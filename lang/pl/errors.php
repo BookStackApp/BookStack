@@ -44,7 +44,7 @@ return [
     'cannot_get_image_from_url' => 'Nie można pobrać obrazka z :url',
     'cannot_create_thumbs' => 'Serwer nie może utworzyć miniaturek. Upewnij się że rozszerzenie GD PHP zostało zainstalowane.',
     'server_upload_limit' => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Serwer nie może przyjąć tej ilości danych. Spróbuj ponownie z mniejszą ilością danych lub mniejszym plikiem.',
     'uploaded'  => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
 
     // Drawing & Images
