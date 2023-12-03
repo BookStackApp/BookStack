@@ -21,19 +21,13 @@ use OneLogin\Saml2\ValidationError;
 class Saml2Service
 {
     protected array $config;
-    protected RegistrationService $registrationService;
-    protected LoginService $loginService;
-    protected GroupSyncService $groupSyncService;
 
     public function __construct(
-        RegistrationService $registrationService,
-        LoginService $loginService,
-        GroupSyncService $groupSyncService
+        protected RegistrationService $registrationService,
+        protected LoginService $loginService,
+        protected GroupSyncService $groupSyncService
     ) {
         $this->config = config('saml2');
-        $this->registrationService = $registrationService;
-        $this->loginService = $loginService;
-        $this->groupSyncService = $groupSyncService;
     }
 
     /**
@@ -357,6 +351,10 @@ class Saml2Service
         $userDetails = $this->getUserDetails($samlID, $samlAttributes);
         $isLoggedIn = auth()->check();
 
+        if ($this->shouldSyncGroups()) {
+            $userDetails['groups'] = $this->getUserGroups($samlAttributes);
+        }
+
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
                 'id_from_idp'         => $samlID,
@@ -379,13 +377,8 @@ class Saml2Service
             $userDetails['external_id']
         );
 
-        if ($user === null) {
-            throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
-        }
-
         if ($this->shouldSyncGroups()) {
-            $groups = $this->getUserGroups($samlAttributes);
-            $this->groupSyncService->syncUserWithFoundGroups($user, $groups, $this->config['remove_from_groups']);
+            $this->groupSyncService->syncUserWithFoundGroups($user, $userDetails['groups'], $this->config['remove_from_groups']);
         }
 
         $this->loginService->login($user, 'saml2');
