@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP modulen er ikke installert.',
     'ldap_cannot_connect' => 'Klarer ikke koble til LDAP på denne adressen',
     'saml_already_logged_in' => 'Allerede logget inn',
-    'saml_user_not_registered' => 'Kontoen med navn :name er ikke registert, registrering er også deaktivert.',
     'saml_no_email_address' => 'Denne kontoinformasjonen finnes ikke i det eksterne autentiseringssystemet.',
     'saml_invalid_response_id' => 'Forespørselen fra det eksterne autentiseringssystemet gjenkjennes ikke av en prosess som startes av dette programmet. Å navigere tilbake etter pålogging kan forårsake dette problemet.',
     'saml_fail_authed' => 'Innlogging gjennom :system feilet. Fikk ikke kontakt med autentiseringstjeneren.',
