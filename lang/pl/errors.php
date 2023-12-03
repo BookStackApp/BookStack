@@ -51,9 +51,9 @@ return [
     'image_upload_error' => 'Wystąpił błąd podczas przesyłania obrazka',
     'image_upload_type_error' => 'Typ przesłanego obrazka jest nieprwidłowy.',
     'image_upload_replace_type' => 'Zamienniki plików graficznych muszą być tego samego typu',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Nie udało się obsłużyć przesyłania zdjęć i/lub tworzenia miniatur ze względu na limity zasobów systemowych.',
+    'image_thumbnail_memory_limit' => 'Nie udało się utworzyć wariantów rozmiaru obrazu ze względu na limity zasobów systemowych.',
+    'image_gallery_thumbnail_memory_limit' => 'Nie udało się utworzyć miniatur galerii ze względu na limity zasobów systemowych.',
     'drawing_data_not_found' => 'Nie można załadować danych rysunku. Plik rysunku może już nie istnieć lub nie masz uprawnień dostępu do niego.',
 
     // Attachments
