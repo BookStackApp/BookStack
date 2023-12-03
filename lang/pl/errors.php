@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Rozszerzenie LDAP PHP nie zostało zainstalowane',
     'ldap_cannot_connect' => 'Nie można połączyć z serwerem LDAP, połączenie nie zostało ustanowione',
     'saml_already_logged_in' => 'Już zalogowany',
-    'saml_user_not_registered' => 'Użytkownik :name nie jest zarejestrowany i automatyczna rejestracja jest wyłączona',
     'saml_no_email_address' => 'Nie można odnaleźć adresu email dla tego użytkownika w danych dostarczonych przez zewnętrzny system uwierzytelniania',
     'saml_invalid_response_id' => 'Żądanie z zewnętrznego systemu uwierzytelniania nie zostało rozpoznane przez proces rozpoczęty przez tę aplikację. Cofnięcie po zalogowaniu mogło spowodować ten problem.',
     'saml_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
