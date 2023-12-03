@@ -9,8 +9,10 @@ use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
+use BookStack\Users\Models\User;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlDocument;
+use BookStack\Util\WebSafeMimeSniffer;
 use Closure;
 use DOMElement;
 use DOMNode;
@@ -27,9 +29,9 @@ class PageContent
     /**
      * Update the content of the page with new provided HTML.
      */
-    public function setNewHTML(string $html): void
+    public function setNewHTML(string $html, User $updater): void
     {
-        $html = $this->extractBase64ImagesFromHtml($html);
+        $html = $this->extractBase64ImagesFromHtml($html, $updater);
         $this->page->html = $this->formatHtml($html);
         $this->page->text = $this->toPlainText();
         $this->page->markdown = '';
@@ -38,9 +40,9 @@ class PageContent
     /**
      * Update the content of the page with new provided Markdown content.
      */
-    public function setNewMarkdown(string $markdown): void
+    public function setNewMarkdown(string $markdown, User $updater): void
     {
-        $markdown = $this->extractBase64ImagesFromMarkdown($markdown);
+        $markdown = $this->extractBase64ImagesFromMarkdown($markdown, $updater);
         $this->page->markdown = $markdown;
         $html = (new MarkdownToHtml($markdown))->convert();
         $this->page->html = $this->formatHtml($html);
@@ -50,7 +52,7 @@ class PageContent
     /**
      * Convert all base64 image data to saved images.
      */
-    protected function extractBase64ImagesFromHtml(string $htmlText): string
+    protected function extractBase64ImagesFromHtml(string $htmlText, User $updater): string
     {
         if (empty($htmlText) || !str_contains($htmlText, 'data:image')) {
             return $htmlText;
@@ -62,7 +64,7 @@ class PageContent
         $imageNodes = $doc->queryXPath('//img[contains(@src, \'data:image\')]');
         foreach ($imageNodes as $imageNode) {
             $imageSrc = $imageNode->getAttribute('src');
-            $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc);
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc, $updater);
             $imageNode->setAttribute('src', $newUrl);
         }
 
@@ -76,7 +78,7 @@ class PageContent
      * Attempting to capture the whole data uri using regex can cause PHP
      * PCRE limits to be hit with larger, multi-MB, files.
      */
-    protected function extractBase64ImagesFromMarkdown(string $markdown): string
+    protected function extractBase64ImagesFromMarkdown(string $markdown, User $updater): string
     {
         $matches = [];
         $contentLength = strlen($markdown);
@@ -94,7 +96,7 @@ class PageContent
                 $dataUri .= $char;
             }
 
-            $newUrl = $this->base64ImageUriToUploadedImageUrl($dataUri);
+            $newUrl = $this->base64ImageUriToUploadedImageUrl($dataUri, $updater);
             $replacements[] = [$dataUri, $newUrl];
         }
 
@@ -109,13 +111,25 @@ class PageContent
      * Parse the given base64 image URI and return the URL to the created image instance.
      * Returns an empty string if the parsed URI is invalid or causes an error upon upload.
      */
-    protected function base64ImageUriToUploadedImageUrl(string $uri): string
+    protected function base64ImageUriToUploadedImageUrl(string $uri, User $updater): string
     {
         $imageRepo = app()->make(ImageRepo::class);
         $imageInfo = $this->parseBase64ImageUri($uri);
 
+        // Validate user has permission to create images
+        if (!$updater->can('image-create-all')) {
+            return '';
+        }
+
         // Validate extension and content
         if (empty($imageInfo['data']) || !ImageService::isExtensionSupported($imageInfo['extension'])) {
+            return '';
+        }
+
+        // Validate content looks like an image via sniffing mime type
+        $mimeSniffer = new WebSafeMimeSniffer();
+        $mime = $mimeSniffer->sniff($imageInfo['data']);
+        if (!str_starts_with($mime, 'image/')) {
             return '';
         }
 

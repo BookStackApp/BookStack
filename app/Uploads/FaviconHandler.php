@@ -3,14 +3,13 @@
 namespace BookStack\Uploads;
 
 use Illuminate\Http\UploadedFile;
-use Intervention\Image\ImageManager;
 
 class FaviconHandler
 {
     protected string $path;
 
     public function __construct(
-        protected ImageManager $imageTool
+        protected ImageResizer $imageResizer,
     ) {
         $this->path = public_path('favicon.ico');
     }
@@ -25,10 +24,8 @@ class FaviconHandler
         }
 
         $imageData = file_get_contents($file->getRealPath());
-        $image = $this->imageTool->make($imageData);
-        $image->resize(32, 32);
-        $bmpData = $image->encode('png');
-        $icoData = $this->pngToIco($bmpData, 32, 32);
+        $pngData = $this->imageResizer->resizeImageData($imageData, 32, 32, false, 'png');
+        $icoData = $this->pngToIco($pngData, 32, 32);
 
         file_put_contents($this->path, $icoData);
     }
@@ -81,7 +78,7 @@ class FaviconHandler
      * Built following the file format info from Wikipedia:
      * https://en.wikipedia.org/wiki/ICO_(file_format)
      */
-    protected function pngToIco(string $bmpData, int $width, int $height): string
+    protected function pngToIco(string $pngData, int $width, int $height): string
     {
         // ICO header
         $header = pack('v', 0x00); // Reserved. Must always be 0
@@ -100,11 +97,11 @@ class FaviconHandler
         // via intervention from png typically provides this as 24.
         $entry .= pack('v', 0x00);
         // Size of the image data in bytes
-        $entry .= pack('V', strlen($bmpData));
+        $entry .= pack('V', strlen($pngData));
         // Offset of the bmp data from file start
         $entry .= pack('V', strlen($header) + strlen($entry) + 4);
 
         // Join & return the combined parts of the ICO image data
-        return $header . $entry . $bmpData;
+        return $header . $entry . $pngData;
     }
 }

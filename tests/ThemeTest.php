@@ -78,7 +78,7 @@ class ThemeTest extends TestCase
 
         $page = $this->entities->page();
         $content = new PageContent($page);
-        $content->setNewMarkdown('# test');
+        $content->setNewMarkdown('# test', $this->users->editor());
 
         $this->assertTrue($callbackCalled);
     }
