@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Tiện ích mở rộng LDAP PHP chưa được cài đặt',
     'ldap_cannot_connect' => 'Không thể kết nối đến máy chủ LDAP, mở đầu kết nối thất bại',
     'saml_already_logged_in' => 'Đã đăng nhập',
-    'saml_user_not_registered' => 'Người dùng :name chưa được đăng ký và tự động đăng ký đang bị tắt',
     'saml_no_email_address' => 'Không tìm thấy địa chỉ email cho người dùng này trong dữ liệu được cung cấp bới hệ thống xác thực ngoài',
     'saml_invalid_response_id' => 'Yêu cầu từ hệ thống xác thực bên ngoài không được nhận diện bởi quy trình chạy cho ứng dụng này. Điều hướng trở lại sau khi đăng nhập có thể đã gây ra vấn đề này.',
     'saml_fail_authed' => 'Đăng nhập sử dụng :system thất bại, hệ thống không cung cấp được sự xác thực thành công',
