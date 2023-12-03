@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'PHP:n LDAP-laajennusta ei ole asennettu',
     'ldap_cannot_connect' => 'Yhteyttä LDAP-palvelimeen ei voida muodostaa, alustava yhteys epäonnistui',
     'saml_already_logged_in' => 'Olet jo kirjautunut sisään',
-    'saml_user_not_registered' => 'Käyttäjää :nimi ei ole rekisteröity ja automaattinen rekisteröinti on pois käytöstä',
     'saml_no_email_address' => 'Tämän käyttäjän sähköpostiosoitetta ei löytynyt ulkoisesta todennuspalvelusta',
     'saml_invalid_response_id' => 'Tämän sovelluksen käynnistämä prosessi ei tunnista ulkoisen todennusjärjestelmän pyyntöä.
 Sovellus ei tunnista ulkoisen todennuspalvelun pyyntöä. Ongelman voi aiheuttaa siirtyminen selaimessa takaisin edelliseen näkymään kirjautumisen jälkeen.',
