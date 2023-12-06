@@ -10,27 +10,19 @@ use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
     use ThrottlesLogins;
 
-    protected SocialDriverManager $socialDriverManager;
-    protected LoginService $loginService;
-
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct(SocialDriverManager $driverManager, LoginService $loginService)
-    {
+    public function __construct(
+        protected SocialDriverManager $socialDriverManager,
+        protected LoginService $loginService,
+    ) {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
         $this->middleware('guard:standard,ldap', ['only' => ['login']]);
         $this->middleware('guard:standard,ldap,oidc', ['only' => ['logout']]);
-
-        $this->socialDriverManager = $driverManager;
-        $this->loginService = $loginService;
     }
 
     /**
@@ -52,7 +44,7 @@ class LoginController extends Controller
         // Store the previous location for redirect after login
         $this->updateIntendedFromPrevious();
 
-        if (!$preventInitiation && $this->shouldAutoInitiate()) {
+        if (!$preventInitiation && $this->loginService->shouldAutoInitiate()) {
             return view('auth.login-initiate', [
                 'authMethod'    => $authMethod,
             ]);
@@ -194,7 +186,7 @@ class LoginController extends Controller
     {
         // Store the previous location for redirect after login
         $previous = url()->previous('');
-        $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+        $isPreviousFromInstance = str_starts_with($previous, url('/'));
         if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
             return;
         }
@@ -205,7 +197,7 @@ class LoginController extends Controller
         ];
 
         foreach ($ignorePrefixList as $ignorePrefix) {
-            if (strpos($previous, url($ignorePrefix)) === 0) {
+            if (str_starts_with($previous, url($ignorePrefix))) {
                 return;
             }
         }

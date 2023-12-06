@@ -21,6 +21,7 @@ class OidcProviderSettings
     public ?string $redirectUri;
     public ?string $authorizationEndpoint;
     public ?string $tokenEndpoint;
+    public ?string $endSessionEndpoint;
 
     /**
      * @var string[]|array[]
@@ -130,6 +131,10 @@ class OidcProviderSettings
         if (!empty($result['jwks_uri'])) {
             $keys = $this->loadKeysFromUri($result['jwks_uri'], $httpClient);
             $discoveredSettings['keys'] = $this->filterKeys($keys);
+        }
+
+        if (!empty($result['end_session_endpoint'])) {
+            $discoveredSettings['endSessionEndpoint'] = $result['end_session_endpoint'];
         }
 
         return $discoveredSettings;

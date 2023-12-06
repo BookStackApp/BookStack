@@ -44,6 +44,7 @@ class OidcTest extends TestCase
             'oidc.groups_claim'           => 'group',
             'oidc.remove_from_groups'     => false,
             'oidc.external_id_claim'      => 'sub',
+            'oidc.end_session_endpoint'   => null,
         ]);
     }
 
@@ -478,6 +479,81 @@ class OidcTest extends TestCase
         $this->assertTrue($user->hasRole($roleA->id));
     }
 
+    public function test_oidc_logout_form_active_when_oidc_active()
+    {
+        $this->runLogin();
+
+        $resp = $this->get('/');
+        $this->withHtml($resp)->assertElementExists('header form[action$="/oidc/logout"] button');
+    }
+    public function test_logout_with_autodiscovery()
+    {
+        $this->withAutodiscovery();
+
+        $transactions = $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            $this->getJwksResponse(),
+        ]);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('https://auth.example.com/oidc/logout?post_logout_redirect_uri=' . urlencode(url('/')));
+
+        $this->assertEquals(2, $transactions->requestCount());
+    }
+
+    public function test_logout_with_autodiscovery_but_oidc_logout_disabled()
+    {
+        $this->withAutodiscovery();
+        config()->set(['oidc.end_session_endpoint' => false]);
+
+        $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            $this->getJwksResponse(),
+        ]);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('/');
+    }
+
+    public function test_logout_without_autodiscovery_but_with_endpoint_configured()
+    {
+        config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout']);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('https://example.com/logout?post_logout_redirect_uri=' . urlencode(url('/')));
+    }
+
+    public function test_logout_with_autodiscovery_and_auto_initiate_returns_to_auto_prevented_login()
+    {
+        $this->withAutodiscovery();
+        config()->set([
+            'auth.auto_initiate' => true,
+            'services.google.client_id' => false,
+            'services.github.client_id' => false,
+        ]);
+
+        $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            $this->getJwksResponse(),
+        ]);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+
+        $redirectUrl = url('/login?prevent_auto_init=true');
+        $resp->assertRedirect('https://auth.example.com/oidc/logout?post_logout_redirect_uri=' . urlencode($redirectUrl));
+    }
+
+    public function test_logout_redirect_contains_id_token_hint_if_existing()
+    {
+        config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout']);
+
+        $this->runLogin();
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken()) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
+        $resp->assertRedirect('https://example.com/logout?' . $query);
+    }
+
     public function test_oidc_id_token_pre_validate_theme_event_without_return()
     {
         $args = [];
@@ -563,6 +639,7 @@ class OidcTest extends TestCase
             'authorization_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/authorize',
             'jwks_uri'               => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
             'issuer'                 => OidcJwtHelper::defaultIssuer(),
+            'end_session_endpoint'   => OidcJwtHelper::defaultIssuer() . '/oidc/logout',
         ], $responseOverrides)));
     }
 

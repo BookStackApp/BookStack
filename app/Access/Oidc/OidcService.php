@@ -84,6 +84,7 @@ class OidcService
             'redirectUri'           => url('/oidc/callback'),
             'authorizationEndpoint' => $config['authorization_endpoint'],
             'tokenEndpoint'         => $config['token_endpoint'],
+            'endSessionEndpoint'    => $config['end_session_endpoint'],
         ]);
 
         // Use keys if configured
@@ -98,6 +99,11 @@ class OidcService
             } catch (OidcIssuerDiscoveryException $exception) {
                 throw new OidcException('OIDC Discovery Error: ' . $exception->getMessage());
             }
+        }
+
+        // Prevent use of RP-initiated logout if specifically disabled
+        if ($config['end_session_endpoint'] === false) {
+            $settings->endSessionEndpoint = null;
         }
 
         $settings->validate();
@@ -291,20 +297,23 @@ class OidcService
      * Start the RP-initiated logout flow if active, otherwise start a standard logout flow.
      * Returns a post-app-logout redirect URL.
      * Reference: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+     * @throws OidcException
      */
     public function logout(): string
     {
-        $endSessionEndpoint = $this->config()["end_session_endpoint"];
-
-        // TODO - Add autodiscovery and false/null config value support.
-
         $oidcToken = session()->pull("oidc_id_token");
         $defaultLogoutUrl = url($this->loginService->logout());
+        $oidcSettings = $this->getProviderSettings();
+
+        if (!$oidcSettings->endSessionEndpoint) {
+            return $defaultLogoutUrl;
+        }
+
         $endpointParams = [
             'id_token_hint' => $oidcToken,
             'post_logout_redirect_uri' => $defaultLogoutUrl,
         ];
 
-        return $endSessionEndpoint . '?' . http_build_query($endpointParams);
+        return $oidcSettings->endSessionEndpoint . '?' . http_build_query($endpointParams);
     }
 }
