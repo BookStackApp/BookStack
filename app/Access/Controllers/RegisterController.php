@@ -4,7 +4,7 @@ namespace BookStack\Access\Controllers;
 
 use BookStack\Access\LoginService;
 use BookStack\Access\RegistrationService;
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Http\Controller;
@@ -15,7 +15,7 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    protected SocialAuthService $socialAuthService;
+    protected SocialDriverManager $socialDriverManager;
     protected RegistrationService $registrationService;
     protected LoginService $loginService;
 
@@ -23,14 +23,14 @@ class RegisterController extends Controller
      * Create a new controller instance.
      */
     public function __construct(
-        SocialAuthService $socialAuthService,
+        SocialDriverManager $socialDriverManager,
         RegistrationService $registrationService,
         LoginService $loginService
     ) {
         $this->middleware('guest');
         $this->middleware('guard:standard');
 
-        $this->socialAuthService = $socialAuthService;
+        $this->socialDriverManager = $socialDriverManager;
         $this->registrationService = $registrationService;
         $this->loginService = $loginService;
     }
@@ -43,7 +43,7 @@ class RegisterController extends Controller
     public function getRegister()
     {
         $this->registrationService->ensureRegistrationAllowed();
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
+        $socialDrivers = $this->socialDriverManager->getActive();
 
         return view('auth.register', [
             'socialDrivers' => $socialDrivers,

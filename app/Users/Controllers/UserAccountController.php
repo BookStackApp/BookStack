@@ -2,7 +2,7 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Http\Controller;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
@@ -161,7 +161,7 @@ class UserAccountController extends Controller
     /**
      * Show the view for the "Access & Security" account options.
      */
-    public function showAuth(SocialAuthService $socialAuthService)
+    public function showAuth(SocialDriverManager $socialDriverManager)
     {
         $mfaMethods = user()->mfaValues()->get()->groupBy('method');
 
@@ -171,7 +171,7 @@ class UserAccountController extends Controller
             'category' => 'auth',
             'mfaMethods' => $mfaMethods,
             'authMethod' => config('auth.method'),
-            'activeSocialDrivers' => $socialAuthService->getActiveDrivers(),
+            'activeSocialDrivers' => $socialDriverManager->getActive(),
         ]);
     }
 

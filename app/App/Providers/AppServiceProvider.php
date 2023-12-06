@@ -2,7 +2,7 @@
 
 namespace BookStack\App\Providers;
 
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
     public $singletons = [
         'activity' => ActivityLogger::class,
         SettingService::class => SettingService::class,
-        SocialAuthService::class => SocialAuthService::class,
+        SocialDriverManager::class => SocialDriverManager::class,
         CspService::class => CspService::class,
         HttpRequestService::class => HttpRequestService::class,
     ];
