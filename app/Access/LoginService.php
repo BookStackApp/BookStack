@@ -176,14 +176,18 @@ class LoginService
     }
 
     /**
-     * Check if login auto-initiate should be valid based upon authentication config.
+     * Check if login auto-initiate should be active based upon authentication config.
      */
-    protected function shouldAutoInitiate(): bool
+    public function shouldAutoInitiate(): bool
     {
+        $autoRedirect = config('auth.auto_initiate');
+        if (!$autoRedirect) {
+            return false;
+        }
+
         $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
-        $autoRedirect = config('auth.auto_initiate');
 
-        return $autoRedirect && count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
+        return count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
     }
 }
