@@ -47,4 +47,9 @@ return [
     'groups_claim' => env('OIDC_GROUPS_CLAIM', 'groups'),
     // When syncing groups, remove any groups that no longer match. Otherwise sync only adds new groups.
     'remove_from_groups' => env('OIDC_REMOVE_FROM_GROUPS', false),
+
+    // OIDC Logout Feature: OAuth2 end_session_endpoint
+    'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', null),
+
 ];
+
