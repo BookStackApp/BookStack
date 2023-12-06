@@ -217,11 +217,7 @@ class OidcService
             $settings->keys,
         );
 
-        // OIDC Logout Feature: Temporarily save token in session 
-        $access_token_for_logout = $idTokenText;
-        session()->put("oidctoken", $access_token_for_logout);
-
-
+        session()->put("oidc_id_token", $idTokenText);
 
         $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
             'access_token' => $accessToken->getToken(),
@@ -291,36 +287,24 @@ class OidcService
         return $this->config()['user_to_groups'] !== false;
     }
 
-
     /**
-     * OIDC Logout Feature: Initiate a logout flow.
-     *
-     * @throws OidcException
-     *
-     * @return string
+     * Start the RP-initiated logout flow if active, otherwise start a standard logout flow.
+     * Returns a post-app-logout redirect URL.
+     * Reference: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
      */
-    public function logout() {
+    public function logout(): string
+    {
+        $endSessionEndpoint = $this->config()["end_session_endpoint"];
 
-        $config = $this->config();
-        $app_url = env('APP_URL', '');
-        $end_session_endpoint = $config["end_session_endpoint"];
+        // TODO - Add autodiscovery and false/null config value support.
 
-        $oidctoken = session()->get("oidctoken");
-        session()->invalidate();
+        $oidcToken = session()->pull("oidc_id_token");
+        $defaultLogoutUrl = url($this->loginService->logout());
+        $endpointParams = [
+            'id_token_hint' => $oidcToken,
+            'post_logout_redirect_uri' => $defaultLogoutUrl,
+        ];
 
-        if (str_contains($app_url, 'https://')) { 
-             $protocol = 'https://';
-        } else {
-             $protocol = 'http://';
-        }
-
-
-
-        return redirect($end_session_endpoint.'?id_token_hint='.$oidctoken."&post_logout_redirect_uri=".$protocol.$_SERVER['HTTP_HOST']."/");
-
-
+        return $endSessionEndpoint . '?' . http_build_query($endpointParams);
     }
-
-
-
 }

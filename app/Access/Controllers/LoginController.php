@@ -3,7 +3,7 @@
 namespace BookStack\Access\Controllers;
 
 use BookStack\Access\LoginService;
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Facades\Activity;
@@ -17,19 +17,19 @@ class LoginController extends Controller
 {
     use ThrottlesLogins;
 
-    protected SocialAuthService $socialAuthService;
+    protected SocialDriverManager $socialDriverManager;
     protected LoginService $loginService;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
+    public function __construct(SocialDriverManager $driverManager, LoginService $loginService)
     {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
         $this->middleware('guard:standard,ldap', ['only' => ['login']]);
         $this->middleware('guard:standard,ldap,oidc', ['only' => ['logout']]);
 
-        $this->socialAuthService = $socialAuthService;
+        $this->socialDriverManager = $driverManager;
         $this->loginService = $loginService;
     }
 
@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     public function getLogin(Request $request)
     {
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
+        $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
         $preventInitiation = $request->get('prevent_auto_init') === 'true';
 
@@ -101,15 +101,9 @@ class LoginController extends Controller
     /**
      * Logout user and perform subsequent redirect.
      */
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::guard()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        $redirectUri = $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
-
-        return redirect($redirectUri);
+        return redirect($this->loginService->logout());
     }
 
     /**
@@ -217,17 +211,5 @@ class LoginController extends Controller
         }
 
         redirect()->setIntendedUrl($previous);
-    }
-
-    /**
-     * Check if login auto-initiate should be valid based upon authentication config.
-     */
-    protected function shouldAutoInitiate(): bool
-    {
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $authMethod = config('auth.method');
-        $autoRedirect = config('auth.auto_initiate');
-
-        return $autoRedirect && count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
     }
 }

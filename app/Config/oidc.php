@@ -36,6 +36,12 @@ return [
     'authorization_endpoint' => env('OIDC_AUTH_ENDPOINT', null),
     'token_endpoint'         => env('OIDC_TOKEN_ENDPOINT', null),
 
+    // OIDC RP-Initiated Logout endpoint
+    // A null value gets the URL from discovery, if active.
+    // A false value force-disables RP-Initiated Logout.
+    // A string value forces the given URL to be used.
+    'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', null),
+
     // Add extra scopes, upon those required, to the OIDC authentication request
     // Multiple values can be provided comma seperated.
     'additional_scopes' => env('OIDC_ADDITIONAL_SCOPES', null),
@@ -45,11 +51,6 @@ return [
     'user_to_groups' => env('OIDC_USER_TO_GROUPS', false),
     // Attribute, within a OIDC ID token, to find group names within
     'groups_claim' => env('OIDC_GROUPS_CLAIM', 'groups'),
-    // When syncing groups, remove any groups that no longer match. Otherwise sync only adds new groups.
+    // When syncing groups, remove any groups that no longer match. Otherwise, sync only adds new groups.
     'remove_from_groups' => env('OIDC_REMOVE_FROM_GROUPS', false),
-
-    // OIDC Logout Feature: OAuth2 end_session_endpoint
-    'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', null),
-
 ];
-
