@@ -16,13 +16,11 @@ class LoginService
 {
     protected const LAST_LOGIN_ATTEMPTED_SESSION_KEY = 'auth-login-last-attempted';
 
-    protected $mfaSession;
-    protected $emailConfirmationService;
-
-    public function __construct(MfaSession $mfaSession, EmailConfirmationService $emailConfirmationService)
-    {
-        $this->mfaSession = $mfaSession;
-        $this->emailConfirmationService = $emailConfirmationService;
+    public function __construct(
+        protected MfaSession $mfaSession,
+        protected EmailConfirmationService $emailConfirmationService,
+        protected SocialDriverManager $socialDriverManager,
+    ) {
     }
 
     /**
@@ -162,5 +160,34 @@ class LoginService
         }
 
         return $result;
+    }
+
+    /**
+     * Logs the current user out of the application.
+     * Returns an app post-redirect path.
+     */
+    public function logout(): string
+    {
+        auth()->logout();
+        session()->invalidate();
+        session()->regenerateToken();
+
+        return $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
+    }
+
+    /**
+     * Check if login auto-initiate should be active based upon authentication config.
+     */
+    public function shouldAutoInitiate(): bool
+    {
+        $autoRedirect = config('auth.auto_initiate');
+        if (!$autoRedirect) {
+            return false;
+        }
+
+        $socialDrivers = $this->socialDriverManager->getActive();
+        $authMethod = config('auth.method');
+
+        return count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
     }
 }

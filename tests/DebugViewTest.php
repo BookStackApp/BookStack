@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use Illuminate\Testing\TestResponse;
 
 class DebugViewTest extends TestCase
@@ -46,8 +46,8 @@ class DebugViewTest extends TestCase
     protected function getDebugViewForException(\Exception $exception): TestResponse
     {
         // Fake an error via social auth service used on login page
-        $mockService = $this->mock(SocialAuthService::class);
-        $mockService->shouldReceive('getActiveDrivers')->andThrow($exception);
+        $mockService = $this->mock(SocialDriverManager::class);
+        $mockService->shouldReceive('getActive')->andThrow($exception);
 
         return $this->get('/login');
     }

@@ -71,8 +71,7 @@ class Saml2Service
                 throw $error;
             }
 
-            $this->actionLogout();
-            $url = '/';
+            $url = $this->loginService->logout();
             $id = null;
         }
 
@@ -140,18 +139,9 @@ class Saml2Service
             );
         }
 
-        $this->actionLogout();
+        $this->loginService->logout();
 
         return $redirect;
-    }
-
-    /**
-     * Do the required actions to log a user out.
-     */
-    protected function actionLogout()
-    {
-        auth()->logout();
-        session()->invalidate();
     }
 
     /**

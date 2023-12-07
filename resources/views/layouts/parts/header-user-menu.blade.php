@@ -29,8 +29,14 @@
         </li>
         <li><hr></li>
         <li>
-            <form action="{{ url(config('auth.method') === 'saml2' ? '/saml2/logout' : '/logout') }}"
-                  method="post">
+            @php
+                $logoutPath = match (config('auth.method')) {
+                    'saml2' => '/saml2/logout',
+                    'oidc' => '/oidc/logout',
+                    default => '/logout',
+                }
+            @endphp
+            <form action="{{ url($logoutPath) }}" method="post">
                 {{ csrf_field() }}
                 <button class="icon-item" data-shortcut="logout">
                     @icon('logout')

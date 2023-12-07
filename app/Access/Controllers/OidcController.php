@@ -11,9 +11,6 @@ class OidcController extends Controller
 {
     protected OidcService $oidcService;
 
-    /**
-     * OpenIdController constructor.
-     */
     public function __construct(OidcService $oidcService)
     {
         $this->oidcService = $oidcService;
@@ -62,5 +59,13 @@ class OidcController extends Controller
         }
 
         return redirect()->intended();
+    }
+
+    /**
+     * Log the user out then start the OIDC RP-initiated logout process.
+     */
+    public function logout()
+    {
+        return redirect($this->oidcService->logout());
     }
 }
