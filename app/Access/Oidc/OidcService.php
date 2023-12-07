@@ -84,7 +84,7 @@ class OidcService
             'redirectUri'           => url('/oidc/callback'),
             'authorizationEndpoint' => $config['authorization_endpoint'],
             'tokenEndpoint'         => $config['token_endpoint'],
-            'endSessionEndpoint'    => $config['end_session_endpoint'],
+            'endSessionEndpoint'    => is_string($config['end_session_endpoint']) ? $config['end_session_endpoint'] : null,
         ]);
 
         // Use keys if configured
@@ -102,8 +102,11 @@ class OidcService
         }
 
         // Prevent use of RP-initiated logout if specifically disabled
+        // Or force use of a URL if specifically set.
         if ($config['end_session_endpoint'] === false) {
             $settings->endSessionEndpoint = null;
+        } else if (is_string($config['end_session_endpoint'])) {
+            $settings->endSessionEndpoint = $config['end_session_endpoint'];
         }
 
         $settings->validate();
@@ -314,6 +317,8 @@ class OidcService
             'post_logout_redirect_uri' => $defaultLogoutUrl,
         ];
 
-        return $oidcSettings->endSessionEndpoint . '?' . http_build_query($endpointParams);
+        $joiner = str_contains($oidcSettings->endSessionEndpoint, '?') ? '&' : '?';
+
+        return $oidcSettings->endSessionEndpoint . $joiner . http_build_query($endpointParams);
     }
 }

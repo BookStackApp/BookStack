@@ -37,9 +37,10 @@ return [
     'token_endpoint'         => env('OIDC_TOKEN_ENDPOINT', null),
 
     // OIDC RP-Initiated Logout endpoint URL.
-    // A null value gets the URL from discovery, if active.
     // A false value force-disables RP-Initiated Logout.
-    'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', null),
+    // A true value gets the URL from discovery, if active.
+    // A string value is used as the URL.
+    'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', false),
 
     // Add extra scopes, upon those required, to the OIDC authentication request
     // Multiple values can be provided comma seperated.
