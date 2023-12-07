@@ -44,7 +44,7 @@ class OidcTest extends TestCase
             'oidc.groups_claim'           => 'group',
             'oidc.remove_from_groups'     => false,
             'oidc.external_id_claim'      => 'sub',
-            'oidc.end_session_endpoint'   => null,
+            'oidc.end_session_endpoint'   => false,
         ]);
     }
 
@@ -486,8 +486,9 @@ class OidcTest extends TestCase
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementExists('header form[action$="/oidc/logout"] button');
     }
-    public function test_logout_with_autodiscovery()
+    public function test_logout_with_autodiscovery_with_oidc_logout_enabled()
     {
+        config()->set(['oidc.end_session_endpoint' => true]);
         $this->withAutodiscovery();
 
         $transactions = $this->mockHttpClient([
@@ -499,9 +500,10 @@ class OidcTest extends TestCase
         $resp->assertRedirect('https://auth.example.com/oidc/logout?post_logout_redirect_uri=' . urlencode(url('/')));
 
         $this->assertEquals(2, $transactions->requestCount());
+        $this->assertFalse(auth()->check());
     }
 
-    public function test_logout_with_autodiscovery_but_oidc_logout_disabled()
+    public function test_logout_with_autodiscovery_with_oidc_logout_disabled()
     {
         $this->withAutodiscovery();
         config()->set(['oidc.end_session_endpoint' => false]);
@@ -513,6 +515,7 @@ class OidcTest extends TestCase
 
         $resp = $this->asEditor()->post('/oidc/logout');
         $resp->assertRedirect('/');
+        $this->assertFalse(auth()->check());
     }
 
     public function test_logout_without_autodiscovery_but_with_endpoint_configured()
@@ -521,6 +524,16 @@ class OidcTest extends TestCase
 
         $resp = $this->asEditor()->post('/oidc/logout');
         $resp->assertRedirect('https://example.com/logout?post_logout_redirect_uri=' . urlencode(url('/')));
+        $this->assertFalse(auth()->check());
+    }
+
+    public function test_logout_without_autodiscovery_with_configured_endpoint_adds_to_query_if_existing()
+    {
+        config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout?a=b']);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('https://example.com/logout?a=b&post_logout_redirect_uri=' . urlencode(url('/')));
+        $this->assertFalse(auth()->check());
     }
 
     public function test_logout_with_autodiscovery_and_auto_initiate_returns_to_auto_prevented_login()
@@ -530,6 +543,7 @@ class OidcTest extends TestCase
             'auth.auto_initiate' => true,
             'services.google.client_id' => false,
             'services.github.client_id' => false,
+            'oidc.end_session_endpoint' => true,
         ]);
 
         $this->mockHttpClient([
@@ -541,6 +555,39 @@ class OidcTest extends TestCase
 
         $redirectUrl = url('/login?prevent_auto_init=true');
         $resp->assertRedirect('https://auth.example.com/oidc/logout?post_logout_redirect_uri=' . urlencode($redirectUrl));
+        $this->assertFalse(auth()->check());
+    }
+
+    public function test_logout_endpoint_url_overrides_autodiscovery_endpoint()
+    {
+        config()->set(['oidc.end_session_endpoint' => 'https://a.example.com']);
+        $this->withAutodiscovery();
+
+        $transactions = $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(),
+            $this->getJwksResponse(),
+        ]);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('https://a.example.com?post_logout_redirect_uri=' . urlencode(url('/')));
+
+        $this->assertEquals(2, $transactions->requestCount());
+        $this->assertFalse(auth()->check());
+    }
+
+    public function test_logout_with_autodiscovery_does_not_use_rp_logout_if_no_url_via_autodiscovery()
+    {
+        config()->set(['oidc.end_session_endpoint' => true]);
+        $this->withAutodiscovery();
+
+        $this->mockHttpClient([
+            $this->getAutoDiscoveryResponse(['end_session_endpoint' => null]),
+            $this->getJwksResponse(),
+        ]);
+
+        $resp = $this->asEditor()->post('/oidc/logout');
+        $resp->assertRedirect('/');
+        $this->assertFalse(auth()->check());
     }
 
     public function test_logout_redirect_contains_id_token_hint_if_existing()
