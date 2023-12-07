@@ -2,7 +2,7 @@
 
 namespace BookStack\Theming;
 
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\ThemeException;
 use Illuminate\Console\Application;
 use Illuminate\Console\Application as Artisan;
@@ -82,11 +82,11 @@ class ThemeService
     }
 
     /**
-     * @see SocialAuthService::addSocialDriver
+     * @see SocialDriverManager::addSocialDriver
      */
     public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, callable $configureForRedirect = null): void
     {
-        $socialAuthService = app()->make(SocialAuthService::class);
-        $socialAuthService->addSocialDriver($driverName, $config, $socialiteHandler, $configureForRedirect);
+        $driverManager = app()->make(SocialDriverManager::class);
+        $driverManager->addSocialDriver($driverName, $config, $socialiteHandler, $configureForRedirect);
     }
 }
