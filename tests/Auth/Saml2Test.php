@@ -181,7 +181,7 @@ class Saml2Test extends TestCase
         ]);
 
         $handleLogoutResponse = function () {
-            $this->assertTrue($this->isAuthenticated());
+            $this->assertFalse($this->isAuthenticated());
 
             $req = $this->get('/saml2/sls');
             $req->assertRedirect('/');
@@ -212,6 +212,55 @@ class Saml2Test extends TestCase
         $req = $this->post('/saml2/logout');
         $req->assertRedirect('/');
         $this->assertFalse($this->isAuthenticated());
+    }
+
+    public function test_logout_sls_flow_logs_user_out_before_redirect()
+    {
+        config()->set([
+            'saml2.onelogin.strict' => false,
+        ]);
+
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+        $this->assertTrue($this->isAuthenticated());
+
+        $req = $this->post('/saml2/logout');
+        $redirect = $req->headers->get('location');
+        $this->assertStringStartsWith('http://saml.local/saml2/idp/SingleLogoutService.php', $redirect);
+        $this->assertFalse($this->isAuthenticated());
+    }
+
+    public function test_logout_sls_request_redirect_prevents_auto_login_when_enabled()
+    {
+        config()->set([
+            'saml2.onelogin.strict' => false,
+            'auth.auto_initiate' => true,
+            'services.google.client_id' => false,
+            'services.github.client_id' => false,
+        ]);
+
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+
+        $req = $this->post('/saml2/logout');
+        $redirect = $req->headers->get('location');
+        $this->assertStringContainsString(urlencode(url('/login?prevent_auto_init=true')), $redirect);
+    }
+
+    public function test_logout_sls_response_endpoint_redirect_prevents_auto_login_when_enabled()
+    {
+        config()->set([
+            'saml2.onelogin.strict' => false,
+            'auth.auto_initiate' => true,
+            'services.google.client_id' => false,
+            'services.github.client_id' => false,
+        ]);
+
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+
+        $this->withGet(['SAMLResponse' => $this->sloResponseData], function () {
+            $req = $this->get('/saml2/sls');
+            $redirect = $req->headers->get('location');
+            $this->assertEquals(url('/login?prevent_auto_init=true'), $redirect);
+        });
     }
 
     public function test_dump_user_details_option_works()

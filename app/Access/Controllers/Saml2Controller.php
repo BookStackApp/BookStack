@@ -9,14 +9,9 @@ use Illuminate\Support\Str;
 
 class Saml2Controller extends Controller
 {
-    protected Saml2Service $samlService;
-
-    /**
-     * Saml2Controller constructor.
-     */
-    public function __construct(Saml2Service $samlService)
-    {
-        $this->samlService = $samlService;
+    public function __construct(
+        protected Saml2Service $samlService
+    ) {
         $this->middleware('guard:saml2');
     }
 
@@ -36,7 +31,12 @@ class Saml2Controller extends Controller
      */
     public function logout()
     {
-        $logoutDetails = $this->samlService->logout(auth()->user());
+        $user = user();
+        if ($user->isGuest()) {
+            return redirect('/login');
+        }
+
+        $logoutDetails = $this->samlService->logout($user);
 
         if ($logoutDetails['id']) {
             session()->flash('saml2_logout_request_id', $logoutDetails['id']);
@@ -64,7 +64,7 @@ class Saml2Controller extends Controller
     public function sls()
     {
         $requestId = session()->pull('saml2_logout_request_id', null);
-        $redirect = $this->samlService->processSlsResponse($requestId) ?? '/';
+        $redirect = $this->samlService->processSlsResponse($requestId);
 
         return redirect($redirect);
     }
