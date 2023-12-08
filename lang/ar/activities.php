@@ -73,8 +73,8 @@ return [
 
     // Settings
     'settings_update' => 'تحديث الإعدادات',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update_notification' => 'تم تحديث الإعدادات',
+    'maintenance_action_run' => 'إجراء الصيانة',
 
     // Webhooks
     'webhook_create' => 'تم إنشاء webhook',
@@ -85,39 +85,39 @@ return [
     'webhook_delete_notification' => 'تم حذف Webhook بنجاح',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'إنشاء مستخدم',
+    'user_create_notification' => 'تم انشاء الحساب',
+    'user_update' => 'المستخدم المحدث',
     'user_update_notification' => 'تم تحديث المستخدم بنجاح',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'المستخدم المحذوف',
     'user_delete_notification' => 'تم إزالة المستخدم بنجاح',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'تم إنشاء رمز api',
+    'api_token_create_notification' => 'تم إنشاء رمز الـ API بنجاح',
+    'api_token_update' => 'تم تحديث رمز api',
+    'api_token_update_notification' => 'تم تحديث رمز الـ API بنجاح',
+    'api_token_delete' => 'رمز api المحذوف',
+    'api_token_delete_notification' => 'تم حذف رمز الـ API بنجاح',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'إنشاء صَلاحِيَة',
+    'role_create_notification' => 'تم إنشاء الدور بنجاح',
+    'role_update' => 'حدّث الدور',
+    'role_update_notification' => 'تم تحديث الدور بنجاح',
+    'role_delete' => 'حذف الدور',
+    'role_delete_notification' => 'تم حذف الدور بنجاح',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'سلة إعادة التدوير المفرغة',
+    'recycle_bin_restore' => 'استعادة من سلة المحذوفات',
+    'recycle_bin_destroy' => 'إزالة من سلة المحذوفات',
 
     // Comments
     'commented_on'                => 'تم التعليق',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'تعليق مضاف',
+    'comment_update'              => 'تعليق محدث',
+    'comment_delete'              => 'تعليق محذوف',
 
     // Other
     'permissions_update'          => 'تحديث الأذونات',
