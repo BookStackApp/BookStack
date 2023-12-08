@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'تمت استعادة الصفحة',
     'page_restore_notification'   => 'تمت استعادة الصفحة بنجاح',
     'page_move'                   => 'تم نقل الصفحة',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'تم نقل الصفحة بنجاح',
 
     // Chapters
     'chapter_create'              => 'تم إنشاء فصل',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'تم حذف الفصل',
     'chapter_delete_notification' => 'تم حذف الفصل بنجاح',
     'chapter_move'                => 'تم نقل الفصل',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'تم نقل الفصل بنجاح',
 
     // Books
     'book_create'                 => 'تم إنشاء كتاب',
@@ -50,29 +50,29 @@ return [
     'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'استعادة مراجعة',
+    'revision_delete' => 'مراجعة محذوفة',
+    'revision_delete_notification' => 'تم حذف المراجعة بنجاح',
 
     // Favourites
     'favourite_add_notification' => 'تم إضافة ":name" إلى المفضلة لديك',
     'favourite_remove_notification' => 'تم إزالة ":name" من المفضلة لديك',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'تم تحديث الإعدادات المشاهدة بنجاح',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'تم تسجيل الدخول',
+    'auth_register' => 'سجل كمستخدم جديد',
+    'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة المرور',
+    'auth_password_reset_update' => 'إعادة تعيين كلمة مرور المستخدم',
+    'mfa_setup_method' => 'طريقة MFA المكونة',
     'mfa_setup_method_notification' => 'تم تكوين طريقة متعددة العوامل بنجاح',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'إزالة طريقة MFA',
     'mfa_remove_method_notification' => 'تمت إزالة طريقة متعددة العوامل بنجاح',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'تحديث الإعدادات',
     'settings_update_notification' => 'Settings successfully updated',
     'maintenance_action_run' => 'ran maintenance action',
 
