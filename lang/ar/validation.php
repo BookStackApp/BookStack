@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => 'يجب أن يقتصر :attribute على حروف أو أرقام أو شرطات فقط.',
     'alpha_num'            => 'يجب أن يقتصر :attribute على الحروف والأرقام فقط.',
     'array'                => 'يجب أن تكون السمة مصفوفة.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'الرمز المقدم غير صالح أو تم استخدامه بالفعل.',
     'before'               => 'يجب أن يكون التاريخ :attribute قبل :date.',
     'between'              => [
         'numeric' => 'يجب أن يكون :attribute بين :min و :max.',
@@ -32,7 +32,7 @@ return [
     'digits_between'       => 'يجب أن يكون :attribute بعدد خانات بين :min و :max.',
     'email'                => 'يجب أن يكون :attribute عنوان بريد إلكتروني صالح.',
     'ends_with' => 'يجب أن تنتهي السمة بأحد القيم التالية',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'file'                 => 'يجب توفير :attribute كملف صالح.',
     'filled'               => 'حقل :attribute مطلوب.',
     'gt'                   => [
         'numeric' => 'يجب أن تكون السمة أكبر من: القيمة.',
@@ -100,7 +100,7 @@ return [
     ],
     'string'               => 'يجب أن تكون السمة: سلسلة.',
     'timezone'             => 'يجب أن تكون :attribute منطقة صالحة.',
-    'totp'                 => 'The provided code is not valid or has expired.',
+    'totp'                 => 'الرمز المقدم غير صالح أو انتهت صلاحيته.',
     'unique'               => 'تم حجز :attribute من قبل.',
     'url'                  => 'صيغة :attribute غير صالحة.',
     'uploaded'             => 'تعذر تحميل الملف. قد لا يقبل الخادم ملفات بهذا الحجم.',
