@@ -25,11 +25,11 @@ esbuild.build({
     entryPoints,
     outdir,
     sourcemap: true,
-    target: 'es2020',
+    target: 'es2021',
     mainFields: ['module', 'main'],
     format: 'esm',
     minify: isProd,
-    logLevel: "info",
+    logLevel: 'info',
 }).then(result => {
     fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
 }).catch(() => process.exit(1));
