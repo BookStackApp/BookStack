@@ -101,7 +101,7 @@ class ThemeEvents
      * Called when standard web (browser/non-api) app routes are registered.
      * Provides an app router, so you can register your own web routes.
      *
-     * @param \Illuminate\Routing\Router
+     * @param \Illuminate\Routing\Router $router
      */
     const ROUTES_REGISTER_WEB = 'routes_register_web';
 
@@ -111,7 +111,7 @@ class ThemeEvents
      * These are routes that typically require login to access (unless the instance is made public).
      * Provides an app router, so you can register your own web routes.
      *
-     * @param \Illuminate\Routing\Router
+     * @param \Illuminate\Routing\Router $router
      */
     const ROUTES_REGISTER_WEB_AUTH = 'routes_register_web_auth';
 

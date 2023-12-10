@@ -42,6 +42,7 @@ class ReferenceUpdater
             $chapters = $entity->chapters()->get(['id']);
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
+                /** @var Reference[] $childRefs */
                 $childRefs = $this->referenceFetcher->getPageReferencesToEntity($bookChild)->values()->all();
                 array_push($references, ...$childRefs);
             }
