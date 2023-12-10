@@ -24,6 +24,6 @@ class WatchController extends Controller
 
         $this->showSuccessNotification(trans('activities.watch_update_level_notification'));
 
-        return redirect()->back();
+        return redirect($watchable->getUrl());
     }
 }

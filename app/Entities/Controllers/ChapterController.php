@@ -12,6 +12,7 @@ use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
@@ -170,7 +171,7 @@ class ChapterController extends Controller
     /**
      * Perform the move action for a chapter.
      *
-     * @throws NotFoundException
+     * @throws NotFoundException|NotifyException
      */
     public function move(Request $request, string $bookSlug, string $chapterSlug)
     {
@@ -184,13 +185,13 @@ class ChapterController extends Controller
         }
 
         try {
-            $newBook = $this->chapterRepo->move($chapter, $entitySelection);
+            $this->chapterRepo->move($chapter, $entitySelection);
         } catch (PermissionsException $exception) {
             $this->showPermissionError();
         } catch (MoveOperationException $exception) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
 
-            return redirect()->back();
+            return redirect($chapter->getUrl('/move'));
         }
 
         return redirect($chapter->getUrl());
@@ -231,7 +232,7 @@ class ChapterController extends Controller
         if (is_null($newParentBook)) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
 
-            return redirect()->back();
+            return redirect($chapter->getUrl('/copy'));
         }
 
         $this->checkOwnablePermission('chapter-create', $newParentBook);

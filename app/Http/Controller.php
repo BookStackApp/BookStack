@@ -9,6 +9,8 @@ use BookStack\Facades\Activity;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 abstract class Controller extends BaseController
@@ -164,5 +166,21 @@ abstract class Controller extends BaseController
     protected function getImageValidationRules(): array
     {
         return ['image_extension', 'mimes:jpeg,png,gif,webp', 'max:' . (config('app.upload_limit') * 1000)];
+    }
+
+    /**
+     * Redirect to the URL provided in the request as a '_return' parameter.
+     * Will check that the parameter leads to a URL under the root path of the system.
+     */
+    protected function redirectToRequest(Request $request): RedirectResponse
+    {
+        $basePath = url('/');
+        $returnUrl = $request->input('_return') ?? $basePath;
+
+        if (!str_starts_with($returnUrl, $basePath)) {
+            return redirect($basePath);
+        }
+
+        return redirect($returnUrl);
     }
 }
