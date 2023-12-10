@@ -13,6 +13,7 @@
               method="post"
           @endif
     >
+        <input type="hidden" name="_return" value="{{ url()->current() }}">
 
         @if($useQuery ?? false)
             @foreach(array_filter(request()->except(['sort', 'order'])) as $key => $value)

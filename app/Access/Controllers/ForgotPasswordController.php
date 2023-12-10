@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
@@ -30,10 +25,6 @@ class ForgotPasswordController extends Controller
 
     /**
      * Send a reset link to the given user.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function sendResetLinkEmail(Request $request)
     {
@@ -56,13 +47,13 @@ class ForgotPasswordController extends Controller
             $message = trans('auth.reset_password_sent', ['email' => $request->get('email')]);
             $this->showSuccessNotification($message);
 
-            return back()->with('status', trans($response));
+            return redirect('/password/email')->with('status', trans($response));
         }
 
         // If an error was returned by the password broker, we will get this message
         // translated so we can notify a user of the problem. We'll redirect back
         // to where the users came from so they can attempt this process again.
-        return back()->withErrors(
+        return redirect('/password/email')->withErrors(
             ['email' => trans($response)]
         );
     }

@@ -235,7 +235,7 @@ class RoleManagementTest extends TestCase
         /** @var Role $publicRole */
         $publicRole = Role::getSystemRole('public');
         $resp = $this->asAdmin()->delete('/settings/roles/delete/' . $publicRole->id);
-        $resp->assertRedirect('/');
+        $resp->assertRedirect('/settings/roles/delete/' . $publicRole->id);
 
         $this->get('/settings/roles/delete/' . $publicRole->id);
         $resp = $this->delete('/settings/roles/delete/' . $publicRole->id);

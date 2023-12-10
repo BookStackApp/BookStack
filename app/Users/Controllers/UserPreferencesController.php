@@ -3,9 +3,6 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\Controller;
-use BookStack\Permissions\PermissionApplicator;
-use BookStack\Settings\UserNotificationPreferences;
-use BookStack\Settings\UserShortcutMap;
 use BookStack\Users\UserRepo;
 use Illuminate\Http\Request;
 
@@ -23,7 +20,7 @@ class UserPreferencesController extends Controller
     {
         $valueViewTypes = ['books', 'bookshelves', 'bookshelf'];
         if (!in_array($type, $valueViewTypes)) {
-            return redirect()->back(500);
+            return $this->redirectToRequest($request);
         }
 
         $view = $request->get('view');
@@ -34,7 +31,7 @@ class UserPreferencesController extends Controller
         $key = $type . '_view_type';
         setting()->putForCurrentUser($key, $view);
 
-        return redirect()->back(302, [], "/");
+        return $this->redirectToRequest($request);
     }
 
     /**
@@ -44,7 +41,7 @@ class UserPreferencesController extends Controller
     {
         $validSortTypes = ['books', 'bookshelves', 'shelf_books', 'users', 'roles', 'webhooks', 'tags', 'page_revisions'];
         if (!in_array($type, $validSortTypes)) {
-            return redirect()->back(500);
+            return $this->redirectToRequest($request);
         }
 
         $sort = substr($request->get('sort') ?: 'name', 0, 50);
@@ -55,18 +52,18 @@ class UserPreferencesController extends Controller
         setting()->putForCurrentUser($sortKey, $sort);
         setting()->putForCurrentUser($orderKey, $order);
 
-        return redirect()->back(302, [], "/");
+        return $this->redirectToRequest($request);
     }
 
     /**
      * Toggle dark mode for the current user.
      */
-    public function toggleDarkMode()
+    public function toggleDarkMode(Request $request)
     {
         $enabled = setting()->getForCurrentUser('dark-mode-enabled');
         setting()->putForCurrentUser('dark-mode-enabled', $enabled ? 'false' : 'true');
 
-        return redirect()->back();
+        return $this->redirectToRequest($request);
     }
 
     /**

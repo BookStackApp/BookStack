@@ -91,7 +91,7 @@ class SocialController extends Controller
             return $this->socialRegisterCallback($socialDriver, $socialUser);
         }
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     /**

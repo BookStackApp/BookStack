@@ -2,9 +2,6 @@
 
 namespace BookStack\Activity\Controllers;
 
-use BookStack\Activity\Models\Favouritable;
-use BookStack\App\Model;
-use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Tools\MixedEntityRequestHelper;
 use BookStack\Http\Controller;
@@ -52,7 +49,7 @@ class FavouriteController extends Controller
             'name' => $entity->name,
         ]));
 
-        return redirect()->back();
+        return redirect($entity->getUrl());
     }
 
     /**
@@ -70,6 +67,6 @@ class FavouriteController extends Controller
             'name' => $entity->name,
         ]));
 
-        return redirect()->back();
+        return redirect($entity->getUrl());
     }
 }

@@ -63,8 +63,7 @@ class WatchTest extends TestCase
         $editor = $this->users->editor();
         $book = $this->entities->book();
 
-        $this->actingAs($editor)->get($book->getUrl());
-        $resp = $this->put('/watching/update', [
+        $resp = $this->actingAs($editor)->put('/watching/update', [
             'type' => $book->getMorphClass(),
             'id' => $book->id,
             'level' => 'comments'
