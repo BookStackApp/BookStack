@@ -30,3 +30,4 @@ webpack-stats.json
 .DS_Store
 phpstan.neon
 esbuild-meta.json
+.phpactor.json

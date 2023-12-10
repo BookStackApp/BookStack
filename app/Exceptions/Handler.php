@@ -9,6 +9,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -42,7 +43,7 @@ class Handler extends ExceptionHandler
      * If it returns a response, that will be provided back to the request
      * upon an out of memory event.
      *
-     * @var ?callable<?\Illuminate\Http\Response>
+     * @var ?callable(): ?Response
      */
     protected $onOutOfMemory = null;
 

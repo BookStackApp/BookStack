@@ -25,7 +25,7 @@ class PermissionApplicator
     /**
      * Checks if an entity has a restriction set upon it.
      *
-     * @param HasCreatorAndUpdater|HasOwner $ownable
+     * @param Model&(HasCreatorAndUpdater|HasOwner) $ownable
      */
     public function checkOwnableUserAccess(Model $ownable, string $permission): bool
     {
@@ -160,10 +160,9 @@ class PermissionApplicator
 
         $joinQuery = function ($query) use ($entityProvider) {
             $first = true;
-            /** @var Builder $query */
             foreach ($entityProvider->all() as $entity) {
+                /** @var Builder $query */
                 $entityQuery = function ($query) use ($entity) {
-                    /** @var Builder $query */
                     $query->select(['id', 'deleted_at'])
                         ->selectRaw("'{$entity->getMorphClass()}' as type")
                         ->from($entity->getTable())

@@ -72,8 +72,8 @@ class PageIncludeParser
         $includeTags = [];
 
         /** @var DOMNode $node */
-        /** @var DOMNode $childNode */
         foreach ($includeHosts as $node) {
+            /** @var DOMNode $childNode */
             foreach ($node->childNodes as $childNode) {
                 if ($childNode->nodeName === '#text') {
                     array_push($includeTags, ...$this->splitTextNodesAtTags($childNode));
@@ -174,8 +174,8 @@ class PageIncludeParser
         $parentNode->parentNode->insertBefore($parentClone, $parentNode);
         $parentClone->removeAttribute('id');
 
-        /** @var DOMNode $child */
         for ($i = 0; $i < $splitPos; $i++) {
+            /** @var DOMNode $child */
             $child = $children[$i];
             $parentClone->appendChild($child);
         }

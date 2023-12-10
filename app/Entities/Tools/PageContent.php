@@ -62,6 +62,7 @@ class PageContent
 
         // Get all img elements with image data blobs
         $imageNodes = $doc->queryXPath('//img[contains(@src, \'data:image\')]');
+        /** @var DOMElement $imageNode */
         foreach ($imageNodes as $imageNode) {
             $imageSrc = $imageNode->getAttribute('src');
             $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc, $updater);
