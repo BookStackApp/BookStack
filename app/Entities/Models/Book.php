@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
  *
  * @property string                                   $description
  * @property int                                      $image_id
+ * @property ?int                                     $default_template
  * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages

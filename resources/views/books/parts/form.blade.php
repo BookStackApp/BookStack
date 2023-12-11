@@ -40,7 +40,19 @@
         <label for="template-manager">{{ trans('entities.books_default_template') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
-        @include('books.parts.template-selector', ['entity' => $book ?? null, 'templates' => []])
+        <div class="flex-container-row items-center gap-m justify-space-between pt-s pb-xs">
+            <p class="text-muted small my-none">
+                {{ trans('entities.books_default_template_explain') }}
+            </p>
+
+
+            @include('form.page-picker', [
+                'name' => 'default_template',
+                'placeholder' => trans('entities.books_default_template_select'),
+                'value' => $book?->default_template ?? null,
+            ])
+        </div>
+
     </div>
 </div>
 
@@ -48,3 +60,5 @@
     <a href="{{ $returnLocation }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.books_save') }}</button>
 </div>
+
+@include('entities.selector-popup', ['entityTypes' => 'page', 'selectorEndpoint' => '/search/entity-selector-templates'])

@@ -279,11 +279,13 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
+        $usedAsTemplate = Book::query()->where('default_template', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
             'page'    => $page,
             'current' => $page,
+            'usedAsTemplate' => $usedAsTemplate,
         ]);
     }
 
