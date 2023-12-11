@@ -37,10 +37,10 @@
 
 <div class="form-group collapsible" component="collapsible" id="template-control">
     <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
-        <label for="template-manager">{{ trans('entities.default_template') }}</label>
+        <label for="template-manager">{{ trans('entities.books_default_template') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
-        @include('entities.template-manager', ['entity' => $book ?? null, 'templates' => $templates])
+        @include('books.parts.template-selector', ['entity' => $book ?? null, 'templates' => []])
     </div>
 </div>
 

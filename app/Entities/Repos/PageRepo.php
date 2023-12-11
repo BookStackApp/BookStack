@@ -136,9 +136,11 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        if ($page->book->defaultTemplate) {
+        $defaultTemplate = $page->book->defaultTemplate;
+        if ($defaultTemplate && userCan('view', $defaultTemplate)) {
             $page->forceFill([
-                'html'  => $page->book->defaultTemplate->html,
+                'html'  => $defaultTemplate->html,
+                'markdown' => $defaultTemplate->markdown,
             ]);
         }
 

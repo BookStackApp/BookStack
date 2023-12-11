@@ -20,6 +20,7 @@ use Illuminate\Support\Collection;
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
+ * @property ?Page                                    $defaultTemplate
  */
 class Book extends Entity implements HasCoverImage
 {
@@ -27,7 +28,7 @@ class Book extends Entity implements HasCoverImage
 
     public $searchFactor = 1.2;
 
-    protected $fillable = ['name', 'description', 'default_template'];
+    protected $fillable = ['name', 'description'];
     protected $hidden = ['pivot', 'image_id', 'deleted_at'];
 
     /**

@@ -259,13 +259,13 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
-        $times_used_as_template = Book::where('default_template', '=', $page->id)->count();
+        $usedAsTemplate = Book::query()->where('default_template', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
             'page'    => $page,
             'current' => $page,
-            'times_used_as_template' => $times_used_as_template,
+            'usedAsTemplate' => $usedAsTemplate,
         ]);
     }
 
