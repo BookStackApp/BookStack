@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ config('app.lang') }}">
+<html lang="{{ $locale->htmlLang() }}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>@yield('title')</title>
@@ -13,7 +13,7 @@
 </head>
 <body class="export export-format-{{ $format }} export-engine-{{ $engine ?? 'none' }}">
 @include('layouts.parts.export-body-start')
-<div class="page-content">
+<div class="page-content" dir="auto">
     @yield('content')
 </div>
 @include('layouts.parts.export-body-end')

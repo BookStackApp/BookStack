@@ -1,11 +1,41 @@
 /**
+ * Create a new element with the given attrs and children.
+ * Children can be a string for text nodes or other elements.
+ * @param {String} tagName
+ * @param {Object<String, String>} attrs
+ * @param {Element[]|String[]}children
+ * @return {*}
+ */
+export function elem(tagName, attrs = {}, children = []) {
+    const el = document.createElement(tagName);
+
+    for (const [key, val] of Object.entries(attrs)) {
+        if (val === null) {
+            el.removeAttribute(key);
+        } else {
+            el.setAttribute(key, val);
+        }
+    }
+
+    for (const child of children) {
+        if (typeof child === 'string') {
+            el.append(document.createTextNode(child));
+        } else {
+            el.append(child);
+        }
+    }
+
+    return el;
+}
+
+/**
  * Run the given callback against each element that matches the given selector.
  * @param {String} selector
  * @param {Function<Element>} callback
  */
 export function forEach(selector, callback) {
     const elements = document.querySelectorAll(selector);
-    for (let element of elements) {
+    for (const element of elements) {
         callback(element);
     }
 }
@@ -17,7 +47,7 @@ export function forEach(selector, callback) {
  * @param {Function<Event>} callback
  */
 export function onEvents(listenerElement, events, callback) {
-    for (let eventName of events) {
+    for (const eventName of events) {
         listenerElement.addEventListener(eventName, callback);
     }
 }
@@ -35,7 +65,7 @@ export function onSelect(elements, callback) {
 
     for (const listenerElement of elements) {
         listenerElement.addEventListener('click', callback);
-        listenerElement.addEventListener('keydown', (event) => {
+        listenerElement.addEventListener('keydown', event => {
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 callback(event);
@@ -45,22 +75,41 @@ export function onSelect(elements, callback) {
 }
 
 /**
- * Listen to enter press on the given element(s).
+ * Listen to key press on the given element(s).
+ * @param {String} key
  * @param {HTMLElement|Array} elements
  * @param {function} callback
  */
-export function onEnterPress(elements, callback) {
+function onKeyPress(key, elements, callback) {
     if (!Array.isArray(elements)) {
         elements = [elements];
     }
 
     const listener = event => {
-        if (event.key === 'Enter') {
+        if (event.key === key) {
             callback(event);
         }
-    }
+    };
 
-    elements.forEach(e => e.addEventListener('keypress', listener));
+    elements.forEach(e => e.addEventListener('keydown', listener));
+}
+
+/**
+ * Listen to enter press on the given element(s).
+ * @param {HTMLElement|Array} elements
+ * @param {function} callback
+ */
+export function onEnterPress(elements, callback) {
+    onKeyPress('Enter', elements, callback);
+}
+
+/**
+ * Listen to escape press on the given element(s).
+ * @param {HTMLElement|Array} elements
+ * @param {function} callback
+ */
+export function onEscapePress(elements, callback) {
+    onKeyPress('Escape', elements, callback);
 }
 
 /**
@@ -73,7 +122,7 @@ export function onEnterPress(elements, callback) {
  * @param {Function} callback
  */
 export function onChildEvent(listenerElement, childSelector, eventName, callback) {
-    listenerElement.addEventListener(eventName, function(event) {
+    listenerElement.addEventListener(eventName, event => {
         const matchingChild = event.target.closest(childSelector);
         if (matchingChild) {
             callback.call(matchingChild, event, matchingChild);
@@ -91,7 +140,7 @@ export function onChildEvent(listenerElement, childSelector, eventName, callback
 export function findText(selector, text) {
     const elements = document.querySelectorAll(selector);
     text = text.toLowerCase();
-    for (let element of elements) {
+    for (const element of elements) {
         if (element.textContent.toLowerCase().includes(text)) {
             return element;
         }
@@ -105,7 +154,18 @@ export function findText(selector, text) {
  * @param {Element} element
  */
 export function showLoading(element) {
-    element.innerHTML = `<div class="loading-container"><div></div><div></div><div></div></div>`;
+    element.innerHTML = '<div class="loading-container"><div></div><div></div><div></div></div>';
+}
+
+/**
+ * Get a loading element indicator element.
+ * @returns {Element}
+ */
+export function getLoading() {
+    const wrap = document.createElement('div');
+    wrap.classList.add('loading-container');
+    wrap.innerHTML = '<div></div><div></div><div></div>';
+    return wrap;
 }
 
 /**

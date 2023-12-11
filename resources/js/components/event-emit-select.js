@@ -1,5 +1,5 @@
-import {onSelect} from "../services/dom";
-import {Component} from "./component";
+import {onSelect} from '../services/dom';
+import {Component} from './component';
 
 /**
  * EventEmitSelect
@@ -12,11 +12,11 @@ import {Component} from "./component";
  * All options will be set as the "detail" of the event with
  * their values included.
  */
-export class EventEmitSelect extends Component{
+export class EventEmitSelect extends Component {
+
     setup() {
         this.container = this.$el;
         this.name = this.$opts.name;
-
 
         onSelect(this.$el, () => {
             this.$emit(this.name, this.$opts);

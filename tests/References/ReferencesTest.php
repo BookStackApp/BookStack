@@ -2,9 +2,9 @@
 
 namespace Tests\References;
 
+use BookStack\App\Model;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
-use BookStack\Model;
 use BookStack\References\Reference;
 use Tests\TestCase;
 
@@ -91,7 +91,7 @@ class ReferencesTest extends TestCase
         $pageB = $this->entities->page();
         $this->createReference($pageB, $page);
 
-        $this->entities->setPermissions($pageB);
+        $this->permissions->setEntityPermissions($pageB);
 
         $this->asEditor()->get($page->getUrl('/references'))->assertDontSee($pageB->name);
         $this->asAdmin()->get($page->getUrl('/references'))->assertSee($pageB->name);

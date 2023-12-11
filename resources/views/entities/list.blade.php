@@ -5,7 +5,7 @@
         @endforeach
     </div>
 @else
-    <p class="text-muted empty-text">
+    <p class="text-muted empty-text pb-l mb-none">
         {{ $emptyText ?? trans('common.no_items') }}
     </p>
 @endif

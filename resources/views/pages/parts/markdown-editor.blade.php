@@ -1,13 +1,13 @@
 <div id="markdown-editor" component="markdown-editor"
      option:markdown-editor:page-id="{{ $model->id ?? 0 }}"
-     option:markdown-editor:text-direction="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+     option:markdown-editor:text-direction="{{ $locale->htmlDirection() }}"
      option:markdown-editor:image-upload-error-text="{{ trans('errors.image_upload_error') }}"
      option:markdown-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
      class="flex-fill flex code-fill">
 
     <div class="markdown-editor-wrap active flex-container-column">
         <div class="editor-toolbar flex-container-row items-stretch justify-space-between">
-            <div class="editor-toolbar-label text-mono px-m py-xs flex-container-row items-center flex">
+            <div class="editor-toolbar-label text-mono bold px-m py-xs flex-container-row items-center flex">
                 <span>{{ trans('entities.pages_md_editor') }}</span>
             </div>
             <div component="dropdown" class="buttons flex-container-row items-stretch">
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div markdown-input class="flex flex-fill">
+        <div class="flex flex-fill" dir="ltr">
             <textarea id="markdown-editor-input"
                       refs="markdown-editor@input"
                       @if($errors->has('markdown')) class="text-neg" @endif
@@ -44,7 +44,7 @@
         <div refs="markdown-editor@divider" class="markdown-panel-divider flex-fill"></div>
         <div class="flex-container-column flex flex-fill">
             <div class="editor-toolbar">
-                <div class="editor-toolbar-label text-mono px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
+                <div class="editor-toolbar-label text-mono bold px-m py-xs">{{ trans('entities.pages_md_preview') }}</div>
             </div>
             <iframe src="about:blank"
                     refs="markdown-editor@display"

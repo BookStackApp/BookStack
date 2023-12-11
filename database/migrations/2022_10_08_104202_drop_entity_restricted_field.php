@@ -7,7 +7,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class DropEntityRestrictedField extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -90,4 +90,4 @@ class DropEntityRestrictedField extends Migration
         // Delete default entity permissions
         DB::table('entity_permissions')->where('role_id', '=', 0)->delete();
     }
-}
+};

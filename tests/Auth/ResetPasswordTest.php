@@ -2,8 +2,8 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\User;
-use BookStack\Notifications\ResetPassword;
+use BookStack\Access\Notifications\ResetPasswordNotification;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
@@ -34,8 +34,8 @@ class ResetPasswordTest extends TestCase
         /** @var User $user */
         $user = User::query()->where('email', '=', 'admin@admin.com')->first();
 
-        Notification::assertSentTo($user, ResetPassword::class);
-        $n = Notification::sent($user, ResetPassword::class);
+        Notification::assertSentTo($user, ResetPasswordNotification::class);
+        $n = Notification::sent($user, ResetPasswordNotification::class);
 
         $this->get('/password/reset/' . $n->first()->token)
             ->assertOk()
@@ -85,7 +85,7 @@ class ResetPasswordTest extends TestCase
 
     public function test_reset_request_is_throttled()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         Notification::fake();
         $this->get('/password/email');
         $this->followingRedirects()->post('/password/email', [
@@ -95,7 +95,7 @@ class ResetPasswordTest extends TestCase
         $resp = $this->followingRedirects()->post('/password/email', [
             'email' => $editor->email,
         ]);
-        Notification::assertTimesSent(1, ResetPassword::class);
+        Notification::assertTimesSent(1, ResetPasswordNotification::class);
         $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
     }
 }

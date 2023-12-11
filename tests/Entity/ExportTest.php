@@ -2,7 +2,6 @@
 
 namespace Tests\Entity;
 
-use BookStack\Auth\Role;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
@@ -47,15 +46,41 @@ class ExportTest extends TestCase
 
     public function test_book_text_export()
     {
-        $page = $this->entities->page();
-        $book = $page->book;
+        $book = $this->entities->bookHasChaptersAndPages();
+        $directPage = $book->directPages()->first();
+        $chapter = $book->chapters()->first();
+        $chapterPage = $chapter->pages()->first();
+        $this->entities->updatePage($directPage, ['html' => '<p>My awesome page</p>']);
+        $this->entities->updatePage($chapterPage, ['html' => '<p>My little nested page</p>']);
         $this->asEditor();
 
         $resp = $this->get($book->getUrl('/export/plaintext'));
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
-        $resp->assertSee($page->name);
+        $resp->assertSee($chapterPage->name);
+        $resp->assertSee($chapter->name);
+        $resp->assertSee($directPage->name);
+        $resp->assertSee('My awesome page');
+        $resp->assertSee('My little nested page');
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.txt"');
+    }
+
+    public function test_book_text_export_format()
+    {
+        $entities = $this->entities->createChainBelongingToUser($this->users->viewer());
+        $this->entities->updatePage($entities['page'], ['html' => '<p>My great page</p><p>Full of <strong>great</strong> stuff</p>', 'name' => 'My wonderful page!']);
+        $entities['chapter']->name = 'Export chapter';
+        $entities['chapter']->description = "A test chapter to be exported\nIt has loads of info within";
+        $entities['book']->name = 'Export Book';
+        $entities['book']->description = "This is a book with stuff to export";
+        $entities['chapter']->save();
+        $entities['book']->save();
+
+        $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
+
+        $expected = "Export Book\nThis is a book with stuff to export\n\nExport chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
+        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $resp->assertSee($expected);
     }
 
     public function test_book_pdf_export()
@@ -100,13 +125,30 @@ class ExportTest extends TestCase
     {
         $chapter = $this->entities->chapter();
         $page = $chapter->pages[0];
+        $this->entities->updatePage($page, ['html' => '<p>This is content within the page!</p>']);
         $this->asEditor();
 
         $resp = $this->get($chapter->getUrl('/export/plaintext'));
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
+        $resp->assertSee('This is content within the page!');
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.txt"');
+    }
+
+    public function test_chapter_text_export_format()
+    {
+        $entities = $this->entities->createChainBelongingToUser($this->users->viewer());
+        $this->entities->updatePage($entities['page'], ['html' => '<p>My great page</p><p>Full of <strong>great</strong> stuff</p>', 'name' => 'My wonderful page!']);
+        $entities['chapter']->name = 'Export chapter';
+        $entities['chapter']->description = "A test chapter to be exported\nIt has loads of info within";
+        $entities['chapter']->save();
+
+        $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
+
+        $expected = "Export chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
+        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $resp->assertSee($expected);
     }
 
     public function test_chapter_pdf_export()
@@ -160,9 +202,9 @@ class ExportTest extends TestCase
         $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($page->created_at->formatLocalized('%e %B %Y %H:%M:%S'));
+        $resp->assertSee($page->created_at->isoFormat('D MMMM Y HH:mm:ss'));
         $resp->assertDontSee($page->created_at->diffForHumans());
-        $resp->assertSee($page->updated_at->formatLocalized('%e %B %Y %H:%M:%S'));
+        $resp->assertSee($page->updated_at->isoFormat('D MMMM Y HH:mm:ss'));
         $resp->assertDontSee($page->updated_at->diffForHumans());
     }
 
@@ -275,7 +317,7 @@ class ExportTest extends TestCase
 
     public function test_page_export_with_deleted_creator_and_updater()
     {
-        $user = $this->getViewer(['name' => 'ExportWizardTheFifth']);
+        $user = $this->users->viewer(['name' => 'ExportWizardTheFifth']);
         $page = $this->entities->page();
         $page->created_by = $user->id;
         $page->updated_by = $user->id;
@@ -409,7 +451,7 @@ class ExportTest extends TestCase
         $chapter = $book->chapters()->first();
         $page = $chapter->pages()->first();
         $entities = [$book, $chapter, $page];
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $this->actingAs($user);
 
         foreach ($entities as $entity) {
@@ -417,8 +459,7 @@ class ExportTest extends TestCase
             $resp->assertSee('/export/pdf');
         }
 
-        /** @var Role $role */
-        $this->removePermissionFromUser($user, 'content-export');
+        $this->permissions->removeUserRolePermissions($user, ['content-export']);
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());

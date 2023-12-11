@@ -1,4 +1,23 @@
-<div class="image-manager-details">
+<div component="dropzone"
+     option:dropzone:url="{{ url("/images/{$image->id}/file") }}"
+     option:dropzone:method="PUT"
+     option:dropzone:success-message="{{ trans('components.image_update_success') }}"
+     option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
+     option:dropzone:upload-limit-message="{{ trans('errors.server_upload_limit') }}"
+     option:dropzone:zone-text="{{ trans('entities.attachments_dropzone') }}"
+     option:dropzone:file-accept="image/*"
+     class="image-manager-details">
+
+    @if($warning ?? '')
+        <div class="image-manager-warning px-m py-xs flex-container-row gap-xs items-center mb-l">
+            <div>@icon('warning')</div>
+            <div class="flex">{{ $warning }}</div>
+        </div>
+    @endif
+
+    <div refs="dropzone@status-area dropzone@drop-target"></div>
+
+    <script id="image-manager-form-image-data" type="application/json">@json($image)</script>
 
     <form component="ajax-form"
           option:ajax-form:success-message="{{ trans('components.image_update_success') }}"
@@ -18,23 +37,36 @@
             <label for="name">{{ trans('components.image_image_name') }}</label>
             <input id="name" class="input-base" type="text" name="name" value="{{ $image->name }}">
         </div>
-        <div class="grid half">
-            <div>
-                @if(userCan('image-delete', $image))
-                    <button type="button"
-                        id="image-manager-delete"
-                        title="{{ trans('common.delete') }}"
-                        class="button icon outline">@icon('delete')</button>
-                @endif
-            </div>
-            <div class="text-right">
+        <div class="flex-container-row justify-space-between gap-m">
+            @if(userCan('image-delete', $image) || userCan('image-update', $image))
+                <div component="dropdown"
+                     class="dropdown-container">
+                    <button refs="dropdown@toggle" type="button" class="button icon outline">@icon('more')</button>
+                    <div refs="dropdown@menu" class="dropdown-menu anchor-left">
+                        @if(userCan('image-delete', $image))
+                            <button type="button"
+                                    id="image-manager-delete"
+                                    class="text-item">{{ trans('common.delete') }}</button>
+                        @endif
+                        @if(userCan('image-update', $image))
+                            <button type="button"
+                                    id="image-manager-replace"
+                                    refs="dropzone@select-button"
+                                    class="text-item">{{ trans('components.image_replace') }}</button>
+                            <button type="button"
+                                    id="image-manager-rebuild-thumbs"
+                                    class="text-item">{{ trans('components.image_rebuild_thumbs') }}</button>
+                        @endif
+                    </div>
+                </div>
+            @endif
                 <button type="submit"
                         class="button icon outline">{{ trans('common.save') }}</button>
-            </div>
         </div>
     </form>
 
     @if(!is_null($dependantPages))
+        <hr>
         @if(count($dependantPages) > 0)
             <p class="text-neg mb-xs mt-m">{{ trans('components.image_delete_used') }}</p>
             <ul class="text-neg">
@@ -59,5 +91,28 @@
             </button>
         </form>
     @endif
+
+    <div class="text-muted text-small">
+        <hr class="my-m">
+        <div title="{{ $image->created_at->format('Y-m-d H:i:s') }}">
+            @icon('star') {{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->diffForHumans()]) }}
+        </div>
+        @if($image->created_at->valueOf() !== $image->updated_at->valueOf())
+            <div title="{{ $image->updated_at->format('Y-m-d H:i:s') }}">
+                @icon('edit') {{ trans('components.image_updated', ['updateDate' => $image->updated_at->diffForHumans()]) }}
+            </div>
+        @endif
+        @if($image->createdBy)
+            <div>@icon('user') {{ trans('components.image_uploaded_by', ['userName' => $image->createdBy->name]) }}</div>
+        @endif
+        @if(($page = $image->getPage()) && userCan('view', $page))
+            <div>
+                @icon('page')
+                {!! trans('components.image_uploaded_to', [
+                    'pageLink' => '<a class="text-page" href="' . e($page->getUrl()) . '" target="_blank">' . e($page->name) . '</a>'
+                ]) !!}
+            </div>
+        @endif
+    </div>
 
 </div>

@@ -2,14 +2,15 @@
 
 namespace Tests\Actions;
 
-use BookStack\Actions\ActivityLogger;
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\DispatchWebhookJob;
-use BookStack\Actions\Webhook;
-use BookStack\Auth\User;
-use Illuminate\Http\Client\Request;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\DispatchWebhookJob;
+use BookStack\Activity\Models\Webhook;
+use BookStack\Activity\Tools\ActivityLogger;
+use BookStack\Api\ApiToken;
+use BookStack\Users\Models\User;
+use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Bus;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class WebhookCallTest extends TestCase
@@ -46,12 +47,30 @@ class WebhookCallTest extends TestCase
         Bus::assertNotDispatched(DispatchWebhookJob::class);
     }
 
+    public function test_webhook_runs_for_delete_actions()
+    {
+        // This test must not fake the queue/bus since this covers an issue
+        // around handling and serialization of items now deleted from the database.
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
+        $this->mockHttpClient([new Response(500)]);
+
+        $user = $this->users->newUser();
+        $resp = $this->asAdmin()->delete($user->getEditUrl());
+        $resp->assertRedirect('/settings/users');
+
+        /** @var ApiToken $apiToken */
+        $editor = $this->users->editor();
+        $apiToken = ApiToken::factory()->create(['user_id' => $editor]);
+        $this->delete($apiToken->getUrl())->assertRedirect();
+
+        $webhook->refresh();
+        $this->assertEquals('Response status from endpoint was 500', $webhook->last_error);
+    }
+
     public function test_failed_webhook_call_logs_error()
     {
         $logger = $this->withTestLogger();
-        Http::fake([
-            '*' => Http::response('', 500),
-        ]);
+        $this->mockHttpClient([new Response(500)]);
         $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
         $this->assertNull($webhook->last_errored_at);
 
@@ -66,7 +85,7 @@ class WebhookCallTest extends TestCase
 
     public function test_webhook_call_exception_is_caught_and_logged()
     {
-        Http::shouldReceive('asJson')->andThrow(new \Exception('Failed to perform request'));
+        $this->mockHttpClient([new ConnectException('Failed to perform request', new \GuzzleHttp\Psr7\Request('GET', ''))]);
 
         $logger = $this->withTestLogger();
         $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
@@ -81,37 +100,46 @@ class WebhookCallTest extends TestCase
         $this->assertNotNull($webhook->last_errored_at);
     }
 
+    public function test_webhook_uses_ssr_hosts_option_if_set()
+    {
+        config()->set('app.ssr_hosts', 'https://*.example.com');
+        $responses = $this->mockHttpClient();
+
+        $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.co.uk'], ['all']);
+        $this->runEvent(ActivityType::ROLE_CREATE);
+        $this->assertEquals(0, $responses->requestCount());
+
+        $webhook->refresh();
+        $this->assertEquals('The URL does not match the configured allowed SSR hosts', $webhook->last_error);
+        $this->assertNotNull($webhook->last_errored_at);
+    }
+
     public function test_webhook_call_data_format()
     {
-        Http::fake([
-            '*' => Http::response('', 200),
-        ]);
+        $responses = $this->mockHttpClient([new Response(200, [], '')]);
         $webhook = $this->newWebhook(['active' => true, 'endpoint' => 'https://wh.example.com'], ['all']);
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $this->runEvent(ActivityType::PAGE_UPDATE, $page, $editor);
 
-        Http::assertSent(function (Request $request) use ($editor, $page, $webhook) {
-            $reqData = $request->data();
-
-            return $request->isJson()
-                && $reqData['event'] === 'page_update'
-                && $reqData['text'] === ($editor->name . ' updated page "' . $page->name . '"')
-                && is_string($reqData['triggered_at'])
-                && $reqData['triggered_by']['name'] === $editor->name
-                && $reqData['triggered_by_profile_url'] === $editor->getProfileUrl()
-                && $reqData['webhook_id'] === $webhook->id
-                && $reqData['webhook_name'] === $webhook->name
-                && $reqData['url'] === $page->getUrl()
-                && $reqData['related_item']['name'] === $page->name;
-        });
+        $request = $responses->latestRequest();
+        $reqData = json_decode($request->getBody(), true);
+        $this->assertEquals('page_update', $reqData['event']);
+        $this->assertEquals(($editor->name . ' updated page "' . $page->name . '"'), $reqData['text']);
+        $this->assertIsString($reqData['triggered_at']);
+        $this->assertEquals($editor->name, $reqData['triggered_by']['name']);
+        $this->assertEquals($editor->getProfileUrl(), $reqData['triggered_by_profile_url']);
+        $this->assertEquals($webhook->id, $reqData['webhook_id']);
+        $this->assertEquals($webhook->name, $reqData['webhook_name']);
+        $this->assertEquals($page->getUrl(), $reqData['url']);
+        $this->assertEquals($page->name, $reqData['related_item']['name']);
     }
 
     protected function runEvent(string $event, $detail = '', ?User $user = null)
     {
         if (is_null($user)) {
-            $user = $this->getEditor();
+            $user = $this->users->editor();
         }
 
         $this->actingAs($user);
@@ -120,7 +148,7 @@ class WebhookCallTest extends TestCase
         $activityLogger->add($event, $detail);
     }
 
-    protected function newWebhook(array $attrs = [], array $events = ['all']): Webhook
+    protected function newWebhook(array $attrs, array $events): Webhook
     {
         /** @var Webhook $webhook */
         $webhook = Webhook::factory()->create($attrs);

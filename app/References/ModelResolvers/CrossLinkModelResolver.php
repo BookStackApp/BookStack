@@ -2,7 +2,7 @@
 
 namespace BookStack\References\ModelResolvers;
 
-use BookStack\Model;
+use BookStack\App\Model;
 
 interface CrossLinkModelResolver
 {

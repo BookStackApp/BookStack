@@ -2,8 +2,8 @@
 
 namespace Tests\Commands;
 
-use BookStack\Auth\Access\Mfa\MfaValue;
-use BookStack\Auth\User;
+use BookStack\Access\Mfa\MfaValue;
+use BookStack\Users\Models\User;
 use Tests\TestCase;
 
 class ResetMfaCommandTest extends TestCase
@@ -11,7 +11,7 @@ class ResetMfaCommandTest extends TestCase
     public function test_command_requires_email_or_id_option()
     {
         $this->artisan('bookstack:reset-mfa')
-            ->expectsOutput('Either a --id=<number> or --email=<email> option must be provided.')
+            ->expectsOutputToContain('Either a --id=<number> or --email=<email> option must be provided.')
             ->assertExitCode(1);
     }
 

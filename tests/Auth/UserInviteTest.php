@@ -2,9 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Access\UserInviteService;
-use BookStack\Auth\User;
-use BookStack\Notifications\UserInvite;
+use BookStack\Access\Notifications\UserInviteNotification;
+use BookStack\Access\UserInviteService;
+use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +17,7 @@ class UserInviteTest extends TestCase
     public function test_user_creation_creates_invite()
     {
         Notification::fake();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
@@ -29,7 +29,7 @@ class UserInviteTest extends TestCase
 
         $newUser = User::query()->where('email', '=', $email)->orderBy('id', 'desc')->first();
 
-        Notification::assertSentTo($newUser, UserInvite::class);
+        Notification::assertSentTo($newUser, UserInviteNotification::class);
         $this->assertDatabaseHas('user_invites', [
             'user_id' => $newUser->id,
         ]);
@@ -38,7 +38,7 @@ class UserInviteTest extends TestCase
     public function test_user_invite_sent_in_selected_language()
     {
         Notification::fake();
-        $admin = $this->getAdmin();
+        $admin = $this->users->admin();
 
         $email = Str::random(16) . '@example.com';
         $resp = $this->actingAs($admin)->post('/settings/users/create', [
@@ -50,11 +50,11 @@ class UserInviteTest extends TestCase
         $resp->assertRedirect('/settings/users');
 
         $newUser = User::query()->where('email', '=', $email)->orderBy('id', 'desc')->first();
-        Notification::assertSentTo($newUser, UserInvite::class, function ($notification, $channels, $notifiable) {
+        Notification::assertSentTo($newUser, UserInviteNotification::class, function ($notification, $channels, $notifiable) {
             /** @var MailMessage $mail */
             $mail = $notification->toMail($notifiable);
 
-            return 'Sie wurden eingeladen BookStack beizutreten!' === $mail->subject &&
+            return 'Sie wurden eingeladen, BookStack beizutreten!' === $mail->subject &&
                 'Ein Konto wurde für Sie auf BookStack erstellt.' === $mail->greeting;
         });
     }
@@ -62,7 +62,7 @@ class UserInviteTest extends TestCase
     public function test_invite_set_password()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);
@@ -91,7 +91,7 @@ class UserInviteTest extends TestCase
     public function test_invite_set_has_password_validation()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);
@@ -126,7 +126,7 @@ class UserInviteTest extends TestCase
     public function test_token_expires_after_two_weeks()
     {
         Notification::fake();
-        $user = $this->getViewer();
+        $user = $this->users->viewer();
         $inviteService = app(UserInviteService::class);
 
         $inviteService->sendInvitation($user);

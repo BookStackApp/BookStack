@@ -30,8 +30,13 @@
     @else
         <p class="text-muted">{{ trans('entities.shelves_empty') }}</p>
         @if(userCan('bookshelf-create-all'))
-            <a href="{{ url("/create-shelf") }}"
-               class="button outline">@icon('edit'){{ trans('entities.create_now') }}</a>
+            <div class="icon-list block inline">
+                <a href="{{ url("/create-shelf") }}"
+                   class="icon-list-item text-bookshelf">
+                    <span>@icon('add')</span>
+                    <span>{{ trans('entities.create_now') }}</span>
+                </a>
+            </div>
         @endif
     @endif
 

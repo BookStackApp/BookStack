@@ -1,68 +1,79 @@
-import DrawIO from "../services/drawio";
+import * as DrawIO from '../services/drawio';
 
 export class Actions {
+
     /**
      * @param {MarkdownEditor} editor
      */
     constructor(editor) {
         this.editor = editor;
+        this.lastContent = {
+            html: '',
+            markdown: '',
+        };
     }
 
     updateAndRender() {
-        const content = this.editor.cm.getValue();
+        const content = this.#getText();
         this.editor.config.inputEl.value = content;
 
         const html = this.editor.markdown.render(content);
-        window.$events.emit('editor-html-change', html);
-        window.$events.emit('editor-markdown-change', content);
+        window.$events.emit('editor-html-change', '');
+        window.$events.emit('editor-markdown-change', '');
+        this.lastContent.html = html;
+        this.lastContent.markdown = content;
         this.editor.display.patchWithHtml(html);
     }
 
-    insertImage() {
-        const cursorPos = this.editor.cm.getCursor('from');
-        /** @type {ImageManager} **/
+    getContent() {
+        return this.lastContent;
+    }
+
+    showImageInsert() {
+        /** @type {ImageManager} * */
         const imageManager = window.$components.first('image-manager');
+
         imageManager.show(image => {
-            const imageUrl = image.thumbs.display || image.url;
-            let selectedText = this.editor.cm.getSelection();
-            let newText = "[![" + (selectedText || image.name) + "](" + imageUrl + ")](" + image.url + ")";
-            this.editor.cm.focus();
-            this.editor.cm.replaceSelection(newText);
-            this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
+            const imageUrl = image.thumbs?.display || image.url;
+            const selectedText = this.#getSelectionText();
+            const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
+            this.#replaceSelection(newText, newText.length);
         }, 'gallery');
     }
 
+    insertImage() {
+        const newText = `![${this.#getSelectionText()}](http://)`;
+        this.#replaceSelection(newText, newText.length - 1);
+    }
+
     insertLink() {
-        const cursorPos = this.editor.cm.getCursor('from');
-        const selectedText = this.editor.cm.getSelection() || '';
+        const selectedText = this.#getSelectionText();
         const newText = `[${selectedText}]()`;
-        this.editor.cm.focus();
-        this.editor.cm.replaceSelection(newText);
         const cursorPosDiff = (selectedText === '') ? -3 : -1;
-        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length+cursorPosDiff);
+        this.#replaceSelection(newText, newText.length + cursorPosDiff);
     }
 
     showImageManager() {
-        const cursorPos = this.editor.cm.getCursor('from');
-        /** @type {ImageManager} **/
+        const selectionRange = this.#getSelectionRange();
+        /** @type {ImageManager} * */
         const imageManager = window.$components.first('image-manager');
         imageManager.show(image => {
-            this.insertDrawing(image, cursorPos);
+            this.#insertDrawing(image, selectionRange);
         }, 'drawio');
     }
 
     // Show the popup link selector and insert a link when finished
     showLinkSelector() {
-        const cursorPos = this.editor.cm.getCursor('from');
-        /** @type {EntitySelectorPopup} **/
+        const selectionRange = this.#getSelectionRange();
+
+        /** @type {EntitySelectorPopup} * */
         const selector = window.$components.first('entity-selector-popup');
+        const selectionText = this.#getSelectionText(selectionRange);
         selector.show(entity => {
-            let selectedText = this.editor.cm.getSelection() || entity.name;
-            let newText = `[${selectedText}](${entity.link})`;
-            this.editor.cm.focus();
-            this.editor.cm.replaceSelection(newText);
-            this.editor.cm.setCursor(cursorPos.line, cursorPos.ch + newText.length);
-        });
+            const selectedText = selectionText || entity.name;
+            const newText = `[${selectedText}](${entity.link})`;
+            this.#replaceSelection(newText, newText.length, selectionRange);
+        }, selectionText);
     }
 
     // Show draw.io if enabled and handle save.
@@ -70,67 +81,61 @@ export class Actions {
         const url = this.editor.config.drawioUrl;
         if (!url) return;
 
-        const cursorPos = this.editor.cm.getCursor('from');
+        const selectionRange = this.#getSelectionRange();
 
-        DrawIO.show(url,() => {
-            return Promise.resolve('');
-        }, (pngData) => {
-
+        DrawIO.show(url, () => Promise.resolve(''), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post("/images/drawio", data).then(resp => {
-                this.insertDrawing(resp.data, cursorPos);
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
+                this.#insertDrawing(resp.data, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 
-    insertDrawing(image, originalCursor) {
+    #insertDrawing(image, originalSelectionRange) {
         const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
-        this.editor.cm.focus();
-        this.editor.cm.replaceSelection(newText);
-        this.editor.cm.setCursor(originalCursor.line, originalCursor.ch + newText.length);
+        this.#replaceSelection(newText, newText.length, originalSelectionRange);
     }
 
     // Show draw.io if enabled and handle save.
     editDrawing(imgContainer) {
-        const drawioUrl = this.editor.config.drawioUrl;
+        const {drawioUrl} = this.editor.config;
         if (!drawioUrl) {
             return;
         }
 
-        const cursorPos = this.editor.cm.getCursor('from');
+        const selectionRange = this.#getSelectionRange();
         const drawingId = imgContainer.getAttribute('drawio-diagram');
 
-        DrawIO.show(drawioUrl, () => {
-            return DrawIO.load(drawingId);
-        }, (pngData) => {
-
+        DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), async pngData => {
             const data = {
                 image: pngData,
                 uploaded_to: Number(this.editor.config.pageId),
             };
 
-            window.$http.post("/images/drawio", data).then(resp => {
+            try {
+                const resp = await window.$http.post('/images/drawio', data);
                 const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                const newContent = this.editor.cm.getValue().split('\n').map(line => {
+                const newContent = this.#getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
                         return newText;
                     }
                     return line;
                 }).join('\n');
-                this.editor.cm.setValue(newContent);
-                this.editor.cm.setCursor(cursorPos);
-                this.editor.cm.focus();
+                this.#setText(newContent, selectionRange);
                 DrawIO.close();
-            }).catch(err => {
+            } catch (err) {
                 this.handleDrawingUploadError(err);
-            });
+                throw new Error(`Failed to save image with error: ${err}`);
+            }
         });
     }
 
@@ -140,12 +145,12 @@ export class Actions {
         } else {
             window.$events.emit('error', this.editor.config.text.imageUploadError);
         }
-        console.log(error);
+        console.error(error);
     }
 
     // Make the editor full screen
     fullScreen() {
-        const container = this.editor.config.container;
+        const {container} = this.editor.config;
         const alreadyFullscreen = container.classList.contains('fullscreen');
         container.classList.toggle('fullscreen', !alreadyFullscreen);
         document.body.classList.toggle('markdown-fullscreen', !alreadyFullscreen);
@@ -157,29 +162,30 @@ export class Actions {
             return;
         }
 
-        const content = this.editor.cm.getValue();
-        const lines = content.split(/\r?\n/);
-        let lineNumber = lines.findIndex(line => {
-            return line && line.indexOf(searchText) !== -1;
-        });
+        const text = this.editor.cm.state.doc;
+        let lineCount = 1;
+        let scrollToLine = -1;
+        for (const line of text.iterLines()) {
+            if (line.includes(searchText)) {
+                scrollToLine = lineCount;
+                break;
+            }
+            lineCount += 1;
+        }
 
-        if (lineNumber === -1) {
+        if (scrollToLine === -1) {
             return;
         }
 
-        this.editor.cm.scrollIntoView({
-            line: lineNumber,
-        }, 200);
-        this.editor.cm.focus();
-        // set the cursor location.
-        this.editor.cm.setCursor({
-            line: lineNumber,
-            char: lines[lineNumber].length
-        })
+        const line = text.line(scrollToLine);
+        this.#setSelection(line.from, line.to, true);
+        this.focus();
     }
 
     focus() {
-        this.editor.cm.focus();
+        if (!this.editor.cm.hasFocus) {
+            this.editor.cm.focus();
+        }
     }
 
     /**
@@ -187,7 +193,7 @@ export class Actions {
      * @param {String} content
      */
     insertContent(content) {
-        this.editor.cm.replaceSelection(content);
+        this.#replaceSelection(content, content.length);
     }
 
     /**
@@ -195,11 +201,11 @@ export class Actions {
      * @param {String} content
      */
     prependContent(content) {
-        const cursorPos = this.editor.cm.getCursor('from');
-        const newContent = content + '\n' + this.editor.cm.getValue();
-        this.editor.cm.setValue(newContent);
-        const prependLineCount = content.split('\n').length;
-        this.editor.cm.setCursor(cursorPos.line + prependLineCount, cursorPos.ch);
+        content = this.#cleanTextForEditor(content);
+        const selectionRange = this.#getSelectionRange();
+        const selectFrom = selectionRange.from + content.length + 1;
+        this.#dispatchChange(0, 0, `${content}\n`, selectFrom);
+        this.focus();
     }
 
     /**
@@ -207,10 +213,9 @@ export class Actions {
      * @param {String} content
      */
     appendContent(content) {
-        const cursorPos = this.editor.cm.getCursor('from');
-        const newContent = this.editor.cm.getValue() + '\n' + content;
-        this.editor.cm.setValue(newContent);
-        this.editor.cm.setCursor(cursorPos.line, cursorPos.ch);
+        content = this.#cleanTextForEditor(content);
+        this.#dispatchChange(this.editor.cm.state.doc.length, `\n${content}`);
+        this.focus();
     }
 
     /**
@@ -218,18 +223,7 @@ export class Actions {
      * @param {String} content
      */
     replaceContent(content) {
-        this.editor.cm.setValue(content);
-    }
-
-    /**
-     * @param {String|RegExp} search
-     * @param {String} replace
-     */
-    findAndReplaceContent(search, replace) {
-        const text = this.editor.cm.getValue();
-        const cursor = this.editor.cm.listSelections();
-        this.editor.cm.setValue(text.replace(search, replace));
-        this.editor.cm.setSelections(cursor);
+        this.#setText(content);
     }
 
     /**
@@ -237,51 +231,30 @@ export class Actions {
      * @param {String} newStart
      */
     replaceLineStart(newStart) {
-        const cursor = this.editor.cm.getCursor();
-        let lineContent = this.editor.cm.getLine(cursor.line);
-        const lineLen = lineContent.length;
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+
+        const lineContent = line.text;
         const lineStart = lineContent.split(' ')[0];
 
         // Remove symbol if already set
         if (lineStart === newStart) {
-            lineContent = lineContent.replace(`${newStart} `, '');
-            this.editor.cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-            this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch - (newStart.length + 1)});
+            const newLineContent = lineContent.replace(`${newStart} `, '');
+            const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
+            this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
             return;
         }
 
-        const alreadySymbol = /^[#>`]/.test(lineStart);
-        let posDif = 0;
-        if (alreadySymbol) {
-            posDif = newStart.length - lineStart.length;
-            lineContent = lineContent.replace(lineStart, newStart).trim();
-        } else if (newStart !== '') {
-            posDif = newStart.length + 1;
-            lineContent = newStart + ' ' + lineContent;
-        }
-        this.editor.cm.replaceRange(lineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + posDif});
-    }
-
-    /**
-     * Wrap the line in the given start and end contents.
-     * @param {String} start
-     * @param {String} end
-     */
-    wrapLine(start, end) {
-        const cursor = this.editor.cm.getCursor();
-        const lineContent = this.editor.cm.getLine(cursor.line);
-        const lineLen = lineContent.length;
         let newLineContent = lineContent;
-
-        if (lineContent.indexOf(start) === 0 && lineContent.slice(-end.length) === end) {
-            newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
-        } else {
-            newLineContent = `${start}${lineContent}${end}`;
+        const alreadySymbol = /^[#>`]/.test(lineStart);
+        if (alreadySymbol) {
+            newLineContent = lineContent.replace(lineStart, newStart).trim();
+        } else if (newStart !== '') {
+            newLineContent = `${newStart} ${lineContent}`;
         }
 
-        this.editor.cm.replaceRange(newLineContent, {line: cursor.line, ch: 0}, {line: cursor.line, ch: lineLen});
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + start.length});
+        const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
+        this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
     }
 
     /**
@@ -290,37 +263,43 @@ export class Actions {
      * @param {String} end
      */
     wrapSelection(start, end) {
-        const selection = this.editor.cm.getSelection();
-        if (selection === '') return this.wrapLine(start, end);
-
-        let newSelection = selection;
-        const frontDiff = 0;
-        let endDiff;
-
-        if (selection.indexOf(start) === 0 && selection.slice(-end.length) === end) {
-            newSelection = selection.slice(start.length, selection.length - end.length);
-            endDiff = -(end.length + start.length);
-        } else {
-            newSelection = `${start}${selection}${end}`;
-            endDiff = start.length + end.length;
+        const selectRange = this.#getSelectionRange();
+        const selectionText = this.#getSelectionText(selectRange);
+        if (!selectionText) {
+            this.#wrapLine(start, end);
+            return;
         }
 
-        const selections = this.editor.cm.listSelections()[0];
-        this.editor.cm.replaceSelection(newSelection);
-        const headFirst = selections.head.ch <= selections.anchor.ch;
-        selections.head.ch += headFirst ? frontDiff : endDiff;
-        selections.anchor.ch += headFirst ? endDiff : frontDiff;
-        this.editor.cm.setSelections([selections]);
+        let newSelectionText = selectionText;
+        let newRange;
+
+        if (selectionText.startsWith(start) && selectionText.endsWith(end)) {
+            newSelectionText = selectionText.slice(start.length, selectionText.length - end.length);
+            newRange = selectRange.extend(selectRange.from, selectRange.to - (start.length + end.length));
+        } else {
+            newSelectionText = `${start}${selectionText}${end}`;
+            newRange = selectRange.extend(selectRange.from, selectRange.to + (start.length + end.length));
+        }
+
+        this.#dispatchChange(
+            selectRange.from,
+            selectRange.to,
+            newSelectionText,
+            newRange.anchor,
+            newRange.head,
+        );
     }
 
     replaceLineStartForOrderedList() {
-        const cursor = this.editor.cm.getCursor();
-        const prevLineContent = this.editor.cm.getLine(cursor.line - 1) || '';
-        const listMatch = prevLineContent.match(/^(\s*)(\d)([).])\s/) || [];
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+        const prevLine = this.editor.cm.state.doc.line(line.number - 1);
+
+        const listMatch = prevLine.text.match(/^(\s*)(\d)([).])\s/) || [];
 
         const number = (Number(listMatch[2]) || 0) + 1;
         const whiteSpace = listMatch[1] || '';
-        const listMark = listMatch[3] || '.'
+        const listMark = listMatch[3] || '.';
 
         const prefix = `${whiteSpace}${number}${listMark}`;
         return this.replaceLineStart(prefix);
@@ -331,87 +310,45 @@ export class Actions {
      * Creates a callout block if none existing, and removes it if cycling past the danger type.
      */
     cycleCalloutTypeAtSelection() {
-        const selectionRange = this.editor.cm.listSelections()[0];
-        const lineContent = this.editor.cm.getLine(selectionRange.anchor.line);
-        const lineLength = lineContent.length;
-        const contentRange = {
-            anchor: {line: selectionRange.anchor.line, ch: 0},
-            head: {line: selectionRange.anchor.line, ch: lineLength},
-        };
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
 
         const formats = ['info', 'success', 'warning', 'danger'];
         const joint = formats.join('|');
         const regex = new RegExp(`class="((${joint})\\s+callout|callout\\s+(${joint}))"`, 'i');
-        const matches = regex.exec(lineContent);
+        const matches = regex.exec(line.text);
         const format = (matches ? (matches[2] || matches[3]) : '').toLowerCase();
 
         if (format === formats[formats.length - 1]) {
-            this.wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
+            this.#wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
         } else if (format === '') {
-            this.wrapLine('<p class="callout info">', '</p>');
+            this.#wrapLine('<p class="callout info">', '</p>');
         } else {
             const newFormatIndex = formats.indexOf(format) + 1;
             const newFormat = formats[newFormatIndex];
-            const newContent = lineContent.replace(matches[0], matches[0].replace(format, newFormat));
-            this.editor.cm.replaceRange(newContent, contentRange.anchor, contentRange.head);
-
-            const chDiff = newContent.length - lineContent.length;
-            selectionRange.anchor.ch += chDiff;
-            if (selectionRange.anchor !== selectionRange.head) {
-                selectionRange.head.ch += chDiff;
-            }
-            this.editor.cm.setSelection(selectionRange.anchor, selectionRange.head);
+            const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
+            const lineDiff = newContent.length - line.text.length;
+            this.#dispatchChange(
+                line.from,
+                line.to,
+                newContent,
+                selectionRange.anchor + lineDiff,
+                selectionRange.head + lineDiff,
+            );
         }
     }
 
-    /**
-     * Handle image upload and add image into markdown content
-     * @param {File} file
-     */
-    uploadImage(file) {
-        if (file === null || file.type.indexOf('image') !== 0) return;
-        let ext = 'png';
-
-        if (file.name) {
-            let fileNameMatches = file.name.match(/\.(.+)$/);
-            if (fileNameMatches.length > 1) ext = fileNameMatches[1];
-        }
-
-        // Insert image into markdown
-        const id = "image-" + Math.random().toString(16).slice(2);
-        const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
-        const selectedText = this.editor.cm.getSelection();
-        const placeHolderText = `![${selectedText}](${placeholderImage})`;
-        const cursor = this.editor.cm.getCursor();
-        this.editor.cm.replaceSelection(placeHolderText);
-        this.editor.cm.setCursor({line: cursor.line, ch: cursor.ch + selectedText.length + 3});
-
-        const remoteFilename = "image-" + Date.now() + "." + ext;
-        const formData = new FormData();
-        formData.append('file', file, remoteFilename);
-        formData.append('uploaded_to', this.editor.config.pageId);
-
-        window.$http.post('/images/gallery', formData).then(resp => {
-            const newContent = `[![${selectedText}](${resp.data.thumbs.display})](${resp.data.url})`;
-            this.findAndReplaceContent(placeHolderText, newContent);
-        }).catch(err => {
-            window.$events.emit('error', this.editor.config.text.imageUploadError);
-            this.findAndReplaceContent(placeHolderText, selectedText);
-            console.log(err);
-        });
-    }
-
-    syncDisplayPosition() {
+    syncDisplayPosition(event) {
         // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
-        const scroll = this.editor.cm.getScrollInfo();
-        const atEnd = scroll.top + scroll.clientHeight === scroll.height;
+        const scrollEl = event.target;
+        const atEnd = Math.abs(scrollEl.scrollHeight - scrollEl.clientHeight - scrollEl.scrollTop) < 1;
         if (atEnd) {
             this.editor.display.scrollToIndex(-1);
             return;
         }
 
-        const lineNum = this.editor.cm.lineAtHeight(scroll.top, 'local');
-        const range = this.editor.cm.getRange({line: 0, ch: null}, {line: lineNum, ch: null});
+        const blockInfo = this.editor.cm.lineBlockAtHeight(scrollEl.scrollTop);
+        const range = this.editor.cm.state.sliceDoc(0, blockInfo.from);
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.editor.markdown.render(range), 'text/html');
         const totalLines = doc.documentElement.querySelectorAll('body > *');
@@ -425,24 +362,197 @@ export class Actions {
      * @param {Number} posX
      * @param {Number} posY
      */
-    insertTemplate(templateId, posX, posY) {
-        const cursorPos = this.editor.cm.coordsChar({left: posX, top: posY});
-        this.editor.cm.setCursor(cursorPos);
-        window.$http.get(`/templates/${templateId}`).then(resp => {
-            const content = resp.data.markdown || resp.data.html;
-            this.editor.cm.replaceSelection(content);
-        });
+    async insertTemplate(templateId, posX, posY) {
+        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
+        const {data} = await window.$http.get(`/templates/${templateId}`);
+        const content = data.markdown || data.html;
+        this.#dispatchChange(cursorPos, cursorPos, content, cursorPos);
     }
 
     /**
-     * Insert multiple images from the clipboard.
+     * Insert multiple images from the clipboard from an event at the provided
+     * screen coordinates (Typically form a paste event).
      * @param {File[]} images
+     * @param {Number} posX
+     * @param {Number} posY
      */
-    insertClipboardImages(images) {
-        const cursorPos = this.editor.cm.coordsChar({left: event.pageX, top: event.pageY});
-        this.editor.cm.setCursor(cursorPos);
+    insertClipboardImages(images, posX, posY) {
+        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
         for (const image of images) {
-            this.uploadImage(image);
+            this.uploadImage(image, cursorPos);
         }
     }
+
+    /**
+     * Handle image upload and add image into markdown content
+     * @param {File} file
+     * @param {?Number} position
+     */
+    async uploadImage(file, position = null) {
+        if (file === null || file.type.indexOf('image') !== 0) return;
+        let ext = 'png';
+
+        if (position === null) {
+            position = this.#getSelectionRange().from;
+        }
+
+        if (file.name) {
+            const fileNameMatches = file.name.match(/\.(.+)$/);
+            if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+        }
+
+        // Insert image into markdown
+        const id = `image-${Math.random().toString(16).slice(2)}`;
+        const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
+        const placeHolderText = `![](${placeholderImage})`;
+        this.#dispatchChange(position, position, placeHolderText, position);
+
+        const remoteFilename = `image-${Date.now()}.${ext}`;
+        const formData = new FormData();
+        formData.append('file', file, remoteFilename);
+        formData.append('uploaded_to', this.editor.config.pageId);
+
+        try {
+            const {data} = await window.$http.post('/images/gallery', formData);
+            const newContent = `[![](${data.thumbs.display})](${data.url})`;
+            this.#findAndReplaceContent(placeHolderText, newContent);
+        } catch (err) {
+            window.$events.error(err?.data?.message || this.editor.config.text.imageUploadError);
+            this.#findAndReplaceContent(placeHolderText, '');
+            console.error(err);
+        }
+    }
+
+    /**
+     * Get the current text of the editor instance.
+     * @return {string}
+     */
+    #getText() {
+        return this.editor.cm.state.doc.toString();
+    }
+
+    /**
+     * Set the text of the current editor instance.
+     * @param {String} text
+     * @param {?SelectionRange} selectionRange
+     */
+    #setText(text, selectionRange = null) {
+        selectionRange = selectionRange || this.#getSelectionRange();
+        const newDoc = this.editor.cm.state.toText(text);
+        const newSelectFrom = Math.min(selectionRange.from, newDoc.length);
+        this.#dispatchChange(0, this.editor.cm.state.doc.length, text, newSelectFrom);
+        this.focus();
+    }
+
+    /**
+     * Replace the current selection and focus the editor.
+     * Takes an offset for the cursor, after the change, relative to the start of the provided string.
+     * Can be provided a selection range to use instead of the current selection range.
+     * @param {String} newContent
+     * @param {Number} cursorOffset
+     * @param {?SelectionRange} selectionRange
+     */
+    #replaceSelection(newContent, cursorOffset = 0, selectionRange = null) {
+        selectionRange = selectionRange || this.editor.cm.state.selection.main;
+        const selectFrom = selectionRange.from + cursorOffset;
+        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectFrom);
+        this.focus();
+    }
+
+    /**
+     * Get the text content of the main current selection.
+     * @param {SelectionRange} selectionRange
+     * @return {string}
+     */
+    #getSelectionText(selectionRange = null) {
+        selectionRange = selectionRange || this.#getSelectionRange();
+        return this.editor.cm.state.sliceDoc(selectionRange.from, selectionRange.to);
+    }
+
+    /**
+     * Get the range of the current main selection.
+     * @return {SelectionRange}
+     */
+    #getSelectionRange() {
+        return this.editor.cm.state.selection.main;
+    }
+
+    /**
+     * Cleans the given text to work with the editor.
+     * Standardises line endings to what's expected.
+     * @param {String} text
+     * @return {String}
+     */
+    #cleanTextForEditor(text) {
+        return text.replace(/\r\n|\r/g, '\n');
+    }
+
+    /**
+     * Find and replace the first occurrence of [search] with [replace]
+     * @param {String} search
+     * @param {String} replace
+     */
+    #findAndReplaceContent(search, replace) {
+        const newText = this.#getText().replace(search, replace);
+        this.#setText(newText);
+    }
+
+    /**
+     * Wrap the line in the given start and end contents.
+     * @param {String} start
+     * @param {String} end
+     */
+    #wrapLine(start, end) {
+        const selectionRange = this.#getSelectionRange();
+        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+        const lineContent = line.text;
+        let newLineContent;
+        let lineOffset = 0;
+
+        if (lineContent.startsWith(start) && lineContent.endsWith(end)) {
+            newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
+            lineOffset = -(start.length);
+        } else {
+            newLineContent = `${start}${lineContent}${end}`;
+            lineOffset = start.length;
+        }
+
+        this.#dispatchChange(line.from, line.to, newLineContent, selectionRange.from + lineOffset);
+    }
+
+    /**
+     * Dispatch changes to the editor.
+     * @param {Number} from
+     * @param {?Number} to
+     * @param {?String} text
+     * @param {?Number} selectFrom
+     * @param {?Number} selectTo
+     */
+    #dispatchChange(from, to = null, text = null, selectFrom = null, selectTo = null) {
+        const tr = {changes: {from, to, insert: text}};
+
+        if (selectFrom) {
+            tr.selection = {anchor: selectFrom};
+            if (selectTo) {
+                tr.selection.head = selectTo;
+            }
+        }
+
+        this.editor.cm.dispatch(tr);
+    }
+
+    /**
+     * Set the current selection range.
+     * Optionally will scroll the new range into view.
+     * @param {Number} from
+     * @param {Number} to
+     * @param {Boolean} scrollIntoView
+     */
+    #setSelection(from, to, scrollIntoView = false) {
+        this.editor.cm.dispatch({
+            selection: {anchor: from, head: to},
+            scrollIntoView,
+        });
+    }
+
 }

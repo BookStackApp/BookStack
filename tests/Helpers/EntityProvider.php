@@ -2,9 +2,6 @@
 
 namespace Tests\Helpers;
 
-use BookStack\Auth\Permissions\EntityPermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
@@ -14,6 +11,8 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Tools\TrashCan;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -187,41 +186,26 @@ class EntityProvider
     }
 
     /**
-     * Regenerate the permission for an entity.
-     * Centralised to manage clearing of cached elements between requests.
+     * Create and return a new test draft page.
      */
-    public function regenPermissions(Entity $entity): void
+    public function newDraftPage(array $input = ['name' => 'test page', 'html' => 'My new test page']): Page
     {
-        $entity->rebuildPermissions();
-        $entity->load('jointPermissions');
+        $book = $this->book();
+        $pageRepo = app(PageRepo::class);
+        $draftPage = $pageRepo->getNewDraftPage($book);
+        $pageRepo->updatePageDraft($draftPage, $input);
+        $this->addToCache($draftPage);
+        return $draftPage;
     }
 
     /**
-     * Set the given entity as having restricted permissions, and apply the given
-     * permissions for the given roles.
-     * @param string[] $actions
-     * @param Role[] $roles
+     * Fully destroy the given entity from the system, bypassing the recycle bin
+     * stage. Still runs through main app deletion logic.
      */
-    public function setPermissions(Entity $entity, array $actions = [], array $roles = []): void
+    public function destroy(Entity $entity)
     {
-        $entity->permissions()->delete();
-
-        $permissions = [
-            // Set default permissions to not allow actions so that only the provided role permissions are at play.
-            ['role_id' => 0, 'view' => false, 'create' => false, 'update' => false, 'delete' => false],
-        ];
-
-        foreach ($roles as $role) {
-            $permission = ['role_id' => $role->id];
-            foreach (EntityPermission::PERMISSIONS as $possibleAction) {
-                $permission[$possibleAction] = in_array($possibleAction, $actions);
-            }
-            $permissions[] = $permission;
-        }
-
-        $entity->permissions()->createMany($permissions);
-        $entity->load('permissions');
-        $this->regenPermissions($entity);
+        $trash = app()->make(TrashCan::class);
+        $trash->destroyEntity($entity);
     }
 
     /**

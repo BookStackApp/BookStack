@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class FixShelfCoverImageTypes extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -41,4 +41,4 @@ class FixShelfCoverImageTypes extends Migration
             ->where('type', '=', 'cover_bookshelf')
             ->update(['type' => 'cover_book']);
     }
-}
+};

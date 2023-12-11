@@ -1,7 +1,7 @@
-import {htmlToDom} from "../services/dom";
-import {debounce} from "../services/util";
-import {KeyboardNavigationHandler} from "../services/keyboard-navigation";
-import {Component} from "./component";
+import {htmlToDom} from '../services/dom';
+import {debounce} from '../services/util';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
+import {Component} from './component';
 
 /**
  * Global (header) search box handling.
@@ -25,12 +25,12 @@ export class GlobalSearch extends Component {
 
         // Handle search input changes
         this.input.addEventListener('input', () => {
-            const value = this.input.value;
+            const {value} = this.input;
             if (value.length > 0) {
                 this.loadingWrap.style.display = 'block';
                 this.suggestionResultsWrap.style.opacity = '0.5';
                 updateSuggestionsDebounced(value);
-            }  else {
+            } else {
                 this.hideSuggestions();
             }
         });
@@ -55,7 +55,7 @@ export class GlobalSearch extends Component {
         if (!this.input.value) {
             return;
         }
-        
+
         const resultDom = htmlToDom(results);
 
         this.suggestionResultsWrap.innerHTML = '';
@@ -71,7 +71,7 @@ export class GlobalSearch extends Component {
         this.container.classList.add('search-active');
         window.requestAnimationFrame(() => {
             this.suggestions.classList.add('search-suggestions-animation');
-        })
+        });
     }
 
     hideSuggestions() {
@@ -79,4 +79,5 @@ export class GlobalSearch extends Component {
         this.suggestions.classList.remove('search-suggestions-animation');
         this.suggestionResultsWrap.innerHTML = '';
     }
+
 }

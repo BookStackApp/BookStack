@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class SettingColorPicker extends Component {
 
@@ -15,6 +15,7 @@ export class SettingColorPicker extends Component {
 
     setValue(value) {
         this.colorInput.value = value;
-        this.colorInput.dispatchEvent(new Event('change'));
+        this.colorInput.dispatchEvent(new Event('change', {bubbles: true}));
     }
+
 }

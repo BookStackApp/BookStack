@@ -14,11 +14,11 @@
         HTTP POST calls upon events occurring in BookStack.
     </li>
     <li>
-        <a href="https://github.com/BookStackApp/BookStack/blob/master/dev/docs/visual-theme-system.md" target="_blank" rel="noopener noreferrer">Visual Theme System</a> -
+        <a href="https://github.com/BookStackApp/BookStack/blob/development/dev/docs/visual-theme-system.md" target="_blank" rel="noopener noreferrer">Visual Theme System</a> -
         Methods to override views, translations and icons within BookStack.
     </li>
     <li>
-        <a href="https://github.com/BookStackApp/BookStack/blob/master/dev/docs/logical-theme-system.md" target="_blank" rel="noopener noreferrer">Logical Theme System</a> -
+        <a href="https://github.com/BookStackApp/BookStack/blob/development/dev/docs/logical-theme-system.md" target="_blank" rel="noopener noreferrer">Logical Theme System</a> -
         Methods to extend back-end functionality within BookStack.
     </li>
 </ul>

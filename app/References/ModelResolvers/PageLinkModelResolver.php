@@ -2,8 +2,8 @@
 
 namespace BookStack\References\ModelResolvers;
 
+use BookStack\App\Model;
 use BookStack\Entities\Models\Page;
-use BookStack\Model;
 
 class PageLinkModelResolver implements CrossLinkModelResolver
 {

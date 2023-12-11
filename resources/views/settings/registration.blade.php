@@ -24,9 +24,12 @@
                     @endif
 
                     <label for="setting-registration-role">{{ trans('settings.reg_default_role') }}</label>
-                    <select id="setting-registration-role" name="setting-registration-role" @if($errors->has('setting-registration-role')) class="neg" @endif>
-                        <option value="0" @if(intval(setting('registration-role', '0')) === 0) selected @endif>-- {{ trans('common.none') }} --</option>
-                        @foreach(\BookStack\Auth\Role::all() as $role)
+                    <select id="setting-registration-role" name="setting-registration-role"
+                            @if($errors->has('setting-registration-role')) class="neg" @endif>
+                        <option value="0" @if(intval(setting('registration-role', '0')) === 0) selected @endif>
+                            -- {{ trans('common.none') }} --
+                        </option>
+                        @foreach(\BookStack\Users\Models\Role::all() as $role)
                             <option value="{{$role->id}}"
                                     data-system-role-name="{{ $role->system_name ?? '' }}"
                                     @if(intval(setting('registration-role', '0')) === $role->id) selected @endif
@@ -40,11 +43,14 @@
 
             <div class="grid half gap-xl">
                 <div>
-                    <label for="setting-registration-restrict" class="setting-list-label">{{ trans('settings.reg_confirm_restrict_domain') }}</label>
+                    <label for="setting-registration-restrict"
+                           class="setting-list-label">{{ trans('settings.reg_confirm_restrict_domain') }}</label>
                     <p class="small">{!! trans('settings.reg_confirm_restrict_domain_desc') !!}</p>
                 </div>
                 <div class="pt-xs">
-                    <input type="text" id="setting-registration-restrict" name="setting-registration-restrict" placeholder="{{ trans('settings.reg_confirm_restrict_domain_placeholder') }}" value="{{ setting('registration-restrict', '') }}">
+                    <input type="text" id="setting-registration-restrict" name="setting-registration-restrict"
+                           placeholder="{{ trans('settings.reg_confirm_restrict_domain_placeholder') }}"
+                           value="{{ setting('registration-restrict', '') }}">
                 </div>
             </div>
 

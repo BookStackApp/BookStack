@@ -2,8 +2,8 @@
 
 namespace BookStack\References\ModelResolvers;
 
+use BookStack\App\Model;
 use BookStack\Entities\Models\Book;
-use BookStack\Model;
 
 class BookLinkModelResolver implements CrossLinkModelResolver
 {

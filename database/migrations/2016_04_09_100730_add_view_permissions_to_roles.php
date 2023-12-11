@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class AddViewPermissionsToRoles extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -54,4 +54,4 @@ class AddViewPermissionsToRoles extends Migration
             }
         }
     }
-}
+};

@@ -1,6 +1,33 @@
-import * as DOM from "../services/dom";
-import {scrollAndHighlightElement} from "../services/util";
-import {Component} from "./component";
+import * as DOM from '../services/dom';
+import {scrollAndHighlightElement} from '../services/util';
+import {Component} from './component';
+
+function toggleAnchorHighlighting(elementId, shouldHighlight) {
+    DOM.forEach(`#page-navigation a[href="#${elementId}"]`, anchor => {
+        anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
+    });
+}
+
+function headingVisibilityChange(entries) {
+    for (const entry of entries) {
+        const isVisible = (entry.intersectionRatio === 1);
+        toggleAnchorHighlighting(entry.target.id, isVisible);
+    }
+}
+
+function addNavObserver(headings) {
+    // Setup the intersection observer.
+    const intersectOpts = {
+        rootMargin: '0px 0px 0px 0px',
+        threshold: 1.0,
+    };
+    const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
+
+    // observe each heading
+    for (const heading of headings) {
+        pageNavObserver.observe(heading);
+    }
+}
 
 export class PageDisplay extends Component {
 
@@ -10,7 +37,6 @@ export class PageDisplay extends Component {
 
         window.importVersioned('code').then(Code => Code.highlight());
         this.setupNavHighlighting();
-        this.setupDetailsCodeBlockRefresh();
 
         // Check the hash on load
         if (window.location.hash) {
@@ -26,7 +52,7 @@ export class PageDisplay extends Component {
                 window.$components.first('tri-layout').showContent();
                 const contentId = child.getAttribute('href').substr(1);
                 this.goToText(contentId);
-                window.history.pushState(null, null, '#' + contentId);
+                window.history.pushState(null, null, `#${contentId}`);
             });
         }
     }
@@ -58,42 +84,6 @@ export class PageDisplay extends Component {
         if (headings.length > 0 && pageNav !== null) {
             addNavObserver(headings);
         }
-
-        function addNavObserver(headings) {
-            // Setup the intersection observer.
-            const intersectOpts = {
-                rootMargin: '0px 0px 0px 0px',
-                threshold: 1.0
-            };
-            const pageNavObserver = new IntersectionObserver(headingVisibilityChange, intersectOpts);
-
-            // observe each heading
-            for (const heading of headings) {
-                pageNavObserver.observe(heading);
-            }
-        }
-
-        function headingVisibilityChange(entries, observer) {
-            for (const entry of entries) {
-                const isVisible = (entry.intersectionRatio === 1);
-                toggleAnchorHighlighting(entry.target.id, isVisible);
-            }
-        }
-
-        function toggleAnchorHighlighting(elementId, shouldHighlight) {
-            DOM.forEach('a[href="#' + elementId + '"]', anchor => {
-                anchor.closest('li').classList.toggle('current-heading', shouldHighlight);
-            });
-        }
     }
 
-    setupDetailsCodeBlockRefresh() {
-        const onToggle = event => {
-            const codeMirrors = [...event.target.querySelectorAll('.CodeMirror')];
-            codeMirrors.forEach(cm => cm.CodeMirror && cm.CodeMirror.refresh());
-        };
-
-        const details = [...this.container.querySelectorAll('details')];
-        details.forEach(detail => detail.addEventListener('toggle', onToggle));
-    }
 }

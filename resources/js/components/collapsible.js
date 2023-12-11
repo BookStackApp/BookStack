@@ -1,5 +1,5 @@
-import {slideDown, slideUp} from "../services/animations";
-import {Component} from "./component";
+import {slideDown, slideUp} from '../services/animations';
+import {Component} from './component';
 
 /**
  * Collapsible

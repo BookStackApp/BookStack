@@ -23,10 +23,10 @@
                     <div refs="code-editor@language-options-container" class="lang-options">
                         @php
                             $languages = [
-                                'Bash', 'CSS', 'C', 'C++', 'C#', 'Dart', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
-                                'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'MATLAB', 'Nginx', 'OCaml',
-                                'Octave', 'Pascal', 'Perl', 'PHP', 'Powershell', 'Python', 'Ruby', 'Rust', 'Shell', 'SQL', 'Swift',
-                                 'TypeScript', 'VBScript', 'VB.NET', 'XML', 'YAML',
+                                'Bash', 'CSS', 'C', 'C++', 'C#', 'Clojure', 'Dart', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
+                                'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'MATLAB', 'MSSQL', 'MySQL', 'Nginx', 'OCaml',
+                                'Octave', 'Pascal', 'Perl', 'PHP', 'PL/SQL', 'PostgreSQL', 'Powershell', 'Python', 'Ruby', 'Rust', 'Scheme', 'Shell', 'Smarty',
+                                 'SQL', 'SQLite', 'Swift', 'Twig', 'TypeScript', 'VBScript', 'VB.NET', 'XML', 'YAML',
                             ];
                         @endphp
 

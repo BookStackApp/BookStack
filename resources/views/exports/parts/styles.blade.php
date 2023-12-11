@@ -10,7 +10,7 @@
     <style>
         /* Patches for CSS variable colors within PDF exports */
         a {
-            color: {{ setting('app-color') }};
+            color: {{ setting('app-link') }};
         }
 
         blockquote {

@@ -1,5 +1,5 @@
-import {onChildEvent} from "../services/dom";
-import {Component} from "./component";
+import {onChildEvent} from '../services/dom';
+import {Component} from './component';
 
 export class UserSelect extends Component {
 
@@ -20,7 +20,7 @@ export class UserSelect extends Component {
     }
 
     hide() {
-        /** @var {Dropdown} **/
+        /** @var {Dropdown} * */
         const dropdown = window.$components.firstOnElement(this.container, 'dropdown');
         dropdown.hide();
     }

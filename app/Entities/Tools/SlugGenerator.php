@@ -2,9 +2,9 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\App\Model;
+use BookStack\App\Sluggable;
 use BookStack\Entities\Models\BookChild;
-use BookStack\Interfaces\Sluggable;
-use BookStack\Model;
 use Illuminate\Support\Str;
 
 class SlugGenerator

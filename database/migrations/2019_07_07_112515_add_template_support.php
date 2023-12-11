@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddTemplateSupport extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -51,4 +51,4 @@ class AddTemplateSupport extends Migration
         DB::table('permission_role')->where('permission_id', '=', $templatesManagePermission->id)->delete();
         DB::table('role_permissions')->where('name', '=', 'templates-manage')->delete();
     }
-}
+};

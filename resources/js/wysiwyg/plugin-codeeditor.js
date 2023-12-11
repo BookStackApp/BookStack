@@ -9,9 +9,16 @@ function elemIsCodeBlock(elem) {
  * @param {function(string, string)} callback (Receives (code: string,language: string)
  */
 function showPopup(editor, code, language, callback) {
-    window.$components.first('code-editor').open(code, language, (newCode, newLang) => {
-        callback(newCode, newLang)
-        editor.focus()
+    /** @var {CodeEditor} codeEditor * */
+    const codeEditor = window.$components.first('code-editor');
+    const bookMark = editor.selection.getBookmark();
+    codeEditor.open(code, language, (newCode, newLang) => {
+        callback(newCode, newLang);
+        editor.focus();
+        editor.selection.moveToBookmark(bookMark);
+    }, () => {
+        editor.focus();
+        editor.selection.moveToBookmark(bookMark);
     });
 }
 
@@ -36,23 +43,30 @@ function defineCodeBlockCustomElement(editor) {
     const win = doc.defaultView;
 
     class CodeBlockElement extends win.HTMLElement {
+
+        /**
+         * @type {?SimpleEditorInterface}
+         */
+        editor = null;
+
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
 
-            const stylesToCopy = document.querySelectorAll('link[rel="stylesheet"]:not([media="print"])');
-            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(false));
+            const stylesToCopy = document.head.querySelectorAll('link[rel="stylesheet"]:not([media="print"]),style');
+            const copiedStyles = Array.from(stylesToCopy).map(styleEl => styleEl.cloneNode(true));
 
             const cmContainer = document.createElement('div');
             cmContainer.style.pointerEvents = 'none';
             cmContainer.contentEditable = 'false';
             cmContainer.classList.add('CodeMirrorContainer');
+            cmContainer.classList.toggle('dark-mode', document.documentElement.classList.contains('dark-mode'));
 
             this.shadowRoot.append(...copiedStyles, cmContainer);
         }
 
         getLanguage() {
-            const getLanguageFromClassList = (classes) => {
+            const getLanguageFromClassList = classes => {
                 const langClasses = classes.split(' ').filter(cssClass => cssClass.startsWith('language-'));
                 return (langClasses[0] || '').replace('language-', '');
             };
@@ -63,11 +77,9 @@ function defineCodeBlockCustomElement(editor) {
         }
 
         setContent(content, language) {
-            if (this.cm) {
-                importVersioned('code').then(Code => {
-                    Code.setContent(this.cm, content);
-                    Code.setMode(this.cm, language, content);
-                });
+            if (this.editor) {
+                this.editor.setContent(content);
+                this.editor.setMode(language, content);
             }
 
             let pre = this.querySelector('pre');
@@ -98,7 +110,7 @@ function defineCodeBlockCustomElement(editor) {
 
         connectedCallback() {
             const connectedTime = Date.now();
-            if (this.cm) {
+            if (this.editor) {
                 return;
             }
 
@@ -109,15 +121,16 @@ function defineCodeBlockCustomElement(editor) {
             this.style.height = `${height}px`;
 
             const container = this.shadowRoot.querySelector('.CodeMirrorContainer');
-            const renderCodeMirror = (Code) => {
-                this.cm = Code.wysiwygView(container, content, this.getLanguage());
-                setTimeout(() => Code.updateLayout(this.cm), 10);
-                setTimeout(() => this.style.height = null, 12);
+            const renderEditor = Code => {
+                this.editor = Code.wysiwygView(container, this.shadowRoot, content, this.getLanguage());
+                setTimeout(() => {
+                    this.style.height = null;
+                }, 12);
             };
 
-            window.importVersioned('code').then((Code) => {
+            window.importVersioned('code').then(Code => {
                 const timeout = (Date.now() - connectedTime < 20) ? 20 : 0;
-                setTimeout(() => renderCodeMirror(Code), timeout);
+                setTimeout(() => renderEditor(Code), timeout);
             });
         }
 
@@ -131,26 +144,24 @@ function defineCodeBlockCustomElement(editor) {
                 }
             }
         }
+
     }
 
     win.customElements.define('code-block', CodeBlockElement);
 }
 
-
 /**
  * @param {Editor} editor
- * @param {String} url
  */
-function register(editor, url) {
-
-    editor.ui.registry.addIcon('codeblock', '<svg width="24" height="24"><path d="M4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V4c0-.6.4-1 1-1Zm1 2v14h14V5Z"/><path d="M11.103 15.423c.277.277.277.738 0 .922a.692.692 0 0 1-1.106 0l-4.057-3.78a.738.738 0 0 1 0-1.107l4.057-3.872c.276-.277.83-.277 1.106 0a.724.724 0 0 1 0 1.014L7.6 12.012ZM12.897 8.577c-.245-.312-.2-.675.08-.955.28-.281.727-.27 1.027.033l4.057 3.78a.738.738 0 0 1 0 1.107l-4.057 3.872c-.277.277-.83.277-1.107 0a.724.724 0 0 1 0-1.014l3.504-3.412z"/></svg>')
+function register(editor) {
+    editor.ui.registry.addIcon('codeblock', '<svg width="24" height="24"><path d="M4 3h16c.6 0 1 .4 1 1v16c0 .6-.4 1-1 1H4a1 1 0 0 1-1-1V4c0-.6.4-1 1-1Zm1 2v14h14V5Z"/><path d="M11.103 15.423c.277.277.277.738 0 .922a.692.692 0 0 1-1.106 0l-4.057-3.78a.738.738 0 0 1 0-1.107l4.057-3.872c.276-.277.83-.277 1.106 0a.724.724 0 0 1 0 1.014L7.6 12.012ZM12.897 8.577c-.245-.312-.2-.675.08-.955.28-.281.727-.27 1.027.033l4.057 3.78a.738.738 0 0 1 0 1.107l-4.057 3.872c-.277.277-.83.277-1.107 0a.724.724 0 0 1 0-1.014l3.504-3.412z"/></svg>');
 
     editor.ui.registry.addButton('codeeditor', {
         tooltip: 'Insert code block',
         icon: 'codeblock',
         onAction() {
             editor.execCommand('codeeditor');
-        }
+        },
     });
 
     editor.ui.registry.addButton('editcodeeditor', {
@@ -158,7 +169,7 @@ function register(editor, url) {
         icon: 'edit-block',
         onAction() {
             editor.execCommand('codeeditor');
-        }
+        },
     });
 
     editor.addCommand('codeeditor', () => {
@@ -180,17 +191,17 @@ function register(editor, url) {
         }
     });
 
-    editor.on('dblclick', event => {
-        let selectedNode = editor.selection.getNode();
+    editor.on('dblclick', () => {
+        const selectedNode = editor.selection.getNode();
         if (elemIsCodeBlock(selectedNode)) {
             showPopupForCodeBlock(editor, selectedNode);
         }
     });
 
     editor.on('PreInit', () => {
-        editor.parser.addNodeFilter('pre', function(elms) {
+        editor.parser.addNodeFilter('pre', elms => {
             for (const el of elms) {
-                const wrapper = tinymce.html.Node.create('code-block', {
+                const wrapper = window.tinymce.html.Node.create('code-block', {
                     contenteditable: 'false',
                 });
 
@@ -203,13 +214,13 @@ function register(editor, url) {
             }
         });
 
-        editor.parser.addNodeFilter('code-block', function(elms) {
+        editor.parser.addNodeFilter('code-block', elms => {
             for (const el of elms) {
                 el.attr('contenteditable', 'false');
             }
         });
 
-        editor.serializer.addNodeFilter('code-block', function(elms) {
+        editor.serializer.addNodeFilter('code-block', elms => {
             for (const el of elms) {
                 el.unwrap();
             }
@@ -217,12 +228,12 @@ function register(editor, url) {
     });
 
     editor.ui.registry.addContextToolbar('codeeditor', {
-        predicate: function (node) {
+        predicate(node) {
             return node.nodeName.toLowerCase() === 'code-block';
         },
         items: 'editcodeeditor',
         position: 'node',
-        scope: 'node'
+        scope: 'node',
     });
 
     editor.on('PreInit', () => {
@@ -231,9 +242,8 @@ function register(editor, url) {
 }
 
 /**
- * @param {WysiwygConfigOptions} options
  * @return {register}
  */
-export function getPlugin(options) {
+export function getPlugin() {
     return register;
 }

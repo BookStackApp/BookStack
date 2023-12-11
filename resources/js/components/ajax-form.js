@@ -1,5 +1,5 @@
-import {onEnterPress, onSelect} from "../services/dom";
-import {Component} from "./component";
+import {onEnterPress, onSelect} from '../services/dom';
+import {Component} from './component';
 
 /**
  * Ajax Form
@@ -11,6 +11,7 @@ import {Component} from "./component";
  * otherwise will act as a fake form element.
  */
 export class AjaxForm extends Component {
+
     setup() {
         this.container = this.$el;
         this.responseContainer = this.container;
@@ -27,7 +28,6 @@ export class AjaxForm extends Component {
     }
 
     setupListeners() {
-
         if (this.container.tagName === 'FORM') {
             this.container.addEventListener('submit', this.submitRealForm.bind(this));
             return;
@@ -43,7 +43,7 @@ export class AjaxForm extends Component {
 
     submitFakeForm() {
         const fd = new FormData();
-        const inputs = this.container.querySelectorAll(`[name]`);
+        const inputs = this.container.querySelectorAll('[name]');
         for (const input of inputs) {
             fd.append(input.getAttribute('name'), input.value);
         }

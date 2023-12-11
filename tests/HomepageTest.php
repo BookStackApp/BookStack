@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 
 class HomepageTest extends TestCase
 {
@@ -114,7 +114,7 @@ class HomepageTest extends TestCase
 
     public function test_set_book_homepage()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'books_view_type', 'grid');
 
         $this->setSettings(['app-homepage-type' => 'books']);
@@ -126,14 +126,11 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('grid-card-footer');
         $homeVisit->assertSee('featured-image-container');
-
-        $this->setSettings(['app-homepage-type' => false]);
-        $this->test_default_homepage_visible();
     }
 
     public function test_set_bookshelves_homepage()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'bookshelves_view_type', 'grid');
         $shelf = $this->entities->shelf();
 
@@ -145,14 +142,24 @@ class HomepageTest extends TestCase
         $homeVisit->assertSee('grid-card-content');
         $homeVisit->assertSee('featured-image-container');
         $this->withHtml($homeVisit)->assertElementContains('.grid-card', $shelf->name);
+    }
 
-        $this->setSettings(['app-homepage-type' => false]);
-        $this->test_default_homepage_visible();
+    public function test_books_and_bookshelves_homepage_has_expected_actions()
+    {
+        $this->asEditor();
+
+        foreach (['bookshelves', 'books'] as $homepageType) {
+            $this->setSettings(['app-homepage-type' => $homepageType]);
+
+            $html = $this->withHtml($this->get('/'));
+            $html->assertElementContains('.actions button', 'Dark Mode');
+            $html->assertElementContains('.actions a[href$="/tags"]', 'View Tags');
+        }
     }
 
     public function test_shelves_list_homepage_adheres_to_book_visibility_permissions()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'bookshelves_view_type', 'list');
         $this->setSettings(['app-homepage-type' => 'bookshelves']);
         $this->asEditor();
@@ -167,13 +174,13 @@ class HomepageTest extends TestCase
 
         // Ensure book no longer visible without view permission
         $editor->roles()->detach();
-        $this->giveUserPermissions($editor, ['bookshelf-view-all']);
+        $this->permissions->grantUserRolePermissions($editor, ['bookshelf-view-all']);
         $homeVisit = $this->get('/');
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
         $this->withHtml($homeVisit)->assertElementNotContains('.content-wrap', $book->name);
 
         // Ensure is visible again with entity-level view permission
-        $this->entities->setPermissions($book, ['view'], [$editor->roles()->first()]);
+        $this->permissions->setEntityPermissions($book, ['view'], [$editor->roles()->first()]);
         $homeVisit = $this->get('/');
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $shelf->name);
         $this->withHtml($homeVisit)->assertElementContains('.content-wrap', $book->name);

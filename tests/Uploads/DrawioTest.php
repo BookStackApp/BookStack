@@ -2,22 +2,20 @@
 
 namespace Tests\Uploads;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
 
 class DrawioTest extends TestCase
 {
-    use UsesImages;
-
     public function test_get_image_as_base64()
     {
-        $page = Page::first();
+        $page = $this->entities->page();
         $this->asAdmin();
         $imageName = 'first-image.png';
 
-        $this->uploadImage($imageName, $page->id);
-        $image = Image::first();
+        $this->files->uploadGalleryImage($this, $imageName, $page->id);
+        /** @var Image $image */
+        $image = Image::query()->first();
         $image->type = 'drawio';
         $image->save();
 
@@ -27,10 +25,30 @@ class DrawioTest extends TestCase
         ]);
     }
 
+    public function test_non_accessible_image_returns_404_error_and_message()
+    {
+        $page = $this->entities->page();
+        $this->asEditor();
+        $imageName = 'non-accessible-image.png';
+
+        $this->files->uploadGalleryImage($this, $imageName, $page->id);
+        /** @var Image $image */
+        $image = Image::query()->first();
+        $image->type = 'drawio';
+        $image->save();
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $imageGet = $this->getJson("/images/drawio/base64/{$image->id}");
+        $imageGet->assertNotFound();
+        $imageGet->assertJson([
+            'message' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+        ]);
+    }
+
     public function test_drawing_base64_upload()
     {
-        $page = Page::first();
-        $editor = $this->getEditor();
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
         $this->actingAs($editor);
 
         $upload = $this->postJson('images/drawio', [
@@ -49,7 +67,7 @@ class DrawioTest extends TestCase
         $image = Image::where('type', '=', 'drawio')->first();
         $this->assertTrue(file_exists(public_path($image->path)), 'Uploaded image not found at path: ' . public_path($image->path));
 
-        $testImageData = file_get_contents($this->getTestImageFilePath());
+        $testImageData = $this->files->pngImageData();
         $uploadedImageData = file_get_contents(public_path($image->path));
         $this->assertTrue($testImageData === $uploadedImageData, 'Uploaded image file data does not match our test image as expected');
     }
@@ -57,8 +75,8 @@ class DrawioTest extends TestCase
     public function test_drawio_url_can_be_configured()
     {
         config()->set('services.drawio', 'http://cats.com?dog=tree');
-        $page = Page::first();
-        $editor = $this->getEditor();
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
         $resp->assertSee('drawio-url="http://cats.com?dog=tree"', false);
@@ -67,8 +85,8 @@ class DrawioTest extends TestCase
     public function test_drawio_url_can_be_disabled()
     {
         config()->set('services.drawio', true);
-        $page = Page::first();
-        $editor = $this->getEditor();
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
         $resp->assertSee('drawio-url="https://embed.diagrams.net/?embed=1&amp;proto=json&amp;spin=1&amp;configure=1"', false);

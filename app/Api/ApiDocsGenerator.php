@@ -2,11 +2,12 @@
 
 namespace BookStack\Api;
 
-use BookStack\Http\Controllers\Api\ApiController;
+use BookStack\Http\ApiController;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
@@ -16,8 +17,8 @@ use ReflectionMethod;
 
 class ApiDocsGenerator
 {
-    protected $reflectionClasses = [];
-    protected $controllerClasses = [];
+    protected array $reflectionClasses = [];
+    protected array $controllerClasses = [];
 
     /**
      * Load the docs form the cache if existing
@@ -27,12 +28,15 @@ class ApiDocsGenerator
     {
         $appVersion = trim(file_get_contents(base_path('version')));
         $cacheKey = 'api-docs::' . $appVersion;
-        if (Cache::has($cacheKey) && config('app.env') === 'production') {
-            $docs = Cache::get($cacheKey);
-        } else {
-            $docs = (new ApiDocsGenerator())->generate();
-            Cache::put($cacheKey, $docs, 60 * 24);
+        $isProduction = config('app.env') === 'production';
+        $cacheVal = $isProduction ? Cache::get($cacheKey) : null;
+
+        if (!is_null($cacheVal)) {
+            return $cacheVal;
         }
+
+        $docs = (new ApiDocsGenerator())->generate();
+        Cache::put($cacheKey, $docs, 60 * 24);
 
         return $docs;
     }
@@ -139,9 +143,10 @@ class ApiDocsGenerator
     protected function parseDescriptionFromMethodComment(string $comment): string
     {
         $matches = [];
-        preg_match_all('/^\s*?\*\s((?![@\s]).*?)$/m', $comment, $matches);
+        preg_match_all('/^\s*?\*\s?($|((?![\/@\s]).*?))$/m', $comment, $matches);
 
-        return implode(' ', $matches[1] ?? []);
+        $text = implode(' ', $matches[1] ?? []);
+        return str_replace('  ', "\n", $text);
     }
 
     /**

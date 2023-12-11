@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 /**
  * Attachments List
@@ -13,11 +13,11 @@ export class AttachmentsList extends Component {
     }
 
     setupListeners() {
-        const isExpectedKey = (event) => event.key === 'Control' || event.key === 'Meta';
+        const isExpectedKey = event => event.key === 'Control' || event.key === 'Meta';
         window.addEventListener('keydown', event => {
-             if (isExpectedKey(event)) {
+            if (isExpectedKey(event)) {
                 this.addOpenQueryToLinks();
-             }
+            }
         }, {passive: true});
         window.addEventListener('keyup', event => {
             if (isExpectedKey(event)) {
@@ -30,7 +30,7 @@ export class AttachmentsList extends Component {
         const links = this.container.querySelectorAll('a.attachment-file');
         for (const link of links) {
             if (link.href.split('?')[1] !== 'open=true') {
-                link.href = link.href + '?open=true';
+                link.href += '?open=true';
                 link.setAttribute('target', '_blank');
             }
         }
@@ -43,4 +43,5 @@ export class AttachmentsList extends Component {
             link.removeAttribute('target');
         }
     }
+
 }

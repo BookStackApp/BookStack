@@ -1,7 +1,8 @@
-import {onSelect} from "../services/dom";
-import {Component} from "./component";
+import {onSelect} from '../services/dom';
+import {Component} from './component';
 
 export class OptionalInput extends Component {
+
     setup() {
         this.removeButton = this.$refs.remove;
         this.showButton = this.$refs.show;

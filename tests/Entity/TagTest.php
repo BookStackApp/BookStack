@@ -2,7 +2,7 @@
 
 namespace Tests\Entity;
 
-use BookStack\Actions\Tag;
+use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
@@ -75,7 +75,7 @@ class TagTest extends TestCase
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson(['color', 'country']);
 
         // Set restricted permission the page
-        $this->entities->setPermissions($page, [], []);
+        $this->permissions->setEntityPermissions($page, [], []);
 
         $this->asAdmin()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson(['color', 'country']);
         $this->asEditor()->get('/ajax/tags/suggest/names?search=co')->assertSimilarJson([]);
@@ -178,7 +178,7 @@ class TagTest extends TestCase
         $resp = $this->get('/tags?name=SuperCategory');
         $resp->assertSee('GreatTestContent');
 
-        $this->entities->setPermissions($page, [], []);
+        $this->permissions->setEntityPermissions($page, [], []);
 
         $resp = $this->asEditor()->get('/tags');
         $resp->assertDontSee('SuperCategory');

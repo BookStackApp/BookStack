@@ -2,15 +2,14 @@
 
 namespace BookStack\References;
 
-use BookStack\Model;
+use BookStack\App\Model;
 use BookStack\References\ModelResolvers\BookLinkModelResolver;
 use BookStack\References\ModelResolvers\BookshelfLinkModelResolver;
 use BookStack\References\ModelResolvers\ChapterLinkModelResolver;
 use BookStack\References\ModelResolvers\CrossLinkModelResolver;
 use BookStack\References\ModelResolvers\PageLinkModelResolver;
 use BookStack\References\ModelResolvers\PagePermalinkModelResolver;
-use DOMDocument;
-use DOMXPath;
+use BookStack\Util\HtmlDocument;
 
 class CrossLinkParser
 {
@@ -54,13 +53,8 @@ class CrossLinkParser
     {
         $links = [];
 
-        $html = '<body>' . $html . '</body>';
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-
-        $xPath = new DOMXPath($doc);
-        $anchors = $xPath->query('//a[@href]');
+        $doc = new HtmlDocument($html);
+        $anchors = $doc->queryXPath('//a[@href]');
 
         /** @var \DOMElement $anchor */
         foreach ($anchors as $anchor) {

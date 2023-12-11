@@ -2,7 +2,7 @@
 
 namespace Tests\Commands;
 
-use BookStack\Actions\Comment;
+use BookStack\Activity\Models\Comment;
 use Tests\TestCase;
 
 class RegenerateCommentContentCommandTest extends TestCase

@@ -8,26 +8,18 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\CspService;
-use DOMDocument;
+use BookStack\Util\HtmlDocument;
 use DOMElement;
-use DOMXPath;
 use Exception;
 use Throwable;
 
 class ExportFormatter
 {
-    protected ImageService $imageService;
-    protected PdfGenerator $pdfGenerator;
-    protected CspService $cspService;
-
-    /**
-     * ExportService constructor.
-     */
-    public function __construct(ImageService $imageService, PdfGenerator $pdfGenerator, CspService $cspService)
-    {
-        $this->imageService = $imageService;
-        $this->pdfGenerator = $pdfGenerator;
-        $this->cspService = $cspService;
+    public function __construct(
+        protected ImageService $imageService,
+        protected PdfGenerator $pdfGenerator,
+        protected CspService $cspService
+    ) {
     }
 
     /**
@@ -36,13 +28,14 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function pageToContainedHtml(Page $page)
+    public function pageToContainedHtml(Page $page): string
     {
         $page->html = (new PageContent($page))->render();
         $pageHtml = view('exports.page', [
             'page'       => $page,
             'format'     => 'html',
             'cspContent' => $this->cspService->getCspMetaTagValue(),
+            'locale'     => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($pageHtml);
@@ -53,7 +46,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function chapterToContainedHtml(Chapter $chapter)
+    public function chapterToContainedHtml(Chapter $chapter): string
     {
         $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
@@ -64,6 +57,7 @@ class ExportFormatter
             'pages'      => $pages,
             'format'     => 'html',
             'cspContent' => $this->cspService->getCspMetaTagValue(),
+            'locale'     => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($html);
@@ -74,7 +68,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function bookToContainedHtml(Book $book)
+    public function bookToContainedHtml(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('exports.book', [
@@ -82,6 +76,7 @@ class ExportFormatter
             'bookChildren' => $bookTree,
             'format'       => 'html',
             'cspContent'   => $this->cspService->getCspMetaTagValue(),
+            'locale'       => user()->getLocale(),
         ])->render();
 
         return $this->containHtml($html);
@@ -92,13 +87,14 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function pageToPdf(Page $page)
+    public function pageToPdf(Page $page): string
     {
         $page->html = (new PageContent($page))->render();
         $html = view('exports.page', [
             'page'   => $page,
             'format' => 'pdf',
             'engine' => $this->pdfGenerator->getActiveEngine(),
+            'locale' => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -109,7 +105,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function chapterToPdf(Chapter $chapter)
+    public function chapterToPdf(Chapter $chapter): string
     {
         $pages = $chapter->getVisiblePages();
         $pages->each(function ($page) {
@@ -121,6 +117,7 @@ class ExportFormatter
             'pages'   => $pages,
             'format'  => 'pdf',
             'engine'  => $this->pdfGenerator->getActiveEngine(),
+            'locale'  => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -131,7 +128,7 @@ class ExportFormatter
      *
      * @throws Throwable
      */
-    public function bookToPdf(Book $book)
+    public function bookToPdf(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $html = view('exports.book', [
@@ -139,6 +136,7 @@ class ExportFormatter
             'bookChildren' => $bookTree,
             'format'       => 'pdf',
             'engine'       => $this->pdfGenerator->getActiveEngine(),
+            'locale'       => user()->getLocale(),
         ])->render();
 
         return $this->htmlToPdf($html);
@@ -152,49 +150,40 @@ class ExportFormatter
     protected function htmlToPdf(string $html): string
     {
         $html = $this->containHtml($html);
-        $html = $this->replaceIframesWithLinks($html);
-        $html = $this->openDetailElements($html);
+        $doc = new HtmlDocument();
+        $doc->loadCompleteHtml($html);
 
-        return $this->pdfGenerator->fromHtml($html);
+        $this->replaceIframesWithLinks($doc);
+        $this->openDetailElements($doc);
+        $cleanedHtml = $doc->getHtml();
+
+        return $this->pdfGenerator->fromHtml($cleanedHtml);
     }
 
     /**
      * Within the given HTML content, Open any detail blocks.
      */
-    protected function openDetailElements(string $html): string
+    protected function openDetailElements(HtmlDocument $doc): void
     {
-        libxml_use_internal_errors(true);
-
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $xPath = new DOMXPath($doc);
-
-        $details = $xPath->query('//details');
+        $details = $doc->queryXPath('//details');
         /** @var DOMElement $detail */
         foreach ($details as $detail) {
             $detail->setAttribute('open', 'open');
         }
-
-        return $doc->saveHTML();
     }
 
     /**
-     * Within the given HTML content, replace any iframe elements
+     * Within the given HTML document, replace any iframe elements
      * with anchor links within paragraph blocks.
      */
-    protected function replaceIframesWithLinks(string $html): string
+    protected function replaceIframesWithLinks(HtmlDocument $doc): void
     {
-        libxml_use_internal_errors(true);
+        $iframes = $doc->queryXPath('//iframe');
 
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $xPath = new DOMXPath($doc);
-
-        $iframes = $xPath->query('//iframe');
         /** @var DOMElement $iframe */
         foreach ($iframes as $iframe) {
             $link = $iframe->getAttribute('src');
-            if (strpos($link, '//') === 0) {
+            if (str_starts_with($link, '//')) {
                 $link = 'https:' . $link;
             }
 
@@ -204,8 +193,6 @@ class ExportFormatter
             $paragraph->appendChild($anchor);
             $iframe->parentNode->replaceChild($paragraph, $iframe);
         }
-
-        return $doc->saveHTML();
     }
 
     /**
@@ -223,7 +210,7 @@ class ExportFormatter
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgTagString = $imgMatch;
                 $srcString = $imageTagsOutput[2][$index];
-                $imageEncoded = $this->imageService->imageUriToBase64($srcString);
+                $imageEncoded = $this->imageService->imageUrlToBase64($srcString);
                 if ($imageEncoded === null) {
                     $imageEncoded = $srcString;
                 }
@@ -240,7 +227,7 @@ class ExportFormatter
             foreach ($linksOutput[0] as $index => $linkMatch) {
                 $oldLinkString = $linkMatch;
                 $srcString = $linksOutput[2][$index];
-                if (strpos(trim($srcString), 'http') !== 0) {
+                if (!str_starts_with(trim($srcString), 'http')) {
                     $newSrcString = url($srcString);
                     $newLinkString = str_replace($srcString, $newSrcString, $oldLinkString);
                     $htmlContent = str_replace($oldLinkString, $newLinkString, $htmlContent);
@@ -255,17 +242,20 @@ class ExportFormatter
      * Converts the page contents into simple plain text.
      * This method filters any bad looking content to provide a nice final output.
      */
-    public function pageToPlainText(Page $page): string
+    public function pageToPlainText(Page $page, bool $pageRendered = false, bool $fromParent = false): string
     {
-        $html = (new PageContent($page))->render();
-        $text = strip_tags($html);
+        $html = $pageRendered ? $page->html : (new PageContent($page))->render();
+        // Add proceeding spaces before tags so spaces remain between
+        // text within elements after stripping tags.
+        $html = str_replace('<', " <", $html);
+        $text = trim(strip_tags($html));
         // Replace multiple spaces with single spaces
-        $text = preg_replace('/\ {2,}/', ' ', $text);
+        $text = preg_replace('/ {2,}/', ' ', $text);
         // Reduce multiple horrid whitespace characters.
         $text = preg_replace('/(\x0A|\xA0|\x0A|\r|\n){2,}/su', "\n\n", $text);
         $text = html_entity_decode($text);
         // Add title
-        $text = $page->name . "\n\n" . $text;
+        $text = $page->name . ($fromParent ? "\n" : "\n\n") . $text;
 
         return $text;
     }
@@ -275,13 +265,15 @@ class ExportFormatter
      */
     public function chapterToPlainText(Chapter $chapter): string
     {
-        $text = $chapter->name . "\n\n";
-        $text .= $chapter->description . "\n\n";
+        $text = $chapter->name . "\n" . $chapter->description;
+        $text = trim($text) . "\n\n";
+
+        $parts = [];
         foreach ($chapter->getVisiblePages() as $page) {
-            $text .= $this->pageToPlainText($page);
+            $parts[] = $this->pageToPlainText($page, false, true);
         }
 
-        return $text;
+        return $text . implode("\n\n", $parts);
     }
 
     /**
@@ -289,17 +281,20 @@ class ExportFormatter
      */
     public function bookToPlainText(Book $book): string
     {
-        $bookTree = (new BookContents($book))->getTree(false, false);
-        $text = $book->name . "\n\n";
+        $bookTree = (new BookContents($book))->getTree(false, true);
+        $text = $book->name . "\n" . $book->description;
+        $text = rtrim($text) . "\n\n";
+
+        $parts = [];
         foreach ($bookTree as $bookChild) {
             if ($bookChild->isA('chapter')) {
-                $text .= $this->chapterToPlainText($bookChild);
+                $parts[] = $this->chapterToPlainText($bookChild);
             } else {
-                $text .= $this->pageToPlainText($bookChild);
+                $parts[] = $this->pageToPlainText($bookChild, true, true);
             }
         }
 
-        return $text;
+        return $text . implode("\n\n", $parts);
     }
 
     /**

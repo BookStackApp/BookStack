@@ -2,18 +2,18 @@
 
 namespace BookStack\Entities\Tools\Markdown;
 
-use League\CommonMark\Block\Element\AbstractBlock;
-use League\CommonMark\Block\Element\ListItem;
-use League\CommonMark\Block\Element\Paragraph;
-use League\CommonMark\Block\Renderer\BlockRendererInterface;
-use League\CommonMark\Block\Renderer\ListItemRenderer;
-use League\CommonMark\ElementRendererInterface;
+use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+use League\CommonMark\Extension\CommonMark\Renderer\Block\ListItemRenderer;
 use League\CommonMark\Extension\TaskList\TaskListItemMarker;
-use League\CommonMark\HtmlElement;
+use League\CommonMark\Node\Block\Paragraph;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
 
-class CustomListItemRenderer implements BlockRendererInterface
+class CustomListItemRenderer implements NodeRendererInterface
 {
-    protected $baseRenderer;
+    protected ListItemRenderer $baseRenderer;
 
     public function __construct()
     {
@@ -23,11 +23,11 @@ class CustomListItemRenderer implements BlockRendererInterface
     /**
      * @return HtmlElement|string|null
      */
-    public function render(AbstractBlock $block, ElementRendererInterface $htmlRenderer, bool $inTightList = false)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        $listItem = $this->baseRenderer->render($block, $htmlRenderer, $inTightList);
+        $listItem = $this->baseRenderer->render($node, $childRenderer);
 
-        if ($this->startsTaskListItem($block)) {
+        if ($node instanceof ListItem && $this->startsTaskListItem($node) && $listItem instanceof HtmlElement) {
             $listItem->setAttribute('class', 'task-list-item');
         }
 

@@ -2,9 +2,8 @@
 
 namespace BookStack\Entities\Models;
 
-use BookStack\Auth\User;
-use BookStack\Interfaces\Deletable;
-use BookStack\Interfaces\Loggable;
+use BookStack\Activity\Models\Loggable;
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;

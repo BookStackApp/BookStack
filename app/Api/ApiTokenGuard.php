@@ -2,7 +2,7 @@
 
 namespace BookStack\Api;
 
-use BookStack\Auth\Access\LoginService;
+use BookStack\Access\LoginService;
 use BookStack\Exceptions\ApiAuthException;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;

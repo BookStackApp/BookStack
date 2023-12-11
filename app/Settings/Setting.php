@@ -2,7 +2,7 @@
 
 namespace BookStack\Settings;
 
-use BookStack\Model;
+use BookStack\App\Model;
 
 class Setting extends Model
 {

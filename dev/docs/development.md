@@ -3,7 +3,7 @@
 All development on BookStack is currently done on the `development` branch. 
 When it's time for a release the `development` branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-* [Node.js](https://nodejs.org/en/) v16.0+
+* [Node.js](https://nodejs.org/en/) v18.0+
 
 ## Building CSS & JavaScript Assets
 
@@ -23,13 +23,19 @@ npm run production
 npm run dev
 ```
 
-BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the database name, username and password all defined as `bookstack-test`. You will have to create that database and that set of credentials before testing.
+Further details about the BookStack JavaScript codebase can be found in the [javascript-code.md document](javascript-code.md).
 
-The testing database will also need migrating and seeding beforehand. This can be done by running `composer refresh-test-database`.
+## Automated App Testing 
 
-Once done you can run `composer test` in the application root directory to run all tests. Tests can be ran in parallel by running them via `composer t`. This will use Laravel's built-in parallel testing functionality, and attempt to create and seed a database instance for each testing thread. If required these parallel testing instances can be reset, before testing again, by running `composer t-reset`.
+BookStack has a large suite of PHP tests to cover application functionality. We try to ensure that all additions and changes to the platform are covered with testing.
+
+For details about setting-up, running and writing tests please see the [php-testing.md document](php-testing.md).
 
 ## Code Standards
+
+We use tools to manage code standards and formatting within the project. If submitting a PR, formatting as per our project standards would help for clarity but don't worry too much about using/understanding these tools as we can always address issues at a later stage when they're picked up by our automated tools.
+
+### PHP
 
 PHP code standards are managed by [using PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
 Static analysis is in place using [PHPStan](https://phpstan.org/) & [Larastan](https://github.com/nunomaduro/larastan).
@@ -49,7 +55,19 @@ composer format
 composer check-static
 ```
 
-If submitting a PR, formatting as per our project standards would help for clarity but don't worry too much about using/understanding these tools as we can always address issues at a later stage when they're picked up by our automated tools.
+### JavaScript
+
+JavaScript code standards use managed using [ESLint](https://eslint.org/).
+The ESLint rule configuration is managed within the `package.json` file.
+The below commands can be used to lint and format:
+
+```bash
+# Run code linting using ESLint
+npm run lint
+
+# Fix code where possible using ESLint
+npm run fix
+```
 
 ## Development using Docker
 

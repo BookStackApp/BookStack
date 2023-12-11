@@ -1,0 +1,38 @@
+{
+  "owner": {
+    "id": 1,
+    "name": "Admin",
+    "slug": "admin"
+  },
+  "role_permissions": [
+    {
+      "role_id": 2,
+      "view": true,
+      "create": false,
+      "update": true,
+      "delete": false,
+      "role": {
+        "id": 2,
+        "display_name": "Editor"
+      }
+    },
+    {
+      "role_id": 10,
+      "view": true,
+      "create": true,
+      "update": false,
+      "delete": false,
+      "role": {
+        "id": 10,
+        "display_name": "Wizards of the west"
+      }
+    }
+  ],
+  "fallback_permissions": {
+    "inheriting": false,
+    "view": true,
+    "create": false,
+    "update": false,
+    "delete": false
+  }
+}

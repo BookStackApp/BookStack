@@ -1,0 +1,14 @@
+{
+  "display_name": "Book & Shelf Maintainers",
+  "description": "All those who maintain books & shelves",
+  "mfa_enforced": false,
+  "permissions": [
+    "book-view-all",
+    "book-update-all",
+    "book-delete-all",
+    "bookshelf-view-all",
+    "bookshelf-update-all",
+    "bookshelf-delete-all",
+    "restrictions-manage-all"
+  ]
+}

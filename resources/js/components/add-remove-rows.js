@@ -1,6 +1,6 @@
-import {onChildEvent} from "../services/dom";
-import {uniqueId} from "../services/util";
-import {Component} from "./component";
+import {onChildEvent} from '../services/dom';
+import {uniqueId} from '../services/util';
+import {Component} from './component';
 
 /**
  * AddRemoveRows
@@ -8,6 +8,7 @@ import {Component} from "./component";
  * Needs a model row to use when adding a new row.
  */
 export class AddRemoveRows extends Component {
+
     setup() {
         this.modelRow = this.$refs.model;
         this.addButton = this.$refs.add;
@@ -19,7 +20,7 @@ export class AddRemoveRows extends Component {
     setupListeners() {
         this.addButton.addEventListener('click', this.add.bind(this));
 
-        onChildEvent(this.$el, this.removeSelector, 'click', (e) => {
+        onChildEvent(this.$el, this.removeSelector, 'click', e => {
             const row = e.target.closest(this.rowSelector);
             row.remove();
         });
@@ -44,9 +45,10 @@ export class AddRemoveRows extends Component {
      */
     setClonedInputNames(clone) {
         const rowId = uniqueId();
-        const randRowIdElems = clone.querySelectorAll(`[name*="randrowid"]`);
+        const randRowIdElems = clone.querySelectorAll('[name*="randrowid"]');
         for (const elem of randRowIdElems) {
             elem.name = elem.name.split('randrowid').join(rowId);
         }
     }
+
 }

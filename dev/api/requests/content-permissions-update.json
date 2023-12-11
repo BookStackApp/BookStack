@@ -1,0 +1,26 @@
+{
+  "owner_id": 1,
+  "role_permissions": [
+    {
+      "role_id": 2,
+      "view": true,
+      "create": true,
+      "update": true,
+      "delete": false
+    },
+    {
+      "role_id": 3,
+      "view": false,
+      "create": false,
+      "update": false,
+      "delete": false
+    }
+  ],
+  "fallback_permissions": {
+    "inheriting": false,
+    "view": true,
+    "create": true,
+    "update": false,
+    "delete": false
+  }
+}

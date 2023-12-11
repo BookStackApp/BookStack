@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class UpdatePolymorphicTypes extends Migration
+return new class extends Migration
 {
     /**
      * Mapping of old polymorphic types to new simpler values.
@@ -61,4 +61,4 @@ class UpdatePolymorphicTypes extends Migration
             }
         }
     }
-}
+};

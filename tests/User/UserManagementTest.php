@@ -2,10 +2,11 @@
 
 namespace Tests\User;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\Access\UserInviteService;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
+use BookStack\Access\UserInviteService;
+use BookStack\Activity\ActivityType;
+use BookStack\Uploads\Image;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
@@ -46,7 +47,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_updating()
     {
-        $user = $this->getNormalUser();
+        $user = $this->users->viewer();
         $password = $user->password;
 
         $resp = $this->asAdmin()->get('/settings/users/' . $user->id);
@@ -65,7 +66,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_password_update()
     {
-        $user = $this->getNormalUser();
+        $user = $this->users->viewer();
         $userProfilePage = '/settings/users/' . $user->id;
 
         $this->asAdmin()->get($userProfilePage);
@@ -113,7 +114,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $resp = $this->asAdmin()->delete("settings/users/{$editor->id}");
         $resp->assertRedirect('/settings/users');
         $resp = $this->followRedirects($resp);
@@ -126,7 +127,7 @@ class UserManagementTest extends TestCase
 
     public function test_delete_offers_migrate_option()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         $resp = $this->asAdmin()->get("settings/users/{$editor->id}/delete");
         $resp->assertSee('Migrate Ownership');
         $resp->assertSee('new_owner_id');
@@ -134,16 +135,17 @@ class UserManagementTest extends TestCase
 
     public function test_migrate_option_hidden_if_user_cannot_manage_users()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
         $resp->assertDontSee('Migrate Ownership');
         $resp->assertDontSee('new_owner_id');
 
-        $this->giveUserPermissions($editor, ['users-manage']);
+        $this->permissions->grantUserRolePermissions($editor, ['users-manage']);
 
         $resp = $this->asEditor()->get("settings/users/{$editor->id}/delete");
         $resp->assertSee('Migrate Ownership');
+        $this->withHtml($resp)->assertElementExists('form input[name="new_owner_id"]');
         $resp->assertSee('new_owner_id');
     }
 
@@ -160,9 +162,19 @@ class UserManagementTest extends TestCase
         ]);
     }
 
+    public function test_delete_with_empty_owner_migration_id_works()
+    {
+        $user = $this->users->editor();
+
+        $resp = $this->asAdmin()->delete("settings/users/{$user->id}", ['new_owner_id' => '']);
+        $resp->assertRedirect('/settings/users');
+        $this->assertActivityExists(ActivityType::USER_DELETE);
+        $this->assertSessionHas('success');
+    }
+
     public function test_delete_removes_user_preferences()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         setting()->putUser($editor, 'dark-mode-enabled', 'true');
 
         $this->assertDatabaseHas('settings', [
@@ -179,7 +191,7 @@ class UserManagementTest extends TestCase
 
     public function test_guest_profile_shows_limited_form()
     {
-        $guest = User::getDefault();
+        $guest = $this->users->guest();
         $resp = $this->asAdmin()->get('/settings/users/' . $guest->id);
         $resp->assertSee('Guest');
         $this->withHtml($resp)->assertElementNotExists('#password');
@@ -187,7 +199,7 @@ class UserManagementTest extends TestCase
 
     public function test_guest_profile_cannot_be_deleted()
     {
-        $guestUser = User::getDefault();
+        $guestUser = $this->users->guest();
         $resp = $this->asAdmin()->get('/settings/users/' . $guestUser->id . '/delete');
         $resp->assertSee('Delete User');
         $resp->assertSee('Guest');
@@ -203,7 +215,7 @@ class UserManagementTest extends TestCase
     {
         $langs = ['en', 'fr', 'hr'];
         foreach ($langs as $lang) {
-            config()->set('app.locale', $lang);
+            config()->set('app.default_locale', $lang);
             $resp = $this->asAdmin()->get('/settings/users/create');
             $this->withHtml($resp)->assertElementExists('select[name="language"] option[value="' . $lang . '"][selected]');
         }
@@ -253,7 +265,7 @@ class UserManagementTest extends TestCase
 
     public function test_user_create_update_fails_if_locale_is_invalid()
     {
-        $user = $this->getEditor();
+        $user = $this->users->editor();
 
         // Too long
         $resp = $this->asAdmin()->put($user->getEditUrl(), ['language' => 'this_is_too_long']);
@@ -273,5 +285,34 @@ class UserManagementTest extends TestCase
         ]);
         $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
         $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);
+    }
+
+    public function test_user_avatar_update_and_reset()
+    {
+        $user = $this->users->viewer();
+        $avatarFile = $this->files->uploadedImage('avatar-icon.png');
+
+        $this->assertEquals(0, $user->image_id);
+
+        $upload = $this->asAdmin()->call('PUT', "/settings/users/{$user->id}", [
+            'name' => 'Barry Scott',
+        ], [], ['profile_image' => $avatarFile], []);
+        $upload->assertRedirect('/settings/users');
+
+        $user->refresh();
+        $this->assertNotEquals(0, $user->image_id);
+        /** @var Image $image */
+        $image = Image::query()->findOrFail($user->image_id);
+        $this->assertFileExists(public_path($image->path));
+
+        $reset = $this->put("/settings/users/{$user->id}", [
+            'name' => 'Barry Scott',
+            'profile_image_reset' => 'true',
+        ]);
+        $upload->assertRedirect('/settings/users');
+
+        $user->refresh();
+        $this->assertFileDoesNotExist(public_path($image->path));
+        $this->assertEquals(0, $user->image_id);
     }
 }

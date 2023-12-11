@@ -2,7 +2,9 @@
 
 namespace BookStack\References;
 
+use BookStack\Permissions\Models\JointPermission;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
@@ -23,5 +25,11 @@ class Reference extends Model
     public function to(): MorphTo
     {
         return $this->morphTo('to');
+    }
+
+    public function jointPermissions(): HasMany
+    {
+        return $this->hasMany(JointPermission::class, 'entity_id', 'from_id')
+            ->whereColumn('references.from_type', '=', 'joint_permissions.entity_type');
     }
 }

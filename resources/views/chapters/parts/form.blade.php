@@ -12,7 +12,7 @@
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">
-    <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
         <label for="tags">{{ trans('entities.chapter_tags') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">

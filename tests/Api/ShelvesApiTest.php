@@ -7,12 +7,10 @@ use BookStack\Entities\Models\Bookshelf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
-use Tests\Uploads\UsesImages;
 
 class ShelvesApiTest extends TestCase
 {
     use TestsApi;
-    use UsesImages;
 
     protected string $baseEndpoint = '/api/shelves';
 
@@ -154,7 +152,7 @@ class ShelvesApiTest extends TestCase
         /** @var Book $shelf */
         $shelf = Bookshelf::visible()->first();
         $this->assertNull($shelf->cover);
-        $file = $this->getTestImage('image.png');
+        $file = $this->files->uploadedImage('image.png');
 
         // Ensure cover image can be set via API
         $resp = $this->call('PUT', $this->baseEndpoint . "/{$shelf->id}", [

@@ -1,5 +1,5 @@
-import {build as buildEditorConfig} from "../wysiwyg/config";
-import {Component} from "./component";
+import {build as buildEditorConfig} from '../wysiwyg/config';
+import {Component} from './component';
 
 export class WysiwygEditor extends Component {
 
@@ -25,7 +25,9 @@ export class WysiwygEditor extends Component {
         });
 
         window.$events.emitPublic(this.elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
-        window.tinymce.init(this.tinyMceConfig);
+        window.tinymce.init(this.tinyMceConfig).then(editors => {
+            this.editor = editors[0];
+        });
     }
 
     getDrawIoUrl() {
@@ -34,6 +36,17 @@ export class WysiwygEditor extends Component {
             return drawioUrlElem.getAttribute('drawio-url');
         }
         return '';
+    }
+
+    /**
+     * Get the content of this editor.
+     * Used by the parent page editor component.
+     * @return {{html: String}}
+     */
+    getContent() {
+        return {
+            html: this.editor.getContent(),
+        };
     }
 
 }

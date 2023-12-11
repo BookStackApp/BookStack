@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class FlattenEntityPermissionsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -102,4 +102,4 @@ class FlattenEntityPermissionsTable extends Migration
         Schema::dropIfExists('entity_permissions');
         Schema::rename('old_entity_permissions', 'entity_permissions');
     }
-}
+};

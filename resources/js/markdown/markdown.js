@@ -1,4 +1,4 @@
-import MarkdownIt from "markdown-it";
+import MarkdownIt from 'markdown-it';
 import mdTasksLists from 'markdown-it-task-lists';
 
 export class Markdown {
@@ -24,7 +24,5 @@ export class Markdown {
     render(markdown) {
         return this.renderer.render(markdown);
     }
+
 }
-
-
-

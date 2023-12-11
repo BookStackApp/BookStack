@@ -24,7 +24,7 @@ class PageFactory extends Factory
         $html = '<p>' . implode('</p>', $this->faker->paragraphs(5)) . '</p>';
 
         return [
-            'name'           => $this->faker->sentence,
+            'name'           => $this->faker->sentence(),
             'slug'           => Str::random(10),
             'html'           => $html,
             'text'           => strip_tags($html),

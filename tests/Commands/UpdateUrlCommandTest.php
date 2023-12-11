@@ -2,6 +2,7 @@
 
 namespace Tests\Commands;
 
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Tests\TestCase;
 
@@ -34,10 +35,19 @@ class UpdateUrlCommandTest extends TestCase
         $this->artisan('bookstack:update-url https://cats.example.com');
     }
 
+    public function test_command_force_option_skips_prompt()
+    {
+        $this->artisan('bookstack:update-url --force https://cats.example.com/donkey https://cats.example.com/monkey')
+            ->expectsOutputToContain('URL update procedure complete')
+            ->assertSuccessful();
+    }
+
     public function test_command_updates_settings()
     {
         setting()->put('my-custom-item', 'https://example.com/donkey/cat');
         $this->runUpdate('https://example.com', 'https://cats.example.com');
+
+        setting()->flushCache();
 
         $settingVal = setting('my-custom-item');
         $this->assertEquals('https://cats.example.com/donkey/cat', $settingVal);
@@ -47,6 +57,9 @@ class UpdateUrlCommandTest extends TestCase
     {
         setting()->put('my-custom-array-item', [['name' => 'a https://example.com/donkey/cat url']]);
         $this->runUpdate('https://example.com', 'https://cats.example.com');
+
+        setting()->flushCache();
+
         $settingVal = setting('my-custom-array-item');
         $this->assertEquals('a https://cats.example.com/donkey/cat url', $settingVal[0]['name']);
     }

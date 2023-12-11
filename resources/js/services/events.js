@@ -6,13 +6,12 @@ const stack = [];
  * @param {String} eventName
  * @param {*} eventData
  */
-function emit(eventName, eventData) {
+export function emit(eventName, eventData) {
     stack.push({name: eventName, data: eventData});
-    if (typeof listeners[eventName] === 'undefined') return this;
-    let eventsToStart = listeners[eventName];
-    for (let i = 0; i < eventsToStart.length; i++) {
-        let event = eventsToStart[i];
-        event(eventData);
+
+    const listenersToRun = listeners[eventName] || [];
+    for (const listener of listenersToRun) {
+        listener(eventData);
     }
 }
 
@@ -22,7 +21,7 @@ function emit(eventName, eventData) {
  * @param {Function} callback
  * @returns {Events}
  */
-function listen(eventName, callback) {
+export function listen(eventName, callback) {
     if (typeof listeners[eventName] === 'undefined') listeners[eventName] = [];
     listeners[eventName].push(callback);
 }
@@ -34,33 +33,49 @@ function listen(eventName, callback) {
  * @param {String} eventName
  * @param {Object} eventData
  */
-function emitPublic(targetElement, eventName, eventData) {
+export function emitPublic(targetElement, eventName, eventData) {
     const event = new CustomEvent(eventName, {
         detail: eventData,
-        bubbles: true
+        bubbles: true,
     });
     targetElement.dispatchEvent(event);
 }
 
 /**
- * Notify of a http error.
- * Check for standard scenarios such as validation errors and
- * formats an error notification accordingly.
- * @param {Error} error
+ * Emit a success event with the provided message.
+ * @param {String} message
  */
-function showValidationErrors(error) {
-    if (!error.status) return;
-    if (error.status === 422 && error.data) {
-        const message = Object.values(error.data).flat().join('\n');
-        emit('error', message);
+export function success(message) {
+    emit('success', message);
+}
+
+/**
+ * Emit an error event with the provided message.
+ * @param {String} message
+ */
+export function error(message) {
+    emit('error', message);
+}
+
+/**
+ * Notify of standard server-provided validation errors.
+ * @param {Object} responseErr
+ */
+export function showValidationErrors(responseErr) {
+    if (!responseErr.status) return;
+    if (responseErr.status === 422 && responseErr.data) {
+        const message = Object.values(responseErr.data).flat().join('\n');
+        error(message);
     }
 }
 
-export default {
-    emit,
-    emitPublic,
-    listen,
-    success: (msg) => emit('success', msg),
-    error: (msg) => emit('error', msg),
-    showValidationErrors,
+/**
+ * Notify standard server-provided error messages.
+ * @param {Object} responseErr
+ */
+export function showResponseError(responseErr) {
+    if (!responseErr.status) return;
+    if (responseErr.status >= 400 && responseErr.data && responseErr.data.message) {
+        error(responseErr.data.message);
+    }
 }

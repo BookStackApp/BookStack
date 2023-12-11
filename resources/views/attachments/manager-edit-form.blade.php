@@ -1,7 +1,7 @@
 <div component="ajax-form"
      option:ajax-form:url="/attachments/{{ $attachment->id }}"
      option:ajax-form:method="put"
-     option:ajax-form:response-container=".attachment-edit-container"
+     option:ajax-form:response-container="#edit-form-container"
      option:ajax-form:success-message="{{ trans('entities.attachments_updated_success') }}">
     <h5>{{ trans('entities.attachments_edit_file') }}</h5>
 
@@ -17,18 +17,35 @@
     </div>
 
     <div component="tabs" class="tab-container">
-        <div class="nav-tabs">
-            <button refs="tabs@toggleFile" type="button" class="tab-item {{ $attachment->external ? '' : 'selected' }}">{{ trans('entities.attachments_upload') }}</button>
-            <button refs="tabs@toggleLink" type="button" class="tab-item {{ $attachment->external ? 'selected' : '' }}">{{ trans('entities.attachments_set_link') }}</button>
+        <div class="nav-tabs" role="tablist">
+            <button id="attachment-edit-file-tab"
+                    type="button"
+                    aria-controls="attachment-edit-file-panel"
+                    aria-selected="{{ $attachment->external ? 'false' : 'true' }}"
+                    role="tab">{{ trans('entities.attachments_upload') }}</button>
+            <button id="attachment-edit-link-tab"
+                    type="button"
+                    aria-controls="attachment-edit-link-panel"
+                    aria-selected="{{ $attachment->external ? 'true' : 'false' }}"
+                    role="tab">{{ trans('entities.attachments_set_link') }}</button>
         </div>
-        <div refs="tabs@contentFile" class="mb-m {{ $attachment->external ? 'hidden' : '' }}">
-            @include('form.dropzone', [
+        <div id="attachment-edit-file-panel"
+             @if($attachment->external) hidden @endif
+             tabindex="0"
+             role="tabpanel"
+             aria-labelledby="attachment-edit-file-tab"
+             class="mb-m">
+            @include('form.simple-dropzone', [
                 'placeholder' => trans('entities.attachments_edit_drop_upload'),
                 'url' =>  url('/attachments/upload/' . $attachment->id),
                 'successMessage' => trans('entities.attachments_file_updated'),
             ])
         </div>
-        <div refs="tabs@contentLink" class="{{ $attachment->external ? '' : 'hidden' }}">
+        <div id="attachment-edit-link-panel"
+             @if(!$attachment->external) hidden @endif
+             tabindex="0"
+             role="tabpanel"
+             aria-labelledby="attachment-edit-link-tab">
             <div class="form-group">
                 <label for="attachment_edit_url">{{ trans('entities.attachments_link_url') }}</label>
                 <input type="text" id="attachment_edit_url"
@@ -43,6 +60,8 @@
     </div>
 
     <button component="event-emit-select"
-            option:event-emit-select:name="edit-back" type="button" class="button outline">{{ trans('common.back') }}</button>
+            option:event-emit-select:name="edit-back"
+            type="button"
+            class="button outline">{{ trans('common.back') }}</button>
     <button refs="ajax-form@submit" type="button" class="button">{{ trans('common.save') }}</button>
 </div>
