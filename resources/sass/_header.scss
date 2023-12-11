@@ -2,12 +2,12 @@
  * Includes the main navigation header and the faded toolbar.
  */
 
-header .grid {
+header.grid {
   grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
 }
 
 @include smaller-than($l) {
-  header .grid {
+  header.grid {
     grid-template-columns: 1fr;
     grid-row-gap: 0;
   }
@@ -22,9 +22,6 @@ header {
   border-bottom: 1px solid #DDD;
   box-shadow: $bs-card;
   @include lightDark(border-bottom-color, #DDD, #000);
-  @include whenDark {
-    filter: saturate(0.8) brightness(0.8);
-  }
   .header-links {
     display: flex;
     align-items: center;
@@ -367,43 +364,4 @@ header .search-box.search-active:focus-within {
 .faded span.faded-text {
   display: inline-block;
   padding: $-s;
-}
-
-.action-buttons .text-button {
-  display: inline-block;
-  padding: $-xs $-s;
-  &:last-child {
-    padding-inline-end: 0;
-  }
-  &:first-child {
-    padding-inline-start: 0;
-  }
-}
-
-
-.action-buttons .dropdown-container:last-child a {
-  padding-inline-end: 0;
-  padding-inline-start: $-s;
-}
-.action-buttons {
-  text-align: end;
-  &.text-left {
-    text-align: start;
-    .text-button {
-      padding-inline-end: $-m;
-      padding-inline-start: 0;
-    }
-  }
-  &.text-center {
-    text-align: center;
-  }
-}
-
-@include smaller-than($m) {
-  .action-buttons .text-button {
-    padding: $-xs $-xs;
-  }
-  .action-buttons .dropdown-container:last-child a {
-    padding-inline-start: $-xs;
-  }
 }

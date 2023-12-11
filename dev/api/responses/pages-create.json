@@ -5,25 +5,30 @@
 	"name": "My API Page",
 	"slug": "my-api-page",
 	"html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
-	"priority": 14,
+	"raw_html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",
+	"priority": 15,
 	"created_at": "2020-11-28T15:01:39.000000Z",
 	"updated_at": "2020-11-28T15:01:39.000000Z",
 	"created_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"updated_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"owned_by": {
 		"id": 1,
-		"name": "Admin"
+		"name": "Admin",
+		"slug": "admin"
 	},
 	"draft": false,
 	"markdown": "",
 	"revision_count": 1,
 	"template": false,
+	"editor": "wysiwyg",
 	"tags": [
 		{
 			"name": "Category",

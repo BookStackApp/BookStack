@@ -1,5 +1,7 @@
 /vendor
 /node_modules
+/.vscode
+/composer
 Homestead.yaml
 .env
 .idea
@@ -11,6 +13,7 @@ yarn-error.log
 /public/js
 /public/bower
 /public/build/
+/public/favicon.ico
 /storage/images
 _ide_helper.php
 /storage/debugbar
@@ -20,8 +23,11 @@ yarn.lock
 nbproject
 .buildpath
 .project
+.nvmrc
 .settings/
 webpack-stats.json
 .phpunit.result.cache
 .DS_Store
 phpstan.neon
+esbuild-meta.json
+.phpactor.json

@@ -2,22 +2,22 @@
 
 namespace Tests;
 
-use BookStack\Actions\Favourite;
-use BookStack\Auth\User;
+use BookStack\Activity\Models\Favourite;
+use BookStack\Users\Models\User;
 
 class FavouriteTest extends TestCase
 {
     public function test_page_add_favourite_flow()
     {
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
         $this->withHtml($resp)->assertElementContains('button', 'Favourite');
-        $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"]');
+        $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/add"] input[name="type"][value="page"]');
 
         $resp = $this->post('/favourites/add', [
-            'type' => get_class($page),
+            'type' => $page->getMorphClass(),
             'id'   => $page->id,
         ]);
         $resp->assertRedirect($page->getUrl());
@@ -33,7 +33,7 @@ class FavouriteTest extends TestCase
     public function test_page_remove_favourite_flow()
     {
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         Favourite::query()->forceCreate([
             'user_id'           => $editor->id,
             'favouritable_id'   => $page->id,
@@ -45,7 +45,7 @@ class FavouriteTest extends TestCase
         $this->withHtml($resp)->assertElementExists('form[method="POST"][action$="/favourites/remove"]');
 
         $resp = $this->post('/favourites/remove', [
-            'type' => get_class($page),
+            'type' => $page->getMorphClass(),
             'id'   => $page->id,
         ]);
         $resp->assertRedirect($page->getUrl());
@@ -56,6 +56,23 @@ class FavouriteTest extends TestCase
         ]);
     }
 
+    public function test_add_and_remove_redirect_to_entity_without_history()
+    {
+        $page = $this->entities->page();
+
+        $resp = $this->asEditor()->post('/favourites/add', [
+            'type' => $page->getMorphClass(),
+            'id'   => $page->id,
+        ]);
+        $resp->assertRedirect($page->getUrl());
+
+        $resp = $this->asEditor()->post('/favourites/remove', [
+            'type' => $page->getMorphClass(),
+            'id'   => $page->id,
+        ]);
+        $resp->assertRedirect($page->getUrl());
+    }
+
     public function test_favourite_flow_with_own_permissions()
     {
         $book = $this->entities->book();
@@ -63,11 +80,11 @@ class FavouriteTest extends TestCase
         $book->owned_by = $user->id;
         $book->save();
 
-        $this->giveUserPermissions($user, ['book-view-own']);
+        $this->permissions->grantUserRolePermissions($user, ['book-view-own']);
 
         $this->actingAs($user)->get($book->getUrl());
         $resp = $this->post('/favourites/add', [
-            'type' => get_class($book),
+            'type' => $book->getMorphClass(),
             'id'   => $book->id,
         ]);
         $resp->assertRedirect($book->getUrl());
@@ -81,7 +98,7 @@ class FavouriteTest extends TestCase
 
     public function test_each_entity_type_shows_favourite_button()
     {
-        $this->actingAs($this->getEditor());
+        $this->actingAs($this->users->editor());
 
         foreach ($this->entities->all() as $entity) {
             $resp = $this->get($entity->getUrl());
@@ -94,13 +111,13 @@ class FavouriteTest extends TestCase
         $this->setSettings(['app-public' => 'true']);
         $resp = $this->get('/');
         $this->withHtml($resp)->assertElementNotContains('header', 'My Favourites');
-        $resp = $this->actingAs($this->getViewer())->get('/');
+        $resp = $this->actingAs($this->users->viewer())->get('/');
         $this->withHtml($resp)->assertElementContains('header a', 'My Favourites');
     }
 
     public function test_favourites_shown_on_homepage()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get('/');
         $this->withHtml($resp)->assertElementNotExists('#top-favourites');
@@ -116,7 +133,7 @@ class FavouriteTest extends TestCase
     public function test_favourites_list_page_shows_favourites_and_has_working_pagination()
     {
         $page = $this->entities->page();
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get('/favourites');
         $resp->assertDontSee($page->name);

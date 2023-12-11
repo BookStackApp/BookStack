@@ -17,7 +17,7 @@
         @if(count($popular) > 0)
             @include('entities.list', ['entities' => $popular, 'style' => 'compact'])
         @else
-            <div class="body text-muted">{{ trans('entities.books_popular_empty') }}</div>
+            <p class="text-muted pb-l mb-none">{{ trans('entities.books_popular_empty') }}</p>
         @endif
     </div>
 
@@ -26,7 +26,7 @@
         @if(count($popular) > 0)
             @include('entities.list', ['entities' => $new, 'style' => 'compact'])
         @else
-            <div class="body text-muted">{{ trans('entities.books_new_empty') }}</div>
+            <p class="text-muted pb-l mb-none">{{ trans('entities.books_new_empty') }}</p>
         @endif
     </div>
 @stop
@@ -35,8 +35,8 @@
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
-            @if(user()->can('book-create-all'))
+        <div class="icon-list text-link">
+            @if(userCan('book-create-all'))
                 <a href="{{ url("/create-book") }}" data-shortcut="new" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.books_create') }}</span>

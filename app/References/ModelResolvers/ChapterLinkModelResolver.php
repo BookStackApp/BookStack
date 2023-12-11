@@ -2,8 +2,8 @@
 
 namespace BookStack\References\ModelResolvers;
 
+use BookStack\App\Model;
 use BookStack\Entities\Models\Chapter;
-use BookStack\Model;
 
 class ChapterLinkModelResolver implements CrossLinkModelResolver
 {

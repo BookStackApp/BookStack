@@ -1,5 +1,3 @@
-
-
 export const blockElementTypes = [
     'p',
     'h1',
@@ -15,5 +13,6 @@ export const blockElementTypes = [
     'details',
     'ul',
     'ol',
-    'table'
+    'table',
+    'hr',
 ];

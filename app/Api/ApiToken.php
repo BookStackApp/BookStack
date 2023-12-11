@@ -2,8 +2,9 @@
 
 namespace BookStack\Api;
 
-use BookStack\Auth\User;
-use BookStack\Interfaces\Loggable;
+use BookStack\Activity\Models\Loggable;
+use BookStack\Users\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -20,6 +21,8 @@ use Illuminate\Support\Carbon;
  */
 class ApiToken extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'expires_at'];
     protected $casts = [
         'expires_at' => 'date:Y-m-d',
@@ -48,5 +51,13 @@ class ApiToken extends Model implements Loggable
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}; User: {$this->user->logDescriptor()}";
+    }
+
+    /**
+     * Get the URL for managing this token.
+     */
+    public function getUrl(string $path = ''): string
+    {
+        return url("/api-tokens/{$this->user_id}/{$this->id}/" . trim($path, '/'));
     }
 }

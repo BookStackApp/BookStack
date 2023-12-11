@@ -39,7 +39,7 @@ class PageDraftTest extends TestCase
         $this->withHtml($resp)->assertElementNotContains('[name="html"]', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
-        $newUser = $this->getEditor();
+        $newUser = $this->users->editor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
         $resp = $this->actingAs($newUser)->get($this->page->getUrl('/edit'));
@@ -62,7 +62,7 @@ class PageDraftTest extends TestCase
         $this->withHtml($resp)->assertElementNotContains('[name="html"]', $addedContent);
 
         $newContent = $this->page->html . $addedContent;
-        $newUser = $this->getEditor();
+        $newUser = $this->users->editor();
         $this->pageRepo->updatePageDraft($this->page, ['html' => $newContent]);
 
         $this->actingAs($newUser)
@@ -75,8 +75,8 @@ class PageDraftTest extends TestCase
 
     public function test_draft_save_shows_alert_if_draft_older_than_last_page_update()
     {
-        $admin = $this->getAdmin();
-        $editor = $this->getEditor();
+        $admin = $this->users->admin();
+        $editor = $this->users->editor();
         $page = $this->entities->page();
 
         $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
@@ -109,8 +109,8 @@ class PageDraftTest extends TestCase
 
     public function test_draft_save_shows_alert_if_draft_edit_started_by_someone_else()
     {
-        $admin = $this->getAdmin();
-        $editor = $this->getEditor();
+        $admin = $this->users->admin();
+        $editor = $this->users->editor();
         $page = $this->entities->page();
 
         $this->actingAs($admin)->put('/ajax/page/' . $page->id . '/save-draft', [
@@ -143,7 +143,7 @@ class PageDraftTest extends TestCase
     {
         $book = $this->entities->book();
         $chapter = $book->chapters->first();
-        $newUser = $this->getEditor();
+        $newUser = $this->users->editor();
 
         $this->actingAs($newUser)->get($book->getUrl('/create-page'));
         $this->get($chapter->getUrl('/create-page'));
@@ -164,6 +164,30 @@ class PageDraftTest extends TestCase
         $this->getJson('/ajax/page/' . $page->id)->assertJson([
             'html' => $page->html,
         ]);
+    }
+
+    public function test_user_draft_removed_on_user_drafts_delete_call()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $this->actingAs($editor)->put('/ajax/page/' . $page->id . '/save-draft', [
+            'name' => $page->name,
+            'html' => '<p>updated draft again</p>',
+        ]);
+
+        $revisionData = [
+            'type' => 'update_draft',
+            'created_by' => $editor->id,
+            'page_id' => $page->id,
+        ];
+
+        $this->assertDatabaseHas('page_revisions', $revisionData);
+
+        $resp = $this->delete("/page-revisions/user-drafts/{$page->id}");
+
+        $resp->assertOk();
+        $this->assertDatabaseMissing('page_revisions', $revisionData);
     }
 
     public function test_updating_page_draft_with_markdown_retains_markdown_content()

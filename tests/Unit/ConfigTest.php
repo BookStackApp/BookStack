@@ -3,6 +3,8 @@
 namespace Tests\Unit;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Tests\TestCase;
 
 /**
@@ -94,6 +96,68 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'cat', 'snappy.pdf.options.page-size', 'A4');
         $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'letter', 'snappy.pdf.options.page-size', 'Letter');
         $this->checkEnvConfigResult('EXPORT_PAGE_SIZE', 'a4', 'snappy.pdf.options.page-size', 'A4');
+    }
+
+    public function test_sendmail_command_is_configurable()
+    {
+        $this->checkEnvConfigResult('MAIL_SENDMAIL_COMMAND', '/var/sendmail -o', 'mail.mailers.sendmail.path', '/var/sendmail -o');
+    }
+
+    public function test_mail_disable_ssl_verification_alters_mailer()
+    {
+        $getStreamOptions = function (): array {
+            /** @var EsmtpTransport $transport */
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            return $transport->getStream()->getStreamOptions();
+        };
+
+        $this->assertEmpty($getStreamOptions());
+
+
+        $this->runWithEnv('MAIL_VERIFY_SSL', 'false', function () use ($getStreamOptions) {
+            $options = $getStreamOptions();
+            $this->assertArrayHasKey('ssl', $options);
+            $this->assertFalse($options['ssl']['verify_peer']);
+            $this->assertFalse($options['ssl']['verify_peer_name']);
+        });
+    }
+
+    public function test_non_null_mail_encryption_options_enforce_smtp_scheme()
+    {
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'tls', 'mail.mailers.smtp.tls_required', true);
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'ssl', 'mail.mailers.smtp.tls_required', true);
+        $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'null', 'mail.mailers.smtp.tls_required', false);
+    }
+
+    public function test_smtp_scheme_and_certain_port_forces_tls_usage()
+    {
+        $isMailTlsRequired = function () {
+            /** @var \BookStack\App\Mail\EsmtpTransport $transport */
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            Mail::purge('smtp');
+            return $transport->getTlsRequirement();
+        };
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => null,
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertFalse($isMailTlsRequired());
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => 'tls',
+            'mail.mailers.smtp.port' => 587,
+        ]);
+
+        $this->assertTrue($isMailTlsRequired());
+
+        config()->set([
+            'mail.mailers.smtp.tls_required' => null,
+            'mail.mailers.smtp.port' => 465,
+        ]);
+
+        $this->assertTrue($isMailTlsRequired());
     }
 
     /**

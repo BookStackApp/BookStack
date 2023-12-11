@@ -17,7 +17,7 @@
 
 @section('body')
 
-    <div class="mb-s">
+    <div class="mb-s print-hidden">
         @include('entities.breadcrumbs', ['crumbs' => [
             $book,
         ]])
@@ -70,7 +70,7 @@
     <div class="mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $book])
+            @include('entities.meta', ['entity' => $book, 'watchOptions' => $watchOptions])
             @if($book->hasPermissions())
                 <div class="active-restriction">
                     @if(userCan('restrictions-manage', $book))
@@ -91,7 +91,7 @@
 
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
 
             @if(userCan('page-create', $book))
                 <a href="{{ $book->getUrl('/create-page') }}" data-shortcut="new" class="icon-list-item">
@@ -139,7 +139,10 @@
 
             <hr class="primary-background">
 
-            @if(signedInUser())
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching())
+                @include('entities.watch-action', ['entity' => $book])
+            @endif
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $book])
             @endif
             @if(userCan('content-export'))
@@ -168,7 +171,7 @@
     @endif
 
     @if(count($activity) > 0)
-        <div class="mb-xl">
+        <div id="recent-activity" class="mb-xl">
             <h5>{{ trans('entities.recent_activity') }}</h5>
             @include('common.activity-list', ['activity' => $activity])
         </div>

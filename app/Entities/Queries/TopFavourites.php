@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\Actions\Favourite;
+use BookStack\Activity\Models\Favourite;
 use Illuminate\Database\Query\JoinClause;
 
 class TopFavourites extends EntityQuery
@@ -10,7 +10,7 @@ class TopFavourites extends EntityQuery
     public function run(int $count, int $skip = 0)
     {
         $user = user();
-        if (is_null($user) || $user->isDefault()) {
+        if ($user->isGuest()) {
             return collect();
         }
 

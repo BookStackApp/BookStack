@@ -4,16 +4,17 @@
         <div class="text-right pt-xs">
             @if(userCan('access-api'))
                 <a href="{{ url('/api/docs') }}" class="button outline">{{ trans('settings.users_api_tokens_docs') }}</a>
-                <a href="{{ $user->getEditUrl('/create-api-token') }}" class="button outline">{{ trans('settings.users_api_tokens_create') }}</a>
+                <a href="{{ url('/api-tokens/' . $user->id . '/create?context=' . $context) }}" class="button outline">{{ trans('settings.users_api_tokens_create') }}</a>
             @endif
         </div>
     </div>
+    <p class="text-small text-muted">{{ trans('settings.users_api_tokens_desc') }}</p>
     @if (count($user->apiTokens) > 0)
         <div class="item-list my-m">
             @foreach($user->apiTokens as $token)
                 <div class="item-list-row flex-container-row items-center wrap py-xs gap-x-m">
                     <div class="flex px-m py-xs min-width-m">
-                        <a href="{{ $user->getEditUrl('/api-tokens/' . $token->id) }}">{{ $token->name }}</a> <br>
+                        <a href="{{ $token->getUrl("?context={$context}") }}">{{ $token->name }}</a> <br>
                         <span class="small text-muted italic">{{ $token->token_id }}</span>
                     </div>
                     <div class="flex flex-container-row items-center min-width-m">
@@ -22,7 +23,7 @@
                             {{ $token->expires_at->format('Y-m-d') ?? '' }}
                         </div>
                         <div class="flex px-m py-xs text-right">
-                            <a class="button outline small" href="{{ $user->getEditUrl('/api-tokens/' . $token->id) }}">{{ trans('common.edit') }}</a>
+                            <a class="button outline small" href="{{ $token->getUrl("?context={$context}") }}">{{ trans('common.edit') }}</a>
                         </div>
                     </div>
                 </div>

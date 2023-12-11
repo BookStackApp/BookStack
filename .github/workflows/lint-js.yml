@@ -1,0 +1,24 @@
+name: lint-js
+
+on:
+  push:
+    paths:
+      - '**.js'
+      - '**.json'
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.json'
+
+jobs:
+  build:
+    if: ${{ github.ref != 'refs/heads/l10n_development' }}
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install NPM deps
+      run: npm ci
+
+    - name: Run formatting check
+      run: npm run lint

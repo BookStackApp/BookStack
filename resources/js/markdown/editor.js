@@ -1,10 +1,9 @@
-import {Markdown} from "./markdown";
-import {Display} from "./display";
-import {Actions} from "./actions";
-import {Settings} from "./settings";
-import {listen} from "./common-events";
-import {init as initCodemirror} from "./codemirror";
-
+import {Markdown} from './markdown';
+import {Display} from './display';
+import {Actions} from './actions';
+import {Settings} from './settings';
+import {listen} from './common-events';
+import {init as initCodemirror} from './codemirror';
 
 /**
  * Initiate a new markdown editor instance.
@@ -12,7 +11,6 @@ import {init as initCodemirror} from "./codemirror";
  * @returns {Promise<MarkdownEditor>}
  */
 export async function init(config) {
-
     /**
      * @type {MarkdownEditor}
      */
@@ -31,7 +29,6 @@ export async function init(config) {
     return editor;
 }
 
-
 /**
  * @typedef MarkdownEditorConfig
  * @property {String} pageId
@@ -49,6 +46,6 @@ export async function init(config) {
  * @property {Display} display
  * @property {Markdown} markdown
  * @property {Actions} actions
- * @property {CodeMirror} cm
+ * @property {EditorView} cm
  * @property {Settings} settings
  */

@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class EditorToolbox extends Component {
 
@@ -8,6 +8,7 @@ export class EditorToolbox extends Component {
         this.buttons = this.$manyRefs.tabButton;
         this.contentElements = this.$manyRefs.tabContent;
         this.toggleButton = this.$refs.toggle;
+        this.editorWrapEl = this.container.closest('.page-editor');
 
         this.setupListeners();
 
@@ -30,16 +31,16 @@ export class EditorToolbox extends Component {
 
     toggle() {
         this.container.classList.toggle('open');
-        const expanded = this.container.classList.contains('open') ? 'true' : 'false';
-        this.toggleButton.setAttribute('aria-expanded', expanded);
+        const isOpen = this.container.classList.contains('open');
+        this.toggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        this.editorWrapEl.classList.toggle('toolbox-open', isOpen);
     }
 
     setActiveTab(tabName, openToolbox = false) {
-
         // Set button visibility
         for (const button of this.buttons) {
             button.classList.remove('active');
-            const bName =  button.dataset.tab;
+            const bName = button.dataset.tab;
             if (bName === tabName) button.classList.add('active');
         }
 

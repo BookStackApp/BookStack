@@ -21,9 +21,9 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'name'        => $this->faker->slug . '.jpg',
-            'url'         => $this->faker->url,
-            'path'        => $this->faker->url,
+            'name'        => $this->faker->slug() . '.jpg',
+            'url'         => $this->faker->url(),
+            'path'        => $this->faker->url(),
             'type'        => 'gallery',
             'uploaded_to' => 0,
         ];

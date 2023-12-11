@@ -12,7 +12,7 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!hasAppAccess()) {
+        if (!user()->hasAppAccess()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             }

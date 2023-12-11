@@ -27,15 +27,15 @@
 
     @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])
 
-    @if ($commentsEnabled)
+    @if ($commentTree->enabled())
         @if(($previous || $next))
-            <div class="px-xl">
+            <div class="px-xl print-hidden">
                 <hr class="darker">
             </div>
         @endif
 
-        <div class="px-xl comments-container mb-l print-hidden">
-            @include('comments.comments', ['page' => $page])
+        <div class="comments-container mb-l print-hidden">
+            @include('comments.comments', ['commentTree' => $commentTree, 'page' => $page])
             <div class="clearfix"></div>
         </div>
     @endif
@@ -66,7 +66,7 @@
                     @foreach($pageNav as $navItem)
                         <li class="page-nav-item h{{ $navItem['level'] }}">
                             <a href="{{ $navItem['link'] }}" class="text-limit-lines-1 block">{{ $navItem['text'] }}</a>
-                            <div class="primary-background sidebar-page-nav-bullet"></div>
+                            <div class="link-background sidebar-page-nav-bullet"></div>
                         </li>
                     @endforeach
                 </div>
@@ -81,7 +81,7 @@
     <div id="page-details" class="entity-details mb-xl">
         <h5>{{ trans('common.details') }}</h5>
         <div class="blended-links">
-            @include('entities.meta', ['entity' => $page])
+            @include('entities.meta', ['entity' => $page, 'watchOptions' => $watchOptions])
 
             @if($book->hasPermissions())
                 <div class="active-restriction">
@@ -143,7 +143,7 @@
     <div class="actions mb-xl">
         <h5>{{ trans('common.actions') }}</h5>
 
-        <div class="icon-list text-primary">
+        <div class="icon-list text-link">
 
             {{--User Actions--}}
             @if(userCan('page-update', $page))
@@ -185,7 +185,10 @@
 
             <hr class="primary-background"/>
 
-            @if(signedInUser())
+            @if($watchOptions->canWatch() && !$watchOptions->isWatching())
+                @include('entities.watch-action', ['entity' => $page])
+            @endif
+            @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $page])
             @endif
             @if(userCan('content-export'))

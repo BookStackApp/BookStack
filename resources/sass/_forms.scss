@@ -13,10 +13,10 @@
   max-width: 100%;
 
   &.neg, &.invalid {
-    border: 1px solid $negative;
+    border: 1px solid var(--color-negative);
   }
   &.pos, &.valid {
-    border: 1px solid $positive;
+    border: 1px solid var(--color-positive);
   }
   &.disabled, &[disabled] {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMUlEQVQIW2NkwAGuXbv2nxGbHEhCS0uLEUMSJgHShCKJLIEiiS4Bl8QmAZbEJQGSBAC62BuJ+tt7zgAAAABJRU5ErkJggg==);
@@ -75,11 +75,19 @@
   @include lightDark(border-color, #ddd, #000);
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 .markdown-editor-wrap + .markdown-editor-wrap {
   flex-basis: 50%;
   flex-shrink: 0;
   flex-grow: 0;
+}
+
+.markdown-editor-wrap .cm-editor {
+  flex: 1;
+  max-width: 100%;
+  border: 0;
+  margin: 0;
 }
 
 .markdown-panel-divider {
@@ -97,6 +105,7 @@
     max-width: 100%;
     flex-grow: 1;
     flex-basis: auto !important;
+    min-height: 0;
   }
   .editor-toolbar-label {
     float: none !important;
@@ -111,7 +120,6 @@
   #markdown-editor .markdown-editor-wrap:not(.active) {
     flex-grow: 0;
     flex: none;
-    min-height: 0;
   }
 }
 
@@ -140,10 +148,9 @@ html.markdown-editor-display.dark-mode {
   width: 100%;
   font-size: 11px;
   line-height: 1.6;
-  border-bottom: 1px solid #DDD;
-  background-color: #EEE;
-  @include lightDark(background-color, #eee, #111);
-  @include lightDark(border-color, #ddd, #000);
+  border-bottom: 1px solid #CCC;
+  @include lightDark(background-color, #FFF, #333);
+  @include lightDark(border-color, #CCC, #000);
   flex: none;
   @include whenDark {
     button {
@@ -258,7 +265,6 @@ input[type=color] {
     border-radius: 2px;
     display: inline-block;
     border: 2px solid currentColor;
-    opacity: 0.6;
     overflow: hidden;
     fill: currentColor;
     .svg-icon {
@@ -391,27 +397,6 @@ input[type=color] {
   height: auto;
 }
 
-.title-input.page-title {
-  font-size: 0.8em;
-  @include lightDark(background-color, #fff, #333);
-  .input {
-    border: 0;
-    margin-bottom: -1px;
-  }
-  input[type="text"] {
-    max-width: 840px;
-    margin: 0 auto;
-    border: none;
-    height: auto;
-  }
-}
-
-.page-title input {
-  display: block;
-  width: 100%;
-  font-size: 1.4em;
-}
-
 .description-input textarea {
   display: block;
   width: 100%;
@@ -419,11 +404,6 @@ input[type=color] {
   font-size: $fs-m;
   color: #666;
   height: auto;
-}
-
-div[editor-type="markdown"] .title-input.page-title input[type="text"] {
-  max-width: 100%;
-  border-radius: 0;
 }
 
 .search-box {
@@ -457,6 +437,58 @@ div[editor-type="markdown"] .title-input.page-title input[type="text"] {
   button.search-box-cancel {
     left: auto;
     right: 0;
+  }
+}
+
+.contained-search-box {
+  display: flex;
+  height: 38px;
+  z-index: -1;
+  &.floating {
+    box-shadow: $bs-med;
+    border-radius: 4px;
+    overflow: hidden;
+    @include whenDark {
+      border: 1px solid #000;
+    }
+  }
+  input, button {
+    height: 100%;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    @include lightDark(border-color, #ddd, #000);
+    margin-inline-start: -1px;
+    &:last-child {
+      border-inline-end: 0;
+    }
+  }
+  input {
+    border: 0;
+    flex: 5;
+    padding: $-xs $-s;
+    &:focus, &:active {
+      outline: 1px dotted var(--color-primary);
+      outline-offset: -2px;
+      border: 0;
+    }
+  }
+  button {
+    border: 0;
+    width: 48px;
+    border-inline-start: 1px solid #DDD;
+    background-color: #FFF;
+    @include lightDark(background-color, #FFF, #333);
+    @include lightDark(color, #444, #AAA);
+  }
+  button:focus {
+    outline: 1px dotted var(--color-primary);
+    outline-offset: -2px;
+  }
+  svg {
+    margin: 0;
+  }
+  @include smaller-than($s) {
+    width: 180px;
   }
 }
 

@@ -4,27 +4,37 @@ namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class NotifyException extends Exception implements Responsable
+class NotifyException extends Exception implements Responsable, HttpExceptionInterface
 {
     public $message;
-    public $redirectLocation;
-    protected $status;
+    public string $redirectLocation;
+    protected int $status;
 
     public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
     {
         $this->message = $message;
         $this->redirectLocation = $redirectLocation;
         $this->status = $status;
+
         parent::__construct();
     }
 
     /**
-     * Get the desired status code for this exception.
+     * Get the desired HTTP status code for this exception.
      */
-    public function getStatus(): int
+    public function getStatusCode(): int
     {
         return $this->status;
+    }
+
+    /**
+     * Get the desired HTTP headers for this exception.
+     */
+    public function getHeaders(): array
+    {
+        return [];
     }
 
     /**
@@ -38,7 +48,7 @@ class NotifyException extends Exception implements Responsable
 
         // Front-end JSON handling. API-side handling managed via handler.
         if ($request->wantsJson()) {
-            return response()->json(['error' => $message], 403);
+            return response()->json(['error' => $message], $this->getStatusCode());
         }
 
         if (!empty($message)) {

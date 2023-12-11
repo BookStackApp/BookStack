@@ -6,7 +6,6 @@ function register(editor, url) {
 
 }
 
-
 /**
  * @param {WysiwygConfigOptions} options
  * @return {register}

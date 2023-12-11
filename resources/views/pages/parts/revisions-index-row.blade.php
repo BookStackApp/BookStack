@@ -17,7 +17,7 @@
                 @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif
                 <br>
                 <div class="text-muted">
-                    <small>{{ $revision->created_at->formatLocalized('%e %B %Y %H:%M:%S') }}</small>
+                    <small>{{ $revision->created_at->isoFormat('D MMMM Y HH:mm:ss') }}</small>
                     <small>({{ $revision->created_at->diffForHumans() }})</small>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                             <form action="{{ $revision->getUrl('/restore') }}" method="POST">
                                 {!! csrf_field() !!}
                                 <input type="hidden" name="_method" value="PUT">
-                                <button type="submit" class="text-primary icon-item">
+                                <button type="submit" class="text-link icon-item">
                                     @icon('history')
                                     <div>{{ trans('entities.pages_revisions_restore') }}</div>
                                 </button>

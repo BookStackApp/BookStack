@@ -2,9 +2,12 @@
 
 namespace Tests;
 
+use BookStack\Activity\ActivityType;
+use BookStack\Translation\LocaleManager;
+
 class LanguageTest extends TestCase
 {
-    protected $langs;
+    protected array $langs;
 
     /**
      * LanguageTest constructor.
@@ -12,15 +15,15 @@ class LanguageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->langs = array_diff(scandir(resource_path('lang')), ['..', '.']);
+        $this->langs = array_diff(scandir(lang_path('')), ['..', '.']);
     }
 
-    public function test_locales_config_key_set_properly()
+    public function test_locales_list_set_properly()
     {
-        $configLocales = config('app.locales');
-        sort($configLocales);
+        $appLocales = $this->app->make(LocaleManager::class)->getAllAppLocales();
+        sort($appLocales);
         sort($this->langs);
-        $this->assertEquals(implode(':', $configLocales), implode(':', $this->langs), 'app.locales configuration variable does not match those found in lang files');
+        $this->assertEquals(implode(':', $this->langs), implode(':', $appLocales), 'app.locales configuration variable does not match those found in lang files');
     }
 
     // Not part of standard phpunit test runs since we sometimes expect non-added langs.
@@ -58,7 +61,7 @@ class LanguageTest extends TestCase
 
     public function test_all_lang_files_loadable()
     {
-        $files = array_diff(scandir(resource_path('lang/en')), ['..', '.']);
+        $files = array_diff(scandir(lang_path('en')), ['..', '.']);
         foreach ($this->langs as $lang) {
             foreach ($files as $file) {
                 $loadError = false;
@@ -73,12 +76,29 @@ class LanguageTest extends TestCase
         }
     }
 
-    public function test_rtl_config_set_if_lang_is_rtl()
+    public function test_views_use_rtl_if_rtl_language_is_set()
     {
-        $this->asEditor();
-        $this->assertFalse(config('app.rtl'), 'App RTL config should be false by default');
-        setting()->putUser($this->getEditor(), 'language', 'ar');
-        $this->get('/');
-        $this->assertTrue(config('app.rtl'), 'App RTL config should have been set to true by middleware');
+        $this->asEditor()->withHtml($this->get('/'))->assertElementExists('html[dir="ltr"]');
+
+        setting()->putUser($this->users->editor(), 'language', 'ar');
+
+        $this->withHtml($this->get('/'))->assertElementExists('html[dir="rtl"]');
+    }
+
+    public function test_unknown_lang_does_not_break_app()
+    {
+        config()->set('app.locale', 'zz');
+
+        $loginReq = $this->get('/login', ['Accept-Language' => 'zz']);
+        $loginReq->assertOk();
+        $loginReq->assertSee('Log In');
+    }
+
+    public function test_all_activity_types_have_activity_text()
+    {
+        foreach (ActivityType::all() as $activityType) {
+            $langKey = 'activities.' . $activityType;
+            $this->assertNotEquals($langKey, trans($langKey, [], 'en'));
+        }
     }
 }

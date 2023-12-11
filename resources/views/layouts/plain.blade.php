@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.lang') }}"
-      dir="{{ config('app.rtl') ? 'rtl' : 'ltr' }}"
+<html lang="{{ isset($locale) ? $locale->htmlLang() : config('app.default_locale') }}"
+      dir="{{ isset($locale) ? $locale->htmlDirection() : 'auto' }}"
       class="@yield('document-class')">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
@@ -9,13 +9,12 @@
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
 
-    <!-- Styles and Fonts -->
+    <!-- Styles -->
     <link rel="stylesheet" href="{{ versioned_asset('dist/styles.css') }}">
-    <link rel="stylesheet" media="print" href="{{ versioned_asset('dist/print-styles.css') }}">
 
     <!-- Custom Styles & Head Content -->
-    @include('common.custom-styles')
-    @include('common.custom-head')
+    @include('layouts.parts.custom-styles')
+    @include('layouts.parts.custom-head')
 </head>
 <body>
     @yield('content')

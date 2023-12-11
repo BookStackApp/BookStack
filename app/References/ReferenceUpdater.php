@@ -6,18 +6,14 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
-use DOMDocument;
-use DOMXPath;
+use BookStack\Util\HtmlDocument;
 
 class ReferenceUpdater
 {
-    protected ReferenceFetcher $referenceFetcher;
-    protected RevisionRepo $revisionRepo;
-
-    public function __construct(ReferenceFetcher $referenceFetcher, RevisionRepo $revisionRepo)
-    {
-        $this->referenceFetcher = $referenceFetcher;
-        $this->revisionRepo = $revisionRepo;
+    public function __construct(
+        protected ReferenceFetcher $referenceFetcher,
+        protected RevisionRepo $revisionRepo
+    ) {
     }
 
     public function updateEntityPageReferences(Entity $entity, string $oldLink)
@@ -46,6 +42,7 @@ class ReferenceUpdater
             $chapters = $entity->chapters()->get(['id']);
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
+                /** @var Reference[] $childRefs */
                 $childRefs = $this->referenceFetcher->getPageReferencesToEntity($bookChild)->values()->all();
                 array_push($references, ...$childRefs);
             }
@@ -96,13 +93,8 @@ class ReferenceUpdater
             return $html;
         }
 
-        $html = '<body>' . $html . '</body>';
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-
-        $xPath = new DOMXPath($doc);
-        $anchors = $xPath->query('//a[@href]');
+        $doc = new HtmlDocument($html);
+        $anchors = $doc->queryXPath('//a[@href]');
 
         /** @var \DOMElement $anchor */
         foreach ($anchors as $anchor) {
@@ -111,12 +103,6 @@ class ReferenceUpdater
             $anchor->setAttribute('href', $updated);
         }
 
-        $html = '';
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
-        foreach ($topElems as $child) {
-            $html .= $doc->saveHTML($child);
-        }
-
-        return $html;
+        return $doc->getBodyInnerHtml();
     }
 }

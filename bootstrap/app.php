@@ -11,7 +11,7 @@
 |
 */
 
-$app = new BookStack\Application(
+$app = new \BookStack\App\Application(
     dirname(__DIR__)
 );
 

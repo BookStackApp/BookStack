@@ -2,6 +2,7 @@
 	"book_id": 1,
 	"name": "My API Page",
 	"html": "<p>my new API page</p>",
+	"priority": 15,
 	"tags": [
 		{"name": "Category", "value": "Not Bad Content"},
 		{"name": "Rating", "value": "Average"}

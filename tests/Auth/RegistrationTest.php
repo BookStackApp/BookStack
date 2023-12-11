@@ -2,9 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
-use BookStack\Notifications\ConfirmEmail;
+use BookStack\Access\Notifications\ConfirmEmailNotification;
+use BookStack\Users\Models\Role;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -28,7 +28,7 @@ class RegistrationTest extends TestCase
         // Ensure notification sent
         /** @var User $dbUser */
         $dbUser = User::query()->where('email', '=', $user->email)->first();
-        Notification::assertSentTo($dbUser, ConfirmEmail::class);
+        Notification::assertSentTo($dbUser, ConfirmEmailNotification::class);
 
         // Test access and resend confirmation email
         $resp = $this->post('/login', ['email' => $user->email, 'password' => $user->password]);
@@ -42,7 +42,7 @@ class RegistrationTest extends TestCase
 
         // Get confirmation and confirm notification matches
         $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
-        Notification::assertSentTo($dbUser, ConfirmEmail::class, function ($notification, $channels) use ($emailConfirmation) {
+        Notification::assertSentTo($dbUser, ConfirmEmailNotification::class, function ($notification, $channels) use ($emailConfirmation) {
             return $notification->token === $emailConfirmation->token;
         });
 

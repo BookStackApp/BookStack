@@ -9,10 +9,8 @@ class Request extends LaravelRequest
     /**
      * Override the default request methods to get the scheme and host
      * to directly use the custom APP_URL, if set.
-     *
-     * @return string
      */
-    public function getSchemeAndHttpHost()
+    public function getSchemeAndHttpHost(): string
     {
         $appUrl = config('app.url', null);
 
@@ -27,10 +25,8 @@ class Request extends LaravelRequest
      * Override the default request methods to get the base URL
      * to directly use the custom APP_URL, if set.
      * The base URL never ends with a / but should start with one if not empty.
-     *
-     * @return string
      */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         $appUrl = config('app.url', null);
 

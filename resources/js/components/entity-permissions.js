@@ -1,5 +1,5 @@
-import {htmlToDom} from "../services/dom";
-import {Component} from "./component";
+import {htmlToDom} from '../services/dom';
+import {Component} from './component';
 
 export class EntityPermissions extends Component {
 
@@ -29,12 +29,12 @@ export class EntityPermissions extends Component {
         this.container.addEventListener('click', event => {
             const button = event.target.closest('button');
             if (button && button.dataset.roleId) {
-                this.removeRowOnButtonClick(button)
+                this.removeRowOnButtonClick(button);
             }
         });
 
         // Role select change
-        this.roleSelect.addEventListener('change', event => {
+        this.roleSelect.addEventListener('change', () => {
             const roleId = this.roleSelect.value;
             if (roleId) {
                 this.addRoleRow(roleId);
@@ -61,8 +61,8 @@ export class EntityPermissions extends Component {
 
     removeRowOnButtonClick(button) {
         const row = button.closest('.item-list-row');
-        const roleId = button.dataset.roleId;
-        const roleName = button.dataset.roleName;
+        const {roleId} = button.dataset;
+        const {roleName} = button.dataset;
 
         const option = document.createElement('option');
         option.value = roleId;

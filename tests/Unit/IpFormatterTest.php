@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use BookStack\Actions\IpFormatter;
+use BookStack\Activity\Tools\IpFormatter;
 use Tests\TestCase;
 
 class IpFormatterTest extends TestCase

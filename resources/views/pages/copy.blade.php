@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group" collapsible>
-                    <button type="button" class="collapse-title text-primary" collapsible-trigger aria-expanded="false">
+                    <button type="button" class="collapse-title text-link" collapsible-trigger aria-expanded="false">
                         <label for="entity_selection">{{ trans('entities.pages_copy_desination') }}</label>
                     </button>
                     <div class="collapse-content" collapsible-content>

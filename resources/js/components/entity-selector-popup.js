@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class EntitySelectorPopup extends Component {
 
@@ -15,9 +15,14 @@ export class EntitySelectorPopup extends Component {
         window.$events.listen('entity-select-confirm', this.handleConfirmedSelection.bind(this));
     }
 
-    show(callback) {
+    show(callback, searchText = '') {
         this.callback = callback;
         this.getPopup().show();
+
+        if (searchText) {
+            this.getSelector().searchText(searchText);
+        }
+
         this.getSelector().focusSearch();
     }
 
@@ -57,4 +62,5 @@ export class EntitySelectorPopup extends Component {
         this.getSelector().reset();
         if (this.callback && entity) this.callback(entity);
     }
+
 }

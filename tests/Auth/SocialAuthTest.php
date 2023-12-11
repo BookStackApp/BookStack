@@ -2,9 +2,9 @@
 
 namespace Tests\Auth;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Auth\SocialAccount;
-use BookStack\Auth\User;
+use BookStack\Access\SocialAccount;
+use BookStack\Activity\ActivityType;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Contracts\Factory;
 use Laravel\Socialite\Contracts\Provider;
@@ -18,7 +18,7 @@ class SocialAuthTest extends TestCase
         $user = User::factory()->make();
 
         $this->setSettings(['registration-enabled' => 'true']);
-        config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
+        config(['GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc']);
 
         $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);
@@ -45,7 +45,6 @@ class SocialAuthTest extends TestCase
         config([
             'GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc',
             'GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc',
-            'APP_URL'       => 'http://localhost',
         ]);
 
         $mockSocialite = $this->mock(Factory::class);
@@ -77,21 +76,50 @@ class SocialAuthTest extends TestCase
 
         // Test social callback with matching social account
         DB::table('social_accounts')->insert([
-            'user_id'   => $this->getAdmin()->id,
+            'user_id'   => $this->users->admin()->id,
             'driver'    => 'github',
             'driver_id' => 'logintest123',
         ]);
         $resp = $this->followingRedirects()->get('/login/service/github/callback');
         $resp->assertDontSee('login-form');
-        $this->assertActivityExists(ActivityType::AUTH_LOGIN, null, 'github; (' . $this->getAdmin()->id . ') ' . $this->getAdmin()->name);
+        $this->assertActivityExists(ActivityType::AUTH_LOGIN, null, 'github; (' . $this->users->admin()->id . ') ' . $this->users->admin()->name);
+    }
+
+    public function test_social_account_attach()
+    {
+        config([
+            'GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc',
+        ]);
+        $editor = $this->users->editor();
+
+        $mockSocialite = $this->mock(Factory::class);
+        $mockSocialDriver = Mockery::mock(Provider::class);
+        $mockSocialUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
+
+        $mockSocialUser->shouldReceive('getId')->twice()->andReturn('logintest123');
+        $mockSocialUser->shouldReceive('getAvatar')->andReturn(null);
+
+        $mockSocialite->shouldReceive('driver')->twice()->with('google')->andReturn($mockSocialDriver);
+        $mockSocialDriver->shouldReceive('redirect')->once()->andReturn(redirect('/login/service/google/callback'));
+        $mockSocialDriver->shouldReceive('user')->once()->andReturn($mockSocialUser);
+
+        // Test login routes
+        $resp = $this->actingAs($editor)->followingRedirects()->get('/login/service/google');
+        $resp->assertSee('Access & Security');
+
+        // Test social callback with matching social account
+        $this->assertDatabaseHas('social_accounts', [
+            'user_id'   => $editor->id,
+            'driver'    => 'google',
+            'driver_id' => 'logintest123',
+        ]);
     }
 
     public function test_social_account_detach()
     {
-        $editor = $this->getEditor();
+        $editor = $this->users->editor();
         config([
             'GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc',
-            'APP_URL'       => 'http://localhost',
         ]);
 
         $socialAccount = SocialAccount::query()->forceCreate([
@@ -100,11 +128,11 @@ class SocialAuthTest extends TestCase
             'driver_id' => 'logintest123',
         ]);
 
-        $resp = $this->actingAs($editor)->get($editor->getEditUrl());
+        $resp = $this->actingAs($editor)->get('/my-account/auth');
         $this->withHtml($resp)->assertElementContains('form[action$="/login/service/github/detach"]', 'Disconnect Account');
 
         $resp = $this->post('/login/service/github/detach');
-        $resp->assertRedirect($editor->getEditUrl());
+        $resp->assertRedirect('/my-account/auth#social-accounts');
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Github account was successfully disconnected from your profile.');
 
@@ -115,7 +143,6 @@ class SocialAuthTest extends TestCase
     {
         config([
             'services.google.client_id' => 'abc123', 'services.google.client_secret' => '123abc',
-            'APP_URL'                   => 'http://localhost',
         ]);
 
         $user = User::factory()->make();
@@ -153,7 +180,7 @@ class SocialAuthTest extends TestCase
     {
         config([
             'services.google.client_id' => 'abc123', 'services.google.client_secret' => '123abc',
-            'APP_URL'                   => 'http://localhost', 'services.google.auto_register' => true, 'services.google.auto_confirm' => true,
+            'services.google.auto_register' => true, 'services.google.auto_confirm' => true,
         ]);
 
         $user = User::factory()->make();
@@ -191,7 +218,7 @@ class SocialAuthTest extends TestCase
         $user = User::factory()->make(['email' => 'nonameuser@example.com']);
 
         $this->setSettings(['registration-enabled' => 'true']);
-        config(['GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc', 'APP_URL' => 'http://localhost']);
+        config(['GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc']);
 
         $mockSocialite = $this->mock(Factory::class);
         $mockSocialDriver = Mockery::mock(Provider::class);

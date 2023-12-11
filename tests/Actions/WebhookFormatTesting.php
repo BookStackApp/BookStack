@@ -2,9 +2,9 @@
 
 namespace Tests\Actions;
 
-use BookStack\Actions\ActivityType;
-use BookStack\Actions\Webhook;
-use BookStack\Actions\WebhookFormatter;
+use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Webhook;
+use BookStack\Activity\Tools\WebhookFormatter;
 use Illuminate\Support\Arr;
 use Tests\TestCase;
 
@@ -41,7 +41,7 @@ class WebhookFormatTesting extends TestCase
     protected function getWebhookData(string $event, $detail): array
     {
         $webhook = Webhook::factory()->make();
-        $user = $this->getEditor();
+        $user = $this->users->editor();
         $formatter = WebhookFormatter::getDefault($event, $webhook, $detail, $user, time());
 
         return $formatter->format();

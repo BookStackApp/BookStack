@@ -17,7 +17,7 @@
                 <li>
                     <form action="{{ $book->getUrl('/convert-to-shelf') }}" method="POST">
                         {!! csrf_field() !!}
-                        <button type="submit" class="text-primary text-item">{{ trans('common.confirm') }}</button>
+                        <button type="submit" class="text-link text-item">{{ trans('common.confirm') }}</button>
                     </form>
                 </li>
             </ul>

@@ -1,24 +1,23 @@
-
 export function getCurrentDay() {
-    let date = new Date();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
 
-    return `${date.getFullYear()}-${(month>9?'':'0') + month}-${(day>9?'':'0') + day}`;
+    return `${date.getFullYear()}-${(month > 9 ? '' : '0') + month}-${(day > 9 ? '' : '0') + day}`;
 }
 
 export function utcTimeStampToLocalTime(timestamp) {
-    let date = new Date(timestamp * 1000);
-    let hours = date.getHours();
-    let mins = date.getMinutes();
-    return `${(hours>9?'':'0') + hours}:${(mins>9?'':'0') + mins}`;
+    const date = new Date(timestamp * 1000);
+    const hours = date.getHours();
+    const mins = date.getMinutes();
+    return `${(hours > 9 ? '' : '0') + hours}:${(mins > 9 ? '' : '0') + mins}`;
 }
 
 export function formatDateTime(date) {
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    let hours = date.getHours();
-    let mins = date.getMinutes();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const mins = date.getMinutes();
 
-    return `${date.getFullYear()}-${(month>9?'':'0') + month}-${(day>9?'':'0') + day} ${(hours>9?'':'0') + hours}:${(mins>9?'':'0') + mins}`;
+    return `${date.getFullYear()}-${(month > 9 ? '' : '0') + month}-${(day > 9 ? '' : '0') + day} ${(hours > 9 ? '' : '0') + hours}:${(mins > 9 ? '' : '0') + mins}`;
 }

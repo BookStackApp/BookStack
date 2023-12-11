@@ -2,18 +2,11 @@
 
 namespace Tests;
 
-use BookStack\Auth\Permissions\JointPermissionBuilder;
-use BookStack\Auth\Permissions\PermissionsRepo;
-use BookStack\Auth\Permissions\RolePermission;
-use BookStack\Auth\Role;
-use BookStack\Auth\User;
 use BookStack\Entities\Models\Entity;
+use BookStack\Http\HttpClientHistory;
+use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
-use BookStack\Uploads\HttpFetcher;
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
+use BookStack\Users\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -24,10 +17,12 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
-use Psr\Http\Client\ClientInterface;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
+use Tests\Helpers\FileProvider;
+use Tests\Helpers\PermissionsProvider;
 use Tests\Helpers\TestServiceProvider;
+use Tests\Helpers\UserRoleProvider;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -35,14 +30,23 @@ abstract class TestCase extends BaseTestCase
     use DatabaseTransactions;
     use TestsHtml;
 
-    protected ?User $admin = null;
-    protected ?User $editor = null;
     protected EntityProvider $entities;
+    protected UserRoleProvider $users;
+    protected PermissionsProvider $permissions;
+    protected FileProvider $files;
 
     protected function setUp(): void
     {
         $this->entities = new EntityProvider();
+        $this->users = new UserRoleProvider();
+        $this->permissions = new PermissionsProvider($this->users);
+        $this->files = new FileProvider();
+
         parent::setUp();
+
+        // We can uncomment the below to run tests with failings upon deprecations.
+        // Can't leave on since some deprecations can only be fixed upstream.
+         // $this->withoutDeprecationHandling();
     }
 
     /**
@@ -70,20 +74,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asAdmin()
     {
-        return $this->actingAs($this->getAdmin());
-    }
-
-    /**
-     * Get the current admin user.
-     */
-    public function getAdmin(): User
-    {
-        if (is_null($this->admin)) {
-            $adminRole = Role::getSystemRole('admin');
-            $this->admin = $adminRole->users->first();
-        }
-
-        return $this->admin;
+        return $this->actingAs($this->users->admin());
     }
 
     /**
@@ -91,20 +82,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asEditor()
     {
-        return $this->actingAs($this->getEditor());
-    }
-
-    /**
-     * Get a editor user.
-     */
-    protected function getEditor(): User
-    {
-        if ($this->editor === null) {
-            $editorRole = Role::getRole('editor');
-            $this->editor = $editorRole->users->first();
-        }
-
-        return $this->editor;
+        return $this->actingAs($this->users->editor());
     }
 
     /**
@@ -112,28 +90,7 @@ abstract class TestCase extends BaseTestCase
      */
     public function asViewer()
     {
-        return $this->actingAs($this->getViewer());
-    }
-
-    /**
-     * Get an instance of a user with 'viewer' permissions.
-     */
-    protected function getViewer(array $attributes = []): User
-    {
-        $user = Role::getRole('viewer')->users()->first();
-        if (!empty($attributes)) {
-            $user->forceFill($attributes)->save();
-        }
-
-        return $user;
-    }
-
-    /**
-     * Get a user that's not a system user such as the guest user.
-     */
-    public function getNormalUser(): User
-    {
-        return User::query()->where('system_name', '=', null)->get()->last();
+        return $this->actingAs($this->users->viewer());
     }
 
     /**
@@ -148,79 +105,11 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Give the given user some permissions.
+     * Mock the http client used in BookStack http calls.
      */
-    protected function giveUserPermissions(User $user, array $permissions = []): void
+    protected function mockHttpClient(array $responses = []): HttpClientHistory
     {
-        $newRole = $this->createNewRole($permissions);
-        $user->attachRole($newRole);
-        $user->load('roles');
-        $user->clearPermissionCache();
-    }
-
-    /**
-     * Completely remove the given permission name from the given user.
-     */
-    protected function removePermissionFromUser(User $user, string $permissionName)
-    {
-        $permissionBuilder = app()->make(JointPermissionBuilder::class);
-
-        /** @var RolePermission $permission */
-        $permission = RolePermission::query()->where('name', '=', $permissionName)->firstOrFail();
-
-        $roles = $user->roles()->whereHas('permissions', function ($query) use ($permission) {
-            $query->where('id', '=', $permission->id);
-        })->get();
-
-        /** @var Role $role */
-        foreach ($roles as $role) {
-            $role->detachPermission($permission);
-            $permissionBuilder->rebuildForRole($role);
-        }
-
-        $user->clearPermissionCache();
-    }
-
-    /**
-     * Create a new basic role for testing purposes.
-     */
-    protected function createNewRole(array $permissions = []): Role
-    {
-        $permissionRepo = app(PermissionsRepo::class);
-        $roleData = Role::factory()->make()->toArray();
-        $roleData['permissions'] = array_flip($permissions);
-
-        return $permissionRepo->saveNewRole($roleData);
-    }
-
-    /**
-     * Mock the HttpFetcher service and return the given data on fetch.
-     */
-    protected function mockHttpFetch($returnData, int $times = 1)
-    {
-        $mockHttp = Mockery::mock(HttpFetcher::class);
-        $this->app[HttpFetcher::class] = $mockHttp;
-        $mockHttp->shouldReceive('fetch')
-            ->times($times)
-            ->andReturn($returnData);
-    }
-
-    /**
-     * Mock the http client used in BookStack.
-     * Returns a reference to the container which holds all history of http transactions.
-     *
-     * @link https://docs.guzzlephp.org/en/stable/testing.html#history-middleware
-     */
-    protected function &mockHttpClient(array $responses = []): array
-    {
-        $container = [];
-        $history = Middleware::history($container);
-        $mock = new MockHandler($responses);
-        $handlerStack = new HandlerStack($mock);
-        $handlerStack->push($history);
-        $this->app[ClientInterface::class] = new Client(['handler' => $handlerStack]);
-
-        return $container;
+        return $this->app->make(HttpRequestService::class)->mockClient($responses);
     }
 
     /**
@@ -245,8 +134,11 @@ abstract class TestCase extends BaseTestCase
 
         DB::purge();
         config()->set('database.connections.mysql_testing.database', $database);
+        DB::beginTransaction();
 
         $callback();
+
+        DB::rollBack();
 
         if (is_null($originalVal)) {
             unset($_SERVER[$name]);
@@ -295,18 +187,14 @@ abstract class TestCase extends BaseTestCase
      */
     private function isPermissionError($response): bool
     {
+        if ($response->status() === 403 && $response instanceof JsonResponse) {
+            $errMessage = $response->getData(true)['error']['message'] ?? '';
+            return $errMessage === 'You do not have permission to perform the requested action.';
+        }
+
         return $response->status() === 302
-            && (
-                (
-                    $response->headers->get('Location') === url('/')
-                    && strpos(session()->pull('error', ''), 'You do not have permission to access') === 0
-                )
-                ||
-                (
-                    $response instanceof JsonResponse &&
-                    $response->json(['error' => 'You do not have permission to perform the requested action.'])
-                )
-            );
+            && $response->headers->get('Location') === url('/')
+            && str_starts_with(session()->pull('error', ''), 'You do not have permission to access');
     }
 
     /**

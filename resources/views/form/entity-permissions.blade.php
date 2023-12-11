@@ -1,5 +1,5 @@
 <?php
-  /** @var \BookStack\Auth\Permissions\PermissionFormData $data */
+/** @var \BookStack\Permissions\PermissionFormData $data */
 ?>
 <form component="entity-permissions"
       option:entity-permissions:entity-type="{{ $model->getType() }}"
@@ -48,7 +48,8 @@
 
     <div class="flex-container-row justify-flex-end mb-xl">
         <div class="flex-container-row items-center gap-m">
-            <label for="role_select" class="m-none p-none"><span class="bold">{{ trans('entities.permissions_role_override') }}</span></label>
+            <label for="role_select" class="m-none p-none"><span
+                        class="bold">{{ trans('entities.permissions_role_override') }}</span></label>
             <select name="role_select" id="role_select" refs="entity-permissions@role-select">
                 <option value="">{{ trans('common.select') }}</option>
                 @foreach($data->rolesNotAssigned() as $role)
@@ -69,8 +70,17 @@
 
     <hr class="mb-m">
 
-    <div class="text-right">
-        <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
-        <button type="submit" class="button">{{ trans('entities.permissions_save') }}</button>
+    <div class="flex-container-row justify-space-between gap-m wrap">
+        <div class="flex min-width-m">
+            @if($model instanceof \BookStack\Entities\Models\Bookshelf)
+                <p class="small text-muted mb-none">
+                    * {{ trans('entities.shelves_permissions_create') }}
+                </p>
+            @endif
+        </div>
+        <div class="text-right">
+            <a href="{{ $model->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
+            <button type="submit" class="button">{{ trans('entities.permissions_save') }}</button>
+        </div>
     </div>
 </form>

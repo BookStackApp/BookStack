@@ -21,6 +21,11 @@
 @import "footer";
 @import "lists";
 @import "pages";
+@import "content";
+
+@media print {
+  @import "print";
+}
 
 // Jquery Sortable Styles
 .dragged {
@@ -113,38 +118,7 @@ $loadingSize: 10px;
   &:focus {
     top: $-xl;
     outline-offset: -10px;
-    outline: 2px dotted var(--color-primary);
-  }
-}
-
-.contained-search-box {
-  display: flex;
-  height: 38px;
-  input, button {
-    border-radius: 0;
-    border: 1px solid #ddd;
-    @include lightDark(border-color, #ddd, #000);
-    margin-inline-start: -1px;
-  }
-  input {
-    flex: 5;
-    padding: $-xs $-s;
-    &:focus, &:active {
-      outline: 0;
-    }
-  }
-  button {
-    width: 60px;
-  }
-  button i {
-    padding: 0;
-  }
-  button.cancel.active {
-    background-color: $negative;
-    color: #EEE;
-  }
-  svg {
-    margin: 0;
+    outline: 2px dotted var(--color-link);
   }
 }
 
@@ -187,84 +161,15 @@ $loadingSize: 10px;
     height: 400px;
     padding-top: $-l;
   }
-  .entity-selector-add button {
-    margin: 0;
-    display: block;
-    width: 100%;
-    border: 0;
-    border-top: 1px solid #DDD;
-  }
   &.compact {
     font-size: 10px;
     .entity-item-snippet {
       display: none;
     }
+    h4 {
+      font-size: 14px;
+    }
   }
-}
-
-.scroll-box {
-  max-height: 250px;
-  overflow-y: scroll;
-  border: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
-  border-radius: 3px;
-  min-height: 20px;
-  @include lightDark(background-color, #EEE, #000);
-}
-.scroll-box-item {
-  border-bottom: 1px solid;
-  border-top: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
-  margin-top: -1px;
-  @include lightDark(background-color, #FFF, #222);
-  display: flex;
-  padding: 1px;
-  &:last-child {
-    border-bottom: 0;
-  }
-  &:hover {
-    cursor: pointer;
-    @include lightDark(background-color, #f8f8f8, #333);
-  }
-  .handle {
-    color: #AAA;
-    cursor: grab;
-  }
-  .handle svg {
-    margin: 0;
-  }
-  > * {
-    padding: $-xs $-m;
-  }
-  .handle + * {
-    padding-left: 0;
-  }
-  &:hover .handle {
-    @include lightDark(color, #444, #FFF);
-  }
-  a:hover {
-    text-decoration: none;
-  }
-}
-
-input.scroll-box-search, .scroll-box-header-item {
-  font-size: 0.8rem;
-  padding: $-xs $-m;
-  border: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
-  @include lightDark(background-color, #FFF, #222);
-  margin-bottom: -1px;
-  border-radius: 3px 3px 0 0;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  line-height: 1.4;
-  color: #666;
-}
-
-.scroll-box-search + .scroll-box,
-.scroll-box-header-item + .scroll-box {
-  border-radius: 0 0 3px 3px;
 }
 
 .fullscreen {
@@ -277,6 +182,14 @@ input.scroll-box-search, .scroll-box-header-item {
   width:100%;
   height:100%;
   z-index: 150;
+}
+
+@include between($s, $m) {
+  #home-default > .grid.third {
+    display: block;
+    columns: 2;
+    column-gap: $-l !important;
+  }
 }
 
 .list-sort-container {

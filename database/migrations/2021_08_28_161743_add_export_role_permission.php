@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class AddExportRolePermission extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -46,4 +46,4 @@ class AddExportRolePermission extends Migration
         DB::table('permission_role')->where('permission_id', '=', $contentExportPermission->id)->delete();
         DB::table('role_permissions')->where('id', '=', 'content-export')->delete();
     }
-}
+};

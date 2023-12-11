@@ -8,7 +8,7 @@ class ApiDocsTest extends TestCase
 {
     use TestsApi;
 
-    protected $endpoint = '/api/docs';
+    protected string $endpoint = '/api/docs';
 
     public function test_api_endpoint_redirects_to_docs()
     {

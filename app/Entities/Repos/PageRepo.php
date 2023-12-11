@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Repos;
 
-use BookStack\Actions\ActivityType;
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
@@ -23,24 +23,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class PageRepo
 {
-    protected BaseRepo $baseRepo;
-    protected RevisionRepo $revisionRepo;
-    protected ReferenceStore $referenceStore;
-    protected ReferenceUpdater $referenceUpdater;
-
-    /**
-     * PageRepo constructor.
-     */
     public function __construct(
-        BaseRepo $baseRepo,
-        RevisionRepo $revisionRepo,
-        ReferenceStore $referenceStore,
-        ReferenceUpdater $referenceUpdater
+        protected BaseRepo $baseRepo,
+        protected RevisionRepo $revisionRepo,
+        protected ReferenceStore $referenceStore,
+        protected ReferenceUpdater $referenceUpdater
     ) {
-        $this->baseRepo = $baseRepo;
-        $this->revisionRepo = $revisionRepo;
-        $this->referenceStore = $referenceStore;
-        $this->referenceUpdater = $referenceUpdater;
     }
 
     /**
@@ -165,13 +153,11 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
-        $this->updateTemplateStatusAndContentFromInput($draft, $input);
-        $this->baseRepo->update($draft, $input);
-
         $draft->draft = false;
         $draft->revision_count = 1;
         $draft->priority = $this->getNewPriority($draft);
-        $draft->save();
+        $this->updateTemplateStatusAndContentFromInput($draft, $input);
+        $this->baseRepo->update($draft, $input);
 
         $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
         $this->referenceStore->updateForPage($draft);
@@ -231,13 +217,13 @@ class PageRepo
         $inputEmpty = empty($input['markdown']) && empty($input['html']);
 
         if ($haveInput && $inputEmpty) {
-            $pageContent->setNewHTML('');
+            $pageContent->setNewHTML('', user());
         } elseif (!empty($input['markdown']) && is_string($input['markdown'])) {
             $newEditor = 'markdown';
-            $pageContent->setNewMarkdown($input['markdown']);
+            $pageContent->setNewMarkdown($input['markdown'], user());
         } elseif (isset($input['html'])) {
             $newEditor = 'wysiwyg';
-            $pageContent->setNewHTML($input['html']);
+            $pageContent->setNewHTML($input['html'], user());
         }
 
         if ($newEditor !== $currentEditor && userCan('editor-change')) {
@@ -304,9 +290,9 @@ class PageRepo
         $content = new PageContent($page);
 
         if (!empty($revision->markdown)) {
-            $content->setNewMarkdown($revision->markdown);
+            $content->setNewMarkdown($revision->markdown, user());
         } else {
-            $content->setNewHTML($revision->html);
+            $content->setNewHTML($revision->html, user());
         }
 
         $page->updated_by = user()->id;

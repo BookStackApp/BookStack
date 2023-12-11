@@ -4,18 +4,12 @@ namespace BookStack\Exceptions;
 
 use Exception;
 use Illuminate\Contracts\Support\Responsable;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class PrettyException extends Exception implements Responsable
+class PrettyException extends Exception implements Responsable, HttpExceptionInterface
 {
-    /**
-     * @var ?string
-     */
-    protected $subtitle = null;
-
-    /**
-     * @var ?string
-     */
-    protected $details = null;
+    protected ?string $subtitle = null;
+    protected ?string $details = null;
 
     /**
      * Render a response for when this exception occurs.
@@ -24,7 +18,7 @@ class PrettyException extends Exception implements Responsable
      */
     public function toResponse($request)
     {
-        $code = ($this->getCode() === 0) ? 500 : $this->getCode();
+        $code = $this->getStatusCode();
 
         return response()->view('errors.' . $code, [
             'message'  => $this->getMessage(),
@@ -45,5 +39,21 @@ class PrettyException extends Exception implements Responsable
         $this->details = $details;
 
         return $this;
+    }
+
+    /**
+     * Get the desired HTTP status code for this exception.
+     */
+    public function getStatusCode(): int
+    {
+        return ($this->getCode() === 0) ? 500 : $this->getCode();
+    }
+
+    /**
+     * Get the desired HTTP headers for this exception.
+     */
+    public function getHeaders(): array
+    {
+        return [];
     }
 }

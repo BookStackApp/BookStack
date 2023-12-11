@@ -1,5 +1,5 @@
-import Sortable from "sortablejs";
-import {Component} from "./component";
+import Sortable from 'sortablejs';
+import {Component} from './component';
 
 /**
  * SortableList
@@ -9,6 +9,7 @@ import {Component} from "./component";
  * the data to set on the data-transfer.
  */
 export class SortableList extends Component {
+
     setup() {
         this.container = this.$el;
         this.handleSelector = this.$opts.handleSelector;
@@ -33,4 +34,5 @@ export class SortableList extends Component {
             dragoverBubble: false,
         });
     }
+
 }

@@ -8,6 +8,8 @@
     flex: 1;
     flex-direction: column;
     z-index: 10;
+    overflow: hidden;
+    border-radius: 0 0 8px 8px;
   }
 
   .mce-tinymce {
@@ -17,6 +19,69 @@
   .mce-top-part::before {
     box-shadow: none;
   }
+}
+
+.page-editor-page-area {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  @include lightDark(background-color, #FFF, #333)
+}
+
+.page-edit-toolbar {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(max-content, 2fr) 1.5fr minmax(max-content, 2fr);
+  align-items: center;
+}
+
+@include larger-than($xxl) {
+  .page-editor-wysiwyg .page-edit-toolbar,
+  .page-editor-wysiwyg .page-editor-page-area {
+    max-width: 1140px;
+  }
+
+  .page-editor-wysiwyg .floating-toolbox {
+    position: absolute;
+  }
+}
+
+@include smaller-than($m) {
+  .page-edit-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.title-input.page-title {
+  font-size: 0.8em;
+  .input {
+    border: 0;
+    margin-bottom: -1px;
+  }
+  input[type="text"] {
+    max-width: 840px;
+    margin: 0 auto;
+    border: none;
+    height: auto;
+    display: block;
+    width: 100%;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+  input[type="text"]:focus {
+    position: relative;
+    outline-offset: -1px;
+    outline: 1px dashed var(--color-primary);
+    box-shadow: $bs-card;
+    z-index: 50;
+  }
+}
+
+.page-editor-markdown .title-input.page-title input[type="text"] {
+  max-width: 100%;
 }
 
 body.tox-fullscreen .page-editor .edit-area,
@@ -35,8 +100,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     overflow-x: scroll;
     overflow-y: visible;
   }
-  .page-edit-toolbar .grid.third {
-    display: block;
+  .page-edit-toolbar {
     white-space: nowrap;
     > div {
       display: inline-block;
@@ -48,10 +112,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
   position: fixed;
   z-index: 30;
   border-radius: 50%;
-  width: 56px;
-  height: 56px;
-  font-size: 24px;
-  right: $-m;
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
+  inset-inline-end: $-xs;
   bottom: $-s;
   box-shadow: $bs-hover;
   background-color: currentColor;
@@ -76,110 +140,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
   padding: 0 !important;
 }
 
-.page-content {
-  width: 100%;
-  max-width: 840px;
-  margin: 0 auto;
-  overflow-wrap: break-word;
-  .align-left {
-    text-align: left;
-  }
-  img.align-left, table.align-left {
-    float: left !important;
-    margin: $-xs $-m $-m 0;
-  }
-  .align-right {
-    text-align: right !important;
-  }
-  img.align-right, table.align-right {
-    float: right !important;
-    margin: $-xs 0 $-xs $-s;
-  }
-  .align-center {
-    text-align: center;
-  }
-  img.align-center {
-    display: block;
-  }
-  img.align-center, table.align-center {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  img {
-    max-width: 100%;
-    height:auto;
-  }
-  h1, h2, h3, h4, h5, h6, pre {
-    clear: left;
-  }
-  hr {
-    clear: both;
-    margin: $-m 0;
-  }
-  table {
-    hyphens: auto;
-    table-layout: fixed;
-    max-width: 100%;
-    height: auto !important;
-  }
-
-  // diffs
-  ins,
-  del {
-    text-decoration: none;
-  }
-  ins {
-    background: #dbffdb;
-  }
-  del {
-    background: #FFECEC;
-  }
-
-  details {
-    border: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
-    margin-bottom: 1em;
-    padding: $-s;
-  }
-  details > summary {
-    margin-top: -$-s;
-    margin-left: -$-s;
-    margin-right: -$-s;
-    margin-bottom: -$-s;
-    font-weight: bold;
-    @include lightDark(background-color, #EEE, #333);
-    padding: $-xs $-s;
-  }
-  details[open] > summary {
-    margin-bottom: $-s;
-    border-bottom: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
-  }
-  details > summary + * {
-    margin-top: .2em;
-  }
-  details:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-
-  li > input[type="checkbox"] {
-    vertical-align: top;
-    margin-top: 0.3em;
-  }
-
-  p:empty {
-    min-height: 1.6em;
-  }
-
-  &.page-revision {
-    pre code {
-      white-space: pre-wrap;
-    }
-  }
-}
-
 // Page content pointers
 .pointer-container {
   position: fixed;
@@ -190,10 +150,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
 .pointer {
   border: 1px solid #CCC;
   @include lightDark(border-color, #ccc, #000);
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  padding: $-s $-s;
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   @include lightDark(background-color, #fff, #333);
@@ -214,8 +170,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
     display: block;
     transform: rotate(45deg);
     transform-origin: 50% 50%;
-    border-block-end: 1px solid #CCC;
-    border-inline-end: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
     z-index: 56;
     @include lightDark(background-color, #fff, #333);
     @include lightDark(border-color, #ccc, #000);
@@ -233,16 +189,12 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border: 1px solid #DDD;
     @include lightDark(border-color, #ddd, #000);
     color: #666;
-    width: 172px;
+    width: 160px;
     z-index: 40;
     padding: 5px 10px;
   }
-  span.icon {
-    fill: #444;
-    cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    line-height: 1;
+  .text-button {
+    @include lightDark(color, #444, #AAA);
   }
   .input-group .button {
     line-height: 1;
@@ -261,22 +213,27 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-// Attribute form
+// Page editor sidebar toolbox
 .floating-toolbox {
-  border: 1px solid #DDD;
-  @include lightDark(background-color, #fff, #222);
-  @include lightDark(border-color, #DDD, #000);
-  right: $-xl*2;
-  width: 48px;
+  @include lightDark(background-color, #FFF, #222);
   overflow: hidden;
   align-items: stretch;
   flex-direction: row;
   display: flex;
-  transition: width ease-in-out 180ms;
-  margin-top: -1px;
-  min-height: 0;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: $bs-card;
+  margin-bottom: auto;
+  margin-inline-start: $-l;
+  position: relative;
   &.open {
-    width: 480px;
+    position: relative;
+    right: 0;
+    max-width: 480px;
+    margin-bottom: 0;
+  }
+  &:not(.open) .toolbox-tab-content {
+    display: none !important;
   }
   .toolbox-toggle svg {
     transition: transform ease-in-out 180ms;
@@ -285,7 +242,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     transition: background-color ease-in-out 180ms;
   }
   &.open .toolbox-toggle {
-    background-color: rgba(255, 0, 0, 0.29);
+    background-color: rgba(255, 0, 0, 0.20);
   }
   &.open .toolbox-toggle svg {
     transform: rotate(180deg);
@@ -295,36 +252,45 @@ body.tox-fullscreen, body.markdown-fullscreen {
     position: relative;
   }
   .tabs {
-    display: block;
     border-inline-end: 1px solid #DDD;
-    @include lightDark(border-color, #ddd, #000);
-    width: 48px;
+    @include lightDark(border-inline-end-color, #DDD, #000);
+    width: 40px;
     flex: 0 1 auto;
+    margin-inline-end: -1px;
+  }
+  .tabs-inner {
+    @include lightDark(background-color, #FFFFFF, #222);
   }
   .tabs svg {
     padding: 0;
     margin: 0;
   }
-  .tabs > button {
-    @include lightDark(color, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+  .tabs-inner > button {
+    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
-    padding: $-s $-m;
-    font-size: 16px;
+    padding: 10px $-xs;
+    font-size: 18px;
     line-height: 1.6;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
-  &.open .tabs > button.active {
-    @include lightDark(color, #444, #EEE);
-    background-color: rgba(0, 0, 0, 0.1);
+  .tabs-inner > button:hover,  &.open .tabs-inner > button.active {
+    color: var(--color-link) !important;
+    position: relative;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 0;
+      height: 100%;
+      background-color: currentColor;
+      opacity: .075;
+    }
   }
-  div[toolbox-tab-content] {
-    padding-bottom: 45px;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    min-height: 0;
-    overflow-y: scroll;
+  &.open .tabs-inner > button.active {
+    border-inline-end: 1px solid var(--color-link);
+    margin-inline-end: -1px;
   }
   h4 {
     font-size: 24px;
@@ -357,8 +323,37 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
+@include smaller-than($xxl) {
+  .floating-toolbox {
+    margin-inline-start: $-s;
+  }
+}
+
+@include smaller-than($s) {
+  .page-editor-page-area-wrap {
+    margin: 4px !important;
+  }
+  .floating-toolbox {
+    margin-inline-start: 4px;
+  }
+  .floating-toolbox .tabs {
+    width: 32px;
+  }
+  .floating-toolbox .tabs-inner > button {
+    font-size: 12px;
+  }
+  .page-edit-toolbar {
+    padding-block: 0 !important;
+  }
+  .page-editor.toolbox-open .page-editor-page-area {
+    display: none;
+  }
+}
+
 .toolbox-tab-content {
   display: none;
+  overflow-y: auto;
+  padding-bottom: 45px;
 }
 
 .suggestion-box {

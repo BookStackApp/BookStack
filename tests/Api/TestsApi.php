@@ -2,17 +2,30 @@
 
 namespace Tests\Api;
 
+use BookStack\Users\Models\User;
+
 trait TestsApi
 {
-    protected $apiTokenId = 'apitoken';
-    protected $apiTokenSecret = 'password';
+    protected string $apiTokenId = 'apitoken';
+    protected string $apiTokenSecret = 'password';
+
+    /**
+     * Set the given user as the current logged-in user via the API driver.
+     * This does not ensure API access. The user may still lack required role permissions.
+     */
+    protected function actingAsForApi(User $user): static
+    {
+        parent::actingAs($user, 'api');
+
+        return $this;
+    }
 
     /**
      * Set the API editor role as the current user via the API driver.
      */
-    protected function actingAsApiEditor()
+    protected function actingAsApiEditor(): static
     {
-        $this->actingAs($this->getEditor(), 'api');
+        $this->actingAs($this->users->editor(), 'api');
 
         return $this;
     }
@@ -20,9 +33,9 @@ trait TestsApi
     /**
      * Set the API admin role as the current user via the API driver.
      */
-    protected function actingAsApiAdmin()
+    protected function actingAsApiAdmin(): static
     {
-        $this->actingAs($this->getAdmin(), 'api');
+        $this->actingAs($this->users->admin(), 'api');
 
         return $this;
     }

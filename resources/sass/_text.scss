@@ -3,10 +3,10 @@
  */
 
 body, button, input, select, label, textarea {
-  font-family: $text;
+  font-family: var(--font-body);
 }
-.Codemirror, pre, #markdown-editor-input, .text-mono, .code-base {
-  font-family: $mono;
+pre, #markdown-editor-input, .text-mono, .code-base {
+  font-family: var(--font-code);
 }
 
 /*
@@ -42,6 +42,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   position: relative;
   display: block;
+  font-family: var(--font-heading, var(--font-body));
   @include lightDark(color, #222, #BBB);
   .subheader {
     font-size: 0.5em;
@@ -90,7 +91,7 @@ h2.list-heading {
  * Link styling
  */
 a {
-  color: var(--color-primary);
+  color: var(--color-link);
   fill: currentColor;
   cursor: pointer;
   text-decoration: none;
@@ -107,7 +108,7 @@ a {
     display: inline-block;
   }
   &:focus img:only-child {
-    outline: 2px dashed var(--color-primary);
+    outline: 2px dashed var(--color-link);
     outline-offset: 2px;
   }
 }
@@ -178,18 +179,19 @@ sub, .subscript {
 pre {
   font-size: 12px;
   border: 1px solid #DDD;
-  @include lightDark(background-color, #f5f5f5, #2B2B2B);
+  @include lightDark(background-color, #FFF, #2B2B2B);
   @include lightDark(border-color, #DDD, #111);
-  padding-left: 31px;
+  border-radius: 4px;
+  padding-left: 26px;
   position: relative;
   padding-top: 3px;
   padding-bottom: 3px;
-  &:after {
+  &:before {
     content: '';
     display: block;
     position: absolute;
     top: 0;
-    width: 29px;
+    width: 22.4px;
     left: 0;
     height: 100%;
     @include lightDark(background-color, #f5f5f5, #313335);
@@ -201,7 +203,7 @@ pre {
   pre {
     padding-left: 12px;
   }
-  pre:after {
+  pre:before {
     display: none;
   }
 }
@@ -209,7 +211,8 @@ pre {
 blockquote {
   display: block;
   position: relative;
-  border-left: 4px solid var(--color-primary);
+  border-left: 4px solid transparent;
+  border-left-color: var(--color-primary);
   @include lightDark(background-color, #f8f8f8, #333);
   padding: $-s $-m $-s $-xl;
   overflow: auto;
@@ -225,7 +228,7 @@ blockquote {
 }
 
 .text-mono {
-  font-family: $mono;
+  font-family: var(--font-code);
 }
 
 .text-uppercase {
@@ -362,6 +365,7 @@ li.checkbox-item, li.task-list-item {
 }
 
 .break-text {
+  white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }

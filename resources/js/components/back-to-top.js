@@ -1,4 +1,4 @@
-import {Component} from "./component";
+import {Component} from './component';
 
 export class BackToTop extends Component {
 
@@ -18,7 +18,7 @@ export class BackToTop extends Component {
     }
 
     onPageScroll() {
-        let scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (!this.showing && scrollTopPos > this.breakPoint) {
             this.button.style.display = 'block';
             this.showing = true;
@@ -35,15 +35,15 @@ export class BackToTop extends Component {
     }
 
     scrollToTop() {
-        let targetTop = this.targetElem.getBoundingClientRect().top;
-        let scrollElem = document.documentElement.scrollTop ? document.documentElement : document.body;
-        let duration = 300;
-        let start = Date.now();
-        let scrollStart = this.targetElem.getBoundingClientRect().top;
+        const targetTop = this.targetElem.getBoundingClientRect().top;
+        const scrollElem = document.documentElement.scrollTop ? document.documentElement : document.body;
+        const duration = 300;
+        const start = Date.now();
+        const scrollStart = this.targetElem.getBoundingClientRect().top;
 
         function setPos() {
-            let percentComplete = (1-((Date.now() - start) / duration));
-            let target = Math.abs(percentComplete * scrollStart);
+            const percentComplete = (1 - ((Date.now() - start) / duration));
+            const target = Math.abs(percentComplete * scrollStart);
             if (percentComplete > 0) {
                 scrollElem.scrollTop = target;
                 requestAnimationFrame(setPos.bind(this));

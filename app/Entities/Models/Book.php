@@ -40,26 +40,19 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Returns book cover image, if book cover not exists return default cover image.
-     *
-     * @param int $width  - Width of the image
-     * @param int $height - Height of the image
-     *
-     * @return string
      */
-    public function getBookCover($width = 440, $height = 250)
+    public function getBookCover(int $width = 440, int $height = 250): string
     {
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id) {
+        if (!$this->image_id || !$this->cover) {
             return $default;
         }
 
         try {
-            $cover = $this->cover ? url($this->cover->getThumb($width, $height, false)) : $default;
+            return $this->cover->getThumb($width, $height, false) ?? $default;
         } catch (Exception $err) {
-            $cover = $default;
+            return $default;
         }
-
-        return $cover;
     }
 
     /**

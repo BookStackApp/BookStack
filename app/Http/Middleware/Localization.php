@@ -2,17 +2,14 @@
 
 namespace BookStack\Http\Middleware;
 
-use BookStack\Util\LanguageManager;
-use Carbon\Carbon;
+use BookStack\Translation\LocaleManager;
 use Closure;
 
 class Localization
 {
-    protected LanguageManager $languageManager;
-
-    public function __construct(LanguageManager $languageManager)
-    {
-        $this->languageManager = $languageManager;
+    public function __construct(
+        protected LocaleManager $localeManager
+    ) {
     }
 
     /**
@@ -25,22 +22,12 @@ class Localization
      */
     public function handle($request, Closure $next)
     {
-        // Get and record the default language in the config
-        $defaultLang = config('app.locale');
-        config()->set('app.default_locale', $defaultLang);
+        // Share details of the user's locale for use in views
+        $userLocale = $this->localeManager->getForUser(user());
+        view()->share('locale', $userLocale);
 
-        // Get the user's language and record that in the config for use in views
-        $userLang = $this->languageManager->getUserLanguage($request, $defaultLang);
-        config()->set('app.lang', str_replace('_', '-', $this->languageManager->getIsoName($userLang)));
-
-        // Set text direction
-        if ($this->languageManager->isRTL($userLang)) {
-            config()->set('app.rtl', true);
-        }
-
-        app()->setLocale($userLang);
-        Carbon::setLocale($userLang);
-        $this->languageManager->setPhpDateTimeLocale($userLang);
+        // Set locale for system components
+        app()->setLocale($userLocale->appLocale());
 
         return $next($request);
     }

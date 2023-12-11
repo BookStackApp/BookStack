@@ -25,7 +25,6 @@ button {
   text-transform: uppercase;
   border: 1px solid var(--color-primary);
   vertical-align: top;
-  @include lightDark(filter, none, saturate(0.8) brightness(0.8));
   &:hover, &:focus, &:active {
     background-color: var(--color-primary);
     text-decoration: none;
@@ -85,10 +84,7 @@ button {
   user-select: none;
   font-size: 0.75rem;
   line-height: 1.4em;
-  color: var(--color-primary);
-  @include whenDark {
-    color: #AAA;
-  }
+  color: var(--color-link);
   &:active {
     outline: 0;
   }
@@ -96,8 +92,8 @@ button {
     text-decoration: none;
   }
   &:hover, &:focus {
-    color: var(--color-primary);
-    fill: var(--color-primary);
+    color: var(--color-link);
+    fill: var(--color-link);
   }
 }
 .text-button.hover-underline:hover {
@@ -110,7 +106,7 @@ button {
   display: block;
 }
 
-.button.icon, .icon-button {
+.button.icon, .icon-button, .text-button.icon {
   .svg-icon {
     margin-inline-end: 0;
   }

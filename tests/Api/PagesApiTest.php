@@ -45,6 +45,7 @@ class PagesApiTest extends TestCase
                     'value' => 'tagvalue',
                 ],
             ],
+            'priority' => 15,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -159,6 +160,41 @@ class PagesApiTest extends TestCase
         $this->assertStringContainsString('testing', $html);
     }
 
+    public function test_read_endpoint_provides_raw_html()
+    {
+        $html = "<p>testing</p><script>alert('danger')</script><h1>Hello</h1>";
+
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $page->html = $html;
+        $page->save();
+
+        $resp = $this->getJson($this->baseEndpoint . "/{$page->id}");
+        $this->assertEquals($html, $resp->json('raw_html'));
+        $this->assertNotEquals($html, $resp->json('html'));
+    }
+
+    public function test_read_endpoint_returns_not_found()
+    {
+        $this->actingAsApiEditor();
+        // get an id that is not used
+        $id = Page::orderBy('id', 'desc')->first()->id + 1;
+        $this->assertNull(Page::find($id));
+
+        $resp = $this->getJson($this->baseEndpoint . "/$id");
+
+        $resp->assertNotFound();
+        $this->assertNull($resp->json('id'));
+        $resp->assertJsonIsObject('error');
+        $resp->assertJsonStructure([
+            'error' => [
+                'code',
+                'message',
+            ],
+        ]);
+        $this->assertSame(404, $resp->json('error')['code']);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
@@ -172,6 +208,7 @@ class PagesApiTest extends TestCase
                     'value' => 'freshtagval',
                 ],
             ],
+            'priority' => 15,
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
@@ -209,7 +246,7 @@ class PagesApiTest extends TestCase
         $this->actingAsApiEditor();
         $page = $this->entities->page();
         $chapter = Chapter::visible()->where('book_id', '!=', $page->book_id)->first();
-        $this->entities->setPermissions($chapter, ['view'], [$this->getEditor()->roles()->first()]);
+        $this->permissions->setEntityPermissions($chapter, ['view'], [$this->users->editor()->roles()->first()]);
         $details = [
             'name'       => 'My updated API page',
             'chapter_id' => $chapter->id,
@@ -315,7 +352,7 @@ class PagesApiTest extends TestCase
     {
         $types = ['html', 'plaintext', 'pdf', 'markdown'];
         $this->actingAsApiEditor();
-        $this->removePermissionFromUser($this->getEditor(), 'content-export');
+        $this->permissions->removeUserRolePermissions($this->users->editor(), ['content-export']);
 
         $page = $this->entities->page();
         foreach ($types as $type) {

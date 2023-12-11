@@ -2,7 +2,7 @@
 
 namespace BookStack\Search;
 
-use BookStack\Actions\Tag;
+use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
 use Illuminate\Support\HtmlString;
 

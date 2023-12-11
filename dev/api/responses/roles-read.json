@@ -1,0 +1,23 @@
+{
+  "id": 26,
+  "display_name": "Book Maintainer",
+  "description": "People who maintain books",
+  "created_at": "2023-02-19T15:38:40.000000Z",
+  "updated_at": "2023-02-19T15:38:40.000000Z",
+  "system_name": "",
+  "external_auth_id": "",
+  "mfa_enforced": true,
+  "permissions": [
+    "book-delete-all",
+    "book-update-all",
+    "book-view-all",
+    "restrictions-manage-all"
+  ],
+  "users": [
+    {
+      "id": 11,
+      "name": "Barry Scott",
+      "slug": "barry-scott"
+    }
+  ]
+}

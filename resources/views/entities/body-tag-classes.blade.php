@@ -1,1 +1,1 @@
-@push('body-class', e((new \BookStack\Actions\TagClassGenerator($entity->tags->all()))->generateAsString() . ' '))
+@push('body-class', e((new \BookStack\Activity\Tools\TagClassGenerator($entity->tags->all()))->generateAsString() . ' '))

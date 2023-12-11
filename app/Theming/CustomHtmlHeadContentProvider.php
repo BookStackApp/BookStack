@@ -50,7 +50,7 @@ class CustomHtmlHeadContentProvider
         $hash = md5($content);
 
         return $this->cache->remember('custom-head-export:' . $hash, 86400, function () use ($content) {
-            return HtmlContentFilter::removeScripts($content);
+            return HtmlContentFilter::removeScriptsFromHtmlString($content);
         });
     }
 

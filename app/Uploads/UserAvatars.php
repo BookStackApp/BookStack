@@ -2,21 +2,21 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Auth\User;
 use BookStack\Exceptions\HttpFetchException;
+use BookStack\Http\HttpRequestService;
+use BookStack\Users\Models\User;
 use Exception;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Psr\Http\Client\ClientExceptionInterface;
 
 class UserAvatars
 {
-    protected $imageService;
-    protected $http;
-
-    public function __construct(ImageService $imageService, HttpFetcher $http)
-    {
-        $this->imageService = $imageService;
-        $this->http = $http;
+    public function __construct(
+        protected ImageService $imageService,
+        protected HttpRequestService $http
+    ) {
     }
 
     /**
@@ -34,7 +34,7 @@ class UserAvatars
             $user->avatar()->associate($avatar);
             $user->save();
         } catch (Exception $e) {
-            Log::error('Failed to save user avatar image');
+            Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
 
@@ -49,14 +49,14 @@ class UserAvatars
             $user->avatar()->associate($avatar);
             $user->save();
         } catch (Exception $e) {
-            Log::error('Failed to save user avatar image');
+            Log::error('Failed to save user avatar image', ['exception' => $e]);
         }
     }
 
     /**
      * Destroy all user avatars uploaded to the given user.
      */
-    public function destroyAllForUser(User $user)
+    public function destroyAllForUser(User $user): void
     {
         $profileImages = Image::query()->where('type', '=', 'user')
             ->where('uploaded_to', '=', $user->id)
@@ -70,7 +70,7 @@ class UserAvatars
     /**
      * Save an avatar image from an external service.
      *
-     * @throws Exception
+     * @throws HttpFetchException
      */
     protected function saveAvatarImage(User $user, int $size = 500): Image
     {
@@ -107,33 +107,37 @@ class UserAvatars
     /**
      * Gets an image from url and returns it as a string of image data.
      *
-     * @throws Exception
+     * @throws HttpFetchException
      */
     protected function getAvatarImageData(string $url): string
     {
         try {
-            $imageData = $this->http->fetch($url);
-        } catch (HttpFetchException $exception) {
-            throw new Exception(trans('errors.cannot_get_image_from_url', ['url' => $url]));
-        }
+            $client = $this->http->buildClient(5);
+            $response = $client->sendRequest(new Request('GET', $url));
+            if ($response->getStatusCode() !== 200) {
+                throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));
+            }
 
-        return $imageData;
+            return (string) $response->getBody();
+        } catch (ClientExceptionInterface $exception) {
+            throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]), $exception->getCode(), $exception);
+        }
     }
 
     /**
      * Check if fetching external avatars is enabled.
      */
-    protected function avatarFetchEnabled(): bool
+    public function avatarFetchEnabled(): bool
     {
         $fetchUrl = $this->getAvatarUrl();
 
-        return is_string($fetchUrl) && strpos($fetchUrl, 'http') === 0;
+        return str_starts_with($fetchUrl, 'http');
     }
 
     /**
      * Get the URL to fetch avatars from.
      */
-    protected function getAvatarUrl(): string
+    public function getAvatarUrl(): string
     {
         $configOption = config('services.avatar_url');
         if ($configOption === false) {

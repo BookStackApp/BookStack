@@ -1,15 +1,20 @@
-<h6 class="text-uppercase text-muted float right">{{ $endpoint['controller_method_kebab'] }}</h6>
+<div class="flex-container-row items-center gap-m">
+    <span class="api-method text-mono" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
+    <h5 id="{{ $endpoint['name'] }}" class="text-mono pb-xs">
+        @if($endpoint['controller_method_kebab'] === 'list')
+            <a style="color: inherit;" target="_blank" rel="noopener" href="{{ url($endpoint['uri']) }}">{{ url($endpoint['uri']) }}</a>
+        @else
+            <span>{{ url($endpoint['uri']) }}</span>
+        @endif
+    </h5>
+    <h6 class="text-uppercase text-muted text-mono ml-auto">{{ $endpoint['controller_method_kebab'] }}</h6>
+</div>
 
-<h5 id="{{ $endpoint['name'] }}" class="text-mono mb-m">
-    <span class="api-method" data-method="{{ $endpoint['method'] }}">{{ $endpoint['method'] }}</span>
-    @if($endpoint['controller_method_kebab'] === 'list')
-        <a style="color: inherit;" target="_blank" rel="noopener" href="{{ url($endpoint['uri']) }}">{{ url($endpoint['uri']) }}</a>
-    @else
-        {{ url($endpoint['uri']) }}
-    @endif
-</h5>
-
-<p class="mb-m">{{ $endpoint['description'] ?? '' }}</p>
+<div class="mb-m">
+    @foreach(explode("\n", $endpoint['description'] ?? '') as $descriptionBlock)
+        <p class="mb-xxs">{{ $descriptionBlock }}</p>
+    @endforeach
+</div>
 
 @if($endpoint['body_params'] ?? false)
     <details class="mb-m">
