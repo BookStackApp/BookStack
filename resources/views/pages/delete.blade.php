@@ -19,8 +19,8 @@
         <div class="card content-wrap auto-height">
             <h1 class="list-heading">{{ $page->draft ? trans('entities.pages_delete_draft') : trans('entities.pages_delete') }}</h1>
 
-            @if ($times_used_as_template > 0)
-                <p>{{ trans_choice('entities.pages_delete_warning_template', $times_used_as_template) }}</p>
+            @if($usedAsTemplate)
+                <p>{{ trans('entities.pages_delete_warning_template') }}</p>
             @endif
 
             <div class="grid half v-center">

@@ -132,6 +132,8 @@ return [
     'books_edit_named' => 'Edit Book :bookName',
     'books_form_book_name' => 'Book Name',
     'books_save' => 'Save Book',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a default template that will be used for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template.',
     'books_permissions' => 'Book Permissions',
     'books_permissions_updated' => 'Book Permissions Updated',
     'books_empty_contents' => 'No pages or chapters have been created for this book.',
@@ -204,7 +206,7 @@ return [
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Page deleted',
     'pages_delete_draft_success' => 'Draft page deleted',
-    'pages_delete_warning_template' => '{0}|{1}Be careful: this page is used as a template for :count book.|[2,*]Be careful: this page is used as a template for :count books.',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a page default template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
@@ -351,8 +353,6 @@ return [
     'templates_replace_content' => 'Replace page content',
     'templates_append_content' => 'Append to page content',
     'templates_prepend_content' => 'Prepend to page content',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => "Assign a default template that will be used for all new pages in this book.",
 
     // Profile View
     'profile_user_for_x' => 'User for :time',
