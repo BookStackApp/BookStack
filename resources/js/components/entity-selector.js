@@ -10,6 +10,7 @@ export class EntitySelector extends Component {
         this.elem = this.$el;
         this.entityTypes = this.$opts.entityTypes || 'page,book,chapter';
         this.entityPermission = this.$opts.entityPermission || 'view';
+        this.searchEndpoint = this.$opts.searchEndpoint || '/search/entity-selector';
 
         this.input = this.$refs.input;
         this.searchInput = this.$refs.search;
@@ -18,7 +19,6 @@ export class EntitySelector extends Component {
 
         this.search = '';
         this.lastClick = 0;
-        this.selectedItemData = null;
 
         this.setupListeners();
         this.showLoading();
@@ -110,7 +110,7 @@ export class EntitySelector extends Component {
     }
 
     searchUrl() {
-        return `/search/entity-selector?types=${encodeURIComponent(this.entityTypes)}&permission=${encodeURIComponent(this.entityPermission)}`;
+        return `${this.searchEndpoint}?types=${encodeURIComponent(this.entityTypes)}&permission=${encodeURIComponent(this.entityPermission)}`;
     }
 
     searchEntities(searchTerm) {
@@ -153,7 +153,6 @@ export class EntitySelector extends Component {
 
         if (isSelected) {
             item.classList.add('selected');
-            this.selectedItemData = data;
         } else {
             window.$events.emit('entity-select-change', null);
         }
@@ -177,7 +176,6 @@ export class EntitySelector extends Component {
         for (const selectedElem of selected) {
             selectedElem.classList.remove('selected', 'primary-background');
         }
-        this.selectedItemData = null;
     }
 
 }

@@ -14,7 +14,7 @@ class AddDefaultTemplateToBooks extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('default_template')->nullable();
+            $table->integer('default_template')->nullable()->default(null);
         });
     }
 

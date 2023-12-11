@@ -2,6 +2,7 @@
 
 namespace BookStack\Search;
 
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
@@ -80,6 +81,32 @@ class SearchController extends Controller
         }
 
         return view('search.parts.entity-selector-list', ['entities' => $entities, 'permission' => $permission]);
+    }
+
+    /**
+     * Search for a list of templates to choose from.
+     */
+    public function templatesForSelector(Request $request)
+    {
+        $searchTerm = $request->get('term', false);
+
+        if ($searchTerm !== false) {
+            $searchOptions = SearchOptions::fromString($searchTerm);
+            $searchOptions->setFilter('is_template');
+            $entities = $this->searchRunner->searchEntities($searchOptions, 'page', 1, 20)['results'];
+        } else {
+            $entities = Page::visible()
+                ->where('template', '=', true)
+                ->where('draft', '=', false)
+                ->orderBy('updated_at', 'desc')
+                ->take(20)
+                ->get(Page::$listAttributes);
+        }
+
+        return view('search.parts.entity-selector-list', [
+            'entities' => $entities,
+            'permission' => 'view'
+        ]);
     }
 
     /**
