@@ -1,7 +1,7 @@
 import {Component} from './component';
 
 function toggleElem(elem, show) {
-    elem.style.display = show ? null : 'none';
+    elem.toggleAttribute('hidden', !show);
 }
 
 export class PagePicker extends Component {
@@ -21,6 +21,7 @@ export class PagePicker extends Component {
     setupListeners() {
         this.selectButton.addEventListener('click', this.showPopup.bind(this));
         this.display.parentElement.addEventListener('click', this.showPopup.bind(this));
+        this.display.addEventListener('click', e => e.stopPropagation());
 
         this.resetButton.addEventListener('click', () => {
             this.setValue('', '');

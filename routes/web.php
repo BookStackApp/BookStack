@@ -182,6 +182,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);
     Route::get('/search/entity-selector', [SearchController::class, 'searchForSelector']);
+    Route::get('/search/entity-selector-templates', [SearchController::class, 'templatesForSelector']);
     Route::get('/search/suggest', [SearchController::class, 'searchSuggestions']);
 
     // User Search

@@ -171,6 +171,14 @@ class SearchOptions
     }
 
     /**
+     * Set the value of a specific filter in the search options.
+     */
+    public function setFilter(string $filterName, string $filterValue = ''): void
+    {
+        $this->filters[$filterName] = $filterValue;
+    }
+
+    /**
      * Encode this instance to a search string.
      */
     public function toString(): string

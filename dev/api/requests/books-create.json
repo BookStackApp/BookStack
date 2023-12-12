@@ -1,4 +1,9 @@
 {
   "name": "My own book",
-  "description": "This is my own little book"
+  "description": "This is my own little book",
+  "default_template_id": 12,
+  "tags": [
+    {"name": "Category", "value": "Top Content"},
+    {"name": "Rating", "value": "Highest"}
+  ]
 }

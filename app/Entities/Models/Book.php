@@ -15,11 +15,13 @@ use Illuminate\Support\Collection;
  *
  * @property string                                   $description
  * @property int                                      $image_id
+ * @property ?int                                     $default_template_id
  * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
+ * @property ?Page                                    $defaultTemplate
  */
 class Book extends Entity implements HasCoverImage
 {
@@ -69,6 +71,14 @@ class Book extends Entity implements HasCoverImage
     public function coverImageTypeKey(): string
     {
         return 'cover_book';
+    }
+
+    /**
+     * Get the Page that is used as default template for newly created pages within this Book.
+     */
+    public function defaultTemplate(): BelongsTo
+    {
+        return $this->belongsTo(Page::class, 'default_template_id');
     }
 
     /**
