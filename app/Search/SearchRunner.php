@@ -58,7 +58,7 @@ class SearchRunner
         $entityTypesToSearch = $entityTypes;
 
         if ($entityType !== 'all') {
-            $entityTypesToSearch = $entityType;
+            $entityTypesToSearch = [$entityType];
         } elseif (isset($searchOpts->filters['type'])) {
             $entityTypesToSearch = explode('|', $searchOpts->filters['type']);
         }
@@ -467,6 +467,13 @@ class SearchRunner
         $query->whereDoesntHave('views', function ($query) {
             $query->where('user_id', '=', user()->id);
         });
+    }
+
+    protected function filterIsTemplate(EloquentBuilder $query, Entity $model, $input)
+    {
+        if ($model instanceof Page) {
+            $query->where('template', '=', true);
+        }
     }
 
     protected function filterSortBy(EloquentBuilder $query, Entity $model, $input)

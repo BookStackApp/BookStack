@@ -133,7 +133,7 @@
                     </select>
 
                     <div refs="setting-homepage-control@page-picker-container" style="display: none;" class="mt-m">
-                        @include('settings.parts.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
+                        @include('form.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ namespace BookStack\Entities\Repos;
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -17,18 +18,11 @@ use Illuminate\Support\Collection;
 
 class BookRepo
 {
-    protected $baseRepo;
-    protected $tagRepo;
-    protected $imageRepo;
-
-    /**
-     * BookRepo constructor.
-     */
-    public function __construct(BaseRepo $baseRepo, TagRepo $tagRepo, ImageRepo $imageRepo)
-    {
-        $this->baseRepo = $baseRepo;
-        $this->tagRepo = $tagRepo;
-        $this->imageRepo = $imageRepo;
+    public function __construct(
+        protected BaseRepo $baseRepo,
+        protected TagRepo $tagRepo,
+        protected ImageRepo $imageRepo
+    ) {
     }
 
     /**
@@ -92,6 +86,7 @@ class BookRepo
         $book = new Book();
         $this->baseRepo->create($book, $input);
         $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
+        $this->updateBookDefaultTemplate($book, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::BOOK_CREATE, $book);
 
         return $book;
@@ -104,6 +99,10 @@ class BookRepo
     {
         $this->baseRepo->update($book, $input);
 
+        if (array_key_exists('default_template_id', $input)) {
+            $this->updateBookDefaultTemplate($book, intval($input['default_template_id']));
+        }
+
         if (array_key_exists('image', $input)) {
             $this->baseRepo->updateCoverImage($book, $input['image'], $input['image'] === null);
         }
@@ -111,6 +110,33 @@ class BookRepo
         Activity::add(ActivityType::BOOK_UPDATE, $book);
 
         return $book;
+    }
+
+    /**
+     * Update the default page template used for this book.
+     * Checks that, if changing, the provided value is a valid template and the user
+     * has visibility of the provided page template id.
+     */
+    protected function updateBookDefaultTemplate(Book $book, int $templateId): void
+    {
+        $changing = $templateId !== intval($book->default_template_id);
+        if (!$changing) {
+            return;
+        }
+
+        if ($templateId === 0) {
+            $book->default_template_id = null;
+            $book->save();
+            return;
+        }
+
+        $templateExists = Page::query()->visible()
+            ->where('template', '=', true)
+            ->where('id', '=', $templateId)
+            ->exists();
+
+        $book->default_template_id = $templateExists ? $templateId : null;
+        $book->save();
     }
 
     /**
