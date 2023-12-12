@@ -40,17 +40,18 @@
         <label for="template-manager">{{ trans('entities.books_default_template') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
-        <div class="flex-container-row items-center gap-m justify-space-between pt-s pb-xs">
-            <p class="text-muted small my-none">
+        <div class="flex-container-row gap-l justify-space-between pb-xs wrap">
+            <p class="text-muted small my-none min-width-xs flex">
                 {{ trans('entities.books_default_template_explain') }}
             </p>
 
-
-            @include('form.page-picker', [
-                'name' => 'default_template_id',
-                'placeholder' => trans('entities.books_default_template_select'),
-                'value' => $book?->default_template_id ?? null,
-            ])
+            <div class="min-width-m">
+                @include('form.page-picker', [
+                    'name' => 'default_template_id',
+                    'placeholder' => trans('entities.books_default_template_select'),
+                    'value' => $book?->default_template_id ?? null,
+                ])
+            </div>
         </div>
 
     </div>
