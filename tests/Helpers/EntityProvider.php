@@ -53,6 +53,15 @@ class EntityProvider
         return $this->page(fn(Builder $query) => $query->where('chapter_id', '=', 0));
     }
 
+    public function templatePage(): Page
+    {
+        $page = $this->page();
+        $page->template = true;
+        $page->save();
+
+        return $page;
+    }
+
     /**
      * Get an un-fetched chapter from the system.
      */

@@ -203,8 +203,8 @@ class TrashCan
         }
 
         // Remove book template usages
-        Book::query()->where('default_template', '=', $page->id)
-            ->update(['default_template' => null]);
+        Book::query()->where('default_template_id', '=', $page->id)
+            ->update(['default_template_id' => null]);
 
         $page->forceDelete();
 

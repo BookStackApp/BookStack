@@ -20,6 +20,7 @@
     "name": "Admin",
     "slug": "admin"
   },
+  "default_template_id": null,
   "contents": [
     {
       "id": 50,

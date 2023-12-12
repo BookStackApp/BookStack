@@ -86,6 +86,7 @@ class BookRepo
         $book = new Book();
         $this->baseRepo->create($book, $input);
         $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
+        $this->updateBookDefaultTemplate($book, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::BOOK_CREATE, $book);
 
         return $book;
@@ -98,8 +99,8 @@ class BookRepo
     {
         $this->baseRepo->update($book, $input);
 
-        if (array_key_exists('default_template', $input)) {
-            $this->updateBookDefaultTemplate($book, intval($input['default_template']));
+        if (array_key_exists('default_template_id', $input)) {
+            $this->updateBookDefaultTemplate($book, intval($input['default_template_id']));
         }
 
         if (array_key_exists('image', $input)) {
@@ -118,13 +119,13 @@ class BookRepo
      */
     protected function updateBookDefaultTemplate(Book $book, int $templateId): void
     {
-        $changing = $templateId !== intval($book->default_template);
+        $changing = $templateId !== intval($book->default_template_id);
         if (!$changing) {
             return;
         }
 
         if ($templateId === 0) {
-            $book->default_template = null;
+            $book->default_template_id = null;
             $book->save();
             return;
         }
@@ -134,7 +135,7 @@ class BookRepo
             ->where('id', '=', $templateId)
             ->exists();
 
-        $book->default_template = $templateExists ? $templateId : null;
+        $book->default_template_id = $templateExists ? $templateId : null;
         $book->save();
     }
 
