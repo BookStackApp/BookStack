@@ -262,7 +262,7 @@ class EntitySearchTest extends TestCase
 
         // Visit both to make popular
         $this->asEditor()->get($templatePage->getUrl());
-        $this->asEditor()->get($nonTemplatePage->getUrl());
+        $this->get($nonTemplatePage->getUrl());
 
         $normalSearch = $this->get('/search/entity-selector-templates?term=test');
         $normalSearch->assertSee($templatePage->name);
@@ -275,6 +275,14 @@ class EntitySearchTest extends TestCase
         $defaultListTest = $this->get('/search/entity-selector-templates');
         $defaultListTest->assertSee($templatePage->name);
         $defaultListTest->assertDontSee($nonTemplatePage->name);
+
+        $this->permissions->disableEntityInheritedPermissions($templatePage);
+
+        $normalSearch = $this->get('/search/entity-selector-templates?term=test');
+        $normalSearch->assertDontSee($templatePage->name);
+
+        $defaultListTest = $this->get('/search/entity-selector-templates');
+        $defaultListTest->assertDontSee($templatePage->name);
     }
 
     public function test_sibling_search_for_pages()
