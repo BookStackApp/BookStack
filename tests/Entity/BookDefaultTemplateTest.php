@@ -159,6 +159,21 @@ class BookDefaultTemplateTest extends TestCase
         $this->assertEquals('', $latestPage->markdown);
     }
 
+    public function test_template_page_delete_removes_book_template_usage()
+    {
+        $templatePage = $this->entities->templatePage();
+        $book = $this->bookUsingDefaultTemplate($templatePage);
+
+        $book->refresh();
+        $this->assertEquals($templatePage->id, $book->default_template_id);
+
+        $this->asEditor()->delete($templatePage->getUrl());
+        $this->asAdmin()->post('/settings/recycle-bin/empty');
+
+        $book->refresh();
+        $this->assertEquals(null, $book->default_template_id);
+    }
+
     protected function bookUsingDefaultTemplate(Page $page): Book
     {
         $book = $this->entities->book();
