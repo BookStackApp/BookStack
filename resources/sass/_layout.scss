@@ -270,8 +270,12 @@ body.flexbox {
   overflow: hidden;
 }
 
-.fill-height {
+.height-fill {
   height: 100%;
+}
+
+.height-auto {
+  height: auto !important;
 }
 
 .float {
