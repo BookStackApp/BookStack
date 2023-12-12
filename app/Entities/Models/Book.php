@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
  *
  * @property string                                   $description
  * @property int                                      $image_id
- * @property ?int                                     $default_template
+ * @property ?int                                     $default_template_id
  * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
@@ -78,7 +78,7 @@ class Book extends Entity implements HasCoverImage
      */
     public function defaultTemplate(): BelongsTo
     {
-        return $this->belongsTo(Page::class, 'default_template');
+        return $this->belongsTo(Page::class, 'default_template_id');
     }
 
     /**

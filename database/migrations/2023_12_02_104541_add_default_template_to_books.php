@@ -14,7 +14,7 @@ class AddDefaultTemplateToBooks extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->integer('default_template')->nullable()->default(null);
+            $table->integer('default_template_id')->nullable()->default(null);
         });
     }
 
@@ -26,7 +26,7 @@ class AddDefaultTemplateToBooks extends Migration
     public function down()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('default_template');
+            $table->dropColumn('default_template_id');
         });
     }
 }

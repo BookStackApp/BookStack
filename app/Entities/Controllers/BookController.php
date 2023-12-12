@@ -92,11 +92,11 @@ class BookController extends Controller
     {
         $this->checkPermission('book-create-all');
         $validated = $this->validate($request, [
-            'name'              => ['required', 'string', 'max:255'],
-            'description'       => ['string', 'max:1000'],
-            'image'             => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'              => ['array'],
-            'default_template'  => ['nullable', 'integer'],
+            'name'                => ['required', 'string', 'max:255'],
+            'description'         => ['string', 'max:1000'],
+            'image'               => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
         ]);
 
         $bookshelf = null;
@@ -167,11 +167,11 @@ class BookController extends Controller
         $this->checkOwnablePermission('book-update', $book);
 
         $validated = $this->validate($request, [
-            'name'              => ['required', 'string', 'max:255'],
-            'description'       => ['string', 'max:1000'],
-            'image'             => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'              => ['array'],
-            'default_template'  => ['nullable', 'integer'],
+            'name'                => ['required', 'string', 'max:255'],
+            'description'         => ['string', 'max:1000'],
+            'image'               => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
         ]);
 
         if ($request->has('image_reset')) {

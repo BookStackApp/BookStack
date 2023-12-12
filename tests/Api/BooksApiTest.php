@@ -31,13 +31,16 @@ class BooksApiTest extends TestCase
     public function test_create_endpoint()
     {
         $this->actingAsApiEditor();
+        $templatePage = $this->entities->templatePage();
         $details = [
             'name'        => 'My API book',
             'description' => 'A book created via the API',
+            'default_template_id' => $templatePage->id,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(200);
+
         $newItem = Book::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
         $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
         $this->assertActivityExists('book_create', $newItem);
@@ -83,6 +86,7 @@ class BooksApiTest extends TestCase
             'owned_by' => [
                 'name' => $book->ownedBy->name,
             ],
+            'default_template_id' => null,
         ]);
     }
 
@@ -121,9 +125,11 @@ class BooksApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $book = $this->entities->book();
+        $templatePage = $this->entities->templatePage();
         $details = [
             'name'        => 'My updated API book',
             'description' => 'A book created via the API',
+            'default_template_id' => $templatePage->id,
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$book->id}", $details);

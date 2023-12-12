@@ -14,11 +14,9 @@ use Illuminate\Validation\ValidationException;
 
 class BookApiController extends ApiController
 {
-    protected BookRepo $bookRepo;
-
-    public function __construct(BookRepo $bookRepo)
-    {
-        $this->bookRepo = $bookRepo;
+    public function __construct(
+        protected BookRepo $bookRepo
+    ) {
     }
 
     /**
@@ -58,7 +56,9 @@ class BookApiController extends ApiController
      */
     public function read(string $id)
     {
-        $book = Book::visible()->with(['tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy'])->findOrFail($id);
+        $book = Book::visible()
+            ->with(['tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy'])
+            ->findOrFail($id);
 
         $contents = (new BookContents($book))->getTree(true, false)->all();
         $contentsApiData = (new ApiEntityListFormatter($contents))
@@ -116,12 +116,14 @@ class BookApiController extends ApiController
                 'description' => ['string', 'max:1000'],
                 'tags'        => ['array'],
                 'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'default_template_id' => ['nullable', 'integer'],
             ],
             'update' => [
                 'name'        => ['string', 'min:1', 'max:255'],
                 'description' => ['string', 'max:1000'],
                 'tags'        => ['array'],
                 'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'default_template_id' => ['nullable', 'integer'],
             ],
         ];
     }
