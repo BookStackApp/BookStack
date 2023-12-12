@@ -49,7 +49,7 @@
                 @include('form.page-picker', [
                     'name' => 'default_template_id',
                     'placeholder' => trans('entities.books_default_template_select'),
-                    'value' => $book?->default_template_id ?? null,
+                    'value' => $book->default_template_id ?? null,
                 ])
             </div>
         </div>
