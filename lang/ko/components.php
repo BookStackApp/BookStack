@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => '이미지 선택',
-    'image_list' => 'Image List',
-    'image_details' => 'Image Details',
+    'image_list' => '이미지 목록',
+    'image_details' => '이미지 상세정보',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
