@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Elimina Bozza Pagina',
     'pages_delete_success' => 'Pagina eliminata',
     'pages_delete_draft_success' => 'Bozza di una pagina eliminata',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Questa pagina è in uso come pagina template predefinita di un libro. Dopo l\'eliminazione di questa pagina, a questi libri non verrà più assegnato una pagina template predefinita.',
     'pages_delete_confirm' => 'Sei sicuro di voler eliminare questa pagina?',
     'pages_delete_draft_confirm' => 'Sei sicuro di voler eliminare la bozza di questa pagina?',
     'pages_editing_named' => 'Modifica :pageName',
