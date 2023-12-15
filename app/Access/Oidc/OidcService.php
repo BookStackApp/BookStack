@@ -85,6 +85,7 @@ class OidcService
             'authorizationEndpoint' => $config['authorization_endpoint'],
             'tokenEndpoint'         => $config['token_endpoint'],
             'endSessionEndpoint'    => is_string($config['end_session_endpoint']) ? $config['end_session_endpoint'] : null,
+            'userinfoEndpoint'      => $config['userinfo_endpoint'],
         ]);
 
         // Use keys if configured
@@ -227,6 +228,17 @@ class OidcService
         );
 
         session()->put("oidc_id_token", $idTokenText);
+
+        if (!empty($settings->userinfoEndpoint)) {
+            $provider = $this->getProvider($settings);
+            $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
+            $response = $provider->getParsedResponse($request);
+            $claims = $idToken->getAllClaims();
+            foreach ($response as $key => $value) {
+                $claims[$key] = $value;
+            }
+            $idToken->replaceClaims($claims);
+        }
 
         $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
             'access_token' => $accessToken->getToken(),
