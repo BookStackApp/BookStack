@@ -132,7 +132,7 @@ return [
     'books_edit_named' => '编辑图书「:bookName」',
     'books_form_book_name' => '书名',
     'books_save' => '保存图书',
-    'books_default_template' => 'Default Page Template',
+    'books_default_template' => '默认页面模板',
     'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
     'books_default_template_select' => 'Select a template page',
     'books_permissions' => '图书权限',
