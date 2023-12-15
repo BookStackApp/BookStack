@@ -668,11 +668,44 @@ class OidcTest extends TestCase
 
     protected function runLogin($claimOverrides = []): TestResponse
     {
+        // These two variables should perhaps be arguments instead of
+        // assuming that they're tied to whether discovery is enabled,
+        // but that's how the tests are written for now.
+        $claimsInIdToken = !config('oidc.discover');
+        $tokenEndpoint = config('oidc.discover')
+                       ? OidcJwtHelper::defaultIssuer() . '/oidc/token'
+                       : 'https://oidc.local/token';
+
         $this->post('/oidc/login');
         $state = session()->get('oidc_state');
-        $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides)]);
 
-        return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $providerResponses = [$this->getMockAuthorizationResponse($claimsInIdToken ? $claimOverrides : [])];
+        if (!$claimsInIdToken) {
+            $providerResponses[] = new Response(200, [
+                'Content-Type'  => 'application/json',
+                'Cache-Control' => 'no-cache, no-store',
+                'Pragma'        => 'no-cache',
+            ], json_encode($claimOverrides));
+        }
+
+        $transactions = $this->mockHttpClient($providerResponses);
+
+        $response = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+
+        if (auth()->check()) {
+            $this->assertEquals($claimsInIdToken ? 1 : 2, $transactions->requestCount());
+            $tokenRequest = $transactions->requestAt(0);
+            $this->assertEquals($tokenEndpoint, (string) $tokenRequest->getUri());
+            $this->assertEquals('POST', $tokenRequest->getMethod());
+            if (!$claimsInIdToken) {
+                $userinfoRequest = $transactions->requestAt(1);
+                $this->assertEquals(OidcJwtHelper::defaultIssuer() . '/oidc/userinfo', (string) $userinfoRequest->getUri());
+                $this->assertEquals('GET', $userinfoRequest->getMethod());
+                $this->assertEquals('Bearer abc123', $userinfoRequest->getHeader('Authorization')[0]);
+            }
+        }
+
+        return $response;
     }
 
     protected function getAutoDiscoveryResponse($responseOverrides = []): Response
@@ -684,6 +717,7 @@ class OidcTest extends TestCase
         ], json_encode(array_merge([
             'token_endpoint'         => OidcJwtHelper::defaultIssuer() . '/oidc/token',
             'authorization_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/authorize',
+            'userinfo_endpoint'      => OidcJwtHelper::defaultIssuer() . '/oidc/userinfo',
             'jwks_uri'               => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
             'issuer'                 => OidcJwtHelper::defaultIssuer(),
             'end_session_endpoint'   => OidcJwtHelper::defaultIssuer() . '/oidc/logout',
