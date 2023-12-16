@@ -72,6 +72,30 @@ body.page-content.mce-content-body  {
   overflow: hidden;
 }
 
+// Allow alignment to be reflected in media embed wrappers
+.page-content.mce-content-body .mce-preview-object.align-right {
+  float: right !important;
+  margin: $-xs 0 $-xs $-s;
+}
+
+.page-content.mce-content-body .mce-preview-object.align-left {
+  float: left !important;
+  margin: $-xs $-m $-m 0;
+}
+
+.page-content.mce-content-body .mce-preview-object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-content.mce-content-body .mce-preview-object iframe,
+.page-content.mce-content-body .mce-preview-object video {
+  display: block;
+  margin: 0 !important;
+  float: none !important;
+}
+
 /**
  * Dark Mode Overrides
  */
