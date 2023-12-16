@@ -1,3 +1,6 @@
+@push('head')
+    <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
+@endpush
 
 {{ csrf_field() }}
 <div class="form-group title-input">
@@ -8,6 +11,15 @@
 <div class="form-group description-input">
     <label for="description">{{ trans('common.description') }}</label>
     @include('form.textarea', ['name' => 'description'])
+
+    <textarea component="wysiwyg-input"
+              option:wysiwyg-input:language="{{ $locale->htmlLang() }}"
+              option:wysiwyg-input:text-direction="{{ $locale->htmlDirection() }}"
+              id="description_html" name="description_html" rows="5"
+              @if($errors->has('description_html')) class="text-neg" @endif>@if(isset($model) || old('description_html')){{ old('description_html') ? old($name) : $model->description_html}}@endif</textarea>
+    @if($errors->has('description_html'))
+        <div class="text-neg text-small">{{ $errors->first('description_html') }}</div>
+    @endif
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">
@@ -63,3 +75,4 @@
 </div>
 
 @include('entities.selector-popup', ['entityTypes' => 'page', 'selectorEndpoint' => '/search/entity-selector-templates'])
+@include('form.editor-translations')
