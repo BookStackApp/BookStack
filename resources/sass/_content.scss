@@ -11,24 +11,24 @@
   .align-left {
     text-align: left;
   }
-  img.align-left, table.align-left {
+  img.align-left, table.align-left, iframe.align-left, video.align-left {
     float: left !important;
     margin: $-xs $-m $-m 0;
   }
   .align-right {
     text-align: right !important;
   }
-  img.align-right, table.align-right {
+  img.align-right, table.align-right, iframe.align-right, video.align-right {
     float: right !important;
     margin: $-xs 0 $-xs $-s;
   }
   .align-center {
     text-align: center;
   }
-  img.align-center {
+  img.align-center, video.align-center, iframe.align-center {
     display: block;
   }
-  img.align-center, table.align-center {
+  img.align-center, table.align-center, iframe.align-center, video.align-center {
     margin-left: auto;
     margin-right: auto;
   }
