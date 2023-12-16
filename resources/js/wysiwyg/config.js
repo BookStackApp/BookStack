@@ -13,6 +13,7 @@ import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
+import {handleEmbedAlignmentChanges} from './fixes';
 
 const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
@@ -35,9 +36,9 @@ const styleFormats = [
 ];
 
 const formats = {
-    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
-    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
-    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
+    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-left'},
+    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-center'},
+    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-right'},
     calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
     calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
     calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
@@ -176,6 +177,8 @@ function getSetupCallback(options) {
         editor.on('PreInit', () => {
             setupFilters(editor);
         });
+
+        handleEmbedAlignmentChanges(editor);
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
