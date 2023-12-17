@@ -304,7 +304,7 @@ export function buildForInput(options) {
     // Return config object
     return {
         width: '100%',
-        height: '300px',
+        height: '185px',
         target: options.containerElement,
         cache_suffix: `?version=${version}`,
         content_css: [
@@ -312,7 +312,7 @@ export function buildForInput(options) {
         ],
         branding: false,
         skin: options.darkMode ? 'tinymce-5-dark' : 'tinymce-5',
-        body_class: 'page-content',
+        body_class: 'wysiwyg-input',
         browser_spellcheck: true,
         relative_urls: false,
         language: options.language,
@@ -323,11 +323,13 @@ export function buildForInput(options) {
         remove_trailing_brs: false,
         statusbar: false,
         menubar: false,
-        plugins: 'link autolink',
+        plugins: 'link autolink lists',
         contextmenu: false,
-        toolbar: 'bold italic underline link',
+        toolbar: 'bold italic underline link bullist numlist',
         content_style: getContentStyle(options),
         color_map: colorMap,
+        file_picker_types: 'file',
+        file_picker_callback: filePickerCallback,
         init_instance_callback(editor) {
             const head = editor.getDoc().querySelector('head');
             head.innerHTML += fetchCustomHeadContent();

@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
 class Chapter extends BookChild
 {
     use HasFactory;
+    use HasHtmlDescription;
 
     public $searchFactor = 1.2;
 

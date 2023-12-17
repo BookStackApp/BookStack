@@ -26,7 +26,7 @@
     <main class="content-wrap card">
         <h1 class="break-text">{{$book->name}}</h1>
         <div refs="entity-search@contentView" class="book-content">
-            <p class="text-muted">{!! nl2br(e($book->description)) !!}</p>
+            <p class="text-muted">{!! $book->descriptionHtml() !!}</p>
             @if(count($bookChildren) > 0)
                 <div class="entity-list book-contents">
                     @foreach($bookChildren as $childElement)
