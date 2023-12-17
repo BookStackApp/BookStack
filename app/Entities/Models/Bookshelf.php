@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Bookshelf extends Entity implements HasCoverImage
 {
     use HasFactory;
+    use HasHtmlDescription;
 
     protected $table = 'bookshelves';
 

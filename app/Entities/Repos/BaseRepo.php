@@ -5,6 +5,7 @@ namespace BookStack\Entities\Repos;
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
+use BookStack\Entities\Models\HasHtmlDescription;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceUpdater;
 use BookStack\Uploads\ImageRepo;
@@ -12,15 +13,11 @@ use Illuminate\Http\UploadedFile;
 
 class BaseRepo
 {
-    protected TagRepo $tagRepo;
-    protected ImageRepo $imageRepo;
-    protected ReferenceUpdater $referenceUpdater;
-
-    public function __construct(TagRepo $tagRepo, ImageRepo $imageRepo, ReferenceUpdater $referenceUpdater)
-    {
-        $this->tagRepo = $tagRepo;
-        $this->imageRepo = $imageRepo;
-        $this->referenceUpdater = $referenceUpdater;
+    public function __construct(
+        protected TagRepo $tagRepo,
+        protected ImageRepo $imageRepo,
+        protected ReferenceUpdater $referenceUpdater
+    ) {
     }
 
     /**
@@ -29,6 +26,7 @@ class BaseRepo
     public function create(Entity $entity, array $input)
     {
         $entity->fill($input);
+        $this->updateDescription($entity, $input);
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
@@ -54,6 +52,7 @@ class BaseRepo
         $oldUrl = $entity->getUrl();
 
         $entity->fill($input);
+        $this->updateDescription($entity, $input);
         $entity->updated_by = user()->id;
 
         if ($entity->isDirty('name') || empty($entity->slug)) {
@@ -97,6 +96,22 @@ class BaseRepo
             $this->imageRepo->destroyImage($entity->cover()->first());
             $entity->image_id = 0;
             $entity->save();
+        }
+    }
+
+    protected function updateDescription(Entity $entity, array $input): void
+    {
+        if (!in_array(HasHtmlDescription::class, class_uses($entity))) {
+            return;
+        }
+
+        /** @var HasHtmlDescription $entity */
+        if (isset($input['description_html'])) {
+            $entity->description_html = $input['description_html'];
+            $entity->description = html_entity_decode(strip_tags($input['description_html']));
+        } else if (isset($input['description'])) {
+            $entity->description = $input['description'];
+            $entity->description_html = $entity->descriptionHtml();
         }
     }
 }

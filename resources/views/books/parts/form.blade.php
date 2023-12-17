@@ -9,17 +9,8 @@
 </div>
 
 <div class="form-group description-input">
-    <label for="description">{{ trans('common.description') }}</label>
-    @include('form.textarea', ['name' => 'description'])
-
-    <textarea component="wysiwyg-input"
-              option:wysiwyg-input:language="{{ $locale->htmlLang() }}"
-              option:wysiwyg-input:text-direction="{{ $locale->htmlDirection() }}"
-              id="description_html" name="description_html" rows="5"
-              @if($errors->has('description_html')) class="text-neg" @endif>@if(isset($model) || old('description_html')){{ old('description_html') ? old($name) : $model->description_html}}@endif</textarea>
-    @if($errors->has('description_html'))
-        <div class="text-neg text-small">{{ $errors->first('description_html') }}</div>
-    @endif
+    <label for="description_html">{{ trans('common.description') }}</label>
+    @include('form.description-html-input')
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">

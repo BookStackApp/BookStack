@@ -26,10 +26,11 @@ use Illuminate\Support\Collection;
 class Book extends Entity implements HasCoverImage
 {
     use HasFactory;
+    use HasHtmlDescription;
 
     public $searchFactor = 1.2;
 
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name'];
     protected $hidden = ['pivot', 'image_id', 'deleted_at'];
 
     /**
