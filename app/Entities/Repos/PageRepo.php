@@ -305,7 +305,7 @@ class PageRepo
         $this->revisionRepo->storeNewForPage($page, $summary);
 
         if ($oldUrl !== $page->getUrl()) {
-            $this->referenceUpdater->updateEntityPageReferences($page, $oldUrl);
+            $this->referenceUpdater->updateEntityReferences($page, $oldUrl);
         }
 
         Activity::add(ActivityType::PAGE_RESTORE, $page);
