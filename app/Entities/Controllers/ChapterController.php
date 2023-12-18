@@ -86,7 +86,7 @@ class ChapterController extends Controller
             'pages'          => $pages,
             'next'           => $nextPreviousLocator->getNext(),
             'previous'       => $nextPreviousLocator->getPrevious(),
-            'referenceCount' => $this->referenceFetcher->getPageReferenceCountToEntity($chapter),
+            'referenceCount' => $this->referenceFetcher->getReferenceCountToEntity($chapter),
         ]);
     }
 

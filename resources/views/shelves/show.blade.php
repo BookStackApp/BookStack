@@ -28,7 +28,7 @@
         </div>
 
         <div class="book-content">
-            <p class="text-muted">{!! nl2br(e($shelf->description)) !!}</p>
+            <p class="text-muted">{!! $shelf->descriptionHtml() !!}</p>
             @if(count($sortedVisibleShelfBooks) > 0)
                 @if($view === 'list')
                     <div class="entity-list">

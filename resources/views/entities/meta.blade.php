@@ -64,7 +64,7 @@
         <a href="{{ $entity->getUrl('/references') }}" class="entity-meta-item">
             @icon('reference')
             <div>
-                {!! trans_choice('entities.meta_reference_page_count', $referenceCount, ['count' => $referenceCount]) !!}
+                {{ trans_choice('entities.meta_reference_count', $referenceCount, ['count' => $referenceCount]) }}
             </div>
         </a>
     @endif

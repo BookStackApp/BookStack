@@ -35,7 +35,7 @@ class ReferenceUpdater
     protected function getReferencesToUpdate(Entity $entity): array
     {
         /** @var Reference[] $references */
-        $references = $this->referenceFetcher->getPageReferencesToEntity($entity)->values()->all();
+        $references = $this->referenceFetcher->getReferencesToEntity($entity)->values()->all();
 
         if ($entity instanceof Book) {
             $pages = $entity->pages()->get(['id']);
@@ -43,7 +43,7 @@ class ReferenceUpdater
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
                 /** @var Reference[] $childRefs */
-                $childRefs = $this->referenceFetcher->getPageReferencesToEntity($bookChild)->values()->all();
+                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild)->values()->all();
                 array_push($references, ...$childRefs);
             }
         }
