@@ -74,7 +74,7 @@ class BaseRepo
         $this->referenceStore->updateForEntity($entity);
 
         if ($oldUrl !== $entity->getUrl()) {
-            $this->referenceUpdater->updateEntityPageReferences($entity, $oldUrl);
+            $this->referenceUpdater->updateEntityReferences($entity, $oldUrl);
         }
     }
 
