@@ -125,7 +125,7 @@ class BookshelfController extends Controller
             'view'                    => $view,
             'activity'                => $activities->entityActivity($shelf, 20, 1),
             'listOptions'             => $listOptions,
-            'referenceCount'          => $this->referenceFetcher->getPageReferenceCountToEntity($shelf),
+            'referenceCount'          => $this->referenceFetcher->getReferenceCountToEntity($shelf),
         ]);
     }
 

@@ -2,60 +2,62 @@
 
 namespace BookStack\References;
 
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Eloquent\Collection;
 
 class ReferenceStore
 {
-    /**
-     * Update the outgoing references for the given page.
-     */
-    public function updateForPage(Page $page): void
-    {
-        $this->updateForPages([$page]);
+    public function __construct(
+        protected EntityProvider $entityProvider
+    ) {
     }
 
     /**
-     * Update the outgoing references for all pages in the system.
+     * Update the outgoing references for the given entity.
      */
-    public function updateForAllPages(): void
+    public function updateForEntity(Entity $entity): void
     {
-        Reference::query()
-            ->where('from_type', '=', (new Page())->getMorphClass())
-            ->delete();
-
-        Page::query()->select(['id', 'html'])->chunk(100, function (Collection $pages) {
-            $this->updateForPages($pages->all());
-        });
+        $this->updateForEntities([$entity]);
     }
 
     /**
-     * Update the outgoing references for the pages in the given array.
+     * Update the outgoing references for all entities in the system.
+     */
+    public function updateForAll(): void
+    {
+        Reference::query()->delete();
+
+        foreach ($this->entityProvider->all() as $entity) {
+            $entity->newQuery()->select(['id', $entity->htmlField])->chunk(100, function (Collection $entities) {
+                $this->updateForEntities($entities->all());
+            });
+        }
+    }
+
+    /**
+     * Update the outgoing references for the entities in the given array.
      *
-     * @param Page[] $pages
+     * @param Entity[] $entities
      */
-    protected function updateForPages(array $pages): void
+    protected function updateForEntities(array $entities): void
     {
-        if (count($pages) === 0) {
+        if (count($entities) === 0) {
             return;
         }
 
         $parser = CrossLinkParser::createWithEntityResolvers();
         $references = [];
 
-        $pageIds = array_map(fn (Page $page) => $page->id, $pages);
-        Reference::query()
-            ->where('from_type', '=', $pages[0]->getMorphClass())
-            ->whereIn('from_id', $pageIds)
-            ->delete();
+        $this->dropReferencesFromEntities($entities);
 
-        foreach ($pages as $page) {
-            $models = $parser->extractLinkedModels($page->html);
+        foreach ($entities as $entity) {
+            $models = $parser->extractLinkedModels($entity->getAttribute($entity->htmlField));
 
             foreach ($models as $model) {
                 $references[] = [
-                    'from_id'   => $page->id,
-                    'from_type' => $page->getMorphClass(),
+                    'from_id'   => $entity->id,
+                    'from_type' => $entity->getMorphClass(),
                     'to_id'     => $model->id,
                     'to_type'   => $model->getMorphClass(),
                 ];
@@ -64,6 +66,31 @@ class ReferenceStore
 
         foreach (array_chunk($references, 1000) as $referenceDataChunk) {
             Reference::query()->insert($referenceDataChunk);
+        }
+    }
+
+    /**
+     * Delete all the existing references originating from the given entities.
+     * @param Entity[] $entities
+     */
+    protected function dropReferencesFromEntities(array $entities): void
+    {
+        $IdsByType = [];
+
+        foreach ($entities as $entity) {
+            $type = $entity->getMorphClass();
+            if (!isset($IdsByType[$type])) {
+                $IdsByType[$type] = [];
+            }
+
+            $IdsByType[$type][] = $entity->id;
+        }
+
+        foreach ($IdsByType as $type => $entityIds) {
+            Reference::query()
+                ->where('from_type', '=', $type)
+                ->whereIn('from_id', $entityIds)
+                ->delete();
         }
     }
 }

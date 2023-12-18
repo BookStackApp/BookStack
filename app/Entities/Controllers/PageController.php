@@ -155,7 +155,7 @@ class PageController extends Controller
             'watchOptions'    => new UserEntityWatchOptions(user(), $page),
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
-            'referenceCount'  => $this->referenceFetcher->getPageReferenceCountToEntity($page),
+            'referenceCount'  => $this->referenceFetcher->getReferenceCountToEntity($page),
         ]);
     }
 

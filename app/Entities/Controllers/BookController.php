@@ -138,7 +138,7 @@ class BookController extends Controller
             'bookParentShelves' => $bookParentShelves,
             'watchOptions'      => new UserEntityWatchOptions(user(), $book),
             'activity'          => $activities->entityActivity($book, 20, 1),
-            'referenceCount'    => $this->referenceFetcher->getPageReferenceCountToEntity($book),
+            'referenceCount'    => $this->referenceFetcher->getReferenceCountToEntity($book),
         ]);
     }
 
