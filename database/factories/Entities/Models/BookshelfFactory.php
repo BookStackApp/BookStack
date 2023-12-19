@@ -21,10 +21,12 @@ class BookshelfFactory extends Factory
      */
     public function definition()
     {
+        $description = $this->faker->paragraph();
         return [
             'name'        => $this->faker->sentence,
             'slug'        => Str::random(10),
-            'description' => $this->faker->paragraph,
+            'description' => $description,
+            'description_html' => '<p>' . e($description) . '</p>'
         ];
     }
 }
