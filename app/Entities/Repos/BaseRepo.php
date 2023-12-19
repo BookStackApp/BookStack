@@ -10,6 +10,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
 use BookStack\Uploads\ImageRepo;
+use BookStack\Util\HtmlDescriptionFilter;
 use Illuminate\Http\UploadedFile;
 
 class BaseRepo
@@ -111,7 +112,7 @@ class BaseRepo
 
         /** @var HasHtmlDescription $entity */
         if (isset($input['description_html'])) {
-            $entity->description_html = $input['description_html'];
+            $entity->description_html = HtmlDescriptionFilter::filterFromString($input['description_html']);
             $entity->description = html_entity_decode(strip_tags($input['description_html']));
         } else if (isset($input['description'])) {
             $entity->description = $input['description'];

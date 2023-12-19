@@ -329,7 +329,7 @@ export function buildForInput(options) {
         menubar: false,
         plugins: 'link autolink lists',
         contextmenu: false,
-        toolbar: 'bold italic underline link bullist numlist',
+        toolbar: 'bold italic link bullist numlist',
         content_style: getContentStyle(options),
         color_map: colorMap,
         file_picker_types: 'file',
