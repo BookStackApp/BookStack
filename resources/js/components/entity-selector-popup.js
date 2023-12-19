@@ -15,8 +15,15 @@ export class EntitySelectorPopup extends Component {
         window.$events.listen('entity-select-confirm', this.handleConfirmedSelection.bind(this));
     }
 
-    show(callback, searchText = '') {
+    /**
+     * Show the selector popup.
+     * @param {Function} callback
+     * @param {String} searchText
+     * @param {EntitySelectorSearchOptions} searchOptions
+     */
+    show(callback, searchText = '', searchOptions = {}) {
         this.callback = callback;
+        this.getSelector().configureSearchOptions(searchOptions);
         this.getPopup().show();
 
         if (searchText) {

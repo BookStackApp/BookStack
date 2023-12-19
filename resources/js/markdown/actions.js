@@ -73,7 +73,11 @@ export class Actions {
             const selectedText = selectionText || entity.name;
             const newText = `[${selectedText}](${entity.link})`;
             this.#replaceSelection(newText, newText.length, selectionRange);
-        }, selectionText);
+        }, selectionText, {
+            searchEndpoint: '/search/entity-selector',
+            entityTypes: 'page,book,chapter,bookshelf',
+            entityPermission: 'view',
+        });
     }
 
     // Show draw.io if enabled and handle save.

@@ -27,5 +27,5 @@
     <button type="submit" class="button">{{ trans('entities.chapters_save') }}</button>
 </div>
 
-@include('entities.selector-popup', ['entityTypes' => 'page', 'selectorEndpoint' => '/search/entity-selector-templates'])
+@include('entities.selector-popup')
 @include('form.editor-translations')

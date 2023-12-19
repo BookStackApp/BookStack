@@ -53,6 +53,7 @@
                     'name' => 'default_template_id',
                     'placeholder' => trans('entities.books_default_template_select'),
                     'value' => $book->default_template_id ?? null,
+                    'selectorEndpoint' => '/search/entity-selector-templates',
                 ])
             </div>
         </div>
@@ -65,5 +66,5 @@
     <button type="submit" class="button">{{ trans('entities.books_save') }}</button>
 </div>
 
-@include('entities.selector-popup', ['entityTypes' => 'page', 'selectorEndpoint' => '/search/entity-selector-templates'])
+@include('entities.selector-popup')
 @include('form.editor-translations')
