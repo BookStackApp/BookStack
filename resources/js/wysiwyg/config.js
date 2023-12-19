@@ -85,7 +85,11 @@ function filePickerCallback(callback, value, meta) {
                 text: entity.name,
                 title: entity.name,
             });
-        }, selectionText);
+        }, selectionText, {
+            searchEndpoint: '/search/entity-selector',
+            entityTypes: 'page,book,chapter,bookshelf',
+            entityPermission: 'view',
+        });
     }
 
     if (meta.filetype === 'image') {
