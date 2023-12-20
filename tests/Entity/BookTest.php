@@ -278,6 +278,17 @@ class BookTest extends TestCase
         $this->assertEquals($expected, $book->description_html);
     }
 
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $book = $this->entities->book();
+        $book->description_html = '';
+        $book->description = "My great\ndescription\n\nwith newlines";
+        $book->save();
+
+        $resp = $this->asEditor()->get($book->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
+    }
+
     public function test_show_view_has_copy_button()
     {
         $book = $this->entities->book();
