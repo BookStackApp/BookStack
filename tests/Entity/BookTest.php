@@ -307,6 +307,8 @@ class BookTest extends TestCase
 
         $resp->assertRedirect($copy->getUrl());
         $this->assertEquals($book->getDirectChildren()->count(), $copy->getDirectChildren()->count());
+
+        $this->get($copy->getUrl())->assertSee($book->description_html, false);
     }
 
     public function test_copy_does_not_copy_non_visible_content()

@@ -102,13 +102,13 @@ class ReferencesTest extends TestCase
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());
-            $resp->assertSee('Referenced on 1 page');
-            $resp->assertDontSee('Referenced on 1 pages');
+            $resp->assertSee('Referenced by 1 item');
+            $resp->assertDontSee('Referenced by 1 items');
         }
 
         $this->createReference($otherPage, $entities['page']);
         $resp = $this->get($entities['page']->getUrl());
-        $resp->assertSee('Referenced on 2 pages');
+        $resp->assertSee('Referenced by 2 items');
     }
 
     public function test_references_to_visible_on_references_page()
