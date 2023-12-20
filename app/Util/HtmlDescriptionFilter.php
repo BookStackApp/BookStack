@@ -31,6 +31,10 @@ class HtmlDescriptionFilter
 
     public static function filterFromString(string $html): string
     {
+        if (empty(trim($html))) {
+            return '';
+        }
+
         $doc = new HtmlDocument($html);
 
         $topLevel = [...$doc->getBodyChildren()];
