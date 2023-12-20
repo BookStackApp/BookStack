@@ -31,6 +31,17 @@ class ChapterTest extends TestCase
         $resp->assertSee($chapter->description_html, false);
     }
 
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $chapter = $this->entities->chapter();
+        $chapter->description_html = '';
+        $chapter->description = "My great\ndescription\n\nwith newlines";
+        $chapter->save();
+
+        $resp = $this->asEditor()->get($chapter->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
+    }
+
     public function test_delete()
     {
         $chapter = Chapter::query()->whereHas('pages')->first();

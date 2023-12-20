@@ -403,4 +403,15 @@ class BookShelfTest extends TestCase
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
         $this->withHtml($resp)->assertElementContains('form a[href="' . $shelf->getUrl() . '"]', 'Cancel');
     }
+
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $shelf = $this->entities->shelf();
+        $shelf->description_html = '';
+        $shelf->description = "My great\ndescription\n\nwith newlines";
+        $shelf->save();
+
+        $resp = $this->asEditor()->get($shelf->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
+    }
 }
