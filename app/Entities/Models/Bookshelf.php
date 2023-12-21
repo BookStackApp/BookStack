@@ -19,7 +19,7 @@ class Bookshelf extends Entity implements HasCoverImage
 
     protected $fillable = ['name', 'description', 'image_id'];
 
-    protected $hidden = ['image_id', 'deleted_at'];
+    protected $hidden = ['image_id', 'deleted_at', 'description_html'];
 
     /**
      * Get the books in this shelf.
