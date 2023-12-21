@@ -52,7 +52,7 @@ return [
     // Revisions
     'revision_restore' => 'restored revision',
     'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete_notification' => 'Версію успішно видалено',
 
     // Favourites
     'favourite_add_notification' => '":ім\'я" було додане до ваших улюлених',
@@ -96,7 +96,7 @@ return [
     'api_token_create' => 'created api token',
     'api_token_create_notification' => 'API token successfully created',
     'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
+    'api_token_update_notification' => 'Токен API успішно оновлено',
     'api_token_delete' => 'deleted api token',
     'api_token_delete_notification' => 'API token successfully deleted',
 
