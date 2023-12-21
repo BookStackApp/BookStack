@@ -3,6 +3,7 @@
   "name": "My shelf",
   "slug": "my-shelf",
   "description": "This is my shelf with some books",
+  "description_html": "<p>This is my shelf with some books</p>",
   "created_by": {
     "id": 1,
     "name": "Admin",
