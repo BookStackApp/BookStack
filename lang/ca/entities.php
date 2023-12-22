@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualitzat :timeLength',
     'meta_updated_name' => 'Actualitzat :timeLength per :user',
     'meta_owned_name' => 'Propietat de :user',
-    'meta_reference_page_count' => 'Referenciat a :count pàgina|Referenciat a :count pàgines',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Selecciona una entitat',
     'entity_select_lack_permission' => 'No teniu els permisos necessaris per a seleccionar aquest element',
     'images' => 'Imatges',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referències',
     'references_none' => 'Ni hi ha cap referència detectada a aquest element.',
-    'references_to_desc' => 'A continuació es mostren totes les pàgines conegudes del sistema que enllacen a aquest element.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Segueix',
