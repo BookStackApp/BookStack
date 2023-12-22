@@ -87,7 +87,7 @@ class MaintenanceController extends Controller
         $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'regenerate-references');
 
         try {
-            $referenceStore->updateForAllPages();
+            $referenceStore->updateForAll();
             $this->showSuccessNotification(trans('settings.maint_regen_references_success'));
         } catch (\Exception $exception) {
             $this->showErrorNotification($exception->getMessage());

@@ -12,11 +12,9 @@ use Illuminate\Validation\ValidationException;
 
 class BookshelfApiController extends ApiController
 {
-    protected BookshelfRepo $bookshelfRepo;
-
-    public function __construct(BookshelfRepo $bookshelfRepo)
-    {
-        $this->bookshelfRepo = $bookshelfRepo;
+    public function __construct(
+        protected BookshelfRepo $bookshelfRepo
+    ) {
     }
 
     /**
@@ -48,7 +46,7 @@ class BookshelfApiController extends ApiController
         $bookIds = $request->get('books', []);
         $shelf = $this->bookshelfRepo->create($requestData, $bookIds);
 
-        return response()->json($shelf);
+        return response()->json($this->forJsonDisplay($shelf));
     }
 
     /**
@@ -56,12 +54,14 @@ class BookshelfApiController extends ApiController
      */
     public function read(string $id)
     {
-        $shelf = Bookshelf::visible()->with([
-            'tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy',
+        $shelf = Bookshelf::visible()->findOrFail($id);
+        $shelf = $this->forJsonDisplay($shelf);
+        $shelf->load([
+            'createdBy', 'updatedBy', 'ownedBy',
             'books' => function (BelongsToMany $query) {
                 $query->scopes('visible')->get(['id', 'name', 'slug']);
             },
-        ])->findOrFail($id);
+        ]);
 
         return response()->json($shelf);
     }
@@ -86,7 +86,7 @@ class BookshelfApiController extends ApiController
 
         $shelf = $this->bookshelfRepo->update($shelf, $requestData, $bookIds);
 
-        return response()->json($shelf);
+        return response()->json($this->forJsonDisplay($shelf));
     }
 
     /**
@@ -105,22 +105,36 @@ class BookshelfApiController extends ApiController
         return response('', 204);
     }
 
+    protected function forJsonDisplay(Bookshelf $shelf): Bookshelf
+    {
+        $shelf = clone $shelf;
+        $shelf->unsetRelations()->refresh();
+
+        $shelf->load(['tags', 'cover']);
+        $shelf->makeVisible('description_html')
+            ->setAttribute('description_html', $shelf->descriptionHtml());
+
+        return $shelf;
+    }
+
     protected function rules(): array
     {
         return [
             'create' => [
-                'name'        => ['required', 'string', 'max:255'],
-                'description' => ['string', 'max:1000'],
-                'books'       => ['array'],
-                'tags'        => ['array'],
-                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'name'             => ['required', 'string', 'max:255'],
+                'description'      => ['string', 'max:1900'],
+                'description_html' => ['string', 'max:2000'],
+                'books'            => ['array'],
+                'tags'             => ['array'],
+                'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
             ],
             'update' => [
-                'name'        => ['string', 'min:1', 'max:255'],
-                'description' => ['string', 'max:1000'],
-                'books'       => ['array'],
-                'tags'        => ['array'],
-                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'name'             => ['string', 'min:1', 'max:255'],
+                'description'      => ['string', 'max:1900'],
+                'description_html' => ['string', 'max:2000'],
+                'books'            => ['array'],
+                'tags'             => ['array'],
+                'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
             ],
         ];
     }
