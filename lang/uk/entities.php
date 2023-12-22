@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Оновлено :timeLength',
     'meta_updated_name' => ':user оновив :timeLength',
     'meta_owned_name' => 'Власник :user',
-    'meta_reference_page_count' => 'Посилання на :count сторінки|Посилання на :count сторінок',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Вибір об\'єкта',
     'entity_select_lack_permission' => 'У вас немає необхідних прав для вибору цього елемента',
     'images' => 'Зображення',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Посилання',
     'references_none' => 'Немає відслідковуваних посилань для цього елемента.',
-    'references_to_desc' => 'Показані нижче всі відомі сторінки в системі, що посилаються на цей елемент.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
