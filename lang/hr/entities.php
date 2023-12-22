@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Ažurirano :timeLength',
     'meta_updated_name' => 'Ažurirano :timeLength od :user',
     'meta_owned_name' => 'Vlasništvo :user',
-    'meta_reference_page_count' => 'Referencirano na :count stranici|Referencirano na :count stranica',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Odaberi subjekt',
     'entity_select_lack_permission' => 'Nemate potrebne ovlasti za odabir ovog elementa',
     'images' => 'Slike',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Reference',
     'references_none' => 'Nema praćenih referenci na ovu stavku.',
-    'references_to_desc' => 'U nastavku su prikazane sve poznate stranice u sustavu koje se povezuju s ovom stavkom.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Prati',
