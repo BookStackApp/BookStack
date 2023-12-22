@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_page_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'مراجع',
     'references_none' => 'هیچ رفرنسی برای این قلم یافت نشد.',
-    'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'نظارت',
