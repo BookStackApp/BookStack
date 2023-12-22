@@ -408,6 +408,7 @@ input[type=color] {
 
 .description-input > .tox-tinymce {
   border: 1px solid #DDD !important;
+  @include lightDark(border-color, #DDD !important, #000 !important);
   border-radius: 3px;
   .tox-toolbar__primary {
     justify-content: end;

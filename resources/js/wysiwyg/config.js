@@ -331,15 +331,13 @@ export function buildForInput(options) {
         contextmenu: false,
         toolbar: 'bold italic link bullist numlist',
         content_style: getContentStyle(options),
-        color_map: colorMap,
         file_picker_types: 'file',
         file_picker_callback: filePickerCallback,
         init_instance_callback(editor) {
             const head = editor.getDoc().querySelector('head');
             head.innerHTML += fetchCustomHeadContent();
-        },
-        setup(editor) {
-            //
+
+            editor.contentDocument.documentElement.classList.toggle('dark-mode', options.darkMode);
         },
     };
 }

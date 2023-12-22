@@ -39,7 +39,7 @@
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="template-control">
-    <button refs="collapsible@trigger" type="button" class="collapse-title text-primary" aria-expanded="false">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
         <label for="template-manager">{{ trans('entities.books_default_template') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
