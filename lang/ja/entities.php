@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
-    'meta_reference_page_count' => '{0}ページの参照はありません|[1,9]:count つのページから参照|[10,*]:count ページから参照',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'エンティティ選択',
     'entity_select_lack_permission' => 'この項目を選択するために必要な権限がありません',
     'images' => '画像',
@@ -410,7 +410,7 @@ return [
     // References
     'references' => '参照',
     'references_none' => 'この項目への追跡された参照はありません。',
-    'references_to_desc' => 'この項目にリンクしている、システム内のすべての既知のページを以下に示します。',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'ウォッチ',
