@@ -116,6 +116,7 @@ class BaseRepo
             $entity->description = html_entity_decode(strip_tags($input['description_html']));
         } else if (isset($input['description'])) {
             $entity->description = $input['description'];
+            $entity->description_html = '';
             $entity->description_html = $entity->descriptionHtml();
         }
     }
