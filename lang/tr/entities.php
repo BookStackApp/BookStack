@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => ':user kişisine ait',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Öge Seçimi',
     'entity_select_lack_permission' => 'Bu öğeyi seçmek için gerekli izinlere sahip değilsiniz',
     'images' => 'Görseller',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referanslar',
     'references_none' => 'Bu öğeye ilişkin takip edilen bir referans bulunmamaktadır.',
-    'references_to_desc' => 'Aşağıda, sistemde bu öğeye bağlantı veren bilinen tüm sayfalar gösterilmektedir.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
