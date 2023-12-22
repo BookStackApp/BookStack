@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
     'meta_owned_name' => 'Właściciel: :user',
-    'meta_reference_page_count' => 'Odniesienie na :count stronie|Odniesienie na :count stronach',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Wybór obiektu',
     'entity_select_lack_permission' => 'Nie masz wymaganych uprawnień do wybrania tej pozycji',
     'images' => 'Obrazki',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Odniesienia',
     'references_none' => 'Brak śledzonych odwołań do tego elementu.',
-    'references_to_desc' => 'Poniżej znajdują się wszystkie znane strony w systemie, które odnoszą się do tego elementu.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Obserwuj',
