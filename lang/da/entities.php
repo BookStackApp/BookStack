@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Opdateret :timeLength',
     'meta_updated_name' => 'Opdateret :timeLength af :user',
     'meta_owned_name' => 'Ejet af :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Vælg emne',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Billeder',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
