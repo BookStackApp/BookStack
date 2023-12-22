@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
-    'meta_reference_page_count' => 'Naartoe verwezen op :count pagina|Naartoe verwezen op :count pagina\'s',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entiteit selecteren',
     'entity_select_lack_permission' => 'Je hebt niet de vereiste machtiging om dit item te selecteren',
     'images' => 'Afbeeldingen',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Verwijzingen',
     'references_none' => 'Er zijn geen verwijzingen naar dit artikel bijgehouden.',
-    'references_to_desc' => 'Hieronder staan alle gekende pagina\'s in het systeem die naar dit item linken.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Volg',
