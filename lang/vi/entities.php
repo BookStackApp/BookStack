@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Được cập nhật :timeLength',
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
-    'meta_reference_page_count' => 'Được tham chiếu trên :count page|Được tham chiếu trên :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Chọn thực thể',
     'entity_select_lack_permission' => 'Bạn không có quyền để chọn mục này',
     'images' => 'Ảnh',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
