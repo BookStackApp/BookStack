@@ -1,11 +1,20 @@
 {
-  "id": 14,
+  "id": 20,
   "name": "My shelf",
   "slug": "my-shelf",
   "description": "This is my shelf with some books",
   "created_by": 1,
   "updated_by": 1,
+  "created_at": "2023-12-22T14:33:52.000000Z",
+  "updated_at": "2023-12-22T14:33:52.000000Z",
   "owned_by": 1,
-  "created_at": "2020-04-10T13:24:09.000000Z",
-  "updated_at": "2020-04-10T13:24:09.000000Z"
+  "description_html": "<p>This is <strong>my shelf<\/strong> with some books<\/p>",
+  "tags": [
+    {
+      "name": "Category",
+      "value": "Learning",
+      "order": 0
+    }
+  ],
+  "cover": null
 }
