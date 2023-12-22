@@ -10,11 +10,9 @@ use BookStack\Http\Controller;
 
 class ReferenceController extends Controller
 {
-    protected ReferenceFetcher $referenceFetcher;
-
-    public function __construct(ReferenceFetcher $referenceFetcher)
-    {
-        $this->referenceFetcher = $referenceFetcher;
+    public function __construct(
+        protected ReferenceFetcher $referenceFetcher
+    ) {
     }
 
     /**
@@ -23,7 +21,7 @@ class ReferenceController extends Controller
     public function page(string $bookSlug, string $pageSlug)
     {
         $page = Page::getBySlugs($bookSlug, $pageSlug);
-        $references = $this->referenceFetcher->getPageReferencesToEntity($page);
+        $references = $this->referenceFetcher->getReferencesToEntity($page);
 
         return view('pages.references', [
             'page'       => $page,
@@ -37,7 +35,7 @@ class ReferenceController extends Controller
     public function chapter(string $bookSlug, string $chapterSlug)
     {
         $chapter = Chapter::getBySlugs($bookSlug, $chapterSlug);
-        $references = $this->referenceFetcher->getPageReferencesToEntity($chapter);
+        $references = $this->referenceFetcher->getReferencesToEntity($chapter);
 
         return view('chapters.references', [
             'chapter'    => $chapter,
@@ -51,7 +49,7 @@ class ReferenceController extends Controller
     public function book(string $slug)
     {
         $book = Book::getBySlug($slug);
-        $references = $this->referenceFetcher->getPageReferencesToEntity($book);
+        $references = $this->referenceFetcher->getReferencesToEntity($book);
 
         return view('books.references', [
             'book'       => $book,
@@ -65,7 +63,7 @@ class ReferenceController extends Controller
     public function shelf(string $slug)
     {
         $shelf = Bookshelf::getBySlug($slug);
-        $references = $this->referenceFetcher->getPageReferencesToEntity($shelf);
+        $references = $this->referenceFetcher->getReferencesToEntity($shelf);
 
         return view('shelves.references', [
             'shelf'      => $shelf,

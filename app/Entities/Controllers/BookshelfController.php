@@ -18,15 +18,11 @@ use Illuminate\Validation\ValidationException;
 
 class BookshelfController extends Controller
 {
-    protected BookshelfRepo $shelfRepo;
-    protected ShelfContext $shelfContext;
-    protected ReferenceFetcher $referenceFetcher;
-
-    public function __construct(BookshelfRepo $shelfRepo, ShelfContext $shelfContext, ReferenceFetcher $referenceFetcher)
-    {
-        $this->shelfRepo = $shelfRepo;
-        $this->shelfContext = $shelfContext;
-        $this->referenceFetcher = $referenceFetcher;
+    public function __construct(
+        protected BookshelfRepo $shelfRepo,
+        protected ShelfContext $shelfContext,
+        protected ReferenceFetcher $referenceFetcher
+    ) {
     }
 
     /**
@@ -81,10 +77,10 @@ class BookshelfController extends Controller
     {
         $this->checkPermission('bookshelf-create-all');
         $validated = $this->validate($request, [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'        => ['array'],
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'             => ['array'],
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -129,7 +125,7 @@ class BookshelfController extends Controller
             'view'                    => $view,
             'activity'                => $activities->entityActivity($shelf, 20, 1),
             'listOptions'             => $listOptions,
-            'referenceCount'          => $this->referenceFetcher->getPageReferenceCountToEntity($shelf),
+            'referenceCount'          => $this->referenceFetcher->getReferenceCountToEntity($shelf),
         ]);
     }
 
@@ -164,10 +160,10 @@ class BookshelfController extends Controller
         $shelf = $this->shelfRepo->getBySlug($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'        => ['array'],
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'             => ['array'],
         ]);
 
         if ($request->has('image_reset')) {

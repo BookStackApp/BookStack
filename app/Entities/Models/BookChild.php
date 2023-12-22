@@ -65,7 +65,7 @@ abstract class BookChild extends Entity
         $this->refresh();
 
         if ($oldUrl !== $this->getUrl()) {
-            app()->make(ReferenceUpdater::class)->updateEntityPageReferences($this, $oldUrl);
+            app()->make(ReferenceUpdater::class)->updateEntityReferences($this, $oldUrl);
         }
 
         // Update all child pages if a chapter

@@ -58,6 +58,10 @@ export function register(editor) {
 
             editor.selection.collapse(false);
             editor.focus();
-        }, selectionText);
+        }, selectionText, {
+            searchEndpoint: '/search/entity-selector',
+            entityTypes: 'page,book,chapter,bookshelf',
+            entityPermission: 'view',
+        });
     });
 }

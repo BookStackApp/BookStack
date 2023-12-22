@@ -1,14 +1,16 @@
+@push('head')
+    <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
+@endpush
 
-{!! csrf_field() !!}
-
+{{ csrf_field() }}
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>
     @include('form.text', ['name' => 'name', 'autofocus' => true])
 </div>
 
 <div class="form-group description-input">
-    <label for="description">{{ trans('common.description') }}</label>
-    @include('form.textarea', ['name' => 'description'])
+    <label for="description_html">{{ trans('common.description') }}</label>
+    @include('form.description-html-input')
 </div>
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">
@@ -24,3 +26,6 @@
     <a href="{{ isset($chapter) ? $chapter->getUrl() : $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.chapters_save') }}</button>
 </div>
+
+@include('entities.selector-popup')
+@include('form.editor-translations')

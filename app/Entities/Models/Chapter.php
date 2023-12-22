@@ -15,11 +15,12 @@ use Illuminate\Support\Collection;
 class Chapter extends BookChild
 {
     use HasFactory;
+    use HasHtmlDescription;
 
-    public $searchFactor = 1.2;
+    public float $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description', 'priority'];
-    protected $hidden = ['pivot', 'deleted_at'];
+    protected $hidden = ['pivot', 'deleted_at', 'description_html'];
 
     /**
      * Get the pages that this chapter contains.

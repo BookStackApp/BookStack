@@ -18,4 +18,4 @@
     <div class="text-neg text-small">{{ $errors->first('html') }}</div>
 @endif
 
-@include('pages.parts.editor-translations')
+@include('form.editor-translations')

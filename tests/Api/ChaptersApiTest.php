@@ -51,7 +51,11 @@ class ChaptersApiTest extends TestCase
         $resp = $this->postJson($this->baseEndpoint, $details);
         $resp->assertStatus(200);
         $newItem = Chapter::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
-        $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
+        $resp->assertJson(array_merge($details, [
+            'id' => $newItem->id,
+            'slug' => $newItem->slug,
+            'description_html' => '<p>A chapter created via the API</p>',
+        ]));
         $this->assertDatabaseHas('tags', [
             'entity_id'   => $newItem->id,
             'entity_type' => $newItem->getMorphClass(),
@@ -60,6 +64,28 @@ class ChaptersApiTest extends TestCase
         ]);
         $resp->assertJsonMissing(['pages' => []]);
         $this->assertActivityExists('chapter_create', $newItem);
+    }
+
+    public function test_create_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+        $book = $this->entities->book();
+        $details = [
+            'name'             => 'My API chapter',
+            'description_html' => '<p>A chapter <strong>created</strong> via the API</p>',
+            'book_id'          => $book->id,
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(200);
+        $newItem = Chapter::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
+
+        $expectedDetails = array_merge($details, [
+            'id'          => $newItem->id,
+            'description' => 'A chapter created via the API',
+        ]);
+        $resp->assertJson($expectedDetails);
+        $this->assertDatabaseHas('chapters', $expectedDetails);
     }
 
     public function test_chapter_name_needed_to_create()
@@ -131,7 +157,7 @@ class ChaptersApiTest extends TestCase
         $chapter = $this->entities->chapter();
         $details = [
             'name'        => 'My updated API chapter',
-            'description' => 'A chapter created via the API',
+            'description' => 'A chapter updated via the API',
             'tags'        => [
                 [
                     'name'  => 'freshtag',
@@ -146,9 +172,29 @@ class ChaptersApiTest extends TestCase
 
         $resp->assertStatus(200);
         $resp->assertJson(array_merge($details, [
-            'id' => $chapter->id, 'slug' => $chapter->slug, 'book_id' => $chapter->book_id,
+            'id' => $chapter->id,
+            'slug' => $chapter->slug,
+            'book_id' => $chapter->book_id,
+            'description_html' => '<p>A chapter updated via the API</p>',
         ]));
         $this->assertActivityExists('chapter_update', $chapter);
+    }
+
+    public function test_update_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+        $chapter = $this->entities->chapter();
+        $details = [
+            'name'             => 'My updated API chapter',
+            'description_html' => '<p>A chapter <em>updated</em> via the API</p>',
+        ];
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
+        $resp->assertStatus(200);
+
+        $this->assertDatabaseHas('chapters', array_merge($details, [
+            'id' => $chapter->id, 'description' => 'A chapter updated via the API'
+        ]));
     }
 
     public function test_update_increments_updated_date_if_only_tags_are_sent()

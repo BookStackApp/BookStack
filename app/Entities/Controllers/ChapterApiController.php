@@ -15,18 +15,20 @@ class ChapterApiController extends ApiController
 {
     protected $rules = [
         'create' => [
-            'book_id'     => ['required', 'integer'],
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-            'priority'    => ['integer'],
+            'book_id'          => ['required', 'integer'],
+            'name'             => ['required', 'string', 'max:255'],
+            'description'      => ['string', 'max:1900'],
+            'description_html' => ['string', 'max:2000'],
+            'tags'             => ['array'],
+            'priority'         => ['integer'],
         ],
         'update' => [
-            'book_id'     => ['integer'],
-            'name'        => ['string', 'min:1', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'tags'        => ['array'],
-            'priority'    => ['integer'],
+            'book_id'          => ['integer'],
+            'name'             => ['string', 'min:1', 'max:255'],
+            'description'      => ['string', 'max:1900'],
+            'description_html' => ['string', 'max:2000'],
+            'tags'             => ['array'],
+            'priority'         => ['integer'],
         ],
     ];
 
@@ -61,7 +63,7 @@ class ChapterApiController extends ApiController
 
         $chapter = $this->chapterRepo->create($requestData, $book);
 
-        return response()->json($chapter->load(['tags']));
+        return response()->json($this->forJsonDisplay($chapter));
     }
 
     /**
@@ -69,9 +71,15 @@ class ChapterApiController extends ApiController
      */
     public function read(string $id)
     {
-        $chapter = Chapter::visible()->with(['tags', 'createdBy', 'updatedBy', 'ownedBy', 'pages' => function (HasMany $query) {
-            $query->scopes('visible')->get(['id', 'name', 'slug']);
-        }])->findOrFail($id);
+        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->forJsonDisplay($chapter);
+
+        $chapter->load([
+            'createdBy', 'updatedBy', 'ownedBy',
+            'pages' => function (HasMany $query) {
+                $query->scopes('visible')->get(['id', 'name', 'slug']);
+            }
+        ]);
 
         return response()->json($chapter);
     }
@@ -93,7 +101,7 @@ class ChapterApiController extends ApiController
             try {
                 $this->chapterRepo->move($chapter, "book:{$requestData['book_id']}");
             } catch (Exception $exception) {
-                if ($exception instanceof  PermissionsException) {
+                if ($exception instanceof PermissionsException) {
                     $this->showPermissionError();
                 }
 
@@ -103,7 +111,7 @@ class ChapterApiController extends ApiController
 
         $updatedChapter = $this->chapterRepo->update($chapter, $requestData);
 
-        return response()->json($updatedChapter->load(['tags']));
+        return response()->json($this->forJsonDisplay($updatedChapter));
     }
 
     /**
@@ -118,5 +126,17 @@ class ChapterApiController extends ApiController
         $this->chapterRepo->destroy($chapter);
 
         return response('', 204);
+    }
+
+    protected function forJsonDisplay(Chapter $chapter): Chapter
+    {
+        $chapter = clone $chapter;
+        $chapter->unsetRelations()->refresh();
+
+        $chapter->load(['tags']);
+        $chapter->makeVisible('description_html')
+            ->setAttribute('description_html', $chapter->descriptionHtml());
+
+        return $chapter;
     }
 }

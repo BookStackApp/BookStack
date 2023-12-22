@@ -21,7 +21,7 @@ class RegenerateReferencesTest extends TestCase
     public function test_action_runs_reference_regen()
     {
         $this->mock(ReferenceStore::class)
-            ->shouldReceive('updateForAllPages')
+            ->shouldReceive('updateForAll')
             ->once();
 
         $resp = $this->asAdmin()->post('/settings/maintenance/regenerate-references');
@@ -45,7 +45,7 @@ class RegenerateReferencesTest extends TestCase
     public function test_action_failed_shown_as_error_notification()
     {
         $this->mock(ReferenceStore::class)
-            ->shouldReceive('updateForAllPages')
+            ->shouldReceive('updateForAll')
             ->andThrow(\Exception::class, 'A badger stopped the task');
 
         $resp = $this->asAdmin()->post('/settings/maintenance/regenerate-references');

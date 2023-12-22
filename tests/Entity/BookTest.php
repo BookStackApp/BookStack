@@ -22,7 +22,7 @@ class BookTest extends TestCase
         $resp = $this->get('/create-book');
         $this->withHtml($resp)->assertElementContains('form[action="' . url('/books') . '"][method="POST"]', 'Save Book');
 
-        $resp = $this->post('/books', $book->only('name', 'description'));
+        $resp = $this->post('/books', $book->only('name', 'description_html'));
         $resp->assertRedirect('/books/my-first-book');
 
         $resp = $this->get('/books/my-first-book');
@@ -36,8 +36,8 @@ class BookTest extends TestCase
             'name' => 'My First Book',
         ]);
 
-        $this->asEditor()->post('/books', $book->only('name', 'description'));
-        $this->asEditor()->post('/books', $book->only('name', 'description'));
+        $this->asEditor()->post('/books', $book->only('name', 'description_html'));
+        $this->asEditor()->post('/books', $book->only('name', 'description_html'));
 
         $books = Book::query()->where('name', '=', $book->name)
             ->orderBy('id', 'desc')
@@ -52,9 +52,9 @@ class BookTest extends TestCase
     {
         // Cheeky initial update to refresh slug
         $this->asEditor()->post('books', [
-            'name'        => 'My book with tags',
-            'description' => 'A book with tags',
-            'tags'        => [
+            'name'             => 'My book with tags',
+            'description_html' => '<p>A book with tags</p>',
+            'tags'             => [
                 [
                     'name'  => 'Category',
                     'value' => 'Donkey Content',
@@ -79,23 +79,23 @@ class BookTest extends TestCase
     {
         $book = $this->entities->book();
         // Cheeky initial update to refresh slug
-        $this->asEditor()->put($book->getUrl(), ['name' => $book->name . '5', 'description' => $book->description]);
+        $this->asEditor()->put($book->getUrl(), ['name' => $book->name . '5', 'description_html' => $book->description_html]);
         $book->refresh();
 
         $newName = $book->name . ' Updated';
-        $newDesc = $book->description . ' with more content';
+        $newDesc = $book->description_html . '<p>with more content</p>';
 
         $resp = $this->get($book->getUrl('/edit'));
         $resp->assertSee($book->name);
-        $resp->assertSee($book->description);
+        $resp->assertSee($book->description_html);
         $this->withHtml($resp)->assertElementContains('form[action="' . $book->getUrl() . '"]', 'Save Book');
 
-        $resp = $this->put($book->getUrl(), ['name' => $newName, 'description' => $newDesc]);
+        $resp = $this->put($book->getUrl(), ['name' => $newName, 'description_html' => $newDesc]);
         $resp->assertRedirect($book->getUrl() . '-updated');
 
         $resp = $this->get($book->getUrl() . '-updated');
         $resp->assertSee($newName);
-        $resp->assertSee($newDesc);
+        $resp->assertSee($newDesc, false);
     }
 
     public function test_update_sets_tags()
@@ -184,7 +184,7 @@ class BookTest extends TestCase
 
     public function test_recently_viewed_books_updates_as_expected()
     {
-        $books = Book::all()->take(2);
+        $books = Book::take(2)->get();
 
         $resp = $this->asAdmin()->get('/books');
         $this->withHtml($resp)->assertElementNotContains('#recents', $books[0]->name)
@@ -200,7 +200,7 @@ class BookTest extends TestCase
 
     public function test_popular_books_updates_upon_visits()
     {
-        $books = Book::all()->take(2);
+        $books = Book::take(2)->get();
 
         $resp = $this->asAdmin()->get('/books');
         $this->withHtml($resp)->assertElementNotContains('#popular', $books[0]->name)
@@ -262,6 +262,33 @@ class BookTest extends TestCase
         $this->assertEquals('parta-partb-partc', $book->slug);
     }
 
+    public function test_description_limited_to_specific_html()
+    {
+        $book = $this->entities->book();
+
+        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" data-a="b">a</a><section>Hello</section></p>';
+        $expected = '<p>Content<a href="#cat">a</a></p>';
+
+        $this->asEditor()->put($book->getUrl(), [
+            'name' => $book->name,
+            'description_html' => $input
+        ]);
+
+        $book->refresh();
+        $this->assertEquals($expected, $book->description_html);
+    }
+
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $book = $this->entities->book();
+        $book->description_html = '';
+        $book->description = "My great\ndescription\n\nwith newlines";
+        $book->save();
+
+        $resp = $this->asEditor()->get($book->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
+    }
+
     public function test_show_view_has_copy_button()
     {
         $book = $this->entities->book();
@@ -291,6 +318,8 @@ class BookTest extends TestCase
 
         $resp->assertRedirect($copy->getUrl());
         $this->assertEquals($book->getDirectChildren()->count(), $copy->getDirectChildren()->count());
+
+        $this->get($copy->getUrl())->assertSee($book->description_html, false);
     }
 
     public function test_copy_does_not_copy_non_visible_content()

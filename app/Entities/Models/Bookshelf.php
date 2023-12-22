@@ -11,14 +11,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Bookshelf extends Entity implements HasCoverImage
 {
     use HasFactory;
+    use HasHtmlDescription;
 
     protected $table = 'bookshelves';
 
-    public $searchFactor = 1.2;
+    public float $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description', 'image_id'];
 
-    protected $hidden = ['image_id', 'deleted_at'];
+    protected $hidden = ['image_id', 'deleted_at', 'description_html'];
 
     /**
      * Get the books in this shelf.
