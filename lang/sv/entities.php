@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Uppdaterad :timeLength',
     'meta_updated_name' => 'Uppdaterad :timeLength av :user',
     'meta_owned_name' => 'Ägs av :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Välj enhet',
     'entity_select_lack_permission' => 'Du har inte den behörighet som krävs för att välja det här objektet',
     'images' => 'Bilder',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referenser',
     'references_none' => 'Det finns inga referenser kopplade till detta objekt.',
-    'references_to_desc' => 'Nedan visas alla kända sidor i systemet som länkar till detta objekt.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
