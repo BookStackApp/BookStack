@@ -1,7 +1,7 @@
 {
   "book_id": 1,
   "name": "My fantastic new chapter",
-  "description": "This is a great new chapter that I've created via the API",
+  "description_html": "<p>This is a <strong>great new chapter</strong> that I've created via the API</p>",
   "priority": 15,
   "tags": [
     {"name": "Category", "value": "Top Content"},
