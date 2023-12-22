@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
-    'meta_reference_page_count' => 'Ссылается на :count страницу|Ссылается на :count страниц',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Выбор объекта',
     'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Ссылки',
     'references_none' => 'Нет отслеживаемых ссылок на этот элемент.',
-    'references_to_desc' => 'Ниже показаны все известные страницы в системе, которые ссылаются на этот элемент.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
