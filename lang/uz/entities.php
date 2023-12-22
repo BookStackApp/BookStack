@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength da yangilangan',
     'meta_updated_name' => ':user tomonidan :timeLength da yangilangan',
     'meta_owned_name' => 'Muallif: foydalanuvchi',
-    'meta_reference_page_count' => ':count sahifasida havola qilingan :count sahifalarida havola qilingan',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Ob\'ektni tanlash',
     'entity_select_lack_permission' => 'Sizda bu elementni tanlash uchun kerakli ruxsatlar yo‘q',
     'images' => 'Rasmlar',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Ma\'lumotnomalar',
     'references_none' => 'Bu elementga kuzatilgan havolalar mavjud emas.',
-    'references_to_desc' => 'Quyida ushbu elementga bog\'langan tizimdagi barcha ma\'lum sahifalar ko\'rsatilgan.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Tomosha qiling',
