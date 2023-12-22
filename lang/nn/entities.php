@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Oppdatert :timeLength',
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eigd av :user',
-    'meta_reference_page_count' => 'Sitert på :count side|Sitert på :count sider',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Velg entitet',
     'entity_select_lack_permission' => 'Du har ikkje tilgang til å velge dette elementet',
     'images' => 'Bilete',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referanser',
     'references_none' => 'Det er ingen sporede referanser til dette elementet.',
-    'references_to_desc' => 'Nedenfor vises alle de kjente sidene i systemet som lenker til denne oppføringen.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Overvåk',
