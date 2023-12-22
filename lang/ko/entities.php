@@ -23,7 +23,7 @@ return [
     'meta_updated' => '수정함 :timeLength',
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => '항목 선택',
     'entity_select_lack_permission' => '이 항목을 선택하기 위해 필요한 권한이 없습니다',
     'images' => '이미지',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
