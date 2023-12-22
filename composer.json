@@ -23,7 +23,7 @@
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.0",
-        "laravel/socialite": "5.10.*",
+        "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.6",
         "league/commonmark": "^2.3",
         "league/flysystem-aws-s3-v3": "^3.0",
