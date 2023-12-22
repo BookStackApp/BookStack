@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Ενημερώθηκε :timeLength',
     'meta_updated_name' => 'Ενημερώθηκε :timeLength από :user',
     'meta_owned_name' => 'Ανήκει στον :user',
-    'meta_reference_page_count' => 'Αναφορά σε :count σελίδας|Αναφορά στο :count σελίδες',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Επιλογή Οντότητας',
     'entity_select_lack_permission' => 'Δεν έχετε τα απαιτούμενα δικαιώματα για να επιλέξετε αυτό το στοιχείο',
     'images' => 'Εικόνες',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Αναφορές',
     'references_none' => 'Δεν υπάρχουν αναφορές παρακολούθησης σε αυτό το στοιχείο.',
-    'references_to_desc' => 'Παρακάτω εμφανίζονται όλες οι γνωστές σελίδες του συστήματος που συνδέονται με αυτό το στοιχείο.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
