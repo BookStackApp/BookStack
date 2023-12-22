@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Muudetud :timeLength',
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
-    'meta_reference_page_count' => 'Viidatud :count lehel|Viidatud :count lehel',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Objekti valik',
     'entity_select_lack_permission' => 'Sul pole õiguseid selle objekti valimiseks',
     'images' => 'Pildid',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Viited',
     'references_none' => 'Sellele objektile ei ole viiteid.',
-    'references_to_desc' => 'Allpool on kõik teadaolevad lehed, mis sellele objektile viitavad.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Jälgi',
