@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualizat :timeLength',
     'meta_updated_name' => 'Actualizat :timeLength de :user',
     'meta_owned_name' => 'Deținut de :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Selectare entitate',
     'entity_select_lack_permission' => 'Nu ai drepturile necesare pentru a selecta acest element',
     'images' => 'Imagini',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referințe',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
