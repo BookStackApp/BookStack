@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizováno :timeLength',
     'meta_updated_name' => 'Aktualizováno :timeLength uživatelem :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Odkazováno na 1 stránce|Odkazováno na :count stranách',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Výběr entity',
     'entity_select_lack_permission' => 'Nemáte dostatečná oprávnění k výběru této položky',
     'images' => 'Obrázky',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Odkazy',
     'references_none' => 'Nebyly nalezeny žádné odkazy na tuto položku.',
-    'references_to_desc' => 'Níže jsou uvedeny všechny známé stránky systému, které odkazují na tuto položku.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Sledovat',
