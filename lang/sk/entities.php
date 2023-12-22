@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizované :timeLength',
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Referencia na :count page|Referencia na :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entita vybraná',
     'entity_select_lack_permission' => 'Na výber tejto položky nemáte potrebné povolenia',
     'images' => 'Obrázky',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referencie',
     'references_none' => 'Neexistujú žiadne sledované referencie na túto položku.',
-    'references_to_desc' => 'Nižšie sú zobrazené všetky známe stránky v systéme, ktoré odkazujú na túto položku.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
