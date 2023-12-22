@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atjaunināts :timeLength',
     'meta_updated_name' => ':user atjauninājis pirms :timeLength',
     'meta_owned_name' => 'Īpašnieks :user',
-    'meta_reference_page_count' => 'Atsauce :count lapā|Atsauce :count lapās',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Izvēlēties vienumu',
     'entity_select_lack_permission' => 'Jums nav nepieciešamās piekļuves tiesības, lai izvēlētu šo vienumu',
     'images' => 'Attēli',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Atsauces',
     'references_none' => 'Uz šo vienumu nav atrasta neviena atsauce.',
-    'references_to_desc' => 'Zemāk parādītas visas sistēmā atrastās lapas, kas norāda uz šo vienumu.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',
