@@ -83,13 +83,13 @@ class JointPermissionBuilder
         $role->load('permissions');
 
         // Chunk through all books
-        $this->bookFetchQuery()->chunk(20, function ($books) use ($roles) {
+        $this->bookFetchQuery()->chunk(10, function ($books) use ($roles) {
             $this->buildJointPermissionsForBooks($books, $roles);
         });
 
         // Chunk through all bookshelves
         Bookshelf::query()->select(['id', 'owned_by'])
-            ->chunk(50, function ($shelves) use ($roles) {
+            ->chunk(100, function ($shelves) use ($roles) {
                 $this->createManyJointPermissions($shelves->all(), $roles);
             });
     }

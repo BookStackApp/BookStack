@@ -9,11 +9,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EntityPermissionEvaluator
 {
-    protected string $action;
-
-    public function __construct(string $action)
-    {
-        $this->action = $action;
+    public function __construct(
+        protected string $action
+    ) {
     }
 
     public function evaluateEntityForUser(Entity $entity, array $userRoleIds): ?bool
@@ -82,23 +80,25 @@ class EntityPermissionEvaluator
      */
     protected function getPermissionsMapByTypeId(array $typeIdChain, array $filterRoleIds): array
     {
-        $query = EntityPermission::query()->where(function (Builder $query) use ($typeIdChain) {
-            foreach ($typeIdChain as $typeId) {
-                $query->orWhere(function (Builder $query) use ($typeId) {
-                    [$type, $id] = explode(':', $typeId);
-                    $query->where('entity_type', '=', $type)
-                        ->where('entity_id', '=', $id);
-                });
+        $idsByType = [];
+        foreach ($typeIdChain as $typeId) {
+            [$type, $id] = explode(':', $typeId);
+            if (!isset($idsByType[$type])) {
+                $idsByType[$type] = [];
             }
-        });
 
-        if (!empty($filterRoleIds)) {
-            $query->where(function (Builder $query) use ($filterRoleIds) {
-                $query->whereIn('role_id', [...$filterRoleIds, 0]);
-            });
+            $idsByType[$type][] = $id;
         }
 
-        $relevantPermissions = $query->get(['entity_id', 'entity_type', 'role_id', $this->action])->all();
+        $relevantPermissions = [];
+
+        foreach ($idsByType as $type => $ids) {
+            $idsChunked = array_chunk($ids, 10000);
+            foreach ($idsChunked as $idChunk) {
+                $permissions = $this->getPermissionsForEntityIdsOfType($type, $idChunk, $filterRoleIds);
+                array_push($relevantPermissions, ...$permissions);
+            }
+        }
 
         $map = [];
         foreach ($relevantPermissions as $permission) {
@@ -111,6 +111,26 @@ class EntityPermissionEvaluator
         }
 
         return $map;
+    }
+
+    /**
+     * @param string[] $ids
+     * @param int[] $filterRoleIds
+     * @return EntityPermission[]
+     */
+    protected function getPermissionsForEntityIdsOfType(string $type, array $ids, array $filterRoleIds): array
+    {
+        $query = EntityPermission::query()
+            ->where('entity_type', '=', $type)
+            ->whereIn('entity_id', $ids);
+
+        if (!empty($filterRoleIds)) {
+            $query->where(function (Builder $query) use ($filterRoleIds) {
+                $query->whereIn('role_id', [...$filterRoleIds, 0]);
+            });
+        }
+
+        return $query->get(['entity_id', 'entity_type', 'role_id', $this->action])->all();
     }
 
     /**
