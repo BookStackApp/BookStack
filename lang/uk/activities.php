@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":ім\'я" було видалено з ваших улюблених',
 
     // Watching
-    'watch_update_level_notification' => 'Налаштування годинника успішно оновлено',
+    'watch_update_level_notification' => 'Налаштування перегляду успішно оновлено',
 
     // Auth
     'auth_login' => 'ввійшли',
