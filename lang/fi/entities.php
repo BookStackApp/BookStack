@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Päivitetty :timeLength',
     'meta_updated_name' => 'Päivitetty :timeLength käyttäjän :user toimesta',
     'meta_owned_name' => 'Omistaja :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'Viittaa :count kohteeseen|Viittaa :count kohteeseen',
     'entity_select' => 'Kohteen valinta',
     'entity_select_lack_permission' => 'Sinulla ei ole tarvittavia oikeuksia tämän kohteen valitsemiseen',
     'images' => 'Kuvat',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Viitteet',
     'references_none' => 'Tähän kohteeseen ei ole viittauksia.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'Lista kohteeseen viittaavasta sisällöstä.',
 
     // Watch Options
     'watch' => 'Seuraa',
