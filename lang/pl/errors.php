@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Rozszerzenie LDAP PHP nie zostało zainstalowane',
     'ldap_cannot_connect' => 'Nie można połączyć z serwerem LDAP, połączenie nie zostało ustanowione',
     'saml_already_logged_in' => 'Już zalogowany',
-    'saml_user_not_registered' => 'Użytkownik :name nie jest zarejestrowany i automatyczna rejestracja jest wyłączona',
     'saml_no_email_address' => 'Nie można odnaleźć adresu email dla tego użytkownika w danych dostarczonych przez zewnętrzny system uwierzytelniania',
     'saml_invalid_response_id' => 'Żądanie z zewnętrznego systemu uwierzytelniania nie zostało rozpoznane przez proces rozpoczęty przez tę aplikację. Cofnięcie po zalogowaniu mogło spowodować ten problem.',
     'saml_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
@@ -44,16 +43,16 @@ return [
     'cannot_get_image_from_url' => 'Nie można pobrać obrazka z :url',
     'cannot_create_thumbs' => 'Serwer nie może utworzyć miniaturek. Upewnij się że rozszerzenie GD PHP zostało zainstalowane.',
     'server_upload_limit' => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Serwer nie może przyjąć tej ilości danych. Spróbuj ponownie z mniejszą ilością danych lub mniejszym plikiem.',
     'uploaded'  => 'Serwer nie pozwala na przyjęcie pliku o tym rozmiarze. Spróbuj przesłać plik o mniejszym rozmiarze.',
 
     // Drawing & Images
     'image_upload_error' => 'Wystąpił błąd podczas przesyłania obrazka',
     'image_upload_type_error' => 'Typ przesłanego obrazka jest nieprwidłowy.',
     'image_upload_replace_type' => 'Zamienniki plików graficznych muszą być tego samego typu',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Nie udało się obsłużyć przesyłania zdjęć i/lub tworzenia miniatur ze względu na limity zasobów systemowych.',
+    'image_thumbnail_memory_limit' => 'Nie udało się utworzyć wariantów rozmiaru obrazu ze względu na limity zasobów systemowych.',
+    'image_gallery_thumbnail_memory_limit' => 'Nie udało się utworzyć miniatur galerii ze względu na limity zasobów systemowych.',
     'drawing_data_not_found' => 'Nie można załadować danych rysunku. Plik rysunku może już nie istnieć lub nie masz uprawnień dostępu do niego.',
 
     // Attachments

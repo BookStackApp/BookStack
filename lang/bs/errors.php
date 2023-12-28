@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP ekstenzija nije instalirana',
     'ldap_cannot_connect' => 'Nije se moguće povezati sa ldap serverom, incijalna konekcija nije uspjela',
     'saml_already_logged_in' => 'Već prijavljeni',
-    'saml_user_not_registered' => 'Korisnik :user nije registrovan i automatska registracija je onemogućena',
     'saml_no_email_address' => 'E-mail adresa za ovog korisnika nije nađena u podacima dobijenim od eksternog autentifikacijskog sistema',
     'saml_invalid_response_id' => 'Proces, koji je pokrenula ova aplikacija, nije prepoznao zahtjev od eksternog sistema za autentifikaciju. Navigacija nazad nakon prijave može uzrokovati ovaj problem.',
     'saml_fail_authed' => 'Prijava koristeći :system nije uspjela, sistem nije obezbijedio uspješnu autorizaciju',

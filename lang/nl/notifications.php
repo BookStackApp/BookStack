@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Om een stortvloed aan meldingen te voorkomen, zul je een tijdje geen meldingen ontvangen voor verdere bewerkingen van deze pagina door dezelfde redacteur.',
 
     'detail_page_name' => 'Pagina Naam:',
+    'detail_page_path' => 'Paginapad:',
     'detail_commenter' => 'Reageerder:',
     'detail_comment' => 'Opmerking:',
     'detail_created_by' => 'Gemaakt Door:',

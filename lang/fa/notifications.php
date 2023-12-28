@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'برای جلوگیری از انبوه اعلان‌ها، برای مدتی اعلان‌ ویرایش‌هایی که توسط همان ویرایشگر در این صفحه انجام می‌شود، ارسال نخواهد شد.',
 
     'detail_page_name' => 'نام صفحه:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'نظر دهنده:',
     'detail_comment' => 'نظر:',
     'detail_created_by' => 'ایجاد شده توسط:',

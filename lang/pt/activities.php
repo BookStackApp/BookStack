@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" foi removido dos seus favoritos',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Ver preferências atualizadas com sucesso',
 
     // Auth
     'auth_login' => 'sessão iniciada',
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'comentado a',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'comentário adicionado',
+    'comment_update'              => 'comentário atualizado',
+    'comment_delete'              => 'comentário eliminado',
 
     // Other
     'permissions_update'          => 'permissões atualizadas',

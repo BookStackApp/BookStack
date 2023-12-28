@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
 
     'detail_page_name' => 'Имя страницы:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Комментатор:',
     'detail_comment' => 'Комментарий:',
     'detail_created_by' => 'Создано:',

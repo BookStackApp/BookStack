@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
-    'meta_reference_page_count' => '{0}ページの参照はありません|[1,9]:count つのページから参照|[10,*]:count ページから参照',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'エンティティ選択',
     'entity_select_lack_permission' => 'この項目を選択するために必要な権限がありません',
     'images' => '画像',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'ブック「:bookName」を編集',
     'books_form_book_name' => 'ブック名',
     'books_save' => 'ブックを保存',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'ブックの権限',
     'books_permissions_updated' => 'ブックの権限を更新しました',
     'books_empty_contents' => 'まだページまたはチャプターが作成されていません。',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'ページの下書きを削除',
     'pages_delete_success' => 'ページを削除しました',
     'pages_delete_draft_success' => 'ページの下書きを削除しました',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'このページを削除してもよろしいですか？',
     'pages_delete_draft_confirm' => 'このページの下書きを削除してもよろしいですか？',
     'pages_editing_named' => 'ページ :pageName を編集',
@@ -406,7 +410,7 @@ return [
     // References
     'references' => '参照',
     'references_none' => 'この項目への追跡された参照はありません。',
-    'references_to_desc' => 'この項目にリンクしている、システム内のすべての既知のページを以下に示します。',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'ウォッチ',

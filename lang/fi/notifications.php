@@ -4,23 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Uusi kommentti sivulla: :pageName',
+    'new_comment_intro' => 'Käyttäjä on kommentoinut sivua sivustolla :appName:',
+    'new_page_subject' => 'Uusi sivu: :pageName',
+    'new_page_intro' => 'Uusi sivu on luotu sivustolla :appName:',
+    'updated_page_subject' => 'Päivitetty sivu: :pageName',
+    'updated_page_intro' => 'Sivu on päivitetty sivustolla :appName:',
+    'updated_page_debounce' => 'Useiden ilmoitusten välttämiseksi sinulle ei toistaiseksi lähetetä ilmoituksia saman toimittajan tekemistä uusista muokkauksista tälle sivulle.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Sivun nimi:',
+    'detail_page_path' => 'Sivun polku:',
+    'detail_commenter' => 'Kommentoija:',
+    'detail_comment' => 'Kommentti:',
+    'detail_created_by' => 'Luonut',
+    'detail_updated_by' => 'Päivittänyt',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Näytä kommentti',
+    'action_view_page' => 'Näytä sivu',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Tämä ilmoitus lähetettiin sinulle, koska :link kattaa tämän tyyppisen toiminnan tälle kohteelle.',
+    'footer_reason_link' => 'omat ilmoitusasetukset',
 ];

@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Скасувати',
-    'close' => 'Close',
+    'close' => 'Закрити',
     'confirm' => 'Застосувати',
     'back' => 'Назад',
     'save' => 'Зберегти',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Видалити',
     'add' => 'Додати',
     'configure' => 'Налаштувати',
-    'manage' => 'Manage',
+    'manage' => 'Управління',
     'fullscreen' => 'На весь екран',
     'favourite' => 'Улюблене',
     'unfavourite' => 'Прибрати з обраного',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Очистити фільтр',
     'download' => 'Завантажити',
     'open_in_tab' => 'Відкрити в новій вкладці',
-    'open' => 'Open',
+    'open' => 'Відкрити',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',

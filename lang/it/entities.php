@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
-    'meta_reference_page_count' => 'Referenziato su :count page|Referenziato su :count pages',
+    'meta_reference_count' => 'Referenziato da :count item|Referenziato da :count items',
     'entity_select' => 'Selezione Entità',
     'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Modifica il libro :bookName',
     'books_form_book_name' => 'Nome Libro',
     'books_save' => 'Salva Libro',
+    'books_default_template' => 'Pagina template predefinita',
+    'books_default_template_explain' => 'Assegnare una pagina template che verrà utilizzata come contenuto predefinito per tutte le nuove pagine di questo libro. Tenete presente che questa sarà usata solo se il creatore della pagina ha accesso di visualizzazione alla pagina template scelta.',
+    'books_default_template_select' => 'Selezionare una pagina template',
     'books_permissions' => 'Permessi Libro',
     'books_permissions_updated' => 'Permessi del libro aggiornati',
     'books_empty_contents' => 'Non ci sono pagine o capitoli per questo libro.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Elimina Bozza Pagina',
     'pages_delete_success' => 'Pagina eliminata',
     'pages_delete_draft_success' => 'Bozza di una pagina eliminata',
+    'pages_delete_warning_template' => 'Questa pagina è in uso come pagina template predefinita di un libro. Dopo l\'eliminazione di questa pagina, a questi libri non verrà più assegnato una pagina template predefinita.',
     'pages_delete_confirm' => 'Sei sicuro di voler eliminare questa pagina?',
     'pages_delete_draft_confirm' => 'Sei sicuro di voler eliminare la bozza di questa pagina?',
     'pages_editing_named' => 'Modifica :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Riferimenti',
     'references_none' => 'Non ci sono riferimenti tracciati a questa voce.',
-    'references_to_desc' => 'Di seguito sono riportate tutte le pagine conosciute nel sistema che collegano a questo elemento.',
+    'references_to_desc' => 'Di seguito sono elencati tutti i contenuti noti del sistema che rimandano a questo elemento.',
 
     // Watch Options
     'watch' => 'Osserva',
