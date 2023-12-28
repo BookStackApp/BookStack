@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Aby zapobiec nadmiarowi powiadomień, przez jakiś czas nie będziesz otrzymywać powiadomień o dalszych edycjach tej strony przez tego samego edytora.',
 
     'detail_page_name' => 'Nazwa strony:',
+    'detail_page_path' => 'Ścieżka strony:',
     'detail_commenter' => 'Skomentował:',
     'detail_comment' => 'Komentarz:',
     'detail_created_by' => 'Utworzono przez:',

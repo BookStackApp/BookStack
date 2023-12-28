@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP-PHP-Erweiterung ist nicht installiert',
     'ldap_cannot_connect' => 'Die Verbindung zum LDAP-Server ist fehlgeschlagen. Beim initialen Verbindungsaufbau trat ein Fehler auf',
     'saml_already_logged_in' => 'Du bist bereits angemeldet',
-    'saml_user_not_registered' => 'Kein Benutzer mit ID :name registriert und die automatische Registrierung ist deaktiviert',
     'saml_no_email_address' => 'Es konnte keine E-Mail-Adresse für diesen Benutzer in den vom externen Authentifizierungssystem zur Verfügung gestellten Daten gefunden werden',
     'saml_invalid_response_id' => 'Die Anfrage vom externen Authentifizierungssystem wird von einem von dieser Anwendung gestarteten Prozess nicht erkannt. Das Zurückblättern nach einem Login könnte dieses Problem verursachen.',
     'saml_fail_authed' => 'Anmeldung mit :system fehlgeschlagen, System konnte keine erfolgreiche Autorisierung bereitstellen',

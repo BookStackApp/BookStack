@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atjaunināts :timeLength',
     'meta_updated_name' => ':user atjauninājis pirms :timeLength',
     'meta_owned_name' => 'Īpašnieks :user',
-    'meta_reference_page_count' => 'Atsauce :count lapā|Atsauce :count lapās',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Izvēlēties vienumu',
     'entity_select_lack_permission' => 'Jums nav nepieciešamās piekļuves tiesības, lai izvēlētu šo vienumu',
     'images' => 'Attēli',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Labot grāmatu :bookName',
     'books_form_book_name' => 'Grāmatas nosaukums',
     'books_save' => 'Saglabāt grāmatu',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Grāmatas atļaujas',
     'books_permissions_updated' => 'Grāmatas atļaujas atjauninātas',
     'books_empty_contents' => 'Lapas vai nodaļas vēl nav izveidotas šai grāmatai.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Dzēst melnrakstu',
     'pages_delete_success' => 'Lapa ir dzēsta',
     'pages_delete_draft_success' => 'Melnraksts ir dzēsts',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo lapu?',
     'pages_delete_draft_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo melnrakstu?',
     'pages_editing_named' => 'Rediģē lapu :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Atsauces',
     'references_none' => 'Uz šo vienumu nav atrasta neviena atsauce.',
-    'references_to_desc' => 'Zemāk parādītas visas sistēmā atrastās lapas, kas norāda uz šo vienumu.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

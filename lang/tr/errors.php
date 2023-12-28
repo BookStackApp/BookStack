@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP eklentisi kurulu değil',
     'ldap_cannot_connect' => 'LDAP sunucusuna bağlanılamadı, ilk bağlantı başarısız oldu',
     'saml_already_logged_in' => 'Zaten giriş yapılmış',
-    'saml_user_not_registered' => ':name adlı kullanıcı kayıtlı değil ve otomatik kaydolma devre dışı bırakılmış',
     'saml_no_email_address' => 'Harici kimlik doğrulama sisteminden gelen veriler, bu kullanıcının e-posta adresini içermiyor',
     'saml_invalid_response_id' => 'Harici doğrulama sistemi tarafından sağlanan bir veri talebi, bu uygulama tarafından başlatılan bir işlem tarafından tanınamadı. Giriş yaptıktan sonra geri dönmek bu soruna yol açmış olabilir.',
     'saml_fail_authed' => ':system kullanarak giriş yapma başarısız oldu; sistem, başarılı bir kimlik doğrulama sağlayamadı',

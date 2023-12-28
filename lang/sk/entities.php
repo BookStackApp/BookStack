@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizované :timeLength',
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Referencia na :count page|Referencia na :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entita vybraná',
     'entity_select_lack_permission' => 'Na výber tejto položky nemáte potrebné povolenia',
     'images' => 'Obrázky',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Upraviť knihu :bookName',
     'books_form_book_name' => 'Názov knihy',
     'books_save' => 'Uložiť knihu',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Oprávnenia knihy',
     'books_permissions_updated' => 'Oprávnenia knihy aktualizované',
     'books_empty_contents' => 'Pre túto knihu neboli vytvorené žiadne stránky alebo kapitoly.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Zmazať koncept',
     'pages_delete_success' => 'Stránka zmazaná',
     'pages_delete_draft_success' => 'Koncept stránky zmazaný',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ste si istý, že chcete zmazať túto stránku?',
     'pages_delete_draft_confirm' => 'Ste si istý, že chcete zmazať tento koncept stránky?',
     'pages_editing_named' => 'Upraviť stránku :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referencie',
     'references_none' => 'Neexistujú žiadne sledované referencie na túto položku.',
-    'references_to_desc' => 'Nižšie sú zobrazené všetky známe stránky v systéme, ktoré odkazujú na túto položku.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP-extensie is niet geïnstalleerd',
     'ldap_cannot_connect' => 'Kan geen verbinding maken met de ldap server, initiële verbinding is mislukt',
     'saml_already_logged_in' => 'Reeds ingelogd',
-    'saml_user_not_registered' => 'De gebruiker :name is niet geregistreerd en automatische registratie is uitgeschakeld',
     'saml_no_email_address' => 'In de gegevens van het externe verificatiesysteem kon voor deze gebruiker geen e-mailadres gevonden worden',
     'saml_invalid_response_id' => 'Het verzoek van het externe authenticatiesysteem wordt niet herkend door een proces dat door deze applicatie wordt gestart. Terugkeren na inloggen kan dit probleem veroorzaken.',
     'saml_fail_authed' => 'Inloggen met :system mislukt, het systeem gaf geen succesvolle autorisatie',

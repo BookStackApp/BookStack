@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => ':user kişisine ait',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Öge Seçimi',
     'entity_select_lack_permission' => 'Bu öğeyi seçmek için gerekli izinlere sahip değilsiniz',
     'images' => 'Görseller',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => ':bookName Kitabını Düzenle',
     'books_form_book_name' => 'Kitap Adı',
     'books_save' => 'Kitabı Kaydet',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Kitap İzinleri',
     'books_permissions_updated' => 'Kitap İzinleri Güncellendi',
     'books_empty_contents' => 'Bu kitaba ait sayfa veya bölüm oluşturulmamış.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Sayfa Taslağını Sil',
     'pages_delete_success' => 'Sayfa silindi',
     'pages_delete_draft_success' => 'Sayfa taslağı silindi',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Bu sayfayı silmek istediğinize emin misiniz?',
     'pages_delete_draft_confirm' => 'Bu sayfa taslağını silmek istediğinize emin misiniz?',
     'pages_editing_named' => ':pageName Sayfası Düzenleniyor',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referanslar',
     'references_none' => 'Bu öğeye ilişkin takip edilen bir referans bulunmamaktadır.',
-    'references_to_desc' => 'Aşağıda, sistemde bu öğeye bağlantı veren bilinen tüm sayfalar gösterilmektedir.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP-tillägg inte installerat',
     'ldap_cannot_connect' => 'Kan inte ansluta till ldap-servern. Anslutningen misslyckades',
     'saml_already_logged_in' => 'Redan inloggad',
-    'saml_user_not_registered' => 'Användarnamnet är inte registrerat och automatisk registrering är inaktiverad',
     'saml_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i data som tillhandahålls av det externa autentiseringssystemet',
     'saml_invalid_response_id' => 'En begäran från det externa autentiseringssystemet känns inte igen av en process som startats av denna applikation. Att navigera bakåt efter en inloggning kan orsaka detta problem.',
     'saml_fail_authed' => 'Inloggning med :system misslyckades, systemet godkände inte auktoriseringen',

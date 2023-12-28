@@ -14,7 +14,7 @@ return [
 
     // App Settings
     'app_customization' => 'Tilpassing',
-    'app_features_security' => 'Funksjoner og sikkerhet',
+    'app_features_security' => 'Funksjonar og tryggleik',
     'app_name' => 'Applikasjonsnavn',
     'app_name_desc' => 'Dette navnet vises i overskriften og i alle e-postmeldinger som sendes av systemet.',
     'app_name_header' => 'Vis navn i topptekst',
@@ -23,8 +23,8 @@ return [
     'app_public_access_desc_guest' => 'Tilgang for offentlige besøkende kan kontrolleres gjennom "Gjest" -brukeren.',
     'app_public_access_toggle' => 'Tillat offentlig tilgang',
     'app_public_viewing' => 'Tillat offentlig visning?',
-    'app_secure_images' => 'Høyere sikkerhet på bildeopplastinger',
-    'app_secure_images_toggle' => 'Enable høyere sikkerhet på bildeopplastinger',
+    'app_secure_images' => 'Høyere tryggleik på bileteopplastingar',
+    'app_secure_images_toggle' => 'Skru på høgare tryggleik på bileteopplastingar',
     'app_secure_images_desc' => 'Av ytelsesgrunner er alle bilder offentlige. Dette alternativet legger til en tilfeldig streng som er vanskelig å gjette foran bildets nettadresser. Forsikre deg om at katalogindekser ikke er aktivert for å forhindre enkel tilgang.',
     'app_default_editor' => 'Standard sideredigeringsprogram',
     'app_default_editor_desc' => 'Velg hvilken tekstbehandler som skal brukes som standard når du redigerer nye sider. Dette kan overskrives på et sidenivå der tillatelser tillates.',
@@ -76,8 +76,8 @@ return [
 
     // Maintenance settings
     'maint' => 'Vedlikehold',
-    'maint_image_cleanup' => 'Bildeopprydding',
-    'maint_image_cleanup_desc' => 'Skanner side og revisjonsinnhold for å sjekke hvilke bilder og tegninger som for øyeblikket er i bruk, og hvilke bilder som er overflødige. Forsikre deg om at du lager en full database og sikkerhetskopiering av bilder før du kjører denne.',
+    'maint_image_cleanup' => 'Rydd opp bilete',
+    'maint_image_cleanup_desc' => 'Skanner side og revisjonsinnhold for å sjekke kva bilete og teikninar som for er i bruk no, og kva bilete som er til overs. Sørg for å tryggleikskopiere heile databasen og alle bilete før du kjører denne.',
     'maint_delete_images_only_in_revisions' => 'Slett også bilder som bare finnes i game siderevisjoner',
     'maint_image_cleanup_run' => 'Kjør opprydding',
     'maint_image_cleanup_warning' => ':count potensielt ubrukte bilder ble funnet. Er du sikker på at du vil slette disse bildene?',
@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Papirkurven er for øyeblikket tom',
     'recycle_bin_empty' => 'Tøm papirkurven',
     'recycle_bin_empty_confirm' => 'Dette vil slette alle elementene i papirkurven permanent. Dette inkluderer innhold i hvert element. Er du sikker på at du vil tømme papirkurven?',
-    'recycle_bin_destroy_confirm' => 'Denne handlingen vil permanent slette dette elementet og alle dets underelementer fra systemet, som beskrevet nedenfor. Du vil ikke kunne gjenopprette dette innholdet med mindre du har en tidligere sikkerhetskopi av databasen. Er du sikker på at du vil fortsette?',
+    'recycle_bin_destroy_confirm' => 'Denne handlinga vil permanent slette dette elementet og alle dets underelementer frå systemet, som skildra nedanfor. Du vil ikkje kunne gjenopprette dette innholdet, med mindre du har ein tidligere tryggleiksskopi av databasen. Er du sikker på at du vil fortsette?',
     'recycle_bin_destroy_list' => 'Elementer som skal slettes',
     'recycle_bin_restore_list' => 'Elementer som skal gjenopprettes',
     'recycle_bin_restore_confirm' => 'Denne handlingen vil hente opp elementet fra papirkurven, inkludert underliggende innhold, til sin opprinnelige sted. Om den opprinnelige plassen har blitt slettet i mellomtiden og nå befinner seg i papirkurven, vil også dette bli hentet opp igjen.',
@@ -225,7 +225,7 @@ return [
     'users_api_tokens_expires' => 'Utløper',
     'users_api_tokens_docs' => 'API-dokumentasjon',
     'users_mfa' => 'Flerfaktorautentisering',
-    'users_mfa_desc' => 'Konfigurer flerfaktorautentisering som et ekstra lag med sikkerhet for din konto.',
+    'users_mfa_desc' => 'Konfigurer flerfaktorautentisering som eit ekstra lag med tryggleik for din konto.',
     'users_mfa_x_methods' => ':count metode konfigurert|:count metoder konfigurert',
     'users_mfa_configure' => 'Konfigurer metoder',
 
@@ -296,6 +296,7 @@ return [
         'et' => 'Eesti keel',
         'eu' => 'Euskara',
         'fa' => 'فارسی',
+        'fi' => 'Suomi',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',

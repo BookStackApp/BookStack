@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新於 :timeLength',
     'meta_updated_name' => '由 :user 更新於 :timeLength',
     'meta_owned_name' => ':user 所擁有',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => '選取項目',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => '圖片',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => '編輯書本「:bookName」',
     'books_form_book_name' => '書本名稱',
     'books_save' => '儲存書本',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => '書本權限',
     'books_permissions_updated' => '書本權限已更新',
     'books_empty_contents' => '本書目前沒有頁面或章節。',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => '刪除草稿頁面',
     'pages_delete_success' => '頁面已刪除',
     'pages_delete_draft_success' => '草稿頁面已刪除',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => '您確定要刪除此頁面嗎？',
     'pages_delete_draft_confirm' => '您確定要刪除此草稿頁面嗎？',
     'pages_editing_named' => '正在編輯頁面 :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
-    'meta_reference_page_count' => 'Naartoe verwezen op :count pagina|Naartoe verwezen op :count pagina\'s',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entiteit selecteren',
     'entity_select_lack_permission' => 'Je hebt niet de vereiste machtiging om dit item te selecteren',
     'images' => 'Afbeeldingen',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Bewerk boek :bookName',
     'books_form_book_name' => 'Boek naam',
     'books_save' => 'Boek opslaan',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Boek machtigingen',
     'books_permissions_updated' => 'Boek Machtigingen Bijgewerkt',
     'books_empty_contents' => 'Er zijn nog geen hoofdstukken en pagina\'s voor dit boek gemaakt.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Verwijder concept pagina',
     'pages_delete_success' => 'Pagina verwijderd',
     'pages_delete_draft_success' => 'Concept verwijderd',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Weet je zeker dat je deze pagina wilt verwijderen?',
     'pages_delete_draft_confirm' => 'Weet je zeker dat je dit concept wilt verwijderen?',
     'pages_editing_named' => 'Pagina :pageName bewerken',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Verwijzingen',
     'references_none' => 'Er zijn geen verwijzingen naar dit artikel bijgehouden.',
-    'references_to_desc' => 'Hieronder staan alle gekende pagina\'s in het systeem die naar dit item linken.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Volg',

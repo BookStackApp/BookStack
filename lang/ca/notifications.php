@@ -4,23 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Comentari nou a la pàgina :pageName',
+    'new_comment_intro' => 'Un usuari ha comentat en una pàgina de :appName:',
+    'new_page_subject' => 'Pàgina nova: :pageName',
+    'new_page_intro' => 'S’ha creat una pàgina nova a :appName:',
+    'updated_page_subject' => 'Pàgina actualitzada: :pageName',
+    'updated_page_intro' => 'S’ha actualitzat una pàgina a :appName:',
+    'updated_page_debounce' => 'Per a evitar les notificacions massives, no us enviarem notificacions si hi ha més edicions en aquesta pàgina fetes pel mateix editor.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Nom de la pàgina:',
+    'detail_page_path' => 'Camí de la pàgina:',
+    'detail_commenter' => 'Autor del comentari:',
+    'detail_comment' => 'Comentari:',
+    'detail_created_by' => 'Creat per:',
+    'detail_updated_by' => 'Actualitzat per:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Mostra el comentari',
+    'action_view_page' => 'Mostra la pàgina',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Rebeu aquesta notificació perquè :link cobreixen aquest tipus d’activitat en aquest element.',
+    'footer_reason_link' => 'les vostres preferències de notificacions',
 ];

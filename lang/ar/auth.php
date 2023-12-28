@@ -39,8 +39,8 @@ return [
     'register_success' => 'شكراً لإنشاء حسابكم! تم تسجيلكم ودخولكم للحساب الخاص بكم.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_starting' => 'محاولة تسجيل الدخول',
+    'auto_init_starting_desc' => 'نحن نتصل بنظام المصادقة الخاص بك لبدء عملية تسجيل الدخول. إذا لم يحدث أي تقدم بعد 5 ثوان يمكنك محاولة النقر على الرابط أدناه.',
     'auto_init_start_link' => 'المتابعة مع المصادقة',
 
     // Password Reset
@@ -59,10 +59,10 @@ return [
     'email_confirm_text' => 'الرجاء تأكيد بريدكم الإلكتروني بالضغط على الزر أدناه:',
     'email_confirm_action' => 'تأكيد البريد الإلكتروني',
     'email_confirm_send_error' => 'تأكيد البريد الإلكتروني مطلوب ولكن النظام لم يستطع إرسال الرسالة. تواصل مع مشرف النظام للتأكد من إعدادات البريد.',
-    'email_confirm_success' => 'Your email has been confirmed! You should now be able to login using this email address.',
+    'email_confirm_success' => 'تم تأكيد بريدك الإلكتروني! يمكنك الآن تسجيل الدخول باستخدام عنوان البريد الإلكتروني هذا.',
     'email_confirm_resent' => 'تمت إعادة إرسال رسالة التأكيد. الرجاء مراجعة صندوق الوارد',
-    'email_confirm_thanks' => 'Thanks for confirming!',
-    'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
+    'email_confirm_thanks' => 'شكرا للتأكيد!',
+    'email_confirm_thanks_desc' => 'الرجاء الانتظار لحظة بينما يتم التعامل مع التأكيد الخاص بك. إذا لم يتم إعادة توجيهك بعد 3 ثوان اضغط على الرابط "المتابعة" أدناه للمتابعة.',
 
     'email_not_confirmed' => 'لم يتم تأكيد البريد الإلكتروني',
     'email_not_confirmed_text' => 'لم يتم بعد تأكيد عنوان البريد الإلكتروني.',
@@ -78,14 +78,14 @@ return [
     'user_invite_page_welcome' => 'مرحبا بكم في :appName!',
     'user_invite_page_text' => 'لإكمال حسابك والحصول على حق الوصول تحتاج إلى تعيين كلمة مرور سيتم استخدامها لتسجيل الدخول إلى :appName في الزيارات المستقبلية.',
     'user_invite_page_confirm_button' => 'تأكيد كلمة المرور',
-    'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
+    'user_invite_success_login' => 'تم تأكيد كلمة المرور. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور المحددة للوصول إلى :appName!',
 
     // Multi-factor Authentication
-    'mfa_setup' => 'Setup Multi-Factor Authentication',
-    'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
-    'mfa_setup_configured' => 'Already configured',
-    'mfa_setup_reconfigure' => 'Reconfigure',
-    'mfa_setup_remove_confirmation' => 'Are you sure you want to remove this multi-factor authentication method?',
+    'mfa_setup' => 'إعداد المصادقة متعددة العوامل',
+    'mfa_setup_desc' => 'إعداد المصادقة متعددة العوامل كطبقة إضافية من الأمان لحساب المستخدم الخاص بك.',
+    'mfa_setup_configured' => 'تم إعداده مسبقاً',
+    'mfa_setup_reconfigure' => 'إعادة التكوين',
+    'mfa_setup_remove_confirmation' => 'هل أنت متأكد من أنك تريد إزالة طريقة المصادقة متعددة العناصر هذه؟',
     'mfa_setup_action' => 'إعداد (تنصيب)',
     'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
     'mfa_option_totp_title' => 'تطبيق الجوال',

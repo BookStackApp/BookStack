@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Актуализирано :timeLength',
     'meta_updated_name' => 'Актуализирано преди :timeLength от :user',
     'meta_owned_name' => 'Притежавано от :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Избор на обект',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Изображения',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Редактирай книга :bookName',
     'books_form_book_name' => 'Име на книга',
     'books_save' => 'Запази книга',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Настройки за достъп до книгата',
     'books_permissions_updated' => 'Настройките за достъп до книгата бяха обновени',
     'books_empty_contents' => 'Няма създадени страници или глави към тази книга.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Изтрий чернова',
     'pages_delete_success' => 'Страницата е изтрита',
     'pages_delete_draft_success' => 'Черновата на страницата бе изтрита',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Сигурни ли сте, че искате да изтриете тази страница?',
     'pages_delete_draft_confirm' => 'Сигурни ли сте, че искате да изтриете тази чернова?',
     'pages_editing_named' => 'Редактиране на страница :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

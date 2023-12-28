@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'oppretta hylle',
-    'bookshelf_create_notification'    => 'Hylla vart opprettet',
+    'bookshelf_create_notification'    => 'Hylla vart oppretta',
     'bookshelf_create_from_book'    => 'endra frå bok til hylle',
     'bookshelf_create_from_book_notification'    => 'Boka vart konvertert til ei bokhylle',
     'bookshelf_update'                 => 'oppdaterte hylle',
@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '«:name» vart fjerna frå dine favorittar',
 
     // Watching
-    'watch_update_level_notification' => 'Overvåkingsinnstillingene vart oppdatert',
+    'watch_update_level_notification' => 'Overvakingsinnstillingane vart oppdatert',
 
     // Auth
     'auth_login' => 'logga inn',
@@ -103,7 +103,7 @@ return [
     // Roles
     'role_create' => 'oppretta rolle',
     'role_create_notification' => 'Rolla vart oppretta',
-    'role_update' => 'oppdatert rolla',
+    'role_update' => 'oppdatert rolle',
     'role_update_notification' => 'Rolla vart oppdatert',
     'role_delete' => 'sletta rolla',
     'role_delete_notification' => 'Rolla vart fjerna',

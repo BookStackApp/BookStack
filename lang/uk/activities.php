@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'видалив розділ',
     'chapter_delete_notification' => 'Розділ успішно видалено',
     'chapter_move'                => 'перемістив розділ',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Розділ успішно перенесений',
 
     // Books
     'book_create'                 => 'створив книгу',
@@ -50,31 +50,31 @@ return [
     'bookshelf_delete_notification'    => 'Полиця успішно видалена',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'відновлено версію',
+    'revision_delete' => 'видалена версія',
+    'revision_delete_notification' => 'Версію успішно видалено',
 
     // Favourites
     'favourite_add_notification' => '":ім\'я" було додане до ваших улюлених',
     'favourite_remove_notification' => '":ім\'я" було видалено з ваших улюблених',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Налаштування перегляду успішно оновлено',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'ввійшли',
+    'auth_register' => 'зареєстрований як новий користувач',
+    'auth_password_reset_request' => 'запит на скидання пароля користувача',
+    'auth_password_reset_update' => 'скинути пароль користувача',
+    'mfa_setup_method' => 'налаштований метод MFA',
     'mfa_setup_method_notification' => 'Багатофакторний метод успішно налаштований',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'видалив метод MFA',
     'mfa_remove_method_notification' => 'Багатофакторний метод успішно видалений',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'оновлені налаштування',
+    'settings_update_notification' => 'Налаштування успішно оновлено',
+    'maintenance_action_run' => 'виконуються дії щодо обслуговування',
 
     // Webhooks
     'webhook_create' => 'створений вебхук',
@@ -85,38 +85,38 @@ return [
     'webhook_delete_notification' => 'Вебхуки успішно видалено',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'створений користувач',
+    'user_create_notification' => 'Користувач успішно створений',
+    'user_update' => 'оновлений користувач',
     'user_update_notification' => 'Користувача було успішно оновлено',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'вилучений користувач',
     'user_delete_notification' => 'Користувача успішно видалено',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'створений APi токен',
+    'api_token_create_notification' => 'API токен успішно створений',
+    'api_token_update' => 'оновлено API токен',
+    'api_token_update_notification' => 'Токен API успішно оновлено',
+    'api_token_delete' => 'видалено API токен',
+    'api_token_delete_notification' => 'API-токен успішно видалено',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'створену роль',
     'role_create_notification' => 'Роль успішно створена',
-    'role_update' => 'updated role',
+    'role_update' => 'оновлена роль',
     'role_update_notification' => 'Роль успішно оновлена',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'видалена роль',
     'role_delete_notification' => 'Роль успішно видалена',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'очищено кошик',
+    'recycle_bin_restore' => 'відновлено із кошику',
+    'recycle_bin_destroy' => 'видалено з кошика',
 
     // Comments
     'commented_on'                => 'прокоментував',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
+    'comment_create'              => 'додано коментар',
+    'comment_update'              => 'оновлено коментар',
     'comment_delete'              => 'видалений коментар',
 
     // Other

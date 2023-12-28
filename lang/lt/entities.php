@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atnaujintas :timeLength',
     'meta_updated_name' => 'Atnaujinta :timeLength naudotojo :user',
     'meta_owned_name' => 'Priklauso :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Pasirinkti subjektą',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Nuotraukos',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Redaguoti knygą :bookName',
     'books_form_book_name' => 'Knygos pavadinimas',
     'books_save' => 'Išsaugoti knygą',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Knygos leidimas',
     'books_permissions_updated' => 'Knygos leidimas atnaujintas',
     'books_empty_contents' => 'Jokių puslapių ar skyrių nebuvo skurta šiai knygai',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Ištrinti juodraščio puslapį',
     'pages_delete_success' => 'Puslapis ištrintas',
     'pages_delete_draft_success' => 'Juodraščio puslapis ištrintas',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ar esate tikri, kad norite ištrinti šį puslapį?',
     'pages_delete_draft_confirm' => 'Ar esate tikri, kad norite ištrinti šį juodraščio puslapį?',
     'pages_editing_named' => 'Redaguojamas puslapis :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

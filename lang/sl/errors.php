@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'PHP razširitev za LDAP ni nameščena',
     'ldap_cannot_connect' => 'Ne morem se povezati na LDAP strežnik, neuspešna začetna povezava',
     'saml_already_logged_in' => 'Že prijavljen',
-    'saml_user_not_registered' => 'Uporabniško ime :name ni registrirano in avtomatska registracija je onemogočena',
     'saml_no_email_address' => 'Nisem našel e-naslova za tega uporabnika v podatkih iz zunanjega sistema za preverjanje pristnosti',
     'saml_invalid_response_id' => 'Zahteva iz zunanjega sistema za preverjanje pristnosti ni prepoznana s strani procesa zagnanega s strani te aplikacije. Pomik nazaj po prijavi je lahko vzrok teh težav.',
     'saml_fail_authed' => 'Prijava z uporabo :system ni uspela, sistem ni zagotovil uspešne avtorizacije',

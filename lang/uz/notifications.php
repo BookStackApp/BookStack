@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Xabarnomalar koʻp boʻlishining oldini olish uchun bir muncha vaqt oʻsha muharrir tomonidan ushbu sahifaga keyingi tahrirlar haqida bildirishnomalar yuborilmaydi.',
 
     'detail_page_name' => 'Sahifa nomi:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Izoh egasi:',
     'detail_comment' => 'Izoh:',
     'detail_created_by' => 'Tomonidan yaratildi:',

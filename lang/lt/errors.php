@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP išplėtimas neįdiegtas',
     'ldap_cannot_connect' => 'Negalima prisijungti prie LDAP serverio, nepavyko prisijungti',
     'saml_already_logged_in' => 'Jau prisijungta',
-    'saml_user_not_registered' => 'Naudotojas :name neužregistruotas ir automatinė registracija yra išjungta',
     'saml_no_email_address' => 'Nerandamas šio naudotojo elektroninio pašto adresas išorinės autentifikavimo sistemos pateiktuose duomenyse',
     'saml_invalid_response_id' => 'Prašymas iš išorinės autentifikavimo sistemos nėra atpažintas proceso, kurį pradėjo ši programa. Naršymas po prisijungimo gali sukelti šią problemą.',
     'saml_fail_authed' => 'Prisijungimas, naudojant :system nepavyko, sistema nepateikė sėkmingo leidimo.',

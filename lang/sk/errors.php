@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Rozšírenie LDAP PHP nie je nainštalované',
     'ldap_cannot_connect' => 'Nedá sa pripojiť k serveru ldap, počiatočné pripojenie zlyhalo',
     'saml_already_logged_in' => 'Používateľ sa už prihlásil',
-    'saml_user_not_registered' => 'Používateľ :name nie je zaregistrovaný a automatická registrácia je zakázaná',
     'saml_no_email_address' => 'V údajoch poskytnutých externým overovacím systémom sa nepodarilo nájsť e-mailovú adresu tohto používateľa',
     'saml_invalid_response_id' => 'Požiadavka z externého autentifikačného systému nie je rozpoznaná procesom spusteným touto aplikáciou. Tento problém môže spôsobiť navigácia späť po prihlásení.',
     'saml_fail_authed' => 'Prihlásenie pomocou :system zlyhalo, systém neposkytol úspešnú autorizáciu',

@@ -297,6 +297,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
         'et' => 'Estnisch',
         'eu' => 'Euskara',
         'fa' => 'فارسی',
+        'fi' => 'Suomi',
         'fr' => 'Französisch',
         'he' => 'Hebräisch',
         'hr' => 'Kroatisch',

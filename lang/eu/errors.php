@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'PHP LDAP extentsioa ez dago instalatuta',
     'ldap_cannot_connect' => 'Ezin izan da ldap zerbitzarira konektatu, hasierako konexioak huts egin du',
     'saml_already_logged_in' => 'Saioa aurretik hasita dago',
-    'saml_user_not_registered' => ':name erabiltzailea ez dago erregistratua eta erregistro automatikoa ezgaituta dago',
     'saml_no_email_address' => 'Ezin izan dugu posta helbiderik aurkitu erabiltzaile honentzat, kanpoko autentifikazio zerbitzuak bidalitako datuetan',
     'saml_invalid_response_id' => 'Kanpoko egiazkotasun-sistemaren eskaria ez du onartzen aplikazio honek abiarazitako prozesu batek. Loginean atzera egitea izan daiteke arrazoia.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',

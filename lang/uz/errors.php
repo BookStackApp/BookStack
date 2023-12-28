@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP kengaytmasi oʻrnatilmagan',
     'ldap_cannot_connect' => 'Ldap serveriga ulanib boʻlmadi, Dastlabki ulanish amalga oshmadi',
     'saml_already_logged_in' => 'Allaqachon tizimga kirgan',
-    'saml_user_not_registered' => 'Foydalanuvchi :name roʻyxatdan oʻtmagan va avtomatik roʻyxatdan oʻtish oʻchirilgan',
     'saml_no_email_address' => 'Tashqi autentifikatsiya tizimi tomonidan taqdim etilgan maʼlumotlarda ushbu foydalanuvchi uchun elektron pochta manzili topilmadi',
     'saml_invalid_response_id' => 'Tashqi autentifikatsiya tizimidagi so‘rov ushbu ilova tomonidan boshlangan jarayon tomonidan tan olinmaydi. Kirishdan keyin orqaga qaytish bu muammoga olib kelishi mumkin.',
     'saml_fail_authed' => ':tizim yordamida tizimga kirish amalga oshmadi, tizim muvaffaqiyatli avtorizatsiyani taqdim etmadi',

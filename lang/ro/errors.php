@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Extensia LDAP PHP nu este instalată',
     'ldap_cannot_connect' => 'Nu se poate conecta la serverul ldap, conexiunea inițială a eșuat',
     'saml_already_logged_in' => 'Deja conectat',
-    'saml_user_not_registered' => 'Utilizatorul :name nu este înregistrat și înregistrarea automată este dezactivată',
     'saml_no_email_address' => 'Nu s-a putut găsi o adresă de e-mail, pentru acest utilizator, în datele furnizate de sistemul extern de autentificare',
     'saml_invalid_response_id' => 'Solicitarea de la sistemul extern de autentificare nu este recunoscută de un proces inițiat de această aplicație. Navigarea înapoi după o autentificare ar putea cauza această problemă.',
     'saml_fail_authed' => 'Autentificarea folosind :system a eșuat, sistemul nu a furnizat autorizare cu succes',

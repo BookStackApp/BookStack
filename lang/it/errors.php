@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'L\'estensione PHP LDAP non è installata',
     'ldap_cannot_connect' => 'Impossibile connettersi al server ldap, connessione iniziale fallita',
     'saml_already_logged_in' => 'Già loggato',
-    'saml_user_not_registered' => 'L\'utente :name non è registrato e la registrazione automatica è disabilitata',
     'saml_no_email_address' => 'Impossibile trovare un indirizzo email per questo utente nei dati forniti dal sistema di autenticazione esterno',
     'saml_invalid_response_id' => 'La richiesta dal sistema di autenticazione esterno non è riconosciuta da un processo iniziato da questa applicazione. Tornare indietro dopo un login potrebbe causare questo problema.',
     'saml_fail_authed' => 'Accesso con :system non riuscito, il sistema non ha fornito l\'autorizzazione corretta',

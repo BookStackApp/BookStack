@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Pentru a preveni notificări în masă, pentru un timp nu veți primi notificări suplimentare la această pagină de către același editor.',
 
     'detail_page_name' => 'Nume pagină:',
+    'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Cine a comentat:',
     'detail_comment' => 'Comentariu:',
     'detail_created_by' => 'Creat de:',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
-    'meta_reference_page_count' => 'Ссылается на :count страницу|Ссылается на :count страниц',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Выбор объекта',
     'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Редактировать книгу :bookName',
     'books_form_book_name' => 'Название книги',
     'books_save' => 'Сохранить книгу',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Разрешения на книгу',
     'books_permissions_updated' => 'Разрешения на книгу обновлены',
     'books_empty_contents' => 'Для этой книги нет страниц или разделов.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Удалить черновик',
     'pages_delete_success' => 'Страница удалена',
     'pages_delete_draft_success' => 'Черновик удален',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Вы действительно хотите удалить эту страницу?',
     'pages_delete_draft_confirm' => 'Вы действительно хотите удалить этот черновик?',
     'pages_editing_named' => 'Редактирование страницы :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Ссылки',
     'references_none' => 'Нет отслеживаемых ссылок на этот элемент.',
-    'references_to_desc' => 'Ниже показаны все известные страницы в системе, которые ссылаются на этот элемент.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

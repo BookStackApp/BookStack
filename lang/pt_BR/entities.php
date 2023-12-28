@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Atualizado :timeLength',
     'meta_updated_name' => 'Atualizado :timeLength por :user',
     'meta_owned_name' => 'De :user',
-    'meta_reference_page_count' => 'Referenciado em :count página|Referenciado em :count páginas',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Seleção de Entidade',
     'entity_select_lack_permission' => 'Você não tem as permissões necessárias para selecionar este item',
     'images' => 'Imagens',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Editar Livro :bookName',
     'books_form_book_name' => 'Nome do Livro',
     'books_save' => 'Salvar Livro',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Permissões do Livro',
     'books_permissions_updated' => 'Permissões do Livro Atualizadas',
     'books_empty_contents' => 'Nenhuma página ou capítulo foram criados para este livro.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Excluir Rascunho de Página',
     'pages_delete_success' => 'Página excluída',
     'pages_delete_draft_success' => 'Rascunho de página excluído',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Tem certeza que deseja excluir a página?',
     'pages_delete_draft_confirm' => 'Tem certeza que deseja excluir o rascunho de página?',
     'pages_editing_named' => 'Editando a Página :pageName',
@@ -295,7 +299,7 @@ return [
     'pages_is_template' => 'Modelo de Página',
 
     // Editor Sidebar
-    'toggle_sidebar' => 'Toggle Sidebar',
+    'toggle_sidebar' => '',
     'page_tags' => 'Tags de Página',
     'chapter_tags' => 'Tags de Capítulo',
     'book_tags' => 'Tags de Livro',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referências',
     'references_none' => 'Não há referências rastreadas para este item.',
-    'references_to_desc' => 'Abaixo estão todas as páginas conhecidas no sistema que vinculam a este item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Acompanhar',

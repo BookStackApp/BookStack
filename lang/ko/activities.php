@@ -50,9 +50,9 @@ return [
     'bookshelf_delete_notification'    => '책꽃이가 삭제되었습니다.',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => '버전 복원',
+    'revision_delete' => '버전 삭제',
+    'revision_delete_notification' => '버전 삭제 성공',
 
     // Favourites
     'favourite_add_notification' => '":name" 북마크에 추가함',
@@ -63,17 +63,17 @@ return [
 
     // Auth
     'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
+    'auth_register' => '신규 사용자 등록',
+    'auth_password_reset_request' => '사용자 비밀번호 초기화 요청',
+    'auth_password_reset_update' => '사용자 비밀번호 초기화',
     'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => '다중 인증 설정함',
     'mfa_remove_method' => 'removed MFA method',
     'mfa_remove_method_notification' => '다중 인증 해제함',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update' => '설정 변경',
+    'settings_update_notification' => '설졍 변경 성공',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -85,15 +85,15 @@ return [
     'webhook_delete_notification' => '웹 훅 삭제함',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => '사용자 생성',
+    'user_create_notification' => '사용자 생성 성공',
+    'user_update' => '사용자 갱신',
     'user_update_notification' => '사용자가 업데이트되었습니다',
-    'user_delete' => 'deleted user',
+    'user_delete' => '사용자 삭제',
     'user_delete_notification' => '사용자가 삭제되었습니다',
 
     // API Tokens
-    'api_token_create' => 'created api token',
+    'api_token_create' => 'aPI 토큰 생성',
     'api_token_create_notification' => 'API token successfully created',
     'api_token_update' => 'updated api token',
     'api_token_update_notification' => 'API token successfully updated',
@@ -101,11 +101,11 @@ return [
     'api_token_delete_notification' => 'API token successfully deleted',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => '역활 생성',
     'role_create_notification' => '역할이 생성되었습니다',
-    'role_update' => 'updated role',
+    'role_update' => '역활 갱신',
     'role_update_notification' => '역할이 수정되었습니다',
-    'role_delete' => 'deleted role',
+    'role_delete' => '역활 삭제',
     'role_delete_notification' => '역할이 삭제되었습니다',
 
     // Recycle Bin
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => '댓글 쓰기',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => '댓글 생성',
+    'comment_update'              => '댓글 변경',
+    'comment_delete'              => '댓글 삭제',
 
     // Other
     'permissions_update'          => '권한 수정함',

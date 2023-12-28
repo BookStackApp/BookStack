@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Aby se zabránilo hromadnému zasílání upozornění, na nějakou dobu nebudete posílat oznámení o dalších úpravách této stránky stejným editorem.',
 
     'detail_page_name' => 'Název stránky:',
+    'detail_page_path' => 'Cesta ke stránce:',
     'detail_commenter' => 'Komentoval:',
     'detail_comment' => 'Komentář:',
     'detail_created_by' => 'Vytvořil:',

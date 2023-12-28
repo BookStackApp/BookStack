@@ -34,8 +34,8 @@ return [
     'image_delete_success' => 'Obrázek byl odstraněn',
     'image_replace' => 'Nahradit obrázek',
     'image_replace_success' => 'Obrázek úspěšně vytvořen',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => 'Přegenerovat všechny velikosti',
+    'image_rebuild_thumbs_success' => 'Všechny velikostní varianty obrázku byly úspěšně znovu vytvořeny!',
 
     // Code Editor
     'code_editor' => 'Upravit kód',

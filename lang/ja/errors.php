@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP extensionがインストールされていません',
     'ldap_cannot_connect' => 'LDAPサーバに接続できませんでした',
     'saml_already_logged_in' => '既にログインしています',
-    'saml_user_not_registered' => 'ユーザー :name は登録されておらず、自動登録は無効になっています',
     'saml_no_email_address' => '外部認証システムから提供されたデータに、このユーザーのメールアドレスが見つかりませんでした',
     'saml_invalid_response_id' => '外部認証システムからの要求がアプリケーションによって開始されたプロセスによって認識されません。ログイン後に戻るとこの問題が発生する可能性があります。',
     'saml_fail_authed' => ':systemを利用したログインに失敗しました。システムは正常な認証を提供しませんでした。',

@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Ekstensi LDAP PHP tidak terpasang',
     'ldap_cannot_connect' => 'Tidak dapat terhubung ke server ldap, Koneksi awal gagal',
     'saml_already_logged_in' => 'Telah masuk',
-    'saml_user_not_registered' => 'Pengguna :name tidak terdaftar dan pendaftaran otomatis dinonaktifkan',
     'saml_no_email_address' => 'Tidak dapat menemukan sebuah alamat email untuk pengguna ini, dalam data yang diberikan oleh sistem autentikasi eksternal',
     'saml_invalid_response_id' => 'Permintaan dari sistem otentikasi eksternal tidak dikenali oleh sebuah proses yang dimulai oleh aplikasi ini. Menavigasi kembali setelah masuk dapat menyebabkan masalah ini.',
     'saml_fail_authed' => 'Masuk menggunakan :system gagal, sistem tidak memberikan otorisasi yang berhasil',

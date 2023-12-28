@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP udvidelse er ikke installeret',
     'ldap_cannot_connect' => 'Kan ikke forbinde til ldap server. Indledende forbindelse mislykkedes',
     'saml_already_logged_in' => 'Allerede logget ind',
-    'saml_user_not_registered' => 'Brugeren :name er ikke registreret, og automatisk registrering er slået fra',
     'saml_no_email_address' => 'Kunne ikke finde en e-mail-adresse for denne bruger i de data, der leveres af det eksterne godkendelsessystem',
     'saml_invalid_response_id' => 'Anmodningen fra det eksterne godkendelsessystem genkendes ikke af en proces, der er startet af denne applikation. Navigering tilbage efter et login kan forårsage dette problem.',
     'saml_fail_authed' => 'Login ved hjælp af :system failed, systemet har ikke givet tilladelse',
