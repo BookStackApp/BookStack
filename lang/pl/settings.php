@@ -296,6 +296,7 @@ return [
         'et' => 'Estoński',
         'eu' => 'Euskara',
         'fa' => 'فارسی',
+        'fi' => 'Suomi',
         'fr' => 'Français',
         'he' => 'עברית',
         'hr' => 'Hrvatski',
