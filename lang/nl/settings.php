@@ -296,6 +296,7 @@ return [
         'et' => 'Eesti keel (Estisch)',
         'eu' => 'Euskara',
         'fa' => 'فارسی',
+        'fi' => 'Suomi',
         'fr' => 'Français (Frans)',
         'he' => 'עברית (Hebreeuws)',
         'hr' => 'Hrvatski (Kroatisch)',
