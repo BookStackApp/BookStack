@@ -177,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: French; Dutch; Turkish; 
+REMOVED_USER :: French; Dutch; Portuguese, Brazilian; Portuguese; Turkish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -371,3 +371,18 @@ LameeQS :: Latvian
 Sorin T. (trimbitassorin) :: Romanian
 poesty :: Chinese Simplified
 balmag :: Hungarian
+Antti-Jussi Nygård (ajnyga) :: Finnish
+Eduard Ereza Martínez (Ereza) :: Catalan
+Jabir Lang (amar.almrad) :: Arabic
+Jaroslav Koblizek (foretix) :: Czech; French
+Wiktor Adamczyk (adamczyk.wiktor) :: Polish
+Abdulmajeed Alshuaibi (4Majeed) :: Arabic
+NotSmartZakk :: Czech
+HyoungMin Lee (ddokkaebi) :: Korean
+Dasferco :: Chinese Simplified
+Marcus Teräs (mteras) :: Finnish
+Serkan Yardim (serkanzz) :: Turkish
+Y (cnsr) :: Ukrainian
+ZY ZV (vy0b0x) :: Chinese Simplified
+diegobenitez :: Spanish
+Marc Hagen (MarcHagen) :: Dutch
