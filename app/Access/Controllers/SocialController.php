@@ -79,7 +79,7 @@ class SocialController extends Controller
             try {
                 return $this->socialAuthService->handleLoginCallback($socialDriver, $socialUser);
             } catch (SocialSignInAccountNotUsed $exception) {
-                if ($this->socialAuthService->driverAutoRegisterEnabled($socialDriver)) {
+                if ($this->socialAuthService->drivers()->isAutoRegisterEnabled($socialDriver)) {
                     return $this->socialRegisterCallback($socialDriver, $socialUser);
                 }
 
@@ -91,7 +91,7 @@ class SocialController extends Controller
             return $this->socialRegisterCallback($socialDriver, $socialUser);
         }
 
-        return redirect()->back();
+        return redirect('/');
     }
 
     /**
@@ -114,7 +114,7 @@ class SocialController extends Controller
     {
         $socialUser = $this->socialAuthService->handleRegistrationCallback($socialDriver, $socialUser);
         $socialAccount = $this->socialAuthService->newSocialAccount($socialDriver, $socialUser);
-        $emailVerified = $this->socialAuthService->driverAutoConfirmEmailEnabled($socialDriver);
+        $emailVerified = $this->socialAuthService->drivers()->isAutoConfirmEmailEnabled($socialDriver);
 
         // Create an array of the user data to create a new user instance
         $userData = [

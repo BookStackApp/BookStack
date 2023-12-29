@@ -13,6 +13,7 @@ import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
+import {handleEmbedAlignmentChanges} from './fixes';
 
 const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
@@ -35,9 +36,9 @@ const styleFormats = [
 ];
 
 const formats = {
-    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-left'},
-    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-center'},
-    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes: 'align-right'},
+    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-left'},
+    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-center'},
+    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-right'},
     calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
     calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
     calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
@@ -84,7 +85,11 @@ function filePickerCallback(callback, value, meta) {
                 text: entity.name,
                 title: entity.name,
             });
-        }, selectionText);
+        }, selectionText, {
+            searchEndpoint: '/search/entity-selector',
+            entityTypes: 'page,book,chapter,bookshelf',
+            entityPermission: 'view',
+        });
     }
 
     if (meta.filetype === 'image') {
@@ -177,6 +182,8 @@ function getSetupCallback(options) {
             setupFilters(editor);
         });
 
+        handleEmbedAlignmentChanges(editor);
+
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
 
@@ -214,7 +221,7 @@ body {
  * @param {WysiwygConfigOptions} options
  * @return {Object}
  */
-export function build(options) {
+export function buildForEditor(options) {
     // Set language
     window.tinymce.addI18n(options.language, options.translationMap);
 
@@ -283,6 +290,54 @@ export function build(options) {
             registerCustomIcons(editor);
             registerAdditionalToolbars(editor);
             getSetupCallback(options)(editor);
+        },
+    };
+}
+
+/**
+ * @param {WysiwygConfigOptions} options
+ * @return {RawEditorOptions}
+ */
+export function buildForInput(options) {
+    // Set language
+    window.tinymce.addI18n(options.language, options.translationMap);
+
+    // BookStack Version
+    const version = document.querySelector('script[src*="/dist/app.js"]').getAttribute('src').split('?version=')[1];
+
+    // Return config object
+    return {
+        width: '100%',
+        height: '185px',
+        target: options.containerElement,
+        cache_suffix: `?version=${version}`,
+        content_css: [
+            window.baseUrl('/dist/styles.css'),
+        ],
+        branding: false,
+        skin: options.darkMode ? 'tinymce-5-dark' : 'tinymce-5',
+        body_class: 'wysiwyg-input',
+        browser_spellcheck: true,
+        relative_urls: false,
+        language: options.language,
+        directionality: options.textDirection,
+        remove_script_host: false,
+        document_base_url: window.baseUrl('/'),
+        end_container_on_empty_block: true,
+        remove_trailing_brs: false,
+        statusbar: false,
+        menubar: false,
+        plugins: 'link autolink lists',
+        contextmenu: false,
+        toolbar: 'bold italic link bullist numlist',
+        content_style: getContentStyle(options),
+        file_picker_types: 'file',
+        file_picker_callback: filePickerCallback,
+        init_instance_callback(editor) {
+            const head = editor.getDoc().querySelector('head');
+            head.innerHTML += fetchCustomHeadContent();
+
+            editor.contentDocument.documentElement.classList.toggle('dark-mode', options.darkMode);
         },
     };
 }

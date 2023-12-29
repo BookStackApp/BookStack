@@ -154,7 +154,7 @@ class RoleController extends Controller
         } catch (PermissionsException $e) {
             $this->showErrorNotification($e->getMessage());
 
-            return redirect()->back();
+            return redirect("/settings/roles/delete/{$id}");
         }
 
         return redirect('/settings/roles');

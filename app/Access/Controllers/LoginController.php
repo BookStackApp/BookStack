@@ -3,34 +3,26 @@
 namespace BookStack\Access\Controllers;
 
 use BookStack\Access\LoginService;
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
     use ThrottlesLogins;
 
-    protected SocialAuthService $socialAuthService;
-    protected LoginService $loginService;
-
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct(SocialAuthService $socialAuthService, LoginService $loginService)
-    {
+    public function __construct(
+        protected SocialDriverManager $socialDriverManager,
+        protected LoginService $loginService,
+    ) {
         $this->middleware('guest', ['only' => ['getLogin', 'login']]);
         $this->middleware('guard:standard,ldap', ['only' => ['login']]);
         $this->middleware('guard:standard,ldap,oidc', ['only' => ['logout']]);
-
-        $this->socialAuthService = $socialAuthService;
-        $this->loginService = $loginService;
     }
 
     /**
@@ -38,7 +30,7 @@ class LoginController extends Controller
      */
     public function getLogin(Request $request)
     {
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
+        $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
         $preventInitiation = $request->get('prevent_auto_init') === 'true';
 
@@ -52,7 +44,7 @@ class LoginController extends Controller
         // Store the previous location for redirect after login
         $this->updateIntendedFromPrevious();
 
-        if (!$preventInitiation && $this->shouldAutoInitiate()) {
+        if (!$preventInitiation && $this->loginService->shouldAutoInitiate()) {
             return view('auth.login-initiate', [
                 'authMethod'    => $authMethod,
             ]);
@@ -101,15 +93,9 @@ class LoginController extends Controller
     /**
      * Logout user and perform subsequent redirect.
      */
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::guard()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        $redirectUri = $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
-
-        return redirect($redirectUri);
+        return redirect($this->loginService->logout());
     }
 
     /**
@@ -200,7 +186,7 @@ class LoginController extends Controller
     {
         // Store the previous location for redirect after login
         $previous = url()->previous('');
-        $isPreviousFromInstance = (strpos($previous, url('/')) === 0);
+        $isPreviousFromInstance = str_starts_with($previous, url('/'));
         if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
             return;
         }
@@ -211,23 +197,11 @@ class LoginController extends Controller
         ];
 
         foreach ($ignorePrefixList as $ignorePrefix) {
-            if (strpos($previous, url($ignorePrefix)) === 0) {
+            if (str_starts_with($previous, url($ignorePrefix))) {
                 return;
             }
         }
 
         redirect()->setIntendedUrl($previous);
-    }
-
-    /**
-     * Check if login auto-initiate should be valid based upon authentication config.
-     */
-    protected function shouldAutoInitiate(): bool
-    {
-        $socialDrivers = $this->socialAuthService->getActiveDrivers();
-        $authMethod = config('auth.method');
-        $autoRedirect = config('auth.auto_initiate');
-
-        return $autoRedirect && count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
     }
 }

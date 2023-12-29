@@ -12,6 +12,7 @@ use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
@@ -21,13 +22,10 @@ use Throwable;
 
 class ChapterController extends Controller
 {
-    protected ChapterRepo $chapterRepo;
-    protected ReferenceFetcher $referenceFetcher;
-
-    public function __construct(ChapterRepo $chapterRepo, ReferenceFetcher $referenceFetcher)
-    {
-        $this->chapterRepo = $chapterRepo;
-        $this->referenceFetcher = $referenceFetcher;
+    public function __construct(
+        protected ChapterRepo $chapterRepo,
+        protected ReferenceFetcher $referenceFetcher
+    ) {
     }
 
     /**
@@ -50,14 +48,16 @@ class ChapterController extends Controller
      */
     public function store(Request $request, string $bookSlug)
     {
-        $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
+        $validated = $this->validate($request, [
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'tags'             => ['array'],
         ]);
 
         $book = Book::visible()->where('slug', '=', $bookSlug)->firstOrFail();
         $this->checkOwnablePermission('chapter-create', $book);
 
-        $chapter = $this->chapterRepo->create($request->all(), $book);
+        $chapter = $this->chapterRepo->create($validated, $book);
 
         return redirect($chapter->getUrl());
     }
@@ -86,7 +86,7 @@ class ChapterController extends Controller
             'pages'          => $pages,
             'next'           => $nextPreviousLocator->getNext(),
             'previous'       => $nextPreviousLocator->getPrevious(),
-            'referenceCount' => $this->referenceFetcher->getPageReferenceCountToEntity($chapter),
+            'referenceCount' => $this->referenceFetcher->getReferenceCountToEntity($chapter),
         ]);
     }
 
@@ -110,10 +110,16 @@ class ChapterController extends Controller
      */
     public function update(Request $request, string $bookSlug, string $chapterSlug)
     {
+        $validated = $this->validate($request, [
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'tags'             => ['array'],
+        ]);
+
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
 
-        $this->chapterRepo->update($chapter, $request->all());
+        $this->chapterRepo->update($chapter, $validated);
 
         return redirect($chapter->getUrl());
     }
@@ -170,7 +176,7 @@ class ChapterController extends Controller
     /**
      * Perform the move action for a chapter.
      *
-     * @throws NotFoundException
+     * @throws NotFoundException|NotifyException
      */
     public function move(Request $request, string $bookSlug, string $chapterSlug)
     {
@@ -184,13 +190,13 @@ class ChapterController extends Controller
         }
 
         try {
-            $newBook = $this->chapterRepo->move($chapter, $entitySelection);
+            $this->chapterRepo->move($chapter, $entitySelection);
         } catch (PermissionsException $exception) {
             $this->showPermissionError();
         } catch (MoveOperationException $exception) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
 
-            return redirect()->back();
+            return redirect($chapter->getUrl('/move'));
         }
 
         return redirect($chapter->getUrl());
@@ -231,7 +237,7 @@ class ChapterController extends Controller
         if (is_null($newParentBook)) {
             $this->showErrorNotification(trans('errors.selected_book_not_found'));
 
-            return redirect()->back();
+            return redirect($chapter->getUrl('/copy'));
         }
 
         $this->checkOwnablePermission('chapter-create', $newParentBook);

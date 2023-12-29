@@ -14,11 +14,9 @@ use Illuminate\Validation\ValidationException;
 
 class BookApiController extends ApiController
 {
-    protected BookRepo $bookRepo;
-
-    public function __construct(BookRepo $bookRepo)
-    {
-        $this->bookRepo = $bookRepo;
+    public function __construct(
+        protected BookRepo $bookRepo
+    ) {
     }
 
     /**
@@ -47,7 +45,7 @@ class BookApiController extends ApiController
 
         $book = $this->bookRepo->create($requestData);
 
-        return response()->json($book);
+        return response()->json($this->forJsonDisplay($book));
     }
 
     /**
@@ -58,7 +56,9 @@ class BookApiController extends ApiController
      */
     public function read(string $id)
     {
-        $book = Book::visible()->with(['tags', 'cover', 'createdBy', 'updatedBy', 'ownedBy'])->findOrFail($id);
+        $book = Book::visible()->findOrFail($id);
+        $book = $this->forJsonDisplay($book);
+        $book->load(['createdBy', 'updatedBy', 'ownedBy']);
 
         $contents = (new BookContents($book))->getTree(true, false)->all();
         $contentsApiData = (new ApiEntityListFormatter($contents))
@@ -89,7 +89,7 @@ class BookApiController extends ApiController
         $requestData = $this->validate($request, $this->rules()['update']);
         $book = $this->bookRepo->update($book, $requestData);
 
-        return response()->json($book);
+        return response()->json($this->forJsonDisplay($book));
     }
 
     /**
@@ -108,20 +108,36 @@ class BookApiController extends ApiController
         return response('', 204);
     }
 
+    protected function forJsonDisplay(Book $book): Book
+    {
+        $book = clone $book;
+        $book->unsetRelations()->refresh();
+
+        $book->load(['tags', 'cover']);
+        $book->makeVisible('description_html')
+            ->setAttribute('description_html', $book->descriptionHtml());
+
+        return $book;
+    }
+
     protected function rules(): array
     {
         return [
             'create' => [
-                'name'        => ['required', 'string', 'max:255'],
-                'description' => ['string', 'max:1000'],
-                'tags'        => ['array'],
-                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'name'                => ['required', 'string', 'max:255'],
+                'description'         => ['string', 'max:1900'],
+                'description_html'    => ['string', 'max:2000'],
+                'tags'                => ['array'],
+                'image'               => array_merge(['nullable'], $this->getImageValidationRules()),
+                'default_template_id' => ['nullable', 'integer'],
             ],
             'update' => [
-                'name'        => ['string', 'min:1', 'max:255'],
-                'description' => ['string', 'max:1000'],
-                'tags'        => ['array'],
-                'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
+                'name'                => ['string', 'min:1', 'max:255'],
+                'description'         => ['string', 'max:1900'],
+                'description_html'    => ['string', 'max:2000'],
+                'tags'                => ['array'],
+                'image'               => array_merge(['nullable'], $this->getImageValidationRules()),
+                'default_template_id' => ['nullable', 'integer'],
             ],
         ];
     }

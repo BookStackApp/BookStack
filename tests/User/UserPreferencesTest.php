@@ -2,8 +2,6 @@
 
 namespace Tests\User;
 
-use BookStack\Activity\Tools\UserEntityWatchOptions;
-use BookStack\Activity\WatchLevels;
 use Tests\TestCase;
 
 class UserPreferencesTest extends TestCase
@@ -40,7 +38,7 @@ class UserPreferencesTest extends TestCase
             'sort'  => 'name',
             'order' => 'asc',
         ]);
-        $updateRequest->assertStatus(500);
+        $updateRequest->assertRedirect();
 
         $this->assertNotEmpty('name', setting()->getForCurrentUser('bookshelves_sort'));
         $this->assertNotEmpty('asc', setting()->getForCurrentUser('bookshelves_sort_order'));
@@ -141,7 +139,10 @@ class UserPreferencesTest extends TestCase
             ->assertElementNotExists('.featured-image-container')
             ->assertElementExists('.content-wrap .entity-list-item');
 
-        $req = $this->patch("/preferences/change-view/bookshelf", ['view' => 'grid']);
+        $req = $this->patch("/preferences/change-view/bookshelf", [
+            'view' => 'grid',
+            '_return' => $shelf->getUrl(),
+        ]);
         $req->assertRedirect($shelf->getUrl());
 
         $resp = $this->actingAs($editor)->get($shelf->getUrl())

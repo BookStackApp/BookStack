@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
     'meta_owned_name' => 'Appartient à :user',
-    'meta_reference_page_count' => 'Référencé sur :count page|Référencé sur :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Sélectionner l\'entité',
     'entity_select_lack_permission' => 'Vous n\'avez pas les permissions requises pour sélectionner cet élément',
     'images' => 'Images',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Modifier le livre :bookName',
     'books_form_book_name' => 'Nom du livre',
     'books_save' => 'Enregistrer le livre',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Permissions du livre',
     'books_permissions_updated' => 'Permissions du livre mises à jour',
     'books_empty_contents' => 'Aucune page ou chapitre n\'a été ajouté à ce livre.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
     'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Références',
     'references_none' => 'Il n\'y a pas de références suivies à cet élément.',
-    'references_to_desc' => 'Vous trouverez ci-dessous toutes les pages connues du système qui ont un lien vers cet élément.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Suivre',

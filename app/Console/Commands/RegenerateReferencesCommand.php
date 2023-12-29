@@ -34,7 +34,7 @@ class RegenerateReferencesCommand extends Command
             DB::setDefaultConnection($this->option('database'));
         }
 
-        $references->updateForAllPages();
+        $references->updateForAll();
 
         DB::setDefaultConnection($connection);
 

@@ -115,7 +115,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   width: 52px;
   height: 52px;
   font-size: 26px;
-  right: $-xs;
+  inset-inline-end: $-xs;
   bottom: $-s;
   box-shadow: $bs-hover;
   background-color: currentColor;
@@ -170,8 +170,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
     display: block;
     transform: rotate(45deg);
     transform-origin: 50% 50%;
-    border-block-end: 1px solid #CCC;
-    border-inline-end: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
     z-index: 56;
     @include lightDark(background-color, #fff, #333);
     @include lightDark(border-color, #ccc, #000);
@@ -224,7 +224,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   border-radius: 8px;
   box-shadow: $bs-card;
   margin-bottom: auto;
-  margin-left: $-l;
+  margin-inline-start: $-l;
   position: relative;
   &.open {
     position: relative;
@@ -252,11 +252,11 @@ body.tox-fullscreen, body.markdown-fullscreen {
     position: relative;
   }
   .tabs {
-    border-right: 1px solid #DDD;
-    @include lightDark(border-right-color, #DDD, #000);
+    border-inline-end: 1px solid #DDD;
+    @include lightDark(border-inline-end-color, #DDD, #000);
     width: 40px;
     flex: 0 1 auto;
-    margin-right: -1px;
+    margin-inline-end: -1px;
   }
   .tabs-inner {
     @include lightDark(background-color, #FFFFFF, #222);
@@ -325,7 +325,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
 
 @include smaller-than($xxl) {
   .floating-toolbox {
-    margin-left: $-s;
+    margin-inline-start: $-s;
   }
 }
 
@@ -334,7 +334,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
     margin: 4px !important;
   }
   .floating-toolbox {
-    margin-left: 4px;
+    margin-inline-start: 4px;
   }
   .floating-toolbox .tabs {
     width: 32px;

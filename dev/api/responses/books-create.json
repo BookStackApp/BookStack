@@ -1,11 +1,26 @@
 {
-  "id": 15,
-  "name": "My new book",
-  "slug": "my-new-book",
-  "description": "This is a book created via the API",
+  "id": 226,
+  "name": "My own book",
+  "slug": "my-own-book",
+  "description": "This is my own little book created via the API",
+  "created_at": "2023-12-22T14:22:28.000000Z",
+  "updated_at": "2023-12-22T14:22:28.000000Z",
   "created_by": 1,
   "updated_by": 1,
   "owned_by": 1,
-  "updated_at": "2020-01-12T14:05:11.000000Z",
-  "created_at": "2020-01-12T14:05:11.000000Z"
+  "default_template_id": 2427,
+  "description_html": "<p>This is <strong>my<\/strong> own little book created via the API<\/p>",
+  "tags": [
+    {
+      "name": "Category",
+      "value": "Top Content",
+      "order": 0
+    },
+    {
+      "name": "Rating",
+      "value": "Highest",
+      "order": 0
+    }
+  ],
+  "cover": null
 }

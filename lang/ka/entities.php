@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Updated :timeLength',
     'meta_updated_name' => 'Updated :timeLength by :user',
     'meta_owned_name' => 'Owned by :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entity Select',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Images',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => 'Edit Book :bookName',
     'books_form_book_name' => 'Book Name',
     'books_save' => 'Save Book',
+    'books_default_template' => 'Default Page Template',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Book Permissions',
     'books_permissions_updated' => 'Book Permissions Updated',
     'books_empty_contents' => 'No pages or chapters have been created for this book.',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Page deleted',
     'pages_delete_draft_success' => 'Draft page deleted',
+    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

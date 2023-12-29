@@ -5,6 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -71,7 +72,6 @@ class PageController extends Controller
         $page = $this->pageRepo->getNewDraftPage($parent);
         $this->pageRepo->publishDraft($page, [
             'name' => $request->get('name'),
-            'html' => '',
         ]);
 
         return redirect($page->getUrl('/edit'));
@@ -155,7 +155,7 @@ class PageController extends Controller
             'watchOptions'    => new UserEntityWatchOptions(user(), $page),
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
-            'referenceCount'  => $this->referenceFetcher->getPageReferenceCountToEntity($page),
+            'referenceCount'  => $this->referenceFetcher->getReferenceCountToEntity($page),
         ]);
     }
 
@@ -259,11 +259,13 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
+        $usedAsTemplate = Book::query()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
             'page'    => $page,
             'current' => $page,
+            'usedAsTemplate' => $usedAsTemplate,
         ]);
     }
 
@@ -277,11 +279,13 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
+        $usedAsTemplate = Book::query()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
             'page'    => $page,
             'current' => $page,
+            'usedAsTemplate' => $usedAsTemplate,
         ]);
     }
 
@@ -391,7 +395,7 @@ class PageController extends Controller
         } catch (Exception $exception) {
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
 
-            return redirect()->back();
+            return redirect($page->getUrl('/move'));
         }
 
         return redirect($page->getUrl());
@@ -431,7 +435,7 @@ class PageController extends Controller
         if (is_null($newParent)) {
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
 
-            return redirect()->back();
+            return redirect($page->getUrl('/copy'));
         }
 
         $this->checkOwnablePermission('page-create', $newParent);

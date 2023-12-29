@@ -56,6 +56,23 @@ class FavouriteTest extends TestCase
         ]);
     }
 
+    public function test_add_and_remove_redirect_to_entity_without_history()
+    {
+        $page = $this->entities->page();
+
+        $resp = $this->asEditor()->post('/favourites/add', [
+            'type' => $page->getMorphClass(),
+            'id'   => $page->id,
+        ]);
+        $resp->assertRedirect($page->getUrl());
+
+        $resp = $this->asEditor()->post('/favourites/remove', [
+            'type' => $page->getMorphClass(),
+            'id'   => $page->id,
+        ]);
+        $resp->assertRedirect($page->getUrl());
+    }
+
     public function test_favourite_flow_with_own_permissions()
     {
         $book = $this->entities->book();

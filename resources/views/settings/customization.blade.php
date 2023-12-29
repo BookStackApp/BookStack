@@ -3,7 +3,7 @@
 @section('card')
     <h1 id="customization" class="list-heading">{{ trans('settings.app_customization') }}</h1>
     <form action="{{ url("/settings/customization") }}" method="POST" enctype="multipart/form-data">
-        {!! csrf_field() !!}
+        {{ csrf_field() }}
         <input type="hidden" name="section" value="customization">
 
         <div class="setting-list">
@@ -133,7 +133,12 @@
                     </select>
 
                     <div refs="setting-homepage-control@page-picker-container" style="display: none;" class="mt-m">
-                        @include('settings.parts.page-picker', ['name' => 'setting-app-homepage', 'placeholder' => trans('settings.app_homepage_select'), 'value' => setting('app-homepage')])
+                        @include('form.page-picker', [
+                            'name' => 'setting-app-homepage',
+                            'placeholder' => trans('settings.app_homepage_select'),
+                            'value' => setting('app-homepage'),
+                            'selectorEndpoint' => '/search/entity-selector',
+                        ])
                     </div>
                 </div>
             </div>
@@ -168,5 +173,5 @@
 @endsection
 
 @section('after-content')
-    @include('entities.selector-popup', ['entityTypes' => 'page'])
+    @include('entities.selector-popup')
 @endsection

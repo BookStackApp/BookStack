@@ -57,12 +57,17 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * @var string - Name of property where the main text content is found
      */
-    public $textField = 'description';
+    public string $textField = 'description';
+
+    /**
+     * @var string - Name of the property where the main HTML content is found
+     */
+    public string $htmlField = 'description_html';
 
     /**
      * @var float - Multiplier for search indexing.
      */
-    public $searchFactor = 1.0;
+    public float $searchFactor = 1.0;
 
     /**
      * Get the entities that are visible to the current user.

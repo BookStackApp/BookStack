@@ -11,12 +11,12 @@ use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
 use BookStack\Users\Models\User;
 use BookStack\Util\HtmlContentFilter;
+use BookStack\Util\HtmlDocument;
 use BookStack\Util\WebSafeMimeSniffer;
-use DOMDocument;
+use Closure;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
-use DOMXPath;
 use Illuminate\Support\Str;
 
 class PageContent
@@ -58,27 +58,18 @@ class PageContent
             return $htmlText;
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlText);
-        $container = $doc->documentElement;
-        $body = $container->childNodes->item(0);
-        $childNodes = $body->childNodes;
-        $xPath = new DOMXPath($doc);
+        $doc = new HtmlDocument($htmlText);
 
         // Get all img elements with image data blobs
-        $imageNodes = $xPath->query('//img[contains(@src, \'data:image\')]');
+        $imageNodes = $doc->queryXPath('//img[contains(@src, \'data:image\')]');
+        /** @var DOMElement $imageNode */
         foreach ($imageNodes as $imageNode) {
             $imageSrc = $imageNode->getAttribute('src');
             $newUrl = $this->base64ImageUriToUploadedImageUrl($imageSrc, $updater);
             $imageNode->setAttribute('src', $newUrl);
         }
 
-        // Generate inner html as a string
-        $html = '';
-        foreach ($childNodes as $childNode) {
-            $html .= $doc->saveHTML($childNode);
-        }
-
-        return $html;
+        return $doc->getBodyInnerHtml();
     }
 
     /**
@@ -186,27 +177,18 @@ class PageContent
             return $htmlText;
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlText);
-        $container = $doc->documentElement;
-        $body = $container->childNodes->item(0);
-        $childNodes = $body->childNodes;
-        $xPath = new DOMXPath($doc);
+        $doc = new HtmlDocument($htmlText);
 
         // Map to hold used ID references
         $idMap = [];
         // Map to hold changing ID references
         $changeMap = [];
 
-        $this->updateIdsRecursively($body, 0, $idMap, $changeMap);
-        $this->updateLinks($xPath, $changeMap);
+        $this->updateIdsRecursively($doc->getBody(), 0, $idMap, $changeMap);
+        $this->updateLinks($doc, $changeMap);
 
-        // Generate inner html as a string
-        $html = '';
-        foreach ($childNodes as $childNode) {
-            $html .= $doc->saveHTML($childNode);
-        }
-
-        // Perform required string-level tweaks
+        // Generate inner html as a string & perform required string-level tweaks
+        $html = $doc->getBodyInnerHtml();
         $html = str_replace(' ', '&nbsp;', $html);
 
         return $html;
@@ -239,13 +221,13 @@ class PageContent
      * Update the all links in the given xpath to apply requires changes within the
      * given $changeMap array.
      */
-    protected function updateLinks(DOMXPath $xpath, array $changeMap): void
+    protected function updateLinks(HtmlDocument $doc, array $changeMap): void
     {
         if (empty($changeMap)) {
             return;
         }
 
-        $links = $xpath->query('//body//*//*[@href]');
+        $links = $doc->queryXPath('//body//*//*[@href]');
         /** @var DOMElement $domElem */
         foreach ($links as $domElem) {
             $href = ltrim($domElem->getAttribute('href'), '#');
@@ -309,21 +291,65 @@ class PageContent
      */
     public function render(bool $blankIncludes = false): string
     {
-        $content = $this->page->html ?? '';
+        $html = $this->page->html ?? '';
+
+        if (empty($html)) {
+            return $html;
+        }
+
+        $doc = new HtmlDocument($html);
+        $contentProvider = $this->getContentProviderClosure($blankIncludes);
+        $parser = new PageIncludeParser($doc, $contentProvider);
+
+        $nodesAdded = 1;
+        for ($includeDepth = 0; $includeDepth < 3 && $nodesAdded !== 0; $includeDepth++) {
+            $nodesAdded = $parser->parse();
+        }
+
+        if ($includeDepth > 1) {
+            $idMap = [];
+            $changeMap = [];
+            $this->updateIdsRecursively($doc->getBody(), 0, $idMap, $changeMap);
+        }
 
         if (!config('app.allow_content_scripts')) {
-            $content = HtmlContentFilter::removeScripts($content);
+            HtmlContentFilter::removeScriptsFromDocument($doc);
         }
 
-        if ($blankIncludes) {
-            $content = $this->blankPageIncludes($content);
-        } else {
-            for ($includeDepth = 0; $includeDepth < 3; $includeDepth++) {
-                $content = $this->parsePageIncludes($content);
+        return $doc->getBodyInnerHtml();
+    }
+
+    /**
+     * Get the closure used to fetch content for page includes.
+     */
+    protected function getContentProviderClosure(bool $blankIncludes): Closure
+    {
+        $contextPage = $this->page;
+
+        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage): PageIncludeContent {
+            if ($blankIncludes) {
+                return PageIncludeContent::fromHtmlAndTag('', $tag);
             }
-        }
 
-        return $content;
+            $matchedPage = Page::visible()->find($tag->getPageId());
+            $content = PageIncludeContent::fromHtmlAndTag($matchedPage->html ?? '', $tag);
+
+            if (Theme::hasListeners(ThemeEvents::PAGE_INCLUDE_PARSE)) {
+                $themeReplacement = Theme::dispatch(
+                    ThemeEvents::PAGE_INCLUDE_PARSE,
+                    $tag->tagContent,
+                    $content->toHtml(),
+                    clone $contextPage,
+                    $matchedPage ? (clone $matchedPage) : null,
+                );
+
+                if ($themeReplacement !== null) {
+                    $content = PageIncludeContent::fromInlineHtml(strval($themeReplacement));
+                }
+            }
+
+            return $content;
+        };
     }
 
     /**
@@ -335,11 +361,10 @@ class PageContent
             return [];
         }
 
-        $doc = $this->loadDocumentFromHtml($htmlContent);
-        $xPath = new DOMXPath($doc);
-        $headers = $xPath->query('//h1|//h2|//h3|//h4|//h5|//h6');
+        $doc = new HtmlDocument($htmlContent);
+        $headers = $doc->queryXPath('//h1|//h2|//h3|//h4|//h5|//h6');
 
-        return $headers ? $this->headerNodesToLevelList($headers) : [];
+        return $headers->count() === 0 ? [] : $this->headerNodesToLevelList($headers);
     }
 
     /**
@@ -371,103 +396,5 @@ class PageContent
         });
 
         return $tree->toArray();
-    }
-
-    /**
-     * Remove any page include tags within the given HTML.
-     */
-    protected function blankPageIncludes(string $html): string
-    {
-        return preg_replace("/{{@\s?([0-9].*?)}}/", '', $html);
-    }
-
-    /**
-     * Parse any include tags "{{@<page_id>#section}}" to be part of the page.
-     */
-    protected function parsePageIncludes(string $html): string
-    {
-        $matches = [];
-        preg_match_all("/{{@\s?([0-9].*?)}}/", $html, $matches);
-
-        foreach ($matches[1] as $index => $includeId) {
-            $fullMatch = $matches[0][$index];
-            $splitInclude = explode('#', $includeId, 2);
-
-            // Get page id from reference
-            $pageId = intval($splitInclude[0]);
-            if (is_nan($pageId)) {
-                continue;
-            }
-
-            // Find page to use, and default replacement to empty string for non-matches.
-            /** @var ?Page $matchedPage */
-            $matchedPage = Page::visible()->find($pageId);
-            $replacement = '';
-
-            if ($matchedPage && count($splitInclude) === 1) {
-                // If we only have page id, just insert all page html and continue.
-                $replacement = $matchedPage->html;
-            } elseif ($matchedPage && count($splitInclude) > 1) {
-                // Otherwise, if our include tag defines a section, load that specific content
-                $innerContent = $this->fetchSectionOfPage($matchedPage, $splitInclude[1]);
-                $replacement = trim($innerContent);
-            }
-
-            $themeReplacement = Theme::dispatch(
-                ThemeEvents::PAGE_INCLUDE_PARSE,
-                $includeId,
-                $replacement,
-                clone $this->page,
-                $matchedPage ? (clone $matchedPage) : null,
-            );
-
-            // Perform the content replacement
-            $html = str_replace($fullMatch, $themeReplacement ?? $replacement, $html);
-        }
-
-        return $html;
-    }
-
-    /**
-     * Fetch the content from a specific section of the given page.
-     */
-    protected function fetchSectionOfPage(Page $page, string $sectionId): string
-    {
-        $topLevelTags = ['table', 'ul', 'ol', 'pre'];
-        $doc = $this->loadDocumentFromHtml($page->html);
-
-        // Search included content for the id given and blank out if not exists.
-        $matchingElem = $doc->getElementById($sectionId);
-        if ($matchingElem === null) {
-            return '';
-        }
-
-        // Otherwise replace the content with the found content
-        // Checks if the top-level wrapper should be included by matching on tag types
-        $innerContent = '';
-        $isTopLevel = in_array(strtolower($matchingElem->nodeName), $topLevelTags);
-        if ($isTopLevel) {
-            $innerContent .= $doc->saveHTML($matchingElem);
-        } else {
-            foreach ($matchingElem->childNodes as $childNode) {
-                $innerContent .= $doc->saveHTML($childNode);
-            }
-        }
-        libxml_clear_errors();
-
-        return $innerContent;
-    }
-
-    /**
-     * Create and load a DOMDocument from the given html content.
-     */
-    protected function loadDocumentFromHtml(string $html): DOMDocument
-    {
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
-        $doc->loadHTML($html);
-
-        return $doc;
     }
 }

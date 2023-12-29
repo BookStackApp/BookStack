@@ -5,9 +5,9 @@
                 <div class="popup-title">{{ trans('entities.entity_select') }}</div>
                 <button refs="popup@hide" type="button" class="popup-header-close">@icon('close')</button>
             </div>
-            @include('entities.selector', ['name' => 'entity-selector'])
+            @include('entities.selector', ['name' => 'entity-selector', 'selectorEndpoint' => ''])
             <div class="popup-footer">
-                <button refs="entity-selector-popup@select" type="button" disabled="true" class="button">{{ trans('common.select') }}</button>
+                <button refs="entity-selector-popup@select" type="button" disabled class="button">{{ trans('common.select') }}</button>
             </div>
         </div>
     </div>

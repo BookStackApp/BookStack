@@ -182,6 +182,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);
     Route::get('/search/entity-selector', [SearchController::class, 'searchForSelector']);
+    Route::get('/search/entity-selector-templates', [SearchController::class, 'templatesForSelector']);
     Route::get('/search/suggest', [SearchController::class, 'searchSuggestions']);
 
     // User Search
@@ -332,6 +333,7 @@ Route::get('/saml2/acs', [AccessControllers\Saml2Controller::class, 'processAcs'
 // OIDC routes
 Route::post('/oidc/login', [AccessControllers\OidcController::class, 'login']);
 Route::get('/oidc/callback', [AccessControllers\OidcController::class, 'callback']);
+Route::post('/oidc/logout', [AccessControllers\OidcController::class, 'logout']);
 
 // User invitation routes
 Route::get('/register/invite/{token}', [AccessControllers\UserInviteController::class, 'showSetPassword']);

@@ -23,12 +23,23 @@ class ChapterTest extends TestCase
         $resp = $this->get($book->getUrl('/create-chapter'));
         $this->withHtml($resp)->assertElementContains('form[action="' . $book->getUrl('/create-chapter') . '"][method="POST"]', 'Save Chapter');
 
-        $resp = $this->post($book->getUrl('/create-chapter'), $chapter->only('name', 'description'));
+        $resp = $this->post($book->getUrl('/create-chapter'), $chapter->only('name', 'description_html'));
         $resp->assertRedirect($book->getUrl('/chapter/my-first-chapter'));
 
         $resp = $this->get($book->getUrl('/chapter/my-first-chapter'));
         $resp->assertSee($chapter->name);
-        $resp->assertSee($chapter->description);
+        $resp->assertSee($chapter->description_html, false);
+    }
+
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $chapter = $this->entities->chapter();
+        $chapter->description_html = '';
+        $chapter->description = "My great\ndescription\n\nwith newlines";
+        $chapter->save();
+
+        $resp = $this->asEditor()->get($chapter->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
     }
 
     public function test_delete()

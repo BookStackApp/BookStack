@@ -2,8 +2,6 @@
 
 namespace BookStack\Theming;
 
-use BookStack\Entities\Models\Page;
-
 /**
  * The ThemeEvents used within BookStack.
  *
@@ -93,10 +91,29 @@ class ThemeEvents
      *
      * @param string $tagReference
      * @param string $replacementHTML
-     * @param Page   $currentPage
-     * @param ?Page  $referencedPage
+     * @param \BookStack\Entities\Models\Page   $currentPage
+     * @param ?\BookStack\Entities\Models\Page  $referencedPage
      */
     const PAGE_INCLUDE_PARSE = 'page_include_parse';
+
+    /**
+     * Routes register web event.
+     * Called when standard web (browser/non-api) app routes are registered.
+     * Provides an app router, so you can register your own web routes.
+     *
+     * @param \Illuminate\Routing\Router $router
+     */
+    const ROUTES_REGISTER_WEB = 'routes_register_web';
+
+    /**
+     * Routes register web auth event.
+     * Called when auth-required web (browser/non-api) app routes can be registered.
+     * These are routes that typically require login to access (unless the instance is made public).
+     * Provides an app router, so you can register your own web routes.
+     *
+     * @param \Illuminate\Routing\Router $router
+     */
+    const ROUTES_REGISTER_WEB_AUTH = 'routes_register_web_auth';
 
     /**
      * Web before middleware action.

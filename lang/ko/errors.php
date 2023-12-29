@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'PHP에 LDAP 확장 도구를 설치하세요.',
     'ldap_cannot_connect' => 'LDAP 서버에 연결할 수 없습니다.',
     'saml_already_logged_in' => '로그인 중입니다.',
-    'saml_user_not_registered' => ':name 사용자가 없습니다. 자동 가입 옵션이 비활성 상태입니다.',
     'saml_no_email_address' => '인증 시스템이 제공한 메일 주소가 없습니다.',
     'saml_invalid_response_id' => '인증 시스템이 요청을 받지 못했습니다. 인증 후 이전 페이지로 돌아갈 때 발생할 수 있는 현상입니다.',
     'saml_fail_authed' => ':system에 로그인할 수 없습니다.',

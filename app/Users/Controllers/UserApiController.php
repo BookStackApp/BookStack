@@ -90,7 +90,7 @@ class UserApiController extends ApiController
     public function create(Request $request)
     {
         $data = $this->validate($request, $this->rules()['create']);
-        $sendInvite = ($data['send_invite'] ?? false) === true;
+        $sendInvite = boolval($data['send_invite'] ?? false) === true;
 
         $user = null;
         DB::transaction(function () use ($data, $sendInvite, &$user) {

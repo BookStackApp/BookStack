@@ -136,6 +136,14 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
+        $defaultTemplate = $page->book->defaultTemplate;
+        if ($defaultTemplate && userCan('view', $defaultTemplate)) {
+            $page->forceFill([
+                'html'  => $defaultTemplate->html,
+                'markdown' => $defaultTemplate->markdown,
+            ]);
+        }
+
         $page->save();
         $page->refresh()->rebuildPermissions();
 
@@ -154,7 +162,6 @@ class PageRepo
         $this->baseRepo->update($draft, $input);
 
         $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
-        $this->referenceStore->updateForPage($draft);
         $draft->refresh();
 
         Activity::add(ActivityType::PAGE_CREATE, $draft);
@@ -174,7 +181,6 @@ class PageRepo
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
-        $this->referenceStore->updateForPage($page);
 
         // Update with new details
         $page->revision_count++;
@@ -293,13 +299,13 @@ class PageRepo
         $page->refreshSlug();
         $page->save();
         $page->indexForSearch();
-        $this->referenceStore->updateForPage($page);
+        $this->referenceStore->updateForEntity($page);
 
         $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
         $this->revisionRepo->storeNewForPage($page, $summary);
 
         if ($oldUrl !== $page->getUrl()) {
-            $this->referenceUpdater->updateEntityPageReferences($page, $oldUrl);
+            $this->referenceUpdater->updateEntityReferences($page, $oldUrl);
         }
 
         Activity::add(ActivityType::PAGE_RESTORE, $page);

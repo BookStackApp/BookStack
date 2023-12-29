@@ -2,7 +2,7 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Access\SocialAuthService;
+use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Http\Controller;
@@ -101,7 +101,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified user.
      */
-    public function edit(int $id, SocialAuthService $socialAuthService)
+    public function edit(int $id, SocialDriverManager $socialDriverManager)
     {
         $this->checkPermission('users-manage');
 
@@ -109,7 +109,7 @@ class UserController extends Controller
         $user->load(['apiTokens', 'mfaValues']);
         $authMethod = ($user->system_name) ? 'system' : config('auth.method');
 
-        $activeSocialDrivers = $socialAuthService->getActiveDrivers();
+        $activeSocialDrivers = $socialDriverManager->getActive();
         $mfaMethods = $user->mfaValues->groupBy('method');
         $this->setPageTitle(trans('settings.user_profile'));
         $roles = Role::query()->orderBy('display_name', 'asc')->get();

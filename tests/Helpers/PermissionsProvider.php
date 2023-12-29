@@ -5,16 +5,21 @@ namespace Tests\Helpers;
 use BookStack\Entities\Models\Entity;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\RolePermission;
+use BookStack\Settings\SettingService;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 
 class PermissionsProvider
 {
-    protected UserRoleProvider $userRoleProvider;
+    public function __construct(
+        protected UserRoleProvider $userRoleProvider
+    ) {
+    }
 
-    public function __construct(UserRoleProvider $userRoleProvider)
+    public function makeAppPublic(): void
     {
-        $this->userRoleProvider = $userRoleProvider;
+        $settings = app(SettingService::class);
+        $settings->put('app-public', 'true');
     }
 
     /**

@@ -12,7 +12,6 @@ use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Activity\WatchLevels;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Tools\TrashCan;
 use BookStack\Settings\UserNotificationPreferences;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -64,8 +63,7 @@ class WatchTest extends TestCase
         $editor = $this->users->editor();
         $book = $this->entities->book();
 
-        $this->actingAs($editor)->get($book->getUrl());
-        $resp = $this->put('/watching/update', [
+        $resp = $this->actingAs($editor)->put('/watching/update', [
             'type' => $book->getMorphClass(),
             'id' => $book->id,
             'level' => 'comments'
@@ -268,6 +266,7 @@ class WatchTest extends TestCase
             return $mail->subject === 'New comment on page: ' . $entities['page']->getShortName()
                 && str_contains($mailContent, 'View Comment')
                 && str_contains($mailContent, 'Page Name: ' . $entities['page']->name)
+                && str_contains($mailContent, 'Page Path: ' . $entities['book']->getShortName(24) . ' > ' . $entities['chapter']->getShortName(24))
                 && str_contains($mailContent, 'Commenter: ' . $admin->name)
                 && str_contains($mailContent, 'Comment: My new comment response');
         });
@@ -285,12 +284,13 @@ class WatchTest extends TestCase
         $this->actingAs($admin);
         $this->entities->updatePage($entities['page'], ['name' => 'Updated page', 'html' => 'new page content']);
 
-        $notifications->assertSentTo($editor, function (PageUpdateNotification $notification) use ($editor, $admin) {
+        $notifications->assertSentTo($editor, function (PageUpdateNotification $notification) use ($editor, $admin, $entities) {
             $mail = $notification->toMail($editor);
             $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'Updated page: Updated page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: Updated page')
+                && str_contains($mailContent, 'Page Path: ' . $entities['book']->getShortName(24) . ' > ' . $entities['chapter']->getShortName(24))
                 && str_contains($mailContent, 'Updated By: ' . $admin->name)
                 && str_contains($mailContent, 'you won\'t be sent notifications for further edits to this page by the same editor');
         });
@@ -314,12 +314,13 @@ class WatchTest extends TestCase
         $page = $entities['chapter']->pages()->where('draft', '=', true)->first();
         $this->post($page->getUrl(), ['name' => 'My new page', 'html' => 'My new page content']);
 
-        $notifications->assertSentTo($editor, function (PageCreationNotification $notification) use ($editor, $admin) {
+        $notifications->assertSentTo($editor, function (PageCreationNotification $notification) use ($editor, $admin, $entities) {
             $mail = $notification->toMail($editor);
             $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
             return $mail->subject === 'New page: My new page'
                 && str_contains($mailContent, 'View Page')
                 && str_contains($mailContent, 'Page Name: My new page')
+                && str_contains($mailContent, 'Page Path: ' . $entities['book']->getShortName(24) . ' > ' . $entities['chapter']->getShortName(24))
                 && str_contains($mailContent, 'Created By: ' . $admin->name);
         });
     }
@@ -407,5 +408,33 @@ class WatchTest extends TestCase
         $this->entities->destroy($page);
 
         $this->assertDatabaseMissing('watches', ['watchable_type' => 'page', 'watchable_id' => $page->id]);
+    }
+
+    public function test_page_path_in_notifications_limited_by_permissions()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        $page = $chapter->pages()->first();
+        $book = $chapter->book;
+        $notification = new PageCreationNotification($page, $this->users->editor());
+
+        $viewer = $this->users->viewer();
+        $viewerRole = $viewer->roles()->first();
+
+        $content = html_entity_decode(strip_tags($notification->toMail($viewer)->render()), ENT_QUOTES);
+        $this->assertStringContainsString('Page Path: ' . $book->getShortName(24) . ' > ' . $chapter->getShortName(24), $content);
+
+        $this->permissions->setEntityPermissions($page, ['view'], [$viewerRole]);
+        $this->permissions->setEntityPermissions($chapter, [], [$viewerRole]);
+
+        $content = html_entity_decode(strip_tags($notification->toMail($viewer)->render()), ENT_QUOTES);
+        $this->assertStringContainsString('Page Path: ' . $book->getShortName(24), $content);
+        $this->assertStringNotContainsString(' > ' . $chapter->getShortName(24), $content);
+
+        $this->permissions->setEntityPermissions($book, [], [$viewerRole]);
+
+        $content = html_entity_decode(strip_tags($notification->toMail($viewer)->render()), ENT_QUOTES);
+        $this->assertStringNotContainsString('Page Path:', $content);
+        $this->assertStringNotContainsString($book->getShortName(24), $content);
+        $this->assertStringNotContainsString($chapter->getShortName(24), $content);
     }
 }

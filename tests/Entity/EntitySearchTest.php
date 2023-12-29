@@ -252,6 +252,39 @@ class EntitySearchTest extends TestCase
         $this->withHtml($resp)->assertElementContains($baseSelector, "You don't have the required permissions to select this item");
     }
 
+    public function test_entity_template_selector_search()
+    {
+        $templatePage = $this->entities->newPage(['name' => 'Template search test', 'html' => 'template test']);
+        $templatePage->template = true;
+        $templatePage->save();
+
+        $nonTemplatePage = $this->entities->newPage(['name' => 'Nontemplate page', 'html' => 'nontemplate', 'template' => false]);
+
+        // Visit both to make popular
+        $this->asEditor()->get($templatePage->getUrl());
+        $this->get($nonTemplatePage->getUrl());
+
+        $normalSearch = $this->get('/search/entity-selector-templates?term=test');
+        $normalSearch->assertSee($templatePage->name);
+        $normalSearch->assertDontSee($nonTemplatePage->name);
+
+        $normalSearch = $this->get('/search/entity-selector-templates?term=beans');
+        $normalSearch->assertDontSee($templatePage->name);
+        $normalSearch->assertDontSee($nonTemplatePage->name);
+
+        $defaultListTest = $this->get('/search/entity-selector-templates');
+        $defaultListTest->assertSee($templatePage->name);
+        $defaultListTest->assertDontSee($nonTemplatePage->name);
+
+        $this->permissions->disableEntityInheritedPermissions($templatePage);
+
+        $normalSearch = $this->get('/search/entity-selector-templates?term=test');
+        $normalSearch->assertDontSee($templatePage->name);
+
+        $defaultListTest = $this->get('/search/entity-selector-templates');
+        $defaultListTest->assertDontSee($templatePage->name);
+    }
+
     public function test_sibling_search_for_pages()
     {
         $chapter = $this->entities->chapterHasPages();

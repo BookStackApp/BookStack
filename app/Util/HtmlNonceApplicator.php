@@ -2,14 +2,12 @@
 
 namespace BookStack\Util;
 
-use DOMDocument;
 use DOMElement;
 use DOMNodeList;
-use DOMXPath;
 
 class HtmlNonceApplicator
 {
-    protected static $placeholder = '[CSP_NONCE_VALUE]';
+    protected static string $placeholder = '[CSP_NONCE_VALUE]';
 
     /**
      * Prepare the given HTML content with nonce attributes including a placeholder
@@ -21,28 +19,20 @@ class HtmlNonceApplicator
             return $html;
         }
 
-        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML($html, LIBXML_SCHEMA_CREATE);
-        $xPath = new DOMXPath($doc);
+        // LIBXML_SCHEMA_CREATE was found to be required here otherwise
+        // the PHP DOMDocument handling will attempt to format/close
+        // HTML tags within scripts and therefore change JS content.
+        $doc = new HtmlDocument($html, LIBXML_SCHEMA_CREATE);
 
         // Apply to scripts
-        $scriptElems = $xPath->query('//script');
+        $scriptElems = $doc->queryXPath('//script');
         static::addNonceAttributes($scriptElems, static::$placeholder);
 
         // Apply to styles
-        $styleElems = $xPath->query('//style');
+        $styleElems = $doc->queryXPath('//style');
         static::addNonceAttributes($styleElems, static::$placeholder);
 
-        $returnHtml = '';
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
-        foreach ($topElems as $child) {
-            $content = $doc->saveHTML($child);
-            $returnHtml .= $content;
-        }
-
-        return $returnHtml;
+        return $doc->getBodyInnerHtml();
     }
 
     /**

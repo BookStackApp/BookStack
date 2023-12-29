@@ -42,6 +42,7 @@ class ConvertTest extends TestCase
         $this->assertEquals('Penguins', $newBook->tags->first()->value);
         $this->assertEquals($chapter->name, $newBook->name);
         $this->assertEquals($chapter->description, $newBook->description);
+        $this->assertEquals($chapter->description_html, $newBook->description_html);
 
         $this->assertActivityExists(ActivityType::BOOK_CREATE_FROM_CHAPTER, $newBook);
     }
@@ -105,6 +106,7 @@ class ConvertTest extends TestCase
         $this->assertEquals('Ducks', $newShelf->tags->first()->value);
         $this->assertEquals($book->name, $newShelf->name);
         $this->assertEquals($book->description, $newShelf->description);
+        $this->assertEquals($book->description_html, $newShelf->description_html);
         $this->assertEquals($newShelf->books()->count(), $bookChapterCount + 1);
         $this->assertEquals($systemBookCount + $bookChapterCount, Book::query()->count());
         $this->assertActivityExists(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $newShelf);

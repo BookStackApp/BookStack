@@ -57,38 +57,6 @@ class PageContentTest extends TestCase
         $this->assertEquals('', $page->text);
     }
 
-    public function test_page_includes_do_not_break_tables()
-    {
-        $page = $this->entities->page();
-        $secondPage = $this->entities->page();
-
-        $content = '<table id="table"><tbody><tr><td>test</td></tr></tbody></table>';
-        $secondPage->html = $content;
-        $secondPage->save();
-
-        $page->html = "{{@{$secondPage->id}#table}}";
-        $page->save();
-
-        $pageResp = $this->asEditor()->get($page->getUrl());
-        $pageResp->assertSee($content, false);
-    }
-
-    public function test_page_includes_do_not_break_code()
-    {
-        $page = $this->entities->page();
-        $secondPage = $this->entities->page();
-
-        $content = '<pre id="bkmrk-code"><code>var cat = null;</code></pre>';
-        $secondPage->html = $content;
-        $secondPage->save();
-
-        $page->html = "{{@{$secondPage->id}#bkmrk-code}}";
-        $page->save();
-
-        $pageResp = $this->asEditor()->get($page->getUrl());
-        $pageResp->assertSee($content, false);
-    }
-
     public function test_page_includes_rendered_on_book_export()
     {
         $page = $this->entities->page();
@@ -118,6 +86,19 @@ class PageContentTest extends TestCase
         $pageResp = $this->asEditor()->get($page->getUrl());
         $this->withHtml($pageResp)->assertElementContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry Hello Barry ' . $tag);
         $this->withHtml($pageResp)->assertElementNotContains('#bkmrk-test', 'Hello Barry Hello Barry Hello Barry Hello Barry Hello Barry ' . $tag);
+    }
+
+    public function test_page_includes_to_nonexisting_pages_does_not_error()
+    {
+        $page = $this->entities->page();
+        $missingId = Page::query()->max('id') + 1;
+        $tag = "{{@{$missingId}}}";
+        $page->html = '<p id="bkmrk-test">Hello Barry ' . $tag . '</p>';
+        $page->save();
+
+        $pageResp = $this->asEditor()->get($page->getUrl());
+        $pageResp->assertOk();
+        $pageResp->assertSee('Hello Barry');
     }
 
     public function test_page_content_scripts_removed_by_default()

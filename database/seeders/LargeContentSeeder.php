@@ -28,12 +28,18 @@ class LargeContentSeeder extends Seeder
 
         /** @var Book $largeBook */
         $largeBook = Book::factory()->create(['name' => 'Large book' . Str::random(10), 'created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
-        $pages = Page::factory()->count(200)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
         $chapters = Chapter::factory()->count(50)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id]);
-
-        $largeBook->pages()->saveMany($pages);
         $largeBook->chapters()->saveMany($chapters);
-        $all = array_merge([$largeBook], array_values($pages->all()), array_values($chapters->all()));
+
+        $allPages = [];
+
+        foreach ($chapters as $chapter) {
+            $pages = Page::factory()->count(100)->make(['created_by' => $editorUser->id, 'updated_by' => $editorUser->id, 'chapter_id' => $chapter->id]);
+            $largeBook->pages()->saveMany($pages);
+            array_push($allPages, ...$pages->all());
+        }
+
+        $all = array_merge([$largeBook], $allPages, array_values($chapters->all()));
 
         app()->make(JointPermissionBuilder::class)->rebuildForEntity($largeBook);
         app()->make(SearchIndex::class)->indexEntities($all);

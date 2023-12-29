@@ -202,6 +202,10 @@ class TrashCan
             $attachmentService->deleteFile($attachment);
         }
 
+        // Remove book template usages
+        Book::query()->where('default_template_id', '=', $page->id)
+            ->update(['default_template_id' => null]);
+
         $page->forceDelete();
 
         return 1;

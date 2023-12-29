@@ -21,19 +21,13 @@ use OneLogin\Saml2\ValidationError;
 class Saml2Service
 {
     protected array $config;
-    protected RegistrationService $registrationService;
-    protected LoginService $loginService;
-    protected GroupSyncService $groupSyncService;
 
     public function __construct(
-        RegistrationService $registrationService,
-        LoginService $loginService,
-        GroupSyncService $groupSyncService
+        protected RegistrationService $registrationService,
+        protected LoginService $loginService,
+        protected GroupSyncService $groupSyncService
     ) {
         $this->config = config('saml2');
-        $this->registrationService = $registrationService;
-        $this->loginService = $loginService;
-        $this->groupSyncService = $groupSyncService;
     }
 
     /**
@@ -54,20 +48,23 @@ class Saml2Service
 
     /**
      * Initiate a logout flow.
+     * Returns the SAML2 request ID, and the URL to redirect the user to.
      *
      * @throws Error
+     * @returns array{url: string, id: ?string}
      */
     public function logout(User $user): array
     {
         $toolKit = $this->getToolkit();
-        $returnRoute = url('/');
+        $sessionIndex = session()->get('saml2_session_index');
+        $returnUrl = url($this->loginService->logout());
 
         try {
             $url = $toolKit->logout(
-                $returnRoute,
+                $returnUrl,
                 [],
                 $user->email,
-                session()->get('saml2_session_index'),
+                $sessionIndex,
                 true,
                 Constants::NAMEID_EMAIL_ADDRESS
             );
@@ -77,8 +74,7 @@ class Saml2Service
                 throw $error;
             }
 
-            $this->actionLogout();
-            $url = '/';
+            $url = $returnUrl;
             $id = null;
         }
 
@@ -128,7 +124,7 @@ class Saml2Service
      *
      * @throws Error
      */
-    public function processSlsResponse(?string $requestId): ?string
+    public function processSlsResponse(?string $requestId): string
     {
         $toolkit = $this->getToolkit();
 
@@ -137,7 +133,7 @@ class Saml2Service
         // value so that the exact encoding format is matched when checking the signature.
         // This is primarily due to ADFS encoding query params with lowercase percent encoding while
         // PHP (And most other sensible providers) standardise on uppercase.
-        $redirect = $toolkit->processSLO(true, $requestId, true, null, true);
+        $samlRedirect = $toolkit->processSLO(true, $requestId, true, null, true);
         $errors = $toolkit->getErrors();
 
         if (!empty($errors)) {
@@ -146,18 +142,9 @@ class Saml2Service
             );
         }
 
-        $this->actionLogout();
+        $defaultBookStackRedirect = $this->loginService->logout();
 
-        return $redirect;
-    }
-
-    /**
-     * Do the required actions to log a user out.
-     */
-    protected function actionLogout()
-    {
-        auth()->logout();
-        session()->invalidate();
+        return $samlRedirect ?? $defaultBookStackRedirect;
     }
 
     /**
@@ -357,6 +344,10 @@ class Saml2Service
         $userDetails = $this->getUserDetails($samlID, $samlAttributes);
         $isLoggedIn = auth()->check();
 
+        if ($this->shouldSyncGroups()) {
+            $userDetails['groups'] = $this->getUserGroups($samlAttributes);
+        }
+
         if ($this->config['dump_user_details']) {
             throw new JsonDebugException([
                 'id_from_idp'         => $samlID,
@@ -379,13 +370,8 @@ class Saml2Service
             $userDetails['external_id']
         );
 
-        if ($user === null) {
-            throw new SamlException(trans('errors.saml_user_not_registered', ['name' => $userDetails['external_id']]), '/login');
-        }
-
         if ($this->shouldSyncGroups()) {
-            $groups = $this->getUserGroups($samlAttributes);
-            $this->groupSyncService->syncUserWithFoundGroups($user, $groups, $this->config['remove_from_groups']);
+            $this->groupSyncService->syncUserWithFoundGroups($user, $userDetails['groups'], $this->config['remove_from_groups']);
         }
 
         $this->loginService->login($user, 'saml2');

@@ -14,7 +14,7 @@ button {
   display: inline-block;
   font-weight: 400;
   outline: 0;
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color ease-in-out 120ms,
     filter ease-in-out 120ms,
@@ -22,7 +22,6 @@ button {
   box-shadow: none;
   background-color: var(--color-primary);
   color: #FFF;
-  text-transform: uppercase;
   border: 1px solid var(--color-primary);
   vertical-align: top;
   &:hover, &:focus, &:active {
@@ -52,10 +51,11 @@ button {
   border: 1px solid;
   @include lightDark(border-color, #CCC, #666);
   &:hover, &:focus, &:active {
+    @include lightDark(color, #444, #BBB);
     border: 1px solid #CCC;
-    box-shadow: none;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     background-color: #F2F2F2;
-    @include lightDark(background-color, #f2f2f2, #555);
+    @include lightDark(background-color, #f8f8f8, #444);
     filter: none;
   }
   &:active {

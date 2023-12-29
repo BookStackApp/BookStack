@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
-    'meta_reference_page_count' => '被 :count 个页面引用|被 :count 个页面引用',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => '选择项目',
     'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
@@ -132,6 +132,9 @@ return [
     'books_edit_named' => '编辑图书「:bookName」',
     'books_form_book_name' => '书名',
     'books_save' => '保存图书',
+    'books_default_template' => '默认页面模板',
+    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template_select' => '选择模板页面',
     'books_permissions' => '图书权限',
     'books_permissions_updated' => '图书权限已更新',
     'books_empty_contents' => '本书目前没有页面或章节。',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => '删除草稿页面',
     'pages_delete_success' => '页面已删除',
     'pages_delete_draft_success' => '草稿页面已删除',
+    'pages_delete_warning_template' => '此页面是当前的书籍默认页面模板。删除此页面后，将不再为这些书籍分配默认页面模板。',
     'pages_delete_confirm' => '您确定要删除此页面吗？',
     'pages_delete_draft_confirm' => '您确定要删除此草稿页面吗？',
     'pages_editing_named' => '正在编辑页面“:pageName”',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => '引用',
     'references_none' => '没有跟踪到对此项目的引用。',
-    'references_to_desc' => '下面显示的是系统中所有已知链接到这个项目的页面。',
+    'references_to_desc' => '下方列出了系统中链接到此项目的所有已知内容。',
 
     // Watch Options
     'watch' => '关注',

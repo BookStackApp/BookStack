@@ -2,27 +2,48 @@ import {onChildEvent} from '../services/dom';
 import {Component} from './component';
 
 /**
+ * @typedef EntitySelectorSearchOptions
+ * @property entityTypes string
+ * @property entityPermission string
+ * @property searchEndpoint string
+ */
+
+/**
  * Entity Selector
  */
 export class EntitySelector extends Component {
 
     setup() {
         this.elem = this.$el;
-        this.entityTypes = this.$opts.entityTypes || 'page,book,chapter';
-        this.entityPermission = this.$opts.entityPermission || 'view';
 
         this.input = this.$refs.input;
         this.searchInput = this.$refs.search;
         this.loading = this.$refs.loading;
         this.resultsContainer = this.$refs.results;
 
+        this.searchOptions = {
+            entityTypes: this.$opts.entityTypes || 'page,book,chapter',
+            entityPermission: this.$opts.entityPermission || 'view',
+            searchEndpoint: this.$opts.searchEndpoint || '',
+        };
+
         this.search = '';
         this.lastClick = 0;
-        this.selectedItemData = null;
 
         this.setupListeners();
         this.showLoading();
-        this.initialLoad();
+
+        if (this.searchOptions.searchEndpoint) {
+            this.initialLoad();
+        }
+    }
+
+    /**
+     * @param {EntitySelectorSearchOptions} options
+     */
+    configureSearchOptions(options) {
+        Object.assign(this.searchOptions, options);
+        this.reset();
     }
 
     setupListeners() {
@@ -103,6 +124,10 @@ export class EntitySelector extends Component {
     }
 
     initialLoad() {
+        if (!this.searchOptions.searchEndpoint) {
+            throw new Error('Search endpoint not set for entity-selector load');
+        }
+
         window.$http.get(this.searchUrl()).then(resp => {
             this.resultsContainer.innerHTML = resp.data;
             this.hideLoading();
@@ -110,10 +135,15 @@ export class EntitySelector extends Component {
     }
 
     searchUrl() {
-        return `/search/entity-selector?types=${encodeURIComponent(this.entityTypes)}&permission=${encodeURIComponent(this.entityPermission)}`;
+        const query = `types=${encodeURIComponent(this.searchOptions.entityTypes)}&permission=${encodeURIComponent(this.searchOptions.entityPermission)}`;
+        return `${this.searchOptions.searchEndpoint}?${query}`;
     }
 
     searchEntities(searchTerm) {
+        if (!this.searchOptions.searchEndpoint) {
+            throw new Error('Search endpoint not set for entity-selector load');
+        }
+
         this.input.value = '';
         const url = `${this.searchUrl()}&term=${encodeURIComponent(searchTerm)}`;
         window.$http.get(url).then(resp => {
@@ -153,7 +183,6 @@ export class EntitySelector extends Component {
 
         if (isSelected) {
             item.classList.add('selected');
-            this.selectedItemData = data;
         } else {
             window.$events.emit('entity-select-change', null);
         }
@@ -177,7 +206,6 @@ export class EntitySelector extends Component {
         for (const selectedElem of selected) {
             selectedElem.classList.remove('selected', 'primary-background');
         }
-        this.selectedItemData = null;
     }
 
 }

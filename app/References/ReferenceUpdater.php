@@ -4,32 +4,28 @@ namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\HasHtmlDescription;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
-use DOMDocument;
-use DOMXPath;
+use BookStack\Util\HtmlDocument;
 
 class ReferenceUpdater
 {
-    protected ReferenceFetcher $referenceFetcher;
-    protected RevisionRepo $revisionRepo;
-
-    public function __construct(ReferenceFetcher $referenceFetcher, RevisionRepo $revisionRepo)
-    {
-        $this->referenceFetcher = $referenceFetcher;
-        $this->revisionRepo = $revisionRepo;
+    public function __construct(
+        protected ReferenceFetcher $referenceFetcher,
+        protected RevisionRepo $revisionRepo,
+    ) {
     }
 
-    public function updateEntityPageReferences(Entity $entity, string $oldLink)
+    public function updateEntityReferences(Entity $entity, string $oldLink): void
     {
         $references = $this->getReferencesToUpdate($entity);
         $newLink = $entity->getUrl();
 
-        /** @var Reference $reference */
         foreach ($references as $reference) {
-            /** @var Page $page */
-            $page = $reference->from;
-            $this->updateReferencesWithinPage($page, $oldLink, $newLink);
+            /** @var Entity $entity */
+            $entity = $reference->from;
+            $this->updateReferencesWithinEntity($entity, $oldLink, $newLink);
         }
     }
 
@@ -39,14 +35,15 @@ class ReferenceUpdater
     protected function getReferencesToUpdate(Entity $entity): array
     {
         /** @var Reference[] $references */
-        $references = $this->referenceFetcher->getPageReferencesToEntity($entity)->values()->all();
+        $references = $this->referenceFetcher->getReferencesToEntity($entity)->values()->all();
 
         if ($entity instanceof Book) {
             $pages = $entity->pages()->get(['id']);
             $chapters = $entity->chapters()->get(['id']);
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
-                $childRefs = $this->referenceFetcher->getPageReferencesToEntity($bookChild)->values()->all();
+                /** @var Reference[] $childRefs */
+                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild)->values()->all();
                 array_push($references, ...$childRefs);
             }
         }
@@ -60,7 +57,28 @@ class ReferenceUpdater
         return array_values($deduped);
     }
 
-    protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink)
+    protected function updateReferencesWithinEntity(Entity $entity, string $oldLink, string $newLink): void
+    {
+        if ($entity instanceof Page) {
+            $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
+            return;
+        }
+
+        if (in_array(HasHtmlDescription::class, class_uses($entity))) {
+            $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
+        }
+    }
+
+    protected function updateReferencesWithinDescription(Entity $entity, string $oldLink, string $newLink): void
+    {
+        /** @var HasHtmlDescription&Entity $entity */
+        $entity = (clone $entity)->refresh();
+        $html = $this->updateLinksInHtml($entity->description_html ?: '', $oldLink, $newLink);
+        $entity->description_html = $html;
+        $entity->save();
+    }
+
+    protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink): void
     {
         $page = (clone $page)->refresh();
         $html = $this->updateLinksInHtml($page->html, $oldLink, $newLink);
@@ -96,13 +114,8 @@ class ReferenceUpdater
             return $html;
         }
 
-        $html = '<body>' . $html . '</body>';
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-
-        $xPath = new DOMXPath($doc);
-        $anchors = $xPath->query('//a[@href]');
+        $doc = new HtmlDocument($html);
+        $anchors = $doc->queryXPath('//a[@href]');
 
         /** @var \DOMElement $anchor */
         foreach ($anchors as $anchor) {
@@ -111,12 +124,6 @@ class ReferenceUpdater
             $anchor->setAttribute('href', $updated);
         }
 
-        $html = '';
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
-        foreach ($topElems as $child) {
-            $html .= $doc->saveHTML($child);
-        }
-
-        return $html;
+        return $doc->getBodyInnerHtml();
     }
 }

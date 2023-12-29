@@ -19,7 +19,6 @@ return [
     'ldap_extension_not_installed' => 'Není nainstalováno rozšíření LDAP pro PHP',
     'ldap_cannot_connect' => 'Nelze se připojit k adresáři LDAP. Prvotní připojení selhalo.',
     'saml_already_logged_in' => 'Již jste přihlášeni',
-    'saml_user_not_registered' => 'Uživatel :name není registrován a automatická registrace je zakázána',
     'saml_no_email_address' => 'Nelze najít e-mailovou adresu pro tohoto uživatele v datech poskytnutých externím přihlašovacím systémem',
     'saml_invalid_response_id' => 'Požadavek z externího ověřovacího systému nebyl rozpoznám procesem, který tato aplikace spustila. Tento problém může způsobit stisknutí tlačítka Zpět po přihlášení.',
     'saml_fail_authed' => 'Přihlášení pomocí :system selhalo, systém neposkytl úspěšnou autorizaci',
@@ -44,16 +43,16 @@ return [
     'cannot_get_image_from_url' => 'Nelze získat obrázek z adresy :url',
     'cannot_create_thumbs' => 'Server nedokáže udělat náhledy. Zkontrolujte, že rozšíření GD pro PHP je nainstalováno.',
     'server_upload_limit' => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Server nemůže přijmout takové množství dat. Zkuste to znovu s méně daty nebo menším souborem.',
     'uploaded'  => 'Server nepovoluje nahrávat tak veliké soubory. Zkuste prosím menší soubor.',
 
     // Drawing & Images
     'image_upload_error' => 'Nastala chyba během nahrávání souboru',
     'image_upload_type_error' => 'Typ nahrávaného obrázku je neplatný.',
     'image_upload_replace_type' => 'Náhrady souboru obrázku musí být stejného typu',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Nepodařilo se zpracovat nahrávaný obrázek anebo vytvořit náhledy z důvodu omezených systémových prostředků.',
+    'image_thumbnail_memory_limit' => 'Nepodařilo se vytvořit všechny velikostní varianty obrázku z důvodu omezených systémových prostředků.',
+    'image_gallery_thumbnail_memory_limit' => 'Nepodařilo se vytvořit náhledy alba z důvodu omezených systémových prostředků.',
     'drawing_data_not_found' => 'Data výkresu nelze načíst. Výkresový soubor již nemusí existovat nebo nemusí mít oprávnění k němu přistupovat.',
 
     // Attachments

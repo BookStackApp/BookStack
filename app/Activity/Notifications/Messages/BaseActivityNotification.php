@@ -3,8 +3,12 @@
 namespace BookStack\Activity\Notifications\Messages;
 
 use BookStack\Activity\Models\Loggable;
+use BookStack\Activity\Notifications\MessageParts\EntityPathMessageLine;
 use BookStack\Activity\Notifications\MessageParts\LinkedMailMessageLine;
 use BookStack\App\MailNotification;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
+use BookStack\Permissions\PermissionApplicator;
 use BookStack\Translation\LocaleDefinition;
 use BookStack\Users\Models\User;
 use Illuminate\Bus\Queueable;
@@ -43,5 +47,21 @@ abstract class BaseActivityNotification extends MailNotification
             $locale->trans('notifications.footer_reason'),
             $locale->trans('notifications.footer_reason_link'),
         );
+    }
+
+    /**
+     * Build a line which provides the book > chapter path to a page.
+     * Takes into account visibility of these parent items.
+     * Returns null if no path items can be used.
+     */
+    protected function buildPagePathLine(Page $page, User $notifiable): ?EntityPathMessageLine
+    {
+        $permissions = new PermissionApplicator($notifiable);
+
+        $path = array_filter([$page->book, $page->chapter], function (?Entity $entity) use ($permissions) {
+            return !is_null($entity) && $permissions->checkOwnableUserAccess($entity, 'view');
+        });
+
+        return empty($path) ? null : new EntityPathMessageLine($path);
     }
 }

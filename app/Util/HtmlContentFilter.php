@@ -3,70 +3,65 @@
 namespace BookStack\Util;
 
 use DOMAttr;
-use DOMDocument;
 use DOMElement;
 use DOMNodeList;
-use DOMXPath;
 
 class HtmlContentFilter
 {
     /**
-     * Remove all the script elements from the given HTML.
+     * Remove all the script elements from the given HTML document.
      */
-    public static function removeScripts(string $html): string
+    public static function removeScriptsFromDocument(HtmlDocument $doc)
     {
-        if (empty($html)) {
-            return $html;
-        }
-
-        $html = '<?xml encoding="utf-8" ?><body>' . $html . '</body>';
-        libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
-        $doc->loadHTML($html);
-        $xPath = new DOMXPath($doc);
-
         // Remove standard script tags
-        $scriptElems = $xPath->query('//script');
+        $scriptElems = $doc->queryXPath('//script');
         static::removeNodes($scriptElems);
 
         // Remove clickable links to JavaScript URI
-        $badLinks = $xPath->query('//*[' . static::xpathContains('@href', 'javascript:') . ']');
+        $badLinks = $doc->queryXPath('//*[' . static::xpathContains('@href', 'javascript:') . ']');
         static::removeNodes($badLinks);
 
         // Remove forms with calls to JavaScript URI
-        $badForms = $xPath->query('//*[' . static::xpathContains('@action', 'javascript:') . '] | //*[' . static::xpathContains('@formaction', 'javascript:') . ']');
+        $badForms = $doc->queryXPath('//*[' . static::xpathContains('@action', 'javascript:') . '] | //*[' . static::xpathContains('@formaction', 'javascript:') . ']');
         static::removeNodes($badForms);
 
         // Remove meta tag to prevent external redirects
-        $metaTags = $xPath->query('//meta[' . static::xpathContains('@content', 'url') . ']');
+        $metaTags = $doc->queryXPath('//meta[' . static::xpathContains('@content', 'url') . ']');
         static::removeNodes($metaTags);
 
         // Remove data or JavaScript iFrames
-        $badIframes = $xPath->query('//*[' . static::xpathContains('@src', 'data:') . '] | //*[' . static::xpathContains('@src', 'javascript:') . '] | //*[@srcdoc]');
+        $badIframes = $doc->queryXPath('//*[' . static::xpathContains('@src', 'data:') . '] | //*[' . static::xpathContains('@src', 'javascript:') . '] | //*[@srcdoc]');
         static::removeNodes($badIframes);
 
         // Remove attributes, within svg children, hiding JavaScript or data uris.
         // A bunch of svg element and attribute combinations expose xss possibilities.
         // For example, SVG animate tag can exploit javascript in values.
-        $badValuesAttrs = $xPath->query('//svg//@*[' . static::xpathContains('.', 'data:') . '] | //svg//@*[' . static::xpathContains('.', 'javascript:') . ']');
+        $badValuesAttrs = $doc->queryXPath('//svg//@*[' . static::xpathContains('.', 'data:') . '] | //svg//@*[' . static::xpathContains('.', 'javascript:') . ']');
         static::removeAttributes($badValuesAttrs);
 
         // Remove elements with a xlink:href attribute
         // Used in SVG but deprecated anyway, so we'll be a bit more heavy-handed here.
-        $xlinkHrefAttributes = $xPath->query('//@*[contains(name(), \'xlink:href\')]');
+        $xlinkHrefAttributes = $doc->queryXPath('//@*[contains(name(), \'xlink:href\')]');
         static::removeAttributes($xlinkHrefAttributes);
 
         // Remove 'on*' attributes
-        $onAttributes = $xPath->query('//@*[starts-with(name(), \'on\')]');
+        $onAttributes = $doc->queryXPath('//@*[starts-with(name(), \'on\')]');
         static::removeAttributes($onAttributes);
+    }
 
-        $html = '';
-        $topElems = $doc->documentElement->childNodes->item(0)->childNodes;
-        foreach ($topElems as $child) {
-            $html .= $doc->saveHTML($child);
+    /**
+     * Remove scripts from the given HTML string.
+     */
+    public static function removeScriptsFromHtmlString(string $html): string
+    {
+        if (empty($html)) {
+            return $html;
         }
 
-        return $html;
+        $doc = new HtmlDocument($html);
+        static::removeScriptsFromDocument($doc);
+
+        return $doc->getBodyInnerHtml();
     }
 
     /**

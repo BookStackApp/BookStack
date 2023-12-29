@@ -406,6 +406,15 @@ input[type=color] {
   height: auto;
 }
 
+.description-input > .tox-tinymce {
+  border: 1px solid #DDD !important;
+  @include lightDark(border-color, #DDD !important, #000 !important);
+  border-radius: 3px;
+  .tox-toolbar__primary {
+    justify-content: end;
+  }
+}
+
 .search-box {
   max-width: 100%;
   position: relative;
@@ -434,7 +443,7 @@ input[type=color] {
   &.flexible input {
     width: 100%;
   }
-  .search-box-cancel {
+  button.search-box-cancel {
     left: auto;
     right: 0;
   }
