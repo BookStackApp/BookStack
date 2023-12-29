@@ -194,7 +194,7 @@ return [
     'users_send_invite_option' => 'ارسال ایمیل دعوت کاربر',
     'users_external_auth_id' => 'شناسه احراز هویت خارجی',
     'users_external_auth_id_desc' => 'When an external authentication system is in use (such as SAML2, OIDC or LDAP) this is the ID which links this BookStack user to the authentication system account. You can ignore this field if using the default email-based authentication.',
-    'users_password_warning' => 'Only fill the below if you would like to change the password for this user.',
+    'users_password_warning' => 'فقط در صورتی که مایل به تغییر رمز عبور این کاربر هستید، موارد زیر را پر کنید.',
     'users_system_public' => 'این کاربر نماینده هر کاربر مهمانی است که از نمونه شما بازدید می کند. نمی توان از آن برای ورود استفاده کرد اما به طور خودکار اختصاص داده می شود.',
     'users_delete' => 'حذف کاربر',
     'users_delete_named' => 'حذف :userName',
