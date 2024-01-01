@@ -192,6 +192,9 @@ return [
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
     'chapter_sort_book' => 'Sort Book',
+    'chapter_default_template' => 'Default Page Template',
+    'chapter_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this chapter. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'chapter_default_template_select' => 'Select a template page',
 
     // Pages
     'page' => 'Page',

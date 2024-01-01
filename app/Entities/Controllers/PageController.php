@@ -6,6 +6,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
@@ -259,7 +260,9 @@ class PageController extends Controller
         $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
-        $usedAsTemplate = Book::query()->where('default_template_id', '=', $page->id)->count() > 0;
+        $usedAsTemplate = 
+            Book::query()->where('default_template_id', '=', $page->id)->count() > 0 ||
+            Chapter::query()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
@@ -279,7 +282,9 @@ class PageController extends Controller
         $page = $this->pageRepo->getById($pageId);
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
-        $usedAsTemplate = Book::query()->where('default_template_id', '=', $page->id)->count() > 0;
+        $usedAsTemplate = 
+            Book::query()->where('default_template_id', '=', $page->id)->count() > 0 ||
+            Chapter::query()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
