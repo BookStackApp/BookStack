@@ -49,9 +49,10 @@ class ChapterController extends Controller
     public function store(Request $request, string $bookSlug)
     {
         $validated = $this->validate($request, [
-            'name'             => ['required', 'string', 'max:255'],
-            'description_html' => ['string', 'max:2000'],
-            'tags'             => ['array'],
+            'name'                => ['required', 'string', 'max:255'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
         ]);
 
         $book = Book::visible()->where('slug', '=', $bookSlug)->firstOrFail();
@@ -111,9 +112,10 @@ class ChapterController extends Controller
     public function update(Request $request, string $bookSlug, string $chapterSlug)
     {
         $validated = $this->validate($request, [
-            'name'             => ['required', 'string', 'max:255'],
-            'description_html' => ['string', 'max:2000'],
-            'tags'             => ['array'],
+            'name'                => ['required', 'string', 'max:255'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
         ]);
 
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);

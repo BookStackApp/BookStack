@@ -208,6 +208,12 @@ class TrashCan
 
         $page->forceDelete();
 
+        // Remove chapter template usages
+        Chapter::query()->where('default_template_id', '=', $page->id)
+            ->update(['default_template_id' => null]);
+
+        $page->forceDelete();
+
         return 1;
     }
 

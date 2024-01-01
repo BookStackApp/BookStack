@@ -4,6 +4,7 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Tools\BookContents;
@@ -46,6 +47,7 @@ class ChapterRepo
         $chapter->book_id = $parentBook->id;
         $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
         $this->baseRepo->create($chapter, $input);
+        $this->updateChapterDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
         return $chapter;
@@ -57,6 +59,11 @@ class ChapterRepo
     public function update(Chapter $chapter, array $input): Chapter
     {
         $this->baseRepo->update($chapter, $input);
+
+        if (array_key_exists('default_template_id', $input)) {
+            $this->updateChapterDefaultTemplate($chapter, intval($input['default_template_id']));
+        }
+
         Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
 
         return $chapter;
@@ -99,6 +106,33 @@ class ChapterRepo
         Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 
         return $parent;
+    }
+
+    /**
+     * Update the default page template used for this chapter.
+     * Checks that, if changing, the provided value is a valid template and the user
+     * has visibility of the provided page template id.
+     */
+    protected function updateChapterDefaultTemplate(Chapter $chapter, int $templateId): void
+    {
+        $changing = $templateId !== intval($chapter->default_template_id);
+        if (!$changing) {
+            return;
+        }
+
+        if ($templateId === 0) {
+            $chapter->default_template_id = null;
+            $chapter->save();
+            return;
+        }
+
+        $templateExists = Page::query()->visible()
+            ->where('template', '=', true)
+            ->where('id', '=', $templateId)
+            ->exists();
+
+        $chapter->default_template_id = $templateExists ? $templateId : null;
+        $chapter->save();
     }
 
     /**

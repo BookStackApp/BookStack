@@ -22,6 +22,29 @@
     </div>
 </div>
 
+<div class="form-group collapsible" component="collapsible" id="template-control">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
+        <label for="template-manager">{{ trans('entities.chapter_default_template') }}</label>
+    </button>
+    <div refs="collapsible@content" class="collapse-content">
+        <div class="flex-container-row gap-l justify-space-between pb-xs wrap">
+            <p class="text-muted small my-none min-width-xs flex">
+                {{ trans('entities.chapter_default_template_explain') }}
+            </p>
+
+            <div class="min-width-m">
+                @include('form.page-picker', [
+                    'name' => 'default_template_id',
+                    'placeholder' => trans('entities.chapter_default_template_select'),
+                    'value' => $chapter->default_template_id ?? null,
+                    'selectorEndpoint' => '/search/entity-selector-templates',
+                ])
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div class="form-group text-right">
     <a href="{{ isset($chapter) ? $chapter->getUrl() : $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.chapters_save') }}</button>
