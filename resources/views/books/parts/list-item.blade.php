@@ -9,3 +9,6 @@
         </div>
     </div>
 </a>
+
+@component('books.parts.context-menu', ['entity' => $book])
+@endcomponent
