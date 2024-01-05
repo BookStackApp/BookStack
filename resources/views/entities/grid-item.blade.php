@@ -14,3 +14,6 @@
         <p>@icon('edit')<span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span></p>
     </div>
 </a>
+
+@component('books.parts.context-menu', ['entity' => $entity])
+@endcomponent
