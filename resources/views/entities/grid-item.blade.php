@@ -13,7 +13,9 @@
         <p>@icon('star')<span title="{{ $entity->created_at->toDayDateTimeString() }}">{{ trans('entities.meta_created', ['timeLength' => $entity->created_at->diffForHumans()]) }}</span></p>
         <p>@icon('edit')<span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span></p>
     </div>
-</a>
 
-@component('books.parts.context-menu', ['entity' => $entity])
-@endcomponent
+    @if($entity->getType() === 'book' || $entity->getType() === 'bookshelf')
+        @component('books.parts.context-menu', ['entity' => $entity])
+        @endcomponent
+    @endif
+</a>
