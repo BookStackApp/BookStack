@@ -19,3 +19,6 @@
         </div>
     @endforeach
 </div>
+
+@component('books.parts.context-menu', ['entity' => $shelf])
+@endcomponent
