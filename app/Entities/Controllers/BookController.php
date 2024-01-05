@@ -44,6 +44,11 @@ class BookController extends Controller
         ]);
 
         $books = $this->bookRepo->getAllPaginated(18, $listOptions->getSort(), $listOptions->getOrder());
+        foreach ($books as $book) {
+            if (auth()->check()) {
+                $book->watchOptions = new UserEntityWatchOptions(auth()->user(), $book);
+            }
+        }
         $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
         $popular = $this->bookRepo->getPopular(4);
         $new = $this->bookRepo->getRecentlyCreated(4);
