@@ -230,3 +230,38 @@ $loadingSize: 10px;
     }
   }
 }
+
+.context-menu {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu ul li a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.context-menu ul li a:hover {
+  background-color: #eee;
+}
+
+.context-menu.active {
+  display: block !important;
+}

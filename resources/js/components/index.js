@@ -59,3 +59,4 @@ export {UserSelect} from './user-select';
 export {WebhookEvents} from './webhook-events';
 export {WysiwygEditor} from './wysiwyg-editor';
 export {WysiwygInput} from './wysiwyg-input';
+export {ContextMenu} from './context-menu';

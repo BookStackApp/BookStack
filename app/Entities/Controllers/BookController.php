@@ -24,7 +24,7 @@ use Throwable;
 
 class BookController extends Controller
 {
-    public function __construct( 
+    public function __construct(
         protected ShelfContext $shelfContext,
         protected BookRepo $bookRepo,
         protected ReferenceFetcher $referenceFetcher
