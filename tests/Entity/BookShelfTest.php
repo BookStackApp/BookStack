@@ -217,8 +217,8 @@ class BookShelfTest extends TestCase
         $html = $this->withHtml($this->asEditor()->get($shelf->getUrl()));
 
         $html->assertElementContains('.book-content a.grid-card:nth-child(1)', 'Book Ab');
-        $html->assertElementContains('.book-content a.grid-card:nth-child(2)', 'Book ac');
-        $html->assertElementContains('.book-content a.grid-card:nth-child(3)', 'Book AD');
+        $html->assertElementContains('.book-content a.grid-card:nth-child(3)', 'Book ac');
+        $html->assertElementContains('.book-content a.grid-card:nth-child(5)', 'Book AD');
     }
 
     public function test_shelf_edit()
