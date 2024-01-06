@@ -20,8 +20,10 @@
 
     </a>
 
-    @if($entity->getType() === 'book' || $entity->getType() === 'bookshelf')
-    @component('books.parts.context-menu', ['entity' => $entity])
-    @endcomponent
-    @endif
+    <div>
+        @if($entity->getType() === 'book' || $entity->getType() === 'bookshelf')
+            @component('books.parts.context-menu', ['entity' => $entity])
+            @endcomponent
+        @endif
+    </div>
 </div>
