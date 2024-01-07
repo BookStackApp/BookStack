@@ -3,17 +3,30 @@
 namespace BookStack\Http;
 
 use BookStack\Util\WebSafeMimeSniffer;
-use Symfony\Component\HttpFoundation\HeaderBag;
+use Illuminate\Http\Request;
 
+/**
+ * Helper wrapper for range-based stream response handling.
+ * Much of this used symfony/http-foundation as a reference during build.
+ * URL: https://github.com/symfony/http-foundation/blob/v6.0.20/BinaryFileResponse.php
+ * License: MIT license, Copyright (c) Fabien Potencier.
+ */
 class RangeSupportedStream
 {
     protected string $sniffContent;
+    protected array $responseHeaders;
+    protected int $responseStatus = 200;
+
+    protected int $responseLength = 0;
+    protected int $responseOffset = 0;
 
     public function __construct(
         protected $stream,
         protected int $fileSize,
-        protected HeaderBag $requestHeaders,
+        Request $request,
     ) {
+        $this->responseLength = $this->fileSize;
+        $this->parseRequest($request);
     }
 
     /**
@@ -40,18 +53,82 @@ class RangeSupportedStream
         }
 
         $outStream = fopen('php://output', 'w');
-        $offset = 0;
+        $sniffOffset = strlen($this->sniffContent);
 
-        if (!empty($this->sniffContent)) {
-            fwrite($outStream, $this->sniffContent);
-            $offset = strlen($this->sniffContent);
+        if (!empty($this->sniffContent) && $this->responseOffset < $sniffOffset) {
+            $sniffOutput = substr($this->sniffContent, $this->responseOffset, min($sniffOffset, $this->responseLength));
+            fwrite($outStream, $sniffOutput);
+        } else if ($this->responseOffset !== 0) {
+            fseek($this->stream, $this->responseOffset);
         }
 
-        $toWrite = $this->fileSize - $offset;
-        stream_copy_to_stream($this->stream, $outStream, $toWrite);
-        fpassthru($this->stream);
+        stream_copy_to_stream($this->stream, $outStream, $this->responseLength);
 
         fclose($this->stream);
         fclose($outStream);
+    }
+
+    public function getResponseHeaders(): array
+    {
+        return $this->responseHeaders;
+    }
+
+    public function getResponseStatus(): int
+    {
+        return $this->responseStatus;
+    }
+
+    protected function parseRequest(Request $request): void
+    {
+        $this->responseHeaders['Accept-Ranges'] = $request->isMethodSafe() ? 'bytes' : 'none';
+
+        $range = $this->getRangeFromRequest($request);
+        if ($range) {
+            [$start, $end] = $range;
+            if ($start < 0 || $start > $end) {
+                $this->responseStatus = 416;
+                $this->responseHeaders['Content-Range'] = sprintf('bytes */%s', $this->fileSize);
+            } elseif ($end - $start < $this->fileSize - 1) {
+                $this->responseLength = $end < $this->fileSize ? $end - $start + 1 : -1;
+                $this->responseOffset = $start;
+                $this->responseStatus = 206;
+                $this->responseHeaders['Content-Range'] = sprintf('bytes %s-%s/%s', $start, $end, $this->fileSize);
+                $this->responseHeaders['Content-Length'] = $end - $start + 1;
+            }
+        }
+
+        if ($request->isMethod('HEAD')) {
+            $this->responseLength = 0;
+        }
+    }
+
+    protected function getRangeFromRequest(Request $request): ?array
+    {
+        $range = $request->headers->get('Range');
+        if (!$range || !$request->isMethod('GET') || !str_starts_with($range, 'bytes=')) {
+            return null;
+        }
+
+        if ($request->headers->has('If-Range')) {
+            return null;
+        }
+
+        [$start, $end] = explode('-', substr($range, 6), 2) + [0];
+
+        $end = ('' === $end) ? $this->fileSize - 1 : (int) $end;
+
+        if ('' === $start) {
+            $start = $this->fileSize - $end;
+            $end = $this->fileSize - 1;
+        } else {
+            $start = (int) $start;
+        }
+
+        if ($start > $end) {
+            return null;
+        }
+
+        $end = min($end, $this->fileSize - 1);
+        return [$start, $end];
     }
 }
