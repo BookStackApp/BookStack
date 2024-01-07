@@ -66,13 +66,19 @@ class AttachmentService
     /**
      * Stream an attachment from storage.
      *
-     * @throws FileNotFoundException
-     *
      * @return resource|null
      */
     public function streamAttachmentFromStorage(Attachment $attachment)
     {
         return $this->getStorageDisk()->readStream($this->adjustPathForStorageDisk($attachment->path));
+    }
+
+    /**
+     * Read the file size of an attachment from storage, in bytes.
+     */
+    public function getAttachmentFileSize(Attachment $attachment): int
+    {
+        return $this->getStorageDisk()->size($this->adjustPathForStorageDisk($attachment->path));
     }
 
     /**
