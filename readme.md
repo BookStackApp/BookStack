@@ -43,29 +43,29 @@ Big thanks to these companies for supporting the project.
 
 [Project donation details](https://www.bookstackapp.com/donate/) - [GitHub Sponsors Page](https://github.com/sponsors/ssddanbrown) - [Ko-fi Page](https://ko-fi.com/ssddanbrown)
 
-#### Silver Sponsors
+#### Gold Sponsor
 
 <table><tbody><tr>
-<td><a href="https://www.diagrams.net/" target="_blank">
-    <img width="400" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
+<td align="center"><a href="https://www.federated.computer/bookstack/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/federated-computer.png" alt="Diagrams.net">
 </a></td>
 </tr></tbody></table>
 
 #### Bronze Sponsors
 
 <table><tbody><tr>
-<td><a href="https://cloudabove.com/hosting" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/cloudabove.png" alt="Cloudabove">
+<td align="center"><a href="https://www.diagrams.net/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
 </a></td>
-<td><a href="https://www.practicali.be" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practicali.png" alt="Practicali">
+<td align="center"><a href="https://cloudabove.com/hosting" target="_blank">
+    <img width="200" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/cloudabove.png" alt="Cloudabove">
 </a></td>
 </tr><tr>
-<td><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
+<td align="center"><a href="https://www.practicali.be" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practicali.png" alt="Practicali">
 </a></td>
-<td><a href="https://torutec.com/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/torutec.png" alt="Torutec">
+<td align="center"><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
 </a></td>
 </tr>
 <tr>
