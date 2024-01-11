@@ -22,40 +22,42 @@
     </div>
 
     <main class="content-wrap card">
-        <h1 class="break-text">{{ $chapter->name }}</h1>
-        <div refs="entity-search@contentView" class="chapter-content">
-            <div class="text-muted break-text">{!! $chapter->descriptionHtml() !!}</div>
-            @if(count($pages) > 0)
-                <div class="entity-list book-contents">
-                    @foreach($pages as $page)
-                        @include('pages.parts.list-item', ['page' => $page])
-                    @endforeach
-                </div>
-            @else
-                <div class="mt-xl">
-                    <hr>
-                    <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
-
-                    <div class="icon-list block inline">
-                        @if(userCan('page-create', $chapter))
-                            <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item text-page">
-                                <span class="icon">@icon('page')</span>
-                                <span>{{ trans('entities.books_empty_create_page') }}</span>
-                            </a>
-                        @endif
-                        @if(userCan('book-update', $book))
-                            <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item text-book">
-                                <span class="icon">@icon('book')</span>
-                                <span>{{ trans('entities.books_empty_sort_current_book') }}</span>
-                            </a>
-                        @endif
+        <div>
+            <h1 class="break-text">{{ $chapter->name }}</h1>
+            <div refs="entity-search@contentView" class="chapter-content">
+                <p class="text-muted break-text">{!! nl2br(e($chapter->description)) !!}</p>
+                @if(count($pages) > 0)
+                    <div class="entity-list book-contents">
+                        @foreach($pages as $page)
+                            @include('pages.parts.list-item', ['page' => $page])
+                        @endforeach
                     </div>
+                @else
+                    <div class="mt-xl">
+                        <hr>
+                        <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
 
-                </div>
-            @endif
+                        <div class="icon-list block inline">
+                            @if(userCan('page-create', $chapter))
+                                <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item text-page">
+                                    <span class="icon">@icon('page')</span>
+                                    <span>{{ trans('entities.books_empty_create_page') }}</span>
+                                </a>
+                            @endif
+                            @if(userCan('book-update', $book))
+                                <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item text-book">
+                                    <span class="icon">@icon('book')</span>
+                                    <span>{{ trans('entities.books_empty_sort_current_book') }}</span>
+                                </a>
+                            @endif
+                        </div>
+
+                    </div>
+                @endif
+            </div>
+
+            @include('entities.search-results')
         </div>
-
-        @include('entities.search-results')
     </main>
 
     @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])

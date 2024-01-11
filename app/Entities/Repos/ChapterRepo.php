@@ -12,12 +12,14 @@ use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\Uploads\ImageRepo;
 use Exception;
+use Illuminate\Http\UploadedFile;
 
 class ChapterRepo
 {
     public function __construct(
-        protected BaseRepo $baseRepo
+        protected BaseRepo $baseRepo, protected ImageRepo $imageRepo
     ) {
     }
 
@@ -46,6 +48,7 @@ class ChapterRepo
         $chapter->book_id = $parentBook->id;
         $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
         $this->baseRepo->create($chapter, $input);
+        $this->baseRepo->updateCoverImage($chapter, $input['image'] ?? null);
         Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
         return $chapter;
@@ -59,7 +62,22 @@ class ChapterRepo
         $this->baseRepo->update($chapter, $input);
         Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
 
+        if (array_key_exists('image', $input)) {
+            $this->baseRepo->updateCoverImage($chapter, $input['image'], $input['image'] === null);
+        }
+
         return $chapter;
+    }
+
+    /**
+     * Update the given chapter's cover image, or clear it.
+     *
+     * @throws ImageUploadException
+     * @throws Exception
+     */
+    public function updateCoverImage(Chapter $chapter, ?UploadedFile $coverImage, bool $removeImage = false)
+    {
+        $this->baseRepo->updateCoverImage($chapter, $coverImage, $removeImage);
     }
 
     /**

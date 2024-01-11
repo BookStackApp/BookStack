@@ -15,7 +15,7 @@
 
         <main class="content-wrap card">
             <h1 class="list-heading">{{ trans('entities.chapters_create') }}</h1>
-            <form action="{{ $book->getUrl('/create-chapter') }}" method="POST">
+            <form action="{{ $book->getUrl('/create-chapter') }}" method="POST" enctype="multipart/form-data">
                 @include('chapters.parts.form')
             </form>
         </main>

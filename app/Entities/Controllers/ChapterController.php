@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Exceptions\MoveOperationException;
+use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
@@ -44,12 +45,14 @@ class ChapterController extends Controller
     /**
      * Store a newly created chapter in storage.
      *
+     * @throws ImageUploadException
      * @throws ValidationException
      */
     public function store(Request $request, string $bookSlug)
     {
         $validated = $this->validate($request, [
             'name'             => ['required', 'string', 'max:255'],
+            'image' => array_merge(['nullable'], $this->getImageValidationRules()),
             'description_html' => ['string', 'max:2000'],
             'tags'             => ['array'],
         ]);
@@ -112,12 +115,19 @@ class ChapterController extends Controller
     {
         $validated = $this->validate($request, [
             'name'             => ['required', 'string', 'max:255'],
+            'image' => array_merge(['nullable'], $this->getImageValidationRules()),
             'description_html' => ['string', 'max:2000'],
             'tags'             => ['array'],
         ]);
 
         $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
         $this->checkOwnablePermission('chapter-update', $chapter);
+
+        if ($request->has('image_reset')) {
+            $request['image'] = null;
+        } elseif (array_key_exists('image', $request->all()) && is_null($request['image'])) {
+            unset($request['image']);
+        }
 
         $this->chapterRepo->update($chapter, $validated);
 

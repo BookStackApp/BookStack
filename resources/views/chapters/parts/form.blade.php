@@ -15,6 +15,22 @@
 
 <div class="form-group collapsible" component="collapsible" id="logo-control">
     <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
+        <label>{{ trans('common.cover_image') }}</label>
+    </button>
+    <div refs="collapsible@content" class="collapse-content">
+        <p class="small">{{ trans('common.cover_image_description') }}</p>
+
+        @include('form.image-picker', [
+            'defaultImage' => url('/book_default_cover.png'),
+            'currentImage' => (isset($model) && $model->cover) ? $model->getChapterCover() : url('/book_default_cover.png') ,
+            'name' => 'image',
+            'imageClass' => 'cover'
+        ])
+    </div>
+</div>
+
+<div class="form-group collapsible" component="collapsible" id="logo-control">
+    <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
         <label for="tags">{{ trans('entities.chapter_tags') }}</label>
     </button>
     <div refs="collapsible@content" class="collapse-content">
