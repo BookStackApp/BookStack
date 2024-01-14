@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
  */
 class RangeSupportedStream
 {
-    protected string $sniffContent;
-    protected array $responseHeaders;
+    protected string $sniffContent = '';
+    protected array $responseHeaders = [];
     protected int $responseStatus = 200;
 
     protected int $responseLength = 0;
@@ -53,16 +53,20 @@ class RangeSupportedStream
         }
 
         $outStream = fopen('php://output', 'w');
-        $sniffOffset = strlen($this->sniffContent);
+        $sniffLength = strlen($this->sniffContent);
+        $bytesToWrite = $this->responseLength;
 
-        if (!empty($this->sniffContent) && $this->responseOffset < $sniffOffset) {
-            $sniffOutput = substr($this->sniffContent, $this->responseOffset, min($sniffOffset, $this->responseLength));
+        if ($sniffLength > 0 && $this->responseOffset < $sniffLength) {
+            $sniffEnd = min($sniffLength, $bytesToWrite + $this->responseOffset);
+            $sniffOutLength = $sniffEnd - $this->responseOffset;
+            $sniffOutput = substr($this->sniffContent, $this->responseOffset, $sniffOutLength);
             fwrite($outStream, $sniffOutput);
+            $bytesToWrite -= $sniffOutLength;
         } else if ($this->responseOffset !== 0) {
             fseek($this->stream, $this->responseOffset);
         }
 
-        stream_copy_to_stream($this->stream, $outStream, $this->responseLength);
+        stream_copy_to_stream($this->stream, $outStream, $bytesToWrite);
 
         fclose($this->stream);
         fclose($outStream);
@@ -122,10 +126,6 @@ class RangeSupportedStream
             $end = $this->fileSize - 1;
         } else {
             $start = (int) $start;
-        }
-
-        if ($start > $end) {
-            return null;
         }
 
         $end = min($end, $this->fileSize - 1);
