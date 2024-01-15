@@ -77,7 +77,22 @@ class Attachment extends Model
     }
 
     /**
-     * Generate a HTML link to this attachment.
+     * Get the representation of this attachment in a format suitable for the page editors.
+     * Detects and adapts video content to use an inline video embed.
+     */
+    public function editorContent(): array
+    {
+        $videoExtensions = ['mp4', 'webm', 'mkv', 'ogg', 'avi'];
+        if (in_array(strtolower($this->extension), $videoExtensions)) {
+            $html = '<video src="' . e($this->getUrl(true)) . '" controls width="480" height="270"></video>';
+            return ['text/html' => $html, 'text/plain' => $html];
+        }
+
+        return ['text/html' => $this->htmlLink(), 'text/plain' => $this->markdownLink()];
+    }
+
+    /**
+     * Generate the HTML link to this attachment.
      */
     public function htmlLink(): string
     {
@@ -85,7 +100,7 @@ class Attachment extends Model
     }
 
     /**
-     * Generate a markdown link to this attachment.
+     * Generate a MarkDown link to this attachment.
      */
     public function markdownLink(): string
     {
