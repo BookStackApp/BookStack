@@ -324,7 +324,7 @@ Robin Flikkema (RobinFlikkema) :: Dutch
 Michal Gurcik (mgurcik) :: Slovak
 Pooyan Arab (pooyanarab) :: Persian
 Ochi Darma Putra (troke12) :: Indonesian
-H.-H. Peng (Hsins) :: Chinese Traditional
+Hsin-Hsiang Peng (Hsins) :: Chinese Traditional
 Mosi  Wang (mosiwang) :: Chinese Traditional
 骆言 (LawssssCat) :: Chinese Simplified
 Stickers Gaming Shøw (StickerSGSHOW) :: French
@@ -386,3 +386,5 @@ Y (cnsr) :: Ukrainian
 ZY ZV (vy0b0x) :: Chinese Simplified
 diegobenitez :: Spanish
 Marc Hagen (MarcHagen) :: Dutch
+Kasper Alsøe (zeonos) :: Danish
+sultani :: Persian
