@@ -22,11 +22,12 @@ class ChaptersApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint . '?count=1&sort=+id');
         $resp->assertJson(['data' => [
             [
-                'id'       => $firstChapter->id,
-                'name'     => $firstChapter->name,
-                'slug'     => $firstChapter->slug,
-                'book_id'  => $firstChapter->book->id,
-                'priority' => $firstChapter->priority,
+                'id'        => $firstChapter->id,
+                'name'      => $firstChapter->name,
+                'slug'      => $firstChapter->slug,
+                'book_id'   => $firstChapter->book->id,
+                'priority'  => $firstChapter->priority,
+                'book_slug' => $firstChapter->book->slug,
             ],
         ]]);
     }
@@ -130,6 +131,7 @@ class ChaptersApiTest extends TestCase
         $resp->assertJson([
             'id'         => $chapter->id,
             'slug'       => $chapter->slug,
+            'book_slug'  => $chapter->book->slug,
             'created_by' => [
                 'name' => $chapter->createdBy->name,
             ],
@@ -148,6 +150,7 @@ class ChaptersApiTest extends TestCase
                 ],
             ],
         ]);
+        $resp->assertJsonMissingPath('book');
         $resp->assertJsonCount($chapter->pages()->count(), 'pages');
     }
 
