@@ -134,8 +134,9 @@ class ChapterApiController extends ApiController
         $chapter->unsetRelations()->refresh();
 
         $chapter->load(['tags']);
-        $chapter->makeVisible('description_html')
-            ->setAttribute('description_html', $chapter->descriptionHtml());
+        $chapter->makeVisible('description_html');
+        $chapter->setAttribute('description_html', $chapter->descriptionHtml());
+        $chapter->setAttribute('book_slug', $chapter->book()->first()->slug);
 
         return $chapter;
     }
