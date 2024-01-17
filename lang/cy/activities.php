@@ -98,7 +98,7 @@ return [
     'api_token_update' => 'diweddarodd docyn api',
     'api_token_update_notification' => 'Tocyn API wedi\'i ddiweddaru\'n llwyddiannus',
     'api_token_delete' => 'dileodd docyn api',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'Tocyn API wedi\'i ddileu\'n llwyddiannus',
 
     // Roles
     'role_create' => 'created role',
@@ -109,15 +109,15 @@ return [
     'role_delete_notification' => 'Role successfully deleted',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
+    'recycle_bin_empty' => 'gwagodd fin ailgylchu',
     'recycle_bin_restore' => 'restored from recycle bin',
     'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Comments
     'commented_on'                => 'gwnaeth sylwadau ar',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'ychwanegodd sylw',
+    'comment_update'              => 'diweddarodd sylw',
+    'comment_delete'              => 'dileodd sylw',
 
     // Other
     'permissions_update'          => 'caniatadau wedi\'u diweddaru',
