@@ -23,7 +23,7 @@ return [
     'meta_updated' => '수정함 :timeLength',
     'meta_updated_name' => '수정함 :timeLength, :user',
     'meta_owned_name' => '소유함 :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => '참조 대상 :항목 수|참조 대상 :항목 수',
     'entity_select' => '항목 선택',
     'entity_select_lack_permission' => '이 항목을 선택하기 위해 필요한 권한이 없습니다',
     'images' => '이미지',
@@ -42,15 +42,15 @@ return [
 
     // Permissions and restrictions
     'permissions' => '권한',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_desc' => '여기에서 권한을 설정하여 사용자 역할에서 제공하는 기본 권한을 재정의합니다.',
+    'permissions_book_cascade' => '책에 설정된 권한은 자체 권한이 정의되어 있지 않은 한 하위 챕터와 페이지에 자동으로 계단식으로 적용됩니다.',
+    'permissions_chapter_cascade' => '챕터에 설정된 권한은 하위 페이지에 자체 권한이 정의되어 있지 않는 한 자동으로 계단식으로 적용됩니다.',
     'permissions_save' => '권한 저장',
     'permissions_owner' => '소유자',
-    'permissions_role_everyone_else' => 'Everyone Else',
-    'permissions_role_everyone_else_desc' => 'Set permissions for all roles not specifically overridden.',
-    'permissions_role_override' => 'Override permissions for role',
-    'permissions_inherit_defaults' => 'Inherit defaults',
+    'permissions_role_everyone_else' => '그 외 모든 사용자',
+    'permissions_role_everyone_else_desc' => '특별히 재정의되지 않은 모든 역할에 대한 권한을 설정.',
+    'permissions_role_override' => '역할에 대한 권한 재정의하기',
+    'permissions_inherit_defaults' => '기본값 상속',
 
     // Search
     'search_results' => '검색 결과',
