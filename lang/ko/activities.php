@@ -15,7 +15,7 @@ return [
     'page_restore'                => '문서 복원',
     'page_restore_notification'   => '페이지가 복원되었습니다',
     'page_move'                   => '문서 이동',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => '페이지를 성공적으로 이동했습니다.',
 
     // Chapters
     'chapter_create'              => '챕터 만들기',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => '삭제된 챕터',
     'chapter_delete_notification' => '챕터 삭제함',
     'chapter_move'                => '챕터 이동된',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => '챕터를 성공적으로 이동했습니다.',
 
     // Books
     'book_create'                 => '책자 만들기',
@@ -59,22 +59,22 @@ return [
     'favourite_remove_notification' => '":name" 북마크에서 삭제함',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Watch 환경설정이 성공적으로 업데이트되었습니다.',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => '로그인 됨',
     'auth_register' => '신규 사용자 등록',
     'auth_password_reset_request' => '사용자 비밀번호 초기화 요청',
     'auth_password_reset_update' => '사용자 비밀번호 초기화',
-    'mfa_setup_method' => 'configured MFA method',
+    'mfa_setup_method' => '구성된 MFA 방법',
     'mfa_setup_method_notification' => '다중 인증 설정함',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'MFA 메서드 제거',
     'mfa_remove_method_notification' => '다중 인증 해제함',
 
     // Settings
     'settings_update' => '설정 변경',
     'settings_update_notification' => '설졍 변경 성공',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => '유지 관리 작업 실행',
 
     // Webhooks
     'webhook_create' => '웹 훅 만들기',
@@ -94,11 +94,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'aPI 토큰 생성',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create_notification' => 'API 토큰이 성공적으로 생성되었습니다.',
+    'api_token_update' => '업데이트된 API 토큰',
+    'api_token_update_notification' => 'API 토큰이 성공적으로 업데이트되었습니다.',
+    'api_token_delete' => '삭제된 API 토큰',
+    'api_token_delete_notification' => 'API 토큰이 성공적으로 삭제되었습니다.',
 
     // Roles
     'role_create' => '역활 생성',
@@ -109,9 +109,9 @@ return [
     'role_delete_notification' => '역할이 삭제되었습니다',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => '비운 휴지통',
+    'recycle_bin_restore' => '휴지통에서 복원됨',
+    'recycle_bin_destroy' => '휴지통에서 제거됨',
 
     // Comments
     'commented_on'                => '댓글 쓰기',
