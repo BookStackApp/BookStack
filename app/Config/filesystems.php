@@ -58,6 +58,7 @@ return [
             'endpoint'                => env('STORAGE_S3_ENDPOINT', null),
             'use_path_style_endpoint' => env('STORAGE_S3_ENDPOINT', null) !== null,
             'throw'                   => true,
+            'stream_reads'            => false,
         ],
 
     ],
