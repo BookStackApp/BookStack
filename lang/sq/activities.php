@@ -6,37 +6,37 @@
 return [
 
     // Pages
-    'page_create'                 => 'krijoi faqen',
+    'page_create'                 => 'krijoi faqe',
     'page_create_notification'    => 'Faqja u krijua me sukses',
     'page_update'                 => 'përditësoi faqe',
     'page_update_notification'    => 'Faqja u përditësua me sukses',
-    'page_delete'                 => 'fshiu faqen',
+    'page_delete'                 => 'fshiu faqe',
     'page_delete_notification'    => 'Faqja u fshi me sukses',
-    'page_restore'                => 'riktheu faqen',
+    'page_restore'                => 'riktheu faqe',
     'page_restore_notification'   => 'Faqja u rikthye me sukses',
-    'page_move'                   => 'zhvendosi faqen',
+    'page_move'                   => 'zhvendosi faqe',
     'page_move_notification'      => 'Faqja u zhvendos me sukses',
 
     // Chapters
-    'chapter_create'              => 'krijoi kapitullin',
+    'chapter_create'              => 'krijoi kapitull',
     'chapter_create_notification' => 'Kapitulli u krijua me sukses',
-    'chapter_update'              => 'përditësoi kapitullin',
+    'chapter_update'              => 'përditësoi kapitull',
     'chapter_update_notification' => 'Kapitulli u përditësua me sukses',
-    'chapter_delete'              => 'fshiu kapitullin',
+    'chapter_delete'              => 'fshiu kapitull',
     'chapter_delete_notification' => 'Kapitulli u fshi me sukses',
-    'chapter_move'                => 'zhvendosi kapitullin',
+    'chapter_move'                => 'zhvendosi kapitull',
     'chapter_move_notification' => 'Kapitulli u zhvendos me sukses',
 
     // Books
-    'book_create'                 => 'krijoi librin',
+    'book_create'                 => 'krijoi libër',
     'book_create_notification'    => 'Libri u krijua me sukses',
     'book_create_from_chapter'              => 'konvertoi kapitullin në libër',
     'book_create_from_chapter_notification' => 'Kapitulli u konvertua në libër me sukses',
-    'book_update'                 => 'përditësoi librin',
+    'book_update'                 => 'përditësoi libër',
     'book_update_notification'    => 'Libri u përditësua me sukses',
-    'book_delete'                 => 'fshiu librin',
+    'book_delete'                 => 'fshiu libër',
     'book_delete_notification'    => 'Libri u fshi me sukses',
-    'book_sort'                   => 'renditi librin',
+    'book_sort'                   => 'renditi libër',
     'book_sort_notification'      => 'Libri u rendit me sukses',
 
     // Bookshelves
@@ -50,75 +50,75 @@ return [
     'bookshelf_delete_notification'    => 'Rafti u fshi me sukses',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'riktheu rishikimin',
+    'revision_delete' => 'fshiu rishikimin',
+    'revision_delete_notification' => 'Rishikimi u fshi me sukses',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":emri" është shtuar në listën tuaj të të preferuarve',
+    'favourite_remove_notification' => '":emri" është hequr nga lista juaj e të preferuarve',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Preferencat e orës u përditësuan me sukses',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'auth_login' => 'loguar',
+    'auth_register' => 'regjistruar si përdorues i ri',
+    'auth_password_reset_request' => 'kërkoi rivendosjen e fjalëkalimit të përdoruesit',
+    'auth_password_reset_update' => 'rivendos fjalëkalimin e përdoruesit',
+    'mfa_setup_method' => 'konfiguroi metodën MFA',
+    'mfa_setup_method_notification' => 'Metoda Multi-factor u konfigurua me sukses',
+    'mfa_remove_method' => 'hoqi metodën MFA',
+    'mfa_remove_method_notification' => 'Metoda Multi-factor u hoq me sukses',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'përditësoi cilësimet',
+    'settings_update_notification' => 'Cilësimet u përditësuan me sukses',
+    'maintenance_action_run' => 'u zhvillua veprim i mirëmbajtjes',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'u krijua uebhook',
+    'webhook_create_notification' => 'Uebhook-u u krijua me sukses',
+    'webhook_update' => 'përditësoi uebhook',
+    'webhook_update_notification' => 'Uebhook-u u përditësua me sukses',
+    'webhook_delete' => 'fshiu uebhook',
+    'webhook_delete_notification' => 'Uebhook-u u fshi me sukses',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
-    'user_update_notification' => 'User successfully updated',
-    'user_delete' => 'deleted user',
-    'user_delete_notification' => 'User successfully removed',
+    'user_create' => 'krijoi përdorues',
+    'user_create_notification' => 'Përdoruesi u krijua me sukses',
+    'user_update' => 'përditësoi përdorues',
+    'user_update_notification' => 'Përdoruesi u përditësua me sukses',
+    'user_delete' => 'fshi përdorues',
+    'user_delete_notification' => 'Përdoruesi u fshi me sukses',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'krijoi token api',
+    'api_token_create_notification' => 'Token API u krijua me sukses',
+    'api_token_update' => 'përditësoi token api',
+    'api_token_update_notification' => 'Token API u përditësua me sukses',
+    'api_token_delete' => 'fshiu token api',
+    'api_token_delete_notification' => 'Token API u fshi me sukses',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'krijoi rol',
+    'role_create_notification' => 'Roli u krijua me sukses',
+    'role_update' => 'përditësoi rol',
+    'role_update_notification' => 'Roli u përditësua me sukses',
+    'role_delete' => 'fshiu rol',
+    'role_delete_notification' => 'Roli u fshi me sukses',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'boshatisi koshin e riciklimit',
+    'recycle_bin_restore' => 'riktheu nga koshi i riciklimit',
+    'recycle_bin_destroy' => 'fshiu nga koshi i riciklimit',
 
     // Comments
-    'commented_on'                => 'commented on',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'commented_on'                => 'komentoi në',
+    'comment_create'              => 'shtoi koment',
+    'comment_update'              => 'përditësoi koment',
+    'comment_delete'              => 'fshiu koment',
 
     // Other
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'përditësoi lejet',
 ];
