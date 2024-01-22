@@ -40,14 +40,14 @@ return [
     'book_sort_notification'      => '책이 성공적으로 재정렬되었습니다.',
 
     // Bookshelves
-    'bookshelf_create'            => '서가 만들기',
-    'bookshelf_create_notification'    => '서가를 성공적으로 생성했습니다.',
-    'bookshelf_create_from_book'    => '책을 서가로 변환함',
-    'bookshelf_create_from_book_notification'    => '책을 성공적으로 서가로 변환하였습니다.',
-    'bookshelf_update'                 => '업데이트된 서가',
-    'bookshelf_update_notification'    => '서가가 성공적으로 업데이트 되었습니다.',
-    'bookshelf_delete'                 => '삭제된 서가',
-    'bookshelf_delete_notification'    => '서가가 성공적으로 삭제되었습니다.',
+    'bookshelf_create'            => '책장 만들기',
+    'bookshelf_create_notification'    => '책장을 성공적으로 생성했습니다.',
+    'bookshelf_create_from_book'    => '책을 책장으로 변환함',
+    'bookshelf_create_from_book_notification'    => '책을 성공적으로 책장으로 변환하였습니다.',
+    'bookshelf_update'                 => '책장 업데이트됨',
+    'bookshelf_update_notification'    => '책장이 성공적으로 업데이트 되었습니다.',
+    'bookshelf_delete'                 => '삭제된 책장',
+    'bookshelf_delete_notification'    => '책장이 성공적으로 삭제되었습니다.',
 
     // Revisions
     'revision_restore' => '복구된 리비전',
@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" 가 북마크에서 삭제되었습니다.',
 
     // Watching
-    'watch_update_level_notification' => 'Watch 환경설정이 성공적으로 업데이트되었습니다.',
+    'watch_update_level_notification' => '주시 환경설정이 성공적으로 업데이트되었습니다.',
 
     // Auth
     'auth_login' => '로그인 됨',
