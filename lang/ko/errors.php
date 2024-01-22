@@ -21,13 +21,11 @@ return [
     'saml_already_logged_in' => '이미 로그인했습니다.',
     'saml_no_email_address' => '외부 인증 시스템에서 제공한 데이터에서 이 사용자의 이메일 주소를 찾을 수 없습니다.',
     'saml_invalid_response_id' => '이 애플리케이션에서 시작한 프로세스에서 외부 인증 시스템의 요청을 인식하지 못합니다. 로그인 후 다시 이동하면 이 문제가 발생할 수 있습니다.',
-    'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization
-:system 을 사용하여 로그인, 시스템이 성공적인 인증을 제공하지 않음',
+    'saml_fail_authed' => ':system 을 사용하여 로그인, 시스템이 성공적인 인증을 제공하지 않음',
     'oidc_already_logged_in' => '이미 로그인했습니다.',
     'oidc_user_not_registered' => '사용자 :name 이 등록되지 않았으며 자동 등록이 비활성화되었습니다.',
     'oidc_no_email_address' => '외부 인증 시스템에서 제공한 데이터에서 이 사용자의 이메일 주소를 찾을 수 없습니다.',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization
-:system 을 사용하여 로그인, 시스템이 성공적인 인증을 제공하지 않음',
+    'oidc_fail_authed' => ':system 을 사용하여 로그인, 시스템이 성공적인 인증을 제공하지 않음',
     'social_no_action_defined' => '정의된 동작 없음',
     'social_login_bad_response' => ":socialAccount 로 로그인 동안 에러가 발생했습니다: \n:error",
     'social_account_in_use' => ':socialAccount(을)를 가진 사용자가 있습니다. :socialAccount 옵션을 통해 로그인해 보세요.',
@@ -68,7 +66,7 @@ return [
 
     // Entities
     'entity_not_found' => '항목이 없습니다.',
-    'bookshelf_not_found' => '서가를 찾을 수 없음',
+    'bookshelf_not_found' => '책장을 찾을 수 없음',
     'book_not_found' => '책이 없습니다.',
     'page_not_found' => '문서가 없습니다.',
     'chapter_not_found' => '챕터가 없습니다.',
