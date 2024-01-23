@@ -142,7 +142,7 @@ class PageRepo
         } else {
             $defaultTemplate = $page->book->defaultTemplate;
         }
-        
+
         if ($defaultTemplate && userCan('view', $defaultTemplate)) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
