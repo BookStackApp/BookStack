@@ -27,7 +27,7 @@ return [
     'image' => [
         'enabled' => false,
         'binary'  => '/usr/local/bin/wkhtmltoimage',
-        'timeout' => false,
+        'timeout' => 120,
         'options' => [],
         'env'     => [],
     ],
