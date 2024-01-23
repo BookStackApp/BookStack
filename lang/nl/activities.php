@@ -74,7 +74,7 @@ return [
     // Settings
     'settings_update' => 'werkte instellingen bij',
     'settings_update_notification' => 'Instellingen met succes bijgewerkt',
-    'maintenance_action_run' => 'voerde een onderhoudactie uit',
+    'maintenance_action_run' => 'voerde onderhoudsactie uit',
 
     // Webhooks
     'webhook_create' => 'maakte webhook aan',
