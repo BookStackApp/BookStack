@@ -9,6 +9,8 @@ export class AttachmentsList extends Component {
 
     setup() {
         this.container = this.$el;
+        this.fileLinks = this.$manyRefs.linkTypeFile;
+
         this.setupListeners();
     }
 
@@ -27,8 +29,7 @@ export class AttachmentsList extends Component {
     }
 
     addOpenQueryToLinks() {
-        const links = this.container.querySelectorAll('a.attachment-file');
-        for (const link of links) {
+        for (const link of this.fileLinks) {
             if (link.href.split('?')[1] !== 'open=true') {
                 link.href += '?open=true';
                 link.setAttribute('target', '_blank');
@@ -37,8 +38,7 @@ export class AttachmentsList extends Component {
     }
 
     removeOpenQueryFromLinks() {
-        const links = this.container.querySelectorAll('a.attachment-file');
-        for (const link of links) {
+        for (const link of this.fileLinks) {
             link.href = link.href.split('?')[0];
             link.removeAttribute('target');
         }
