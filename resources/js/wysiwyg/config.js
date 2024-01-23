@@ -85,7 +85,8 @@ function filePickerCallback(callback, value, meta) {
                 text: entity.name,
                 title: entity.name,
             });
-        }, selectionText, {
+        }, {
+            initialValue: selectionText,
             searchEndpoint: '/search/entity-selector',
             entityTypes: 'page,book,chapter,bookshelf',
             entityPermission: 'view',
