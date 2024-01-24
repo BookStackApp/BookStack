@@ -49,8 +49,8 @@ return [
 
     // Color settings
     'color_scheme' => 'Lietotnes krāsu shēma',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'color_scheme_desc' => 'Uzstādiet krāsas, ko izmantot aplikācijas lietotātja saskarnē. Krāsas var uzstādīt atsevišķi gaišajam un tumšajam režīmam, lai labāk iederētos vizuālajā tēmā un nodrošinātu lasāmību.',
+    'ui_colors_desc' => 'Uzstādiem aplikācijas primāro krāsu un noklusēto saišu krāsu. Primārā krāsa tiek izmantota galvenokārt lapas galvenē, uz pogām un saskarnes dekoratīvajos elementos. Noklusētā saišu krāsa tiek lietota teksta saitēm un darbībām gan izveidotajā saturā, gan aplikācijas saskarnē.',
     'app_color' => 'Pamatkrāsa',
     'link_color' => 'Noklusētā saišu krāsa',
     'content_colors_desc' => 'Norādīt krāsas visiem lapas hierarhijas elementiem. Lasāmības labad ieteicams izvēlēties krāsas ar līdzīgu spilgtumu kā noklusētajām.',
@@ -92,10 +92,10 @@ return [
     'maint_send_test_email_mail_text' => 'Apsveicam! Tā kā jūs saņēmāt šo epasta paziņojumu, jūsu epasta uzstādījumi šķiet pareizi.',
     'maint_recycle_bin_desc' => 'Dzēstie plaukti, grāmatas, nodaļas un lapas ir pārceltas uz miskasti, lai tos varētu atjaunot vai izdzēst pilnībā. Vecākas vienības miskastē var tikt automātiski dzēstas pēc kāda laika atkarībā no sistēmas uzstādījumiem.',
     'maint_recycle_bin_open' => 'Atvērt miskasti',
-    'maint_regen_references' => 'Regenerate References',
-    'maint_regen_references_desc' => 'This action will rebuild the cross-item reference index within the database. This is usually handled automatically but this action can be useful to index old content or content added via unofficial methods.',
-    'maint_regen_references_success' => 'Reference index has been regenerated!',
-    'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
+    'maint_regen_references' => 'Atjaunot atsauces',
+    'maint_regen_references_desc' => 'Šī darbība no jauna izveidos atsauču indeksu datubāzē. Tas parasti notiek automātiski, taču šī darbība var palīdzēt, lai indeksētu vecāku saturu vai saturu, kas pievienots, izmantojot nestandarta metodes.',
+    'maint_regen_references_success' => 'Atsauču indekss ir izveidots!',
+    'maint_timeout_command_note' => 'Piezīme: Šī darbība var prasīt ilgāku laiku, kas var radīt pieprasījuma laika kļūmes (timeout) pie noteiktiem interneta vietnes uzstādījumiem. Alternatīva var būt veikt šo darbību, izmantojot termināla komandu.',
 
     // Recycle Bin
     'recycle_bin' => 'Miskaste',
@@ -214,8 +214,8 @@ return [
     'users_social_accounts_info' => 'Te jūs varat pieslēgt citus kontus ātrākai un ērtākai piekļuvei. Konta atvienošana no šejienes neatceļ šai aplikācijai dotās tiesības šī konta piekļuvei. Atvienojtiet piekļuvi arī no jūsu profila uzstādījumiem pievienotajā sociālajā kontā.',
     'users_social_connect' => 'Pievienot kontu',
     'users_social_disconnect' => 'Atvienot kontu',
-    'users_social_status_connected' => 'Connected',
-    'users_social_status_disconnected' => 'Disconnected',
+    'users_social_status_connected' => 'Savienots',
+    'users_social_status_disconnected' => 'Atvienots',
     'users_social_connected' => ':socialAccount konts veiksmīgi pieslēgts jūsu profilam.',
     'users_social_disconnected' => ':socialAccount konts veiksmīgi atslēgts no jūsu profila.',
     'users_api_tokens' => 'API žetoni',
