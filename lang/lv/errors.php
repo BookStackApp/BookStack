@@ -43,16 +43,16 @@ return [
     'cannot_get_image_from_url' => 'Nevar iegūt bildi no :url',
     'cannot_create_thumbs' => 'Serveris nevar izveidot samazinātus attēlus. Lūdzu pārbaudiet, vai ir uzstādīts PHP GD paplašinājums.',
     'server_upload_limit' => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Serveris nevar apstrādāt šāda izmēra datus. Lūdzu mēģiniet vēlreiz ar mazāku datu apjomu vai mazāku failu.',
     'uploaded'  => 'Serveris neatļauj šāda izmēra failu ielādi. Lūdzu mēģiniet mazāka izmēra failu.',
 
     // Drawing & Images
     'image_upload_error' => 'Radās kļūda augšupielādējot attēlu',
     'image_upload_type_error' => 'Ielādējamā attēla tips nav derīgs',
     'image_upload_replace_type' => 'Aizvietojot attēlu tipiem ir jābūt vienādiem',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Neizdevās apstrādāt attēla ielādi vai izveidot attēlu variantus sistēmas resursu ierobežojumu dēļ.',
+    'image_thumbnail_memory_limit' => 'Neizdevās izveidot attēla dažādu izmēru variantus sistēmas resursu ierobežojumu dēļ.',
+    'image_gallery_thumbnail_memory_limit' => 'Neizdevās izveidot galerijas sīktēlus sistēmas resursu ierobežojumu dēļ.',
     'drawing_data_not_found' => 'Attēla datus nevarēja ielādēt. Attēla fails, iespējams, vairs neeksistē, vai arī jums varētu nebūt piekļuves tiesības tam.',
 
     // Attachments
@@ -115,5 +115,5 @@ return [
     'maintenance_test_email_failure' => 'Radusies kļūda sūtot testa epastu:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'Adrese (URL) nesakrīt ar atļautajām SSR adresēm',
 ];

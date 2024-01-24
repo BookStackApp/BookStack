@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'ביטול',
-    'close' => 'Close',
+    'close' => 'סגור',
     'confirm' => 'אישור',
     'back' => 'אחורה',
     'save' => 'שמור',
@@ -42,7 +42,7 @@ return [
     'remove' => 'הסר',
     'add' => 'הוסף',
     'configure' => 'הגדרות',
-    'manage' => 'Manage',
+    'manage' => 'נהל',
     'fullscreen' => 'מסך מלא',
     'favourite' => 'מועדף',
     'unfavourite' => 'בטל מועדף',

@@ -18,17 +18,12 @@ export class EntitySelectorPopup extends Component {
     /**
      * Show the selector popup.
      * @param {Function} callback
-     * @param {String} searchText
      * @param {EntitySelectorSearchOptions} searchOptions
      */
-    show(callback, searchText = '', searchOptions = {}) {
+    show(callback, searchOptions = {}) {
         this.callback = callback;
         this.getSelector().configureSearchOptions(searchOptions);
         this.getPopup().show();
-
-        if (searchText) {
-            this.getSelector().searchText(searchText);
-        }
 
         this.getSelector().focusSearch();
     }

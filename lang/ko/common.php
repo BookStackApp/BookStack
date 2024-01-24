@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => '취소',
-    'close' => 'Close',
+    'close' => '닫기',
     'confirm' => '확인',
     'back' => '뒤로',
     'save' => '저장',
@@ -26,7 +26,7 @@ return [
     'actions' => '활동',
     'view' => '보기',
     'view_all' => '모두 보기',
-    'new' => 'New',
+    'new' => '신규',
     'create' => '만들기',
     'update' => '바꾸기',
     'edit' => '수정',
@@ -42,7 +42,7 @@ return [
     'remove' => '제거',
     'add' => '추가',
     'configure' => '설정',
-    'manage' => 'Manage',
+    'manage' => '관리',
     'fullscreen' => '전체화면',
     'favourite' => '즐겨찾기',
     'unfavourite' => '즐겨찾기 해제',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => '모든 필터 해제',
     'download' => '내려받기',
     'open_in_tab' => '탭에서 열기',
-    'open' => 'Open',
+    'open' => '열기 ',
 
     // Sort Options
     'sort_options' => '정렬 기준',

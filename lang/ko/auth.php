@@ -29,7 +29,7 @@ return [
     'already_have_account' => '계정이 있나요?',
     'dont_have_account' => '계정이 없나요?',
     'social_login' => '소셜 로그인',
-    'social_registration' => '소셜 가입',
+    'social_registration' => '소셜 계정으로 가입',
     'social_registration_text' => '소셜 계정으로 가입하고 로그인합니다.',
 
     'register_thanks' => '가입해 주셔서 감사합니다!',

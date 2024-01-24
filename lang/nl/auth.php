@@ -7,14 +7,14 @@
 return [
 
     'failed' => 'Deze inloggegevens zijn niet bij ons bekend.',
-    'throttle' => 'Te veel login pogingen! Probeer het opnieuw na :seconds seconden.',
+    'throttle' => 'Te veel inlogpogingen! Probeer het opnieuw na :seconds seconden.',
 
     // Login & Register
-    'sign_up' => 'Registreren',
-    'log_in' => 'Inloggen',
-    'log_in_with' => 'Login met :socialDriver',
+    'sign_up' => 'Registreer',
+    'log_in' => 'Log in',
+    'log_in_with' => 'Log in met :socialDriver',
     'sign_up_with' => 'Registreer met :socialDriver',
-    'logout' => 'Uitloggen',
+    'logout' => 'Log uit',
 
     'name' => 'Naam',
     'username' => 'Gebruikersnaam',
@@ -23,7 +23,7 @@ return [
     'password_confirm' => 'Wachtwoord Bevestigen',
     'password_hint' => 'Moet uit minstens 8 tekens bestaan',
     'forgot_password' => 'Wachtwoord vergeten?',
-    'remember_me' => 'Mij onthouden',
+    'remember_me' => 'Onthoud Mij',
     'ldap_email_hint' => 'Geef een e-mailadres op voor dit account.',
     'create_account' => 'Account aanmaken',
     'already_have_account' => 'Heb je al een account?',
@@ -87,7 +87,7 @@ return [
     'mfa_setup_reconfigure' => 'Herconfigureren',
     'mfa_setup_remove_confirmation' => 'Weet je zeker dat je deze multi-factor authenticatie methode wilt verwijderen?',
     'mfa_setup_action' => 'Instellen',
-    'mfa_backup_codes_usage_limit_warning' => 'U heeft minder dan 5 back-upcodes resterend. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',
+    'mfa_backup_codes_usage_limit_warning' => 'U heeft minder dan 5 back-upcodes over. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',
     'mfa_option_totp_title' => 'Mobiele app',
     'mfa_option_totp_desc' => 'Om multi-factor authenticatie te gebruiken heeft u een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Back-up Codes',

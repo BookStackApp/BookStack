@@ -9,7 +9,7 @@ return [
 
     // Standard laravel validation lines
     'accepted'             => ':attribute(을)를 허용하세요.',
-    'active_url'           => ':attribute(을)를 유효한 주소로 구성하세요.',
+    'active_url'           => ':attribute이 유효한 URL이 아닙니다.',
     'after'                => ':attribute(을)를 :date 후로 설정하세요.',
     'alpha'                => ':attribute(을)를 문자로만 구성하세요.',
     'alpha_dash'           => ':attribute(을)를 문자, 숫자, -, _로만 구성하세요.',
