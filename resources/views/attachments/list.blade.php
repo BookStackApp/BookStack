@@ -2,7 +2,9 @@
     @foreach($attachments as $attachment)
         <div class="attachment icon-list">
             <div class="split-icon-list-item attachment-{{ $attachment->external ? 'link' : 'file' }}">
-                <a href="{{ $attachment->getUrl() }}" @if($attachment->external) target="_blank" @endif>
+                <a href="{{ $attachment->getUrl() }}"
+                   refs="attachments-list@link-type-{{ $attachment->external ? 'link' : 'file' }}"
+                   @if($attachment->external) target="_blank" @endif>
                     <div class="icon">@icon($attachment->external ? 'export' : 'file')</div>
                     <div class="label">{{ $attachment->name }}</div>
                 </a>

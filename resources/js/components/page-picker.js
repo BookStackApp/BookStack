@@ -35,7 +35,8 @@ export class PagePicker extends Component {
         const selectorPopup = window.$components.first('entity-selector-popup');
         selectorPopup.show(entity => {
             this.setValue(entity.id, entity.name);
-        }, '', {
+        }, {
+            initialValue: '',
             searchEndpoint: this.selectorEndpoint,
             entityTypes: 'page',
             entityPermission: 'view',

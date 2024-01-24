@@ -13,7 +13,7 @@ return [
     'updated_page_debounce' => 'Pour éviter de nombreuses notifications, pendant un certain temps, vous ne recevrez pas de notifications pour d\'autres modifications de cette page par le même éditeur.',
 
     'detail_page_name' => 'Nom de la page :',
-    'detail_page_path' => 'Page Path:',
+    'detail_page_path' => 'Chemin de la page :',
     'detail_commenter' => 'Commenta·teur·trice :',
     'detail_comment' => 'Commentaire :',
     'detail_created_by' => 'Créé par :',

@@ -58,7 +58,8 @@ export function register(editor) {
 
             editor.selection.collapse(false);
             editor.focus();
-        }, selectionText, {
+        }, {
+            initialValue: selectionText,
             searchEndpoint: '/search/entity-selector',
             entityTypes: 'page,book,chapter,bookshelf',
             entityPermission: 'view',

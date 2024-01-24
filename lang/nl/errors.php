@@ -106,9 +106,9 @@ return [
     // API errors
     'api_no_authorization_found' => 'Geen autorisatie token gevonden',
     'api_bad_authorization_format' => 'Een autorisatie token is gevonden, maar het formaat schijnt onjuist te zijn',
-    'api_user_token_not_found' => 'Er is geen overeenkomende API token gevonden voor de opgegeven autorisatie token',
-    'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API token is onjuist',
-    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API token heeft geen machtiging om API calls te maken',
+    'api_user_token_not_found' => 'Er is geen overeenkomende API-token gevonden voor de opgegeven autorisatie token',
+    'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API-token is onjuist',
+    'api_user_no_api_permission' => 'De eigenaar van de gebruikte API-token heeft geen machtiging om API calls te maken',
     'api_user_token_expired' => 'De gebruikte autorisatie token is verlopen',
 
     // Settings & Maintenance
