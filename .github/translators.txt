@@ -388,3 +388,8 @@ diegobenitez :: Spanish
 Marc Hagen (MarcHagen) :: Dutch
 Kasper Alsøe (zeonos) :: Danish
 sultani :: Persian
+renge :: Korean
+TheGatesDev (thegatesdev) :: Dutch
+Irdi (irdiOL) :: Albanian
+KateBarber :: Welsh
+Twister (theuncles75) :: Hebrew
