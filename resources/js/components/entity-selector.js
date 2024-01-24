@@ -6,6 +6,7 @@ import {Component} from './component';
  * @property entityTypes string
  * @property entityPermission string
  * @property searchEndpoint string
+ * @property initialValue string
  */
 
 /**
@@ -25,6 +26,7 @@ export class EntitySelector extends Component {
             entityTypes: this.$opts.entityTypes || 'page,book,chapter',
             entityPermission: this.$opts.entityPermission || 'view',
             searchEndpoint: this.$opts.searchEndpoint || '',
+            initialValue: this.searchInput.value || '',
         };
 
         this.search = '';
@@ -44,6 +46,7 @@ export class EntitySelector extends Component {
     configureSearchOptions(options) {
         Object.assign(this.searchOptions, options);
         this.reset();
+        this.searchInput.value = this.searchOptions.initialValue;
     }
 
     setupListeners() {
@@ -108,11 +111,6 @@ export class EntitySelector extends Component {
         this.searchInput.focus();
     }
 
-    searchText(queryText) {
-        this.searchInput.value = queryText;
-        this.searchEntities(queryText);
-    }
-
     showLoading() {
         this.loading.style.display = 'block';
         this.resultsContainer.style.display = 'none';
@@ -126,6 +124,11 @@ export class EntitySelector extends Component {
     initialLoad() {
         if (!this.searchOptions.searchEndpoint) {
             throw new Error('Search endpoint not set for entity-selector load');
+        }
+
+        if (this.searchOptions.initialValue) {
+            this.searchEntities(this.searchOptions.initialValue);
+            return;
         }
 
         window.$http.get(this.searchUrl()).then(resp => {
