@@ -83,15 +83,9 @@ class OidcOAuthProvider extends AbstractProvider
 
     /**
      * Checks a provider response for errors.
-     *
-     * @param ResponseInterface $response
-     * @param array|string      $data     Parsed response data
-     *
      * @throws IdentityProviderException
-     *
-     * @return void
      */
-    protected function checkResponse(ResponseInterface $response, $data)
+    protected function checkResponse(ResponseInterface $response, $data): void
     {
         if ($response->getStatusCode() >= 400 || isset($data['error'])) {
             throw new IdentityProviderException(
@@ -105,13 +99,8 @@ class OidcOAuthProvider extends AbstractProvider
     /**
      * Generates a resource owner object from a successful resource owner
      * details request.
-     *
-     * @param array       $response
-     * @param AccessToken $token
-     *
-     * @return ResourceOwnerInterface
      */
-    protected function createResourceOwner(array $response, AccessToken $token)
+    protected function createResourceOwner(array $response, AccessToken $token): ResourceOwnerInterface
     {
         return new GenericResourceOwner($response, '');
     }
@@ -121,14 +110,18 @@ class OidcOAuthProvider extends AbstractProvider
      *
      * The grant that was used to fetch the response can be used to provide
      * additional context.
-     *
-     * @param array         $response
-     * @param AbstractGrant $grant
-     *
-     * @return OidcAccessToken
      */
-    protected function createAccessToken(array $response, AbstractGrant $grant)
+    protected function createAccessToken(array $response, AbstractGrant $grant): OidcAccessToken
     {
         return new OidcAccessToken($response);
+    }
+
+    /**
+     * Get the method used for PKCE code verifier hashing, which is passed
+     * in the "code_challenge_method" parameter in the authorization request.
+     */
+    protected function getPkceMethod(): string
+    {
+        return static::PKCE_METHOD_S256;
     }
 }
