@@ -96,6 +96,27 @@ window.addEventListener('editor-drawio::configure', event => {
 });
 ```
 
+### `editor-drawio::export`
+
+This event is triggered when an export action is initiated in the embedded diagrams.net drawing editor. It allows for dynamic configuration of the export parameters of diagrams.net, offering greater flexibility and control over the export process.
+See [this diagrams.net page](https://www.drawio.com/doc/faq/embed-mode) for details on the available options for the configure event.
+
+#### Event Data
+
+- `config` - The configuration object used for the export function in diagrams.net.
+  - The default settings include format: 'xmlpng', xml: message.xml, and spin: 'Updating drawing'.
+  - You can modify this object in-place to customize the export parameters as per your requirements.
+
+##### Example
+
+```javascript
+// Set export scale parameter to 2
+window.addEventListener('editor-drawio::export', event => {
+    const config = event.detail.config;
+    config.scale = 2;
+});
+```
+
 ### `editor-tinymce::pre-init`
 
 This event is called before the TinyMCE editor, used as the BookStack WYSIWYG page editor, is initialised.

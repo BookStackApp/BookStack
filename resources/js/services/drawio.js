@@ -21,9 +21,11 @@ function drawEventExport(message) {
 }
 
 function drawEventSave(message) {
-    drawPostMessage({
-        action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing',
-    });
+    const config = {
+        format: 'xmlpng', xml: message.xml, spin: 'Updating drawing',
+    };
+    window.$events.emitPublic(iFrame, 'editor-drawio::export', {config});
+    drawPostMessage({action: 'export', ...config});
 }
 
 function drawEventInit() {
