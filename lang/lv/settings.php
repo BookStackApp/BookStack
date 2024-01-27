@@ -249,8 +249,8 @@ return [
 
     // Webhooks
     'webhooks' => 'Webhook',
-    'webhooks_index_desc' => 'Webhooks are a way to send data to external URLs when certain actions and events occur within the system which allows event-based integration with external platforms such as messaging or notification systems.',
-    'webhooks_x_trigger_events' => ':count trigger event|:count trigger events',
+    'webhooks_index_desc' => 'Webhook ir veids, kā nosūtīt datus ārējām adresēm (URL) pie noteiktām darbībām vai notikumiem sistēmā. Tas ļauj īstenot uz notikumiem balstītu integrāciju ar ārējām platformām, kā piemēram, apziņošanas sistēmām.',
+    'webhooks_x_trigger_events' => ':count notikums|:count notikumi',
     'webhooks_create' => 'Izveidot jaunu webhook',
     'webhooks_none_created' => 'Nav izveidots neviens webhook.',
     'webhooks_edit' => 'Labot webhook',
