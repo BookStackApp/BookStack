@@ -59,11 +59,11 @@ return [
     'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Skatīšanas uzstādījumi veiksmīgi atjaunināti',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_login' => 'pieteicies',
+    'auth_register' => 'reģistrējies kā jauns lietotājs',
     'auth_password_reset_request' => 'pieprasīja lietotāja paroles atiestatīšanu',
     'auth_password_reset_update' => 'atiestatīja lietotāja paroli',
     'mfa_setup_method' => 'uzstādīja MFA metodi',
