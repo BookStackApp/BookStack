@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
@@ -132,8 +132,8 @@ return [
     'books_edit_named' => 'ویرایش کتاب:bookName',
     'books_form_book_name' => 'نام کتاب',
     'books_save' => 'ذخیره کتاب',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'books_default_template' => 'قالب پیش فرض صفحه',
+    'books_default_template_explain' => 'یک الگوی صفحه اختصاص دهید که به عنوان قالب پیش‌فرض برای همه صفحات جدید این کتاب استفاده شود. به خاطر داشته باشید که این قالب تنها در صورتی استفاده می‌شود که سازنده صفحه به قالب انتخابی، دسترسی داشته باشد.',
     'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'مجوزهای کتاب',
     'books_permissions_updated' => 'مجوزهای کتاب به روز شد',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'مراجع',
     'references_none' => 'هیچ رفرنسی برای این قلم یافت نشد.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
 
     // Watch Options
     'watch' => 'نظارت',
