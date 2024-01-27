@@ -18,7 +18,7 @@ return [
     'image_search_hint' => 'جستجو بر اساس نام تصویر',
     'image_uploaded' => 'بارگذاری شده :uploadedDate',
     'image_uploaded_by' => 'بارگذاری شده توسط:userName',
-    'image_uploaded_to' => 'بارگذاری شده در صفحه:pageLink',
+    'image_uploaded_to' => 'بارگذاری شده در صفحه :pageLink',
     'image_updated' => 'به‌روزرسانی شده در:updateDate',
     'image_load_more' => 'بارگذاری بیشتر',
     'image_image_name' => 'نام تصویر',
