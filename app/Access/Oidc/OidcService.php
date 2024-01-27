@@ -33,6 +33,8 @@ class OidcService
 
     /**
      * Initiate an authorization flow.
+     * Provides back an authorize redirect URL, in addition to other
+     * details which may be required for the auth flow.
      *
      * @throws OidcException
      *
@@ -42,8 +44,12 @@ class OidcService
     {
         $settings = $this->getProviderSettings();
         $provider = $this->getProvider($settings);
+
+        $url = $provider->getAuthorizationUrl();
+        session()->put('oidc_pkce_code', $provider->getPkceCode() ?? '');
+
         return [
-            'url'   => $provider->getAuthorizationUrl(),
+            'url'   => $url,
             'state' => $provider->getState(),
         ];
     }
@@ -62,6 +68,10 @@ class OidcService
     {
         $settings = $this->getProviderSettings();
         $provider = $this->getProvider($settings);
+
+        // Set PKCE code flashed at login
+        $pkceCode = session()->pull('oidc_pkce_code', '');
+        $provider->setPkceCode($pkceCode);
 
         // Try to exchange authorization code for access token
         $accessToken = $provider->getAccessToken('authorization_code', [
