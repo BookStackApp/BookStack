@@ -52,7 +52,7 @@ return [
     'image_upload_replace_type' => 'جایگزینی فایل تصویری باید از یک نوع باشد',
     'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
     'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'به دلیل محدودیت منابع سیستم، تصاویر کوچک گالری ایجاد نشد.',
     'drawing_data_not_found' => 'داده های طرح قابل بارگذاری نیستند. ممکن است فایل طرح دیگر وجود نداشته باشد یا شما به آن دسترسی نداشته باشید.',
 
     // Attachments
