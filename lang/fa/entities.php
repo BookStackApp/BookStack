@@ -134,7 +134,7 @@ return [
     'books_save' => 'ذخیره کتاب',
     'books_default_template' => 'قالب پیش فرض صفحه',
     'books_default_template_explain' => 'یک الگوی صفحه اختصاص دهید که به عنوان قالب پیش‌فرض برای همه صفحات جدید این کتاب استفاده شود. به خاطر داشته باشید که این قالب تنها در صورتی استفاده می‌شود که سازنده صفحه به قالب انتخابی، دسترسی داشته باشد.',
-    'books_default_template_select' => 'Select a template page',
+    'books_default_template_select' => 'یک صفحه قالب را انتخاب کنید',
     'books_permissions' => 'مجوزهای کتاب',
     'books_permissions_updated' => 'مجوزهای کتاب به روز شد',
     'books_empty_contents' => 'هیچ صفحه یا فصلی برای این کتاب ایجاد نشده است.',
