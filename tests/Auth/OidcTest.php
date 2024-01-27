@@ -655,6 +655,34 @@ class OidcTest extends TestCase
         ]);
     }
 
+    public function test_pkce_used_on_authorize_and_access()
+    {
+        // Start auth
+        $resp = $this->post('/oidc/login');
+        $state = session()->get('oidc_state');
+
+        $pkceCode = session()->get('oidc_pkce_code');
+        $this->assertGreaterThan(30, strlen($pkceCode));
+
+        $expectedCodeChallenge = trim(strtr(base64_encode(hash('sha256', $pkceCode, true)), '+/', '-_'), '=');
+        $redirect = $resp->headers->get('Location');
+        $redirectParams = [];
+        parse_str(parse_url($redirect, PHP_URL_QUERY), $redirectParams);
+        $this->assertEquals($expectedCodeChallenge, $redirectParams['code_challenge']);
+        $this->assertEquals('S256', $redirectParams['code_challenge_method']);
+
+        $transactions = $this->mockHttpClient([$this->getMockAuthorizationResponse([
+            'email' => 'benny@example.com',
+            'sub'   => 'benny1010101',
+        ])]);
+
+        $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $tokenRequest = $transactions->latestRequest();
+        $bodyParams = [];
+        parse_str($tokenRequest->getBody(), $bodyParams);
+        $this->assertEquals($pkceCode, $bodyParams['code_verifier']);
+    }
+
     protected function withAutodiscovery()
     {
         config()->set([
