@@ -210,7 +210,7 @@ return [
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Page deleted',
     'pages_delete_draft_success' => 'Draft page deleted',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Are you sure you want to delete this page?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
