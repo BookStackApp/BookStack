@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF File',
     'export_text' => 'Plain Text File',
     'export_md' => 'Markdown File',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book/chapter. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Permissions',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Edit Book :bookName',
     'books_form_book_name' => 'Book Name',
     'books_save' => 'Save Book',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Book Permissions',
     'books_permissions_updated' => 'Book Permissions Updated',
     'books_empty_contents' => 'No pages or chapters have been created for this book.',
@@ -192,9 +192,6 @@ return [
     'chapters_permissions_success' => 'Chapter Permissions Updated',
     'chapters_search_this' => 'Search this chapter',
     'chapter_sort_book' => 'Sort Book',
-    'chapter_default_template' => 'Default Page Template',
-    'chapter_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this chapter. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'chapter_default_template_select' => 'Select a template page',
 
     // Pages
     'page' => 'Page',
