@@ -6,25 +6,25 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
-    'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'updated page',
-    'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'deleted page',
-    'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'restored page',
-    'page_restore_notification'   => 'Page successfully restored',
-    'page_move'                   => 'moved page',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_create'                 => 'креирана страница',
+    'page_create_notification'    => 'Страница је успешно креирана',
+    'page_update'                 => 'ажурирана страница',
+    'page_update_notification'    => 'Страница је успешно ажурирана',
+    'page_delete'                 => 'обрисана страница',
+    'page_delete_notification'    => 'Страница је успешно обрисана',
+    'page_restore'                => 'обновљена страна',
+    'page_restore_notification'   => 'Страница је успешно обновљена',
+    'page_move'                   => 'премештена страна',
+    'page_move_notification'      => 'Страница је успешно померена',
 
     // Chapters
-    'chapter_create'              => 'created chapter',
-    'chapter_create_notification' => 'Chapter successfully created',
-    'chapter_update'              => 'updated chapter',
-    'chapter_update_notification' => 'Chapter successfully updated',
-    'chapter_delete'              => 'deleted chapter',
-    'chapter_delete_notification' => 'Chapter successfully deleted',
-    'chapter_move'                => 'moved chapter',
+    'chapter_create'              => 'креирано поглавље',
+    'chapter_create_notification' => 'Поглавље је успешно креирано',
+    'chapter_update'              => 'ажурирано поглавље',
+    'chapter_update_notification' => 'Поглавље је успешно обновљено',
+    'chapter_delete'              => 'обрисано поглавље',
+    'chapter_delete_notification' => 'Поглавље је успешно обрисано',
+    'chapter_move'                => 'премештено поглавље',
     'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
