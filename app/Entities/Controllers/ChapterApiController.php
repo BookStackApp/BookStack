@@ -15,20 +15,22 @@ class ChapterApiController extends ApiController
 {
     protected $rules = [
         'create' => [
-            'book_id'          => ['required', 'integer'],
-            'name'             => ['required', 'string', 'max:255'],
-            'description'      => ['string', 'max:1900'],
-            'description_html' => ['string', 'max:2000'],
-            'tags'             => ['array'],
-            'priority'         => ['integer'],
+            'book_id'             => ['required', 'integer'],
+            'name'                => ['required', 'string', 'max:255'],
+            'description'         => ['string', 'max:1900'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'priority'            => ['integer'],
+            'default_template_id' => ['nullable', 'integer'],
         ],
         'update' => [
-            'book_id'          => ['integer'],
-            'name'             => ['string', 'min:1', 'max:255'],
-            'description'      => ['string', 'max:1900'],
-            'description_html' => ['string', 'max:2000'],
-            'tags'             => ['array'],
-            'priority'         => ['integer'],
+            'book_id'             => ['integer'],
+            'name'                => ['string', 'min:1', 'max:255'],
+            'description'         => ['string', 'max:1900'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'priority'            => ['integer'],
+            'default_template_id' => ['nullable', 'integer'],
         ],
     ];
 
