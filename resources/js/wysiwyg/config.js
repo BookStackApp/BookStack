@@ -143,16 +143,23 @@ function gatherPlugins(options) {
 }
 
 /**
- * Fetch custom HTML head content from the parent page head into the editor.
+ * Fetch custom HTML head content nodes from the outer page head
+ * and add them to the given editor document.
+ * @param {Document} editorDoc
  */
-function fetchCustomHeadContent() {
+function addCustomHeadContent(editorDoc) {
     const headContentLines = document.head.innerHTML.split('\n');
     const startLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- Start: custom user content -->');
     const endLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- End: custom user content -->');
     if (startLineIndex === -1 || endLineIndex === -1) {
-        return '';
+        return;
     }
-    return headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
+
+    const customHeadHtml = headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
+    const el = editorDoc.createElement('div');
+    el.innerHTML = customHeadHtml;
+
+    editorDoc.head.append(...el.children);
 }
 
 /**
@@ -284,8 +291,7 @@ export function buildForEditor(options) {
             }
         },
         init_instance_callback(editor) {
-            const head = editor.getDoc().querySelector('head');
-            head.innerHTML += fetchCustomHeadContent();
+            addCustomHeadContent(editor.getDoc());
         },
         setup(editor) {
             registerCustomIcons(editor);
@@ -335,8 +341,7 @@ export function buildForInput(options) {
         file_picker_types: 'file',
         file_picker_callback: filePickerCallback,
         init_instance_callback(editor) {
-            const head = editor.getDoc().querySelector('head');
-            head.innerHTML += fetchCustomHeadContent();
+            addCustomHeadContent(editor.getDoc());
 
             editor.contentDocument.documentElement.classList.toggle('dark-mode', options.darkMode);
         },
