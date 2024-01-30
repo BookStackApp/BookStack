@@ -1,6 +1,6 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
-import {buildForInput} from "../wysiwyg/config";
+import {buildForInput} from '../wysiwyg/config';
 
 export class PageComments extends Component {
 
@@ -65,9 +65,8 @@ export class PageComments extends Component {
         this.form.after(loading);
         this.form.toggleAttribute('hidden', true);
 
-        const text = this.formInput.value;
         const reqData = {
-            text,
+            html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
         };
 
@@ -92,6 +91,7 @@ export class PageComments extends Component {
     }
 
     resetForm() {
+        this.removeEditor();
         this.formInput.value = '';
         this.parentId = null;
         this.replyToRow.toggleAttribute('hidden', true);
@@ -99,6 +99,7 @@ export class PageComments extends Component {
     }
 
     showForm() {
+        this.removeEditor();
         this.formContainer.toggleAttribute('hidden', false);
         this.addButtonContainer.toggleAttribute('hidden', true);
         this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
@@ -118,6 +119,7 @@ export class PageComments extends Component {
 
     loadEditor() {
         if (this.wysiwygEditor) {
+            this.wysiwygEditor.focus();
             return;
         }
 
@@ -132,8 +134,15 @@ export class PageComments extends Component {
 
         window.tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
-            this.wysiwygEditor.focus();
+            setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
+    }
+
+    removeEditor() {
+        if (this.wysiwygEditor) {
+            this.wysiwygEditor.remove();
+            this.wysiwygEditor = null;
+        }
     }
 
     getCommentCount() {

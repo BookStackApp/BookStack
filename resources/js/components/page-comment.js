@@ -1,6 +1,6 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
-import {buildForInput} from "../wysiwyg/config";
+import {buildForInput} from '../wysiwyg/config';
 
 export class PageComment extends Component {
 
@@ -58,6 +58,7 @@ export class PageComment extends Component {
         this.toggleEditMode(true);
 
         if (this.wysiwygEditor) {
+            this.wysiwygEditor.focus();
             return;
         }
 
@@ -72,6 +73,7 @@ export class PageComment extends Component {
 
         window.tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
+            setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
     }
 
@@ -81,7 +83,7 @@ export class PageComment extends Component {
         this.form.toggleAttribute('hidden', true);
 
         const reqData = {
-            text: this.input.value,
+            html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
         };
 
