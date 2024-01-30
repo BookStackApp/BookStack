@@ -22,8 +22,8 @@ class CommentController extends Controller
      */
     public function savePageComment(Request $request, int $pageId)
     {
-        $this->validate($request, [
-            'text'      => ['required', 'string'],
+        $input = $this->validate($request, [
+            'html'      => ['required', 'string'],
             'parent_id' => ['nullable', 'integer'],
         ]);
 
@@ -39,7 +39,7 @@ class CommentController extends Controller
 
         // Create a new comment.
         $this->checkPermission('comment-create-all');
-        $comment = $this->commentRepo->create($page, $request->get('text'), $request->get('parent_id'));
+        $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null);
 
         return view('comments.comment-branch', [
             'readOnly' => false,
@@ -57,17 +57,20 @@ class CommentController extends Controller
      */
     public function update(Request $request, int $commentId)
     {
-        $this->validate($request, [
-            'text' => ['required', 'string'],
+        $input = $this->validate($request, [
+            'html' => ['required', 'string'],
         ]);
 
         $comment = $this->commentRepo->getById($commentId);
         $this->checkOwnablePermission('page-view', $comment->entity);
         $this->checkOwnablePermission('comment-update', $comment);
 
-        $comment = $this->commentRepo->update($comment, $request->get('text'));
+        $comment = $this->commentRepo->update($comment, $input['html']);
 
-        return view('comments.comment', ['comment' => $comment, 'readOnly' => false]);
+        return view('comments.comment', [
+            'comment' => $comment,
+            'readOnly' => false,
+        ]);
     }
 
     /**

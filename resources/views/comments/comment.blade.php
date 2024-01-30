@@ -77,7 +77,7 @@
     @if(!$readOnly && userCan('comment-update', $comment))
         <form novalidate refs="page-comment@form" hidden class="content pt-s px-s block">
             <div class="form-group description-input">
-                <textarea refs="page-comment@input" name="markdown" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->text }}</textarea>
+                <textarea refs="page-comment@input" name="html" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->html }}</textarea>
             </div>
             <div class="form-group text-right">
                 <button type="button" class="button outline" refs="page-comment@form-cancel">{{ trans('common.cancel') }}</button>
