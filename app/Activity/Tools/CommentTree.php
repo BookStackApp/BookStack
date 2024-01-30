@@ -41,6 +41,17 @@ class CommentTree
         return $this->tree;
     }
 
+    public function canUpdateAny(): bool
+    {
+        foreach ($this->comments as $comment) {
+            if (userCan('comment-update', $comment)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * @param Comment[] $comments
      */
