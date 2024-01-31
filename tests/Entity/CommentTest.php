@@ -117,6 +117,29 @@ class CommentTest extends TestCase
         $resp->assertDontSee('superbadonclick', false);
     }
 
+    public function test_comment_html_is_limited()
+    {
+        $page = $this->entities->page();
+        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" data-a="b">a</a><section>Hello</section></p>';
+        $expected = '<p>Content<a href="#cat">a</a></p>';
+
+        $resp = $this->asAdmin()->post("/comment/{$page->id}", ['html' => $input]);
+        $resp->assertOk();
+        $this->assertDatabaseHas('comments', [
+           'entity_type' => 'page',
+           'entity_id' => $page->id,
+           'html' => $expected,
+        ]);
+
+        $comment = $page->comments()->first();
+        $resp = $this->put("/comment/{$comment->id}", ['html' => $input]);
+        $resp->assertOk();
+        $this->assertDatabaseHas('comments', [
+            'id'   => $comment->id,
+            'html' => $expected,
+        ]);
+    }
+
     public function test_reply_comments_are_nested()
     {
         $this->asAdmin();
