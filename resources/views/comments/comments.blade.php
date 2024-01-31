@@ -40,6 +40,9 @@
             <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
             @include('form.editor-translations')
         @endpush
+        @push('post-app-html')
+            @include('entities.selector-popup')
+        @endpush
     @endif
 
 </section>
