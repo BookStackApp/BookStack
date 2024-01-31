@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'visszaállította az oldalt:',
     'page_restore_notification'   => 'Oldal sikeresen visszaállítva',
     'page_move'                   => 'áthelyezte az oldalt:',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Oldal sikeresen áthelyezve',
 
     // Chapters
     'chapter_create'              => 'létrehozta a fejezetet:',
@@ -25,13 +25,13 @@ return [
     'chapter_delete'              => 'törölte a fejezetet:',
     'chapter_delete_notification' => 'Fejezet sikeresen törölve',
     'chapter_move'                => 'áthelyezte a fejezetet:',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Fejezet sikeresen áthelyezve',
 
     // Books
     'book_create'                 => 'létrehozott egy könyvet:',
     'book_create_notification'    => 'Könyv sikeresen létrehozva',
-    'book_create_from_chapter'              => 'converted chapter to book',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter'              => 'fejezet könyvvé alakítva',
+    'book_create_from_chapter_notification' => 'Fejezet sikeresen könyvvé lett alakítva',
     'book_update'                 => 'frissítette a könyvet:',
     'book_update_notification'    => 'Könyv sikeresen frissítve',
     'book_delete'                 => 'törölte a könyvet:',
@@ -40,19 +40,19 @@ return [
     'book_sort_notification'      => 'Könyv sikeresen újrarendezve',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
+    'bookshelf_create'            => 'létrehozta a polcot',
     'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create_from_book'    => 'polccá alakított könyv',
+    'bookshelf_create_from_book_notification'    => 'Könyv sikeresen polccá lett alakítva',
+    'bookshelf_update'                 => 'frissített polc',
+    'bookshelf_update_notification'    => 'Polc sikeresen frissítve',
+    'bookshelf_delete'                 => 'törölt polc',
+    'bookshelf_delete_notification'    => 'Polc sikeresen törölve',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'visszaállította a változatot',
+    'revision_delete' => 'törölte a változatot',
+    'revision_delete_notification' => 'Változat sikeresen törölve',
 
     // Favourites
     'favourite_add_notification' => '":name" has been added to your favourites',
@@ -104,7 +104,7 @@ return [
     'role_create' => 'created role',
     'role_create_notification' => 'Role successfully created',
     'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
+    'role_update_notification' => 'Szerepkör sikeresen frissítve',
     'role_delete' => 'deleted role',
     'role_delete_notification' => 'Role successfully deleted',
 
