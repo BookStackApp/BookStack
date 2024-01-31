@@ -16,7 +16,7 @@
         <div class="content px-s pt-s">
             <form refs="page-comments@form" novalidate>
                 <div class="form-group description-input">
-                <textarea refs="page-comments@form-input" name="markdown"
+                <textarea refs="page-comments@form-input" name="html"
                           rows="3"
                           placeholder="{{ trans('entities.comment_placeholder') }}"></textarea>
                 </div>
