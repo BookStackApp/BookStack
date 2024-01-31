@@ -1,3 +1,6 @@
+@php
+    $commentHtml = $comment->safeHtml();
+@endphp
 <div component="{{ $readOnly ? '' : 'page-comment' }}"
      option:page-comment:comment-id="{{ $comment->id }}"
      option:page-comment:comment-local-id="{{ $comment->local_id }}"
@@ -71,13 +74,13 @@
                 <a class="text-muted text-small" href="#comment{{ $comment->parent_id }}">@icon('reply'){{ trans('entities.comment_in_reply_to', ['commentId' => '#' . $comment->parent_id]) }}</a>
             </p>
         @endif
-        {!! $comment->html  !!}
+        {!! $commentHtml  !!}
     </div>
 
     @if(!$readOnly && userCan('comment-update', $comment))
         <form novalidate refs="page-comment@form" hidden class="content pt-s px-s block">
             <div class="form-group description-input">
-                <textarea refs="page-comment@input" name="html" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $comment->html }}</textarea>
+                <textarea refs="page-comment@input" name="html" rows="3" placeholder="{{ trans('entities.comment_placeholder') }}">{{ $commentHtml }}</textarea>
             </div>
             <div class="form-group text-right">
                 <button type="button" class="button outline" refs="page-comment@form-cancel">{{ trans('common.cancel') }}</button>

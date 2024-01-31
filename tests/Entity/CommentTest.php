@@ -82,11 +82,10 @@ class CommentTest extends TestCase
 
     public function test_scripts_cannot_be_injected_via_comment_html()
     {
-        $this->asAdmin();
         $page = $this->entities->page();
 
         $script = '<script>const a = "script";</script><p onclick="1">My lovely comment</p>';
-        $this->postJson("/comment/$page->id", [
+        $this->asAdmin()->postJson("/comment/$page->id", [
             'html' => $script,
         ]);
 
@@ -102,6 +101,20 @@ class CommentTest extends TestCase
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee($script, false);
         $pageView->assertSee('<p>My lovely comment</p><p>updated</p>');
+    }
+
+    public function test_scripts_are_removed_even_if_already_in_db()
+    {
+        $page = $this->entities->page();
+        Comment::factory()->create([
+            'html' => '<script>superbadscript</script><p onclick="superbadonclick">scriptincommentest</p>',
+            'entity_type' => 'page', 'entity_id' => $page
+        ]);
+
+        $resp = $this->asAdmin()->get($page->getUrl());
+        $resp->assertSee('scriptincommentest', false);
+        $resp->assertDontSee('superbadscript', false);
+        $resp->assertDontSee('superbadonclick', false);
     }
 
     public function test_reply_comments_are_nested()

@@ -4,6 +4,7 @@ namespace BookStack\Activity\Models;
 
 use BookStack\App\Model;
 use BookStack\Users\Models\HasCreatorAndUpdater;
+use BookStack\Util\HtmlContentFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -72,5 +73,10 @@ class Comment extends Model implements Loggable
     public function logDescriptor(): string
     {
         return "Comment #{$this->local_id} (ID: {$this->id}) for {$this->entity_type} (ID: {$this->entity_id})";
+    }
+
+    public function safeHtml(): string
+    {
+        return HtmlContentFilter::removeScriptsFromHtmlString($this->html ?? '');
     }
 }
