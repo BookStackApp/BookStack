@@ -129,11 +129,11 @@ return [
     'cell_border_dotted' => 'Pontozott',
     'cell_border_dashed' => 'Szaggatott',
     'cell_border_double' => 'Dupla',
-    'cell_border_groove' => 'Groove',
+    'cell_border_groove' => 'Horony',
     'cell_border_ridge' => 'Ridge',
     'cell_border_inset' => 'Inset',
     'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
+    'cell_border_none' => 'Egyik sem',
     'cell_border_hidden' => 'Rejtett',
 
     // Images, links, details/summary & embed
@@ -150,7 +150,7 @@ return [
     'open_link_new' => 'Új ablak',
     'remove_link' => 'Hivatkozás eltávolítása',
     'insert_collapsible' => 'Illeszd be az összecsukható blokkot',
-    'collapsible_unwrap' => 'Unwrap',
+    'collapsible_unwrap' => 'Kicsomagol',
     'edit_label' => 'Címke szerkesztése',
     'toggle_open_closed' => 'Nyitott/zárt váltása',
     'collapsible_edit' => 'Összecsukható blokk szerkesztése',
