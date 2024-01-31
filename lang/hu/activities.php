@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'létrehozta az oldalt:',
+    'page_create'                 => 'létrehozta az oldalt',
     'page_create_notification'    => 'Oldal sikeresen létrehozva',
     'page_update'                 => 'frissítette az oldalt:',
     'page_update_notification'    => 'Oldal sikeresen frissítve',
@@ -22,7 +22,7 @@ return [
     'chapter_create_notification' => 'Fejezet sikeresen létrehozva',
     'chapter_update'              => 'frissítette a fejezetet:',
     'chapter_update_notification' => 'Fejezet sikeresen frissítve',
-    'chapter_delete'              => 'törölte a fejezetet:',
+    'chapter_delete'              => 'törölte a fejezetet',
     'chapter_delete_notification' => 'Fejezet sikeresen törölve',
     'chapter_move'                => 'áthelyezte a fejezetet:',
     'chapter_move_notification' => 'Fejezet sikeresen áthelyezve',
@@ -55,68 +55,68 @@ return [
     'revision_delete_notification' => 'Változat sikeresen törölve',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" hozzáadva a kedvencekhez',
+    'favourite_remove_notification' => '":name" törölve a kedvencek közül',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'A megfigyelési beállítások sikeresen frissültek',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'auth_login' => 'bejelentkezve',
+    'auth_register' => 'új felhasználóként regisztrált',
+    'auth_password_reset_request' => 'jelszó visszaállítást kért',
+    'auth_password_reset_update' => 'felhasználói jelszó visszaállítás',
+    'mfa_setup_method' => 'MFA módszert állított be',
+    'mfa_setup_method_notification' => 'Többfaktoros azonosítás sikeresen beállítva',
+    'mfa_remove_method' => 'MFA módszert törölt',
+    'mfa_remove_method_notification' => 'Többfaktoros azonosítás sikeresen törölve',
 
     // Settings
     'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update_notification' => 'Beállítások sikeresen frissítve',
+    'maintenance_action_run' => 'karbantartási műveletet futtatott',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
+    'webhook_create' => 'webhookot hozott létre',
     'webhook_create_notification' => 'Webhook sikeresen létrehozva',
-    'webhook_update' => 'updated webhook',
+    'webhook_update' => 'webhookot frissített',
     'webhook_update_notification' => 'Webhook sikeresen frissítve',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_delete' => 'webhookot törölt',
+    'webhook_delete_notification' => 'Webhook sikeresen törölve',
 
     // Users
     'user_create' => 'felhasználó létrehozása',
     'user_create_notification' => 'Felhasználó sikeresen létrehozva',
     'user_update' => 'felhasználó módosítása',
     'user_update_notification' => 'Felhasználó sikeresen frissítve',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'felhasználót törölt',
     'user_delete_notification' => 'Felhasználó sikeresen eltávolítva',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'api tokent hozott létre',
+    'api_token_create_notification' => 'API token sikeresen létrehozva',
+    'api_token_update' => 'api tokent frissített',
+    'api_token_update_notification' => 'API token sikeresen frissítve',
+    'api_token_delete' => 'api tokent törölt',
+    'api_token_delete_notification' => 'API token sikeresen törölve',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
+    'role_create' => 'szerepkört hozott létre',
+    'role_create_notification' => 'Szerepkör sikeresen létrehozva',
+    'role_update' => 'frissített szerepkör',
     'role_update_notification' => 'Szerepkör sikeresen frissítve',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_delete' => 'törölt szerepkör',
+    'role_delete_notification' => 'Szerepkör sikeresen törölve',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'lomtár kiürítve',
+    'recycle_bin_restore' => 'lomtárból visszaállítva',
+    'recycle_bin_destroy' => 'lomtárból törölve',
 
     // Comments
     'commented_on'                => 'megjegyzést fűzött hozzá:',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
+    'comment_create'              => 'hozzáadott hozzászólás',
+    'comment_update'              => 'frissített hozzászólás',
     'comment_delete'              => 'megjegyzés törlése',
 
     // Other
