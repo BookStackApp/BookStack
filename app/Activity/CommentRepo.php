@@ -5,7 +5,7 @@ namespace BookStack\Activity;
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity as ActivityService;
-use League\CommonMark\CommonMarkConverter;
+use BookStack\Util\HtmlDescriptionFilter;
 
 class CommentRepo
 {
@@ -20,13 +20,12 @@ class CommentRepo
     /**
      * Create a new comment on an entity.
      */
-    public function create(Entity $entity, string $text, ?int $parent_id): Comment
+    public function create(Entity $entity, string $html, ?int $parent_id): Comment
     {
         $userId = user()->id;
         $comment = new Comment();
 
-        $comment->text = $text;
-        $comment->html = $this->commentToHtml($text);
+        $comment->html = HtmlDescriptionFilter::filterFromString($html);
         $comment->created_by = $userId;
         $comment->updated_by = $userId;
         $comment->local_id = $this->getNextLocalId($entity);
@@ -42,11 +41,10 @@ class CommentRepo
     /**
      * Update an existing comment.
      */
-    public function update(Comment $comment, string $text): Comment
+    public function update(Comment $comment, string $html): Comment
     {
         $comment->updated_by = user()->id;
-        $comment->text = $text;
-        $comment->html = $this->commentToHtml($text);
+        $comment->html = HtmlDescriptionFilter::filterFromString($html);
         $comment->save();
 
         ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
@@ -62,20 +60,6 @@ class CommentRepo
         $comment->delete();
 
         ActivityService::add(ActivityType::COMMENT_DELETE, $comment);
-    }
-
-    /**
-     * Convert the given comment Markdown to HTML.
-     */
-    public function commentToHtml(string $commentText): string
-    {
-        $converter = new CommonMarkConverter([
-            'html_input'         => 'strip',
-            'max_nesting_level'  => 10,
-            'allow_unsafe_links' => false,
-        ]);
-
-        return $converter->convert($commentText);
     }
 
     /**
