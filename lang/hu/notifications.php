@@ -6,10 +6,10 @@ return [
 
     'new_comment_subject' => 'Új megjegyzés ezen az oldalon: :pageName',
     'new_comment_intro' => 'Egy felhasználó hozzászólt egy oldalon itt: :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
+    'new_page_subject' => 'Új oldal: :pageName',
+    'new_page_intro' => 'Az új oldal létrehozása sikeres volt itt: :appName:',
+    'updated_page_subject' => 'Frissített oldal: :pageName',
+    'updated_page_intro' => 'Az oldal frissítése sikeres volt itt: :appName:',
     'updated_page_debounce' => 'Az értesítések tömegének elkerülése érdekében egy ideig nem kap értesítést az oldal további szerkesztéseiről ugyanaz a szerkesztő.',
 
     'detail_page_name' => 'Oldal neve:',
