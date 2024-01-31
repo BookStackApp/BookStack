@@ -65,8 +65,8 @@ return [
     'email_confirm_thanks_desc' => 'Сачекајте тренутак док се обради ваша потврда. Ако не будете преусмерени након 3 секунде, притисните доњу везу „Настави“ да бисте наставили.',
 
     'email_not_confirmed' => 'Адреса е-поште није потврђена',
-    'email_not_confirmed_text' => 'Your email address has not yet been confirmed.',
-    'email_not_confirmed_click_link' => 'Please click the link in the email that was sent shortly after you registered.',
+    'email_not_confirmed_text' => 'Ваша адреса е-поште још није потврђена.',
+    'email_not_confirmed_click_link' => 'Кликните на везу у е-поруци која је послата убрзо након што сте се регистровали.',
     'email_not_confirmed_resend' => 'If you cannot find the email you can re-send the confirmation email by submitting the form below.',
     'email_not_confirmed_resend_button' => 'Resend Confirmation Email',
 
