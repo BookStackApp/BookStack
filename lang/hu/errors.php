@@ -43,7 +43,7 @@ return [
     'cannot_get_image_from_url' => 'Nem lehet lekérni a képet innen: :url',
     'cannot_create_thumbs' => 'A kiszolgáló nem tud létrehozni bélyegképeket. Ellenőrizni kell, hogy telepítve van-a a GD PHP kiterjesztés.',
     'server_upload_limit' => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'A szerver nem tudja fogadni a megadott adatmennyiséget. Próbálkozz újra kevesebb adattal vagy egy kisebb fájllal.',
     'uploaded'  => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
 
     // Drawing & Images
@@ -66,7 +66,7 @@ return [
 
     // Entities
     'entity_not_found' => 'Entitás nem található',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Polc nem található',
     'book_not_found' => 'Könyv nem található',
     'page_not_found' => 'Oldal nem található',
     'chapter_not_found' => 'Fejezet nem található',
