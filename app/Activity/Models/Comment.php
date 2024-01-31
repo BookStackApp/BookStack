@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int      $id
- * @property string   $text
+ * @property string   $text - Deprecated & now unused (#4821)
  * @property string   $html
  * @property int|null $parent_id  - Relates to local_id, not id
  * @property int      $local_id
@@ -25,7 +25,7 @@ class Comment extends Model implements Loggable
     use HasFactory;
     use HasCreatorAndUpdater;
 
-    protected $fillable = ['text', 'parent_id'];
+    protected $fillable = ['parent_id'];
     protected $appends = ['created', 'updated'];
 
     /**
