@@ -18,10 +18,10 @@ class CommentTest extends TestCase
         $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
         $resp->assertStatus(200);
-        $resp->assertSee($comment->text);
+        $resp->assertSee($comment->html, false);
 
         $pageResp = $this->get($page->getUrl());
-        $pageResp->assertSee($comment->text);
+        $pageResp->assertSee($comment->html, false);
 
         $this->assertDatabaseHas('comments', [
             'local_id'    => 1,

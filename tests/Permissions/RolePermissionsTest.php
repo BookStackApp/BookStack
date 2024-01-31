@@ -738,16 +738,12 @@ class RolePermissionsTest extends TestCase
 
     private function addComment(Page $page): TestResponse
     {
-        $comment = Comment::factory()->make();
-
-        return $this->postJson("/comment/$page->id", $comment->only('text', 'html'));
+        return $this->postJson("/comment/$page->id", ['html' => '<p>New comment content</p>']);
     }
 
     private function updateComment(Comment $comment): TestResponse
     {
-        $commentData = Comment::factory()->make();
-
-        return $this->putJson("/comment/{$comment->id}", $commentData->only('text', 'html'));
+        return $this->putJson("/comment/{$comment->id}", ['html' => '<p>Updated comment content</p>']);
     }
 
     private function deleteComment(Comment $comment): TestResponse
