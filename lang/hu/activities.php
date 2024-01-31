@@ -8,45 +8,45 @@ return [
     // Pages
     'page_create'                 => 'létrehozta az oldalt',
     'page_create_notification'    => 'Oldal sikeresen létrehozva',
-    'page_update'                 => 'frissítette az oldalt:',
+    'page_update'                 => 'frissítette az oldalt',
     'page_update_notification'    => 'Oldal sikeresen frissítve',
-    'page_delete'                 => 'törölte az oldalt:',
+    'page_delete'                 => 'törölte az oldalt',
     'page_delete_notification'    => 'Oldal sikeresen törölve',
-    'page_restore'                => 'visszaállította az oldalt:',
+    'page_restore'                => 'visszaállította az oldalt',
     'page_restore_notification'   => 'Oldal sikeresen visszaállítva',
-    'page_move'                   => 'áthelyezte az oldalt:',
+    'page_move'                   => 'áthelyezte az oldalt',
     'page_move_notification'      => 'Oldal sikeresen áthelyezve',
 
     // Chapters
-    'chapter_create'              => 'létrehozta a fejezetet:',
+    'chapter_create'              => 'létrehozta a fejezetet',
     'chapter_create_notification' => 'Fejezet sikeresen létrehozva',
-    'chapter_update'              => 'frissítette a fejezetet:',
+    'chapter_update'              => 'frissítette a fejezetet',
     'chapter_update_notification' => 'Fejezet sikeresen frissítve',
     'chapter_delete'              => 'törölte a fejezetet',
     'chapter_delete_notification' => 'Fejezet sikeresen törölve',
-    'chapter_move'                => 'áthelyezte a fejezetet:',
+    'chapter_move'                => 'áthelyezte a fejezetet',
     'chapter_move_notification' => 'Fejezet sikeresen áthelyezve',
 
     // Books
-    'book_create'                 => 'létrehozott egy könyvet:',
+    'book_create'                 => 'létrehozott egy könyvet',
     'book_create_notification'    => 'Könyv sikeresen létrehozva',
     'book_create_from_chapter'              => 'fejezet könyvvé alakítva',
     'book_create_from_chapter_notification' => 'Fejezet sikeresen könyvvé lett alakítva',
-    'book_update'                 => 'frissítette a könyvet:',
+    'book_update'                 => 'frissítette a könyvet',
     'book_update_notification'    => 'Könyv sikeresen frissítve',
-    'book_delete'                 => 'törölte a könyvet:',
+    'book_delete'                 => 'törölte a könyvet',
     'book_delete_notification'    => 'Könyv sikeresen törölve',
-    'book_sort'                   => 'átrendezte a könyvet:',
+    'book_sort'                   => 'átrendezte a könyvet',
     'book_sort_notification'      => 'Könyv sikeresen újrarendezve',
 
     // Bookshelves
     'bookshelf_create'            => 'létrehozta a polcot',
     'bookshelf_create_notification'    => 'Könyvespolc sikeresen létrehozva',
-    'bookshelf_create_from_book'    => 'polccá alakított könyv',
+    'bookshelf_create_from_book'    => 'könyvet polccá alakított',
     'bookshelf_create_from_book_notification'    => 'Könyv sikeresen polccá lett alakítva',
-    'bookshelf_update'                 => 'frissített polc',
+    'bookshelf_update'                 => 'polcot frissített',
     'bookshelf_update_notification'    => 'Polc sikeresen frissítve',
-    'bookshelf_delete'                 => 'törölt polc',
+    'bookshelf_delete'                 => 'polcot törölt',
     'bookshelf_delete_notification'    => 'Polc sikeresen törölve',
 
     // Revisions
@@ -72,7 +72,7 @@ return [
     'mfa_remove_method_notification' => 'Többfaktoros azonosítás sikeresen törölve',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'frissítette a beállításokat',
     'settings_update_notification' => 'Beállítások sikeresen frissítve',
     'maintenance_action_run' => 'karbantartási műveletet futtatott',
 
