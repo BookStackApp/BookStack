@@ -61,8 +61,6 @@ class ListingResponseBuilder
             }
         });
 
-        dd($data->first());
-
         return response()->json([
             'data'  => $data,
             'total' => $total,
