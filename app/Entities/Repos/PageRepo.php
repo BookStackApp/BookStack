@@ -136,13 +136,7 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        // check for chapter
-        if ($page->chapter_id) {
-            $defaultTemplate = $page->chapter->defaultTemplate;
-        } else {
-            $defaultTemplate = $page->book->defaultTemplate;
-        }
-
+        $defaultTemplate = $page->chapter->defaultTemplate ?? $page->book->defaultTemplate;
         if ($defaultTemplate && userCan('view', $defaultTemplate)) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
