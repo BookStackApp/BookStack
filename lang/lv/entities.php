@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF fails',
     'export_text' => 'Vienkāršs teksta fails',
     'export_md' => 'Markdown fails',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Atļaujas',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Labot grāmatu :bookName',
     'books_form_book_name' => 'Grāmatas nosaukums',
     'books_save' => 'Saglabāt grāmatu',
-    'books_default_template' => 'Noklusētā lapas sagatave',
-    'books_default_template_explain' => 'Norādīt lapas sagatavi, kas tiks izmantota kā noklusētais saturs visām jaunājām lapām šajā grāmatā. Ņemiet vērā, ka tā tiks izmantota tikai tad, ja lapas veidotājam ir skatīšanas tiesības izvēlētajai sagatavei.',
-    'books_default_template_select' => 'Izvēlēt lapas sagatavi',
     'books_permissions' => 'Grāmatas atļaujas',
     'books_permissions_updated' => 'Grāmatas atļaujas atjauninātas',
     'books_empty_contents' => 'Lapas vai nodaļas vēl nav izveidotas šai grāmatai.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Dzēst melnrakstu',
     'pages_delete_success' => 'Lapa ir dzēsta',
     'pages_delete_draft_success' => 'Melnraksts ir dzēsts',
-    'pages_delete_warning_template' => 'Šī lapa tiek pašlaik izmantota kā grāmatas noklusētā lapas sagatave. Šīm grāmatām vairāk nebūs noklusētās lapas sagataves pēc šīs lapas dzēšanas.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo lapu?',
     'pages_delete_draft_confirm' => 'Vai esat pārliecināts, ka vēlaties dzēst šo melnrakstu?',
     'pages_editing_named' => 'Rediģē lapu :pageName',
