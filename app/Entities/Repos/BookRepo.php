@@ -86,7 +86,7 @@ class BookRepo
         $book = new Book();
         $this->baseRepo->create($book, $input);
         $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
-        $this->updateBookDefaultTemplate($book, intval($input['default_template_id'] ?? null));
+        $this->baseRepo->updateDefaultTemplate($book, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::BOOK_CREATE, $book);
 
         return $book;
@@ -100,7 +100,7 @@ class BookRepo
         $this->baseRepo->update($book, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->updateBookDefaultTemplate($book, intval($input['default_template_id']));
+            $this->baseRepo->updateDefaultTemplate($book, intval($input['default_template_id']));
         }
 
         if (array_key_exists('image', $input)) {
@@ -110,33 +110,6 @@ class BookRepo
         Activity::add(ActivityType::BOOK_UPDATE, $book);
 
         return $book;
-    }
-
-    /**
-     * Update the default page template used for this book.
-     * Checks that, if changing, the provided value is a valid template and the user
-     * has visibility of the provided page template id.
-     */
-    protected function updateBookDefaultTemplate(Book $book, int $templateId): void
-    {
-        $changing = $templateId !== intval($book->default_template_id);
-        if (!$changing) {
-            return;
-        }
-
-        if ($templateId === 0) {
-            $book->default_template_id = null;
-            $book->save();
-            return;
-        }
-
-        $templateExists = Page::query()->visible()
-            ->where('template', '=', true)
-            ->where('id', '=', $templateId)
-            ->exists();
-
-        $book->default_template_id = $templateExists ? $templateId : null;
-        $book->save();
     }
 
     /**

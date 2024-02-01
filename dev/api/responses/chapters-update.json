@@ -11,6 +11,7 @@
   "updated_by": 1,
   "owned_by": 1,
   "description_html": "<p>This is an <strong>updated chapter<\/strong> that I've altered via the API<\/p>",
+  "default_template_id": 2428,
   "book_slug": "example-book",
   "tags": [
     {

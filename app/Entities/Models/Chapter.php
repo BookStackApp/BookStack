@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -11,6 +12,8 @@ use Illuminate\Support\Collection;
  *
  * @property Collection<Page> $pages
  * @property string           $description
+ * @property ?int             $default_template_id
+ * @property ?Page            $defaultTemplate
  */
 class Chapter extends BookChild
 {
@@ -46,6 +49,14 @@ class Chapter extends BookChild
         ];
 
         return url('/' . implode('/', $parts));
+    }
+
+    /**
+     * Get the Page that is used as default template for newly created pages within this Chapter.
+     */
+    public function defaultTemplate(): BelongsTo
+    {
+        return $this->belongsTo(Page::class, 'default_template_id');
     }
 
     /**
