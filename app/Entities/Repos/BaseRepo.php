@@ -3,9 +3,12 @@
 namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\TagRepo;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\HasHtmlDescription;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
@@ -102,6 +105,33 @@ class BaseRepo
             $entity->image_id = 0;
             $entity->save();
         }
+    }
+
+    /**
+     * Update the default page template used for this item.
+     * Checks that, if changing, the provided value is a valid template and the user
+     * has visibility of the provided page template id.
+     */
+    public function updateDefaultTemplate(Book|Chapter $entity, int $templateId): void
+    {
+        $changing = $templateId !== intval($entity->default_template_id);
+        if (!$changing) {
+            return;
+        }
+
+        if ($templateId === 0) {
+            $entity->default_template_id = null;
+            $entity->save();
+            return;
+        }
+
+        $templateExists = Page::query()->visible()
+            ->where('template', '=', true)
+            ->where('id', '=', $templateId)
+            ->exists();
+
+        $entity->default_template_id = $templateExists ? $templateId : null;
+        $entity->save();
     }
 
     protected function updateDescription(Entity $entity, array $input): void
