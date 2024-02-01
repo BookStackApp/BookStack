@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'Arquivo PDF',
     'export_text' => 'Arquivo Texto',
     'export_md' => 'Arquivos para remarcar',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Modelo de página padrão',
+    'default_template_explain' => 'Atribuir o modelo de página que sera usado como padrão para todas as páginas criadas neste livro. Tenha em mente que isto será usado apenas se o criador da página tiver acesso de visualização ao modelo de página escolhido.',
+    'default_template_select' => 'Selecione o modelo de página',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Excluir Rascunho de Página',
     'pages_delete_success' => 'Página excluída',
     'pages_delete_draft_success' => 'Rascunho de página excluído',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Está página atualmente esta atribuída como modelo de página padrão para algum livro ou capítulo. Estes livros ou capítulos não terão mais um modelo de página padrão atribuídos após essa página ser deletada.',
     'pages_delete_confirm' => 'Tem certeza que deseja excluir a página?',
     'pages_delete_draft_confirm' => 'Tem certeza que deseja excluir o rascunho de página?',
     'pages_editing_named' => 'Editando a Página :pageName',
