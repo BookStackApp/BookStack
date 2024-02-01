@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Fichier PDF',
     'export_text' => 'Document texte',
     'export_md' => 'Fichiers Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Autorisations',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Modifier le livre :bookName',
     'books_form_book_name' => 'Nom du livre',
     'books_save' => 'Enregistrer le livre',
-    'books_default_template' => 'Modèle de page par défaut',
-    'books_default_template_explain' => 'Sélectionnez un modèle de page qui sera utilisé comme contenu par défaut pour les nouvelles pages créées dans ce livre. Gardez à l\'esprit que le modèle ne sera utilisé que si le créateur de la page a accès au modèle sélectionné.',
-    'books_default_template_select' => 'Sélectionnez un modèle de page',
     'books_permissions' => 'Permissions du livre',
     'books_permissions_updated' => 'Permissions du livre mises à jour',
     'books_empty_contents' => 'Aucune page ou chapitre n\'a été ajouté à ce livre.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
-    'pages_delete_warning_template' => 'Cette page est utilisée comme modèle de page par défaut dans un livre. Ces livres n\'utiliseront plus ce modèle après la suppression de cette page.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
     'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
