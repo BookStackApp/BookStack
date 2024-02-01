@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
     'export_md' => 'Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => '権限',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'ブック「:bookName」を編集',
     'books_form_book_name' => 'ブック名',
     'books_save' => 'ブックを保存',
-    'books_default_template' => 'デフォルトページテンプレート',
-    'books_default_template_explain' => 'このブックに新しいページを作成する際にデフォルトコンテンツとして使用されるページテンプレートを割り当てます。 これはページ作成者が選択したテンプレートページへのアクセス権を持つ場合にのみ使用されることに注意してください。',
-    'books_default_template_select' => 'テンプレートページを選択',
     'books_permissions' => 'ブックの権限',
     'books_permissions_updated' => 'ブックの権限を更新しました',
     'books_empty_contents' => 'まだページまたはチャプターが作成されていません。',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'ページの下書きを削除',
     'pages_delete_success' => 'ページを削除しました',
     'pages_delete_draft_success' => 'ページの下書きを削除しました',
-    'pages_delete_warning_template' => 'このページは現在ブックのデフォルトページテンプレートとして使用されています。 このページが削除されると、それらのブックでデフォルトのページテンプレートが割り当てられなくなります。',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'このページを削除してもよろしいですか？',
     'pages_delete_draft_confirm' => 'このページの下書きを削除してもよろしいですか？',
     'pages_editing_named' => 'ページ :pageName を編集',
