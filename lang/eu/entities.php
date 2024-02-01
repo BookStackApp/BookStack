@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF fitxategia',
     'export_text' => 'Testu lauko fitxategiak',
     'export_md' => 'Markdown fitxategia',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Baimenak',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Editatu :bookName liburua',
     'books_form_book_name' => 'Liburu izena',
     'books_save' => 'Gorde Liburua',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Liburu baimenak',
     'books_permissions_updated' => 'Liburu baimenak eguneratuta',
     'books_empty_contents' => 'Ez da orri edo kapitulurik sortu liburu honentzat.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Delete Draft Page',
     'pages_delete_success' => 'Orria ezabatua',
     'pages_delete_draft_success' => 'Draft page deleted',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ziur al zaude orri hau ezabatu nahi duzula?',
     'pages_delete_draft_confirm' => 'Are you sure you want to delete this draft page?',
     'pages_editing_named' => 'Editing Page :pageName',
