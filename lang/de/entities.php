@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
     'export_md' => 'Markdown-Datei',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Standard Seitenvorlage',
+    'default_template_explain' => 'Zuweisen einer Seitenvorlage, die als Standardinhalt für alle Seiten verwendet wird, die innerhalb dieses Elements erstellt wurden. Beachten Sie, dass dies nur dann verwendet wird, wenn der Ersteller der Seite Zugriff auf die ausgewählte Vorlagen-Seite hat.',
+    'default_template_select' => 'Wählen Sie eine Seitenvorlage',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Seitenentwurf löschen',
     'pages_delete_success' => 'Seite gelöscht',
     'pages_delete_draft_success' => 'Seitenentwurf gelöscht',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Diese Seite wird aktiv als Standardvorlage für Bücher oder Kapitel verwendet. In diesen Büchern oder Kapiteln wird nach dem Löschen dieser Seite keine Standardvorlage mehr zugewiesen sein.',
     'pages_delete_confirm' => 'Sind Sie sicher, dass Sie diese Seite löschen möchen?',
     'pages_delete_draft_confirm' => 'Sind Sie sicher, dass Sie diesen Seitenentwurf löschen möchten?',
     'pages_editing_named' => 'Seite ":pageName" bearbeiten',
