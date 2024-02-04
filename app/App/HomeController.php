@@ -8,7 +8,6 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\RecentlyViewed;
 use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
 use BookStack\Uploads\FaviconHandler;
@@ -80,7 +79,9 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'bookshelves') {
-            $shelves = app()->make(BookshelfRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $shelves = $this->queries->shelves->visibleForListWithCover()
+                ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
+                ->paginate(18);
             $data = array_merge($commonData, ['shelves' => $shelves]);
 
             return view('home.shelves', $data);
