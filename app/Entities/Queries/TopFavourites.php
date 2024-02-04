@@ -25,11 +25,13 @@ class TopFavourites extends EntityQuery
             ->orderBy('views.views', 'desc')
             ->where('favourites.user_id', '=', user()->id);
 
-        return $query->with('favouritable')
+        $favourites = $query
             ->skip($skip)
             ->take($count)
-            ->get()
-            ->pluck('favouritable')
-            ->filter();
+            ->get();
+
+        $this->mixedEntityListLoader()->loadIntoRelations($favourites->all(), 'favouritable', false);
+
+        return $favourites->pluck('favouritable')->filter();
     }
 }

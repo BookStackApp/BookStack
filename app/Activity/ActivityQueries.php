@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,11 +15,10 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ActivityQueries
 {
-    protected PermissionApplicator $permissions;
-
-    public function __construct(PermissionApplicator $permissions)
-    {
-        $this->permissions = $permissions;
+    public function __construct(
+        protected PermissionApplicator $permissions,
+        protected MixedEntityListLoader $listLoader,
+    ) {
     }
 
     /**
@@ -29,10 +29,12 @@ class ActivityQueries
         $activityList = $this->permissions
             ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
             ->orderBy('created_at', 'desc')
-            ->with(['user', 'entity'])
+            ->with(['user'])
             ->skip($count * $page)
             ->take($count)
             ->get();
+
+        $this->listLoader->loadIntoRelations($activityList->all(), 'entity', false);
 
         return $this->filterSimilar($activityList);
     }

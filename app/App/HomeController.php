@@ -5,6 +5,7 @@ namespace BookStack\App;
 use BookStack\Activity\ActivityQueries;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\RecentlyViewed;
 use BookStack\Entities\Queries\TopFavourites;
 use BookStack\Entities\Repos\BookRepo;
@@ -26,9 +27,7 @@ class HomeController extends Controller
         $draftPages = [];
 
         if ($this->isSignedIn()) {
-            $draftPages = Page::visible()
-                ->where('draft', '=', true)
-                ->where('created_by', '=', user()->id)
+            $draftPages = PageQueries::currentUserDraftsForList()
                 ->orderBy('updated_at', 'desc')
                 ->with('book')
                 ->take(6)
@@ -40,11 +39,10 @@ class HomeController extends Controller
             (new RecentlyViewed())->run(12 * $recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
         $favourites = (new TopFavourites())->run(6);
-        $recentlyUpdatedPages = Page::visible()->with('book')
+        $recentlyUpdatedPages = PageQueries::visibleForList()
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
             ->take($favourites->count() > 0 ? 5 : 10)
-            ->select(Page::$listAttributes)
             ->get();
 
         $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
@@ -95,7 +93,7 @@ class HomeController extends Controller
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
             /** @var Page $customHomepage */
-            $customHomepage = Page::query()->where('draft', '=', false)->findOrFail($id);
+            $customHomepage = PageQueries::start()->where('draft', '=', false)->findOrFail($id);
             $pageContent = new PageContent($customHomepage);
             $customHomepage->html = $pageContent->render(false);
 

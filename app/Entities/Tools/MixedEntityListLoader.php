@@ -26,7 +26,7 @@ class MixedEntityListLoader
      * This will look for a model id and type via 'name_id' and 'name_type'.
      * @param Model[] $relations
      */
-    public function loadIntoRelations(array $relations, string $relationName): void
+    public function loadIntoRelations(array $relations, string $relationName, bool $loadParents): void
     {
         $idsByType = [];
         foreach ($relations as $relation) {
@@ -40,7 +40,7 @@ class MixedEntityListLoader
             $idsByType[$type][] = $id;
         }
 
-        $modelMap = $this->idsByTypeToModelMap($idsByType);
+        $modelMap = $this->idsByTypeToModelMap($idsByType, $loadParents);
 
         foreach ($relations as $relation) {
             $type = $relation->getAttribute($relationName . '_type');
@@ -56,7 +56,7 @@ class MixedEntityListLoader
      * @param array<string, int[]> $idsByType
      * @return array<string, array<int, Model>>
      */
-    protected function idsByTypeToModelMap(array $idsByType): array
+    protected function idsByTypeToModelMap(array $idsByType, bool $eagerLoadParents): array
     {
         $modelMap = [];
 
@@ -67,10 +67,10 @@ class MixedEntityListLoader
 
             $instance = $this->entityProvider->get($type);
             $models = $instance->newQuery()
-                ->select($this->listAttributes[$type])
+                ->select(array_merge($this->listAttributes[$type], $this->getSubSelectsForQuery($type)))
                 ->scopes('visible')
                 ->whereIn('id', $ids)
-                ->with($this->getRelationsToEagerLoad($type))
+                ->with($eagerLoadParents ? $this->getRelationsToEagerLoad($type) : [])
                 ->get();
 
             if (count($models) > 0) {
@@ -99,5 +99,20 @@ class MixedEntityListLoader
         }
 
         return $toLoad;
+    }
+
+    protected function getSubSelectsForQuery(string $type): array
+    {
+        $subSelects = [];
+
+        if ($type === 'chapter' || $type === 'page') {
+            $subSelects['book_slug'] = function ($builder) {
+                $builder->select('slug')
+                    ->from('books')
+                    ->whereColumn('books.id', '=', 'book_id');
+            };
+        }
+
+        return $subSelects;
     }
 }
