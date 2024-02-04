@@ -18,20 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 abstract class BookChild extends Entity
 {
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Load book slugs onto these models by default during query-time
-        static::addGlobalScope('book_slug', function (Builder $builder) {
-            $builder->addSelect(['book_slug' => function ($builder) {
-                $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'book_id');
-            }]);
-        });
-    }
-
     /**
      * Scope a query to find items where the child has the given childSlug
      * where its parent has the bookSlug.
