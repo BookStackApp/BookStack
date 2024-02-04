@@ -7,6 +7,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -27,7 +28,8 @@ class BookController extends Controller
     public function __construct(
         protected ShelfContext $shelfContext,
         protected BookRepo $bookRepo,
-        protected ReferenceFetcher $referenceFetcher
+        protected BookQueries $queries,
+        protected ReferenceFetcher $referenceFetcher,
     ) {
     }
 
@@ -43,10 +45,12 @@ class BookController extends Controller
             'updated_at' => trans('common.sort_updated_at'),
         ]);
 
-        $books = $this->bookRepo->getAllPaginated(18, $listOptions->getSort(), $listOptions->getOrder());
-        $recents = $this->isSignedIn() ? $this->bookRepo->getRecentlyViewed(4) : false;
-        $popular = $this->bookRepo->getPopular(4);
-        $new = $this->bookRepo->getRecentlyCreated(4);
+        $books = $this->queries->visibleForListWithCover()
+            ->orderBy($listOptions->getSort(), $listOptions->getOrder())
+            ->paginate(18);
+        $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->take(4)->get() : false;
+        $popular = $this->queries->popularForList()->take(4)->get();
+        $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();
 
         $this->shelfContext->clearShelfContext();
 
@@ -120,7 +124,7 @@ class BookController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->queries->findVisibleBySlug($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
 
@@ -147,7 +151,7 @@ class BookController extends Controller
      */
     public function edit(string $slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->queries->findVisibleBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName' => $book->getShortName()]));
 
@@ -163,7 +167,7 @@ class BookController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $book = $this->bookRepo->getBySlug($slug);
+        $book = $this->queries->findVisibleBySlug($slug);
         $this->checkOwnablePermission('book-update', $book);
 
         $validated = $this->validate($request, [
@@ -190,7 +194,7 @@ class BookController extends Controller
      */
     public function showDelete(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName' => $book->getShortName()]));
 
@@ -204,7 +208,7 @@ class BookController extends Controller
      */
     public function destroy(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlug($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
 
         $this->bookRepo->destroy($book);
@@ -219,7 +223,7 @@ class BookController extends Controller
      */
     public function showCopy(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlug($bookSlug);
         $this->checkOwnablePermission('book-view', $book);
 
         session()->flashInput(['name' => $book->name]);
@@ -236,7 +240,7 @@ class BookController extends Controller
      */
     public function copy(Request $request, Cloner $cloner, string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlug($bookSlug);
         $this->checkOwnablePermission('book-view', $book);
         $this->checkPermission('book-create-all');
 
@@ -252,7 +256,7 @@ class BookController extends Controller
      */
     public function convertToShelf(HierarchyTransformer $transformer, string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlug($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
         $this->checkOwnablePermission('book-delete', $book);
         $this->checkPermission('bookshelf-create-all');
