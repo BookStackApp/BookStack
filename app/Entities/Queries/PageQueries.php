@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PageQueries
 {
-    public static function start(): Builder
+    public function start(): Builder
     {
         return Page::query();
     }
 
-    public static function visibleForList(): Builder
+    public function visibleForList(): Builder
     {
-        return Page::visible()
+        return $this->start()
             ->select(array_merge(Page::$listAttributes, ['book_slug' => function ($builder) {
                 $builder->select('slug')
                     ->from('books')
@@ -22,9 +22,9 @@ class PageQueries
             }]));
     }
 
-    public static function currentUserDraftsForList(): Builder
+    public function currentUserDraftsForList(): Builder
     {
-        return static::visibleForList()
+        return $this->visibleForList()
             ->where('draft', '=', true)
             ->where('created_by', '=', user()->id);
     }

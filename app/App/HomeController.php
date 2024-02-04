@@ -5,10 +5,9 @@ namespace BookStack\App;
 use BookStack\Activity\ActivityQueries;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Queries\PageQueries;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\RecentlyViewed;
 use BookStack\Entities\Queries\TopFavourites;
-use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
@@ -18,6 +17,11 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
     /**
      * Display the homepage.
      */
@@ -27,7 +31,7 @@ class HomeController extends Controller
         $draftPages = [];
 
         if ($this->isSignedIn()) {
-            $draftPages = PageQueries::currentUserDraftsForList()
+            $draftPages = $this->queries->pages->currentUserDraftsForList()
                 ->orderBy('updated_at', 'desc')
                 ->with('book')
                 ->take(6)
@@ -39,7 +43,7 @@ class HomeController extends Controller
             (new RecentlyViewed())->run(12 * $recentFactor, 1)
             : Book::visible()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
         $favourites = (new TopFavourites())->run(6);
-        $recentlyUpdatedPages = PageQueries::visibleForList()
+        $recentlyUpdatedPages = $this->queries->pages->visibleForList()
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')
             ->take($favourites->count() > 0 ? 5 : 10)
@@ -83,7 +87,9 @@ class HomeController extends Controller
         }
 
         if ($homepageOption === 'books') {
-            $books = app()->make(BookRepo::class)->getAllPaginated(18, $commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder());
+            $books = $this->queries->books->visibleForListWithCover()
+                ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
+                ->paginate(18);
             $data = array_merge($commonData, ['books' => $books]);
 
             return view('home.books', $data);
@@ -93,7 +99,7 @@ class HomeController extends Controller
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
             /** @var Page $customHomepage */
-            $customHomepage = PageQueries::start()->where('draft', '=', false)->findOrFail($id);
+            $customHomepage = $this->queries->pages->start()->where('draft', '=', false)->findOrFail($id);
             $pageContent = new PageContent($customHomepage);
             $customHomepage->html = $pageContent->render(false);
 
