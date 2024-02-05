@@ -5,6 +5,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
@@ -35,7 +36,8 @@ class PageApiController extends ApiController
     ];
 
     public function __construct(
-        protected PageRepo $pageRepo
+        protected PageRepo $pageRepo,
+        protected PageQueries $queries,
     ) {
     }
 
@@ -97,7 +99,7 @@ class PageApiController extends ApiController
      */
     public function read(string $id)
     {
-        $page = $this->pageRepo->getById($id, []);
+        $page = $this->queries->findVisibleByIdOrFail($id);
 
         return response()->json($page->forJsonDisplay());
     }
@@ -113,7 +115,7 @@ class PageApiController extends ApiController
     {
         $requestData = $this->validate($request, $this->rules['update']);
 
-        $page = $this->pageRepo->getById($id, []);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $this->checkOwnablePermission('page-update', $page);
 
         $parent = null;
@@ -148,7 +150,7 @@ class PageApiController extends ApiController
      */
     public function delete(string $id)
     {
-        $page = $this->pageRepo->getById($id, []);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $this->checkOwnablePermission('page-delete', $page);
 
         $this->pageRepo->destroy($page);

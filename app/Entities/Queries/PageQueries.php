@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
 class PageQueries implements ProvidesEntityQueries
@@ -15,6 +16,34 @@ class PageQueries implements ProvidesEntityQueries
     public function findVisibleById(int $id): ?Page
     {
         return $this->start()->scopes('visible')->find($id);
+    }
+
+    public function findVisibleByIdOrFail(int $id): Page
+    {
+        $page = $this->findVisibleById($id);
+
+        if (is_null($page)) {
+            throw new NotFoundException(trans('errors.page_not_found'));
+        }
+
+        return $page;
+    }
+
+    public function findVisibleBySlugsOrFail(string $bookSlug, string $pageSlug): Page
+    {
+        /** @var ?Page $page */
+        $page = $this->start()->with('book')
+            ->whereHas('book', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            })
+            ->where('slug', '=', $pageSlug)
+            ->first();
+
+        if (is_null($page)) {
+            throw new NotFoundException(trans('errors.chapter_not_found'));
+        }
+
+        return $page;
     }
 
     public function visibleForList(): Builder
@@ -32,5 +61,11 @@ class PageQueries implements ProvidesEntityQueries
         return $this->visibleForList()
             ->where('draft', '=', true)
             ->where('created_by', '=', user()->id);
+    }
+
+    public function visibleTemplates(): Builder
+    {
+        return $this->visibleForList()
+            ->where('template', '=', true);
     }
 }

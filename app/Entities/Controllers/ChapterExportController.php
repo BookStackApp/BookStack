@@ -25,7 +25,7 @@ class ChapterExportController extends Controller
      */
     public function pdf(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->queries->findVisibleBySlugs($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
 
         return $this->download()->directly($pdfContent, $chapterSlug . '.pdf');
@@ -39,7 +39,7 @@ class ChapterExportController extends Controller
      */
     public function html(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->queries->findVisibleBySlugs($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $containedHtml = $this->exportFormatter->chapterToContainedHtml($chapter);
 
         return $this->download()->directly($containedHtml, $chapterSlug . '.html');
@@ -52,7 +52,7 @@ class ChapterExportController extends Controller
      */
     public function plainText(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->queries->findVisibleBySlugs($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
 
         return $this->download()->directly($chapterText, $chapterSlug . '.txt');
@@ -65,7 +65,7 @@ class ChapterExportController extends Controller
      */
     public function markdown(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->queries->findVisibleBySlugs($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToMarkdown($chapter);
 
         return $this->download()->directly($chapterText, $chapterSlug . '.md');

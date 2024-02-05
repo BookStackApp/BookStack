@@ -103,7 +103,7 @@ class BookshelfController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-view', $shelf);
 
         $listOptions = SimpleListOptions::fromRequest($request, 'shelf_books')->withSortOptions([
@@ -141,7 +141,7 @@ class BookshelfController extends Controller
      */
     public function edit(string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
@@ -164,7 +164,7 @@ class BookshelfController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
             'name'             => ['required', 'string', 'max:255'],
@@ -190,7 +190,7 @@ class BookshelfController extends Controller
      */
     public function showDelete(string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $shelf->getShortName()]));
@@ -205,7 +205,7 @@ class BookshelfController extends Controller
      */
     public function destroy(string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->shelfRepo->destroy($shelf);

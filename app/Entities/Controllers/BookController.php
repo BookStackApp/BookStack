@@ -124,7 +124,7 @@ class BookController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $book = $this->queries->findVisibleBySlug($slug);
+        $book = $this->queries->findVisibleBySlugOrFail($slug);
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
 
@@ -151,7 +151,7 @@ class BookController extends Controller
      */
     public function edit(string $slug)
     {
-        $book = $this->queries->findVisibleBySlug($slug);
+        $book = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('book-update', $book);
         $this->setPageTitle(trans('entities.books_edit_named', ['bookName' => $book->getShortName()]));
 
@@ -167,7 +167,7 @@ class BookController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $book = $this->queries->findVisibleBySlug($slug);
+        $book = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('book-update', $book);
 
         $validated = $this->validate($request, [
@@ -194,7 +194,7 @@ class BookController extends Controller
      */
     public function showDelete(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
         $this->setPageTitle(trans('entities.books_delete_named', ['bookName' => $book->getShortName()]));
 
@@ -208,7 +208,7 @@ class BookController extends Controller
      */
     public function destroy(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-delete', $book);
 
         $this->bookRepo->destroy($book);
@@ -223,7 +223,7 @@ class BookController extends Controller
      */
     public function showCopy(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-view', $book);
 
         session()->flashInput(['name' => $book->name]);
@@ -240,7 +240,7 @@ class BookController extends Controller
      */
     public function copy(Request $request, Cloner $cloner, string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-view', $book);
         $this->checkPermission('book-create-all');
 
@@ -256,7 +256,7 @@ class BookController extends Controller
      */
     public function convertToShelf(HierarchyTransformer $transformer, string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
         $this->checkOwnablePermission('book-delete', $book);
         $this->checkPermission('bookshelf-create-all');
