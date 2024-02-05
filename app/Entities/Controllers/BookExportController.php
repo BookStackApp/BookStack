@@ -23,7 +23,7 @@ class BookExportController extends Controller
      */
     public function pdf(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
 
         return $this->download()->directly($pdfContent, $bookSlug . '.pdf');
@@ -36,7 +36,7 @@ class BookExportController extends Controller
      */
     public function html(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
 
         return $this->download()->directly($htmlContent, $bookSlug . '.html');
@@ -47,7 +47,7 @@ class BookExportController extends Controller
      */
     public function plainText(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToPlainText($book);
 
         return $this->download()->directly($textContent, $bookSlug . '.txt');
@@ -58,7 +58,7 @@ class BookExportController extends Controller
      */
     public function markdown(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToMarkdown($book);
 
         return $this->download()->directly($textContent, $bookSlug . '.md');

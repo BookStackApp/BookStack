@@ -24,7 +24,7 @@ class ChapterQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->find($id);
     }
 
-    public function findVisibleBySlugs(string $bookSlug, string $chapterSlug): Chapter
+    public function findVisibleBySlugsOrFail(string $bookSlug, string $chapterSlug): Chapter
     {
         /** @var ?Chapter $chapter */
         $chapter = $this->start()->with('book')
@@ -34,7 +34,7 @@ class ChapterQueries implements ProvidesEntityQueries
             ->where('slug', '=', $chapterSlug)
             ->first();
 
-        if ($chapter === null) {
+        if (is_null($chapter)) {
             throw new NotFoundException(trans('errors.chapter_not_found'));
         }
 

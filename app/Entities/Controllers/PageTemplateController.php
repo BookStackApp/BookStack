@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Controllers;
 
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controller;
@@ -9,14 +10,10 @@ use Illuminate\Http\Request;
 
 class PageTemplateController extends Controller
 {
-    protected $pageRepo;
-
-    /**
-     * PageTemplateController constructor.
-     */
-    public function __construct(PageRepo $pageRepo)
-    {
-        $this->pageRepo = $pageRepo;
+    public function __construct(
+        protected PageRepo $pageRepo,
+        protected PageQueries $pageQueries,
+    ) {
     }
 
     /**
@@ -26,7 +23,19 @@ class PageTemplateController extends Controller
     {
         $page = $request->get('page', 1);
         $search = $request->get('search', '');
-        $templates = $this->pageRepo->getTemplates(10, $page, $search);
+        $count = 10;
+
+        $query = $this->pageQueries->visibleTemplates()
+            ->orderBy('name', 'asc')
+            ->skip(($page - 1) * $count)
+            ->take($count);
+
+        if ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        }
+
+        $templates = $query->paginate($count, ['*'], 'page', $page);
+        $templates->withPath('/templates');
 
         if ($search) {
             $templates->appends(['search' => $search]);
@@ -44,7 +53,7 @@ class PageTemplateController extends Controller
      */
     public function get(int $templateId)
     {
-        $page = $this->pageRepo->getById($templateId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($templateId);
 
         if (!$page->template) {
             throw new NotFoundException();

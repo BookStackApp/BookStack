@@ -22,7 +22,7 @@ class BookSortController extends Controller
      */
     public function show(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         $bookChildren = (new BookContents($book))->getTree(false);
@@ -38,7 +38,7 @@ class BookSortController extends Controller
      */
     public function showItem(string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $bookChildren = (new BookContents($book))->getTree();
 
         return view('books.parts.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
@@ -49,7 +49,7 @@ class BookSortController extends Controller
      */
     public function update(Request $request, string $bookSlug)
     {
-        $book = $this->queries->findVisibleBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent

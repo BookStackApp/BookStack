@@ -18,7 +18,7 @@ class BookshelfQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->find($id);
     }
 
-    public function findVisibleBySlug(string $slug): Bookshelf
+    public function findVisibleBySlugOrFail(string $slug): Bookshelf
     {
         /** @var ?Bookshelf $shelf */
         $shelf = $this->start()

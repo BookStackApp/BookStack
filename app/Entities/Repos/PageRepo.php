@@ -14,13 +14,11 @@ use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditorData;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
 use Exception;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class PageRepo
 {
@@ -31,91 +29,6 @@ class PageRepo
         protected ReferenceStore $referenceStore,
         protected ReferenceUpdater $referenceUpdater
     ) {
-    }
-
-    /**
-     * Get a page by ID.
-     *
-     * @throws NotFoundException
-     */
-    public function getById(int $id, array $relations = ['book']): Page
-    {
-        /** @var Page $page */
-        $page = Page::visible()->with($relations)->find($id);
-
-        if (!$page) {
-            throw new NotFoundException(trans('errors.page_not_found'));
-        }
-
-        return $page;
-    }
-
-    /**
-     * Get a page its book and own slug.
-     *
-     * @throws NotFoundException
-     */
-    public function getBySlug(string $bookSlug, string $pageSlug): Page
-    {
-        $page = Page::visible()->whereSlugs($bookSlug, $pageSlug)->first();
-
-        if (!$page) {
-            throw new NotFoundException(trans('errors.page_not_found'));
-        }
-
-        return $page;
-    }
-
-    /**
-     * Get a page by its old slug but checking the revisions table
-     * for the last revision that matched the given page and book slug.
-     */
-    public function getByOldSlug(string $bookSlug, string $pageSlug): ?Page
-    {
-        $revision = $this->revisionRepo->getBySlugs($bookSlug, $pageSlug);
-
-        return $revision->page ?? null;
-    }
-
-    /**
-     * Get pages that have been marked as a template.
-     */
-    public function getTemplates(int $count = 10, int $page = 1, string $search = ''): LengthAwarePaginator
-    {
-        $query = Page::visible()
-            ->where('template', '=', true)
-            ->orderBy('name', 'asc')
-            ->skip(($page - 1) * $count)
-            ->take($count);
-
-        if ($search) {
-            $query->where('name', 'like', '%' . $search . '%');
-        }
-
-        $paginator = $query->paginate($count, ['*'], 'page', $page);
-        $paginator->withPath('/templates');
-
-        return $paginator;
-    }
-
-    /**
-     * Get a parent item via slugs.
-     */
-    public function getParentFromSlugs(string $bookSlug, string $chapterSlug = null): Entity
-    {
-        if ($chapterSlug !== null) {
-            return Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
-        }
-
-        return Book::visible()->where('slug', '=', $bookSlug)->firstOrFail();
-    }
-
-    /**
-     * Get the draft copy of the given page for the current user.
-     */
-    public function getUserDraft(Page $page): ?PageRevision
-    {
-        return $this->revisionRepo->getLatestDraftForCurrentUser($page);
     }
 
     /**

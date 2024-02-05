@@ -11,6 +11,7 @@ class EntityQueries
         public BookQueries $books,
         public ChapterQueries $chapters,
         public PageQueries $pages,
+        public PageRevisionQueries $revisions,
     ) {
     }
 
