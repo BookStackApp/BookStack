@@ -8,6 +8,8 @@ use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -29,6 +31,8 @@ class PageController extends Controller
 {
     public function __construct(
         protected PageRepo $pageRepo,
+        protected PageQueries $pageQueries,
+        protected EntityQueries $entityQueries,
         protected ReferenceFetcher $referenceFetcher
     ) {
     }
@@ -435,9 +439,9 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-view', $page);
 
         $entitySelection = $request->get('entity_selection') ?: null;
-        $newParent = $entitySelection ? $this->pageRepo->findParentByIdentifier($entitySelection) : $page->getParent();
+        $newParent = $entitySelection ? $this->entityQueries->findVisibleByStringIdentifier($entitySelection) : $page->getParent();
 
-        if (is_null($newParent)) {
+        if (!$newParent instanceof Book && !$newParent instanceof Chapter) {
             $this->showErrorNotification(trans('errors.selected_book_chapter_not_found'));
 
             return redirect($page->getUrl('/copy'));

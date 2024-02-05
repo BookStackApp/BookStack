@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditorData;
@@ -26,6 +27,7 @@ class PageRepo
     public function __construct(
         protected BaseRepo $baseRepo,
         protected RevisionRepo $revisionRepo,
+        protected EntityQueries $entityQueries,
         protected ReferenceStore $referenceStore,
         protected ReferenceUpdater $referenceUpdater
     ) {
@@ -324,8 +326,8 @@ class PageRepo
      */
     public function move(Page $page, string $parentIdentifier): Entity
     {
-        $parent = $this->findParentByIdentifier($parentIdentifier);
-        if (is_null($parent)) {
+        $parent = $this->entityQueries->findVisibleByStringIdentifier($parentIdentifier);
+        if (!$parent instanceof Chapter && !$parent instanceof Book) {
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
@@ -341,28 +343,6 @@ class PageRepo
         Activity::add(ActivityType::PAGE_MOVE, $page);
 
         return $parent;
-    }
-
-    /**
-     * Find a page parent entity via an identifier string in the format:
-     * {type}:{id}
-     * Example: (book:5).
-     *
-     * @throws MoveOperationException
-     */
-    public function findParentByIdentifier(string $identifier): ?Entity
-    {
-        $stringExploded = explode(':', $identifier);
-        $entityType = $stringExploded[0];
-        $entityId = intval($stringExploded[1]);
-
-        if ($entityType !== 'book' && $entityType !== 'chapter') {
-            throw new MoveOperationException('Pages can only be in books or chapters');
-        }
-
-        $parentClass = $entityType === 'book' ? Book::class : Chapter::class;
-
-        return $parentClass::visible()->where('id', '=', $entityId)->first();
     }
 
     /**
