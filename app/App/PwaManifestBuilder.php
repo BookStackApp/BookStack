@@ -26,7 +26,7 @@ class PwaManifestBuilder
             "launch_handler" => [
                 "client_mode" => "focus-existing"
             ],
-            "orientation" => "portrait",
+            "orientation" => "any",
             "icons" => [
                 [
                     "src" => setting('app-icon-32') ?: url('/icon-32.png'),
