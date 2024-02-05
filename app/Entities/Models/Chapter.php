@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
  * Class Chapter.
  *
  * @property Collection<Page> $pages
- * @property string           $description
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
  */

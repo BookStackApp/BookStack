@@ -5,11 +5,16 @@ namespace BookStack\Entities\Queries;
 use BookStack\Entities\Models\Page;
 use Illuminate\Database\Eloquent\Builder;
 
-class PageQueries
+class PageQueries implements ProvidesEntityQueries
 {
     public function start(): Builder
     {
         return Page::query();
+    }
+
+    public function findVisibleById(int $id): ?Page
+    {
+        return $this->start()->scopes('visible')->find($id);
     }
 
     public function visibleForList(): Builder

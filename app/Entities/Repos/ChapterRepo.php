@@ -4,12 +4,11 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
-use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use Exception;
@@ -17,24 +16,9 @@ use Exception;
 class ChapterRepo
 {
     public function __construct(
-        protected BaseRepo $baseRepo
+        protected BaseRepo $baseRepo,
+        protected EntityQueries $entityQueries,
     ) {
-    }
-
-    /**
-     * Get a chapter via the slug.
-     *
-     * @throws NotFoundException
-     */
-    public function getBySlug(string $bookSlug, string $chapterSlug): Chapter
-    {
-        $chapter = Chapter::visible()->whereSlugs($bookSlug, $chapterSlug)->first();
-
-        if ($chapter === null) {
-            throw new NotFoundException(trans('errors.chapter_not_found'));
-        }
-
-        return $chapter;
     }
 
     /**
@@ -91,8 +75,8 @@ class ChapterRepo
      */
     public function move(Chapter $chapter, string $parentIdentifier): Book
     {
-        $parent = $this->findParentByIdentifier($parentIdentifier);
-        if (is_null($parent)) {
+        $parent = $this->entityQueries->findVisibleByStringIdentifier($parentIdentifier);
+        if (!$parent instanceof Book) {
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
@@ -105,25 +89,5 @@ class ChapterRepo
         Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 
         return $parent;
-    }
-
-    /**
-     * Find a page parent entity via an identifier string in the format:
-     * {type}:{id}
-     * Example: (book:5).
-     *
-     * @throws MoveOperationException
-     */
-    public function findParentByIdentifier(string $identifier): ?Book
-    {
-        $stringExploded = explode(':', $identifier);
-        $entityType = $stringExploded[0];
-        $entityId = intval($stringExploded[1]);
-
-        if ($entityType !== 'book') {
-            throw new MoveOperationException('Chapters can only be in books');
-        }
-
-        return Book::visible()->where('id', '=', $entityId)->first();
     }
 }

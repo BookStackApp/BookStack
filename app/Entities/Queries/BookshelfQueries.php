@@ -6,11 +6,16 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
-class BookshelfQueries
+class BookshelfQueries implements ProvidesEntityQueries
 {
     public function start(): Builder
     {
         return Bookshelf::query();
+    }
+
+    public function findVisibleById(int $id): ?Bookshelf
+    {
+        return $this->start()->scopes('visible')->find($id);
     }
 
     public function findVisibleBySlug(string $slug): Bookshelf
