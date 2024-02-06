@@ -51,6 +51,25 @@ class RegistrationService
     }
 
     /**
+     * Attempt to find a user in the system.
+     * For use with external auth systems since password is auto-generated.
+     *
+     * @throws UserRegistrationException
+     */
+    public function findOrFail(string $externalId): User
+    {
+        $user = User::query()
+            ->where('external_auth_id', '=', $externalId)
+            ->first();
+
+        if (is_null($user)) {
+            throw new UserRegistrationException(trans('auth.failed'), '/login');
+        }
+
+        return $user;
+    }
+
+    /**
      * Attempt to find a user in the system otherwise register them as a new
      * user. For use with external auth systems since password is auto-generated.
      *

@@ -42,6 +42,9 @@ return [
     // A string value is used as the URL.
     'end_session_endpoint' => env('OIDC_END_SESSION_ENDPOINT', false),
 
+    // Enable Auto Register
+    'auto_register' => env('OIDC_AUTO_REGISTER', true),
+
     // Add extra scopes, upon those required, to the OIDC authentication request
     // Multiple values can be provided comma seperated.
     'additional_scopes' => env('OIDC_ADDITIONAL_SCOPES', null),

@@ -269,12 +269,17 @@ class OidcService
             throw new OidcException(trans('errors.oidc_already_logged_in'));
         }
 
+
         try {
-            $user = $this->registrationService->findOrRegister(
-                $userDetails['name'],
-                $userDetails['email'],
-                $userDetails['external_id']
-            );
+            if ($this->config()['auto_register'] === false) {
+                $user = $this->registrationService->findOrFail($userDetails['external_id']);
+            } else {
+                $user = $this->registrationService->findOrRegister(
+                    $userDetails['name'],
+                    $userDetails['email'],
+                    $userDetails['external_id']
+                );
+            }
         } catch (UserRegistrationException $exception) {
             throw new OidcException($exception->getMessage());
         }
