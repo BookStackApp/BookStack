@@ -18,6 +18,7 @@ class ChapterRepo
     public function __construct(
         protected BaseRepo $baseRepo,
         protected EntityQueries $entityQueries,
+        protected TrashCan $trashCan,
     ) {
     }
 
@@ -59,10 +60,9 @@ class ChapterRepo
      */
     public function destroy(Chapter $chapter)
     {
-        $trashCan = new TrashCan();
-        $trashCan->softDestroyChapter($chapter);
+        $this->trashCan->softDestroyChapter($chapter);
         Activity::add(ActivityType::CHAPTER_DELETE, $chapter);
-        $trashCan->autoClearOld();
+        $this->trashCan->autoClearOld();
     }
 
     /**

@@ -33,6 +33,7 @@ class PageQueries implements ProvidesEntityQueries
     {
         /** @var ?Page $page */
         $page = $this->start()->with('book')
+            ->scopes('visible')
             ->whereHas('book', function (Builder $query) use ($bookSlug) {
                 $query->where('slug', '=', $bookSlug);
             })
@@ -46,10 +47,31 @@ class PageQueries implements ProvidesEntityQueries
         return $page;
     }
 
+    public function usingSlugs(string $bookSlug, string $pageSlug): Builder
+    {
+        return $this->start()
+            ->where('slug', '=', $pageSlug)
+            ->whereHas('book', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            });
+    }
+
     public function visibleForList(): Builder
     {
         return $this->start()
+            ->scopes('visible')
             ->select(array_merge(Page::$listAttributes, ['book_slug' => function ($builder) {
+                $builder->select('slug')
+                    ->from('books')
+                    ->whereColumn('books.id', '=', 'pages.book_id');
+            }]));
+    }
+
+    public function visibleWithContents(): Builder
+    {
+        return $this->start()
+            ->scopes('visible')
+            ->select(array_merge(Page::$contentAttributes, ['book_slug' => function ($builder) {
                 $builder->select('slug')
                     ->from('books')
                     ->whereColumn('books.id', '=', 'pages.book_id');

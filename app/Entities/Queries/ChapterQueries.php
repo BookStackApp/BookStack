@@ -24,10 +24,17 @@ class ChapterQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->find($id);
     }
 
+    public function findVisibleByIdOrFail(int $id): Chapter
+    {
+        return $this->start()->scopes('visible')->findOrFail($id);
+    }
+
     public function findVisibleBySlugsOrFail(string $bookSlug, string $chapterSlug): Chapter
     {
         /** @var ?Chapter $chapter */
-        $chapter = $this->start()->with('book')
+        $chapter = $this->start()
+            ->scopes('visible')
+            ->with('book')
             ->whereHas('book', function (Builder $query) use ($bookSlug) {
                 $query->where('slug', '=', $bookSlug);
             })
@@ -41,9 +48,19 @@ class ChapterQueries implements ProvidesEntityQueries
         return $chapter;
     }
 
+    public function usingSlugs(string $bookSlug, string $chapterSlug): Builder
+    {
+        return $this->start()
+            ->where('slug', '=', $chapterSlug)
+            ->whereHas('book', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            });
+    }
+
     public function visibleForList(): Builder
     {
         return $this->start()
+            ->scopes('visible')
             ->select(array_merge(static::$listAttributes, ['book_slug' => function ($builder) {
                 $builder->select('slug')
                     ->from('books')

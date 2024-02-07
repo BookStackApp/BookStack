@@ -130,12 +130,12 @@ class SearchController extends Controller
     /**
      * Search siblings items in the system.
      */
-    public function searchSiblings(Request $request)
+    public function searchSiblings(Request $request, SiblingFetcher $siblingFetcher)
     {
         $type = $request->get('entity_type', null);
         $id = $request->get('entity_id', null);
 
-        $entities = (new SiblingFetcher())->fetch($type, $id);
+        $entities = $siblingFetcher->fetch($type, $id);
 
         return view('entities.list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
