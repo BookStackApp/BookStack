@@ -2,7 +2,6 @@
 
 namespace BookStack\Uploads\Controllers;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\ApiController;
 use BookStack\Uploads\Image;

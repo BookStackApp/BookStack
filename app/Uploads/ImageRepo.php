@@ -2,7 +2,6 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Permissions\PermissionApplicator;

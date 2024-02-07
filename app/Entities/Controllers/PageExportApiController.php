@@ -2,7 +2,6 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Http\ApiController;

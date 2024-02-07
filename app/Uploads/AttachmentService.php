@@ -4,7 +4,6 @@ namespace BookStack\Uploads;
 
 use BookStack\Exceptions\FileUploadException;
 use Exception;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\Log;

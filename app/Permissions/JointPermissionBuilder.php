@@ -4,7 +4,6 @@ namespace BookStack\Permissions;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;

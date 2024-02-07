@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PageQueries implements ProvidesEntityQueries
 {
+    protected static array $contentAttributes = [
+        'name', 'id', 'slug', 'book_id', 'chapter_id', 'draft',
+        'template', 'html', 'text', 'created_at', 'updated_at', 'priority'
+    ];
+    protected static array $listAttributes = [
+        'name', 'id', 'slug', 'book_id', 'chapter_id', 'draft',
+        'template', 'text', 'created_at', 'updated_at', 'priority'
+    ];
+
     public function start(): Builder
     {
         return Page::query();
@@ -60,22 +69,14 @@ class PageQueries implements ProvidesEntityQueries
     {
         return $this->start()
             ->scopes('visible')
-            ->select(array_merge(Page::$listAttributes, ['book_slug' => function ($builder) {
-                $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'pages.book_id');
-            }]));
+            ->select($this->mergeBookSlugForSelect(static::$listAttributes));
     }
 
     public function visibleWithContents(): Builder
     {
         return $this->start()
             ->scopes('visible')
-            ->select(array_merge(Page::$contentAttributes, ['book_slug' => function ($builder) {
-                $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'pages.book_id');
-            }]));
+            ->select($this->mergeBookSlugForSelect(static::$contentAttributes));
     }
 
     public function currentUserDraftsForList(): Builder
@@ -89,5 +90,14 @@ class PageQueries implements ProvidesEntityQueries
     {
         return $this->visibleForList()
             ->where('template', '=', true);
+    }
+
+    protected function mergeBookSlugForSelect(array $columns): array
+    {
+        return array_merge($columns, ['book_slug' => function ($builder) {
+            $builder->select('slug')
+                ->from('books')
+                ->whereColumn('books.id', '=', 'pages.book_id');
+        }]);
     }
 }

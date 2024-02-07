@@ -16,6 +16,19 @@ use Illuminate\Database\Eloquent\Builder;
  */
 interface ProvidesEntityQueries
 {
+    /**
+     * Start a new query for this entity type.
+     */
     public function start(): Builder;
+
+    /**
+     * Find the entity of the given ID, or return null if not found.
+     */
     public function findVisibleById(int $id): ?Entity;
+
+    /**
+     * Start a query for items that are visible, with selection
+     * configured for list display of this item.
+     */
+    public function visibleForList(): Builder;
 }

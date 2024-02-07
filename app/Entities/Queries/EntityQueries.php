@@ -3,6 +3,8 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Entities\Models\Entity;
+use Illuminate\Database\Eloquent\Builder;
+use InvalidArgumentException;
 
 class EntityQueries
 {
@@ -25,9 +27,25 @@ class EntityQueries
         $explodedId = explode(':', $identifier);
         $entityType = $explodedId[0];
         $entityId = intval($explodedId[1]);
+        $queries = $this->getQueriesForType($entityType);
 
+        return $queries->findVisibleById($entityId);
+    }
+
+    /**
+     * Start a query of visible entities of the given type,
+     * suitable for listing display.
+     */
+    public function visibleForList(string $entityType): Builder
+    {
+        $queries = $this->getQueriesForType($entityType);
+        return $queries->visibleForList();
+    }
+
+    protected function getQueriesForType(string $type): ProvidesEntityQueries
+    {
         /** @var ?ProvidesEntityQueries $queries */
-        $queries = match ($entityType) {
+        $queries = match ($type) {
             'page' => $this->pages,
             'chapter' => $this->chapters,
             'book' => $this->books,
@@ -36,9 +54,9 @@ class EntityQueries
         };
 
         if (is_null($queries)) {
-            return null;
+            throw new InvalidArgumentException("No entity query class configured for {$type}");
         }
 
-        return $queries->findVisibleById($entityId);
+        return $queries;
     }
 }

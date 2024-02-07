@@ -13,24 +13,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int    $priority
  * @property string $book_slug
  * @property Book   $book
- *
- * @method Builder whereSlugs(string $bookSlug, string $childSlug)
  */
 abstract class BookChild extends Entity
 {
-    /**
-     * Scope a query to find items where the child has the given childSlug
-     * where its parent has the bookSlug.
-     */
-    public function scopeWhereSlugs(Builder $query, string $bookSlug, string $childSlug)
-    {
-        return $query->with('book')
-            ->whereHas('book', function (Builder $query) use ($bookSlug) {
-                $query->where('slug', '=', $bookSlug);
-            })
-            ->where('slug', '=', $childSlug);
-    }
-
     /**
      * Get the book this page sits in.
      */

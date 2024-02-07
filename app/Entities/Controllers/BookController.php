@@ -6,7 +6,6 @@ use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
-use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookRepo;

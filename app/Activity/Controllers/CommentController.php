@@ -3,7 +3,6 @@
 namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\CommentRepo;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
