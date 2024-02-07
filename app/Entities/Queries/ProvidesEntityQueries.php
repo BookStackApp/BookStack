@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Queries;
 
-use BookStack\App\Model;
+use BookStack\Entities\Models\Entity;
 use Illuminate\Database\Eloquent\Builder;
 
 /**

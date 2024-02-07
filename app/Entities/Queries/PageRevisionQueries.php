@@ -27,7 +27,10 @@ class PageRevisionQueries
 
     public function findLatestCurrentUserDraftsForPageId(int $pageId): ?PageRevision
     {
-        return $this->latestCurrentUserDraftsForPageId($pageId)->first();
+        /** @var ?PageRevision $revision */
+        $revision = $this->latestCurrentUserDraftsForPageId($pageId)->first();
+
+        return $revision;
     }
 
     public function latestCurrentUserDraftsForPageId(int $pageId): Builder

@@ -4,39 +4,13 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
-use Illuminate\Database\Eloquent\Builder;
+use BookStack\Entities\Queries\PageRevisionQueries;
 
 class RevisionRepo
 {
-    /**
-     * Get a revision by its stored book and page slug values.
-     */
-    public function getBySlugs(string $bookSlug, string $pageSlug): ?PageRevision
-    {
-        /** @var ?PageRevision $revision */
-        $revision = PageRevision::query()
-            ->whereHas('page', function (Builder $query) {
-                $query->scopes('visible');
-            })
-            ->where('slug', '=', $pageSlug)
-            ->where('type', '=', 'version')
-            ->where('book_slug', '=', $bookSlug)
-            ->orderBy('created_at', 'desc')
-            ->with('page')
-            ->first();
-
-        return $revision;
-    }
-
-    /**
-     * Get the latest draft revision, for the given page, belonging to the current user.
-     */
-    public function getLatestDraftForCurrentUser(Page $page): ?PageRevision
-    {
-        /** @var ?PageRevision $revision */
-        $revision = $this->queryForCurrentUserDraft($page->id)->first();
-
-        return $revision;
+    public function __construct(
+        protected PageRevisionQueries $queries,
+    ) {
     }
 
     /**
@@ -44,7 +18,7 @@ class RevisionRepo
      */
     public function deleteDraftsForCurrentUser(Page $page): void
     {
-        $this->queryForCurrentUserDraft($page->id)->delete();
+        $this->queries->latestCurrentUserDraftsForPageId($page->id)->delete();
     }
 
     /**
@@ -53,7 +27,7 @@ class RevisionRepo
      */
     public function getNewDraftForCurrentUser(Page $page): PageRevision
     {
-        $draft = $this->getLatestDraftForCurrentUser($page);
+        $draft = $this->queries->findLatestCurrentUserDraftsForPageId($page->id);
 
         if ($draft) {
             return $draft;
@@ -115,17 +89,5 @@ class RevisionRepo
         if ($revisionsToDelete->count() > 0) {
             PageRevision::query()->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
         }
-    }
-
-    /**
-     * Query update draft revisions for the current user.
-     */
-    protected function queryForCurrentUserDraft(int $pageId): Builder
-    {
-        return PageRevision::query()
-            ->where('created_by', '=', user()->id)
-            ->where('type', 'update_draft')
-            ->where('page_id', '=', $pageId)
-            ->orderBy('created_at', 'desc');
     }
 }
