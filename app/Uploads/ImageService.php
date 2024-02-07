@@ -2,9 +2,6 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\ImageUploadException;
 use Exception;

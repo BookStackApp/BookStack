@@ -2,7 +2,6 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Http\ApiController;

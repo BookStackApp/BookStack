@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BookQueries implements ProvidesEntityQueries
 {
+    protected static array $listAttributes = [
+        'id', 'slug', 'name', 'description', 'created_at', 'updated_at', 'image_id'
+    ];
+
     public function start(): Builder
     {
         return Book::query();
@@ -40,7 +44,8 @@ class BookQueries implements ProvidesEntityQueries
 
     public function visibleForList(): Builder
     {
-        return $this->start()->scopes('visible');
+        return $this->start()->scopes('visible')
+            ->select(static::$listAttributes);
     }
 
     public function visibleForListWithCover(): Builder

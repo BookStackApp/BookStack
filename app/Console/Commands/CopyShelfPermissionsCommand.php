@@ -2,7 +2,6 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use Illuminate\Console\Command;

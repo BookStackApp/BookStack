@@ -2,7 +2,6 @@
 
 namespace BookStack\Search;
 
-use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SiblingFetcher;

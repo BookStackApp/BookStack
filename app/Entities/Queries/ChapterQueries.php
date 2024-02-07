@@ -10,8 +10,7 @@ class ChapterQueries implements ProvidesEntityQueries
 {
     protected static array $listAttributes = [
         'id', 'slug', 'name', 'description', 'priority',
-        'created_at', 'updated_at',
-        'created_by', 'updated_by', 'owned_by',
+        'created_at', 'updated_at'
     ];
 
     public function start(): Builder
