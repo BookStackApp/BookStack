@@ -101,10 +101,10 @@ return [
 
     // Email Content
     'email_action_help' => 'Ако имате проблема да кликнете на дугме ":actionText" копирајте и налепите УРЛ доле у свој веб прегледач:',
-    'email_rights' => 'All rights reserved',
+    'email_rights' => 'Сва права задржана',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Правила о приватности',
+    'terms_of_service' => 'Услови коришћења',
 ];
