@@ -67,10 +67,10 @@ return [
     // Entities
     'entity_not_found' => 'Entity not found',
     'bookshelf_not_found' => 'Shelf not found',
-    'book_not_found' => 'Book not found',
-    'page_not_found' => 'Page not found',
-    'chapter_not_found' => 'Chapter not found',
-    'selected_book_not_found' => 'The selected book was not found',
+    'book_not_found' => 'Књига није пронађена',
+    'page_not_found' => 'Страница није пронађена',
+    'chapter_not_found' => 'Поглавље није пронађено',
+    'selected_book_not_found' => 'Одабрана књига није пронађена',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
     'guests_cannot_save_drafts' => 'Guests cannot save drafts',
 
