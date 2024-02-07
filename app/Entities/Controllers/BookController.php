@@ -8,6 +8,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -29,6 +30,7 @@ class BookController extends Controller
         protected ShelfContext $shelfContext,
         protected BookRepo $bookRepo,
         protected BookQueries $queries,
+        protected BookshelfQueries $shelfQueries,
         protected ReferenceFetcher $referenceFetcher,
     ) {
     }
@@ -75,7 +77,7 @@ class BookController extends Controller
 
         $bookshelf = null;
         if ($shelfSlug !== null) {
-            $bookshelf = Bookshelf::visible()->where('slug', '=', $shelfSlug)->firstOrFail();
+            $bookshelf = $this->shelfQueries->findVisibleBySlugOrFail($shelfSlug);
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 
@@ -105,7 +107,7 @@ class BookController extends Controller
 
         $bookshelf = null;
         if ($shelfSlug !== null) {
-            $bookshelf = Bookshelf::visible()->where('slug', '=', $shelfSlug)->firstOrFail();
+            $bookshelf = $this->shelfQueries->findVisibleBySlugOrFail($shelfSlug);
             $this->checkOwnablePermission('bookshelf-update', $bookshelf);
         }
 

@@ -359,7 +359,9 @@ class PageController extends Controller
             $query->scopes('visible');
         };
 
-        $pages = Page::visible()->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope])
+        $pages = $this->queries->visibleForList()
+            ->addSelect('updated_by')
+            ->with(['updatedBy', 'book' => $visibleBelongsScope, 'chapter' => $visibleBelongsScope])
             ->orderBy('updated_at', 'desc')
             ->paginate(20)
             ->setPath(url('/pages/recently-updated'));

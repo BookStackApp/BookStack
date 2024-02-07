@@ -18,6 +18,17 @@ class BookshelfQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->find($id);
     }
 
+    public function findVisibleByIdOrFail(int $id): Bookshelf
+    {
+        $shelf = $this->findVisibleById($id);
+
+        if (is_null($shelf)) {
+            throw new NotFoundException(trans('errors.bookshelf_not_found'));
+        }
+
+        return $shelf;
+    }
+
     public function findVisibleBySlugOrFail(string $slug): Bookshelf
     {
         /** @var ?Bookshelf $shelf */

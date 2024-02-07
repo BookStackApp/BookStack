@@ -4,10 +4,16 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookshelfQueries;
 
 class ShelfContext
 {
-    protected $KEY_SHELF_CONTEXT_ID = 'context_bookshelf_id';
+    protected string $KEY_SHELF_CONTEXT_ID = 'context_bookshelf_id';
+
+    public function __construct(
+        protected BookshelfQueries $shelfQueries,
+    ) {
+    }
 
     /**
      * Get the current bookshelf context for the given book.
@@ -20,8 +26,7 @@ class ShelfContext
             return null;
         }
 
-        /** @var Bookshelf $shelf */
-        $shelf = Bookshelf::visible()->find($contextBookshelfId);
+        $shelf = $this->shelfQueries->findVisibleById($contextBookshelfId);
         $shelfContainsBook = $shelf && $shelf->contains($book);
 
         return $shelfContainsBook ? $shelf : null;
@@ -30,7 +35,7 @@ class ShelfContext
     /**
      * Store the current contextual shelf ID.
      */
-    public function setShelfContext(int $shelfId)
+    public function setShelfContext(int $shelfId): void
     {
         session()->put($this->KEY_SHELF_CONTEXT_ID, $shelfId);
     }
@@ -38,7 +43,7 @@ class ShelfContext
     /**
      * Clear the session stored shelf context id.
      */
-    public function clearShelfContext()
+    public function clearShelfContext(): void
     {
         session()->forget($this->KEY_SHELF_CONTEXT_ID);
     }
