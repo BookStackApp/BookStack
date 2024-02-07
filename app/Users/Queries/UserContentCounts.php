@@ -2,10 +2,7 @@
 
 namespace BookStack\Users\Queries;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Users\Models\User;
 
 /**
@@ -13,6 +10,12 @@ use BookStack\Users\Models\User;
  */
 class UserContentCounts
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
+
     /**
      * @return array{pages: int, chapters: int, books: int, shelves: int}
      */
@@ -21,10 +24,10 @@ class UserContentCounts
         $createdBy = ['created_by' => $user->id];
 
         return [
-            'pages'    => Page::visible()->where($createdBy)->count(),
-            'chapters' => Chapter::visible()->where($createdBy)->count(),
-            'books'    => Book::visible()->where($createdBy)->count(),
-            'shelves'  => Bookshelf::visible()->where($createdBy)->count(),
+            'pages'    => $this->queries->pages->visibleForList()->where($createdBy)->count(),
+            'chapters' => $this->queries->chapters->visibleForList()->where($createdBy)->count(),
+            'books'    => $this->queries->books->visibleForList()->where($createdBy)->count(),
+            'shelves'  => $this->queries->shelves->visibleForList()->where($createdBy)->count(),
         ];
     }
 }

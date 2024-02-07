@@ -7,10 +7,16 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use Illuminate\Support\Collection;
 
 class SiblingFetcher
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
     /**
      * Search among the siblings of the entity of given type and id.
      */
@@ -26,7 +32,7 @@ class SiblingFetcher
 
         // Page in book or chapter
         if (($entity instanceof Page && !$entity->chapter) || $entity instanceof Chapter) {
-            $entities = $entity->book->getDirectChildren();
+            $entities = $entity->book->getDirectVisibleChildren();
         }
 
         // Book
@@ -36,13 +42,13 @@ class SiblingFetcher
             if ($contextShelf) {
                 $entities = $contextShelf->visibleBooks()->get();
             } else {
-                $entities = Book::visible()->get();
+                $entities = $this->queries->books->visibleForList()->get();
             }
         }
 
         // Shelf
         if ($entity instanceof Bookshelf) {
-            $entities = Bookshelf::visible()->get();
+            $entities = $this->queries->shelves->visibleForList()->get();
         }
 
         return $entities;

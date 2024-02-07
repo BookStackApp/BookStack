@@ -303,7 +303,7 @@ class EntitySearchTest extends TestCase
     public function test_sibling_search_for_pages_without_chapter()
     {
         $page = $this->entities->pageNotWithinChapter();
-        $bookChildren = $page->book->getDirectChildren();
+        $bookChildren = $page->book->getDirectVisibleChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$page->id}&entity_type=page");
@@ -318,7 +318,7 @@ class EntitySearchTest extends TestCase
     public function test_sibling_search_for_chapters()
     {
         $chapter = $this->entities->chapter();
-        $bookChildren = $chapter->book->getDirectChildren();
+        $bookChildren = $chapter->book->getDirectVisibleChildren();
         $this->assertGreaterThan(2, count($bookChildren), 'Ensure we\'re testing with at least 1 sibling');
 
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$chapter->id}&entity_type=chapter");

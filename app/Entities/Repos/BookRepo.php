@@ -17,7 +17,8 @@ class BookRepo
     public function __construct(
         protected BaseRepo $baseRepo,
         protected TagRepo $tagRepo,
-        protected ImageRepo $imageRepo
+        protected ImageRepo $imageRepo,
+        protected TrashCan $trashCan,
     ) {
     }
 
@@ -73,10 +74,9 @@ class BookRepo
      */
     public function destroy(Book $book)
     {
-        $trashCan = new TrashCan();
-        $trashCan->softDestroyBook($book);
+        $this->trashCan->softDestroyBook($book);
         Activity::add(ActivityType::BOOK_DELETE, $book);
 
-        $trashCan->autoClearOld();
+        $this->trashCan->autoClearOld();
     }
 }

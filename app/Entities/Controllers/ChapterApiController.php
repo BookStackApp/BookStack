@@ -2,8 +2,9 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
@@ -35,7 +36,9 @@ class ChapterApiController extends ApiController
     ];
 
     public function __construct(
-        protected ChapterRepo $chapterRepo
+        protected ChapterRepo $chapterRepo,
+        protected ChapterQueries $queries,
+        protected BookQueries $bookQueries,
     ) {
     }
 
@@ -44,7 +47,7 @@ class ChapterApiController extends ApiController
      */
     public function list()
     {
-        $chapters = Chapter::visible();
+        $chapters = $this->queries->visibleForList();
 
         return $this->apiListingResponse($chapters, [
             'id', 'book_id', 'name', 'slug', 'description', 'priority',
@@ -60,7 +63,7 @@ class ChapterApiController extends ApiController
         $requestData = $this->validate($request, $this->rules['create']);
 
         $bookId = $request->get('book_id');
-        $book = Book::visible()->findOrFail($bookId);
+        $book = $this->bookQueries->findVisibleByIdOrFail(intval($bookId));
         $this->checkOwnablePermission('chapter-create', $book);
 
         $chapter = $this->chapterRepo->create($requestData, $book);
@@ -73,7 +76,7 @@ class ChapterApiController extends ApiController
      */
     public function read(string $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $chapter = $this->forJsonDisplay($chapter);
 
         $chapter->load([
@@ -94,7 +97,7 @@ class ChapterApiController extends ApiController
     public function update(Request $request, string $id)
     {
         $requestData = $this->validate($request, $this->rules()['update']);
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission('chapter-update', $chapter);
 
         if ($request->has('book_id') && $chapter->book_id !== intval($requestData['book_id'])) {
@@ -122,7 +125,7 @@ class ChapterApiController extends ApiController
      */
     public function delete(string $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission('chapter-delete', $chapter);
 
         $this->chapterRepo->destroy($chapter);

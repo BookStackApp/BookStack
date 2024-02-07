@@ -4,9 +4,15 @@ namespace BookStack\References\ModelResolvers;
 
 use BookStack\App\Model;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 
 class PagePermalinkModelResolver implements CrossLinkModelResolver
 {
+    public function __construct(
+        protected PageQueries $queries
+    ) {
+    }
+
     public function resolve(string $link): ?Model
     {
         $pattern = '/^' . preg_quote(url('/link'), '/') . '\/(\d+)/';
@@ -18,7 +24,7 @@ class PagePermalinkModelResolver implements CrossLinkModelResolver
 
         $id = intval($matches[1]);
         /** @var ?Page $model */
-        $model = Page::query()->find($id, ['id']);
+        $model = $this->queries->start()->find($id, ['id']);
 
         return $model;
     }

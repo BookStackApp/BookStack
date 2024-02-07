@@ -27,7 +27,8 @@ class PageRepo
         protected RevisionRepo $revisionRepo,
         protected EntityQueries $entityQueries,
         protected ReferenceStore $referenceStore,
-        protected ReferenceUpdater $referenceUpdater
+        protected ReferenceUpdater $referenceUpdater,
+        protected TrashCan $trashCan,
     ) {
     }
 
@@ -184,10 +185,9 @@ class PageRepo
      */
     public function destroy(Page $page)
     {
-        $trashCan = new TrashCan();
-        $trashCan->softDestroyPage($page);
+        $this->trashCan->softDestroyPage($page);
         Activity::add(ActivityType::PAGE_DELETE, $page);
-        $trashCan->autoClearOld();
+        $this->trashCan->autoClearOld();
     }
 
     /**

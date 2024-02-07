@@ -10,16 +10,25 @@ use BookStack\Users\UserRepo;
 
 class UserProfileController extends Controller
 {
+    public function __construct(
+        protected UserRepo $userRepo,
+        protected ActivityQueries $activityQueries,
+        protected UserContentCounts $contentCounts,
+        protected UserRecentlyCreatedContent $recentlyCreatedContent
+    ) {
+    }
+
+
     /**
      * Show the user profile page.
      */
-    public function show(UserRepo $repo, ActivityQueries $activities, string $slug)
+    public function show(string $slug)
     {
-        $user = $repo->getBySlug($slug);
+        $user = $this->userRepo->getBySlug($slug);
 
-        $userActivity = $activities->userActivity($user);
-        $recentlyCreated = (new UserRecentlyCreatedContent())->run($user, 5);
-        $assetCounts = (new UserContentCounts())->run($user);
+        $userActivity = $this->activityQueries->userActivity($user);
+        $recentlyCreated = $this->recentlyCreatedContent->run($user, 5);
+        $assetCounts = $this->contentCounts->run($user);
 
         $this->setPageTitle($user->name);
 

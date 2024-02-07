@@ -4,7 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\Models\View;
-use BookStack\Entities\Models\Book;
+use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\ShelfContext;
@@ -22,6 +22,7 @@ class BookshelfController extends Controller
     public function __construct(
         protected BookshelfRepo $shelfRepo,
         protected BookshelfQueries $queries,
+        protected BookQueries $bookQueries,
         protected ShelfContext $shelfContext,
         protected ReferenceFetcher $referenceFetcher,
     ) {
@@ -68,7 +69,7 @@ class BookshelfController extends Controller
     public function create()
     {
         $this->checkPermission('bookshelf-create-all');
-        $books = Book::visible()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
+        $books = $this->bookQueries->visibleForList()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
         $this->setPageTitle(trans('entities.shelves_create'));
 
         return view('shelves.create', ['books' => $books]);
@@ -145,7 +146,10 @@ class BookshelfController extends Controller
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
-        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
+        $books = $this->bookQueries->visibleForList()
+            ->whereNotIn('id', $shelfBookIds)
+            ->orderBy('name')
+            ->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
 

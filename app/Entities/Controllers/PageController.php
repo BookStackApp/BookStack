@@ -276,8 +276,8 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-delete', $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
         $usedAsTemplate =
-            Book::query()->where('default_template_id', '=', $page->id)->count() > 0 ||
-            Chapter::query()->where('default_template_id', '=', $page->id)->count() > 0;
+            $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
+            $this->entityQueries->chapters->start()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,
@@ -298,8 +298,8 @@ class PageController extends Controller
         $this->checkOwnablePermission('page-update', $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
         $usedAsTemplate =
-            Book::query()->where('default_template_id', '=', $page->id)->count() > 0 ||
-            Chapter::query()->where('default_template_id', '=', $page->id)->count() > 0;
+            $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
+            $this->entityQueries->chapters->start()->where('default_template_id', '=', $page->id)->count() > 0;
 
         return view('pages.delete', [
             'book'    => $page->book,

@@ -18,6 +18,11 @@ class BookQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->find($id);
     }
 
+    public function findVisibleByIdOrFail(int $id): Book
+    {
+        return $this->start()->scopes('visible')->findOrFail($id);
+    }
+
     public function findVisibleBySlugOrFail(string $slug): Book
     {
         /** @var ?Book $book */

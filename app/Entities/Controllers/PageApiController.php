@@ -2,9 +2,7 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\PermissionsException;
@@ -38,6 +36,7 @@ class PageApiController extends ApiController
     public function __construct(
         protected PageRepo $pageRepo,
         protected PageQueries $queries,
+        protected EntityQueries $entityQueries,
     ) {
     }
 
@@ -46,7 +45,7 @@ class PageApiController extends ApiController
      */
     public function list()
     {
-        $pages = Page::visible();
+        $pages = $this->queries->visibleForList();
 
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
@@ -72,9 +71,9 @@ class PageApiController extends ApiController
         $this->validate($request, $this->rules['create']);
 
         if ($request->has('chapter_id')) {
-            $parent = Chapter::visible()->findOrFail($request->get('chapter_id'));
+            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->get('chapter_id')));
         } else {
-            $parent = Book::visible()->findOrFail($request->get('book_id'));
+            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->get('book_id')));
         }
         $this->checkOwnablePermission('page-create', $parent);
 
@@ -120,9 +119,9 @@ class PageApiController extends ApiController
 
         $parent = null;
         if ($request->has('chapter_id')) {
-            $parent = Chapter::visible()->findOrFail($request->get('chapter_id'));
+            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->get('chapter_id')));
         } elseif ($request->has('book_id')) {
-            $parent = Book::visible()->findOrFail($request->get('book_id'));
+            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->get('book_id')));
         }
 
         if ($parent && !$parent->matches($page->getParent())) {

@@ -3,8 +3,8 @@
 namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\ActivityType;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Facades\Activity;
 use Exception;
@@ -13,6 +13,8 @@ class BookshelfRepo
 {
     public function __construct(
         protected BaseRepo $baseRepo,
+        protected BookQueries $bookQueries,
+        protected TrashCan $trashCan,
     ) {
     }
 
@@ -60,7 +62,7 @@ class BookshelfRepo
             return intval($id);
         });
 
-        $syncData = Book::visible()
+        $syncData = $this->bookQueries->visibleForList()
             ->whereIn('id', $bookIds)
             ->pluck('id')
             ->mapWithKeys(function ($bookId) use ($numericIDs) {
@@ -77,9 +79,8 @@ class BookshelfRepo
      */
     public function destroy(Bookshelf $shelf)
     {
-        $trashCan = new TrashCan();
-        $trashCan->softDestroyShelf($shelf);
+        $this->trashCan->softDestroyShelf($shelf);
         Activity::add(ActivityType::BOOKSHELF_DELETE, $shelf);
-        $trashCan->autoClearOld();
+        $this->trashCan->autoClearOld();
     }
 }
