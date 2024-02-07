@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
@@ -21,9 +22,12 @@ use Illuminate\Support\Str;
 
 class PageContent
 {
+    protected PageQueries $pageQueries;
+
     public function __construct(
         protected Page $page
     ) {
+        $this->pageQueries = app()->make(PageQueries::class);
     }
 
     /**
@@ -331,7 +335,7 @@ class PageContent
                 return PageIncludeContent::fromHtmlAndTag('', $tag);
             }
 
-            $matchedPage = Page::visible()->find($tag->getPageId());
+            $matchedPage = $this->pageQueries->findVisibleById($tag->getPageId());
             $content = PageIncludeContent::fromHtmlAndTag($matchedPage->html ?? '', $tag);
 
             if (Theme::hasListeners(ThemeEvents::PAGE_INCLUDE_PARSE)) {

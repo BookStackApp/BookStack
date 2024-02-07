@@ -3,6 +3,7 @@
 namespace BookStack\Uploads\Controllers;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Http\ApiController;
 use BookStack\Uploads\Attachment;
@@ -15,7 +16,8 @@ use Illuminate\Validation\ValidationException;
 class AttachmentApiController extends ApiController
 {
     public function __construct(
-        protected AttachmentService $attachmentService
+        protected AttachmentService $attachmentService,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -48,7 +50,7 @@ class AttachmentApiController extends ApiController
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $pageId = $request->get('uploaded_to');
-        $page = Page::visible()->findOrFail($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         if ($request->hasFile('file')) {
@@ -132,7 +134,7 @@ class AttachmentApiController extends ApiController
         $page = $attachment->page;
         if ($requestData['uploaded_to'] ?? false) {
             $pageId = $request->get('uploaded_to');
-            $page = Page::visible()->findOrFail($pageId);
+            $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
             $attachment->uploaded_to = $requestData['uploaded_to'];
         }
 

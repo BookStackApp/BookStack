@@ -3,6 +3,7 @@
 namespace BookStack\Search;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\Popular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
@@ -11,7 +12,8 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function __construct(
-        protected SearchRunner $searchRunner
+        protected SearchRunner $searchRunner,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -95,12 +97,11 @@ class SearchController extends Controller
             $searchOptions->setFilter('is_template');
             $entities = $this->searchRunner->searchEntities($searchOptions, 'page', 1, 20)['results'];
         } else {
-            $entities = Page::visible()
-                ->where('template', '=', true)
+            $entities = $this->pageQueries->visibleTemplates()
                 ->where('draft', '=', false)
                 ->orderBy('updated_at', 'desc')
                 ->take(20)
-                ->get(Page::$listAttributes);
+                ->get();
         }
 
         return view('search.parts.entity-selector-list', [
