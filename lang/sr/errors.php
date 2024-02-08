@@ -72,15 +72,15 @@ return [
     'chapter_not_found' => 'Поглавље није пронађено',
     'selected_book_not_found' => 'Одабрана књига није пронађена',
     'selected_book_chapter_not_found' => 'The selected Book or Chapter was not found',
-    'guests_cannot_save_drafts' => 'Guests cannot save drafts',
+    'guests_cannot_save_drafts' => 'Гости не могу сачувати нацрте',
 
     // Users
-    'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
-    'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    'users_cannot_delete_only_admin' => 'Не можете обрисати јединог администратора',
+    'users_cannot_delete_guest' => 'Не можете обрисати госта',
 
     // Roles
-    'role_cannot_be_edited' => 'This role cannot be edited',
-    'role_system_cannot_be_deleted' => 'This role is a system role and cannot be deleted',
+    'role_cannot_be_edited' => 'Ова улога се не може мењати',
+    'role_system_cannot_be_deleted' => 'Ово је системска улога и не може се мењати',
     'role_registration_default_cannot_delete' => 'This role cannot be deleted while set as the default registration role',
     'role_cannot_remove_only_admin' => 'This user is the only user assigned to the administrator role. Assign the administrator role to another user before attempting to remove it here.',
 
@@ -99,7 +99,7 @@ return [
     'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
     'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
     'return_home' => 'Return to home',
-    'error_occurred' => 'An Error Occurred',
+    'error_occurred' => 'Догодила се грешка',
     'app_down' => ':appName is down right now',
     'back_soon' => 'It will be back up soon.',
 
