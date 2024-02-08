@@ -10,11 +10,12 @@ class PageQueries implements ProvidesEntityQueries
 {
     protected static array $contentAttributes = [
         'name', 'id', 'slug', 'book_id', 'chapter_id', 'draft',
-        'template', 'html', 'text', 'created_at', 'updated_at', 'priority'
+        'template', 'html', 'text', 'created_at', 'updated_at', 'priority',
+        'created_by', 'updated_by', 'owned_by',
     ];
     protected static array $listAttributes = [
         'name', 'id', 'slug', 'book_id', 'chapter_id', 'draft',
-        'template', 'text', 'created_at', 'updated_at', 'priority'
+        'template', 'text', 'created_at', 'updated_at', 'priority', 'owned_by',
     ];
 
     public function start(): Builder

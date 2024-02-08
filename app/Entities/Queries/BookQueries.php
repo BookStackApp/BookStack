@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Builder;
 class BookQueries implements ProvidesEntityQueries
 {
     protected static array $listAttributes = [
-        'id', 'slug', 'name', 'description', 'created_at', 'updated_at', 'image_id'
+        'id', 'slug', 'name', 'description',
+        'created_at', 'updated_at', 'image_id', 'owned_by',
     ];
 
     public function start(): Builder
