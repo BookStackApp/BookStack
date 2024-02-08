@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF Fil',
     'export_text' => 'Tekstfil',
     'export_md' => 'Markdownfil',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Standard sidemal',
+    'default_template_explain' => 'Tildel en sidemal som vil bli brukt som standardinnhold for alle nye sider i denne boken. Husk dette vil kun bli brukt hvis sideskaperen har tilgang til den valgte malsiden.',
+    'default_template_select' => 'Velg en malside',
 
     // Permissions and restrictions
     'permissions' => 'Tilganger',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Slett utkastet',
     'pages_delete_success' => 'Siden er slettet',
     'pages_delete_draft_success' => 'Sideutkastet ble slettet',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Denne siden er i aktiv bruk som en bok eller kapittelstandard sidemal. Disse bøkene eller kapitlene vil ikke lenger ha en standardmal som er tilordnet etter at denne siden er slettet.',
     'pages_delete_confirm' => 'Er du sikker på at du vil slette siden?',
     'pages_delete_draft_confirm' => 'Er du sikker på at du vil slette utkastet?',
     'pages_editing_named' => 'Redigerer :pageName (side)',
