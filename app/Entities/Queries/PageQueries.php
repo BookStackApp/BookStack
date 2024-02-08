@@ -50,7 +50,7 @@ class PageQueries implements ProvidesEntityQueries
             ->first();
 
         if (is_null($page)) {
-            throw new NotFoundException(trans('errors.chapter_not_found'));
+            throw new NotFoundException(trans('errors.page_not_found'));
         }
 
         return $page;

@@ -3,10 +3,18 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Activity\Models\View;
+use BookStack\Entities\Tools\MixedEntityListLoader;
+use BookStack\Permissions\PermissionApplicator;
 use Illuminate\Support\Collection;
 
-class RecentlyViewed extends EntityQuery
+class QueryRecentlyViewed
 {
+    public function __construct(
+        protected PermissionApplicator $permissions,
+        protected MixedEntityListLoader $listLoader,
+    ) {
+    }
+
     public function run(int $count, int $page): Collection
     {
         $user = user();
@@ -14,7 +22,7 @@ class RecentlyViewed extends EntityQuery
             return collect();
         }
 
-        $query = $this->permissionService()->restrictEntityRelationQuery(
+        $query = $this->permissions->restrictEntityRelationQuery(
             View::query(),
             'views',
             'viewable_id',
@@ -28,7 +36,7 @@ class RecentlyViewed extends EntityQuery
             ->take($count)
             ->get();
 
-        $this->mixedEntityListLoader()->loadIntoRelations($views->all(), 'viewable', false);
+        $this->listLoader->loadIntoRelations($views->all(), 'viewable', false);
 
         return $views->pluck('viewable')->filter();
     }

@@ -3,10 +3,18 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Activity\Models\Favourite;
+use BookStack\Entities\Tools\MixedEntityListLoader;
+use BookStack\Permissions\PermissionApplicator;
 use Illuminate\Database\Query\JoinClause;
 
-class TopFavourites extends EntityQuery
+class QueryTopFavourites
 {
+    public function __construct(
+        protected PermissionApplicator $permissions,
+        protected MixedEntityListLoader $listLoader,
+    ) {
+    }
+
     public function run(int $count, int $skip = 0)
     {
         $user = user();
@@ -14,7 +22,7 @@ class TopFavourites extends EntityQuery
             return collect();
         }
 
-        $query = $this->permissionService()
+        $query = $this->permissions
             ->restrictEntityRelationQuery(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type')
             ->select('favourites.*')
             ->leftJoin('views', function (JoinClause $join) {
@@ -30,7 +38,7 @@ class TopFavourites extends EntityQuery
             ->take($count)
             ->get();
 
-        $this->mixedEntityListLoader()->loadIntoRelations($favourites->all(), 'favouritable', false);
+        $this->listLoader->loadIntoRelations($favourites->all(), 'favouritable', false);
 
         return $favourites->pluck('favouritable')->filter();
     }

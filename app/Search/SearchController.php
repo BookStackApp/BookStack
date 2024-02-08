@@ -3,7 +3,7 @@
 namespace BookStack\Search;
 
 use BookStack\Entities\Queries\PageQueries;
-use BookStack\Entities\Queries\Popular;
+use BookStack\Entities\Queries\QueryPopular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -67,7 +67,7 @@ class SearchController extends Controller
      * Search for a list of entities and return a partial HTML response of matching entities.
      * Returns the most popular entities if no search is provided.
      */
-    public function searchForSelector(Request $request)
+    public function searchForSelector(Request $request, QueryPopular $queryPopular)
     {
         $entityTypes = $request->filled('types') ? explode(',', $request->get('types')) : ['page', 'chapter', 'book'];
         $searchTerm = $request->get('term', false);
@@ -78,7 +78,7 @@ class SearchController extends Controller
             $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
             $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20)['results'];
         } else {
-            $entities = (new Popular())->run(20, 0, $entityTypes);
+            $entities = $queryPopular->run(20, 0, $entityTypes);
         }
 
         return view('search.parts.entity-selector-list', ['entities' => $entities, 'permission' => $permission]);

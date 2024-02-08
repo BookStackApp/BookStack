@@ -3,20 +3,13 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\App\Model;
-use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Queries\EntityQueries;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MixedEntityListLoader
 {
-    protected array $listAttributes = [
-        'page'      => ['id', 'name', 'slug', 'book_id', 'chapter_id', 'text', 'draft'],
-        'chapter'   => ['id', 'name', 'slug', 'book_id', 'description'],
-        'book'      => ['id', 'name', 'slug', 'description'],
-        'bookshelf' => ['id', 'name', 'slug', 'description'],
-    ];
-
     public function __construct(
-        protected EntityProvider $entityProvider
+        protected EntityQueries $queries,
     ) {
     }
 
@@ -61,14 +54,7 @@ class MixedEntityListLoader
         $modelMap = [];
 
         foreach ($idsByType as $type => $ids) {
-            if (!isset($this->listAttributes[$type])) {
-                continue;
-            }
-
-            $instance = $this->entityProvider->get($type);
-            $models = $instance->newQuery()
-                ->select(array_merge($this->listAttributes[$type], $this->getSubSelectsForQuery($type)))
-                ->scopes('visible')
+            $models = $this->queries->visibleForList($type)
                 ->whereIn('id', $ids)
                 ->with($eagerLoadParents ? $this->getRelationsToEagerLoad($type) : [])
                 ->get();
@@ -99,20 +85,5 @@ class MixedEntityListLoader
         }
 
         return $toLoad;
-    }
-
-    protected function getSubSelectsForQuery(string $type): array
-    {
-        $subSelects = [];
-
-        if ($type === 'chapter' || $type === 'page') {
-            $subSelects['book_slug'] = function ($builder) {
-                $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'book_id');
-            };
-        }
-
-        return $subSelects;
     }
 }
