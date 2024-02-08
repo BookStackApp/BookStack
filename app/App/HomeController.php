@@ -5,8 +5,8 @@ namespace BookStack\App;
 use BookStack\Activity\ActivityQueries;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
-use BookStack\Entities\Queries\RecentlyViewed;
-use BookStack\Entities\Queries\TopFavourites;
+use BookStack\Entities\Queries\QueryRecentlyViewed;
+use BookStack\Entities\Queries\QueryTopFavourites;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
 use BookStack\Uploads\FaviconHandler;
@@ -23,8 +23,12 @@ class HomeController extends Controller
     /**
      * Display the homepage.
      */
-    public function index(Request $request, ActivityQueries $activities)
-    {
+    public function index(
+        Request $request,
+        ActivityQueries $activities,
+        QueryRecentlyViewed $recentlyViewed,
+        QueryTopFavourites $topFavourites,
+    ) {
         $activity = $activities->latest(10);
         $draftPages = [];
 
@@ -38,9 +42,9 @@ class HomeController extends Controller
 
         $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
         $recents = $this->isSignedIn() ?
-            (new RecentlyViewed())->run(12 * $recentFactor, 1)
+            $recentlyViewed->run(12 * $recentFactor, 1)
             : $this->queries->books->visibleForList()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $favourites = (new TopFavourites())->run(6);
+        $favourites = $topFavourites->run(6);
         $recentlyUpdatedPages = $this->queries->pages->visibleForList()
             ->where('draft', false)
             ->orderBy('updated_at', 'desc')

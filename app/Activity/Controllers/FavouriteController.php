@@ -2,7 +2,7 @@
 
 namespace BookStack\Activity\Controllers;
 
-use BookStack\Entities\Queries\TopFavourites;
+use BookStack\Entities\Queries\QueryTopFavourites;
 use BookStack\Entities\Tools\MixedEntityRequestHelper;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class FavouriteController extends Controller
     {
         $viewCount = 20;
         $page = intval($request->get('page', 1));
-        $favourites = (new TopFavourites())->run($viewCount + 1, (($page - 1) * $viewCount));
+        $favourites = (new QueryTopFavourites())->run($viewCount + 1, (($page - 1) * $viewCount));
 
         $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page=' . ($page + 1)) : null;
 
