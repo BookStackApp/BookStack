@@ -14,6 +14,7 @@ class SiblingFetcher
 {
     public function __construct(
         protected EntityQueries $queries,
+        protected ShelfContext $shelfContext,
     ) {
     }
 
@@ -38,7 +39,7 @@ class SiblingFetcher
         // Book
         // Gets just the books in a shelf if shelf is in context
         if ($entity instanceof Book) {
-            $contextShelf = (new ShelfContext())->getContextualShelfForBook($entity);
+            $contextShelf = $this->shelfContext->getContextualShelfForBook($entity);
             if ($contextShelf) {
                 $entities = $contextShelf->visibleBooks()->get();
             } else {

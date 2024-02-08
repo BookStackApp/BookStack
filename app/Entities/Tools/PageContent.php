@@ -329,13 +329,14 @@ class PageContent
     protected function getContentProviderClosure(bool $blankIncludes): Closure
     {
         $contextPage = $this->page;
+        $queries = $this->pageQueries;
 
-        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage): PageIncludeContent {
+        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage, $queries): PageIncludeContent {
             if ($blankIncludes) {
                 return PageIncludeContent::fromHtmlAndTag('', $tag);
             }
 
-            $matchedPage = $this->pageQueries->findVisibleById($tag->getPageId());
+            $matchedPage = $queries->findVisibleById($tag->getPageId());
             $content = PageIncludeContent::fromHtmlAndTag($matchedPage->html ?? '', $tag);
 
             if (Theme::hasListeners(ThemeEvents::PAGE_INCLUDE_PARSE)) {

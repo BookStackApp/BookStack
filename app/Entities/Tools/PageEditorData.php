@@ -38,7 +38,8 @@ class PageEditorData
         $templates = $this->queries->pages->visibleTemplates()
             ->orderBy('name', 'asc')
             ->take(10)
-            ->get();
+            ->paginate()
+            ->withPath('/templates');
 
         $draftsEnabled = auth()->check();
 
@@ -51,7 +52,7 @@ class PageEditorData
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->queries->revisions->findLatestCurrentUserDraftsForPageId($page->id)->first();
+        $userDraft = $this->queries->revisions->findLatestCurrentUserDraftsForPageId($page->id);
         if (!is_null($userDraft)) {
             $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
             $isDraftRevision = true;
