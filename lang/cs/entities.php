@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF dokument',
     'export_text' => 'Textový soubor',
     'export_md' => 'Markdown',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Výchozí šablona stránky',
+    'default_template_explain' => 'Přiřadit šablonu stránky, která bude použita jako výchozí obsah pro všechny nové stránky v této knize. Mějte na paměti, že šablona bude použita pouze v případě, že tvůrce stránek bude mít přístup k těmto vybraným stránkám šablony.',
+    'default_template_select' => 'Vyberte šablonu stránky',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnění',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Odstranit koncept stránky',
     'pages_delete_success' => 'Stránka odstraněna',
     'pages_delete_draft_success' => 'Koncept stránky odstraněn',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Tato stránka je aktivní výchozí šablona pro nějakou knihu či kapitolu. Tyto knihy nebo kapitoly již nebudou mít výchozí šablonu stránky přiřazenou po odstranění této stránky.',
     'pages_delete_confirm' => 'Opravdu chcete odstranit tuto stránku?',
     'pages_delete_draft_confirm' => 'Opravdu chcete odstranit tento koncept stránky?',
     'pages_editing_named' => 'Úpravy stránky :pageName',
