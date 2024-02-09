@@ -210,7 +210,7 @@ return [
     'users_preferred_language' => 'Предпочитаемый язык',
     'users_preferred_language_desc' => 'Этот параметр изменит язык интерфейса приложения. Это не влияет на созданный пользователем контент.',
     'users_social_accounts' => 'Аккаунты социальных сетей',
-    'users_social_accounts_desc' => 'View the status of the connected social accounts for this user. Social accounts can be used in addition to the primary authentication system for system access.',
+    'users_social_accounts_desc' => 'Просмотр статуса подключенных социальных учетных записей для этого пользователя. Учетные записи социальных сетей могут использоваться в дополнение к системе первичной аутентификации для доступа к системе.',
     'users_social_accounts_info' => 'Здесь вы можете подключить другие учетные записи для более быстрого и легкого входа в систему. Отключение учетной записи здесь не возможно. Отмените доступ к настройкам вашего профиля в подключенном социальном аккаунте.',
     'users_social_connect' => 'Подключить аккаунт',
     'users_social_disconnect' => 'Отключить аккаунт',
