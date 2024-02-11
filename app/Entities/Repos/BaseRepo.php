@@ -8,7 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\HasHtmlDescription;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
@@ -23,6 +23,7 @@ class BaseRepo
         protected ImageRepo $imageRepo,
         protected ReferenceUpdater $referenceUpdater,
         protected ReferenceStore $referenceStore,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -125,8 +126,7 @@ class BaseRepo
             return;
         }
 
-        $templateExists = Page::query()->visible()
-            ->where('template', '=', true)
+        $templateExists = $this->pageQueries->visibleTemplates()
             ->where('id', '=', $templateId)
             ->exists();
 

@@ -3,20 +3,13 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\App\Model;
-use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Queries\EntityQueries;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class MixedEntityListLoader
 {
-    protected array $listAttributes = [
-        'page'      => ['id', 'name', 'slug', 'book_id', 'chapter_id', 'text', 'draft'],
-        'chapter'   => ['id', 'name', 'slug', 'book_id', 'description'],
-        'book'      => ['id', 'name', 'slug', 'description'],
-        'bookshelf' => ['id', 'name', 'slug', 'description'],
-    ];
-
     public function __construct(
-        protected EntityProvider $entityProvider
+        protected EntityQueries $queries,
     ) {
     }
 
@@ -26,7 +19,7 @@ class MixedEntityListLoader
      * This will look for a model id and type via 'name_id' and 'name_type'.
      * @param Model[] $relations
      */
-    public function loadIntoRelations(array $relations, string $relationName): void
+    public function loadIntoRelations(array $relations, string $relationName, bool $loadParents): void
     {
         $idsByType = [];
         foreach ($relations as $relation) {
@@ -40,7 +33,7 @@ class MixedEntityListLoader
             $idsByType[$type][] = $id;
         }
 
-        $modelMap = $this->idsByTypeToModelMap($idsByType);
+        $modelMap = $this->idsByTypeToModelMap($idsByType, $loadParents);
 
         foreach ($relations as $relation) {
             $type = $relation->getAttribute($relationName . '_type');
@@ -56,21 +49,14 @@ class MixedEntityListLoader
      * @param array<string, int[]> $idsByType
      * @return array<string, array<int, Model>>
      */
-    protected function idsByTypeToModelMap(array $idsByType): array
+    protected function idsByTypeToModelMap(array $idsByType, bool $eagerLoadParents): array
     {
         $modelMap = [];
 
         foreach ($idsByType as $type => $ids) {
-            if (!isset($this->listAttributes[$type])) {
-                continue;
-            }
-
-            $instance = $this->entityProvider->get($type);
-            $models = $instance->newQuery()
-                ->select($this->listAttributes[$type])
-                ->scopes('visible')
+            $models = $this->queries->visibleForList($type)
                 ->whereIn('id', $ids)
-                ->with($this->getRelationsToEagerLoad($type))
+                ->with($eagerLoadParents ? $this->getRelationsToEagerLoad($type) : [])
                 ->get();
 
             if (count($models) > 0) {

@@ -3,7 +3,7 @@
 namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\CommentRepo;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -11,7 +11,8 @@ use Illuminate\Validation\ValidationException;
 class CommentController extends Controller
 {
     public function __construct(
-        protected CommentRepo $commentRepo
+        protected CommentRepo $commentRepo,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -27,7 +28,7 @@ class CommentController extends Controller
             'parent_id' => ['nullable', 'integer'],
         ]);
 
-        $page = Page::visible()->find($pageId);
+        $page = $this->pageQueries->findVisibleById($pageId);
         if ($page === null) {
             return response('Not found', 404);
         }

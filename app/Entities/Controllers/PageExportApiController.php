@@ -2,18 +2,17 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Http\ApiController;
 use Throwable;
 
 class PageExportApiController extends ApiController
 {
-    protected $exportFormatter;
-
-    public function __construct(ExportFormatter $exportFormatter)
-    {
-        $this->exportFormatter = $exportFormatter;
+    public function __construct(
+        protected ExportFormatter $exportFormatter,
+        protected PageQueries $queries,
+    ) {
         $this->middleware('can:content-export');
     }
 
@@ -24,7 +23,7 @@ class PageExportApiController extends ApiController
      */
     public function exportPdf(int $id)
     {
-        $page = Page::visible()->findOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $pdfContent = $this->exportFormatter->pageToPdf($page);
 
         return $this->download()->directly($pdfContent, $page->slug . '.pdf');
@@ -37,7 +36,7 @@ class PageExportApiController extends ApiController
      */
     public function exportHtml(int $id)
     {
-        $page = Page::visible()->findOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $htmlContent = $this->exportFormatter->pageToContainedHtml($page);
 
         return $this->download()->directly($htmlContent, $page->slug . '.html');
@@ -48,7 +47,7 @@ class PageExportApiController extends ApiController
      */
     public function exportPlainText(int $id)
     {
-        $page = Page::visible()->findOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $textContent = $this->exportFormatter->pageToPlainText($page);
 
         return $this->download()->directly($textContent, $page->slug . '.txt');
@@ -59,7 +58,7 @@ class PageExportApiController extends ApiController
      */
     public function exportMarkdown(int $id)
     {
-        $page = Page::visible()->findOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail($id);
         $markdown = $this->exportFormatter->pageToMarkdown($page);
 
         return $this->download()->directly($markdown, $page->slug . '.md');

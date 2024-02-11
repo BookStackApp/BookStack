@@ -4,10 +4,10 @@ namespace BookStack\Permissions;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Users\Models\Role;
 use Illuminate\Database\Eloquent\Builder;
@@ -20,6 +20,12 @@ use Illuminate\Support\Facades\DB;
  */
 class JointPermissionBuilder
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
+
     /**
      * Re-generate all entity permission from scratch.
      */
@@ -36,7 +42,7 @@ class JointPermissionBuilder
         });
 
         // Chunk through all bookshelves
-        Bookshelf::query()->withTrashed()->select(['id', 'owned_by'])
+        $this->queries->shelves->start()->withTrashed()->select(['id', 'owned_by'])
             ->chunk(50, function (EloquentCollection $shelves) use ($roles) {
                 $this->createManyJointPermissions($shelves->all(), $roles);
             });
@@ -88,7 +94,7 @@ class JointPermissionBuilder
         });
 
         // Chunk through all bookshelves
-        Bookshelf::query()->select(['id', 'owned_by'])
+        $this->queries->shelves->start()->select(['id', 'owned_by'])
             ->chunk(100, function ($shelves) use ($roles) {
                 $this->createManyJointPermissions($shelves->all(), $roles);
             });
@@ -99,7 +105,7 @@ class JointPermissionBuilder
      */
     protected function bookFetchQuery(): Builder
     {
-        return Book::query()->withTrashed()
+        return $this->queries->books->start()->withTrashed()
             ->select(['id', 'owned_by'])->with([
                 'chapters' => function ($query) {
                     $query->withTrashed()->select(['id', 'owned_by', 'book_id']);

@@ -25,6 +25,9 @@ class ShelvesApiTest extends TestCase
                 'id'   => $firstBookshelf->id,
                 'name' => $firstBookshelf->name,
                 'slug' => $firstBookshelf->slug,
+                'owned_by' => $firstBookshelf->owned_by,
+                'created_by' => $firstBookshelf->created_by,
+                'updated_by' => $firstBookshelf->updated_by,
             ],
         ]]);
     }
