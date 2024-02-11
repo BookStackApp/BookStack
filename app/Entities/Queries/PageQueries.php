@@ -73,6 +73,14 @@ class PageQueries implements ProvidesEntityQueries
             ->select($this->mergeBookSlugForSelect(static::$listAttributes));
     }
 
+    public function visibleForChapterList(int $chapterId): Builder
+    {
+        return $this->visibleForList()
+            ->where('chapter_id', '=', $chapterId)
+            ->orderBy('draft', 'desc')
+            ->orderBy('priority', 'asc');
+    }
+
     public function visibleWithContents(): Builder
     {
         return $this->start()

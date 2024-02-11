@@ -79,7 +79,8 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-view', $chapter);
 
         $sidebarTree = (new BookContents($chapter->book))->getTree();
-        $pages = $chapter->getVisiblePages();
+        $pages = $this->entityQueries->pages->visibleForChapterList($chapter->id)->get();
+
         $nextPreviousLocator = new NextPreviousContentLocator($chapter, $sidebarTree);
         View::incrementFor($chapter);
 

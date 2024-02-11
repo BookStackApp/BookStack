@@ -45,7 +45,8 @@ class PageApiController extends ApiController
      */
     public function list()
     {
-        $pages = $this->queries->visibleForList();
+        $pages = $this->queries->visibleForList()
+            ->addSelect(['created_by', 'updated_by', 'revision_count', 'editor']);
 
         return $this->apiListingResponse($pages, [
             'id', 'book_id', 'chapter_id', 'name', 'slug', 'priority',
