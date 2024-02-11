@@ -2,23 +2,17 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Http\Controller;
 use Throwable;
 
 class BookExportController extends Controller
 {
-    protected $bookRepo;
-    protected $exportFormatter;
-
-    /**
-     * BookExportController constructor.
-     */
-    public function __construct(BookRepo $bookRepo, ExportFormatter $exportFormatter)
-    {
-        $this->bookRepo = $bookRepo;
-        $this->exportFormatter = $exportFormatter;
+    public function __construct(
+        protected BookQueries $queries,
+        protected ExportFormatter $exportFormatter,
+    ) {
         $this->middleware('can:content-export');
     }
 
@@ -29,7 +23,7 @@ class BookExportController extends Controller
      */
     public function pdf(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
 
         return $this->download()->directly($pdfContent, $bookSlug . '.pdf');
@@ -42,7 +36,7 @@ class BookExportController extends Controller
      */
     public function html(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
 
         return $this->download()->directly($htmlContent, $bookSlug . '.html');
@@ -53,7 +47,7 @@ class BookExportController extends Controller
      */
     public function plainText(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToPlainText($book);
 
         return $this->download()->directly($textContent, $bookSlug . '.txt');
@@ -64,7 +58,7 @@ class BookExportController extends Controller
      */
     public function markdown(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToMarkdown($book);
 
         return $this->download()->directly($textContent, $bookSlug . '.md');

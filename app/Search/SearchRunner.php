@@ -3,9 +3,9 @@
 namespace BookStack\Search;
 
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Connection;
@@ -20,9 +20,6 @@ use SplObjectStorage;
 
 class SearchRunner
 {
-    protected EntityProvider $entityProvider;
-    protected PermissionApplicator $permissions;
-
     /**
      * Acceptable operators to be used in a query.
      *
@@ -38,10 +35,11 @@ class SearchRunner
      */
     protected $termAdjustmentCache;
 
-    public function __construct(EntityProvider $entityProvider, PermissionApplicator $permissions)
-    {
-        $this->entityProvider = $entityProvider;
-        $this->permissions = $permissions;
+    public function __construct(
+        protected EntityProvider $entityProvider,
+        protected PermissionApplicator $permissions,
+        protected EntityQueries $entityQueries,
+    ) {
         $this->termAdjustmentCache = new SplObjectStorage();
     }
 
@@ -72,10 +70,9 @@ class SearchRunner
                 continue;
             }
 
-            $entityModelInstance = $this->entityProvider->get($entityType);
-            $searchQuery = $this->buildQuery($searchOpts, $entityModelInstance);
+            $searchQuery = $this->buildQuery($searchOpts, $entityType);
             $entityTotal = $searchQuery->count();
-            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityModelInstance, $page, $count);
+            $searchResults = $this->getPageOfDataFromQuery($searchQuery, $entityType, $page, $count);
 
             if ($entityTotal > ($page * $count)) {
                 $hasMore = true;
@@ -108,8 +105,7 @@ class SearchRunner
                 continue;
             }
 
-            $entityModelInstance = $this->entityProvider->get($entityType);
-            $search = $this->buildQuery($opts, $entityModelInstance)->where('book_id', '=', $bookId)->take(20)->get();
+            $search = $this->buildQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
             $results = $results->merge($search);
         }
 
@@ -122,8 +118,7 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $entityModelInstance = $this->entityProvider->get('page');
-        $pages = $this->buildQuery($opts, $entityModelInstance)->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $pages = $this->buildQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
 
         return $pages->sortByDesc('score');
     }
@@ -131,17 +126,17 @@ class SearchRunner
     /**
      * Get a page of result data from the given query based on the provided page parameters.
      */
-    protected function getPageOfDataFromQuery(EloquentBuilder $query, Entity $entityModelInstance, int $page = 1, int $count = 20): EloquentCollection
+    protected function getPageOfDataFromQuery(EloquentBuilder $query, string $entityType, int $page = 1, int $count = 20): EloquentCollection
     {
         $relations = ['tags'];
 
-        if ($entityModelInstance instanceof BookChild) {
+        if ($entityType === 'page' || $entityType === 'chapter') {
             $relations['book'] = function (BelongsTo $query) {
                 $query->scopes('visible');
             };
         }
 
-        if ($entityModelInstance instanceof Page) {
+        if ($entityType === 'page') {
             $relations['chapter'] = function (BelongsTo $query) {
                 $query->scopes('visible');
             };
@@ -157,18 +152,13 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      */
-    protected function buildQuery(SearchOptions $searchOpts, Entity $entityModelInstance): EloquentBuilder
+    protected function buildQuery(SearchOptions $searchOpts, string $entityType): EloquentBuilder
     {
-        $entityQuery = $entityModelInstance->newQuery()->scopes('visible');
-
-        if ($entityModelInstance instanceof Page) {
-            $entityQuery->select(array_merge($entityModelInstance::$listAttributes, ['owned_by']));
-        } else {
-            $entityQuery->select(['*']);
-        }
+        $entityModelInstance = $this->entityProvider->get($entityType);
+        $entityQuery = $this->entityQueries->visibleForList($entityType);
 
         // Handle normal search terms
-        $this->applyTermSearch($entityQuery, $searchOpts, $entityModelInstance);
+        $this->applyTermSearch($entityQuery, $searchOpts, $entityType);
 
         // Handle exact term matching
         foreach ($searchOpts->exacts as $inputTerm) {
@@ -198,7 +188,7 @@ class SearchRunner
     /**
      * For the given search query, apply the queries for handling the regular search terms.
      */
-    protected function applyTermSearch(EloquentBuilder $entityQuery, SearchOptions $options, Entity $entity): void
+    protected function applyTermSearch(EloquentBuilder $entityQuery, SearchOptions $options, string $entityType): void
     {
         $terms = $options->searches;
         if (count($terms) === 0) {
@@ -216,7 +206,7 @@ class SearchRunner
 
         $subQuery->addBinding($scoreSelect['bindings'], 'select');
 
-        $subQuery->where('entity_type', '=', $entity->getMorphClass());
+        $subQuery->where('entity_type', '=', $entityType);
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
                 $inputTerm = str_replace('\\', '\\\\', $inputTerm);

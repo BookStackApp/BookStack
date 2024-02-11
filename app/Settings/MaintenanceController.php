@@ -14,7 +14,7 @@ class MaintenanceController extends Controller
     /**
      * Show the page for application maintenance.
      */
-    public function index()
+    public function index(TrashCan $trashCan)
     {
         $this->checkPermission('settings-manage');
         $this->setPageTitle(trans('settings.maint'));
@@ -23,7 +23,7 @@ class MaintenanceController extends Controller
         $version = trim(file_get_contents(base_path('version')));
 
         // Recycle bin details
-        $recycleStats = (new TrashCan())->getTrashedCounts();
+        $recycleStats = $trashCan->getTrashedCounts();
 
         return view('settings.maintenance', [
             'version'      => $version,

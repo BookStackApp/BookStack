@@ -4,7 +4,7 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Activity\Tools\CommentTree;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 
@@ -15,7 +15,7 @@ class PageEditorData
 
     public function __construct(
         protected Page $page,
-        protected PageRepo $pageRepo,
+        protected EntityQueries $queries,
         protected string $requestedEditor
     ) {
         $this->viewData = $this->build();
@@ -35,7 +35,12 @@ class PageEditorData
     {
         $page = clone $this->page;
         $isDraft = boolval($this->page->draft);
-        $templates = $this->pageRepo->getTemplates(10);
+        $templates = $this->queries->pages->visibleTemplates()
+            ->orderBy('name', 'asc')
+            ->take(10)
+            ->paginate()
+            ->withPath('/templates');
+
         $draftsEnabled = auth()->check();
 
         $isDraftRevision = false;
@@ -47,8 +52,8 @@ class PageEditorData
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->pageRepo->getUserDraft($page);
-        if ($userDraft !== null) {
+        $userDraft = $this->queries->revisions->findLatestCurrentUserDraftsForPageId($page->id);
+        if (!is_null($userDraft)) {
             $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
             $isDraftRevision = true;
             $this->warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);

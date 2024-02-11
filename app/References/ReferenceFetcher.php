@@ -23,7 +23,7 @@ class ReferenceFetcher
     public function getReferencesToEntity(Entity $entity): Collection
     {
         $references = $this->queryReferencesToEntity($entity)->get();
-        $this->mixedEntityListLoader->loadIntoRelations($references->all(), 'from');
+        $this->mixedEntityListLoader->loadIntoRelations($references->all(), 'from', true);
 
         return $references;
     }

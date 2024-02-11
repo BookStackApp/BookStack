@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Http\ApiController;
 use Exception;
@@ -13,7 +14,8 @@ use Illuminate\Validation\ValidationException;
 class BookshelfApiController extends ApiController
 {
     public function __construct(
-        protected BookshelfRepo $bookshelfRepo
+        protected BookshelfRepo $bookshelfRepo,
+        protected BookshelfQueries $queries,
     ) {
     }
 
@@ -22,7 +24,9 @@ class BookshelfApiController extends ApiController
      */
     public function list()
     {
-        $shelves = Bookshelf::visible();
+        $shelves = $this->queries
+            ->visibleForList()
+            ->addSelect(['created_by', 'updated_by']);
 
         return $this->apiListingResponse($shelves, [
             'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',
@@ -54,7 +58,7 @@ class BookshelfApiController extends ApiController
      */
     public function read(string $id)
     {
-        $shelf = Bookshelf::visible()->findOrFail($id);
+        $shelf = $this->queries->findVisibleByIdOrFail(intval($id));
         $shelf = $this->forJsonDisplay($shelf);
         $shelf->load([
             'createdBy', 'updatedBy', 'ownedBy',
@@ -78,7 +82,7 @@ class BookshelfApiController extends ApiController
      */
     public function update(Request $request, string $id)
     {
-        $shelf = Bookshelf::visible()->findOrFail($id);
+        $shelf = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $requestData = $this->validate($request, $this->rules()['update']);
@@ -97,7 +101,7 @@ class BookshelfApiController extends ApiController
      */
     public function delete(string $id)
     {
-        $shelf = Bookshelf::visible()->findOrFail($id);
+        $shelf = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->bookshelfRepo->destroy($shelf);

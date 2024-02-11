@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
@@ -11,16 +11,10 @@ use Throwable;
 
 class PageExportController extends Controller
 {
-    protected $pageRepo;
-    protected $exportFormatter;
-
-    /**
-     * PageExportController constructor.
-     */
-    public function __construct(PageRepo $pageRepo, ExportFormatter $exportFormatter)
-    {
-        $this->pageRepo = $pageRepo;
-        $this->exportFormatter = $exportFormatter;
+    public function __construct(
+        protected PageQueries $queries,
+        protected ExportFormatter $exportFormatter,
+    ) {
         $this->middleware('can:content-export');
     }
 
@@ -33,7 +27,7 @@ class PageExportController extends Controller
      */
     public function pdf(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $page->html = (new PageContent($page))->render();
         $pdfContent = $this->exportFormatter->pageToPdf($page);
 
@@ -48,7 +42,7 @@ class PageExportController extends Controller
      */
     public function html(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $page->html = (new PageContent($page))->render();
         $containedHtml = $this->exportFormatter->pageToContainedHtml($page);
 
@@ -62,7 +56,7 @@ class PageExportController extends Controller
      */
     public function plainText(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $pageText = $this->exportFormatter->pageToPlainText($page);
 
         return $this->download()->directly($pageText, $pageSlug . '.txt');
@@ -75,7 +69,7 @@ class PageExportController extends Controller
      */
     public function markdown(string $bookSlug, string $pageSlug)
     {
-        $page = $this->pageRepo->getBySlug($bookSlug, $pageSlug);
+        $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $pageText = $this->exportFormatter->pageToMarkdown($page);
 
         return $this->download()->directly($pageText, $pageSlug . '.md');

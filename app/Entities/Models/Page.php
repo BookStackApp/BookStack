@@ -32,9 +32,6 @@ class Page extends BookChild
 {
     use HasFactory;
 
-    public static $listAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'text', 'created_at', 'updated_at', 'priority'];
-    public static $contentAttributes = ['name', 'id', 'slug', 'book_id', 'chapter_id', 'draft', 'template', 'html', 'text', 'created_at', 'updated_at', 'priority'];
-
     protected $fillable = ['name', 'priority'];
 
     public string $textField = 'text';
@@ -144,14 +141,5 @@ class Page extends BookChild
         $refreshed->html = (new PageContent($refreshed))->render();
 
         return $refreshed;
-    }
-
-    /**
-     * Get a visible page by its book and page slugs.
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function getBySlugs(string $bookSlug, string $pageSlug): self
-    {
-        return static::visible()->whereSlugs($bookSlug, $pageSlug)->firstOrFail();
     }
 }

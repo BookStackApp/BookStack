@@ -2,9 +2,7 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\ImageUploadException;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +18,7 @@ class ImageService
     public function __construct(
         protected ImageStorage $storage,
         protected ImageResizer $resizer,
+        protected EntityQueries $queries,
     ) {
     }
 
@@ -278,15 +277,15 @@ class ImageService
         }
 
         if ($imageType === 'gallery' || $imageType === 'drawio') {
-            return Page::visible()->where('id', '=', $image->uploaded_to)->exists();
+            return $this->queries->pages->visibleForList()->where('id', '=', $image->uploaded_to)->exists();
         }
 
         if ($imageType === 'cover_book') {
-            return Book::visible()->where('id', '=', $image->uploaded_to)->exists();
+            return $this->queries->books->visibleForList()->where('id', '=', $image->uploaded_to)->exists();
         }
 
         if ($imageType === 'cover_bookshelf') {
-            return Bookshelf::visible()->where('id', '=', $image->uploaded_to)->exists();
+            return $this->queries->shelves->visibleForList()->where('id', '=', $image->uploaded_to)->exists();
         }
 
         return false;

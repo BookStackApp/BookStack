@@ -24,6 +24,9 @@ class BooksApiTest extends TestCase
                 'id'   => $firstBook->id,
                 'name' => $firstBook->name,
                 'slug' => $firstBook->slug,
+                'owned_by' => $firstBook->owned_by,
+                'created_by' => $firstBook->created_by,
+                'updated_by' => $firstBook->updated_by,
             ],
         ]]);
     }

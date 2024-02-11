@@ -11,7 +11,6 @@ use Illuminate\Support\Collection;
  * Class Chapter.
  *
  * @property Collection<Page> $pages
- * @property string           $description
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
  */
@@ -69,14 +68,5 @@ class Chapter extends BookChild
         ->orderBy('draft', 'desc')
         ->orderBy('priority', 'asc')
         ->get();
-    }
-
-    /**
-     * Get a visible chapter by its book and page slugs.
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function getBySlugs(string $bookSlug, string $chapterSlug): self
-    {
-        return static::visible()->whereSlugs($bookSlug, $chapterSlug)->firstOrFail();
     }
 }
