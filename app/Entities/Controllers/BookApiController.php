@@ -26,7 +26,9 @@ class BookApiController extends ApiController
      */
     public function list()
     {
-        $books = $this->queries->visibleForList();
+        $books = $this->queries
+            ->visibleForList()
+            ->addSelect(['created_by', 'updated_by']);
 
         return $this->apiListingResponse($books, [
             'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',

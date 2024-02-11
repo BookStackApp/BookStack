@@ -3,8 +3,8 @@
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\ChapterQueries;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
@@ -38,7 +38,7 @@ class ChapterApiController extends ApiController
     public function __construct(
         protected ChapterRepo $chapterRepo,
         protected ChapterQueries $queries,
-        protected BookQueries $bookQueries,
+        protected EntityQueries $entityQueries,
     ) {
     }
 
@@ -47,7 +47,8 @@ class ChapterApiController extends ApiController
      */
     public function list()
     {
-        $chapters = $this->queries->visibleForList();
+        $chapters = $this->queries->visibleForList()
+            ->addSelect(['created_by', 'updated_by']);
 
         return $this->apiListingResponse($chapters, [
             'id', 'book_id', 'name', 'slug', 'description', 'priority',
@@ -63,7 +64,7 @@ class ChapterApiController extends ApiController
         $requestData = $this->validate($request, $this->rules['create']);
 
         $bookId = $request->get('book_id');
-        $book = $this->bookQueries->findVisibleByIdOrFail(intval($bookId));
+        $book = $this->entityQueries->books->findVisibleByIdOrFail(intval($bookId));
         $this->checkOwnablePermission('chapter-create', $book);
 
         $chapter = $this->chapterRepo->create($requestData, $book);
@@ -79,12 +80,14 @@ class ChapterApiController extends ApiController
         $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $chapter = $this->forJsonDisplay($chapter);
 
-        $chapter->load([
-            'createdBy', 'updatedBy', 'ownedBy',
-            'pages' => function (HasMany $query) {
-                $query->scopes('visible')->get(['id', 'name', 'slug']);
-            }
-        ]);
+        $chapter->load(['createdBy', 'updatedBy', 'ownedBy']);
+
+        // Note: More fields than usual here, for backwards compatibility,
+        // due to previously accidentally including more fields that desired.
+        $pages = $this->entityQueries->pages->visibleForChapterList($chapter->id)
+            ->addSelect(['created_by', 'updated_by', 'revision_count', 'editor'])
+            ->get();
+        $chapter->setRelation('pages', $pages);
 
         return response()->json($chapter);
     }

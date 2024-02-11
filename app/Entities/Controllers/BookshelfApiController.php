@@ -24,7 +24,9 @@ class BookshelfApiController extends ApiController
      */
     public function list()
     {
-        $shelves = $this->queries->visibleForList();
+        $shelves = $this->queries
+            ->visibleForList()
+            ->addSelect(['created_by', 'updated_by']);
 
         return $this->apiListingResponse($shelves, [
             'id', 'name', 'slug', 'description', 'created_at', 'updated_at', 'created_by', 'updated_by', 'owned_by',
