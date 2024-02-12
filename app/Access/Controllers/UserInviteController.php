@@ -68,6 +68,13 @@ class UserInviteController extends Controller
 
         $user = $this->userRepo->getById($userId);
         $user->password = Hash::make($request->get('password'));
+
+        //save new password in histories
+        $passwordHistory = PasswordHistory::create_initial_history([
+            'user_id' => $user->id,
+            'hash' => $user->password
+        ]);
+        
         $user->email_confirmed = true;
         $user->save();
 

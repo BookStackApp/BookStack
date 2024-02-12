@@ -11,10 +11,12 @@ use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
+use BookStack\Users\Models\PasswordHistory;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class UserRepo
 {
@@ -65,6 +67,12 @@ class UserRepo
 
         $user->refreshSlug();
         $user->save();
+
+        //save new password in histories
+        $passwordHistory = PasswordHistory::create_initial_history([
+            'user_id' => $user->id,
+            'hash' => $user->password
+        ]);
 
         if (!empty($data['language'])) {
             setting()->putUser($user, 'language', $data['language']);
@@ -124,6 +132,7 @@ class UserRepo
         }
 
         if (!empty($data['password'])) {
+            $passwordHistory = PasswordHistory::create(['user_id' => $user->id, 'password' => $data['password']]);
             $user->password = Hash::make($data['password']);
         }
 

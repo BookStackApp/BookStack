@@ -6,12 +6,15 @@ use BookStack\Access\LoginService;
 use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
 use BookStack\Users\Models\User;
+use BookStack\Users\Models\PasswordHistory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rules\Password as PasswordRule;
+use BookStack\Exceptions\PasswordHistoryException;
 
 class ResetPasswordController extends Controller
 {
@@ -46,7 +49,7 @@ class ResetPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => ['required', 'confirmed', PasswordRule::defaults()],
+            'password' => ['required', 'confirmed', PasswordRule::default()],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -54,6 +57,13 @@ class ResetPasswordController extends Controller
         // database. Otherwise we will parse the error and return the response.
         $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
         $response = Password::broker()->reset($credentials, function (User $user, string $password) {
+            //validate new password with PasswordHistory model before saving
+            try{
+                PasswordHistory::create(['user_id' => $user->id, 'password' => $password]);
+            } catch (PasswordHistoryException $e) {
+                //make the exception redirect user to reset password page
+                throw new PasswordHistoryException($e->getMessage(), '/password/email');
+            }
             $user->password = Hash::make($password);
             $user->setRememberToken(Str::random(60));
             $user->save();

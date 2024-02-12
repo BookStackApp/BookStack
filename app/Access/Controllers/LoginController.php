@@ -11,6 +11,8 @@ use BookStack\Http\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Carbon;
+use BookStack\Users\Models\PasswordHistory;
 
 class LoginController extends Controller
 {
@@ -72,6 +74,12 @@ class LoginController extends Controller
 
         try {
             if ($this->attemptLogin($request)) {
+                $password_created_at = Carbon::parse(PasswordHistory::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first()->created_at);
+                if (env('PASSWORD_MAX_AGE', false) && $password_created_at->lessThan(Carbon::now()->subDays(env('PASSWORD_MAX_AGE')))) {
+                    auth()->logout();
+                    $this->showWarningNotification('Your password has expired, please reset it.');
+                    return redirect('/password/email');
+                }
                 return $this->sendLoginResponse($request);
             }
         } catch (LoginAttemptException $exception) {
