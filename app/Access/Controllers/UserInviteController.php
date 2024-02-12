@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use BookStack\Users\Models\PasswordHistory;
 
 class UserInviteController extends Controller
 {
