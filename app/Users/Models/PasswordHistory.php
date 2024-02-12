@@ -21,7 +21,7 @@ class PasswordHistory extends Model
     }
 
     /**
-    * Creates a password history log upon password creation or change
+    * Creates a password history log upon password change
     * @throws PasswordHistoryException
     */
     public static function create(array $newHistory)
@@ -49,7 +49,7 @@ class PasswordHistory extends Model
     }
 
     /**
-    * Creates a history for existing passwords, only used in initial migration
+    * Creates a password history log upon user creation and initial migration
     */
     public static function create_initial_history(array $newHistory)
     {

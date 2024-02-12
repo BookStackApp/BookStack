@@ -74,6 +74,7 @@ class LoginController extends Controller
 
         try {
             if ($this->attemptLogin($request)) {
+                //logout and redirect to password reset page if the user's password is expired
                 $password_created_at = Carbon::parse(PasswordHistory::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first()->created_at);
                 if (env('PASSWORD_MAX_AGE', false) && $password_created_at->lessThan(Carbon::now()->subDays(env('PASSWORD_MAX_AGE')))) {
                     auth()->logout();

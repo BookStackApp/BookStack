@@ -68,7 +68,7 @@ class UserRepo
         $user->save();
 
         //save new password in histories
-        $passwordHistory = PasswordHistory::create_initial_history([
+        PasswordHistory::create_initial_history([
             'user_id' => $user->id,
             'hash' => $user->password
         ]);
@@ -131,7 +131,8 @@ class UserRepo
         }
 
         if (!empty($data['password'])) {
-            $passwordHistory = PasswordHistory::create(['user_id' => $user->id, 'password' => $data['password']]);
+            // validate and record new password in PasswordHistory model before saving
+            PasswordHistory::create(['user_id' => $user->id, 'password' => $data['password']]);
             $user->password = Hash::make($data['password']);
         }
 

@@ -56,7 +56,7 @@ class ResetPasswordController extends Controller
         // database. Otherwise we will parse the error and return the response.
         $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
         $response = Password::broker()->reset($credentials, function (User $user, string $password) {
-            //validate new password with PasswordHistory model before saving
+            // validate and record new password in PasswordHistory model before saving
             try{
                 PasswordHistory::create(['user_id' => $user->id, 'password' => $password]);
             } catch (PasswordHistoryException $e) {
