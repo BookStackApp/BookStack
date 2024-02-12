@@ -77,6 +77,12 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'You cannot delete the only admin',
     'users_cannot_delete_guest' => 'You cannot delete the guest user',
+    
+    // Password history
+    'password_cannot_be_changed' => 'Password cannot be changed for :days day(s)',
+    'cannot_reuse_password' => 'Password cannot be within the last :passwords password(s)',
+    'password_expired' => 'Your password has expired, please reset it',
+    
 
     // Roles
     'role_cannot_be_edited' => 'This role cannot be edited',

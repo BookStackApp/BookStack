@@ -77,7 +77,7 @@ class LoginController extends Controller
                 $password_created_at = Carbon::parse(PasswordHistory::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->first()->created_at);
                 if (env('PASSWORD_MAX_AGE', false) && $password_created_at->lessThan(Carbon::now()->subDays(env('PASSWORD_MAX_AGE')))) {
                     auth()->logout();
-                    $this->showWarningNotification('Your password has expired, please reset it.');
+                    $this->showWarningNotification(trans('errors.password_expired'));
                     return redirect('/password/email');
                 }
                 return $this->sendLoginResponse($request);

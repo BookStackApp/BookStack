@@ -33,12 +33,12 @@ class PasswordHistory extends Model
         $last_password_created_at = $histories->first()->created_at;
 
         if ($last_password_created_at->greaterThan(Carbon::now()->subDays(env('PASSWORD_MIN_AGE', 0)))){
-            throw new PasswordHistoryException('Password has been recently changed');
+            throw new PasswordHistoryException(trans('errors.password_cannot_be_changed', ['days' => env('PASSWORD_MIN_AGE')]));
         }
 
         foreach($histories as $history) {
             if (Hash::check($newHistory['password'], $history['hash'])){
-                throw new PasswordHistoryException('Password has been recently used');
+                throw new PasswordHistoryException(trans('errors.cannot_reuse_password', ['passwords' => env('PASSWORD_HISTORY')]));
             }
         }
 
