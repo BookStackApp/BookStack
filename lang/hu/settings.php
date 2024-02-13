@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'A lomtár jelenleg üres',
     'recycle_bin_empty' => 'Lomtár kiürítése',
     'recycle_bin_empty_confirm' => 'Ezzel véglegesen megsemmisíti a lomtárban lévő összes elemet, beleértve az egyes tételekben található tartalmat is. Biztos benne, hogy ki akarja üríteni a lomtárat?',
-    'recycle_bin_destroy_confirm' => 'Ez a művelet véglegesen törli ezt az elemet és az alább felsorolt utódelemeket a rendszerből, és nem tudja visszaállítani ezt a tartalmat. Biztosan véglegesen törli ezt az elemet?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Megsemmisítendő elemek',
     'recycle_bin_restore_list' => 'Visszaállítandó elemek',
     'recycle_bin_restore_confirm' => 'Ez a művelet visszaállítja a törölt elemet, beleértve az utódelemeket is, az eredeti helyükre. Ha az eredeti helyet azóta törölték, és most a lomtárban van, akkor a szülőelemet is vissza kell állítani.',
