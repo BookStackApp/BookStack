@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'На данный момент корзина пуста',
     'recycle_bin_empty' => 'Очистить корзину',
     'recycle_bin_empty_confirm' => 'Это действие навсегда уничтожит все элементы в корзине, включая содержимое, содержащееся в каждом элементе. Вы уверены, что хотите очистить корзину?',
-    'recycle_bin_destroy_confirm' => 'Это действие удалит этот элемент навсегда вместе с любыми дочерними элементами, перечисленными ниже, и вы не сможете восстановить этот контент. Вы уверены, что хотите навсегда удалить этот элемент?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Элементы для удаления',
     'recycle_bin_restore_list' => 'Элементы для восстановления',
     'recycle_bin_restore_confirm' => 'Это действие восстановит удаленный элемент, включая дочерние, в исходное место. Если исходное место было удалено и теперь находится в корзине, родительский элемент также необходимо будет восстановить.',
