@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => '成功移除用户',
 
     // API Tokens
-    'api_token_create' => 'API 令牌已创建',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => '成功创建 API 令牌',
-    'api_token_update' => 'API 令牌已更新',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API 令牌更新成功',
-    'api_token_delete' => '已删除 API 令牌',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API 令牌删除成功',
 
     // Roles
