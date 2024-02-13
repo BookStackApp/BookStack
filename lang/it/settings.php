@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Al momento il cestino è vuoto',
     'recycle_bin_empty' => 'Svuota Cestino',
     'recycle_bin_empty_confirm' => 'Questa operazione cancellerà definitivamente tutti gli elementi presenti nel cestino, inclusi i contenuti relativi a ciascun elemento. Sei sicuro di voler svuotare il cestino?',
-    'recycle_bin_destroy_confirm' => 'Questa operazione eliminerà permanentemente questo elemento (insieme a tutti i relativi elementi elencati qui sotto) dal sistema e non sarà più possibile recuperarlo. Sei sicuro di voler eliminare permanentemente questo elemento?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Elementi da Eliminare definitivamente',
     'recycle_bin_restore_list' => 'Elementi da Ripristinare',
     'recycle_bin_restore_confirm' => 'Questa azione ripristinerà l\'elemento eliminato, compresi gli elementi figli, nella loro posizione originale. Se la posizione originale è stata eliminata, ed è ora nel cestino, anche l\'elemento padre dovrà essere ripristinato.',
