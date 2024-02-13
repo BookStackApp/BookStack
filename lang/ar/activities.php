@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'تم إزالة المستخدم بنجاح',
 
     // API Tokens
-    'api_token_create' => 'تم إنشاء رمز api',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'تم إنشاء رمز الـ API بنجاح',
-    'api_token_update' => 'تم تحديث رمز api',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'تم تحديث رمز الـ API بنجاح',
-    'api_token_delete' => 'رمز api المحذوف',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'تم حذف رمز الـ API بنجاح',
 
     // Roles
