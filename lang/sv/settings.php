@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Papperskorgen är för närvarande tom',
     'recycle_bin_empty' => 'Töm papperskorgen',
     'recycle_bin_empty_confirm' => 'Detta kommer permanent att förstöra alla objekt i papperskorgen inklusive innehåll som finns i varje objekt. Är du säker du vill tömma papperskorgen?',
-    'recycle_bin_destroy_confirm' => 'Denna åtgärd kommer att permanent ta bort detta objekt, tillsammans med alla underordnade element som anges nedan, från systemet och du kommer inte att kunna återställa detta innehåll. Är du säker på att du vill ta bort objektet permanent?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Objekt som ska förstöras',
     'recycle_bin_restore_list' => 'Objekt som ska återställas',
     'recycle_bin_restore_confirm' => 'Denna åtgärd kommer att återställa det raderade objektet, inklusive alla underordnade element, till deras ursprungliga plats. Om den ursprungliga platsen har tagits bort sedan dess, och är nu i papperskorgen, kommer det överordnade objektet också att behöva återställas.',
