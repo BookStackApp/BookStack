@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Koš je prazen',
     'recycle_bin_empty' => 'Izprazni koš',
     'recycle_bin_empty_confirm' => 'S tem boste trajno uničili vse predmete v košu, vključno z vsebino vsakega predmeta. Ali ste prepričani, da želite izprazniti koš?',
-    'recycle_bin_destroy_confirm' => 'S tem dejanjem boste ta element skupaj s spodaj navedenimi podrejenimi elementi trajno izbrisali iz sistema in te vsebine ne boste mogli obnoviti. Ali ste prepričani, da želite trajno izbrisati ta element?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Predmeti, ki naj bodo trajno izbrisani',
     'recycle_bin_restore_list' => 'Predmeti, ki naj bodo obnovljeni',
     'recycle_bin_restore_confirm' => 'S tem dejanjem boste izbrisani element, vključno z vsemi podrejenimi elementi, obnovili na prvotno mesto. Če je bilo prvotno mesto od takrat izbrisano in je zdaj v košu, bo treba obnoviti tudi nadrejeni element.',
