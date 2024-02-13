@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'סל המיחזור כרגע ריק',
     'recycle_bin_empty' => 'רוקן את סל המיחזור',
     'recycle_bin_empty_confirm' => 'פעולה זו תשמיד לצמיתות את כל הפריטים בסל המיחזור, לרבות התוכן בכל פריט. אתם בטוחים שאתם מעוניינים לרוקן את סל המיחזור?',
-    'recycle_bin_destroy_confirm' => 'פעולה זו תמחק מהמערכת לצמיתות פריט זה, יחד עם כל פריטי-הבן ברשימה להלן, ולא תוכלו לאחזר תוכל זה. אתם בטוחים שברצונכם למחוק לצמיתות פריט זה?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'פריטים שיושמדו',
     'recycle_bin_restore_list' => 'פריטים שיאוחזרו',
     'recycle_bin_restore_confirm' => 'פעולה זו תאחזר את הפריט שנמחק, לרבות רכיבי-הבן שלו, למיקומו המקורי. אם המיקום המקורי נמחק מאז, וכעת נמצא בסל המיחזור, יש לאחזר גם את פריט-האב.',
