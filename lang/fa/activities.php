@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'ایجاد توکن API',
     'api_token_create_notification' => 'توکن api با موفقیت ایجاد شد',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'توکن api بروز شده',
     'api_token_update_notification' => 'توکن API با موفقیت بروزرسانی شد',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'توکن api حذف شده',
     'api_token_delete_notification' => 'توکن API با موفقیت حذف شد',
 
     // Roles
