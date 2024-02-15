@@ -110,6 +110,16 @@ body.page-content.mce-content-body  {
   float: none !important;
 }
 
+.page-content.mce-content-body td[data-mce-selected]::after,
+.page-content.mce-content-body th[data-mce-selected]::after {
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+  outline: 1px dashed #1a85ff;
+  outline-offset: 0;
+}
+
 /**
  * Dark Mode Overrides
  */
