@@ -13,7 +13,7 @@ import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
-import {handleEmbedAlignmentChanges} from './fixes';
+import {handleClearFormattingOnTableCells, handleEmbedAlignmentChanges} from './fixes';
 
 const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
@@ -191,6 +191,7 @@ function getSetupCallback(options) {
         });
 
         handleEmbedAlignmentChanges(editor);
+        handleClearFormattingOnTableCells(editor);
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
