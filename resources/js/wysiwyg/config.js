@@ -12,6 +12,7 @@ import {getPlugin as getCustomhrPlugin} from './plugins-customhr';
 import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
+import {getPlugin as getTableAdditionsPlugin} from './plugins-table-additions';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
 import {handleClearFormattingOnTableCells, handleEmbedAlignmentChanges} from './fixes';
 
@@ -124,6 +125,7 @@ function gatherPlugins(options) {
         'about',
         'details',
         'tasklist',
+        'tableadditions',
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -133,6 +135,7 @@ function gatherPlugins(options) {
     window.tinymce.PluginManager.add('about', getAboutPlugin());
     window.tinymce.PluginManager.add('details', getDetailsPlugin());
     window.tinymce.PluginManager.add('tasklist', getTasklistPlugin());
+    window.tinymce.PluginManager.add('tableadditions', getTableAdditionsPlugin());
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));

@@ -81,6 +81,8 @@ return [
     'table_properties' => 'Table properties',
     'table_properties_title' => 'Table Properties',
     'delete_table' => 'Delete table',
+    'table_clear_formatting' => 'Clear table formatting',
+    'resize_to_contents' => 'Resize to contents',
     'insert_row_before' => 'Insert row before',
     'insert_row_after' => 'Insert row after',
     'delete_row' => 'Delete row',
