@@ -53,3 +53,34 @@ export function handleEmbedAlignmentChanges(editor) {
         }
     });
 }
+
+/**
+ * TinyMCE does not seem to do a great job on clearing styles in complex
+ * scenarios (like copied word content) when a range of table cells
+ * are selected. This tracks the selected table cells, and watches
+ * for clear formatting events, so some manual cleanup can be performed.
+ *
+ * The events used don't seem to be advertised by TinyMCE.
+ * Found at https://github.com/tinymce/tinymce/blob/6.8.3/modules/tinymce/src/models/dom/main/ts/table/api/Events.ts
+ * @param {Editor} editor
+ */
+export function handleClearFormattingOnTableCells(editor) {
+    /** @var {HTMLTableCellElement[]} * */
+    let selectedCells = [];
+
+    editor.on('TableSelectionChange', event => {
+        selectedCells = (event.cells || []).map(cell => cell.dom);
+    });
+    editor.on('TableSelectionClear', () => {
+        selectedCells = [];
+    });
+
+    const attrsToRemove = ['class', 'style', 'width', 'height'];
+    editor.on('FormatRemove', () => {
+        for (const cell of selectedCells) {
+            for (const attr of attrsToRemove) {
+                cell.removeAttribute(attr);
+            }
+        }
+    });
+}
