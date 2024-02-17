@@ -12,8 +12,9 @@ import {getPlugin as getCustomhrPlugin} from './plugins-customhr';
 import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
+import {getPlugin as getTableAdditionsPlugin} from './plugins-table-additions';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
-import {handleEmbedAlignmentChanges} from './fixes';
+import {handleClearFormattingOnTableCells, handleEmbedAlignmentChanges} from './fixes';
 
 const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
@@ -124,6 +125,7 @@ function gatherPlugins(options) {
         'about',
         'details',
         'tasklist',
+        'tableadditions',
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -133,6 +135,7 @@ function gatherPlugins(options) {
     window.tinymce.PluginManager.add('about', getAboutPlugin());
     window.tinymce.PluginManager.add('details', getDetailsPlugin());
     window.tinymce.PluginManager.add('tasklist', getTasklistPlugin());
+    window.tinymce.PluginManager.add('tableadditions', getTableAdditionsPlugin());
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
@@ -191,6 +194,7 @@ function getSetupCallback(options) {
         });
 
         handleEmbedAlignmentChanges(editor);
+        handleClearFormattingOnTableCells(editor);
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
