@@ -34,10 +34,10 @@
   align-items: center;
   justify-content: center;
   top: -1px;
-  right: -1px;
+  inset-inline-end: -1px;
   background-color: #EEE;
   border: 1px solid #DDD;
-  border-radius: 0 4px 0 0;
+  border-start-end-radius: 4px;
   @include lightDark(background-color, #eee, #333);
   @include lightDark(border-color, #ddd, #444);
   @include lightDark(color, #444, #888);
