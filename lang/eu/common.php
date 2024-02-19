@@ -20,7 +20,7 @@ return [
     'description' => 'Deskribapena',
     'role' => 'Rola',
     'cover_image' => 'Azaleko irudia',
-    'cover_image_description' => 'Irudiaren tamaina 440x250px antzekoa izan beharko litzake.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Ekintzak',
