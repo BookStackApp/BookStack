@@ -1,4 +1,4 @@
-import {EditorView, keymap, Direction} from '@codemirror/view';
+import {EditorView, keymap} from '@codemirror/view';
 
 import {copyTextToClipboard} from '../services/clipboard';
 import {viewerExtensions, editorExtensions} from './setups';
