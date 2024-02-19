@@ -20,7 +20,7 @@ return [
     'description' => '설명',
     'role' => '권한',
     'cover_image' => '대표 이미지',
-    'cover_image_description' => '이미지 크기는 440x250px 내외입니다.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => '활동',
