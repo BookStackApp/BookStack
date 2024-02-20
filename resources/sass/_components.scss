@@ -906,11 +906,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
-@include smaller-than($m) {
+@include smaller-than($l) {
   .dropdown-search-dropdown {
-    position: fixed;
-    right: auto;
-    left: $-m;
+    inset-inline: $-m auto;
   }
   .dropdown-search-dropdown .dropdown-search-list {
     max-height: 240px;
