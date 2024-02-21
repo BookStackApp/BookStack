@@ -23,7 +23,7 @@ class ThemeEvents
      * The provided $detail can be a string or a loggable type of model. You should check
      * the type before making use of this parameter.
      *
-     * @param string                                $type
+     * @param string $type
      * @param string|\BookStack\Activity\Models\Loggable $detail
      */
     const ACTIVITY_LOGGED = 'activity_logged';
@@ -42,18 +42,37 @@ class ThemeEvents
      * system as a standard app user. This includes a user becoming logged in
      * after registration. This is not emitted upon API usage.
      *
-     * @param string               $authSystem
+     * @param string $authSystem
      * @param \BookStack\Users\Models\User $user
      */
     const AUTH_LOGIN = 'auth_login';
 
     /**
+     * Auth pre-register event.
+     * Runs right before a new user account is registered in the system by any authentication
+     * system as a standard app user including auto-registration systems used by LDAP,
+     * SAML, OIDC and social systems. It only includes self-registrations,
+     * not accounts created by others in the UI or via the REST API.
+     * It runs after any other normal validation steps.
+     * Any account/email confirmation occurs post-registration.
+     * The provided $userData contains the main details that would be used to create
+     * the account, and may depend on authentication method.
+     * If false is returned from the event, registration will be prevented and the user
+     * will be returned to the login page.
+     *
+     * @param string $authSystem
+     * @param array $userData
+     * @returns bool|null
+     */
+    const AUTH_PRE_REGISTER = 'auth_pre_register';
+
+    /**
      * Auth register event.
      * Runs right after a user is newly registered to the application by any authentication
      * system as a standard app user. This includes auto-registration systems used
-     * by LDAP, SAML and social systems. It only includes self-registrations.
+     * by LDAP, SAML, OIDC and social systems. It only includes self-registrations.
      *
-     * @param string               $authSystem
+     * @param string $authSystem
      * @param \BookStack\Users\Models\User $user
      */
     const AUTH_REGISTER = 'auth_register';
@@ -91,8 +110,8 @@ class ThemeEvents
      *
      * @param string $tagReference
      * @param string $replacementHTML
-     * @param \BookStack\Entities\Models\Page   $currentPage
-     * @param ?\BookStack\Entities\Models\Page  $referencedPage
+     * @param \BookStack\Entities\Models\Page $currentPage
+     * @param ?\BookStack\Entities\Models\Page $referencedPage
      */
     const PAGE_INCLUDE_PARSE = 'page_include_parse';
 
@@ -133,7 +152,7 @@ class ThemeEvents
      * Provides both the original request and the currently resolved response.
      * Return values, if provided, will be used as a new response to use.
      *
-     * @param \Illuminate\Http\Request                                                       $request
+     * @param \Illuminate\Http\Request $request
      * @param \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse $response
      * @returns \Illuminate\Http\Response|null
      */
@@ -149,11 +168,11 @@ class ThemeEvents
      * If the listener returns a non-null value, that will be used as the POST data instead
      * of the system default.
      *
-     * @param string                                     $event
-     * @param \BookStack\Activity\Models\Webhook         $webhook
+     * @param string $event
+     * @param \BookStack\Activity\Models\Webhook $webhook
      * @param string|\BookStack\Activity\Models\Loggable $detail
-     * @param \BookStack\Users\Models\User               $initiator
-     * @param int                                        $initiatedTime
+     * @param \BookStack\Users\Models\User $initiator
+     * @param int $initiatedTime
      * @returns array|null
      */
     const WEBHOOK_CALL_BEFORE = 'webhook_call_before';
