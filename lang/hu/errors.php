@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':email címmel már létezik felhasználó, de más hitelesítő adatokkal.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Az email cím már meg van erősítve, meg lehet próbálni a bejelentkezést.',
     'email_confirmation_invalid' => 'A megerősítő vezérjel nem érvényes vagy használva volt. Meg kell próbálni újraregisztrálni.',
     'email_confirmation_expired' => 'A megerősítő vezérjel lejárt. Egy új megerősítő email lett elküldve.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'A külső hitelesítő rendszerből érkező kérést nem ismerte fel az alkalmazás által indított folyamat. Bejelentkezés után az előző oldalra történő visszalépés okozhatja ezt a hibát.',
     'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
     'oidc_already_logged_in' => 'Már bejelentkezett',
-    'oidc_user_not_registered' => ':name felhasználó nincs regisztrálva és az automatikus regisztráció le van tiltva',
     'oidc_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
     'oidc_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
     'social_no_action_defined' => 'Nincs művelet meghatározva',
