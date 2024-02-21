@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'يوجد مستخدم ببيانات مختلفة مسجل بالنظام للبريد الإلكتروني :email.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'تم تأكيد البريد الإلكتروني من قبل, الرجاء محاولة تسجيل الدخول.',
     'email_confirmation_invalid' => 'رابط التأكيد غير صحيح أو قد تم استخدامه من قبل, الرجاء محاولة التسجيل من جديد.',
     'email_confirmation_expired' => 'صلاحية رابط التأكيد انتهت, تم إرسال رسالة تأكيد جديدة لعنوان البريد الإلكتروني.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'لم يتم التعرف على الطلب من نظام التوثيق الخارجي من خلال عملية تبدأ بهذا التطبيق. العودة بعد تسجيل الدخول يمكن أن يسبب هذه المشكلة.',
     'saml_fail_authed' => 'تسجيل الدخول باستخدام :system فشل، النظام لم يوفر التفويض الناجح',
     'oidc_already_logged_in' => 'تم تسجيل الدخول مسبقاً',
-    'oidc_user_not_registered' => 'المستخدم :name غير مسجل و لايمكن التسجيل بشكل اتوماتيكي',
     'oidc_no_email_address' => 'تعذر العثور على عنوان بريد إلكتروني، لهذا المستخدم، في البيانات المقدمة من نظام المصادقة الخارجي',
     'oidc_fail_authed' => 'تسجيل الدخول باستخدام :system فشل، النظام لم يوفر التفويض الناجح',
     'social_no_action_defined' => 'لم يتم تعريف أي إجراء',
