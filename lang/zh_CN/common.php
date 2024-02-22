@@ -20,7 +20,7 @@ return [
     'description' => '概要',
     'role' => '角色',
     'cover_image' => '封面图片',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => '此图像的大小应约为 440 x 250 像素，但会根据需要灵活缩放和裁剪以适应不同场景下的用户界面，因此实际显示尺寸会有所不同。',
 
     // Actions
     'actions' => '操作',
