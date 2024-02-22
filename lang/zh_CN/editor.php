@@ -83,7 +83,7 @@ return [
     'delete_table' => '删除表格',
     'table_clear_formatting' => '清除表格格式',
     'resize_to_contents' => '根据内容调整大小',
-    'row_header' => 'Row header',
+    'row_header' => '行头',
     'insert_row_before' => '在上方插入行',
     'insert_row_after' => '在下方插入行',
     'delete_row' => '删除行',
