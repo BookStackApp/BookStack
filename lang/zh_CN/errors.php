@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Email为 :email 的用户已经存在，但具有不同的凭据。',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => '无法根据所提供的信息注册帐户',
     'email_already_confirmed' => 'Email已被确认，请尝试登录。',
     'email_confirmation_invalid' => '此确认令牌无效或已被使用，请重新注册。',
     'email_confirmation_expired' => '确认令牌已过期，已发送新的确认电子邮件。',
