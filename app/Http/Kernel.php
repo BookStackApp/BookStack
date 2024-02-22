@@ -28,7 +28,7 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\ApplyCspRules::class,
             \BookStack\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
+            \BookStack\Http\Middleware\StartSessionExtended::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
             \BookStack\Http\Middleware\CheckEmailConfirmed::class,
