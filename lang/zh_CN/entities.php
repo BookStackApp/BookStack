@@ -40,8 +40,8 @@ return [
     'export_text' => '纯文本文件',
     'export_md' => 'Markdown 文件',
     'default_template' => '默认页面模板',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template_explain' => '指定一个页面模板，该模板将作为此项目中所有页面的默认内容。请注意，仅当页面创建者具有对所选页面模板的查看访问权限时，此功能才会生效。',
+    'default_template_select' => '选择模板页面',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => '删除草稿页面',
     'pages_delete_success' => '页面已删除',
     'pages_delete_draft_success' => '草稿页面已删除',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => '此页面是当前书籍或章节的默认页面模板。删除此页面后，这些书籍或章节的默认页面模板将被取消。',
     'pages_delete_confirm' => '您确定要删除此页面吗？',
     'pages_delete_draft_confirm' => '您确定要删除此草稿页面吗？',
     'pages_editing_named' => '正在编辑页面“:pageName”',
