@@ -39,7 +39,7 @@ return [
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
     'export_md' => 'Markdown 文件',
-    'default_template' => 'Default Page Template',
+    'default_template' => '默认页面模板',
     'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
     'default_template_select' => 'Select a template page',
 
