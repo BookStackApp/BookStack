@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
     'export_md' => 'Markdown',
-    'default_template' => 'Default Page Template',
+    'default_template' => 'デフォルトページテンプレート',
     'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template_select' => 'テンプレートページを選択',
 
     // Permissions and restrictions
     'permissions' => '権限',
