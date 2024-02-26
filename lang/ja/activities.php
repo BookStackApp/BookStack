@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'ユーザーを削除しました',
 
     // API Tokens
-    'api_token_create' => 'APIトークンの生成',
+    'api_token_create' => 'がAPIトークンを作成',
     'api_token_create_notification' => 'APIトークンを作成しました',
-    'api_token_update' => 'APIトークンの更新',
+    'api_token_update' => 'がAPIトークンを更新',
     'api_token_update_notification' => 'APIトークンを更新しました',
-    'api_token_delete' => 'APIトークンの削除',
+    'api_token_delete' => 'がAPIトークンを削除',
     'api_token_delete_notification' => 'APIトークンを削除しました',
 
     // Roles
