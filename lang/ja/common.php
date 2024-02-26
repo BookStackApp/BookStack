@@ -20,7 +20,7 @@ return [
     'description' => '概要',
     'role' => '権限',
     'cover_image' => 'カバー画像',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'この画像はおよそ440x250pxであるべきですが、必要に応じてさまざまなシナリオでユーザー・インターフェースに合うように柔軟に拡大・縮小されるため、実際の表示寸法は異なります。',
 
     // Actions
     'actions' => '実行',
