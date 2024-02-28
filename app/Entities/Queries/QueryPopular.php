@@ -4,10 +4,8 @@ namespace BookStack\Entities\Queries;
 
 use BookStack\Activity\Models\View;
 use BookStack\Entities\EntityProvider;
-use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -16,10 +14,11 @@ class QueryPopular
     public function __construct(
         protected PermissionApplicator $permissions,
         protected EntityProvider $entityProvider,
+        protected MixedEntityListLoader $listLoader,
     ) {
     }
 
-    public function run(int $count, int $page, array $filterModels = null)
+    public function run(int $count, int $page, array $filterModels = null): Collection
     {
         $query = $this->permissions
             ->restrictEntityRelationQuery(View::query(), 'views', 'viewable_id', 'viewable_type')
@@ -31,24 +30,13 @@ class QueryPopular
             $query->whereIn('viewable_type', $this->entityProvider->getMorphClasses($filterModels));
         }
 
-        $entities = $query->with('viewable')
+        $views = $query
             ->skip($count * ($page - 1))
             ->take($count)
-            ->get()
-            ->pluck('viewable')
-            ->filter();
+            ->get();
 
-        $this->loadBooksForChildren($entities);
+        $this->listLoader->loadIntoRelations($views->all(), 'viewable', false);
 
-        return $entities;
-    }
-
-    protected function loadBooksForChildren(Collection $entities): void
-    {
-        $bookChildren = $entities->filter(fn(Entity $entity) => $entity instanceof BookChild);
-        $eloquent = (new \Illuminate\Database\Eloquent\Collection($bookChildren));
-        $eloquent->load(['book' => function (BelongsTo $query) {
-            $query->scopes('visible');
-        }]);
+        return $views->pluck('viewable')->filter();
     }
 }
