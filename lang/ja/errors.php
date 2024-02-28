@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':emailを持つユーザは既に存在しますが、資格情報が異なります。',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => '指定された内容によるユーザーアカウントの登録はできません。',
     'email_already_confirmed' => 'Eメールは既に確認済みです。ログインしてください。',
     'email_confirmation_invalid' => 'この確認トークンは無効か、または既に使用済みです。登録を再試行してください。',
     'email_confirmation_expired' => '確認トークンは有効期限切れです。確認メールを再送しました。',
