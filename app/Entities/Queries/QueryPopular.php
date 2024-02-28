@@ -35,7 +35,7 @@ class QueryPopular
             ->take($count)
             ->get();
 
-        $this->listLoader->loadIntoRelations($views->all(), 'viewable', false);
+        $this->listLoader->loadIntoRelations($views->all(), 'viewable', true);
 
         return $views->pluck('viewable')->filter();
     }
