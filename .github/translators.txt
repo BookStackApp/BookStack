@@ -374,7 +374,7 @@ balmag :: Hungarian
 Antti-Jussi Nygård (ajnyga) :: Finnish
 Eduard Ereza Martínez (Ereza) :: Catalan
 Jabir Lang (amar.almrad) :: Arabic
-Jaroslav Koblizek (foretix) :: Czech; French
+Jaroslav Kobližek (foretix) :: Czech; French
 Wiktor Adamczyk (adamczyk.wiktor) :: Polish
 Abdulmajeed Alshuaibi (4Majeed) :: Arabic
 NotSmartZakk :: Czech
@@ -393,3 +393,16 @@ TheGatesDev (thegatesdev) :: Dutch
 Irdi (irdiOL) :: Albanian
 KateBarber :: Welsh
 Twister (theuncles75) :: Hebrew
+algernon19 :: Hungarian
+Ivan Krstic (ikrstic) :: Serbian (Cyrillic)
+Show :: Russian
+xBahamut :: Portuguese, Brazilian
+Pavle Knežević (pavleknezzevic) :: Serbian (Cyrillic)
+Vanja Cvelbar (b100w11) :: Slovenian
+simonpct :: French
+Honza Nagy (honza.nagy) :: Czech
+asd20752 :: Norwegian Bokmal
+Jan Picka (polipones) :: Czech
+diogoalex991 :: Portuguese
+Ehsan Sadeghi (ehsansadeghi) :: Persian
+ka_picit :: Danish
