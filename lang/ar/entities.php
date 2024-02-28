@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'ملف PDF',
     'export_text' => 'ملف نص عادي',
     'export_md' => 'Markdown File',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'الأذونات',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'تعديل كتاب :bookName',
     'books_form_book_name' => 'اسم الكتاب',
     'books_save' => 'حفظ الكتاب',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'أذونات الكتاب',
     'books_permissions_updated' => 'تم تحديث أذونات الكتاب',
     'books_empty_contents' => 'لم يتم إنشاء أي صفحات أو فصول لهذا الكتاب.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'حذف المسودة',
     'pages_delete_success' => 'تم حذف الصفحة',
     'pages_delete_draft_success' => 'تم حذف المسودة',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'تأكيد حذف الصفحة؟',
     'pages_delete_draft_confirm' => 'تأكيد حذف المسودة؟',
     'pages_editing_named' => ':pageName قيد التعديل',

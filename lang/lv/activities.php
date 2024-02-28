@@ -59,11 +59,11 @@ return [
     'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Skatīšanas uzstādījumi veiksmīgi atjaunināti',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
+    'auth_login' => 'pieteicies',
+    'auth_register' => 'reģistrējies kā jauns lietotājs',
     'auth_password_reset_request' => 'pieprasīja lietotāja paroles atiestatīšanu',
     'auth_password_reset_update' => 'atiestatīja lietotāja paroli',
     'mfa_setup_method' => 'uzstādīja MFA metodi',
@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // API Tokens
-    'api_token_create' => 'izveidoja API žetonu',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API žetons veiksmīgi izveidots',
-    'api_token_update' => 'atjaunoja API žetonu',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API žetons veiksmīgi atjaunināts',
-    'api_token_delete' => 'dzēsa API žetonu',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API žetons veiksmīgi dzēsts',
 
     // Roles

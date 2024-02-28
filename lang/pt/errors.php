@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Um utilizador com o endereço de e-mail :email já existe mas com credenciais diferentes.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-mail já foi confirmado. Tente iniciar sessão.',
     'email_confirmation_invalid' => 'Este token de confirmação não é válido ou já foi utilizado. Por favor, tente registar-se novamente.',
     'email_confirmation_expired' => 'O token de confirmação já expirou. Um novo e-mail foi enviado.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'A requisição do sistema de autenticação externa não foi reconhecia por um processo iniciado por esta aplicação. Navegar para o caminho anterior após o inicio de sessão pode provocar este problema.',
     'saml_fail_authed' => 'Inicio de sessão com :system falhou. O sistema não forneceu uma autorização bem sucedida',
     'oidc_already_logged_in' => 'Sessão já iniciada',
-    'oidc_user_not_registered' => 'O utilizador :name não está registado e o registo automático está desativado',
     'oidc_no_email_address' => 'Não foi possível encontrar um endereço de e-mail para este utilizador nos dados providenciados pelo sistema de autenticação externo',
     'oidc_fail_authed' => 'Inicio de sessão com :system falhou. O sistema não forneceu uma autorização bem sucedida',
     'social_no_action_defined' => 'Nenhuma ação definida',

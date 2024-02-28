@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Зараз кошик порожній',
     'recycle_bin_empty' => 'Очистити кошик',
     'recycle_bin_empty_confirm' => 'Це назавжди знищить усі елементи в кошику, включаючи вміст кожного елементу. Ви впевнені, що хочете очистити кошик?',
-    'recycle_bin_destroy_confirm' => 'Ця дія назавжди видалить цей об\'єкт із системи, а також усі дочірні об\'єкти вказані нижче, і ви не зможете відновити його. Ви впевнені, що хочете назавжди видалити цей об\'єкт?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Елементи для знищення',
     'recycle_bin_restore_list' => 'Елементи для відновлення',
     'recycle_bin_restore_confirm' => 'Ця дія відновить видалений елемент у початкове місце, включаючи всі дочірні елементи. Якщо вихідне розташування відтоді було видалено, і знаходиться у кошику, батьківський елемент також потрібно буде відновити.',

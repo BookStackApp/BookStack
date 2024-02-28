@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Përdoruesi u fshi me sukses',
 
     // API Tokens
-    'api_token_create' => 'krijoi token api',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'Token API u krijua me sukses',
-    'api_token_update' => 'përditësoi token api',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'Token API u përditësua me sukses',
-    'api_token_delete' => 'fshiu token api',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'Token API u fshi me sukses',
 
     // Roles

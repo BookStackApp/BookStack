@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => '回收桶目前是空的',
     'recycle_bin_empty' => '清空回收桶',
     'recycle_bin_empty_confirm' => '這將會永久破壞回收桶中的所有項目，包括每個項目中包含的內容。您確定您想要清空回收桶嗎？',
-    'recycle_bin_destroy_confirm' => '此動作將會從系統中永久移除此項目以及下方列出的所有下層元素，您將無法還原此內容。您確定您想要永久刪除此項目嗎？',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => '要被銷毀的項目',
     'recycle_bin_restore_list' => '要被還原的項目',
     'recycle_bin_restore_confirm' => '此動作將會還原已被刪除的項目（包含任何下層元素）到其原始位置。如果原始位置已被刪除，且目前位於垃圾桶裡，那麼上層項目也需要被還原。',

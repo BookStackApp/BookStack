@@ -110,7 +110,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'recycle_bin_contents_empty' => 'Der Papierkorb ist derzeit leer',
     'recycle_bin_empty' => 'Papierkorb leeren',
     'recycle_bin_empty_confirm' => 'Dies wird alle Einträge im Papierkorb dauerhaft entfernen, einschließlich der Inhalte, die darin enthalten sind. Bist du sicher, dass du den Papierkorb leeren möchtest?',
-    'recycle_bin_destroy_confirm' => 'Diese Aktion wird diesen Eintrag zusammen mit allen unten aufgeführten Untereinträgen dauerhaft aus dem System löschen und du wirst nicht in der Lage sein, diesen Inhalt wiederherzustellen. Bist du sicher, dass du diesen Eintrag endgültig löschen möchtest?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Zu löschende Einträge',
     'recycle_bin_restore_list' => 'Wiederherzustellende Einträge',
     'recycle_bin_restore_confirm' => 'Mit dieser Aktion wird der gelöschte Eintrag einschließlich aller untergeordneten Einträge an seinem ursprünglichen Ort wiederhergestellt. Wenn der ursprüngliche Ort gelöscht wurde und sich nun im Papierkorb befindet, muss auch der übergeordnete Eintrag wiederhergestellt werden.',

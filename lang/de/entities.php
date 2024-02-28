@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
     'export_md' => 'Markdown-Datei',
+    'default_template' => 'Standard Seitenvorlage',
+    'default_template_explain' => 'Zuweisen einer Seitenvorlage, die als Standardinhalt für alle Seiten verwendet wird, die innerhalb dieses Elements erstellt wurden. Beachten Sie, dass dies nur dann verwendet wird, wenn der Ersteller der Seite Zugriff auf die ausgewählte Vorlagen-Seite hat.',
+    'default_template_select' => 'Wählen Sie eine Seitenvorlage',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Buch ":bookName" bearbeiten',
     'books_form_book_name' => 'Name des Buches',
     'books_save' => 'Buch speichern',
-    'books_default_template' => 'Standard Seitentemplate',
-    'books_default_template_explain' => 'Zuweisen einer Seitenvorlage, die als Standardinhalt für alle neuen Seiten in diesem Buch verwendet wird. Beachten Sie, dass dies nur dann verwendet wird, wenn der Ersteller einer Seite Zugriff auf die ausgewählte Template-Seite hat.',
-    'books_default_template_select' => 'Template-Seite auswählen',
     'books_permissions' => 'Buch-Berechtigungen',
     'books_permissions_updated' => 'Buch-Berechtigungen aktualisiert',
     'books_empty_contents' => 'Es sind noch keine Seiten oder Kapitel zu diesem Buch hinzugefügt worden.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Seitenentwurf löschen',
     'pages_delete_success' => 'Seite gelöscht',
     'pages_delete_draft_success' => 'Seitenentwurf gelöscht',
-    'pages_delete_warning_template' => 'Diese Seite wird aktiv als Standardvorlage für Seiten in diesem Buch verwendet. Diese Bücher haben nach dem Löschen dieser Seite keine Standardvorlage mehr zugewiesen.',
+    'pages_delete_warning_template' => 'Diese Seite wird aktiv als Standardvorlage für Bücher oder Kapitel verwendet. In diesen Büchern oder Kapiteln wird nach dem Löschen dieser Seite keine Standardvorlage mehr zugewiesen sein.',
     'pages_delete_confirm' => 'Sind Sie sicher, dass Sie diese Seite löschen möchen?',
     'pages_delete_draft_confirm' => 'Sind Sie sicher, dass Sie diesen Seitenentwurf löschen möchten?',
     'pages_editing_named' => 'Seite ":pageName" bearbeiten',

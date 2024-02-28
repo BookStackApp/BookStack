@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => '휴지통이 비었습니다.',
     'recycle_bin_empty' => '비우기',
     'recycle_bin_empty_confirm' => '휴지통을 비울 건가요?',
-    'recycle_bin_destroy_confirm' => '아래 자식 항목들이 함께 영구적으로 삭제됩니다. 영구 삭제할 건가요?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => '영구 삭제함',
     'recycle_bin_restore_list' => '복원함',
     'recycle_bin_restore_confirm' => '원래 위치로 복원합니다. 원래 위치의 부모 항목이 지워졌을 경우 부모 항목도 복원해야 합니다.',

@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Pengguna dengan email :email sudah ada tetapi dengan kredensial berbeda.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Email telah dikonfirmasi, Coba masuk.',
     'email_confirmation_invalid' => 'Token konfirmasi ini tidak valid atau telah digunakan, Silakan coba mendaftar lagi.',
     'email_confirmation_expired' => 'Token konfirmasi telah kedaluwarsa, Email konfirmasi baru telah dikirim.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Permintaan dari sistem otentikasi eksternal tidak dikenali oleh sebuah proses yang dimulai oleh aplikasi ini. Menavigasi kembali setelah masuk dapat menyebabkan masalah ini.',
     'saml_fail_authed' => 'Masuk menggunakan :system gagal, sistem tidak memberikan otorisasi yang berhasil',
     'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'Tidak ada tindakan yang ditentukan',

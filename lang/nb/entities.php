@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Oppdatert :timeLength',
     'meta_updated_name' => 'Oppdatert :timeLength av :user',
     'meta_owned_name' => 'Eies av :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'Sitert på :count side|Sitert på :count sider',
     'entity_select' => 'Velg entitet',
     'entity_select_lack_permission' => 'Du har ikke tilgang til å velge dette elementet',
     'images' => 'Bilder',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF Fil',
     'export_text' => 'Tekstfil',
     'export_md' => 'Markdownfil',
+    'default_template' => 'Standard sidemal',
+    'default_template_explain' => 'Tildel en sidemal som vil bli brukt som standardinnhold for alle nye sider i denne boken. Husk dette vil kun bli brukt hvis sideskaperen har tilgang til den valgte malsiden.',
+    'default_template_select' => 'Velg en malside',
 
     // Permissions and restrictions
     'permissions' => 'Tilganger',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Endre boken :bookName',
     'books_form_book_name' => 'Boktittel',
     'books_save' => 'Lagre bok',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Boktilganger',
     'books_permissions_updated' => 'Boktilganger oppdatert',
     'books_empty_contents' => 'Ingen sider eller kapitler finnes i denne boken.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Slett utkastet',
     'pages_delete_success' => 'Siden er slettet',
     'pages_delete_draft_success' => 'Sideutkastet ble slettet',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Denne siden er i aktiv bruk som en bok eller kapittelstandard sidemal. Disse bøkene eller kapitlene vil ikke lenger ha en standardmal som er tilordnet etter at denne siden er slettet.',
     'pages_delete_confirm' => 'Er du sikker på at du vil slette siden?',
     'pages_delete_draft_confirm' => 'Er du sikker på at du vil slette utkastet?',
     'pages_editing_named' => 'Redigerer :pageName (side)',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Referanser',
     'references_none' => 'Det er ingen sporede referanser til dette elementet.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'Nedenfor vises alle de kjente sidene i systemet som lenker til denne oppføringen.',
 
     // Watch Options
     'watch' => 'Overvåk',

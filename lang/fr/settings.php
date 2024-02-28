@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'La corbeille est vide',
     'recycle_bin_empty' => 'Vider la corbeille',
     'recycle_bin_empty_confirm' => 'Cela détruira définitivement tous les éléments de la corbeille, y compris le contenu de chaque élément. Êtes-vous sûr de vouloir vider la corbeille ?',
-    'recycle_bin_destroy_confirm' => 'Cette action supprimera définitivement cet élément du système ainsi que tous les éléments enfants listés ci-dessous et vous ne pourrez plus restaurer ce contenu. Êtes-vous sûr de vouloir supprimer définitivement cet élément ?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Éléments à détruire',
     'recycle_bin_restore_list' => 'Éléments à restaurer',
     'recycle_bin_restore_confirm' => 'Cette action restaurera l\'élément supprimé, y compris tous les éléments enfants, à leur emplacement d\'origine. Si l\'emplacement d\'origine a été supprimé depuis et est maintenant dans la corbeille, l\'élément parent devra également être restauré.',

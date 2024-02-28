@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Textfil',
     'export_md' => 'Markdown-fil',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Rättigheter',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Redigera bok :bookName',
     'books_form_book_name' => 'Bokens namn',
     'books_save' => 'Spara bok',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Rättigheter för boken',
     'books_permissions_updated' => 'Bokens rättigheter har uppdaterats',
     'books_empty_contents' => 'Det finns inga sidor eller kapitel i den här boken.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Ta bort utkast',
     'pages_delete_success' => 'Sidan har tagits bort',
     'pages_delete_draft_success' => 'Utkastet har tagits bort',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Är du säker på att du vill ta bort den här sidan?',
     'pages_delete_draft_confirm' => 'Är du säker på att du vill ta bort det här utkastet?',
     'pages_editing_named' => 'Redigerar sida :pageName',

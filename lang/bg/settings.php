@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Кошчето е празно',
     'recycle_bin_empty' => 'Изпразни кочшето',
     'recycle_bin_empty_confirm' => 'Това ще унищожи завинаги всички обекти в кошчето, включително съдържанието във всеки обект. Сигурен/на ли си, че искаш да изпразниш кошчето?',
-    'recycle_bin_destroy_confirm' => 'Това действие завинаги ще изтрие от системата този обект, както и всички негови поделементи, и няма да можеш да го възстановиш. Сигурен/на ли си, че искаш да изтриеш този обект завинаги?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Обекти за унищожение',
     'recycle_bin_restore_list' => 'Обекти за възстановяване',
     'recycle_bin_restore_confirm' => 'Това действие ще възстанови изтрития обект, както и всички негови поделементи, в оригиналното им местоположение. Ако оригиналното им местоположение също е изтрито и сега се намира в кошчето, то също ще трябва да бъде възстановено.',

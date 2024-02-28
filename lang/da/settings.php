@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Papirkurven er tom',
     'recycle_bin_empty' => 'Tøm papirkurv',
     'recycle_bin_empty_confirm' => 'Dette vil permanent slette alle elementer i papirkurven, inkluderet hvert elements indhold. Er du sikker på, at du vil tømme papirkurven?',
-    'recycle_bin_destroy_confirm' => 'Denne handling sletter dette element permanent, sammen med elementerne anført nedenfor, fra systemet. Du vil ikke være i stand til at gendanne dette indhold. Er du sikker på, at du vil slette dette element permanent?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Elementer der skal slettes',
     'recycle_bin_restore_list' => 'Elementer der skal gendannes',
     'recycle_bin_restore_confirm' => 'Denne handling vil gendanne det slettede element, herunder alle underelementer, til deres oprindelige placering. Hvis den oprindelige placering siden er blevet slettet, og nu er i papirkurven, vil det overordnede element også skulle gendannes.',

@@ -41,11 +41,11 @@ return [
     'profile_email_desc' => 'Šis epasts tiks izmantots paziņojumiem un sistēmas piekļuvei, atkarībā no sistēmā uzstādītās autentifikācijas metodes.',
     'profile_email_no_permission' => 'Diemžēl jums nav tiesību mainīt savu epasta adresi. Ja vēlaties to mainīt, jums jāsazinās ar administratoru, lai tas nomaina šo adresi.',
     'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
-    'profile_admin_options' => 'Administrator Options',
-    'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
+    'profile_admin_options' => 'Administratora iestatījumi',
+    'profile_admin_options_desc' => 'Papildus administratora iestatījumus, kā piemēram, lomu piešķiršanu, var atrast jūsu lietotāja kontā ejot uz "Uzstādījumu > Lietotāji".',
 
     'delete_account' => 'Dzēst kontu',
     'delete_my_account' => 'Izdzēst manu kontu',
-    'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
+    'delete_my_account_desc' => 'Šī darbība pilnībā izdzēsīs jūsu lietotāja kontu no sistēmas. Jūs vairs nevarēsiet piekļūt kontam, atcelt šo darbību vai atjaunot kontu. Jūsu izveidotais saturs, piemēram, izveidotās lapas un augšupielādētie attēli, tiks saglabāts.',
     'delete_my_account_warning' => 'Vai tiešām vēlaties dzēst savu kontu?',
 ];

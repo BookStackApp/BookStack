@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Thùng rác hiện đang trống',
     'recycle_bin_empty' => 'Dọn dẹp Thùng Rác',
     'recycle_bin_empty_confirm' => 'Thao tác này sẽ hủy vĩnh viễn tất cả các mục trong thùng rác bao gồm cả nội dung có trong mỗi mục. Bạn có chắc chắn muốn làm trống thùng rác?',
-    'recycle_bin_destroy_confirm' => 'Hành động này sẽ xóa vĩnh viễn mục này, cùng với bất kỳ phần tử con nào được liệt kê bên dưới, khỏi hệ thống và bạn sẽ không thể khôi phục nội dung này. Bạn có chắc chắn muốn xóa vĩnh viễn mặt hàng này không?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Items to be Destroyed',
     'recycle_bin_restore_list' => 'Items to be Restored',
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',

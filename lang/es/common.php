@@ -20,7 +20,7 @@ return [
     'description' => 'Descripción',
     'role' => 'Rol',
     'cover_image' => 'Imagen de portada',
-    'cover_image_description' => 'Esta imagen debe ser aproximadamente de 440x250px.',
+    'cover_image_description' => 'Esta imagen debe ser de aproximadamente 440x250px aunque será escalada y recortada para adaptarse a la interfaz de usuario en diferentes escenarios según sea necesario, por lo que las dimensiones en pantalla diferirán.',
 
     // Actions
     'actions' => 'Acciones',

@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
     'export_md' => 'Markdown 文件',
+    'default_template' => '默认页面模板',
+    'default_template_explain' => '指定一个页面模板，该模板将作为此项目中所有页面的默认内容。请注意，仅当页面创建者具有对所选页面模板的查看访问权限时，此功能才会生效。',
+    'default_template_select' => '选择模板页面',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => '编辑图书「:bookName」',
     'books_form_book_name' => '书名',
     'books_save' => '保存图书',
-    'books_default_template' => '默认页面模板',
-    'books_default_template_explain' => '指定一个页面模板，该模板将用作本书中所有新页面的默认内容。请注意，仅当页面创建者具有对所选页面模板的查看访问权限时，此功能才会生效。',
-    'books_default_template_select' => '选择模板页面',
     'books_permissions' => '图书权限',
     'books_permissions_updated' => '图书权限已更新',
     'books_empty_contents' => '本书目前没有页面或章节。',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => '删除草稿页面',
     'pages_delete_success' => '页面已删除',
     'pages_delete_draft_success' => '草稿页面已删除',
-    'pages_delete_warning_template' => '此页面是当前的书籍默认页面模板。删除此页面后，将不再为这些书籍分配默认页面模板。',
+    'pages_delete_warning_template' => '此页面是当前书籍或章节的默认页面模板。删除此页面后，这些书籍或章节的默认页面模板将被取消。',
     'pages_delete_confirm' => '您确定要删除此页面吗？',
     'pages_delete_draft_confirm' => '您确定要删除此草稿页面吗？',
     'pages_editing_named' => '正在编辑页面“:pageName”',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'فایل PDF',
     'export_text' => 'پرونده متنی ساده',
     'export_md' => 'راهنما مارک‌دون',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'ویرایش کتاب:bookName',
     'books_form_book_name' => 'نام کتاب',
     'books_save' => 'ذخیره کتاب',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'مجوزهای کتاب',
     'books_permissions_updated' => 'مجوزهای کتاب به روز شد',
     'books_empty_contents' => 'هیچ صفحه یا فصلی برای این کتاب ایجاد نشده است.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'حذف صفحه پیش نویس',
     'pages_delete_success' => 'صفحه حذف شد',
     'pages_delete_draft_success' => 'صفحه پیش نویس حذف شد',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'آیا مطمئن هستید که می خواهید این صفحه را حذف کنید؟',
     'pages_delete_draft_confirm' => 'آیا مطمئن هستید که می خواهید این صفحه پیش نویس را حذف کنید؟',
     'pages_editing_named' => 'ویرایش صفحه :pageName',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'مراجع',
     'references_none' => 'هیچ رفرنسی برای این قلم یافت نشد.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'در زیر تمام صفحات شناخته شده در سیستم که به این مورد پیوند دارند، نشان داده شده است.',
 
     // Watch Options
     'watch' => 'نظارت',

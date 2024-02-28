@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Prügikast on hetkel tühi',
     'recycle_bin_empty' => 'Tühjenda prügikast',
     'recycle_bin_empty_confirm' => 'See kustutab lõplikult kõik objektid prügikastis, kaasa arvatud nende sisu. Kas oled kindel, et soovid prügikasti tühjendada?',
-    'recycle_bin_destroy_confirm' => 'See kustutab lõplikult valitud objekti koos loetletud alamobjektidega, ja seda sisu ei ole enam võimalik taastada. Kas oled kindel, et soovid selle objekti kustutada?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Kustutatavad objektid',
     'recycle_bin_restore_list' => 'Taastatavad objektid',
     'recycle_bin_restore_confirm' => 'See taastab valitud objekti koos kõigi alamobjektidega nende algsesse asukohta. Kui see asukoht on ka vahepeal kustutatud ja on nüüd prügikastis, tuleb ka see taastada.',

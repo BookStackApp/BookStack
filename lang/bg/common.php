@@ -20,7 +20,7 @@ return [
     'description' => 'Описание',
     'role' => 'Роля',
     'cover_image' => 'Образ на корицата',
-    'cover_image_description' => 'Образът трябва да е горе-долу 440х250 пиксела.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Действия',

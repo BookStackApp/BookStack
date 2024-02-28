@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Coșul de gunoi este în prezent gol',
     'recycle_bin_empty' => 'Golește coșul de gunoi',
     'recycle_bin_empty_confirm' => 'Aceasta va distruge definitiv toate elementele din coșul de gunoi, inclusiv conținutul conținut din fiecare element. Ești sigur că vrei să golești coșul de gunoi?',
-    'recycle_bin_destroy_confirm' => 'Această acțiune va șterge permanent acest element din sistem, împreună cu orice elemente copil enumerat mai jos, și nu vei putea restaura acest conținut. Ești sigur că vrei să ștergi definitiv acest element?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Elemente de distrus',
     'recycle_bin_restore_list' => 'Elemente care vor fi restaurate',
     'recycle_bin_restore_confirm' => 'Această acțiune va restaura elementul șters, inclusiv orice elemente copii, la locația lor originală. În cazul în care locația originală a fost de atunci ștearsă și acum este în coșul de reciclare, elementul părinte va trebui, de asemenea, să fie restaurat.',

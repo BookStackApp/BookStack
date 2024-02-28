@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF dokument',
     'export_text' => 'Textový soubor',
     'export_md' => 'Markdown',
+    'default_template' => 'Výchozí šablona stránky',
+    'default_template_explain' => 'Přiřadit šablonu stránky, která bude použita jako výchozí obsah pro všechny nové stránky v této knize. Mějte na paměti, že šablona bude použita pouze v případě, že tvůrce stránek bude mít přístup k těmto vybraným stránkám šablony.',
+    'default_template_select' => 'Vyberte šablonu stránky',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnění',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Upravit knihu :bookName',
     'books_form_book_name' => 'Název knihy',
     'books_save' => 'Uložit knihu',
-    'books_default_template' => 'Výchozí šablona stránky',
-    'books_default_template_explain' => 'Přiřadit šablonu stránky, která bude použita jako výchozí obsah pro všechny nové stránky v této knize. Mějte na paměti, že šablona bude použita pouze v případě, že tvůrce stránek bude mít přístup k těmto vybraným stránkám šablony.',
-    'books_default_template_select' => 'Vyberte šablonu stránky',
     'books_permissions' => 'Oprávnění knihy',
     'books_permissions_updated' => 'Oprávnění knihy byla aktualizována',
     'books_empty_contents' => 'Pro tuto knihu nebyly vytvořeny žádné stránky ani kapitoly.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Odstranit koncept stránky',
     'pages_delete_success' => 'Stránka odstraněna',
     'pages_delete_draft_success' => 'Koncept stránky odstraněn',
-    'pages_delete_warning_template' => 'Tato stránka je aktivní výchozí šablona. Tyto knihy již nebudou mít výchozí šablonu stránky přiřazenou po odstranění této stránky.',
+    'pages_delete_warning_template' => 'Tato stránka je aktivní výchozí šablona pro nějakou knihu či kapitolu. Tyto knihy nebo kapitoly již nebudou mít výchozí šablonu stránky přiřazenou po odstranění této stránky.',
     'pages_delete_confirm' => 'Opravdu chcete odstranit tuto stránku?',
     'pages_delete_draft_confirm' => 'Opravdu chcete odstranit tento koncept stránky?',
     'pages_editing_named' => 'Úpravy stránky :pageName',

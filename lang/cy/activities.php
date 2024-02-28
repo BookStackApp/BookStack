@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Tynnwyd y defnyddiwr yn llwyddiannus',
 
     // API Tokens
-    'api_token_create' => 'creodd tocyn api',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'Tocyn API wedi\'i greu\'n llwyddiannus',
-    'api_token_update' => 'diweddarodd docyn api',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'Tocyn API wedi\'i ddiweddaru\'n llwyddiannus',
-    'api_token_delete' => 'dileodd docyn api',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'Tocyn API wedi\'i ddileu\'n llwyddiannus',
 
     // Roles

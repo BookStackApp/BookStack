@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'سلة المحذوفات فارغة حاليًا',
     'recycle_bin_empty' => 'إفراغ سلة المحذوفات',
     'recycle_bin_empty_confirm' => 'سيؤدي هذا إلى إتلاف جميع العناصر الموجودة في سلة المحذوفات بشكل دائم بما في ذلك المحتوى الموجود داخل كل عنصر. هل أنت متأكد من أنك تريد إفراغ سلة المحذوفات؟',
-    'recycle_bin_destroy_confirm' => 'سيؤدي هذا الإجراء إلى حذف هذا العنصر نهائيًا ، إلى جانب أي عناصر فرعية مدرجة أدناه ، من النظام ولن تتمكن من استعادة هذا المحتوى. هل أنت متأكد من أنك تريد حذف هذا العنصر نهائيًا؟',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'العناصر المراد تدميرها',
     'recycle_bin_restore_list' => 'العناصر المراد استرجاعها',
     'recycle_bin_restore_confirm' => 'سيعيد هذا الإجراء العنصر المحذوف ، بما في ذلك أي عناصر فرعية ، إلى موقعه الأصلي. إذا تم حذف الموقع الأصلي منذ ذلك الحين ، وهو الآن في سلة المحذوفات ، فسيلزم أيضًا استعادة العنصر الأصلي.',

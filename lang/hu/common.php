@@ -20,7 +20,7 @@ return [
     'description' => 'Leírás',
     'role' => 'Szerepkör',
     'cover_image' => 'Borítókép',
-    'cover_image_description' => 'A kép méretének kb. 440x250px-nek kell lennie.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Műveletek',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Eltávolítás',
     'add' => 'Hozzáadás',
     'configure' => 'Beállítás',
-    'manage' => 'Manage',
+    'manage' => 'Kezelés',
     'fullscreen' => 'Teljes képernyő',
     'favourite' => 'Kedvencekhez ad',
     'unfavourite' => 'Kedvencekből eltávolít',
@@ -85,7 +85,7 @@ return [
 
     // Header
     'homepage' => 'Kezdőlap',
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Menü megnyitása',
     'profile_menu' => 'Profil menü',
     'view_profile' => 'Profil megtekintése',
     'edit_profile' => 'Profil szerkesztése',
@@ -95,9 +95,9 @@ return [
 
     // Layout tabs
     'tab_info' => 'Információ',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Másodlagos információk megjelenítése',
     'tab_content' => 'Tartalom',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Elsődleges információk megjelenítése',
 
     // Email Content
     'email_action_help' => 'Probléma esetén a lenti ":actionText" gombra kell kattintani, majd ki kell másolni a lenti webcímet és be kell illeszteni egy böngészőbe:',

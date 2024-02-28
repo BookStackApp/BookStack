@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Tệp PDF',
     'export_text' => 'Tệp văn bản thuần túy',
     'export_md' => 'Tệp Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Quyền',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Sửa sách :bookName',
     'books_form_book_name' => 'Tên sách',
     'books_save' => 'Lưu sách',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Các quyền của cuốn sách',
     'books_permissions_updated' => 'Các quyền của cuốn sách đã được cập nhật',
     'books_empty_contents' => 'Không có trang hay chương nào được tạo cho cuốn sách này.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Xóa Trang Nháp',
     'pages_delete_success' => 'Đã xóa Trang',
     'pages_delete_draft_success' => 'Đã xóa trang Nháp',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Bạn có chắc chắn muốn xóa trang này?',
     'pages_delete_draft_confirm' => 'Bạn có chắc chắn muốn xóa trang nháp này?',
     'pages_editing_named' => 'Đang chỉnh sửa Trang :pageName',

@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Kullanıcı başarıyla silindi',
 
     // API Tokens
-    'api_token_create' => 'created api token',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API anahtarı başarıyla oluşturuldu',
-    'api_token_update' => 'updated api token',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API anahtarı başarıyla güncellendi',
-    'api_token_delete' => 'silinen sayfa tokenı',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API anahtarı başarıyla silindi',
 
     // Roles

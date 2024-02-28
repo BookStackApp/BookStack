@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Αρχείο PDF',
     'export_text' => 'Αρχείο Απλού κειμένου',
     'export_md' => 'Αρχείο Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Δικαιώματα',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Επεξεργασία Βιβλίου :bookname',
     'books_form_book_name' => 'Όνομα Βιβλίου',
     'books_save' => 'Αποθήκευση Βιβλίου',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Άδειες Βιβλίου',
     'books_permissions_updated' => 'Τα Δικαιώματα Βιβλίου Ενημερώθηκαν',
     'books_empty_contents' => 'Δεν έχουν δημιουργηθεί σελίδες ή κεφάλαια για αυτό το βιβλίο.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Διαγραφή Προσχέδιας Σελίδας',
     'pages_delete_success' => 'Η σελίδα διαγράφηκε',
     'pages_delete_draft_success' => 'Η προσχέδια (πρόχειρη) σελίδα διαγράφηκε',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη σελίδα;',
     'pages_delete_draft_confirm' => 'Θέλετε σίγουρα να διαγράψετε την προσχέδια σελίδα;',
     'pages_editing_named' => 'Επεξεργασία Σελίδας :pageName',

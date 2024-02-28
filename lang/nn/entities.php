@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Tekstfil',
     'export_md' => 'Markdownfil',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Tilgongar',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Endre boken :bookName',
     'books_form_book_name' => 'Boktittel',
     'books_save' => 'Lagre bok',
-    'books_default_template' => 'Standard sidemal',
-    'books_default_template_explain' => 'Tildel ein sidemal som vil bli brukt som standardinnhold for alle nye sider i denne boka. Hugs at dette berre vil bli brukt om sideskaperen har tilgang til den valgte malsida.',
-    'books_default_template_select' => 'Velg ei malside',
     'books_permissions' => 'Boktilganger',
     'books_permissions_updated' => 'Boktilganger oppdatert',
     'books_empty_contents' => 'Ingen sider eller kapittel finst i denne boka.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Slett utkastet',
     'pages_delete_success' => 'Siden er slettet',
     'pages_delete_draft_success' => 'Sideutkastet vart sletta',
-    'pages_delete_warning_template' => 'Denne siden er i aktiv bruk som en standard sidemal for bok. Desse bøkene vil ikkje lenger ha ein standard sidemal som er tilordnet etter at denne sida vert sletta.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Er du sikker på at du vil slette siden?',
     'pages_delete_draft_confirm' => 'Er du sikker på at du vil slette utkastet?',
     'pages_editing_named' => 'Redigerer :pageName (side)',

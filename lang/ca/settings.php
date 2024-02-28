@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'La paperera de reciclatge és buida',
     'recycle_bin_empty' => 'Buida la paperera de reciclatge',
     'recycle_bin_empty_confirm' => 'Se suprimiran de manera permanent tots els elements de la paperera de reciclatge, incloent-hi el contingut dins de cada element. Segur que voleu buidar la paperera de reciclatge?',
-    'recycle_bin_destroy_confirm' => 'Aquesta acció suprimirà del sistema de manera permanent aquest element, juntament amb tots els elements fills que es llisten a sota, i no podreu restaurar aquest contingut. Segur que voleu suprimir de manera permanent aquest element?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Elements que es destruiran',
     'recycle_bin_restore_list' => 'Elements que es restauraran',
     'recycle_bin_restore_confirm' => 'Aquesta acció restaurarà l’element suprimit, incloent-hi tots els elements fills, a la seva ubicació original. Si la ubicació original ha estat suprimida, i ara és a la paperera de reciclatge, caldrà que també en restaureu l’element pare.',

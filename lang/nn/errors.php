@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En konto med :email finnes allerede, men har andre detaljer.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-posten er allerede bekreftet, du kan forsøke å logge inn.',
     'email_confirmation_invalid' => 'Denne bekreftelseskoden er allerede benyttet eller utgått. Prøv å registrere på nytt.',
     'email_confirmation_expired' => 'Bekreftelseskoden er allerede utgått, en ny e-post er sendt.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Forespørselen fra det eksterne autentiseringssystemet gjenkjennes ikke av en prosess som startes av dette programmet. Å navigere tilbake etter pålogging kan forårsake dette problemet.',
     'saml_fail_authed' => 'Innlogging gjennom :system feilet. Fikk ikke kontakt med autentiseringstjeneren.',
     'oidc_already_logged_in' => 'Allerede logget inn',
-    'oidc_user_not_registered' => 'Brukeren :name er ikkje registrert og automatisk registrering er deaktivert',
     'oidc_no_email_address' => 'Finner ikke en e-postadresse, for denne brukeren, i dataene som leveres av det eksterne autentiseringssystemet',
     'oidc_fail_authed' => 'Innlogging ved hjelp av :system feilet, systemet ga ikke vellykket godkjenning',
     'social_no_action_defined' => 'Ingen handlinger er definert',

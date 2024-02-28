@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Utilizator eliminat cu succes',
 
     // API Tokens
-    'api_token_create' => 'token api creat',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'Token API creat cu succes',
-    'api_token_update' => 'token api actualizat',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'Token API actualizat cu succes',
-    'api_token_delete' => 'token api șters',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'Token API șters cu succes',
 
     // Roles

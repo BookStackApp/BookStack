@@ -20,7 +20,7 @@ return [
     'description' => 'Popis',
     'role' => 'Role',
     'cover_image' => 'Obrázek obálky',
-    'cover_image_description' => 'Obrázek by měl být přibližně 440×250px.',
+    'cover_image_description' => 'Tento obrázek by měl mít rozměry přibližně 440x250px, ačkoli bude podle potřeby zmenšen a oříznut, aby se vešel do uživatelského rozhraní, takže se skutečné rozměry budou lišit.',
 
     // Actions
     'actions' => 'Akce',

@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Er bestaat al een gebruiker met het e-mailadres :email, maar met andere inloggegevens.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Het e-mailadres is al bevestigd, probeer in te loggen.',
     'email_confirmation_invalid' => 'Deze bevestigingstoken is niet geldig of al gebruikt, probeer opnieuw te registreren.',
     'email_confirmation_expired' => 'Het bevestigingstoken is verlopen, Er is een nieuwe bevestigingsmail verzonden.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Het verzoek van het externe authenticatiesysteem wordt niet herkend door een proces dat door deze applicatie wordt gestart. Terugkeren na inloggen kan dit probleem veroorzaken.',
     'saml_fail_authed' => 'Inloggen met :system mislukt, het systeem gaf geen succesvolle autorisatie',
     'oidc_already_logged_in' => 'Reeds ingelogd',
-    'oidc_user_not_registered' => 'De gebruiker :name is niet geregistreerd en automatische registratie is uitgeschakeld',
     'oidc_no_email_address' => 'In de gegevens van het externe verificatiesysteem kon voor deze gebruiker geen e-mailadres gevonden worden',
     'oidc_fail_authed' => 'Inloggen met :system mislukt, systeem heeft geen succesvolle autorisatie gegeven',
     'social_no_action_defined' => 'Geen actie gedefinieerd',

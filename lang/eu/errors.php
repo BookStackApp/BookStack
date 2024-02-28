@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':email kontuakin erabiltzaile bat badago, baina kredentzial ezberdinekin.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Email kontua berretsita dago, saiatu saioa hasten.',
     'email_confirmation_invalid' => 'Berrezpen token hau ez da baliozkoa eta iada erabiltzen da, mesedez, saiatu berriz erregistroa burutzen.',
     'email_confirmation_expired' => 'Berrezpen tokena iraungi da, berrezpen email berri bnat bidali da.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Kanpoko egiazkotasun-sistemaren eskaria ez du onartzen aplikazio honek abiarazitako prozesu batek. Loginean atzera egitea izan daiteke arrazoia.',
     'saml_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'oidc_already_logged_in' => 'Dagoeneko saioa hasita',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'No action defined',

@@ -28,8 +28,8 @@ return [
     'create_account' => 'Krijo një llogari',
     'already_have_account' => 'Keni një llogari?',
     'dont_have_account' => 'Nuk keni akoma llogari?',
-    'social_login' => 'Social Login',
-    'social_registration' => 'Social Registration',
+    'social_login' => 'Kyçu me rrjete sociale',
+    'social_registration' => 'Regjistrohu me rrjete sociale',
     'social_registration_text' => 'Regjistrohu dhe logohu duhet përdorur një shërbim tjetër.',
 
     'register_thanks' => 'Faleminderit që u regjistruat!',
@@ -39,17 +39,17 @@ return [
     'register_success' => 'Faleminderit që u regjistruar! Ju tani jeni të regjistruar dhe të loguar.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Përpjekje për t\'u kyçur',
+    'auto_init_starting_desc' => 'Jemi duke kontaktuar sistemin e verifikimit për të filluar proçesin e kyçjes. Nëse nuk ka progres për 5 sekonda, klikoni linkun më poshtë.',
+    'auto_init_start_link' => 'Vazhdoni me verifikimin',
 
     // Password Reset
-    'reset_password' => 'Reset Password',
-    'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
-    'reset_password_send_button' => 'Send Reset Link',
-    'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
-    'reset_password_success' => 'Your password has been successfully reset.',
-    'email_reset_subject' => 'Reset your :appName password',
+    'reset_password' => 'Rivendosni fjalëkalimin',
+    'reset_password_send_instructions' => 'Shkruani email-in tuaj më poshtë dhe do të merrni një link në email për të rikthyer fjalëkalimin.',
+    'reset_password_send_button' => 'Dërgo linkun e rikthimit të fjalëkalimit',
+    'reset_password_sent' => 'Një link për rikthimin e fjalëkalimit do ju dërgohet në :email nëse adresa e email-it ndodhet në sistem.',
+    'reset_password_success' => 'Fjalëkalimi juaj u rikthye me sukses.',
+    'email_reset_subject' => 'Rikthe fjalëkalimin për :appName',
     'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',
     'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',
 
