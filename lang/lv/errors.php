@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Lietotājs ar epastu :email bet ar citiem piekļuves datiem jau eksistē.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Epasts jau ir apstiprināts, mēģini ielogoties.',
     'email_confirmation_invalid' => 'Šis apstiprinājuma žetons nav derīgs vai jau ir izmantots. Lūdzu, mēģiniet reģistrēties vēlreiz.',
     'email_confirmation_expired' => 'Apstiprinājuma žetona derīguma termiņš ir beidzies. Ir nosūtīts jauns apstiprinājuma e-pasts.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Ārējās autentifikācijas sistēmas pieprasījums neatpazīst procesu, kuru sākusi šī lietojumprogramma. Pārvietojoties atpakaļ pēc pieteikšanās var rasties šāda problēma.',
     'saml_fail_authed' => 'Piekļuve ar :system neizdevās, sistēma nepieļāva veiksmīgu autorizāciju',
     'oidc_already_logged_in' => 'Jau esat ielogojies',
-    'oidc_user_not_registered' => 'Lietotājs :name nav reģistrēts un automātiska reģistrācija ir izslēgta',
     'oidc_no_email_address' => 'Ārējās autentifikācijas sistēmas sniegtajos datos nevarēja atrast šī lietotāja e-pasta adresi',
     'oidc_fail_authed' => 'Piekļuve ar :system neizdevās, sistēma nepieļāva veiksmīgu autorizāciju',
     'social_no_action_defined' => 'Darbības nav definētas',

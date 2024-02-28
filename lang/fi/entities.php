@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-tiedosto',
     'export_text' => 'Tekstitiedosto',
     'export_md' => 'Markdown-tiedosto',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Käyttöoikeudet',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Muokkaa kirjaa :bookName',
     'books_form_book_name' => 'Kirjan nimi',
     'books_save' => 'Tallenna kirja',
-    'books_default_template' => 'Oletusmallipohja',
-    'books_default_template_explain' => 'Määritä mallipohja, jota käytetään oletuksena kaikille tämän kirjan uusille sivuille. Muista, että mallipohjaa käytetään vain, jos sivun luojalla on katseluoikeudet valittuun mallipohjaan.',
-    'books_default_template_select' => 'Valitse mallipohja',
     'books_permissions' => 'Kirjan käyttöoikeudet',
     'books_permissions_updated' => 'Kirjan käyttöoikeudet päivitetty',
     'books_empty_contents' => 'Tähän kirjaan ei ole luotu sivuja tai lukuja.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Poista luonnos',
     'pages_delete_success' => 'Sivu poistettu',
     'pages_delete_draft_success' => 'Luonnos poistettu',
-    'pages_delete_warning_template' => 'Tätä sivua käytetään oletusmallipohjana. Näillä kirjoilla ei ole enää oletusmallipohjaa, jos tämä sivu poistetaan.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Oletko varma, että haluat poistaa tämän sivun?',
     'pages_delete_draft_confirm' => 'Haluatko varmasti poistaa tämän luonnoksen?',
     'pages_editing_named' => 'Muokataan sivua :pageName',

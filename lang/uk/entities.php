@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF файл',
     'export_text' => 'Текстовий файл',
     'export_md' => 'Файл розмітки',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Дозволи',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Редагувати книгу :bookName',
     'books_form_book_name' => 'Назва книги',
     'books_save' => 'Зберегти книгу',
-    'books_default_template' => 'Типовий шаблон сторінки',
-    'books_default_template_explain' => 'Призначити шаблон сторінки, який буде використовуватися як типовий вміст для всіх нових сторінок цієї книги. Майте на увазі, що це буде використано лише в тому випадку, якщо творець сторінки має доступ до обраної сторінки шаблону.',
-    'books_default_template_select' => 'Виберіть сторінку шаблону',
     'books_permissions' => 'Дозволи на книгу',
     'books_permissions_updated' => 'Дозволи на книгу оновлено',
     'books_empty_contents' => 'Для цієї книги не створено жодної сторінки або розділів.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Видалити чернетку',
     'pages_delete_success' => 'Сторінка видалена',
     'pages_delete_draft_success' => 'Чернетка видалена',
-    'pages_delete_warning_template' => 'Ця сторінка використовується як шаблон сторінки за промовчанням. У цих книгах немає стандартного шаблону сторінки, призначеного після видалення цієї сторінки.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ви впевнені, що хочете видалити цю сторінку?',
     'pages_delete_draft_confirm' => 'Ви впевнені, що хочете видалити цю чернетку?',
     'pages_editing_named' => 'Редагування сторінки :pageName',

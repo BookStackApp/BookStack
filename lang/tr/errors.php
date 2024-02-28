@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':email e-posta adresine sahip bir kullanıcı zaten var.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-posta adresi zaten doğrulanmış, giriş yapmayı deneyin.',
     'email_confirmation_invalid' => 'Bu doğrulama kodu ya geçersiz ya da daha önce kullanılmış, lütfen tekrar kaydolmayı deneyin.',
     'email_confirmation_expired' => 'Doğrulama kodunun süresi doldu, yeni bir doğrulama kodu e-posta adresine gönderildi.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Harici doğrulama sistemi tarafından sağlanan bir veri talebi, bu uygulama tarafından başlatılan bir işlem tarafından tanınamadı. Giriş yaptıktan sonra geri dönmek bu soruna yol açmış olabilir.',
     'saml_fail_authed' => ':system kullanarak giriş yapma başarısız oldu; sistem, başarılı bir kimlik doğrulama sağlayamadı',
     'oidc_already_logged_in' => 'Zaten oturum açılmış',
-    'oidc_user_not_registered' => ':name adlı kullanıcı kayıtlı değil ve otomatik kaydolma devre dışı bırakılmış',
     'oidc_no_email_address' => 'Harici kimlik doğrulama sisteminden gelen veriler, bu kullanıcının e-posta adresini içermiyor',
     'oidc_fail_authed' => ':system kullanarak giriş yapma başarısız oldu; sistem, başarılı bir kimlik doğrulama sağlayamadı',
     'social_no_action_defined' => 'Herhangi bir eylem tanımlanmamış',

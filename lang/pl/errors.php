@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Użytkownik o adresie :email już istnieje, ale używa innych poświadczeń.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-mail został potwierdzony, spróbuj się zalogować.',
     'email_confirmation_invalid' => 'Ten token jest nieprawidłowy lub został już wykorzystany. Spróbuj zarejestrować się ponownie.',
     'email_confirmation_expired' => 'Ten token potwierdzający wygasł. Wysłaliśmy Ci kolejny.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'Żądanie z zewnętrznego systemu uwierzytelniania nie zostało rozpoznane przez proces rozpoczęty przez tę aplikację. Cofnięcie po zalogowaniu mogło spowodować ten problem.',
     'saml_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
     'oidc_already_logged_in' => 'Już zalogowany',
-    'oidc_user_not_registered' => 'Użytkownik :name nie jest zarejestrowany, a automatyczna rejestracja jest wyłączona',
     'oidc_no_email_address' => 'Nie można odnaleźć adresu email dla tego użytkownika w danych dostarczonych przez zewnętrzny system uwierzytelniania',
     'oidc_fail_authed' => 'Logowanie przy użyciu :system nie powiodło się, system nie mógł pomyślnie ukończyć uwierzytelniania',
     'social_no_action_defined' => 'Brak zdefiniowanej akcji',

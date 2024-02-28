@@ -20,7 +20,7 @@ return [
     'description' => 'Descrição',
     'role' => 'Cargo',
     'cover_image' => 'Imagem de capa',
-    'cover_image_description' => 'Esta imagem deve ser aproximadamente 440x250px.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Ações',

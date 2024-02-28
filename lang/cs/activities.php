@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Uživatel byl úspěšně odstraněn',
 
     // API Tokens
-    'api_token_create' => 'vytvořil api token',
+    'api_token_create' => 'API token byl vytvořen',
     'api_token_create_notification' => 'API token úspěšně vytvořen',
-    'api_token_update' => 'aktualizoval api token',
+    'api_token_update' => 'API token byl aktualizován',
     'api_token_update_notification' => 'API token úspěšně aktualizován',
-    'api_token_delete' => 'odstranil api token',
+    'api_token_delete' => 'API token byl odstraněn',
     'api_token_delete_notification' => 'API token úspěšně odstraněn',
 
     // Roles

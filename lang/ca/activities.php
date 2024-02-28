@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Usuari suprimit correctament',
 
     // API Tokens
-    'api_token_create' => 'ha creat un testimoni d’API',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'Testimoni d’API creat correctament',
-    'api_token_update' => 'ha actualitzat un testimoni d’API',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'Testimoni d’API actualitzat correctament',
-    'api_token_delete' => 'ha suprimit un testumoni d’API',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'Testimoni d’API suprimit correctament',
 
     // Roles

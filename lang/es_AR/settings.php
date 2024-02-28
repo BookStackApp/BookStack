@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'La papelera de reciclaje está vacía',
     'recycle_bin_empty' => 'Vaciar Papelera de reciclaje',
     'recycle_bin_empty_confirm' => 'Esto destruirá permanentemente todos los elementos de la papelera de reciclaje, incluyendo el contenido existente en cada elemento. ¿Está seguro de que desea vaciar la papelera de reciclaje?',
-    'recycle_bin_destroy_confirm' => 'Esta acción eliminará permanentemente este elemento del sistema, junto con los elementos secundarios listados a continuación, y no podrá restaurar este contenido. ¿Está seguro de que desea eliminar permanentemente este elemento?',
+    'recycle_bin_destroy_confirm' => 'Esta acción eliminará permanentemente este elemento del sistema, junto con los elementos secundarios listados a continuación, y no podrá restaurar este contenido de nuevo. ¿Está seguro de que desea eliminar permanentemente este elemento?',
     'recycle_bin_destroy_list' => 'Elementos a destruir',
     'recycle_bin_restore_list' => 'Elementos a restaurar',
     'recycle_bin_restore_confirm' => 'Esta acción restaurará el elemento eliminado, incluyendo cualquier elemento secundario, a su ubicación original. Si la ubicación original ha sido eliminada, y ahora está en la papelera de reciclaje, el elemento padre también tendrá que ser restaurado.',

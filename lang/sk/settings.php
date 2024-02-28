@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Kôš je aktuálne prázdny',
     'recycle_bin_empty' => 'Vyprázdniť Kôš',
     'recycle_bin_empty_confirm' => 'Tým sa natrvalo odstránia všetky položky v koši vrátane obsahu obsiahnutého v každej položke. Naozaj chcete vyprázdniť kôš?',
-    'recycle_bin_destroy_confirm' => 'Táto akcia natrvalo odstráni túto položku spolu so všetkými podriadenými prvkami uvedenými nižšie zo systému a tento obsah nebudete môcť obnoviť. Naozaj chcete natrvalo odstrániť túto položku?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Položky, ktoré budú odstránené',
     'recycle_bin_restore_list' => 'Položky, ktoré budú obnovené',
     'recycle_bin_restore_confirm' => 'Táto akcia obnoví odstránenú položku vrátane všetkých podradených prvkov na ich pôvodné miesto. Ak bolo pôvodné umiestnenie medzitým odstránené a teraz je v koši, bude potrebné obnoviť aj nadradenú položku.',

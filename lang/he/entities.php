@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'קובץ PDF',
     'export_text' => 'טקסט רגיל',
     'export_md' => 'קובץ Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'הרשאות',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'עריכת ספר :bookName',
     'books_form_book_name' => 'שם הספר',
     'books_save' => 'שמור ספר',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'הרשאות ספר',
     'books_permissions_updated' => 'הרשאות הספר עודכנו',
     'books_empty_contents' => 'לא נוצרו פרקים או דפים עבור ספר זה',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'מחק טיוטת דף',
     'pages_delete_success' => 'הדף נמחק',
     'pages_delete_draft_success' => 'טיוטת דף נמחקה',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'האם ברצונך למחוק דף זה?',
     'pages_delete_draft_confirm' => 'האם ברצונך למחוק את טיוטת הדף הזה?',
     'pages_editing_named' => 'עריכת דף :pageName',

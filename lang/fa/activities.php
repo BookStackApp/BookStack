@@ -93,7 +93,7 @@ return [
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
 
     // API Tokens
-    'api_token_create' => 'توکن api ایجاد شده',
+    'api_token_create' => 'ایجاد توکن API',
     'api_token_create_notification' => 'توکن api با موفقیت ایجاد شد',
     'api_token_update' => 'توکن api بروز شده',
     'api_token_update_notification' => 'توکن API با موفقیت بروزرسانی شد',

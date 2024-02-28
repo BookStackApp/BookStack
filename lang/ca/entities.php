@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Fitxer PDF',
     'export_text' => 'Fitxer de text sense format',
     'export_md' => 'Fitxer Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Edita el llibre :bookName',
     'books_form_book_name' => 'Nom del llibre',
     'books_save' => 'Desa el llibre',
-    'books_default_template' => 'Plantilla de pàgina per defecte',
-    'books_default_template_explain' => 'Assigneu una plantilla de pàgina que s’utilitzarà com a contingut per defecte de totes les pàgines noves d’aquest llibre. Tingueu en compte que només es farà servir si qui crea la pàgina té accés de visualització a la plantilla de pàgina elegida.',
-    'books_default_template_select' => 'Seleccioneu una plantilla de pàgina',
     'books_permissions' => 'Permisos del llibre',
     'books_permissions_updated' => 'S’han actualitzat els permisos del llibre',
     'books_empty_contents' => 'No hi ha cap pàgina ni cap capítol creat en aquest llibre.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Suprimeix l’esborrany de pàgina',
     'pages_delete_success' => 'S’ha suprimit la pàgina',
     'pages_delete_draft_success' => 'S’ha suprimit l’esborrany de pàgina',
-    'pages_delete_warning_template' => 'Aquesta pàgina es fa servir com a plantilla de pàgina per defecte en algun llibre. Quan l’hàgiu suprimida, aquests llibres ja no tindran assignada cap plantilla de pàgina per defecte.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Segur que voleu suprimir aquesta pàgina?',
     'pages_delete_draft_confirm' => 'Segur que voleu suprimir aquest esborrany de pàgina?',
     'pages_editing_named' => 'Esteu editant :pageName',

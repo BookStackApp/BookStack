@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'The recycle bin is currently empty',
     'recycle_bin_empty' => 'Empty Recycle Bin',
     'recycle_bin_empty_confirm' => 'This will permanently destroy all items in the recycle bin including content contained within each item. Are you sure you want to empty the recycle bin?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item, along with any child elements listed below, from the system and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Items to be Destroyed',
     'recycle_bin_restore_list' => 'Items to be Restored',
     'recycle_bin_restore_confirm' => 'This action will restore the deleted item, including any child elements, to their original location. If the original location has since been deleted, and is now in the recycle bin, the parent item will also need to be restored.',
