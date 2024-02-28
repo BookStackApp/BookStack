@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Un usuario con el email :email ya existe pero con credenciales diferentes.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'La cuenta de usuario no pudo ser registrada con los detalles proporcionados',
     'email_already_confirmed' => 'El email ya ha sido confirmado, Intente loguearse en la aplicación.',
     'email_confirmation_invalid' => 'Este token de confirmación no e válido o ya ha sido usado,Intente registrar uno nuevamente.',
     'email_confirmation_expired' => 'El token de confirmación ha expirado, Un nuevo email de confirmacón ha sido enviado.',
