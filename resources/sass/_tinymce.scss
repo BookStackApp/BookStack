@@ -30,6 +30,13 @@
   display: block;
 }
 
+.wysiwyg-input.mce-content-body:before {
+  padding: 1rem;
+  top: 4px;
+  font-style: italic;
+  @include lightDark(color, rgba(34,47,62,.5), rgba(155,155,155,.5))
+}
+
 // Default styles for our custom root nodes
 .page-content.mce-content-body doc-root {
   display: block;
@@ -101,6 +108,16 @@ body.page-content.mce-content-body  {
   display: block;
   margin: 0 !important;
   float: none !important;
+}
+
+.page-content.mce-content-body td[data-mce-selected]::after,
+.page-content.mce-content-body th[data-mce-selected]::after {
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+  outline: 1px dashed #1a85ff;
+  outline-offset: 0;
 }
 
 /**

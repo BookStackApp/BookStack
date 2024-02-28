@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Geri dönüşüm kutusu boş',
     'recycle_bin_empty' => 'Geri Dönüşüm Kutusunu Boşalt',
     'recycle_bin_empty_confirm' => 'Bu işlem, her bir öğenin içinde bulunan içerik de dahil olmak üzere geri dönüşüm kutusundaki tüm öğeleri kalıcı olarak imha edecektir. Geri dönüşüm kutusunu boşaltmak istediğinizden emin misiniz?',
-    'recycle_bin_destroy_confirm' => 'Bu işlem, bu öğeyi kalıcı olarak ve aşağıda listelenen alt öğelerle birlikte sistemden silecek ve bu içeriği geri yükleyemeyeceksiniz. Bu öğeyi kalıcı olarak silmek istediğinizden emin misiniz?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Kalıcı Olarak Silinecek Öğeler',
     'recycle_bin_restore_list' => 'Geri Yüklenecek Öğeler',
     'recycle_bin_restore_confirm' => 'Bu eylem, tüm alt öğeler dahil olmak üzere silinen öğeyi orijinal konumlarına geri yükleyecektir. Orijinal konum o zamandan beri silinmişse ve şimdi geri dönüşüm kutusunda bulunuyorsa, üst öğenin de geri yüklenmesi gerekecektir.',

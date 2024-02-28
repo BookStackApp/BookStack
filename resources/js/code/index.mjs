@@ -55,6 +55,11 @@ function highlightElem(elem) {
     const wrapper = document.createElement('div');
     elem.parentNode.insertBefore(wrapper, elem);
 
+    const direction = innerCodeElem.getAttribute('dir') || elem.getAttribute('dir') || '';
+    if (direction) {
+        wrapper.setAttribute('dir', direction);
+    }
+
     const ev = createView('content-code-block', {
         parent: wrapper,
         doc: content,

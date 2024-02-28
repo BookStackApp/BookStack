@@ -178,6 +178,43 @@ class ThemeTest extends TestCase
         $this->assertInstanceOf(User::class, $args[1]);
     }
 
+    public function test_event_auth_pre_register()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+        Theme::listen(ThemeEvents::AUTH_PRE_REGISTER, $callback);
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $user = User::factory()->make();
+        $this->post('/register', ['email' => $user->email, 'name' => $user->name, 'password' => 'password']);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals('standard', $args[0]);
+        $this->assertEquals([
+            'email' => $user->email,
+            'name' => $user->name,
+            'password' => 'password',
+        ], $args[1]);
+        $this->assertDatabaseHas('users', ['email' => $user->email]);
+    }
+
+    public function test_event_auth_pre_register_with_false_return_blocks_registration()
+    {
+        $callback = function () {
+            return false;
+        };
+        Theme::listen(ThemeEvents::AUTH_PRE_REGISTER, $callback);
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $user = User::factory()->make();
+        $resp = $this->post('/register', ['email' => $user->email, 'name' => $user->name, 'password' => 'password']);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('User account could not be registered for the provided details');
+        $this->assertDatabaseMissing('users', ['email' => $user->email]);
+    }
+
     public function test_event_webhook_call_before()
     {
         $args = [];

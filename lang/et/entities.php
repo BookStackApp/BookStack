@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF fail',
     'export_text' => 'Tekstifail',
     'export_md' => 'Markdown fail',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Muuda raamatut :bookName',
     'books_form_book_name' => 'Raamatu pealkiri',
     'books_save' => 'Salvesta raamat',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Raamatu õigused',
     'books_permissions_updated' => 'Raamatu õigused muudetud',
     'books_empty_contents' => 'Ühtegi lehte ega peatükki pole lisatud.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Kustuta mustand',
     'pages_delete_success' => 'Leht kustutatud',
     'pages_delete_draft_success' => 'Mustand kustutatud',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Kas oled kindel, et soovid selle lehe kustutada?',
     'pages_delete_draft_confirm' => 'Kas oled kindel, et soovid selle mustandi kustutada?',
     'pages_editing_named' => 'Lehe :pageName muutmine',

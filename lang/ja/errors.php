@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':emailを持つユーザは既に存在しますが、資格情報が異なります。',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Eメールは既に確認済みです。ログインしてください。',
     'email_confirmation_invalid' => 'この確認トークンは無効か、または既に使用済みです。登録を再試行してください。',
     'email_confirmation_expired' => '確認トークンは有効期限切れです。確認メールを再送しました。',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => '外部認証システムからの要求がアプリケーションによって開始されたプロセスによって認識されません。ログイン後に戻るとこの問題が発生する可能性があります。',
     'saml_fail_authed' => ':systemを利用したログインに失敗しました。システムは正常な認証を提供しませんでした。',
     'oidc_already_logged_in' => '既にログインしています',
-    'oidc_user_not_registered' => 'ユーザー :name は登録されておらず、自動登録は無効になっています',
     'oidc_no_email_address' => '外部認証システムから提供されたデータに、このユーザーのメールアドレスが見つかりませんでした',
     'oidc_fail_authed' => ':systemを利用したログインに失敗しました。システムは正常な認証を提供しませんでした。',
     'social_no_action_defined' => 'アクションが定義されていません',

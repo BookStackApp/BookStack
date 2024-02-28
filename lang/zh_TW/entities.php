@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF 檔案',
     'export_text' => '純文字檔案',
     'export_md' => 'Markdown 檔案',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => '權限',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => '編輯書本「:bookName」',
     'books_form_book_name' => '書本名稱',
     'books_save' => '儲存書本',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => '書本權限',
     'books_permissions_updated' => '書本權限已更新',
     'books_empty_contents' => '本書目前沒有頁面或章節。',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => '刪除草稿頁面',
     'pages_delete_success' => '頁面已刪除',
     'pages_delete_draft_success' => '草稿頁面已刪除',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => '您確定要刪除此頁面嗎？',
     'pages_delete_draft_confirm' => '您確定要刪除此草稿頁面嗎？',
     'pages_editing_named' => '正在編輯頁面 :pageName',

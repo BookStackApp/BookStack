@@ -383,6 +383,29 @@ class ImageTest extends TestCase
         }
     }
 
+    public function test_secure_images_not_tracked_in_session_history()
+    {
+        config()->set('filesystems.images', 'local_secure');
+        $this->asEditor();
+        $page = $this->entities->page();
+        $result = $this->files->uploadGalleryImageToPage($this, $page);
+        $expectedPath = storage_path($result['path']);
+        $this->assertFileExists($expectedPath);
+
+        $this->get('/books');
+        $this->assertEquals(url('/books'), session()->previousUrl());
+
+        $resp = $this->get($result['path']);
+        $resp->assertOk();
+        $resp->assertHeader('Content-Type', 'image/png');
+
+        $this->assertEquals(url('/books'), session()->previousUrl());
+
+        if (file_exists($expectedPath)) {
+            unlink($expectedPath);
+        }
+    }
+
     public function test_system_images_remain_public_with_local_secure_restricted()
     {
         config()->set('filesystems.images', 'local_secure_restricted');

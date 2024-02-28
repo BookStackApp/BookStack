@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'A lixeira está vazia',
     'recycle_bin_empty' => 'Esvaziar Lixeira',
     'recycle_bin_empty_confirm' => 'Isso irá destruir permanentemente todos os itens na lixeira inclusive o conteúdo de cada item. Tem certeza de que quer esvaziar a lixeira?',
-    'recycle_bin_destroy_confirm' => 'Esta ação irá excluir permanentemente do sistema este item junto com todos os elementos filhos listados abaixo. Você não poderá restaurar esse conteúdo. Tem certeza de que deseja excluir permanentemente este item?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Itens a serem Destruídos',
     'recycle_bin_restore_list' => 'Itens a serem restaurados',
     'recycle_bin_restore_confirm' => 'Esta ação irá restaurar o item excluído, inclusive quaisquer elementos filhos, para seu local original. Se a localização original tiver, entretanto, sido eliminada e estiver agora na lixeira, o item pai também precisará ser restaurado.',

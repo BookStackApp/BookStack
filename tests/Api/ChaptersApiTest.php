@@ -28,6 +28,9 @@ class ChaptersApiTest extends TestCase
                 'book_id'   => $firstChapter->book->id,
                 'priority'  => $firstChapter->priority,
                 'book_slug' => $firstChapter->book->slug,
+                'owned_by'   => $firstChapter->owned_by,
+                'created_by' => $firstChapter->created_by,
+                'updated_by' => $firstChapter->updated_by,
             ],
         ]]);
     }
@@ -36,6 +39,7 @@ class ChaptersApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $book = $this->entities->book();
+        $templatePage = $this->entities->templatePage();
         $details = [
             'name'        => 'My API chapter',
             'description' => 'A chapter created via the API',
@@ -47,6 +51,7 @@ class ChaptersApiTest extends TestCase
                 ],
             ],
             'priority' => 15,
+            'default_template_id' => $templatePage->id,
         ];
 
         $resp = $this->postJson($this->baseEndpoint, $details);
@@ -147,8 +152,19 @@ class ChaptersApiTest extends TestCase
                     'id'   => $page->id,
                     'slug' => $page->slug,
                     'name' => $page->name,
+                    'owned_by' => $page->owned_by,
+                    'created_by' => $page->created_by,
+                    'updated_by' => $page->updated_by,
+                    'book_id' => $page->id,
+                    'chapter_id' => $chapter->id,
+                    'priority' => $page->priority,
+                    'book_slug' => $chapter->book->slug,
+                    'draft' => $page->draft,
+                    'template' => $page->template,
+                    'editor' => $page->editor,
                 ],
             ],
+            'default_template_id' => null,
         ]);
         $resp->assertJsonMissingPath('book');
         $resp->assertJsonCount($chapter->pages()->count(), 'pages');
@@ -158,6 +174,7 @@ class ChaptersApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $chapter = $this->entities->chapter();
+        $templatePage = $this->entities->templatePage();
         $details = [
             'name'        => 'My updated API chapter',
             'description' => 'A chapter updated via the API',
@@ -168,6 +185,7 @@ class ChaptersApiTest extends TestCase
                 ],
             ],
             'priority'    => 15,
+            'default_template_id' => $templatePage->id,
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);

@@ -53,3 +53,89 @@ export function handleEmbedAlignmentChanges(editor) {
         }
     });
 }
+
+/**
+ * Cleans up the direction property for an element.
+ * Removes all inline direction control from child elements.
+ * Removes non "dir" attribute direction control from provided element.
+ * @param {HTMLElement} element
+ */
+function cleanElementDirection(element) {
+    const directionChildren = element.querySelectorAll('[dir],[style*="direction"],[style*="text-align"]');
+    for (const child of directionChildren) {
+        child.removeAttribute('dir');
+        child.style.direction = null;
+        child.style.textAlign = null;
+    }
+    element.style.direction = null;
+    element.style.textAlign = null;
+}
+
+/**
+ * This tracks table cell range selection, so we can apply custom handling where
+ * required to actions applied to such selections.
+ * The events used don't seem to be advertised by TinyMCE.
+ * Found at https://github.com/tinymce/tinymce/blob/6.8.3/modules/tinymce/src/models/dom/main/ts/table/api/Events.ts
+ * @param {Editor} editor
+ */
+export function handleTableCellRangeEvents(editor) {
+    /** @var {HTMLTableCellElement[]} * */
+    let selectedCells = [];
+
+    editor.on('TableSelectionChange', event => {
+        selectedCells = (event.cells || []).map(cell => cell.dom);
+    });
+    editor.on('TableSelectionClear', () => {
+        selectedCells = [];
+    });
+
+    // TinyMCE does not seem to do a great job on clearing styles in complex
+    // scenarios (like copied word content) when a range of table cells
+    // are selected. Here we watch for clear formatting events, so some manual
+    // cleanup can be performed.
+    const attrsToRemove = ['class', 'style', 'width', 'height'];
+    editor.on('FormatRemove', () => {
+        for (const cell of selectedCells) {
+            for (const attr of attrsToRemove) {
+                cell.removeAttribute(attr);
+            }
+        }
+    });
+
+    // TinyMCE does not apply direction events to table cell range selections
+    // so here we hastily patch in that ability by setting the direction ourselves
+    // when a direction event is fired.
+    editor.on('ExecCommand', event => {
+        const command = event.command;
+        if (command !== 'mceDirectionLTR' && command !== 'mceDirectionRTL') {
+            return;
+        }
+
+        const dir = command === 'mceDirectionLTR' ? 'ltr' : 'rtl';
+        for (const cell of selectedCells) {
+            cell.setAttribute('dir', dir);
+            cleanElementDirection(cell);
+        }
+    });
+}
+
+/**
+ * Direction control might not work if there are other unexpected direction-handling styles
+ * or attributes involved nearby. This watches for direction change events to clean
+ * up direction controls, removing non-dir-attr direction controls, while removing
+ * directions from child elements that may be involved.
+ * @param {Editor} editor
+ */
+export function handleTextDirectionCleaning(editor) {
+    editor.on('ExecCommand', event => {
+        const command = event.command;
+        if (command !== 'mceDirectionLTR' && command !== 'mceDirectionRTL') {
+            return;
+        }
+
+        const blocks = editor.selection.getSelectedBlocks();
+        for (const block of blocks) {
+            cleanElementDirection(block);
+        }
+    });
+}

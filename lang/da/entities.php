@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Almindelig tekstfil',
     'export_md' => 'Markdown Fil',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Rettigheder',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Rediger bog :bookName',
     'books_form_book_name' => 'Bognavn',
     'books_save' => 'Gem bog',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Bogtilladelser',
     'books_permissions_updated' => 'Bogtilladelser opdateret',
     'books_empty_contents' => 'Ingen sider eller kapitler er blevet oprettet i denne bog.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Slet kladdeside',
     'pages_delete_success' => 'Side slettet',
     'pages_delete_draft_success' => 'Kladdeside slettet',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Er du sikker på, du vil slette denne side?',
     'pages_delete_draft_confirm' => 'Er du sikker på at du vil slette denne kladdesidde?',
     'pages_editing_named' => 'Redigerer :pageName',

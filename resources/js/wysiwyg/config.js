@@ -12,8 +12,13 @@ import {getPlugin as getCustomhrPlugin} from './plugins-customhr';
 import {getPlugin as getImagemanagerPlugin} from './plugins-imagemanager';
 import {getPlugin as getAboutPlugin} from './plugins-about';
 import {getPlugin as getDetailsPlugin} from './plugins-details';
+import {getPlugin as getTableAdditionsPlugin} from './plugins-table-additions';
 import {getPlugin as getTasklistPlugin} from './plugins-tasklist';
-import {handleEmbedAlignmentChanges} from './fixes';
+import {
+    handleTableCellRangeEvents,
+    handleEmbedAlignmentChanges,
+    handleTextDirectionCleaning,
+} from './fixes';
 
 const styleFormats = [
     {title: 'Large Header', format: 'h2', preview: 'color: blue;'},
@@ -36,9 +41,9 @@ const styleFormats = [
 ];
 
 const formats = {
-    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-left'},
-    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-center'},
-    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video,span', classes: 'align-right'},
+    alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video', classes: 'align-left'},
+    aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video', classes: 'align-center'},
+    alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img,iframe,video', classes: 'align-right'},
     calloutsuccess: {block: 'p', exact: true, attributes: {class: 'callout success'}},
     calloutinfo: {block: 'p', exact: true, attributes: {class: 'callout info'}},
     calloutwarning: {block: 'p', exact: true, attributes: {class: 'callout warning'}},
@@ -124,6 +129,7 @@ function gatherPlugins(options) {
         'about',
         'details',
         'tasklist',
+        'tableadditions',
         options.textDirection === 'rtl' ? 'directionality' : '',
     ];
 
@@ -133,6 +139,7 @@ function gatherPlugins(options) {
     window.tinymce.PluginManager.add('about', getAboutPlugin());
     window.tinymce.PluginManager.add('details', getDetailsPlugin());
     window.tinymce.PluginManager.add('tasklist', getTasklistPlugin());
+    window.tinymce.PluginManager.add('tableadditions', getTableAdditionsPlugin());
 
     if (options.drawioUrl) {
         window.tinymce.PluginManager.add('drawio', getDrawioPlugin(options));
@@ -143,16 +150,23 @@ function gatherPlugins(options) {
 }
 
 /**
- * Fetch custom HTML head content from the parent page head into the editor.
+ * Fetch custom HTML head content nodes from the outer page head
+ * and add them to the given editor document.
+ * @param {Document} editorDoc
  */
-function fetchCustomHeadContent() {
+function addCustomHeadContent(editorDoc) {
     const headContentLines = document.head.innerHTML.split('\n');
     const startLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- Start: custom user content -->');
     const endLineIndex = headContentLines.findIndex(line => line.trim() === '<!-- End: custom user content -->');
     if (startLineIndex === -1 || endLineIndex === -1) {
-        return '';
+        return;
     }
-    return headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
+
+    const customHeadHtml = headContentLines.slice(startLineIndex + 1, endLineIndex).join('\n');
+    const el = editorDoc.createElement('div');
+    el.innerHTML = customHeadHtml;
+
+    editorDoc.head.append(...el.children);
 }
 
 /**
@@ -184,6 +198,8 @@ function getSetupCallback(options) {
         });
 
         handleEmbedAlignmentChanges(editor);
+        handleTableCellRangeEvents(editor);
+        handleTextDirectionCleaning(editor);
 
         // Custom handler hook
         window.$events.emitPublic(options.containerElement, 'editor-tinymce::setup', {editor});
@@ -284,8 +300,7 @@ export function buildForEditor(options) {
             }
         },
         init_instance_callback(editor) {
-            const head = editor.getDoc().querySelector('head');
-            head.innerHTML += fetchCustomHeadContent();
+            addCustomHeadContent(editor.getDoc());
         },
         setup(editor) {
             registerCustomIcons(editor);
@@ -333,10 +348,10 @@ export function buildForInput(options) {
         toolbar: 'bold italic link bullist numlist',
         content_style: getContentStyle(options),
         file_picker_types: 'file',
+        valid_elements: 'p,a[href|title],ol,ul,li,strong,em,br',
         file_picker_callback: filePickerCallback,
         init_instance_callback(editor) {
-            const head = editor.getDoc().querySelector('head');
-            head.innerHTML += fetchCustomHeadContent();
+            addCustomHeadContent(editor.getDoc());
 
             editor.contentDocument.documentElement.classList.toggle('dark-mode', options.darkMode);
         },

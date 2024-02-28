@@ -358,13 +358,10 @@ details.sort-box[open] summary .caret-container svg {
 }
 
 ul.pagination {
-  display: inline-block;
+  display: inline-flex;
   list-style: none;
   margin: $-m 0;
   padding-inline-start: 1px;
-  li {
-    float: left;
-  }
   li:first-child {
     a, span {
       border-radius: 3px 0 0 3px;

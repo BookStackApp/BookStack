@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Šiukšliadėžė šiuo metu yra tuščia',
     'recycle_bin_empty' => 'Ištuštinti šiukšliadėžę',
     'recycle_bin_empty_confirm' => 'Tai visam laikui sunaikins visus elementus, esančius šiukšliadėžėje, įskaitant kiekvieno elemento turinį. Ar esate tikri, jog norite ištuštinti šiukšliadėžę?',
-    'recycle_bin_destroy_confirm' => 'Šis veiksmas visam laikui ištrins šį elementą iš sistemos kartu su bet kuriais elementais įvardintais žemiau ir jūs nebegalėsite atkurti jo bei jo turinio. Ar esate tikri, jog norite visam laikui ištrinti šį elementą?',
+    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
     'recycle_bin_destroy_list' => 'Elementai panaikinimui',
     'recycle_bin_restore_list' => 'Elementai atkūrimui',
     'recycle_bin_restore_confirm' => 'Šis veiksmas atkurs ištrintą elementą ir perkels jį atgal į jo originalią vietą. Jei originali vieta buvo ištrinta ir šiuo metu yra šiukšliadėžėje, ji taip pat turės būti atkurta.',

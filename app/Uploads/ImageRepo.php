@@ -2,7 +2,7 @@
 
 namespace BookStack\Uploads;
 
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Permissions\PermissionApplicator;
 use Exception;
@@ -15,6 +15,7 @@ class ImageRepo
         protected ImageService $imageService,
         protected PermissionApplicator $permissions,
         protected ImageResizer $imageResizer,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -77,14 +78,13 @@ class ImageRepo
      */
     public function getEntityFiltered(
         string $type,
-        string $filterType = null,
-        int $page = 0,
-        int $pageSize = 24,
-        int $uploadedTo = null,
-        string $search = null
+        ?string $filterType,
+        int $page,
+        int $pageSize,
+        int $uploadedTo,
+        ?string $search
     ): array {
-        /** @var Page $contextPage */
-        $contextPage = Page::visible()->findOrFail($uploadedTo);
+        $contextPage = $this->pageQueries->findVisibleByIdOrFail($uploadedTo);
         $parentFilter = null;
 
         if ($filterType === 'book' || $filterType === 'page') {
@@ -225,9 +225,9 @@ class ImageRepo
      */
     public function getPagesUsingImage(Image $image): array
     {
-        $pages = Page::visible()
+        $pages = $this->pageQueries->visibleForList()
             ->where('html', 'like', '%' . $image->url . '%')
-            ->get(['id', 'name', 'slug', 'book_id']);
+            ->get();
 
         foreach ($pages as $page) {
             $page->setAttribute('url', $page->getUrl());

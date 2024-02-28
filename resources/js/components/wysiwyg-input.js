@@ -10,11 +10,8 @@ export class WysiwygInput extends Component {
             language: this.$opts.language,
             containerElement: this.elem,
             darkMode: document.documentElement.classList.contains('dark-mode'),
-            textDirection: this.textDirection,
-            translations: {
-                imageUploadErrorText: this.$opts.imageUploadErrorText,
-                serverUploadLimitText: this.$opts.serverUploadLimitText,
-            },
+            textDirection: this.$opts.textDirection,
+            translations: {},
             translationMap: window.editor_translations,
         });
 

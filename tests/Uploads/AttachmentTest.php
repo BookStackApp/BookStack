@@ -316,4 +316,105 @@ class AttachmentTest extends TestCase
         $this->assertFileExists(storage_path($attachment->path));
         $this->files->deleteAllAttachmentFiles();
     }
+
+    public function test_file_get_range_access()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+        $attachment = $this->files->uploadAttachmentDataToPage($this, $page, 'my_text.txt', 'abc123456', 'text/plain');
+
+        // Download access
+        $resp = $this->get($attachment->getUrl(), ['Range' => 'bytes=3-5']);
+        $resp->assertStatus(206);
+        $resp->assertStreamedContent('123');
+        $resp->assertHeader('Content-Length', '3');
+        $resp->assertHeader('Content-Range', 'bytes 3-5/9');
+
+        // Inline access
+        $resp = $this->get($attachment->getUrl(true), ['Range' => 'bytes=5-7']);
+        $resp->assertStatus(206);
+        $resp->assertStreamedContent('345');
+        $resp->assertHeader('Content-Length', '3');
+        $resp->assertHeader('Content-Range', 'bytes 5-7/9');
+
+        $this->files->deleteAllAttachmentFiles();
+    }
+
+    public function test_file_head_range_returns_no_content()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+        $attachment = $this->files->uploadAttachmentDataToPage($this, $page, 'my_text.txt', 'abc123456', 'text/plain');
+
+        $resp = $this->head($attachment->getUrl(), ['Range' => 'bytes=0-9']);
+        $resp->assertStreamedContent('');
+        $resp->assertHeader('Content-Length', '9');
+        $resp->assertStatus(200);
+
+        $this->files->deleteAllAttachmentFiles();
+    }
+
+    public function test_file_head_range_edge_cases()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+
+        // Mime-type "sniffing" happens on first 2k bytes, hence this content (2005 bytes)
+        $content = '01234' . str_repeat('a', 1990) . '0123456789';
+        $attachment = $this->files->uploadAttachmentDataToPage($this, $page, 'my_text.txt', $content, 'text/plain');
+
+        // Test for both inline and download attachment serving
+        foreach ([true, false] as $isInline) {
+            // No end range
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=5-']);
+            $resp->assertStreamedContent(substr($content, 5));
+            $resp->assertHeader('Content-Length', '2000');
+            $resp->assertHeader('Content-Range', 'bytes 5-2004/2005');
+            $resp->assertStatus(206);
+
+            // End only range
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=-10']);
+            $resp->assertStreamedContent('0123456789');
+            $resp->assertHeader('Content-Length', '10');
+            $resp->assertHeader('Content-Range', 'bytes 1995-2004/2005');
+            $resp->assertStatus(206);
+
+            // Range across sniff point
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=1997-2002']);
+            $resp->assertStreamedContent('234567');
+            $resp->assertHeader('Content-Length', '6');
+            $resp->assertHeader('Content-Range', 'bytes 1997-2002/2005');
+            $resp->assertStatus(206);
+
+            // Range up to sniff point
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=0-1997']);
+            $resp->assertHeader('Content-Length', '1998');
+            $resp->assertHeader('Content-Range', 'bytes 0-1997/2005');
+            $resp->assertStreamedContent(substr($content, 0, 1998));
+            $resp->assertStatus(206);
+
+            // Range beyond sniff point
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=2001-2003']);
+            $resp->assertStreamedContent('678');
+            $resp->assertHeader('Content-Length', '3');
+            $resp->assertHeader('Content-Range', 'bytes 2001-2003/2005');
+            $resp->assertStatus(206);
+
+            // Range beyond content
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=0-2010']);
+            $resp->assertStreamedContent($content);
+            $resp->assertHeader('Content-Length', '2005');
+            $resp->assertHeaderMissing('Content-Range');
+            $resp->assertStatus(200);
+
+            // Range start before end
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=50-10']);
+            $resp->assertStreamedContent($content);
+            $resp->assertHeader('Content-Length', '2005');
+            $resp->assertHeader('Content-Range', 'bytes */2005');
+            $resp->assertStatus(416);
+        }
+
+        $this->files->deleteAllAttachmentFiles();
+    }
 }

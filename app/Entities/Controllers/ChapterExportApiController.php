@@ -2,21 +2,17 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Http\ApiController;
 use Throwable;
 
 class ChapterExportApiController extends ApiController
 {
-    protected $exportFormatter;
-
-    /**
-     * ChapterExportController constructor.
-     */
-    public function __construct(ExportFormatter $exportFormatter)
-    {
-        $this->exportFormatter = $exportFormatter;
+    public function __construct(
+        protected ExportFormatter $exportFormatter,
+        protected ChapterQueries $queries,
+    ) {
         $this->middleware('can:content-export');
     }
 
@@ -27,7 +23,7 @@ class ChapterExportApiController extends ApiController
      */
     public function exportPdf(int $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail($id);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
 
         return $this->download()->directly($pdfContent, $chapter->slug . '.pdf');
@@ -40,7 +36,7 @@ class ChapterExportApiController extends ApiController
      */
     public function exportHtml(int $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail($id);
         $htmlContent = $this->exportFormatter->chapterToContainedHtml($chapter);
 
         return $this->download()->directly($htmlContent, $chapter->slug . '.html');
@@ -51,7 +47,7 @@ class ChapterExportApiController extends ApiController
      */
     public function exportPlainText(int $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail($id);
         $textContent = $this->exportFormatter->chapterToPlainText($chapter);
 
         return $this->download()->directly($textContent, $chapter->slug . '.txt');
@@ -62,7 +58,7 @@ class ChapterExportApiController extends ApiController
      */
     public function exportMarkdown(int $id)
     {
-        $chapter = Chapter::visible()->findOrFail($id);
+        $chapter = $this->queries->findVisibleByIdOrFail($id);
         $markdown = $this->exportFormatter->chapterToMarkdown($chapter);
 
         return $this->download()->directly($markdown, $chapter->slug . '.md');

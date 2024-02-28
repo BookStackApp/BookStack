@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Gebruiker succesvol verwijderd',
 
     // API Tokens
-    'api_token_create' => 'maakte api token aan',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API-token met succes aangemaakt',
-    'api_token_update' => 'werkte api token bij',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API-token met succes bijgewerkt',
-    'api_token_delete' => 'verwijderde api token',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API-token met succes verwijderd',
 
     // Roles

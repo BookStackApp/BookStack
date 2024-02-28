@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF Dosyası',
     'export_text' => 'Düz Metin Dosyası',
     'export_md' => 'Markdown Dosyası',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'İzinler',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => ':bookName Kitabını Düzenle',
     'books_form_book_name' => 'Kitap Adı',
     'books_save' => 'Kitabı Kaydet',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Kitap İzinleri',
     'books_permissions_updated' => 'Kitap İzinleri Güncellendi',
     'books_empty_contents' => 'Bu kitaba ait sayfa veya bölüm oluşturulmamış.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Sayfa Taslağını Sil',
     'pages_delete_success' => 'Sayfa silindi',
     'pages_delete_draft_success' => 'Sayfa taslağı silindi',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Bu sayfayı silmek istediğinize emin misiniz?',
     'pages_delete_draft_confirm' => 'Bu sayfa taslağını silmek istediğinize emin misiniz?',
     'pages_editing_named' => ':pageName Sayfası Düzenleniyor',

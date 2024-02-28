@@ -19,7 +19,7 @@
   "devDependencies": {
     "@lezer/generator": "^1.5.1",
     "chokidar-cli": "^3.0",
-    "esbuild": "^0.19",
+    "esbuild": "^0.20",
     "eslint": "^8.55.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.0",

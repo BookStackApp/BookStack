@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Ja hi ha un usuari amb l’adreça electrònica :email però amb credencials diferents.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'L’adreça electrònica ja està confirmada. Proveu d’iniciar la sessió.',
     'email_confirmation_invalid' => 'Aquest testimoni de confirmació no és vàlid o ja s’ha utilitzat. Proveu de tornar-vos a registrar.',
     'email_confirmation_expired' => 'El testimoni de confirmació ha caducat. S’ha enviat un nou correu electrònic de confirmació.',
@@ -23,7 +24,6 @@ return [
     'saml_invalid_response_id' => 'La petició del sistema d’autenticació extern no és reconeguda per un procés iniciat per aquesta aplicació. Aquest problema podria ser causat per navegar endarrere després d’iniciar la sessió.',
     'saml_fail_authed' => 'L’inici de sessió fent servir :system ha fallat, el sistema no ha proporcionat una autorització satisfactòria',
     'oidc_already_logged_in' => 'Ja teniu una sessió iniciada',
-    'oidc_user_not_registered' => 'L’usuari :name no està registrat i els registres automàtics estan desactivats',
     'oidc_no_email_address' => 'No s’ha pogut trobar cap adreça electrònica per a aquest usuari en les dades proporcionades pel sistema d’autenticació extern',
     'oidc_fail_authed' => 'L’inici de sessió fent servir :system ha fallat, el sistema no ha proporcionat una autorització satisfactòria',
     'social_no_action_defined' => 'No hi ha cap acció definida',

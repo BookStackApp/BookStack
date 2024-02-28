@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Fișier PDF',
     'export_text' => 'Fișier text simplu',
     'export_md' => 'Fișier Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Permisiuni',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Editează cartea :bookName',
     'books_form_book_name' => 'Nume carte',
     'books_save' => 'Salvează cartea',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Permisiuni carte',
     'books_permissions_updated' => 'Permisiuni carte actualizate',
     'books_empty_contents' => 'Nu au fost create pagini sau capitole pentru această carte.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Șterge ciorna',
     'pages_delete_success' => 'Pagină ștearsă',
     'pages_delete_draft_success' => 'Pagină ciornă ștearsă',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ești sigur că dorești să ștergi acestă pagină?',
     'pages_delete_draft_confirm' => 'Ești sigur că vrei să ștergi această pagină schiță?',
     'pages_editing_named' => 'Editare pagină :pageNume',

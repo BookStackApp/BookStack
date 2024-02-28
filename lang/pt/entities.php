@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Arquivo PDF',
     'export_text' => 'Arquivo Texto',
     'export_md' => 'Ficheiro Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
@@ -132,9 +135,6 @@ return [
     'books_edit_named' => 'Editar Livro :bookName',
     'books_form_book_name' => 'Nome do Livro',
     'books_save' => 'Guardar Livro',
-    'books_default_template' => 'Default Page Template',
-    'books_default_template_explain' => 'Assign a page template that will be used as the default content for all new pages in this book. Keep in mind this will only be used if the page creator has view access to those chosen template page.',
-    'books_default_template_select' => 'Select a template page',
     'books_permissions' => 'Permissões do Livro',
     'books_permissions_updated' => 'Permissões do Livro Atualizadas',
     'books_empty_contents' => 'Nenhuma página ou capítulo foram criados para este livro.',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Eliminar Rascunho de Página',
     'pages_delete_success' => 'Página eliminada',
     'pages_delete_draft_success' => 'Rascunho de página eliminado',
-    'pages_delete_warning_template' => 'This page is in active use as a book default page template. These books will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Tem certeza que deseja eliminar a página?',
     'pages_delete_draft_confirm' => 'Tem certeza que deseja eliminar o rascunho de página?',
     'pages_editing_named' => 'A Editar a Página :pageName',
