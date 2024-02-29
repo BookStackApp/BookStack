@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Cette page actuellement utilisée comme modèle de page par défaut de livre ou de chapitre. Ces livres ou chapitres n\'auront plus de modèle de page par défaut assigné après la suppression de cette page.',
     'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
     'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
