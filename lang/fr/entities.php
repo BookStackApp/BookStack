@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'Fichier PDF',
     'export_text' => 'Document texte',
     'export_md' => 'Fichiers Markdown',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Modèle de page par défaut',
+    'default_template_explain' => 'Sélectionnez un modèle de page qui sera utilisé comme contenu par défaut pour les nouvelles pages créées dans cet élément. Gardez à l\'esprit que le modèle ne sera utilisé que si le créateur de la page a accès au modèle sélectionné.',
+    'default_template_select' => 'Sélectionnez un modèle de page',
 
     // Permissions and restrictions
     'permissions' => 'Autorisations',
