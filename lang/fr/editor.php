@@ -82,7 +82,7 @@ return [
     'table_properties_title' => 'Propriétés du tableau',
     'delete_table' => 'Supprimer le tableau',
     'table_clear_formatting' => 'Effacer toute la mise en forme',
-    'resize_to_contents' => 'Resize to contents',
+    'resize_to_contents' => 'Redimensionner au contenu',
     'row_header' => 'En-tête de ligne',
     'insert_row_before' => 'Insérer une ligne avant',
     'insert_row_after' => 'Insérer une ligne après',
