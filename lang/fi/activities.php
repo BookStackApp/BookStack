@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Käyttäjä poistettiin onnistuneesti',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'loi API-tunnisteen',
     'api_token_create_notification' => 'API-tunniste luotiin onnistuneesti',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'päivitti API-tunnisteen',
     'api_token_update_notification' => 'API-tunniste päivitettiin onnistuneesti',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'poisti API-tunnisteen',
     'api_token_delete_notification' => 'API-tunniste poistettiin onnistuneesti',
 
     // Roles
