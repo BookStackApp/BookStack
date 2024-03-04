@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Verwijzingen',
     'references_none' => 'Er zijn geen verwijzingen naar dit item bijgehouden.',
-    'references_to_desc' => 'Hieronder is alle inhoud in het systeem dat naar dit item linkt vermeld.',
+    'references_to_desc' => 'Hieronder staat alle bekende inhoud in het systeem die gekoppeld is aan dit item.',
 
     // Watch Options
     'watch' => 'Volg',
