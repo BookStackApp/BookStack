@@ -10,13 +10,13 @@ return [
     'new_page_intro' => 'Nová stránka byla vytvořena v :appName:',
     'updated_page_subject' => 'Aktualizovaná stránka: :pageName',
     'updated_page_intro' => 'Stránka byla aktualizována v :appName:',
-    'updated_page_debounce' => 'Aby se zabránilo hromadnému zasílání upozornění, na nějakou dobu nebudete posílat oznámení o dalších úpravách této stránky stejným editorem.',
+    'updated_page_debounce' => 'Po nějakou dobu neobdržíte další oznámení o aktualizaci této stránky stejným editorem, aby se omezil počet stejných zaslaných upozornění.',
 
     'detail_page_name' => 'Název stránky:',
-    'detail_page_path' => 'Cesta ke stránce:',
-    'detail_commenter' => 'Komentoval:',
+    'detail_page_path' => 'Umístěný v:',
+    'detail_commenter' => 'Komentoval(a):',
     'detail_comment' => 'Komentář:',
-    'detail_created_by' => 'Vytvořil:',
+    'detail_created_by' => 'Vytvořil(a):',
     'detail_updated_by' => 'Aktualizoval(a):',
 
     'action_view_comment' => 'Zobrazit komentář',
