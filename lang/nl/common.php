@@ -20,7 +20,7 @@ return [
     'description' => 'Beschrijving',
     'role' => 'Rol',
     'cover_image' => 'Omslagfoto',
-    'cover_image_description' => 'Deze afbeelding moet ongeveer 440x250px zijn, maar zal flexibel geschaald en bijgesneden te passen binnen de gebruikersinterface afhankelijk van de gebruikscontext. De werkelijke afmetingen voor de weergave zullen verschillen.',
+    'cover_image_description' => 'Deze afbeelding moet ongeveer 440x250 pixels zijn, hoewel deze flexibel zal worden geschaald en bijgesneden naargelang dit nodig is in de verschillende scenario\'s van de gebruikersinterface. De daadwerkelijk gebruikte afmetingen voor weergave zullen dan verschillen.',
 
     // Actions
     'actions' => 'Acties',
