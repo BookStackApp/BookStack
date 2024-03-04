@@ -5,7 +5,7 @@
 return [
 
     'new_comment_subject' => 'Nový komentář na stránce: :pageName',
-    'new_comment_intro' => 'Uživatel okomentoval stránku v :appName:',
+    'new_comment_intro' => 'Uživatel(ka) okomentoval(a) stránku v :appName:',
     'new_page_subject' => 'New page: :pageName',
     'new_page_intro' => 'Nová stránka byla vytvořena v :appName:',
     'updated_page_subject' => 'Aktualizovaná stránka: :pageName',
@@ -22,6 +22,6 @@ return [
     'action_view_comment' => 'Zobrazit komentář',
     'action_view_page' => 'Zobrazit stránku',
 
-    'footer_reason' => 'Toto oznámení vám bylo zasláno, protože :link pokrývá tento typ aktivity pro tuto položku.',
+    'footer_reason' => 'Dle :link Vám bylo pro tento typ aktivity zasláno toto upozornění.',
     'footer_reason_link' => 'nastavení upozornění',
 ];
