@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF bestand',
     'export_text' => 'Normaal tekstbestand',
     'export_md' => 'Markdown bestand',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Standaard Paginasjabloon',
+    'default_template_explain' => 'Wijs een paginasjabloon toe die zal worden gebruikt als de standaardinhoud voor alle pagina\'s die worden aangemaakt in dit boek. Bedenk wel dat dit sjabloon alleen gebruikt wordt als de paginamaker machtiging heeft om die te bekijken.',
+    'default_template_select' => 'Selecteer een sjabloonpagina',
 
     // Permissions and restrictions
     'permissions' => 'Machtigingen',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Verwijder concept pagina',
     'pages_delete_success' => 'Pagina verwijderd',
     'pages_delete_draft_success' => 'Concept verwijderd',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Deze pagina is in actief gebruik als standaard paginasjabloon voor boeken of hoofdstukken. Aan deze boeken of hoofdstukken is niet langer een standaard paginasjabloon toegewezen nadat deze pagina is verwijderd.',
     'pages_delete_confirm' => 'Weet je zeker dat je deze pagina wilt verwijderen?',
     'pages_delete_draft_confirm' => 'Weet je zeker dat je dit concept wilt verwijderen?',
     'pages_editing_named' => 'Pagina :pageName aan het bewerken',
