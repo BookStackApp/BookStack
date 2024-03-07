@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Ein Benutzer mit der E-Mail-Adresse :email ist bereits mit anderen Anmeldedaten registriert.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Das Benutzerkonto kann mit den bereitgestellten Informationen nicht erstellen werden',
     'email_already_confirmed' => 'Die E-Mail-Adresse ist bereits bestätigt. Bitte melde dich an.',
     'email_confirmation_invalid' => 'Der Bestätigungslink ist nicht gültig oder wurde bereits verwendet. Bitte registriere dich erneut.',
     'email_confirmation_expired' => 'Der Bestätigungslink ist abgelaufen. Es wurde eine neue Bestätigungs-E-Mail gesendet.',
