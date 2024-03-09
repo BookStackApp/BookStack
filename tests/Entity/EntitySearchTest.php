@@ -356,6 +356,42 @@ class EntitySearchTest extends TestCase
         }
     }
 
+    public function test_sibling_search_for_books_provides_results_in_alphabetical_order()
+    {
+        $contextBook = $this->entities->book();
+        $searchBook = $this->entities->book();
+
+        $searchBook->name = 'Zebras';
+        $searchBook->save();
+
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextBook->id}&entity_type=book");
+        $this->withHtml($search)->assertElementNotContains('a:first-child', 'Zebras');
+
+        $searchBook->name = 'AAAAAAArdvarks';
+        $searchBook->save();
+
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextBook->id}&entity_type=book");
+        $this->withHtml($search)->assertElementContains('a:first-child', 'AAAAAAArdvarks');
+    }
+
+    public function test_sibling_search_for_shelves_provides_results_in_alphabetical_order()
+    {
+        $contextShelf = $this->entities->shelf();
+        $searchShelf = $this->entities->shelf();
+
+        $searchShelf->name = 'Zebras';
+        $searchShelf->save();
+
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextShelf->id}&entity_type=bookshelf");
+        $this->withHtml($search)->assertElementNotContains('a:first-child', 'Zebras');
+
+        $searchShelf->name = 'AAAAAAArdvarks';
+        $searchShelf->save();
+
+        $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextShelf->id}&entity_type=bookshelf");
+        $this->withHtml($search)->assertElementContains('a:first-child', 'AAAAAAArdvarks');
+    }
+
     public function test_search_works_on_updated_page_content()
     {
         $page = $this->entities->page();
