@@ -379,7 +379,7 @@ class PageContent
     protected function headerNodesToLevelList(DOMNodeList $nodeList): array
     {
         $tree = collect($nodeList)->map(function (DOMElement $header) {
-            $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
+            $text = trim(str_replace("\xc2\xa0", ' ', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 
             return [
