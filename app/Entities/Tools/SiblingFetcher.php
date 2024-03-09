@@ -43,13 +43,13 @@ class SiblingFetcher
             if ($contextShelf) {
                 $entities = $contextShelf->visibleBooks()->get();
             } else {
-                $entities = $this->queries->books->visibleForList()->get();
+                $entities = $this->queries->books->visibleForList()->orderBy('name', 'asc')->get();
             }
         }
 
         // Shelf
         if ($entity instanceof Bookshelf) {
-            $entities = $this->queries->shelves->visibleForList()->get();
+            $entities = $this->queries->shelves->visibleForList()->orderBy('name', 'asc')->get();
         }
 
         return $entities;
