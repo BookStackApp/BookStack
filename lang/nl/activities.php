@@ -66,9 +66,9 @@ return [
     'auth_register' => 'registreerde als nieuwe gebruiker',
     'auth_password_reset_request' => 'vraagde een nieuw gebruikerswachtwoord aan',
     'auth_password_reset_update' => 'stelde gebruikerswachtwoord opnieuw in',
-    'mfa_setup_method' => 'stelde MFA-methode in',
+    'mfa_setup_method' => 'heeft zijn meervoudige verificatie methode ingesteld',
     'mfa_setup_method_notification' => 'Meervoudige verificatie methode succesvol geconfigureerd',
-    'mfa_remove_method' => 'verwijderde MFA-methode',
+    'mfa_remove_method' => 'heeft zijn meervoudige verificatie methode verwijderd',
     'mfa_remove_method_notification' => 'Meervoudige verificatie methode is succesvol verwijderd',
 
     // Settings
