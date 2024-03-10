@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'De prullenbak is momenteel leeg',
     'recycle_bin_empty' => 'Prullenbak legen',
     'recycle_bin_empty_confirm' => 'Dit zal permanent alle items in de prullenbak vernietigen, inclusief de inhoud die in elk item zit. Weet u zeker dat u de prullenbak wilt legen?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Deze actie zal dit item permanent verwijderen uit het systeem, samen met onderstaande onderliggende elementen, en u zal deze inhoud niet kunnen herstellen. Bent u zeker dat u dit item permanent wilt verwijderen?',
     'recycle_bin_destroy_list' => 'Te vernietigen items',
     'recycle_bin_restore_list' => 'Items te herstellen',
     'recycle_bin_restore_confirm' => 'Deze actie herstelt het verwijderde item, inclusief alle onderliggende elementen, op hun oorspronkelijke locatie. Als de oorspronkelijke locatie sindsdien is verwijderd en zich nu in de prullenbak bevindt, zal ook het bovenliggende item moeten worden hersteld.',

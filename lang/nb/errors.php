@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En konto med :email finnes allerede, men har andre detaljer.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Brukerkonto kunne ikke bli registrert for de angitte opplysningene',
     'email_already_confirmed' => 'E-posten er allerede bekreftet, du kan forsøke å logge inn.',
     'email_confirmation_invalid' => 'Denne bekreftelseskoden er allerede benyttet eller utgått. Prøv å registrere på nytt.',
     'email_confirmation_expired' => 'Bekreftelseskoden er allerede utgått, en ny e-post er sendt.',

@@ -20,7 +20,7 @@ return [
     'description' => 'Beskrivelse',
     'role' => 'Rolle',
     'cover_image' => 'Forside',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Dette bildet bør være omtrent 440x250px selv om det vil bli fleksibelt skalert og beskjært slik at brukergrensesnittet passer til forskjellige scenarier ved behov. Dette betyr at de faktiske dimensjonene for visning varierer.',
 
     // Actions
     'actions' => 'Handlinger',

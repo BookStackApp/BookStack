@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Un utilisateur avec l\'adresse :email existe déjà.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Le compte utilisateur n\'a pas pu être enregistré avec les informations fournies',
     'email_already_confirmed' => 'Cet e-mail a déjà été validé, vous pouvez vous connecter.',
     'email_confirmation_invalid' => 'Cette confirmation est invalide. Veuillez essayer de vous inscrire à nouveau.',
     'email_confirmation_expired' => 'Le jeton de confirmation est périmé. Un nouvel e-mail vous a été envoyé.',
