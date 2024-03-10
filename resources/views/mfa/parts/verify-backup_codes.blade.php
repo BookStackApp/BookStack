@@ -2,10 +2,11 @@
 
 <p class="small mb-m">{{ trans('auth.mfa_verify_backup_code_desc') }}</p>
 
-<form action="{{ url('/mfa/backup_codes/verify') }}" method="post">
+<form action="{{ url('/mfa/backup_codes/verify') }}" method="post" autocomplete="off">
     {{ csrf_field() }}
     <input type="text"
            name="code"
+           autocomplete="one-time-code"
            placeholder="{{ trans('auth.mfa_verify_backup_code_enter_here') }}"
            class="input-fill-width {{ $errors->has('code') ? 'neg' : '' }}">
     @if($errors->has('code'))
