@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Er bestaat al een gebruiker met het e-mailadres :email, maar met andere inloggegevens.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Het gebruikersaccount kon niet worden geregistreerd met de opgegeven informatie',
     'email_already_confirmed' => 'Het e-mailadres is al bevestigd, probeer in te loggen.',
     'email_confirmation_invalid' => 'Deze bevestigingstoken is niet geldig of al gebruikt, probeer opnieuw te registreren.',
     'email_confirmation_expired' => 'Het bevestigingstoken is verlopen, Er is een nieuwe bevestigingsmail verzonden.',
