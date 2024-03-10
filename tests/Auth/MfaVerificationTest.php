@@ -57,6 +57,15 @@ class MfaVerificationTest extends TestCase
         $this->assertNull(auth()->user());
     }
 
+    public function test_totp_form_has_autofill_configured()
+    {
+        [$user, $secret, $loginResp] = $this->startTotpLogin();
+        $html = $this->withHtml($this->get('/mfa/verify'));
+
+        $html->assertElementExists('form[autocomplete="off"][action$="/verify"]');
+        $html->assertElementExists('input[autocomplete="one-time-code"][name="code"]');
+    }
+
     public function test_backup_code_verification()
     {
         [$user, $codes, $loginResp] = $this->startBackupCodeLogin();
@@ -136,6 +145,15 @@ class MfaVerificationTest extends TestCase
         ]);
         $resp = $this->followRedirects($resp);
         $resp->assertSeeText('You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.');
+    }
+
+    public function test_backup_code_form_has_autofill_configured()
+    {
+        [$user, $codes, $loginResp] = $this->startBackupCodeLogin();
+        $html = $this->withHtml($this->get('/mfa/verify'));
+
+        $html->assertElementExists('form[autocomplete="off"][action$="/verify"]');
+        $html->assertElementExists('input[autocomplete="one-time-code"][name="code"]');
     }
 
     public function test_both_mfa_options_available_if_set_on_profile()

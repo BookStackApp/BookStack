@@ -66,9 +66,9 @@ return [
     'auth_register' => 'registreerde als nieuwe gebruiker',
     'auth_password_reset_request' => 'vraagde een nieuw gebruikerswachtwoord aan',
     'auth_password_reset_update' => 'stelde gebruikerswachtwoord opnieuw in',
-    'mfa_setup_method' => 'stelde MFA-methode in',
+    'mfa_setup_method' => 'heeft zijn meervoudige verificatie methode ingesteld',
     'mfa_setup_method_notification' => 'Meervoudige verificatie methode succesvol geconfigureerd',
-    'mfa_remove_method' => 'verwijderde MFA-methode',
+    'mfa_remove_method' => 'heeft zijn meervoudige verificatie methode verwijderd',
     'mfa_remove_method_notification' => 'Meervoudige verificatie methode is succesvol verwijderd',
 
     // Settings
@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Gebruiker succesvol verwijderd',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'API-token aangemaakt',
     'api_token_create_notification' => 'API-token met succes aangemaakt',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'geüpdatet API-token',
     'api_token_update_notification' => 'API-token met succes bijgewerkt',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'verwijderd API-token',
     'api_token_delete_notification' => 'API-token met succes verwijderd',
 
     // Roles

@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Корисник је успешно уклоњен',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'креирао апи токен',
     'api_token_create_notification' => 'АПИ токен је успешно креиран',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'ажуриран апи токен',
     'api_token_update_notification' => 'АПИ токен је успешно ажуриран',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'обрисан апи токен',
     'api_token_delete_notification' => 'АПИ токен је успешно избрисан',
 
     // Roles
