@@ -594,10 +594,16 @@ class OidcTest extends TestCase
     {
         config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout']);
 
-        $this->runLogin();
+        // Fix times so our token is predictable
+        $claimOverrides = [
+            'iat' => time(),
+            'exp' => time() + 720,
+            'auth_time' => time()
+        ];
+        $this->runLogin($claimOverrides);
 
         $resp = $this->asEditor()->post('/oidc/logout');
-        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken()) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
+        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken($claimOverrides)) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
         $resp->assertRedirect('https://example.com/logout?' . $query);
     }
 
