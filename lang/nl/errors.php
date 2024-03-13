@@ -86,7 +86,7 @@ return [
 
     // Comments
     'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
-    'cannot_add_comment_to_draft' => 'U kunt geen reacties toevoegen aan een concept.',
+    'cannot_add_comment_to_draft' => 'Je kunt geen reacties toevoegen aan een concept.',
     'comment_add' => 'Er is een fout opgetreden tijdens het aanpassen / toevoegen van de reactie.',
     'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
     'empty_comment' => 'Kan geen lege reactie toevoegen.',
