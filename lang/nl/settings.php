@@ -190,7 +190,7 @@ return [
     'users_role_desc' => 'Selecteer aan welke rollen deze gebruiker zal worden toegewezen. Als een gebruiker aan meerdere rollen wordt toegewezen, worden de machtigingen van die rollen samengevoegd en krijgt hij alle mogelijkheden van de toegewezen rollen.',
     'users_password' => 'Wachtwoord gebruiker',
     'users_password_desc' => 'Stel een wachtwoord in om op de applicatie in te loggen. Dit moet minstens 8 tekens lang zijn.',
-    'users_send_invite_text' => 'U kunt ervoor kiezen om deze gebruiker een uitnodigingsmail te sturen waarmee hij zijn eigen wachtwoord kan instellen, anders kunt u zelf zijn wachtwoord instellen.',
+    'users_send_invite_text' => 'Je kunt ervoor kiezen om deze gebruiker een uitnodigingsmail te sturen waarmee hij zijn eigen wachtwoord kan instellen, anders kun je zelf zijn wachtwoord instellen.',
     'users_send_invite_option' => 'Stuur gebruiker uitnodigings e-mail',
     'users_external_auth_id' => 'Externe authenticatie ID',
     'users_external_auth_id_desc' => 'Wanneer een extern authenticatiesysteem wordt gebruikt (zoals SAML2, OIDC of LDAP) is dit de ID die deze BookStack-gebruiker koppelt aan het account van het authenticatiesysteem. Je kunt dit veld negeren als je de standaard op e-mail gebaseerde verificatie gebruikt.',
