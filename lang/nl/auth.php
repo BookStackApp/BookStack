@@ -40,7 +40,7 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'Poging tot inloggen',
-    'auto_init_starting_desc' => 'We maken contact met uw authenticatiesysteem om het inlogproces te starten. Als er na 5 seconden geen vooruitgang is, kunt u proberen op de onderstaande link te klikken.',
+    'auto_init_starting_desc' => 'We maken contact met jouw authenticatiesysteem om het inlogproces te starten. Als er na 5 seconden geen vooruitgang is, kun je proberen op de onderstaande link te klikken.',
     'auto_init_start_link' => 'Ga verder met authenticatie',
 
     // Password Reset
@@ -62,7 +62,7 @@ return [
     'email_confirm_success' => 'Uw e-mailadres is bevestigd! U zou nu moeten kunnen inloggen met dit e-mailadres.',
     'email_confirm_resent' => 'Bevestigingsmail opnieuw verzonden, controleer je inbox.',
     'email_confirm_thanks' => 'Bedankt voor de bevestiging!',
-    'email_confirm_thanks_desc' => 'Wacht even terwijl uw bevestiging wordt behandeld. Als u na 3 seconden niet wordt doorverwezen, drukt u op de onderstaande link "Doorgaan" om verder te gaan.',
+    'email_confirm_thanks_desc' => 'Wacht even terwijl jouw bevestiging wordt behandeld. Als u na 3 seconden niet wordt doorverwezen, druk dan op de onderstaande link "Doorgaan" om verder te gaan.',
 
     'email_not_confirmed' => 'E-mailadres nog niet bevestigd',
     'email_not_confirmed_text' => 'Je e-mailadres is nog niet bevestigd.',
@@ -82,27 +82,27 @@ return [
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-factor authenticatie instellen',
-    'mfa_setup_desc' => 'Stel multi-factor authenticatie in als een extra beveiligingslaag voor uw gebruikersaccount.',
+    'mfa_setup_desc' => 'Stel multi-factor authenticatie in als een extra beveiligingslaag voor je gebruikersaccount.',
     'mfa_setup_configured' => 'Reeds geconfigureerd',
     'mfa_setup_reconfigure' => 'Herconfigureren',
     'mfa_setup_remove_confirmation' => 'Weet je zeker dat je deze multi-factor authenticatie methode wilt verwijderen?',
     'mfa_setup_action' => 'Instellen',
-    'mfa_backup_codes_usage_limit_warning' => 'U heeft minder dan 5 back-upcodes over. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',
+    'mfa_backup_codes_usage_limit_warning' => 'Je hebt minder dan 5 back-upcodes over. Genereer en sla een nieuwe set op voordat je geen codes meer hebt om te voorkomen dat je buiten je account wordt gesloten.',
     'mfa_option_totp_title' => 'Mobiele app',
-    'mfa_option_totp_desc' => 'Om multi-factor authenticatie te gebruiken heeft u een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
+    'mfa_option_totp_desc' => 'Om multi-factor authenticatie te gebruiken heb je een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Back-up Codes',
-    'mfa_option_backup_codes_desc' => 'Bewaar veilig een set eenmalige back-upcodes die u kunt invoeren om uw identiteit te verifiëren.',
+    'mfa_option_backup_codes_desc' => 'Bewaar veilig een set eenmalige back-upcodes die je kunt invoeren om je identiteit te verifiëren.',
     'mfa_gen_confirm_and_enable' => 'Bevestigen en inschakelen',
     'mfa_gen_backup_codes_title' => 'Back-up codes instellen',
     'mfa_gen_backup_codes_desc' => 'Bewaar de onderstaande lijst met codes op een veilige plaats. Bij toegang tot het systeem kun je een van de codes gebruiken als tweede verificatiemechanisme.',
     'mfa_gen_backup_codes_download' => 'Download Codes',
     'mfa_gen_backup_codes_usage_warning' => 'Elke code kan slechts eenmaal gebruikt worden',
     'mfa_gen_totp_title' => 'Mobiele app installatie',
-    'mfa_gen_totp_desc' => 'Om multi-factor authenticatie te gebruiken heeft u een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
-    'mfa_gen_totp_scan' => 'Scan de onderstaande QR-code door gebruik te maken van uw favoriete authenticatie app om aan de slag te gaan.',
+    'mfa_gen_totp_desc' => 'Om multi-factor authenticatie te gebruiken heb je een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
+    'mfa_gen_totp_scan' => 'Scan de onderstaande QR-code door gebruik te maken van je favoriete authenticatie app om aan de slag te gaan.',
     'mfa_gen_totp_verify_setup' => 'Installatie verifiëren',
-    'mfa_gen_totp_verify_setup_desc' => 'Controleer of alles werkt door het invoeren van een code, die wordt gegenereerd binnen uw authenticatie-app, in het onderstaande invoerveld:',
-    'mfa_gen_totp_provide_code_here' => 'Geef uw app gegenereerde code hier',
+    'mfa_gen_totp_verify_setup_desc' => 'Controleer of alles werkt door het invoeren van een code, die wordt gegenereerd binnen je authenticatie-app, in het onderstaande invoerveld:',
+    'mfa_gen_totp_provide_code_here' => 'Vul je app-gegenereerde code hier in',
     'mfa_verify_access' => 'Verifieer toegang',
     'mfa_verify_access_desc' => 'Uw gebruikersaccount vereist dat u uw identiteit bevestigt via een extra verificatieniveau voordat u toegang krijgt. Verifieer met een van de door u geconfigureerde methoden om verder te gaan.',
     'mfa_verify_no_methods' => 'Geen methode geconfigureerd',
