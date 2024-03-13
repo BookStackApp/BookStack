@@ -22,6 +22,6 @@ return [
     'action_view_comment' => 'Bekijk Opmerking',
     'action_view_page' => 'Bekijk Pagina',
 
-    'footer_reason' => 'Deze melding is naar u verzonden omdat :link dit type activiteit voor dit artikel dekt.',
+    'footer_reason' => 'Deze melding is naar je verzonden omdat :link dit type activiteit voor dit artikel dekt.',
     'footer_reason_link' => 'je meldingsvoorkeuren',
 ];
