@@ -40,6 +40,12 @@ return [
 
     ],
 
+    // Job batching
+    'batching' => [
+        'database' => 'mysql',
+        'table' => 'job_batches',
+    ],
+
     // Failed queue job logging
     'failed' => [
         'driver'   => 'database-uuids',
