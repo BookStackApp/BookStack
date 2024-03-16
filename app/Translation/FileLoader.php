@@ -8,8 +8,14 @@ class FileLoader extends BaseLoader
 {
     /**
      * Load the messages for the given locale.
+     *
      * Extends Laravel's translation FileLoader to look in multiple directories
      * so that we can load in translation overrides from the theme file if wanted.
+     *
+     * Note: As of using Laravel 10, this may now be redundant since Laravel's
+     * file loader supports multiple paths. This needs further testing though
+     * to confirm if Laravel works how we expect, since we specifically need
+     * the theme folder to be able to partially override core lang files.
      *
      * @param string      $locale
      * @param string      $group
@@ -17,7 +23,7 @@ class FileLoader extends BaseLoader
      *
      * @return array
      */
-    public function load($locale, $group, $namespace = null)
+    public function load($locale, $group, $namespace = null): array
     {
         if ($group === '*' && $namespace === '*') {
             return $this->loadJsonPaths($locale);
@@ -25,8 +31,8 @@ class FileLoader extends BaseLoader
 
         if (is_null($namespace) || $namespace === '*') {
             $themePath = theme_path('lang');
-            $themeTranslations = $themePath ? $this->loadPath($themePath, $locale, $group) : [];
-            $originalTranslations = $this->loadPath($this->path, $locale, $group);
+            $themeTranslations = $themePath ? $this->loadPaths([$themePath], $locale, $group) : [];
+            $originalTranslations = $this->loadPaths($this->paths, $locale, $group);
 
             return array_merge($originalTranslations, $themeTranslations);
         }
