@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('joint_permissions', function (Blueprint $table) {
             $table->dropColumn('id');
@@ -21,10 +19,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('joint_permissions', function (Blueprint $table) {
             $table->dropPrimary(['role_id', 'entity_type', 'entity_id', 'action']);

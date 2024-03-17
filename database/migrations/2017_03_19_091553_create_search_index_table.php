@@ -8,10 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('search_terms', function (Blueprint $table) {
             $table->increments('id');
@@ -55,10 +53,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // This was removed for v0.24 since these indexes are removed anyway
         // and will cause issues for db engines that don't support such indexes.

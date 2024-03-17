@@ -10,10 +10,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Remove entries for non-existing roles (Caused by previous lack of deletion handling)
         $roleIds = DB::table('roles')->pluck('id');
@@ -63,10 +61,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Create old table structure for entity_permissions
         Schema::create('old_entity_permissions', function (Blueprint $table) {

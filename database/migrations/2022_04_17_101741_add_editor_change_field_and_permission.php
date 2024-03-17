@@ -10,10 +10,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Add the new 'editor' column to the pages table
         Schema::table('pages', function (Blueprint $table) {
@@ -46,10 +44,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Drop the new column from the pages table
         Schema::table('pages', function (Blueprint $table) {

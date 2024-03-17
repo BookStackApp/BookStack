@@ -1,15 +1,15 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Get roles with permissions we need to change
         $adminRoleId = DB::table('roles')->where('name', '=', 'admin')->first()->id;
@@ -30,8 +30,8 @@ return new class extends Migration
             $permissionId = DB::table('permissions')->insertGetId([
                 'name'         => $name,
                 'display_name' => $displayName,
-                'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-                'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                'created_at'   => Carbon::now()->toDateTimeString(),
+                'updated_at'   => Carbon::now()->toDateTimeString(),
             ]);
             DB::table('permission_role')->insert([
                 'role_id'       => $adminRoleId,
@@ -47,8 +47,8 @@ return new class extends Migration
                 $permissionId = DB::table('permissions')->insertGetId([
                     'name'         => strtolower($entity) . '-' . strtolower(str_replace(' ', '-', $op)),
                     'display_name' => $op . ' ' . $entity . 's',
-                    'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                    'created_at'   => Carbon::now()->toDateTimeString(),
+                    'updated_at'   => Carbon::now()->toDateTimeString(),
                 ]);
                 DB::table('permission_role')->insert([
                     'role_id'       => $adminRoleId,
@@ -66,10 +66,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Get roles with permissions we need to change
         $adminRoleId = DB::table('roles')->where('name', '=', 'admin')->first()->id;
@@ -85,8 +83,8 @@ return new class extends Migration
                 $permissionId = DB::table('permissions')->insertGetId([
                     'name'         => strtolower($entity) . '-' . strtolower($op),
                     'display_name' => $op . ' ' . $entity . 's',
-                    'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                    'created_at'   => Carbon::now()->toDateTimeString(),
+                    'updated_at'   => Carbon::now()->toDateTimeString(),
                 ]);
                 DB::table('permission_role')->insert([
                     'role_id'       => $adminRoleId,
@@ -103,8 +101,8 @@ return new class extends Migration
                 $permissionId = DB::table('permissions')->insertGetId([
                     'name'         => strtolower($entity) . '-' . strtolower($op),
                     'display_name' => $op . ' ' . $entity,
-                    'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-                    'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                    'created_at'   => Carbon::now()->toDateTimeString(),
+                    'updated_at'   => Carbon::now()->toDateTimeString(),
                 ]);
                 DB::table('permission_role')->insert([
                     'role_id'       => $adminRoleId,
