@@ -12,10 +12,8 @@ class ViewTweaksServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Set paginator to use bootstrap-style pagination
         Paginator::useBootstrap();

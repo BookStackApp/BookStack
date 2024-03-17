@@ -4,6 +4,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Processor\PsrLogMessageProcessor;
 
 /**
  * Logging configuration options.
@@ -49,6 +50,7 @@ return [
             'path'   => storage_path('logs/laravel.log'),
             'level'  => 'debug',
             'days'   => 14,
+            'replace_placeholders' => true,
         ],
 
         'daily' => [
@@ -56,6 +58,7 @@ return [
             'path'   => storage_path('logs/laravel.log'),
             'level'  => 'debug',
             'days'   => 7,
+            'replace_placeholders' => true,
         ],
 
         'stderr' => [
@@ -65,16 +68,20 @@ return [
             'with'    => [
                 'stream' => 'php://stderr',
             ],
+            'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'syslog' => [
             'driver' => 'syslog',
             'level'  => 'debug',
+            'facility' => LOG_USER,
+            'replace_placeholders' => true,
         ],
 
         'errorlog' => [
             'driver' => 'errorlog',
             'level'  => 'debug',
+            'replace_placeholders' => true,
         ],
 
         // Custom errorlog implementation that logs out a plain,
@@ -88,6 +95,7 @@ return [
             'formatter_with' => [
                 'format' => '%message%',
             ],
+            'replace_placeholders' => true,
         ],
 
         'null' => [
