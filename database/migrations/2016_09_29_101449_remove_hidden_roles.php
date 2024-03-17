@@ -1,17 +1,17 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Remove the hidden property from roles
         Schema::table('roles', function (Blueprint $table) {
@@ -29,8 +29,8 @@ return new class extends Migration
             'name'            => 'Guest',
             'system_name'     => 'public',
             'email_confirmed' => true,
-            'created_at'      => \Carbon\Carbon::now(),
-            'updated_at'      => \Carbon\Carbon::now(),
+            'created_at'      => Carbon::now(),
+            'updated_at'      => Carbon::now(),
         ]);
 
         // Get the public role
@@ -45,10 +45,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('roles', function (Blueprint $table) {
             $table->boolean('hidden')->default(false);

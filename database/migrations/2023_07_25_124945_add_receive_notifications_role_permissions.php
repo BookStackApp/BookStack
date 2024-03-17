@@ -2,15 +2,14 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Create new receive-notifications permission and assign to admin role
         $permissionId = DB::table('role_permissions')->insertGetId([
@@ -29,10 +28,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         $permission = DB::table('role_permissions')
             ->where('name', '=', 'receive-notifications')

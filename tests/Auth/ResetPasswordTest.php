@@ -95,7 +95,7 @@ class ResetPasswordTest extends TestCase
         $resp = $this->followingRedirects()->post('/password/email', [
             'email' => $editor->email,
         ]);
-        Notification::assertTimesSent(1, ResetPasswordNotification::class);
+        Notification::assertSentTimes(ResetPasswordNotification::class, 1);
         $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
     }
 }
