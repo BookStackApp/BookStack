@@ -32,10 +32,8 @@ return new class extends Migration
 
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         foreach ($this->columnsByTable as $table => $column) {
             foreach ($this->changeMap as $oldVal => $newVal) {
@@ -48,10 +46,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         foreach ($this->columnsByTable as $table => $column) {
             foreach ($this->changeMap as $oldVal => $newVal) {
