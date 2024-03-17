@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e05f9f4344c239682f6a9fbab0f87cf0",
+    "content-hash": "ccfc07d0ecc580962915a0457f0466a7",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5643,38 +5643,43 @@
         },
         {
             "name": "ssddanbrown/symfony-mailer",
-            "version": "6.0.x-dev",
+            "version": "6.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ssddanbrown/symfony-mailer.git",
-                "reference": "2219dcdc5f58e4f382ce8f1e6942d16982aa3012"
+                "reference": "0497d6eb2734fe22b9550f88ae6526611c9df7ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ssddanbrown/symfony-mailer/zipball/2219dcdc5f58e4f382ce8f1e6942d16982aa3012",
-                "reference": "2219dcdc5f58e4f382ce8f1e6942d16982aa3012",
+                "url": "https://api.github.com/repos/ssddanbrown/symfony-mailer/zipball/0497d6eb2734fe22b9550f88ae6526611c9df7ae",
+                "reference": "0497d6eb2734fe22b9550f88ae6526611c9df7ae",
                 "shasum": ""
             },
             "require": {
                 "egulias/email-validator": "^2.1.10|^3|^4",
-                "php": ">=8.0.2",
+                "php": ">=8.1",
                 "psr/event-dispatcher": "^1",
                 "psr/log": "^1|^2|^3",
-                "symfony/event-dispatcher": "^5.4|^6.0",
-                "symfony/mime": "^5.4|^6.0",
-                "symfony/service-contracts": "^1.1|^2|^3"
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/mime": "^6.2|^7.0",
+                "symfony/service-contracts": "^2.5|^3"
             },
             "conflict": {
-                "symfony/http-kernel": "<5.4"
+                "symfony/http-client-contracts": "<2.5",
+                "symfony/http-kernel": "<5.4",
+                "symfony/messenger": "<6.2",
+                "symfony/mime": "<6.2",
+                "symfony/twig-bridge": "<6.2.1"
             },
             "replace": {
                 "symfony/mailer": "^6.0"
             },
             "require-dev": {
-                "symfony/http-client-contracts": "^1.1|^2|^3",
-                "symfony/messenger": "^5.4|^6.0"
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/http-client": "^5.4|^6.0|^7.0",
+                "symfony/messenger": "^6.2|^7.0",
+                "symfony/twig-bridge": "^6.2|^7.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5705,9 +5710,9 @@
             "description": "Helps sending emails",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/ssddanbrown/symfony-mailer/tree/6.0"
+                "source": "https://github.com/ssddanbrown/symfony-mailer/tree/6.4"
             },
-            "time": "2023-07-04T14:10:33+00:00"
+            "time": "2024-03-17T16:25:21+00:00"
         },
         {
             "name": "symfony/console",

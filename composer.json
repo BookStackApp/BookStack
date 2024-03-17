@@ -39,7 +39,7 @@
         "socialiteproviders/okta": "^4.2",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.2",
-        "ssddanbrown/symfony-mailer": "6.0.x-dev"
+        "ssddanbrown/symfony-mailer": "6.4.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.21",
