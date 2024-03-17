@@ -132,7 +132,7 @@ class ConfigTest extends TestCase
     public function test_smtp_scheme_and_certain_port_forces_tls_usage()
     {
         $isMailTlsRequired = function () {
-            /** @var \BookStack\App\Mail\EsmtpTransport $transport */
+            /** @var EsmtpTransport $transport */
             $transport = Mail::mailer('smtp')->getSymfonyTransport();
             Mail::purge('smtp');
             return $transport->getTlsRequirement();
