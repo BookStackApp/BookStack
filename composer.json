@@ -21,7 +21,7 @@
         "barryvdh/laravel-snappy": "^1.0",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.4",
-        "intervention/image": "^2.7",
+        "intervention/image": "^3.5",
         "laravel/framework": "^10.10",
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
