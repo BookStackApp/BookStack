@@ -26,9 +26,9 @@ return new class extends Migration
     public function down(): void
     {
         $sm = Schema::getConnection()->getDoctrineSchemaManager();
-        $pages = $sm->listTableDetails('pages');
-        $books = $sm->listTableDetails('books');
-        $chapters = $sm->listTableDetails('chapters');
+        $pages = $sm->introspectTable('pages');
+        $books = $sm->introspectTable('books');
+        $chapters = $sm->introspectTable('chapters');
 
         if ($pages->hasIndex('name_search')) {
             Schema::table('pages', function (Blueprint $table) {

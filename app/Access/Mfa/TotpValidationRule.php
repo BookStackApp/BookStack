@@ -2,36 +2,26 @@
 
 namespace BookStack\Access\Mfa;
 
-use Illuminate\Contracts\Validation\Rule;
+use Closure;
+use Illuminate\Contracts\Validation\ValidationRule;
 
-class TotpValidationRule implements Rule
+class TotpValidationRule implements ValidationRule
 {
-    protected $secret;
-    protected $totpService;
-
     /**
      * Create a new rule instance.
      * Takes the TOTP secret that must be system provided, not user provided.
      */
-    public function __construct(string $secret)
-    {
-        $this->secret = $secret;
-        $this->totpService = app()->make(TotpService::class);
+    public function __construct(
+        protected string $secret,
+        protected TotpService $totpService,
+    ) {
     }
 
-    /**
-     * Determine if the validation rule passes.
-     */
-    public function passes($attribute, $value)
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        return $this->totpService->verifyCode($value, $this->secret);
-    }
-
-    /**
-     * Get the validation error message.
-     */
-    public function message()
-    {
-        return trans('validation.totp');
+        $passes = $this->totpService->verifyCode($value, $this->secret);
+        if (!$passes) {
+            $fail(trans('validation.totp'));
+        }
     }
 }
