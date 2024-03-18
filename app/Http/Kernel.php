@@ -45,11 +45,11 @@ class Kernel extends HttpKernel
     ];
 
     /**
-     * The application's route middleware.
+     * The application's middleware aliases.
      *
      * @var array
      */
-    protected $routeMiddleware = [
+    protected $middlewareAliases = [
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,
         'can'        => \BookStack\Http\Middleware\CheckUserHasPermission::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
