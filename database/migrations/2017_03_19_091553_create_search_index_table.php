@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -25,9 +26,10 @@ return new class extends Migration
         });
 
         $sm = Schema::getConnection()->getDoctrineSchemaManager();
-        $pages = $sm->introspectTable('pages');
-        $books = $sm->introspectTable('books');
-        $chapters = $sm->introspectTable('chapters');
+        $prefix = DB::getTablePrefix();
+        $pages = $sm->introspectTable($prefix . 'pages');
+        $books = $sm->introspectTable($prefix . 'books');
+        $chapters = $sm->introspectTable($prefix . 'chapters');
 
         if ($pages->hasIndex('search')) {
             Schema::table('pages', function (Blueprint $table) {
