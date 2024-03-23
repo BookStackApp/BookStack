@@ -19,5 +19,6 @@ parameters:
 
     excludePaths:
         - ./Config/**/*.php
+        - ./dev/**/*.php
 
     checkMissingIterableValueType: false
