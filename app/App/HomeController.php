@@ -9,7 +9,6 @@ use BookStack\Entities\Queries\QueryRecentlyViewed;
 use BookStack\Entities\Queries\QueryTopFavourites;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
-use BookStack\Uploads\FaviconHandler;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
@@ -111,49 +110,5 @@ class HomeController extends Controller
         }
 
         return view('home.default', $commonData);
-    }
-
-    /**
-     * Show the view for /robots.txt.
-     */
-    public function robots()
-    {
-        $sitePublic = setting('app-public', false);
-        $allowRobots = config('app.allow_robots');
-
-        if ($allowRobots === null) {
-            $allowRobots = $sitePublic;
-        }
-
-        return response()
-            ->view('misc.robots', ['allowRobots' => $allowRobots])
-            ->header('Content-Type', 'text/plain');
-    }
-
-    /**
-     * Show the route for 404 responses.
-     */
-    public function notFound()
-    {
-        return response()->view('errors.404', [], 404);
-    }
-
-    /**
-     * Serve the application favicon.
-     * Ensures a 'favicon.ico' file exists at the web root location (if writable) to be served
-     * directly by the webserver in the future.
-     */
-    public function favicon(FaviconHandler $favicons)
-    {
-        $exists = $favicons->restoreOriginalIfNotExists();
-        return response()->file($exists ? $favicons->getPath() : $favicons->getOriginalPath());
-    }
-
-    /**
-     * Serve a PWA application manifest.
-     */
-    public function pwaManifest(PwaManifestBuilder $manifestBuilder)
-    {
-        return response()->json($manifestBuilder->build());
     }
 }
