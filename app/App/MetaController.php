@@ -56,7 +56,7 @@ class MetaController extends Controller
      */
     public function licenses()
     {
-        $this->setPageTitle('Licenses');
+        $this->setPageTitle(trans('settings.licenses'));
 
         return view('help.licenses', [
             'license' => file_get_contents(base_path('LICENSE')),
