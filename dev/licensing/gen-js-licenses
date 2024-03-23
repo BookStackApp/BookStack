@@ -1,0 +1,121 @@
+#!/usr/bin/env php
+<?php
+
+// This script reads the project composer.lock file to generate
+// clear license details for our PHP dependencies.
+
+$rootPath = dirname(__DIR__, 2);
+$outputPath = "{$rootPath}/dev/licensing/js-library-licenses.txt";
+$outputSeparator = "\n-----------\n";
+$warnings = [];
+
+$packages = [
+    ...glob("{$rootPath}/node_modules/*/package.json"),
+    ...glob("{$rootPath}/node_modules/@*/*/package.json"),
+];
+
+$packageOutput = array_map(packageToOutput(...), $packages);
+
+$licenseInfo = implode($outputSeparator, $packageOutput) . "\n";
+file_put_contents($outputPath, $licenseInfo);
+
+echo "License information written to {$outputPath}\n";
+echo implode("\n", $warnings);
+
+function dd(mixed $data): never {
+    print_r($data);
+    exit(0);
+}
+
+function packageToOutput(string $packagePath): string
+{
+    global $rootPath;
+    $package = json_decode(file_get_contents($packagePath));
+    $output = ["{$package->name}"];
+
+    $license = $package->license ?? '';
+    if ($license) {
+        $output[] = "License: {$license}";
+    } else {
+        warn("Package {$package->name}: No license found");
+    }
+
+    $licenseFile = findLicenseFile($package->name, $packagePath);
+    if ($licenseFile) {
+        $relLicenseFile = str_replace("{$rootPath}/", '', $licenseFile);
+        $output[] = "License File: {$relLicenseFile}";
+        $copyright = findCopyright($licenseFile);
+        if ($copyright) {
+            $output[] = "Copyright: {$copyright}";
+        } else {
+            warn("Package {$package->name}: no copyright found in its license");
+        }
+    }
+
+    $source = $package->repository->url ?? $package->repository ?? '';
+    if ($source) {
+        $output[] = "Source: {$source}";
+    }
+
+    $link = $package->homepage ?? $source;
+    if ($link) {
+        $output[] = "Link: {$link}";
+    }
+
+    return implode("\n", $output);
+}
+
+function findLicenseFile(string $packageName, string $packagePath): string
+{
+    $licenseNameOptions = [
+        'license', 'LICENSE', 'License',
+        'license.*', 'LICENSE.*', 'License.*',
+        'license-*.*', 'LICENSE-*.*', 'License-*.*',
+    ];
+    $packageDir = dirname($packagePath);
+
+    $foundLicenses = [];
+    foreach ($licenseNameOptions as $option) {
+        $search = glob("{$packageDir}/$option");
+        array_push($foundLicenses, ...$search);
+    }
+
+    if (count($foundLicenses) > 1) {
+        warn("Package {$packageName}: more than one license file found");
+    }
+
+    if (count($foundLicenses) > 0) {
+        $fileName = basename($foundLicenses[0]);
+        return "{$packageDir}/{$fileName}";
+    }
+
+    warn("Package {$packageName}: no license files found");
+    return '';
+}
+
+function findCopyright(string $licenseFile): string
+{
+    $fileContents = file_get_contents($licenseFile);
+    $pattern = '/^.*?copyright (\(c\)|\d{4})[\s\S]*?(\n\n|\.\n)/mi';
+    $matches = [];
+    preg_match($pattern, $fileContents, $matches);
+    $copyright = trim($matches[0] ?? '');
+
+    if (str_contains($copyright, 'i.e.')) {
+        return '';
+    }
+
+    $emailPattern = '/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/i';
+    return preg_replace_callback($emailPattern, obfuscateEmail(...), $copyright);
+}
+
+function obfuscateEmail(array $matches): string
+{
+    return preg_replace('/[^@.]/', '*', $matches[1]);
+}
+
+function warn(string $text): void
+{
+    global $warnings;
+    $warnings[] = "WARN:" . $text;
+}
