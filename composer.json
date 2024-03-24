@@ -72,6 +72,10 @@
         "lint": "phpcs",
         "test": "phpunit",
         "t-reset": "@php artisan test --recreate-databases",
+        "build-licenses": [
+            "@php ./dev/licensing/gen-js-licenses",
+            "@php ./dev/licensing/gen-php-licenses"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
