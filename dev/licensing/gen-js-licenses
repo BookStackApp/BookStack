@@ -22,7 +22,7 @@ $licenseInfo = implode($outputSeparator, $packageOutput) . "\n";
 file_put_contents($outputPath, $licenseInfo);
 
 echo "License information written to {$outputPath}\n";
-echo implode("\n", getWarnings());
+echo implode("\n", getWarnings()) . "\n";
 
 function packageToOutput(string $packagePath): string
 {
