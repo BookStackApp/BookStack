@@ -277,6 +277,14 @@ Hinweis: Benutzer kÃ¶nnen ihre E-Mail Adresse nach erfolgreicher Registrierung Ã
     'webhooks_last_errored' => 'Letzter Fehler:',
     'webhooks_last_error_message' => 'Letzte Fehlermeldung:',
 
+    // Licensing
+    'licenses' => 'Licenses',
+    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
+    'licenses_bookstack' => 'BookStack License',
+    'licenses_php' => 'PHP Library Licenses',
+    'licenses_js' => 'JavaScript Library Licenses',
+    'licenses_other' => 'Other Licenses',
+    'license_details' => 'License Details',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
