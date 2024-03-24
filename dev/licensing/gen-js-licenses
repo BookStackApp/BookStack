@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php
+
+// This script reads the project composer.lock file to generate
+// clear license details for our PHP dependencies.
+
+declare(strict_types=1);
+require "gen-licenses-shared.php";
+
+$rootPath = dirname(__DIR__, 2);
+$outputPath = "{$rootPath}/dev/licensing/js-library-licenses.txt";
+$outputSeparator = "\n-----------\n";
+
+$packages = [
+    ...glob("{$rootPath}/node_modules/*/package.json"),
+    ...glob("{$rootPath}/node_modules/@*/*/package.json"),
+];
+
+$packageOutput = array_map(packageToOutput(...), $packages);
+
+$licenseInfo = implode($outputSeparator, $packageOutput) . "\n";
+file_put_contents($outputPath, $licenseInfo);
+
+echo "License information written to {$outputPath}\n";
+echo implode("\n", getWarnings()) . "\n";
+
+function packageToOutput(string $packagePath): string
+{
+    global $rootPath;
+    $package = json_decode(file_get_contents($packagePath));
+    $output = ["{$package->name}"];
+
+    $license = $package->license ?? '';
+    if ($license) {
+        $output[] = "License: {$license}";
+    } else {
+        warn("Package {$package->name}: No license found");
+    }
+
+    $licenseFile = findLicenseFile($package->name, $packagePath);
+    if ($licenseFile) {
+        $relLicenseFile = str_replace("{$rootPath}/", '', $licenseFile);
+        $output[] = "License File: {$relLicenseFile}";
+        $copyright = findCopyright($licenseFile);
+        if ($copyright) {
+            $output[] = "Copyright: {$copyright}";
+        } else {
+            warn("Package {$package->name}: no copyright found in its license");
+        }
+    }
+
+    $source = $package->repository->url ?? $package->repository ?? '';
+    if ($source) {
+        $output[] = "Source: {$source}";
+    }
+
+    $link = $package->homepage ?? $source;
+    if ($link) {
+        $output[] = "Link: {$link}";
+    }
+
+    return implode("\n", $output);
+}

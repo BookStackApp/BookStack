@@ -30,6 +30,10 @@ esbuild.build({
     format: 'esm',
     minify: isProd,
     logLevel: 'info',
+    banner: {
+        js: '// See the "/licenses" URI for full package license details',
+        css: '/* See the "/licenses" URI for full package license details */',
+    },
 }).then(result => {
     fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
 }).catch(() => process.exit(1));
