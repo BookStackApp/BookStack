@@ -209,6 +209,12 @@ class LdapService
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
+        // Specify CA Cert file for LDAP.
+        // This option works globally and must be set before a connection is created.
+        if ($this->config['tls_cacertfile']) {
+            $this->ldap->setOption(null, LDAP_OPT_X_TLS_CACERTFILE, $this->config['tls_cacertfile']);
+        }
+
         $ldapHost = $this->parseServerString($this->config['server']);
         $ldapConnection = $this->ldap->connect($ldapHost);
 
