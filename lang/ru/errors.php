@@ -50,8 +50,8 @@ return [
     'image_upload_error' => 'Произошла ошибка при загрузке изображения',
     'image_upload_type_error' => 'Неправильный тип загружаемого изображения',
     'image_upload_replace_type' => 'Замена файла изображения должна быть того же типа',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_upload_memory_limit' => 'Не удалось выполнить загрузку изображений и/или создать эскизы из-за ограничения системных ресурсов.',
+    'image_thumbnail_memory_limit' => 'Не удалось создать вариации размера изображения из-за ограничений системных ресурсов.',
     'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
     'drawing_data_not_found' => 'Данные чертежа не могут быть загружены. Возможно, файл чертежа больше не существует или у вас нет разрешения на доступ к нему.',
 

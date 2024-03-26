@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'página creada',
+    'page_create'                 => 'Página creada',
     'page_create_notification'    => 'Página creada correctamente',
     'page_update'                 => 'página actualizada',
     'page_update_notification'    => 'Página actualizada correctamente',
@@ -72,7 +72,7 @@ return [
     'mfa_remove_method_notification' => 'Método de Autenticación en Dos Pasos eliminado correctamente',
 
     // Settings
-    'settings_update' => 'ajustes actualizados',
+    'settings_update' => 'configuración actualizada',
     'settings_update_notification' => 'Configuración actualizada correctamente',
     'maintenance_action_run' => 'ejecutada acción de mantenimiento',
 

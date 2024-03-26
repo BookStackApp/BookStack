@@ -39,7 +39,7 @@ return [
     'app_homepage_desc' => 'Selecteer een weergave om weer te geven op de startpagina in plaats van de standaard weergave. Paginamachtigingen worden genegeerd voor geselecteerde pagina\'s.',
     'app_homepage_select' => 'Selecteer een pagina',
     'app_footer_links' => 'Voettekst hyperlinks',
-    'app_footer_links_desc' => 'Voeg hyperlinks toe aan de voettekst van de applicatie. Deze zullen onderaan de meeste pagina\'s getoond worden, ook aan pagina\'s die geen login vereisen. U kunt een label van "trans::<key>" gebruiken om systeem-gedefinieerde vertalingen te gebruiken. Bijvoorbeeld: Het gebruik van "trans::common.privacy_policy" zal de vertaalde tekst "Privacy Policy" opleveren en "trans::common.terms_of_service" zal de vertaalde tekst "Gebruiksvoorwaarden" opleveren.',
+    'app_footer_links_desc' => 'Voeg hyperlinks toe aan de voettekst van de applicatie. Deze zullen onderaan de meeste pagina\'s getoond worden, ook aan pagina\'s die geen login vereisen. Je kunt een label van "trans::<key>" gebruiken om systeem-gedefinieerde vertalingen te gebruiken. Bijvoorbeeld: Het gebruik van "trans::common.privacy_policy" zal de vertaalde tekst "Privacy Policy" opleveren en "trans::common.terms_of_service" zal de vertaalde tekst "Gebruiksvoorwaarden" opleveren.',
     'app_footer_links_label' => 'Link label',
     'app_footer_links_url' => 'Link URL',
     'app_footer_links_add' => 'Voettekst link toevoegen',
@@ -80,7 +80,7 @@ return [
     'maint_image_cleanup_desc' => 'Scant pagina- en revisie inhoud om te controleren welke afbeeldingen en tekeningen momenteel worden gebruikt en welke afbeeldingen overbodig zijn. Zorg ervoor dat je een volledige database- en afbeelding back-up maakt voordat je dit uitvoert.',
     'maint_delete_images_only_in_revisions' => 'Ook afbeeldingen verwijderen die alleen in oude pagina revisies bestaan',
     'maint_image_cleanup_run' => 'Opschonen uitvoeren',
-    'maint_image_cleanup_warning' => ':count potentieel ongebruikte afbeeldingen gevonden. Weet u zeker dat u deze afbeeldingen wilt verwijderen?',
+    'maint_image_cleanup_warning' => ':count potentieel ongebruikte afbeeldingen gevonden. Weet je zeker dat je deze afbeeldingen wilt verwijderen?',
     'maint_image_cleanup_success' => ':count potentieel ongebruikte afbeeldingen gevonden en verwijderd!',
     'maint_image_cleanup_nothing_found' => 'Geen ongebruikte afbeeldingen gevonden, niets verwijderd!',
     'maint_send_test_email' => 'Stuur een test e-mail',
@@ -99,7 +99,7 @@ return [
 
     // Recycle Bin
     'recycle_bin' => 'Prullenbak',
-    'recycle_bin_desc' => 'Hier kunt u items herstellen die zijn verwijderd of ervoor kiezen om ze permanent uit het systeem te verwijderen. Deze lijst is ongefilterd, in tegenstelling tot vergelijkbare activiteitenlijsten in het systeem waar machtigingenfilters worden toegepast.',
+    'recycle_bin_desc' => 'Hier kun je items herstellen die zijn verwijderd of ervoor kiezen om ze permanent uit het systeem te verwijderen. Deze lijst is ongefilterd, in tegenstelling tot vergelijkbare activiteitenlijsten in het systeem waar machtigingenfilters worden toegepast.',
     'recycle_bin_deleted_item' => 'Verwijderde Item',
     'recycle_bin_deleted_parent' => 'Bovenliggende',
     'recycle_bin_deleted_by' => 'Verwijderd door',
@@ -108,7 +108,7 @@ return [
     'recycle_bin_restore' => 'Herstellen',
     'recycle_bin_contents_empty' => 'De prullenbak is momenteel leeg',
     'recycle_bin_empty' => 'Prullenbak legen',
-    'recycle_bin_empty_confirm' => 'Dit zal permanent alle items in de prullenbak vernietigen, inclusief de inhoud die in elk item zit. Weet u zeker dat u de prullenbak wilt legen?',
+    'recycle_bin_empty_confirm' => 'Dit zal permanent alle items in de prullenbak vernietigen, inclusief de inhoud die in elk item zit. Weet je zeker dat je de prullenbak wil legen?',
     'recycle_bin_destroy_confirm' => 'Deze actie zal dit item permanent verwijderen uit het systeem, samen met onderstaande onderliggende elementen, en u zal deze inhoud niet kunnen herstellen. Bent u zeker dat u dit item permanent wilt verwijderen?',
     'recycle_bin_destroy_list' => 'Te vernietigen items',
     'recycle_bin_restore_list' => 'Items te herstellen',
@@ -190,7 +190,7 @@ return [
     'users_role_desc' => 'Selecteer aan welke rollen deze gebruiker zal worden toegewezen. Als een gebruiker aan meerdere rollen wordt toegewezen, worden de machtigingen van die rollen samengevoegd en krijgt hij alle mogelijkheden van de toegewezen rollen.',
     'users_password' => 'Wachtwoord gebruiker',
     'users_password_desc' => 'Stel een wachtwoord in om op de applicatie in te loggen. Dit moet minstens 8 tekens lang zijn.',
-    'users_send_invite_text' => 'U kunt ervoor kiezen om deze gebruiker een uitnodigingsmail te sturen waarmee hij zijn eigen wachtwoord kan instellen, anders kunt u zelf zijn wachtwoord instellen.',
+    'users_send_invite_text' => 'Je kunt ervoor kiezen om deze gebruiker een uitnodigingsmail te sturen waarmee hij zijn eigen wachtwoord kan instellen, anders kun je zelf zijn wachtwoord instellen.',
     'users_send_invite_option' => 'Stuur gebruiker uitnodigings e-mail',
     'users_external_auth_id' => 'Externe authenticatie ID',
     'users_external_auth_id_desc' => 'Wanneer een extern authenticatiesysteem wordt gebruikt (zoals SAML2, OIDC of LDAP) is dit de ID die deze BookStack-gebruiker koppelt aan het account van het authenticatiesysteem. Je kunt dit veld negeren als je de standaard op e-mail gebaseerde verificatie gebruikt.',
@@ -211,7 +211,7 @@ return [
     'users_preferred_language_desc' => 'Deze optie wijzigt de taal die gebruikt wordt voor de gebruikersinterface. Dit heeft geen invloed op door gebruiker gemaakte inhoud.',
     'users_social_accounts' => 'Sociale media accounts',
     'users_social_accounts_desc' => 'Bekijk de status van de verbonden socialmedia-accounts voor deze gebruiker. socialmedia-accounts kunnen worden gebruikt naast het primaire authenticatiesysteem voor systeemtoegang.',
-    'users_social_accounts_info' => 'Hier kunt u uw andere accounts koppelen om sneller en eenvoudiger in te loggen. Als u hier een account loskoppelt, wordt de eerder gemachtigde toegang niet ingetrokken. U kunt de toegang intrekken via uw profielinstellingen op het gekoppelde socialemedia-account zelf.',
+    'users_social_accounts_info' => 'Hier kun je je andere accounts koppelen om sneller en eenvoudiger in te loggen. Als je hier een account loskoppelt, wordt de eerder gemachtigde toegang niet ingetrokken. Je kunt de toegang intrekken via je profielinstellingen op het gekoppelde socialemedia-account zelf.',
     'users_social_connect' => 'Account Verbinden',
     'users_social_disconnect' => 'Account Ontkoppelen',
     'users_social_status_connected' => 'Verbonden',
@@ -225,7 +225,7 @@ return [
     'users_api_tokens_expires' => 'Verloopt',
     'users_api_tokens_docs' => 'API-Documentatie',
     'users_mfa' => 'Meervoudige Verificatie',
-    'users_mfa_desc' => 'Stel meervoudige verificatie in als extra beveiligingslaag voor uw gebruikersaccount.',
+    'users_mfa_desc' => 'Stel meervoudige verificatie in als extra beveiligingslaag voor je gebruikersaccount.',
     'users_mfa_x_methods' => ':count methode geconfigureerd|:count methoden geconfigureerd',
     'users_mfa_configure' => 'Configureer methoden',
 
@@ -245,7 +245,7 @@ return [
     'user_api_token_updated' => 'Token :timeAgo geleden bijgewerkt',
     'user_api_token_delete' => 'Token Verwijderen',
     'user_api_token_delete_warning' => 'Dit zal de API-token met de naam \':tokenName\' volledig uit het systeem verwijderen.',
-    'user_api_token_delete_confirm' => 'Weet u zeker dat u deze API-token wilt verwijderen?',
+    'user_api_token_delete_confirm' => 'Weet je zeker dat je deze API-token wilt verwijderen?',
 
     // Webhooks
     'webhooks' => 'Webhooks',
@@ -268,7 +268,7 @@ return [
     'webhook_events_table_header' => 'Gebeurtenissen',
     'webhooks_delete' => 'Verwijder Webhook',
     'webhooks_delete_warning' => 'Dit zal de webhook met naam \':webhookName\' volledig verwijderen van het systeem.',
-    'webhooks_delete_confirm' => 'Weet u zeker dat u deze webhook wil verwijderen?',
+    'webhooks_delete_confirm' => 'Weet je zeker dat je deze webhook wilt verwijderen?',
     'webhooks_format_example' => 'Voorbeeld Webhook Formaat',
     'webhooks_format_example_desc' => 'Webhook gegevens worden verzonden als een POST verzoek naar het geconfigureerde eindpunt als JSON volgens het onderstaande formaat. De "related_item" en "url" eigenschappen zijn optioneel en hangen af van het type gebeurtenis die geactiveerd wordt.',
     'webhooks_status' => 'Webhook Status',
@@ -276,6 +276,14 @@ return [
     'webhooks_last_errored' => 'Laatst Gefaald:',
     'webhooks_last_error_message' => 'Laatste Foutmelding:',
 
+    // Licensing
+    'licenses' => 'Licenties',
+    'licenses_desc' => 'Deze pagina beschrijft licentie-informatie voor BookStack naast de projecten & bibliotheken die binnen BookStack worden gebruikt. Veel van de vermelde projecten worden alleen in een ontwikkelingscontext gebruikt.',
+    'licenses_bookstack' => 'BookStack Licentie',
+    'licenses_php' => 'PHP Bibliotheek Licenties',
+    'licenses_js' => 'JavaScript Bibliotheek Licenties',
+    'licenses_other' => 'Andere Licenties',
+    'license_details' => 'Licentie Details',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

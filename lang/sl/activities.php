@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Uporabnik uspešno izbrisan',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'ustvarjen žeton API',
     'api_token_create_notification' => 'Žeton API uspešno ustvarjen',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'posodobljen žeton API',
     'api_token_update_notification' => 'Žeton API uspešno posodobljen',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'izbrisan žeton API',
     'api_token_delete_notification' => 'Žeton API uspešno izbrisan',
 
     // Roles

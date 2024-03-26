@@ -398,7 +398,7 @@ return [
     'convert_to_shelf' => 'In Regal umwandeln',
     'convert_to_shelf_contents_desc' => 'Du kannst dieses Buch in ein neues Regal mit demselben Inhalt umwandeln. Die in diesem Buch enthaltenen Kapitel werden in neue Bücher umgewandelt. Wenn dieses Buch Seiten enthält, die nicht in einem Kapitel enthalten sind, wird das Buch umbenannt und enthält diese Seiten, und das Buch wird Teil des neuen Regals.',
     'convert_to_shelf_permissions_desc' => 'Alle Berechtigungen, die für dieses Buch festgelegt wurden, werden in das neue Regal und in alle neuen untergeordneten Bücher kopiert, für die keine eigenen Berechtigungen festgelegt wurden. Beachte, dass Berechtigungen für Regale nicht automatisch auf den Inhalt übertragen werden, wie es bei Büchern der Fall ist.',
-    'convert_book' => 'In Buch umwandeln',
+    'convert_book' => 'Buch umwandeln',
     'convert_book_confirm' => 'Bist du dir sicher, dass du dieses Buch umwandelt möchtest?',
     'convert_undo_warning' => 'Das kann nicht so einfach rückgängig gemacht werden.',
     'convert_to_book' => 'In Buch umwandeln',
