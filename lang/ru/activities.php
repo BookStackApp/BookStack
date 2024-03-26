@@ -97,7 +97,7 @@ return [
     'api_token_create_notification' => 'API токен успешно создан',
     'api_token_update' => 'обновлён API токен',
     'api_token_update_notification' => 'API токен успешно обновлен',
-    'api_token_delete' => 'удалён API токен',
+    'api_token_delete' => 'обновил API токен',
     'api_token_delete_notification' => 'API токен успешно удален',
 
     // Roles
