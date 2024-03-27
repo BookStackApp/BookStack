@@ -133,6 +133,7 @@ return [
         'group_attribute'        => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
         'remove_from_groups'     => env('LDAP_REMOVE_FROM_GROUPS', false),
         'tls_insecure'           => env('LDAP_TLS_INSECURE', false),
+        'tls_cacertfile'   	     => env('LDAP_TLS_CACERTFILE', false),
         'start_tls'              => env('LDAP_START_TLS', false),
         'thumbnail_attribute'    => env('LDAP_THUMBNAIL_ATTRIBUTE', null),
     ],
