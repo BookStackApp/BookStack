@@ -41,7 +41,8 @@ class ReferenceFetcher
     {
         $baseQuery = Reference::query()
             ->where('to_type', '=', $entity->getMorphClass())
-            ->where('to_id', '=', $entity->id);
+            ->where('to_id', '=', $entity->id)
+            ->whereHas('from');
 
         return $this->permissions->restrictEntityRelationQuery(
             $baseQuery,

@@ -271,7 +271,31 @@ class ReferencesTest extends TestCase
         }
     }
 
-    protected function createReference(Model $from, Model $to)
+    public function test_reference_from_deleted_item_does_not_count_or_show_in_references_page()
+    {
+        $page = $this->entities->page();
+        $referencingPageA = $this->entities->page();
+        $referencingPageB = $this->entities->page();
+
+        $this->asEditor();
+        $this->createReference($referencingPageA, $page);
+        $this->createReference($referencingPageB, $page);
+
+        $resp = $this->get($page->getUrl());
+        $resp->assertSee('Referenced by 2 items');
+
+        $this->delete($referencingPageA->getUrl());
+
+        $resp = $this->get($page->getUrl());
+        $resp->assertSee('Referenced by 1 item');
+
+        $resp = $this->get($page->getUrl('/references'));
+        $resp->assertOk();
+        $resp->assertSee($referencingPageB->getUrl());
+        $resp->assertDontSee($referencingPageA->getUrl());
+    }
+
+    protected function createReference(Model $from, Model $to): void
     {
         (new Reference())->forceFill([
             'from_type' => $from->getMorphClass(),
