@@ -266,8 +266,8 @@ class BookTest extends TestCase
     {
         $book = $this->entities->book();
 
-        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" data-a="b">a</a><section>Hello</section></p>';
-        $expected = '<p>Content<a href="#cat">a</a></p>';
+        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" target="_blank" data-a="b">a</a><section>Hello</section></p>';
+        $expected = '<p>Content<a href="#cat" target="_blank">a</a></p>';
 
         $this->asEditor()->put($book->getUrl(), [
             'name' => $book->name,
