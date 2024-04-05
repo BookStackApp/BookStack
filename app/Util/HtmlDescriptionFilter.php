@@ -20,7 +20,7 @@ class HtmlDescriptionFilter
      */
     protected static array $allowedAttrsByElements = [
         'p' => [],
-        'a' => ['href', 'title'],
+        'a' => ['href', 'title', 'target'],
         'ol' => [],
         'ul' => [],
         'li' => [],

@@ -348,7 +348,7 @@ export function buildForInput(options) {
         toolbar: 'bold italic link bullist numlist',
         content_style: getContentStyle(options),
         file_picker_types: 'file',
-        valid_elements: 'p,a[href|title],ol,ul,li,strong,em,br',
+        valid_elements: 'p,a[href|title|target],ol,ul,li,strong,em,br',
         file_picker_callback: filePickerCallback,
         init_instance_callback(editor) {
             addCustomHeadContent(editor.getDoc());
