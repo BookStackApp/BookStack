@@ -25,7 +25,6 @@
     "eslint-plugin-import": "^2.29.0",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
-    "punycode": "^2.3.1",
     "sass": "^1.69.5"
   },
   "dependencies": {
@@ -47,7 +46,7 @@
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "codemirror": "^6.0.1",
     "idb-keyval": "^6.2.1",
-    "markdown-it": "^13.0.2",
+    "markdown-it": "^14.1.0",
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.5.1",
     "sortablejs": "^1.15.1"
