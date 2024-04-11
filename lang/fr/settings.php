@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => 'Dernier message d\'erreur : ',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => 'Licences',
+    'licenses_desc' => 'Cette page détaille les informations de licence pour BookStack ainsi que les projets et librairies utilisées dans BookStack. Nombre des projets listés peuvent n\'être utilisés que dans un contexte de développement.',
+    'licenses_bookstack' => 'Licences BookStack',
+    'licenses_php' => 'Licences de librairies PHP',
+    'licenses_js' => 'Licences de librairies JavaScript',
+    'licenses_other' => 'Autres Licences',
+    'license_details' => 'Détails de la licence',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
