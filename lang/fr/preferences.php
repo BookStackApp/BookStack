@@ -8,7 +8,7 @@ return [
     'my_account' => 'Mon compte',
 
     'shortcuts' => 'Raccourcis',
-    'shortcuts_interface' => 'Préférences de raccourci de l\'interface utilisateur',
+    'shortcuts_interface' => 'Préférences de raccourcis de l\'interface utilisateur',
     'shortcuts_toggle_desc' => 'Ici vous pouvez activer ou désactiver les raccourcis clavier, utilisés pour la navigation et les actions.',
     'shortcuts_customize_desc' => 'Vous pouvez personnaliser chaque raccourci ci-dessous. Il vous suffit d\'appuyer sur la combinaison de touche choisie après avoir sélectionné l\'entrée pour un raccourci.',
     'shortcuts_toggle_label' => 'Raccourcis clavier activés',
