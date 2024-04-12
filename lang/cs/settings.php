@@ -277,9 +277,9 @@ return [
     'webhooks_last_error_message' => 'Poslední chybová zpráva',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
+    'licenses' => 'Licence',
+    'licenses_desc' => 'Na této stránce naleznete kromě informací o projektech a knihovnách, které se v rámci BookStacku používají, také informace o licencích pro BookStack. Mnoho uvedených projektů lze používat pouze ve vývojovém kontextu.',
+    'licenses_bookstack' => 'BookStack Licence',
     'licenses_php' => 'PHP Library Licenses',
     'licenses_js' => 'JavaScript Library Licenses',
     'licenses_other' => 'Other Licenses',
