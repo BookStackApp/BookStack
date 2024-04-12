@@ -279,11 +279,11 @@ return [
     // Licensing
     'licenses' => 'Licence',
     'licenses_desc' => 'Na této stránce naleznete kromě informací o projektech a knihovnách, které se v rámci BookStacku používají, také informace o licencích pro BookStack. Mnoho uvedených projektů lze používat pouze ve vývojovém kontextu.',
-    'licenses_bookstack' => 'BookStack Licence',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses_bookstack' => 'BookStack licence',
+    'licenses_php' => 'Licence PHP knihoven',
+    'licenses_js' => 'Licence JavaScript knihoven',
+    'licenses_other' => 'Ostatní licence',
+    'license_details' => 'Podrobnosti o licenci',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
