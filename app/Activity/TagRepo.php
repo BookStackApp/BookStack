@@ -38,7 +38,8 @@ class TagRepo
                 DB::raw('SUM(IF(entity_type = \'book\', 1, 0)) as book_count'),
                 DB::raw('SUM(IF(entity_type = \'bookshelf\', 1, 0)) as shelf_count'),
             ])
-            ->orderBy($sort, $listOptions->getOrder());
+            ->orderBy($sort, $listOptions->getOrder())
+            ->whereHas('entity');
 
         if ($nameFilter) {
             $query->where('name', '=', $nameFilter);
