@@ -12,7 +12,6 @@ use BookStack\Facades\Theme;
 use BookStack\Http\HttpRequestService;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
@@ -160,69 +159,6 @@ class OidcService
     }
 
     /**
-     * Calculate the display name.
-     */
-    protected function getUserDisplayName(OidcIdToken $token, string $defaultValue): string
-    {
-        $displayNameAttrString = $this->config()['display_name_claims'] ?? '';
-        $displayNameAttrs = explode('|', $displayNameAttrString);
-
-        $displayName = [];
-        foreach ($displayNameAttrs as $dnAttr) {
-            $dnComponent = $token->getClaim($dnAttr) ?? '';
-            if ($dnComponent !== '') {
-                $displayName[] = $dnComponent;
-            }
-        }
-
-        if (count($displayName) == 0) {
-            $displayName[] = $defaultValue;
-        }
-
-        return implode(' ', $displayName);
-    }
-
-    /**
-     * Extract the assigned groups from the id token.
-     *
-     * @return string[]
-     */
-    protected function getUserGroups(OidcIdToken $token): array
-    {
-        $groupsAttr = $this->config()['groups_claim'];
-        if (empty($groupsAttr)) {
-            return [];
-        }
-
-        $groupsList = Arr::get($token->getAllClaims(), $groupsAttr);
-        if (!is_array($groupsList)) {
-            return [];
-        }
-
-        return array_values(array_filter($groupsList, function ($val) {
-            return is_string($val);
-        }));
-    }
-
-    /**
-     * Extract the details of a user from an ID token.
-     *
-     * @return array{name: string, email: string, external_id: string, groups: string[]}
-     */
-    protected function getUserDetails(OidcIdToken $token): array
-    {
-        $idClaim = $this->config()['external_id_claim'];
-        $id = $token->getClaim($idClaim);
-
-        return [
-            'external_id' => $id,
-            'email'       => $token->getClaim('email'),
-            'name'        => $this->getUserDisplayName($token, $id),
-            'groups'      => $this->getUserGroups($token),
-        ];
-    }
-
-    /**
      * Processes a received access token for a user. Login the user when
      * they exist, optionally registering them automatically.
      *
@@ -240,26 +176,6 @@ class OidcService
         );
 
         session()->put("oidc_id_token", $idTokenText);
-
-        // TODO - This should not affect id token validation
-        // TODO - Should only call if we're missing properties
-        if (!empty($settings->userinfoEndpoint)) {
-            $provider = $this->getProvider($settings);
-            $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
-            $response = $provider->getParsedResponse($request);
-            // TODO - Ensure response content-type is "application/json" before using in this way (5.3.2)
-            // TODO - The sub Claim in the UserInfo Response MUST be verified to exactly match the sub Claim in the ID Token; if they do not match, the UserInfo Response values MUST NOT be used. (5.3.2)
-            // TODO - Response validation (5.3.4)
-               // TODO - Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
-               // TODO - If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
-               // TODO - If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
-            $claims = $idToken->getAllClaims();
-            foreach ($response as $key => $value) {
-                $claims[$key] = $value;
-            }
-            // TODO - Should maybe remain separate from IdToken completely
-            $idToken->replaceClaims($claims);
-        }
 
         $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
             'access_token' => $accessToken->getToken(),
@@ -281,31 +197,54 @@ class OidcService
             throw new OidcException("ID token validate failed with error: {$exception->getMessage()}");
         }
 
-        $userDetails = $this->getUserDetails($idToken);
-        $isLoggedIn = auth()->check();
+        $userDetails = OidcUserDetails::fromToken(
+            $idToken,
+            $this->config()['external_id_claim'],
+            $this->config()['display_name_claims'] ?? '',
+            $this->config()['groups_claim'] ?? ''
+        );
 
-        if (empty($userDetails['email'])) {
+        // TODO - This should not affect id token validation
+        if (!$userDetails->isFullyPopulated($this->shouldSyncGroups()) && !empty($settings->userinfoEndpoint)) {
+            $provider = $this->getProvider($settings);
+            $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
+            $response = $provider->getParsedResponse($request);
+            // TODO - Ensure response content-type is "application/json" before using in this way (5.3.2)
+            // TODO - The sub Claim in the UserInfo Response MUST be verified to exactly match the sub Claim in the ID Token; if they do not match, the UserInfo Response values MUST NOT be used. (5.3.2)
+            // TODO - Response validation (5.3.4)
+            // TODO - Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
+            // TODO - If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
+            // TODO - If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
+            $claims = $idToken->getAllClaims();
+            foreach ($response as $key => $value) {
+                $claims[$key] = $value;
+            }
+            // TODO - Should maybe remain separate from IdToken completely
+            $idToken->replaceClaims($claims);
+        }
+
+        if (empty($userDetails->email)) {
             throw new OidcException(trans('errors.oidc_no_email_address'));
         }
 
+        $isLoggedIn = auth()->check();
         if ($isLoggedIn) {
             throw new OidcException(trans('errors.oidc_already_logged_in'));
         }
 
         try {
             $user = $this->registrationService->findOrRegister(
-                $userDetails['name'],
-                $userDetails['email'],
-                $userDetails['external_id']
+                $userDetails->name,
+                $userDetails->email,
+                $userDetails->externalId
             );
         } catch (UserRegistrationException $exception) {
             throw new OidcException($exception->getMessage());
         }
 
         if ($this->shouldSyncGroups()) {
-            $groups = $userDetails['groups'];
             $detachExisting = $this->config()['remove_from_groups'];
-            $this->groupService->syncUserWithFoundGroups($user, $groups, $detachExisting);
+            $this->groupService->syncUserWithFoundGroups($user, $userDetails->groups ?? [], $detachExisting);
         }
 
         $this->loginService->login($user, 'oidc');
