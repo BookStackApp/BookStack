@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'For å forhindre mange varslinger, vil du ikke få nye varslinger for endringer på denne siden fra samme forfatter.',
 
     'detail_page_name' => 'Sidenavn:',
+    'detail_page_path' => 'Side bane:',
     'detail_commenter' => 'Kommentar fra:',
     'detail_comment' => 'Kommentar:',
     'detail_created_by' => 'Opprettet av:',

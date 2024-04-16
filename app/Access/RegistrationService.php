@@ -14,20 +14,14 @@ use Illuminate\Support\Str;
 
 class RegistrationService
 {
-    protected $userRepo;
-    protected $emailConfirmationService;
-
-    /**
-     * RegistrationService constructor.
-     */
-    public function __construct(UserRepo $userRepo, EmailConfirmationService $emailConfirmationService)
-    {
-        $this->userRepo = $userRepo;
-        $this->emailConfirmationService = $emailConfirmationService;
+    public function __construct(
+        protected UserRepo $userRepo,
+        protected EmailConfirmationService $emailConfirmationService,
+    ) {
     }
 
     /**
-     * Check whether or not registrations are allowed in the app settings.
+     * Check if registrations are allowed in the app settings.
      *
      * @throws UserRegistrationException
      */
@@ -84,6 +78,7 @@ class RegistrationService
     public function registerUser(array $userData, ?SocialAccount $socialAccount = null, bool $emailConfirmed = false): User
     {
         $userEmail = $userData['email'];
+        $authSystem = $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver();
 
         // Email restriction
         $this->ensureEmailDomainAllowed($userEmail);
@@ -92,6 +87,12 @@ class RegistrationService
         $alreadyUser = !is_null($this->userRepo->getByEmail($userEmail));
         if ($alreadyUser) {
             throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $userEmail]), '/login');
+        }
+
+        /** @var ?bool $shouldRegister */
+        $shouldRegister = Theme::dispatch(ThemeEvents::AUTH_PRE_REGISTER, $authSystem, $userData);
+        if ($shouldRegister === false) {
+            throw new UserRegistrationException(trans('errors.auth_pre_register_theme_prevention'), '/login');
         }
 
         // Create the user
@@ -104,7 +105,7 @@ class RegistrationService
         }
 
         Activity::add(ActivityType::AUTH_REGISTER, $socialAccount ?? $newUser);
-        Theme::dispatch(ThemeEvents::AUTH_REGISTER, $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver(), $newUser);
+        Theme::dispatch(ThemeEvents::AUTH_REGISTER, $authSystem, $newUser);
 
         // Start email confirmation flow if required
         if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {
@@ -138,7 +139,7 @@ class RegistrationService
         }
 
         $restrictedEmailDomains = explode(',', str_replace(' ', '', $registrationRestrict));
-        $userEmailDomain = $domain = mb_substr(mb_strrchr($userEmail, '@'), 1);
+        $userEmailDomain = mb_substr(mb_strrchr($userEmail, '@'), 1);
         if (!in_array($userEmailDomain, $restrictedEmailDomains)) {
             $redirect = $this->registrationAllowed() ? '/register' : '/login';
 

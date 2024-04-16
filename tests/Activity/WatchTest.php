@@ -196,7 +196,7 @@ class WatchTest extends TestCase
         $notifications = Notification::fake();
 
         $this->asAdmin()->post("/comment/{$entities['page']->id}", [
-            'text' => 'My new comment'
+            'html' => '<p>My new comment</p>'
         ]);
         $notifications->assertSentTo($editor, CommentCreationNotification::class);
     }
@@ -217,12 +217,12 @@ class WatchTest extends TestCase
         $notifications = Notification::fake();
 
         $this->actingAs($editor)->post("/comment/{$entities['page']->id}", [
-            'text' => 'My new comment'
+            'html' => '<p>My new comment</p>'
         ]);
         $comment = $entities['page']->comments()->orderBy('id', 'desc')->first();
 
         $this->asAdmin()->post("/comment/{$entities['page']->id}", [
-            'text' => 'My new comment response',
+            'html' => '<p>My new comment response</p>',
             'parent_id' => $comment->local_id,
         ]);
         $notifications->assertSentTo($editor, CommentCreationNotification::class);
@@ -257,7 +257,7 @@ class WatchTest extends TestCase
 
         // Comment post
         $this->actingAs($admin)->post("/comment/{$entities['page']->id}", [
-            'text' => 'My new comment response',
+            'html' => '<p>My new comment response</p>',
         ]);
 
         $notifications->assertSentTo($editor, function (CommentCreationNotification $notification) use ($editor, $admin, $entities) {
@@ -376,7 +376,7 @@ class WatchTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($page);
 
         $this->asAdmin()->post("/comment/{$page->id}", [
-            'text' => 'My new comment response',
+            'html' => '<p>My new comment response</p>',
         ])->assertOk();
 
         $notifications->assertNothingSentTo($editor);

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Zuletzt aktualisiert: :timeLength',
     'meta_updated_name' => 'Zuletzt aktualisiert: :timeLength von :user',
     'meta_owned_name' => 'Im Besitz von :user',
-    'meta_reference_page_count' => 'Verwiesen auf 1 Seite|Verwiesen auf :count Seiten',
+    'meta_reference_count' => 'Referenziert von :count Element|Referenziert von :count Elementen',
     'entity_select' => 'Eintrag auswählen',
     'entity_select_lack_permission' => 'Du hast nicht die benötigte Berechtigung, um dieses Element auszuwählen',
     'images' => 'Bilder',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF-Datei',
     'export_text' => 'Textdatei',
     'export_md' => 'Markdown-Datei',
+    'default_template' => 'Standard Seitenvorlage',
+    'default_template_explain' => 'Zuweisen einer Seitenvorlage, die als Standardinhalt für alle Seiten verwendet wird, die innerhalb dieses Elements erstellt wurden. Beachten Sie, dass dies nur dann verwendet wird, wenn der Ersteller der Seite Zugriff auf die ausgewählte Vorlagen-Seite hat.',
+    'default_template_select' => 'Wähle eine Seitenvorlage',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Seitenentwurf löschen',
     'pages_delete_success' => 'Seite gelöscht',
     'pages_delete_draft_success' => 'Seitenentwurf gelöscht',
+    'pages_delete_warning_template' => 'Diese Seite wird aktiv als Standardvorlage für Bücher oder Kapitel verwendet. In diesen Büchern oder Kapiteln wird nach dem Löschen dieser Seite keine Standardvorlage mehr zugewiesen sein.',
     'pages_delete_confirm' => 'Bist du sicher, dass du diese Seite löschen möchtest?',
     'pages_delete_draft_confirm' => 'Bist du sicher, dass du diesen Seitenentwurf löschen möchtest?',
     'pages_editing_named' => 'Seite ":pageName" bearbeiten',
@@ -212,7 +216,7 @@ return [
     'pages_edit_draft' => 'Seitenentwurf bearbeiten',
     'pages_editing_draft' => 'Seitenentwurf bearbeiten',
     'pages_editing_page' => 'Seite bearbeiten',
-    'pages_edit_draft_save_at' => 'Entwurf gespeichert um ',
+    'pages_edit_draft_save_at' => 'Entwurf gesichert um ',
     'pages_edit_delete_draft' => 'Entwurf löschen',
     'pages_edit_delete_draft_confirm' => 'Bist du sicher, dass du deinen Entwurf löschen möchtest? Alle deine Änderungen seit dem letzten vollständigen Speichern gehen verloren und der Editor wird mit dem letzten Speicherzustand aktualisiert, der kein Entwurf ist.',
     'pages_edit_discard_draft' => 'Entwurf verwerfen',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Verweise',
     'references_none' => 'Es gibt keine nachverfolgten Referenzen zu diesem Element.',
-    'references_to_desc' => 'Nachfolgend sind alle bekannten Seiten im System aufgeführt, die auf diesen Artikel verweisen.',
+    'references_to_desc' => 'Unten sind alle bekannten Inhalte im System aufgelistet, die auf diesen Eintrag verweisen.',
 
     // Watch Options
     'watch' => 'Beobachten',

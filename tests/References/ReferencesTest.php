@@ -30,7 +30,30 @@ class ReferencesTest extends TestCase
         ]);
     }
 
-    public function test_references_deleted_on_entity_delete()
+    public function test_references_created_on_book_chapter_bookshelf_update()
+    {
+        $entities = [$this->entities->book(), $this->entities->chapter(), $this->entities->shelf()];
+        $shelf = $this->entities->shelf();
+
+        foreach ($entities as $entity) {
+            $entity->refresh();
+            $this->assertDatabaseMissing('references', ['from_id' => $entity->id, 'from_type' => $entity->getMorphClass()]);
+
+            $this->asEditor()->put($entity->getUrl(), [
+                'name' => 'Reference test',
+                'description_html' => '<a href="' . $shelf->getUrl() . '">Testing</a>',
+            ]);
+
+            $this->assertDatabaseHas('references', [
+                'from_id'   => $entity->id,
+                'from_type' => $entity->getMorphClass(),
+                'to_id'     => $shelf->id,
+                'to_type'   => $shelf->getMorphClass(),
+            ]);
+        }
+    }
+
+    public function test_references_deleted_on_page_delete()
     {
         $pageA = $this->entities->page();
         $pageB = $this->entities->page();
@@ -48,6 +71,25 @@ class ReferencesTest extends TestCase
         $this->assertDatabaseMissing('references', ['to_id' => $pageA->id, 'to_type' => $pageA->getMorphClass()]);
     }
 
+    public function test_references_from_deleted_on_book_chapter_shelf_delete()
+    {
+        $entities = [$this->entities->chapter(), $this->entities->book(), $this->entities->shelf()];
+        $shelf = $this->entities->shelf();
+
+        foreach ($entities as $entity) {
+            $this->createReference($entity, $shelf);
+            $this->assertDatabaseHas('references', ['from_id' => $entity->id, 'from_type' => $entity->getMorphClass()]);
+
+            $this->asEditor()->delete($entity->getUrl());
+            app(TrashCan::class)->empty();
+
+            $this->assertDatabaseMissing('references', [
+                'from_id'   => $entity->id,
+                'from_type' => $entity->getMorphClass()
+            ]);
+        }
+    }
+
     public function test_references_to_count_visible_on_entity_show_view()
     {
         $entities = $this->entities->all();
@@ -60,13 +102,13 @@ class ReferencesTest extends TestCase
 
         foreach ($entities as $entity) {
             $resp = $this->get($entity->getUrl());
-            $resp->assertSee('Referenced on 1 page');
-            $resp->assertDontSee('Referenced on 1 pages');
+            $resp->assertSee('Referenced by 1 item');
+            $resp->assertDontSee('Referenced by 1 items');
         }
 
         $this->createReference($otherPage, $entities['page']);
         $resp = $this->get($entities['page']->getUrl());
-        $resp->assertSee('Referenced on 2 pages');
+        $resp->assertSee('Referenced by 2 items');
     }
 
     public function test_references_to_visible_on_references_page()
@@ -203,7 +245,57 @@ class ReferencesTest extends TestCase
         $this->assertEquals($expected, $page->markdown);
     }
 
-    protected function createReference(Model $from, Model $to)
+    public function test_description_links_from_book_chapter_shelf_updated_on_url_change()
+    {
+        $entities = [$this->entities->chapter(), $this->entities->book(), $this->entities->shelf()];
+        $shelf = $this->entities->shelf();
+        $this->asEditor();
+
+        foreach ($entities as $entity) {
+            $this->put($entity->getUrl(), [
+                'name' => 'Reference test',
+                'description_html' => '<a href="' . $shelf->getUrl() . '">Testing</a>',
+            ]);
+        }
+
+        $oldUrl = $shelf->getUrl();
+        $this->put($shelf->getUrl(), ['name' => 'My updated shelf link']);
+        $shelf->refresh();
+        $this->assertNotEquals($oldUrl, $shelf->getUrl());
+
+        foreach ($entities as $entity) {
+            $oldHtml = $entity->description_html;
+            $entity->refresh();
+            $this->assertNotEquals($oldHtml, $entity->description_html);
+            $this->assertStringContainsString($shelf->getUrl(), $entity->description_html);
+        }
+    }
+
+    public function test_reference_from_deleted_item_does_not_count_or_show_in_references_page()
+    {
+        $page = $this->entities->page();
+        $referencingPageA = $this->entities->page();
+        $referencingPageB = $this->entities->page();
+
+        $this->asEditor();
+        $this->createReference($referencingPageA, $page);
+        $this->createReference($referencingPageB, $page);
+
+        $resp = $this->get($page->getUrl());
+        $resp->assertSee('Referenced by 2 items');
+
+        $this->delete($referencingPageA->getUrl());
+
+        $resp = $this->get($page->getUrl());
+        $resp->assertSee('Referenced by 1 item');
+
+        $resp = $this->get($page->getUrl('/references'));
+        $resp->assertOk();
+        $resp->assertSee($referencingPageB->getUrl());
+        $resp->assertDontSee($referencingPageA->getUrl());
+    }
+
+    protected function createReference(Model $from, Model $to): void
     {
         (new Reference())->forceFill([
             'from_type' => $from->getMorphClass(),

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aggiornato :timeLength',
     'meta_updated_name' => 'Aggiornato :timeLength da :user',
     'meta_owned_name' => 'Creati da :user',
-    'meta_reference_page_count' => 'Referenziato su :count page|Referenziato su :count pages',
+    'meta_reference_count' => 'Referenziato da :count item|Referenziato da :count items',
     'entity_select' => 'Selezione Entità',
     'entity_select_lack_permission' => 'Non hai i permessi necessari per selezionare questo elemento',
     'images' => 'Immagini',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'File PDF',
     'export_text' => 'File di testo',
     'export_md' => 'File Markdown',
+    'default_template' => 'Modello Di Pagina Predefinito',
+    'default_template_explain' => 'Assegna un modello di pagina che sarà usato come contenuto predefinito per tutte le pagine create in questo elemento. Tenere presente che questo verrà utilizzato solo se il creatore della pagina ha accesso alla pagina del modello scelto.',
+    'default_template_select' => 'Seleziona una pagina modello',
 
     // Permissions and restrictions
     'permissions' => 'Permessi',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Elimina Bozza Pagina',
     'pages_delete_success' => 'Pagina eliminata',
     'pages_delete_draft_success' => 'Bozza di una pagina eliminata',
+    'pages_delete_warning_template' => 'Questa pagina è in uso attivo come modello di pagina predefinito del libro o del capitolo. Questi libri o capitoli non avranno più un modello di pagina predefinito assegnato dopo che questa pagina è stata eliminata.',
     'pages_delete_confirm' => 'Sei sicuro di voler eliminare questa pagina?',
     'pages_delete_draft_confirm' => 'Sei sicuro di voler eliminare la bozza di questa pagina?',
     'pages_editing_named' => 'Modifica :pageName',
@@ -344,7 +348,7 @@ return [
     'attachments_file_uploaded' => 'File caricato correttamente',
     'attachments_file_updated' => 'File aggiornato correttamente',
     'attachments_link_attached' => 'Link allegato correttamente alla pagina',
-    'templates' => 'Template',
+    'templates' => 'Modello',
     'templates_set_as_template' => 'La pagina è un template',
     'templates_explain_set_as_template' => 'Puoi impostare questa pagina come template in modo che il suo contenuto sia utilizzato quando si creano altre pagine. Gli altri utenti potranno utilizzare questo template se avranno i permessi di visualizzazione per questa pagina.',
     'templates_replace_content' => 'Rimpiazza contenuto della pagina',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Riferimenti',
     'references_none' => 'Non ci sono riferimenti tracciati a questa voce.',
-    'references_to_desc' => 'Di seguito sono riportate tutte le pagine conosciute nel sistema che collegano a questo elemento.',
+    'references_to_desc' => 'Di seguito sono elencati tutti i contenuti noti del sistema che rimandano a questo elemento.',
 
     // Watch Options
     'watch' => 'Osserva',

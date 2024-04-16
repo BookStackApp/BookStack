@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Email为 :email 的用户已经存在，但具有不同的凭据。',
+    'auth_pre_register_theme_prevention' => '无法根据所提供的信息注册帐户',
     'email_already_confirmed' => 'Email已被确认，请尝试登录。',
     'email_confirmation_invalid' => '此确认令牌无效或已被使用，请重新注册。',
     'email_confirmation_expired' => '确认令牌已过期，已发送新的确认电子邮件。',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => '未安装LDAP PHP扩展程序',
     'ldap_cannot_connect' => '无法连接到ldap服务器，初始连接失败',
     'saml_already_logged_in' => '您已经登陆了',
-    'saml_user_not_registered' => '用户 :name 未注册且自动注册功能已被禁用',
     'saml_no_email_address' => '无法找到有效Email地址，此用户数据由外部身份验证系统托管',
     'saml_invalid_response_id' => '来自外部身份验证系统的请求没有被本应用程序认证，在登录后返回上一页可能会导致此问题。',
     'saml_fail_authed' => '使用 :system 登录失败，登录系统未返回成功登录授权信息。',
     'oidc_already_logged_in' => '您已经登陆了',
-    'oidc_user_not_registered' => '用户 :name 尚未注册，自助注册功能已被禁用',
     'oidc_no_email_address' => '无法找到有效的 Email 地址，此用户数据由外部身份验证系统托管',
     'oidc_fail_authed' => '使用 :system 登录失败，登录系统未返回成功登录授权信息',
     'social_no_action_defined' => '没有定义行为',

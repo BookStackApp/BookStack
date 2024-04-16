@@ -48,12 +48,19 @@ function highlightElem(elem) {
     const content = elem.textContent.trimEnd();
 
     let langName = '';
+    let innerCodeDirection = '';
     if (innerCodeElem !== null) {
         langName = innerCodeElem.className.replace('language-', '');
+        innerCodeDirection = innerCodeElem.getAttribute('dir');
     }
 
     const wrapper = document.createElement('div');
     elem.parentNode.insertBefore(wrapper, elem);
+
+    const direction = innerCodeDirection || elem.getAttribute('dir') || '';
+    if (direction) {
+        wrapper.setAttribute('dir', direction);
+    }
 
     const ev = createView('content-code-block', {
         parent: wrapper,

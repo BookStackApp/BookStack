@@ -4,7 +4,8 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\Models\View;
-use BookStack\Entities\Models\Book;
+use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
@@ -18,15 +19,13 @@ use Illuminate\Validation\ValidationException;
 
 class BookshelfController extends Controller
 {
-    protected BookshelfRepo $shelfRepo;
-    protected ShelfContext $shelfContext;
-    protected ReferenceFetcher $referenceFetcher;
-
-    public function __construct(BookshelfRepo $shelfRepo, ShelfContext $shelfContext, ReferenceFetcher $referenceFetcher)
-    {
-        $this->shelfRepo = $shelfRepo;
-        $this->shelfContext = $shelfContext;
-        $this->referenceFetcher = $referenceFetcher;
+    public function __construct(
+        protected BookshelfRepo $shelfRepo,
+        protected BookshelfQueries $queries,
+        protected BookQueries $bookQueries,
+        protected ShelfContext $shelfContext,
+        protected ReferenceFetcher $referenceFetcher,
+    ) {
     }
 
     /**
@@ -41,10 +40,15 @@ class BookshelfController extends Controller
             'updated_at' => trans('common.sort_updated_at'),
         ]);
 
-        $shelves = $this->shelfRepo->getAllPaginated(18, $listOptions->getSort(), $listOptions->getOrder());
-        $recents = $this->isSignedIn() ? $this->shelfRepo->getRecentlyViewed(4) : false;
-        $popular = $this->shelfRepo->getPopular(4);
-        $new = $this->shelfRepo->getRecentlyCreated(4);
+        $shelves = $this->queries->visibleForListWithCover()
+            ->orderBy($listOptions->getSort(), $listOptions->getOrder())
+            ->paginate(18);
+        $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->get() : false;
+        $popular = $this->queries->popularForList()->get();
+        $new = $this->queries->visibleForList()
+            ->orderBy('created_at', 'desc')
+            ->take(4)
+            ->get();
 
         $this->shelfContext->clearShelfContext();
         $this->setPageTitle(trans('entities.shelves'));
@@ -65,7 +69,7 @@ class BookshelfController extends Controller
     public function create()
     {
         $this->checkPermission('bookshelf-create-all');
-        $books = Book::visible()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
+        $books = $this->bookQueries->visibleForList()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
         $this->setPageTitle(trans('entities.shelves_create'));
 
         return view('shelves.create', ['books' => $books]);
@@ -81,10 +85,10 @@ class BookshelfController extends Controller
     {
         $this->checkPermission('bookshelf-create-all');
         $validated = $this->validate($request, [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'        => ['array'],
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'             => ['array'],
         ]);
 
         $bookIds = explode(',', $request->get('books', ''));
@@ -100,7 +104,7 @@ class BookshelfController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $shelf = $this->shelfRepo->getBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-view', $shelf);
 
         $listOptions = SimpleListOptions::fromRequest($request, 'shelf_books')->withSortOptions([
@@ -129,7 +133,7 @@ class BookshelfController extends Controller
             'view'                    => $view,
             'activity'                => $activities->entityActivity($shelf, 20, 1),
             'listOptions'             => $listOptions,
-            'referenceCount'          => $this->referenceFetcher->getPageReferenceCountToEntity($shelf),
+            'referenceCount'          => $this->referenceFetcher->getReferenceCountToEntity($shelf),
         ]);
     }
 
@@ -138,11 +142,14 @@ class BookshelfController extends Controller
      */
     public function edit(string $slug)
     {
-        $shelf = $this->shelfRepo->getBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
         $shelfBookIds = $shelf->books()->get(['id'])->pluck('id');
-        $books = Book::visible()->whereNotIn('id', $shelfBookIds)->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
+        $books = $this->bookQueries->visibleForList()
+            ->whereNotIn('id', $shelfBookIds)
+            ->orderBy('name')
+            ->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
 
         $this->setPageTitle(trans('entities.shelves_edit_named', ['name' => $shelf->getShortName()]));
 
@@ -161,13 +168,13 @@ class BookshelfController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $shelf = $this->shelfRepo->getBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['string', 'max:1000'],
-            'image'       => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'        => ['array'],
+            'name'             => ['required', 'string', 'max:255'],
+            'description_html' => ['string', 'max:2000'],
+            'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'             => ['array'],
         ]);
 
         if ($request->has('image_reset')) {
@@ -187,7 +194,7 @@ class BookshelfController extends Controller
      */
     public function showDelete(string $slug)
     {
-        $shelf = $this->shelfRepo->getBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->setPageTitle(trans('entities.shelves_delete_named', ['name' => $shelf->getShortName()]));
@@ -202,7 +209,7 @@ class BookshelfController extends Controller
      */
     public function destroy(string $slug)
     {
-        $shelf = $this->shelfRepo->getBySlug($slug);
+        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
         $this->shelfRepo->destroy($shelf);

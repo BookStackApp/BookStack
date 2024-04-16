@@ -10,6 +10,7 @@ use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
@@ -20,6 +21,11 @@ use Illuminate\Support\Carbon;
 
 class TrashCan
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
     /**
      * Send a shelf to the recycle bin.
      *
@@ -203,7 +209,13 @@ class TrashCan
         }
 
         // Remove book template usages
-        Book::query()->where('default_template_id', '=', $page->id)
+        $this->queries->books->start()
+            ->where('default_template_id', '=', $page->id)
+            ->update(['default_template_id' => null]);
+
+        // Remove chapter template usages
+        $this->queries->chapters->start()
+            ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 
         $page->forceDelete();

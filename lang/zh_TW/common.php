@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => '取消',
-    'close' => 'Close',
+    'close' => '關閉',
     'confirm' => '確認',
     'back' => '返回',
     'save' => '儲存',
@@ -20,7 +20,7 @@ return [
     'description' => '描述',
     'role' => '角色',
     'cover_image' => '封面圖片',
-    'cover_image_description' => '此圖片大小應約為 440x250px。',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => '動作',
@@ -42,7 +42,7 @@ return [
     'remove' => '移除',
     'add' => '新增',
     'configure' => '配置',
-    'manage' => 'Manage',
+    'manage' => '管理',
     'fullscreen' => '全螢幕',
     'favourite' => '最愛',
     'unfavourite' => '取消最愛',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => '清理過濾',
     'download' => '下載',
     'open_in_tab' => '在新分頁中開啟',
-    'open' => 'Open',
+    'open' => '開啟',
 
     // Sort Options
     'sort_options' => '排序選項',

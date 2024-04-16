@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Ο Χρήστης αφαιρέθηκε επιτυχώς',
 
     // API Tokens
-    'api_token_create' => 'δημιουργήθηκε κωδικός API',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'O κωδικός API δημιουργήθηκε με επιτυχία',
-    'api_token_update' => 'κωδικός API ενημερώθηκε',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'κωδικός API ενημερώθηκε με επιτυχία',
-    'api_token_delete' => 'διαγραμμένο api token',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'Το διακριτικό API διαγράφηκε με επιτυχία',
 
     // Roles

@@ -52,7 +52,7 @@ class SearchApiTest extends TestCase
     public function test_all_endpoint_returns_items_with_preview_html()
     {
         $book = $this->entities->book();
-        $book->update(['name' => 'name with superuniquevalue within', 'description' => 'Description with superuniquevalue within']);
+        $book->forceFill(['name' => 'name with superuniquevalue within', 'description' => 'Description with superuniquevalue within'])->save();
         $book->indexForSearch();
 
         $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');

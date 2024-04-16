@@ -4,23 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'תגובה חדשה בדף: :pageName',
+    'new_comment_intro' => 'משתמש רשם על עמוד ב :appName:',
+    'new_page_subject' => 'עמוד חדש: PageName',
+    'new_page_intro' => 'עמוד חדש נפתח ב:appName:',
+    'updated_page_subject' => 'עמוד עודכן :pageName',
+    'updated_page_intro' => 'דף עודכן ב:appName:',
+    'updated_page_debounce' => 'על מנת לעצור הצפת התראות, לזמן מסוים אתה לא תקבל התראות על שינויים עתידיים בדף זה על ידי אותו עורך.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'שם עמוד:',
+    'detail_page_path' => 'נתיב לעמוד:',
+    'detail_commenter' => 'יוצר התגובה:',
+    'detail_comment' => 'תגובה:',
+    'detail_created_by' => 'נוצר על ידי:',
+    'detail_updated_by' => 'עודכן על ידי:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'צפה בתגובה',
+    'action_view_page' => 'הצג דף',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'ההתראה נשלחה אליך בגלל :link לכסות סוג זה של פעילות עבור פריט זה.',
+    'footer_reason_link' => 'העדפות ההתראות שלך',
 ];

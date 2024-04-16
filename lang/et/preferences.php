@@ -35,7 +35,7 @@ return [
     'auth_change_password_success' => 'Parool on muudetud!',
 
     'profile' => 'Profiili detailid',
-    'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
+    'profile_desc' => 'Halda oma konto andmeid, mis sind teistele kasutajatele esindab, lisaks andmetele, mida kasutatakse suhtluseks ja süsteemi kohaldamiseks.',
     'profile_view_public' => 'Vaata avalikku profiili',
     'profile_name_desc' => 'Seadista oma avalik nimi, mis on nähtav teistele kasutajatele sinu tehtud tegevuste ja sulle kuuluva sisu kaudu.',
     'profile_email_desc' => 'Seda e-posti aadressi kasutatakse teavituste saatmiseks ning, sõltuvalt aktiivsest autentimismeetodist, süsteemile ligipääsemiseks.',

@@ -205,9 +205,6 @@ header .search-box.search-active:focus-within {
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 4px;
   padding: 0 $-xs;
-  position: absolute;
-  right: $-m;
-  top: 13px;
   line-height: 1;
   cursor: pointer;
   user-select: none;
@@ -215,12 +212,7 @@ header .search-box.search-active:focus-within {
     margin: 0;
     bottom: -2px;
   }
-  @include rtl() {
-    left: $-m;
-    right: auto;
-  }
 }
-
 
 
 @include smaller-than($l) {
@@ -228,7 +220,7 @@ header .search-box.search-active:focus-within {
     @include lightDark(background-color, #fff, #333);
     display: none;
     z-index: 10;
-    right: $-m;
+    inset-inline-end: $-m;
     border-radius: 4px;
     overflow: hidden;
     position: absolute;

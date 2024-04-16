@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Mae defnyddiwr gyda\'r e-bost :email eisoes yn bodoli ond gyda nodweddion gwahanol.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-bost eisoes wedi\'i gadarnhau, Ceisiwch fewngofnodi.',
     'email_confirmation_invalid' => 'Nid yw\'r tocyn cadarnhau hwn yn ddilys neu mae eisoes wedi\'i ddefnyddio. Ceisiwch gofrestru eto.',
     'email_confirmation_expired' => 'Mae\'r tocyn cadarnhad wedi dod i ben, Mae e-bost cadarnhau newydd wedi\'i anfon.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'Estyniad PHP LDAP heb ei osod',
     'ldap_cannot_connect' => 'Methu cysylltu i weinydd ldap, cysylltiad cychwynnol wedi methu',
     'saml_already_logged_in' => 'Wedi mewngofnodi yn barod',
-    'saml_user_not_registered' => 'Nid yw\'r defnyddiwr :name wedi\'i gofrestru ac mae cofrestriad awtomatig wedi\'i analluogi',
     'saml_no_email_address' => 'Methu dod o hyd i gyfeiriad e-bost, ar gyfer y defnyddiwr hwn, yn y data a ddarparwyd gan y system ddilysu allanol',
     'saml_invalid_response_id' => 'Nid yw\'r cais o\'r system ddilysu allanol yn cael ei gydnabod gan broses a ddechreuwyd gan y cais hwn. Gallai llywio yn ôl ar ôl mewngofnodi achosi\'r broblem hon.',
     'saml_fail_authed' => 'Wedi methu mewngofnodi gan ddefnyddio :system, ni roddodd y system awdurdodiad llwyddiannus',
     'oidc_already_logged_in' => 'Wedi mewngofnodi yn barod',
-    'oidc_user_not_registered' => 'Nid yw\'r defnyddiwr :name wedi\'i gofrestru ac mae cofrestriad awtomatig wedi\'i analluogi',
     'oidc_no_email_address' => 'Methu dod o hyd i gyfeiriad e-bost, ar gyfer y defnyddiwr hwn, yn y data a ddarparwyd gan y system ddilysu allanol',
     'oidc_fail_authed' => 'Wedi methu mewngofnodi gan ddefnyddio :system, ni roddodd y system awdurdodiad llwyddiannus',
     'social_no_action_defined' => 'Dim gweithred wedi\'i diffinio',

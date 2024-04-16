@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Un utente con la mail :email esiste già ma con credenziali differenti.',
+    'auth_pre_register_theme_prevention' => 'Non è stato possibile registrare l\'account utente coi dettagli forniti',
     'email_already_confirmed' => 'La mail è già stata confermata, esegui il login.',
     'email_confirmation_invalid' => 'Questo token di conferma non è valido o già stato utilizzato, registrati nuovamente.',
     'email_confirmation_expired' => 'Il token di conferma è scaduto, è stata inviata una nuova mail di conferma.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'L\'estensione PHP LDAP non è installata',
     'ldap_cannot_connect' => 'Impossibile connettersi al server ldap, connessione iniziale fallita',
     'saml_already_logged_in' => 'Già loggato',
-    'saml_user_not_registered' => 'L\'utente :name non è registrato e la registrazione automatica è disabilitata',
     'saml_no_email_address' => 'Impossibile trovare un indirizzo email per questo utente nei dati forniti dal sistema di autenticazione esterno',
     'saml_invalid_response_id' => 'La richiesta dal sistema di autenticazione esterno non è riconosciuta da un processo iniziato da questa applicazione. Tornare indietro dopo un login potrebbe causare questo problema.',
     'saml_fail_authed' => 'Accesso con :system non riuscito, il sistema non ha fornito l\'autorizzazione corretta',
     'oidc_already_logged_in' => 'Hai già effettuato il login',
-    'oidc_user_not_registered' => 'L\'utente :name non è registrato e la registrazione automatica è disabilitata',
     'oidc_no_email_address' => 'Impossibile trovare un indirizzo email, per questo utente, nei dati forniti dal sistema di autenticazione esterno',
     'oidc_fail_authed' => 'Accesso con :system non riuscito, il sistema non ha fornito l\'autorizzazione',
     'social_no_action_defined' => 'Nessuna azione definita',

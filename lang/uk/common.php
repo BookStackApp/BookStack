@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Скасувати',
-    'close' => 'Close',
+    'close' => 'Закрити',
     'confirm' => 'Застосувати',
     'back' => 'Назад',
     'save' => 'Зберегти',
@@ -20,7 +20,7 @@ return [
     'description' => 'Опис',
     'role' => 'Роль',
     'cover_image' => 'Обкладинка',
-    'cover_image_description' => 'Це зображення має бути приблизно 440x250px.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Дії',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Видалити',
     'add' => 'Додати',
     'configure' => 'Налаштувати',
-    'manage' => 'Manage',
+    'manage' => 'Управління',
     'fullscreen' => 'На весь екран',
     'favourite' => 'Улюблене',
     'unfavourite' => 'Прибрати з обраного',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Очистити фільтр',
     'download' => 'Завантажити',
     'open_in_tab' => 'Відкрити в новій вкладці',
-    'open' => 'Open',
+    'open' => 'Відкрити',
 
     // Sort Options
     'sort_options' => 'Параметри сортування',

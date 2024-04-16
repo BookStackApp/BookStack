@@ -25,6 +25,9 @@ class ShelvesApiTest extends TestCase
                 'id'   => $firstBookshelf->id,
                 'name' => $firstBookshelf->name,
                 'slug' => $firstBookshelf->slug,
+                'owned_by' => $firstBookshelf->owned_by,
+                'created_by' => $firstBookshelf->created_by,
+                'updated_by' => $firstBookshelf->updated_by,
             ],
         ]]);
     }
@@ -42,7 +45,11 @@ class ShelvesApiTest extends TestCase
         $resp = $this->postJson($this->baseEndpoint, array_merge($details, ['books' => [$books[0]->id, $books[1]->id]]));
         $resp->assertStatus(200);
         $newItem = Bookshelf::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
-        $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
+        $resp->assertJson(array_merge($details, [
+            'id' => $newItem->id,
+            'slug' => $newItem->slug,
+            'description_html' => '<p>A shelf created via the API</p>',
+        ]));
         $this->assertActivityExists('bookshelf_create', $newItem);
         foreach ($books as $index => $book) {
             $this->assertDatabaseHas('bookshelves_books', [
@@ -51,6 +58,28 @@ class ShelvesApiTest extends TestCase
                 'order'        => $index,
             ]);
         }
+    }
+
+    public function test_create_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+
+        $details = [
+            'name'             => 'My API shelf',
+            'description_html' => '<p>A <strong>shelf</strong> created via the API</p>',
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(200);
+        $newItem = Bookshelf::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
+
+        $expectedDetails = array_merge($details, [
+            'id'          => $newItem->id,
+            'description' => 'A shelf created via the API',
+        ]);
+
+        $resp->assertJson($expectedDetails);
+        $this->assertDatabaseHas('bookshelves', $expectedDetails);
     }
 
     public function test_shelf_name_needed_to_create()
@@ -102,15 +131,34 @@ class ShelvesApiTest extends TestCase
         $shelf = Bookshelf::visible()->first();
         $details = [
             'name'        => 'My updated API shelf',
-            'description' => 'A shelf created via the API',
+            'description' => 'A shelf updated via the API',
         ];
 
         $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", $details);
         $shelf->refresh();
 
         $resp->assertStatus(200);
-        $resp->assertJson(array_merge($details, ['id' => $shelf->id, 'slug' => $shelf->slug]));
+        $resp->assertJson(array_merge($details, [
+            'id' => $shelf->id,
+            'slug' => $shelf->slug,
+            'description_html' => '<p>A shelf updated via the API</p>',
+        ]));
         $this->assertActivityExists('bookshelf_update', $shelf);
+    }
+
+    public function test_update_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+        $shelf = Bookshelf::visible()->first();
+        $details = [
+            'name'             => 'My updated API shelf',
+            'description_html' => '<p>A shelf <em>updated</em> via the API</p>',
+        ];
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$shelf->id}", $details);
+        $resp->assertStatus(200);
+
+        $this->assertDatabaseHas('bookshelves', array_merge($details, ['id' => $shelf->id, 'description' => 'A shelf updated via the API']));
     }
 
     public function test_update_increments_updated_date_if_only_tags_are_sent()

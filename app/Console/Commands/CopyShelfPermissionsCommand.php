@@ -2,7 +2,7 @@
 
 namespace BookStack\Console\Commands;
 
-use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Tools\PermissionsUpdater;
 use Illuminate\Console\Command;
 
@@ -28,7 +28,7 @@ class CopyShelfPermissionsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle(PermissionsUpdater $permissionsUpdater): int
+    public function handle(PermissionsUpdater $permissionsUpdater, BookshelfQueries $queries): int
     {
         $shelfSlug = $this->option('slug');
         $cascadeAll = $this->option('all');
@@ -51,11 +51,11 @@ class CopyShelfPermissionsCommand extends Command
                 return 0;
             }
 
-            $shelves = Bookshelf::query()->get(['id']);
+            $shelves = $queries->start()->get(['id']);
         }
 
         if ($shelfSlug) {
-            $shelves = Bookshelf::query()->where('slug', '=', $shelfSlug)->get(['id']);
+            $shelves = $queries->start()->where('slug', '=', $shelfSlug)->get(['id']);
             if ($shelves->count() === 0) {
                 $this->info('No shelves found with the given slug.');
             }

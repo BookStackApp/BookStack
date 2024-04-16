@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'See e-posti aadress on juba seotud teise kasutajaga.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-posti aadress on juba kinnitatud. Proovi sisse logida.',
     'email_confirmation_invalid' => 'Kinnituslink ei ole kehtiv või on seda juba kasutatud. Proovi uuesti registreeruda.',
     'email_confirmation_expired' => 'Kinnituslink on aegunud. Sulle saadeti aadressi kinnitamiseks uus e-kiri.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'PHP LDAP laiendus ei ole paigaldatud',
     'ldap_cannot_connect' => 'Ühendus LDAP serveriga ebaõnnestus',
     'saml_already_logged_in' => 'Juba sisse logitud',
-    'saml_user_not_registered' => 'Kasutaja :name ei ole registreeritud ning automaatne registreerimine on keelatud',
     'saml_no_email_address' => 'Selle kasutaja e-posti aadressi ei õnnestunud välisest autentimissüsteemist leida',
     'saml_invalid_response_id' => 'Välisest autentimissüsteemist tulnud päringut ei algatatud sellest rakendusest. Seda viga võib põhjustada pärast sisselogimist tagasi liikumine.',
     'saml_fail_authed' => 'Sisenemine :system kaudu ebaõnnestus, süsteem ei andnud volitust',
     'oidc_already_logged_in' => 'Juba sisse logitud',
-    'oidc_user_not_registered' => 'Kasutaja :name ei ole registreeritud ning automaatne registreerimine on keelatud',
     'oidc_no_email_address' => 'Selle kasutaja e-posti aadressi ei õnnestunud välisest autentimissüsteemist leida',
     'oidc_fail_authed' => 'Sisenemine :system kaudu ebaõnnestus, süsteem ei andnud volitust',
     'social_no_action_defined' => 'Tegevus on defineerimata',

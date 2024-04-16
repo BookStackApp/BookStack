@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => '電子郵件為 :email 已存在，但帳號密碼不同。',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => '已確認電子郵件，請嘗試登入。',
     'email_confirmation_invalid' => '這個確認權杖無效或已被使用，請嘗試重新註冊。',
     'email_confirmation_expired' => '這個確認權杖無效或已被使用，已傳送新的確認電子郵件。',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => '未安裝 PHP 的 LDAP 擴充程式',
     'ldap_cannot_connect' => '無法連線至 LDAP 伺服器，初始化連線失敗',
     'saml_already_logged_in' => '已登入',
-    'saml_user_not_registered' => '使用者 :name 未註冊，並已停用自動註冊',
     'saml_no_email_address' => '在外部認證系統提供的資料中找不到該使用者的電子郵件地址',
     'saml_invalid_response_id' => '此應用程式啟動的處理程序無法識別來自外部認證系統的請求。登入後回上一頁可能會造成此問題。',
     'saml_fail_authed' => '使用 :system 登入失敗，系統未提供成功的授權',
     'oidc_already_logged_in' => '已登入',
-    'oidc_user_not_registered' => '使用者 :name 未註冊，並已停用自動註冊',
     'oidc_no_email_address' => '在外部認證系統提供的資料中找不到該使用者的電子郵件地址',
     'oidc_fail_authed' => '使用 :system 登入失敗，系統未提供成功的授權',
     'social_no_action_defined' => '未定義動作',

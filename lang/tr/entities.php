@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength güncellendi',
     'meta_updated_name' => ':user tarafından :timeLength güncellendi',
     'meta_owned_name' => ':user kişisine ait',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Öge Seçimi',
     'entity_select_lack_permission' => 'Bu öğeyi seçmek için gerekli izinlere sahip değilsiniz',
     'images' => 'Görseller',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF Dosyası',
     'export_text' => 'Düz Metin Dosyası',
     'export_md' => 'Markdown Dosyası',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'İzinler',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Sayfa Taslağını Sil',
     'pages_delete_success' => 'Sayfa silindi',
     'pages_delete_draft_success' => 'Sayfa taslağı silindi',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Bu sayfayı silmek istediğinize emin misiniz?',
     'pages_delete_draft_confirm' => 'Bu sayfa taslağını silmek istediğinize emin misiniz?',
     'pages_editing_named' => ':pageName Sayfası Düzenleniyor',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referanslar',
     'references_none' => 'Bu öğeye ilişkin takip edilen bir referans bulunmamaktadır.',
-    'references_to_desc' => 'Aşağıda, sistemde bu öğeye bağlantı veren bilinen tüm sayfalar gösterilmektedir.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

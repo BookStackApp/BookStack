@@ -97,7 +97,7 @@ return [
     'api_token_create_notification' => 'Token de API creado correctamente',
     'api_token_update' => 'token de API actualizado',
     'api_token_update_notification' => 'Token de API actualizado correctamente',
-    'api_token_delete' => 'token de API eliminado',
+    'api_token_delete' => 'token de API borrado',
     'api_token_delete_notification' => 'Token de API eliminado correctamente',
 
     // Roles

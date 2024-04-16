@@ -7,15 +7,17 @@ use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use Illuminate\Support\Collection;
 
 class BookContents
 {
-    protected Book $book;
+    protected EntityQueries $queries;
 
-    public function __construct(Book $book)
-    {
-        $this->book = $book;
+    public function __construct(
+        protected Book $book,
+    ) {
+        $this->queries = app()->make(EntityQueries::class);
     }
 
     /**
@@ -23,10 +25,12 @@ class BookContents
      */
     public function getLastPriority(): int
     {
-        $maxPage = Page::visible()->where('book_id', '=', $this->book->id)
+        $maxPage = $this->book->pages()
             ->where('draft', '=', false)
-            ->where('chapter_id', '=', 0)->max('priority');
-        $maxChapter = Chapter::visible()->where('book_id', '=', $this->book->id)
+            ->where('chapter_id', '=', 0)
+            ->max('priority');
+
+        $maxChapter = $this->book->chapters()
             ->max('priority');
 
         return max($maxChapter, $maxPage, 1);
@@ -38,7 +42,7 @@ class BookContents
     public function getTree(bool $showDrafts = false, bool $renderPages = false): Collection
     {
         $pages = $this->getPages($showDrafts, $renderPages);
-        $chapters = Chapter::visible()->where('book_id', '=', $this->book->id)->get();
+        $chapters = $this->book->chapters()->scopes('visible')->get();
         $all = collect()->concat($pages)->concat($chapters);
         $chapterMap = $chapters->keyBy('id');
         $lonePages = collect();
@@ -87,15 +91,17 @@ class BookContents
      */
     protected function getPages(bool $showDrafts = false, bool $getPageContent = false): Collection
     {
-        $query = Page::visible()
-            ->select($getPageContent ? Page::$contentAttributes : Page::$listAttributes)
-            ->where('book_id', '=', $this->book->id);
+        if ($getPageContent) {
+            $query = $this->queries->pages->visibleWithContents();
+        } else {
+            $query = $this->queries->pages->visibleForList();
+        }
 
         if (!$showDrafts) {
             $query->where('draft', '=', false);
         }
 
-        return $query->get();
+        return $query->where('book_id', '=', $this->book->id)->get();
     }
 
     /**
@@ -126,7 +132,7 @@ class BookContents
 
         /** @var Book[] $booksInvolved */
         $booksInvolved = array_values(array_filter($modelMap, function (string $key) {
-            return strpos($key, 'book:') === 0;
+            return str_starts_with($key, 'book:');
         }, ARRAY_FILTER_USE_KEY));
 
         // Update permissions of books involved
@@ -279,7 +285,7 @@ class BookContents
             }
         }
 
-        $pages = Page::visible()->whereIn('id', array_unique($ids['page']))->get(Page::$listAttributes);
+        $pages = $this->queries->pages->visibleForList()->whereIn('id', array_unique($ids['page']))->get();
         /** @var Page $page */
         foreach ($pages as $page) {
             $modelMap['page:' . $page->id] = $page;
@@ -289,14 +295,14 @@ class BookContents
             }
         }
 
-        $chapters = Chapter::visible()->whereIn('id', array_unique($ids['chapter']))->get();
+        $chapters = $this->queries->chapters->visibleForList()->whereIn('id', array_unique($ids['chapter']))->get();
         /** @var Chapter $chapter */
         foreach ($chapters as $chapter) {
             $modelMap['chapter:' . $chapter->id] = $chapter;
             $ids['book'][] = $chapter->book_id;
         }
 
-        $books = Book::visible()->whereIn('id', array_unique($ids['book']))->get();
+        $books = $this->queries->books->visibleForList()->whereIn('id', array_unique($ids['book']))->get();
         /** @var Book $book */
         foreach ($books as $book) {
             $modelMap['book:' . $book->id] = $book;

@@ -2,7 +2,7 @@
 
 namespace BookStack\Uploads\Controllers;
 
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\ApiController;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
@@ -18,6 +18,7 @@ class ImageGalleryApiController extends ApiController
     public function __construct(
         protected ImageRepo $imageRepo,
         protected ImageResizer $imageResizer,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -66,9 +67,9 @@ class ImageGalleryApiController extends ApiController
     {
         $this->checkPermission('image-create-all');
         $data = $this->validate($request, $this->rules()['create']);
-        Page::visible()->findOrFail($data['uploaded_to']);
+        $page = $this->pageQueries->findVisibleByIdOrFail($data['uploaded_to']);
 
-        $image = $this->imageRepo->saveNew($data['image'], $data['type'], $data['uploaded_to']);
+        $image = $this->imageRepo->saveNew($data['image'], $data['type'], $page->id);
 
         if (isset($data['name'])) {
             $image->refresh();

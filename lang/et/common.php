@@ -20,7 +20,7 @@ return [
     'description' => 'Kirjeldus',
     'role' => 'Roll',
     'cover_image' => 'Kaanepilt',
-    'cover_image_description' => 'See pilt peaks olema umbes 440x250 pikslit.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Tegevused',

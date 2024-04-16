@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizováno :timeLength',
     'meta_updated_name' => 'Aktualizováno :timeLength uživatelem :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Odkazováno na 1 stránce|Odkazováno na :count stranách',
+    'meta_reference_count' => 'Odkazováno :count položkou|Odkazováno :count položkami',
     'entity_select' => 'Výběr entity',
     'entity_select_lack_permission' => 'Nemáte dostatečná oprávnění k výběru této položky',
     'images' => 'Obrázky',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF dokument',
     'export_text' => 'Textový soubor',
     'export_md' => 'Markdown',
+    'default_template' => 'Výchozí šablona stránky',
+    'default_template_explain' => 'Přiřadit šablonu stránky, která bude použita jako výchozí obsah pro všechny nové stránky v této knize. Mějte na paměti, že šablona bude použita pouze v případě, že tvůrce stránek bude mít přístup k těmto vybraným stránkám šablony.',
+    'default_template_select' => 'Vyberte šablonu stránky',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnění',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Odstranit koncept stránky',
     'pages_delete_success' => 'Stránka odstraněna',
     'pages_delete_draft_success' => 'Koncept stránky odstraněn',
+    'pages_delete_warning_template' => 'Tato stránka je aktivní výchozí šablona pro nějakou knihu či kapitolu. Tyto knihy nebo kapitoly již nebudou mít výchozí šablonu stránky přiřazenou po odstranění této stránky.',
     'pages_delete_confirm' => 'Opravdu chcete odstranit tuto stránku?',
     'pages_delete_draft_confirm' => 'Opravdu chcete odstranit tento koncept stránky?',
     'pages_editing_named' => 'Úpravy stránky :pageName',
@@ -295,7 +299,7 @@ return [
     'pages_is_template' => 'Šablona stránky',
 
     // Editor Sidebar
-    'toggle_sidebar' => 'Toggle Sidebar',
+    'toggle_sidebar' => 'Skrýt/Zobrazit postranní panel',
     'page_tags' => 'Štítky stránky',
     'chapter_tags' => 'Štítky kapitoly',
     'book_tags' => 'Štítky knihy',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Odkazy',
     'references_none' => 'Nebyly nalezeny žádné odkazy na tuto položku.',
-    'references_to_desc' => 'Níže jsou uvedeny všechny známé stránky systému, které odkazují na tuto položku.',
+    'references_to_desc' => 'Níže je uveden veškerý obsah o kterém systém ví, že odkazuje na tuto položku.',
 
     // Watch Options
     'watch' => 'Sledovat',

@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En användare med adressen :email finns redan.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'E-posten har redan bekräftats, prova att logga in.',
     'email_confirmation_invalid' => 'Denna bekräftelsekod är inte giltig eller har redan använts. Vänligen prova att registrera dig på nytt.',
     'email_confirmation_expired' => 'Denna bekräftelsekod har gått ut. Vi har skickat dig en ny.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP-tillägg inte installerat',
     'ldap_cannot_connect' => 'Kan inte ansluta till ldap-servern. Anslutningen misslyckades',
     'saml_already_logged_in' => 'Redan inloggad',
-    'saml_user_not_registered' => 'Användarnamnet är inte registrerat och automatisk registrering är inaktiverad',
     'saml_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i data som tillhandahålls av det externa autentiseringssystemet',
     'saml_invalid_response_id' => 'En begäran från det externa autentiseringssystemet känns inte igen av en process som startats av denna applikation. Att navigera bakåt efter en inloggning kan orsaka detta problem.',
     'saml_fail_authed' => 'Inloggning med :system misslyckades, systemet godkände inte auktoriseringen',
     'oidc_already_logged_in' => 'Redan inloggad',
-    'oidc_user_not_registered' => 'Användaren :name är inte registrerad och automatisk registrering är inaktiverad',
     'oidc_no_email_address' => 'Kunde inte hitta en e-postadress för den här användaren i den data som tillhandahölls av det externa autentiseringssystemet',
     'oidc_fail_authed' => 'Inloggning med :system misslyckades, systemet presenterade inte en godkänd auktorisering',
     'social_no_action_defined' => 'Ingen åtgärd definierad',

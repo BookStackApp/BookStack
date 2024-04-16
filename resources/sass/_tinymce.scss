@@ -21,6 +21,21 @@
   padding-block-end: 1rem;
   outline: 0;
   display: block;
+  max-width: 870px;
+}
+
+.wysiwyg-input.mce-content-body {
+  padding-block-start: 1rem;
+  padding-block-end: 1rem;
+  outline: 0;
+  display: block;
+}
+
+.wysiwyg-input.mce-content-body:before {
+  padding: 1rem;
+  top: 4px;
+  font-style: italic;
+  @include lightDark(color, rgba(34,47,62,.5), rgba(155,155,155,.5))
 }
 
 // Default styles for our custom root nodes
@@ -70,6 +85,40 @@ body.page-content.mce-content-body  {
   margin-bottom: (2px - $-s);
   margin-top: (2px - $-s);
   overflow: hidden;
+}
+
+// Allow alignment to be reflected in media embed wrappers
+.page-content.mce-content-body .mce-preview-object.align-right {
+  float: right !important;
+  margin: $-xs 0 $-xs $-s;
+}
+
+.page-content.mce-content-body .mce-preview-object.align-left {
+  float: left !important;
+  margin: $-xs $-m $-m 0;
+}
+
+.page-content.mce-content-body .mce-preview-object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-content.mce-content-body .mce-preview-object iframe,
+.page-content.mce-content-body .mce-preview-object video {
+  display: block;
+  margin: 0 !important;
+  float: none !important;
+}
+
+.page-content.mce-content-body td[data-mce-selected]::after,
+.page-content.mce-content-body th[data-mce-selected]::after {
+  top: 1px;
+  left: 1px;
+  bottom: 1px;
+  right: 1px;
+  outline: 1px dashed #1a85ff;
+  outline-offset: 0;
 }
 
 /**

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Mis à jour :timeLength',
     'meta_updated_name' => 'Mis à jour :timeLength par :user',
     'meta_owned_name' => 'Appartient à :user',
-    'meta_reference_page_count' => 'Référencé sur :count page|Référencé sur :count pages',
+    'meta_reference_count' => 'Référencé sur :count élément|Référencé sur :count éléments',
     'entity_select' => 'Sélectionner l\'entité',
     'entity_select_lack_permission' => 'Vous n\'avez pas les permissions requises pour sélectionner cet élément',
     'images' => 'Images',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Fichier PDF',
     'export_text' => 'Document texte',
     'export_md' => 'Fichiers Markdown',
+    'default_template' => 'Modèle de page par défaut',
+    'default_template_explain' => 'Sélectionnez un modèle de page qui sera utilisé comme contenu par défaut pour les nouvelles pages créées dans cet élément. Gardez à l\'esprit que le modèle ne sera utilisé que si le créateur de la page a accès au modèle sélectionné.',
+    'default_template_select' => 'Sélectionnez un modèle de page',
 
     // Permissions and restrictions
     'permissions' => 'Autorisations',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Supprimer le brouillon',
     'pages_delete_success' => 'Page supprimée',
     'pages_delete_draft_success' => 'Brouillon supprimé',
+    'pages_delete_warning_template' => 'Cette page actuellement utilisée comme modèle de page par défaut de livre ou de chapitre. Ces livres ou chapitres n\'auront plus de modèle de page par défaut assigné après la suppression de cette page.',
     'pages_delete_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer cette page ?',
     'pages_delete_draft_confirm' => 'Êtes-vous sûr(e) de vouloir supprimer ce brouillon ?',
     'pages_editing_named' => 'Modification de la page :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Références',
     'references_none' => 'Il n\'y a pas de références suivies à cet élément.',
-    'references_to_desc' => 'Vous trouverez ci-dessous toutes les pages connues du système qui ont un lien vers cet élément.',
+    'references_to_desc' => 'Vous trouverez ci-dessous le contenu connu du système qui a un lien vers cet élément.',
 
     // Watch Options
     'watch' => 'Suivre',

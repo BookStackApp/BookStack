@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Actualizado el :timeLength',
     'meta_updated_name' => 'Actualizado el :timeLength por :user',
     'meta_owned_name' => 'Propiedad de :user',
-    'meta_reference_page_count' => 'Referido en :count página | Referido en :count paginas',
+    'meta_reference_count' => 'Referido en :count página | Referido en :count paginas',
     'entity_select' => 'Seleccione entidad',
     'entity_select_lack_permission' => 'No tiene los permisos necesarios para seleccionar este elemento',
     'images' => 'Imágenes',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Archivo PDF',
     'export_text' => 'Archivo de texto plano',
     'export_md' => 'Archivo Markdown',
+    'default_template' => 'Plantilla de página por defecto',
+    'default_template_explain' => 'Asigne una plantilla de página que se utilizará como contenido predeterminado para todas las páginas creadas en este elemento. Tenga en cuenta que esto sólo se utilizará si el creador de páginas tiene acceso a la plantilla de página elegida.',
+    'default_template_select' => 'Seleccione una página de plantilla',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Borrar borrador de página',
     'pages_delete_success' => 'Página borrada',
     'pages_delete_draft_success' => 'Borrador de página borrado',
+    'pages_delete_warning_template' => 'Esta página está en uso como plantilla de página predeterminada de libro o capítulo. Estos libros o capítulos ya no tendrán una plantilla de página predeterminada asignada después de eliminar esta página.',
     'pages_delete_confirm' => '¿Está seguro de borrar esta página?',
     'pages_delete_draft_confirm' => 'Está seguro de que desea borrar este borrador de página?',
     'pages_editing_named' => 'Editando página :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referencias',
     'references_none' => 'No hay referencias a este elemento.',
-    'references_to_desc' => 'A continuación se muestran todas las páginas en el sistema que tienen un enlace a este elemento.',
+    'references_to_desc' => 'A continuación se muestran todas las páginas en el sistema que enlazan a este elemento.',
 
     // Watch Options
     'watch' => 'Suscribirme',

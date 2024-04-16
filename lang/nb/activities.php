@@ -94,11 +94,11 @@ return [
     'user_delete_notification' => 'Brukeren ble fjernet',
 
     // API Tokens
-    'api_token_create' => 'opprettet api token',
+    'api_token_create' => 'opprettet API-nøkkel',
     'api_token_create_notification' => 'API-token er opprettet',
-    'api_token_update' => 'oppdatert api token',
+    'api_token_update' => 'oppdaterte API-nøkkel',
     'api_token_update_notification' => 'API-token oppdatert',
-    'api_token_delete' => 'slettet api token',
+    'api_token_delete' => 'slettet API-nøkkel',
     'api_token_delete_notification' => 'API-token ble slettet',
 
     // Roles

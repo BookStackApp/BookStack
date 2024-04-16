@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
@@ -21,9 +22,12 @@ use Illuminate\Support\Str;
 
 class PageContent
 {
+    protected PageQueries $pageQueries;
+
     public function __construct(
         protected Page $page
     ) {
+        $this->pageQueries = app()->make(PageQueries::class);
     }
 
     /**
@@ -325,13 +329,14 @@ class PageContent
     protected function getContentProviderClosure(bool $blankIncludes): Closure
     {
         $contextPage = $this->page;
+        $queries = $this->pageQueries;
 
-        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage): PageIncludeContent {
+        return function (PageIncludeTag $tag) use ($blankIncludes, $contextPage, $queries): PageIncludeContent {
             if ($blankIncludes) {
                 return PageIncludeContent::fromHtmlAndTag('', $tag);
             }
 
-            $matchedPage = Page::visible()->find($tag->getPageId());
+            $matchedPage = $queries->findVisibleById($tag->getPageId());
             $content = PageIncludeContent::fromHtmlAndTag($matchedPage->html ?? '', $tag);
 
             if (Theme::hasListeners(ThemeEvents::PAGE_INCLUDE_PARSE)) {
@@ -374,7 +379,7 @@ class PageContent
     protected function headerNodesToLevelList(DOMNodeList $nodeList): array
     {
         $tree = collect($nodeList)->map(function (DOMElement $header) {
-            $text = trim(str_replace("\xc2\xa0", '', $header->nodeValue));
+            $text = trim(str_replace("\xc2\xa0", ' ', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 
             return [

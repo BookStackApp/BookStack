@@ -27,6 +27,10 @@ class PagesApiTest extends TestCase
                 'slug'     => $firstPage->slug,
                 'book_id'  => $firstPage->book->id,
                 'priority' => $firstPage->priority,
+                'owned_by'   => $firstPage->owned_by,
+                'created_by' => $firstPage->created_by,
+                'updated_by' => $firstPage->updated_by,
+                'revision_count' => $firstPage->revision_count,
             ],
         ]]);
     }

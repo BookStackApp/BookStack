@@ -23,6 +23,35 @@ class ErrorTest extends TestCase
         $notFound->assertSeeText('tester');
     }
 
+    public function test_404_page_does_not_non_visible_content()
+    {
+        $editor = $this->users->editor();
+        $book = $this->entities->book();
+
+        $this->actingAs($editor)->get($book->getUrl())->assertOk();
+
+        $this->permissions->disableEntityInheritedPermissions($book);
+
+        $this->actingAs($editor)->get($book->getUrl())->assertNotFound();
+    }
+
+    public function test_404_page_shows_visible_content_within_non_visible_parent()
+    {
+        $editor = $this->users->editor();
+        $book = $this->entities->book();
+        $page = $book->pages()->first();
+
+        $this->actingAs($editor)->get($page->getUrl())->assertOk();
+
+        $this->permissions->disableEntityInheritedPermissions($book);
+        $this->permissions->addEntityPermission($page, ['view'], $editor->roles()->first());
+
+        $resp = $this->actingAs($editor)->get($book->getUrl());
+        $resp->assertNotFound();
+        $resp->assertSee($page->name);
+        $resp->assertDontSee($book->name);
+    }
+
     public function test_item_not_found_does_not_get_logged_to_file()
     {
         $this->actingAs($this->users->viewer());

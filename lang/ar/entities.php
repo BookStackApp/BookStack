@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'مُحدث :timeLength',
     'meta_updated_name' => 'مُحدث :timeLength بواسطة :user',
     'meta_owned_name' => 'Owned by :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'اختيار الكيان',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'صور',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'ملف PDF',
     'export_text' => 'ملف نص عادي',
     'export_md' => 'Markdown File',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'الأذونات',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'حذف المسودة',
     'pages_delete_success' => 'تم حذف الصفحة',
     'pages_delete_draft_success' => 'تم حذف المسودة',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'تأكيد حذف الصفحة؟',
     'pages_delete_draft_confirm' => 'تأكيد حذف المسودة؟',
     'pages_editing_named' => ':pageName قيد التعديل',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

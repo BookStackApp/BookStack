@@ -20,7 +20,7 @@ return [
     'description' => 'Descriere',
     'role' => 'Rol',
     'cover_image' => 'Imagine copertă',
-    'cover_image_description' => 'Această imagine ar trebui să aibă aproximativ 440x250px.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Acțiuni',

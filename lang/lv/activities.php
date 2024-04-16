@@ -59,22 +59,22 @@ return [
     'favourite_remove_notification' => '":name" ir izņemts no jūsu favorītiem',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Skatīšanas uzstādījumi veiksmīgi atjaunināti',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => 'pieteicies',
+    'auth_register' => 'reģistrējies kā jauns lietotājs',
+    'auth_password_reset_request' => 'pieprasīja lietotāja paroles atiestatīšanu',
+    'auth_password_reset_update' => 'atiestatīja lietotāja paroli',
+    'mfa_setup_method' => 'uzstādīja MFA metodi',
     'mfa_setup_method_notification' => '2FA funkcija aktivizēta',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'noņēma MFA metodi',
     'mfa_remove_method_notification' => '2FA funkcija noņemta',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'atjaunoja uzstādījumus',
+    'settings_update_notification' => 'Uzstādījums veiksmīgi atjaunināts',
+    'maintenance_action_run' => 'veica apkopes darbību',
 
     // Webhooks
     'webhook_create' => 'izveidoja webhook',
@@ -85,39 +85,39 @@ return [
     'webhook_delete_notification' => 'Webhook veiksmīgi izdzēsts',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'izveidoja lietotāju',
+    'user_create_notification' => 'Lietotājs veiksmīgi izveidots',
+    'user_update' => 'atjaunoja lietotāju',
     'user_update_notification' => 'Lietotājs veiksmīgi atjaunināts',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'dzēsa lietotāju',
     'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // API Tokens
-    'api_token_create' => 'created api token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated api token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted api token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'created API token',
+    'api_token_create_notification' => 'API žetons veiksmīgi izveidots',
+    'api_token_update' => 'updated API token',
+    'api_token_update_notification' => 'API žetons veiksmīgi atjaunināts',
+    'api_token_delete' => 'deleted API token',
+    'api_token_delete_notification' => 'API žetons veiksmīgi dzēsts',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'izveidoja lomu',
     'role_create_notification' => 'Loma veiksmīgi izveidota',
-    'role_update' => 'updated role',
+    'role_update' => 'atjaunoja lomu',
     'role_update_notification' => 'Loma veiksmīgi atjaunināta',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'dzēsa lomu',
     'role_delete_notification' => 'Loma veiksmīgi dzēsta',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'iztukšoja atkritni',
+    'recycle_bin_restore' => 'atjaunoja no atkritnes',
+    'recycle_bin_destroy' => 'izdzēsa no atkritnes',
 
     // Comments
     'commented_on'                => 'komentēts',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'pievienoja komentāru',
+    'comment_update'              => 'atjaunoja komentārju',
+    'comment_delete'              => 'dzēsa komentāru',
 
     // Other
     'permissions_update'          => 'atjaunoja atļaujas',

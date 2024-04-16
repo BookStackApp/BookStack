@@ -20,7 +20,7 @@ return [
     'description' => 'Beschreibung',
     'role' => 'Rolle',
     'cover_image' => 'Titelbild',
-    'cover_image_description' => 'Das Bild sollte eine Auflösung von ca. 440x250px haben.',
+    'cover_image_description' => 'Dieses Bild sollte ungefähr 440x250px groß sein, obwohl es flexibel skaliert und beschnitten wird, um in verschiedenen Szenarien in die Benutzeroberfläche zu passen, sodass die tatsächlichen Abmessungen für die Anzeige abweichen können.',
 
     // Actions
     'actions' => 'Aktionen',

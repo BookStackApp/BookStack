@@ -41,7 +41,7 @@ return [
 
     // Bookshelves
     'bookshelf_create'            => 'oppretta hylle',
-    'bookshelf_create_notification'    => 'Hylla vart opprettet',
+    'bookshelf_create_notification'    => 'Hylla vart oppretta',
     'bookshelf_create_from_book'    => 'endra frå bok til hylle',
     'bookshelf_create_from_book_notification'    => 'Boka vart konvertert til ei bokhylle',
     'bookshelf_update'                 => 'oppdaterte hylle',
@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '«:name» vart fjerna frå dine favorittar',
 
     // Watching
-    'watch_update_level_notification' => 'Overvåkingsinnstillingene vart oppdatert',
+    'watch_update_level_notification' => 'Overvakingsinnstillingane vart oppdatert',
 
     // Auth
     'auth_login' => 'logga inn',
@@ -93,17 +93,17 @@ return [
     'user_delete_notification' => 'Brukaren vart fjerna',
 
     // API Tokens
-    'api_token_create' => 'oppretta api token',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API-token er oppretta',
-    'api_token_update' => 'oppdatert api token',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API-token oppdatert',
-    'api_token_delete' => 'sletta api token',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API-token vart sletta',
 
     // Roles
     'role_create' => 'oppretta rolle',
     'role_create_notification' => 'Rolla vart oppretta',
-    'role_update' => 'oppdatert rolla',
+    'role_update' => 'oppdatert rolle',
     'role_update_notification' => 'Rolla vart oppdatert',
     'role_delete' => 'sletta rolla',
     'role_delete_notification' => 'Rolla vart fjerna',

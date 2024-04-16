@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" foi removido dos seus favoritos',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Ver preferências atualizadas com sucesso',
 
     // Auth
     'auth_login' => 'sessão iniciada',
@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Utilizador removido com sucesso',
 
     // API Tokens
-    'api_token_create' => 'api token criado',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API token criado com sucesso',
-    'api_token_update' => 'api token atualizado',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API token atualizado com sucesso',
-    'api_token_delete' => 'api token eliminado',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API token atualizado com sucesso',
 
     // Roles
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'comentado a',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'comentário adicionado',
+    'comment_update'              => 'comentário atualizado',
+    'comment_delete'              => 'comentário eliminado',
 
     // Other
     'permissions_update'          => 'permissões atualizadas',

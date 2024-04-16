@@ -68,10 +68,13 @@
     </div>
 
     @yield('bottom')
+    @stack('post-app-html')
+
     @if($cspNonce ?? false)
         <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
     @endif
     @yield('scripts')
+    @stack('post-app-scripts')
 
     @include('layouts.parts.base-body-end')
 </body>
