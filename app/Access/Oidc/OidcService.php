@@ -91,7 +91,6 @@ class OidcService
             'issuer'                => $config['issuer'],
             'clientId'              => $config['client_id'],
             'clientSecret'          => $config['client_secret'],
-            'redirectUri'           => url('/oidc/callback'),
             'authorizationEndpoint' => $config['authorization_endpoint'],
             'tokenEndpoint'         => $config['token_endpoint'],
             'endSessionEndpoint'    => is_string($config['end_session_endpoint']) ? $config['end_session_endpoint'] : null,
@@ -130,7 +129,10 @@ class OidcService
      */
     protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
     {
-        $provider = new OidcOAuthProvider($settings->arrayForProvider(), [
+        $provider = new OidcOAuthProvider([
+            ...$settings->arrayForOAuthProvider(),
+            'redirectUri' => url('/oidc/callback'),
+        ], [
             'httpClient'     => $this->http->buildClient(5),
             'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
