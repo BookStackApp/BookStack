@@ -241,14 +241,23 @@ class OidcService
 
         session()->put("oidc_id_token", $idTokenText);
 
+        // TODO - This should not affect id token validation
+        // TODO - Should only call if we're missing properties
         if (!empty($settings->userinfoEndpoint)) {
             $provider = $this->getProvider($settings);
             $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
             $response = $provider->getParsedResponse($request);
+            // TODO - Ensure response content-type is "application/json" before using in this way (5.3.2)
+            // TODO - The sub Claim in the UserInfo Response MUST be verified to exactly match the sub Claim in the ID Token; if they do not match, the UserInfo Response values MUST NOT be used. (5.3.2)
+            // TODO - Response validation (5.3.4)
+               // TODO - Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
+               // TODO - If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
+               // TODO - If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
             $claims = $idToken->getAllClaims();
             foreach ($response as $key => $value) {
                 $claims[$key] = $value;
             }
+            // TODO - Should maybe remain separate from IdToken completely
             $idToken->replaceClaims($claims);
         }
 
