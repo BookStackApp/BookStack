@@ -20,7 +20,7 @@ return [
     'description' => 'Popis',
     'role' => 'Role',
     'cover_image' => 'Obrázek obálky',
-    'cover_image_description' => 'Obrázek by měl být přibližně 440×250px.',
+    'cover_image_description' => 'Tento obrázek by měl mít rozměry přibližně 440x250px, ačkoli bude podle potřeby zmenšen a oříznut, aby se vešel do uživatelského rozhraní, takže se skutečné rozměry budou lišit.',
 
     // Actions
     'actions' => 'Akce',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Zrušit filtr',
     'download' => 'Stáhnout',
     'open_in_tab' => 'Otevřít v nové záložce',
-    'open' => 'Open',
+    'open' => 'Otevřít',
 
     // Sort Options
     'sort_options' => 'Možnosti řazení',
@@ -68,7 +68,7 @@ return [
     'deleted_user' => 'Odstraněný uživatel',
     'no_activity' => 'Žádná aktivita k zobrazení',
     'no_items' => 'Žádné položky k dispozici',
-    'back_to_top' => 'Zpět na začátek',
+    'back_to_top' => 'Zpět nahoru',
     'skip_to_main_content' => 'Přeskočit na hlavní obsah',
     'toggle_details' => 'Přepnout podrobnosti',
     'toggle_thumbnails' => 'Přepnout náhledy',

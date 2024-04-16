@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Entities\Repos\ChapterRepo;
+use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controller;
@@ -10,16 +10,10 @@ use Throwable;
 
 class ChapterExportController extends Controller
 {
-    protected $chapterRepo;
-    protected $exportFormatter;
-
-    /**
-     * ChapterExportController constructor.
-     */
-    public function __construct(ChapterRepo $chapterRepo, ExportFormatter $exportFormatter)
-    {
-        $this->chapterRepo = $chapterRepo;
-        $this->exportFormatter = $exportFormatter;
+    public function __construct(
+        protected ChapterQueries $queries,
+        protected ExportFormatter $exportFormatter,
+    ) {
         $this->middleware('can:content-export');
     }
 
@@ -31,7 +25,7 @@ class ChapterExportController extends Controller
      */
     public function pdf(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $pdfContent = $this->exportFormatter->chapterToPdf($chapter);
 
         return $this->download()->directly($pdfContent, $chapterSlug . '.pdf');
@@ -45,7 +39,7 @@ class ChapterExportController extends Controller
      */
     public function html(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $containedHtml = $this->exportFormatter->chapterToContainedHtml($chapter);
 
         return $this->download()->directly($containedHtml, $chapterSlug . '.html');
@@ -58,7 +52,7 @@ class ChapterExportController extends Controller
      */
     public function plainText(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToPlainText($chapter);
 
         return $this->download()->directly($chapterText, $chapterSlug . '.txt');
@@ -71,7 +65,7 @@ class ChapterExportController extends Controller
      */
     public function markdown(string $bookSlug, string $chapterSlug)
     {
-        $chapter = $this->chapterRepo->getBySlug($bookSlug, $chapterSlug);
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $chapterText = $this->exportFormatter->chapterToMarkdown($chapter);
 
         return $this->download()->directly($chapterText, $chapterSlug . '.md');

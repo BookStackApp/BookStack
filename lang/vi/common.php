@@ -20,7 +20,7 @@ return [
     'description' => 'Mô tả',
     'role' => 'Vai trò',
     'cover_image' => 'Ảnh bìa',
-    'cover_image_description' => 'Ảnh nên có kích thước 440x250px.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Hành động',

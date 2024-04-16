@@ -23,7 +23,7 @@ return [
     'meta_updated' => ':timeLength da yangilangan',
     'meta_updated_name' => ':user tomonidan :timeLength da yangilangan',
     'meta_owned_name' => 'Muallif: foydalanuvchi',
-    'meta_reference_page_count' => ':count sahifasida havola qilingan :count sahifalarida havola qilingan',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Ob\'ektni tanlash',
     'entity_select_lack_permission' => 'Sizda bu elementni tanlash uchun kerakli ruxsatlar yo‘q',
     'images' => 'Rasmlar',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF holatida',
     'export_text' => 'Oddiy matn holatida',
     'export_md' => 'Markdown fayli holatida',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Huquqlar',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Qoralama sahifani oʻchirish',
     'pages_delete_success' => 'Sahifa oʻchirildi',
     'pages_delete_draft_success' => 'Qoralama sahifa oʻchirildi',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Haqiqatan ham bu sahifani oʻchirib tashlamoqchimisiz?',
     'pages_delete_draft_confirm' => 'Haqiqatan ham bu qoralama sahifani oʻchirib tashlamoqchimisiz?',
     'pages_editing_named' => 'Sahifani tahrirlash :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Ma\'lumotnomalar',
     'references_none' => 'Bu elementga kuzatilgan havolalar mavjud emas.',
-    'references_to_desc' => 'Quyida ushbu elementga bog\'langan tizimdagi barcha ma\'lum sahifalar ko\'rsatilgan.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Tomosha qiling',

@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Kasutaja on kustutatud',
 
     // API Tokens
-    'api_token_create' => 'lisas API tunnuse',
+    'api_token_create' => 'created API token',
     'api_token_create_notification' => 'API tunnus on lisatud',
-    'api_token_update' => 'muutis API tunnust',
+    'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API tunnus on muudetud',
-    'api_token_delete' => 'kustutas API tunnuse',
+    'api_token_delete' => 'deleted API token',
     'api_token_delete_notification' => 'API tunnus on kustutatud',
 
     // Roles

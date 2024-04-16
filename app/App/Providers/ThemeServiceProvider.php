@@ -4,17 +4,14 @@ namespace BookStack\App\Providers;
 
 use BookStack\Theming\ThemeEvents;
 use BookStack\Theming\ThemeService;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class ThemeServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         // Register the ThemeService as a singleton
         $this->app->singleton(ThemeService::class, fn ($app) => new ThemeService());
@@ -22,10 +19,8 @@ class ThemeServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Boot up the theme system
         $themeService = $this->app->make(ThemeService::class);

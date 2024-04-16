@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, wirst du für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
 
     'detail_page_name' => 'Seitenname:',
+    'detail_page_path' => 'Seitenpfad:',
     'detail_commenter' => 'Kommentator:',
     'detail_comment' => 'Kommentar:',
     'detail_created_by' => 'Erstellt von:',

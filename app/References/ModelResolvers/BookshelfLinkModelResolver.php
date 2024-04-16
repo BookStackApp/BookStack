@@ -4,9 +4,14 @@ namespace BookStack\References\ModelResolvers;
 
 use BookStack\App\Model;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Queries\BookshelfQueries;
 
 class BookshelfLinkModelResolver implements CrossLinkModelResolver
 {
+    public function __construct(
+        protected BookshelfQueries $queries
+    ) {
+    }
     public function resolve(string $link): ?Model
     {
         $pattern = '/^' . preg_quote(url('/shelves'), '/') . '\/([\w-]+)' . '([#?\/]|$)/';
@@ -19,7 +24,7 @@ class BookshelfLinkModelResolver implements CrossLinkModelResolver
         $shelfSlug = $matches[1];
 
         /** @var ?Bookshelf $model */
-        $model = Bookshelf::query()->where('slug', '=', $shelfSlug)->first(['id']);
+        $model = $this->queries->start()->where('slug', '=', $shelfSlug)->first(['id']);
 
         return $model;
     }

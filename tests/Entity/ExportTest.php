@@ -107,18 +107,18 @@ class ExportTest extends TestCase
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
     }
 
-    public function test_book_html_export_shows_chapter_descriptions()
+    public function test_book_html_export_shows_html_descriptions()
     {
-        $chapterDesc = 'My custom test chapter description ' . Str::random(12);
-        $chapter = $this->entities->chapter();
-        $chapter->description = $chapterDesc;
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters()->first();
+        $book->description_html = '<p>A description with <strong>HTML</strong> within!</p>';
+        $chapter->description_html = '<p>A chapter description with <strong>HTML</strong> within!</p>';
+        $book->save();
         $chapter->save();
 
-        $book = $chapter->book;
-        $this->asEditor();
-
-        $resp = $this->get($book->getUrl('/export/html'));
-        $resp->assertSee($chapterDesc);
+        $resp = $this->asEditor()->get($book->getUrl('/export/html'));
+        $resp->assertSee($book->description_html, false);
+        $resp->assertSee($chapter->description_html, false);
     }
 
     public function test_chapter_text_export()
@@ -172,6 +172,16 @@ class ExportTest extends TestCase
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
         $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.html"');
+    }
+
+    public function test_chapter_html_export_shows_html_descriptions()
+    {
+        $chapter = $this->entities->chapter();
+        $chapter->description_html = '<p>A description with <strong>HTML</strong> within!</p>';
+        $chapter->save();
+
+        $resp = $this->asEditor()->get($chapter->getUrl('/export/html'));
+        $resp->assertSee($chapter->description_html, false);
     }
 
     public function test_page_html_export_contains_custom_head_if_set()

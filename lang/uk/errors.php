@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Користувач з електронною адресою: електронна адреса вже існує, але з іншими обліковими даними.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Електронна пошта вже підтверджена, спробуйте увійти.',
     'email_confirmation_invalid' => 'Цей токен підтвердження недійсний або вже був використаний, будь ласка, спробуйте знову зареєструватися.',
     'email_confirmation_expired' => 'Термін дії токена підтвердження минув, новий електронний лист підтвердження був відправлений.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'Розширення PHP LDAP не встановлено',
     'ldap_cannot_connect' => 'Неможливо підключитися до ldap-сервера, Помилка з\'єднання',
     'saml_already_logged_in' => 'Вже увійшли',
-    'saml_user_not_registered' => 'Користувач «:name» не зареєстрований, а автоматична реєстрація вимкнена',
     'saml_no_email_address' => 'Не вдалося знайти електронну адресу для цього користувача у даних, наданих зовнішньою системою аутентифікації',
     'saml_invalid_response_id' => 'Запит із зовнішньої системи аутентифікації не розпізнається процесом, розпочатим цим додатком. Повернення назад після входу могла спричинити цю проблему.',
     'saml_fail_authed' => 'Вхід із використанням «:system» не вдався, система не здійснила успішну авторизацію',
     'oidc_already_logged_in' => 'Вже ввійшли в систему',
-    'oidc_user_not_registered' => 'Користувач :name не зареєстровано і автоматична реєстрація відключена',
     'oidc_no_email_address' => 'Не вдалося знайти адресу електронної пошти для цього користувача у даних, наданих зовнішньою системою автентифікації',
     'oidc_fail_authed' => 'Увійти за допомогою :system не вдалося, система не надала успішної авторизації',
     'social_no_action_defined' => 'Жодних дій не визначено',
@@ -44,25 +43,25 @@ return [
     'cannot_get_image_from_url' => 'Неможливо отримати зображення з :url',
     'cannot_create_thumbs' => 'Сервер не може створювати ескізи. Будь ласка, перевірте, чи встановлено розширення GD PHP.',
     'server_upload_limit' => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Сервер не може отримати вказаний обсяг даних. Спробуйте ще раз з меншими даними або меншим файлом.',
     'uploaded'  => 'Сервер не дозволяє завантажувати файли такого розміру. Спробуйте менший розмір файлу.',
 
     // Drawing & Images
     'image_upload_error' => 'Виникла помилка під час завантаження зображення',
     'image_upload_type_error' => 'Тип завантаженого зображення недійсний',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_replace_type' => 'Замінники файлів зображень повинні мати однаковий тип',
+    'image_upload_memory_limit' => 'Не вдалося завантажити зображення і/або створити ескізи через обмеження системних ресурсів.',
+    'image_thumbnail_memory_limit' => 'Не вдалося створити варіації розміру зображення через обмеження системних ресурсів.',
+    'image_gallery_thumbnail_memory_limit' => 'Не вдалося створити галерею через обмеження системних ресурсів.',
     'drawing_data_not_found' => 'Не вдалося завантажити дані малюнка. Файл малюнка може більше не існувати або у вас немає дозволу на доступ до нього.',
 
     // Attachments
     'attachment_not_found' => 'Вкладення не знайдено',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Сталася помилка при завантаженні файлу',
 
     // Pages
     'page_draft_autosave_fail' => 'Не вдалося зберегти чернетку. Перед збереженням цієї сторінки переконайтеся, що у вас є зв\'язок з сервером.',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Не вдалося видалити чернетку сторінки та отримати збережений вміст сторінки',
     'page_custom_home_deletion' => 'Неможливо видалити сторінку, коли вона встановлена як домашня сторінка',
 
     // Entities
@@ -116,5 +115,5 @@ return [
     'maintenance_test_email_failure' => 'Помилка під час надсилання тестового електронного листа:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL-адреса не відповідає налаштованим дозволеним SSR хостів',
 ];

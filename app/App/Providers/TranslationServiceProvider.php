@@ -11,10 +11,8 @@ class TranslationServiceProvider extends BaseProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerLoader();
 
@@ -41,10 +39,8 @@ class TranslationServiceProvider extends BaseProvider
     /**
      * Register the translation line loader.
      * Overrides the default register action from Laravel so a custom loader can be used.
-     *
-     * @return void
      */
-    protected function registerLoader()
+    protected function registerLoader(): void
     {
         $this->app->singleton('translation.loader', function ($app) {
             return new FileLoader($app['files'], $app['path.lang']);

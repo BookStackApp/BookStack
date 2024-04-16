@@ -469,6 +469,20 @@ class PageContentTest extends TestCase
         ], $navMap[2]);
     }
 
+    public function test_get_page_nav_respects_non_breaking_spaces()
+    {
+        $content = '<h1 id="testa">Hello&nbsp;There</h1>';
+        $pageContent = new PageContent(new Page(['html' => $content]));
+        $navMap = $pageContent->getNavigation($content);
+
+        $this->assertEquals([
+            'nodeName' => 'h1',
+            'link'     => '#testa',
+            'text'     => 'Hello There',
+            'level'    => 1,
+        ], $navMap[0]);
+    }
+
     public function test_page_text_decodes_html_entities()
     {
         $page = $this->entities->page();

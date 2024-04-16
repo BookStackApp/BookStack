@@ -1,17 +1,18 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('joint_permissions', function (Blueprint $table) {
             $table->increments('id');
@@ -48,8 +49,8 @@ return new class extends Migration
             'description'  => 'The role given to public visitors if allowed',
             'system_name'  => 'public',
             'hidden'       => true,
-            'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-            'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+            'created_at'   => Carbon::now()->toDateTimeString(),
+            'updated_at'   => Carbon::now()->toDateTimeString(),
         ];
 
         // Ensure unique name
@@ -79,10 +80,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::drop('joint_permissions');
 

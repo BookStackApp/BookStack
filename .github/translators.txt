@@ -177,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: French; Dutch; Turkish; 
+REMOVED_USER :: French; Dutch; Portuguese, Brazilian; Portuguese; Turkish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -324,7 +324,7 @@ Robin Flikkema (RobinFlikkema) :: Dutch
 Michal Gurcik (mgurcik) :: Slovak
 Pooyan Arab (pooyanarab) :: Persian
 Ochi Darma Putra (troke12) :: Indonesian
-H.-H. Peng (Hsins) :: Chinese Traditional
+Hsin-Hsiang Peng (Hsins) :: Chinese Traditional
 Mosi  Wang (mosiwang) :: Chinese Traditional
 骆言 (LawssssCat) :: Chinese Simplified
 Stickers Gaming Shøw (StickerSGSHOW) :: French
@@ -371,3 +371,42 @@ LameeQS :: Latvian
 Sorin T. (trimbitassorin) :: Romanian
 poesty :: Chinese Simplified
 balmag :: Hungarian
+Antti-Jussi Nygård (ajnyga) :: Finnish
+Eduard Ereza Martínez (Ereza) :: Catalan
+Jabir Lang (amar.almrad) :: Arabic
+Jaroslav Kobližek (foretix) :: Czech; French
+Wiktor Adamczyk (adamczyk.wiktor) :: Polish
+Abdulmajeed Alshuaibi (4Majeed) :: Arabic
+NotSmartZakk :: Czech
+HyoungMin Lee (ddokkaebi) :: Korean
+Dasferco :: Chinese Simplified
+Marcus Teräs (mteras) :: Finnish
+Serkan Yardim (serkanzz) :: Turkish
+Y (cnsr) :: Ukrainian
+ZY ZV (vy0b0x) :: Chinese Simplified
+diegobenitez :: Spanish
+Marc Hagen (MarcHagen) :: Dutch
+Kasper Alsøe (zeonos) :: Danish
+sultani :: Persian
+renge :: Korean
+TheGatesDev (thegatesdev) :: Dutch
+Irdi (irdiOL) :: Albanian
+KateBarber :: Welsh
+Twister (theuncles75) :: Hebrew
+algernon19 :: Hungarian
+Ivan Krstic (ikrstic) :: Serbian (Cyrillic)
+Show :: Russian
+xBahamut :: Portuguese, Brazilian
+Pavle Knežević (pavleknezzevic) :: Serbian (Cyrillic)
+Vanja Cvelbar (b100w11) :: Slovenian
+simonpct :: French
+Honza Nagy (honza.nagy) :: Czech
+asd20752 :: Norwegian Bokmal
+Jan Picka (polipones) :: Czech
+diogoalex991 :: Portuguese
+Ehsan Sadeghi (ehsansadeghi) :: Persian
+ka_picit :: Danish
+cracrayol :: French
+CapuaSC :: Dutch
+Guardian75 :: German Informal
+mr-kanister :: German

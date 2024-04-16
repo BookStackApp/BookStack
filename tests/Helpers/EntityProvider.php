@@ -208,6 +208,29 @@ class EntityProvider
     }
 
     /**
+     * Send an entity to the recycle bin.
+     */
+    public function sendToRecycleBin(Entity $entity)
+    {
+        $trash = app()->make(TrashCan::class);
+
+        if ($entity instanceof Page) {
+            $trash->softDestroyPage($entity);
+        } elseif ($entity instanceof Chapter) {
+            $trash->softDestroyChapter($entity);
+        } elseif ($entity instanceof Book) {
+            $trash->softDestroyBook($entity);
+        } elseif ($entity instanceof Bookshelf) {
+            $trash->softDestroyBookshelf($entity);
+        }
+
+        $entity->refresh();
+        if (is_null($entity->deleted_at)) {
+            throw new \Exception("Could not send entity type [{$entity->getMorphClass()}] to the recycle bin");
+        }
+    }
+
+    /**
      * Fully destroy the given entity from the system, bypassing the recycle bin
      * stage. Still runs through main app deletion logic.
      */

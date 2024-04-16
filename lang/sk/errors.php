@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Používateľ s emailom :email už existuje, ale s inými údajmi.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Email bol už overený, skúste sa prihlásiť.',
     'email_confirmation_invalid' => 'Tento potvrdzujúci token nie je platný alebo už bol použitý, skúste sa prosím registrovať znova.',
     'email_confirmation_expired' => 'Potvrdzujúci token expiroval, bol odoslaný nový potvrdzujúci email.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'Rozšírenie LDAP PHP nie je nainštalované',
     'ldap_cannot_connect' => 'Nedá sa pripojiť k serveru ldap, počiatočné pripojenie zlyhalo',
     'saml_already_logged_in' => 'Používateľ sa už prihlásil',
-    'saml_user_not_registered' => 'Používateľ :name nie je zaregistrovaný a automatická registrácia je zakázaná',
     'saml_no_email_address' => 'V údajoch poskytnutých externým overovacím systémom sa nepodarilo nájsť e-mailovú adresu tohto používateľa',
     'saml_invalid_response_id' => 'Požiadavka z externého autentifikačného systému nie je rozpoznaná procesom spusteným touto aplikáciou. Tento problém môže spôsobiť navigácia späť po prihlásení.',
     'saml_fail_authed' => 'Prihlásenie pomocou :system zlyhalo, systém neposkytol úspešnú autorizáciu',
     'oidc_already_logged_in' => 'Používateľ sa už prihlásil',
-    'oidc_user_not_registered' => 'Používateľ :name nie je zaregistrovaný a automatická registrácia je zakázaná',
     'oidc_no_email_address' => 'V údajoch poskytnutých externým overovacím systémom sa nepodarilo nájsť e-mailovú adresu tohto používateľa',
     'oidc_fail_authed' => 'Prihlásenie pomocou :system zlyhalo, systém neposkytol úspešnú autorizáciu',
     'social_no_action_defined' => 'Nebola definovaná žiadna akcia',

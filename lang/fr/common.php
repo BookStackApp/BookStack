@@ -20,7 +20,7 @@ return [
     'description' => 'Description',
     'role' => 'Rôle',
     'cover_image' => 'Image de couverture',
-    'cover_image_description' => 'Cette image doit faire environ 440x250 px.',
+    'cover_image_description' => 'Cette image doit faire environ 440x250px. Elle sera mise à l\'échelle et recadrée automatiquement pour s\'adapter à l\'interface utilisateur, si nécessaire, à différents emplacements.',
 
     // Actions
     'actions' => 'Actions',

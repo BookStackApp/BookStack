@@ -6,8 +6,12 @@ use BookStack\Exceptions\ImageUploadException;
 use Exception;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Cache;
-use Intervention\Image\Gd\Driver;
-use Intervention\Image\Image as InterventionImage;
+use Intervention\Image\Decoders\BinaryImageDecoder;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Encoders\AutoEncoder;
+use Intervention\Image\Encoders\PngEncoder;
+use Intervention\Image\Interfaces\ImageInterface as InterventionImage;
+use Intervention\Image\ImageManager;
 
 class ImageResizer
 {
@@ -124,15 +128,17 @@ class ImageResizer
         $this->orientImageToOriginalExif($thumb, $imageData);
 
         if ($keepRatio) {
-            $thumb->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
+            $thumb->scaleDown($width, $height);
         } else {
-            $thumb->fit($width, $height);
+            $thumb->cover($width, $height);
         }
 
-        $thumbData = (string) $thumb->encode($format);
+        $encoder = match ($format) {
+            'png' => new PngEncoder(),
+            default => new AutoEncoder(),
+        };
+
+        $thumbData = (string) $thumb->encode($encoder);
 
         // Use original image data if we're keeping the ratio
         // and the resizing does not save any space.
@@ -150,8 +156,9 @@ class ImageResizer
      */
     protected function interventionFromImageData(string $imageData): InterventionImage
     {
-        $driver = new Driver();
-        return $driver->decoder->initFromBinary($imageData);
+        $manager = new ImageManager(new Driver());
+
+        return $manager->read($imageData, BinaryImageDecoder::class);
     }
 
     /**

@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Et vältida liigseid teavitusi, ei saadeta sulle mõnda aega teavitusi selle lehe muutmiste kohta sama kasutaja poolt.',
 
     'detail_page_name' => 'Lehe nimetus:',
+    'detail_page_path' => 'Lehe asukoht:',
     'detail_commenter' => 'Kommenteerija:',
     'detail_comment' => 'Kommentaar:',
     'detail_created_by' => 'Autor:',

@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Posodobljeno :timeLength',
     'meta_updated_name' => 'Posodobil :timeLength uporabnik :user',
     'meta_owned_name' => 'V lasti :user',
-    'meta_reference_page_count' => 'Referenced on :count page|Referenced on :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Izbira entitete',
     'entity_select_lack_permission' => 'You don\'t have the required permissions to select this item',
     'images' => 'Slike',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF datoteka (.pdf)',
     'export_text' => 'Navadna besedilna datoteka',
     'export_md' => 'Markdown File',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Dovoljenja',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Izbriši osnutek strani',
     'pages_delete_success' => 'Stran izbirsana',
     'pages_delete_draft_success' => 'Osnutek strani izbrisan',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ste prepričani, da želite izbrisati to stran?',
     'pages_delete_draft_confirm' => 'Ali ste prepričani, da želite izbrisati ta osnutek?',
     'pages_editing_named' => 'Urejanje strani :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

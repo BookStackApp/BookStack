@@ -31,9 +31,12 @@ export function debounce(func, waitMs, immediate) {
 export function scrollAndHighlightElement(element) {
     if (!element) return;
 
-    const parentDetails = element.closest('details');
-    if (parentDetails && !parentDetails.open) {
-        parentDetails.open = true;
+    let parent = element;
+    while (parent.parentElement) {
+        parent = parent.parentElement;
+        if (parent.nodeName === 'DETAILS' && !parent.open) {
+            parent.open = true;
+        }
     }
 
     element.scrollIntoView({behavior: 'smooth'});

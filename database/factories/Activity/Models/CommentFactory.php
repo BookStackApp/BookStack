@@ -25,8 +25,8 @@ class CommentFactory extends Factory
 
         return [
             'html'      => $html,
-            'text'      => $text,
             'parent_id' => null,
+            'local_id'  => 1,
         ];
     }
 }

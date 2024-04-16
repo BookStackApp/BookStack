@@ -8,17 +8,17 @@
 return [
 
     // Standard laravel validation lines
-    'accepted'             => 'Cal que acceptis :attribute.',
-    'active_url'           => 'L\':attribute no és un URL vàlid.',
+    'accepted'             => 'Cal que accepteu el camp :attribute.',
+    'active_url'           => 'El camp :attribute no és un URL vàlid.',
     'after'                => 'El camp :attribute ha de ser una data posterior a :date.',
     'alpha'                => 'El camp :attribute només pot contenir lletres.',
     'alpha_dash'           => 'El camp :attribute només pot contenir lletres, números, guions i guions baixos.',
     'alpha_num'            => 'El camp :attribute només pot contenir lletres i números.',
     'array'                => 'El camp :attribute ha de ser un vector.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'El codi que heu proporcionat no és vàlid o ja s’ha fet servir.',
     'before'               => 'El camp :attribute ha de ser una data anterior a :date.',
     'between'              => [
-        'numeric' => 'El camp :attribute ha d\'estar entre :min i :max.',
+        'numeric' => 'El camp :attribute ha d’estar entre :min i :max.',
         'file'    => 'El camp :attribute ha de tenir entre :min i :max kilobytes.',
         'string'  => 'El camp :attribute ha de tenir entre :min i :max caràcters.',
         'array'   => 'El camp :attribute ha de tenir entre :min i :max elements.',
@@ -31,8 +31,8 @@ return [
     'digits'               => 'El camp :attribute ha de tenir :digits dígits.',
     'digits_between'       => 'El camp :attribute ha de tenir entre :min i :max dígits.',
     'email'                => 'El camp :attribute ha de ser una adreça electrònica vàlida.',
-    'ends_with' => 'El camp :attribute ha d\'acabar amb un dels següents valors: :values',
-    'file'                 => 'The :attribute must be provided as a valid file.',
+    'ends_with' => 'El camp :attribute ha d’acabar amb un dels següents valors: :values',
+    'file'                 => 'El camp :attribute ha de ser un fitxer vàlid.',
     'filled'               => 'El camp :attribute és obligatori.',
     'gt'                   => [
         'numeric' => 'El camp :attribute ha de ser més gran que :value.',
@@ -46,9 +46,9 @@ return [
         'string'  => 'El camp :attribute ha de tenir :value caràcters o més.',
         'array'   => 'El camp :attribute ha de tenir :value elements o més.',
     ],
-    'exists'               => 'El camp :attribute no és vàlid.',
+    'exists'               => 'El camp :attribute seleccionat no és vàlid.',
     'image'                => 'El camp :attribute ha de ser una imatge.',
-    'image_extension'      => 'El camp :attribute ha de tenir una extensió d\'imatge vàlida i suportada.',
+    'image_extension'      => 'El camp :attribute ha de tenir una extensió d’imatge vàlida i suportada.',
     'in'                   => 'El camp :attribute seleccionat no és vàlid.',
     'integer'              => 'El camp :attribute ha de ser un enter.',
     'ip'                   => 'El camp :attribute ha de ser una adreça IP vàlida.',
@@ -87,11 +87,11 @@ return [
     'required'             => 'El camp :attribute és obligatori.',
     'required_if'          => 'El camp :attribute és obligatori quan :other és :value.',
     'required_with'        => 'El camp :attribute és obligatori quan hi ha aquest valor: :values.',
-    'required_with_all'    => 'El camp :attribute és obligatori quan hi ha algun d\'aquests valors: :values.',
+    'required_with_all'    => 'El camp :attribute és obligatori quan hi ha algun d’aquests valors: :values.',
     'required_without'     => 'El camp :attribute és obligatori quan no hi ha aquest valor: :values.',
-    'required_without_all' => 'El camp :attribute és obligatori quan no hi ha cap d\'aquests valors: :values.',
+    'required_without_all' => 'El camp :attribute és obligatori quan no hi ha cap d’aquests valors: :values.',
     'same'                 => 'Els camps :attribute i :other han de coincidir.',
-    'safe_url'             => 'L\'enllaç proporcionat podria no ser segur.',
+    'safe_url'             => 'L’enllaç proporcionat podria no ser segur.',
     'size'                 => [
         'numeric' => 'El camp :attribute ha de ser :size.',
         'file'    => 'El camp :attribute ha de tenir :size kilobytes.',
@@ -100,10 +100,10 @@ return [
     ],
     'string'               => 'El camp :attribute ha de ser una cadena.',
     'timezone'             => 'El camp :attribute ha de ser una zona vàlida.',
-    'totp'                 => 'The provided code is not valid or has expired.',
-    'unique'               => 'El camp :attribute ja està ocupat.',
+    'totp'                 => 'El codi que heu proporcionat no és vàlid o ha caducat.',
+    'unique'               => 'El camp :attribute ja es fa servir.',
     'url'                  => 'El format del camp :attribute no és vàlid.',
-    'uploaded'             => 'No s\'ha pogut pujar el fitxer. És possible que el servidor no accepti fitxers d\'aquesta mida.',
+    'uploaded'             => 'No s’ha pogut pujar el fitxer. És possible que el servidor no accepti fitxers d’aquesta mida.',
 
     // Custom validation lines
     'custom' => [

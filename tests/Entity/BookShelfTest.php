@@ -77,8 +77,8 @@ class BookShelfTest extends TestCase
     {
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'             => 'My test shelf' . Str::random(4),
+            'description_html' => '<p>Test book description ' . Str::random(10) . '</p>',
         ];
         $resp = $this->asEditor()->post('/shelves', array_merge($shelfInfo, [
             'books' => $booksToInclude->implode('id', ','),
@@ -96,7 +96,7 @@ class BookShelfTest extends TestCase
         $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
         $shelfPage = $this->get($shelf->getUrl());
         $shelfPage->assertSee($shelfInfo['name']);
-        $shelfPage->assertSee($shelfInfo['description']);
+        $shelfPage->assertSee($shelfInfo['description_html'], false);
         $this->withHtml($shelfPage)->assertElementContains('.tag-item', 'Test Category');
         $this->withHtml($shelfPage)->assertElementContains('.tag-item', 'Test Tag Value');
 
@@ -107,8 +107,8 @@ class BookShelfTest extends TestCase
     public function test_shelves_create_sets_cover_image()
     {
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'             => 'My test shelf' . Str::random(4),
+            'description_html' => '<p>Test book description ' . Str::random(10) . '</p>',
         ];
 
         $imageFile = $this->files->uploadedImage('shelf-test.png');
@@ -174,7 +174,7 @@ class BookShelfTest extends TestCase
         // Set book ordering
         $this->asAdmin()->put($shelf->getUrl(), [
             'books' => $books->implode('id', ','),
-            'tags'  => [], 'description' => 'abc', 'name' => 'abc',
+            'tags'  => [], 'description_html' => 'abc', 'name' => 'abc',
         ]);
         $this->assertEquals(3, $shelf->books()->count());
         $shelf->refresh();
@@ -207,7 +207,7 @@ class BookShelfTest extends TestCase
         // Set book ordering
         $this->asAdmin()->put($shelf->getUrl(), [
             'books' => $books->implode('id', ','),
-            'tags'  => [], 'description' => 'abc', 'name' => 'abc',
+            'tags'  => [], 'description_html' => 'abc', 'name' => 'abc',
         ]);
         $this->assertEquals(3, $shelf->books()->count());
         $shelf->refresh();
@@ -229,8 +229,8 @@ class BookShelfTest extends TestCase
 
         $booksToInclude = Book::take(2)->get();
         $shelfInfo = [
-            'name'        => 'My test book' . Str::random(4),
-            'description' => 'Test book description ' . Str::random(10),
+            'name'             => 'My test shelf' . Str::random(4),
+            'description_html' => '<p>Test book description ' . Str::random(10) . '</p>',
         ];
 
         $resp = $this->asEditor()->put($shelf->getUrl(), array_merge($shelfInfo, [
@@ -251,7 +251,7 @@ class BookShelfTest extends TestCase
 
         $shelfPage = $this->get($shelf->getUrl());
         $shelfPage->assertSee($shelfInfo['name']);
-        $shelfPage->assertSee($shelfInfo['description']);
+        $shelfPage->assertSee($shelfInfo['description_html'], false);
         $this->withHtml($shelfPage)->assertElementContains('.tag-item', 'Test Category');
         $this->withHtml($shelfPage)->assertElementContains('.tag-item', 'Test Tag Value');
 
@@ -270,8 +270,8 @@ class BookShelfTest extends TestCase
         $testName = 'Test Book in Shelf Name';
 
         $createBookResp = $this->asEditor()->post($shelf->getUrl('/create-book'), [
-            'name'        => $testName,
-            'description' => 'Book in shelf description',
+            'name'             => $testName,
+            'description_html' => 'Book in shelf description',
         ]);
         $createBookResp->assertRedirect();
 
@@ -372,8 +372,8 @@ class BookShelfTest extends TestCase
     {
         // Create shelf
         $shelfInfo = [
-            'name'        => 'My test shelf' . Str::random(4),
-            'description' => 'Test shelf description ' . Str::random(10),
+            'name'             => 'My test shelf' . Str::random(4),
+            'description_html' => '<p>Test shelf description ' . Str::random(10) . '</p>',
         ];
 
         $this->asEditor()->post('/shelves', $shelfInfo);
@@ -381,8 +381,8 @@ class BookShelfTest extends TestCase
 
         // Create book and add to shelf
         $this->asEditor()->post($shelf->getUrl('/create-book'), [
-            'name'        => 'Test book name',
-            'description' => 'Book in shelf description',
+            'name'             => 'Test book name',
+            'description_html' => '<p>Book in shelf description</p>',
         ]);
 
         $newBook = Book::query()->orderBy('id', 'desc')->first();
@@ -402,5 +402,16 @@ class BookShelfTest extends TestCase
         $shelf = $this->entities->shelf();
         $resp = $this->asEditor()->get($shelf->getUrl('/create-book'));
         $this->withHtml($resp)->assertElementContains('form a[href="' . $shelf->getUrl() . '"]', 'Cancel');
+    }
+
+    public function test_show_view_displays_description_if_no_description_html_set()
+    {
+        $shelf = $this->entities->shelf();
+        $shelf->description_html = '';
+        $shelf->description = "My great\ndescription\n\nwith newlines";
+        $shelf->save();
+
+        $resp = $this->asEditor()->get($shelf->getUrl());
+        $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
     }
 }

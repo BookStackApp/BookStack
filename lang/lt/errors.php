@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Naudotojo elektroninis paštas :email jau egzistuoja, bet su kitokiais įgaliojimais.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Elektroninis paštas jau buvo patvirtintas, pabandykite prisijungti.',
     'email_confirmation_invalid' => 'Šis patvirtinimo prieigos raktas negalioja arba jau buvo panaudotas, prašome bandykite vėl registruotis.',
     'email_confirmation_expired' => 'Šis patvirtinimo prieigos raktas baigė galioti, naujas patvirtinimo laiškas jau išsiųstas elektroniniu paštu.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP išplėtimas neįdiegtas',
     'ldap_cannot_connect' => 'Negalima prisijungti prie LDAP serverio, nepavyko prisijungti',
     'saml_already_logged_in' => 'Jau prisijungta',
-    'saml_user_not_registered' => 'Naudotojas :name neužregistruotas ir automatinė registracija yra išjungta',
     'saml_no_email_address' => 'Nerandamas šio naudotojo elektroninio pašto adresas išorinės autentifikavimo sistemos pateiktuose duomenyse',
     'saml_invalid_response_id' => 'Prašymas iš išorinės autentifikavimo sistemos nėra atpažintas proceso, kurį pradėjo ši programa. Naršymas po prisijungimo gali sukelti šią problemą.',
     'saml_fail_authed' => 'Prisijungimas, naudojant :system nepavyko, sistema nepateikė sėkmingo leidimo.',
     'oidc_already_logged_in' => 'Already logged in',
-    'oidc_user_not_registered' => 'The user :name is not registered and automatic registration is disabled',
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
     'social_no_action_defined' => 'Neapibrėžtas joks veiksmas',

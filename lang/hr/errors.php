@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Korisnik s mailom :email već postoji, ali s drugom vjerodajnicom.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Email je već potvrđen, pokušajte se logirati.',
     'email_confirmation_invalid' => 'Ova vjerodajnica nije valjana ili je već bila korištena. Pokušajte se ponovno registrirati.',
     'email_confirmation_expired' => 'Ova vjerodajnica je istekla. Poslan je novi email za pristup.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP ekstenzija nije instalirana',
     'ldap_cannot_connect' => 'Nemoguće pristupiti ldap serveru, problem s mrežom',
     'saml_already_logged_in' => 'Već ste prijavljeni',
-    'saml_user_not_registered' => 'Korisnik :name nije registriran i automatska registracija je onemogućena',
     'saml_no_email_address' => 'Nismo pronašli email adresu za ovog korisnika u vanjskim sustavima',
     'saml_invalid_response_id' => 'Sustav za autentifikaciju nije prepoznat. Ovaj problem možda je nastao zbog vraćanja nakon prijave.',
     'saml_fail_authed' => 'Prijava pomoću :system nije uspjela zbog neuspješne autorizacije',
     'oidc_already_logged_in' => 'Već ste prijavljeni',
-    'oidc_user_not_registered' => 'Korisnik :name nije registriran i automatska registracija je onemogućena',
     'oidc_no_email_address' => 'Nije moguće pronaći adresu e-pošte za ovog korisnika u podacima koje pruža vanjski sustav za autentifikaciju',
     'oidc_fail_authed' => 'Prijavljivanje putem :system nije uspjelo. Sustav nije uspješno odobrio autorizaciju',
     'social_no_action_defined' => 'Nije definirana nijedna radnja',

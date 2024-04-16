@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Aktualizované :timeLength',
     'meta_updated_name' => 'Aktualizované :timeLength používateľom :user',
     'meta_owned_name' => 'Vlastník :user',
-    'meta_reference_page_count' => 'Referencia na :count page|Referencia na :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Entita vybraná',
     'entity_select_lack_permission' => 'Na výber tejto položky nemáte potrebné povolenia',
     'images' => 'Obrázky',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF súbor',
     'export_text' => 'Súbor s čistým textom',
     'export_md' => 'Súbor Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnenia',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Zmazať koncept',
     'pages_delete_success' => 'Stránka zmazaná',
     'pages_delete_draft_success' => 'Koncept stránky zmazaný',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Ste si istý, že chcete zmazať túto stránku?',
     'pages_delete_draft_confirm' => 'Ste si istý, že chcete zmazať tento koncept stránky?',
     'pages_editing_named' => 'Upraviť stránku :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Referencie',
     'references_none' => 'Neexistujú žiadne sledované referencie na túto položku.',
-    'references_to_desc' => 'Nižšie sú zobrazené všetky známe stránky v systéme, ktoré odkazujú na túto položku.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

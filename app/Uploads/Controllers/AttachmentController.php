@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads\Controllers;
 
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Exceptions\NotFoundException;
@@ -18,6 +19,7 @@ class AttachmentController extends Controller
 {
     public function __construct(
         protected AttachmentService $attachmentService,
+        protected PageQueries $pageQueries,
         protected PageRepo $pageRepo
     ) {
     }
@@ -36,7 +38,7 @@ class AttachmentController extends Controller
         ]);
 
         $pageId = $request->get('uploaded_to');
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -152,7 +154,7 @@ class AttachmentController extends Controller
             ]), 422);
         }
 
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
 
         $this->checkPermission('attachment-create-all');
         $this->checkOwnablePermission('page-update', $page);
@@ -173,7 +175,7 @@ class AttachmentController extends Controller
      */
     public function listForPage(int $pageId)
     {
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission('page-view', $page);
 
         return view('attachments.manager-list', [
@@ -192,7 +194,7 @@ class AttachmentController extends Controller
         $this->validate($request, [
             'order' => ['required', 'array'],
         ]);
-        $page = $this->pageRepo->getById($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission('page-update', $page);
 
         $attachmentOrder = $request->get('order');
@@ -213,7 +215,7 @@ class AttachmentController extends Controller
         $attachment = Attachment::query()->findOrFail($attachmentId);
 
         try {
-            $page = $this->pageRepo->getById($attachment->uploaded_to);
+            $page = $this->pageQueries->findVisibleByIdOrFail($attachment->uploaded_to);
         } catch (NotFoundException $exception) {
             throw new NotFoundException(trans('errors.attachment_not_found'));
         }
@@ -226,12 +228,13 @@ class AttachmentController extends Controller
 
         $fileName = $attachment->getFileName();
         $attachmentStream = $this->attachmentService->streamAttachmentFromStorage($attachment);
+        $attachmentSize = $this->attachmentService->getAttachmentFileSize($attachment);
 
         if ($request->get('open') === 'true') {
-            return $this->download()->streamedInline($attachmentStream, $fileName);
+            return $this->download()->streamedInline($attachmentStream, $fileName, $attachmentSize);
         }
 
-        return $this->download()->streamedDirectly($attachmentStream, $fileName);
+        return $this->download()->streamedDirectly($attachmentStream, $fileName, $attachmentSize);
     }
 
     /**

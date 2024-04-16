@@ -20,7 +20,7 @@ return [
     'image_uploaded_by' => 'Lastet opp av :userName',
     'image_uploaded_to' => 'Lastet opp til :pageLink',
     'image_updated' => 'Oppdatert :updateDate',
-    'image_load_more' => 'Last in flere',
+    'image_load_more' => 'Last inn flere',
     'image_image_name' => 'Bildenavn',
     'image_delete_used' => 'Dette bildet er brukt på sidene nedenfor.',
     'image_delete_confirm_text' => 'Vil du slette dette bildet?',

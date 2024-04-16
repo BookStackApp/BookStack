@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Utilisateur supprimé avec succès',
 
     // API Tokens
-    'api_token_create' => 'jeton d\'api créé',
+    'api_token_create' => 'a créé un jeton API',
     'api_token_create_notification' => 'Jeton d\'API créé avec succès',
-    'api_token_update' => 'jeton d\'api mis à jour',
+    'api_token_update' => 'a mis à jour un jeton API',
     'api_token_update_notification' => 'Jeton d\'API mis à jour avec succès',
-    'api_token_delete' => 'jeton d\'api supprimé',
+    'api_token_delete' => 'a supprimé un jeton API',
     'api_token_delete_notification' => 'Jeton d\'API supprimé avec succès',
 
     // Roles

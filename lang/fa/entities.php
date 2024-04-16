@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'به روزرسانی شده :timeLength',
     'meta_updated_name' => 'به روزرسانی شده :timeLength توسط :user',
     'meta_owned_name' => 'متعلق به :user',
-    'meta_reference_page_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
+    'meta_reference_count' => 'در 1 صفحه به آن ارجاع داده شده|در :count صفحه به آن ارجاع داده شده',
     'entity_select' => 'انتخاب موجودیت',
     'entity_select_lack_permission' => 'شما مجوزهای لازم برای انتخاب این مورد را ندارید',
     'images' => 'عکس‌ها',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'فایل PDF',
     'export_text' => 'پرونده متنی ساده',
     'export_md' => 'راهنما مارک‌دون',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'حذف صفحه پیش نویس',
     'pages_delete_success' => 'صفحه حذف شد',
     'pages_delete_draft_success' => 'صفحه پیش نویس حذف شد',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'آیا مطمئن هستید که می خواهید این صفحه را حذف کنید؟',
     'pages_delete_draft_confirm' => 'آیا مطمئن هستید که می خواهید این صفحه پیش نویس را حذف کنید؟',
     'pages_editing_named' => 'ویرایش صفحه :pageName',

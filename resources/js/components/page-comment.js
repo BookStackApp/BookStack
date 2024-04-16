@@ -1,5 +1,6 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
+import {buildForInput} from '../wysiwyg/config';
 
 export class PageComment extends Component {
 
@@ -11,7 +12,12 @@ export class PageComment extends Component {
         this.deletedText = this.$opts.deletedText;
         this.updatedText = this.$opts.updatedText;
 
-        // Element References
+        // Editor reference and text options
+        this.wysiwygEditor = null;
+        this.wysiwygLanguage = this.$opts.wysiwygLanguage;
+        this.wysiwygTextDirection = this.$opts.wysiwygTextDirection;
+
+        // Element references
         this.container = this.$el;
         this.contentContainer = this.$refs.contentContainer;
         this.form = this.$refs.form;
@@ -50,8 +56,25 @@ export class PageComment extends Component {
 
     startEdit() {
         this.toggleEditMode(true);
-        const lineCount = this.$refs.input.value.split('\n').length;
-        this.$refs.input.style.height = `${(lineCount * 20) + 40}px`;
+
+        if (this.wysiwygEditor) {
+            this.wysiwygEditor.focus();
+            return;
+        }
+
+        const config = buildForInput({
+            language: this.wysiwygLanguage,
+            containerElement: this.input,
+            darkMode: document.documentElement.classList.contains('dark-mode'),
+            textDirection: this.wysiwygTextDirection,
+            translations: {},
+            translationMap: window.editor_translations,
+        });
+
+        window.tinymce.init(config).then(editors => {
+            this.wysiwygEditor = editors[0];
+            setTimeout(() => this.wysiwygEditor.focus(), 50);
+        });
     }
 
     async update(event) {
@@ -60,7 +83,7 @@ export class PageComment extends Component {
         this.form.toggleAttribute('hidden', true);
 
         const reqData = {
-            text: this.input.value,
+            html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
         };
 

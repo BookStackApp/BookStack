@@ -205,6 +205,11 @@ function register(editor) {
                     contenteditable: 'false',
                 });
 
+                const direction = el.attr('dir');
+                if (direction) {
+                    wrapper.attr('dir', direction);
+                }
+
                 const spans = el.getAll('span');
                 for (const span of spans) {
                     span.unwrap();
@@ -222,6 +227,13 @@ function register(editor) {
 
         editor.serializer.addNodeFilter('code-block', elms => {
             for (const el of elms) {
+                const direction = el.attr('dir');
+                if (direction && el.firstChild) {
+                    el.firstChild.attr('dir', direction);
+                } else if (el.firstChild) {
+                    el.firstChild.attr('dir', null);
+                }
+
                 el.unwrap();
             }
         });

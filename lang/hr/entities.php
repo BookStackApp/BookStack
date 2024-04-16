@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Ažurirano :timeLength',
     'meta_updated_name' => 'Ažurirano :timeLength od :user',
     'meta_owned_name' => 'Vlasništvo :user',
-    'meta_reference_page_count' => 'Referencirano na :count stranici|Referencirano na :count stranica',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Odaberi subjekt',
     'entity_select_lack_permission' => 'Nemate potrebne ovlasti za odabir ovog elementa',
     'images' => 'Slike',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF Datoteka',
     'export_text' => 'Text File',
     'export_md' => 'Markdown Datoteka',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Dopuštenja',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Izbriši nacrt stranice',
     'pages_delete_success' => 'Izbrisana stranica',
     'pages_delete_draft_success' => 'Izbrisan nacrt stranice',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Jeste li sigurni da želite izbrisati stranicu?',
     'pages_delete_draft_confirm' => 'Jeste li sigurni da želite izbrisati nacrt stranice?',
     'pages_editing_named' => 'Uređivanje stranice :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'Reference',
     'references_none' => 'Nema praćenih referenci na ovu stavku.',
-    'references_to_desc' => 'U nastavku su prikazane sve poznate stranice u sustavu koje se povezuju s ovom stavkom.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Prati',

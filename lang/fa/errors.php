@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'کاربری با ایمیل :email از قبل وجود دارد اما دارای اطلاعات متفاوتی می باشد.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'ایمیل قبلا تایید شده است، وارد سیستم شوید.',
     'email_confirmation_invalid' => 'این کلمه عبور معتبر نمی باشد و یا قبلا استفاده شده است، لطفا دوباره ثبت نام نمایید.',
     'email_confirmation_expired' => 'کلمه عبور منقضی شده است، یک ایمیل تایید جدید ارسال شد.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'افزونه PHP LDAP نصب نشده است',
     'ldap_cannot_connect' => 'اتصال به سرور LDAP امکان پذیر نیست، اتصال اولیه برقرار نشد',
     'saml_already_logged_in' => 'قبلا وارد سیستم شده اید',
-    'saml_user_not_registered' => 'کاربر :name ثبت نشده است و ثبت نام خودکار غیرفعال است',
     'saml_no_email_address' => 'آدرس داده ای برای این کاربر در داده های ارائه شده توسط سیستم احراز هویت خارجی یافت نشد',
     'saml_invalid_response_id' => 'درخواست از سیستم احراز هویت خارجی توسط فرایندی که توسط این نرم افزار آغاز شده است شناخته نمی شود. بازگشت به سیستم پس از ورود به سیستم می تواند باعث این مسئله شود.',
     'saml_fail_authed' => 'ورود به سیستم :system انجام نشد، سیستم مجوز موفقیت آمیز ارائه نکرد',
     'oidc_already_logged_in' => 'قبلا وارد شده اید',
-    'oidc_user_not_registered' => 'کاربر :name ثبت نشده و ثبت نام خودکار غیرفعال است',
     'oidc_no_email_address' => 'آدرس ایمیلی برای این کاربر در داده های ارائه شده توسط سیستم احراز هویت خارجی یافت نشد',
     'oidc_fail_authed' => 'ورود به سیستم با استفاده از :system انجام نشد، سیستم مجوز موفقیت آمیز ارائه نکرد',
     'social_no_action_defined' => 'عملی تعریف نشده است',
@@ -53,7 +52,7 @@ return [
     'image_upload_replace_type' => 'جایگزینی فایل تصویری باید از یک نوع باشد',
     'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
     'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'به دلیل محدودیت منابع سیستم، تصاویر کوچک گالری ایجاد نشد.',
     'drawing_data_not_found' => 'داده های طرح قابل بارگذاری نیستند. ممکن است فایل طرح دیگر وجود نداشته باشد یا شما به آن دسترسی نداشته باشید.',
 
     // Attachments

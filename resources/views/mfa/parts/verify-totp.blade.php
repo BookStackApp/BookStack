@@ -2,10 +2,11 @@
 
 <p class="small mb-m">{{ trans('auth.mfa_verify_totp_desc') }}</p>
 
-<form action="{{ url('/mfa/totp/verify') }}" method="post">
+<form action="{{ url('/mfa/totp/verify') }}" method="post" autocomplete="off">
     {{ csrf_field() }}
     <input type="text"
            name="code"
+           autocomplete="one-time-code"
            autofocus
            placeholder="{{ trans('auth.mfa_gen_totp_provide_code_here') }}"
            class="input-fill-width {{ $errors->has('code') ? 'neg' : '' }}">

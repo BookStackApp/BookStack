@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新: :timeLength',
     'meta_updated_name' => '更新: :timeLength (:user)',
     'meta_owned_name' => '所有者: :user',
-    'meta_reference_page_count' => '{0}ページの参照はありません|[1,9]:count つのページから参照|[10,*]:count ページから参照',
+    'meta_reference_count' => ':count 項目から参照|:count 項目から参照',
     'entity_select' => 'エンティティ選択',
     'entity_select_lack_permission' => 'この項目を選択するために必要な権限がありません',
     'images' => '画像',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF',
     'export_text' => 'テキストファイル',
     'export_md' => 'Markdown',
+    'default_template' => 'デフォルトページテンプレート',
+    'default_template_explain' => 'このアイテム内に新しいページを作成する際にデフォルトコンテンツとして使用されるページテンプレートを割り当てます。これはページ作成者が選択したテンプレートページへのアクセス権を持つ場合にのみ使用されることに注意してください。',
+    'default_template_select' => 'テンプレートページを選択',
 
     // Permissions and restrictions
     'permissions' => '権限',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'ページの下書きを削除',
     'pages_delete_success' => 'ページを削除しました',
     'pages_delete_draft_success' => 'ページの下書きを削除しました',
+    'pages_delete_warning_template' => 'このページは現在、ブックまたはチャプタのデフォルトページテンプレートとして使用されています。このページが削除されると、それらのアイテムでデフォルトのページテンプレートが割り当てられなくなります。',
     'pages_delete_confirm' => 'このページを削除してもよろしいですか？',
     'pages_delete_draft_confirm' => 'このページの下書きを削除してもよろしいですか？',
     'pages_editing_named' => 'ページ :pageName を編集',
@@ -406,7 +410,7 @@ return [
     // References
     'references' => '参照',
     'references_none' => 'この項目への追跡された参照はありません。',
-    'references_to_desc' => 'この項目にリンクしている、システム内のすべての既知のページを以下に示します。',
+    'references_to_desc' => 'この項目はシステム内の以下のコンテンツからリンクされています。',
 
     // Watch Options
     'watch' => 'ウォッチ',

@@ -1,8 +1,9 @@
 {
   "book_id": 1,
   "name": "My fantastic updated chapter",
-  "description": "This is an updated chapter that I've altered via the API",
+  "description_html": "<p>This is an <strong>updated chapter</strong> that I've altered via the API</p>",
   "priority": 16,
+  "default_template_id": 2428,
   "tags": [
     {"name": "Category", "value": "Kinda Good Content"},
     {"name": "Rating", "value": "Medium"}

@@ -182,7 +182,7 @@ pre {
   @include lightDark(background-color, #FFF, #2B2B2B);
   @include lightDark(border-color, #DDD, #111);
   border-radius: 4px;
-  padding-left: 26px;
+  padding-inline-start: 26px;
   position: relative;
   padding-top: 3px;
   padding-bottom: 3px;
@@ -192,10 +192,10 @@ pre {
     position: absolute;
     top: 0;
     width: 22.4px;
-    left: 0;
+    inset-inline-start: 0;
     height: 100%;
     @include lightDark(background-color, #f5f5f5, #313335);
-    @include lightDark(border-right, 1px solid #DDD, none);
+    @include lightDark(border-inline-end, 1px solid #DDD, none);
   }
 }
 

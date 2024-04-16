@@ -3,7 +3,7 @@
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\ActivityType;
-use BookStack\Entities\Repos\BookRepo;
+use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Facades\Activity;
@@ -12,11 +12,9 @@ use Illuminate\Http\Request;
 
 class BookSortController extends Controller
 {
-    protected $bookRepo;
-
-    public function __construct(BookRepo $bookRepo)
-    {
-        $this->bookRepo = $bookRepo;
+    public function __construct(
+        protected BookQueries $queries,
+    ) {
     }
 
     /**
@@ -24,7 +22,7 @@ class BookSortController extends Controller
      */
     public function show(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         $bookChildren = (new BookContents($book))->getTree(false);
@@ -40,7 +38,7 @@ class BookSortController extends Controller
      */
     public function showItem(string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $bookChildren = (new BookContents($book))->getTree();
 
         return view('books.parts.sort-box', ['book' => $book, 'bookChildren' => $bookChildren]);
@@ -51,7 +49,7 @@ class BookSortController extends Controller
      */
     public function update(Request $request, string $bookSlug)
     {
-        $book = $this->bookRepo->getBySlug($bookSlug);
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
 
         // Return if no map sent

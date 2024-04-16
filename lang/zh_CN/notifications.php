@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => '为了防止出现大量通知，一段时间内您不会收到同一编辑者再次编辑本页面的通知。',
 
     'detail_page_name' => '页面名称：',
+    'detail_page_path' => '页面路径：',
     'detail_commenter' => '评论者：',
     'detail_comment' => '评论：',
     'detail_created_by' => '创建者：',

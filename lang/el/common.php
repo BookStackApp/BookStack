@@ -20,7 +20,7 @@ return [
     'description' => 'Περιγραφή',
     'role' => 'Ρόλος',
     'cover_image' => 'Εικόνα εξώφυλλου',
-    'cover_image_description' => 'Αυτή η εικόνα πρέπει να είναι περίπου 440x250px.',
+    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
 
     // Actions
     'actions' => 'Ενέργειες',

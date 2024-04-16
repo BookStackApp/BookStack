@@ -14,6 +14,8 @@ export class PagePicker extends Component {
         this.defaultDisplay = this.$refs.defaultDisplay;
         this.buttonSep = this.$refs.buttonSeperator;
 
+        this.selectorEndpoint = this.$opts.selectorEndpoint;
+
         this.value = this.input.value;
         this.setupListeners();
     }
@@ -33,6 +35,11 @@ export class PagePicker extends Component {
         const selectorPopup = window.$components.first('entity-selector-popup');
         selectorPopup.show(entity => {
             this.setValue(entity.id, entity.name);
+        }, {
+            initialValue: '',
+            searchEndpoint: this.selectorEndpoint,
+            entityTypes: 'page',
+            entityPermission: 'view',
         });
     }
 

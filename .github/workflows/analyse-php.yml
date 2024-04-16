@@ -18,7 +18,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 8.1
+        php-version: 8.3
         extensions: gd, mbstring, json, curl, xml, mysql, ldap
 
     - name: Get Composer Cache Directory
@@ -27,10 +27,10 @@ jobs:
         echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache composer packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-8.1
+        key: ${{ runner.os }}-composer-8.3
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install composer dependencies

@@ -24,6 +24,9 @@ class BooksApiTest extends TestCase
                 'id'   => $firstBook->id,
                 'name' => $firstBook->name,
                 'slug' => $firstBook->slug,
+                'owned_by' => $firstBook->owned_by,
+                'created_by' => $firstBook->created_by,
+                'updated_by' => $firstBook->updated_by,
             ],
         ]]);
     }
@@ -33,8 +36,8 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         $templatePage = $this->entities->templatePage();
         $details = [
-            'name'        => 'My API book',
-            'description' => 'A book created via the API',
+            'name'                => 'My API book',
+            'description'         => 'A book created via the API',
             'default_template_id' => $templatePage->id,
         ];
 
@@ -42,8 +45,33 @@ class BooksApiTest extends TestCase
         $resp->assertStatus(200);
 
         $newItem = Book::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
-        $resp->assertJson(array_merge($details, ['id' => $newItem->id, 'slug' => $newItem->slug]));
+        $resp->assertJson(array_merge($details, [
+            'id' => $newItem->id,
+            'slug' => $newItem->slug,
+            'description_html' => '<p>A book created via the API</p>',
+        ]));
         $this->assertActivityExists('book_create', $newItem);
+    }
+
+    public function test_create_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+        $details = [
+            'name'             => 'My API book',
+            'description_html' => '<p>A book <em>created</em> <strong>via</strong> the API</p>',
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(200);
+
+        $newItem = Book::query()->orderByDesc('id')->where('name', '=', $details['name'])->first();
+        $expectedDetails = array_merge($details, [
+            'id'          => $newItem->id,
+            'description' => 'A book created via the API',
+        ]);
+
+        $resp->assertJson($expectedDetails);
+        $this->assertDatabaseHas('books', $expectedDetails);
     }
 
     public function test_book_name_needed_to_create()
@@ -61,7 +89,7 @@ class BooksApiTest extends TestCase
                 'validation' => [
                     'name' => ['The name field is required.'],
                 ],
-                'code' => 422,
+                'code'       => 422,
             ],
         ]);
     }
@@ -128,7 +156,7 @@ class BooksApiTest extends TestCase
         $templatePage = $this->entities->templatePage();
         $details = [
             'name'        => 'My updated API book',
-            'description' => 'A book created via the API',
+            'description' => 'A book updated via the API',
             'default_template_id' => $templatePage->id,
         ];
 
@@ -136,8 +164,27 @@ class BooksApiTest extends TestCase
         $book->refresh();
 
         $resp->assertStatus(200);
-        $resp->assertJson(array_merge($details, ['id' => $book->id, 'slug' => $book->slug]));
+        $resp->assertJson(array_merge($details, [
+            'id' => $book->id,
+            'slug' => $book->slug,
+            'description_html' => '<p>A book updated via the API</p>',
+        ]));
         $this->assertActivityExists('book_update', $book);
+    }
+
+    public function test_update_endpoint_with_html()
+    {
+        $this->actingAsApiEditor();
+        $book = $this->entities->book();
+        $details = [
+            'name'             => 'My updated API book',
+            'description_html' => '<p>A book <strong>updated</strong> via the API</p>',
+        ];
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$book->id}", $details);
+        $resp->assertStatus(200);
+
+        $this->assertDatabaseHas('books', array_merge($details, ['id' => $book->id, 'description' => 'A book updated via the API']));
     }
 
     public function test_update_increments_updated_date_if_only_tags_are_sent()

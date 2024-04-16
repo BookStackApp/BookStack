@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En bruger med email :email eksistere allerede, men med andre legitimationsoplysninger.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Email er allerede bekræftet. Prøv at logge ind.',
     'email_confirmation_invalid' => 'Denne bekræftelsestoken er ikke gyldig eller er allerede blevet brugt. Prøv at registrere dig igen.',
     'email_confirmation_expired' => 'Bekræftelsestoken er udløbet. En ny bekræftelsesmail er blevet sendt.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP udvidelse er ikke installeret',
     'ldap_cannot_connect' => 'Kan ikke forbinde til ldap server. Indledende forbindelse mislykkedes',
     'saml_already_logged_in' => 'Allerede logget ind',
-    'saml_user_not_registered' => 'Brugeren :name er ikke registreret, og automatisk registrering er slået fra',
     'saml_no_email_address' => 'Kunne ikke finde en e-mail-adresse for denne bruger i de data, der leveres af det eksterne godkendelsessystem',
     'saml_invalid_response_id' => 'Anmodningen fra det eksterne godkendelsessystem genkendes ikke af en proces, der er startet af denne applikation. Navigering tilbage efter et login kan forårsage dette problem.',
     'saml_fail_authed' => 'Login ved hjælp af :system failed, systemet har ikke givet tilladelse',
     'oidc_already_logged_in' => 'Allerede logget ind',
-    'oidc_user_not_registered' => 'Brugeren :name er ikke registreret, og automatisk registrering er slået fra',
     'oidc_no_email_address' => 'Kunne ikke finde en e-mailadresse for denne bruger i de data, der leveres af det eksterne godkendelsessystem',
     'oidc_fail_authed' => 'Login ved hjælp af :system fejlede, systemet har ikke givet tilladelse',
     'social_no_action_defined' => 'Ingen handling er defineret',

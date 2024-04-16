@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => '大量の通知を防ぐために、しばらくの間は同じユーザがこのページをさらに編集しても通知は送信されません。',
 
     'detail_page_name' => 'ページ名：',
+    'detail_page_path' => 'ページパス：',
     'detail_commenter' => 'コメントユーザ：',
     'detail_comment' => 'コメント：',
     'detail_created_by' => '作成ユーザ：',

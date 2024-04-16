@@ -13,6 +13,7 @@ return [
     'updated_page_debounce' => 'Para prevenir notificações em massa, por enquanto notificações não serão enviadas para você para próximas edições nessa página pelo mesmo editor.',
 
     'detail_page_name' => 'Nome da Página:',
+    'detail_page_path' => 'Caminho da Página:',
     'detail_commenter' => 'Comentador:',
     'detail_comment' => 'Comentário:',
     'detail_created_by' => 'Criado por: ',

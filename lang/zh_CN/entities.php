@@ -23,7 +23,7 @@ return [
     'meta_updated' => '更新于 :timeLength',
     'meta_updated_name' => '由 :user 更新于 :timeLength',
     'meta_owned_name' => '拥有者 :user',
-    'meta_reference_page_count' => '被 :count 个页面引用|被 :count 个页面引用',
+    'meta_reference_count' => '被 :count 个页面引用|被 :count 个页面引用',
     'entity_select' => '选择项目',
     'entity_select_lack_permission' => '您没有选择此项目所需的权限',
     'images' => '图片',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'PDF文件',
     'export_text' => '纯文本文件',
     'export_md' => 'Markdown 文件',
+    'default_template' => '默认页面模板',
+    'default_template_explain' => '指定一个页面模板，该模板将作为此项目中所有页面的默认内容。请注意，仅当页面创建者具有对所选页面模板的查看访问权限时，此功能才会生效。',
+    'default_template_select' => '选择模板页面',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => '删除草稿页面',
     'pages_delete_success' => '页面已删除',
     'pages_delete_draft_success' => '草稿页面已删除',
+    'pages_delete_warning_template' => '此页面是当前书籍或章节的默认页面模板。删除此页面后，这些书籍或章节的默认页面模板将被取消。',
     'pages_delete_confirm' => '您确定要删除此页面吗？',
     'pages_delete_draft_confirm' => '您确定要删除此草稿页面吗？',
     'pages_editing_named' => '正在编辑页面“:pageName”',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => '引用',
     'references_none' => '没有跟踪到对此项目的引用。',
-    'references_to_desc' => '下面显示的是系统中所有已知链接到这个项目的页面。',
+    'references_to_desc' => '下方列出了系统中链接到此项目的所有已知内容。',
 
     // Watch Options
     'watch' => '关注',

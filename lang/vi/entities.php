@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Được cập nhật :timeLength',
     'meta_updated_name' => 'Được cập nhật :timeLength bởi :user',
     'meta_owned_name' => 'Được sở hữu bởi :user',
-    'meta_reference_page_count' => 'Được tham chiếu trên :count page|Được tham chiếu trên :count pages',
+    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
     'entity_select' => 'Chọn thực thể',
     'entity_select_lack_permission' => 'Bạn không có quyền để chọn mục này',
     'images' => 'Ảnh',
@@ -39,6 +39,9 @@ return [
     'export_pdf' => 'Tệp PDF',
     'export_text' => 'Tệp văn bản thuần túy',
     'export_md' => 'Tệp Markdown',
+    'default_template' => 'Default Page Template',
+    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
     'permissions' => 'Quyền',
@@ -204,6 +207,7 @@ return [
     'pages_delete_draft' => 'Xóa Trang Nháp',
     'pages_delete_success' => 'Đã xóa Trang',
     'pages_delete_draft_success' => 'Đã xóa trang Nháp',
+    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
     'pages_delete_confirm' => 'Bạn có chắc chắn muốn xóa trang này?',
     'pages_delete_draft_confirm' => 'Bạn có chắc chắn muốn xóa trang nháp này?',
     'pages_editing_named' => 'Đang chỉnh sửa Trang :pageName',
@@ -405,7 +409,7 @@ return [
     // References
     'references' => 'References',
     'references_none' => 'There are no tracked references to this item.',
-    'references_to_desc' => 'Shown below are all the known pages in the system that link to this item.',
+    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
     'watch' => 'Watch',

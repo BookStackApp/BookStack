@@ -2,10 +2,7 @@
 
 namespace BookStack\Users\Queries;
 
-use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\Bookshelf;
-use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\Page;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,6 +12,11 @@ use Illuminate\Database\Eloquent\Collection;
  */
 class UserRecentlyCreatedContent
 {
+    public function __construct(
+        protected EntityQueries $queries,
+    ) {
+    }
+
     /**
      * @return array{pages: Collection, chapters: Collection, books: Collection, shelves: Collection}
      */
@@ -28,10 +30,10 @@ class UserRecentlyCreatedContent
         };
 
         return [
-            'pages'    => $query(Page::visible()->where('draft', '=', false)),
-            'chapters' => $query(Chapter::visible()),
-            'books'    => $query(Book::visible()),
-            'shelves'  => $query(Bookshelf::visible()),
+            'pages'    => $query($this->queries->pages->visibleForList()->where('draft', '=', false)),
+            'chapters' => $query($this->queries->chapters->visibleForList()),
+            'books'    => $query($this->queries->books->visibleForList()),
+            'shelves'  => $query($this->queries->shelves->visibleForList()),
         ];
     }
 }

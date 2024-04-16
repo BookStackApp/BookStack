@@ -594,10 +594,16 @@ class OidcTest extends TestCase
     {
         config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout']);
 
-        $this->runLogin();
+        // Fix times so our token is predictable
+        $claimOverrides = [
+            'iat' => time(),
+            'exp' => time() + 720,
+            'auth_time' => time()
+        ];
+        $this->runLogin($claimOverrides);
 
         $resp = $this->asEditor()->post('/oidc/logout');
-        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken()) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
+        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken($claimOverrides)) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
         $resp->assertRedirect('https://example.com/logout?' . $query);
     }
 
@@ -653,6 +659,34 @@ class OidcTest extends TestCase
             'external_auth_id' => 'lenny1010101',
             'name' => 'Lenny',
         ]);
+    }
+
+    public function test_pkce_used_on_authorize_and_access()
+    {
+        // Start auth
+        $resp = $this->post('/oidc/login');
+        $state = session()->get('oidc_state');
+
+        $pkceCode = session()->get('oidc_pkce_code');
+        $this->assertGreaterThan(30, strlen($pkceCode));
+
+        $expectedCodeChallenge = trim(strtr(base64_encode(hash('sha256', $pkceCode, true)), '+/', '-_'), '=');
+        $redirect = $resp->headers->get('Location');
+        $redirectParams = [];
+        parse_str(parse_url($redirect, PHP_URL_QUERY), $redirectParams);
+        $this->assertEquals($expectedCodeChallenge, $redirectParams['code_challenge']);
+        $this->assertEquals('S256', $redirectParams['code_challenge_method']);
+
+        $transactions = $this->mockHttpClient([$this->getMockAuthorizationResponse([
+            'email' => 'benny@example.com',
+            'sub'   => 'benny1010101',
+        ])]);
+
+        $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $tokenRequest = $transactions->latestRequest();
+        $bodyParams = [];
+        parse_str($tokenRequest->getBody(), $bodyParams);
+        $this->assertEquals($pkceCode, $bodyParams['code_verifier']);
     }
 
     protected function withAutodiscovery()

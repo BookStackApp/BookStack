@@ -20,7 +20,7 @@ return [
     'description' => 'Beskrivelse',
     'role' => 'Rolle',
     'cover_image' => 'Forside',
-    'cover_image_description' => 'Bildet bør være ca. 440x250px.',
+    'cover_image_description' => 'Dette bildet bør være omtrent 440x250px selv om det vil bli fleksibelt skalert og beskjært slik at brukergrensesnittet passer til forskjellige scenarier ved behov. Dette betyr at de faktiske dimensjonene for visning varierer.',
 
     // Actions
     'actions' => 'Handlinger',
@@ -44,8 +44,8 @@ return [
     'configure' => 'Konfigurer',
     'manage' => 'Administrer',
     'fullscreen' => 'Fullskjerm',
-    'favourite' => 'Favorisér',
-    'unfavourite' => 'Avfavorisér',
+    'favourite' => 'Favoriser',
+    'unfavourite' => 'Avfavoriser',
     'next' => 'Neste',
     'previous' => 'Forrige',
     'filter_active' => 'Aktivt filter:',

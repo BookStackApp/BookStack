@@ -10,6 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':email címmel már létezik felhasználó, de más hitelesítő adatokkal.',
+    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
     'email_already_confirmed' => 'Az email cím már meg van erősítve, meg lehet próbálni a bejelentkezést.',
     'email_confirmation_invalid' => 'A megerősítő vezérjel nem érvényes vagy használva volt. Meg kell próbálni újraregisztrálni.',
     'email_confirmation_expired' => 'A megerősítő vezérjel lejárt. Egy új megerősítő email lett elküldve.',
@@ -19,12 +20,10 @@ return [
     'ldap_extension_not_installed' => 'LDAP PHP kiterjesztés nincs telepítve',
     'ldap_cannot_connect' => 'Nem lehet kapcsolódni az LDAP kiszolgálóhoz, a kezdeti kapcsolatfelvétel nem sikerült',
     'saml_already_logged_in' => 'Már bejelentkezett',
-    'saml_user_not_registered' => ':name felhasználó nincs regisztrálva és az automatikus regisztráció le van tiltva',
     'saml_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
     'saml_invalid_response_id' => 'A külső hitelesítő rendszerből érkező kérést nem ismerte fel az alkalmazás által indított folyamat. Bejelentkezés után az előző oldalra történő visszalépés okozhatja ezt a hibát.',
     'saml_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
     'oidc_already_logged_in' => 'Már bejelentkezett',
-    'oidc_user_not_registered' => ':name felhasználó nincs regisztrálva és az automatikus regisztráció le van tiltva',
     'oidc_no_email_address' => 'Ehhez a felhasználóhoz nem található email cím a külső hitelesítő rendszer által átadott adatokban',
     'oidc_fail_authed' => 'Bejelentkezés :system használatával sikertelen, a rendszer nem biztosított sikeres hitelesítést',
     'social_no_action_defined' => 'Nincs művelet meghatározva',
@@ -44,30 +43,30 @@ return [
     'cannot_get_image_from_url' => 'Nem lehet lekérni a képet innen: :url',
     'cannot_create_thumbs' => 'A kiszolgáló nem tud létrehozni bélyegképeket. Ellenőrizni kell, hogy telepítve van-a a GD PHP kiterjesztés.',
     'server_upload_limit' => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'A szerver nem tudja fogadni a megadott adatmennyiséget. Próbálkozz újra kevesebb adattal vagy egy kisebb fájllal.',
     'uploaded'  => 'A kiszolgáló nem engedélyez ilyen méretű feltöltéseket. Kisebb fájlmérettel kell próbálkozni.',
 
     // Drawing & Images
     'image_upload_error' => 'Hiba történt a kép feltöltése közben',
     'image_upload_type_error' => 'A feltöltött kép típusa érvénytelen',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'image_upload_replace_type' => 'A cserélt képnek azonos típusúnak kell lennie',
+    'image_upload_memory_limit' => 'A rendszererőforrás-korlátok miatt nem sikerült kezelni a képfeltöltést és/vagy az indexképek létrehozását.',
+    'image_thumbnail_memory_limit' => 'A rendszererőforrás-korlátok miatt nem sikerült létrehozni a képméret-változatokat.',
+    'image_gallery_thumbnail_memory_limit' => 'A rendszererőforrás-korlátok miatt nem sikerült létrehozni a galéria bélyegképét.',
+    'drawing_data_not_found' => 'A rajzadatokat nem sikerült betölteni. Előfordulhat, hogy a rajzfájl már nem létezik, vagy nem rendelkezik hozzáférési engedéllyel.',
 
     // Attachments
     'attachment_not_found' => 'Csatolmány nem található',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Hiba történt a melléklet feltöltésekor',
 
     // Pages
     'page_draft_autosave_fail' => 'Nem sikerült a vázlat mentése. Mentés előtt meg kell róla győződni, hogy van internetkapcsolat',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Nem sikerült törölni az oldalvázlatot és lekérni az aktuális oldal mentett tartalmat',
     'page_custom_home_deletion' => 'Nem lehet oldalt törölni ha kezdőlapnak van beállítva',
 
     // Entities
     'entity_not_found' => 'Entitás nem található',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Polc nem található',
     'book_not_found' => 'Könyv nem található',
     'page_not_found' => 'Oldal nem található',
     'chapter_not_found' => 'Fejezet nem található',
@@ -95,10 +94,10 @@ return [
     // Error pages
     '404_page_not_found' => 'Oldal nem található',
     'sorry_page_not_found' => 'Sajnáljuk, a keresett oldal nem található.',
-    'sorry_page_not_found_permission_warning' => 'If you expected this page to exist, you might not have permission to view it.',
+    'sorry_page_not_found_permission_warning' => 'Ha arra számított, hogy ez az oldal létezik, előfordulhat, hogy nincs engedélye a megtekintésére.',
     'image_not_found' => 'A kép nem található',
     'image_not_found_subtitle' => 'Sajnáljuk, a keresett kép nem található.',
-    'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
+    'image_not_found_details' => 'Ha arra számított, hogy ez a kép létezik, akkor előfordulhat, hogy törölték.',
     'return_home' => 'Vissza a kezdőlapra',
     'error_occurred' => 'Hiba örtént',
     'app_down' => ':appName jelenleg nem üzemel',
@@ -108,7 +107,7 @@ return [
     'api_no_authorization_found' => 'A kérésben nem található hitelesítési vezérjel',
     'api_bad_authorization_format' => 'A kérésben hitelesítési vezérjel található de a formátuma érvénytelennek tűnik',
     'api_user_token_not_found' => 'A megadott hitelesítési vezérjelhez nem található egyező API vezérjel',
-    'api_incorrect_token_secret' => 'The secret provided for the given used API token is incorrect',
+    'api_incorrect_token_secret' => 'Az API tokenhez használt secret helytelen',
     'api_user_no_api_permission' => 'A használt API vezérjel tulajdonosának nincs jogosultsága API hívások végrehajtásához',
     'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
 
@@ -116,5 +115,5 @@ return [
     'maintenance_test_email_failure' => 'Hiba történt egy teszt email küldésekor:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'Az URL nem egyezik a konfigurált és engedélyezett SSR-állomásokkal',
 ];

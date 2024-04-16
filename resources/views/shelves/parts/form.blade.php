@@ -1,13 +1,16 @@
-{{ csrf_field() }}
+@push('head')
+    <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
+@endpush
 
+{{ csrf_field() }}
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>
     @include('form.text', ['name' => 'name', 'autofocus' => true])
 </div>
 
 <div class="form-group description-input">
-    <label for="description">{{ trans('common.description') }}</label>
-    @include('form.textarea', ['name' => 'description'])
+    <label for="description_html">{{ trans('common.description') }}</label>
+    @include('form.description-html-input')
 </div>
 
 <div component="shelf-sort" class="grid half gap-xl">
@@ -85,3 +88,6 @@
     <a href="{{ isset($shelf) ? $shelf->getUrl() : url('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.shelves_save') }}</button>
 </div>
+
+@include('entities.selector-popup')
+@include('form.editor-translations')
