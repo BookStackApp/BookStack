@@ -28,7 +28,7 @@ class OidcUserDetails
     }
 
     /**
-     * Populate user details from OidcIdToken data.
+     * Populate user details from the given claim data.
      */
     public function populate(
         ProvidesClaims $claims,
@@ -38,11 +38,11 @@ class OidcUserDetails
     ): void {
         $this->externalId = $claims->getClaim($idClaim) ?? $this->externalId;
         $this->email = $claims->getClaim('email') ?? $this->email;
-        $this->name = static::getUserDisplayName($displayNameClaims, $claims, $this->externalId) ?? $this->name;
+        $this->name = static::getUserDisplayName($displayNameClaims, $claims) ?? $this->name;
         $this->groups = static::getUserGroups($groupsClaim, $claims) ?? $this->groups;
     }
 
-    protected static function getUserDisplayName(string $displayNameClaims, ProvidesClaims $token, string $defaultValue): string
+    protected static function getUserDisplayName(string $displayNameClaims, ProvidesClaims $token): string
     {
         $displayNameClaimParts = explode('|', $displayNameClaims);
 
@@ -52,10 +52,6 @@ class OidcUserDetails
             if ($component !== '') {
                 $displayName[] = $component;
             }
-        }
-
-        if (count($displayName) === 0) {
-            $displayName[] = $defaultValue;
         }
 
         return implode(' ', $displayName);
