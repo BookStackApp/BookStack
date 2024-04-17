@@ -194,35 +194,10 @@ class OidcService
         try {
             $idToken->validate($settings->clientId);
         } catch (OidcInvalidTokenException $exception) {
-            throw new OidcException("ID token validate failed with error: {$exception->getMessage()}");
+            throw new OidcException("ID token validation failed with error: {$exception->getMessage()}");
         }
 
-        $userDetails = OidcUserDetails::fromToken(
-            $idToken,
-            $this->config()['external_id_claim'],
-            $this->config()['display_name_claims'] ?? '',
-            $this->config()['groups_claim'] ?? ''
-        );
-
-        // TODO - This should not affect id token validation
-        if (!$userDetails->isFullyPopulated($this->shouldSyncGroups()) && !empty($settings->userinfoEndpoint)) {
-            $provider = $this->getProvider($settings);
-            $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
-            $response = $provider->getParsedResponse($request);
-            // TODO - Ensure response content-type is "application/json" before using in this way (5.3.2)
-            // TODO - The sub Claim in the UserInfo Response MUST be verified to exactly match the sub Claim in the ID Token; if they do not match, the UserInfo Response values MUST NOT be used. (5.3.2)
-            // TODO - Response validation (5.3.4)
-            // TODO - Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
-            // TODO - If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
-            // TODO - If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
-            $claims = $idToken->getAllClaims();
-            foreach ($response as $key => $value) {
-                $claims[$key] = $value;
-            }
-            // TODO - Should maybe remain separate from IdToken completely
-            $idToken->replaceClaims($claims);
-        }
-
+        $userDetails = $this->getUserDetailsFromToken($idToken, $accessToken, $settings);
         if (empty($userDetails->email)) {
             throw new OidcException(trans('errors.oidc_no_email_address'));
         }
@@ -250,6 +225,41 @@ class OidcService
         $this->loginService->login($user, 'oidc');
 
         return $user;
+    }
+
+    /**
+     * @throws OidcException
+     */
+    protected function getUserDetailsFromToken(OidcIdToken $idToken, OidcAccessToken $accessToken, OidcProviderSettings $settings): OidcUserDetails
+    {
+        $userDetails = new OidcUserDetails();
+        $userDetails->populate(
+            $idToken,
+            $this->config()['external_id_claim'],
+            $this->config()['display_name_claims'] ?? '',
+            $this->config()['groups_claim'] ?? ''
+        );
+
+        if (!$userDetails->isFullyPopulated($this->shouldSyncGroups()) && !empty($settings->userinfoEndpoint)) {
+            $provider = $this->getProvider($settings);
+            $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
+            $response = new OidcUserinfoResponse($provider->getResponse($request));
+
+            try {
+                $response->validate($idToken->getClaim('sub'));
+            } catch (OidcInvalidTokenException $exception) {
+                throw new OidcException("Userinfo endpoint response validation failed with error: {$exception->getMessage()}");
+            }
+
+            $userDetails->populate(
+                $response,
+                $this->config()['external_id_claim'],
+                $this->config()['display_name_claims'] ?? '',
+                $this->config()['groups_claim'] ?? ''
+            );
+        }
+
+        return $userDetails;
     }
 
     /**
