@@ -30,23 +30,19 @@ class OidcUserDetails
     /**
      * Populate user details from OidcIdToken data.
      */
-    public static function fromToken(
-        OidcIdToken $token,
+    public function populate(
+        ProvidesClaims $claims,
         string $idClaim,
         string $displayNameClaims,
         string $groupsClaim,
-    ): static {
-        $id = $token->getClaim($idClaim);
-
-        return new self(
-            externalId: $id,
-            email: $token->getClaim('email'),
-            name: static::getUserDisplayName($displayNameClaims, $token, $id),
-            groups: static::getUserGroups($groupsClaim, $token),
-        );
+    ): void {
+        $this->externalId = $claims->getClaim($idClaim) ?? $this->externalId;
+        $this->email = $claims->getClaim('email') ?? $this->email;
+        $this->name = static::getUserDisplayName($displayNameClaims, $claims, $this->externalId) ?? $this->name;
+        $this->groups = static::getUserGroups($groupsClaim, $claims) ?? $this->groups;
     }
 
-    protected static function getUserDisplayName(string $displayNameClaims, OidcIdToken $token, string $defaultValue): string
+    protected static function getUserDisplayName(string $displayNameClaims, ProvidesClaims $token, string $defaultValue): string
     {
         $displayNameClaimParts = explode('|', $displayNameClaims);
 
@@ -65,7 +61,7 @@ class OidcUserDetails
         return implode(' ', $displayName);
     }
 
-    protected static function getUserGroups(string $groupsClaim, OidcIdToken $token): array
+    protected static function getUserGroups(string $groupsClaim, ProvidesClaims $token): array
     {
         if (empty($groupsClaim)) {
             return [];

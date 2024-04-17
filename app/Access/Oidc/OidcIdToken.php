@@ -2,7 +2,7 @@
 
 namespace BookStack\Access\Oidc;
 
-class OidcIdToken
+class OidcIdToken implements ProvidesClaims
 {
     protected array $header;
     protected array $payload;
@@ -71,10 +71,8 @@ class OidcIdToken
     /**
      * Fetch a specific claim from this token.
      * Returns null if it is null or does not exist.
-     *
-     * @return mixed|null
      */
-    public function getClaim(string $claim)
+    public function getClaim(string $claim): mixed
     {
         return $this->payload[$claim] ?? null;
     }
