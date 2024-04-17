@@ -201,6 +201,9 @@ class OidcService
         if (empty($userDetails->email)) {
             throw new OidcException(trans('errors.oidc_no_email_address'));
         }
+        if (empty($userDetails->name)) {
+            $userDetails->name = $userDetails->externalId;
+        }
 
         $isLoggedIn = auth()->check();
         if ($isLoggedIn) {

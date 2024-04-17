@@ -53,7 +53,7 @@ class OidcProviderSettings
      */
     protected function validateInitial(): void
     {
-        $required = ['clientId', 'clientSecret', 'redirectUri', 'issuer'];
+        $required = ['clientId', 'clientSecret', 'issuer'];
         foreach ($required as $prop) {
             if (empty($this->$prop)) {
                 throw new InvalidArgumentException("Missing required configuration \"{$prop}\" value");

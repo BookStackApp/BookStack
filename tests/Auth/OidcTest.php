@@ -37,6 +37,7 @@ class OidcTest extends TestCase
             'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
             'oidc.authorization_endpoint' => 'https://oidc.local/auth',
             'oidc.token_endpoint'         => 'https://oidc.local/token',
+            'oidc.userinfo_endpoint'      => 'https://oidc.local/userinfo',
             'oidc.discover'               => false,
             'oidc.dump_user_details'      => false,
             'oidc.additional_scopes'      => '',
@@ -208,6 +209,8 @@ class OidcTest extends TestCase
 
     public function test_auth_fails_if_no_email_exists_in_user_data()
     {
+        config()->set('oidc.userinfo_endpoint', null);
+
         $this->runLogin([
             'email' => '',
             'sub'   => 'benny505',
@@ -270,8 +273,36 @@ class OidcTest extends TestCase
         ]);
         $resp = $this->followRedirects($resp);
 
-        $resp->assertSeeText('ID token validate failed with error: Missing token subject value');
+        $resp->assertSeeText('ID token validation failed with error: Missing token subject value');
         $this->assertFalse(auth()->check());
+    }
+
+    public function test_auth_fails_if_endpoints_start_with_https()
+    {
+        $endpointConfigKeys = [
+            'oidc.token_endpoint' => 'tokenEndpoint',
+            'oidc.authorization_endpoint' => 'authorizationEndpoint',
+            'oidc.userinfo_endpoint' => 'userinfoEndpoint',
+        ];
+
+        foreach ($endpointConfigKeys as $endpointConfigKey => $endpointName) {
+            $logger = $this->withTestLogger();
+            $original = config()->get($endpointConfigKey);
+            $new = str_replace('https://', 'http://', $original);
+            config()->set($endpointConfigKey, $new);
+
+            $this->withoutExceptionHandling();
+            $err = null;
+            try {
+                $resp = $this->runLogin();
+                $resp->assertRedirect('/login');
+            } catch (\Exception $exception) {
+                $err = $exception;
+            }
+            $this->assertEquals("Endpoint value for \"{$endpointName}\" must start with https://", $err->getMessage());
+
+            config()->set($endpointConfigKey, $original);
+        }
     }
 
     public function test_auth_login_with_autodiscovery()
@@ -689,57 +720,92 @@ class OidcTest extends TestCase
         $this->assertEquals($pkceCode, $bodyParams['code_verifier']);
     }
 
-    protected function withAutodiscovery()
+    public function test_userinfo_endpoint_used_if_missing_claims_in_id_token()
+    {
+        config()->set('oidc.display_name_claims', 'first_name|last_name');
+        $this->post('/oidc/login');
+        $state = session()->get('oidc_state');
+
+        $client = $this->mockHttpClient([
+            $this->getMockAuthorizationResponse(['name' => null]),
+            new Response(200, [
+                'Content-Type'  => 'application/json',
+            ], json_encode([
+                'sub' => OidcJwtHelper::defaultPayload()['sub'],
+                'first_name' => 'Barry',
+                'last_name' => 'Userinfo',
+            ]))
+        ]);
+
+        $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $resp->assertRedirect('/');
+        $this->assertEquals(2, $client->requestCount());
+
+        $userinfoRequest = $client->requestAt(1);
+        $this->assertEquals('GET', $userinfoRequest->getMethod());
+        $this->assertEquals('https://oidc.local/userinfo', (string) $userinfoRequest->getUri());
+
+        $this->assertEquals('Barry Userinfo', user()->name);
+    }
+
+    public function test_userinfo_endpoint_fetch_with_different_sub_throws_error()
+    {
+        $userinfoResponseData = ['sub' => 'dcba4321'];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Subject value provided in the userinfo endpoint does not match the provided ID token value');
+    }
+
+    public function test_userinfo_endpoint_fetch_returning_no_sub_throws_error()
+    {
+        $userinfoResponseData = ['name' => 'testing'];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
+    public function test_userinfo_endpoint_fetch_can_parsed_nested_groups()
+    {
+        config()->set([
+            'oidc.user_to_groups'     => true,
+            'oidc.groups_claim'       => 'my.nested.groups.attr',
+            'oidc.remove_from_groups' => false,
+        ]);
+
+        $roleA = Role::factory()->create(['display_name' => 'Ducks']);
+        $userinfoResponseData = [
+            'sub' => OidcJwtHelper::defaultPayload()['sub'],
+            'my' => ['nested' => ['groups' => ['attr' => ['Ducks', 'Donkeys']]]]
+        ];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['groups' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/');
+
+        $user = User::where('email', OidcJwtHelper::defaultPayload()['email'])->first();
+        $this->assertTrue($user->hasRole($roleA->id));
+    }
+
+    protected function withAutodiscovery(): void
     {
         config()->set([
             'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
             'oidc.discover'               => true,
             'oidc.authorization_endpoint' => null,
             'oidc.token_endpoint'         => null,
+            'oidc.userinfo_endpoint'      => null,
             'oidc.jwt_public_key'         => null,
         ]);
     }
 
-    protected function runLogin($claimOverrides = []): TestResponse
+    protected function runLogin($claimOverrides = [], $additionalHttpResponses = []): TestResponse
     {
-        // These two variables should perhaps be arguments instead of
-        // assuming that they're tied to whether discovery is enabled,
-        // but that's how the tests are written for now.
-        $claimsInIdToken = !config('oidc.discover');
-        $tokenEndpoint = config('oidc.discover')
-                       ? OidcJwtHelper::defaultIssuer() . '/oidc/token'
-                       : 'https://oidc.local/token';
-
         $this->post('/oidc/login');
         $state = session()->get('oidc_state');
+        $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides), ...$additionalHttpResponses]);
 
-        $providerResponses = [$this->getMockAuthorizationResponse($claimsInIdToken ? $claimOverrides : [])];
-        if (!$claimsInIdToken) {
-            $providerResponses[] = new Response(200, [
-                'Content-Type'  => 'application/json',
-                'Cache-Control' => 'no-cache, no-store',
-                'Pragma'        => 'no-cache',
-            ], json_encode($claimOverrides));
-        }
-
-        $transactions = $this->mockHttpClient($providerResponses);
-
-        $response = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
-
-        if (auth()->check()) {
-            $this->assertEquals($claimsInIdToken ? 1 : 2, $transactions->requestCount());
-            $tokenRequest = $transactions->requestAt(0);
-            $this->assertEquals($tokenEndpoint, (string) $tokenRequest->getUri());
-            $this->assertEquals('POST', $tokenRequest->getMethod());
-            if (!$claimsInIdToken) {
-                $userinfoRequest = $transactions->requestAt(1);
-                $this->assertEquals(OidcJwtHelper::defaultIssuer() . '/oidc/userinfo', (string) $userinfoRequest->getUri());
-                $this->assertEquals('GET', $userinfoRequest->getMethod());
-                $this->assertEquals('Bearer abc123', $userinfoRequest->getHeader('Authorization')[0]);
-            }
-        }
-
-        return $response;
+        return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
     }
 
     protected function getAutoDiscoveryResponse($responseOverrides = []): Response
