@@ -87,6 +87,7 @@ class RegisterController extends Controller
             'name'     => ['required', 'min:2', 'max:100'],
             'email'    => ['required', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::default()],
+            'username' => ['prohibited'], // this is a honeypot for bots that must not be filled in
         ]);
     }
 }

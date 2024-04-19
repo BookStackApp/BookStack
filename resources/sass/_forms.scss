@@ -389,6 +389,17 @@ input[type=color] {
   }
 }
 
+.form-group.ambrosia-container, .form-group.ambrosia-container * {
+    position:absolute;
+    height:0px !important;
+    width:0px !important;
+    margin:0 !important;
+    padding:0 !important;
+    background:transparent !important;
+    color:transparent !important;
+    border:none !important;
+}
+
 .title-input input[type="text"] {
   display: block;
   width: 100%;
