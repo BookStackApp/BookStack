@@ -787,6 +787,68 @@ class OidcTest extends TestCase
         $this->assertTrue($user->hasRole($roleA->id));
     }
 
+    public function test_userinfo_endpoint_jwks_response_handled()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['name' => 'Barry Jwks']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/');
+
+        $user = User::where('email', OidcJwtHelper::defaultPayload()['email'])->first();
+        $this->assertEquals('Barry Jwks', $user->name);
+    }
+
+    public function test_userinfo_endpoint_jwks_response_returning_no_sub_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['sub' => null]);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_returning_non_matching_sub_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['sub' => 'zzz123']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Subject value provided in the userinfo endpoint does not match the provided ID token value');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_with_invalid_signature_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken();
+        $exploded = explode('.', $userinfoResponseData);
+        $exploded[2] = base64_encode(base64_decode($exploded[2]) . 'ABC');
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], implode('.', $exploded));
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Token signature could not be validated using the provided keys');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_with_invalid_signature_alg_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken([], ['alg' => 'ZZ512']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Only RS256 signature validation is supported. Token reports using ZZ512');
+    }
+
+    public function test_userinfo_endpoint_response_with_invalid_content_type_throws()
+    {
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/beans'], json_encode(OidcJwtHelper::defaultPayload()));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
     protected function withAutodiscovery(): void
     {
         config()->set([
