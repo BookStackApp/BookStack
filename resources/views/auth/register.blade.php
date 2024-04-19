@@ -14,7 +14,7 @@
                 {!! csrf_field() !!}
 
                 <div class="form-group">
-                    <label for="email">{{ trans('auth.name') }}</label>
+                    <label for="name">{{ trans('auth.name') }}</label>
                     @include('form.text', ['name' => 'name'])
                 </div>
 
