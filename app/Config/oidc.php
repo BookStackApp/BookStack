@@ -35,6 +35,7 @@ return [
     // OAuth2 endpoints.
     'authorization_endpoint' => env('OIDC_AUTH_ENDPOINT', null),
     'token_endpoint'         => env('OIDC_TOKEN_ENDPOINT', null),
+    'userinfo_endpoint'      => env('OIDC_USERINFO_ENDPOINT', null),
 
     // OIDC RP-Initiated Logout endpoint URL.
     // A false value force-disables RP-Initiated Logout.

@@ -18,10 +18,10 @@ class OidcProviderSettings
     public string $issuer;
     public string $clientId;
     public string $clientSecret;
-    public ?string $redirectUri;
     public ?string $authorizationEndpoint;
     public ?string $tokenEndpoint;
     public ?string $endSessionEndpoint;
+    public ?string $userinfoEndpoint;
 
     /**
      * @var string[]|array[]
@@ -37,7 +37,7 @@ class OidcProviderSettings
     /**
      * Apply an array of settings to populate setting properties within this class.
      */
-    protected function applySettingsFromArray(array $settingsArray)
+    protected function applySettingsFromArray(array $settingsArray): void
     {
         foreach ($settingsArray as $key => $value) {
             if (property_exists($this, $key)) {
@@ -51,9 +51,9 @@ class OidcProviderSettings
      *
      * @throws InvalidArgumentException
      */
-    protected function validateInitial()
+    protected function validateInitial(): void
     {
-        $required = ['clientId', 'clientSecret', 'redirectUri', 'issuer'];
+        $required = ['clientId', 'clientSecret', 'issuer'];
         foreach ($required as $prop) {
             if (empty($this->$prop)) {
                 throw new InvalidArgumentException("Missing required configuration \"{$prop}\" value");
@@ -73,10 +73,18 @@ class OidcProviderSettings
     public function validate(): void
     {
         $this->validateInitial();
+
         $required = ['keys', 'tokenEndpoint', 'authorizationEndpoint'];
         foreach ($required as $prop) {
             if (empty($this->$prop)) {
                 throw new InvalidArgumentException("Missing required configuration \"{$prop}\" value");
+            }
+        }
+
+        $endpointProperties = ['tokenEndpoint', 'authorizationEndpoint', 'userinfoEndpoint'];
+        foreach ($endpointProperties as $prop) {
+            if (is_string($this->$prop) && !str_starts_with($this->$prop, 'https://')) {
+                throw new InvalidArgumentException("Endpoint value for \"{$prop}\" must start with https://");
             }
         }
     }
@@ -86,7 +94,7 @@ class OidcProviderSettings
      *
      * @throws OidcIssuerDiscoveryException
      */
-    public function discoverFromIssuer(ClientInterface $httpClient, Repository $cache, int $cacheMinutes)
+    public function discoverFromIssuer(ClientInterface $httpClient, Repository $cache, int $cacheMinutes): void
     {
         try {
             $cacheKey = 'oidc-discovery::' . $this->issuer;
@@ -126,6 +134,10 @@ class OidcProviderSettings
 
         if (!empty($result['token_endpoint'])) {
             $discoveredSettings['tokenEndpoint'] = $result['token_endpoint'];
+        }
+
+        if (!empty($result['userinfo_endpoint'])) {
+            $discoveredSettings['userinfoEndpoint'] = $result['userinfo_endpoint'];
         }
 
         if (!empty($result['jwks_uri'])) {
@@ -175,9 +187,9 @@ class OidcProviderSettings
     /**
      * Get the settings needed by an OAuth provider, as a key=>value array.
      */
-    public function arrayForProvider(): array
+    public function arrayForOAuthProvider(): array
     {
-        $settingKeys = ['clientId', 'clientSecret', 'redirectUri', 'authorizationEndpoint', 'tokenEndpoint'];
+        $settingKeys = ['clientId', 'clientSecret', 'authorizationEndpoint', 'tokenEndpoint', 'userinfoEndpoint'];
         $settings = [];
         foreach ($settingKeys as $setting) {
             $settings[$setting] = $this->$setting;
