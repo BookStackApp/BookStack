@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Зараз кошик порожній',
     'recycle_bin_empty' => 'Очистити кошик',
     'recycle_bin_empty_confirm' => 'Це назавжди знищить усі елементи в кошику, включаючи вміст кожного елементу. Ви впевнені, що хочете очистити кошик?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Ця дія назавжди видалить цей елемент з системи, разом з будь-яким дочірнім елементом, перерахованим нижче, і ви не зможете відновити цей контент. Ви дійсно бажаєте остаточно видалити цей елемент?',
     'recycle_bin_destroy_list' => 'Елементи для знищення',
     'recycle_bin_restore_list' => 'Елементи для відновлення',
     'recycle_bin_restore_confirm' => 'Ця дія відновить видалений елемент у початкове місце, включаючи всі дочірні елементи. Якщо вихідне розташування відтоді було видалено, і знаходиться у кошику, батьківський елемент також потрібно буде відновити.',
@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => 'Останнє повідомлення про помилку:',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => 'Ліцензії',
+    'licenses_desc' => 'На цій сторінці детально описано ліцензійну інформацію для BookStack на додаток до проектів і бібліотек, які використовуються в BookStack. Багато проектів із списку можна використовувати лише в контексті розробки.',
+    'licenses_bookstack' => 'Ліцензія BookStack',
+    'licenses_php' => 'Ліцензії на бібліотеки PHP',
+    'licenses_js' => 'Ліцензії бібліотеки JavaScript',
+    'licenses_other' => 'Інші ліцензії',
+    'license_details' => 'Про ліцензію',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
