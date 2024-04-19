@@ -59,7 +59,7 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    protected function validateCommonTokenDetails(): bool
+    public function validateCommonTokenDetails(): bool
     {
         $this->validateTokenStructure();
         $this->validateTokenSignature();
@@ -151,7 +151,7 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    public function validateCommonClaims(): void
+    protected function validateCommonClaims(): void
     {
         // 1. The Issuer Identifier for the OpenID Provider (which is typically obtained during Discovery)
         // MUST exactly match the value of the iss (issuer) Claim.

@@ -20,11 +20,6 @@ class OidcUserinfoResponse implements ProvidesClaims
             $this->jwt = new OidcJwtWithClaims($response->getBody()->getContents(), $issuer, $keys);
             $this->claims = $this->jwt->getAllClaims();
         }
-
-        // TODO - Response validation (5.3.4):
-            // TODO - Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
-            // TODO - If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
-            // TODO - If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
     }
 
     /**
@@ -33,7 +28,7 @@ class OidcUserinfoResponse implements ProvidesClaims
     public function validate(string $idTokenSub): bool
     {
         if (!is_null($this->jwt)) {
-            $this->jwt->validateCommonClaims();
+            $this->jwt->validateCommonTokenDetails();
         }
 
         $sub = $this->getClaim('sub');
@@ -48,6 +43,14 @@ class OidcUserinfoResponse implements ProvidesClaims
         if ($idTokenSub !== $sub) {
             throw new OidcInvalidTokenException("Subject value provided in the userinfo endpoint does not match the provided ID token value");
         }
+
+        // Spec v1.0 5.3.4 Defines the following:
+        // Verify that the OP that responded was the intended OP through a TLS server certificate check, per RFC 6125 [RFC6125].
+          // This is effectively done as part of the HTTP request we're making through CURLOPT_SSL_VERIFYHOST on the request.
+        // If the Client has provided a userinfo_encrypted_response_alg parameter during Registration, decrypt the UserInfo Response using the keys specified during Registration.
+          // We don't currently support JWT encryption for OIDC
+        // If the response was signed, the Client SHOULD validate the signature according to JWS [JWS].
+          // This is done as part of the validateCommonClaims above.
 
         return true;
     }
