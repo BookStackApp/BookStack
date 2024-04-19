@@ -11,7 +11,7 @@ class OidcIdToken extends OidcJwtWithClaims implements ProvidesClaims
      */
     public function validate(string $clientId): bool
     {
-        parent::validateCommonClaims();
+        parent::validateCommonTokenDetails($clientId);
         $this->validateTokenClaims($clientId);
 
         return true;

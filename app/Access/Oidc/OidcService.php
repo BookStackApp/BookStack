@@ -253,7 +253,7 @@ class OidcService
             );
 
             try {
-                $response->validate($idToken->getClaim('sub'));
+                $response->validate($idToken->getClaim('sub'), $settings->clientId);
             } catch (OidcInvalidTokenException $exception) {
                 throw new OidcException("Userinfo endpoint response validation failed with error: {$exception->getMessage()}");
             }

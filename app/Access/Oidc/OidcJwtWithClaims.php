@@ -59,11 +59,11 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    public function validateCommonTokenDetails(): bool
+    public function validateCommonTokenDetails(string $clientId): bool
     {
         $this->validateTokenStructure();
         $this->validateTokenSignature();
-        $this->validateCommonClaims();
+        $this->validateCommonClaims($clientId);
 
         return true;
     }
@@ -151,7 +151,7 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    protected function validateCommonClaims(): void
+    protected function validateCommonClaims(string $clientId): void
     {
         // 1. The Issuer Identifier for the OpenID Provider (which is typically obtained during Discovery)
         // MUST exactly match the value of the iss (issuer) Claim.
@@ -167,7 +167,7 @@ class OidcJwtWithClaims implements ProvidesClaims
         }
 
         $aud = is_string($this->payload['aud']) ? [$this->payload['aud']] : $this->payload['aud'];
-        if (!in_array($this->payload['aud'], $aud, true)) {
+        if (!in_array($clientId, $aud, true)) {
             throw new OidcInvalidTokenException('Token audience value did not match the expected client_id');
         }
     }

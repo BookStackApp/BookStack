@@ -25,10 +25,10 @@ class OidcUserinfoResponse implements ProvidesClaims
     /**
      * @throws OidcInvalidTokenException
      */
-    public function validate(string $idTokenSub): bool
+    public function validate(string $idTokenSub, string $clientId): bool
     {
         if (!is_null($this->jwt)) {
-            $this->jwt->validateCommonTokenDetails();
+            $this->jwt->validateCommonTokenDetails($clientId);
         }
 
         $sub = $this->getClaim('sub');
