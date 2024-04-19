@@ -13,6 +13,11 @@
             <form action="{{ url("/register") }}" method="POST" class="mt-l stretch-inputs">
                 {!! csrf_field() !!}
 
+                <div class="form-group ambrosia-container">
+                    <label for="name">{{ trans('auth.name') }}</label>
+                    @include('form.text', ['name' => 'username'])
+                </div>
+
                 <div class="form-group">
                     <label for="name">{{ trans('auth.name') }}</label>
                     @include('form.text', ['name' => 'name'])
