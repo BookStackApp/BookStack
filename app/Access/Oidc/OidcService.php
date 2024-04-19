@@ -246,7 +246,11 @@ class OidcService
         if (!$userDetails->isFullyPopulated($this->shouldSyncGroups()) && !empty($settings->userinfoEndpoint)) {
             $provider = $this->getProvider($settings);
             $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
-            $response = new OidcUserinfoResponse($provider->getResponse($request));
+            $response = new OidcUserinfoResponse(
+                $provider->getResponse($request),
+                $settings->issuer,
+                $settings->keys,
+            );
 
             try {
                 $response->validate($idToken->getClaim('sub'));
