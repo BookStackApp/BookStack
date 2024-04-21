@@ -5,7 +5,7 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => '帳號設定',
 
     'shortcuts' => '快捷鍵',
     'shortcuts_interface' => 'UI Shortcut Preferences',
@@ -30,7 +30,7 @@ return [
     'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Access & Security',
-    'auth_change_password' => 'Change Password',
+    'auth_change_password' => '變更密碼',
     'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
     'auth_change_password_success' => 'Password has been updated!',
 
@@ -47,5 +47,5 @@ return [
     'delete_account' => 'Delete Account',
     'delete_my_account' => 'Delete My Account',
     'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
-    'delete_my_account_warning' => 'Are you sure you want to delete your account?',
+    'delete_my_account_warning' => '您確定要刪除您的帳戶嗎？',
 ];
