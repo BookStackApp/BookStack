@@ -34,7 +34,7 @@ return [
     'app_logo' => '應用程式圖示',
     'app_logo_desc' => '這個設定會被使用在應用程式標題欄等區域；圖片的高度應為 86 像素，大型圖片將會按比例縮小。',
     'app_icon' => '應用程式圖示',
-    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
+    'app_icon_desc' => '這個圖示將顯示在瀏覽器分頁以及捷徑，應為 256 像素的的正方形 PNG 圖片',
     'app_homepage' => '應用程式首頁',
     'app_homepage_desc' => '選取要作為首頁的頁面，這將會取代預設首頁。選定頁面的頁面權限將會被忽略。',
     'app_homepage_select' => '選取頁面',
