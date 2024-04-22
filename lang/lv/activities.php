@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Lietotājs veiksmīgi dzēsts',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'izveidoja API žetonu',
     'api_token_create_notification' => 'API žetons veiksmīgi izveidots',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'atjaunoja API žetonu',
     'api_token_update_notification' => 'API žetons veiksmīgi atjaunināts',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'izdzēsa API žetonu',
     'api_token_delete_notification' => 'API žetons veiksmīgi dzēsts',
 
     // Roles
