@@ -34,8 +34,8 @@ return [
     'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
     'auth_change_password_success' => '密碼已更新',
 
-    'profile' => 'Profile Details',
-    'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
+    'profile' => '個人檔案',
+    'profile_desc' => '管理欲呈現給其他使用的個人資料，另外資料也用於交流與系統個人化',
     'profile_view_public' => '檢視公開的個人檔案',
     'profile_name_desc' => 'Configure your display name which will be visible to other users in the system through the activity you perform, and content you own.',
     'profile_email_desc' => 'This email will be used for notifications and, depending on active system authentication, system access.',
