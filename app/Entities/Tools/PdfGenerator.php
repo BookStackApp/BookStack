@@ -2,8 +2,10 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Exceptions\PdfExportException;
 use Knp\Snappy\Pdf as SnappyPdf;
 use Dompdf\Dompdf;
+use Symfony\Component\Process\Process;
 
 class PdfGenerator
 {
@@ -13,19 +15,15 @@ class PdfGenerator
 
     /**
      * Generate PDF content from the given HTML content.
+     * @throws PdfExportException
      */
     public function fromHtml(string $html): string
     {
-        $engine = $this->getActiveEngine();
-
-        if ($engine === self::ENGINE_WKHTML) {
-            return $this->renderUsingWkhtml($html);
-        } else if ($engine === self::ENGINE_COMMAND) {
-            // TODO - Support PDF command
-            return '';
-        }
-
-        return $this->renderUsingDomPdf($html);
+        return match ($this->getActiveEngine()) {
+            self::ENGINE_COMMAND => $this->renderUsingCommand($html),
+            self::ENGINE_WKHTML => $this->renderUsingWkhtml($html),
+            default => $this->renderUsingDomPdf($html)
+        };
     }
 
     /**
@@ -34,6 +32,10 @@ class PdfGenerator
      */
     public function getActiveEngine(): string
     {
+        if (config('exports.pdf_command')) {
+            return self::ENGINE_COMMAND;
+        }
+
         if ($this->getWkhtmlBinaryPath() && config('app.allow_untrusted_server_fetching') === true) {
             return self::ENGINE_WKHTML;
         }
@@ -61,6 +63,46 @@ class PdfGenerator
         $domPdf->render();
 
         return (string) $domPdf->output();
+    }
+
+    /**
+     * @throws PdfExportException
+     */
+    protected function renderUsingCommand(string $html): string
+    {
+        $command = config('exports.pdf_command');
+        $inputHtml = tempnam(sys_get_temp_dir(), 'bs-pdfgen-html-');
+        $outputPdf = tempnam(sys_get_temp_dir(), 'bs-pdfgen-output-');
+
+        $replacementsByPlaceholder = [
+            '{input_html_path}' => $inputHtml,
+            '{output_html_path}' => $outputPdf,
+        ];
+
+        foreach ($replacementsByPlaceholder as $placeholder => $replacement) {
+            $command = str_replace($placeholder, escapeshellarg($replacement), $command);
+        }
+
+        file_put_contents($inputHtml, $html);
+
+        $process = Process::fromShellCommandline($command);
+        $process->setTimeout(15);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new PdfExportException("PDF Export via command failed with exit code {$process->getExitCode()}, stdout: {$process->getOutput()}, stderr: {$process->getErrorOutput()}");
+        }
+
+        $pdfContents = file_get_contents($outputPdf);
+        unlink($outputPdf);
+
+        if ($pdfContents === false) {
+            throw new PdfExportException("PDF Export via command failed, unable to read PDF output file");
+        } else if (empty($pdfContents)) {
+            throw new PdfExportException("PDF Export via command failed, PDF output file is empty");
+        }
+
+        return $pdfContents;
     }
 
     protected function renderUsingWkhtml(string $html): string
