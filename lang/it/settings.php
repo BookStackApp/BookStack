@@ -8,17 +8,17 @@ return [
 
     // Common Messages
     'settings' => 'Impostazioni',
-    'settings_save' => 'Salva Impostazioni',
-    'system_version' => 'Versione Del Sistema',
+    'settings_save' => 'Salva impostazioni',
+    'system_version' => 'Versione del sistema',
     'categories' => 'Categorie',
 
     // App Settings
     'app_customization' => 'Personalizzazione',
-    'app_features_security' => 'Funzioni & Sicurezza',
+    'app_features_security' => 'Funzioni e sicurezza',
     'app_name' => 'Nome applicazione',
-    'app_name_desc' => 'Questo nome è mostrato nell\'header e in tutte le mail.',
-    'app_name_header' => 'Mostrare il nome nell\'header',
-    'app_public_access' => 'Accesso Pubblico',
+    'app_name_desc' => 'Questo nome è mostrato nell\'intestazione e in tutte le email inviate dal sistema.',
+    'app_name_header' => 'Mostra il nome nell\'header',
+    'app_public_access' => 'Accesso pubblico',
     'app_public_access_desc' => 'Abilitando questa opzione, i visitatori, che non sono loggati, potranno accedere ai contenuti nella tua istanza BookStack.',
     'app_public_access_desc_guest' => 'L\'accesso ai visitatori pubblici può essere controllato attraverso l\'utente "Guest".',
     'app_public_access_toggle' => 'Permetti accesso pubblico',
