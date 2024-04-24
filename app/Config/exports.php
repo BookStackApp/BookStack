@@ -31,22 +31,11 @@ return [
 
     // 2024-04: Snappy/WKHTMLtoPDF now considered deprecated in regard to BookStack support.
     'snappy' => [
-        'pdf' => [
-            'enabled' => true,
-            'binary'  => file_exists(base_path('wkhtmltopdf')) ? base_path('wkhtmltopdf') : env('WKHTMLTOPDF', false),
-            'timeout' => false,
-            'options' => [
-                'outline'   => true,
-                'page-size' => $snappyPaperSizeMap[$exportPageSize] ?? 'A4',
-            ],
-            'env'     => [],
-        ],
-        'image' => [
-            'enabled' => false,
-            'binary'  => '/usr/local/bin/wkhtmltoimage',
-            'timeout' => false,
-            'options' => [],
-            'env'     => [],
+        'pdf_binary' => env('WKHTMLTOPDF', false),
+        'options' => [
+            'print-media-type' => true,
+            'outline'   => true,
+            'page-size' => $snappyPaperSizeMap[$exportPageSize] ?? 'A4',
         ],
     ],
 

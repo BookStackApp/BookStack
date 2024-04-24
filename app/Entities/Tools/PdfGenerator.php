@@ -2,7 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
-use Barryvdh\Snappy\Facades\SnappyPdf;
+use Knp\Snappy\Pdf as SnappyPdf;
 use Dompdf\Dompdf;
 
 class PdfGenerator
@@ -19,9 +19,7 @@ class PdfGenerator
         $engine = $this->getActiveEngine();
 
         if ($engine === self::ENGINE_WKHTML) {
-            $pdf = SnappyPDF::loadHTML($html);
-            $pdf->setOption('print-media-type', true);
-            return $pdf->output();
+            return $this->renderUsingWkhtml($html);
         } else if ($engine === self::ENGINE_COMMAND) {
             // TODO - Support PDF command
             return '';
@@ -36,16 +34,21 @@ class PdfGenerator
      */
     public function getActiveEngine(): string
     {
-        $wkhtmlBinaryPath = config('snappy.pdf.binary');
-        if (file_exists(base_path('wkhtmltopdf'))) {
-            $wkhtmlBinaryPath = base_path('wkhtmltopdf');
-        }
-
-        if (is_string($wkhtmlBinaryPath) && config('app.allow_untrusted_server_fetching') === true) {
+        if ($this->getWkhtmlBinaryPath() && config('app.allow_untrusted_server_fetching') === true) {
             return self::ENGINE_WKHTML;
         }
 
         return self::ENGINE_DOMPDF;
+    }
+
+    protected function getWkhtmlBinaryPath(): string
+    {
+        $wkhtmlBinaryPath = config('exports.snappy.pdf_binary');
+        if (file_exists(base_path('wkhtmltopdf'))) {
+            $wkhtmlBinaryPath = base_path('wkhtmltopdf');
+        }
+
+        return $wkhtmlBinaryPath ?: '';
     }
 
     protected function renderUsingDomPdf(string $html): string
@@ -58,6 +61,13 @@ class PdfGenerator
         $domPdf->render();
 
         return (string) $domPdf->output();
+    }
+
+    protected function renderUsingWkhtml(string $html): string
+    {
+        $snappy = new SnappyPdf($this->getWkhtmlBinaryPath());
+        $options = config('exports.snappy.options');
+        return $snappy->getOutputFromHtml($html, $options);
     }
 
     /**
