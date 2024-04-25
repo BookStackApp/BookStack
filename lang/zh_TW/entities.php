@@ -412,7 +412,7 @@ return [
     'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
-    'watch' => 'Watch',
+    'watch' => '追蹤',
     'watch_title_default' => '預設偏好設定',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
