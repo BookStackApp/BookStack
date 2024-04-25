@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'obnovil(a) stránku',
     'page_restore_notification'   => 'Stránka úspešne obnovená',
     'page_move'                   => 'presunul(a) stránku',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Stránka bola úspešne presunutá',
 
     // Chapters
     'chapter_create'              => 'vytvoril(a) kapitolu',
