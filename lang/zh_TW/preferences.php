@@ -25,13 +25,13 @@ return [
     'notifications_opt_own_page_comments' => '當我的頁面有評論時發送通知',
     'notifications_opt_comment_replies' => '當我的評論有新的回覆時發送通知',
     'notifications_save' => '儲存偏好設定',
-    'notifications_update_success' => 'Notification preferences have been updated!',
+    'notifications_update_success' => '通知設定已更新',
     'notifications_watched' => '追蹤與忽略的項目',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => '以下是已經套用自訂追蹤設定的項目。若要調整，請至該項目側邊欄中的「追蹤」更新設定',
 
-    'auth' => 'Access & Security',
+    'auth' => '存取、安全',
     'auth_change_password' => '變更密碼',
-    'auth_change_password_desc' => 'Change the password you use to log-in to the application. This must be at least 8 characters long.',
+    'auth_change_password_desc' => '修改登入時使用的密碼，密碼長度至少需要有 8 個字',
     'auth_change_password_success' => '密碼已更新',
 
     'profile' => '個人檔案',
