@@ -17,7 +17,7 @@ return [
     'shortcuts_save' => '儲存快捷鍵',
     'shortcuts_overlay_desc' => '注意：當快捷鍵啟用時，可以按下「?」來使用小幫手覆蓋畫面。這將會在目前的畫面上突顯可見動作的快捷鍵。',
     'shortcuts_update_success' => '快捷鍵偏好設定已更新！',
-    'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
+    'shortcuts_overview_desc' => '你可使用鍵盤快速鍵來快速瀏覽系統界面',
 
     'notifications' => '通知設定',
     'notifications_desc' => '控制在系統有特定活動時，是否要接收電子郵件通知',
