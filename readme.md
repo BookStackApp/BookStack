@@ -142,8 +142,7 @@ Note: This is not an exhaustive list of all libraries and projects that would be
 * [Google Material Icons](https://github.com/google/material-design-icons) - _[Apache-2.0](https://github.com/google/material-design-icons/blob/master/LICENSE)_
 * [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists) - _[MIT](https://github.com/markdown-it/markdown-it/blob/master/LICENSE) and [ISC](https://github.com/revin/markdown-it-task-lists/blob/master/LICENSE)_
 * [Dompdf](https://github.com/dompdf/dompdf) - _[LGPL v2.1](https://github.com/dompdf/dompdf/blob/master/LICENSE.LGPL)_
-* [BarryVD/Dompdf](https://github.com/barryvdh/laravel-dompdf) - _[MIT](https://github.com/barryvdh/laravel-dompdf/blob/master/LICENSE)_
-* [BarryVD/Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy) - _[MIT](https://github.com/barryvdh/laravel-snappy/blob/master/LICENSE)_
+* [KnpLabs/snappy](https://github.com/KnpLabs/snappy) - _[MIT](https://github.com/KnpLabs/snappy/blob/master/LICENSE)_
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html) - _[LGPL v3.0](https://github.com/wkhtmltopdf/wkhtmltopdf/blob/master/LICENSE)_
 * [diagrams.net](https://github.com/jgraph/drawio) - _[Embedded Version Terms](https://www.diagrams.net/trust/) / [Source Project - Apache-2.0](https://github.com/jgraph/drawio/blob/dev/LICENSE)_
 * [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml) - _[MIT](https://github.com/onelogin/php-saml/blob/master/LICENSE)_

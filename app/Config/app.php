@@ -116,8 +116,6 @@ return [
     // Application Service Providers
     'providers' => ServiceProvider::defaultProviders()->merge([
         // Third party service providers
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
 
         // BookStack custom service providers
