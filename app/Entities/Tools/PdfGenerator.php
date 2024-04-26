@@ -76,7 +76,7 @@ class PdfGenerator
 
         $replacementsByPlaceholder = [
             '{input_html_path}' => $inputHtml,
-            '{output_html_path}' => $outputPdf,
+            '{output_pdf_path}' => $outputPdf,
         ];
 
         foreach ($replacementsByPlaceholder as $placeholder => $replacement) {
