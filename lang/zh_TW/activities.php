@@ -50,31 +50,31 @@ return [
     'bookshelf_delete_notification'    => '書棧已刪除',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => '還原的版本',
+    'revision_delete' => '刪除的版本',
+    'revision_delete_notification' => '修訂已成功刪除',
 
     // Favourites
     'favourite_add_notification' => '":name" 已加入到你的最愛',
     'favourite_remove_notification' => '":name" 已從你的最愛移除',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => '追蹤偏好設定已成功更新',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_login' => '已登入',
+    'auth_register' => '註冊為新用戶',
+    'auth_password_reset_request' => '請求重置用戶密碼',
+    'auth_password_reset_update' => '重置使用者密碼',
+    'mfa_setup_method' => '設定MFA方式',
     'mfa_setup_method_notification' => '多重身份驗證已設定成功',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => '移除MFA方式',
     'mfa_remove_method_notification' => '多重身份驗證已移除成功',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => '更新設定',
     'settings_update_notification' => '設定更新成功',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => '執行維護動作',
 
     // Webhooks
     'webhook_create' => '建立 Webhook',
@@ -85,39 +85,39 @@ return [
     'webhook_delete_notification' => 'Webhook 已刪除成功',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => '建立使用者',
+    'user_create_notification' => '使用者已成功建立。',
+    'user_update' => '更新使用者',
     'user_update_notification' => '使用者已成功更新。',
-    'user_delete' => 'deleted user',
+    'user_delete' => '已刪除使用者',
     'user_delete_notification' => '使用者移除成功',
 
     // API Tokens
-    'api_token_create' => 'created API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => '建立 API 權杖',
+    'api_token_create_notification' => '成功建立 API 權杖',
+    'api_token_update' => '已更新 API 權杖',
+    'api_token_update_notification' => '成功更新 API 權杖',
+    'api_token_delete' => '已刪除 API 權杖',
+    'api_token_delete_notification' => 'API 權杖已成功刪除',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => '創建角色',
     'role_create_notification' => '建立角色成功',
-    'role_update' => 'updated role',
+    'role_update' => '已更新角色',
     'role_update_notification' => '更新角色成功',
-    'role_delete' => 'deleted role',
+    'role_delete' => '已刪除角色',
     'role_delete_notification' => '刪除角色成功',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => '清理資源回收筒',
+    'recycle_bin_restore' => '從資源回收筒復原',
+    'recycle_bin_destroy' => '從資源回收筒刪除',
 
     // Comments
     'commented_on'                => '評論',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => '新增評論',
+    'comment_update'              => '更新評論',
+    'comment_delete'              => '已刪除之評論',
 
     // Other
     'permissions_update'          => '更新權限',
