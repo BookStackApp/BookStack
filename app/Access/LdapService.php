@@ -249,13 +249,18 @@ class LdapService
 
     /**
      * Build a filter string by injecting common variables.
+     * Both "${var}" and "{var}" style placeholders are supported.
+     * Dollar based are old format but supported for compatibility.
      */
     protected function buildFilter(string $filterString, array $attrs): string
     {
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
-            $newKey = '${' . $key . '}';
-            $newAttrs[$newKey] = $this->ldap->escape($attrText);
+            $escapedText = $this->ldap->escape($attrText);
+            $oldVarKey = '${' . $key . '}';
+            $newVarKey = '{' . $key . '}';
+            $newAttrs[$oldVarKey] = $escapedText;
+            $newAttrs[$newVarKey] = $escapedText;
         }
 
         return strtr($filterString, $newAttrs);
