@@ -32,7 +32,7 @@ class LdapTest extends TestCase
             'services.ldap.id_attribute'           => 'uid',
             'services.ldap.user_to_groups'         => false,
             'services.ldap.version'                => '3',
-            'services.ldap.user_filter'            => '(&(uid=${user}))',
+            'services.ldap.user_filter'            => '(&(uid={user}))',
             'services.ldap.follow_referrals'       => false,
             'services.ldap.tls_insecure'           => false,
             'services.ldap.thumbnail_attribute'    => null,
@@ -176,6 +176,38 @@ class LdapTest extends TestCase
         $resp->assertRedirect('/');
         $this->followRedirects($resp)->assertSee($this->mockUser->name);
         $this->assertDatabaseHas('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
+    }
+
+    public function test_user_filter_default_placeholder_format()
+    {
+        config()->set('services.ldap.user_filter', '(&(uid={user}))');
+        $this->mockUser->name = 'barryldapuser';
+        $expectedFilter = '(&(uid=\62\61\72\72\79\6c\64\61\70\75\73\65\72))';
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->once()
+            ->with($this->resourceId, config('services.ldap.base_dn'), $expectedFilter, \Mockery::type('array'))
+            ->andReturn(['count' => 0, 0 => []]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/login');
+    }
+
+    public function test_user_filter_old_placeholder_format()
+    {
+        config()->set('services.ldap.user_filter', '(&(username=${user}))');
+        $this->mockUser->name = 'barryldapuser';
+        $expectedFilter = '(&(username=\62\61\72\72\79\6c\64\61\70\75\73\65\72))';
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->once()
+            ->with($this->resourceId, config('services.ldap.base_dn'), $expectedFilter, \Mockery::type('array'))
+            ->andReturn(['count' => 0, 0 => []]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/login');
     }
 
     public function test_initial_incorrect_credentials()
