@@ -44,6 +44,10 @@ export async function init(editor) {
                 editor.actions.insertClipboardImages(clipboardImages, event.pageX, event.pageY);
             }
         },
+        // Handle dragover event to allow as drop-target in chrome
+        dragover: event => {
+            event.preventDefault();
+        },
         // Handle image paste
         paste: event => {
             const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
