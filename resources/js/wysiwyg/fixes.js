@@ -29,12 +29,13 @@ export function handleEmbedAlignmentChanges(editor) {
 
     editor.on('FormatApply', event => {
         const isAlignment = event.format.startsWith('align');
-        if (!event.node || !event.node.matches('.mce-preview-object')) {
+        const isElement = event.node instanceof editor.dom.doc.defaultView.HTMLElement;
+        if (!isElement || !isAlignment || !event.node.matches('.mce-preview-object')) {
             return;
         }
 
         const realTarget = event.node.querySelector('iframe, video');
-        if (isAlignment && realTarget) {
+        if (realTarget) {
             const className = (editor.formatter.get(event.format)[0]?.classes || [])[0];
             const toAdd = !realTarget.classList.contains(className);
 
@@ -94,10 +95,12 @@ export function handleTableCellRangeEvents(editor) {
     // are selected. Here we watch for clear formatting events, so some manual
     // cleanup can be performed.
     const attrsToRemove = ['class', 'style', 'width', 'height'];
-    editor.on('FormatRemove', () => {
-        for (const cell of selectedCells) {
-            for (const attr of attrsToRemove) {
-                cell.removeAttribute(attr);
+    editor.on('ExecCommand', event => {
+        if (event.command === 'RemoveFormat') {
+            for (const cell of selectedCells) {
+                for (const attr of attrsToRemove) {
+                    cell.removeAttribute(attr);
+                }
             }
         }
     });
