@@ -151,9 +151,24 @@ function drop(editor, options, event) {
 
 /**
  * @param {Editor} editor
+ * @param {DragEvent} event
+ */
+function dragOver(editor, event) {
+    // This custom handling essentially emulates the default TinyMCE behaviour while allowing us
+    // to specifically call preventDefault on the event to allow the drop of custom elements.
+    event.preventDefault();
+    editor.focus();
+    const rangeUtils = window.tinymce.dom.RangeUtils;
+    const range = rangeUtils.getCaretRangeFromPoint(event.clientX ?? 0, event.clientY ?? 0, editor.getDoc());
+    editor.selection.setRng(range);
+}
+
+/**
+ * @param {Editor} editor
  * @param {WysiwygConfigOptions} options
  */
 export function listenForDragAndPaste(editor, options) {
+    editor.on('dragover', event => dragOver(editor, event));
     editor.on('dragstart', () => dragStart(editor));
     editor.on('drop', event => drop(editor, options, event));
     editor.on('paste', event => paste(editor, options, event));
