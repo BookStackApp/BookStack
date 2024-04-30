@@ -5,9 +5,9 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'Min konto',
 
-    'shortcuts' => 'Shortcuts',
+    'shortcuts' => 'Genveje',
     'shortcuts_interface' => 'UI Shortcut Preferences',
     'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
     'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
