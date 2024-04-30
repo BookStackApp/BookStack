@@ -41,7 +41,7 @@ return [
     'profile_email_desc' => 'This email will be used for notifications and, depending on active system authentication, system access.',
     'profile_email_no_permission' => 'Unfortunately you don\'t have permission to change your email address. If you want to change this, you\'d need to ask an administrator to change this for you.',
     'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
-    'profile_admin_options' => 'Administrator Options',
+    'profile_admin_options' => 'Administrator Indstillinger',
     'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
 
     'delete_account' => 'Slet konto',
