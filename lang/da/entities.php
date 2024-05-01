@@ -34,7 +34,7 @@ return [
     'no_pages_viewed' => 'Du har ikke besøgt nogle sider',
     'no_pages_recently_created' => 'Ingen sider er blevet oprettet for nyligt',
     'no_pages_recently_updated' => 'Ingen sider er blevet opdateret for nyligt',
-    'export' => 'Exporter',
+    'export' => 'Eksporter',
     'export_html' => 'Indeholdt webfil',
     'export_pdf' => 'PDF-fil',
     'export_text' => 'Almindelig tekstfil',
@@ -412,7 +412,7 @@ return [
     'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
-    'watch' => 'Watch',
+    'watch' => 'Overvåg',
     'watch_title_default' => 'Default Preferences',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
