@@ -60,7 +60,7 @@ function registerLinkContextToolbar(editor) {
 function registerImageContextToolbar(editor) {
     editor.ui.registry.addContextToolbar('imagecontexttoolbar', {
         predicate(node) {
-            return node.closest('img') !== null;
+            return node.closest('img') !== null && !node.hasAttribute('data-mce-object');
         },
         position: 'node',
         scope: 'node',
@@ -71,8 +71,23 @@ function registerImageContextToolbar(editor) {
 /**
  * @param {Editor} editor
  */
+function registerObjectContextToolbar(editor) {
+    editor.ui.registry.addContextToolbar('objectcontexttoolbar', {
+        predicate(node) {
+            return node.closest('img') !== null && node.hasAttribute('data-mce-object');
+        },
+        position: 'node',
+        scope: 'node',
+        items: 'media',
+    });
+}
+
+/**
+ * @param {Editor} editor
+ */
 export function registerAdditionalToolbars(editor) {
     registerPrimaryToolbarGroups(editor);
     registerLinkContextToolbar(editor);
     registerImageContextToolbar(editor);
+    registerObjectContextToolbar(editor);
 }
