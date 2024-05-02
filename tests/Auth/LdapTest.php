@@ -4,6 +4,7 @@ namespace Tests\Auth;
 
 use BookStack\Access\Ldap;
 use BookStack\Access\LdapService;
+use BookStack\Exceptions\LdapException;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Testing\TestResponse;
@@ -35,6 +36,7 @@ class LdapTest extends TestCase
             'services.ldap.user_filter'            => '(&(uid={user}))',
             'services.ldap.follow_referrals'       => false,
             'services.ldap.tls_insecure'           => false,
+            'services.ldap.tls_ca_cert'            => false,
             'services.ldap.thumbnail_attribute'    => null,
         ]);
         $this->mockLdap = $this->mock(Ldap::class);
@@ -798,5 +800,35 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=')],
         $user = User::query()->where('email', '=', $this->mockUser->email)->first();
         $this->assertNotNull($user->avatar);
         $this->assertEquals('8c90748342f19b195b9c6b4eff742ded', md5_file(public_path($user->avatar->path)));
+    }
+
+    public function test_tls_ca_cert_option_throws_if_set_to_invalid_location()
+    {
+        $path = 'non_found_' . time();
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->commonLdapMocks(0, 0, 0, 0, 0);
+
+        $this->assertThrows(function () {
+            $this->withoutExceptionHandling()->mockUserLogin();
+        }, LdapException::class, "Provided path [{$path}] for LDAP TLS CA certs could not be resolved to an existing location");
+    }
+
+    public function test_tls_ca_cert_option_used_if_set_to_a_folder()
+    {
+        $path = $this->files->testFilePath('');
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->mockLdap->shouldReceive('setOption')->once()->with(null, LDAP_OPT_X_TLS_CACERTDIR, rtrim($path, '/'))->andReturn(true);
+        $this->runFailedAuthLogin();
+    }
+
+    public function test_tls_ca_cert_option_used_if_set_to_a_file()
+    {
+        $path = $this->files->testFilePath('test-file.txt');
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->mockLdap->shouldReceive('setOption')->once()->with(null, LDAP_OPT_X_TLS_CACERTFILE, $path)->andReturn(true);
+        $this->runFailedAuthLogin();
     }
 }
