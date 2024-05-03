@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Gem Indstillinger',
     'notifications_update_success' => 'Indstillinger for notifikationer er blevet opdateret!',
     'notifications_watched' => 'Overvågede & Ignorerede',
-    'notifications_watched_desc' => ' Nedenfor er de elementer, der har brugerdefinerede overvågning aktivt. For at opdatere dine præferencer for disse, gå til elementet og find derefter overvågning i sidepanelet.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Adgang & Sikkerhed',
     'auth_change_password' => 'Skift adgangskode',
