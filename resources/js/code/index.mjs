@@ -39,6 +39,23 @@ function addCopyIcon(editorView) {
 }
 
 /**
+ * @param {HTMLElement} codeElem
+ * @returns {String}
+ */
+function getDirectionFromCodeBlock(codeElem) {
+    let dir = '';
+    const innerCodeElem = codeElem.querySelector('code');
+
+    if (innerCodeElem && innerCodeElem.hasAttribute('dir')) {
+        dir = innerCodeElem.getAttribute('dir');
+    } else if (codeElem.hasAttribute('dir')) {
+        dir = codeElem.getAttribute('dir');
+    }
+
+    return dir;
+}
+
+/**
  * Add code highlighting to a single element.
  * @param {HTMLElement} elem
  */
@@ -48,16 +65,14 @@ function highlightElem(elem) {
     const content = elem.textContent.trimEnd();
 
     let langName = '';
-    let innerCodeDirection = '';
     if (innerCodeElem !== null) {
         langName = innerCodeElem.className.replace('language-', '');
-        innerCodeDirection = innerCodeElem.getAttribute('dir');
     }
 
     const wrapper = document.createElement('div');
     elem.parentNode.insertBefore(wrapper, elem);
 
-    const direction = innerCodeDirection || elem.getAttribute('dir') || '';
+    const direction = getDirectionFromCodeBlock(elem);
     if (direction) {
         wrapper.setAttribute('dir', direction);
     }

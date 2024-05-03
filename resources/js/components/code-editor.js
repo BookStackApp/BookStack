@@ -129,7 +129,7 @@ export class CodeEditor extends Component {
         this.hide();
     }
 
-    async open(code, language, saveCallback, cancelCallback) {
+    async open(code, language, direction, saveCallback, cancelCallback) {
         this.languageInput.value = language;
         this.saveCallback = saveCallback;
         this.cancelCallback = cancelCallback;
@@ -137,6 +137,7 @@ export class CodeEditor extends Component {
         await this.show();
         this.languageInputChange(language);
         this.editor.setContent(code);
+        this.setDirection(direction);
     }
 
     async show() {
@@ -154,6 +155,15 @@ export class CodeEditor extends Component {
                 this.cancelCallback();
             }
         });
+    }
+
+    setDirection(direction) {
+        const target = this.editorInput.parentElement;
+        if (direction) {
+            target.setAttribute('dir', direction);
+        } else {
+            target.removeAttribute('dir');
+        }
     }
 
     hide() {

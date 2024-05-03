@@ -6,13 +6,14 @@ function elemIsCodeBlock(elem) {
  * @param {Editor} editor
  * @param {String} code
  * @param {String} language
+ * @param {String} direction
  * @param {function(string, string)} callback (Receives (code: string,language: string)
  */
-function showPopup(editor, code, language, callback) {
+function showPopup(editor, code, language, direction, callback) {
     /** @var {CodeEditor} codeEditor * */
     const codeEditor = window.$components.first('code-editor');
     const bookMark = editor.selection.getBookmark();
-    codeEditor.open(code, language, (newCode, newLang) => {
+    codeEditor.open(code, language, direction, (newCode, newLang) => {
         callback(newCode, newLang);
         editor.focus();
         editor.selection.moveToBookmark(bookMark);
@@ -27,7 +28,8 @@ function showPopup(editor, code, language, callback) {
  * @param {CodeBlockElement} codeBlock
  */
 function showPopupForCodeBlock(editor, codeBlock) {
-    showPopup(editor, codeBlock.getContent(), codeBlock.getLanguage(), (newCode, newLang) => {
+    const direction = codeBlock.getAttribute('dir') || '';
+    showPopup(editor, codeBlock.getContent(), codeBlock.getLanguage(), direction, (newCode, newLang) => {
         codeBlock.setContent(newCode, newLang);
     });
 }
@@ -179,13 +181,17 @@ function register(editor) {
             showPopupForCodeBlock(editor, selectedNode);
         } else {
             const textContent = editor.selection.getContent({format: 'text'});
-            showPopup(editor, textContent, '', (newCode, newLang) => {
+            const direction = document.dir === 'rtl' ? 'ltr' : '';
+            showPopup(editor, textContent, '', direction, (newCode, newLang) => {
                 const pre = doc.createElement('pre');
                 const code = doc.createElement('code');
                 code.classList.add(`language-${newLang}`);
                 code.innerText = newCode;
-                pre.append(code);
+                if (direction) {
+                    pre.setAttribute('dir', direction);
+                }
 
+                pre.append(code);
                 editor.insertContent(pre.outerHTML);
             });
         }
@@ -205,7 +211,8 @@ function register(editor) {
                     contenteditable: 'false',
                 });
 
-                const direction = el.attr('dir');
+                const childCodeBlock = el.children().filter(child => child.name === 'code')[0] || null;
+                const direction = el.attr('dir') || (childCodeBlock && childCodeBlock.attr('dir')) || '';
                 if (direction) {
                     wrapper.attr('dir', direction);
                 }
