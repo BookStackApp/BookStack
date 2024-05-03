@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Einstellungen speichern',
     'notifications_update_success' => 'Benachrichtigungseinstellungen wurden aktualisiert!',
     'notifications_watched' => 'Beobachtete und ignorierte Elemente',
-    'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um deine Einstellungen für diese Elemente zu aktualisieren, sieh dir das Element an und suche dann die Überwachungsoptionen in der Seitenleiste.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Zugang & Sicherheit',
     'auth_change_password' => 'Passwort ändern',
