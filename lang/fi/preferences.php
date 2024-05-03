@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Tallenna asetukset',
     'notifications_update_success' => 'Ilmoitusasetukset on päivitetty!',
     'notifications_watched' => 'Seuratut ja huomiotta jätetyt kohteet',
-    'notifications_watched_desc' => 'Alla oleviin kohteisiin sovelletaan muokautettuja seuranta-asetuksia. Voit päivittää kohteita koskevat asetukset avaamalla kohde ja valitsemalla seuranta-asetukset sivupalkista.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Pääsy ja turvallisuus',
     'auth_change_password' => 'Vaihda salasana',
