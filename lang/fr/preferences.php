@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Enregistrer les préférences',
     'notifications_update_success' => 'Les préférences de notification ont été mises à jour !',
     'notifications_watched' => 'Éléments surveillés et ignorés',
-    'notifications_watched_desc' => ' Voici les éléments qui ont des préférences de surveillance personnalisées appliquées. Pour mettre à jour vos préférences pour celles-ci, consultez l\'élément puis trouvez les options de surveillance dans la barre latérale.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Accès et sécurité',
     'auth_change_password' => 'Changer le mot de passe',
