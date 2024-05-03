@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'ذخیره تنظیمات',
     'notifications_update_success' => 'تنظیمات اعلان‌ها به روز شده است!',
     'notifications_watched' => 'موارد مشاهده و رد شده',
-    'notifications_watched_desc' => 'در زیر آیتم‌هایی وجود دارد که تنظیمات «نظارت» سفارشی بر آن‌ها اعمال شده است. برای به‌روزرسانی تنظیمات خود در مورد هر کدام از این آیتم‌ها، روی آن کلیک کنید و سپس گزینه‌ی «نظارت» را در نوار کناری پیدا کنید.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'دسترسی و امنیت',
     'auth_change_password' => 'تغییر گذرواژه',
