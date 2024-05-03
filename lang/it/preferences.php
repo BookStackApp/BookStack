@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Salva preferenze',
     'notifications_update_success' => 'Le preferenze di notifica sono state aggiornate!',
     'notifications_watched' => 'Oggetti osservati e ignorati',
-    'notifications_watched_desc' => ' Di seguito sono riportati gli elementi a cui sono state applicate le preferenze di monitoraggio personalizzate. Per aggiornare le preferenze, visualizza l\'elemento e usa le opzioni di monitoraggio nella barra laterale.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Accesso e sicurezza',
     'auth_change_password' => 'Modifica password',
