@@ -29,7 +29,7 @@ Obavijesti o komentarima na stranicama koje posjedujem',
     'notifications_save' => 'Spremi Postavke',
     'notifications_update_success' => 'Postavke obavijesti su ažurirane!',
     'notifications_watched' => 'Praćene i ignorirane stavke',
-    'notifications_watched_desc' => ' Ispod su stavke na koje su primijenjene prilagođene postavke praćenja. Da biste ažurirali svoje postavke za ove stavke, pregledajte stavku, a zatim pronađite opcije praćenja u bočnoj traci.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Access & Security',
     'auth_change_password' => 'Change Password',
