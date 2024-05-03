@@ -27,7 +27,7 @@ return [
     'notifications_save' => '設定を保存',
     'notifications_update_success' => '通知設定を更新しました。',
     'notifications_watched' => 'ウォッチ/通知無効 項目',
-    'notifications_watched_desc' => ' 以下はカスタムウォッチの設定が適用されている項目です。 これらの設定を更新するには、項目を表示してサイドバーのウォッチオプションを参照してください。',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'アクセス & セキュリティ',
     'auth_change_password' => 'パスワードの変更',
