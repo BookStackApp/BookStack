@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Afzalliklarni saqlash',
     'notifications_update_success' => 'Bildirishnoma sozlamalari yangilandi!',
     'notifications_watched' => 'Koʻrilgan va e\'tiborga olinmagan narsalar',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Quyida maxsus soat sozlamalari qoʻllaniladigan elementlar mavjud. Bular uchun afzalliklaringizni yangilash uchun elementni koʻring, soʻngra yon paneldagi tomosha parametrlarini toping.',
 
     'auth' => 'Access & Security',
     'auth_change_password' => 'Change Password',
