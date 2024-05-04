@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Сохранить настройки',
     'notifications_update_success' => 'Настройки уведомлений были обновлены!',
     'notifications_watched' => 'Просмотренные и игнорированные элементы',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Ниже приведены элементы, которые имеют пользовательские настройки наблюдения. Чтобы обновить ваши предпочтения, посмотрите этот пункт и найдите варианты наблюдения в боковой панели.',
 
     'auth' => 'Доступ и безопасность',
     'auth_change_password' => 'Изменить пароль',
