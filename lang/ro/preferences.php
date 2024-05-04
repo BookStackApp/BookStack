@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Salvează Preferințe',
     'notifications_update_success' => 'Preferințele de notificare au fost actualizate!',
     'notifications_watched' => 'Articole urmărite și ignorate',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Mai jos sunt elementele care au fost aplicate preferințe personalizate. Pentru a actualiza preferințele pentru acestea, vizualizați elementul și apoi găsiți opțiunile de ceas în bara laterală.',
 
     'auth' => 'Acces & Securitate',
     'auth_change_password' => 'Schimbă Parola',
