@@ -27,14 +27,14 @@ class ActivityQueries
     public function latest(int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissions
-            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'loggable_id', 'loggable_type')
             ->orderBy('created_at', 'desc')
             ->with(['user'])
             ->skip($count * $page)
             ->take($count)
             ->get();
 
-        $this->listLoader->loadIntoRelations($activityList->all(), 'entity', false);
+        $this->listLoader->loadIntoRelations($activityList->all(), 'loggable', false);
 
         return $this->filterSimilar($activityList);
     }
@@ -59,8 +59,8 @@ class ActivityQueries
         $query->where(function (Builder $query) use ($queryIds) {
             foreach ($queryIds as $morphClass => $idArr) {
                 $query->orWhere(function (Builder $innerQuery) use ($morphClass, $idArr) {
-                    $innerQuery->where('entity_type', '=', $morphClass)
-                        ->whereIn('entity_id', $idArr);
+                    $innerQuery->where('loggable_type', '=', $morphClass)
+                        ->whereIn('loggable_id', $idArr);
                 });
             }
         });
@@ -82,7 +82,7 @@ class ActivityQueries
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
         $activityList = $this->permissions
-            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'entity_id', 'entity_type')
+            ->restrictEntityRelationQuery(Activity::query(), 'activities', 'loggable_id', 'loggable_type')
             ->orderBy('created_at', 'desc')
             ->where('user_id', '=', $user->id)
             ->skip($count * $page)

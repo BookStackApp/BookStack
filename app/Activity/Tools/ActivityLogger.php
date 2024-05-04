@@ -32,8 +32,8 @@ class ActivityLogger
         $activity->detail = $detailToStore;
 
         if ($detail instanceof Entity) {
-            $activity->entity_id = $detail->id;
-            $activity->entity_type = $detail->getMorphClass();
+            $activity->loggable_id = $detail->id;
+            $activity->loggable_type = $detail->getMorphClass();
         }
 
         $activity->save();
@@ -64,9 +64,9 @@ class ActivityLogger
     public function removeEntity(Entity $entity): void
     {
         $entity->activity()->update([
-            'detail'       => $entity->name,
-            'entity_id'    => null,
-            'entity_type'  => null,
+            'detail'         => $entity->name,
+            'loggable_id'    => null,
+            'loggable_type'  => null,
         ]);
     }
 
