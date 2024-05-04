@@ -27,7 +27,7 @@ return [
     'notifications_save' => '儲存偏好設定',
     'notifications_update_success' => '通知設定已更新',
     'notifications_watched' => '追蹤與忽略的項目',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => '以下是已經套用自訂追蹤設定的項目。若要調整，請至該項目側邊欄中的「追蹤」更新設定',
 
     'auth' => '存取、安全',
     'auth_change_password' => '變更密碼',
