@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Zapisz preferencje',
     'notifications_update_success' => 'Preferencje powiadomień zostały zaktualizowane!',
     'notifications_watched' => 'Obserwowane i ignorowane elementy',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Poniżej znajdują się elementy, które mają własne preferencje obserwowania. Aby zaktualizować swoje preferencje, zobacz dany element, a następnie znajdź opcje obserwowania na pasku bocznym.',
 
     'auth' => 'Dostęp i bezpieczeństwo',
     'auth_change_password' => 'Zmień hasło',
