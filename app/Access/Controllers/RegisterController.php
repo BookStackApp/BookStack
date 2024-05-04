@@ -15,24 +15,13 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
-    protected SocialDriverManager $socialDriverManager;
-    protected RegistrationService $registrationService;
-    protected LoginService $loginService;
-
-    /**
-     * Create a new controller instance.
-     */
     public function __construct(
-        SocialDriverManager $socialDriverManager,
-        RegistrationService $registrationService,
-        LoginService $loginService
+        protected SocialDriverManager $socialDriverManager,
+        protected RegistrationService $registrationService,
+        protected LoginService $loginService
     ) {
         $this->middleware('guest');
         $this->middleware('guard:standard');
-
-        $this->socialDriverManager = $socialDriverManager;
-        $this->registrationService = $registrationService;
-        $this->loginService = $loginService;
     }
 
     /**
@@ -87,6 +76,8 @@ class RegisterController extends Controller
             'name'     => ['required', 'min:2', 'max:100'],
             'email'    => ['required', 'email', 'max:255', 'unique:users'],
             'password' => ['required', Password::default()],
+            // Basic honey for bots that must not be filled in
+            'username' => ['prohibited'],
         ]);
     }
 }

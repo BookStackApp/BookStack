@@ -184,4 +184,23 @@ class RegistrationTest extends TestCase
         $resp->assertSee('The email must be a valid email address.');
         $resp->assertSee('The password must be at least 8 characters.');
     }
+
+    public function test_registration_simple_honeypot_active()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        $resp = $this->get('/register');
+        $this->withHtml($resp)->assertElementExists('form input[name="username"]');
+
+        $resp = $this->post('/register', [
+            'name' => 'Barry',
+            'email' => 'barrybot@example.com',
+            'password' => 'barryIsTheBestBot',
+            'username' => 'MyUsername'
+        ]);
+        $resp->assertRedirect('/register');
+
+        $resp = $this->followRedirects($resp);
+        $this->withHtml($resp)->assertElementExists('form input[name="username"].text-neg');
+    }
 }
