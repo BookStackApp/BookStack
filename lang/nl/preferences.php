@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Voorkeuren opslaan',
     'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
     'notifications_watched' => 'Gevolgde & Genegeerde Items',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Hieronder staan de items waarvoor aangepaste \'Volg\'-voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'Volg\' opties in de zijbalk.',
 
     'auth' => 'Toegang & Beveiliging',
     'auth_change_password' => 'Wachtwoord Wijzigen',
