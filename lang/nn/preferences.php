@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Lagre innstillinger',
     'notifications_update_success' => 'Varslingsinnstillingene er oppdatert!',
     'notifications_watched' => 'Overvåka & ignorerte elementer',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Nedenfor er elementene som har egendefinerte varslingsinnstillinger i bruk. For å oppdatere innstillingene for disse, se elementet, finn varslingsalternativene i sidepanelet.',
 
     'auth' => 'Tilgang og tryggleik',
     'auth_change_password' => 'Endre passord',
