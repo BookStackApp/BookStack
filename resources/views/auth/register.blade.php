@@ -13,8 +13,9 @@
             <form action="{{ url("/register") }}" method="POST" class="mt-l stretch-inputs">
                 {!! csrf_field() !!}
 
+                {{-- Simple honeypot field --}}
                 <div class="form-group ambrosia-container" aria-hidden="true">
-                    <label for="name">{{ trans('auth.name') }}</label>
+                    <label for="username">{{ trans('auth.name') }}</label>
                     @include('form.text', ['name' => 'username'])
                 </div>
 
