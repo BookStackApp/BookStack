@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Зберегти налаштування',
     'notifications_update_success' => 'Налаштування сповіщень було оновлено!',
     'notifications_watched' => 'Переглянуті та ігноровані елементи',
-    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Нижче наведені предмети, які мають застосовані налаштування перегляду. Щоб оновити ваші налаштування для них, перегляньте елемент, а потім знайдіть параметри перегляду на бічній панелі.',
 
     'auth' => 'Доступ і безпека',
     'auth_change_password' => 'Змінити пароль',
