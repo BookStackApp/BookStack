@@ -6,6 +6,7 @@
  * Controllers all end with "ApiController"
  */
 
+use BookStack\Activity\Controllers\AuditLogApiController;
 use BookStack\Api\ApiDocsController;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Permissions\ContentPermissionApiController;
@@ -89,3 +90,5 @@ Route::delete('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiContro
 
 Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'read']);
 Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'update']);
+
+Route::get('audit-log', [AuditLogApiController::class, 'list']);

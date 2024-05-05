@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Actions;
+namespace Activity;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Activity;
@@ -156,7 +156,7 @@ class AuditLogTest extends TestCase
             'type'      => ActivityType::PAGE_UPDATE,
             'ip'        => '192.123.45.1',
             'user_id'   => $editor->id,
-            'entity_id' => $page->id,
+            'loggable_id' => $page->id,
         ]);
 
         $resp = $this->asAdmin()->get('/settings/audit');
@@ -207,7 +207,7 @@ class AuditLogTest extends TestCase
             'type'      => ActivityType::PAGE_UPDATE,
             'ip'        => '127.0.0.1',
             'user_id'   => $editor->id,
-            'entity_id' => $page->id,
+            'loggable_id' => $page->id,
         ]);
     }
 
@@ -229,7 +229,7 @@ class AuditLogTest extends TestCase
             'type'      => ActivityType::PAGE_UPDATE,
             'ip'        => '192.123.x.x',
             'user_id'   => $editor->id,
-            'entity_id' => $page->id,
+            'loggable_id' => $page->id,
         ]);
     }
 }

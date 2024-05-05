@@ -1,0 +1,80 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "type": "bookshelf_create",
+      "detail": "",
+      "user_id": 1,
+      "loggable_id": 1,
+      "loggable_type": "bookshelf",
+      "ip": "124.4.x.x",
+      "created_at": "2021-09-29T12:32:02.000000Z",
+      "user": {
+        "id": 1,
+        "name": "Admins",
+        "slug": "admins"
+      }
+    },
+    {
+      "id": 2,
+      "type": "auth_login",
+      "detail": "standard; (1) Admin",
+      "user_id": 1,
+      "loggable_id": null,
+      "loggable_type": null,
+      "ip": "127.0.x.x",
+      "created_at": "2021-09-29T12:32:04.000000Z",
+      "user": {
+        "id": 1,
+        "name": "Admins",
+        "slug": "admins"
+      }
+    },
+    {
+      "id": 3,
+      "type": "bookshelf_update",
+      "detail": "",
+      "user_id": 1,
+      "loggable_id": 1,
+      "loggable_type": "bookshelf",
+      "ip": "127.0.x.x",
+      "created_at": "2021-09-29T12:32:07.000000Z",
+      "user": {
+        "id": 1,
+        "name": "Admins",
+        "slug": "admins"
+      }
+    },
+    {
+      "id": 4,
+      "type": "page_create",
+      "detail": "",
+      "user_id": 1,
+      "loggable_id": 1,
+      "loggable_type": "page",
+      "ip": "127.0.x.x",
+      "created_at": "2021-09-29T12:32:13.000000Z",
+      "user": {
+        "id": 1,
+        "name": "Admins",
+        "slug": "admins"
+      }
+    },
+    {
+      "id": 5,
+      "type": "page_update",
+      "detail": "",
+      "user_id": 1,
+      "loggable_id": 1,
+      "loggable_type": "page",
+      "ip": "127.0.x.x",
+      "created_at": "2021-09-29T12:37:27.000000Z",
+      "user": {
+        "id": 1,
+        "name": "Admins",
+        "slug": "admins"
+      }
+    }
+  ],
+  "total": 6088
+}

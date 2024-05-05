@@ -15,26 +15,24 @@ use Illuminate\Support\Str;
 /**
  * @property string $type
  * @property User   $user
- * @property Entity $entity
+ * @property Entity $loggable
  * @property string $detail
- * @property string $entity_type
- * @property int    $entity_id
+ * @property string $loggable_type
+ * @property int    $loggable_id
  * @property int    $user_id
  * @property Carbon $created_at
- * @property Carbon $updated_at
  */
 class Activity extends Model
 {
     /**
-     * Get the entity for this activity.
+     * Get the loggable model related to this activity.
+     * Currently only used for entities (previously entity_[id/type] columns).
+     * Could be used for others but will need an audit of uses where assumed
+     * to be entities.
      */
-    public function entity(): MorphTo
+    public function loggable(): MorphTo
     {
-        if ($this->entity_type === '') {
-            $this->entity_type = null;
-        }
-
-        return $this->morphTo('entity');
+        return $this->morphTo('loggable');
     }
 
     /**
@@ -47,8 +45,8 @@ class Activity extends Model
 
     public function jointPermissions(): HasMany
     {
-        return $this->hasMany(JointPermission::class, 'entity_id', 'entity_id')
-            ->whereColumn('activities.entity_type', '=', 'joint_permissions.entity_type');
+        return $this->hasMany(JointPermission::class, 'entity_id', 'loggable_id')
+            ->whereColumn('activities.loggable_type', '=', 'joint_permissions.entity_type');
     }
 
     /**
@@ -74,6 +72,6 @@ class Activity extends Model
      */
     public function isSimilarTo(self $activityB): bool
     {
-        return [$this->type, $this->entity_type, $this->entity_id] === [$activityB->type, $activityB->entity_type, $activityB->entity_id];
+        return [$this->type, $this->loggable_type, $this->loggable_id] === [$activityB->type, $activityB->loggable_type, $activityB->loggable_id];
     }
 }
