@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Actions;
+namespace Activity;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\DispatchWebhookJob;
