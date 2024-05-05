@@ -32,7 +32,7 @@ class AuditLogController extends Controller
 
         $query = Activity::query()
             ->with([
-                'entity' => fn ($query) => $query->withTrashed(),
+                'loggable' => fn ($query) => $query->withTrashed(),
                 'user',
             ])
             ->orderBy($listOptions->getSort(), $listOptions->getOrder());

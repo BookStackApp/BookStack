@@ -137,7 +137,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function activity(): MorphMany
     {
-        return $this->morphMany(Activity::class, 'entity')
+        return $this->morphMany(Activity::class, 'loggable')
             ->orderBy('created_at', 'desc');
     }
 

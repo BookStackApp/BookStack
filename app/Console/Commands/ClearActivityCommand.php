@@ -19,7 +19,7 @@ class ClearActivityCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Clear user activity from the system';
+    protected $description = 'Clear user (audit-log) activity from the system';
 
     /**
      * Execute the console command.

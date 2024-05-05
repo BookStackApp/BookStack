@@ -2,8 +2,8 @@
 
 namespace Tests\User;
 
-use Activity;
 use BookStack\Activity\ActivityType;
+use BookStack\Facades\Activity;
 use BookStack\Users\Models\User;
 use Tests\TestCase;
 
