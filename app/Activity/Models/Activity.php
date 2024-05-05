@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 /**
  * @property string $type
  * @property User   $user
- * @property Entity $entity
+ * @property Entity $loggable
  * @property string $detail
  * @property string $loggable_type
  * @property int    $loggable_id

@@ -248,8 +248,8 @@ abstract class TestCase extends BaseTestCase
         $detailsToCheck = ['type' => $type];
 
         if ($entity) {
-            $detailsToCheck['entity_type'] = $entity->getMorphClass();
-            $detailsToCheck['entity_id'] = $entity->id;
+            $detailsToCheck['loggable_type'] = $entity->getMorphClass();
+            $detailsToCheck['loggable_id'] = $entity->id;
         }
 
         if ($detail) {

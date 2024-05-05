@@ -153,22 +153,22 @@ class RecycleBinTest extends TestCase
 
         $this->assertDatabaseHas('activities', [
             'type'        => 'page_delete',
-            'entity_id'   => $page->id,
-            'entity_type' => $page->getMorphClass(),
+            'loggable_id'   => $page->id,
+            'loggable_type' => $page->getMorphClass(),
         ]);
 
         $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}");
 
         $this->assertDatabaseMissing('activities', [
             'type'        => 'page_delete',
-            'entity_id'   => $page->id,
-            'entity_type' => $page->getMorphClass(),
+            'loggable_id'   => $page->id,
+            'loggable_type' => $page->getMorphClass(),
         ]);
 
         $this->assertDatabaseHas('activities', [
             'type'        => 'page_delete',
-            'entity_id'   => null,
-            'entity_type' => null,
+            'loggable_id'   => null,
+            'loggable_type' => null,
             'detail'      => $page->name,
         ]);
     }

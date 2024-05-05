@@ -66,7 +66,7 @@ class ActivityQueries
         });
 
         $activity = $query->orderBy('created_at', 'desc')
-            ->with(['entity' => function (Relation $query) {
+            ->with(['loggable' => function (Relation $query) {
                 $query->withTrashed();
             }, 'user.avatar'])
             ->skip($count * ($page - 1))
