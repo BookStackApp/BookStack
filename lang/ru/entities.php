@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Обновлено :timeLength',
     'meta_updated_name' => ':user обновил :timeLength',
     'meta_owned_name' => 'Владелец :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'Ссылается :count элемент|Ссылается :count элементов',
     'entity_select' => 'Выбор объекта',
     'entity_select_lack_permission' => 'У вас нет разрешения на выбор этого элемента',
     'images' => 'Изображения',
@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF файл',
     'export_text' => 'Текстовый файл',
     'export_md' => 'Файл Markdown',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Шаблон страницы по умолчанию',
+    'default_template_explain' => 'Назначить шаблон страницы, который будет использоваться в качестве содержимого по умолчанию для всех страниц, созданных в этом элементе. Имейте в виду, что это будет работать, только если создатель страницы имеет доступ к выбранной странице шаблона.',
+    'default_template_select' => 'Выберите страницу шаблона',
 
     // Permissions and restrictions
     'permissions' => 'Разрешения',
