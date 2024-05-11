@@ -9,8 +9,8 @@ return [
 
     'shortcuts' => 'Snelkoppelingen',
     'shortcuts_interface' => 'Snelkoppelingen',
-    'shortcuts_toggle_desc' => 'Hier kunt u toetscombinaties voor de gebruikersinterface in- of uitschakelen voor navigatie en acties.',
-    'shortcuts_customize_desc' => 'U kunt elk van de onderstaande toetsencombinaties aanpassen. Druk simpelweg op de gewenste toetscombinatie na het selecteren van de invoer voor een toetscombinatie.',
+    'shortcuts_toggle_desc' => 'Hier kun je toetscombinaties voor de gebruikersinterface in- of uitschakelen voor navigatie en acties.',
+    'shortcuts_customize_desc' => 'Je kunt elk van de onderstaande toetsencombinaties aanpassen. Druk simpelweg op de gewenste toetscombinatie na het selecteren van de invoer voor een toetscombinatie.',
     'shortcuts_toggle_label' => 'Toetsencombinaties ingeschakeld',
     'shortcuts_section_navigation' => 'Navigatie',
     'shortcuts_section_actions' => 'Gebruikelijke acties',
@@ -27,11 +27,11 @@ return [
     'notifications_save' => 'Voorkeuren opslaan',
     'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
     'notifications_watched' => 'Gevolgde & Genegeerde Items',
-    'notifications_watched_desc' => ' Hieronder staan de items waarvoor aangepaste \'Volg\'-voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'Volg\' opties in de zijbalk.',
+    'notifications_watched_desc' => 'Hieronder staan de items waarvoor aangepaste \'Volg\'-voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'Volg\' opties in de zijbalk.',
 
     'auth' => 'Toegang & Beveiliging',
     'auth_change_password' => 'Wachtwoord Wijzigen',
-    'auth_change_password_desc' => 'Wijzig hier je wachtwoord om in te loggen op de applicatie. Minstens 8 tekens gebruiken.',
+    'auth_change_password_desc' => 'Wijzig hier je wachtwoord die je gebruikt om in te loggen op de applicatie. Gebruik minimaal 8 tekens.',
     'auth_change_password_success' => 'Wachtwoord is bijgewerkt!',
 
     'profile' => 'Profielgegevens',

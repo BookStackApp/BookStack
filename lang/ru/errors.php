@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Пользователь с электронной почтой :email уже существует, но с другими учетными данными.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Пользователь не может быть зарегистрирован по предоставленной информации',
     'email_already_confirmed' => 'Адрес электронной почты уже был подтвержден, попробуйте войти в систему.',
     'email_confirmation_invalid' => 'Этот токен подтверждения недействителен или уже используется. Повторите попытку регистрации.',
     'email_confirmation_expired' => 'Истек срок действия токена. Отправлено новое письмо с подтверждением.',
@@ -43,16 +43,16 @@ return [
     'cannot_get_image_from_url' => 'Не удается получить изображение из :url',
     'cannot_create_thumbs' => 'Сервер не может создавать эскизы. Убедитесь, что у вас установлено расширение GD PHP.',
     'server_upload_limit' => 'Сервер не разрешает загрузку файлов такого размера. Попробуйте уменьшить размер файла.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Сервер не может получить указанный объем данных. Повторите попытку, используя меньшее количество данных или файл меньшего размера.',
     'uploaded'  => 'Сервер не позволяет загружать файлы такого размера. Пожалуйста, попробуйте файл меньше.',
 
     // Drawing & Images
     'image_upload_error' => 'Произошла ошибка при загрузке изображения',
     'image_upload_type_error' => 'Неправильный тип загружаемого изображения',
     'image_upload_replace_type' => 'Замена файла изображения должна быть того же типа',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Не удалось выполнить загрузку изображений и/или создать эскизы из-за ограничения системных ресурсов.',
+    'image_thumbnail_memory_limit' => 'Не удалось создать вариации размера изображения из-за ограничений системных ресурсов.',
+    'image_gallery_thumbnail_memory_limit' => 'Не удалось создать эскизы галереи из-за ограниченности системных ресурсов.',
     'drawing_data_not_found' => 'Данные чертежа не могут быть загружены. Возможно, файл чертежа больше не существует или у вас нет разрешения на доступ к нему.',
 
     // Attachments

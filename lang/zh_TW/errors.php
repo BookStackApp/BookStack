@@ -49,7 +49,7 @@ return [
     // Drawing & Images
     'image_upload_error' => '上傳圖片時發生錯誤',
     'image_upload_type_error' => '上傳圖片類型無效',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => '必須使用的檔案類型才能置換圖檔',
     'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
     'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
     'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',

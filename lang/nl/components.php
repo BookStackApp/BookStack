@@ -23,7 +23,7 @@ return [
     'image_load_more' => 'Laad meer',
     'image_image_name' => 'Afbeeldingsnaam',
     'image_delete_used' => 'Deze afbeelding is op onderstaande pagina\'s in gebruik.',
-    'image_delete_confirm_text' => 'Weet u zeker dat u deze afbeelding wilt verwijderen?',
+    'image_delete_confirm_text' => 'Weet je zeker dat je deze afbeelding wilt verwijderen?',
     'image_select_image' => 'Kies afbeelding',
     'image_dropzone' => 'Sleep afbeeldingen naar hier of klik hier om te uploaden',
     'image_dropzone_drop' => 'Sleep hier de afbeeldingen naar toe',

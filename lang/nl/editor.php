@@ -143,7 +143,7 @@ return [
     'source' => 'Bron',
     'alt_desc' => 'Alternatieve beschrijving',
     'embed' => 'Insluiten',
-    'paste_embed' => 'Plak uw insluitcode hieronder:',
+    'paste_embed' => 'Plak jouw insluitcode hieronder:',
     'url' => 'URL',
     'text_to_display' => 'Weer te geven tekst',
     'title' => 'Titel',

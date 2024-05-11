@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Користувач з електронною адресою: електронна адреса вже існує, але з іншими обліковими даними.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Обліковий запис користувача не може бути зареєстрований за наданими деталями',
     'email_already_confirmed' => 'Електронна пошта вже підтверджена, спробуйте увійти.',
     'email_confirmation_invalid' => 'Цей токен підтвердження недійсний або вже був використаний, будь ласка, спробуйте знову зареєструватися.',
     'email_confirmation_expired' => 'Термін дії токена підтвердження минув, новий електронний лист підтвердження був відправлений.',

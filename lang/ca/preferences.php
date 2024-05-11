@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Desa les preferències',
     'notifications_update_success' => 'S’han actualitzat les preferències de notificacions!',
     'notifications_watched' => 'Elements seguits i ignorats',
-    'notifications_watched_desc' => ' A continuació hi ha els elements que tenen aplicades preferències de seguiment personalitzades. Per a actualitzar-ne les preferències, consulteu l’element i seleccioneu les opcions de seguiment a la barra lateral.',
+    'notifications_watched_desc' => 'A continuació hi ha els elements que tenen aplicades preferències de seguiment personalitzades. Per a actualitzar-ne les preferències, consulteu l’element i seleccioneu les opcions de seguiment a la barra lateral.',
 
     'auth' => 'Accés i seguretat',
     'auth_change_password' => 'Canvia la contrasenya',

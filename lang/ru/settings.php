@@ -86,7 +86,7 @@ return [
     'maint_send_test_email' => 'Отправить тестовое письмо',
     'maint_send_test_email_desc' => 'Отправить тестовое письмо на адрес электронной почты, указанный в профиле.',
     'maint_send_test_email_run' => 'Отправить письмо',
-    'maint_send_test_email_success' => 'На адрес :address отравлено письмо',
+    'maint_send_test_email_success' => 'Письмо отправлено на :address',
     'maint_send_test_email_mail_subject' => 'Проверка электронной почты',
     'maint_send_test_email_mail_greeting' => 'Доставка электронной почты работает!',
     'maint_send_test_email_mail_text' => 'Поздравляем! Поскольку вы получили это письмо, электронная почта настроена правильно.',
@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'На данный момент корзина пуста',
     'recycle_bin_empty' => 'Очистить корзину',
     'recycle_bin_empty_confirm' => 'Это действие навсегда уничтожит все элементы в корзине, включая содержимое, содержащееся в каждом элементе. Вы уверены, что хотите очистить корзину?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Это действие навсегда удалит этот элемент из системы, вместе с любыми дочерними элементами, перечисленными ниже, и вы не сможете восстановить этот контент. Вы уверены, что хотите навсегда удалить этот элемент?',
     'recycle_bin_destroy_list' => 'Элементы для удаления',
     'recycle_bin_restore_list' => 'Элементы для восстановления',
     'recycle_bin_restore_confirm' => 'Это действие восстановит удаленный элемент, включая дочерние, в исходное место. Если исходное место было удалено и теперь находится в корзине, родительский элемент также необходимо будет восстановить.',
@@ -276,6 +276,14 @@ return [
     'webhooks_last_errored' => 'Последняя ошибка:',
     'webhooks_last_error_message' => 'Последнее сообщение об ошибке:',
 
+    // Licensing
+    'licenses' => 'Лицензии',
+    'licenses_desc' => 'Эта страница содержит сведения о лицензиях для BookStack в дополнение к проектам и библиотекам, которые используются в BookStack. Многие перечисленные проекты могут использоваться только в контексте разработки.',
+    'licenses_bookstack' => 'Лицензия BookStack',
+    'licenses_php' => 'Лицензии PHP библиотек',
+    'licenses_js' => 'Лицензии JavaScript библиотек',
+    'licenses_other' => 'Прочие лицензии',
+    'license_details' => 'Подробности о лицензии',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

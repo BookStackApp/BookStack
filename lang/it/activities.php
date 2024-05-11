@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'pagina creata',
+    'page_create'                 => 'ha creato la pagina',
     'page_create_notification'    => 'Pagina creata con successo',
     'page_update'                 => 'ha aggiornato la pagina',
     'page_update_notification'    => 'Pagina aggiornata con successo',
@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => 'Pagina eliminata con successo',
     'page_restore'                => 'ha ripristinato la pagina',
     'page_restore_notification'   => 'Pagina ripristinata con successo',
-    'page_move'                   => 'ha mosso la pagina',
+    'page_move'                   => 'ha spostato la pagina',
     'page_move_notification'      => 'Pagina spostata con successo',
 
     // Chapters
@@ -30,7 +30,7 @@ return [
     // Books
     'book_create'                 => 'ha creato il libro',
     'book_create_notification'    => 'Libro creato con successo',
-    'book_create_from_chapter'              => 'convertito da capitolo a libro',
+    'book_create_from_chapter'              => 'ha convertito da capitolo a libro',
     'book_create_from_chapter_notification' => 'Capitolo convertito con successo in libro',
     'book_update'                 => 'ha aggiornato il libro',
     'book_update_notification'    => 'Libro aggiornato con successo',
@@ -40,18 +40,18 @@ return [
     'book_sort_notification'      => 'Libro reindicizzato con successo',
 
     // Bookshelves
-    'bookshelf_create'            => 'libreria creata',
+    'bookshelf_create'            => 'ha creato la libreria',
     'bookshelf_create_notification'    => 'Libreria creata con successo',
-    'bookshelf_create_from_book'    => 'libro convertito in libreria',
+    'bookshelf_create_from_book'    => 'ha convertito libro in libreria',
     'bookshelf_create_from_book_notification'    => 'Libro convertito con successo in libreria',
-    'bookshelf_update'                 => 'libreria aggiornata',
+    'bookshelf_update'                 => 'ha aggiornato la libreria',
     'bookshelf_update_notification'    => 'Libreria aggiornata con successo',
-    'bookshelf_delete'                 => 'Iibreria eliminata',
+    'bookshelf_delete'                 => 'ha eliminato la libreria',
     'bookshelf_delete_notification'    => 'Libreria eliminata con successo',
 
     // Revisions
-    'revision_restore' => 'revisione ripristinata',
-    'revision_delete' => 'revisione eliminata',
+    'revision_restore' => 'ha ripristinato la revisione',
+    'revision_delete' => 'ha eliminato la revisione',
     'revision_delete_notification' => 'Revisione eliminata con successo',
 
     // Favourites
@@ -64,11 +64,11 @@ return [
     // Auth
     'auth_login' => 'connesso',
     'auth_register' => 'registrato come nuovo utente',
-    'auth_password_reset_request' => 'richiesta di reimpostazione della password utente',
-    'auth_password_reset_update' => 'reimposta password utente',
-    'mfa_setup_method' => 'metodo MFA configurato',
+    'auth_password_reset_request' => 'ha richiesto di reimpostare la password utente',
+    'auth_password_reset_update' => 'ha reimpostato la password utente',
+    'mfa_setup_method' => 'ha configurato un metodo multi-fattore',
     'mfa_setup_method_notification' => 'Metodo multi-fattore impostato con successo',
-    'mfa_remove_method' => 'metodo MFA rimosso',
+    'mfa_remove_method' => 'ha rimosso un metodo multi-fattore',
     'mfa_remove_method_notification' => 'Metodo multi-fattore rimosso con successo',
 
     // Settings

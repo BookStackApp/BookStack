@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Salvar Preferências',
     'notifications_update_success' => 'Preferências de notificação foram atualizadas!',
     'notifications_watched' => 'Itens assistidos e ignorados',
-    'notifications_watched_desc' => ' Abaixo estão os itens que possuem preferências de relógio personalizadas aplicadas. Para atualizar suas preferências para estes, veja o item e encontre as opções de relógio na barra lateral.',
+    'notifications_watched_desc' => 'Abaixo estão os itens que possuem preferências de relógio personalizadas aplicadas. Para atualizar suas preferências para estes, veja o item e encontre as opções de relógio na barra lateral.',
 
     'auth' => 'Acesso & Segurança',
     'auth_change_password' => 'Mudar a senha',

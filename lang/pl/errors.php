@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Użytkownik o adresie :email już istnieje, ale używa innych poświadczeń.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Konto użytkownika nie może być zarejestrowane z podanymi danymi',
     'email_already_confirmed' => 'E-mail został potwierdzony, spróbuj się zalogować.',
     'email_confirmation_invalid' => 'Ten token jest nieprawidłowy lub został już wykorzystany. Spróbuj zarejestrować się ponownie.',
     'email_confirmation_expired' => 'Ten token potwierdzający wygasł. Wysłaliśmy Ci kolejny.',

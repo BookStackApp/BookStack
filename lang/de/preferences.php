@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Einstellungen speichern',
     'notifications_update_success' => 'Benachrichtigungseinstellungen wurden aktualisiert!',
     'notifications_watched' => 'Beobachtete und ignorierte Elemente',
-    'notifications_watched_desc' => ' Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um Ihre Einstellungen für diese Elemente zu aktualisieren, sehen Sie sich das Element an und suchen dann die Überwachungsoptionen in der Seitenleiste.',
+    'notifications_watched_desc' => 'Nachfolgend finden Sie die Elemente, für die benutzerdefinierten Überwachungspräferenzen gelten. Um Ihre Einstellungen für diese Elemente zu aktualisieren, sehen Sie sich das Element an und suchen dann die Überwachungsoptionen in der Seitenleiste.',
 
     'auth' => 'Zugang & Sicherheit',
     'auth_change_password' => 'Passwort ändern',

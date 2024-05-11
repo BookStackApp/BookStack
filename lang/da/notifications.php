@@ -20,7 +20,7 @@ return [
     'detail_updated_by' => 'Updated By:',
 
     'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_page' => 'Vis Side',
 
     'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
     'footer_reason_link' => 'your notification preferences',

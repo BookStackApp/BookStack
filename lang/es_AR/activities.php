@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '".name" se eliminó de sus favoritos',
 
     // Watching
-    'watch_update_level_notification' => 'Preferencias de suscripciones actualizadas correctamente',
+    'watch_update_level_notification' => 'Preferencias de visualización actualizadas con éxito',
 
     // Auth
     'auth_login' => 'sesión iniciada',

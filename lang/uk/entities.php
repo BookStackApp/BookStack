@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF файл',
     'export_text' => 'Текстовий файл',
     'export_md' => 'Файл розмітки',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Типовий шаблон сторінки',
+    'default_template_explain' => 'Призначити шаблон сторінки, який буде використовуватися як типовий вміст для всіх сторінок, створених у цьому елементі. Майте на увазі, що ця сторінка буде використана лише у випадку, якщо вона має доступ до обраної сторінки шаблону.',
+    'default_template_select' => 'Виберіть сторінку шаблону',
 
     // Permissions and restrictions
     'permissions' => 'Дозволи',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Видалити чернетку',
     'pages_delete_success' => 'Сторінка видалена',
     'pages_delete_draft_success' => 'Чернетка видалена',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Ця сторінка використовується в якості шаблону сторінки за промовчанням. У цих книгах або розділах більше не буде встановлено шаблон стандартної сторінки, який використовується після того, як ця сторінка буде видалена.',
     'pages_delete_confirm' => 'Ви впевнені, що хочете видалити цю сторінку?',
     'pages_delete_draft_confirm' => 'Ви впевнені, що хочете видалити цю чернетку?',
     'pages_editing_named' => 'Редагування сторінки :pageName',

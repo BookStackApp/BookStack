@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Saglabāt iestatījumus',
     'notifications_update_success' => 'Paziņojumu iestatījumi ir atjaunoti!',
     'notifications_watched' => 'Vērotie un ignorētie vienumi',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched_desc' => 'Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
 
     'auth' => 'Piekļuve un drošība',
     'auth_change_password' => 'Mainīt paroli',

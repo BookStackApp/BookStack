@@ -66,7 +66,7 @@ return [
     'auth_register' => 'зарегистрировался как новый пользователь',
     'auth_password_reset_request' => 'запросил смену пароля пользователя',
     'auth_password_reset_update' => 'сбросил пароль пользователя',
-    'mfa_setup_method' => 'ностроил метод МФА',
+    'mfa_setup_method' => 'настроил метод МФА',
     'mfa_setup_method_notification' => 'Многофакторный метод аутентификации успешно настроен',
     'mfa_remove_method' => 'удалил метод МФА',
     'mfa_remove_method_notification' => 'Многофакторный метод аутентификации успешно удален',
@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => 'Пользователь успешно удален',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'создан API токен',
     'api_token_create_notification' => 'API токен успешно создан',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'обновлён API токен',
     'api_token_update_notification' => 'API токен успешно обновлен',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'обновил API токен',
     'api_token_delete_notification' => 'API токен успешно удален',
 
     // Roles

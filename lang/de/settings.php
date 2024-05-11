@@ -277,6 +277,14 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'webhooks_last_errored' => 'Letzter Fehler:',
     'webhooks_last_error_message' => 'Letzte Fehlermeldung:',
 
+    // Licensing
+    'licenses' => 'Lizenzen',
+    'licenses_desc' => 'Diese Seite beschreibt Lizenzinformationen für BookStack zusätzlich zu den Projekten und Bibliotheken, die in BookStack verwendet werden. Viele aufgelistete Projekte dürfen nur in einem Entwicklungskontext verwendet werden.',
+    'licenses_bookstack' => 'BookStack-Lizenz',
+    'licenses_php' => 'PHP-Bibliothekslizenzen',
+    'licenses_js' => 'JavaScript-Bibliothekslizenzen',
+    'licenses_other' => 'Andere Lizenzen',
+    'license_details' => 'Lizenzdetails',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

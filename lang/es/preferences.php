@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Guardar preferencias',
     'notifications_update_success' => '¡Se han actualizado las preferencias de notificaciones!',
     'notifications_watched' => 'Elementos vistos e ignorados',
-    'notifications_watched_desc' => ' A continuación se muestran los elementos que tienen preferencias personalizadas de monitorización. Para actualizar sus preferencias, vea el artículo y las opciones se mostrarán en la barra lateral.',
+    'notifications_watched_desc' => 'A continuación se muestran los elementos que tienen preferencias personalizadas de monitorización. Para actualizar sus preferencias, vea el elemento y las opciones se mostrarán en la barra lateral.',
 
     'auth' => 'Acceso y seguridad',
     'auth_change_password' => 'Cambiar contraseña',

@@ -276,6 +276,14 @@ return [
     'webhooks_last_errored' => '最后一个错误：',
     'webhooks_last_error_message' => '最后一个错误消息：',
 
+    // Licensing
+    'licenses' => '许可证',
+    'licenses_desc' => '除了 BookStack 中使用的项目和库之外，此页面还详细介绍了 BookStack 的许可证信息。列出的许多项目只能在开发环境中使用。',
+    'licenses_bookstack' => 'BookStack 许可证',
+    'licenses_php' => 'PHP 库许可证',
+    'licenses_js' => 'JavaScript 库许可证',
+    'licenses_other' => '其他许可证',
+    'license_details' => '许可证细节',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

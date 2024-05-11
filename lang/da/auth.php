@@ -39,9 +39,9 @@ return [
     'register_success' => 'Tak for din registrering. Du er nu registeret og logget ind.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_starting' => 'Forsøger Login',
+    'auto_init_starting_desc' => 'Vi kontakter dit godkendelsessystem for at starte loginprocessen. Hvis der ikke er nogen fremskridt efter 5 sekunder, kan du prøve at klikke på linket nedenfor.',
+    'auto_init_start_link' => 'Fortsæt med godkendelse',
 
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
@@ -61,7 +61,7 @@ return [
     'email_confirm_send_error' => 'E-Mail-bekræftelse kræves, men systemet kunne ikke sende E-Mailen. Kontakt administratoren for at sikre, at E-Mail er konfigureret korrekt.',
     'email_confirm_success' => 'Din email er blevet bekræftet! Du bør nu kune logge ind med denne emailadresse.',
     'email_confirm_resent' => 'Bekræftelsesmail sendt, tjek venligst din indboks.',
-    'email_confirm_thanks' => 'Thanks for confirming!',
+    'email_confirm_thanks' => 'Tak for bekræftelsen!',
     'email_confirm_thanks_desc' => 'Please wait a moment while your confirmation is handled. If you are not redirected after 3 seconds press the "Continue" link below to proceed.',
 
     'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
@@ -103,7 +103,7 @@ return [
     'mfa_gen_totp_verify_setup' => 'Verificer Opsætning',
     'mfa_gen_totp_verify_setup_desc' => 'Verify that all is working by entering a code, generated within your authentication app, in the input box below:',
     'mfa_gen_totp_provide_code_here' => 'Provide your app generated code here',
-    'mfa_verify_access' => 'Verify Access',
+    'mfa_verify_access' => 'Bekræft Adgang',
     'mfa_verify_access_desc' => 'Your user account requires you to confirm your identity via an additional level of verification before you\'re granted access. Verify using one of your configured methods to continue.',
     'mfa_verify_no_methods' => 'Ingen Metoder Konfigureret',
     'mfa_verify_no_methods_desc' => 'No multi-factor authentication methods could be found for your account. You\'ll need to set up at least one method before you gain access.',

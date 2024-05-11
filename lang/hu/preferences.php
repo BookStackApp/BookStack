@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Beállítások mentése',
     'notifications_update_success' => 'Az értesítési beállítások frissítve lettek!',
     'notifications_watched' => 'Megfigyelt és figyelmen kívül hagyott elemek',
-    'notifications_watched_desc' => ' Az alábbi elemekre egyedi figyelési beállítások vannak alkalmazva. A beállítások frissítéséhez tekintsd meg az elemet, majd keress a figyelési lehetőségeket az oldalsávban.',
+    'notifications_watched_desc' => 'Az alábbi elemekre egyedi figyelési beállítások vannak alkalmazva. A beállítások frissítéséhez tekintsd meg az elemet, majd keress a figyelési lehetőségeket az oldalsávban.',
 
     'auth' => 'Hozzáférés és Biztonság',
     'auth_change_password' => 'Jelszó módosítása',
