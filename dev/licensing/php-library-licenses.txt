@@ -18,20 +18,6 @@ All rights reserved.
 Source: https://github.com/Bacon/BaconQrCode.git
 Link: https://github.com/Bacon/BaconQrCode
 -----------
-barryvdh/laravel-dompdf
-License: MIT
-License File: vendor/barryvdh/laravel-dompdf/LICENSE
-Copyright: Copyright (c) 2021 barryvdh
-Source: https://github.com/barryvdh/laravel-dompdf.git
-Link: https://github.com/barryvdh/laravel-dompdf.git
------------
-barryvdh/laravel-snappy
-License: MIT
-License File: vendor/barryvdh/laravel-snappy/LICENSE
-Copyright: Copyright (c) 2018
-Source: https://github.com/barryvdh/laravel-snappy.git
-Link: https://github.com/barryvdh/laravel-snappy.git
------------
 brick/math
 License: MIT
 License File: vendor/brick/math/LICENSE
@@ -124,6 +110,13 @@ Copyright: Copyright (c) 2013-2023 Eduardo Gulias Davis
 Source: https://github.com/egulias/EmailValidator.git
 Link: https://github.com/egulias/EmailValidator
 -----------
+firebase/php-jwt
+License: BSD-3-Clause
+License File: vendor/firebase/php-jwt/LICENSE
+Copyright: Copyright (c) 2011, Neuman Vong
+Source: https://github.com/firebase/php-jwt.git
+Link: https://github.com/firebase/php-jwt
+-----------
 fruitcake/php-cors
 License: MIT
 License File: vendor/fruitcake/php-cors/LICENSE
@@ -186,7 +179,7 @@ Link: https://github.com/guzzle/uri-template.git
 intervention/gif
 License: MIT
 License File: vendor/intervention/gif/LICENSE
-Copyright: Copyright (c) 2020 Oliver Vogel
+Copyright: Copyright (c) 2020-2024 Oliver Vogel
 Source: https://github.com/Intervention/gif.git
 Link: https://github.com/intervention/gif
 -----------
