@@ -276,6 +276,14 @@ return [
     'webhooks_last_errored' => '最後のエラー:',
     'webhooks_last_error_message' => '最後のエラーのメッセージ:',
 
+    // Licensing
+    'licenses' => 'ライセンス',
+    'licenses_desc' => 'このページではBookStackとBookStackで使用されるプロジェクトやライブラリのライセンス情報を詳しく説明します。開発環境でのみ使用するものも多数含まれています。',
+    'licenses_bookstack' => 'BookStack ライセンス',
+    'licenses_php' => 'PHPライブラリライセンス',
+    'licenses_js' => 'JavaScriptライブラリライセンス',
+    'licenses_other' => 'その他のライセンス',
+    'license_details' => 'ライセンス詳細',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

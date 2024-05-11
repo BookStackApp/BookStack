@@ -5,8 +5,8 @@
 return [
 
     // Permissions
-    'permission' => 'U heeft geen machtiging om de gevraagde pagina te openen.',
-    'permissionJson' => 'U heeft geen machtiging om de gevraagde actie uit te voeren.',
+    'permission' => 'Je hebt geen machtiging om de gevraagde pagina te openen.',
+    'permissionJson' => 'Je hebt geen machtiging om de gevraagde actie uit te voeren.',
 
     // Auth
     'error_user_exists_different_creds' => 'Er bestaat al een gebruiker met het e-mailadres :email, maar met andere inloggegevens.',
@@ -36,7 +36,7 @@ return [
     'social_account_register_instructions' => 'Als je nog geen account hebt, kun je je registreren met de :socialAccount optie.',
     'social_driver_not_found' => 'Social driver niet gevonden',
     'social_driver_not_configured' => 'Je :socialAccount instellingen zijn niet correct geconfigureerd.',
-    'invite_token_expired' => 'Deze uitnodigingslink is verlopen. U kunt in plaats daarvan proberen uw wachtwoord opnieuw in te stellen.',
+    'invite_token_expired' => 'Deze uitnodigingslink is verlopen. Je kunt in plaats daarvan proberen je wachtwoord opnieuw in te stellen.',
 
     // System
     'path_not_writable' => 'Bestandspad :filePath kon niet naar geüpload worden. Zorg dat je schrijfrechten op de server hebt.',
@@ -53,7 +53,7 @@ return [
     'image_upload_memory_limit' => 'Het uploaden van afbeeldingen en/of het maken van miniaturen is mislukt vanwege te beperkte systeemmiddelen.',
     'image_thumbnail_memory_limit' => 'Het maken van variaties in afbeeldingsgrootte is mislukt vanwege te beperkte systeemmiddelen.',
     'image_gallery_thumbnail_memory_limit' => 'Het maken van galerij miniaturen is mislukt vanwege te beperkte systeemmiddelen.',
-    'drawing_data_not_found' => 'De gegevens van de tekening konden niet worden geladen. Het tekenbestand bestaat misschien niet meer of u hebt geen machtiging om het te openen.',
+    'drawing_data_not_found' => 'De gegevens van de tekening konden niet worden geladen. Het tekenbestand bestaat misschien niet meer of je hebt geen machtiging om het te openen.',
 
     // Attachments
     'attachment_not_found' => 'Bijlage niet gevonden',
@@ -86,7 +86,7 @@ return [
 
     // Comments
     'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de reacties.',
-    'cannot_add_comment_to_draft' => 'U kunt geen reacties toevoegen aan een concept.',
+    'cannot_add_comment_to_draft' => 'Je kunt geen reacties toevoegen aan een concept.',
     'comment_add' => 'Er is een fout opgetreden tijdens het aanpassen / toevoegen van de reactie.',
     'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
     'empty_comment' => 'Kan geen lege reactie toevoegen.',
@@ -94,10 +94,10 @@ return [
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
     'sorry_page_not_found' => 'Sorry, de pagina die je zocht kan niet gevonden worden.',
-    'sorry_page_not_found_permission_warning' => 'Als u verwachtte dat deze pagina zou bestaan, hebt u misschien geen machtiging om deze te bekijken.',
+    'sorry_page_not_found_permission_warning' => 'Als je verwachtte dat deze pagina zou bestaan, heb je misschien geen machtiging om deze te bekijken.',
     'image_not_found' => 'Afbeelding niet gevonden',
     'image_not_found_subtitle' => 'Sorry, de afbeelding die je zocht is niet beschikbaar.',
-    'image_not_found_details' => 'Als u verwachtte dat deze afbeelding zou bestaan, dan is deze misschien verwijderd.',
+    'image_not_found_details' => 'Als je verwachtte dat deze afbeelding zou bestaan, dan is deze misschien verwijderd.',
     'return_home' => 'Terug naar home',
     'error_occurred' => 'Er Ging Iets Fout',
     'app_down' => ':appName is nu niet beschikbaar',

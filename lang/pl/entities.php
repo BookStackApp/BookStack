@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Zaktualizowano :timeLength',
     'meta_updated_name' => 'Zaktualizowano :timeLength przez :user',
     'meta_owned_name' => 'Właściciel: :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'Odniesienie w :count elemencie|Odniesienia w :count elementach',
     'entity_select' => 'Wybór obiektu',
     'entity_select_lack_permission' => 'Nie masz wymaganych uprawnień do wybrania tej pozycji',
     'images' => 'Obrazki',
@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'Plik PDF',
     'export_text' => 'Plik tekstowy',
     'export_md' => 'Pliki Markdown',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Domyślny szablon strony',
+    'default_template_explain' => 'Przypisz szablon strony, który będzie używany jako domyślna zawartość dla wszystkich stron utworzonych w tym elemencie. Pamiętaj, że będzie to używane tylko wtedy, gdy twórca strony ma dostęp do wybranej strony szablonu.',
+    'default_template_select' => 'Wybierz stronę szablonu',
 
     // Permissions and restrictions
     'permissions' => 'Uprawnienia',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Usuń wersje roboczą',
     'pages_delete_success' => 'Strona usunięta pomyślnie',
     'pages_delete_draft_success' => 'Werjsa robocza usunięta pomyślnie',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'Ta strona jest aktualnie używana jako domyślny szablon strony książki lub rozdziału. Po usunięciu tej strony te książki lub rozdziały nie będą już miały przypisanego domyślnego szablonu strony.',
     'pages_delete_confirm' => 'Czy na pewno chcesz usunąć tę stronę?',
     'pages_delete_draft_confirm' => 'Czy na pewno chcesz usunąć wersje roboczą strony?',
     'pages_editing_named' => 'Edytowanie strony :pageName',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Odniesienia',
     'references_none' => 'Brak śledzonych odwołań do tego elementu.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'Wymienione poniżej są wszystkie znane treści w systemie, które nawiązują do tego elementu.',
 
     // Watch Options
     'watch' => 'Obserwuj',

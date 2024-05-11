@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Salvesta eelistused',
     'notifications_update_success' => 'Teavituste eelistused on salvestatud!',
     'notifications_watched' => 'Jälgitud ja ignoreeritud objektid',
-    'notifications_watched_desc' => ' Allpool on objektid, millele on määratud kohaldatud jälgimise eelistused. Eelistuste muutmiseks ava vastav objekt ning leia jälgimise valikud külgmenüüs.',
+    'notifications_watched_desc' => 'Allpool on objektid, millele on määratud kohaldatud jälgimise eelistused. Eelistuste muutmiseks ava vastav objekt ning leia jälgimise valikud külgmenüüs.',
 
     'auth' => 'Ligipääs ja turvalisus',
     'auth_change_password' => 'Muuda parool',

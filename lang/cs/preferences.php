@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Uložit preference',
     'notifications_update_success' => 'Nastavení oznámení byla aktualizována!',
     'notifications_watched' => 'Sledované a ignorované položky',
-    'notifications_watched_desc' => ' Níže jsou položky, které mají vlastní nastavení hodinek. Chcete-li aktualizovat vaše předvolby, podívejte se na položku a pak najděte možnosti hodinek v postranním panelu.',
+    'notifications_watched_desc' => 'Níže jsou položky, které mají vlastní nastavení hodinek. Chcete-li aktualizovat vaše předvolby, podívejte se na položku a pak najděte možnosti hodinek v postranním panelu.',
 
     'auth' => 'Přístup a zabezpečení',
     'auth_change_password' => 'Změnit heslo',

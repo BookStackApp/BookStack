@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'gendannede side',
     'page_restore_notification'   => 'Siden blev gendannet',
     'page_move'                   => 'flyttede side',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Siden blev flyttet',
 
     // Chapters
     'chapter_create'              => 'oprettede kapitel',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'slettede kapitel',
     'chapter_delete_notification' => 'Kapitel blev slettet',
     'chapter_move'                => 'flyttede kapitel',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Kapitlet blev flyttet',
 
     // Books
     'book_create'                 => 'oprettede bog',
@@ -40,19 +40,19 @@ return [
     'book_sort_notification'      => 'Bogen blev re-sorteret',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
+    'bookshelf_create'            => 'oprettede reol',
+    'bookshelf_create_notification'    => 'Reolen blev oprettet',
+    'bookshelf_create_from_book'    => 'omdannede bog til reol',
     'bookshelf_create_from_book_notification'    => 'Bogen blev omdannet til en bogreal',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_update'                 => 'opdaterede reolen',
+    'bookshelf_update_notification'    => 'Reolen blev opdateret',
+    'bookshelf_delete'                 => 'slettede reol',
+    'bookshelf_delete_notification'    => 'Reolen blev slettet',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'gendannede version',
+    'revision_delete' => 'slettede version',
+    'revision_delete_notification' => 'Versionen blev slettet',
 
     // Favourites
     'favourite_add_notification' => '":name" er blevet tilføjet til dine favoritter',
@@ -62,7 +62,7 @@ return [
     'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'loggede ind',
     'auth_register' => 'registered as new user',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
