@@ -60,13 +60,6 @@ Copyright: Copyright (C) 2015 Jordan Harband
 Source: git://github.com/es-shims/array-includes.git
 Link: git://github.com/es-shims/array-includes.git
 -----------
-array.prototype.filter
-License: MIT
-License File: node_modules/array.prototype.filter/LICENSE
-Copyright: Copyright (c) 2021 Jordan Harband
-Source: git+https://github.com/es-shims/Array.prototype.filter.git
-Link: https://github.com/es-shims/Array.prototype.filter#readme
------------
 array.prototype.findlastindex
 License: MIT
 License File: node_modules/array.prototype.findlastindex/LICENSE
@@ -112,7 +105,8 @@ Link: https://github.com/juliangruber/balanced-match
 binary-extensions
 License: MIT
 License File: node_modules/binary-extensions/license
-Copyright: Copyright (c) 2019 Sindre Sorhus <************@*****.***> (https://sindresorhus.com), Paul Miller (https://paulmillr.com)
+Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
+Copyright (c) Paul Miller (https://paulmillr.com)
 Source: sindresorhus/binary-extensions
 Link: sindresorhus/binary-extensions
 -----------
@@ -226,6 +220,27 @@ Copyright: Copyright (c) 2018 Made With MOXY Lda <*****@****.******>
 Source: git@github.com:moxystudio/node-cross-spawn.git
 Link: https://github.com/moxystudio/node-cross-spawn
 -----------
+data-view-buffer
+License: MIT
+License File: node_modules/data-view-buffer/LICENSE
+Copyright: Copyright (c) 2023 Jordan Harband
+Source: git+https://github.com/ljharb/data-view-buffer.git
+Link: https://github.com/ljharb/data-view-buffer#readme
+-----------
+data-view-byte-length
+License: MIT
+License File: node_modules/data-view-byte-length/LICENSE
+Copyright: Copyright (c) 2024 Jordan Harband
+Source: git+https://github.com/ljharb/data-view-byte-length.git
+Link: https://github.com/ljharb/data-view-byte-length#readme
+-----------
+data-view-byte-offset
+License: MIT
+License File: node_modules/data-view-byte-offset/LICENSE
+Copyright: Copyright (c) 2024 Jordan Harband
+Source: git+https://github.com/ljharb/data-view-byte-offset.git
+Link: https://github.com/ljharb/data-view-byte-offset#readme
+-----------
 debug
 License: MIT
 License File: node_modules/debug/LICENSE
@@ -298,13 +313,6 @@ Copyright: Copyright (C) 2015 Jordan Harband
 Source: git://github.com/ljharb/es-abstract.git
 Link: git://github.com/ljharb/es-abstract.git
 -----------
-es-array-method-boxes-properly
-License: MIT
-License File: node_modules/es-array-method-boxes-properly/LICENSE
-Copyright: Copyright (c) 2019 Jordan Harband
-Source: git+https://github.com/ljharb/es-array-method-boxes-properly.git
-Link: https://github.com/ljharb/es-array-method-boxes-properly#readme
------------
 es-define-property
 License: MIT
 License File: node_modules/es-define-property/LICENSE
@@ -318,6 +326,13 @@ License File: node_modules/es-errors/LICENSE
 Copyright: Copyright (c) 2024 Jordan Harband
 Source: git+https://github.com/ljharb/es-errors.git
 Link: https://github.com/ljharb/es-errors#readme
+-----------
+es-object-atoms
+License: MIT
+License File: node_modules/es-object-atoms/LICENSE
+Copyright: Copyright (c) 2024 Jordan Harband
+Source: git+https://github.com/ljharb/es-object-atoms.git
+Link: https://github.com/ljharb/es-object-atoms#readme
 -----------
 es-set-tostringtag
 License: MIT
@@ -757,6 +772,13 @@ License File: node_modules/is-core-module/LICENSE
 Copyright: Copyright (c) 2014 Dave Justice
 Source: git+https://github.com/inspect-js/is-core-module.git
 Link: https://github.com/inspect-js/is-core-module
+-----------
+is-data-view
+License: MIT
+License File: node_modules/is-data-view/LICENSE
+Copyright: Copyright (c) 2024 Inspect JS
+Source: git+https://github.com/inspect-js/is-data-view.git
+Link: https://github.com/inspect-js/is-data-view#readme
 -----------
 is-date-object
 License: MIT
@@ -1232,6 +1254,12 @@ License File: node_modules/prelude-ls/LICENSE
 Copyright: Copyright (c) George Zahariev
 Source: git://github.com/gkz/prelude-ls.git
 Link: http://preludels.com
+-----------
+punycode.js
+License: MIT
+License File: node_modules/punycode.js/LICENSE-MIT.txt
+Source: https://github.com/mathiasbynens/punycode.js.git
+Link: https://mths.be/punycode
 -----------
 punycode
 License: MIT
@@ -1753,7 +1781,7 @@ Link: https://github.com/codemirror/lang-php.git
 @codemirror/lang-xml
 License: MIT
 License File: node_modules/@codemirror/lang-xml/LICENSE
-Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <*******@*****.***> and others
+Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
 Source: https://github.com/codemirror/lang-xml.git
 Link: https://github.com/codemirror/lang-xml.git
 -----------
