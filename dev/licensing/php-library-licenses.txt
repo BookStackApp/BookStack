@@ -1,0 +1,789 @@
+aws/aws-crt-php
+License: Apache-2.0
+License File: vendor/aws/aws-crt-php/LICENSE
+Source: https://github.com/awslabs/aws-crt-php.git
+Link: https://github.com/awslabs/aws-crt-php
+-----------
+aws/aws-sdk-php
+License: Apache-2.0
+License File: vendor/aws/aws-sdk-php/LICENSE
+Source: https://github.com/aws/aws-sdk-php.git
+Link: http://aws.amazon.com/sdkforphp
+-----------
+bacon/bacon-qr-code
+License: BSD-2-Clause
+License File: vendor/bacon/bacon-qr-code/LICENSE
+Copyright: Copyright (c) 2017, Ben Scholzen 'DASPRiD'
+All rights reserved.
+Source: https://github.com/Bacon/BaconQrCode.git
+Link: https://github.com/Bacon/BaconQrCode
+-----------
+brick/math
+License: MIT
+License File: vendor/brick/math/LICENSE
+Copyright: Copyright (c) 2013-present Benjamin Morel
+Source: https://github.com/brick/math.git
+Link: https://github.com/brick/math.git
+-----------
+carbonphp/carbon-doctrine-types
+License: MIT
+License File: vendor/carbonphp/carbon-doctrine-types/LICENSE
+Copyright: Copyright (c) 2023 Carbon
+Source: https://github.com/CarbonPHP/carbon-doctrine-types.git
+Link: https://github.com/CarbonPHP/carbon-doctrine-types.git
+-----------
+dasprid/enum
+License: BSD-2-Clause
+License File: vendor/dasprid/enum/LICENSE
+Copyright: Copyright (c) 2017, Ben Scholzen 'DASPRiD'
+All rights reserved.
+Source: https://github.com/DASPRiD/Enum.git
+Link: https://github.com/DASPRiD/Enum.git
+-----------
+dflydev/dot-access-data
+License: MIT
+License File: vendor/dflydev/dot-access-data/LICENSE
+Copyright: Copyright (c) 2012 Dragonfly Development Inc.
+Source: https://github.com/dflydev/dflydev-dot-access-data.git
+Link: https://github.com/dflydev/dflydev-dot-access-data
+-----------
+doctrine/cache
+License: MIT
+License File: vendor/doctrine/cache/LICENSE
+Copyright: Copyright (c) 2006-2015 Doctrine Project
+Source: https://github.com/doctrine/cache.git
+Link: https://www.doctrine-project.org/projects/cache.html
+-----------
+doctrine/dbal
+License: MIT
+License File: vendor/doctrine/dbal/LICENSE
+Copyright: Copyright (c) 2006-2018 Doctrine Project
+Source: https://github.com/doctrine/dbal.git
+Link: https://www.doctrine-project.org/projects/dbal.html
+-----------
+doctrine/deprecations
+License: MIT
+License File: vendor/doctrine/deprecations/LICENSE
+Copyright: Copyright (c) 2020-2021 Doctrine Project
+Source: https://github.com/doctrine/deprecations.git
+Link: https://www.doctrine-project.org/
+-----------
+doctrine/event-manager
+License: MIT
+License File: vendor/doctrine/event-manager/LICENSE
+Copyright: Copyright (c) 2006-2015 Doctrine Project
+Source: https://github.com/doctrine/event-manager.git
+Link: https://www.doctrine-project.org/projects/event-manager.html
+-----------
+doctrine/inflector
+License: MIT
+License File: vendor/doctrine/inflector/LICENSE
+Copyright: Copyright (c) 2006-2015 Doctrine Project
+Source: https://github.com/doctrine/inflector.git
+Link: https://www.doctrine-project.org/projects/inflector.html
+-----------
+doctrine/lexer
+License: MIT
+License File: vendor/doctrine/lexer/LICENSE
+Copyright: Copyright (c) 2006-2018 Doctrine Project
+Source: https://github.com/doctrine/lexer.git
+Link: https://www.doctrine-project.org/projects/lexer.html
+-----------
+dompdf/dompdf
+License: LGPL-2.1
+License File: vendor/dompdf/dompdf/LICENSE.LGPL
+Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+Source: https://github.com/dompdf/dompdf.git
+Link: https://github.com/dompdf/dompdf
+-----------
+dragonmantank/cron-expression
+License: MIT
+License File: vendor/dragonmantank/cron-expression/LICENSE
+Copyright: Copyright (c) 2011 Michael Dowling <*********@*****.***>, 2016 Chris Tankersley <*****@***********.***>, and contributors
+Source: https://github.com/dragonmantank/cron-expression.git
+Link: https://github.com/dragonmantank/cron-expression.git
+-----------
+egulias/email-validator
+License: MIT
+License File: vendor/egulias/email-validator/LICENSE
+Copyright: Copyright (c) 2013-2023 Eduardo Gulias Davis
+Source: https://github.com/egulias/EmailValidator.git
+Link: https://github.com/egulias/EmailValidator
+-----------
+firebase/php-jwt
+License: BSD-3-Clause
+License File: vendor/firebase/php-jwt/LICENSE
+Copyright: Copyright (c) 2011, Neuman Vong
+Source: https://github.com/firebase/php-jwt.git
+Link: https://github.com/firebase/php-jwt
+-----------
+fruitcake/php-cors
+License: MIT
+License File: vendor/fruitcake/php-cors/LICENSE
+Copyright: Copyright (c) 2013-2017 Alexander <***.*****@*****.***>
+Copyright (c) 2017-2022 Barryvdh <********@*****.***>
+Source: https://github.com/fruitcake/php-cors.git
+Link: https://github.com/fruitcake/php-cors
+-----------
+graham-campbell/result-type
+License: MIT
+License File: vendor/graham-campbell/result-type/LICENSE
+Copyright: Copyright (c) 2020-2023 Graham Campbell <*****@**********.**.**>
+Source: https://github.com/GrahamCampbell/Result-Type.git
+Link: https://github.com/GrahamCampbell/Result-Type.git
+-----------
+guzzlehttp/guzzle
+License: MIT
+License File: vendor/guzzlehttp/guzzle/LICENSE
+Copyright: Copyright (c) 2011 Michael Dowling <*********@*****.***>
+Copyright (c) 2012 Jeremy Lindblom <**********@*****.***>
+Copyright (c) 2014 Graham Campbell <*****@**********.**.**>
+Copyright (c) 2015 Márk Sági-Kazár <****.*********@*****.***>
+Copyright (c) 2015 Tobias Schultze <*********@**********.**>
+Copyright (c) 2016 Tobias Nyholm <******.******@*****.***>
+Copyright (c) 2016 George Mponos <*******@*****.***>
+Source: https://github.com/guzzle/guzzle.git
+Link: https://github.com/guzzle/guzzle.git
+-----------
+guzzlehttp/promises
+License: MIT
+License File: vendor/guzzlehttp/promises/LICENSE
+Copyright: Copyright (c) 2015 Michael Dowling <*********@*****.***>
+Copyright (c) 2015 Graham Campbell <*****@**********.**.**>
+Copyright (c) 2017 Tobias Schultze <*********@**********.**>
+Copyright (c) 2020 Tobias Nyholm <******.******@*****.***>
+Source: https://github.com/guzzle/promises.git
+Link: https://github.com/guzzle/promises.git
+-----------
+guzzlehttp/psr7
+License: MIT
+License File: vendor/guzzlehttp/psr7/LICENSE
+Copyright: Copyright (c) 2015 Michael Dowling <*********@*****.***>
+Copyright (c) 2015 Márk Sági-Kazár <****.*********@*****.***>
+Copyright (c) 2015 Graham Campbell <*****@**********.**.**>
+Copyright (c) 2016 Tobias Schultze <*********@**********.**>
+Copyright (c) 2016 George Mponos <*******@*****.***>
+Copyright (c) 2018 Tobias Nyholm <******.******@*****.***>
+Source: https://github.com/guzzle/psr7.git
+Link: https://github.com/guzzle/psr7.git
+-----------
+guzzlehttp/uri-template
+License: MIT
+License File: vendor/guzzlehttp/uri-template/LICENSE
+Copyright: Copyright (c) 2014 Michael Dowling <*********@*****.***>
+Copyright (c) 2020 George Mponos <*******@*****.***>
+Copyright (c) 2020 Graham Campbell <*****@**********.**.**>
+Source: https://github.com/guzzle/uri-template.git
+Link: https://github.com/guzzle/uri-template.git
+-----------
+intervention/gif
+License: MIT
+License File: vendor/intervention/gif/LICENSE
+Copyright: Copyright (c) 2020-2024 Oliver Vogel
+Source: https://github.com/Intervention/gif.git
+Link: https://github.com/intervention/gif
+-----------
+intervention/image
+License: MIT
+License File: vendor/intervention/image/LICENSE
+Copyright: Copyright (c) 2013-2024 Oliver Vogel
+Source: https://github.com/Intervention/image.git
+Link: https://image.intervention.io/
+-----------
+knplabs/knp-snappy
+License: MIT
+License File: vendor/knplabs/knp-snappy/LICENSE
+Copyright: Copyright (c) 2010 Matthieu Bontemps
+Source: https://github.com/KnpLabs/snappy.git
+Link: http://github.com/KnpLabs/snappy
+-----------
+laravel/framework
+License: MIT
+License File: vendor/laravel/framework/LICENSE.md
+Copyright: Copyright (c) Taylor Otwell
+Source: https://github.com/laravel/framework.git
+Link: https://laravel.com
+-----------
+laravel/prompts
+License: MIT
+License File: vendor/laravel/prompts/LICENSE.md
+Copyright: Copyright (c) Taylor Otwell
+Source: https://github.com/laravel/prompts.git
+Link: https://github.com/laravel/prompts.git
+-----------
+laravel/serializable-closure
+License: MIT
+License File: vendor/laravel/serializable-closure/LICENSE.md
+Copyright: Copyright (c) Taylor Otwell
+Source: https://github.com/laravel/serializable-closure.git
+Link: https://github.com/laravel/serializable-closure.git
+-----------
+laravel/socialite
+License: MIT
+License File: vendor/laravel/socialite/LICENSE.md
+Copyright: Copyright (c) Taylor Otwell
+Source: https://github.com/laravel/socialite.git
+Link: https://laravel.com
+-----------
+laravel/tinker
+License: MIT
+License File: vendor/laravel/tinker/LICENSE.md
+Copyright: Copyright (c) Taylor Otwell
+Source: https://github.com/laravel/tinker.git
+Link: https://github.com/laravel/tinker.git
+-----------
+league/commonmark
+License: BSD-3-Clause
+License File: vendor/league/commonmark/LICENSE
+Copyright: Copyright (c) 2014-2022, Colin O'Dell. All rights reserved. Some code based on commonmark.js (copyright 2014-2018, John MacFarlane) and commonmark-java (copyright 2015-2016, Atlassian Pty Ltd)
+Source: https://github.com/thephpleague/commonmark.git
+Link: https://commonmark.thephpleague.com
+-----------
+league/config
+License: BSD-3-Clause
+License File: vendor/league/config/LICENSE.md
+Copyright: Copyright (c) 2022, Colin O'Dell. All rights reserved.
+Source: https://github.com/thephpleague/config.git
+Link: https://config.thephpleague.com
+-----------
+league/flysystem
+License: MIT
+License File: vendor/league/flysystem/LICENSE
+Copyright: Copyright (c) 2013-2024 Frank de Jonge
+Source: https://github.com/thephpleague/flysystem.git
+Link: https://github.com/thephpleague/flysystem.git
+-----------
+league/flysystem-aws-s3-v3
+License: MIT
+License File: vendor/league/flysystem-aws-s3-v3/LICENSE
+Copyright: Copyright (c) 2013-2024 Frank de Jonge
+Source: https://github.com/thephpleague/flysystem-aws-s3-v3.git
+Link: https://github.com/thephpleague/flysystem-aws-s3-v3.git
+-----------
+league/flysystem-local
+License: MIT
+License File: vendor/league/flysystem-local/LICENSE
+Copyright: Copyright (c) 2013-2024 Frank de Jonge
+Source: https://github.com/thephpleague/flysystem-local.git
+Link: https://github.com/thephpleague/flysystem-local.git
+-----------
+league/html-to-markdown
+License: MIT
+License File: vendor/league/html-to-markdown/LICENSE
+Copyright: Copyright (c) 2015 Colin O'Dell; Originally created by Nick Cernis
+Source: https://github.com/thephpleague/html-to-markdown.git
+Link: https://github.com/thephpleague/html-to-markdown
+-----------
+league/mime-type-detection
+License: MIT
+License File: vendor/league/mime-type-detection/LICENSE
+Copyright: Copyright (c) 2013-2023 Frank de Jonge
+Source: https://github.com/thephpleague/mime-type-detection.git
+Link: https://github.com/thephpleague/mime-type-detection.git
+-----------
+league/oauth1-client
+License: MIT
+License File: vendor/league/oauth1-client/LICENSE
+Copyright: Copyright (c) 2013 Ben Corlett <**********@**.***>
+Source: https://github.com/thephpleague/oauth1-client.git
+Link: https://github.com/thephpleague/oauth1-client.git
+-----------
+league/oauth2-client
+License: MIT
+License File: vendor/league/oauth2-client/LICENSE
+Copyright: Copyright (c) 2013-2020 Alex Bilbie <*****@**********.***>
+Source: https://github.com/thephpleague/oauth2-client.git
+Link: https://github.com/thephpleague/oauth2-client.git
+-----------
+masterminds/html5
+License: MIT
+License File: vendor/masterminds/html5/LICENSE.txt
+Copyright: Copyright (c) 2013 The Authors of HTML5-PHP
+Source: https://github.com/Masterminds/html5-php.git
+Link: http://masterminds.github.io/html5-php
+-----------
+monolog/monolog
+License: MIT
+License File: vendor/monolog/monolog/LICENSE
+Copyright: Copyright (c) 2011-2020 Jordi Boggiano
+Source: https://github.com/Seldaek/monolog.git
+Link: https://github.com/Seldaek/monolog
+-----------
+mtdowling/jmespath.php
+License: MIT
+License File: vendor/mtdowling/jmespath.php/LICENSE
+Copyright: Copyright (c) 2014 Michael Dowling, https://github.com/mtdowling
+Source: https://github.com/jmespath/jmespath.php.git
+Link: https://github.com/jmespath/jmespath.php.git
+-----------
+nesbot/carbon
+License: MIT
+License File: vendor/nesbot/carbon/LICENSE
+Copyright: Copyright (C) Brian Nesbitt
+Source: https://github.com/briannesbitt/Carbon.git
+Link: https://carbon.nesbot.com
+-----------
+nette/schema
+License: BSD-3-Clause GPL-2.0-only GPL-3.0-only
+License File: vendor/nette/schema/license.md
+Copyright: Copyright (c) 2004, 2014 David Grudl (https://davidgrudl.com)
+All rights reserved.
+Source: https://github.com/nette/schema.git
+Link: https://nette.org
+-----------
+nette/utils
+License: BSD-3-Clause GPL-2.0-only GPL-3.0-only
+License File: vendor/nette/utils/license.md
+Copyright: Copyright (c) 2004, 2014 David Grudl (https://davidgrudl.com)
+All rights reserved.
+Source: https://github.com/nette/utils.git
+Link: https://nette.org
+-----------
+nikic/php-parser
+License: BSD-3-Clause
+License File: vendor/nikic/php-parser/LICENSE
+Copyright: Copyright (c) 2011, Nikita Popov
+All rights reserved.
+Source: https://github.com/nikic/PHP-Parser.git
+Link: https://github.com/nikic/PHP-Parser.git
+-----------
+nunomaduro/termwind
+License: MIT
+License File: vendor/nunomaduro/termwind/LICENSE.md
+Copyright: Copyright (c) Nuno Maduro <***********@*****.***>
+Source: https://github.com/nunomaduro/termwind.git
+Link: https://github.com/nunomaduro/termwind.git
+-----------
+onelogin/php-saml
+License: MIT
+License File: vendor/onelogin/php-saml/LICENSE
+Copyright: Copyright (c) 2010-2016 OneLogin, Inc.
+Source: https://github.com/onelogin/php-saml.git
+Link: https://developers.onelogin.com/saml/php
+-----------
+paragonie/constant_time_encoding
+License: MIT
+License File: vendor/paragonie/constant_time_encoding/LICENSE.txt
+Copyright: Copyright (c) 2016 - 2022 Paragon Initiative Enterprises
+Source: https://github.com/paragonie/constant_time_encoding.git
+Link: https://github.com/paragonie/constant_time_encoding.git
+-----------
+paragonie/random_compat
+License: MIT
+License File: vendor/paragonie/random_compat/LICENSE
+Copyright: Copyright (c) 2015 Paragon Initiative Enterprises
+Source: https://github.com/paragonie/random_compat.git
+Link: https://github.com/paragonie/random_compat.git
+-----------
+phenx/php-font-lib
+License: LGPL-2.1-or-later
+License File: vendor/phenx/php-font-lib/LICENSE
+Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+Source: https://github.com/dompdf/php-font-lib.git
+Link: https://github.com/PhenX/php-font-lib
+-----------
+phenx/php-svg-lib
+License: LGPL-3.0-or-later
+License File: vendor/phenx/php-svg-lib/LICENSE
+Copyright: Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+Source: https://github.com/dompdf/php-svg-lib.git
+Link: https://github.com/PhenX/php-svg-lib
+-----------
+phpoption/phpoption
+License: Apache-2.0
+License File: vendor/phpoption/phpoption/LICENSE
+Source: https://github.com/schmittjoh/php-option.git
+Link: https://github.com/schmittjoh/php-option.git
+-----------
+phpseclib/phpseclib
+License: MIT
+License File: vendor/phpseclib/phpseclib/LICENSE
+Copyright: Copyright (c) 2011-2019 TerraFrost and other contributors
+Source: https://github.com/phpseclib/phpseclib.git
+Link: http://phpseclib.sourceforge.net
+-----------
+pragmarx/google2fa
+License: MIT
+License File: vendor/pragmarx/google2fa/LICENSE.md
+Copyright: Copyright 2014-2018 Phil, Antonio Carlos Ribeiro and All Contributors
+Source: https://github.com/antonioribeiro/google2fa.git
+Link: https://github.com/antonioribeiro/google2fa.git
+-----------
+predis/predis
+License: MIT
+License File: vendor/predis/predis/LICENSE
+Copyright: Copyright (c) 2009-2020 Daniele Alessandri (original work)
+Copyright (c) 2021-2023 Till Krüss (modified work)
+Source: https://github.com/predis/predis.git
+Link: http://github.com/predis/predis
+-----------
+psr/cache
+License: MIT
+License File: vendor/psr/cache/LICENSE.txt
+Copyright: Copyright (c) 2015 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/cache.git
+Link: https://github.com/php-fig/cache.git
+-----------
+psr/clock
+License: MIT
+License File: vendor/psr/clock/LICENSE
+Copyright: Copyright (c) 2017 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/clock.git
+Link: https://github.com/php-fig/clock
+-----------
+psr/container
+License: MIT
+License File: vendor/psr/container/LICENSE
+Copyright: Copyright (c) 2013-2016 container-interop
+Copyright (c) 2016 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/container.git
+Link: https://github.com/php-fig/container
+-----------
+psr/event-dispatcher
+License: MIT
+License File: vendor/psr/event-dispatcher/LICENSE
+Copyright: Copyright (c) 2018 PHP-FIG
+Source: https://github.com/php-fig/event-dispatcher.git
+Link: https://github.com/php-fig/event-dispatcher.git
+-----------
+psr/http-client
+License: MIT
+License File: vendor/psr/http-client/LICENSE
+Copyright: Copyright (c) 2017 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/http-client.git
+Link: https://github.com/php-fig/http-client
+-----------
+psr/http-factory
+License: MIT
+License File: vendor/psr/http-factory/LICENSE
+Copyright: Copyright (c) 2018 PHP-FIG
+Source: https://github.com/php-fig/http-factory.git
+Link: https://github.com/php-fig/http-factory.git
+-----------
+psr/http-message
+License: MIT
+License File: vendor/psr/http-message/LICENSE
+Copyright: Copyright (c) 2014 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/http-message.git
+Link: https://github.com/php-fig/http-message
+-----------
+psr/log
+License: MIT
+License File: vendor/psr/log/LICENSE
+Copyright: Copyright (c) 2012 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/log.git
+Link: https://github.com/php-fig/log
+-----------
+psr/simple-cache
+License: MIT
+License File: vendor/psr/simple-cache/LICENSE.md
+Copyright: Copyright (c) 2016 PHP Framework Interoperability Group
+Source: https://github.com/php-fig/simple-cache.git
+Link: https://github.com/php-fig/simple-cache.git
+-----------
+psy/psysh
+License: MIT
+License File: vendor/psy/psysh/LICENSE
+Copyright: Copyright (c) 2012-2023 Justin Hileman
+Source: https://github.com/bobthecow/psysh.git
+Link: http://psysh.org
+-----------
+ralouphie/getallheaders
+License: MIT
+License File: vendor/ralouphie/getallheaders/LICENSE
+Copyright: Copyright (c) 2014 Ralph Khattar
+Source: https://github.com/ralouphie/getallheaders.git
+Link: https://github.com/ralouphie/getallheaders.git
+-----------
+ramsey/collection
+License: MIT
+License File: vendor/ramsey/collection/LICENSE
+Copyright: Copyright (c) 2015-2022 Ben Ramsey <***@*********.***>
+Source: https://github.com/ramsey/collection.git
+Link: https://github.com/ramsey/collection.git
+-----------
+ramsey/uuid
+License: MIT
+License File: vendor/ramsey/uuid/LICENSE
+Copyright: Copyright (c) 2012-2023 Ben Ramsey <***@*********.***>
+Source: https://github.com/ramsey/uuid.git
+Link: https://github.com/ramsey/uuid.git
+-----------
+robrichards/xmlseclibs
+License: BSD-3-Clause
+License File: vendor/robrichards/xmlseclibs/LICENSE
+Copyright: Copyright (c) 2007-2019, Robert Richards <*********@*********.***>.
+Source: https://github.com/robrichards/xmlseclibs.git
+Link: https://github.com/robrichards/xmlseclibs
+-----------
+sabberworm/php-css-parser
+License: MIT
+License File: vendor/sabberworm/php-css-parser/LICENSE
+Copyright: Copyright (c) 2011 Raphael Schweikert, https://www.sabberworm.com/
+Source: https://github.com/MyIntervals/PHP-CSS-Parser.git
+Link: https://www.sabberworm.com/blog/2010/6/10/php-css-parser
+-----------
+socialiteproviders/discord
+License: MIT
+Source: https://github.com/SocialiteProviders/Discord.git
+Link: https://github.com/SocialiteProviders/Discord.git
+-----------
+socialiteproviders/gitlab
+License: MIT
+Source: https://github.com/SocialiteProviders/GitLab.git
+Link: https://github.com/SocialiteProviders/GitLab.git
+-----------
+socialiteproviders/manager
+License: MIT
+License File: vendor/socialiteproviders/manager/LICENSE
+Copyright: Copyright (c) 2015 Andy Wendt
+Source: https://github.com/SocialiteProviders/Manager.git
+Link: https://socialiteproviders.com
+-----------
+socialiteproviders/microsoft-azure
+License: MIT
+Source: https://github.com/SocialiteProviders/Microsoft-Azure.git
+Link: https://github.com/SocialiteProviders/Microsoft-Azure.git
+-----------
+socialiteproviders/okta
+License: MIT
+Source: https://github.com/SocialiteProviders/Okta.git
+Link: https://github.com/SocialiteProviders/Okta.git
+-----------
+socialiteproviders/twitch
+License: MIT
+Source: https://github.com/SocialiteProviders/Twitch.git
+Link: https://github.com/SocialiteProviders/Twitch.git
+-----------
+ssddanbrown/htmldiff
+License: MIT
+License File: vendor/ssddanbrown/htmldiff/license.md
+Copyright: Copyright (c) 2020 Nathan Herald, Rohland de Charmoy, Dan Brown
+Source: https://github.com/ssddanbrown/HtmlDiff.git
+Link: https://github.com/ssddanbrown/htmldiff
+-----------
+ssddanbrown/symfony-mailer
+License: MIT
+License File: vendor/ssddanbrown/symfony-mailer/LICENSE
+Copyright: Copyright (c) 2019-present Fabien Potencier
+Source: https://github.com/ssddanbrown/symfony-mailer.git
+Link: https://symfony.com
+-----------
+symfony/console
+License: MIT
+License File: vendor/symfony/console/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/console.git
+Link: https://symfony.com
+-----------
+symfony/css-selector
+License: MIT
+License File: vendor/symfony/css-selector/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/css-selector.git
+Link: https://symfony.com
+-----------
+symfony/deprecation-contracts
+License: MIT
+License File: vendor/symfony/deprecation-contracts/LICENSE
+Copyright: Copyright (c) 2020-present Fabien Potencier
+Source: https://github.com/symfony/deprecation-contracts.git
+Link: https://symfony.com
+-----------
+symfony/error-handler
+License: MIT
+License File: vendor/symfony/error-handler/LICENSE
+Copyright: Copyright (c) 2019-present Fabien Potencier
+Source: https://github.com/symfony/error-handler.git
+Link: https://symfony.com
+-----------
+symfony/event-dispatcher
+License: MIT
+License File: vendor/symfony/event-dispatcher/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/event-dispatcher.git
+Link: https://symfony.com
+-----------
+symfony/event-dispatcher-contracts
+License: MIT
+License File: vendor/symfony/event-dispatcher-contracts/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier
+Source: https://github.com/symfony/event-dispatcher-contracts.git
+Link: https://symfony.com
+-----------
+symfony/finder
+License: MIT
+License File: vendor/symfony/finder/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/finder.git
+Link: https://symfony.com
+-----------
+symfony/http-foundation
+License: MIT
+License File: vendor/symfony/http-foundation/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/http-foundation.git
+Link: https://symfony.com
+-----------
+symfony/http-kernel
+License: MIT
+License File: vendor/symfony/http-kernel/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/http-kernel.git
+Link: https://symfony.com
+-----------
+symfony/mime
+License: MIT
+License File: vendor/symfony/mime/LICENSE
+Copyright: Copyright (c) 2010-present Fabien Potencier
+Source: https://github.com/symfony/mime.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-ctype
+License: MIT
+License File: vendor/symfony/polyfill-ctype/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-ctype.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-intl-grapheme
+License: MIT
+License File: vendor/symfony/polyfill-intl-grapheme/LICENSE
+Copyright: Copyright (c) 2015-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-intl-grapheme.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-intl-idn
+License: MIT
+License File: vendor/symfony/polyfill-intl-idn/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier and Trevor Rowbotham <******.*********@**.**>
+Source: https://github.com/symfony/polyfill-intl-idn.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-intl-normalizer
+License: MIT
+License File: vendor/symfony/polyfill-intl-normalizer/LICENSE
+Copyright: Copyright (c) 2015-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-intl-normalizer.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-mbstring
+License: MIT
+License File: vendor/symfony/polyfill-mbstring/LICENSE
+Copyright: Copyright (c) 2015-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-mbstring.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php72
+License: MIT
+License File: vendor/symfony/polyfill-php72/LICENSE
+Copyright: Copyright (c) 2015-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php72.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php80
+License: MIT
+License File: vendor/symfony/polyfill-php80/LICENSE
+Copyright: Copyright (c) 2020-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php80.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php83
+License: MIT
+License File: vendor/symfony/polyfill-php83/LICENSE
+Copyright: Copyright (c) 2022-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php83.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-uuid
+License: MIT
+License File: vendor/symfony/polyfill-uuid/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-uuid.git
+Link: https://symfony.com
+-----------
+symfony/process
+License: MIT
+License File: vendor/symfony/process/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/process.git
+Link: https://symfony.com
+-----------
+symfony/routing
+License: MIT
+License File: vendor/symfony/routing/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/routing.git
+Link: https://symfony.com
+-----------
+symfony/service-contracts
+License: MIT
+License File: vendor/symfony/service-contracts/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier
+Source: https://github.com/symfony/service-contracts.git
+Link: https://symfony.com
+-----------
+symfony/string
+License: MIT
+License File: vendor/symfony/string/LICENSE
+Copyright: Copyright (c) 2019-present Fabien Potencier
+Source: https://github.com/symfony/string.git
+Link: https://symfony.com
+-----------
+symfony/translation
+License: MIT
+License File: vendor/symfony/translation/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/translation.git
+Link: https://symfony.com
+-----------
+symfony/translation-contracts
+License: MIT
+License File: vendor/symfony/translation-contracts/LICENSE
+Copyright: Copyright (c) 2018-present Fabien Potencier
+Source: https://github.com/symfony/translation-contracts.git
+Link: https://symfony.com
+-----------
+symfony/uid
+License: MIT
+License File: vendor/symfony/uid/LICENSE
+Copyright: Copyright (c) 2020-present Fabien Potencier
+Source: https://github.com/symfony/uid.git
+Link: https://symfony.com
+-----------
+symfony/var-dumper
+License: MIT
+License File: vendor/symfony/var-dumper/LICENSE
+Copyright: Copyright (c) 2014-present Fabien Potencier
+Source: https://github.com/symfony/var-dumper.git
+Link: https://symfony.com
+-----------
+tijsverkoyen/css-to-inline-styles
+License: BSD-3-Clause
+License File: vendor/tijsverkoyen/css-to-inline-styles/LICENSE.md
+Copyright: Copyright (c) Tijs Verkoyen. All rights reserved.
+Source: https://github.com/tijsverkoyen/CssToInlineStyles.git
+Link: https://github.com/tijsverkoyen/CssToInlineStyles
+-----------
+vlucas/phpdotenv
+License: BSD-3-Clause
+License File: vendor/vlucas/phpdotenv/LICENSE
+Copyright: Copyright (c) 2014, Graham Campbell.
+Source: https://github.com/vlucas/phpdotenv.git
+Link: https://github.com/vlucas/phpdotenv.git
+-----------
+voku/portable-ascii
+License: MIT
+License File: vendor/voku/portable-ascii/LICENSE.txt
+Copyright: Copyright (C) 2019 Lars Moelleken
+Source: https://github.com/voku/portable-ascii.git
+Link: https://github.com/voku/portable-ascii
+-----------
+webmozart/assert
+License: MIT
+License File: vendor/webmozart/assert/LICENSE
+Copyright: Copyright (c) 2014 Bernhard Schussek
+Source: https://github.com/webmozarts/assert.git
+Link: https://github.com/webmozarts/assert.git

@@ -209,6 +209,12 @@ class LdapService
             $this->ldap->setOption(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
         }
 
+        // Configure any user-provided CA cert files for LDAP.
+        // This option works globally and must be set before a connection is created.
+        if ($this->config['tls_ca_cert']) {
+            $this->configureTlsCaCerts($this->config['tls_ca_cert']);
+        }
+
         $ldapHost = $this->parseServerString($this->config['server']);
         $ldapConnection = $this->ldap->connect($ldapHost);
 
@@ -223,7 +229,14 @@ class LdapService
 
         // Start and verify TLS if it's enabled
         if ($this->config['start_tls']) {
-            $started = $this->ldap->startTls($ldapConnection);
+            try {
+                $started = $this->ldap->startTls($ldapConnection);
+            } catch (\Exception $exception) {
+                $error = $exception->getMessage() . ' :: ' . ldap_error($ldapConnection);
+                ldap_get_option($ldapConnection, LDAP_OPT_DIAGNOSTIC_MESSAGE, $detail);
+                Log::info("LDAP STARTTLS failure: {$error} {$detail}");
+                throw new LdapException('Could not start TLS connection. Further details in the application log.');
+            }
             if (!$started) {
                 throw new LdapException('Could not start TLS connection');
             }
@@ -232,6 +245,33 @@ class LdapService
         $this->ldapConnection = $ldapConnection;
 
         return $this->ldapConnection;
+    }
+
+    /**
+     * Configure TLS CA certs globally for ldap use.
+     * This will detect if the given path is a directory or file, and set the relevant
+     * LDAP TLS options appropriately otherwise throw an exception if no file/folder found.
+     *
+     * Note: When using a folder, certificates are expected to be correctly named by hash
+     * which can be done via the c_rehash utility.
+     *
+     * @throws LdapException
+     */
+    protected function configureTlsCaCerts(string $caCertPath): void
+    {
+        $errMessage = "Provided path [{$caCertPath}] for LDAP TLS CA certs could not be resolved to an existing location";
+        $path = realpath($caCertPath);
+        if ($path === false) {
+            throw new LdapException($errMessage);
+        }
+
+        if (is_dir($path)) {
+            $this->ldap->setOption(null, LDAP_OPT_X_TLS_CACERTDIR, $path);
+        } else if (is_file($path)) {
+            $this->ldap->setOption(null, LDAP_OPT_X_TLS_CACERTFILE, $path);
+        } else {
+            throw new LdapException($errMessage);
+        }
     }
 
     /**
@@ -249,13 +289,18 @@ class LdapService
 
     /**
      * Build a filter string by injecting common variables.
+     * Both "${var}" and "{var}" style placeholders are supported.
+     * Dollar based are old format but supported for compatibility.
      */
     protected function buildFilter(string $filterString, array $attrs): string
     {
         $newAttrs = [];
         foreach ($attrs as $key => $attrText) {
-            $newKey = '${' . $key . '}';
-            $newAttrs[$newKey] = $this->ldap->escape($attrText);
+            $escapedText = $this->ldap->escape($attrText);
+            $oldVarKey = '${' . $key . '}';
+            $newVarKey = '{' . $key . '}';
+            $newAttrs[$oldVarKey] = $escapedText;
+            $newAttrs[$newVarKey] = $escapedText;
         }
 
         return strtr($filterString, $newAttrs);

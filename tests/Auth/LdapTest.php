@@ -4,6 +4,7 @@ namespace Tests\Auth;
 
 use BookStack\Access\Ldap;
 use BookStack\Access\LdapService;
+use BookStack\Exceptions\LdapException;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Testing\TestResponse;
@@ -32,9 +33,10 @@ class LdapTest extends TestCase
             'services.ldap.id_attribute'           => 'uid',
             'services.ldap.user_to_groups'         => false,
             'services.ldap.version'                => '3',
-            'services.ldap.user_filter'            => '(&(uid=${user}))',
+            'services.ldap.user_filter'            => '(&(uid={user}))',
             'services.ldap.follow_referrals'       => false,
             'services.ldap.tls_insecure'           => false,
+            'services.ldap.tls_ca_cert'            => false,
             'services.ldap.thumbnail_attribute'    => null,
         ]);
         $this->mockLdap = $this->mock(Ldap::class);
@@ -176,6 +178,38 @@ class LdapTest extends TestCase
         $resp->assertRedirect('/');
         $this->followRedirects($resp)->assertSee($this->mockUser->name);
         $this->assertDatabaseHas('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
+    }
+
+    public function test_user_filter_default_placeholder_format()
+    {
+        config()->set('services.ldap.user_filter', '(&(uid={user}))');
+        $this->mockUser->name = 'barryldapuser';
+        $expectedFilter = '(&(uid=\62\61\72\72\79\6c\64\61\70\75\73\65\72))';
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->once()
+            ->with($this->resourceId, config('services.ldap.base_dn'), $expectedFilter, \Mockery::type('array'))
+            ->andReturn(['count' => 0, 0 => []]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/login');
+    }
+
+    public function test_user_filter_old_placeholder_format()
+    {
+        config()->set('services.ldap.user_filter', '(&(username=${user}))');
+        $this->mockUser->name = 'barryldapuser';
+        $expectedFilter = '(&(username=\62\61\72\72\79\6c\64\61\70\75\73\65\72))';
+
+        $this->commonLdapMocks(1, 1, 1, 1, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')
+            ->once()
+            ->with($this->resourceId, config('services.ldap.base_dn'), $expectedFilter, \Mockery::type('array'))
+            ->andReturn(['count' => 0, 0 => []]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/login');
     }
 
     public function test_initial_incorrect_credentials()
@@ -766,5 +800,35 @@ EBEQCgwSExIQEw8QEBD/yQALCAABAAEBAREA/8wABgAQEAX/2gAIAQEAAD8A0s8g/9k=')],
         $user = User::query()->where('email', '=', $this->mockUser->email)->first();
         $this->assertNotNull($user->avatar);
         $this->assertEquals('8c90748342f19b195b9c6b4eff742ded', md5_file(public_path($user->avatar->path)));
+    }
+
+    public function test_tls_ca_cert_option_throws_if_set_to_invalid_location()
+    {
+        $path = 'non_found_' . time();
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->commonLdapMocks(0, 0, 0, 0, 0);
+
+        $this->assertThrows(function () {
+            $this->withoutExceptionHandling()->mockUserLogin();
+        }, LdapException::class, "Provided path [{$path}] for LDAP TLS CA certs could not be resolved to an existing location");
+    }
+
+    public function test_tls_ca_cert_option_used_if_set_to_a_folder()
+    {
+        $path = $this->files->testFilePath('');
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->mockLdap->shouldReceive('setOption')->once()->with(null, LDAP_OPT_X_TLS_CACERTDIR, rtrim($path, '/'))->andReturn(true);
+        $this->runFailedAuthLogin();
+    }
+
+    public function test_tls_ca_cert_option_used_if_set_to_a_file()
+    {
+        $path = $this->files->testFilePath('test-file.txt');
+        config()->set(['services.ldap.tls_ca_cert' => $path]);
+
+        $this->mockLdap->shouldReceive('setOption')->once()->with(null, LDAP_OPT_X_TLS_CACERTFILE, $path)->andReturn(true);
+        $this->runFailedAuthLogin();
     }
 }

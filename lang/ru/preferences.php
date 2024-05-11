@@ -8,7 +8,7 @@ return [
     'my_account' => 'Моя учетная запись',
 
     'shortcuts' => 'Горячие клавиши',
-    'shortcuts_interface' => 'UI Shortcut Preferences',
+    'shortcuts_interface' => 'Настройки горячих клавиш',
     'shortcuts_toggle_desc' => 'Здесь вы можете включить или отключить горячие клавиши системного интерфейса, используемые для навигации и действий.',
     'shortcuts_customize_desc' => 'Вы можете настроить каждую из горячих клавиш ниже. Просто нажмите комбинацию клавиш после выбора вставки для горячих клавиш.',
     'shortcuts_toggle_label' => 'Горячие клавиши включены',
@@ -26,8 +26,8 @@ return [
     'notifications_opt_comment_replies' => 'Уведомлять об ответах на мои комментарии',
     'notifications_save' => 'Сохранить настройки',
     'notifications_update_success' => 'Настройки уведомлений были обновлены!',
-    'notifications_watched' => 'Watched & Ignored Items',
-    'notifications_watched_desc' => ' Below are the items that have custom watch preferences applied. To update your preferences for these, view the item then find the watch options in the sidebar.',
+    'notifications_watched' => 'Просмотренные и игнорированные элементы',
+    'notifications_watched_desc' => 'Ниже приведены элементы, которые имеют пользовательские настройки наблюдения. Чтобы обновить ваши предпочтения, посмотрите этот пункт и найдите варианты наблюдения в боковой панели.',
 
     'auth' => 'Доступ и безопасность',
     'auth_change_password' => 'Изменить пароль',
@@ -35,9 +35,9 @@ return [
     'auth_change_password_success' => 'Пароль был обновлен!',
 
     'profile' => 'Детали профиля',
-    'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
+    'profile_desc' => 'Управляйте деталями вашей учетной записи, что представляют вас другим пользователям, в дополнение к деталям, используемым для персонализации коммуникации и системы.',
     'profile_view_public' => 'Просмотреть публичный профиль',
-    'profile_name_desc' => 'Configure your display name which will be visible to other users in the system through the activity you perform, and content you own.',
+    'profile_name_desc' => 'Настройте отображаемое имя, видимое другим пользователям системы через действия, что вы выполняете, и контент, которым вы владеете.',
     'profile_email_desc' => 'Этот адрес электронной почты будет использоваться для уведомлений и, в зависимости от активной системы аутентификации, для доступа к системе.',
     'profile_email_no_permission' => 'К сожалению, у вас нет разрешения на изменение адреса электронной почты. Если вам действительно необходимо его изменить, нужно попросить администратора сделать это.',
     'profile_avatar_desc' => 'Выберите изображение, которое будет использоваться для представления себя другим в системе. По возможности это изображение должно быть квадратным и около 256 пикселей по ширине и высоте.',

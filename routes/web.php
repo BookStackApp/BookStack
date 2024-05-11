@@ -5,6 +5,7 @@ use BookStack\Activity\Controllers as ActivityControllers;
 use BookStack\Api\ApiDocsController;
 use BookStack\Api\UserApiTokenController;
 use BookStack\App\HomeController;
+use BookStack\App\MetaController;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Http\Middleware\VerifyCsrfToken;
 use BookStack\Permissions\PermissionsController;
@@ -18,9 +19,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
-Route::get('/robots.txt', [HomeController::class, 'robots']);
-Route::get('/favicon.ico', [HomeController::class, 'favicon']);
-Route::get('/manifest.json', [HomeController::class, 'pwaManifest']);
+Route::get('/robots.txt', [MetaController::class, 'robots']);
+Route::get('/favicon.ico', [MetaController::class, 'favicon']);
+Route::get('/manifest.json', [MetaController::class, 'pwaManifest']);
+Route::get('/licenses', [MetaController::class, 'licenses']);
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
@@ -350,4 +352,4 @@ Route::post('/password/reset', [AccessControllers\ResetPasswordController::class
 // Metadata routes
 Route::view('/help/wysiwyg', 'help.wysiwyg');
 
-Route::fallback([HomeController::class, 'notFound'])->name('fallback');
+Route::fallback([MetaController::class, 'notFound'])->name('fallback');

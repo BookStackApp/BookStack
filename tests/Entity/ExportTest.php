@@ -6,8 +6,8 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PdfGenerator;
+use BookStack\Exceptions\PdfExportException;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class ExportTest extends TestCase
@@ -483,7 +483,7 @@ class ExportTest extends TestCase
     {
         $page = $this->entities->page();
 
-        config()->set('snappy.pdf.binary', '/abc123');
+        config()->set('exports.snappy.pdf_binary', '/abc123');
         config()->set('app.allow_untrusted_server_fetching', false);
 
         $resp = $this->asEditor()->get($page->getUrl('/export/pdf'));
@@ -492,6 +492,41 @@ class ExportTest extends TestCase
         config()->set('app.allow_untrusted_server_fetching', true);
         $resp = $this->get($page->getUrl('/export/pdf'));
         $resp->assertStatus(500); // Bad response indicates wkhtml usage
+    }
+
+    public function test_pdf_command_option_used_if_set()
+    {
+        $page = $this->entities->page();
+        $command = 'cp {input_html_path} {output_pdf_path}';
+        config()->set('exports.pdf_command', $command);
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $download = $resp->getContent();
+
+        $this->assertStringContainsString(e($page->name), $download);
+        $this->assertStringContainsString('<html lang=', $download);
+    }
+
+    public function test_pdf_command_option_errors_if_output_path_not_written_to()
+    {
+        $page = $this->entities->page();
+        $command = 'echo "hi"';
+        config()->set('exports.pdf_command', $command);
+
+        $this->assertThrows(function () use ($page) {
+            $this->withoutExceptionHandling()->asEditor()->get($page->getUrl('/export/pdf'));
+        }, PdfExportException::class);
+    }
+
+    public function test_pdf_command_option_errors_if_command_returns_error_status()
+    {
+        $page = $this->entities->page();
+        $command = 'exit 1';
+        config()->set('exports.pdf_command', $command);
+
+        $this->assertThrows(function () use ($page) {
+            $this->withoutExceptionHandling()->asEditor()->get($page->getUrl('/export/pdf'));
+        }, PdfExportException::class);
     }
 
     public function test_html_exports_contain_csp_meta_tag()

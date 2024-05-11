@@ -32,10 +32,6 @@
     margin-left: auto;
     margin-right: auto;
   }
-  img {
-    max-width: 100%;
-    height:auto;
-  }
   h1, h2, h3, h4, h5, h6, pre {
     clear: left;
   }
@@ -113,6 +109,20 @@
   video {
     max-width: 100%;
   }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+// This is seperated out so we can target it out-of-editor by default
+// and use advanced (:not) syntax, not supported by things like PDF gen,
+// to target in-editor scenarios to handle edge-case of TinyMCE using an
+// image for data placeholders where we'd want height attributes to take effect.
+body .page-content img,
+.page-content img:not([data-mce-object]) {
+  max-width: 100%;
+  height:auto;
 }
 
 /**

@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true">
-  <coverage>
-    <include>
-      <directory suffix=".php">app/</directory>
-    </include>
-  </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true">
   <testsuites>
     <testsuite name="Application Test Suite">
       <directory>./tests/</directory>
@@ -59,7 +51,13 @@
     <server name="LOG_FAILED_LOGIN_MESSAGE" value=""/>
     <server name="LOG_FAILED_LOGIN_CHANNEL" value="testing"/>
     <server name="WKHTMLTOPDF" value="false"/>
+    <server name="EXPORT_PDF_COMMAND" value="false"/>
     <server name="APP_DEFAULT_DARK_MODE" value="false"/>
     <server name="IP_ADDRESS_PRECISION" value="4"/>
   </php>
+  <source>
+    <include>
+      <directory suffix=".php">app/</directory>
+    </include>
+  </source>
 </phpunit>

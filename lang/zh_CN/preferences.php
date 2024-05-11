@@ -27,7 +27,7 @@ return [
     'notifications_save' => '保存偏好设置',
     'notifications_update_success' => '通知偏好设置已更新！',
     'notifications_watched' => '已关注和忽略的项目',
-    'notifications_watched_desc' => ' 下面是已应用自定义关注选项的项目。要更新您的关注设置，请查看该项目，然后在该项目的侧边栏中找到关注选项。',
+    'notifications_watched_desc' => '下面是已应用自定义关注选项的项目。要更新您的关注设置，请查看该项目，然后在该项目的侧边栏中找到关注选项。',
 
     'auth' => '访问与安全',
     'auth_change_password' => '更改密码',

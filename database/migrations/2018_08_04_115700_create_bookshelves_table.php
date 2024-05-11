@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -9,10 +10,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
 
         // Convert the existing entity tables to InnoDB.
@@ -83,8 +82,8 @@ return new class extends Migration
             $permId = DB::table('role_permissions')->insertGetId([
                 'name'         => 'bookshelf-' . $dbOpName,
                 'display_name' => $op . ' ' . 'BookShelves',
-                'created_at'   => \Carbon\Carbon::now()->toDateTimeString(),
-                'updated_at'   => \Carbon\Carbon::now()->toDateTimeString(),
+                'created_at'   => Carbon::now()->toDateTimeString(),
+                'updated_at'   => Carbon::now()->toDateTimeString(),
             ]);
 
             $rowsToInsert = $roleIdsWithBookPermission->filter(function ($roleId) {
@@ -103,10 +102,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Drop created permissions
         $ops = ['bookshelf-create-all', 'bookshelf-create-own', 'bookshelf-delete-all', 'bookshelf-delete-own', 'bookshelf-update-all', 'bookshelf-update-own', 'bookshelf-view-all', 'bookshelf-view-own'];

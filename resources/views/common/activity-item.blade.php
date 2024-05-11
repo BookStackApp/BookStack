@@ -16,12 +16,12 @@
 
     {{ $activity->getText() }}
 
-    @if($activity->entity && is_null($activity->entity->deleted_at))
-        <a href="{{ $activity->entity->getUrl() }}">{{ $activity->entity->name }}</a>
+    @if($activity->loggable && is_null($activity->loggable->deleted_at))
+        <a href="{{ $activity->loggable->getUrl() }}">{{ $activity->loggable->name }}</a>
     @endif
 
-    @if($activity->entity && !is_null($activity->entity->deleted_at))
-        "{{ $activity->entity->name }}"
+    @if($activity->loggable && !is_null($activity->loggable->deleted_at))
+        "{{ $activity->loggable->name }}"
     @endif
 
     <br>

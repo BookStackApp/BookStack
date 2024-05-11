@@ -389,7 +389,7 @@ Marc Hagen (MarcHagen) :: Dutch
 Kasper Alsøe (zeonos) :: Danish
 sultani :: Persian
 renge :: Korean
-TheGatesDev (thegatesdev) :: Dutch
+Tim (thegatesdev) :: Dutch; German Informal; Romanian; French; Catalan; Czech; Danish; German; Finnish; Hungarian; Italian; Japanese; Korean; Polish; Russian; Ukrainian; Chinese Simplified; Chinese Traditional; Portuguese, Brazilian; Persian; Spanish, Argentina; Croatian; Norwegian Nynorsk; Estonian; Uzbek; Norwegian Bokmal
 Irdi (irdiOL) :: Albanian
 KateBarber :: Welsh
 Twister (theuncles75) :: Hebrew
@@ -410,3 +410,15 @@ cracrayol :: French
 CapuaSC :: Dutch
 Guardian75 :: German Informal
 mr-kanister :: German
+Michele Bastianelli (makoblaster) :: Italian
+jespernissen :: Danish
+Andrey (avmaksimov) :: Russian
+Gonzalo Loyola (AlFcl) :: Spanish, Argentina; Spanish
+grobert63 :: French
+wusst. (Supporti) :: German
+MaximMaximS :: Czech
+damian-klima :: Slovak
+crow_ :: Latvian
+JocelynDelalande :: French
+Jan (JW-CH) :: German Informal
+Timo B (lommes) :: German Informal

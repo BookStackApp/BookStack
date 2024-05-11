@@ -18,10 +18,8 @@ class AuthServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         // Password Configuration
         // Changes here must be reflected in ApiDocsGenerate@getValidationAsString.
@@ -58,10 +56,8 @@ class AuthServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         Auth::provider('external-users', function ($app, array $config) {
             return new ExternalBaseUserProvider($config['model']);

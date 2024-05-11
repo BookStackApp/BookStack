@@ -9,6 +9,7 @@
  */
 
 use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\ServiceProvider;
 
 return [
 
@@ -113,46 +114,20 @@ return [
     ],
 
     // Application Service Providers
-    'providers' => [
-
-        // Laravel Framework Service Providers...
-        Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
-        Illuminate\Bus\BusServiceProvider::class,
-        Illuminate\Cache\CacheServiceProvider::class,
-        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
-        Illuminate\Cookie\CookieServiceProvider::class,
-        Illuminate\Database\DatabaseServiceProvider::class,
-        Illuminate\Encryption\EncryptionServiceProvider::class,
-        Illuminate\Filesystem\FilesystemServiceProvider::class,
-        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
-        Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
-        Illuminate\Notifications\NotificationServiceProvider::class,
-        Illuminate\Pagination\PaginationServiceProvider::class,
-        Illuminate\Pipeline\PipelineServiceProvider::class,
-        Illuminate\Queue\QueueServiceProvider::class,
-        Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Validation\ValidationServiceProvider::class,
-        Illuminate\View\ViewServiceProvider::class,
-
+    'providers' => ServiceProvider::defaultProviders()->merge([
         // Third party service providers
-        Barryvdh\DomPDF\ServiceProvider::class,
-        Barryvdh\Snappy\ServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
 
         // BookStack custom service providers
-        \BookStack\App\Providers\ThemeServiceProvider::class,
-        \BookStack\App\Providers\AppServiceProvider::class,
-        \BookStack\App\Providers\AuthServiceProvider::class,
-        \BookStack\App\Providers\EventServiceProvider::class,
-        \BookStack\App\Providers\RouteServiceProvider::class,
-        \BookStack\App\Providers\TranslationServiceProvider::class,
-        \BookStack\App\Providers\ValidationRuleServiceProvider::class,
-        \BookStack\App\Providers\ViewTweaksServiceProvider::class,
-    ],
+        BookStack\App\Providers\ThemeServiceProvider::class,
+        BookStack\App\Providers\AppServiceProvider::class,
+        BookStack\App\Providers\AuthServiceProvider::class,
+        BookStack\App\Providers\EventServiceProvider::class,
+        BookStack\App\Providers\RouteServiceProvider::class,
+        BookStack\App\Providers\TranslationServiceProvider::class,
+        BookStack\App\Providers\ValidationRuleServiceProvider::class,
+        BookStack\App\Providers\ViewTweaksServiceProvider::class,
+    ])->toArray(),
 
     // Class Aliases
     // This array of class aliases to be registered on application start.

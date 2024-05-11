@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Annuller',
-    'close' => 'Close',
+    'close' => 'Luk',
     'confirm' => 'Bekræft',
     'back' => 'Tilbage',
     'save' => 'Gem',
@@ -20,13 +20,13 @@ return [
     'description' => 'Beskrivelse',
     'role' => 'Rolle',
     'cover_image' => 'Coverbillede',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Dette billede skal være omkring 440x250px selvom det vil være fleksibelt skaleret & beskåret for at passe til brugergrænsefladen i forskellige scenarier efter behov. Så de faktiske dimensioner for visning vil være forskellige.',
 
     // Actions
     'actions' => 'Handlinger',
     'view' => 'Vis',
     'view_all' => 'Vis alle',
-    'new' => 'New',
+    'new' => 'Ny',
     'create' => 'Opret',
     'update' => 'Opdater',
     'edit' => 'Rediger',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Fjern',
     'add' => 'Tilføj',
     'configure' => 'Konfigurer',
-    'manage' => 'Manage',
+    'manage' => 'Administrer',
     'fullscreen' => 'Fuld skærm',
     'favourite' => 'Foretrukken',
     'unfavourite' => 'Fjern som foretrukken',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Nulstil Filter',
     'download' => 'Hent',
     'open_in_tab' => 'Åben i ny fane',
-    'open' => 'Open',
+    'open' => 'Åbn',
 
     // Sort Options
     'sort_options' => 'Sorteringsindstillinger',
@@ -84,14 +84,14 @@ return [
     'none' => 'Ingen',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Forside',
     'header_menu_expand' => 'Udvid header menu',
     'profile_menu' => 'Profilmenu',
     'view_profile' => 'Vis profil',
     'edit_profile' => 'Redigér Profil',
     'dark_mode' => 'Mørk tilstand',
     'light_mode' => 'Lys tilstand',
-    'global_search' => 'Global Search',
+    'global_search' => 'Global søgning',
 
     // Layout tabs
     'tab_info' => 'Info',

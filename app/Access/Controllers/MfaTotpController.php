@@ -19,20 +19,25 @@ class MfaTotpController extends Controller
 
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-totp-secret';
 
+    public function __construct(
+        protected TotpService $totp
+    ) {
+    }
+
     /**
      * Show a view that generates and displays a TOTP QR code.
      */
-    public function generate(TotpService $totp)
+    public function generate()
     {
         if (session()->has(static::SETUP_SECRET_SESSION_KEY)) {
             $totpSecret = decrypt(session()->get(static::SETUP_SECRET_SESSION_KEY));
         } else {
-            $totpSecret = $totp->generateSecret();
+            $totpSecret = $this->totp->generateSecret();
             session()->put(static::SETUP_SECRET_SESSION_KEY, encrypt($totpSecret));
         }
 
-        $qrCodeUrl = $totp->generateUrl($totpSecret, $this->currentOrLastAttemptedUser());
-        $svg = $totp->generateQrCodeSvg($qrCodeUrl);
+        $qrCodeUrl = $this->totp->generateUrl($totpSecret, $this->currentOrLastAttemptedUser());
+        $svg = $this->totp->generateQrCodeSvg($qrCodeUrl);
 
         $this->setPageTitle(trans('auth.mfa_gen_totp_title'));
 
@@ -56,7 +61,7 @@ class MfaTotpController extends Controller
             'code' => [
                 'required',
                 'max:12', 'min:4',
-                new TotpValidationRule($totpSecret),
+                new TotpValidationRule($totpSecret, $this->totp),
             ],
         ]);
 
@@ -87,7 +92,7 @@ class MfaTotpController extends Controller
             'code' => [
                 'required',
                 'max:12', 'min:4',
-                new TotpValidationRule($totpSecret),
+                new TotpValidationRule($totpSecret, $this->totp),
             ],
         ]);
 

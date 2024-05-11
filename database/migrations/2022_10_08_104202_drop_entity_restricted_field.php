@@ -11,10 +11,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         // Remove entity-permissions on non-restricted entities
         $deleteInactiveEntityPermissions = function (string $table, string $morphClass) {
@@ -61,10 +59,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         // Create restricted columns
         $createRestrictedColumn = fn(Blueprint $table) => $table->boolean('restricted')->index()->default(0);

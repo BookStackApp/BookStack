@@ -18,8 +18,10 @@
                 <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>
                 <div class="py-xs">
                     <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
-                        BookStack @if(strpos($version, 'v') !== 0) version @endif {{ $version }}
+                        BookStack @if(!str_starts_with($version, 'v')) version @endif {{ $version }}
                     </a>
+                    <br>
+                    <a target="_blank" href="{{ url('/licenses') }}" class="text-muted">{{ trans('settings.license_details') }}</a>
                 </div>
             </div>
 

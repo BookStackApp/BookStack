@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Kosz jest pusty',
     'recycle_bin_empty' => 'Opróżnij kosz',
     'recycle_bin_empty_confirm' => 'To na stałe zniszczy wszystkie przedmioty w koszu, w tym zawartość w każdym elemencie. Czy na pewno chcesz opróżnić kosz?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Ta akcja trwale usunie ten element z systemu, wraz z elementami podrzędnymi wymienionymi poniżej i nie będziesz już mógł przywrócić tej zawartości. Czy na pewno chcesz trwale usunąć ten element?',
     'recycle_bin_destroy_list' => 'Elementy do usunięcia',
     'recycle_bin_restore_list' => 'Elementy do przywrócenia',
     'recycle_bin_restore_confirm' => 'Ta akcja przywróci usunięty element, w tym elementy podrzędne, do ich oryginalnej lokalizacji. Jeśli oryginalna lokalizacja została od tego czasu usunięta, a teraz znajduje się w koszu, element nadrzędny będzie również musiał zostać przywrócony.',
@@ -276,6 +276,14 @@ return [
     'webhooks_last_errored' => 'Ostatni błąd:',
     'webhooks_last_error_message' => 'Ostatni komunikat o błędzie:',
 
+    // Licensing
+    'licenses' => 'Licencje',
+    'licenses_desc' => 'Ta strona podaje szczegóły dotyczące licencji dla BookStack w powiązaniu z projektami i bibliotekami używanymi w BookStack. Wiele wymienionych projektów może zezwalać na wykorzystanie wyłącznie w kontekście rozwoju oprogramowania.',
+    'licenses_bookstack' => 'Licencja BookStack',
+    'licenses_php' => 'Licencje bibliotek PHP',
+    'licenses_js' => 'Licencje bibliotek JavaScript',
+    'licenses_other' => 'Inne licencje',
+    'license_details' => 'Szczegóły licencji',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

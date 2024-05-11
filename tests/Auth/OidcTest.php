@@ -37,6 +37,7 @@ class OidcTest extends TestCase
             'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
             'oidc.authorization_endpoint' => 'https://oidc.local/auth',
             'oidc.token_endpoint'         => 'https://oidc.local/token',
+            'oidc.userinfo_endpoint'      => 'https://oidc.local/userinfo',
             'oidc.discover'               => false,
             'oidc.dump_user_details'      => false,
             'oidc.additional_scopes'      => '',
@@ -208,6 +209,8 @@ class OidcTest extends TestCase
 
     public function test_auth_fails_if_no_email_exists_in_user_data()
     {
+        config()->set('oidc.userinfo_endpoint', null);
+
         $this->runLogin([
             'email' => '',
             'sub'   => 'benny505',
@@ -270,8 +273,36 @@ class OidcTest extends TestCase
         ]);
         $resp = $this->followRedirects($resp);
 
-        $resp->assertSeeText('ID token validate failed with error: Missing token subject value');
+        $resp->assertSeeText('ID token validation failed with error: Missing token subject value');
         $this->assertFalse(auth()->check());
+    }
+
+    public function test_auth_fails_if_endpoints_start_with_https()
+    {
+        $endpointConfigKeys = [
+            'oidc.token_endpoint' => 'tokenEndpoint',
+            'oidc.authorization_endpoint' => 'authorizationEndpoint',
+            'oidc.userinfo_endpoint' => 'userinfoEndpoint',
+        ];
+
+        foreach ($endpointConfigKeys as $endpointConfigKey => $endpointName) {
+            $logger = $this->withTestLogger();
+            $original = config()->get($endpointConfigKey);
+            $new = str_replace('https://', 'http://', $original);
+            config()->set($endpointConfigKey, $new);
+
+            $this->withoutExceptionHandling();
+            $err = null;
+            try {
+                $resp = $this->runLogin();
+                $resp->assertRedirect('/login');
+            } catch (\Exception $exception) {
+                $err = $exception;
+            }
+            $this->assertEquals("Endpoint value for \"{$endpointName}\" must start with https://", $err->getMessage());
+
+            config()->set($endpointConfigKey, $original);
+        }
     }
 
     public function test_auth_login_with_autodiscovery()
@@ -594,10 +625,16 @@ class OidcTest extends TestCase
     {
         config()->set(['oidc.end_session_endpoint' => 'https://example.com/logout']);
 
-        $this->runLogin();
+        // Fix times so our token is predictable
+        $claimOverrides = [
+            'iat' => time(),
+            'exp' => time() + 720,
+            'auth_time' => time()
+        ];
+        $this->runLogin($claimOverrides);
 
         $resp = $this->asEditor()->post('/oidc/logout');
-        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken()) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
+        $query = 'id_token_hint=' . urlencode(OidcJwtHelper::idToken($claimOverrides)) .  '&post_logout_redirect_uri=' . urlencode(url('/'));
         $resp->assertRedirect('https://example.com/logout?' . $query);
     }
 
@@ -683,22 +720,152 @@ class OidcTest extends TestCase
         $this->assertEquals($pkceCode, $bodyParams['code_verifier']);
     }
 
-    protected function withAutodiscovery()
+    public function test_userinfo_endpoint_used_if_missing_claims_in_id_token()
+    {
+        config()->set('oidc.display_name_claims', 'first_name|last_name');
+        $this->post('/oidc/login');
+        $state = session()->get('oidc_state');
+
+        $client = $this->mockHttpClient([
+            $this->getMockAuthorizationResponse(['name' => null]),
+            new Response(200, [
+                'Content-Type'  => 'application/json',
+            ], json_encode([
+                'sub' => OidcJwtHelper::defaultPayload()['sub'],
+                'first_name' => 'Barry',
+                'last_name' => 'Userinfo',
+            ]))
+        ]);
+
+        $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $resp->assertRedirect('/');
+        $this->assertEquals(2, $client->requestCount());
+
+        $userinfoRequest = $client->requestAt(1);
+        $this->assertEquals('GET', $userinfoRequest->getMethod());
+        $this->assertEquals('https://oidc.local/userinfo', (string) $userinfoRequest->getUri());
+
+        $this->assertEquals('Barry Userinfo', user()->name);
+    }
+
+    public function test_userinfo_endpoint_fetch_with_different_sub_throws_error()
+    {
+        $userinfoResponseData = ['sub' => 'dcba4321'];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Subject value provided in the userinfo endpoint does not match the provided ID token value');
+    }
+
+    public function test_userinfo_endpoint_fetch_returning_no_sub_throws_error()
+    {
+        $userinfoResponseData = ['name' => 'testing'];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
+    public function test_userinfo_endpoint_fetch_can_parsed_nested_groups()
+    {
+        config()->set([
+            'oidc.user_to_groups'     => true,
+            'oidc.groups_claim'       => 'my.nested.groups.attr',
+            'oidc.remove_from_groups' => false,
+        ]);
+
+        $roleA = Role::factory()->create(['display_name' => 'Ducks']);
+        $userinfoResponseData = [
+            'sub' => OidcJwtHelper::defaultPayload()['sub'],
+            'my' => ['nested' => ['groups' => ['attr' => ['Ducks', 'Donkeys']]]]
+        ];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/json'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['groups' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/');
+
+        $user = User::where('email', OidcJwtHelper::defaultPayload()['email'])->first();
+        $this->assertTrue($user->hasRole($roleA->id));
+    }
+
+    public function test_userinfo_endpoint_jwks_response_handled()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['name' => 'Barry Jwks']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/');
+
+        $user = User::where('email', OidcJwtHelper::defaultPayload()['email'])->first();
+        $this->assertEquals('Barry Jwks', $user->name);
+    }
+
+    public function test_userinfo_endpoint_jwks_response_returning_no_sub_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['sub' => null]);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_returning_non_matching_sub_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken(['sub' => 'zzz123']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Subject value provided in the userinfo endpoint does not match the provided ID token value');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_with_invalid_signature_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken();
+        $exploded = explode('.', $userinfoResponseData);
+        $exploded[2] = base64_encode(base64_decode($exploded[2]) . 'ABC');
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], implode('.', $exploded));
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Token signature could not be validated using the provided keys');
+    }
+
+    public function test_userinfo_endpoint_jwks_response_with_invalid_signature_alg_throws()
+    {
+        $userinfoResponseData = OidcJwtHelper::idToken([], ['alg' => 'ZZ512']);
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/jwt'], $userinfoResponseData);
+
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: Only RS256 signature validation is supported. Token reports using ZZ512');
+    }
+
+    public function test_userinfo_endpoint_response_with_invalid_content_type_throws()
+    {
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'application/beans'], json_encode(OidcJwtHelper::defaultPayload()));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
+    }
+
+    protected function withAutodiscovery(): void
     {
         config()->set([
             'oidc.issuer'                 => OidcJwtHelper::defaultIssuer(),
             'oidc.discover'               => true,
             'oidc.authorization_endpoint' => null,
             'oidc.token_endpoint'         => null,
+            'oidc.userinfo_endpoint'      => null,
             'oidc.jwt_public_key'         => null,
         ]);
     }
 
-    protected function runLogin($claimOverrides = []): TestResponse
+    protected function runLogin($claimOverrides = [], $additionalHttpResponses = []): TestResponse
     {
         $this->post('/oidc/login');
         $state = session()->get('oidc_state');
-        $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides)]);
+        $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides), ...$additionalHttpResponses]);
 
         return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
     }
@@ -712,6 +879,7 @@ class OidcTest extends TestCase
         ], json_encode(array_merge([
             'token_endpoint'         => OidcJwtHelper::defaultIssuer() . '/oidc/token',
             'authorization_endpoint' => OidcJwtHelper::defaultIssuer() . '/oidc/authorize',
+            'userinfo_endpoint'      => OidcJwtHelper::defaultIssuer() . '/oidc/userinfo',
             'jwks_uri'               => OidcJwtHelper::defaultIssuer() . '/oidc/keys',
             'issuer'                 => OidcJwtHelper::defaultIssuer(),
             'end_session_endpoint'   => OidcJwtHelper::defaultIssuer() . '/oidc/logout',

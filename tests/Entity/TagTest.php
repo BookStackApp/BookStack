@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-    protected $defaultTagCount = 20;
+    protected int $defaultTagCount = 20;
 
     /**
      * Get an instance of a page that has many tags.
@@ -191,6 +191,24 @@ class TagTest extends TestCase
         $resp = $this->asEditor()->get('/tags?search=testingval');
         $resp->assertSee('No items available');
         $resp->assertSee('Tags can be assigned via the page editor sidebar');
+    }
+
+    public function test_tag_index_does_not_include_tags_on_recycle_bin_items()
+    {
+        $page = $this->entities->page();
+        $page->tags()->create(['name' => 'DeleteRecord', 'value' => 'itemToDeleteTest']);
+
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertSee('DeleteRecord');
+        $resp = $this->asEditor()->get('/tags?name=DeleteRecord');
+        $resp->assertSee('itemToDeleteTest');
+
+        $this->entities->sendToRecycleBin($page);
+
+        $resp = $this->asEditor()->get('/tags');
+        $resp->assertDontSee('DeleteRecord');
+        $resp = $this->asEditor()->get('/tags?name=DeleteRecord');
+        $resp->assertDontSee('itemToDeleteTest');
     }
 
     public function test_tag_classes_visible_on_entities()

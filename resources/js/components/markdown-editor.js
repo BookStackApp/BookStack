@@ -1,5 +1,4 @@
 import {Component} from './component';
-import {init as initEditor} from '../markdown/editor';
 
 export class MarkdownEditor extends Component {
 
@@ -20,17 +19,19 @@ export class MarkdownEditor extends Component {
         const settingInputs = settingContainer.querySelectorAll('input[type="checkbox"]');
 
         this.editor = null;
-        initEditor({
-            pageId: this.pageId,
-            container: this.elem,
-            displayEl: this.display,
-            inputEl: this.input,
-            drawioUrl: this.getDrawioUrl(),
-            settingInputs: Array.from(settingInputs),
-            text: {
-                serverUploadLimit: this.serverUploadLimitText,
-                imageUploadError: this.imageUploadErrorText,
-            },
+        window.importVersioned('markdown').then(markdown => {
+            return markdown.init({
+                pageId: this.pageId,
+                container: this.elem,
+                displayEl: this.display,
+                inputEl: this.input,
+                drawioUrl: this.getDrawioUrl(),
+                settingInputs: Array.from(settingInputs),
+                text: {
+                    serverUploadLimit: this.serverUploadLimitText,
+                    imageUploadError: this.imageUploadErrorText,
+                },
+            });
         }).then(editor => {
             this.editor = editor;
             this.setupListeners();

@@ -8,7 +8,7 @@ return [
     'my_account' => 'Mon compte',
 
     'shortcuts' => 'Raccourcis',
-    'shortcuts_interface' => 'Préférences de raccourci de l\'interface utilisateur',
+    'shortcuts_interface' => 'Préférences de raccourcis de l\'interface utilisateur',
     'shortcuts_toggle_desc' => 'Ici vous pouvez activer ou désactiver les raccourcis clavier, utilisés pour la navigation et les actions.',
     'shortcuts_customize_desc' => 'Vous pouvez personnaliser chaque raccourci ci-dessous. Il vous suffit d\'appuyer sur la combinaison de touche choisie après avoir sélectionné l\'entrée pour un raccourci.',
     'shortcuts_toggle_label' => 'Raccourcis clavier activés',
@@ -27,7 +27,7 @@ return [
     'notifications_save' => 'Enregistrer les préférences',
     'notifications_update_success' => 'Les préférences de notification ont été mises à jour !',
     'notifications_watched' => 'Éléments surveillés et ignorés',
-    'notifications_watched_desc' => ' Voici les éléments qui ont des préférences de surveillance personnalisées appliquées. Pour mettre à jour vos préférences pour celles-ci, consultez l\'élément puis trouvez les options de surveillance dans la barre latérale.',
+    'notifications_watched_desc' => 'Voici les éléments qui ont des préférences de surveillance personnalisées appliquées. Pour mettre à jour vos préférences pour celles-ci, consultez l\'élément puis trouvez les options de surveillance dans la barre latérale.',
 
     'auth' => 'Accès et sécurité',
     'auth_change_password' => 'Changer le mot de passe',

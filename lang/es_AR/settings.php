@@ -195,7 +195,7 @@ return [
     'users_send_invite_option' => 'Enviar correo electrónico de invitación al usuario.',
     'users_external_auth_id' => 'ID externo de autenticación',
     'users_external_auth_id_desc' => 'Cuando un sistema de autenticación externa está en uso (como SAML2, OIDC o LDAP) este es el ID que vincula este usuario de BookStack a la cuenta del sistema de autenticación. Puede ignorar este campo si utiliza la autenticación por defecto basada en correo electrónico.',
-    'users_password_warning' => 'Solo debe rellenar este campo si desea cambiar la contraseña pora este usuario.',
+    'users_password_warning' => 'Solo complete lo siguiente si desea cambiar la contraseña para este usuario.',
     'users_system_public' => 'Este usuario representa cualquier usuario invitado que visita la aplicación. No puede utilizarse para hacer login sino que es asignado automáticamente.',
     'users_delete' => 'Borrar usuario',
     'users_delete_named' => 'Borrar usuario :userName',
@@ -211,7 +211,7 @@ return [
     'users_preferred_language' => 'Lenguaje preferido',
     'users_preferred_language_desc' => 'Esta opción cambiará el idioma de la interfaz de usuario en la aplicación. No afectará al contenido creado por los usuarios.',
     'users_social_accounts' => 'Cuentas sociales',
-    'users_social_accounts_desc' => 'Ver el estado de las cuentas sociales conectadas para este usuario. Las cuentas sociales se pueden utilizar adicionalmente al sistema de autenticación primaria para el acceso al sistema.',
+    'users_social_accounts_desc' => 'Vea el estado de las cuentas sociales conectadas para este usuario. Las cuentas sociales se pueden usar además del sistema de autenticación principal para el acceso al sistema.',
     'users_social_accounts_info' => 'Aquí puede conectar sus otras cuentas para un acceso rápido y más fácil. Desconectando una cuenta aquí no revoca accesos ya autorizados. Revoque el acceso desde los ajustes de perfil en la cuenta social conectada.',
     'users_social_connect' => 'Conectar cuenta',
     'users_social_disconnect' => 'Desconectar cuenta',
@@ -220,7 +220,7 @@ return [
     'users_social_connected' => 'La cuenta :socialAccount ha sido exitosamente añadida a su perfil.',
     'users_social_disconnected' => 'La cuenta :socialAccount ha sido desconectada exitosamente de su perfil.',
     'users_api_tokens' => 'Tokens API',
-    'users_api_tokens_desc' => 'Crear y administrar los tokens de acceso utilizados para autenticar con la REST API de BookStack. Los permisos para el API se administran a través del usuario al que pertenece el token.',
+    'users_api_tokens_desc' => 'Cree y administre los tokens de acceso utilizados para autenticarse con la API REST de BookStack. Los permisos para la API se gestionan a través del usuario al que pertenece el token.',
     'users_api_tokens_none' => 'No se han creado tokens API para este usuario',
     'users_api_tokens_create' => 'Crear token',
     'users_api_tokens_expires' => 'Expira',
@@ -277,6 +277,14 @@ return [
     'webhooks_last_errored' => 'Último error:',
     'webhooks_last_error_message' => 'Último mensaje de error:',
 
+    // Licensing
+    'licenses' => 'Licencias',
+    'licenses_desc' => 'Esta página detalla información sobre la licencia de BookStack además de los proyectos y bibliotecas que se utilizan en BookStack. Muchos proyectos enumerados aquí pueden ser utilizados solo en un contexto de desarrollo.',
+    'licenses_bookstack' => 'Licencia BookStack',
+    'licenses_php' => 'Licencias de la biblioteca PHP',
+    'licenses_js' => 'Licencias de la biblioteca JavaScript',
+    'licenses_other' => 'Otras Licencias',
+    'license_details' => 'Datos de la licencia',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
