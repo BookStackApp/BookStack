@@ -6,7 +6,7 @@
 return [
 
     // Pages
-    'page_create'                 => 'pagina creata',
+    'page_create'                 => 'ha creato la pagina',
     'page_create_notification'    => 'Pagina creata con successo',
     'page_update'                 => 'ha aggiornato la pagina',
     'page_update_notification'    => 'Pagina aggiornata con successo',
