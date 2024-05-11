@@ -28,10 +28,10 @@ return [
 
     // Toolbar
     'formats' => 'Formats',
-    'header_large' => 'Titre 2',
-    'header_medium' => 'Titre 3',
-    'header_small' => 'Titre 4',
-    'header_tiny' => 'Titre 5',
+    'header_large' => 'En-tête large',
+    'header_medium' => 'En-tête moyen',
+    'header_small' => 'Petite en-tête',
+    'header_tiny' => 'En-tête minuscule',
     'paragraph' => 'Paragraphe',
     'blockquote' => 'Bloc de citation',
     'inline_code' => 'Ligne de Code',
