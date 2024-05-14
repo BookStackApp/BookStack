@@ -43,7 +43,7 @@ abstract class BaseActivityNotification extends MailNotification
     protected function buildReasonFooterLine(LocaleDefinition $locale): LinkedMailMessageLine
     {
         return new LinkedMailMessageLine(
-            url('/preferences/notifications'),
+            url('/my-account/notifications'),
             $locale->trans('notifications.footer_reason'),
             $locale->trans('notifications.footer_reason_link'),
         );
