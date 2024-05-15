@@ -20,7 +20,7 @@ return [
     'description' => 'Leírás',
     'role' => 'Szerepkör',
     'cover_image' => 'Borítókép',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Ennek a képnek körülbelül 440 x 250 képpont méretűnek kell lennie, bár rugalmasan méretezhető és levágható, hogy a felhasználói felülethez illeszkedjen a különböző lehetőségek esetén, így a megjelenítés tényleges méretei eltérőek lesznek.',
 
     // Actions
     'actions' => 'Műveletek',
