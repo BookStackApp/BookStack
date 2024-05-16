@@ -32,7 +32,7 @@ return [
     'app_custom_html_desc' => 'Innehåll i det här fältet placeras längst ner i <head>-sektionen på varje sida. Detta kan användas för att skriva över stilmallar eller lägga in spårningskoder.',
     'app_custom_html_disabled_notice' => 'Anpassat innehåll i HTML-huvudet är inaktiverat på denna inställningssida för att säkerställa att eventuella ändringar som påverkar funktionaliteten kan återställas.',
     'app_logo' => 'Applikationslogotyp',
-    'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
+    'app_logo_desc' => 'Detta används bland annat i applikationshuvudet. Bilden bör vara 86 pixlar i höjd. Stora bilder skalas ned.',
     'app_icon' => 'Application Icon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
     'app_homepage' => 'Startsida',
@@ -48,11 +48,11 @@ return [
     'app_disable_comments_desc' => 'Inaktivera kommentarer på alla sidor i applikationen. Befintliga kommentarer visas inte.',
 
     // Color settings
-    'color_scheme' => 'Application Color Scheme',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
-    'app_color' => 'Primary Color',
-    'link_color' => 'Default Link Color',
+    'color_scheme' => 'Programmets färgschema',
+    'color_scheme_desc' => 'Ställ in de färger som ska användas i applikationens användargränssnitt. Färger kan konfigureras separat för mörka och ljusa lägen för att bäst passa temat och säkerställa läsbarhet.',
+    'ui_colors_desc' => 'Ange applikationens primära färg och standard färg för länkar. Den primära färgen används främst för huvudrubriken, knappar och gränssnitt dekorationer. Standardfärgen på länken används för textbaserade länkar och åtgärder, både inom skriftligt innehåll och i applikationsgränssnittet.',
+    'app_color' => 'Primärfärg',
+    'link_color' => 'Standardfärg för länkar',
     'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Hyllfärg',
     'book_color' => 'Bokfärg',
@@ -214,8 +214,8 @@ return [
     'users_social_accounts_info' => 'Här kan du ansluta dina andra konton för snabbare och smidigare inloggning. Om du kopplar från en tjänst här kommer de behörigheter som tidigare givits inte att tas bort - ta bort behörigheter genom att logga in på ditt konto på tjänsten i fråga.',
     'users_social_connect' => 'Anslut konto',
     'users_social_disconnect' => 'Koppla från konto',
-    'users_social_status_connected' => 'Connected',
-    'users_social_status_disconnected' => 'Disconnected',
+    'users_social_status_connected' => 'Ansluten',
+    'users_social_status_disconnected' => 'Bortkopplad',
     'users_social_connected' => ':socialAccount har kopplats till ditt konto.',
     'users_social_disconnected' => ':socialAccount har kopplats bort från ditt konto.',
     'users_api_tokens' => 'API-nyckel',
@@ -277,12 +277,12 @@ return [
     'webhooks_last_error_message' => 'Senaste felmeddelande:',
 
     // Licensing
-    'licenses' => 'Licenses',
+    'licenses' => 'Licenser',
     'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
     'licenses_bookstack' => 'BookStack License',
     'licenses_php' => 'PHP Library Licenses',
     'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
+    'licenses_other' => 'Andra licenser',
     'license_details' => 'License Details',
 
     //! If editing translations files directly please ignore this in all
