@@ -6,14 +6,14 @@ This theme system itself is maintained and supported but usages of this system, 
 
 ## Getting Started
 
-*[Video Guide](https://www.youtube.com/watch?v=gLy_2GBse48)*
+*[Video Guide](https://foss.video/w/ibNY6bGmKFV1tva3Jz4KfA)*
 
 This makes use of the theme system. Create a folder for your theme within your BookStack `themes` directory. As an example we'll use `my_theme`, so we'd create a `themes/my_theme` folder.
 You'll need to tell BookStack to use your theme via the `APP_THEME` option in your `.env` file. For example: `APP_THEME=my_theme`.
 
 ## Customizing View Files
 
-Content placed in your `themes/<theme_name>/` folder will override the original view files found in the `resources/views` folder. These files are typically [Laravel Blade](https://laravel.com/docs/8.x/blade) files.
+Content placed in your `themes/<theme_name>/` folder will override the original view files found in the `resources/views` folder. These files are typically [Laravel Blade](https://laravel.com/docs/10.x/blade) files.
 As an example, I could override the `resources/views/books/parts/list-item.blade.php` file with my own template at the path `themes/<theme_name>/books/parts/list-item.blade.php`. 
 
 ## Customizing Icons
@@ -22,7 +22,7 @@ SVG files placed in a `themes/<theme_name>/icons` folder will override any icons
 
 ## Customizing Text Content
 
-Folders with PHP translation files placed in a `themes/<theme_name>/lang` folder will override translations defined within the `resources/lang` folder. Custom translations are merged with the original files so you only need to override the select translations you want to override, you don't need to copy the whole original file. Note that you'll need to include the language folder.
+Folders with PHP translation files placed in a `themes/<theme_name>/lang` folder will override translations defined within the `lang` folder. Custom translations are merged with the original files, so you only need to override the select translations you want to override, you don't need to copy the whole original file. Note that you'll need to include the language folder.
 
 As an example, Say I wanted to change 'Search' to 'Find'; Within a `themes/<theme_name>/lang/en/common.php` file I'd set the following:
 
