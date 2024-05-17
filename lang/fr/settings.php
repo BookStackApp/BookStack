@@ -222,7 +222,7 @@ return [
     'users_api_tokens_desc' => 'Créer et gérer les jetons d\'accès utilisés pour s\'authentifier avec l\'API REST de BookStack. Les permissions pour l\'API sont gérées par l\'utilisateur auquel le jeton appartient.',
     'users_api_tokens_none' => 'Aucun jeton API n\'a été créé pour cet utilisateur',
     'users_api_tokens_create' => 'Créer un jeton',
-    'users_api_tokens_expires' => 'Expiré',
+    'users_api_tokens_expires' => 'Expire',
     'users_api_tokens_docs' => 'Documentation de l\'API',
     'users_mfa' => 'Authentification multi-facteurs',
     'users_mfa_desc' => 'Configurer l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
