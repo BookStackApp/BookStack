@@ -95,7 +95,7 @@ return [
     'maint_regen_references' => 'Verwijzingen opnieuw genereren',
     'maint_regen_references_desc' => 'Deze actie zal de kruisverwijzingen index binnen de database opnieuw opbouwen. Dit wordt doorgaans automatisch gedaan, maar deze actie kan nuttig zijn om oude inhoud of inhoud die via onofficiële methoden is toegevoegd te indexeren.',
     'maint_regen_references_success' => 'Verwijzingen index is opnieuw gegenereerd!',
-    'maint_timeout_command_note' => 'Opmerking: Het uitvoeren van deze actie kan enige tijd in beslag nemen, wat in sommige webomgevingen kan leiden tot time-outs. Als alternatief kan deze actie ook worden uitgevoerd met een terminal commando.',
+    'maint_timeout_command_note' => 'Let op: Het uitvoeren van deze actie kan enige tijd in beslag nemen, wat in sommige webomgevingen kan leiden tot time-outs. Als alternatief kan deze actie ook worden uitgevoerd met een terminal-commando.',
 
     // Recycle Bin
     'recycle_bin' => 'Prullenbak',
