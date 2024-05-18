@@ -309,7 +309,7 @@ return [
     'tags_index_desc' => 'Labels kunnen worden toegepast op inhoud binnen het systeem om een flexibele vorm van categorisering toe te passen. Labels kunnen zowel een sleutel als een waarde hebben, waarbij de waarde optioneel is. Eenmaal toegepast, kan de inhoud worden opgevraagd aan de hand van de naam en de waarde van het label.',
     'tag_name' =>  'Labelnaam',
     'tag_value' => 'Labelwaarde (Optioneel)',
-    'tags_explain' => "Voeg enkele labels toe om jouw inhoud beter te categoriseren. \nJe kunt een waarde aan een label toekennen voor een meer gedetailleerde organisatie.",
+    'tags_explain' => "Voeg enkele labels toe om je inhoud beter te categoriseren.\nJe kunt een waarde aan een label toekennen voor een meer gedetailleerde organisatie.",
     'tags_add' => 'Voeg nog een label toe',
     'tags_remove' => 'Verwijder deze label',
     'tags_usages' => 'Totaal aantal label-toepassingen',
