@@ -40,7 +40,7 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'Proberen in te loggen',
-    'auto_init_starting_desc' => 'We maken contact met jouw authenticatiesysteem om het inlogproces te starten. Als er na 5 seconden geen vooruitgang is, kun je proberen op de onderstaande link te klikken.',
+    'auto_init_starting_desc' => 'We maken contact met je authenticatiesysteem om het inlogproces te starten. Als er na 5 seconden geen vooruitgang is, kun je proberen op de onderstaande link te klikken.',
     'auto_init_start_link' => 'Ga verder met authenticatie',
 
     // Password Reset
@@ -62,7 +62,7 @@ return [
     'email_confirm_success' => 'Je e-mailadres is bevestigd! Je zou nu moeten kunnen inloggen met dit e-mailadres.',
     'email_confirm_resent' => 'Bevestigingsmail opnieuw verzonden, controleer je inbox.',
     'email_confirm_thanks' => 'Bedankt voor de bevestiging!',
-    'email_confirm_thanks_desc' => 'Wacht even terwijl jouw bevestiging wordt behandeld. Als je na 3 seconden niet wordt doorverwezen, druk dan op de onderstaande link "Doorgaan" om verder te gaan.',
+    'email_confirm_thanks_desc' => 'Wacht even terwijl je bevestiging wordt behandeld. Als je na 3 seconden niet wordt doorverwezen, druk dan op de onderstaande link "Doorgaan" om verder te gaan.',
 
     'email_not_confirmed' => 'E-mailadres nog niet bevestigd',
     'email_not_confirmed_text' => 'Je e-mailadres is nog niet bevestigd.',
@@ -104,7 +104,7 @@ return [
     'mfa_gen_totp_verify_setup_desc' => 'Controleer of alles werkt door het invoeren van een code, die wordt gegenereerd binnen je authenticatie-app, in het onderstaande invoerveld:',
     'mfa_gen_totp_provide_code_here' => 'Vul je app-gegenereerde code hier in',
     'mfa_verify_access' => 'Verifieer toegang',
-    'mfa_verify_access_desc' => 'Je moet jouw identiteit bevestigen via een extra verificatieniveau voordat je toegang krijgt tot je gebruikersaccount. Verifieer met een van de door u geconfigureerde methoden om verder te gaan.',
+    'mfa_verify_access_desc' => 'Je moet je identiteit bevestigen via een extra verificatieniveau voordat je toegang krijgt tot je gebruikersaccount. Verifieer met een van de door jou geconfigureerde methoden om verder te gaan.',
     'mfa_verify_no_methods' => 'Geen methode geconfigureerd',
     'mfa_verify_no_methods_desc' => 'Er konden geen meervoudige verificatie methoden voor je account gevonden worden. Je zult minstens één methode moeten instellen voordat je toegang krijgt.',
     'mfa_verify_use_totp' => 'Verifieer met een mobiele app',
