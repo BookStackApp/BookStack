@@ -207,3 +207,32 @@ async function performDelete(url, data = null) {
 }
 
 export {performDelete as delete};
+
+/**
+ * Parse the response text for an error response to a user
+ * presentable string. Handles a range of errors responses including
+ * validation responses & server response text.
+ * @param {String} text
+ * @returns {String}
+ */
+export function formatErrorResponseText(text) {
+    const data = text.startsWith('{') ? JSON.parse(text) : {message: text};
+    if (!data) {
+        return text;
+    }
+
+    if (data.message || data.error) {
+        return data.message || data.error;
+    }
+
+    const values = Object.values(data);
+    const isValidation = values.every(val => {
+        return Array.isArray(val) || val.every(x => typeof x === 'string');
+    });
+
+    if (isValidation) {
+        return values.flat().join(' ');
+    }
+
+    return text;
+}
