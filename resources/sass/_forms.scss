@@ -321,6 +321,7 @@ input[type=color] {
   }
 }
 .setting-list-label {
+  @include lightDark(color, #222, #DDD);
   color: #222;
   font-size: 1rem;
 }
