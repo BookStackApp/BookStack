@@ -17,7 +17,7 @@ class EmailConfirmationService extends UserTokenService
      *
      * @throws ConfirmationEmailException
      */
-    public function sendConfirmation(User $user)
+    public function sendConfirmation(User $user): void
     {
         if ($user->email_confirmed) {
             throw new ConfirmationEmailException(trans('errors.email_already_confirmed'), '/login');

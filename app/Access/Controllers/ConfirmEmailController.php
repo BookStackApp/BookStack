@@ -32,13 +32,17 @@ class ConfirmEmailController extends Controller
 
     /**
      * Shows a notice that a user's email address has not been confirmed,
-     * Also has the option to re-send the confirmation email.
+     * along with the option to re-send the confirmation email.
      */
     public function showAwaiting()
     {
         $user = $this->loginService->getLastLoginAttemptUser();
+        if ($user === null) {
+            $this->showErrorNotification(trans('errors.login_user_not_found'));
+            return redirect('/login');
+        }
 
-        return view('auth.user-unconfirmed', ['user' => $user]);
+        return view('auth.register-confirm-awaiting');
     }
 
     /**
@@ -90,19 +94,24 @@ class ConfirmEmailController extends Controller
     /**
      * Resend the confirmation email.
      */
-    public function resend(Request $request)
+    public function resend()
     {
-        $this->validate($request, [
-            'email' => ['required', 'email', 'exists:users,email'],
-        ]);
-        $user = $this->userRepo->getByEmail($request->get('email'));
+        $user = $this->loginService->getLastLoginAttemptUser();
+        if ($user === null) {
+            $this->showErrorNotification(trans('errors.login_user_not_found'));
+            return redirect('/login');
+        }
 
         try {
             $this->emailConfirmationService->sendConfirmation($user);
+        } catch (ConfirmationEmailException $e) {
+            $this->showErrorNotification($e->getMessage());
+
+            return redirect('/login');
         } catch (Exception $e) {
             $this->showErrorNotification(trans('auth.email_confirm_send_error'));
 
-            return redirect('/register/confirm');
+            return redirect('/register/awaiting');
         }
 
         $this->showSuccessNotification(trans('auth.email_confirm_resent'));
