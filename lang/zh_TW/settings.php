@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => '上次錯誤信息',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
+    'licenses' => '授權',
+    'licenses_desc' => '本頁提供 BookStack 使用到的專案以及函式庫的詳細授權資料，其中部份專案及函式庫僅開開發環境中使用。',
     'licenses_bookstack' => 'BookStack 授權',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
+    'licenses_php' => 'PHP 函式庫授權',
+    'licenses_js' => 'JavaScript 函式庫授權',
     'licenses_other' => '其它授權',
-    'license_details' => 'License Details',
+    'license_details' => '詳細授權資料',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
