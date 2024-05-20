@@ -15,14 +15,11 @@ use Illuminate\Validation\Rules\Password as PasswordRule;
 
 class ResetPasswordController extends Controller
 {
-    protected LoginService $loginService;
-
-    public function __construct(LoginService $loginService)
-    {
+    public function __construct(
+        protected LoginService $loginService
+    ) {
         $this->middleware('guest');
         $this->middleware('guard:standard');
-
-        $this->loginService = $loginService;
     }
 
     /**
