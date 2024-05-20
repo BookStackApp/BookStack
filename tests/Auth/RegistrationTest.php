@@ -25,6 +25,9 @@ class RegistrationTest extends TestCase
         $resp->assertRedirect('/register/confirm');
         $this->assertDatabaseHas('users', ['name' => $user->name, 'email' => $user->email, 'email_confirmed' => false]);
 
+        $resp = $this->get('/register/confirm');
+        $resp->assertSee('Thanks for registering!');
+
         // Ensure notification sent
         /** @var User $dbUser */
         $dbUser = User::query()->where('email', '=', $user->email)->first();
@@ -231,5 +234,60 @@ class RegistrationTest extends TestCase
         }
 
         $response->assertStatus(429);
+    }
+
+    public function test_registration_confirmation_resend()
+    {
+        Notification::fake();
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+        $user = User::factory()->make();
+
+        $resp = $this->post('/register', $user->only('name', 'email', 'password'));
+        $resp->assertRedirect('/register/confirm');
+        $dbUser = User::query()->where('email', '=', $user->email)->first();
+
+        $resp = $this->post('/login', ['email' => $user->email, 'password' => $user->password]);
+        $resp->assertRedirect('/register/confirm/awaiting');
+
+        $resp = $this->post('/register/confirm/resend');
+        $resp->assertRedirect('/register/confirm');
+        Notification::assertSentToTimes($dbUser, ConfirmEmailNotification::class, 2);
+    }
+
+    public function test_registration_confirmation_expired_resend()
+    {
+        Notification::fake();
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+        $user = User::factory()->make();
+
+        $resp = $this->post('/register', $user->only('name', 'email', 'password'));
+        $resp->assertRedirect('/register/confirm');
+        $dbUser = User::query()->where('email', '=', $user->email)->first();
+
+        $resp = $this->post('/login', ['email' => $user->email, 'password' => $user->password]);
+        $resp->assertRedirect('/register/confirm/awaiting');
+
+        $emailConfirmation = DB::table('email_confirmations')->where('user_id', '=', $dbUser->id)->first();
+        $this->travel(2)->days();
+
+        $resp = $this->post("/register/confirm/accept", [
+            'token' => $emailConfirmation->token,
+        ]);
+        $resp->assertRedirect('/register/confirm');
+        $this->assertSessionError('The confirmation token has expired, A new confirmation email has been sent.');
+
+        Notification::assertSentToTimes($dbUser, ConfirmEmailNotification::class, 2);
+    }
+
+    public function test_registration_confirmation_awaiting_and_resend_returns_to_log_if_no_login_attempt_user_found()
+    {
+        $this->setSettings(['registration-enabled' => 'true', 'registration-confirmation' => 'true']);
+
+        $this->get('/register/confirm/awaiting')->assertRedirect('/login');
+        $this->assertSessionError('A user for this action could not be found.');
+        $this->flushSession();
+
+        $this->post('/register/confirm/resend')->assertRedirect('/login');
+        $this->assertSessionError('A user for this action could not be found.');
     }
 }
