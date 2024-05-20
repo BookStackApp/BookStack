@@ -136,7 +136,8 @@ return [
     // Role Settings
     'roles' => '角色',
     'role_user_roles' => '使用者角色',
-    'roles_index_desc' => 'Roles are used to group users & provide system permission to their members. When a user is a member of multiple roles the privileges granted will stack and the user will inherit all abilities.',
+    'roles_index_desc' => '「角色」用於將系統權限套用至使用者群組。當使用者擁有多角色時，
+使用者會自動繼承角色中的所有系統權限',
     'roles_x_users_assigned' => ':count user assigned|:count users assigned',
     'roles_x_permissions_provided' => ':count permission|:count permissions',
     'roles_assigned_users' => 'Assigned Users',
