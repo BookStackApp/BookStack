@@ -6,6 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Sleep;
 
 class ForgotPasswordController extends Controller
 {
@@ -31,6 +32,10 @@ class ForgotPasswordController extends Controller
         $this->validate($request, [
             'email' => ['required', 'email'],
         ]);
+
+        // Add random pause to the response to help avoid time-base sniffing
+        // of valid resets via slower email send handling.
+        Sleep::for(random_int(1000, 3000))->milliseconds();
 
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we

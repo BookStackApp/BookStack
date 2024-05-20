@@ -317,8 +317,8 @@ Route::get('/register/confirm', [AccessControllers\ConfirmEmailController::class
 Route::get('/register/confirm/awaiting', [AccessControllers\ConfirmEmailController::class, 'showAwaiting']);
 Route::post('/register/confirm/resend', [AccessControllers\ConfirmEmailController::class, 'resend']);
 Route::get('/register/confirm/{token}', [AccessControllers\ConfirmEmailController::class, 'showAcceptForm']);
-Route::post('/register/confirm/accept', [AccessControllers\ConfirmEmailController::class, 'confirm']);
-Route::post('/register', [AccessControllers\RegisterController::class, 'postRegister']);
+Route::post('/register/confirm/accept', [AccessControllers\ConfirmEmailController::class, 'confirm'])->middleware('throttle:public');
+Route::post('/register', [AccessControllers\RegisterController::class, 'postRegister'])->middleware('throttle:public');
 
 // SAML routes
 Route::post('/saml2/login', [AccessControllers\Saml2Controller::class, 'login']);
@@ -338,16 +338,16 @@ Route::get('/oidc/callback', [AccessControllers\OidcController::class, 'callback
 Route::post('/oidc/logout', [AccessControllers\OidcController::class, 'logout']);
 
 // User invitation routes
-Route::get('/register/invite/{token}', [AccessControllers\UserInviteController::class, 'showSetPassword']);
-Route::post('/register/invite/{token}', [AccessControllers\UserInviteController::class, 'setPassword']);
+Route::get('/register/invite/{token}', [AccessControllers\UserInviteController::class, 'showSetPassword'])->middleware('throttle:public');
+Route::post('/register/invite/{token}', [AccessControllers\UserInviteController::class, 'setPassword'])->middleware('throttle:public');
 
 // Password reset link request routes
 Route::get('/password/email', [AccessControllers\ForgotPasswordController::class, 'showLinkRequestForm']);
-Route::post('/password/email', [AccessControllers\ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/password/email', [AccessControllers\ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('throttle:public');
 
 // Password reset routes
 Route::get('/password/reset/{token}', [AccessControllers\ResetPasswordController::class, 'showResetForm']);
-Route::post('/password/reset', [AccessControllers\ResetPasswordController::class, 'reset']);
+Route::post('/password/reset', [AccessControllers\ResetPasswordController::class, 'reset'])->middleware('throttle:public');
 
 // Metadata routes
 Route::view('/help/wysiwyg', 'help.wysiwyg');

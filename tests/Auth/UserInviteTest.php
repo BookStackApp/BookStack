@@ -137,4 +137,24 @@ class UserInviteTest extends TestCase
         $setPasswordPageResp->assertRedirect('/password/email');
         $setPasswordPageResp->assertSessionHas('error', 'This invitation link has expired. You can instead try to reset your account password.');
     }
+
+    public function test_set_password_view_is_throttled()
+    {
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->get("/register/invite/tokenhere{$i}");
+        }
+
+        $response->assertStatus(429);
+    }
+
+    public function test_set_password_post_is_throttled()
+    {
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->post("/register/invite/tokenhere{$i}", [
+                'password' => 'my test password',
+            ]);
+        }
+
+        $response->assertStatus(429);
+    }
 }

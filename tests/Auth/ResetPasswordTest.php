@@ -4,11 +4,19 @@ namespace Tests\Auth;
 
 use BookStack\Access\Notifications\ResetPasswordNotification;
 use BookStack\Users\Models\User;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Sleep;
 use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Sleep::fake();
+    }
+
     public function test_reset_flow()
     {
         Notification::fake();
@@ -75,6 +83,17 @@ class ResetPasswordTest extends TestCase
             ->assertSee('The password reset token is invalid for this email address.');
     }
 
+    public function test_reset_request_with_not_found_user_still_has_delay()
+    {
+        $this->followingRedirects()->post('/password/email', [
+            'email' => 'barrynotfoundrandomuser@example.com',
+        ]);
+
+        Sleep::assertSlept(function (CarbonInterval $duration): bool {
+            return $duration->totalMilliseconds > 999;
+        }, 1);
+    }
+
     public function test_reset_page_shows_sign_links()
     {
         $this->setSettings(['registration-enabled' => 'true']);
@@ -97,5 +116,28 @@ class ResetPasswordTest extends TestCase
         ]);
         Notification::assertSentTimes(ResetPasswordNotification::class, 1);
         $resp->assertSee('A password reset link will be sent to ' . $editor->email . ' if that email address is found in the system.');
+    }
+
+    public function test_reset_request_with_not_found_user_is_throttled()
+    {
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->post('/password/email', [
+                'email' => 'barrynotfoundrandomuser@example.com',
+            ]);
+        }
+
+        $response->assertStatus(429);
+    }
+
+    public function test_reset_call_is_throttled()
+    {
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->post('/password/reset', [
+                'email' => "arandomuser{$i}@example.com",
+                'token' => "randomtoken{$i}",
+            ]);
+        }
+
+        $response->assertStatus(429);
     }
 }

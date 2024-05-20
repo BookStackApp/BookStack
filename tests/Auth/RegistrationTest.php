@@ -203,4 +203,33 @@ class RegistrationTest extends TestCase
         $resp = $this->followRedirects($resp);
         $this->withHtml($resp)->assertElementExists('form input[name="username"].text-neg');
     }
+
+    public function test_registration_endpoint_throttled()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->post('/register/', [
+                'name' => "Barry{$i}",
+                'email' => "barry{$i}@example.com",
+                'password' => "barryIsTheBest{$i}",
+            ]);
+            auth()->logout();
+        }
+
+        $response->assertStatus(429);
+    }
+
+    public function test_registration_confirmation_throttled()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+
+        for ($i = 0; $i < 11; $i++) {
+            $response = $this->post('/register/confirm/accept', [
+                'token' => "token{$i}",
+            ]);
+        }
+
+        $response->assertStatus(429);
+    }
 }
