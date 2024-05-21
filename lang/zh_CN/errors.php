@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => '未找到社交驱动程序',
     'social_driver_not_configured' => '您的:socialAccount社交设置不正确。',
     'invite_token_expired' => '此邀请链接已过期。 您可以尝试重置您的账户密码。',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => '无法上传到文件路径“:filePath”，请确保它可写入服务器。',
