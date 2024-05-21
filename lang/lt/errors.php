@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Socialinis diskas nerastas',
     'social_driver_not_configured' => 'Jūsų :socialAccount socaliniai nustatymai sukonfigūruoti neteisingai.',
     'invite_token_expired' => 'Ši kvietimo nuoroda baigė galioti. Vietoj to, jūs galite bandyti iš naujo nustatyti savo paskyros slaptažodį.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Į failo kelią :filePath negalima įkelti. Įsitikinkite, kad jis yra įrašomas į serverį.',
