@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Social driverが見つかりません',
     'social_driver_not_configured' => 'あなたの:socialAccount設定は正しく構成されていません。',
     'invite_token_expired' => 'この招待リンクの有効期限が切れています。 代わりにアカウントのパスワードをリセットしてみてください。',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'ファイルパス :filePath へアップロードできませんでした。サーバ上での書き込みが許可されているか確認してください。',
