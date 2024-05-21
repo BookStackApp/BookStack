@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Drivrutinen för den här tjänsten hittades inte',
     'social_driver_not_configured' => 'Dina inställningar för :socialAccount är inte korrekta.',
     'invite_token_expired' => 'Denna inbjudningslänk har löpt ut. Du kan istället försöka återställa ditt kontos lösenord.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Kunde inte ladda upp till sökvägen :filePath. Kontrollera att webbservern har skrivåtkomst.',
