@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Sotsiaalmeedia kontode draiverit ei leitud',
     'social_driver_not_configured' => 'Sinu :socialAccount konto seaded ei ole korrektsed.',
     'invite_token_expired' => 'Link on aegunud. Võid selle asemel proovida oma konto parooli lähtestada.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Faili asukohaga :filePath ei õnnestunud üles laadida. Veendu, et serveril on kirjutusõigused.',
