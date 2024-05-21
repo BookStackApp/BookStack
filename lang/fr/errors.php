@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Pilote de compte de réseaux sociaux absent',
     'social_driver_not_configured' => 'Vos préférences pour le compte :socialAccount sont incorrectes.',
     'invite_token_expired' => 'Le lien de cette invitation a expiré. Vous pouvez essayer de réinitialiser votre mot de passe.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Impossible d\'écrire dans :filePath. Assurez-vous d\'avoir les droits d\'écriture sur le serveur',

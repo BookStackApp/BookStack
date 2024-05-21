@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Gyrrwr cymdeithasol heb ei ganfod',
     'social_driver_not_configured' => 'Nid yw eich gosodiadau cymdeithasol :socialAccount wedi\'u ffurfweddu\'n gywir.',
     'invite_token_expired' => 'Mae\'r ddolen wahoddiad hon wedi dod i ben. Yn lle hynny, gallwch chi geisio ailosod cyfrinair eich cyfrif.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Nid oedd modd uwchlwytho llwybr ffeil :filePath. Sicrhewch ei fod yn ysgrifenadwy i\'r gweinydd.',

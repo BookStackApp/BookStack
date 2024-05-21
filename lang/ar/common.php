@@ -20,7 +20,7 @@ return [
     'description' => 'الوصف',
     'role' => 'الدور',
     'cover_image' => 'صورة الغلاف',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'يجب أن يكون حجم هذه الصورة تقريبًا 440x250 بكسل، على الرغم من أنه سيتم تحجيمها وقصها بشكل مرن لتناسب واجهة المستخدم في سيناريوهات مختلفة حسب الحاجة، لذا فإن الأبعاد الفعلية للعرض ستختلف.',
 
     // Actions
     'actions' => 'إجراءات',

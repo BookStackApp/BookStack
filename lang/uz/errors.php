@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Ijtimoiy haydovchi topilmadi',
     'social_driver_not_configured' => 'Sizning :socialAccount ijtimoiy sozlamalaringiz toʻgʻri sozlanmagan.',
     'invite_token_expired' => 'Bu taklif havolasi muddati tugagan. Buning oʻrniga hisobingiz parolini tiklashga urinib koʻrishingiz mumkin.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Fayl yoʻli :filePath faylini yuklab boʻlmadi. Uning serverga yozilishi mumkinligiga ishonch hosil qiling.',

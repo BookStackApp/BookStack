@@ -38,6 +38,7 @@ Sovellus ei tunnista ulkoisen todennuspalvelun pyyntöä. Ongelman voi aiheuttaa
     'social_driver_not_found' => 'Sosiaalisen median tilin ajuria ei löytynyt',
     'social_driver_not_configured' => ':socialAccount-tilin asetuksia ei ole määritetty oikein.',
     'invite_token_expired' => 'Tämä kutsulinkki on vanhentunut. Voit sen sijaan yrittää palauttaa tilisi salasanan.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Tiedostopolkuun :filePath ei voitu ladata tiedostoa. Tarkista polun kirjoitusoikeudet.',

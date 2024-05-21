@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Δεν βρέθηκε κοινωνικός οδηγός',
     'social_driver_not_configured' => 'Οι κοινωνικές ρυθμίσεις του :socialAccount δεν έχουν ρυθμιστεί σωστά.',
     'invite_token_expired' => 'Αυτός ο σύνδεσμος πρόσκλησης έχει λήξει. Αντ\' αυτού μπορείτε να προσπαθήσετε να επαναφέρετε τον κωδικό πρόσβασής σας.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Η διαδρομή αρχείου :filePath δεν μπόρεσε να μεταφορτωθεί. Βεβαιωθείτε ότι είναι εγγράψιμη στο διακομιστή.',
