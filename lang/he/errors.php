@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Social driver not found',
     'social_driver_not_configured' => 'הגדרות ה :socialAccount אינן מוגדרות כראוי',
     'invite_token_expired' => 'לינק ההזמנה פג. אתה יכול לנסות לאפס את סיסמת החשבון שלך במקום.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'לא ניתן להעלות את :filePath אנא ודא שניתן לכתוב למיקום זה',

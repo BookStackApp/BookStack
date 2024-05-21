@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Driver social negăsit',
     'social_driver_not_configured' => 'Setările tale sociale :socialAccount nu sunt configurate corect.',
     'invite_token_expired' => 'Acest link de invitație a expirat. Poți încerca să îți resetezi parola contului.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Calea fișierului :filePath nu a putut fi încărcată. Asigurați-vă că poate fi scrisă pe server.',

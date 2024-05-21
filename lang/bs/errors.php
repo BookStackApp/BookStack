@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Driver društvene mreže nije pronađen',
     'social_driver_not_configured' => 'Vaše :socialAccount postavke nisu konfigurisane ispravno.',
     'invite_token_expired' => 'Pozivni link je istekao. Možete umjesto toga pokušati da resetujete lozinku.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Na putanju fajla :filePath se ne može učitati. Potvrdite da je omogućeno pisanje na server.',

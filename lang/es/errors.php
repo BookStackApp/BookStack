@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Driver social no encontrado',
     'social_driver_not_configured' => 'Su configuración :socialAccount no es correcta.',
     'invite_token_expired' => 'Este enlace de invitación ha expirado. Puede resetear la contraseña de su cuenta como alternativa.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'El fichero no pudo ser subido a la ruta :filePath . Asegúrese de que es escribible por el servidor.',

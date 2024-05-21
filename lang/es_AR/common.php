@@ -12,7 +12,7 @@ return [
     'save' => 'Guardar',
     'continue' => 'Continuar',
     'select' => 'Seleccionar',
-    'toggle_all' => 'Alternar todo',
+    'toggle_all' => 'Mostrar/Ocultar Todo',
     'more' => 'Más',
 
     // Form Labels
@@ -20,7 +20,7 @@ return [
     'description' => 'Descripción',
     'role' => 'Rol',
     'cover_image' => 'Imagen de cubierta',
-    'cover_image_description' => 'Esta imagen debe ser de aproximadamente 440x250px aunque será escalada y recortada para adaptarse a la interfaz de usuario en diferentes escenarios según sea necesario, por lo que las dimensiones en pantalla diferirán.',
+    'cover_image_description' => 'Esta imagen debe ser de 440x250px aproximadamente, aunque será escalada y recortada para adaptarse a la interfaz de usuario en los diferentes escenarios según sea necesario, por lo que las dimensiones en pantalla serán diferentes.',
 
     // Actions
     'actions' => 'Acciones',
@@ -42,7 +42,7 @@ return [
     'remove' => 'Remover',
     'add' => 'Agregar',
     'configure' => 'Configurar',
-    'manage' => 'Gestionar',
+    'manage' => 'Administra',
     'fullscreen' => 'Pantalla completa',
     'favourite' => 'Favoritos',
     'unfavourite' => 'Eliminar de favoritos',
@@ -70,8 +70,8 @@ return [
     'no_items' => 'No hay elementos disponibles',
     'back_to_top' => 'Volver arriba',
     'skip_to_main_content' => 'Ir al contenido principal',
-    'toggle_details' => 'Alternar detalles',
-    'toggle_thumbnails' => 'Alternar miniaturas',
+    'toggle_details' => 'Mostrar/Ocultar Detalles',
+    'toggle_thumbnails' => 'Mostrar/Ocultar Miniaturas',
     'details' => 'Detalles',
     'grid_view' => 'Vista de grilla',
     'list_view' => 'Vista de lista',

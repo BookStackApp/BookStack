@@ -6,13 +6,13 @@
 return [
 
     // Pages
-    'page_create'                 => 'דף נוצר',
+    'page_create'                 => 'הדף נוצר',
     'page_create_notification'    => 'הדף נוצר בהצלחה',
-    'page_update'                 => 'דף עודכן',
+    'page_update'                 => 'הדף עודכן',
     'page_update_notification'    => 'הדף עודכן בהצלחה',
-    'page_delete'                 => 'דף נמחק',
+    'page_delete'                 => 'הדף נמחק',
     'page_delete_notification'    => 'הדף הוסר בהצלחה',
-    'page_restore'                => 'דף שוחזר',
+    'page_restore'                => 'הדף שוחזר',
     'page_restore_notification'   => 'הדף שוחזר בהצלחה',
     'page_move'                   => 'דף הועבר',
     'page_move_notification'      => 'Page successfully moved',

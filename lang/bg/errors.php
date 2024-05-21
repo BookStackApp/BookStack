@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Кодът за връзка със социалната мрежа не съществува',
     'social_driver_not_configured' => 'Социалните настройки на твоя :socialAccount не са конфигурирани правилно.',
     'invite_token_expired' => 'Твоята покана е изтекла. Вместо това може да пробваш да възстановиш паролата на профила си.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Не може да се качи файл в :filePath. Увери се на сървъра, че в пътя може да се записва.',

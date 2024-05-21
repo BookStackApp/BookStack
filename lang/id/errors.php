@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Pengemudi sosial tidak ditemukan',
     'social_driver_not_configured' => 'Pengaturan sosial :socialAccount Anda tidak dikonfigurasi dengan benar.',
     'invite_token_expired' => 'Tautan undangan ini telah kedaluwarsa. Sebagai gantinya, Anda dapat mencoba mengatur ulang kata sandi akun Anda.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Jalur berkas :filePath tidak dapat diunggah. Pastikan berkas tersebut dapat ditulis ke server.',

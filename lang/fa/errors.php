@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'درایور شبکه اجتماعی یافت نشد',
     'social_driver_not_configured' => 'تنظیمات شبکه اجتماعی :socialAccount به درستی پیکربندی نشده است.',
     'invite_token_expired' => 'این پیوند دعوت منقضی شده است. در عوض می توانید سعی کنید رمز عبور حساب خود را بازنشانی کنید.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'مسیر فایل :filePath را نمی توان در آن آپلود کرد. مطمئن شوید که روی سرور قابل نوشتن است.',

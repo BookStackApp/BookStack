@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Social driver bulunamadı',
     'social_driver_not_configured' => ':socialAccount ayarlarınız doğru bir şekilde ayarlanmadı.',
     'invite_token_expired' => 'Davetiye bağlantısının süresi doldu. Bunun yerine parolanızı sıfırlamayı deneyebilirsiniz.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => ':filePath dosya yolu yüklenemedi. Sunucuya yazılabilir olduğundan emin olun.',

@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Doplněk pro tohoto správce identity nebyl nalezen.',
     'social_driver_not_configured' => 'Nastavení vašeho účtu na :socialAccount není správné. :socialAccount musí mít vaše svolení pro naší aplikaci vás přihlásit.',
     'invite_token_expired' => 'Odkaz v pozvánce již bohužel vypršel. Namísto toho ale můžete zkusit resetovat heslo do Vašeho účtu.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Nelze zapisovat na cestu k souboru :filePath. Zajistěte aby se dalo nahrávat na server.',

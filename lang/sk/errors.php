@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Ovládač socialnych sietí nebol nájdený',
     'social_driver_not_configured' => 'Nastavenia Vášho :socialAccount účtu nie sú správne.',
     'invite_token_expired' => 'Platnosť tohto odkazu na pozvánku vypršala. Namiesto toho sa môžete pokúsiť obnoviť heslo účtu.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Do cesty :filePath sa nedá nahrávať. Uistite sa, že je zapisovateľná serverom.',

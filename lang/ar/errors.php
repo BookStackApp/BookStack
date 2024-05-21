@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'لم يتم العثور على السوشيال درايفر "Social driver"',
     'social_driver_not_configured' => 'لم يتم تهيئة إعدادات حسابك الاجتماعي بشكل صحيح.',
     'invite_token_expired' => 'انتهت صلاحية رابط هذه الدعوة. يمكنك بدلاً من ذلك محاولة إعادة تعيين كلمة مرور حسابك.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'لا يمكن الرفع إلى مسار :filePath. الرجاء التأكد من قابلية الكتابة إلى الخادم.',

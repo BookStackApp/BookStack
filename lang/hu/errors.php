@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Közösségi meghajtó nem található',
     'social_driver_not_configured' => ':socialAccount közösségi beállítások nem megfelelőek.',
     'invite_token_expired' => 'Ez a meghívó hivatkozás lejárt. Helyette meg lehet próbálni új jelszót megadni a fiókhoz.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => ':filePath elérési út nem tölthető fel. Ellenőrizni kell, hogy az útvonal a kiszolgáló számára írható.',

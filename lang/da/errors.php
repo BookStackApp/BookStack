@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Socialdriver ikke fundet',
     'social_driver_not_configured' => 'Dine :socialAccount indstillinger er ikke konfigureret korret.',
     'invite_token_expired' => 'Dette invitationslink er udløbet. I stedet kan du prøve at nulstille din kontos kodeord.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Filsti :filePath kunne ikke uploades til. Sørg for at den kan skrives til af webserveren.',

@@ -97,7 +97,7 @@ return [
     'api_token_create_notification' => 'Token de API creado correctamente',
     'api_token_update' => 'token de API actualizado',
     'api_token_update_notification' => 'Token de API actualizado correctamente',
-    'api_token_delete' => 'token de API borrado',
+    'api_token_delete' => 'API token eliminado',
     'api_token_delete_notification' => 'Token de API eliminado correctamente',
 
     // Roles
@@ -115,9 +115,9 @@ return [
 
     // Comments
     'commented_on'                => 'comentado',
-    'comment_create'              => 'comentario añadido',
+    'comment_create'              => 'comentario agregado',
     'comment_update'              => 'comentario actualizado',
-    'comment_delete'              => 'comentario borrado',
+    'comment_delete'              => 'comentario eliminado',
 
     // Other
     'permissions_update'          => 'permisos actualizados',
