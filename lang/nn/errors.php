@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Autentiseringstjeneste fra sosiale medier er ikke installert',
     'social_driver_not_configured' => 'Dine :socialAccount innstilliner er ikke angitt.',
     'invite_token_expired' => 'Invitasjonslenken har utgått, du kan forsøke å be om nytt passord istede.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Filstien :filePath aksepterer ikkje filer, du må sjekke filstitilganger i systemet.',
