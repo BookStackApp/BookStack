@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Socialni vtičnik ni najden',
     'social_driver_not_configured' => 'Vaše nastavitve :socialAccount niso pravilo nastavljene.',
     'invite_token_expired' => 'Ta povezava je potekla. Namesto tega lahko ponastavite vaše geslo računa.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Poti :filePath ni bilo mogoče naložiti. Prepričajte se, da je zapisljiva na strežnik.',
