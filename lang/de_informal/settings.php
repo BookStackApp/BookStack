@@ -279,7 +279,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
 
     // Licensing
     'licenses' => 'Lizenzen',
-    'licenses_desc' => 'Diese Seite beschreibt Lizenzinformationen für BookStack zusätzlich zu den Projekten und Bibliotheken, die in BookStack verwendet werden. Viele aufgelistete Projekte dürfen nur in einem Entwicklungskontext verwendet werden.',
+    'licenses_desc' => 'Diese Seite beschreibt Lizenzinformationen für BookStack zusätzlich zu den Projekten und Bibliotheken, die in BookStack verwendet werden. Viele aufgelistete Projekte werden nur in einem Entwicklungskontext verwendet.',
     'licenses_bookstack' => 'BookStack-Lizenz',
     'licenses_php' => 'PHP-Bibliothekslizenzen',
     'licenses_js' => 'JavaScript-Bibliothekslizenzen',

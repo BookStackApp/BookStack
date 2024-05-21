@@ -321,6 +321,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   background-color: var(--color-primary);
   transition: width ease-in-out 240ms;
 }
+.dropzone-file-item-label {
+  line-height: 1.2;
+  margin-bottom: .2rem;
+}
 .dropzone-file-item-label,
 .dropzone-file-item-status {
   align-items: center;

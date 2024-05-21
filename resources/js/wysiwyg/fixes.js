@@ -56,21 +56,41 @@ export function handleEmbedAlignmentChanges(editor) {
 }
 
 /**
+ * Cleans up and removes text-alignment specific properties on all child elements.
+ * @param {HTMLElement} element
+ */
+function cleanChildAlignment(element) {
+    const alignedChildren = element.querySelectorAll('[align],[style*="text-align"],.align-center,.align-left,.align-right');
+    for (const child of alignedChildren) {
+        child.removeAttribute('align');
+        child.style.textAlign = null;
+        child.classList.remove('align-center', 'align-right', 'align-left');
+    }
+}
+
+/**
  * Cleans up the direction property for an element.
  * Removes all inline direction control from child elements.
  * Removes non "dir" attribute direction control from provided element.
  * @param {HTMLElement} element
  */
 function cleanElementDirection(element) {
-    const directionChildren = element.querySelectorAll('[dir],[style*="direction"],[style*="text-align"]');
+    const directionChildren = element.querySelectorAll('[dir],[style*="direction"]');
     for (const child of directionChildren) {
         child.removeAttribute('dir');
         child.style.direction = null;
-        child.style.textAlign = null;
     }
+
+    cleanChildAlignment(element);
     element.style.direction = null;
     element.style.textAlign = null;
+    element.removeAttribute('align');
 }
+
+/**
+ * @typedef {Function} TableCellHandler
+ * @param {HTMLTableCellElement} cell
+ */
 
 /**
  * This tracks table cell range selection, so we can apply custom handling where
@@ -90,34 +110,51 @@ export function handleTableCellRangeEvents(editor) {
         selectedCells = [];
     });
 
-    // TinyMCE does not seem to do a great job on clearing styles in complex
-    // scenarios (like copied word content) when a range of table cells
-    // are selected. Here we watch for clear formatting events, so some manual
-    // cleanup can be performed.
-    const attrsToRemove = ['class', 'style', 'width', 'height'];
-    editor.on('ExecCommand', event => {
-        if (event.command === 'RemoveFormat') {
-            for (const cell of selectedCells) {
-                for (const attr of attrsToRemove) {
-                    cell.removeAttribute(attr);
-                }
+    /**
+     * @type {Object<String, TableCellHandler>}
+     */
+    const actionByCommand = {
+        // TinyMCE does not seem to do a great job on clearing styles in complex
+        // scenarios (like copied word content) when a range of table cells
+        // are selected. Here we watch for clear formatting events, so some manual
+        // cleanup can be performed.
+        RemoveFormat: cell => {
+            const attrsToRemove = ['class', 'style', 'width', 'height', 'align'];
+            for (const attr of attrsToRemove) {
+                cell.removeAttribute(attr);
             }
-        }
-    });
+        },
 
-    // TinyMCE does not apply direction events to table cell range selections
-    // so here we hastily patch in that ability by setting the direction ourselves
-    // when a direction event is fired.
-    editor.on('ExecCommand', event => {
-        const command = event.command;
-        if (command !== 'mceDirectionLTR' && command !== 'mceDirectionRTL') {
-            return;
-        }
-
-        const dir = command === 'mceDirectionLTR' ? 'ltr' : 'rtl';
-        for (const cell of selectedCells) {
-            cell.setAttribute('dir', dir);
+        // TinyMCE does not apply direction events to table cell range selections
+        // so here we hastily patch in that ability by setting the direction ourselves
+        // when a direction event is fired.
+        mceDirectionLTR: cell => {
+            cell.setAttribute('dir', 'ltr');
             cleanElementDirection(cell);
+        },
+        mceDirectionRTL: cell => {
+            cell.setAttribute('dir', 'rtl');
+            cleanElementDirection(cell);
+        },
+
+        // The "align" attribute can exist on table elements so this clears
+        // the attribute, and also clears common child alignment properties,
+        // when a text direction action is made for a table cell range.
+        JustifyLeft: cell => {
+            cell.removeAttribute('align');
+            cleanChildAlignment(cell);
+        },
+        JustifyRight: this.JustifyLeft,
+        JustifyCenter: this.JustifyLeft,
+        JustifyFull: this.JustifyLeft,
+    };
+
+    editor.on('ExecCommand', event => {
+        const action = actionByCommand[event.command];
+        if (action) {
+            for (const cell of selectedCells) {
+                action(cell);
+            }
         }
     });
 }

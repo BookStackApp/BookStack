@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => '소셜 드라이버를 찾을 수 없습니다.',
     'social_driver_not_configured' => '소셜 계정 :socialAccount 가(이) 올바르게 구성되지 않았습니다.',
     'invite_token_expired' => '이 초대 링크가 만료되었습니다. 대신 계정 비밀번호 재설정을 시도해 보세요.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => '파일 경로 :filePath 에 업로드할 수 없습니다. 서버에 저장이 가능한지 확인하세요.',

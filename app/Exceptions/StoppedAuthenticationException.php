@@ -9,16 +9,10 @@ use Illuminate\Http\Request;
 
 class StoppedAuthenticationException extends \Exception implements Responsable
 {
-    protected $user;
-    protected $loginService;
-
-    /**
-     * StoppedAuthenticationException constructor.
-     */
-    public function __construct(User $user, LoginService $loginService)
-    {
-        $this->user = $user;
-        $this->loginService = $loginService;
+    public function __construct(
+        protected User $user,
+        protected LoginService $loginService
+    ) {
         parent::__construct();
     }
 

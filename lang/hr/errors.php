@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Nije pronađeno',
     'social_driver_not_configured' => 'Postavke vašeg :socialAccount računa nisu ispravno postavljene.',
     'invite_token_expired' => 'Vaša pozivnica je istekla. Pokušajte ponovno postaviti lozinku.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Datoteka :filePath ne može se prenijeti. Učinite je lakše prepoznatljivom vašem serveru.',

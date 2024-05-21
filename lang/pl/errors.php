@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Funkcja społecznościowa nie została odnaleziona',
     'social_driver_not_configured' => 'Ustawienia konta :socialAccount nie są poprawne.',
     'invite_token_expired' => 'Zaproszenie wygasło. Możesz spróować zresetować swoje hasło.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Zapis do ścieżki :filePath jest niemożliwy. Upewnij się że aplikacja ma prawa do zapisu plików na serwerze.',

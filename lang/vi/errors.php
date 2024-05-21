@@ -37,6 +37,7 @@ return [
     'social_driver_not_found' => 'Không tìm thấy driver cho MXH',
     'social_driver_not_configured' => 'Cài đặt MXH :socialAccount của bạn đang không được cấu hình hợp lệ.',
     'invite_token_expired' => 'Liên kết mời này đã hết hạn. Bạn có thể thử đặt lại mật khẩu của tài khoản.',
+    'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
     'path_not_writable' => 'Đường dẫn tệp tin :filePath không thể tải đến được. Đảm bảo rằng đường dẫn này có thể ghi được ở trên máy chủ.',
