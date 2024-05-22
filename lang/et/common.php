@@ -20,7 +20,7 @@ return [
     'description' => 'Kirjeldus',
     'role' => 'Roll',
     'cover_image' => 'Kaanepilt',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'See pildifail peaks olema umbes 440x250px, ehkki seda skaleeritakse ja lõigatakse vastavalt vajadusele, et see mahuks erinevatesse kasutajaliidestesse, seega tegelikud kuvamõõdud võivad erineda.',
 
     // Actions
     'actions' => 'Tegevused',
