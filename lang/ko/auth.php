@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => '모바일 앱',
     'mfa_option_totp_desc' => '다중 인증에는 Google Authenticator, Authy나 Microsoft Authenticator와 같은 TOTP 지원 모바일 앱이 필요합니다.',
     'mfa_option_backup_codes_title' => '백업 코드',
-    'mfa_option_backup_codes_desc' => '일회성 백업 코드를 안전한 장소에 보관하세요.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => '확인 및 활성화',
     'mfa_gen_backup_codes_title' => '백업 코드 설정',
     'mfa_gen_backup_codes_desc' => '코드 목록을 안전한 장소에 보관하세요. 코드 중 하나를 2FA에 쓸 수 있습니다.',
