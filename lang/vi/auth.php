@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Ứng dụng di động',
     'mfa_option_totp_desc' => 'Để sử dụng xác thực đa lớp bạn cần ưng dụng trên điện thoại có hỗ trợ TOTP như Google Authenticator, Authy hoặc Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Mã dự phòng',
-    'mfa_option_backup_codes_desc' => 'Bảo mật việc lưu trữ mã dự phòng dùng một lần mà bạn có thể sử dụng để xác định danh tính của mình.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Xác nhận và Mở',
     'mfa_gen_backup_codes_title' => 'Cài đặt Mã dự phòng',
     'mfa_gen_backup_codes_desc' => 'Lưu trữ các mã dưới đây ở một nơi an toàn. Khi truy cập vào hệ thống bạn sẽ có thể sử dụng được một trong các đoạn mã đó như là một phương thức xác thực dự phòng.',
