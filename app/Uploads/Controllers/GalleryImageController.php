@@ -22,28 +22,29 @@ class GalleryImageController extends Controller
      * Can be paged and filtered by entity.
      */
     public function list(Request $request, ImageResizer $resizer)
-    {
-        $page = $request->get('page', 1);
-        $searchTerm = $request->get('search', null);
-        $uploadedToFilter = $request->get('uploaded_to', null);
-        $parentTypeFilter = $request->get('filter_type', null);
+{
+    $page = $request->get('page', 1);
+    $searchTerm = $request->get('search', null);
+    $uploadedToFilter = $request->get('uploaded_to', 0); 
+    $parentTypeFilter = $request->get('filter_type', null);
 
-        $imgData = $this->imageRepo->getEntityFiltered('gallery', $parentTypeFilter, $page, 30, $uploadedToFilter, $searchTerm);
-        $viewData = [
-            'warning' => '',
-            'images'  => $imgData['images'],
-            'hasMore' => $imgData['has_more'],
-        ];
+    $imgData = $this->imageRepo->getEntityFiltered('gallery', $parentTypeFilter, $page, 30, $uploadedToFilter, $searchTerm);
+    $viewData = [
+        'warning' => '',
+        'images'  => $imgData['images'],
+        'hasMore' => $imgData['has_more'],
+    ];
 
-        new OutOfMemoryHandler(function () use ($viewData) {
-            $viewData['warning'] = trans('errors.image_gallery_thumbnail_memory_limit');
-            return response()->view('pages.parts.image-manager-list', $viewData, 200);
-        });
+    new OutOfMemoryHandler(function () use ($viewData) {
+        $viewData['warning'] = trans('errors.image_gallery_thumbnail_memory_limit');
+        return response()->view('pages.parts.image-manager-list', $viewData, 200);
+    });
 
-        $resizer->loadGalleryThumbnailsForMany($imgData['images']);
+    $resizer->loadGalleryThumbnailsForMany($imgData['images']);
 
-        return view('pages.parts.image-manager-list', $viewData);
-    }
+    return view('pages.parts.image-manager-list', $viewData);
+}
+
 
     /**
      * Store a new gallery image in the system.
