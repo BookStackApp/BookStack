@@ -98,7 +98,7 @@ return [
     'api_token_update' => 'token API yang diperbarui',
     'api_token_update_notification' => 'token API berhasil dirubah',
     'api_token_delete' => 'token API yang dihapus',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_delete_notification' => 'token API berhasil dihapus ',
 
     // Roles
     'role_create' => 'created role',
