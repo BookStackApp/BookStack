@@ -33,9 +33,13 @@
                 {{--Editors--}}
                 <div class="edit-area flex-fill flex">
 
-                    {{--WYSIWYG Editor--}}
                     @if($editor === 'wysiwyg')
                         @include('pages.parts.wysiwyg-editor', ['model' => $model])
+                    @endif
+
+                    {{--WYSIWYG Editor (TinyMCE - Deprecated)--}}
+                    @if($editor === 'wysiwyg-tinymce')
+                        @include('pages.parts.wysiwyg-editor-tinymce', ['model' => $model])
                     @endif
 
                     {{--Markdown Editor--}}

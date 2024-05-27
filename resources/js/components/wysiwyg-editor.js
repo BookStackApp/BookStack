@@ -1,28 +1,13 @@
-import {buildForEditor as buildEditorConfig} from '../wysiwyg/config';
 import {Component} from './component';
 
 export class WysiwygEditor extends Component {
 
     setup() {
         this.elem = this.$el;
+        this.editArea = this.$refs.editArea;
 
-        this.tinyMceConfig = buildEditorConfig({
-            language: this.$opts.language,
-            containerElement: this.elem,
-            darkMode: document.documentElement.classList.contains('dark-mode'),
-            textDirection: this.$opts.textDirection,
-            drawioUrl: this.getDrawIoUrl(),
-            pageId: Number(this.$opts.pageId),
-            translations: {
-                imageUploadErrorText: this.$opts.imageUploadErrorText,
-                serverUploadLimitText: this.$opts.serverUploadLimitText,
-            },
-            translationMap: window.editor_translations,
-        });
-
-        window.$events.emitPublic(this.elem, 'editor-tinymce::pre-init', {config: this.tinyMceConfig});
-        window.tinymce.init(this.tinyMceConfig).then(editors => {
-            this.editor = editors[0];
+        window.importVersioned('wysiwyg').then(wysiwyg => {
+            wysiwyg.createPageEditorInstance(this.editArea);
         });
     }
 
