@@ -4,18 +4,18 @@ import {
     $getSelection,
     COMMAND_PRIORITY_LOW,
     createCommand,
-    createEditor
+    createEditor, CreateEditorArgs,
 } from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {$getNearestBlockElementAncestorOrThrow, mergeRegister} from '@lexical/utils';
 import {$generateNodesFromDOM} from '@lexical/html';
-import {getNodesForPageEditor} from "./nodes/index.js";
-import {$createCalloutNode, $isCalloutNode} from "./nodes/callout.js";
-import {$setBlocksType} from "@lexical/selection";
+import {$setBlocksType} from '@lexical/selection';
+import {getNodesForPageEditor} from './nodes';
+import {$createCalloutNode, $isCalloutNode, CalloutCategory} from './nodes/callout';
 
-export function createPageEditorInstance(editArea) {
-    const config = {
+export function createPageEditorInstance(editArea: HTMLElement) {
+    const config: CreateEditorArgs = {
         namespace: 'BookStackPageEditor',
         nodes: getNodesForPageEditor(),
         onError: console.error,
@@ -52,7 +52,7 @@ export function createPageEditorInstance(editArea) {
     // Example of creating, registering and using a custom command
 
     const SET_BLOCK_CALLOUT_COMMAND = createCommand();
-    editor.registerCommand(SET_BLOCK_CALLOUT_COMMAND, (category = 'info') => {
+    editor.registerCommand(SET_BLOCK_CALLOUT_COMMAND, (category: CalloutCategory = 'info') => {
         const selection = $getSelection();
         const blockElement = $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]);
         if ($isCalloutNode(blockElement)) {
