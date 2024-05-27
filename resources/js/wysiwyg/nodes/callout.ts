@@ -1,35 +1,51 @@
-import {$createParagraphNode, ElementNode} from 'lexical';
+import {
+    $createParagraphNode,
+    DOMConversion,
+    DOMConversionMap, DOMConversionOutput,
+    ElementNode,
+    LexicalEditor,
+    LexicalNode,
+    ParagraphNode, SerializedElementNode, Spread
+} from 'lexical';
+import type {EditorConfig} from "lexical/LexicalEditor";
+import type {RangeSelection} from "lexical/LexicalSelection";
+
+export type CalloutCategory = 'info' | 'danger' | 'warning' | 'success';
+
+export type SerializedCalloutNode = Spread<{
+    category: CalloutCategory;
+}, SerializedElementNode>
 
 export class Callout extends ElementNode {
 
-    __category = 'info';
+    __category: CalloutCategory = 'info';
 
     static getType() {
         return 'callout';
     }
 
-    static clone(node) {
+    static clone(node: Callout) {
         return new Callout(node.__category, node.__key);
     }
 
-    constructor(category, key) {
+    constructor(category: CalloutCategory, key?: string) {
         super(key);
         this.__category = category;
     }
 
-    createDOM(_config, _editor) {
+    createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('p');
         element.classList.add('callout', this.__category || '');
         return element;
     }
 
-    updateDOM(prevNode, dom) {
+    updateDOM(prevNode: unknown, dom: HTMLElement) {
         // Returning false tells Lexical that this node does not need its
         // DOM element replacing with a new copy from createDOM.
         return false;
     }
 
-    insertNewAfter(selection, restoreSelection) {
+    insertNewAfter(selection: RangeSelection, restoreSelection?: boolean): Callout|ParagraphNode {
         const anchorOffset = selection ? selection.anchor.offset : 0;
         const newElement = anchorOffset === this.getTextContentSize() || !selection
             ? $createParagraphNode() : $createCalloutNode(this.__category);
@@ -46,14 +62,14 @@ export class Callout extends ElementNode {
         return newElement;
     }
 
-    static importDOM() {
+    static importDOM(): DOMConversionMap|null {
         return {
-            p: node => {
+            p(node: HTMLElement): DOMConversion|null {
                 if (node.classList.contains('callout')) {
                     return {
-                        conversion: element => {
-                            let category = 'info';
-                            const categories = ['info', 'success', 'warning', 'danger'];
+                        conversion: (element: HTMLElement): DOMConversionOutput|null => {
+                            let category: CalloutCategory = 'info';
+                            const categories: CalloutCategory[] = ['info', 'success', 'warning', 'danger'];
 
                             for (const c of categories) {
                                 if (element.classList.contains(c)) {
@@ -74,7 +90,7 @@ export class Callout extends ElementNode {
         };
     }
 
-    exportJSON() {
+    exportJSON(): SerializedCalloutNode {
         return {
             ...super.exportJSON(),
             type: 'callout',
@@ -83,16 +99,16 @@ export class Callout extends ElementNode {
         };
     }
 
-    static importJSON(serializedNode) {
+    static importJSON(serializedNode: SerializedCalloutNode): Callout {
         return $createCalloutNode(serializedNode.category);
     }
 
 }
 
-export function $createCalloutNode(category = 'info') {
+export function $createCalloutNode(category: CalloutCategory = 'info') {
     return new Callout(category);
 }
 
-export function $isCalloutNode(node) {
+export function $isCalloutNode(node: LexicalNode | null | undefined) {
     return node instanceof Callout;
 }
