@@ -1,85 +1,23 @@
-import {$getRoot, createEditor, ElementNode} from 'lexical';
+import {
+    $createParagraphNode,
+    $getRoot,
+    $getSelection,
+    COMMAND_PRIORITY_LOW,
+    createCommand,
+    createEditor
+} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
-import {HeadingNode, QuoteNode, registerRichText} from '@lexical/rich-text';
-import {mergeRegister} from '@lexical/utils';
+import {registerRichText} from '@lexical/rich-text';
+import {$getNearestBlockElementAncestorOrThrow, mergeRegister} from '@lexical/utils';
 import {$generateNodesFromDOM} from '@lexical/html';
-
-class CalloutParagraph extends ElementNode {
-    __category = 'info';
-
-    static getType() {
-        return 'callout';
-    }
-
-    static clone(node) {
-        return new CalloutParagraph(node.__category, node.__key);
-    }
-
-    constructor(category, key) {
-        super(key);
-        this.__category = category;
-    }
-
-    createDOM(_config, _editor) {
-        const dom = document.createElement('p');
-        dom.classList.add('callout', this.__category || '');
-        return dom;
-    }
-
-    updateDOM(prevNode, dom) {
-        // Returning false tells Lexical that this node does not need its
-        // DOM element replacing with a new copy from createDOM.
-        return false;
-    }
-
-    static importDOM() {
-        return {
-            p: node => {
-                if (node.classList.contains('callout')) {
-                    return {
-                        conversion: element => {
-                            let category = 'info';
-                            const categories = ['info', 'success', 'warning', 'danger'];
-
-                            for (const c of categories) {
-                                if (element.classList.contains(c)) {
-                                    category = c;
-                                    break;
-                                }
-                            }
-
-                            return {
-                                node: new CalloutParagraph(category),
-                            };
-                        },
-                        priority: 3,
-                    }
-                }
-                return null;
-            }
-        }
-    }
-
-    exportJSON() {
-        return {
-            ...super.exportJSON(),
-            type: 'callout',
-            version: 1,
-            category: this.__category,
-        };
-    }
-}
-
-// TODO - Extract callout to own file
-// TODO - Add helper functions
-//   https://lexical.dev/docs/concepts/nodes#creating-custom-nodes
+import {getNodesForPageEditor} from "./nodes/index.js";
+import {$createCalloutNode, $isCalloutNode} from "./nodes/callout.js";
+import {$setBlocksType} from "@lexical/selection";
 
 export function createPageEditorInstance(editArea) {
-    console.log('creating editor', editArea);
-
     const config = {
         namespace: 'BookStackPageEditor',
-        nodes: [HeadingNode, QuoteNode, CalloutParagraph],
+        nodes: getNodesForPageEditor(),
         onError: console.error,
     };
 
@@ -105,5 +43,28 @@ export function createPageEditorInstance(editArea) {
     editor.registerUpdateListener(({editorState}) => {
         console.log('editorState', editorState.toJSON());
         debugView.textContent = JSON.stringify(editorState.toJSON(), null, 2);
+    });
+
+    // Todo - How can we store things like IDs and alignment?
+    //   Node overrides?
+    //   https://lexical.dev/docs/concepts/node-replacement
+
+    // Example of creating, registering and using a custom command
+
+    const SET_BLOCK_CALLOUT_COMMAND = createCommand();
+    editor.registerCommand(SET_BLOCK_CALLOUT_COMMAND, (category = 'info') => {
+        const selection = $getSelection();
+        const blockElement = $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]);
+        if ($isCalloutNode(blockElement)) {
+            $setBlocksType(selection, $createParagraphNode);
+        } else {
+            $setBlocksType(selection, () => $createCalloutNode(category));
+        }
+        return true;
+    }, COMMAND_PRIORITY_LOW);
+
+    const button = document.getElementById('lexical-button');
+    button.addEventListener('click', event => {
+        editor.dispatchCommand(SET_BLOCK_CALLOUT_COMMAND, 'info');
     });
 }

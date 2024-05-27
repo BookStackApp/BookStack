@@ -6,6 +6,10 @@
      option:wysiwyg-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
      class="">
 
+    <div>
+        <button type="button" id="lexical-button">Callout</button>
+    </div>
+
     <div refs="wysiwyg-editor@edit-area" contenteditable="true">
         <p>Some content here</p>
         <h2>List below this h2 header</h2>

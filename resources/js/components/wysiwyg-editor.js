@@ -25,6 +25,7 @@ export class WysiwygEditor extends Component {
      * @return {{html: String}}
      */
     getContent() {
+        // TODO - Update
         return {
             html: this.editor.getContent(),
         };

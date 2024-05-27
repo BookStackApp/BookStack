@@ -44,6 +44,7 @@
     "@lexical/history": "^0.15.0",
     "@lexical/html": "^0.15.0",
     "@lexical/rich-text": "^0.15.0",
+    "@lexical/selection": "^0.15.0",
     "@lexical/utils": "^0.15.0",
     "@lezer/highlight": "^1.2.0",
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
