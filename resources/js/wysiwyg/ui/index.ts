@@ -1,30 +1,31 @@
 import {
     $getSelection,
-    BaseSelection,
     COMMAND_PRIORITY_LOW,
     LexicalEditor,
     SELECTION_CHANGE_COMMAND
 } from "lexical";
-import {$createCalloutNode, $isCalloutNodeOfCategory} from "../nodes/callout";
-import {selectionContainsNodeType, toggleSelectionBlockNodeType} from "../helpers";
 import {EditorButton, EditorButtonDefinition} from "./editor-button";
+import {
+    blockquoteButton, boldButton, codeButton,
+    dangerCalloutButton,
+    h2Button,
+    h3Button, h4Button, h5Button,
+    infoCalloutButton, italicButton, paragraphButton, redoButton, strikethroughButton, subscriptButton,
+    successCalloutButton, superscriptButton, underlineButton, undoButton,
+    warningCalloutButton
+} from "./buttons";
 
-const calloutButton: EditorButtonDefinition = {
-    label: 'Info Callout',
-    action(editor: LexicalEditor) {
-        toggleSelectionBlockNodeType(
-            editor,
-            (node) => $isCalloutNodeOfCategory(node, 'info'),
-            () => $createCalloutNode('info'),
-        )
-    },
-    isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, (node) => $isCalloutNodeOfCategory(node, 'info'));
-    }
-}
+
 
 const toolbarButtonDefinitions: EditorButtonDefinition[] = [
-    calloutButton,
+    undoButton, redoButton,
+
+    infoCalloutButton, warningCalloutButton, dangerCalloutButton, successCalloutButton,
+    h2Button, h3Button, h4Button, h5Button,
+    blockquoteButton, paragraphButton,
+
+    boldButton, italicButton, underlineButton, strikethroughButton,
+    superscriptButton, subscriptButton, codeButton,
 ];
 
 export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
