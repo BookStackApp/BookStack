@@ -33,6 +33,16 @@ export class CalloutNode extends ElementNode {
         this.__category = category;
     }
 
+    setCategory(category: CalloutCategory) {
+        const self = this.getWritable();
+        self.__category = category;
+    }
+
+    getCategory(): CalloutCategory {
+        const self = this.getLatest();
+        return self.__category;
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('p');
         element.classList.add('callout', this.__category || '');
@@ -111,4 +121,8 @@ export function $createCalloutNode(category: CalloutCategory = 'info') {
 
 export function $isCalloutNode(node: LexicalNode | null | undefined) {
     return node instanceof CalloutNode;
+}
+
+export function $isCalloutNodeOfCategory(node: LexicalNode | null | undefined, category: CalloutCategory = 'info') {
+    return node instanceof CalloutNode && (node as CalloutNode).getCategory() === category;
 }
