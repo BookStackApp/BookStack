@@ -6,9 +6,11 @@
      option:wysiwyg-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
      class="">
 
-    <div>
-        <button type="button" id="lexical-button">Callout</button>
-    </div>
+    <style>
+        .editor-toolbar-button-active {
+            background-color: tomato;
+        }
+    </style>
 
     <div refs="wysiwyg-editor@edit-area" contenteditable="true">
         <p id="Content!">Some <strong>content</strong> here</p>
