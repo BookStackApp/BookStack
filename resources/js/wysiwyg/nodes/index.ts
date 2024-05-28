@@ -1,14 +1,22 @@
 import {HeadingNode, QuoteNode} from '@lexical/rich-text';
-import {Callout} from './callout';
-import {KlassConstructor, LexicalNode} from "lexical";
+import {CalloutNode} from './callout';
+import {KlassConstructor, LexicalNode, LexicalNodeReplacement, ParagraphNode} from "lexical";
+import {CustomParagraphNode} from "./custom-paragraph";
 
 /**
  * Load the nodes for lexical.
  */
-export function getNodesForPageEditor(): KlassConstructor<typeof LexicalNode>[] {
+export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> | LexicalNodeReplacement)[] {
     return [
-        Callout,
-        HeadingNode,
-        QuoteNode,
+        CalloutNode, // Todo - Create custom
+        HeadingNode, // Todo - Create custom
+        QuoteNode, // Todo - Create custom
+        CustomParagraphNode,
+        {
+            replace: ParagraphNode,
+            with: (node: ParagraphNode) => {
+                return new CustomParagraphNode();
+            }
+        }
     ];
 }

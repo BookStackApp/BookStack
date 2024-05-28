@@ -11,7 +11,7 @@
     </div>
 
     <div refs="wysiwyg-editor@edit-area" contenteditable="true">
-        <p>Some content here</p>
+        <p id="Content!">Some <strong>content</strong> here</p>
         <h2>List below this h2 header</h2>
         <ul>
             <li>Hello</li>

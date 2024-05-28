@@ -16,7 +16,7 @@ export type SerializedCalloutNode = Spread<{
     category: CalloutCategory;
 }, SerializedElementNode>
 
-export class Callout extends ElementNode {
+export class CalloutNode extends ElementNode {
 
     __category: CalloutCategory = 'info';
 
@@ -24,8 +24,8 @@ export class Callout extends ElementNode {
         return 'callout';
     }
 
-    static clone(node: Callout) {
-        return new Callout(node.__category, node.__key);
+    static clone(node: CalloutNode) {
+        return new CalloutNode(node.__category, node.__key);
     }
 
     constructor(category: CalloutCategory, key?: string) {
@@ -45,7 +45,7 @@ export class Callout extends ElementNode {
         return false;
     }
 
-    insertNewAfter(selection: RangeSelection, restoreSelection?: boolean): Callout|ParagraphNode {
+    insertNewAfter(selection: RangeSelection, restoreSelection?: boolean): CalloutNode|ParagraphNode {
         const anchorOffset = selection ? selection.anchor.offset : 0;
         const newElement = anchorOffset === this.getTextContentSize() || !selection
             ? $createParagraphNode() : $createCalloutNode(this.__category);
@@ -79,7 +79,7 @@ export class Callout extends ElementNode {
                             }
 
                             return {
-                                node: new Callout(category),
+                                node: new CalloutNode(category),
                             };
                         },
                         priority: 3,
@@ -99,16 +99,16 @@ export class Callout extends ElementNode {
         };
     }
 
-    static importJSON(serializedNode: SerializedCalloutNode): Callout {
+    static importJSON(serializedNode: SerializedCalloutNode): CalloutNode {
         return $createCalloutNode(serializedNode.category);
     }
 
 }
 
 export function $createCalloutNode(category: CalloutCategory = 'info') {
-    return new Callout(category);
+    return new CalloutNode(category);
 }
 
 export function $isCalloutNode(node: LexicalNode | null | undefined) {
-    return node instanceof Callout;
+    return node instanceof CalloutNode;
 }
