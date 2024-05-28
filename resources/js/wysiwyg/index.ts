@@ -45,10 +45,6 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         debugView.textContent = JSON.stringify(editorState.toJSON(), null, 2);
     });
 
-    // Todo - How can we store things like IDs and alignment?
-    //   Node overrides?
-    //   https://lexical.dev/docs/concepts/node-replacement
-
     // Example of creating, registering and using a custom command
 
     const SET_BLOCK_CALLOUT_COMMAND = createCommand();
