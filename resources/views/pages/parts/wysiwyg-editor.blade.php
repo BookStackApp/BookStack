@@ -14,6 +14,7 @@
 
     <div refs="wysiwyg-editor@edit-area" contenteditable="true">
         <p id="Content!">Some <strong>content</strong> here</p>
+        <p>This has a <a href="https://example.com" target="_blank" title="Link to example">link</a> in it</p>
         <h2>List below this h2 header</h2>
         <ul>
             <li>Hello</li>

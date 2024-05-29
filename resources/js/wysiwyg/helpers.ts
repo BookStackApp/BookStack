@@ -3,13 +3,29 @@ import {
     $getSelection,
     $isTextNode,
     BaseSelection,
-    ElementFormatType,
     LexicalEditor, TextFormatType
 } from "lexical";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {$setBlocksType} from "@lexical/selection";
-import {TextNodeThemeClasses} from "lexical/LexicalEditor";
+
+export function el(tag: string, attrs: Record<string, string> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
+    const el = document.createElement(tag);
+    const attrKeys = Object.keys(attrs);
+    for (const attr of attrKeys) {
+        el.setAttribute(attr, attrs[attr]);
+    }
+
+    for (const child of children) {
+        if (typeof child === 'string') {
+            el.append(document.createTextNode(child));
+        } else {
+            el.append(child);
+        }
+    }
+
+    return el;
+}
 
 export function selectionContainsNodeType(selection: BaseSelection|null, matcher: LexicalNodeMatcher): boolean {
     if (!selection) {

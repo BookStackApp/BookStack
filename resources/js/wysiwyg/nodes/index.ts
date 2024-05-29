@@ -2,6 +2,7 @@ import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {CalloutNode} from './callout';
 import {ElementNode, KlassConstructor, LexicalNode, LexicalNodeReplacement, ParagraphNode} from "lexical";
 import {CustomParagraphNode} from "./custom-paragraph";
+import {LinkNode} from "@lexical/link";
 
 /**
  * Load the nodes for lexical.
@@ -17,7 +18,8 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
             with: (node: ParagraphNode) => {
                 return new CustomParagraphNode();
             }
-        }
+        },
+        LinkNode,
     ];
 }
 
