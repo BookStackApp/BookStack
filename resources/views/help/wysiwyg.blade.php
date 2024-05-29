@@ -98,11 +98,11 @@
             </tr>
             <tr>
                 <td>
-                    <code>Ctrl</code>+<code>Shift</code>+<code>8</code><br>
+                    <code>Ctrl</code>+<code>8</code><br>
                     <code>Ctrl</code>+<code>Shift</code>+<code>E</code>
                 </td>
                 <td>
-                    <code>Cmd</code>+<code>Shift</code>+<code>8</code><br>
+                    <code>Cmd</code>+<code>8</code><br>
                     <code>Cmd</code>+<code>Shift</code>+<code>E</code>
                 </td>
                 <td>{{ trans('editor.inline_code') }}</td>
