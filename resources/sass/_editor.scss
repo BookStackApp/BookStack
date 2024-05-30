@@ -1,0 +1,49 @@
+// Main UI elements
+.editor-toolbar-main {
+  display: flex;
+}
+
+// Buttons
+.editor-button {
+  border: 1px solid #DDD;
+  font-size: 12px;
+  padding: 4px 6px;
+  color: #444;
+}
+.editor-button:hover {
+  background-color: #EEE;
+  cursor: pointer;
+  color: #000;
+}
+.editor-button-active, .editor-button-active:hover {
+  background-color: #ceebff;
+  color: #000;
+}
+.editor-button-format-preview {
+  padding: 4px 6px;
+  display: block;
+}
+
+// Containers
+.editor-dropdown-menu-container {
+    position: relative;
+}
+.editor-dropdown-menu {
+  position: absolute;
+  background-color: #FFF;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
+  z-index: 99;
+  min-width: 120px;
+}
+.editor-menu-list {
+  display: flex;
+  flex-direction: column;
+}
+.editor-menu-list > .editor-button {
+  border-bottom: 0;
+  text-align: start;
+}
+
+.editor-format-menu .editor-dropdown-menu {
+  min-width: 320px;
+}
