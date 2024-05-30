@@ -1,4 +1,4 @@
-import {EditorButton} from "./framework/buttons";
+import {EditorButton, FormatPreviewButton} from "./framework/buttons";
 import {
     blockquote, bold, code,
     dangerCallout,
@@ -9,25 +9,26 @@ import {
     undo,
     warningCallout
 } from "./defaults/button-definitions";
-import {EditorContainerUiElement, EditorFormatMenu} from "./framework/containers";
+import {EditorContainerUiElement, EditorFormatMenu, EditorSimpleClassContainer} from "./framework/containers";
+import {el} from "../helpers";
 
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
-    return new EditorContainerUiElement([
+    return new EditorSimpleClassContainer('editor-toolbar-main', [
         new EditorButton(undo),
         new EditorButton(redo),
 
         new EditorFormatMenu([
-            new EditorButton(h2),
-            new EditorButton(h3),
-            new EditorButton(h4),
-            new EditorButton(h5),
-            new EditorButton(blockquote),
-            new EditorButton(paragraph),
-            new EditorButton(infoCallout),
-            new EditorButton(successCallout),
-            new EditorButton(warningCallout),
-            new EditorButton(dangerCallout),
+            new FormatPreviewButton(el('h2'), h2),
+            new FormatPreviewButton(el('h3'), h3),
+            new FormatPreviewButton(el('h4'), h4),
+            new FormatPreviewButton(el('h5'), h5),
+            new FormatPreviewButton(el('blockquote'), blockquote),
+            new FormatPreviewButton(el('p'), paragraph),
+            new FormatPreviewButton(el('p', {class: 'callout info'}), infoCallout),
+            new FormatPreviewButton(el('p', {class: 'callout success'}), successCallout),
+            new FormatPreviewButton(el('p', {class: 'callout warning'}), warningCallout),
+            new FormatPreviewButton(el('p', {class: 'callout danger'}), dangerCallout),
         ]),
 
         new EditorButton(bold),
