@@ -1,4 +1,5 @@
 import {BaseSelection, LexicalEditor} from "lexical";
+import {EditorUIManager} from "./manager";
 
 export type EditorUiStateUpdate = {
     editor: LexicalEditor,
@@ -7,6 +8,8 @@ export type EditorUiStateUpdate = {
 
 export type EditorUiContext = {
     editor: LexicalEditor,
+    translate: (text: string) => string,
+    manager: EditorUIManager,
 };
 
 export abstract class EditorUiElement {
@@ -35,5 +38,11 @@ export abstract class EditorUiElement {
         return this.dom;
     }
 
-    abstract updateState(state: EditorUiStateUpdate): void;
+    trans(text: string) {
+        return this.getContext().translate(text);
+    }
+
+    updateState(state: EditorUiStateUpdate): void {
+        return;
+    }
 }

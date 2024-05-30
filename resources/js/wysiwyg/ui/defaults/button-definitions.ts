@@ -3,7 +3,6 @@ import {
     $createParagraphNode,
     $isParagraphNode,
     BaseSelection, FORMAT_TEXT_COMMAND,
-    LexicalEditor,
     LexicalNode,
     REDO_COMMAND, TextFormatType,
     UNDO_COMMAND
@@ -19,11 +18,12 @@ import {
     HeadingTagType
 } from "@lexical/rich-text";
 import {$isLinkNode, $toggleLink} from "@lexical/link";
+import {EditorUiContext} from "../framework/core";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
-    action(editor: LexicalEditor) {
-        editor.dispatchCommand(UNDO_COMMAND, undefined);
+    action(context: EditorUiContext) {
+        context.editor.dispatchCommand(UNDO_COMMAND, undefined);
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;
@@ -32,8 +32,8 @@ export const undo: EditorButtonDefinition = {
 
 export const redo: EditorButtonDefinition = {
     label: 'Redo',
-    action(editor: LexicalEditor) {
-        editor.dispatchCommand(REDO_COMMAND, undefined);
+    action(context: EditorUiContext) {
+        context.editor.dispatchCommand(REDO_COMMAND, undefined);
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;
@@ -43,9 +43,9 @@ export const redo: EditorButtonDefinition = {
 function buildCalloutButton(category: CalloutCategory, name: string): EditorButtonDefinition {
     return {
         label: `${name} Callout`,
-        action(editor: LexicalEditor) {
+        action(context: EditorUiContext) {
             toggleSelectionBlockNodeType(
-                editor,
+                context.editor,
                 (node) => $isCalloutNodeOfCategory(node, category),
                 () => $createCalloutNode(category),
             )
@@ -68,9 +68,9 @@ const isHeaderNodeOfTag = (node: LexicalNode | null | undefined, tag: HeadingTag
 function buildHeaderButton(tag: HeadingTagType, name: string): EditorButtonDefinition {
     return {
         label: name,
-        action(editor: LexicalEditor) {
+        action(context: EditorUiContext) {
             toggleSelectionBlockNodeType(
-                editor,
+                context.editor,
                 (node) => isHeaderNodeOfTag(node, tag),
                 () => $createHeadingNode(tag),
             )
@@ -88,8 +88,8 @@ export const h5: EditorButtonDefinition = buildHeaderButton('h5', 'Tiny Header')
 
 export const blockquote: EditorButtonDefinition = {
     label: 'Blockquote',
-    action(editor: LexicalEditor) {
-        toggleSelectionBlockNodeType(editor, $isQuoteNode, $createQuoteNode);
+    action(context: EditorUiContext) {
+        toggleSelectionBlockNodeType(context.editor, $isQuoteNode, $createQuoteNode);
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isQuoteNode);
@@ -98,8 +98,8 @@ export const blockquote: EditorButtonDefinition = {
 
 export const paragraph: EditorButtonDefinition = {
     label: 'Paragraph',
-    action(editor: LexicalEditor) {
-        toggleSelectionBlockNodeType(editor, $isParagraphNode, $createParagraphNode);
+    action(context: EditorUiContext) {
+        toggleSelectionBlockNodeType(context.editor, $isParagraphNode, $createParagraphNode);
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isParagraphNode);
@@ -109,8 +109,8 @@ export const paragraph: EditorButtonDefinition = {
 function buildFormatButton(label: string, format: TextFormatType): EditorButtonDefinition {
     return {
         label: label,
-        action(editor: LexicalEditor) {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
+        action(context: EditorUiContext) {
+            context.editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
         },
         isActive(selection: BaseSelection|null): boolean {
             return selectionContainsTextFormat(selection, format);
@@ -132,8 +132,8 @@ export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'co
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
-    action(editor: LexicalEditor) {
-        editor.update(() => {
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
             $toggleLink('http://example.com');
         })
     },
