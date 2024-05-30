@@ -1,5 +1,6 @@
-import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./base-elements";
+import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {el} from "../../helpers";
+import {EditorButton} from "./buttons";
 
 export class EditorContainerUiElement extends EditorUiElement {
     protected children : EditorUiElement[];
@@ -24,6 +25,7 @@ export class EditorContainerUiElement extends EditorUiElement {
     }
 
     setContext(context: EditorUiContext) {
+        super.setContext(context);
         for (const child of this.getChildren()) {
             child.setContext(context);
         }
@@ -54,9 +56,9 @@ export class EditorFormatMenu extends EditorContainerUiElement {
         }, childElements);
 
         const toggle = el('button', {
-            class: 'editor-format-menu-toggle',
+            class: 'editor-format-menu-toggle editor-button',
             type: 'button',
-        }, ['Formats']);
+        }, [this.trans('Formats')]);
 
         const wrapper = el('div', {
             class: 'editor-format-menu editor-dropdown-menu-container',
@@ -87,5 +89,25 @@ export class EditorFormatMenu extends EditorContainerUiElement {
         menu.addEventListener('mouseleave', hide);
 
         return wrapper;
+    }
+
+    updateState(state: EditorUiStateUpdate) {
+        super.updateState(state);
+
+        for (const child of this.children) {
+            if (child instanceof EditorButton && child.isActive()) {
+                this.updateToggleLabel(child.getLabel());
+                return;
+            }
+        }
+
+        this.updateToggleLabel(this.trans('Formats'));
+    }
+
+    protected updateToggleLabel(text: string): void {
+        const button = this.getDOMElement().querySelector('button');
+        if (button) {
+            button.innerText = text;
+        }
     }
 }

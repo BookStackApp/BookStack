@@ -1,15 +1,16 @@
-import {BaseSelection, LexicalEditor} from "lexical";
-import {EditorUiElement, EditorUiStateUpdate} from "./base-elements";
+import {BaseSelection} from "lexical";
+import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {el} from "../../helpers";
 
 export interface EditorButtonDefinition {
     label: string;
-    action: (editor: LexicalEditor) => void;
+    action: (context: EditorUiContext) => void;
     isActive: (selection: BaseSelection|null) => boolean;
 }
 
 export class EditorButton extends EditorUiElement {
     protected definition: EditorButtonDefinition;
+    protected active: boolean = false;
 
     constructor(definition: EditorButtonDefinition) {
         super();
@@ -20,7 +21,7 @@ export class EditorButton extends EditorUiElement {
         const button = el('button', {
             type: 'button',
             class: 'editor-button',
-        }, [this.definition.label]) as HTMLButtonElement;
+        }, [this.getLabel()]) as HTMLButtonElement;
 
         button.addEventListener('click', this.onClick.bind(this));
 
@@ -28,16 +29,24 @@ export class EditorButton extends EditorUiElement {
     }
 
     protected onClick() {
-        this.definition.action(this.getContext().editor);
+        this.definition.action(this.getContext());
     }
 
     updateActiveState(selection: BaseSelection|null) {
-        const isActive = this.definition.isActive(selection);
-        this.dom?.classList.toggle('editor-button-active', isActive);
+        this.active = this.definition.isActive(selection);
+        this.dom?.classList.toggle('editor-button-active', this.active);
     }
 
     updateState(state: EditorUiStateUpdate): void {
         this.updateActiveState(state.selection);
+    }
+
+    isActive(): boolean {
+        return this.active;
+    }
+
+    getLabel(): string {
+        return this.trans(this.definition.label);
     }
 }
 
@@ -55,7 +64,7 @@ export class FormatPreviewButton extends EditorButton {
 
         const preview = el('span', {
             class: 'editor-button-format-preview'
-        }, [this.definition.label]);
+        }, [this.getLabel()]);
 
         const stylesToApply = this.getStylesFromPreview();
         console.log(stylesToApply);
@@ -70,7 +79,7 @@ export class FormatPreviewButton extends EditorButton {
     protected getStylesFromPreview(): Record<string, string> {
         const wrap = el('div', {style: 'display: none', hidden: 'true', class: 'page-content'});
         const sampleClone = this.previewSampleElement.cloneNode() as HTMLElement;
-        sampleClone.textContent = this.definition.label;
+        sampleClone.textContent = this.getLabel();
         wrap.append(sampleClone);
         document.body.append(wrap);
 
