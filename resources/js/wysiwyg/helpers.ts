@@ -3,7 +3,7 @@ import {
     $getSelection,
     $isTextNode,
     BaseSelection,
-    LexicalEditor, TextFormatType
+    LexicalEditor, LexicalNode, TextFormatType
 } from "lexical";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
@@ -28,23 +28,27 @@ export function el(tag: string, attrs: Record<string, string> = {}, children: (s
 }
 
 export function selectionContainsNodeType(selection: BaseSelection|null, matcher: LexicalNodeMatcher): boolean {
+    return getNodeFromSelection(selection, matcher) !== null;
+}
+
+export function getNodeFromSelection(selection: BaseSelection|null, matcher: LexicalNodeMatcher): LexicalNode|null {
     if (!selection) {
-        return false;
+        return null;
     }
 
     for (const node of selection.getNodes()) {
         if (matcher(node)) {
-            return true;
+            return node;
         }
 
         for (const parent of node.getParents()) {
             if (matcher(parent)) {
-                return true;
+                return parent;
             }
         }
     }
 
-    return false;
+    return null;
 }
 
 export function selectionContainsTextFormat(selection: BaseSelection|null, format: TextFormatType): boolean {

@@ -1,13 +1,19 @@
 import {EditorButtonDefinition} from "../framework/buttons";
 import {
-    $createParagraphNode,
-    $isParagraphNode,
+    $createNodeSelection,
+    $createParagraphNode, $getSelection,
+    $isParagraphNode, $setSelection,
     BaseSelection, FORMAT_TEXT_COMMAND,
     LexicalNode,
     REDO_COMMAND, TextFormatType,
     UNDO_COMMAND
 } from "lexical";
-import {selectionContainsNodeType, selectionContainsTextFormat, toggleSelectionBlockNodeType} from "../../helpers";
+import {
+    getNodeFromSelection,
+    selectionContainsNodeType,
+    selectionContainsTextFormat,
+    toggleSelectionBlockNodeType
+} from "../../helpers";
 import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "../../nodes/callout";
 import {
     $createHeadingNode,
@@ -17,7 +23,7 @@ import {
     HeadingNode,
     HeadingTagType
 } from "@lexical/rich-text";
-import {$isLinkNode, $toggleLink} from "@lexical/link";
+import {$isLinkNode, $toggleLink, LinkNode} from "@lexical/link";
 import {EditorUiContext} from "../framework/core";
 
 export const undo: EditorButtonDefinition = {
@@ -133,9 +139,29 @@ export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'co
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
     action(context: EditorUiContext) {
-        context.editor.update(() => {
-            $toggleLink('http://example.com');
-        })
+        const linkModal = context.manager.createModal('link');
+        context.editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const selectedLink = getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+
+            let formDefaults = {};
+            if (selectedLink) {
+                formDefaults = {
+                    url: selectedLink.getURL(),
+                    text: selectedLink.getTextContent(),
+                    title: selectedLink.getTitle(),
+                    target: selectedLink.getTarget(),
+                }
+
+                context.editor.update(() => {
+                    const selection = $createNodeSelection();
+                    selection.add(selectedLink.getKey());
+                    $setSelection(selection);
+                });
+            }
+
+            linkModal.show(formDefaults);
+        });
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isLinkNode);

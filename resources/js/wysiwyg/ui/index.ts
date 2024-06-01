@@ -6,8 +6,7 @@ import {
 } from "lexical";
 import {getMainEditorFullToolbar} from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
-import {EditorForm} from "./framework/forms";
-import {link} from "./defaults/form-definitions";
+import {link as linkFormDefinition} from "./defaults/form-definitions";
 
 export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     const manager = new EditorUIManager();
@@ -16,16 +15,18 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
         manager,
         translate: (text: string): string => text,
     };
+    manager.setContext(context);
 
     // Create primary toolbar
     const toolbar = getMainEditorFullToolbar();
     toolbar.setContext(context);
     element.before(toolbar.getDOMElement());
 
-    // Form test
-    const linkForm = new EditorForm(link);
-    linkForm.setContext(context);
-    element.before(linkForm.getDOMElement());
+    // Register modals
+    manager.registerModal('link', {
+        title: 'Insert/Edit link',
+        form: linkFormDefinition,
+    });
 
     // Update button states on editor selection change
     editor.registerCommand(SELECTION_CHANGE_COMMAND, () => {

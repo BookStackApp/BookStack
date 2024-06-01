@@ -15,9 +15,7 @@ export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefiniti
 
 export interface EditorFormDefinition {
     submitText: string;
-    cancelText: string;
     action: (formData: FormData, context: EditorUiContext) => boolean;
-    cancel: () => void;
     fields: EditorFormFieldDefinition[];
 }
 
@@ -27,6 +25,15 @@ export class EditorFormField extends EditorUiElement {
     constructor(definition: EditorFormFieldDefinition) {
         super();
         this.definition = definition;
+    }
+
+    setValue(value: string) {
+        const input = this.getDOMElement().querySelector('input,select') as HTMLInputElement;
+        input.value = value;
+    }
+
+    getName(): string {
+        return this.definition.name;
     }
 
     protected buildDOM(): HTMLElement {
@@ -51,14 +58,38 @@ export class EditorFormField extends EditorUiElement {
 
 export class EditorForm extends EditorContainerUiElement {
     protected definition: EditorFormDefinition;
+    protected onCancel: null|(() => void) = null;
 
     constructor(definition: EditorFormDefinition) {
         super(definition.fields.map(fieldDefinition => new EditorFormField(fieldDefinition)));
         this.definition = definition;
     }
 
+    setValues(values: Record<string, string>) {
+        for (const name of Object.keys(values)) {
+            const field = this.getFieldByName(name);
+            if (field) {
+                field.setValue(values[name]);
+            }
+        }
+    }
+
+    setOnCancel(callback: () => void) {
+        this.onCancel = callback;
+    }
+
+    protected getFieldByName(name: string): EditorFormField|null {
+        for (const child of this.children as EditorFormField[]) {
+            if (child.getName() === name) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
     protected buildDOM(): HTMLElement {
-        const cancelButton = el('button', {type: 'button', class: 'editor-form-action-secondary'}, [this.trans(this.definition.cancelText)]);
+        const cancelButton = el('button', {type: 'button', class: 'editor-form-action-secondary'}, [this.trans('Cancel')]);
         const form = el('form', {}, [
             ...this.children.map(child => child.getDOMElement()),
             el('div', {class: 'editor-form-actions'}, [
@@ -74,7 +105,9 @@ export class EditorForm extends EditorContainerUiElement {
         });
 
         cancelButton.addEventListener('click', (event) => {
-            this.definition.cancel();
+            if (this.onCancel) {
+                this.onCancel();
+            }
         });
 
         return form;
