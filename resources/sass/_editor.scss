@@ -47,3 +47,29 @@
 .editor-format-menu .editor-dropdown-menu {
   min-width: 320px;
 }
+
+// Modals
+.editor-modal-wrapper {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+.editor-modal {
+  background-color: #FFF;
+  border: 1px solid #DDD;
+  padding: 1rem;
+  border-radius: 4px;
+}
+.editor-modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.editor-modal-title {
+  font-weight: 700;
+}

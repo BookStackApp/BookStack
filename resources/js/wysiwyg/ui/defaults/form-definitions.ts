@@ -1,18 +1,25 @@
-import {EditorFormDefinition, EditorFormFieldDefinition, EditorSelectFormFieldDefinition} from "../framework/forms";
+import {EditorFormDefinition, EditorSelectFormFieldDefinition} from "../framework/forms";
 import {EditorUiContext} from "../framework/core";
+import {$createLinkNode} from "@lexical/link";
+import {$createTextNode, $getSelection} from "lexical";
 
 
 export const link: EditorFormDefinition = {
     submitText: 'Apply',
-    cancelText: 'Cancel',
     action(formData, context: EditorUiContext) {
-        // Todo
-        console.log('link-form-action', formData);
+        context.editor.update(() => {
+
+            const selection = $getSelection();
+
+            const linkNode = $createLinkNode(formData.get('url')?.toString() || '', {
+                title: formData.get('title')?.toString() || '',
+                target: formData.get('target')?.toString() || '',
+            });
+            linkNode.append($createTextNode(formData.get('text')?.toString() || ''));
+
+            selection?.insertNodes([linkNode]);
+        });
         return true;
-    },
-    cancel() {
-        // Todo
-        console.log('link-form-cancel');
     },
     fields: [
         {
