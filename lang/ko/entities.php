@@ -41,7 +41,7 @@ return [
     'export_md' => '마크다운 파일',
     'default_template' => '기본 페이지 템플릿',
     'default_template_explain' => '이 항목 내에서 생성되는 모든 페이지의 기본 콘텐츠로 사용할 페이지 템플릿을 지정합니다. 페이지 작성자가 선택한 템플릿 페이지를 볼 수 있는 권한이 있는 경우에만 이 항목이 사용된다는 점을 유의하세요.',
-    'default_template_select' => 'Select a template page',
+    'default_template_select' => '템플릿 페이지 선택',
 
     // Permissions and restrictions
     'permissions' => '권한',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => '초안 문서 삭제하기',
     'pages_delete_success' => '문서 지움',
     'pages_delete_draft_success' => '초안 문서 지움',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => '이 페이지는 책의 기본 페이지 템플릿으로 사용 중입니다. 이 페이지가 삭제되면 해당하는 책에 더 이상 기본 페이지 템플릿이 적용되지 않습니다.',
     'pages_delete_confirm' => '이 문서를 지울 건가요?',
     'pages_delete_draft_confirm' => '이 초안을 지울 건가요?',
     'pages_editing_named' => ':pageName 수정',
