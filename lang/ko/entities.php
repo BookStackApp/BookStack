@@ -39,8 +39,8 @@ return [
     'export_pdf' => 'PDF 파일',
     'export_text' => '일반 텍스트 파일',
     'export_md' => '마크다운 파일',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
+    'default_template' => '기본 페이지 템플릿',
+    'default_template_explain' => '이 항목 내에서 생성되는 모든 페이지의 기본 콘텐츠로 사용할 페이지 템플릿을 지정합니다. 페이지 작성자가 선택한 템플릿 페이지를 볼 수 있는 권한이 있는 경우에만 이 항목이 사용된다는 점을 유의하세요.',
     'default_template_select' => 'Select a template page',
 
     // Permissions and restrictions
