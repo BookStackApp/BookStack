@@ -67,7 +67,6 @@ export class FormatPreviewButton extends EditorButton {
         }, [this.getLabel()]);
 
         const stylesToApply = this.getStylesFromPreview();
-        console.log(stylesToApply);
         for (const style of Object.keys(stylesToApply)) {
             preview.style.setProperty(style, stylesToApply[style]);
         }
