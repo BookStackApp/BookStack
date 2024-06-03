@@ -9,13 +9,14 @@
     <div class="editor-container">
         <div refs="wysiwyg-editor@edit-area" contenteditable="true">
             <p id="Content!">Some <strong>content</strong> here</p>
+            <p>Content with image in, before text. <img src="https://bookstack.local/bookstack/uploads/images/gallery/2022-03/scaled-1680-/cats-image-2400x1000-2.jpg" width="200" alt="Sleepy meow"> After text.</p>
             <p>This has a <a href="https://example.com" target="_blank" title="Link to example">link</a> in it</p>
             <h2>List below this h2 header</h2>
             <ul>
                 <li>Hello</li>
             </ul>
 
-            <p class="callout danger">
+            <p class="callout info">
                 Hello there, this is an info callout
             </p>
         </div>
