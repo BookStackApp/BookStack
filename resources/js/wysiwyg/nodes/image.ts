@@ -80,7 +80,6 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
     setWidth(width: number): void {
         const self = this.getWritable();
         self.__width = width;
-        console.log('widrg', width)
     }
 
     getWidth(): number {
