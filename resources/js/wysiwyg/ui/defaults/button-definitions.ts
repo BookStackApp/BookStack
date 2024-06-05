@@ -25,6 +25,7 @@ import {
 } from "@lexical/rich-text";
 import {$isLinkNode, $toggleLink, LinkNode} from "@lexical/link";
 import {EditorUiContext} from "../framework/core";
+import {$isImageNode, ImageNode} from "../../nodes/image";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -165,6 +166,38 @@ export const link: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isLinkNode);
+    }
+};
+
+export const image: EditorButtonDefinition = {
+    label: 'Insert/Edit Image',
+    action(context: EditorUiContext) {
+        const imageModal = context.manager.createModal('image');
+        const selection = context.lastSelection;
+        const selectedImage = getNodeFromSelection(selection, $isImageNode) as ImageNode|null;
+
+        context.editor.getEditorState().read(() => {
+            let formDefaults = {};
+            if (selectedImage) {
+                formDefaults = {
+                    src: selectedImage.getSrc(),
+                    alt: selectedImage.getAltText(),
+                    height: selectedImage.getHeight(),
+                    width: selectedImage.getWidth(),
+                }
+
+                context.editor.update(() => {
+                    const selection = $createNodeSelection();
+                    selection.add(selectedImage.getKey());
+                    $setSelection(selection);
+                });
+            }
+
+            imageModal.show(formDefaults);
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return selectionContainsNodeType(selection, $isImageNode);
     }
 };
 

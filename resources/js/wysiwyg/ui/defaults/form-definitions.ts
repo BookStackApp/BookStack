@@ -2,6 +2,7 @@ import {EditorFormDefinition, EditorSelectFormFieldDefinition} from "../framewor
 import {EditorUiContext} from "../framework/core";
 import {$createLinkNode} from "@lexical/link";
 import {$createTextNode, $getSelection} from "lexical";
+import {$createImageNode} from "../../nodes/image";
 
 
 export const link: EditorFormDefinition = {
@@ -46,5 +47,43 @@ export const link: EditorFormDefinition = {
                 'New window': '_blank',
             }
         } as EditorSelectFormFieldDefinition,
+    ],
+};
+
+export const image: EditorFormDefinition = {
+    submitText: 'Apply',
+    action(formData, context: EditorUiContext) {
+        context.editor.update(() => {
+            const selection = $getSelection();
+            const imageNode = $createImageNode(formData.get('src')?.toString() || '', {
+                alt: formData.get('alt')?.toString() || '',
+                height: Number(formData.get('height')?.toString() || '0'),
+                width: Number(formData.get('width')?.toString() || '0'),
+            });
+            selection?.insertNodes([imageNode]);
+        });
+        return true;
+    },
+    fields: [
+        {
+            label: 'Source',
+            name: 'src',
+            type: 'text',
+        },
+        {
+            label: 'Alternative description',
+            name: 'alt',
+            type: 'text',
+        },
+        {
+            label: 'Width',
+            name: 'width',
+            type: 'text',
+        },
+        {
+            label: 'Height',
+            name: 'height',
+            type: 'text',
+        },
     ],
 };

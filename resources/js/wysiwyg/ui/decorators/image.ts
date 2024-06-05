@@ -88,6 +88,7 @@ export class ImageDecorator extends EditorDecorator {
         let startingHeight = element.clientHeight;
         let startingRatio = startingWidth / startingHeight;
         let hasHeight = false;
+        let firstChange = true;
         context.editor.getEditorState().read(() => {
             startingWidth = node.getWidth() || startingWidth;
             startingHeight = node.getHeight() || startingHeight;
@@ -109,7 +110,7 @@ export class ImageDecorator extends EditorDecorator {
             if (flipYChange) {
                 yChange = 0 - yChange;
             }
-            const balancedChange = Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2));
+            const balancedChange = Math.sqrt(Math.pow(Math.abs(xChange), 2) + Math.pow(Math.abs(yChange), 2));
             const increase = xChange + yChange > 0;
             const directedChange = increase ? balancedChange : 0-balancedChange;
             const newWidth = Math.max(5, Math.round(startingWidth + directedChange));
@@ -118,11 +119,13 @@ export class ImageDecorator extends EditorDecorator {
                 newHeight = newWidth * startingRatio;
             }
 
+            const updateOptions = firstChange ? {} : {tag: 'history-merge'};
             context.editor.update(() => {
                 const node = this.getNode() as ImageNode;
                 node.setWidth(newWidth);
                 node.setHeight(newHeight);
-            });
+            }, updateOptions);
+            firstChange = false;
         };
 
         const mouseUpListener = (event: MouseEvent) => {
