@@ -7,48 +7,65 @@ import {ImageNode} from "../../nodes/image";
 
 export class ImageDecorator extends EditorDecorator {
     protected dom: HTMLElement|null = null;
+    protected dragLastMouseUp: number = 0;
 
     buildDOM(context: EditorUiContext) {
-        const handleClasses = ['nw', 'ne', 'se', 'sw'];
-        const handleEls = handleClasses.map(c => {
-            return el('div', {class: `editor-image-decorator-handle ${c}`});
-        });
-
+        let handleElems: HTMLElement[] = [];
         const decorateEl = el('div', {
             class: 'editor-image-decorator',
-        }, handleEls);
+        }, []);
+        let selected = false;
 
         const windowClick = (event: MouseEvent) => {
-            if (!decorateEl.contains(event.target as Node)) {
+            if (!decorateEl.contains(event.target as Node) && (Date.now() - this.dragLastMouseUp > 100)) {
                 unselect();
             }
         };
 
+        const mouseDown = (event: MouseEvent) => {
+            const handle = (event.target as HTMLElement).closest('.editor-image-decorator-handle') as HTMLElement|null;
+            if (handle) {
+                // handlingResize = true;
+                this.startHandlingResize(handle, event, context);
+            }
+        };
+
         const select = () => {
+            if (selected) {
+                return;
+            }
+
+            selected = true;
             decorateEl.classList.add('selected');
             window.addEventListener('click', windowClick);
-        };
 
-        const unselect = () => {
-            decorateEl.classList.remove('selected');
-            window.removeEventListener('click', windowClick);
-        };
+            const handleClasses = ['nw', 'ne', 'se', 'sw'];
+            handleElems = handleClasses.map(c => {
+                return el('div', {class: `editor-image-decorator-handle ${c}`});
+            });
+            decorateEl.append(...handleElems);
+            decorateEl.addEventListener('mousedown', mouseDown);
 
-        decorateEl.addEventListener('click', (event) => {
             context.editor.update(() => {
                 const nodeSelection = $createNodeSelection();
                 nodeSelection.add(this.getNode().getKey());
                 $setSelection(nodeSelection);
             });
+        };
 
-            select();
-        });
-
-        decorateEl.addEventListener('mousedown', (event: MouseEvent) => {
-            const handle = (event.target as Element).closest('.editor-image-decorator-handle');
-            if (handle) {
-                this.startHandlingResize(handle, event, context);
+        const unselect = () => {
+            selected = false;
+            // handlingResize = false;
+            decorateEl.classList.remove('selected');
+            window.removeEventListener('click', windowClick);
+            decorateEl.removeEventListener('mousedown', mouseDown);
+            for (const el of handleElems) {
+                el.remove();
             }
+        };
+
+        decorateEl.addEventListener('click', (event) => {
+            select();
         });
 
         return decorateEl;
@@ -63,26 +80,56 @@ export class ImageDecorator extends EditorDecorator {
         return this.dom;
     }
 
-    startHandlingResize(element: Node, event: MouseEvent, context: EditorUiContext) {
+    startHandlingResize(element: HTMLElement, event: MouseEvent, context: EditorUiContext) {
         const startingX = event.screenX;
         const startingY = event.screenY;
+        const node = this.getNode() as ImageNode;
+        let startingWidth = element.clientWidth;
+        let startingHeight = element.clientHeight;
+        let startingRatio = startingWidth / startingHeight;
+        let hasHeight = false;
+        context.editor.getEditorState().read(() => {
+            startingWidth = node.getWidth() || startingWidth;
+            startingHeight = node.getHeight() || startingHeight;
+            if (node.getHeight()) {
+                hasHeight = true;
+            }
+            startingRatio = startingWidth / startingHeight;
+        });
+
+        const flipXChange = element.classList.contains('nw') || element.classList.contains('sw');
+        const flipYChange = element.classList.contains('nw') || element.classList.contains('ne');
 
         const mouseMoveListener = (event: MouseEvent) => {
-            const xChange = event.screenX - startingX;
-            const yChange = event.screenY - startingY;
-            console.log({ xChange, yChange });
+            let xChange = event.screenX - startingX;
+            if (flipXChange) {
+                xChange = 0 - xChange;
+            }
+            let yChange = event.screenY - startingY;
+            if (flipYChange) {
+                yChange = 0 - yChange;
+            }
+            const balancedChange = Math.sqrt(Math.pow(xChange, 2) + Math.pow(yChange, 2));
+            const increase = xChange + yChange > 0;
+            const directedChange = increase ? balancedChange : 0-balancedChange;
+            const newWidth = Math.max(5, Math.round(startingWidth + directedChange));
+            let newHeight = 0;
+            if (hasHeight) {
+                newHeight = newWidth * startingRatio;
+            }
 
             context.editor.update(() => {
                 const node = this.getNode() as ImageNode;
-                node.setWidth(node.getWidth() + xChange);
-                node.setHeight(node.getHeight() + yChange);
+                node.setWidth(newWidth);
+                node.setHeight(newHeight);
             });
         };
 
         const mouseUpListener = (event: MouseEvent) => {
             window.removeEventListener('mousemove', mouseMoveListener);
             window.removeEventListener('mouseup', mouseUpListener);
-        }
+            this.dragLastMouseUp = Date.now();
+        };
 
         window.addEventListener('mousemove', mouseMoveListener);
         window.addEventListener('mouseup', mouseUpListener);
