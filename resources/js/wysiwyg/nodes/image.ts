@@ -57,6 +57,16 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
         }
     }
 
+    setSrc(src: string): void {
+        const self = this.getWritable();
+        self.__src = src;
+    }
+
+    getSrc(): string {
+        const self = this.getLatest();
+        return self.__src;
+    }
+
     setAltText(altText: string): void {
         const self = this.getWritable();
         self.__alt = altText;

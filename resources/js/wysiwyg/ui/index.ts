@@ -6,18 +6,20 @@ import {
 } from "lexical";
 import {getMainEditorFullToolbar} from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
-import {link as linkFormDefinition} from "./defaults/form-definitions";
+import {image as imageFormDefinition, link as linkFormDefinition} from "./defaults/form-definitions";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorDecoratorAdapter} from "./framework/decorator";
 import {ImageDecorator} from "./decorators/image";
+import {EditorUiContext} from "./framework/core";
 
 export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     const manager = new EditorUIManager();
-    const context = {
+    const context: EditorUiContext = {
         editor,
         manager,
         translate: (text: string): string => text,
+        lastSelection: null,
     };
     manager.setContext(context);
 
@@ -31,6 +33,10 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
         title: 'Insert/Edit link',
         form: linkFormDefinition,
     });
+    manager.registerModal('image', {
+        title: 'Insert/Edit Image',
+        form: imageFormDefinition
+    })
 
     // Register decorator listener
     // Maybe move to manager?
@@ -54,6 +60,7 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     editor.registerCommand(SELECTION_CHANGE_COMMAND, () => {
         const selection = $getSelection();
         toolbar.updateState({editor, selection});
+        context.lastSelection = selection;
         return false;
     }, COMMAND_PRIORITY_LOW);
 }

@@ -10,6 +10,7 @@ export type EditorUiContext = {
     editor: LexicalEditor,
     translate: (text: string) => string,
     manager: EditorUIManager,
+    lastSelection: BaseSelection|null,
 };
 
 export abstract class EditorUiElement {

@@ -2,7 +2,7 @@ import {EditorButton, FormatPreviewButton} from "./framework/buttons";
 import {
     blockquote, bold, code,
     dangerCallout,
-    h2, h3, h4, h5,
+    h2, h3, h4, h5, image,
     infoCallout, italic, link, paragraph,
     redo, strikethrough, subscript,
     successCallout, superscript, underline,
@@ -40,5 +40,6 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(code),
 
         new EditorButton(link),
+        new EditorButton(image),
     ]);
 }
