@@ -9,6 +9,7 @@ import {
 } from "lexical";
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {el} from "../helpers";
+import {EditorDecoratorAdapter} from "../ui/framework/decorator";
 
 export interface ImageNodeOptions {
     alt?: string;
@@ -23,7 +24,7 @@ export type SerializedImageNode = Spread<{
     height: number;
 }, SerializedLexicalNode>
 
-export class ImageNode extends DecoratorNode<HTMLElement> {
+export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
     __src: string = '';
     __alt: string = '';
     __width: number = 0;
@@ -79,6 +80,7 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
     setWidth(width: number): void {
         const self = this.getWritable();
         self.__width = width;
+        console.log('widrg', width)
     }
 
     getWidth(): number {
@@ -90,17 +92,16 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
         return true;
     }
 
-    decorate(editor: LexicalEditor, config: EditorConfig): HTMLElement {
-        console.log('decorate!');
-        return el('div', {
-            class: 'editor-image-decorator',
-        }, ['decoration!!!']);
+    decorate(editor: LexicalEditor, config: EditorConfig): EditorDecoratorAdapter {
+        return {
+            type: 'image',
+            getNode: () => this,
+        };
     }
 
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('img');
         element.setAttribute('src', this.__src);
-        element.textContent
 
         if (this.__width) {
             element.setAttribute('width', String(this.__width));
@@ -116,9 +117,38 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
         ]);
     }
 
-    updateDOM(prevNode: unknown, dom: HTMLElement) {
-        // Returning false tells Lexical that this node does not need its
-        // DOM element replacing with a new copy from createDOM.
+    updateDOM(prevNode: ImageNode, dom: HTMLElement) {
+        const image = dom.querySelector('img');
+        if (!image) return false;
+
+        if (prevNode.__src !== this.__src) {
+            image.setAttribute('src', this.__src);
+        }
+
+        if (prevNode.__width !== this.__width) {
+            if (this.__width) {
+                image.setAttribute('width', String(this.__width));
+            } else {
+                image.removeAttribute('width');
+            }
+        }
+
+        if (prevNode.__height !== this.__height) {
+            if (this.__height) {
+                image.setAttribute('height', String(this.__height));
+            } else {
+                image.removeAttribute('height');
+            }
+        }
+
+        if (prevNode.__alt !== this.__alt) {
+            if (this.__alt) {
+                image.setAttribute('alt', String(this.__alt));
+            } else {
+                image.removeAttribute('alt');
+            }
+        }
+
         return false;
     }
 

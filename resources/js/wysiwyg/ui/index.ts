@@ -9,7 +9,8 @@ import {EditorUIManager} from "./framework/manager";
 import {link as linkFormDefinition} from "./defaults/form-definitions";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
-import {el} from "../helpers";
+import {EditorDecoratorAdapter} from "./framework/decorator";
+import {ImageDecorator} from "./decorators/image";
 
 export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     const manager = new EditorUIManager();
@@ -33,11 +34,15 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
 
     // Register decorator listener
     // Maybe move to manager?
-    const domDecorateListener: DecoratorListener<HTMLElement> = (decorator: Record<NodeKey, HTMLElement>) => {
-        const keys = Object.keys(decorator);
+    manager.registerDecoratorType('image', ImageDecorator);
+    const domDecorateListener: DecoratorListener<EditorDecoratorAdapter> = (decorators: Record<NodeKey, EditorDecoratorAdapter>) => {
+        const keys = Object.keys(decorators);
         for (const key of keys) {
             const decoratedEl = editor.getElementByKey(key);
-            const decoratorEl = decorator[key];
+            const adapter = decorators[key];
+            const decorator = manager.getDecorator(adapter.type, key);
+            decorator.setNode(adapter.getNode());
+            const decoratorEl = decorator.render(context);
             if (decoratedEl) {
                 decoratedEl.append(decoratorEl);
             }

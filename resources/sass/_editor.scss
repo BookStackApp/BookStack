@@ -1,3 +1,8 @@
+// Common variables
+:root {
+  --editor-color-primary: #206ea7;
+}
+
 // Main UI elements
 .editor-toolbar-main {
   display: flex;
@@ -72,4 +77,47 @@
 }
 .editor-modal-title {
   font-weight: 700;
+}
+
+// In-editor elements
+.editor-image-wrap {
+  position: relative;
+  display: inline-flex;
+}
+.editor-image-decorator {
+  display: inline-block;
+  position: absolute;
+  border: 1px solid var(--editor-color-primary);
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+.editor-image-decorator-handle {
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 10px;
+  background-color: var(--editor-color-primary);
+  user-select: none;
+  &.nw {
+    inset-inline-start: -5px;
+    inset-block-start: -5px;
+    cursor: nw-resize;
+  }
+  &.ne {
+    inset-inline-end: -5px;
+    inset-block-start: -5px;
+    cursor: ne-resize;
+  }
+  &.se {
+    inset-inline-end: -5px;
+    inset-block-end: -5px;
+    cursor: se-resize;
+  }
+  &.sw {
+    inset-inline-start: -5px;
+    inset-block-end: -5px;
+    cursor: sw-resize;
+  }
 }
