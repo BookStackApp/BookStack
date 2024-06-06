@@ -4,6 +4,7 @@ import {ElementNode, KlassConstructor, LexicalNode, LexicalNodeReplacement, Para
 import {CustomParagraphNode} from "./custom-paragraph";
 import {LinkNode} from "@lexical/link";
 import {ImageNode} from "./image";
+import {DetailsNode, SummaryNode} from "./details";
 
 /**
  * Load the nodes for lexical.
@@ -14,6 +15,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         HeadingNode, // Todo - Create custom
         QuoteNode, // Todo - Create custom
         ImageNode,
+        DetailsNode, SummaryNode,
         CustomParagraphNode,
         {
             replace: ParagraphNode,

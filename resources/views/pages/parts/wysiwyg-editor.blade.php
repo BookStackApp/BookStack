@@ -16,6 +16,13 @@
                 <li>Hello</li>
             </ul>
 
+            <details>
+                <summary>Collapsible details/summary block</summary>
+                <p>Inner text here</p>
+                <h4>Inner Header</h4>
+                <p>More text <strong>with bold in</strong> it</p>
+            </details>
+
             <p class="callout info">
                 Hello there, this is an info callout
             </p>

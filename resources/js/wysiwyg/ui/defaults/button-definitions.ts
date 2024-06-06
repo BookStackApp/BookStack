@@ -1,9 +1,9 @@
 import {EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
-    $createParagraphNode, $getSelection,
+    $createParagraphNode, $getRoot, $getSelection, $insertNodes,
     $isParagraphNode, $setSelection,
-    BaseSelection, FORMAT_TEXT_COMMAND,
+    BaseSelection, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
     REDO_COMMAND, TextFormatType,
     UNDO_COMMAND
@@ -26,6 +26,8 @@ import {
 import {$isLinkNode, $toggleLink, LinkNode} from "@lexical/link";
 import {EditorUiContext} from "../framework/core";
 import {$isImageNode, ImageNode} from "../../nodes/image";
+import {$createDetailsNode, $isDetailsNode} from "../../nodes/details";
+import {$insertNodeToNearestRoot} from "@lexical/utils";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -200,4 +202,31 @@ export const image: EditorButtonDefinition = {
         return selectionContainsNodeType(selection, $isImageNode);
     }
 };
+
+export const details: EditorButtonDefinition = {
+    label: 'Insert collapsible block',
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            const selection = $getSelection();
+            const detailsNode = $createDetailsNode();
+            const selectionNodes = selection?.getNodes() || [];
+            const topLevels = selectionNodes.map(n => n.getTopLevelElement())
+                .filter(n => n !== null) as ElementNode[];
+            const uniqueTopLevels = [...new Set(topLevels)];
+
+            if (uniqueTopLevels.length > 0) {
+                uniqueTopLevels[0].insertAfter(detailsNode);
+            } else {
+                $getRoot().append(detailsNode);
+            }
+
+            for (const node of uniqueTopLevels) {
+                detailsNode.append(node);
+            }
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return selectionContainsNodeType(selection, $isDetailsNode);
+    }
+}
 
