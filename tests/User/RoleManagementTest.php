@@ -96,6 +96,31 @@ class RoleManagementTest extends TestCase
         $this->assertActivityExists(ActivityType::ROLE_DELETE);
     }
 
+    public function test_role_external_auth_id_validation()
+    {
+        config()->set('auth.method', 'oidc');
+        $role = Role::query()->first();
+        $routeByMethod = [
+            'post' => '/settings/roles/new',
+            'put' => "/settings/roles/{$role->id}",
+        ];
+
+        foreach ($routeByMethod as $method => $route) {
+            $resp = $this->asAdmin()->get($route);
+            $resp->assertDontSee('The external auth id');
+
+            $resp = $this->asAdmin()->call($method, $route, [
+                'display_name' => 'Test role for auth id validation',
+                'description'  => '',
+                'external_auth_id' => str_repeat('a', 181),
+            ]);
+
+            $resp->assertRedirect($route);
+            $resp = $this->followRedirects($resp);
+            $resp->assertSee('The external auth id may not be greater than 180 characters.');
+        }
+    }
+
     public function test_admin_role_cannot_be_removed_if_user_last_admin()
     {
         /** @var Role $adminRole */
