@@ -1,8 +1,6 @@
 # This is a Docker Compose configuration
 # intended for development purposes only
 
-version: '3'
-
 volumes:
   db: {}
 
