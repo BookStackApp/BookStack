@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplicación para móviles',
     'mfa_option_totp_desc' => 'Para utilizar la autenticación en dos pasos necesitarás una aplicación móvil que soporte TOTP como Google Authenticator, Authy o Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Códigos de Respaldo',
-    'mfa_option_backup_codes_desc' => 'Almacena de forma segura un conjunto de códigos de respaldo de un solo uso que puedes introducir para verificar tu identidad.',
+    'mfa_option_backup_codes_desc' => 'Genera un conjunto de códigos de seguridad de un solo uso que ingresará al iniciar sesión para verificar su identidad. Asegúrese de guardarlos en un lugar seguro.',
     'mfa_gen_confirm_and_enable' => 'Confirmar y Activar',
     'mfa_gen_backup_codes_title' => 'Configuración de Códigos de Respaldo',
     'mfa_gen_backup_codes_desc' => 'Guarda la siguiente lista de códigos en un lugar seguro. Al acceder al sistema podrás usar uno de los códigos como un segundo mecanismo de autenticación.',
