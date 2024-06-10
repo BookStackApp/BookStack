@@ -357,9 +357,9 @@ Link: https://github.com/nunomaduro/termwind.git
 onelogin/php-saml
 License: MIT
 License File: vendor/onelogin/php-saml/LICENSE
-Copyright: Copyright (c) 2010-2016 OneLogin, Inc.
-Source: https://github.com/onelogin/php-saml.git
-Link: https://developers.onelogin.com/saml/php
+Copyright: Copyright (c) 2010-2022 OneLogin, Inc.
+Source: https://github.com/SAML-Toolkits/php-saml.git
+Link: https://github.com/SAML-Toolkits/php-saml
 -----------
 paragonie/constant_time_encoding
 License: MIT
