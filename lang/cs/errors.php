@@ -9,7 +9,7 @@ return [
     'permissionJson' => 'Nemáte povolení k provedení požadované akce.',
 
     // Auth
-    'error_user_exists_different_creds' => 'Uživatel s emailem :email již existuje ale s jinými přihlašovacími údaji.',
+    'error_user_exists_different_creds' => 'Uživatel s emailem :email již existuje, ale s jinými přihlašovacími údaji.',
     'auth_pre_register_theme_prevention' => 'Zadané údaje nedovolují zaregistrovat uživatelský účet',
     'email_already_confirmed' => 'Emailová adresa již byla potvrzena. Zkuste se přihlásit.',
     'email_confirmation_invalid' => 'Tento potvrzovací odkaz již neplatí nebo už byl použit. Zkuste prosím registraci znovu.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Doplněk pro tohoto správce identity nebyl nalezen.',
     'social_driver_not_configured' => 'Nastavení vašeho účtu na :socialAccount není správné. :socialAccount musí mít vaše svolení pro naší aplikaci vás přihlásit.',
     'invite_token_expired' => 'Odkaz v pozvánce již bohužel vypršel. Namísto toho ale můžete zkusit resetovat heslo do Vašeho účtu.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Uživatele pro tuto akci se nepodařilo najít.',
 
     // System
     'path_not_writable' => 'Nelze zapisovat na cestu k souboru :filePath. Zajistěte aby se dalo nahrávat na server.',

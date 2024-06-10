@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplikazio mugikorra',
     'mfa_option_totp_desc' => 'To use multi-factor authentication you\'ll need a mobile application that supports TOTP such as Google Authenticator, Authy or Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup Codes',
-    'mfa_option_backup_codes_desc' => 'Securely store a set of one-time-use backup codes which you can enter to verify your identity.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Baieztatu eta gaitu',
     'mfa_gen_backup_codes_title' => 'Backup Codes Setup',
     'mfa_gen_backup_codes_desc' => 'Store the below list of codes in a safe place. When accessing the system you\'ll be able to use one of the codes as a second authentication mechanism.',

@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => '휴지통이 비었습니다.',
     'recycle_bin_empty' => '비우기',
     'recycle_bin_empty_confirm' => '휴지통을 비울 건가요?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => '이 작업을 수행하면 이 항목이 아래에 나열된 모든 하위 요소와 함께 시스템에서 영구적으로 삭제되며, 복원할 수 없습니다. 이 항목을 영구 삭제하시겠어요?',
     'recycle_bin_destroy_list' => '영구 삭제함',
     'recycle_bin_restore_list' => '복원함',
     'recycle_bin_restore_confirm' => '원래 위치로 복원합니다. 원래 위치의 부모 항목이 지워졌을 경우 부모 항목도 복원해야 합니다.',
@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => '마지막 에러 메시지:',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => '라이선스',
+    'licenses_desc' => '이 페이지에서는 BookStack 내에서 사용되는 프로젝트 및 라이브러리 외에 BookStack 라이선스 정보를 자세히 설명합니다. 나열된 프로젝트는 개발 용도로만 사용할 수 있습니다.',
+    'licenses_bookstack' => 'BookStack 라이선스',
+    'licenses_php' => 'PHP 라이브러리 라이선스',
+    'licenses_js' => 'JavaScript 라이브러리 라이선스',
+    'licenses_other' => '기타 라이선스',
+    'license_details' => '라이선스 세부 사항',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplicație mobilă',
     'mfa_option_totp_desc' => 'Pentru a utiliza autentificarea multifactor, vei avea nevoie de o aplicație mobilă care acceptă TOTP, cum ar fi Google Authenticator, Authy sau Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Coduri de rezervă',
-    'mfa_option_backup_codes_desc' => 'Stochează în siguranță un set de coduri de rezervă de unică folosință pe care le poți introduce pentru verificarea identității.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Confirmă și activează',
     'mfa_gen_backup_codes_title' => 'Configurarea codurilor de rezervă',
     'mfa_gen_backup_codes_desc' => 'Păstrează lista de coduri de mai jos într-un loc sigur. Când accesezi sistemul, vei putea folosi unul dintre coduri ca un al doilea mecanism de autentificare.',

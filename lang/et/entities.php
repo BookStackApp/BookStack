@@ -23,7 +23,7 @@ return [
     'meta_updated' => 'Muudetud :timeLength',
     'meta_updated_name' => 'Muudetud :timeLength kasutaja :user poolt',
     'meta_owned_name' => 'Kuulub kasutajale :user',
-    'meta_reference_count' => 'Referenced by :count item|Referenced by :count items',
+    'meta_reference_count' => 'Viidatud :count objekti poolt|Viidatud :count objekti poolt',
     'entity_select' => 'Objekti valik',
     'entity_select_lack_permission' => 'Sul pole õiguseid selle objekti valimiseks',
     'images' => 'Pildid',
@@ -39,9 +39,9 @@ return [
     'export_pdf' => 'PDF fail',
     'export_text' => 'Tekstifail',
     'export_md' => 'Markdown fail',
-    'default_template' => 'Default Page Template',
-    'default_template_explain' => 'Assign a page template that will be used as the default content for all pages created within this item. Keep in mind this will only be used if the page creator has view access to the chosen template page.',
-    'default_template_select' => 'Select a template page',
+    'default_template' => 'Vaikimisi lehe mall',
+    'default_template_explain' => 'Vali lehe mall, mida kasutatakse kõigi selle objekti sees loodud lehtede vaikimisi sisuna. Pea meeles, et seda kasutatakse ainult siis, kui lehe loojal on valitud malli vaatamise õigus.',
+    'default_template_select' => 'Vali mall',
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
@@ -207,7 +207,7 @@ return [
     'pages_delete_draft' => 'Kustuta mustand',
     'pages_delete_success' => 'Leht kustutatud',
     'pages_delete_draft_success' => 'Mustand kustutatud',
-    'pages_delete_warning_template' => 'This page is in active use as a book or chapter default page template. These books or chapters will no longer have a default page template assigned after this page is deleted.',
+    'pages_delete_warning_template' => 'See leht on valitud raamatu või peatüki lehe malliks. Pärast selle lehe kustutamist ei ole vastavatel raamatutel või peatükkidel enam vaikimisi lehe malli.',
     'pages_delete_confirm' => 'Kas oled kindel, et soovid selle lehe kustutada?',
     'pages_delete_draft_confirm' => 'Kas oled kindel, et soovid selle mustandi kustutada?',
     'pages_editing_named' => 'Lehe :pageName muutmine',
@@ -409,7 +409,7 @@ return [
     // References
     'references' => 'Viited',
     'references_none' => 'Sellele objektile ei ole viiteid.',
-    'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
+    'references_to_desc' => 'Allpool on kogu teadaolev sisu süsteemis, mis sellele objektile viitab.',
 
     // Watch Options
     'watch' => 'Jälgi',

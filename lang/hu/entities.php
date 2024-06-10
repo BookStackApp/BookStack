@@ -276,7 +276,7 @@ return [
     'pages_pointer_enter_mode' => 'Lépjen be a szakaszválasztó módba',
     'pages_pointer_label' => 'Oldalszakasz beállításai',
     'pages_pointer_permalink' => 'Oldalszakasz állandó hivatkozás',
-    'pages_pointer_include_tag' => 'Page Section Include Tag',
+    'pages_pointer_include_tag' => 'Oldalszakasz tartalmazza a címkét',
     'pages_pointer_toggle_link' => 'Permalink mód, Nyomja meg az include tag megjelenítéséhez',
     'pages_pointer_toggle_include' => 'Include tag mód, Nyomja meg az permalink megjelenítéséhez',
     'pages_permissions_active' => 'Oldal jogosultságok aktívak',

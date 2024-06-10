@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplicativo Móvel',
     'mfa_option_totp_desc' => 'Para usar a autenticação multi-fator, você precisará de um aplicativo móvel que suporte TOTP como o Google Authenticator, Authy ou o Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Códigos de backup',
-    'mfa_option_backup_codes_desc' => 'Armazene com segurança um conjunto de códigos de backup únicos que você pode inserir para verificar sua identidade.',
+    'mfa_option_backup_codes_desc' => 'Gera um conjunto de códigos de backup de uso único que você inserirá no login para verificar sua identidade. Certifique-se de armazená-los em um local seguro e protegido.',
     'mfa_gen_confirm_and_enable' => 'Confirmar e habilitar',
     'mfa_gen_backup_codes_title' => 'Configuração dos Códigos de Backup',
     'mfa_gen_backup_codes_desc' => 'Armazene a lista de códigos abaixo em um lugar seguro. Ao acessar o sistema você poderá usar um dos códigos como segundo mecanismo de autenticação.',

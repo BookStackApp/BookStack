@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Social driver niet gevonden',
     'social_driver_not_configured' => 'Je :socialAccount instellingen zijn niet correct geconfigureerd.',
     'invite_token_expired' => 'Deze uitnodigingslink is verlopen. Je kunt in plaats daarvan proberen je wachtwoord opnieuw in te stellen.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Er is geen gebruiker gevonden voor deze actie.',
 
     // System
     'path_not_writable' => 'Bestandspad :filePath kon niet naar geüpload worden. Zorg dat je schrijfrechten op de server hebt.',

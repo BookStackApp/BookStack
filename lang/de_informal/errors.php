@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Treiber für Social-Media-Konten nicht gefunden',
     'social_driver_not_configured' => 'Dein :socialAccount-Konto ist nicht korrekt konfiguriert.',
     'invite_token_expired' => 'Dieser Einladungslink ist abgelaufen. Du kannst stattdessen versuchen, dein Passwort zurückzusetzen.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Ein Benutzer für diese Aktion konnte nicht gefunden werden.',
 
     // System
     'path_not_writable' => 'Die Datei kann nicht in den angegebenen Pfad :filePath hochgeladen werden. Stelle sicher, dass dieser Ordner auf dem Server beschreibbar ist.',

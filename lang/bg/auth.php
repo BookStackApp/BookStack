@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Мобилно приложение',
     'mfa_option_totp_desc' => 'За да използваш многофакторно удостоверяване, ще ти трябва мобилно приложение, което поддържа временни еднократни пароли (TOTP), като например Google Authenticator, Authy или Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Резервни кодове',
-    'mfa_option_backup_codes_desc' => 'Запази на сигурно място набор от еднократни резервни кодове, с които можеш да устовериш идентичността си.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Потвърди и включи',
     'mfa_gen_backup_codes_title' => 'Настройка на резервни кодове',
     'mfa_gen_backup_codes_desc' => 'Запази този лист с кодове на сигурно място. Когато достъпваш системата, ще можеш да използваш един от тези кодове като вторичен механизъм за удостоверяване.',

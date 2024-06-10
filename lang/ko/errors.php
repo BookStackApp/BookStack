@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => '이메일 :email 이 이미 존재하지만 다른 자격 증명을 가진 사용자입니다.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => '제공된 세부 정보로 사용자 계정을 등록할 수 없습니다',
     'email_already_confirmed' => '이메일이 이미 확인되었으니 로그인해 보세요.',
     'email_confirmation_invalid' => '이 확인 토큰이 유효하지 않거나 이미 사용되었습니다. 다시 등록해 주세요.',
     'email_confirmation_expired' => '확인 토큰이 만료되었습니다. 새 확인 이메일이 전송되었습니다.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => '소셜 드라이버를 찾을 수 없습니다.',
     'social_driver_not_configured' => '소셜 계정 :socialAccount 가(이) 올바르게 구성되지 않았습니다.',
     'invite_token_expired' => '이 초대 링크가 만료되었습니다. 대신 계정 비밀번호 재설정을 시도해 보세요.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => '이 동작의 사용자를 찾을 수 없습니다.',
 
     // System
     'path_not_writable' => '파일 경로 :filePath 에 업로드할 수 없습니다. 서버에 저장이 가능한지 확인하세요.',

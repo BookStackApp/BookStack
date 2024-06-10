@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobil Uygulama',
     'mfa_option_totp_desc' => 'Çok aşamalı kimlik doğrulamayı kullanabilmek için Google Authenticator, Authy veya Microsoft Authenticator gibi TOTP destekleyen bir mobil uygulamaya ihtiyacınız olacaktır.',
     'mfa_option_backup_codes_title' => 'Yedekleme Kodları',
-    'mfa_option_backup_codes_desc' => 'Kimliğini doğrulamak için kullanabileceğin aşağıdaki tek kullanımlık yedek kodlarını güvenli bir yerde sakla.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Onayla ve aktive et',
     'mfa_gen_backup_codes_title' => 'Yedekleme Kodları Kurulumu',
     'mfa_gen_backup_codes_desc' => 'Aşağıdaki kod listesini güvenli bir yerde sakla. Sisteme giriş yaparken kodlardan birini ikinci bir kimlik doğrulama mekanizması olarak kullanabileceksin.',

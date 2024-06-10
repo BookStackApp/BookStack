@@ -20,7 +20,7 @@ return [
     'description' => '설명',
     'role' => '권한',
     'cover_image' => '대표 이미지',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => '이 이미지는 필요에 따라 다양한 시나리오에서 사용자 인터페이스에 맞게 크기가 조정되거나 잘려질 수 있기 때문에 실제 표시되는 크기가 다를 수는 있지만 대략 440x250px 이어야 합니다.',
 
     // Actions
     'actions' => '활동',

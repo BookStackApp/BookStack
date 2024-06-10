@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => ':email címmel már létezik felhasználó, de más hitelesítő adatokkal.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'A felhasználói fiók nem regisztrálható a megadott adatokkal',
     'email_already_confirmed' => 'Az email cím már meg van erősítve, meg lehet próbálni a bejelentkezést.',
     'email_confirmation_invalid' => 'A megerősítő vezérjel nem érvényes vagy használva volt. Meg kell próbálni újraregisztrálni.',
     'email_confirmation_expired' => 'A megerősítő vezérjel lejárt. Egy új megerősítő email lett elküldve.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Közösségi meghajtó nem található',
     'social_driver_not_configured' => ':socialAccount közösségi beállítások nem megfelelőek.',
     'invite_token_expired' => 'Ez a meghívó hivatkozás lejárt. Helyette meg lehet próbálni új jelszót megadni a fiókhoz.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'A művelethez nem található felhasználó.',
 
     // System
     'path_not_writable' => ':filePath elérési út nem tölthető fel. Ellenőrizni kell, hogy az útvonal a kiszolgáló számára írható.',

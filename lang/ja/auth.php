@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'モバイルアプリ',
     'mfa_option_totp_desc' => '多要素認証を使用するには、Google Authenticator、Authy、Microsoft AuthenticatorなどのTOTPをサポートするモバイルアプリケーションが必要です。',
     'mfa_option_backup_codes_title' => 'バックアップコード',
-    'mfa_option_backup_codes_desc' => '本人確認のために入力する、一度しか使えないバックアップコードを安全に保存します。',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => '確認して有効化',
     'mfa_gen_backup_codes_title' => 'バックアップコードの設定',
     'mfa_gen_backup_codes_desc' => '以下のコードのリストを安全な場所に保管してください。システムにアクセスする際、コードのいずれかを第二の認証手段として使用できます。',

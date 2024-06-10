@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Prügikast on hetkel tühi',
     'recycle_bin_empty' => 'Tühjenda prügikast',
     'recycle_bin_empty_confirm' => 'See kustutab lõplikult kõik objektid prügikastis, kaasa arvatud nende sisu. Kas oled kindel, et soovid prügikasti tühjendada?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'See kustutab lõplikult süsteemist valitud objekti koos loetletud alamobjektidega, ja seda sisu ei ole enam võimalik taastada. Kas oled kindel, et soovid selle objekti kustutada?',
     'recycle_bin_destroy_list' => 'Kustutatavad objektid',
     'recycle_bin_restore_list' => 'Taastatavad objektid',
     'recycle_bin_restore_confirm' => 'See taastab valitud objekti koos kõigi alamobjektidega nende algsesse asukohta. Kui see asukoht on ka vahepeal kustutatud ja on nüüd prügikastis, tuleb ka see taastada.',
@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => 'Viimane veateade:',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => 'Litsentsid',
+    'licenses_desc' => 'See leht koondab litsentsiinfot BookStack\'i ja selles kasutatud projektide ja teekide kohta. Paljusid loetletud teekidest võidakse kasutada ainult arenduse kontekstis.',
+    'licenses_bookstack' => 'BookStack\'i litsents',
+    'licenses_php' => 'PHP teekide litsentsid',
+    'licenses_js' => 'JavaScript teekide litsentsid',
+    'licenses_other' => 'Muud litsentsid',
+    'license_details' => 'Litsentsi detailid',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

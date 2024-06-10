@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilapp',
     'mfa_option_totp_desc' => 'För att använda multifaktorautentisering behöver du en mobil app som stöder TOTP så som Google Authenticator, Authy eller Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Reservkoder',
-    'mfa_option_backup_codes_desc' => 'Lagra säkert en uppsättning engångsreservkoder som du kan ange för att verifiera din identitet.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Bekräfta och aktivera',
     'mfa_gen_backup_codes_title' => 'Konfiguration av reservkoder',
     'mfa_gen_backup_codes_desc' => 'Spara nedanstående koder på en säker plats. När du använder systemet kommer du att kunna använda en av koderna som en andra autentiseringsmekanism.',

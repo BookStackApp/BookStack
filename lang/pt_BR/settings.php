@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'A lixeira está vazia',
     'recycle_bin_empty' => 'Esvaziar Lixeira',
     'recycle_bin_empty_confirm' => 'Isso irá destruir permanentemente todos os itens na lixeira inclusive o conteúdo de cada item. Tem certeza de que quer esvaziar a lixeira?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Esta ação excluirá permanentemente este item do sistema, juntamente com quaisquer elementos secundários listados abaixo, e você não poderá restaurar este conteúdo. Tem certeza de que deseja excluir permanentemente este item?',
     'recycle_bin_destroy_list' => 'Itens a serem Destruídos',
     'recycle_bin_restore_list' => 'Itens a serem restaurados',
     'recycle_bin_restore_confirm' => 'Esta ação irá restaurar o item excluído, inclusive quaisquer elementos filhos, para seu local original. Se a localização original tiver, entretanto, sido eliminada e estiver agora na lixeira, o item pai também precisará ser restaurado.',
@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => 'Última mensagem de erro:',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => 'Licenças',
+    'licenses_desc' => 'Esta página detalha informações da licença do BookStack, além dos projetos e bibliotecas usadas no BookStack. Muitos projectos listados só podem ser utilizados num contexto de desenvolvimento.',
+    'licenses_bookstack' => 'Licença do BookStack',
+    'licenses_php' => 'Licenças de Bibliotecas PHP',
+    'licenses_js' => 'Licenças de Bibliotecas JavaScript',
+    'licenses_other' => 'Outras licenças',
+    'license_details' => 'Detalhes da Licença',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
