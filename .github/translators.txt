@@ -425,3 +425,7 @@ Timo B (lommes) :: German Informal
 Erik Lundstedt (Erik.Lundstedt) :: Swedish
 yngams (younessmouhid) :: Arabic
 Ohadp :: Hebrew
+cbridi :: Portuguese, Brazilian
+nanangsb :: Indonesian
+Michal Melich (michalmelich) :: Czech
+David (david-prv) :: German

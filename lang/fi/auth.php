@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobiilisovellus',
     'mfa_option_totp_desc' => 'Jos haluat käyttää monivaiheista tunnistautumista, tarvitset mobiilisovelluksen, joka tukee TOTP:tä, kuten Google Authenticator, Authy tai Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Varmistuskoodit',
-    'mfa_option_backup_codes_desc' => 'Tallenna turvallisesti joukko kertakäyttöisiä varmistuskoodeja, jotka voit syöttää henkilöllisyytesi varmentamiseksi.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Vahvista ja ota käyttöön',
     'mfa_gen_backup_codes_title' => 'Varmistuskoodien asetukset',
     'mfa_gen_backup_codes_desc' => 'Säilytä alla oleva luettelo koodeista turvallisessa paikassa. Kun käytät järjestelmää, voit käyttää yhtä koodeista toisena tunnistautumistapana.',

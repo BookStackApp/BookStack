@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobil ilova',
     'mfa_option_totp_desc' => 'Ko‘p faktorli autentifikatsiyadan foydalanish uchun sizga Google Authenticator, Authy yoki Microsoft Authenticator kabi OTPni qo‘llab-quvvatlaydigan mobil ilova kerak bo‘ladi.',
     'mfa_option_backup_codes_title' => 'Zaxira kodlari',
-    'mfa_option_backup_codes_desc' => 'Shaxsingizni tasdiqlash uchun kiritishingiz mumkin bo‘lgan bir martalik zaxira kodlari to‘plamini xavfsiz saqlang.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Tasdiqlash va yoqish',
     'mfa_gen_backup_codes_title' => 'Zaxira kodlarini sozlash',
     'mfa_gen_backup_codes_desc' => 'Quyidagi kodlar ro‘yxatini xavfsiz joyda saqlang. Tizimga kirishda siz kodlardan birini ikkinchi autentifikatsiya mexanizmi sifatida ishlatishingiz mumkin.',

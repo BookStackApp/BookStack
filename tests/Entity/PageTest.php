@@ -86,6 +86,32 @@ class PageTest extends TestCase
         $resp->assertSee('# a title');
     }
 
+    public function test_page_creation_allows_summary_to_be_set()
+    {
+        $book = $this->entities->book();
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $draft = Page::query()->where('book_id', '=', $book->id)
+            ->where('draft', '=', true)->first();
+
+        $details = [
+            'html'    => '<h1>a title</h1>',
+            'name'    => 'My page with summary',
+            'summary' => 'Here is my changelog message for a new page!',
+        ];
+        $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
+        $resp->assertRedirect();
+
+        $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $draft->id,
+            'summary' => 'Here is my changelog message for a new page!',
+        ]);
+
+        $draft->refresh();
+        $resp = $this->get($draft->getUrl('/revisions'));
+        $resp->assertSee('Here is my changelog message for a new page!');
+    }
+
     public function test_page_delete()
     {
         $page = $this->entities->page();

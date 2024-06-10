@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobiele app',
     'mfa_option_totp_desc' => 'Om meervoudige verificatie te gebruiken heb je een mobiele applicatie nodig die TOTP ondersteunt, zoals Google Authenticator, Authy of Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Back-up Codes',
-    'mfa_option_backup_codes_desc' => 'Bewaar veilig een set eenmalige back-upcodes die je kunt invoeren om je identiteit te verifiëren.',
+    'mfa_option_backup_codes_desc' => 'Genereert een set met eenmalige back-upcodes die je kan invoeren om je identiteit te bevestigen. Bewaar deze op een veilige plaats.',
     'mfa_gen_confirm_and_enable' => 'Bevestigen en inschakelen',
     'mfa_gen_backup_codes_title' => 'Back-up codes instellen',
     'mfa_gen_backup_codes_desc' => 'Bewaar de onderstaande lijst met codes op een veilige plaats. Bij toegang tot het systeem kun je een van de codes gebruiken als tweede verificatiemechanisme.',

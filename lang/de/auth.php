@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Handy-App',
     'mfa_option_totp_desc' => 'Um Mehrfach-Faktor-Authentifizierung nutzen zu können, benötigen Sie eine Handy-Anwendung, die TOTP unterstützt, wie Google Authenticator, Authy oder Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Backup-Codes',
-    'mfa_option_backup_codes_desc' => 'Speichern Sie sicher eine Reihe von einmaligen Backup-Codes, die Sie eingeben können, um Ihre Identität zu überprüfen.',
+    'mfa_option_backup_codes_desc' => 'Erzeugt eine Reihe von einmalig nutzbaren Backup-Codes, welche Sie bei der Anmeldung eingeben, um Ihre Identität zu bestätigen. Achten Sie darauf diese an einem sicheren Ort aufzubewahren.',
     'mfa_gen_confirm_and_enable' => 'Bestätigen und aktivieren',
     'mfa_gen_backup_codes_title' => 'Backup-Codes einrichten',
     'mfa_gen_backup_codes_desc' => 'Speichern Sie die folgende Liste von Codes an einem sicheren Ort. Wenn Sie auf das System zugreifen, können Sie einen der Codes als zweiten Authentifizierungsmechanismus verwenden.',

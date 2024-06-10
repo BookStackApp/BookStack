@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Мобільний додаток',
     'mfa_option_totp_desc' => 'Для використання багатофакторної автентифікації вам потрібен мобільний додаток, який підтримує TOTP такі як Google Authenticator, Authy або Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Резервні коди',
-    'mfa_option_backup_codes_desc' => 'Безпечно зберігайте набір резервних кодів з використанням одноразового використання, які можна увійти, щоб підтвердити свою особу.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Підтвердити та увімкнути',
     'mfa_gen_backup_codes_title' => 'Налаштування резервних кодів',
     'mfa_gen_backup_codes_desc' => 'Зберігайте список кодів в безпечному місці. Для доступу до системи ви зможете використовувати один з кодів як другий механізм аутентифікації.',

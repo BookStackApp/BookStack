@@ -77,7 +77,8 @@ class PageRepo
         $this->updateTemplateStatusAndContentFromInput($draft, $input);
         $this->baseRepo->update($draft, $input);
 
-        $this->revisionRepo->storeNewForPage($draft, trans('entities.pages_initial_revision'));
+        $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
+        $this->revisionRepo->storeNewForPage($draft, $summary);
         $draft->refresh();
 
         Activity::add(ActivityType::PAGE_CREATE, $draft);

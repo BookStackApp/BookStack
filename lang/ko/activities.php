@@ -93,11 +93,11 @@ return [
     'user_delete_notification' => '사용자가 삭제되었습니다',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => '생성된 API 토큰',
     'api_token_create_notification' => 'API 토큰이 성공적으로 생성되었습니다.',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => '갱신된 API 토큰',
     'api_token_update_notification' => 'API 토큰이 성공적으로 업데이트되었습니다.',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => '삭제된 API 토큰',
     'api_token_delete_notification' => 'API 토큰이 성공적으로 삭제되었습니다.',
 
     // Roles

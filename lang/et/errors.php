@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'See e-posti aadress on juba seotud teise kasutajaga.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Etteantud detailidega kasutajakontot ei saadud registreerida',
     'email_already_confirmed' => 'E-posti aadress on juba kinnitatud. Proovi sisse logida.',
     'email_confirmation_invalid' => 'Kinnituslink ei ole kehtiv või on seda juba kasutatud. Proovi uuesti registreeruda.',
     'email_confirmation_expired' => 'Kinnituslink on aegunud. Sulle saadeti aadressi kinnitamiseks uus e-kiri.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Sotsiaalmeedia kontode draiverit ei leitud',
     'social_driver_not_configured' => 'Sinu :socialAccount konto seaded ei ole korrektsed.',
     'invite_token_expired' => 'Link on aegunud. Võid selle asemel proovida oma konto parooli lähtestada.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Selle tegevuse jaoks ei leitud kasutajat.',
 
     // System
     'path_not_writable' => 'Faili asukohaga :filePath ei õnnestunud üles laadida. Veendu, et serveril on kirjutusõigused.',

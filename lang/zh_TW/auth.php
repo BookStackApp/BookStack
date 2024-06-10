@@ -7,7 +7,7 @@
 return [
 
     'failed' => '使用者名稱或密碼錯誤。',
-    'throttle' => '您的登入次數過多，請在:seconds秒後重試。',
+    'throttle' => '您的登入次數過多，請在 :seconds 秒後重試。',
 
     // Login & Register
     'sign_up' => '註冊',
@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => '手機App',
     'mfa_option_totp_desc' => '您必須在行動裝置上安裝了支援TOTP的身份驗證程式（例如Google Authenticator, Authy 或是 Microsoft Authenticator）才能使用雙重身份驗證。',
     'mfa_option_backup_codes_title' => '備用驗證碼',
-    'mfa_option_backup_codes_desc' => '妥善保存好您的一次性備用驗證碼，以便日後驗證您的身份。',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => '確認並啟用',
     'mfa_gen_backup_codes_title' => '備援代碼設定',
     'mfa_gen_backup_codes_desc' => '將以下代碼列表儲存在安全的地方。存取系統時，您可以使用其中一個代碼作為第二個身份驗證機制。',

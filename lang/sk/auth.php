@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilná aplikácia',
     'mfa_option_totp_desc' => 'Pre používanie viacúrovňového prihlasovania budete potrebovať mobilnú aplikáciu, ktorá podporuje TOPS ako napríklad Google Authenticator, Authy alebo Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Záložné kódy',
-    'mfa_option_backup_codes_desc' => 'Bezpečne uložte jednorázové záložné kódy pre overenie vačej identity.',
+    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
     'mfa_gen_confirm_and_enable' => 'Potvrdiť a zapnúť',
     'mfa_gen_backup_codes_title' => 'Nastavenie záložných kódov',
     'mfa_gen_backup_codes_desc' => 'Uložte si tieto kódy na bezpečné miesto. Jeden z kódov budete môcť použiť ako druhý faktor overenia identiy na prihlásenie sa.',

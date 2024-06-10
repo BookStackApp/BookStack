@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilní aplikace',
     'mfa_option_totp_desc' => 'Pro použití vícefaktorového ověření budete potřebovat mobilní aplikaci, která podporuje TOTP jako např. Google Authenticator, Authy nebo Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Záložní kódy',
-    'mfa_option_backup_codes_desc' => 'Bezpečně si uložte sadu jednorázových záložních kódů, které můžete použít pro ověření vaší identity.',
+    'mfa_option_backup_codes_desc' => 'Vygeneruje sadu jednorázových záložních kódů, které zadáte při přihlášení k ověření své identity. Ujistěte se, že jsou uloženy na bezpečném místě.',
     'mfa_gen_confirm_and_enable' => 'Potvrdit a povolit',
     'mfa_gen_backup_codes_title' => 'Nastavení záložních kódů',
     'mfa_gen_backup_codes_desc' => 'Uložte níže uvedený seznam kódů na bezpečné místo. Při přístupu k systému budete moci použít jeden z kódů jako druhou metodu ověření.',
