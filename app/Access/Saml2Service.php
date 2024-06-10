@@ -133,6 +133,7 @@ class Saml2Service
         // value so that the exact encoding format is matched when checking the signature.
         // This is primarily due to ADFS encoding query params with lowercase percent encoding while
         // PHP (And most other sensible providers) standardise on uppercase.
+        /** @var ?string $samlRedirect */
         $samlRedirect = $toolkit->processSLO(true, $requestId, true, null, true);
         $errors = $toolkit->getErrors();
 
