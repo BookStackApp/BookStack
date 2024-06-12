@@ -3,6 +3,7 @@ import {EditorUiContext} from "../framework/core";
 import {$createLinkNode} from "@lexical/link";
 import {$createTextNode, $getSelection} from "lexical";
 import {$createImageNode} from "../../nodes/image";
+import {setEditorContentFromHtml} from "../../actions";
 
 
 export const link: EditorFormDefinition = {
@@ -84,6 +85,21 @@ export const image: EditorFormDefinition = {
             label: 'Height',
             name: 'height',
             type: 'text',
+        },
+    ],
+};
+
+export const source: EditorFormDefinition = {
+    submitText: 'Save',
+    action(formData, context: EditorUiContext) {
+        setEditorContentFromHtml(context.editor, formData.get('source')?.toString() || '');
+        return true;
+    },
+    fields: [
+        {
+            label: 'Source',
+            name: 'source',
+            type: 'textarea',
         },
     ],
 };

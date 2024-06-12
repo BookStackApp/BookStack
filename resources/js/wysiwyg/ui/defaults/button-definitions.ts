@@ -28,6 +28,7 @@ import {EditorUiContext} from "../framework/core";
 import {$isImageNode, ImageNode} from "../../nodes/image";
 import {$createDetailsNode, $isDetailsNode} from "../../nodes/details";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
+import {getEditorContentAsHtml} from "../../actions";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -230,3 +231,14 @@ export const details: EditorButtonDefinition = {
     }
 }
 
+export const source: EditorButtonDefinition = {
+    label: 'Source code',
+    async action(context: EditorUiContext) {
+        const modal = context.manager.createModal('source');
+        const source = await getEditorContentAsHtml(context.editor);
+        modal.show({source});
+    },
+    isActive() {
+        return false;
+    }
+};
