@@ -101,23 +101,23 @@ return [
     'api_token_delete_notification' => 'API-token har tagits bort',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'skapad roll',
+    'role_create_notification' => 'Rollen har skapats',
+    'role_update' => 'uppdaterad roll',
+    'role_update_notification' => 'Rollen har uppdaterats',
+    'role_delete' => 'raderad roll',
+    'role_delete_notification' => 'Rollen har tagits bort',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'tömd papperskorg',
+    'recycle_bin_restore' => 'återställd från papperskorgen',
+    'recycle_bin_destroy' => 'borttagen från papperskorgen',
 
     // Comments
     'commented_on'                => 'kommenterade',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'lagt till kommentar',
+    'comment_update'              => 'uppdaterad kommentar',
+    'comment_delete'              => 'raderad kommentar',
 
     // Other
     'permissions_update'          => 'uppdaterade behörigheter',
