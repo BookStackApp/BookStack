@@ -1,5 +1,6 @@
 import {BaseSelection, LexicalEditor} from "lexical";
 import {EditorUIManager} from "./manager";
+import {el} from "../../helpers";
 
 export type EditorUiStateUpdate = {
     editor: LexicalEditor,
@@ -47,3 +48,49 @@ export abstract class EditorUiElement {
         return;
     }
 }
+
+export class EditorContainerUiElement extends EditorUiElement {
+    protected children : EditorUiElement[];
+
+    constructor(children: EditorUiElement[]) {
+        super();
+        this.children = children;
+    }
+
+    protected buildDOM(): HTMLElement {
+        return el('div', {}, this.getChildren().map(child => child.getDOMElement()));
+    }
+
+    getChildren(): EditorUiElement[] {
+        return this.children;
+    }
+
+    updateState(state: EditorUiStateUpdate): void {
+        for (const child of this.children) {
+            child.updateState(state);
+        }
+    }
+
+    setContext(context: EditorUiContext) {
+        super.setContext(context);
+        for (const child of this.getChildren()) {
+            child.setContext(context);
+        }
+    }
+}
+
+export class EditorSimpleClassContainer extends EditorContainerUiElement {
+    protected className;
+
+    constructor(className: string, children: EditorUiElement[]) {
+        super(children);
+        this.className = className;
+    }
+
+    protected buildDOM(): HTMLElement {
+        return el('div', {
+            class: this.className,
+        }, this.getChildren().map(child => child.getDOMElement()));
+    }
+}
+

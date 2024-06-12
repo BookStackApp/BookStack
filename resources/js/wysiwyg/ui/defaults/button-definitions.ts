@@ -1,11 +1,11 @@
-import {EditorButtonDefinition} from "../framework/buttons";
+import {EditorBasicButtonDefinition, EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
     $createParagraphNode, $getRoot, $getSelection, $insertNodes,
     $isParagraphNode, $isTextNode, $setSelection,
     BaseSelection, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
-    REDO_COMMAND, TextFormatType,
+    REDO_COMMAND, TextFormatType, TextNode,
     UNDO_COMMAND
 } from "lexical";
 import {
@@ -131,8 +131,9 @@ function buildFormatButton(label: string, format: TextFormatType): EditorButtonD
 export const bold: EditorButtonDefinition = buildFormatButton('Bold', 'bold');
 export const italic: EditorButtonDefinition = buildFormatButton('Italic', 'italic');
 export const underline: EditorButtonDefinition = buildFormatButton('Underline', 'underline');
-// Todo - Text color
-// Todo - Highlight color
+export const textColor: EditorBasicButtonDefinition = {label: 'Text color'};
+export const highlightColor: EditorBasicButtonDefinition = {label: 'Highlight color'};
+
 export const strikethrough: EditorButtonDefinition = buildFormatButton('Strikethrough', 'strikethrough');
 export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript');
 export const subscript: EditorButtonDefinition = buildFormatButton('Subscript', 'subscript');

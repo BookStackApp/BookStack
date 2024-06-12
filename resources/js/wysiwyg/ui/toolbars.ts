@@ -1,16 +1,20 @@
-import {EditorButton, FormatPreviewButton} from "./framework/buttons";
+import {EditorButton} from "./framework/buttons";
 import {
     blockquote, bold, clearFormating, code,
     dangerCallout, details,
-    h2, h3, h4, h5, image,
+    h2, h3, h4, h5, highlightColor, image,
     infoCallout, italic, link, paragraph,
     redo, source, strikethrough, subscript,
-    successCallout, superscript, underline,
+    successCallout, superscript, textColor, underline,
     undo,
     warningCallout
 } from "./defaults/button-definitions";
-import {EditorContainerUiElement, EditorFormatMenu, EditorSimpleClassContainer} from "./framework/containers";
+import {EditorContainerUiElement, EditorSimpleClassContainer} from "./framework/core";
 import {el} from "../helpers";
+import {EditorFormatMenu} from "./framework/blocks/format-menu";
+import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
+import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
+import {EditorColorPicker} from "./framework/blocks/color-picker";
 
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
@@ -37,6 +41,12 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(bold),
         new EditorButton(italic),
         new EditorButton(underline),
+        new EditorDropdownButton(textColor, [
+            new EditorColorPicker('color'),
+        ]),
+        new EditorDropdownButton(highlightColor, [
+            new EditorColorPicker('background-color'),
+        ]),
         new EditorButton(strikethrough),
         new EditorButton(superscript),
         new EditorButton(subscript),

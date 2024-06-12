@@ -1,6 +1,6 @@
 import {EditorForm, EditorFormDefinition} from "./forms";
 import {el} from "../../helpers";
-import {EditorContainerUiElement} from "./containers";
+import {EditorContainerUiElement} from "./core";
 
 
 export interface EditorModalDefinition {

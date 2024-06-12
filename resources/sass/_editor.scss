@@ -79,6 +79,22 @@
   font-weight: 700;
 }
 
+// Specific UI elements
+.editor-color-select-row {
+  display: flex;
+}
+.editor-color-select-option {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+.editor-color-select-option:hover {
+  border-radius: 3px;
+  box-sizing: border-box;
+  z-index: 3;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
+}
+
 // In-editor elements
 .editor-image-wrap {
   position: relative;
