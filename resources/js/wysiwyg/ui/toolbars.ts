@@ -4,7 +4,7 @@ import {
     dangerCallout, details,
     h2, h3, h4, h5, image,
     infoCallout, italic, link, paragraph,
-    redo, strikethrough, subscript,
+    redo, source, strikethrough, subscript,
     successCallout, superscript, underline,
     undo,
     warningCallout
@@ -42,5 +42,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(link),
         new EditorButton(image),
         new EditorButton(details),
+
+        new EditorButton(source),
     ]);
 }

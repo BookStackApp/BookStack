@@ -6,7 +6,7 @@ import {
 } from "lexical";
 import {getMainEditorFullToolbar} from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
-import {image as imageFormDefinition, link as linkFormDefinition} from "./defaults/form-definitions";
+import {image as imageFormDefinition, link as linkFormDefinition, source as sourceFormDefinition} from "./defaults/form-definitions";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorDecoratorAdapter} from "./framework/decorator";
@@ -36,7 +36,11 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     manager.registerModal('image', {
         title: 'Insert/Edit Image',
         form: imageFormDefinition
-    })
+    });
+    manager.registerModal('source', {
+        title: 'Source code',
+        form: sourceFormDefinition,
+    });
 
     // Register decorator listener
     // Maybe move to manager?

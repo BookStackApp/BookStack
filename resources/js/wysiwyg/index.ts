@@ -1,10 +1,10 @@
-import {$getRoot, createEditor, CreateEditorArgs} from 'lexical';
+import {createEditor, CreateEditorArgs} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
-import {$generateNodesFromDOM} from '@lexical/html';
 import {getNodesForPageEditor} from './nodes';
 import {buildEditorUI} from "./ui";
+import {setEditorContentFromHtml} from "./actions";
 
 export function createPageEditorInstance(editArea: HTMLElement) {
     const config: CreateEditorArgs = {
@@ -14,8 +14,6 @@ export function createPageEditorInstance(editArea: HTMLElement) {
     };
 
     const startingHtml = editArea.innerHTML;
-    const parser = new DOMParser();
-    const dom = parser.parseFromString(startingHtml, 'text/html');
 
     const editor = createEditor(config);
     editor.setRootElement(editArea);
@@ -25,11 +23,7 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         registerHistory(editor, createEmptyHistoryState(), 300),
     );
 
-    editor.update(() => {
-        const startingNodes = $generateNodesFromDOM(editor, dom);
-        const root = $getRoot();
-        root.append(...startingNodes);
-    });
+    setEditorContentFromHtml(editor, startingHtml);
 
     const debugView = document.getElementById('lexical-debug');
     editor.registerUpdateListener(({editorState}) => {

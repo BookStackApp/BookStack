@@ -5,7 +5,7 @@ import {el} from "../../helpers";
 export interface EditorFormFieldDefinition {
     label: string;
     name: string;
-    type: 'text' | 'select';
+    type: 'text' | 'select' | 'textarea';
 }
 
 export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefinition {
@@ -28,7 +28,7 @@ export class EditorFormField extends EditorUiElement {
     }
 
     setValue(value: string) {
-        const input = this.getDOMElement().querySelector('input,select') as HTMLInputElement;
+        const input = this.getDOMElement().querySelector('input,select,textarea') as HTMLInputElement;
         input.value = value;
     }
 
@@ -45,6 +45,8 @@ export class EditorFormField extends EditorUiElement {
             const labels = Object.keys(options);
             const optionElems = labels.map(label => el('option', {value: options[label]}, [label]));
             input = el('select', {id, name: this.definition.name, class: 'editor-form-field-input'}, optionElems);
+        } else if (this.definition.type === 'textarea') {
+            input = el('textarea', {id, name: this.definition.name, class: 'editor-form-field-input'});
         } else {
             input = el('input', {id, name: this.definition.name, class: 'editor-form-field-input'});
         }
