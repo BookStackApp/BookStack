@@ -2,7 +2,7 @@ import {EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
     $createParagraphNode, $getRoot, $getSelection, $insertNodes,
-    $isParagraphNode, $setSelection,
+    $isParagraphNode, $isTextNode, $setSelection,
     BaseSelection, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
     REDO_COMMAND, TextFormatType,
@@ -137,7 +137,22 @@ export const strikethrough: EditorButtonDefinition = buildFormatButton('Striketh
 export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript');
 export const subscript: EditorButtonDefinition = buildFormatButton('Subscript', 'subscript');
 export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'code');
-// Todo - Clear formatting
+export const clearFormating: EditorButtonDefinition = {
+    label: 'Clear formatting',
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            const selection = $getSelection();
+            for (const node of selection?.getNodes() || []) {
+                if ($isTextNode(node)) {
+                    node.setFormat(0);
+                }
+            }
+        });
+    },
+    isActive() {
+        return false;
+    }
+};
 
 
 export const link: EditorButtonDefinition = {

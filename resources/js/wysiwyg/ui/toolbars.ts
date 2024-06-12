@@ -1,6 +1,6 @@
 import {EditorButton, FormatPreviewButton} from "./framework/buttons";
 import {
-    blockquote, bold, code,
+    blockquote, bold, clearFormating, code,
     dangerCallout, details,
     h2, h3, h4, h5, image,
     infoCallout, italic, link, paragraph,
@@ -15,9 +15,11 @@ import {el} from "../helpers";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
+        // History state
         new EditorButton(undo),
         new EditorButton(redo),
 
+        // Block formats
         new EditorFormatMenu([
             new FormatPreviewButton(el('h2'), h2),
             new FormatPreviewButton(el('h3'), h3),
@@ -31,6 +33,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new FormatPreviewButton(el('p', {class: 'callout danger'}), dangerCallout),
         ]),
 
+        // Inline formats
         new EditorButton(bold),
         new EditorButton(italic),
         new EditorButton(underline),
@@ -38,11 +41,14 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(superscript),
         new EditorButton(subscript),
         new EditorButton(code),
+        new EditorButton(clearFormating),
 
+        // Insert types
         new EditorButton(link),
         new EditorButton(image),
         new EditorButton(details),
 
+        // Meta elements
         new EditorButton(source),
     ]);
 }
