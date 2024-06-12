@@ -1,5 +1,4 @@
-import {EditorUiContext, EditorUiElement} from "./core";
-import {EditorContainerUiElement} from "./containers";
+import {EditorUiContext, EditorUiElement, EditorContainerUiElement} from "./core";
 import {el} from "../../helpers";
 
 export interface EditorFormFieldDefinition {

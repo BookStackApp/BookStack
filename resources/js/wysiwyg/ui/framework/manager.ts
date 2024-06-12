@@ -1,5 +1,5 @@
 import {EditorFormModal, EditorFormModalDefinition} from "./modals";
-import {EditorUiContext} from "./core";
+import {EditorUiContext, EditorUiElement} from "./core";
 import {EditorDecorator} from "./decorator";
 
 
@@ -20,6 +20,13 @@ export class EditorUIManager {
         }
 
         return this.context;
+    }
+
+    triggerStateUpdate(element: EditorUiElement) {
+        element.updateState({
+            selection: null,
+            editor: this.getContext().editor
+        });
     }
 
     registerModal(key: string, modalDefinition: EditorFormModalDefinition) {
