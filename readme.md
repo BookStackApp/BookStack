@@ -71,8 +71,11 @@ Big thanks to these companies for supporting the project.
 </a></td>
 </tr>
 <tr>
-<td colspan="2" align="center" style="text-align: center"><a href="https://nws.netways.de/apps/bookstack/" target="_blank">
+<td align="center" style="text-align: center"><a href="https://nws.netways.de/apps/bookstack/" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/netways.png" alt="NETWAYS Web Services">
+</a></td>
+<td align="center" style="text-align: center"><a href="https://www.schroeck-consulting.de/" target="_blank">
+    <img width="200" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/schroeck-consulting.png" alt="Schroeck IT Consulting">
 </a></td>
 </tr></tbody></table>
 
