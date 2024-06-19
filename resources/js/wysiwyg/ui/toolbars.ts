@@ -1,11 +1,11 @@
 import {EditorButton} from "./framework/buttons";
 import {
-    blockquote, bold, clearFormating, code,
+    blockquote, bold, bulletList, clearFormating, code,
     dangerCallout, details,
     h2, h3, h4, h5, highlightColor, image,
-    infoCallout, italic, link, paragraph,
+    infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
-    successCallout, superscript, textColor, underline,
+    successCallout, superscript, taskList, textColor, underline,
     undo,
     warningCallout
 } from "./defaults/button-definitions";
@@ -52,6 +52,11 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(subscript),
         new EditorButton(code),
         new EditorButton(clearFormating),
+
+        // Lists
+        new EditorButton(bulletList),
+        new EditorButton(numberList),
+        new EditorButton(taskList),
 
         // Insert types
         new EditorButton(link),
