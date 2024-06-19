@@ -4,6 +4,7 @@ import {el} from "../../helpers";
 
 export interface EditorBasicButtonDefinition {
     label: string;
+    icon?: string|undefined;
 }
 
 export interface EditorButtonDefinition extends EditorBasicButtonDefinition {
@@ -21,10 +22,19 @@ export class EditorButton extends EditorUiElement {
     }
 
     protected buildDOM(): HTMLButtonElement {
+
+        const label = this.getLabel();
+        let child: string|HTMLElement = label;
+        if (this.definition.icon) {
+            child = el('span', {class: 'editor-button-icon'});
+            child.innerHTML = this.definition.icon;
+        }
+
         const button = el('button', {
             type: 'button',
             class: 'editor-button',
-        }, [this.getLabel()]) as HTMLButtonElement;
+            title: this.definition.icon ? label : null,
+        }, [child]) as HTMLButtonElement;
 
         button.addEventListener('click', this.onClick.bind(this));
 

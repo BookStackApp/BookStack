@@ -16,6 +16,7 @@ import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
 import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
 import {EditorColorPicker} from "./framework/blocks/color-picker";
 
+console.log(undo);
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
