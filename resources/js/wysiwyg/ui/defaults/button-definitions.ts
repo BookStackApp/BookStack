@@ -1,11 +1,11 @@
 import {EditorBasicButtonDefinition, EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
-    $createParagraphNode, $getRoot, $getSelection, $insertNodes,
+    $createParagraphNode, $getRoot, $getSelection,
     $isParagraphNode, $isTextNode, $setSelection,
     BaseSelection, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
-    REDO_COMMAND, TextFormatType, TextNode,
+    REDO_COMMAND, TextFormatType,
     UNDO_COMMAND
 } from "lexical";
 import {
@@ -23,12 +23,12 @@ import {
     HeadingNode,
     HeadingTagType
 } from "@lexical/rich-text";
-import {$isLinkNode, $toggleLink, LinkNode} from "@lexical/link";
+import {$isLinkNode, LinkNode} from "@lexical/link";
 import {EditorUiContext} from "../framework/core";
 import {$isImageNode, ImageNode} from "../../nodes/image";
 import {$createDetailsNode, $isDetailsNode} from "../../nodes/details";
-import {$insertNodeToNearestRoot} from "@lexical/utils";
 import {getEditorContentAsHtml} from "../../actions";
+import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -154,6 +154,31 @@ export const clearFormating: EditorButtonDefinition = {
         return false;
     }
 };
+
+function buildListButton(label: string, type: ListType): EditorButtonDefinition {
+    return {
+        label,
+        action(context: EditorUiContext) {
+            context.editor.getEditorState().read(() => {
+                const selection = $getSelection();
+                if (this.isActive(selection)) {
+                    removeList(context.editor);
+                } else {
+                    insertList(context.editor, type);
+                }
+            });
+        },
+        isActive(selection: BaseSelection|null): boolean {
+            return selectionContainsNodeType(selection, (node: LexicalNode | null | undefined): boolean => {
+                return $isListNode(node) && (node as ListNode).getListType() === type;
+            });
+        }
+    };
+}
+
+export const bulletList: EditorButtonDefinition = buildListButton('Bullet list', 'bullet');
+export const numberList: EditorButtonDefinition = buildListButton('Numbered list', 'number');
+export const taskList: EditorButtonDefinition = buildListButton('Task list', 'check');
 
 
 export const link: EditorButtonDefinition = {
