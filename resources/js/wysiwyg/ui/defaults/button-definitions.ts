@@ -29,9 +29,27 @@ import {$isImageNode, ImageNode} from "../../nodes/image";
 import {$createDetailsNode, $isDetailsNode} from "../../nodes/details";
 import {getEditorContentAsHtml} from "../../actions";
 import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
+import undoIcon from "@icons/editor/undo.svg"
+import redoIcon from "@icons/editor/redo.svg"
+import boldIcon from "@icons/editor/bold.svg"
+import italicIcon from "@icons/editor/italic.svg"
+import underlinedIcon from "@icons/editor/underlined.svg"
+import strikethroughIcon from "@icons/editor/strikethrough.svg"
+import superscriptIcon from "@icons/editor/superscript.svg"
+import subscriptIcon from "@icons/editor/subscript.svg"
+import codeIcon from "@icons/editor/code.svg"
+import formatClearIcon from "@icons/editor/format-clear.svg"
+import listBulletIcon from "@icons/editor/list-bullet.svg"
+import listNumberedIcon from "@icons/editor/list-numbered.svg"
+import listCheckIcon from "@icons/editor/list-check.svg"
+import linkIcon from "@icons/editor/link.svg"
+import imageIcon from "@icons/editor/image.svg"
+import detailsIcon from "@icons/editor/details.svg"
+import sourceIcon from "@icons/editor/source-view.svg"
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
+    icon: undoIcon,
     action(context: EditorUiContext) {
         context.editor.dispatchCommand(UNDO_COMMAND, undefined);
     },
@@ -42,6 +60,7 @@ export const undo: EditorButtonDefinition = {
 
 export const redo: EditorButtonDefinition = {
     label: 'Redo',
+    icon: redoIcon,
     action(context: EditorUiContext) {
         context.editor.dispatchCommand(REDO_COMMAND, undefined);
     },
@@ -116,9 +135,10 @@ export const paragraph: EditorButtonDefinition = {
     }
 }
 
-function buildFormatButton(label: string, format: TextFormatType): EditorButtonDefinition {
+function buildFormatButton(label: string, format: TextFormatType, icon: string): EditorButtonDefinition {
     return {
         label: label,
+        icon,
         action(context: EditorUiContext) {
             context.editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
         },
@@ -128,18 +148,19 @@ function buildFormatButton(label: string, format: TextFormatType): EditorButtonD
     };
 }
 
-export const bold: EditorButtonDefinition = buildFormatButton('Bold', 'bold');
-export const italic: EditorButtonDefinition = buildFormatButton('Italic', 'italic');
-export const underline: EditorButtonDefinition = buildFormatButton('Underline', 'underline');
+export const bold: EditorButtonDefinition = buildFormatButton('Bold', 'bold', boldIcon);
+export const italic: EditorButtonDefinition = buildFormatButton('Italic', 'italic', italicIcon);
+export const underline: EditorButtonDefinition = buildFormatButton('Underline', 'underline', underlinedIcon);
 export const textColor: EditorBasicButtonDefinition = {label: 'Text color'};
 export const highlightColor: EditorBasicButtonDefinition = {label: 'Highlight color'};
 
-export const strikethrough: EditorButtonDefinition = buildFormatButton('Strikethrough', 'strikethrough');
-export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript');
-export const subscript: EditorButtonDefinition = buildFormatButton('Subscript', 'subscript');
-export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'code');
+export const strikethrough: EditorButtonDefinition = buildFormatButton('Strikethrough', 'strikethrough', strikethroughIcon);
+export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript', superscriptIcon);
+export const subscript: EditorButtonDefinition = buildFormatButton('Subscript', 'subscript', subscriptIcon);
+export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'code', codeIcon);
 export const clearFormating: EditorButtonDefinition = {
     label: 'Clear formatting',
+    icon: formatClearIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
             const selection = $getSelection();
@@ -155,9 +176,10 @@ export const clearFormating: EditorButtonDefinition = {
     }
 };
 
-function buildListButton(label: string, type: ListType): EditorButtonDefinition {
+function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
     return {
         label,
+        icon,
         action(context: EditorUiContext) {
             context.editor.getEditorState().read(() => {
                 const selection = $getSelection();
@@ -176,13 +198,14 @@ function buildListButton(label: string, type: ListType): EditorButtonDefinition 
     };
 }
 
-export const bulletList: EditorButtonDefinition = buildListButton('Bullet list', 'bullet');
-export const numberList: EditorButtonDefinition = buildListButton('Numbered list', 'number');
-export const taskList: EditorButtonDefinition = buildListButton('Task list', 'check');
+export const bulletList: EditorButtonDefinition = buildListButton('Bullet list', 'bullet', listBulletIcon);
+export const numberList: EditorButtonDefinition = buildListButton('Numbered list', 'number', listNumberedIcon);
+export const taskList: EditorButtonDefinition = buildListButton('Task list', 'check', listCheckIcon);
 
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
+    icon: linkIcon,
     action(context: EditorUiContext) {
         const linkModal = context.manager.createModal('link');
         context.editor.getEditorState().read(() => {
@@ -215,6 +238,7 @@ export const link: EditorButtonDefinition = {
 
 export const image: EditorButtonDefinition = {
     label: 'Insert/Edit Image',
+    icon: imageIcon,
     action(context: EditorUiContext) {
         const imageModal = context.manager.createModal('image');
         const selection = context.lastSelection;
@@ -247,6 +271,7 @@ export const image: EditorButtonDefinition = {
 
 export const details: EditorButtonDefinition = {
     label: 'Insert collapsible block',
+    icon: detailsIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
             const selection = $getSelection();
@@ -274,6 +299,7 @@ export const details: EditorButtonDefinition = {
 
 export const source: EditorButtonDefinition = {
     label: 'Source code',
+    icon: sourceIcon,
     async action(context: EditorUiContext) {
         const modal = context.manager.createModal('source');
         const source = await getEditorContentAsHtml(context.editor);

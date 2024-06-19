@@ -9,11 +9,13 @@ import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {$setBlocksType} from "@lexical/selection";
 
-export function el(tag: string, attrs: Record<string, string> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
+export function el(tag: string, attrs: Record<string, string|null> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
     const el = document.createElement(tag);
     const attrKeys = Object.keys(attrs);
     for (const attr of attrKeys) {
-        el.setAttribute(attr, attrs[attr]);
+        if (attrs[attr] !== null) {
+            el.setAttribute(attr, attrs[attr] as string);
+        }
     }
 
     for (const child of children) {

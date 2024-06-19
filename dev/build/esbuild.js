@@ -32,6 +32,13 @@ esbuild.build({
     format: 'esm',
     minify: isProd,
     logLevel: 'info',
+    loader: {
+        '.svg': 'text',
+    },
+    absWorkingDir: path.join(__dirname, '../..'),
+    alias: {
+        '@icons': './resources/icons',
+    },
     banner: {
         js: '// See the "/licenses" URI for full package license details',
         css: '/* See the "/licenses" URI for full package license details */',
