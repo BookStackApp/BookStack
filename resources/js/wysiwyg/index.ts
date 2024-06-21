@@ -5,6 +5,7 @@ import {mergeRegister} from '@lexical/utils';
 import {getNodesForPageEditor} from './nodes';
 import {buildEditorUI} from "./ui";
 import {setEditorContentFromHtml} from "./actions";
+import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 
 export function createPageEditorInstance(editArea: HTMLElement) {
     const config: CreateEditorArgs = {
@@ -21,6 +22,7 @@ export function createPageEditorInstance(editArea: HTMLElement) {
     mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
+        registerTableResizer(editor, editArea),
     );
 
     setEditorContentFromHtml(editor, startingHtml);

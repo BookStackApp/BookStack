@@ -146,3 +146,23 @@
     cursor: sw-resize;
   }
 }
+
+.editor-table-marker-row,
+.editor-table-marker-column {
+  position: fixed;
+  background-color: var(--editor-color-primary);
+  z-index: 99;
+  user-select: none;
+  opacity: 0;
+  &:hover {
+    opacity: 0.4;
+  }
+}
+.editor-table-marker-column {
+  width: 4px;
+  cursor: col-resize;
+}
+.editor-table-marker-row {
+  height: 4px;
+  cursor: row-resize;
+}
