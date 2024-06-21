@@ -1,13 +1,14 @@
 import {
-    $createParagraphNode,
+    $createParagraphNode, $getRoot,
     $getSelection,
     $isTextNode,
-    BaseSelection,
+    BaseSelection, ElementNode,
     LexicalEditor, LexicalNode, TextFormatType
 } from "lexical";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {$setBlocksType} from "@lexical/selection";
+import {$createDetailsNode} from "./nodes/details";
 
 export function el(tag: string, attrs: Record<string, string|null> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
     const el = document.createElement(tag);
@@ -77,4 +78,15 @@ export function toggleSelectionBlockNodeType(editor: LexicalEditor, matcher: Lex
             $setBlocksType(selection, creator);
         }
     });
+}
+
+export function insertNewBlockNodeAtSelection(node: LexicalNode) {
+    const selection = $getSelection();
+    const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
+
+    if (blockElement) {
+        blockElement.insertAfter(node);
+    } else {
+        $getRoot().append(node);
+    }
 }
