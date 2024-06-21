@@ -236,6 +236,10 @@ export const link: EditorButtonDefinition = {
     }
 };
 
+export const table: EditorBasicButtonDefinition = {
+    label: 'Table',
+};
+
 export const image: EditorButtonDefinition = {
     label: 'Insert/Edit Image',
     icon: imageIcon,

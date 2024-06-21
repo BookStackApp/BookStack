@@ -5,7 +5,7 @@ import {
     h2, h3, h4, h5, highlightColor, image,
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
-    successCallout, superscript, taskList, textColor, underline,
+    successCallout, superscript, table, taskList, textColor, underline,
     undo,
     warningCallout
 } from "./defaults/button-definitions";
@@ -15,8 +15,7 @@ import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
 import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
 import {EditorColorPicker} from "./framework/blocks/color-picker";
-
-console.log(undo);
+import {EditorTableCreator} from "./framework/blocks/table-creator";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -61,6 +60,9 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
 
         // Insert types
         new EditorButton(link),
+        new EditorDropdownButton(table, [
+            new EditorTableCreator(),
+        ]),
         new EditorButton(image),
         new EditorButton(details),
 
