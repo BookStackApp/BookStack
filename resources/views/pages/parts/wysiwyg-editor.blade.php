@@ -26,6 +26,25 @@
             <p class="callout info">
                 Hello there, this is an info callout
             </p>
+
+            <h3>Table</h3>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Cell A</th>
+                    <th>Cell B</th>
+                    <th>Cell C</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Cell D</td>
+                    <td>Cell E</td>
+                    <td>Cell F</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
