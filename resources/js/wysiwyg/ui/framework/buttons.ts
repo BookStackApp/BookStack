@@ -1,7 +1,6 @@
 import {BaseSelection} from "lexical";
 import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {el} from "../../helpers";
-import {context} from "esbuild";
 
 export interface EditorBasicButtonDefinition {
     label: string;
@@ -20,9 +19,22 @@ export class EditorButton extends EditorUiElement {
     protected completedSetup: boolean = false;
     protected disabled: boolean = false;
 
-    constructor(definition: EditorButtonDefinition) {
+    constructor(definition: EditorButtonDefinition|EditorBasicButtonDefinition) {
         super();
-        this.definition = definition;
+
+        if ((definition as EditorButtonDefinition).action !== undefined) {
+            this.definition = definition as EditorButtonDefinition;
+        } else {
+            this.definition = {
+                ...definition,
+                action() {
+                    return false;
+                },
+                isActive: () => {
+                    return false;
+                }
+            };
+        }
     }
 
     setContext(context: EditorUiContext) {

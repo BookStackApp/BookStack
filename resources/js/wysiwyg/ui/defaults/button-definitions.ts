@@ -34,6 +34,8 @@ import redoIcon from "@icons/editor/redo.svg"
 import boldIcon from "@icons/editor/bold.svg"
 import italicIcon from "@icons/editor/italic.svg"
 import underlinedIcon from "@icons/editor/underlined.svg"
+import textColorIcon from "@icons/editor/text-color.svg";
+import highlightIcon from "@icons/editor/highlighter.svg";
 import strikethroughIcon from "@icons/editor/strikethrough.svg"
 import superscriptIcon from "@icons/editor/superscript.svg"
 import subscriptIcon from "@icons/editor/subscript.svg"
@@ -43,6 +45,7 @@ import listBulletIcon from "@icons/editor/list-bullet.svg"
 import listNumberedIcon from "@icons/editor/list-numbered.svg"
 import listCheckIcon from "@icons/editor/list-check.svg"
 import linkIcon from "@icons/editor/link.svg"
+import tableIcon from "@icons/editor/table.svg"
 import imageIcon from "@icons/editor/image.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
@@ -167,8 +170,8 @@ function buildFormatButton(label: string, format: TextFormatType, icon: string):
 export const bold: EditorButtonDefinition = buildFormatButton('Bold', 'bold', boldIcon);
 export const italic: EditorButtonDefinition = buildFormatButton('Italic', 'italic', italicIcon);
 export const underline: EditorButtonDefinition = buildFormatButton('Underline', 'underline', underlinedIcon);
-export const textColor: EditorBasicButtonDefinition = {label: 'Text color'};
-export const highlightColor: EditorBasicButtonDefinition = {label: 'Highlight color'};
+export const textColor: EditorBasicButtonDefinition = {label: 'Text color', icon: textColorIcon};
+export const highlightColor: EditorBasicButtonDefinition = {label: 'Highlight color', icon: highlightIcon};
 
 export const strikethrough: EditorButtonDefinition = buildFormatButton('Strikethrough', 'strikethrough', strikethroughIcon);
 export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript', superscriptIcon);
@@ -183,6 +186,7 @@ export const clearFormating: EditorButtonDefinition = {
             for (const node of selection?.getNodes() || []) {
                 if ($isTextNode(node)) {
                     node.setFormat(0);
+                    node.setStyle('');
                 }
             }
         });
@@ -254,6 +258,7 @@ export const link: EditorButtonDefinition = {
 
 export const table: EditorBasicButtonDefinition = {
     label: 'Table',
+    icon: tableIcon,
 };
 
 export const image: EditorButtonDefinition = {
