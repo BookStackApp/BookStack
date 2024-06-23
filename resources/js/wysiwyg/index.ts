@@ -12,6 +12,18 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         namespace: 'BookStackPageEditor',
         nodes: getNodesForPageEditor(),
         onError: console.error,
+        theme: {
+            text: {
+                bold: 'editor-theme-bold',
+                code: 'editor-theme-code',
+                italic: 'editor-theme-italic',
+                strikethrough: 'editor-theme-strikethrough',
+                subscript: 'editor-theme-subscript',
+                superscript: 'editor-theme-superscript',
+                underline: 'editor-theme-underline',
+                underlineStrikethrough: 'editor-theme-underline-strikethrough',
+            }
+        }
     };
 
     const startingHtml = editArea.innerHTML;

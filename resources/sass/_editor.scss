@@ -21,6 +21,12 @@
   cursor: pointer;
   color: #000;
 }
+.editor-button[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: #EEE;
+  opacity: .6;
+}
 .editor-button-active, .editor-button-active:hover {
   background-color: #ceebff;
   color: #000;
@@ -181,4 +187,21 @@
 .editor-table-marker-row {
   height: 4px;
   cursor: row-resize;
+}
+
+// Editor theme styles
+.editor-theme-bold {
+  font-weight: bold;
+}
+.editor-theme-italic {
+  font-style: italic;
+}
+.editor-theme-strikethrough {
+  text-decoration-line: line-through;
+}
+.editor-theme-underline {
+  text-decoration-line: underline;
+}
+.editor-theme-underline-strikethrough {
+  text-decoration: underline line-through;
 }

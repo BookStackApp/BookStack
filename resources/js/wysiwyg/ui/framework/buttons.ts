@@ -1,6 +1,7 @@
 import {BaseSelection} from "lexical";
 import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {el} from "../../helpers";
+import {context} from "esbuild";
 
 export interface EditorBasicButtonDefinition {
     label: string;
@@ -10,15 +11,27 @@ export interface EditorBasicButtonDefinition {
 export interface EditorButtonDefinition extends EditorBasicButtonDefinition {
     action: (context: EditorUiContext) => void;
     isActive: (selection: BaseSelection|null) => boolean;
+    setup?: (context: EditorUiContext, button: EditorButton) => void;
 }
 
 export class EditorButton extends EditorUiElement {
     protected definition: EditorButtonDefinition;
     protected active: boolean = false;
+    protected completedSetup: boolean = false;
+    protected disabled: boolean = false;
 
     constructor(definition: EditorButtonDefinition) {
         super();
         this.definition = definition;
+    }
+
+    setContext(context: EditorUiContext) {
+        super.setContext(context);
+
+        if (this.definition.setup && !this.completedSetup) {
+            this.definition.setup(context, this);
+            this.completedSetup = true;
+        }
     }
 
     protected buildDOM(): HTMLButtonElement {
@@ -34,6 +47,7 @@ export class EditorButton extends EditorUiElement {
             type: 'button',
             class: 'editor-button',
             title: this.definition.icon ? label : null,
+            disabled: this.disabled ? 'true' : null,
         }, [child]) as HTMLButtonElement;
 
         button.addEventListener('click', this.onClick.bind(this));
@@ -60,5 +74,14 @@ export class EditorButton extends EditorUiElement {
 
     getLabel(): string {
         return this.trans(this.definition.label);
+    }
+
+    toggleDisabled(disabled: boolean) {
+        this.disabled = disabled;
+        if (disabled) {
+            this.dom?.setAttribute('disabled', 'true');
+        } else {
+            this.dom?.removeAttribute('disabled');
+        }
     }
 }

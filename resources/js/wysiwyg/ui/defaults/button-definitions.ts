@@ -1,9 +1,9 @@
-import {EditorBasicButtonDefinition, EditorButtonDefinition} from "../framework/buttons";
+import {EditorBasicButtonDefinition, EditorButton, EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
     $createParagraphNode, $getRoot, $getSelection,
     $isParagraphNode, $isTextNode, $setSelection,
-    BaseSelection, ElementNode, FORMAT_TEXT_COMMAND,
+    BaseSelection, CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_LOW, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
     REDO_COMMAND, TextFormatType,
     UNDO_COMMAND
@@ -55,6 +55,14 @@ export const undo: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;
+    },
+    setup(context: EditorUiContext, button: EditorButton) {
+        button.toggleDisabled(true);
+
+        context.editor.registerCommand(CAN_UNDO_COMMAND, (payload: boolean): boolean => {
+            button.toggleDisabled(!payload)
+            return false;
+        }, COMMAND_PRIORITY_LOW);
     }
 }
 
@@ -66,6 +74,14 @@ export const redo: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;
+    },
+    setup(context: EditorUiContext, button: EditorButton) {
+        button.toggleDisabled(true);
+
+        context.editor.registerCommand(CAN_REDO_COMMAND, (payload: boolean): boolean => {
+            button.toggleDisabled(!payload)
+            return false;
+        }, COMMAND_PRIORITY_LOW);
     }
 }
 
