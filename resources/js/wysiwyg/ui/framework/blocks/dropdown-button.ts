@@ -8,19 +8,23 @@ export class EditorDropdownButton extends EditorContainerUiElement {
     protected childItems: EditorUiElement[];
     protected open: boolean = false;
 
-    constructor(buttonDefinition: EditorBasicButtonDefinition, children: EditorUiElement[]) {
+    constructor(button: EditorBasicButtonDefinition|EditorButton, children: EditorUiElement[]) {
         super(children);
         this.childItems = children
 
-        this.button = new EditorButton({
-            ...buttonDefinition,
-            action() {
-                return false;
-            },
-            isActive: () => {
-                return this.open;
-            }
-        });
+        if (button instanceof EditorButton) {
+            this.button = button;
+        } else {
+            this.button = new EditorButton({
+                ...button,
+                action() {
+                    return false;
+                },
+                isActive: () => {
+                    return this.open;
+                }
+            });
+        }
 
         this.children.push(this.button);
     }

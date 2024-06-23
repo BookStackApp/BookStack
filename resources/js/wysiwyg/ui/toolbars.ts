@@ -16,6 +16,7 @@ import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
 import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
 import {EditorColorPicker} from "./framework/blocks/color-picker";
 import {EditorTableCreator} from "./framework/blocks/table-creator";
+import {EditorColorButton} from "./framework/blocks/color-button";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -41,10 +42,10 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(bold),
         new EditorButton(italic),
         new EditorButton(underline),
-        new EditorDropdownButton(textColor, [
+        new EditorDropdownButton(new EditorColorButton(textColor, 'color'), [
             new EditorColorPicker('color'),
         ]),
-        new EditorDropdownButton(highlightColor, [
+        new EditorDropdownButton(new EditorColorButton(highlightColor, 'background-color'), [
             new EditorColorPicker('background-color'),
         ]),
         new EditorButton(strikethrough),
