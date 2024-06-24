@@ -9,7 +9,7 @@ import {
     undo,
     warningCallout
 } from "./defaults/button-definitions";
-import {EditorContainerUiElement, EditorSimpleClassContainer} from "./framework/core";
+import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext} from "./framework/core";
 import {el} from "../helpers";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
@@ -17,6 +17,8 @@ import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
 import {EditorColorPicker} from "./framework/blocks/color-picker";
 import {EditorTableCreator} from "./framework/blocks/table-creator";
 import {EditorColorButton} from "./framework/blocks/color-button";
+import {$isCustomTableNode, $setTableColumnWidth, CustomTableNode} from "../nodes/custom-table";
+import {$getRoot} from "lexical";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -69,5 +71,29 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
 
         // Meta elements
         new EditorButton(source),
+
+        // Test
+        new EditorButton({
+            label: 'Expand table col 2',
+            action(context: EditorUiContext) {
+                context.editor.update(() => {
+                    const root = $getRoot();
+                    let table: CustomTableNode|null = null;
+                    for (const child of root.getChildren()) {
+                        if ($isCustomTableNode(child)) {
+                            table = child as CustomTableNode;
+                            break;
+                        }
+                    }
+
+                    if (table) {
+                        $setTableColumnWidth(table, 1, 500);
+                    }
+                });
+            },
+            isActive() {
+                return false;
+            }
+        })
     ]);
 }

@@ -7,6 +7,7 @@ import {ImageNode} from "./image";
 import {DetailsNode, SummaryNode} from "./details";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
+import {CustomTableNode} from "./custom-table";
 
 /**
  * Load the nodes for lexical.
@@ -18,19 +19,25 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         QuoteNode, // Todo - Create custom
         ListNode, // Todo - Create custom
         ListItemNode,
-        TableNode, // Todo - Create custom,
+        CustomTableNode,
         TableRowNode,
         TableCellNode,
         ImageNode,
         DetailsNode, SummaryNode,
         CustomParagraphNode,
+        LinkNode,
         {
             replace: ParagraphNode,
             with: (node: ParagraphNode) => {
                 return new CustomParagraphNode();
             }
         },
-        LinkNode,
+        {
+            replace: TableNode,
+            with(node: TableNode) {
+                return new CustomTableNode();
+            }
+        },
     ];
 }
 
