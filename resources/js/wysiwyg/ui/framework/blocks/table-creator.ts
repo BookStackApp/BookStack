@@ -1,6 +1,7 @@
 import {el, insertNewBlockNodeAtSelection} from "../../../helpers";
 import {EditorUiElement} from "../core";
 import {$createTableNodeWithDimensions} from "@lexical/table";
+import {CustomTableNode} from "../../../nodes/custom-table";
 
 
 export class EditorTableCreator extends EditorUiElement {
@@ -73,7 +74,7 @@ export class EditorTableCreator extends EditorUiElement {
         }
 
         this.getContext().editor.update(() => {
-            const table = $createTableNodeWithDimensions(rows, columns, false);
+            const table = $createTableNodeWithDimensions(rows, columns, false) as CustomTableNode;
             insertNewBlockNodeAtSelection(table);
         });
     }
