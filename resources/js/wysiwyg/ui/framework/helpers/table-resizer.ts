@@ -1,5 +1,6 @@
 import {LexicalEditor} from "lexical";
 import {el} from "../../../helpers";
+import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
 
 type MarkerDomRecord = {x: HTMLElement, y: HTMLElement};
 
@@ -7,6 +8,7 @@ class TableResizer {
     protected editor: LexicalEditor;
     protected editArea: HTMLElement;
     protected markerDom: MarkerDomRecord|null = null;
+    protected mouseTracker: MouseDragTracker|null = null;
 
     constructor(editor: LexicalEditor, editArea: HTMLElement) {
         this.editor = editor;
@@ -49,13 +51,26 @@ class TableResizer {
     getMarkers(): MarkerDomRecord {
         if (!this.markerDom) {
             this.markerDom = {
-                x: el('div', {class: 'editor-table-marker-column'}),
-                y: el('div', {class: 'editor-table-marker-row'}),
+                x: el('div', {class: 'editor-table-marker editor-table-marker-column'}),
+                y: el('div', {class: 'editor-table-marker editor-table-marker-row'}),
             }
-            this.editArea.after(this.markerDom.x, this.markerDom.y);
+            const wrapper = el('div', {
+                class: 'editor-table-marker-wrap',
+            }, [this.markerDom.x, this.markerDom.y]);
+            this.editArea.after(wrapper);
+            this.watchMarkerMouseDrags(wrapper);
         }
 
         return this.markerDom;
+    }
+
+    watchMarkerMouseDrags(wrapper: HTMLElement) {
+        this.mouseTracker = new MouseDragTracker(wrapper, '.editor-table-marker', {
+            up(event: MouseEvent, marker: HTMLElement, distance: MouseDragTrackerDistance) {
+                console.log('up', distance, marker);
+                // TODO - Update row/column for distance
+            }
+        });
     }
 }
 
