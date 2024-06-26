@@ -2,6 +2,7 @@ import {$getNearestNodeFromDOMNode, LexicalEditor} from "lexical";
 import {el} from "../../../helpers";
 import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
 import {$getTableColumnWidth, $setTableColumnWidth, CustomTableNode} from "../../../nodes/custom-table";
+import {TableRowNode} from "@lexical/table";
 
 type MarkerDomRecord = {x: HTMLElement, y: HTMLElement};
 
@@ -18,19 +19,28 @@ class TableResizer {
     constructor(editor: LexicalEditor, editArea: HTMLElement) {
         this.editor = editor;
         this.editArea = editArea;
+
         this.setupListeners();
     }
 
-    setupListeners() {
-        this.editArea.addEventListener('mousemove', event => {
-            const cell = (event.target as HTMLElement).closest('td,th');
-            if (cell && !this.dragging) {
-                this.onCellMouseMove(cell as HTMLElement, event);
-            }
-        });
+    teardown() {
+        this.editArea.removeEventListener('mousemove', this.onCellMouseMove);
+        if (this.mouseTracker) {
+            this.mouseTracker.teardown();
+        }
     }
 
-    onCellMouseMove(cell: HTMLElement, event: MouseEvent) {
+    protected setupListeners() {
+        this.onCellMouseMove = this.onCellMouseMove.bind(this);
+        this.editArea.addEventListener('mousemove', this.onCellMouseMove);
+    }
+
+    protected onCellMouseMove(event: MouseEvent) {
+        const cell = (event.target as HTMLElement).closest('td,th') as HTMLElement;
+        if (!cell || this.dragging) {
+            return;
+        }
+
         const rect = cell.getBoundingClientRect();
         const midX = rect.left + (rect.width / 2);
         const midY = rect.top + (rect.height / 2);
@@ -44,7 +54,7 @@ class TableResizer {
         this.updateMarkersTo(cell, xMarkerPos, yMarkerPos);
     }
 
-    updateMarkersTo(cell: HTMLElement, xPos: number, yPos: number) {
+    protected updateMarkersTo(cell: HTMLElement, xPos: number, yPos: number) {
         const markers: MarkerDomRecord = this.getMarkers();
         const table = cell.closest('table') as HTMLElement;
         const tableRect = table.getBoundingClientRect();
@@ -58,7 +68,7 @@ class TableResizer {
         markers.y.style.width = tableRect.width + 'px';
     }
 
-    getMarkers(): MarkerDomRecord {
+    protected getMarkers(): MarkerDomRecord {
         if (!this.markerDom) {
             this.markerDom = {
                 x: el('div', {class: 'editor-table-marker editor-table-marker-column'}),
@@ -74,7 +84,7 @@ class TableResizer {
         return this.markerDom;
     }
 
-    watchMarkerMouseDrags(wrapper: HTMLElement) {
+    protected watchMarkerMouseDrags(wrapper: HTMLElement) {
         const _this = this;
         let markerStart: number = 0;
         let markerProp: 'left' | 'top' = 'left';
@@ -96,17 +106,47 @@ class TableResizer {
                 marker.style.top = '0';
 
                 _this.dragging = false;
-                console.log('up', distance, marker, markerProp, _this.targetCell);
                 const parentTable = _this.targetCell?.closest('table');
 
                 if (markerProp === 'left' && _this.targetCell && parentTable) {
-                    const cellIndex = _this.getTargetCellColumnIndex();
+                    let cellIndex = _this.getTargetCellColumnIndex();
+                    let change = distance.x;
+                    if (_this.xMarkerAtStart && cellIndex > 0) {
+                        cellIndex -= 1;
+                    } else if  (_this.xMarkerAtStart && cellIndex === 0) {
+                        change = -change;
+                    }
+
                     _this.editor.update(() => {
                         const table = $getNearestNodeFromDOMNode(parentTable);
                         if (table instanceof CustomTableNode) {
                             const originalWidth = $getTableColumnWidth(_this.editor, table, cellIndex);
-                            const newWidth = Math.max(originalWidth + distance.x, 10);
+                            const newWidth = Math.max(originalWidth + change, 10);
                             $setTableColumnWidth(table, cellIndex, newWidth);
+                        }
+                    });
+                }
+
+                if (markerProp === 'top' && _this.targetCell) {
+                    const cellElement = _this.targetCell;
+
+                    _this.editor.update(() => {
+                        const cellNode = $getNearestNodeFromDOMNode(cellElement);
+                        const rowNode = cellNode?.getParent();
+                        let rowIndex = rowNode?.getIndexWithinParent() || 0;
+
+                        let change = distance.y;
+                        if (_this.yMarkerAtStart && rowIndex > 0) {
+                            rowIndex -= 1;
+                        } else if  (_this.yMarkerAtStart && rowIndex === 0) {
+                            change = -change;
+                        }
+
+                        const targetRow = rowNode?.getParent()?.getChildren()[rowIndex];
+                        if (targetRow instanceof TableRowNode) {
+                            const height  = targetRow.getHeight() || 0;
+                            const newHeight = Math.max(height + change, 10);
+                            targetRow.setHeight(newHeight);
                         }
                     });
                 }
@@ -114,7 +154,7 @@ class TableResizer {
         });
     }
 
-    getTargetCellColumnIndex(): number {
+    protected getTargetCellColumnIndex(): number {
         const cell = this.targetCell;
         if (cell === null) {
             return -1;
@@ -143,6 +183,7 @@ class TableResizer {
 export function registerTableResizer(editor: LexicalEditor, editorArea: HTMLElement): (() => void) {
     const resizer = new TableResizer(editor, editorArea);
 
-    // TODO - Strip/close down resizer
-    return () => {};
+    return () => {
+        resizer.teardown();
+    };
 }
