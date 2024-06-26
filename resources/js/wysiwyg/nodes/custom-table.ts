@@ -1,5 +1,5 @@
 import {SerializedTableNode, TableNode, TableRowNode} from "@lexical/table";
-import {DOMConversion, DOMConversionMap, DOMConversionOutput, LexicalNode, Spread} from "lexical";
+import {DOMConversion, DOMConversionMap, DOMConversionOutput, LexicalEditor, LexicalNode, Spread} from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {el} from "../helpers";
 
@@ -111,6 +111,21 @@ export class CustomTableNode extends TableNode {
 }
 
 function getTableColumnWidths(table: HTMLTableElement): string[] {
+    const maxColRow = getMaxColRowFromTable(table);
+
+    const colGroup = table.querySelector('colgroup');
+    let widths: string[] = [];
+    if (colGroup && (colGroup.childElementCount === maxColRow?.childElementCount || !maxColRow)) {
+        widths = extractWidthsFromRow(colGroup);
+    }
+    if (widths.filter(Boolean).length === 0 && maxColRow) {
+        widths = extractWidthsFromRow(maxColRow);
+    }
+
+    return widths;
+}
+
+function getMaxColRowFromTable(table: HTMLTableElement): HTMLTableRowElement|null {
     const rows = table.querySelectorAll('tr');
     let maxColCount: number = 0;
     let maxColRow: HTMLTableRowElement|null = null;
@@ -122,16 +137,7 @@ function getTableColumnWidths(table: HTMLTableElement): string[] {
         }
     }
 
-    const colGroup = table.querySelector('colgroup');
-    let widths: string[] = [];
-    if (colGroup && colGroup.childElementCount === maxColCount) {
-        widths = extractWidthsFromRow(colGroup);
-    }
-    if (widths.filter(Boolean).length === 0 && maxColRow) {
-        widths = extractWidthsFromRow(maxColRow);
-    }
-
-    return widths;
+    return maxColRow;
 }
 
 function extractWidthsFromRow(row: HTMLTableRowElement|HTMLTableColElement) {
@@ -140,7 +146,7 @@ function extractWidthsFromRow(row: HTMLTableRowElement|HTMLTableColElement) {
 
 function extractWidthFromElement(element: HTMLElement): string {
     let width = element.style.width || element.getAttribute('width');
-    if (!Number.isNaN(Number(width))) {
+    if (width && !Number.isNaN(Number(width))) {
         width = width + 'px';
     }
 
@@ -176,5 +182,23 @@ export function $setTableColumnWidth(node: CustomTableNode, columnIndex: number,
 
     colWidths[columnIndex] = width + 'px';
     node.setColWidths(colWidths);
-    console.log('setting col widths', node, colWidths);
+}
+
+export function $getTableColumnWidth(editor: LexicalEditor, node: CustomTableNode, columnIndex: number): number {
+    const colWidths = node.getColWidths();
+    if (colWidths.length > columnIndex && colWidths[columnIndex].endsWith('px')) {
+        return Number(colWidths[columnIndex].replace('px', ''));
+    }
+
+    // Otherwise, get from table element
+    const table = editor.getElementByKey(node.__key) as HTMLTableElement|null;
+    if (table) {
+        const maxColRow = getMaxColRowFromTable(table);
+        if (maxColRow && maxColRow.children.length > columnIndex) {
+            const cell = maxColRow.children[columnIndex];
+            return cell.clientWidth;
+        }
+    }
+
+    return 0;
 }
