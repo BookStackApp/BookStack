@@ -169,14 +169,13 @@
   }
 }
 
-.editor-table-marker-row,
-.editor-table-marker-column {
+.editor-table-marker {
   position: fixed;
   background-color: var(--editor-color-primary);
   z-index: 99;
   user-select: none;
   opacity: 0;
-  &:hover {
+  &:hover, &.active {
     opacity: 0.4;
   }
 }
