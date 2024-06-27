@@ -65,6 +65,10 @@
   min-width: 320px;
 }
 
+.editor-overflow-container {
+  display: flex;
+}
+
 // Modals
 .editor-modal-wrapper {
   position: fixed;
