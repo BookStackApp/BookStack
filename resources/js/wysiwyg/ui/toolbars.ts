@@ -2,7 +2,7 @@ import {EditorButton} from "./framework/buttons";
 import {
     blockquote, bold, bulletList, clearFormating, code,
     dangerCallout, details,
-    h2, h3, h4, h5, highlightColor, image,
+    h2, h3, h4, h5, highlightColor, horizontalRule, image,
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
     successCallout, superscript, table, taskList, textColor, underline,
@@ -67,6 +67,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorTableCreator(),
         ]),
         new EditorButton(image),
+        new EditorButton(horizontalRule),
         new EditorButton(details),
 
         // Meta elements
@@ -74,21 +75,10 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
 
         // Test
         new EditorButton({
-            label: 'Expand table col 2',
+            label: 'Test button',
             action(context: EditorUiContext) {
                 context.editor.update(() => {
-                    const root = $getRoot();
-                    let table: CustomTableNode|null = null;
-                    for (const child of root.getChildren()) {
-                        if ($isCustomTableNode(child)) {
-                            table = child as CustomTableNode;
-                            break;
-                        }
-                    }
-
-                    if (table) {
-                        $setTableColumnWidth(table, 1, 500);
-                    }
+                    // Do stuff
                 });
             },
             isActive() {
