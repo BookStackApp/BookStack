@@ -50,11 +50,11 @@ export abstract class EditorUiElement {
 }
 
 export class EditorContainerUiElement extends EditorUiElement {
-    protected children : EditorUiElement[];
+    protected children : EditorUiElement[] = [];
 
     constructor(children: EditorUiElement[]) {
         super();
-        this.children = children;
+        this.children.push(...children);
     }
 
     protected buildDOM(): HTMLElement {
@@ -63,6 +63,23 @@ export class EditorContainerUiElement extends EditorUiElement {
 
     getChildren(): EditorUiElement[] {
         return this.children;
+    }
+
+    protected addChildren(...children: EditorUiElement[]): void {
+        this.children.push(...children);
+    }
+
+    protected removeChildren(...children: EditorUiElement[]): void {
+        for (const child of children) {
+            this.removeChild(child);
+        }
+    }
+
+    protected removeChild(child: EditorUiElement) {
+        const index = this.children.indexOf(child);
+        if (index !== -1) {
+            this.children.splice(index, 1);
+        }
     }
 
     updateState(state: EditorUiStateUpdate): void {

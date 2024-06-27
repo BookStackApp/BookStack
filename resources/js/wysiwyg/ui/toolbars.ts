@@ -17,8 +17,7 @@ import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
 import {EditorColorPicker} from "./framework/blocks/color-picker";
 import {EditorTableCreator} from "./framework/blocks/table-creator";
 import {EditorColorButton} from "./framework/blocks/color-button";
-import {$isCustomTableNode, $setTableColumnWidth, CustomTableNode} from "../nodes/custom-table";
-import {$getRoot} from "lexical";
+import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -62,13 +61,15 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         new EditorButton(taskList),
 
         // Insert types
-        new EditorButton(link),
-        new EditorDropdownButton(table, [
-            new EditorTableCreator(),
+        new EditorOverflowContainer(6, [
+            new EditorButton(link),
+            new EditorDropdownButton(table, [
+                new EditorTableCreator(),
+            ]),
+            new EditorButton(image),
+            new EditorButton(horizontalRule),
+            new EditorButton(details),
         ]),
-        new EditorButton(image),
-        new EditorButton(horizontalRule),
-        new EditorButton(details),
 
         // Meta elements
         new EditorButton(source),

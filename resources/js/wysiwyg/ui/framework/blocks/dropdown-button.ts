@@ -26,7 +26,12 @@ export class EditorDropdownButton extends EditorContainerUiElement {
             });
         }
 
-        this.children.push(this.button);
+        this.addChildren(this.button);
+    }
+
+    insertItems(...items: EditorUiElement[]) {
+        this.addChildren(...items);
+        this.childItems.push(...items);
     }
 
     protected buildDOM(): HTMLElement {
