@@ -9,7 +9,7 @@ import {
     UNDO_COMMAND
 } from "lexical";
 import {
-    getNodeFromSelection,
+    getNodeFromSelection, insertNewBlockNodeAtSelection,
     selectionContainsNodeType,
     selectionContainsTextFormat,
     toggleSelectionBlockNodeType
@@ -47,8 +47,10 @@ import listCheckIcon from "@icons/editor/list-check.svg"
 import linkIcon from "@icons/editor/link.svg"
 import tableIcon from "@icons/editor/table.svg"
 import imageIcon from "@icons/editor/image.svg"
+import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
+import {$createHorizontalRuleNode, $isHorizontalRuleNode, HorizontalRuleNode} from "../../nodes/horizontal-rule";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -291,6 +293,19 @@ export const image: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isImageNode);
+    }
+};
+
+export const horizontalRule: EditorButtonDefinition = {
+    label: 'Insert horizontal line',
+    icon: horizontalRuleIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            insertNewBlockNodeAtSelection($createHorizontalRuleNode(), false);
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return selectionContainsNodeType(selection, $isHorizontalRuleNode);
     }
 };
 

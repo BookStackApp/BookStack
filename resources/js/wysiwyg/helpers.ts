@@ -80,12 +80,16 @@ export function toggleSelectionBlockNodeType(editor: LexicalEditor, matcher: Lex
     });
 }
 
-export function insertNewBlockNodeAtSelection(node: LexicalNode) {
+export function insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: boolean = true) {
     const selection = $getSelection();
     const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
 
     if (blockElement) {
-        blockElement.insertAfter(node);
+        if (insertAfter) {
+            blockElement.insertAfter(node);
+        } else {
+            blockElement.insertBefore(node);
+        }
     } else {
         $getRoot().append(node);
     }
