@@ -77,6 +77,11 @@ Big thanks to these companies for supporting the project.
 <td align="center" style="text-align: center"><a href="https://www.schroeck-consulting.de/" target="_blank">
     <img width="200" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/schroeck-consulting.png" alt="Schroeck IT Consulting">
 </a></td>
+</tr>
+<tr>
+<td align="center" colspan="2"><a href="https://practinet.be/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practinet.png" alt="Practinet">
+</a></td>
 </tr></tbody></table>
 
 ## 🛣️ Road Map
