@@ -94,6 +94,7 @@ export class EditorUIManager {
         for (const toolbar of this.activeContextToolbars) {
             toolbar.updateState(update);
         }
+        // console.log('selection update', update.selection);
     }
 
     protected updateContextToolbars(update: EditorUiStateUpdate): void {

@@ -16,8 +16,14 @@ export class EditorContextToolbar extends EditorContainerUiElement {
     }
 
     attachTo(target: HTMLElement) {
-        // Todo - attach to target position
-        console.log('attaching context toolbar to', target);
+        const targetBounds = target.getBoundingClientRect();
+        const dom = this.getDOMElement();
+        const domBounds = dom.getBoundingClientRect();
+
+        const targetMid = targetBounds.left + (targetBounds.width / 2);
+        const targetLeft = targetMid - (domBounds.width / 2);
+        dom.style.top = (targetBounds.bottom + 6) + 'px';
+        dom.style.left = targetLeft + 'px';
     }
 
     insert(children: EditorUiElement[]) {
