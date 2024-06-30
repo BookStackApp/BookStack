@@ -1,5 +1,5 @@
 import {LexicalEditor} from "lexical";
-import {getMainEditorFullToolbar} from "./toolbars";
+import {getImageToolbarContent, getMainEditorFullToolbar} from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
 import {image as imageFormDefinition, link as linkFormDefinition, source as sourceFormDefinition} from "./defaults/form-definitions";
 import {ImageDecorator} from "./decorators/image";
@@ -31,6 +31,15 @@ export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
     manager.registerModal('source', {
         title: 'Source code',
         form: sourceFormDefinition,
+    });
+
+    // Register context toolbars
+    manager.registerContextToolbar('image', {
+        selector: 'img',
+        content: getImageToolbarContent(),
+        displayTargetLocator(originalTarget: HTMLElement) {
+            return originalTarget.closest('a') || originalTarget;
+        }
     });
 
     // Register image decorator listener
