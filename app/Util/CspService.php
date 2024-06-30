@@ -143,6 +143,7 @@ class CspService
             $drawioSourceParsed = parse_url($drawioSource);
             $drawioHost = $drawioSourceParsed['scheme'] . '://' . $drawioSourceParsed['host'];
             $hosts[] = $drawioHost;
+            $hosts[] = 'blob:';
         }
 
         return $hosts;

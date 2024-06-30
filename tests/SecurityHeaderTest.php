@@ -136,7 +136,7 @@ class SecurityHeaderTest extends TestCase
 
         $resp = $this->get('/');
         $scriptHeader = $this->getCspHeader($resp, 'frame-src');
-        $this->assertEquals('frame-src \'self\' https://example.com https://diagrams.example.com', $scriptHeader);
+        $this->assertEquals('frame-src \'self\' https://example.com https://diagrams.example.com blob:', $scriptHeader);
     }
 
     public function test_cache_control_headers_are_set_on_responses()
