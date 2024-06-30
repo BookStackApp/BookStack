@@ -49,10 +49,10 @@ export class EditorDropdownButton extends EditorContainerUiElement {
 
         handleDropdown(button, menu, () => {
             this.open = true;
-            this.getContext().manager.triggerStateUpdate(this.button);
+            this.getContext().manager.triggerStateUpdateForElement(this.button);
         }, () => {
             this.open = false;
-            this.getContext().manager.triggerStateUpdate(this.button);
+            this.getContext().manager.triggerStateUpdateForElement(this.button);
         });
 
         return wrapper;

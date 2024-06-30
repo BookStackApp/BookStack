@@ -1,6 +1,9 @@
 import {EditorFormModal, EditorFormModalDefinition} from "./modals";
-import {EditorUiContext, EditorUiElement} from "./core";
-import {EditorDecorator} from "./decorator";
+import {EditorContainerUiElement, EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
+import {EditorDecorator, EditorDecoratorAdapter} from "./decorator";
+import {$getSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELECTION_CHANGE_COMMAND} from "lexical";
+import {DecoratorListener} from "lexical/LexicalEditor";
+import type {NodeKey} from "lexical/LexicalNode";
 
 
 export class EditorUIManager {
@@ -9,9 +12,11 @@ export class EditorUIManager {
     protected decoratorConstructorsByType: Record<string, typeof EditorDecorator> = {};
     protected decoratorInstancesByNodeKey: Record<string, EditorDecorator> = {};
     protected context: EditorUiContext|null = null;
+    protected toolbar: EditorContainerUiElement|null = null;
 
     setContext(context: EditorUiContext) {
         this.context = context;
+        this.setupEditor(context.editor);
     }
 
     getContext(): EditorUiContext {
@@ -22,7 +27,7 @@ export class EditorUIManager {
         return this.context;
     }
 
-    triggerStateUpdate(element: EditorUiElement) {
+    triggerStateUpdateForElement(element: EditorUiElement) {
         element.updateState({
             selection: null,
             editor: this.getContext().editor
@@ -49,7 +54,7 @@ export class EditorUIManager {
         this.decoratorConstructorsByType[type] = decorator;
     }
 
-    getDecorator(decoratorType: string, nodeKey: string): EditorDecorator {
+    protected getDecorator(decoratorType: string, nodeKey: string): EditorDecorator {
         if (this.decoratorInstancesByNodeKey[nodeKey]) {
             return this.decoratorInstancesByNodeKey[nodeKey];
         }
@@ -63,5 +68,48 @@ export class EditorUIManager {
         const decorator = new decoratorClass(nodeKey);
         this.decoratorInstancesByNodeKey[nodeKey] = decorator;
         return decorator;
+    }
+
+    setToolbar(toolbar: EditorContainerUiElement) {
+        if (this.toolbar) {
+            this.toolbar.getDOMElement().remove();
+        }
+
+        this.toolbar = toolbar;
+        toolbar.setContext(this.getContext());
+        this.getContext().editorDOM.before(toolbar.getDOMElement());
+    }
+
+    protected triggerStateUpdate(state: EditorUiStateUpdate): void {
+        const context = this.getContext();
+        context.lastSelection = state.selection;
+        this.toolbar?.updateState(state);
+    }
+
+    protected setupEditor(editor: LexicalEditor) {
+        // Update button states on editor selection change
+        editor.registerCommand(SELECTION_CHANGE_COMMAND, () => {
+            this.triggerStateUpdate({
+                editor: editor,
+                selection: $getSelection(),
+            });
+            return false;
+        }, COMMAND_PRIORITY_LOW);
+
+        // Register our DOM decorate listener with the editor
+        const domDecorateListener: DecoratorListener<EditorDecoratorAdapter> = (decorators: Record<NodeKey, EditorDecoratorAdapter>) => {
+            const keys = Object.keys(decorators);
+            for (const key of keys) {
+                const decoratedEl = editor.getElementByKey(key);
+                const adapter = decorators[key];
+                const decorator = this.getDecorator(adapter.type, key);
+                decorator.setNode(adapter.getNode());
+                const decoratorEl = decorator.render(this.getContext());
+                if (decoratedEl) {
+                    decoratedEl.append(decoratorEl);
+                }
+            }
+        }
+        editor.registerDecoratorListener(domDecorateListener);
     }
 }
