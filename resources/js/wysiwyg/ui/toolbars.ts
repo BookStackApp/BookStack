@@ -6,7 +6,7 @@ import {
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
     successCallout, superscript, table, taskList, textColor, underline,
-    undo,
+    undo, unlink,
     warningCallout
 } from "./defaults/button-definitions";
 import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "./framework/core";
@@ -91,4 +91,11 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
 
 export function getImageToolbarContent(): EditorUiElement[] {
     return [new EditorButton(image)];
+}
+
+export function getLinkToolbarContent(): EditorUiElement[] {
+    return [
+        new EditorButton(link),
+        new EditorButton(unlink),
+    ];
 }

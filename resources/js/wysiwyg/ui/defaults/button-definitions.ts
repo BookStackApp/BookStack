@@ -1,7 +1,7 @@
 import {EditorBasicButtonDefinition, EditorButton, EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
-    $createParagraphNode, $getRoot, $getSelection,
+    $createParagraphNode, $createTextNode, $getRoot, $getSelection,
     $isParagraphNode, $isTextNode, $setSelection,
     BaseSelection, CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_LOW, ElementNode, FORMAT_TEXT_COMMAND,
     LexicalNode,
@@ -45,12 +45,13 @@ import listBulletIcon from "@icons/editor/list-bullet.svg"
 import listNumberedIcon from "@icons/editor/list-numbered.svg"
 import listCheckIcon from "@icons/editor/list-check.svg"
 import linkIcon from "@icons/editor/link.svg"
+import unlinkIcon from "@icons/editor/unlink.svg"
 import tableIcon from "@icons/editor/table.svg"
 import imageIcon from "@icons/editor/image.svg"
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
-import {$createHorizontalRuleNode, $isHorizontalRuleNode, HorizontalRuleNode} from "../../nodes/horizontal-rule";
+import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -255,6 +256,31 @@ export const link: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isLinkNode);
+    }
+};
+
+export const unlink: EditorButtonDefinition = {
+    label: 'Remove link',
+    icon: unlinkIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            const selection = context.lastSelection;
+            const selectedLink = getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+            const selectionPoints = selection?.getStartEndPoints();
+
+            if (selectedLink) {
+                const newNode = $createTextNode(selectedLink.getTextContent());
+                selectedLink.replace(newNode);
+                if (selectionPoints?.length === 2) {
+                    newNode.select(selectionPoints[0].offset, selectionPoints[1].offset);
+                } else {
+                    newNode.select();
+                }
+            }
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return false;
     }
 };
 
