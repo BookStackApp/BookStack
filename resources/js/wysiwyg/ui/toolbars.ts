@@ -9,7 +9,7 @@ import {
     undo,
     warningCallout
 } from "./defaults/button-definitions";
-import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext} from "./framework/core";
+import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "./framework/core";
 import {el} from "../helpers";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
@@ -87,4 +87,8 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             }
         })
     ]);
+}
+
+export function getImageToolbarContent(): EditorUiElement[] {
+    return [new EditorButton(image)];
 }

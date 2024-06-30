@@ -4,7 +4,7 @@ import {EditorDecorator, EditorDecoratorAdapter} from "./decorator";
 import {$getSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELECTION_CHANGE_COMMAND} from "lexical";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
-
+import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
 
 export class EditorUIManager {
 
@@ -13,6 +13,8 @@ export class EditorUIManager {
     protected decoratorInstancesByNodeKey: Record<string, EditorDecorator> = {};
     protected context: EditorUiContext|null = null;
     protected toolbar: EditorContainerUiElement|null = null;
+    protected contextToolbarDefinitionsByKey: Record<string, EditorContextToolbarDefinition> = {};
+    protected activeContextToolbars: EditorContextToolbar[] = [];
 
     setContext(context: EditorUiContext) {
         this.context = context;
@@ -80,10 +82,59 @@ export class EditorUIManager {
         this.getContext().editorDOM.before(toolbar.getDOMElement());
     }
 
-    protected triggerStateUpdate(state: EditorUiStateUpdate): void {
+    registerContextToolbar(key: string, definition: EditorContextToolbarDefinition) {
+        this.contextToolbarDefinitionsByKey[key] = definition;
+    }
+
+    protected triggerStateUpdate(update: EditorUiStateUpdate): void {
         const context = this.getContext();
-        context.lastSelection = state.selection;
-        this.toolbar?.updateState(state);
+        context.lastSelection = update.selection;
+        this.toolbar?.updateState(update);
+        this.updateContextToolbars(update);
+        for (const toolbar of this.activeContextToolbars) {
+            toolbar.updateState(update);
+        }
+    }
+
+    protected updateContextToolbars(update: EditorUiStateUpdate): void {
+        for (const toolbar of this.activeContextToolbars) {
+            toolbar.empty();
+            toolbar.getDOMElement().remove();
+        }
+
+        const node = (update.selection?.getNodes() || [])[0] || null;
+        if (!node) {
+            return;
+        }
+
+        const element = update.editor.getElementByKey(node.getKey());
+        if (!element) {
+            return;
+        }
+
+        const toolbarKeys = Object.keys(this.contextToolbarDefinitionsByKey);
+        const contentByTarget = new Map<HTMLElement, EditorUiElement[]>();
+        for (const key of toolbarKeys) {
+            const definition = this.contextToolbarDefinitionsByKey[key];
+            const matchingElem = ((element.closest(definition.selector)) || (element.querySelector(definition.selector))) as HTMLElement|null;
+            if (matchingElem) {
+                const targetEl = definition.displayTargetLocator ? definition.displayTargetLocator(matchingElem) : matchingElem;
+                if (!contentByTarget.has(targetEl)) {
+                    contentByTarget.set(targetEl, [])
+                }
+                // @ts-ignore
+                contentByTarget.get(targetEl).push(...definition.content);
+            }
+        }
+
+        for (const [target, contents] of contentByTarget) {
+            const toolbar = new EditorContextToolbar(contents);
+            toolbar.setContext(this.getContext());
+            this.activeContextToolbars.push(toolbar);
+
+            this.getContext().editorDOM.after(toolbar.getDOMElement());
+            toolbar.attachTo(target);
+        }
     }
 
     protected setupEditor(editor: LexicalEditor) {
