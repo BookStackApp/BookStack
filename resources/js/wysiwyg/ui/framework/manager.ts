@@ -79,7 +79,7 @@ export class EditorUIManager {
 
         this.toolbar = toolbar;
         toolbar.setContext(this.getContext());
-        this.getContext().editorDOM.before(toolbar.getDOMElement());
+        this.getContext().containerDOM.prepend(toolbar.getDOMElement());
     }
 
     registerContextToolbar(key: string, definition: EditorContextToolbarDefinition) {
@@ -95,6 +95,13 @@ export class EditorUIManager {
             toolbar.updateState(update);
         }
         // console.log('selection update', update.selection);
+    }
+
+    triggerStateRefresh(): void {
+        this.triggerStateUpdate({
+            editor: this.getContext().editor,
+            selection: this.getContext().lastSelection,
+        });
     }
 
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
@@ -133,7 +140,7 @@ export class EditorUIManager {
             toolbar.setContext(this.getContext());
             this.activeContextToolbars.push(toolbar);
 
-            this.getContext().editorDOM.after(toolbar.getDOMElement());
+            this.getContext().containerDOM.append(toolbar.getDOMElement());
             toolbar.attachTo(target);
         }
     }

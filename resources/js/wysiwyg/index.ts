@@ -6,8 +6,9 @@ import {getNodesForPageEditor} from './nodes';
 import {buildEditorUI} from "./ui";
 import {setEditorContentFromHtml} from "./actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
+import {el} from "./helpers";
 
-export function createPageEditorInstance(editArea: HTMLElement) {
+export function createPageEditorInstance(container: HTMLElement, htmlContent: string) {
     const config: CreateEditorArgs = {
         namespace: 'BookStackPageEditor',
         nodes: getNodesForPageEditor(),
@@ -26,7 +27,11 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         }
     };
 
-    const startingHtml = editArea.innerHTML;
+    const editArea = el('div', {
+        contenteditable: 'true',
+    });
+    container.append(editArea);
+    container.classList.add('editor-container');
 
     const editor = createEditor(config);
     editor.setRootElement(editArea);
@@ -37,7 +42,7 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         registerTableResizer(editor, editArea),
     );
 
-    setEditorContentFromHtml(editor, startingHtml);
+    setEditorContentFromHtml(editor, htmlContent);
 
     const debugView = document.getElementById('lexical-debug');
     editor.registerUpdateListener(({editorState}) => {
@@ -47,24 +52,5 @@ export function createPageEditorInstance(editArea: HTMLElement) {
         }
     });
 
-    buildEditorUI(editArea, editor);
-
-    // Example of creating, registering and using a custom command
-
-    // const SET_BLOCK_CALLOUT_COMMAND = createCommand();
-    // editor.registerCommand(SET_BLOCK_CALLOUT_COMMAND, (category: CalloutCategory = 'info') => {
-    //     const selection = $getSelection();
-    //     const blockElement = $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]);
-    //     if ($isCalloutNode(blockElement)) {
-    //         $setBlocksType(selection, $createParagraphNode);
-    //     } else {
-    //         $setBlocksType(selection, () => $createCalloutNode(category));
-    //     }
-    //     return true;
-    // }, COMMAND_PRIORITY_LOW);
-    //
-    // const button = document.getElementById('lexical-button');
-    // button.addEventListener('click', event => {
-    //     editor.dispatchCommand(SET_BLOCK_CALLOUT_COMMAND, 'info');
-    // });
+    buildEditorUI(container, editArea, editor);
 }

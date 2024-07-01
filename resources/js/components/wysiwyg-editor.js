@@ -4,10 +4,12 @@ export class WysiwygEditor extends Component {
 
     setup() {
         this.elem = this.$el;
-        this.editArea = this.$refs.editArea;
+        this.editContainer = this.$refs.editContainer;
+        this.editContent = this.$refs.editContent;
 
         window.importVersioned('wysiwyg').then(wysiwyg => {
-            wysiwyg.createPageEditorInstance(this.editArea);
+            const editorContent = this.editContent.textContent;
+            wysiwyg.createPageEditorInstance(this.editContainer, editorContent);
         });
     }
 

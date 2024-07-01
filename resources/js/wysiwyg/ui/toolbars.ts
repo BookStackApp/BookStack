@@ -1,7 +1,7 @@
 import {EditorButton} from "./framework/buttons";
 import {
     blockquote, bold, bulletList, clearFormating, code,
-    dangerCallout, details,
+    dangerCallout, details, fullscreen,
     h2, h3, h4, h5, highlightColor, horizontalRule, image,
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
@@ -73,6 +73,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
 
         // Meta elements
         new EditorButton(source),
+        new EditorButton(fullscreen),
 
         // Test
         new EditorButton({

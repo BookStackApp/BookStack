@@ -8,8 +8,8 @@ export interface EditorBasicButtonDefinition {
 }
 
 export interface EditorButtonDefinition extends EditorBasicButtonDefinition {
-    action: (context: EditorUiContext) => void;
-    isActive: (selection: BaseSelection|null) => boolean;
+    action: (context: EditorUiContext, button: EditorButton) => void;
+    isActive: (selection: BaseSelection|null, context: EditorUiContext) => boolean;
     setup?: (context: EditorUiContext, button: EditorButton) => void;
 }
 
@@ -68,11 +68,16 @@ export class EditorButton extends EditorUiElement {
     }
 
     protected onClick() {
-        this.definition.action(this.getContext());
+        this.definition.action(this.getContext(), this);
     }
 
     updateActiveState(selection: BaseSelection|null) {
-        this.active = this.definition.isActive(selection);
+        const isActive = this.definition.isActive(selection, this.getContext());
+        this.setActiveState(isActive);
+    }
+
+    setActiveState(active: boolean) {
+        this.active = active;
         this.dom?.classList.toggle('editor-button-active', this.active);
     }
 

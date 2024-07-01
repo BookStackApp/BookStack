@@ -10,6 +10,7 @@ export type EditorUiStateUpdate = {
 export type EditorUiContext = {
     editor: LexicalEditor,
     editorDOM: HTMLElement,
+    containerDOM: HTMLElement,
     translate: (text: string) => string,
     manager: EditorUIManager,
     lastSelection: BaseSelection|null,
