@@ -29,8 +29,12 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     const editArea = el('div', {
         contenteditable: 'true',
+        class: 'editor-content-area page-content',
     });
-    container.append(editArea);
+    const editWrap = el('div', {
+        class: 'editor-content-wrap',
+    }, [editArea]);
+    container.append(editWrap);
     container.classList.add('editor-container');
 
     const editor = createEditor(config);

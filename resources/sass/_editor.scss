@@ -14,6 +14,9 @@
 .editor-toolbar-main {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
 }
 
 body.editor-is-fullscreen {
@@ -22,13 +25,24 @@ body.editor-is-fullscreen {
     z-index: 20;
   }
 }
+.editor-content-area {
+  &:focus {
+    outline: 0;
+  }
+}
+.editor-content-wrap {
+  overflow-y: scroll;
+}
 
 // Buttons
 .editor-button {
-  border: 1px solid #DDD;
   font-size: 12px;
   padding: 4px 6px;
   color: #444;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .editor-button:hover {
   background-color: #EEE;
@@ -38,7 +52,6 @@ body.editor-is-fullscreen {
 .editor-button[disabled] {
   pointer-events: none;
   cursor: not-allowed;
-  background-color: #EEE;
   opacity: .6;
 }
 .editor-button-active, .editor-button-active:hover {
@@ -52,7 +65,8 @@ body.editor-is-fullscreen {
 .editor-button-icon svg {
   width: 24px;
   height: 24px;
-  fill: #000;
+  color: inherit;
+  fill: currentColor;
 }
 
 // Containers
