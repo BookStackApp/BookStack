@@ -51,7 +51,7 @@ export class EditorButton extends EditorUiElement {
         const label = this.getLabel();
         let child: string|HTMLElement = label;
         if (this.definition.icon) {
-            child = el('span', {class: 'editor-button-icon'});
+            child = el('div', {class: 'editor-button-icon'});
             child.innerHTML = this.definition.icon;
         }
 
