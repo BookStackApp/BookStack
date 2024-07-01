@@ -51,6 +51,7 @@ import imageIcon from "@icons/editor/image.svg"
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
+import fullscreenIcon from "@icons/editor/fullscreen.svg"
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
 
 export const undo: EditorButtonDefinition = {
@@ -206,7 +207,7 @@ function buildListButton(label: string, type: ListType, icon: string): EditorBut
         action(context: EditorUiContext) {
             context.editor.getEditorState().read(() => {
                 const selection = $getSelection();
-                if (this.isActive(selection)) {
+                if (this.isActive(selection, context)) {
                     removeList(context.editor);
                 } else {
                     insertList(context.editor, type);
@@ -373,5 +374,19 @@ export const source: EditorButtonDefinition = {
     },
     isActive() {
         return false;
+    }
+};
+
+export const fullscreen: EditorButtonDefinition = {
+    label: 'Fullscreen',
+    icon: fullscreenIcon,
+    async action(context: EditorUiContext, button: EditorButton) {
+        const isFullScreen = context.containerDOM.classList.contains('fullscreen');
+        context.containerDOM.classList.toggle('fullscreen', !isFullScreen);
+        (context.containerDOM.closest('body') as HTMLElement).classList.toggle('editor-is-fullscreen', !isFullScreen);
+        button.setActiveState(!isFullScreen);
+    },
+    isActive(selection, context: EditorUiContext) {
+        return context.containerDOM.classList.contains('fullscreen');
     }
 };

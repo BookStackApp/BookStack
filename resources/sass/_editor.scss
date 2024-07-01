@@ -4,9 +4,23 @@
 }
 
 // Main UI elements
+.editor-container {
+  background-color: #FFF;
+  position: relative;
+  &.fullscreen {
+    z-index: 500;
+  }
+}
 .editor-toolbar-main {
   display: flex;
   flex-wrap: wrap;
+}
+
+body.editor-is-fullscreen {
+  overflow: hidden;
+  .edit-area {
+    z-index: 20;
+  }
 }
 
 // Buttons

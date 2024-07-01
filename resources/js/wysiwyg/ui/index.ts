@@ -5,10 +5,11 @@ import {image as imageFormDefinition, link as linkFormDefinition, source as sour
 import {ImageDecorator} from "./decorators/image";
 import {EditorUiContext} from "./framework/core";
 
-export function buildEditorUI(element: HTMLElement, editor: LexicalEditor) {
+export function buildEditorUI(container: HTMLElement, element: HTMLElement, editor: LexicalEditor) {
     const manager = new EditorUIManager();
     const context: EditorUiContext = {
         editor,
+        containerDOM: container,
         editorDOM: element,
         manager,
         translate: (text: string): string => text,
