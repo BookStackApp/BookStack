@@ -29,6 +29,7 @@ export abstract class EditorDecorator {
 
     /**
      * Render the decorator.
+     * Can run on both creation and update for a node decorator.
      * If an element is returned, this will be appended to the element
      * that is being decorated.
      */

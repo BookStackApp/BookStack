@@ -73,7 +73,6 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
     }
 
     decorate(editor: LexicalEditor, config: EditorConfig): EditorDecoratorAdapter {
-        // TODO
         return {
             type: 'code',
             getNode: () => this,
@@ -165,4 +164,22 @@ export function $createCodeBlockNode(language: string = '', code: string = ''): 
 
 export function $isCodeBlockNode(node: LexicalNode | null | undefined) {
     return node instanceof CodeBlockNode;
+}
+
+export function $openCodeEditorForNode(editor: LexicalEditor, node: CodeBlockNode): void {
+    const code = node.getCode();
+    const language = node.getLanguage();
+
+    // @ts-ignore
+    const codeEditor = window.$components.first('code-editor');
+    // TODO - Handle direction
+    codeEditor.open(code, language, 'ltr', (newCode: string, newLang: string) => {
+        editor.update(() => {
+            node.setCode(newCode);
+            node.setLanguage(newLang);
+        });
+        // TODO - Re-focus
+    }, () => {
+        // TODO - Re-focus
+    });
 }
