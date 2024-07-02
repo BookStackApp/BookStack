@@ -27,6 +27,11 @@ export abstract class EditorDecorator {
         this.node = node;
     }
 
-    abstract render(context: EditorUiContext): HTMLElement;
+    /**
+     * Render the decorator.
+     * If an element is returned, this will be appended to the element
+     * that is being decorated.
+     */
+    abstract render(context: EditorUiContext, decorated: HTMLElement): HTMLElement|void;
 
 }

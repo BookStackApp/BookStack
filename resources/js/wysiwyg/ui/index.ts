@@ -4,6 +4,7 @@ import {EditorUIManager} from "./framework/manager";
 import {image as imageFormDefinition, link as linkFormDefinition, source as sourceFormDefinition} from "./defaults/form-definitions";
 import {ImageDecorator} from "./decorators/image";
 import {EditorUiContext} from "./framework/core";
+import {CodeBlockDecorator} from "./decorators/code-block";
 
 export function buildEditorUI(container: HTMLElement, element: HTMLElement, editor: LexicalEditor) {
     const manager = new EditorUIManager();
@@ -49,4 +50,5 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, edit
 
     // Register image decorator listener
     manager.registerDecoratorType('image', ImageDecorator);
+    manager.registerDecoratorType('code', CodeBlockDecorator);
 }
