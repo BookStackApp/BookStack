@@ -160,11 +160,15 @@ export class EditorUIManager {
             const keys = Object.keys(decorators);
             for (const key of keys) {
                 const decoratedEl = editor.getElementByKey(key);
+                if (!decoratedEl) {
+                    continue;
+                }
+
                 const adapter = decorators[key];
                 const decorator = this.getDecorator(adapter.type, key);
                 decorator.setNode(adapter.getNode());
-                const decoratorEl = decorator.render(this.getContext());
-                if (decoratedEl) {
+                const decoratorEl = decorator.render(this.getContext(), decoratedEl);
+                if (decoratorEl) {
                     decoratedEl.append(decoratorEl);
                 }
             }
