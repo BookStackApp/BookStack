@@ -49,10 +49,12 @@ import unlinkIcon from "@icons/editor/unlink.svg"
 import tableIcon from "@icons/editor/table.svg"
 import imageIcon from "@icons/editor/image.svg"
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg"
+import codeBlockIcon from "@icons/editor/code-block.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
 import fullscreenIcon from "@icons/editor/fullscreen.svg"
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
+import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -333,6 +335,31 @@ export const horizontalRule: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection|null): boolean {
         return selectionContainsNodeType(selection, $isHorizontalRuleNode);
+    }
+};
+
+export const codeBlock: EditorButtonDefinition = {
+    label: 'Insert code block',
+    icon: codeBlockIcon,
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const codeBlock = getNodeFromSelection(selection, $isCodeBlockNode) as (CodeBlockNode|null);
+            if (codeBlock === null) {
+                context.editor.update(() => {
+                    const codeBlock = $createCodeBlockNode();
+                    codeBlock.setCode(selection?.getTextContent() || '');
+                    insertNewBlockNodeAtSelection(codeBlock, true);
+                    $openCodeEditorForNode(context.editor, codeBlock);
+                    codeBlock.selectStart();
+                });
+            } else {
+                $openCodeEditorForNode(context.editor, codeBlock);
+            }
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return selectionContainsNodeType(selection, $isCodeBlockNode);
     }
 };
 

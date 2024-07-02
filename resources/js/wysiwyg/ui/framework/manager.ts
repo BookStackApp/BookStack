@@ -157,21 +157,23 @@ export class EditorUIManager {
 
         // Register our DOM decorate listener with the editor
         const domDecorateListener: DecoratorListener<EditorDecoratorAdapter> = (decorators: Record<NodeKey, EditorDecoratorAdapter>) => {
-            const keys = Object.keys(decorators);
-            for (const key of keys) {
-                const decoratedEl = editor.getElementByKey(key);
-                if (!decoratedEl) {
-                    continue;
-                }
+            editor.getEditorState().read(() => {
+                const keys = Object.keys(decorators);
+                for (const key of keys) {
+                    const decoratedEl = editor.getElementByKey(key);
+                    if (!decoratedEl) {
+                        continue;
+                    }
 
-                const adapter = decorators[key];
-                const decorator = this.getDecorator(adapter.type, key);
-                decorator.setNode(adapter.getNode());
-                const decoratorEl = decorator.render(this.getContext(), decoratedEl);
-                if (decoratorEl) {
-                    decoratedEl.append(decoratorEl);
+                    const adapter = decorators[key];
+                    const decorator = this.getDecorator(adapter.type, key);
+                    decorator.setNode(adapter.getNode());
+                    const decoratorEl = decorator.render(this.getContext(), decoratedEl);
+                    if (decoratorEl) {
+                        decoratedEl.append(decoratorEl);
+                    }
                 }
-            }
+            });
         }
         editor.registerDecoratorListener(domDecorateListener);
     }

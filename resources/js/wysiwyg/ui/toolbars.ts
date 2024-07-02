@@ -1,6 +1,6 @@
 import {EditorButton} from "./framework/buttons";
 import {
-    blockquote, bold, bulletList, clearFormating, code,
+    blockquote, bold, bulletList, clearFormating, code, codeBlock,
     dangerCallout, details, fullscreen,
     h2, h3, h4, h5, highlightColor, horizontalRule, image,
     infoCallout, italic, link, numberList, paragraph,
@@ -68,6 +68,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             ]),
             new EditorButton(image),
             new EditorButton(horizontalRule),
+            new EditorButton(codeBlock),
             new EditorButton(details),
         ]),
 

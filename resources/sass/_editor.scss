@@ -244,6 +244,13 @@ body.editor-is-fullscreen {
   cursor: row-resize;
 }
 
+.editor-code-block-wrap {
+  user-select: none;
+  > * {
+    pointer-events: none;
+  }
+}
+
 // Editor theme styles
 .editor-theme-bold {
   font-weight: bold;
