@@ -14,7 +14,8 @@
     "livereload": "livereload ./public/dist/",
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads",
     "lint": "eslint \"resources/**/*.js\" \"resources/**/*.mjs\"",
-    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\""
+    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\"",
+    "ts:lint": "tsc --noEmit"
   },
   "devDependencies": {
     "@lezer/generator": "^1.5.1",

@@ -1,9 +1,8 @@
 import * as events from './services/events';
 import * as httpInstance from './services/http';
 import Translations from './services/translations';
-
-import * as components from './services/components';
 import * as componentMap from './components';
+import {ComponentStore} from './services/components.ts';
 
 // Url retrieval function
 window.baseUrl = function baseUrl(path) {
@@ -32,6 +31,6 @@ window.trans_choice = translator.getPlural.bind(translator);
 window.trans_plural = translator.parsePlural.bind(translator);
 
 // Load & initialise components
-components.register(componentMap);
-window.$components = components;
-components.init();
+window.$components = new ComponentStore();
+window.$components.register(componentMap);
+window.$components.init();
