@@ -10,6 +10,7 @@ import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {CustomTableNode} from "./custom-table";
 import {HorizontalRuleNode} from "./horizontal-rule";
 import {CodeBlockNode} from "./code-block";
+import {DiagramNode} from "./diagram";
 
 /**
  * Load the nodes for lexical.
@@ -28,6 +29,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         HorizontalRuleNode,
         DetailsNode, SummaryNode,
         CodeBlockNode,
+        DiagramNode,
         CustomParagraphNode,
         LinkNode,
         {

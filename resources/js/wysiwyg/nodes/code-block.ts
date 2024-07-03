@@ -10,7 +10,6 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {el} from "../helpers";
 import {EditorDecoratorAdapter} from "../ui/framework/decorator";
-import {code} from "../ui/defaults/button-definitions";
 
 export type SerializedCodeBlockNode = Spread<{
     language: string;
