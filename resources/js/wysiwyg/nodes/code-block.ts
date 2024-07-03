@@ -10,6 +10,7 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {el} from "../helpers";
 import {EditorDecoratorAdapter} from "../ui/framework/decorator";
+import {CodeEditor} from "../../components";
 
 export type SerializedCodeBlockNode = Spread<{
     language: string;
@@ -170,7 +171,7 @@ export function $openCodeEditorForNode(editor: LexicalEditor, node: CodeBlockNod
     const language = node.getLanguage();
 
     // @ts-ignore
-    const codeEditor = window.$components.first('code-editor');
+    const codeEditor = window.$components.first('code-editor') as CodeEditor;
     // TODO - Handle direction
     codeEditor.open(code, language, 'ltr', (newCode: string, newLang: string) => {
         editor.update(() => {

@@ -1,12 +1,7 @@
-declare module '*.svg' {
-    const content: string;
-    export default content;
-}
+import {ComponentStore} from "./services/components";
 
 declare global {
     interface Window {
-        $components: {
-            first: (string) => Object,
-        }
+        $components: ComponentStore,
     }
 }
