@@ -119,6 +119,7 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($relPath);
     }
 
+
     public function test_image_file_update_does_not_allow_change_in_image_extension()
     {
         $page = $this->entities->page();
