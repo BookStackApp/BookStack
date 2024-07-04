@@ -7,13 +7,35 @@ export class WysiwygEditor extends Component {
         this.editContainer = this.$refs.editContainer;
         this.input = this.$refs.input;
 
+        /** @var {SimpleWysiwygEditorInterface|null} */
+        this.editor = null;
+
         window.importVersioned('wysiwyg').then(wysiwyg => {
             const editorContent = this.input.value;
-            wysiwyg.createPageEditorInstance(this.editContainer, editorContent);
+            this.editor = wysiwyg.createPageEditorInstance(this.editContainer, editorContent);
+        });
+
+        let handlingFormSubmit = false;
+        this.input.form.addEventListener('submit', event => {
+            if (!this.editor) {
+                return;
+            }
+
+            if (!handlingFormSubmit) {
+                event.preventDefault();
+                handlingFormSubmit = true;
+                this.editor.getContentAsHtml().then(html => {
+                    this.input.value = html;
+                    this.input.form.submit();
+                });
+            } else {
+                handlingFormSubmit = false;
+            }
         });
     }
 
     getDrawIoUrl() {
+        // TODO
         const drawioUrlElem = document.querySelector('[drawio-url]');
         if (drawioUrlElem) {
             return drawioUrlElem.getAttribute('drawio-url');
@@ -24,12 +46,11 @@ export class WysiwygEditor extends Component {
     /**
      * Get the content of this editor.
      * Used by the parent page editor component.
-     * @return {{html: String}}
+     * @return {Promise<{html: String}>}
      */
-    getContent() {
-        // TODO - Update
+    async getContent() {
         return {
-            html: this.editor.getContent(),
+            html: await this.editor.getContentAsHtml(),
         };
     }
 
