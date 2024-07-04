@@ -20,7 +20,7 @@ export class EditorFormatMenu extends EditorContainerUiElement {
             class: 'editor-format-menu editor-dropdown-menu-container',
         }, [toggle, menu]);
 
-        handleDropdown(toggle, menu);
+        handleDropdown({toggle : toggle, menu : menu});
 
         return wrapper;
     }
@@ -32,6 +32,15 @@ export class EditorFormatMenu extends EditorContainerUiElement {
             if (child instanceof EditorButton && child.isActive()) {
                 this.updateToggleLabel(child.getLabel());
                 return;
+            }
+
+            if (child instanceof EditorContainerUiElement) {
+                for (const grandchild of child.getChildren()) {
+                    if (grandchild instanceof EditorButton && grandchild.isActive()) {
+                        this.updateToggleLabel(grandchild.getLabel());
+                        return;
+                    }
+                }
             }
         }
 
