@@ -1,7 +1,16 @@
 
 
 
-export function handleDropdown(toggle: HTMLElement, menu: HTMLElement, onOpen: Function|undefined = undefined, onClose: Function|undefined = undefined) {
+interface HandleDropdownParams {
+    toggle: HTMLElement;
+    menu: HTMLElement;
+    showOnHover?: boolean,
+    onOpen?: Function | undefined;
+    onClose?: Function | undefined;
+}
+
+export function handleDropdown(options: HandleDropdownParams) {
+    const {menu, toggle, onClose, onOpen, showOnHover} = options;
     let clickListener: Function|null = null;
 
     const hide = () => {
@@ -27,8 +36,13 @@ export function handleDropdown(toggle: HTMLElement, menu: HTMLElement, onOpen: F
         }
     };
 
-    toggle.addEventListener('click', event => {
+    const toggleShowing = (event: MouseEvent) => {
         menu.hasAttribute('hidden') ? show() : hide();
-    });
+    };
+    toggle.addEventListener('click', toggleShowing);
+    if (showOnHover) {
+        toggle.addEventListener('mouseenter', toggleShowing);
+    }
+
     menu.addEventListener('mouseleave', hide);
 }

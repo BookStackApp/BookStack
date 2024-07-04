@@ -37,12 +37,13 @@ body.editor-is-fullscreen {
 // Buttons
 .editor-button {
   font-size: 12px;
-  padding: 4px 6px;
+  padding: 4px;
   color: #444;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 2px;
 }
 .editor-button:hover {
   background-color: #EEE;
@@ -67,6 +68,7 @@ body.editor-is-fullscreen {
   height: 24px;
   color: inherit;
   fill: currentColor;
+  display: block;
 }
 
 // Containers
@@ -79,22 +81,60 @@ body.editor-is-fullscreen {
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
   z-index: 99;
   min-width: 120px;
+  display: flex;
+  flex-direction: row;
 }
 .editor-menu-list {
   display: flex;
   flex-direction: column;
+  align-items: stretch;
 }
-.editor-menu-list > .editor-button {
+.editor-menu-list .editor-button {
   border-bottom: 0;
   text-align: start;
+  display: block;
+  width: 100%;
+}
+.editor-menu-list > .editor-dropdown-menu-container .editor-dropdown-menu {
+  inset-inline-start: 100%;
+  top: 0;
+  flex-direction: column;
 }
 
+.editor-format-menu-toggle {
+  width: 130px;
+  height: 32px;
+  overflow: hidden;
+  padding-inline: 12px;
+  justify-content: start;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23666" d="M7.41 8L12 12.58 16.59 8 18 9.41l-6 6-6-6z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+  background-size: 28px;
+}
 .editor-format-menu .editor-dropdown-menu {
-  min-width: 320px;
+  min-width: 300px;
+  .editor-dropdown-menu {
+    min-width: 220px;
+  }
+}
+.editor-format-menu .editor-dropdown-menu .editor-dropdown-menu-container > .editor-button {
+  padding: 8px 10px;
 }
 
 .editor-overflow-container {
   display: flex;
+  border-inline: 1px solid #DDD;
+  padding-inline: 4px;
+  &:first-child {
+    border-inline-start: none;
+  }
+  &:last-child {
+    border-inline-end: none;
+  }
+  + .editor-overflow-container {
+    border-inline-start: none;
+  }
 }
 
 .editor-context-toolbar {
@@ -104,6 +144,8 @@ body.editor-is-fullscreen {
   padding: .2rem;
   border-radius: 4px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: row;
   &:before {
     content: '';
     z-index: -1;

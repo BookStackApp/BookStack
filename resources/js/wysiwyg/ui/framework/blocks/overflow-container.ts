@@ -17,13 +17,14 @@ export class EditorOverflowContainer extends EditorContainerUiElement {
         this.overflowButton = new EditorDropdownButton({
             label: 'More',
             icon: moreHorizontal,
-        }, []);
+        }, false, []);
         this.addChildren(this.overflowButton);
     }
 
     protected buildDOM(): HTMLElement {
-        const visibleChildren = this.content.slice(0, this.size);
-        const invisibleChildren = this.content.slice(this.size);
+        const slicePosition = this.content.length > this.size ? this.size - 1 : this.size;
+        const visibleChildren = this.content.slice(0, slicePosition);
+        const invisibleChildren = this.content.slice(slicePosition);
 
         const visibleElements = visibleChildren.map(child => child.getDOMElement());
         if (invisibleChildren.length > 0) {

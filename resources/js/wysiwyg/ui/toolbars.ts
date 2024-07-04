@@ -21,9 +21,12 @@ import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
+
         // History state
-        new EditorButton(undo),
-        new EditorButton(redo),
+        new EditorOverflowContainer(2, [
+            new EditorButton(undo),
+            new EditorButton(redo),
+        ]),
 
         // Block formats
         new EditorFormatMenu([
@@ -33,37 +36,43 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new FormatPreviewButton(el('h5'), h5),
             new FormatPreviewButton(el('blockquote'), blockquote),
             new FormatPreviewButton(el('p'), paragraph),
-            new FormatPreviewButton(el('p', {class: 'callout info'}), infoCallout),
-            new FormatPreviewButton(el('p', {class: 'callout success'}), successCallout),
-            new FormatPreviewButton(el('p', {class: 'callout warning'}), warningCallout),
-            new FormatPreviewButton(el('p', {class: 'callout danger'}), dangerCallout),
+            new EditorDropdownButton({label: 'Callouts'}, true, [
+                new FormatPreviewButton(el('p', {class: 'callout info'}), infoCallout),
+                new FormatPreviewButton(el('p', {class: 'callout success'}), successCallout),
+                new FormatPreviewButton(el('p', {class: 'callout warning'}), warningCallout),
+                new FormatPreviewButton(el('p', {class: 'callout danger'}), dangerCallout),
+            ]),
         ]),
 
         // Inline formats
-        new EditorButton(bold),
-        new EditorButton(italic),
-        new EditorButton(underline),
-        new EditorDropdownButton(new EditorColorButton(textColor, 'color'), [
-            new EditorColorPicker('color'),
+        new EditorOverflowContainer(6, [
+            new EditorButton(bold),
+            new EditorButton(italic),
+            new EditorButton(underline),
+            new EditorDropdownButton(new EditorColorButton(textColor, 'color'), false, [
+                new EditorColorPicker('color'),
+            ]),
+            new EditorDropdownButton(new EditorColorButton(highlightColor, 'background-color'), false, [
+                new EditorColorPicker('background-color'),
+            ]),
+            new EditorButton(strikethrough),
+            new EditorButton(superscript),
+            new EditorButton(subscript),
+            new EditorButton(code),
+            new EditorButton(clearFormating),
         ]),
-        new EditorDropdownButton(new EditorColorButton(highlightColor, 'background-color'), [
-            new EditorColorPicker('background-color'),
-        ]),
-        new EditorButton(strikethrough),
-        new EditorButton(superscript),
-        new EditorButton(subscript),
-        new EditorButton(code),
-        new EditorButton(clearFormating),
 
         // Lists
-        new EditorButton(bulletList),
-        new EditorButton(numberList),
-        new EditorButton(taskList),
+        new EditorOverflowContainer(3, [
+            new EditorButton(bulletList),
+            new EditorButton(numberList),
+            new EditorButton(taskList),
+        ]),
 
         // Insert types
         new EditorOverflowContainer(6, [
             new EditorButton(link),
-            new EditorDropdownButton(table, [
+            new EditorDropdownButton(table, false, [
                 new EditorTableCreator(),
             ]),
             new EditorButton(image),
@@ -73,21 +82,23 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Meta elements
-        new EditorButton(source),
-        new EditorButton(fullscreen),
+        new EditorOverflowContainer(3, [
+            new EditorButton(source),
+            new EditorButton(fullscreen),
 
-        // Test
-        new EditorButton({
-            label: 'Test button',
-            action(context: EditorUiContext) {
-                context.editor.update(() => {
-                    // Do stuff
-                });
-            },
-            isActive() {
-                return false;
-            }
-        })
+            // Test
+            new EditorButton({
+                label: 'Test button',
+                action(context: EditorUiContext) {
+                    context.editor.update(() => {
+                        // Do stuff
+                    });
+                },
+                isActive() {
+                    return false;
+                }
+            })
+        ]),
     ]);
 }
 
