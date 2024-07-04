@@ -37,9 +37,9 @@ export class WysiwygEditorTinymce extends Component {
     /**
      * Get the content of this editor.
      * Used by the parent page editor component.
-     * @return {{html: String}}
+     * @return {Promise<{html: String}>}
      */
-    getContent() {
+    async getContent() {
         return {
             html: this.editor.getContent(),
         };

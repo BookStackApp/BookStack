@@ -1,14 +1,14 @@
-import {createEditor, CreateEditorArgs} from 'lexical';
+import {createEditor, CreateEditorArgs, LexicalEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
 import {getNodesForPageEditor} from './nodes';
 import {buildEditorUI} from "./ui";
-import {setEditorContentFromHtml} from "./actions";
+import {getEditorContentAsHtml, setEditorContentFromHtml} from "./actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {el} from "./helpers";
 
-export function createPageEditorInstance(container: HTMLElement, htmlContent: string) {
+export function createPageEditorInstance(container: HTMLElement, htmlContent: string): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
         namespace: 'BookStackPageEditor',
         nodes: getNodesForPageEditor(),
@@ -57,4 +57,18 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     });
 
     buildEditorUI(container, editArea, editor);
+
+    return new SimpleWysiwygEditorInterface(editor);
+}
+
+export class SimpleWysiwygEditorInterface {
+    protected editor: LexicalEditor;
+
+    constructor(editor: LexicalEditor) {
+        this.editor = editor;
+    }
+
+    async getContentAsHtml(): Promise<string> {
+        return await getEditorContentAsHtml(this.editor);
+    }
 }

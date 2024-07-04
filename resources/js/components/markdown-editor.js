@@ -133,9 +133,9 @@ export class MarkdownEditor extends Component {
     /**
      * Get the content of this editor.
      * Used by the parent page editor component.
-     * @return {{html: String, markdown: String}}
+     * @return {Promise<{html: String, markdown: String}>}
      */
-    getContent() {
+    async getContent() {
         return this.editor.actions.getContent();
     }
 
