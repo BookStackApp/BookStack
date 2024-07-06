@@ -40,8 +40,8 @@ return [
     'profile_name_desc' => 'Configure o seu nome de exibição que será visível para outros usuários no sistema através da atividade que você executa e do conteúdo você tem.',
     'profile_email_desc' => 'Este e-mail será usado para notificações e, dependendo da autenticação ativa do sistema, acesso do sistema.',
     'profile_email_no_permission' => 'Infelizmente você não tem permissão para alterar seu correio eletrônico. Se você quiser mudar isso, você precisa pedir a um administrador para alterar por você.',
-    'profile_avatar_desc' => 'Select an image which will be used to represent yourself to others in the system. Ideally this image should be square and about 256px in width and height.',
-    'profile_admin_options' => 'Administrator Options',
+    'profile_avatar_desc' => 'Selecione uma imagem que será usada para lhe representar aos outros usuários do sistema. Idealmente, esta imagem deve ser quadrada e sobre 256px em largura e altura.',
+    'profile_admin_options' => 'Opções de administrador',
     'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
 
     'delete_account' => 'Excluir Conta',
