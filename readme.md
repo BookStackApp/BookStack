@@ -79,19 +79,13 @@ Big thanks to these companies for supporting the project.
 </a></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><a href="https://practinet.be/" target="_blank">
+<td align="center"><a href="https://practinet.be/" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practinet.png" alt="Practinet">
 </a></td>
+<td align="center"><a href="https://transporttalent.com" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/transport-talent.png" alt="Transport Talent">
+</a></td>
 </tr></tbody></table>
-
-## 🛣️ Road Map
-
-Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in our [Release Process](dev/docs/release-process.md) documentation.
-
-- **Platform REST API** - *(Most actions implemented, maturing)*
-    - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
-- **Permission System Review** - *(In Progress)*
-    - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
 
 ## 🛠️ Development & Testing
 
