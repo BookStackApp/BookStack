@@ -176,17 +176,38 @@ body.editor-is-fullscreen {
 }
 .editor-modal {
   background-color: #FFF;
-  border: 1px solid #DDD;
-  padding: 1rem;
   border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
 }
 .editor-modal-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  align-items: stretch;
+  background-color: var(--color-primary);
+  color: #FFF;
 }
 .editor-modal-title {
-  font-weight: 700;
+  padding: 8px $-m;
+}
+.editor-modal-close {
+  color: #FFF;
+  padding: 8px $-m;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  }
+  svg {
+    width: 1rem;
+    height: 1rem;
+    fill: currentColor;
+    display: block;
+  }
+}
+.editor-modal-body {
+  padding: $-m;
 }
 
 // Specific UI elements
@@ -290,6 +311,81 @@ body.editor-is-fullscreen {
   user-select: none;
   > * {
     pointer-events: none;
+  }
+}
+
+// Editor form elements
+.editor-form-field-wrapper {
+  margin-bottom: .5rem;
+}
+.editor-form-field-input {
+  display: block;
+  width: 100%;
+  min-width: 250px;
+  border: 1px solid #DDD;
+  padding: .5rem;
+  border-radius: 4px;
+  color: #444;
+}
+textarea.editor-form-field-input {
+  font-family: var(--font-code);
+  width: 350px;
+  height: 250px;
+  font-size: 12px;
+}
+.editor-form-field-label {
+  color: #444;
+  font-weight: 700;
+  font-size: 12px;
+}
+.editor-form-actions {
+  display: flex;
+  justify-content: end;
+  gap: $-s;
+  margin-top: $-m;
+}
+.editor-form-actions > button {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.4em;
+  padding: $-xs*1.3 $-m;
+  font-weight: 400;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: none;
+  &:focus {
+    outline: 1px dotted currentColor;
+    outline-offset: -$-xs;
+    box-shadow: none;
+    filter: brightness(90%);
+  }
+}
+.editor-form-action-primary {
+  background-color: var(--color-primary);
+  color: #FFF;
+  border: 1px solid var(--color-primary);
+  &:hover {
+    @include lightDark(box-shadow, $bs-light, $bs-dark);
+    filter: brightness(110%);
+  }
+}
+.editor-form-action-secondary {
+  border: 1px solid;
+  @include lightDark(border-color, #CCC, #666);
+  @include lightDark(color, #666, #AAA);
+  &:hover, &:focus, &:active {
+    @include lightDark(color, #444, #BBB);
+    border: 1px solid #CCC;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    background-color: #F2F2F2;
+    @include lightDark(background-color, #f8f8f8, #444);
+    filter: none;
+  }
+  &:active {
+    border-color: #BBB;
+    background-color: #DDD;
+    color: #666;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
   }
 }
 

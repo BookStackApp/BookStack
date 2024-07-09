@@ -49,6 +49,9 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     setEditorContentFromHtml(editor, htmlContent);
 
     const debugView = document.getElementById('lexical-debug');
+    if (debugView) {
+        debugView.hidden = true;
+    }
     editor.registerUpdateListener(({editorState}) => {
         console.log('editorState', editorState.toJSON());
         if (debugView) {

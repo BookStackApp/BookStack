@@ -87,17 +87,17 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorButton(fullscreen),
 
             // Test
-            new EditorButton({
-                label: 'Test button',
-                action(context: EditorUiContext) {
-                    context.editor.update(() => {
-                        // Do stuff
-                    });
-                },
-                isActive() {
-                    return false;
-                }
-            })
+            // new EditorButton({
+            //     label: 'Test button',
+            //     action(context: EditorUiContext) {
+            //         context.editor.update(() => {
+            //             // Do stuff
+            //         });
+            //     },
+            //     isActive() {
+            //         return false;
+            //     }
+            // })
         ]),
     ]);
 }
