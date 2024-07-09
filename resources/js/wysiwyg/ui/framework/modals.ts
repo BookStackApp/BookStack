@@ -1,7 +1,7 @@
 import {EditorForm, EditorFormDefinition} from "./forms";
 import {el} from "../../helpers";
 import {EditorContainerUiElement} from "./core";
-
+import closeIcon from "@icons/close.svg";
 
 export interface EditorModalDefinition {
     title: string;
@@ -37,7 +37,12 @@ export class EditorFormModal extends EditorContainerUiElement {
     }
 
     protected buildDOM(): HTMLElement {
-        const closeButton = el('button', {class: 'editor-modal-close', type: 'button', title: this.trans('Close')}, ['x']);
+        const closeButton = el('button', {
+            class: 'editor-modal-close',
+            type: 'button',
+            title: this.trans('Close'),
+        });
+        closeButton.innerHTML = closeIcon;
         closeButton.addEventListener('click', this.hide.bind(this));
 
         const modal = el('div', {class: 'editor-modal editor-form-modal'}, [
