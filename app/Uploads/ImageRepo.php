@@ -166,7 +166,7 @@ class ImageRepo
      */
     public function updateImageFile(Image $image, UploadedFile $file): void
     {
-        if ($file->getClientOriginalExtension() !== pathinfo($image->path, PATHINFO_EXTENSION)) {
+        if (strtolower($file->getClientOriginalExtension()) !== strtolower(pathinfo($image->path, PATHINFO_EXTENSION))) {
             throw new ImageUploadException(trans('errors.image_upload_replace_type'));
         }
 
