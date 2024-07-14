@@ -127,11 +127,18 @@ body .page-content img,
 
 /**
  * Callouts
+ * Some styles duplicated for supporting logical units (eg. inline-end) while
+ * providing fallbacks to non-logical rules, so RTL is natively supported where possible.
  */
 .callout {
   border-left: 3px solid #BBB;
+  border-inline-start: 3px solid #BBB;
+  border-inline-end: none;
   background-color: #EEE;
-  padding: $-s $-s $-s $-xl;
+  padding: $-s;
+  padding-left: $-xl;
+  padding-inline-start: $-xl;
+  padding-inline-end: $-s;
   display: block;
   position: relative;
   overflow: auto;
@@ -142,6 +149,8 @@ body .page-content img,
     width: 1.2em;
     height: 1.2em;
     left: $-xs + 2px;
+    inset-inline-start: $-xs + 2px;
+    inset-inline-end: unset;
     top: 50%;
     margin-top: -9px;
     display: inline-block;
@@ -150,7 +159,7 @@ body .page-content img,
     opacity: 0.8;
   }
   &.success {
-    @include lightDark(border-left-color, $positive, $positive-dark);
+    @include lightDark(border-color, $positive, $positive-dark);
     @include lightDark(background-color, lighten($positive, 68%), darken($positive-dark, 36%));
     @include lightDark(color, darken($positive, 16%), $positive-dark);
   }
@@ -158,7 +167,7 @@ body .page-content img,
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMzNzZjMzkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bS0yIDE1bC01LTUgMS40MS0xLjQxTDEwIDE0LjE3bDcuNTktNy41OUwxOSA4bC05IDl6Ii8+PC9zdmc+");
   }
   &.danger {
-    @include lightDark(border-left-color, $negative, $negative-dark);
+    @include lightDark(border-color, $negative, $negative-dark);
     @include lightDark(background-color, lighten($negative, 56%), darken($negative-dark, 55%));
     @include lightDark(color, darken($negative, 20%), $negative-dark);
   }
@@ -166,12 +175,12 @@ body .page-content img,
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiOTE4MTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0xNS43MyAzSDguMjdMMyA4LjI3djcuNDZMOC4yNyAyMWg3LjQ2TDIxIDE1LjczVjguMjdMMTUuNzMgM3pNMTIgMTcuM2MtLjcyIDAtMS4zLS41OC0xLjMtMS4zIDAtLjcyLjU4LTEuMyAxLjMtMS4zLjcyIDAgMS4zLjU4IDEuMyAxLjMgMCAuNzItLjU4IDEuMy0xLjMgMS4zem0xLTQuM2gtMlY3aDJ2NnoiLz4gICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==");
   }
   &.info {
-    @include lightDark(border-left-color, $info, $info-dark);
+    @include lightDark(border-color, $info, $info-dark);
     @include lightDark(color, darken($info, 20%), $info-dark);
     @include lightDark(background-color, lighten($info, 50%), darken($info-dark, 34%));
   }
   &.warning {
-    @include lightDark(border-left-color, $warning, $warning-dark);
+    @include lightDark(border-color, $warning, $warning-dark);
     @include lightDark(background-color, lighten($warning, 50%), darken($warning-dark, 50%));
     @include lightDark(color, darken($warning, 20%), $warning-dark);
   }
