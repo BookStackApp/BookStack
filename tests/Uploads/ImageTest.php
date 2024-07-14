@@ -119,6 +119,33 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($relPath);
     }
 
+    public function test_image_file_update_allows_case_differences()
+    {
+        $page = $this->entities->page();
+        $this->asEditor();
+
+        $imgDetails = $this->files->uploadGalleryImageToPage($this, $page);
+        $relPath = $imgDetails['path'];
+
+        $newUpload = $this->files->uploadedImage('updated-image.PNG', 'compressed.png');
+        $this->assertFileEquals($this->files->testFilePath('test-image.png'), public_path($relPath));
+
+        $imageId = $imgDetails['response']->id;
+        $image = Image::findOrFail($imageId);
+        $image->updated_at = now()->subMonth();
+        $image->save();
+
+        $this->call('PUT', "/images/{$imageId}/file", [], [], ['file' => $newUpload])
+            ->assertOk();
+
+        $this->assertFileEquals($this->files->testFilePath('compressed.png'), public_path($relPath));
+
+        $image->refresh();
+        $this->assertTrue($image->updated_at->gt(now()->subMinute()));
+
+        $this->files->deleteAtRelativePath($relPath);
+    }
+
     public function test_image_file_update_does_not_allow_change_in_image_extension()
     {
         $page = $this->entities->page();
