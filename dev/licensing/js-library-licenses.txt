@@ -9,7 +9,7 @@ acorn
 License: MIT
 License File: node_modules/acorn/LICENSE
 Copyright: Copyright (C) 2012-2022 by various contributors (see AUTHORS)
-Source: https://github.com/acornjs/acorn.git
+Source: git+https://github.com/acornjs/acorn.git
 Link: https://github.com/acornjs/acorn
 -----------
 ajv
@@ -120,7 +120,7 @@ Link: https://github.com/juliangruber/brace-expansion
 braces
 License: MIT
 License File: node_modules/braces/LICENSE
-Copyright: Copyright (c) 2014-2018, Jon Schlinkert.
+Copyright: Copyright (c) 2014-present, Jon Schlinkert.
 Source: micromatch/braces
 Link: https://github.com/micromatch/braces
 -----------
@@ -1665,6 +1665,13 @@ Copyright: Copyright (c) Isaac Z. Schlueter and Contributors
 Source: git://github.com/isaacs/node-which.git
 Link: git://github.com/isaacs/node-which.git
 -----------
+word-wrap
+License: MIT
+License File: node_modules/word-wrap/LICENSE
+Copyright: Copyright (c) 2014-2016, Jon Schlinkert
+Source: jonschlinkert/word-wrap
+Link: https://github.com/jonschlinkert/word-wrap
+-----------
 wrap-ansi
 License: MIT
 License File: node_modules/wrap-ansi/license
@@ -1714,13 +1721,6 @@ License File: node_modules/yocto-queue/license
 Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
 Source: sindresorhus/yocto-queue
 Link: sindresorhus/yocto-queue
------------
-@aashutoshrathi/word-wrap
-License: MIT
-License File: node_modules/@aashutoshrathi/word-wrap/LICENSE
-Copyright: Copyright (c) 2014-2016, Jon Schlinkert
-Source: git+https://github.com/aashutoshrathi/word-wrap.git
-Link: https://github.com/aashutoshrathi/word-wrap
 -----------
 @codemirror/autocomplete
 License: MIT

@@ -428,4 +428,6 @@ Ohadp :: Hebrew
 cbridi :: Portuguese, Brazilian
 nanangsb :: Indonesian
 Michal Melich (michalmelich) :: Czech
-David (david-prv) :: German
+David (david-prv) :: German; German Informal
+Larry (lahoje) :: Swedish
+Marcia dos Santos (marciab80) :: Portuguese
