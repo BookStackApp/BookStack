@@ -849,6 +849,26 @@ class OidcTest extends TestCase
         $this->assertSessionError('Userinfo endpoint response validation failed with error: No valid subject value found in userinfo data');
     }
 
+    public function test_userinfo_endpoint_not_called_if_empty_groups_array_provided_in_id_token()
+    {
+        config()->set([
+            'oidc.user_to_groups'     => true,
+            'oidc.groups_claim'       => 'groups',
+            'oidc.remove_from_groups' => false,
+        ]);
+
+        $this->post('/oidc/login');
+        $state = session()->get('oidc_state');
+        $client = $this->mockHttpClient([$this->getMockAuthorizationResponse([
+            'groups' => [],
+        ])]);
+
+        $resp = $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
+        $resp->assertRedirect('/');
+        $this->assertEquals(1, $client->requestCount());
+        $this->assertTrue(auth()->check());
+    }
+
     protected function withAutodiscovery(): void
     {
         config()->set([
