@@ -20,13 +20,13 @@ return [
     'description' => 'Beskrivning',
     'role' => 'Roll',
     'cover_image' => 'Omslagsbild',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Denna bild bör vara ungefär 440x250px även om den kommer att vara flexibelt skalad och beskuren för att passa användargränssnittet i olika scenarier där så krävs, kommer faktiska visningsmått att skilja sig.',
 
     // Actions
     'actions' => 'Åtgärder',
     'view' => 'Visa',
     'view_all' => 'Visa alla',
-    'new' => 'New',
+    'new' => 'Ny',
     'create' => 'Skapa',
     'update' => 'Uppdatera',
     'edit' => 'Redigera',
@@ -52,7 +52,7 @@ return [
     'filter_clear' => 'Rensa filter',
     'download' => 'Ladda ner',
     'open_in_tab' => 'Öppna i flik',
-    'open' => 'Open',
+    'open' => 'Öppna',
 
     // Sort Options
     'sort_options' => 'Sorteringsalternativ',
@@ -84,14 +84,14 @@ return [
     'none' => 'Inga',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Startsida',
     'header_menu_expand' => 'Expandera sidhuvudsmenyn',
     'profile_menu' => 'Profilmeny',
     'view_profile' => 'Visa profil',
     'edit_profile' => 'Redigera profil',
     'dark_mode' => 'Mörkt läge',
     'light_mode' => 'Ljust läge',
-    'global_search' => 'Global Search',
+    'global_search' => 'Global sökning',
 
     // Layout tabs
     'tab_info' => 'Information',

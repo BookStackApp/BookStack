@@ -20,14 +20,14 @@ return [
     'shortcuts_overview_desc' => 'Správa klávesových zkratek, které můžete použít k navigaci systémového uživatelského rozhraní.',
 
     'notifications' => 'Nastavení upozornění',
-    'notifications_desc' => 'Ovládat e-mailová oznámení, která dostáváte při provádění určité aktivity v systému.',
+    'notifications_desc' => 'Nastavte si e-mailová oznámení, která dostanete při provedení určitých akcí v systému.',
     'notifications_opt_own_page_changes' => 'Upozornit na změny stránek u kterých jsem vlastníkem',
     'notifications_opt_own_page_comments' => 'Upozornit na komentáře na stránkách, které vlastním',
     'notifications_opt_comment_replies' => 'Upozornit na odpovědi na mé komentáře',
-    'notifications_save' => 'Uložit preference',
+    'notifications_save' => 'Uložit nastavení',
     'notifications_update_success' => 'Nastavení oznámení byla aktualizována!',
     'notifications_watched' => 'Sledované a ignorované položky',
-    'notifications_watched_desc' => 'Níže jsou položky, které mají vlastní nastavení hodinek. Chcete-li aktualizovat vaše předvolby, podívejte se na položku a pak najděte možnosti hodinek v postranním panelu.',
+    'notifications_watched_desc' => 'Níže jsou položky, které mají vlastní nastavení sledování. Chcete-li aktualizovat vaše předvolby, zobrazte položku a pak upravte možnosti sledování v postranním panelu.',
 
     'auth' => 'Přístup a zabezpečení',
     'auth_change_password' => 'Změnit heslo',

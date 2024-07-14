@@ -64,17 +64,17 @@ return [
     // Auth
     'auth_login' => 'loggade in',
     'auth_register' => 'registrerad som ny användare',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
+    'auth_password_reset_request' => 'begärd återställning av användarlösenord',
+    'auth_password_reset_update' => 'återställa användarens lösenord',
+    'mfa_setup_method' => 'konfigurerad MFA metod',
     'mfa_setup_method_notification' => 'Multifaktor-metod har konfigurerats',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'tog bort MFA metod',
     'mfa_remove_method_notification' => 'Multifaktor-metod har tagits bort',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'uppdaterade inställningar',
+    'settings_update_notification' => 'Inställningarna har uppdaterats',
+    'maintenance_action_run' => 'körde underhållsåtgärder',
 
     // Webhooks
     'webhook_create' => 'skapade webhook',
@@ -85,39 +85,39 @@ return [
     'webhook_delete_notification' => 'Webhook har tagits bort',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'skapade användare',
+    'user_create_notification' => 'Användare skapades',
+    'user_update' => 'uppdaterad användare',
     'user_update_notification' => 'Användaren har uppdaterats',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'raderad användare',
     'user_delete_notification' => 'Användaren har tagits bort',
 
     // API Tokens
-    'api_token_create' => 'created API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'skapade API-token',
+    'api_token_create_notification' => 'API-token har skapats',
+    'api_token_update' => 'uppdaterad API-token',
+    'api_token_update_notification' => 'API-token har uppdaterats',
+    'api_token_delete' => 'raderad API-token',
+    'api_token_delete_notification' => 'API-token har tagits bort',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'skapad roll',
+    'role_create_notification' => 'Rollen har skapats',
+    'role_update' => 'uppdaterad roll',
+    'role_update_notification' => 'Rollen har uppdaterats',
+    'role_delete' => 'raderad roll',
+    'role_delete_notification' => 'Rollen har tagits bort',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'tömd papperskorg',
+    'recycle_bin_restore' => 'återställd från papperskorgen',
+    'recycle_bin_destroy' => 'borttagen från papperskorgen',
 
     // Comments
     'commented_on'                => 'kommenterade',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'lagt till kommentar',
+    'comment_update'              => 'uppdaterad kommentar',
+    'comment_delete'              => 'raderad kommentar',
 
     // Other
     'permissions_update'          => 'uppdaterade behörigheter',
