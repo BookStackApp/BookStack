@@ -22,7 +22,7 @@ class OidcUserDetails
         $hasEmpty = empty($this->externalId)
             || empty($this->email)
             || empty($this->name)
-            || ($groupSyncActive && empty($this->groups));
+            || ($groupSyncActive && $this->groups === null);
 
         return !$hasEmpty;
     }
@@ -57,15 +57,15 @@ class OidcUserDetails
         return implode(' ', $displayName);
     }
 
-    protected static function getUserGroups(string $groupsClaim, ProvidesClaims $token): array
+    protected static function getUserGroups(string $groupsClaim, ProvidesClaims $token): ?array
     {
         if (empty($groupsClaim)) {
-            return [];
+            return null;
         }
 
         $groupsList = Arr::get($token->getAllClaims(), $groupsClaim);
         if (!is_array($groupsList)) {
-            return [];
+            return null;
         }
 
         return array_values(array_filter($groupsList, function ($val) {

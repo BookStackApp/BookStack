@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilalkalmazás',
     'mfa_option_totp_desc' => 'A többlépcsős azonosításhoz olyan mobilalkalmazásra lesz szükséged, amely támogatja a TOTP-t, például a Google Authenticator, az Authy vagy a Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Visszaállítási kulcsok',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Egyszer használatos biztonsági kódokat hoz létre, amelyeket bejelentkezéskor kell megadnia személyazonosságának igazolására. Ügyeljen arra, hogy ezeket biztonságos helyen tárolja.',
     'mfa_gen_confirm_and_enable' => 'Jóváhagyás és engedélyezés',
     'mfa_gen_backup_codes_title' => 'Visszaállítási kódok beállítása',
     'mfa_gen_backup_codes_desc' => 'Tárolja el egy biztonságos helyen az alábbi kódokat. Bejelentkezés során fel tudja használni őket másodlagos bejelentkezési kódként.',
