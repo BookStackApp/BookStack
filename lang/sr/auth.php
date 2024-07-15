@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplikacije za mobilne uređaje',
     'mfa_option_totp_desc' => 'Да бисте користили вишефакторску аутентификацију, биће вам потребна мобилна апликација која подржава ТОТП, као што јеGoogle Authenticator, Authy или Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Резервни кодови',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Генерише скуп резервних кодова за једнократну употребу које ћете унети приликом пријављивања да бисте потврдили свој идентитет. Обавезно их чувајте на безбедном и безбедном месту.',
     'mfa_gen_confirm_and_enable' => 'Потврдите и омогућите',
     'mfa_gen_backup_codes_title' => 'Подешавање резервних кодова',
     'mfa_gen_backup_codes_desc' => 'Чувајте доњу листу кодова на безбедном месту. Када приступате систему, моћи ћете да користите један од кодова као други механизам за аутентификацију.',
