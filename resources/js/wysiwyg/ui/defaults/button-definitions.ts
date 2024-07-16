@@ -53,6 +53,7 @@ import codeBlockIcon from "@icons/editor/code-block.svg"
 import detailsIcon from "@icons/editor/details.svg"
 import sourceIcon from "@icons/editor/source-view.svg"
 import fullscreenIcon from "@icons/editor/fullscreen.svg"
+import editIcon from "@icons/edit.svg"
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
 
@@ -344,7 +345,7 @@ export const codeBlock: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const codeBlock = getNodeFromSelection(selection, $isCodeBlockNode) as (CodeBlockNode|null);
+            const codeBlock = getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode|null);
             if (codeBlock === null) {
                 context.editor.update(() => {
                     const codeBlock = $createCodeBlockNode();
@@ -362,6 +363,11 @@ export const codeBlock: EditorButtonDefinition = {
         return selectionContainsNodeType(selection, $isCodeBlockNode);
     }
 };
+
+export const editCodeBlock: EditorButtonDefinition = Object.assign({}, codeBlock, {
+    label: 'Edit code block',
+    icon: editIcon,
+});
 
 export const details: EditorButtonDefinition = {
     label: 'Insert collapsible block',

@@ -312,6 +312,9 @@ body.editor-is-fullscreen {
   > * {
     pointer-events: none;
   }
+  &.selected .cm-editor {
+    border: 1px dashed var(--editor-color-primary);
+  }
 }
 
 // Editor form elements
