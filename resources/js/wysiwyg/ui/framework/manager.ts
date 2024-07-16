@@ -1,10 +1,12 @@
 import {EditorFormModal, EditorFormModalDefinition} from "./modals";
 import {EditorContainerUiElement, EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {EditorDecorator, EditorDecoratorAdapter} from "./decorator";
-import {$getSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELECTION_CHANGE_COMMAND} from "lexical";
+import {$getSelection, BaseSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELECTION_CHANGE_COMMAND} from "lexical";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
+
+export type SelectionChangeHandler = (selection: BaseSelection|null) => void;
 
 export class EditorUIManager {
 
@@ -15,6 +17,7 @@ export class EditorUIManager {
     protected toolbar: EditorContainerUiElement|null = null;
     protected contextToolbarDefinitionsByKey: Record<string, EditorContextToolbarDefinition> = {};
     protected activeContextToolbars: EditorContextToolbar[] = [];
+    protected selectionChangeHandlers: Set<SelectionChangeHandler> = new Set();
 
     setContext(context: EditorUiContext) {
         this.context = context;
@@ -72,6 +75,10 @@ export class EditorUIManager {
         return decorator;
     }
 
+    getDecoratorByNodeKey(nodeKey: string): EditorDecorator|null {
+        return this.decoratorInstancesByNodeKey[nodeKey] || null;
+    }
+
     setToolbar(toolbar: EditorContainerUiElement) {
         if (this.toolbar) {
             this.toolbar.getDOMElement().remove();
@@ -94,7 +101,7 @@ export class EditorUIManager {
         for (const toolbar of this.activeContextToolbars) {
             toolbar.updateState(update);
         }
-        // console.log('selection update', update.selection);
+        this.triggerSelectionChange(update.selection);
     }
 
     triggerStateRefresh(): void {
@@ -102,6 +109,24 @@ export class EditorUIManager {
             editor: this.getContext().editor,
             selection: this.getContext().lastSelection,
         });
+    }
+
+    protected triggerSelectionChange(selection: BaseSelection|null): void {
+        if (!selection) {
+            return;
+        }
+
+        for (const handler of this.selectionChangeHandlers) {
+            handler(selection);
+        }
+    }
+
+    onSelectionChange(handler: SelectionChangeHandler): void {
+        this.selectionChangeHandlers.add(handler);
+    }
+
+    offSelectionChange(handler: SelectionChangeHandler): void {
+        this.selectionChangeHandlers.delete(handler);
     }
 
     protected updateContextToolbars(update: EditorUiStateUpdate): void {

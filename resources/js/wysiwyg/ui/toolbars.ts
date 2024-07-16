@@ -1,7 +1,7 @@
 import {EditorButton} from "./framework/buttons";
 import {
     blockquote, bold, bulletList, clearFormating, code, codeBlock,
-    dangerCallout, details, fullscreen,
+    dangerCallout, details, editCodeBlock, fullscreen,
     h2, h3, h4, h5, highlightColor, horizontalRule, image,
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
@@ -9,7 +9,7 @@ import {
     undo, unlink,
     warningCallout
 } from "./defaults/button-definitions";
-import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "./framework/core";
+import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiElement} from "./framework/core";
 import {el} from "../helpers";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
@@ -110,5 +110,11 @@ export function getLinkToolbarContent(): EditorUiElement[] {
     return [
         new EditorButton(link),
         new EditorButton(unlink),
+    ];
+}
+
+export function getCodeToolbarContent(): EditorUiElement[] {
+    return [
+        new EditorButton(editCodeBlock),
     ];
 }

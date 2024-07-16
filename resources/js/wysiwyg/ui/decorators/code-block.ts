@@ -1,7 +1,9 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
-import {ImageNode} from "../../nodes/image";
+import {selectionContainsNode, selectSingleNode} from "../../helpers";
+import {context} from "esbuild";
+import {BaseSelection} from "lexical";
 
 
 export class CodeBlockDecorator extends EditorDecorator {
@@ -32,10 +34,24 @@ export class CodeBlockDecorator extends EditorDecorator {
 
         const startTime = Date.now();
 
+        element.addEventListener('click', event => {
+            context.editor.update(() => {
+                selectSingleNode(this.getNode());
+            })
+        });
+
         element.addEventListener('dblclick', event => {
             context.editor.getEditorState().read(() => {
                 $openCodeEditorForNode(context.editor, (this.getNode() as CodeBlockNode));
             });
+        });
+
+        const selectionChange = (selection: BaseSelection|null): void => {
+            element.classList.toggle('selected', selectionContainsNode(selection, codeNode));
+        };
+        context.manager.onSelectionChange(selectionChange);
+        this.onDestroy(() => {
+            context.manager.offSelectionChange(selectionChange);
         });
 
         // @ts-ignore

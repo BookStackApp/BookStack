@@ -2,11 +2,12 @@ import {createEditor, CreateEditorArgs, LexicalEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
-import {getNodesForPageEditor} from './nodes';
+import {getNodesForPageEditor, registerCommonNodeMutationListeners} from './nodes';
 import {buildEditorUI} from "./ui";
 import {getEditorContentAsHtml, setEditorContentFromHtml} from "./actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {el} from "./helpers";
+import {EditorUiContext} from "./ui/framework/core";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -59,7 +60,8 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         }
     });
 
-    buildEditorUI(container, editArea, editor);
+    const context: EditorUiContext = buildEditorUI(container, editArea, editor);
+    registerCommonNodeMutationListeners(context);
 
     return new SimpleWysiwygEditorInterface(editor);
 }

@@ -1,5 +1,5 @@
 import {EditorDecorator} from "../framework/decorator";
-import {el} from "../../helpers";
+import {el, selectSingleNode} from "../../helpers";
 import {$createNodeSelection, $setSelection} from "lexical";
 import {EditorUiContext} from "../framework/core";
 import {ImageNode} from "../../nodes/image";
@@ -41,9 +41,7 @@ export class ImageDecorator extends EditorDecorator {
             tracker = this.setupTracker(decorateEl, context);
 
             context.editor.update(() => {
-                const nodeSelection = $createNodeSelection();
-                nodeSelection.add(this.getNode().getKey());
-                $setSelection(nodeSelection);
+                selectSingleNode(this.getNode());
             });
         };
 
