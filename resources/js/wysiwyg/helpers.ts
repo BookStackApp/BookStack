@@ -4,7 +4,7 @@ import {
     $getSelection, $isElementNode,
     $isTextNode, $setSelection,
     BaseSelection, ElementFormatType, ElementNode,
-    LexicalEditor, LexicalNode, TextFormatType
+    LexicalNode, TextFormatType
 } from "lexical";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
@@ -30,11 +30,11 @@ export function el(tag: string, attrs: Record<string, string|null> = {}, childre
     return el;
 }
 
-export function selectionContainsNodeType(selection: BaseSelection|null, matcher: LexicalNodeMatcher): boolean {
-    return getNodeFromSelection(selection, matcher) !== null;
+export function $selectionContainsNodeType(selection: BaseSelection|null, matcher: LexicalNodeMatcher): boolean {
+    return $getNodeFromSelection(selection, matcher) !== null;
 }
 
-export function getNodeFromSelection(selection: BaseSelection|null, matcher: LexicalNodeMatcher): LexicalNode|null {
+export function $getNodeFromSelection(selection: BaseSelection|null, matcher: LexicalNodeMatcher): LexicalNode|null {
     if (!selection) {
         return null;
     }
@@ -54,7 +54,7 @@ export function getNodeFromSelection(selection: BaseSelection|null, matcher: Lex
     return null;
 }
 
-export function selectionContainsTextFormat(selection: BaseSelection|null, format: TextFormatType): boolean {
+export function $selectionContainsTextFormat(selection: BaseSelection|null, format: TextFormatType): boolean {
     if (!selection) {
         return false;
     }
@@ -68,19 +68,17 @@ export function selectionContainsTextFormat(selection: BaseSelection|null, forma
     return false;
 }
 
-export function toggleSelectionBlockNodeType(editor: LexicalEditor, matcher: LexicalNodeMatcher, creator: LexicalElementNodeCreator) {
-    editor.update(() => {
-        const selection = $getSelection();
-        const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
-        if (selection && matcher(blockElement)) {
-            $setBlocksType(selection, $createParagraphNode);
-        } else {
-            $setBlocksType(selection, creator);
-        }
-    });
+export function $toggleSelectionBlockNodeType(matcher: LexicalNodeMatcher, creator: LexicalElementNodeCreator) {
+    const selection = $getSelection();
+    const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
+    if (selection && matcher(blockElement)) {
+        $setBlocksType(selection, $createParagraphNode);
+    } else {
+        $setBlocksType(selection, creator);
+    }
 }
 
-export function insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: boolean = true) {
+export function $insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: boolean = true) {
     const selection = $getSelection();
     const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
 
@@ -95,13 +93,13 @@ export function insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: bo
     }
 }
 
-export function selectSingleNode(node: LexicalNode) {
+export function $selectSingleNode(node: LexicalNode) {
     const nodeSelection = $createNodeSelection();
     nodeSelection.add(node.getKey());
     $setSelection(nodeSelection);
 }
 
-export function selectionContainsNode(selection: BaseSelection|null, node: LexicalNode): boolean {
+export function $selectionContainsNode(selection: BaseSelection|null, node: LexicalNode): boolean {
     if (!selection) {
         return false;
     }
@@ -116,8 +114,8 @@ export function selectionContainsNode(selection: BaseSelection|null, node: Lexic
     return false;
 }
 
-export function selectionContainsElementFormat(selection: BaseSelection|null, format: ElementFormatType): boolean {
-    const nodes = getBlockElementNodesInSelection(selection);
+export function $selectionContainsElementFormat(selection: BaseSelection|null, format: ElementFormatType): boolean {
+    const nodes = $getBlockElementNodesInSelection(selection);
     for (const node of nodes) {
         if (node.getFormatType() === format) {
             return true;
@@ -127,7 +125,7 @@ export function selectionContainsElementFormat(selection: BaseSelection|null, fo
     return false;
 }
 
-export function getBlockElementNodesInSelection(selection: BaseSelection|null): ElementNode[] {
+export function $getBlockElementNodesInSelection(selection: BaseSelection|null): ElementNode[] {
     if (!selection) {
         return [];
     }
