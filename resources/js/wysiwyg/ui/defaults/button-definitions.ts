@@ -21,11 +21,11 @@ import {
     UNDO_COMMAND
 } from "lexical";
 import {
-    getBlockElementNodesInSelection,
-    getNodeFromSelection, insertNewBlockNodeAtSelection, selectionContainsElementFormat,
-    selectionContainsNodeType,
-    selectionContainsTextFormat,
-    toggleSelectionBlockNodeType
+    $getBlockElementNodesInSelection,
+    $getNodeFromSelection, $insertNewBlockNodeAtSelection, $selectionContainsElementFormat,
+    $selectionContainsNodeType,
+    $selectionContainsTextFormat,
+    $toggleSelectionBlockNodeType
 } from "../../helpers";
 import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "../../nodes/callout";
 import {
@@ -116,14 +116,15 @@ function buildCalloutButton(category: CalloutCategory, name: string): EditorButt
     return {
         label: `${name} Callout`,
         action(context: EditorUiContext) {
-            toggleSelectionBlockNodeType(
-                context.editor,
-                (node) => $isCalloutNodeOfCategory(node, category),
-                () => $createCalloutNode(category),
-            )
+            context.editor.update(() => {
+                $toggleSelectionBlockNodeType(
+                    (node) => $isCalloutNodeOfCategory(node, category),
+                    () => $createCalloutNode(category),
+                )
+            });
         },
         isActive(selection: BaseSelection|null): boolean {
-            return selectionContainsNodeType(selection, (node) => $isCalloutNodeOfCategory(node, category));
+            return $selectionContainsNodeType(selection, (node) => $isCalloutNodeOfCategory(node, category));
         }
     };
 }
@@ -141,14 +142,15 @@ function buildHeaderButton(tag: HeadingTagType, name: string): EditorButtonDefin
     return {
         label: name,
         action(context: EditorUiContext) {
-            toggleSelectionBlockNodeType(
-                context.editor,
+            context.editor.update(() => {
+                $toggleSelectionBlockNodeType(
                 (node) => isHeaderNodeOfTag(node, tag),
                 () => $createHeadingNode(tag),
-            )
+                )
+            });
         },
         isActive(selection: BaseSelection|null): boolean {
-            return selectionContainsNodeType(selection, (node) => isHeaderNodeOfTag(node, tag));
+            return $selectionContainsNodeType(selection, (node) => isHeaderNodeOfTag(node, tag));
         }
     };
 }
@@ -161,20 +163,24 @@ export const h5: EditorButtonDefinition = buildHeaderButton('h5', 'Tiny Header')
 export const blockquote: EditorButtonDefinition = {
     label: 'Blockquote',
     action(context: EditorUiContext) {
-        toggleSelectionBlockNodeType(context.editor, $isQuoteNode, $createQuoteNode);
+        context.editor.update(() => {
+            $toggleSelectionBlockNodeType($isQuoteNode, $createQuoteNode);
+        });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isQuoteNode);
+        return $selectionContainsNodeType(selection, $isQuoteNode);
     }
 };
 
 export const paragraph: EditorButtonDefinition = {
     label: 'Paragraph',
     action(context: EditorUiContext) {
-        toggleSelectionBlockNodeType(context.editor, $isParagraphNode, $createParagraphNode);
+        context.editor.update(() => {
+            $toggleSelectionBlockNodeType($isParagraphNode, $createParagraphNode);
+        });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isParagraphNode);
+        return $selectionContainsNodeType(selection, $isParagraphNode);
     }
 }
 
@@ -186,7 +192,7 @@ function buildFormatButton(label: string, format: TextFormatType, icon: string):
             context.editor.dispatchCommand(FORMAT_TEXT_COMMAND, format);
         },
         isActive(selection: BaseSelection|null): boolean {
-            return selectionContainsTextFormat(selection, format);
+            return $selectionContainsTextFormat(selection, format);
         }
     };
 }
@@ -222,7 +228,7 @@ export const clearFormating: EditorButtonDefinition = {
 
 function setAlignmentForSection(alignment: ElementFormatType): void {
     const selection = $getSelection();
-    const elements = getBlockElementNodesInSelection(selection);
+    const elements = $getBlockElementNodesInSelection(selection);
     for (const node of elements) {
         node.setFormat(alignment);
     }
@@ -235,7 +241,7 @@ export const alignLeft: EditorButtonDefinition = {
         context.editor.update(() => setAlignmentForSection('left'));
     },
     isActive(selection: BaseSelection|null) {
-        return selectionContainsElementFormat(selection, 'left');
+        return $selectionContainsElementFormat(selection, 'left');
     }
 };
 
@@ -246,7 +252,7 @@ export const alignCenter: EditorButtonDefinition = {
         context.editor.update(() => setAlignmentForSection('center'));
     },
     isActive(selection: BaseSelection|null) {
-        return selectionContainsElementFormat(selection, 'center');
+        return $selectionContainsElementFormat(selection, 'center');
     }
 };
 
@@ -257,7 +263,7 @@ export const alignRight: EditorButtonDefinition = {
         context.editor.update(() => setAlignmentForSection('right'));
     },
     isActive(selection: BaseSelection|null) {
-        return selectionContainsElementFormat(selection, 'right');
+        return $selectionContainsElementFormat(selection, 'right');
     }
 };
 
@@ -268,7 +274,7 @@ export const alignJustify: EditorButtonDefinition = {
         context.editor.update(() => setAlignmentForSection('justify'));
     },
     isActive(selection: BaseSelection|null) {
-        return selectionContainsElementFormat(selection, 'justify');
+        return $selectionContainsElementFormat(selection, 'justify');
     }
 };
 
@@ -288,7 +294,7 @@ function buildListButton(label: string, type: ListType, icon: string): EditorBut
             });
         },
         isActive(selection: BaseSelection|null): boolean {
-            return selectionContainsNodeType(selection, (node: LexicalNode | null | undefined): boolean => {
+            return $selectionContainsNodeType(selection, (node: LexicalNode | null | undefined): boolean => {
                 return $isListNode(node) && (node as ListNode).getListType() === type;
             });
         }
@@ -307,7 +313,7 @@ export const link: EditorButtonDefinition = {
         const linkModal = context.manager.createModal('link');
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const selectedLink = getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
 
             let formDefaults = {};
             if (selectedLink) {
@@ -329,7 +335,7 @@ export const link: EditorButtonDefinition = {
         });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isLinkNode);
+        return $selectionContainsNodeType(selection, $isLinkNode);
     }
 };
 
@@ -339,7 +345,7 @@ export const unlink: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.update(() => {
             const selection = context.lastSelection;
-            const selectedLink = getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
             const selectionPoints = selection?.getStartEndPoints();
 
             if (selectedLink) {
@@ -369,7 +375,7 @@ export const image: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         const imageModal = context.manager.createModal('image');
         const selection = context.lastSelection;
-        const selectedImage = getNodeFromSelection(selection, $isImageNode) as ImageNode|null;
+        const selectedImage = $getNodeFromSelection(selection, $isImageNode) as ImageNode|null;
 
         context.editor.getEditorState().read(() => {
             let formDefaults = {};
@@ -392,7 +398,7 @@ export const image: EditorButtonDefinition = {
         });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isImageNode);
+        return $selectionContainsNodeType(selection, $isImageNode);
     }
 };
 
@@ -401,11 +407,11 @@ export const horizontalRule: EditorButtonDefinition = {
     icon: horizontalRuleIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            insertNewBlockNodeAtSelection($createHorizontalRuleNode(), false);
+            $insertNewBlockNodeAtSelection($createHorizontalRuleNode(), false);
         });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isHorizontalRuleNode);
+        return $selectionContainsNodeType(selection, $isHorizontalRuleNode);
     }
 };
 
@@ -415,12 +421,12 @@ export const codeBlock: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const codeBlock = getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode|null);
+            const codeBlock = $getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode|null);
             if (codeBlock === null) {
                 context.editor.update(() => {
                     const codeBlock = $createCodeBlockNode();
                     codeBlock.setCode(selection?.getTextContent() || '');
-                    insertNewBlockNodeAtSelection(codeBlock, true);
+                    $insertNewBlockNodeAtSelection(codeBlock, true);
                     $openCodeEditorForNode(context.editor, codeBlock);
                     codeBlock.selectStart();
                 });
@@ -430,7 +436,7 @@ export const codeBlock: EditorButtonDefinition = {
         });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isCodeBlockNode);
+        return $selectionContainsNodeType(selection, $isCodeBlockNode);
     }
 };
 
@@ -463,7 +469,7 @@ export const details: EditorButtonDefinition = {
         });
     },
     isActive(selection: BaseSelection|null): boolean {
-        return selectionContainsNodeType(selection, $isDetailsNode);
+        return $selectionContainsNodeType(selection, $isDetailsNode);
     }
 }
 

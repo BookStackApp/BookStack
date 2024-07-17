@@ -1,7 +1,7 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
-import {selectionContainsNode, selectSingleNode} from "../../helpers";
+import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
 import {context} from "esbuild";
 import {BaseSelection} from "lexical";
 
@@ -36,7 +36,7 @@ export class CodeBlockDecorator extends EditorDecorator {
 
         element.addEventListener('click', event => {
             context.editor.update(() => {
-                selectSingleNode(this.getNode());
+                $selectSingleNode(this.getNode());
             })
         });
 
@@ -47,7 +47,7 @@ export class CodeBlockDecorator extends EditorDecorator {
         });
 
         const selectionChange = (selection: BaseSelection|null): void => {
-            element.classList.toggle('selected', selectionContainsNode(selection, codeNode));
+            element.classList.toggle('selected', $selectionContainsNode(selection, codeNode));
         };
         context.manager.onSelectionChange(selectionChange);
         this.onDestroy(() => {
