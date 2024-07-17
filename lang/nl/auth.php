@@ -47,7 +47,7 @@ return [
     'reset_password' => 'Wachtwoord Herstellen',
     'reset_password_send_instructions' => 'Geef je e-mailadres op en er wordt een link gestuurd om je wachtwoord te herstellen.',
     'reset_password_send_button' => 'Stuur Herstel Link',
-    'reset_password_sent' => 'Een link om het wachtwoord te resetten zal verstuurd worden naar :email als dat e-mailadres in het systeem gevonden is.',
+    'reset_password_sent' => 'Een wachtwoord-herstel link zal worden verstuurd naar :email als dat e-mailadres in het systeem gevonden is.',
     'reset_password_success' => 'Je wachtwoord is succesvol hersteld.',
     'email_reset_subject' => 'Herstel je wachtwoord van :appName',
     'email_reset_text' => 'Je ontvangt deze e-mail omdat we een wachtwoordresetverzoek voor uw account hebben ontvangen.',
