@@ -1,13 +1,13 @@
 import {
     $createNodeSelection,
     $createParagraphNode, $getRoot,
-    $getSelection,
+    $getSelection, $isElementNode,
     $isTextNode, $setSelection,
-    BaseSelection,
+    BaseSelection, ElementFormatType, ElementNode,
     LexicalEditor, LexicalNode, TextFormatType
 } from "lexical";
-import {getNodesForPageEditor, LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
-import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
+import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
+import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {$setBlocksType} from "@lexical/selection";
 
 export function el(tag: string, attrs: Record<string, string|null> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
@@ -114,4 +114,34 @@ export function selectionContainsNode(selection: BaseSelection|null, node: Lexic
     }
 
     return false;
+}
+
+export function selectionContainsElementFormat(selection: BaseSelection|null, format: ElementFormatType): boolean {
+    const nodes = getBlockElementNodesInSelection(selection);
+    for (const node of nodes) {
+        if (node.getFormatType() === format) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+export function getBlockElementNodesInSelection(selection: BaseSelection|null): ElementNode[] {
+    if (!selection) {
+        return [];
+    }
+
+    const blockNodes: Map<string, ElementNode> = new Map();
+    for (const node of selection.getNodes()) {
+        const blockElement = $findMatchingParent(node, (node) => {
+            return $isElementNode(node) && !node.isInline();
+        }) as ElementNode|null;
+
+        if (blockElement) {
+            blockNodes.set(blockElement.getKey(), blockElement);
+        }
+    }
+
+    return Array.from(blockNodes.values());
 }

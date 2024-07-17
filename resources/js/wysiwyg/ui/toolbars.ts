@@ -1,5 +1,8 @@
 import {EditorButton} from "./framework/buttons";
 import {
+    alignCenter, alignJustify,
+    alignLeft,
+    alignRight,
     blockquote, bold, bulletList, clearFormating, code, codeBlock,
     dangerCallout, details, editCodeBlock, fullscreen,
     h2, h3, h4, h5, highlightColor, horizontalRule, image,
@@ -60,6 +63,14 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorButton(subscript),
             new EditorButton(code),
             new EditorButton(clearFormating),
+        ]),
+
+        // Alignment
+        new EditorOverflowContainer(4, [
+            new EditorButton(alignLeft),
+            new EditorButton(alignCenter),
+            new EditorButton(alignRight),
+            new EditorButton(alignJustify),
         ]),
 
         // Lists
