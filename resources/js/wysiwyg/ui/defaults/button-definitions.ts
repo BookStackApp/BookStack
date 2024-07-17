@@ -1,15 +1,28 @@
 import {EditorBasicButtonDefinition, EditorButton, EditorButtonDefinition} from "../framework/buttons";
 import {
     $createNodeSelection,
-    $createParagraphNode, $createTextNode, $getRoot, $getSelection,
-    $isParagraphNode, $isTextNode, $setSelection,
-    BaseSelection, CAN_REDO_COMMAND, CAN_UNDO_COMMAND, COMMAND_PRIORITY_LOW, ElementNode, FORMAT_TEXT_COMMAND,
+    $createParagraphNode,
+    $createTextNode,
+    $getRoot,
+    $getSelection,
+    $isParagraphNode,
+    $isTextNode,
+    $setSelection,
+    BaseSelection,
+    CAN_REDO_COMMAND,
+    CAN_UNDO_COMMAND,
+    COMMAND_PRIORITY_LOW,
+    ElementFormatType,
+    ElementNode,
+    FORMAT_TEXT_COMMAND,
     LexicalNode,
-    REDO_COMMAND, TextFormatType,
+    REDO_COMMAND,
+    TextFormatType,
     UNDO_COMMAND
 } from "lexical";
 import {
-    getNodeFromSelection, insertNewBlockNodeAtSelection,
+    getBlockElementNodesInSelection,
+    getNodeFromSelection, insertNewBlockNodeAtSelection, selectionContainsElementFormat,
     selectionContainsNodeType,
     selectionContainsTextFormat,
     toggleSelectionBlockNodeType
@@ -29,31 +42,35 @@ import {$isImageNode, ImageNode} from "../../nodes/image";
 import {$createDetailsNode, $isDetailsNode} from "../../nodes/details";
 import {getEditorContentAsHtml} from "../../actions";
 import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
-import undoIcon from "@icons/editor/undo.svg"
-import redoIcon from "@icons/editor/redo.svg"
-import boldIcon from "@icons/editor/bold.svg"
-import italicIcon from "@icons/editor/italic.svg"
-import underlinedIcon from "@icons/editor/underlined.svg"
+import undoIcon from "@icons/editor/undo.svg";
+import redoIcon from "@icons/editor/redo.svg";
+import boldIcon from "@icons/editor/bold.svg";
+import italicIcon from "@icons/editor/italic.svg";
+import underlinedIcon from "@icons/editor/underlined.svg";
 import textColorIcon from "@icons/editor/text-color.svg";
 import highlightIcon from "@icons/editor/highlighter.svg";
-import strikethroughIcon from "@icons/editor/strikethrough.svg"
-import superscriptIcon from "@icons/editor/superscript.svg"
-import subscriptIcon from "@icons/editor/subscript.svg"
-import codeIcon from "@icons/editor/code.svg"
-import formatClearIcon from "@icons/editor/format-clear.svg"
-import listBulletIcon from "@icons/editor/list-bullet.svg"
-import listNumberedIcon from "@icons/editor/list-numbered.svg"
-import listCheckIcon from "@icons/editor/list-check.svg"
-import linkIcon from "@icons/editor/link.svg"
-import unlinkIcon from "@icons/editor/unlink.svg"
-import tableIcon from "@icons/editor/table.svg"
-import imageIcon from "@icons/editor/image.svg"
-import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg"
-import codeBlockIcon from "@icons/editor/code-block.svg"
-import detailsIcon from "@icons/editor/details.svg"
-import sourceIcon from "@icons/editor/source-view.svg"
-import fullscreenIcon from "@icons/editor/fullscreen.svg"
-import editIcon from "@icons/edit.svg"
+import strikethroughIcon from "@icons/editor/strikethrough.svg";
+import superscriptIcon from "@icons/editor/superscript.svg";
+import subscriptIcon from "@icons/editor/subscript.svg";
+import codeIcon from "@icons/editor/code.svg";
+import formatClearIcon from "@icons/editor/format-clear.svg";
+import alignLeftIcon from "@icons/editor/align-left.svg";
+import alignCenterIcon from "@icons/editor/align-center.svg";
+import alignRightIcon from "@icons/editor/align-right.svg";
+import alignJustifyIcon from "@icons/editor/align-justify.svg";
+import listBulletIcon from "@icons/editor/list-bullet.svg";
+import listNumberedIcon from "@icons/editor/list-numbered.svg";
+import listCheckIcon from "@icons/editor/list-check.svg";
+import linkIcon from "@icons/editor/link.svg";
+import unlinkIcon from "@icons/editor/unlink.svg";
+import tableIcon from "@icons/editor/table.svg";
+import imageIcon from "@icons/editor/image.svg";
+import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg";
+import codeBlockIcon from "@icons/editor/code-block.svg";
+import detailsIcon from "@icons/editor/details.svg";
+import sourceIcon from "@icons/editor/source-view.svg";
+import fullscreenIcon from "@icons/editor/fullscreen.svg";
+import editIcon from "@icons/edit.svg";
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
 
@@ -202,6 +219,59 @@ export const clearFormating: EditorButtonDefinition = {
         return false;
     }
 };
+
+function setAlignmentForSection(alignment: ElementFormatType): void {
+    const selection = $getSelection();
+    const elements = getBlockElementNodesInSelection(selection);
+    for (const node of elements) {
+        node.setFormat(alignment);
+    }
+}
+
+export const alignLeft: EditorButtonDefinition = {
+    label: 'Align left',
+    icon: alignLeftIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => setAlignmentForSection('left'));
+    },
+    isActive(selection: BaseSelection|null) {
+        return selectionContainsElementFormat(selection, 'left');
+    }
+};
+
+export const alignCenter: EditorButtonDefinition = {
+    label: 'Align center',
+    icon: alignCenterIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => setAlignmentForSection('center'));
+    },
+    isActive(selection: BaseSelection|null) {
+        return selectionContainsElementFormat(selection, 'center');
+    }
+};
+
+export const alignRight: EditorButtonDefinition = {
+    label: 'Align right',
+    icon: alignRightIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => setAlignmentForSection('right'));
+    },
+    isActive(selection: BaseSelection|null) {
+        return selectionContainsElementFormat(selection, 'right');
+    }
+};
+
+export const alignJustify: EditorButtonDefinition = {
+    label: 'Align justify',
+    icon: alignJustifyIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => setAlignmentForSection('justify'));
+    },
+    isActive(selection: BaseSelection|null) {
+        return selectionContainsElementFormat(selection, 'justify');
+    }
+};
+
 
 function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
     return {
