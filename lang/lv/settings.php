@@ -109,7 +109,7 @@ return [
     'recycle_bin_contents_empty' => 'Miskaste ir tukša',
     'recycle_bin_empty' => 'Iztīrīt miskasti',
     'recycle_bin_empty_confirm' => 'Šī darbība pilnībā dzēsīs visas vienības miskastē, ieskaitot saturu, kas ievietots katrā no šīm vienībām. Vai tiešām vēlaties dzēst visu miskastes saturu?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Šī darbība pilnībā no sistēmas izdzēsis šo vienību kopā ar tai pakārtotajiem elementiem, un jūs nevarēsiet šo saturu atjaunot. Vai tiešām vēlaties pilnībā izdzēst šo vienību?',
     'recycle_bin_destroy_list' => 'Dzēšamās vienības',
     'recycle_bin_restore_list' => 'Atjaunojamās vienības',
     'recycle_bin_restore_confirm' => 'Šī darbība atjaunos dzēsto vienību, tai skaitā visus tai pakārtotos elementus, uz tās sākotnējo atrašanās vietu. Ja sākotnējā atrašanās vieta ir izdzēsta un atrodas miskastē, būs nepieciešams atjaunot arī to.',
@@ -277,13 +277,13 @@ return [
     'webhooks_last_error_message' => 'Pēdējais kļūdas paziņojums:',
 
     // Licensing
-    'licenses' => 'Licenses',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses' => 'Licences',
+    'licenses_desc' => 'Šī lapa attēlo BookStack licences informāciju, kā arī licences citiem projektiem un bibliotēkām, kas tiek izmantoti BookStack. Daļa no minētajiem projektiem var būt izmantoti tikai izstrādē.',
+    'licenses_bookstack' => 'BookStack licence',
+    'licenses_php' => 'PHP bibliotēku licences',
+    'licenses_js' => 'JavaScript bibliotēku licences',
+    'licenses_other' => 'Citas licences',
+    'license_details' => 'Licences informācija',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
