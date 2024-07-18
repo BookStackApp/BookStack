@@ -1,12 +1,35 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
+import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
+import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
+import {BaseSelection} from "lexical";
+import {$openDrawingEditorForNode, DiagramNode} from "../../nodes/diagram";
 
 
 export class DiagramDecorator extends EditorDecorator {
     protected completedSetup: boolean = false;
 
     setup(context: EditorUiContext, element: HTMLElement) {
-        //
+        const diagramNode = this.getNode();
+        element.addEventListener('click', event => {
+            context.editor.update(() => {
+                $selectSingleNode(this.getNode());
+            })
+        });
+
+        element.addEventListener('dblclick', event => {
+            context.editor.getEditorState().read(() => {
+                $openDrawingEditorForNode(context.editor, (this.getNode() as DiagramNode));
+            });
+        });
+
+        const selectionChange = (selection: BaseSelection|null): void => {
+            element.classList.toggle('selected', $selectionContainsNode(selection, diagramNode));
+        };
+        context.manager.onSelectionChange(selectionChange);
+        this.onDestroy(() => {
+            context.manager.offSelectionChange(selectionChange);
+        });
 
         this.completedSetup = true;
     }

@@ -1,4 +1,4 @@
-import * as events from './services/events';
+import {EventManager} from './services/events.ts';
 import * as httpInstance from './services/http';
 import Translations from './services/translations';
 import * as componentMap from './components';
@@ -21,7 +21,7 @@ window.importVersioned = function importVersioned(moduleName) {
 
 // Set events and http services on window
 window.$http = httpInstance;
-window.$events = events;
+window.$events = new EventManager();
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as the Laravel translation system

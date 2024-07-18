@@ -1,11 +1,16 @@
 # Lexical based editor todo
 
+## In progress
+
+- Add Type: Drawings
+  - Continue converting drawio to typescript
+  - Next step to convert http service to ts.
+
 ## Main Todo
 
 - Alignments: Use existing classes for blocks
 - Alignments: Handle inline block content (image, video)
 - Add Type: Video/media/embed
-- Add Type: Drawings
 - Handle toolbars on scroll
 - Table features
 - Image paste upload
@@ -20,6 +25,7 @@
 - Link heading-based ID reference menu
 - Image gallery integration for insert
 - Image gallery integration for form
+- Drawing gallery integration
 
 ## Bugs
 

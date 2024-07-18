@@ -1,17 +1,31 @@
 // Docs: https://www.diagrams.net/doc/faq/embed-mode
 import * as store from './store';
+import {ConfirmDialog} from "../components";
 
-let iFrame = null;
-let lastApprovedOrigin;
-let onInit;
-let onSave;
+type DrawioExportEventResponse = {
+    action: 'export',
+    format: string,
+    message: string,
+    data: string,
+    xml: string,
+};
+
+type DrawioSaveEventResponse = {
+    action: 'save',
+    xml: string,
+};
+
+let iFrame: HTMLIFrameElement|null = null;
+let lastApprovedOrigin: string;
+let onInit: () => Promise<string>;
+let onSave: (data: string) => Promise<any>;
 const saveBackupKey = 'last-drawing-save';
 
-function drawPostMessage(data) {
-    iFrame.contentWindow.postMessage(JSON.stringify(data), lastApprovedOrigin);
+function drawPostMessage(data: Record<any, any>): void {
+    iFrame?.contentWindow?.postMessage(JSON.stringify(data), lastApprovedOrigin);
 }
 
-function drawEventExport(message) {
+function drawEventExport(message: DrawioExportEventResponse) {
     store.set(saveBackupKey, message.data);
     if (onSave) {
         onSave(message.data).then(() => {
@@ -20,7 +34,7 @@ function drawEventExport(message) {
     }
 }
 
-function drawEventSave(message) {
+function drawEventSave(message: DrawioSaveEventResponse) {
     drawPostMessage({
         action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing',
     });
@@ -35,8 +49,10 @@ function drawEventInit() {
 
 function drawEventConfigure() {
     const config = {};
-    window.$events.emitPublic(iFrame, 'editor-drawio::configure', {config});
-    drawPostMessage({action: 'configure', config});
+    if (iFrame) {
+        window.$events.emitPublic(iFrame, 'editor-drawio::configure', {config});
+        drawPostMessage({action: 'configure', config});
+    }
 }
 
 function drawEventClose() {
@@ -47,9 +63,8 @@ function drawEventClose() {
 
 /**
  * Receive and handle a message event from the draw.io window.
- * @param {MessageEvent} event
  */
-function drawReceive(event) {
+function drawReceive(event: MessageEvent) {
     if (!event.data || event.data.length < 1) return;
     if (event.origin !== lastApprovedOrigin) return;
 
@@ -59,9 +74,9 @@ function drawReceive(event) {
     } else if (message.event === 'exit') {
         drawEventClose();
     } else if (message.event === 'save') {
-        drawEventSave(message);
+        drawEventSave(message as DrawioSaveEventResponse);
     } else if (message.event === 'export') {
-        drawEventExport(message);
+        drawEventExport(message as DrawioExportEventResponse);
     } else if (message.event === 'configure') {
         drawEventConfigure();
     }
@@ -79,9 +94,8 @@ async function attemptRestoreIfExists() {
         console.error('Missing expected unsaved-drawing dialog');
     }
 
-    if (backupVal) {
-        /** @var {ConfirmDialog} */
-        const dialog = window.$components.firstOnElement(dialogEl, 'confirm-dialog');
+    if (backupVal && dialogEl) {
+        const dialog = window.$components.firstOnElement(dialogEl, 'confirm-dialog') as ConfirmDialog;
         const restore = await dialog.show();
         if (restore) {
             onInit = async () => backupVal;
@@ -94,11 +108,9 @@ async function attemptRestoreIfExists() {
  * onSaveCallback must return a promise that resolves on successful save and errors on failure.
  * onInitCallback must return a promise with the xml to load for the editor.
  * Will attempt to provide an option to restore unsaved changes if found to exist.
- * @param {String} drawioUrl
- * @param {Function<Promise<String>>} onInitCallback
- * @param {Function<Promise>} onSaveCallback - Is called with the drawing data on save.
+ * onSaveCallback Is called with the drawing data on save.
  */
-export async function show(drawioUrl, onInitCallback, onSaveCallback) {
+export async function show(drawioUrl: string, onInitCallback: () => Promise<string>, onSaveCallback: (data: string) => Promise<void>): Promise<void> {
     onInit = onInitCallback;
     onSave = onSaveCallback;
 
@@ -114,7 +126,7 @@ export async function show(drawioUrl, onInitCallback, onSaveCallback) {
     lastApprovedOrigin = (new URL(drawioUrl)).origin;
 }
 
-export async function upload(imageData, pageUploadedToId) {
+export async function upload(imageData: string, pageUploadedToId: string): Promise<{}|string> {
     const data = {
         image: imageData,
         uploaded_to: pageUploadedToId,
@@ -129,10 +141,8 @@ export function close() {
 
 /**
  * Load an existing image, by fetching it as Base64 from the system.
- * @param drawingId
- * @returns {Promise<string>}
  */
-export async function load(drawingId) {
+export async function load(drawingId: string): Promise<string> {
     try {
         const resp = await window.$http.get(window.baseUrl(`/images/drawio/base64/${drawingId}`));
         return `data:image/png;base64,${resp.data.content}`;
