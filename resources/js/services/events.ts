@@ -1,3 +1,5 @@
+import {HttpError} from "./http";
+
 export class EventManager {
     protected listeners: Record<string, ((data: {}) => void)[]> = {};
     protected stack: {name: string, data: {}}[] = [];
@@ -62,9 +64,9 @@ export class EventManager {
     /**
      * Notify standard server-provided error messages.
      */
-    showResponseError(responseErr: {status?: number, data?: {message?: string}}): void {
+    showResponseError(responseErr: {status?: number, data?: Record<any, any>}|HttpError): void {
         if (!responseErr.status) return;
-        if (responseErr.status >= 400 && responseErr.data && responseErr.data.message) {
+        if (responseErr.status >= 400 && typeof responseErr.data === 'object' && responseErr.data.message) {
             this.error(responseErr.data.message);
         }
     }

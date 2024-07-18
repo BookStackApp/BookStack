@@ -1,5 +1,5 @@
 import {EventManager} from './services/events.ts';
-import * as httpInstance from './services/http';
+import {HttpManager} from './services/http.ts';
 import Translations from './services/translations';
 import * as componentMap from './components';
 import {ComponentStore} from './services/components.ts';
@@ -20,7 +20,7 @@ window.importVersioned = function importVersioned(moduleName) {
 };
 
 // Set events and http services on window
-window.$http = httpInstance;
+window.$http = new HttpManager();
 window.$events = new EventManager();
 
 // Translation setup
