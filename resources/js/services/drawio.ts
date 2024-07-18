@@ -1,6 +1,7 @@
 // Docs: https://www.diagrams.net/doc/faq/embed-mode
 import * as store from './store';
 import {ConfirmDialog} from "../components";
+import {HttpError} from "./http";
 
 type DrawioExportEventResponse = {
     action: 'export',
@@ -145,9 +146,10 @@ export function close() {
 export async function load(drawingId: string): Promise<string> {
     try {
         const resp = await window.$http.get(window.baseUrl(`/images/drawio/base64/${drawingId}`));
-        return `data:image/png;base64,${resp.data.content}`;
+        const data = resp.data as {content: string};
+        return `data:image/png;base64,${data.content}`;
     } catch (error) {
-        if (error instanceof window.$http.HttpError) {
+        if (error instanceof HttpError) {
             window.$events.showResponseError(error);
         }
         close();
