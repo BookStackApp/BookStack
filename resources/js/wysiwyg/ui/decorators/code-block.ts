@@ -2,7 +2,6 @@ import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
 import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
-import {context} from "esbuild";
 import {BaseSelection} from "lexical";
 
 
