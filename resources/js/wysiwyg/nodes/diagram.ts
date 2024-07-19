@@ -10,6 +10,9 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {el} from "../helpers";
 import {EditorDecoratorAdapter} from "../ui/framework/decorator";
+import * as DrawIO from '../../services/drawio';
+import {EditorUiContext} from "../ui/framework/core";
+import {HttpError} from "../../services/http";
 
 export type SerializedDiagramNode = Spread<{
     id: string;
@@ -42,10 +45,10 @@ export class DiagramNode extends DecoratorNode<EditorDecoratorAdapter> {
         self.__drawingId = drawingId;
     }
 
-    getDrawingIdAndUrl(): {id: string, url: string} {
+    getDrawingIdAndUrl(): { id: string, url: string } {
         const self = this.getLatest();
         return {
-            id: self.__drawingUrl,
+            id: self.__drawingId,
             url: self.__drawingUrl,
         };
     }
@@ -103,16 +106,16 @@ export class DiagramNode extends DecoratorNode<EditorDecoratorAdapter> {
         return false;
     }
 
-    static importDOM(): DOMConversionMap|null {
+    static importDOM(): DOMConversionMap | null {
         return {
-            div(node: HTMLElement): DOMConversion|null {
+            div(node: HTMLElement): DOMConversion | null {
 
                 if (!node.hasAttribute('drawio-diagram')) {
                     return null;
                 }
 
                 return {
-                    conversion: (element: HTMLElement): DOMConversionOutput|null => {
+                    conversion: (element: HTMLElement): DOMConversionOutput | null => {
 
                         const img = element.querySelector('img');
                         const drawingUrl = img?.getAttribute('src') || '';
@@ -153,6 +156,64 @@ export function $isDiagramNode(node: LexicalNode | null | undefined) {
     return node instanceof DiagramNode;
 }
 
-export function $openDrawingEditorForNode(editor: LexicalEditor, node: DiagramNode): void {
-    // Todo
+
+function handleUploadError(error: HttpError, context: EditorUiContext): void {
+    if (error.status === 413) {
+        window.$events.emit('error', context.options.translations.serverUploadLimitText || '');
+    } else {
+        window.$events.emit('error', context.options.translations.imageUploadErrorText || '');
+    }
+    console.error(error);
+}
+
+async function loadDiagramIdFromNode(editor: LexicalEditor, node: DiagramNode): Promise<string> {
+    const drawingId = await new Promise<string>((res, rej) => {
+        editor.getEditorState().read(() => {
+            const {id: drawingId} = node.getDrawingIdAndUrl();
+            res(drawingId);
+        });
+    });
+
+    return drawingId || '';
+}
+
+async function updateDrawingNodeFromData(context: EditorUiContext, node: DiagramNode, pngData: string, isNew: boolean): Promise<void> {
+    DrawIO.close();
+
+    if (isNew) {
+        const loadingImage: string = window.baseUrl('/loading.gif');
+        context.editor.update(() => {
+            node.setDrawingIdAndUrl('', loadingImage);
+        });
+    }
+
+    try {
+        const img = await DrawIO.upload(pngData, context.options.pageId);
+        context.editor.update(() => {
+            node.setDrawingIdAndUrl(String(img.id), img.url);
+        });
+    } catch (err) {
+        if (err instanceof HttpError) {
+            handleUploadError(err, context);
+        }
+
+        if (isNew) {
+            context.editor.update(() => {
+                node.remove();
+            });
+        }
+
+        throw new Error(`Failed to save image with error: ${err}`);
+    }
+}
+
+export function $openDrawingEditorForNode(context: EditorUiContext, node: DiagramNode): void {
+    let isNew = false;
+    DrawIO.show(context.options.drawioUrl, async () => {
+        const drawingId = await loadDiagramIdFromNode(context.editor, node);
+        isNew = !drawingId;
+        return isNew ? '' : DrawIO.load(drawingId);
+    }, async (pngData: string) => {
+        return updateDrawingNodeFromData(context, node, pngData, isNew);
+    });
 }

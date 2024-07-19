@@ -2,9 +2,6 @@
 
 ## In progress
 
-- Add Type: Drawings
-  - Continue converting drawio to typescript
-  - Next step to convert http service to ts.
 
 ## Main Todo
 

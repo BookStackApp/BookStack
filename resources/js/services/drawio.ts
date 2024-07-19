@@ -127,13 +127,13 @@ export async function show(drawioUrl: string, onInitCallback: () => Promise<stri
     lastApprovedOrigin = (new URL(drawioUrl)).origin;
 }
 
-export async function upload(imageData: string, pageUploadedToId: string): Promise<{}|string> {
+export async function upload(imageData: string, pageUploadedToId: string): Promise<{id: number, url: string}> {
     const data = {
         image: imageData,
         uploaded_to: pageUploadedToId,
     };
     const resp = await window.$http.post(window.baseUrl('/images/drawio'), data);
-    return resp.data;
+    return resp.data as {id: number, url: string};
 }
 
 export function close() {

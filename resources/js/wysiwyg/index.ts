@@ -9,7 +9,7 @@ import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {el} from "./helpers";
 import {EditorUiContext} from "./ui/framework/core";
 
-export function createPageEditorInstance(container: HTMLElement, htmlContent: string): SimpleWysiwygEditorInterface {
+export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
         namespace: 'BookStackPageEditor',
         nodes: getNodesForPageEditor(),
@@ -60,7 +60,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         }
     });
 
-    const context: EditorUiContext = buildEditorUI(container, editArea, editor);
+    const context: EditorUiContext = buildEditorUI(container, editArea, editor, options);
     registerCommonNodeMutationListeners(context);
 
     return new SimpleWysiwygEditorInterface(editor);
