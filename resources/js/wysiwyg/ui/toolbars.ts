@@ -4,7 +4,7 @@ import {
     alignLeft,
     alignRight,
     blockquote, bold, bulletList, clearFormating, code, codeBlock,
-    dangerCallout, details, editCodeBlock, fullscreen,
+    dangerCallout, details, diagram, editCodeBlock, fullscreen,
     h2, h3, h4, h5, highlightColor, horizontalRule, image,
     infoCallout, italic, link, numberList, paragraph,
     redo, source, strikethrough, subscript,
@@ -89,6 +89,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorButton(image),
             new EditorButton(horizontalRule),
             new EditorButton(codeBlock),
+            new EditorButton(diagram),
             new EditorButton(details),
         ]),
 

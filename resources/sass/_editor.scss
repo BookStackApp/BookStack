@@ -316,6 +316,9 @@ body.editor-is-fullscreen {
     border: 1px dashed var(--editor-color-primary);
   }
 }
+.editor-diagram.selected {
+  outline: 2px dashed var(--editor-color-primary);
+}
 
 // Editor form elements
 .editor-form-field-wrapper {

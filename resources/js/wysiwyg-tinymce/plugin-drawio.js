@@ -1,4 +1,4 @@
-import * as DrawIO from '../services/drawio';
+import * as DrawIO from '../services/drawio.ts';
 import {wait} from '../services/util';
 
 let pageEditor = null;

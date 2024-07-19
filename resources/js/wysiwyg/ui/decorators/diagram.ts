@@ -1,7 +1,6 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
-import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
 import {BaseSelection} from "lexical";
 import {$openDrawingEditorForNode, DiagramNode} from "../../nodes/diagram";
 
@@ -11,6 +10,7 @@ export class DiagramDecorator extends EditorDecorator {
 
     setup(context: EditorUiContext, element: HTMLElement) {
         const diagramNode = this.getNode();
+        element.classList.add('editor-diagram');
         element.addEventListener('click', event => {
             context.editor.update(() => {
                 $selectSingleNode(this.getNode());
@@ -19,7 +19,7 @@ export class DiagramDecorator extends EditorDecorator {
 
         element.addEventListener('dblclick', event => {
             context.editor.getEditorState().read(() => {
-                $openDrawingEditorForNode(context.editor, (this.getNode() as DiagramNode));
+                $openDrawingEditorForNode(context, (this.getNode() as DiagramNode));
             });
         });
 

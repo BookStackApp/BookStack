@@ -67,12 +67,14 @@ import tableIcon from "@icons/editor/table.svg";
 import imageIcon from "@icons/editor/image.svg";
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg";
 import codeBlockIcon from "@icons/editor/code-block.svg";
+import diagramIcon from "@icons/editor/diagram.svg";
 import detailsIcon from "@icons/editor/details.svg";
 import sourceIcon from "@icons/editor/source-view.svg";
 import fullscreenIcon from "@icons/editor/fullscreen.svg";
 import editIcon from "@icons/edit.svg";
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../nodes/horizontal-rule";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
+import {$createDiagramNode, $isDiagramNode, $openDrawingEditorForNode, DiagramNode} from "../../nodes/diagram";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -444,6 +446,31 @@ export const editCodeBlock: EditorButtonDefinition = Object.assign({}, codeBlock
     label: 'Edit code block',
     icon: editIcon,
 });
+
+export const diagram: EditorButtonDefinition = {
+    label: 'Insert/edit drawing',
+    icon: diagramIcon,
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const diagramNode = $getNodeFromSelection(context.lastSelection, $isDiagramNode) as (DiagramNode|null);
+            if (diagramNode === null) {
+                context.editor.update(() => {
+                    const diagram = $createDiagramNode();
+                    $insertNewBlockNodeAtSelection(diagram, true);
+                    $openDrawingEditorForNode(context, diagram);
+                    diagram.selectStart();
+                });
+            } else {
+                $openDrawingEditorForNode(context, diagramNode);
+            }
+        });
+    },
+    isActive(selection: BaseSelection|null): boolean {
+        return $selectionContainsNodeType(selection, $isDiagramNode);
+    }
+};
+
 
 export const details: EditorButtonDefinition = {
     label: 'Insert collapsible block',

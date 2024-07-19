@@ -12,7 +12,7 @@ import {EditorUiContext} from "./framework/core";
 import {CodeBlockDecorator} from "./decorators/code-block";
 import {DiagramDecorator} from "./decorators/diagram";
 
-export function buildEditorUI(container: HTMLElement, element: HTMLElement, editor: LexicalEditor): EditorUiContext {
+export function buildEditorUI(container: HTMLElement, element: HTMLElement, editor: LexicalEditor, options: Record<string, any>): EditorUiContext {
     const manager = new EditorUIManager();
     const context: EditorUiContext = {
         editor,
@@ -21,6 +21,7 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, edit
         manager,
         translate: (text: string): string => text,
         lastSelection: null,
+        options,
     };
     manager.setContext(context);
 
@@ -43,7 +44,7 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, edit
 
     // Register context toolbars
     manager.registerContextToolbar('image', {
-        selector: 'img',
+        selector: 'img:not([drawio-diagram] img)',
         content: getImageToolbarContent(),
         displayTargetLocator(originalTarget: HTMLElement) {
             return originalTarget.closest('a') || originalTarget;

@@ -3,17 +3,18 @@ import {EditorUIManager} from "./manager";
 import {el} from "../../helpers";
 
 export type EditorUiStateUpdate = {
-    editor: LexicalEditor,
-    selection: BaseSelection|null,
+    editor: LexicalEditor;
+    selection: BaseSelection|null;
 };
 
 export type EditorUiContext = {
-    editor: LexicalEditor,
-    editorDOM: HTMLElement,
-    containerDOM: HTMLElement,
-    translate: (text: string) => string,
-    manager: EditorUIManager,
-    lastSelection: BaseSelection|null,
+    editor: LexicalEditor; // Lexical editor instance
+    editorDOM: HTMLElement; // DOM element the editor is bound to
+    containerDOM: HTMLElement; // DOM element which contains all editor elements
+    translate: (text: string) => string; // Translate function
+    manager: EditorUIManager; // UI Manager instance for this editor
+    lastSelection: BaseSelection|null; // The last tracked selection made by the user
+    options: Record<string, any>; // General user options which may be used by sub elements
 };
 
 export abstract class EditorUiElement {

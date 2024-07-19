@@ -12,7 +12,14 @@ export class WysiwygEditor extends Component {
 
         window.importVersioned('wysiwyg').then(wysiwyg => {
             const editorContent = this.input.value;
-            this.editor = wysiwyg.createPageEditorInstance(this.editContainer, editorContent);
+            this.editor = wysiwyg.createPageEditorInstance(this.editContainer, editorContent, {
+                drawioUrl: this.getDrawIoUrl(),
+                pageId: Number(this.$opts.pageId),
+                translations: {
+                    imageUploadErrorText: this.$opts.imageUploadErrorText,
+                    serverUploadLimitText: this.$opts.serverUploadLimitText,
+                },
+            });
         });
 
         let handlingFormSubmit = false;
@@ -35,7 +42,6 @@ export class WysiwygEditor extends Component {
     }
 
     getDrawIoUrl() {
-        // TODO
         const drawioUrlElem = document.querySelector('[drawio-url]');
         if (drawioUrlElem) {
             return drawioUrlElem.getAttribute('drawio-url');
