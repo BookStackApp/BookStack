@@ -40,20 +40,10 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $view = setting()->getForCurrentUser('books_view_type');
-        $listOptions = SimpleListOptions::fromRequest($request, 'books')->withSortOptions([
-            'name' => trans('common.sort_name'),
-            'created_at' => trans('common.sort_created_at'),
-            'updated_at' => trans('common.sort_updated_at'),
-            'view_count' => trans('common.sort_popularity'), 
-        ]);
+        $listOptions = $this->getListOptions($request);
 
         $booksQuery = $this->queries->visibleForListWithCover();
-
-        if ($listOptions->getSort() === 'view_count') {
-            $booksQuery->scopes('withViewCount')->orderBy('view_count', $listOptions->getOrder());
-        } else {
-            $booksQuery->orderBy($listOptions->getSort(), $listOptions->getOrder());
-        }
+        $this->applySortOptions($booksQuery, $listOptions);
 
         $books = $booksQuery->paginate(18);
 
@@ -62,17 +52,35 @@ class BookController extends Controller
         $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();
 
         $this->shelfContext->clearShelfContext();
-
         $this->setPageTitle(trans('entities.books'));
 
         return view('books.index', [
-            'books'   => $books,
-            'recents' => $recents,
-            'popular' => $popular,
-            'new'     => $new,
-            'view'    => $view,
+            'books'       => $books,
+            'recents'     => $recents,
+            'popular'     => $popular,
+            'new'         => $new,
+            'view'        => $view,
             'listOptions' => $listOptions,
         ]);
+    }
+
+    private function getListOptions(Request $request): SimpleListOptions
+    {
+        return SimpleListOptions::fromRequest($request, 'books')->withSortOptions([
+            'name'       => trans('common.sort_name'),
+            'created_at' => trans('common.sort_created_at'),
+            'updated_at' => trans('common.sort_updated_at'),
+            'view_count' => trans('common.sort_popularity'),
+        ]);
+    }
+
+    private function applySortOptions($booksQuery, SimpleListOptions $listOptions): void
+    {
+        if ($listOptions->getSort() === 'view_count') {
+            $booksQuery->scopes('withViewCount')->orderBy('view_count', $listOptions->getOrder());
+        } else {
+            $booksQuery->orderBy($listOptions->getSort(), $listOptions->getOrder());
+        }
     }
 
     /**
