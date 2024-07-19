@@ -7,11 +7,8 @@ use BookStack\Users\Models\Role;
 use Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-
 class BookSortingTest extends TestCase
 {
-
-
     public function test_update_sort_preference()
     {
         // Step 1: Set up the test environment
@@ -122,15 +119,12 @@ class BookSortingTest extends TestCase
         $this->assertBooksOrder($response->content(), $allBooks->sortByDesc('view_count')->pluck('name')->toArray());
     }
 
-
     private function assertBooksOrder($htmlContent, $expectedOrder)
     {
         $crawler = new Crawler($htmlContent);
         $bookNames = $crawler->filter('.grid-card-content h2.text-limit-lines-2')->each(function (Crawler $node) {
             return $node->text();
         });
-        print_r($expectedOrder);
-print_r($bookNames);
         $this->assertEquals($expectedOrder, $bookNames);
     }
 }
