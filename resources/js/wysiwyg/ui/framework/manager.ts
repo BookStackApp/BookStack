@@ -21,6 +21,7 @@ export class EditorUIManager {
 
     setContext(context: EditorUiContext) {
         this.context = context;
+        this.setupEventListeners(context);
         this.setupEditor(context.editor);
     }
 
@@ -130,9 +131,10 @@ export class EditorUIManager {
     }
 
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
-        for (const toolbar of this.activeContextToolbars) {
-            toolbar.empty();
-            toolbar.getDOMElement().remove();
+        for (let i = this.activeContextToolbars.length - 1; i >= 0; i--) {
+            const toolbar = this.activeContextToolbars[i];
+            toolbar.destroy();
+            this.activeContextToolbars.splice(i, 1);
         }
 
         const node = (update.selection?.getNodes() || [])[0] || null;
@@ -161,12 +163,12 @@ export class EditorUIManager {
         }
 
         for (const [target, contents] of contentByTarget) {
-            const toolbar = new EditorContextToolbar(contents);
+            const toolbar = new EditorContextToolbar(target, contents);
             toolbar.setContext(this.getContext());
             this.activeContextToolbars.push(toolbar);
 
             this.getContext().containerDOM.append(toolbar.getDOMElement());
-            toolbar.attachTo(target);
+            toolbar.updatePosition();
         }
     }
 
@@ -201,5 +203,16 @@ export class EditorUIManager {
             });
         }
         editor.registerDecoratorListener(domDecorateListener);
+    }
+
+    protected setupEventListeners(context: EditorUiContext) {
+        const updateToolbars = (event: Event) => {
+            for (const toolbar of this.activeContextToolbars) {
+                toolbar.updatePosition();
+            }
+        };
+
+        window.addEventListener('scroll', updateToolbars, {capture: true, passive: true});
+        window.addEventListener('resize', updateToolbars, {passive: true});
     }
 }

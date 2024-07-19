@@ -60,7 +60,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         }
     });
 
-    const context: EditorUiContext = buildEditorUI(container, editArea, editor, options);
+    const context: EditorUiContext = buildEditorUI(container, editArea, editWrap, editor, options);
     registerCommonNodeMutationListeners(context);
 
     return new SimpleWysiwygEditorInterface(editor);

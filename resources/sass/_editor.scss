@@ -161,6 +161,10 @@ body.editor-is-fullscreen {
     margin-left: -4px;
     top: -5px;
   }
+  &.is-above:before {
+    top: calc(100% - 5px);
+    transform: rotate(225deg);
+  }
 }
 
 // Modals

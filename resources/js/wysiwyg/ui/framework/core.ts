@@ -11,6 +11,7 @@ export type EditorUiContext = {
     editor: LexicalEditor; // Lexical editor instance
     editorDOM: HTMLElement; // DOM element the editor is bound to
     containerDOM: HTMLElement; // DOM element which contains all editor elements
+    scrollDOM: HTMLElement; // DOM element which is the main content scroll container
     translate: (text: string) => string; // Translate function
     manager: EditorUIManager; // UI Manager instance for this editor
     lastSelection: BaseSelection|null; // The last tracked selection made by the user
