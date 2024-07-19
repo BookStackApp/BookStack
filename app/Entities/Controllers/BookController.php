@@ -44,11 +44,19 @@ class BookController extends Controller
             'name' => trans('common.sort_name'),
             'created_at' => trans('common.sort_created_at'),
             'updated_at' => trans('common.sort_updated_at'),
+            'view_count' => trans('common.sort_popularity'), 
         ]);
 
-        $books = $this->queries->visibleForListWithCover()
-            ->orderBy($listOptions->getSort(), $listOptions->getOrder())
-            ->paginate(18);
+        $booksQuery = $this->queries->visibleForListWithCover();
+
+        if ($listOptions->getSort() === 'view_count') {
+            $booksQuery->scopes('withViewCount')->orderBy('view_count', $listOptions->getOrder());
+        } else {
+            $booksQuery->orderBy($listOptions->getSort(), $listOptions->getOrder());
+        }
+
+        $books = $booksQuery->paginate(18);
+
         $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->take(4)->get() : false;
         $popular = $this->queries->popularForList()->take(4)->get();
         $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();
