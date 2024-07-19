@@ -8,7 +8,6 @@
 - Alignments: Use existing classes for blocks
 - Alignments: Handle inline block content (image, video)
 - Add Type: Video/media/embed
-- Handle toolbars on scroll
 - Table features
 - Image paste upload
 - Keyboard shortcuts support
@@ -28,3 +27,4 @@
 
 - Image resizing currently bugged, maybe change to ghost resizer in decorator instead of updating core node.
 - Table resize bars often floating around in wrong place, and shows on hover or interrupts mouse actions.
+- Removing link around image via button deletes image, not just link 
