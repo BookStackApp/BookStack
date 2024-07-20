@@ -219,7 +219,7 @@ return [
     'users_social_connected' => 'حساب :socialAccount با موفقیت به نمایه شما پیوست شد.',
     'users_social_disconnected' => 'حساب :socialAccount با موفقیت از نمایه شما قطع شد.',
     'users_api_tokens' => 'توکن‌های API',
-    'users_api_tokens_desc' => 'Create and manage the access tokens used to authenticate with the BookStack REST API. Permissions for the API are managed via the user that the token belongs to.',
+    'users_api_tokens_desc' => 'توکن های دسترسی مورد استفاده در BookStack REST API را بسازید و مدیریت کنید. اجازه‌های مربوط به API توسط کاربری که صاحب آنها است مدیریت می‌شوند.',
     'users_api_tokens_none' => 'هیچ نشانه API برای این کاربر ایجاد نشده است',
     'users_api_tokens_create' => 'ایجاد توکن',
     'users_api_tokens_expires' => 'منقضی شده ها',
@@ -278,12 +278,12 @@ return [
 
     // Licensing
     'licenses' => 'مجوز‌ها',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
+    'licenses_desc' => 'این صفحه اطلاعات مجوز‌های بوک استک به همراه پروژه‌ها و کتابخانه‌های مورد استفاده با آن را به نمایش می‌گذارد. بسیاری از پروژه‌های فهرست شده ممکن است فقط در بحث توسعه به کار گرفته شده باشند.',
     'licenses_bookstack' => 'مجوز‌های بوک استک',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'مجوز‌های کتاب خانه جاوا اسکریپت',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses_php' => 'مجوز‌های کتابخانه PHP',
+    'licenses_js' => 'مجوز‌های کتابخانه جاوا اسکریپت',
+    'licenses_other' => 'سایر مجوز‌ها',
+    'license_details' => 'جزئیات مجوز',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
