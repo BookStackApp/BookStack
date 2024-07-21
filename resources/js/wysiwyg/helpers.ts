@@ -44,10 +44,19 @@ export function $getNodeFromSelection(selection: BaseSelection|null, matcher: Le
             return node;
         }
 
-        for (const parent of node.getParents()) {
-            if (matcher(parent)) {
-                return parent;
-            }
+        const matchedParent = $getParentOfType(node, matcher);
+        if (matchedParent) {
+            return matchedParent;
+        }
+    }
+
+    return null;
+}
+
+export function $getParentOfType(node: LexicalNode, matcher: LexicalNodeMatcher): LexicalNode|null {
+    for (const parent of node.getParents()) {
+        if (matcher(parent)) {
+            return parent;
         }
     }
 

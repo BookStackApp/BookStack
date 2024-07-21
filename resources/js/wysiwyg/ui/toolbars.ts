@@ -1,17 +1,4 @@
 import {EditorButton} from "./framework/buttons";
-import {
-    alignCenter, alignJustify,
-    alignLeft,
-    alignRight,
-    blockquote, bold, bulletList, clearFormating, code, codeBlock,
-    dangerCallout, details, diagram, editCodeBlock, fullscreen,
-    h2, h3, h4, h5, highlightColor, horizontalRule, image,
-    infoCallout, italic, link, numberList, paragraph,
-    redo, source, strikethrough, subscript,
-    successCallout, superscript, table, taskList, textColor, underline,
-    undo, unlink,
-    warningCallout
-} from "./defaults/button-definitions";
 import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiElement} from "./framework/core";
 import {el} from "../helpers";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
@@ -21,6 +8,48 @@ import {EditorColorPicker} from "./framework/blocks/color-picker";
 import {EditorTableCreator} from "./framework/blocks/table-creator";
 import {EditorColorButton} from "./framework/blocks/color-button";
 import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
+import {
+    deleteColumn,
+    deleteRow,
+    deleteTable, insertColumnAfter,
+    insertColumnBefore,
+    insertRowAbove,
+    insertRowBelow,
+    table
+} from "./defaults/buttons/tables";
+import {fullscreen, redo, source, undo} from "./defaults/buttons/controls";
+import {
+    blockquote, dangerCallout,
+    h2,
+    h3,
+    h4,
+    h5,
+    infoCallout,
+    paragraph,
+    successCallout,
+    warningCallout
+} from "./defaults/buttons/block-formats";
+import {
+    bold, clearFormating, code,
+    highlightColor,
+    italic,
+    strikethrough, subscript,
+    superscript,
+    textColor,
+    underline
+} from "./defaults/buttons/inline-formats";
+import {alignCenter, alignJustify, alignLeft, alignRight} from "./defaults/buttons/alignments";
+import {bulletList, numberList, taskList} from "./defaults/buttons/lists";
+import {
+    codeBlock,
+    details,
+    diagram,
+    editCodeBlock,
+    horizontalRule,
+    image,
+    link,
+    unlink
+} from "./defaults/buttons/objects";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -128,5 +157,24 @@ export function getLinkToolbarContent(): EditorUiElement[] {
 export function getCodeToolbarContent(): EditorUiElement[] {
     return [
         new EditorButton(editCodeBlock),
+    ];
+}
+
+export function getTableToolbarContent(): EditorUiElement[] {
+    return [
+        new EditorOverflowContainer(2, [
+            // Todo - Table properties
+            new EditorButton(deleteTable),
+        ]),
+        new EditorOverflowContainer(3, [
+            new EditorButton(insertRowAbove),
+            new EditorButton(insertRowBelow),
+            new EditorButton(deleteRow),
+        ]),
+        new EditorOverflowContainer(3, [
+            new EditorButton(insertColumnBefore),
+            new EditorButton(insertColumnAfter),
+            new EditorButton(deleteColumn),
+        ]),
     ];
 }

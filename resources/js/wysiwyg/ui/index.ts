@@ -3,7 +3,7 @@ import {
     getCodeToolbarContent,
     getImageToolbarContent,
     getLinkToolbarContent,
-    getMainEditorFullToolbar
+    getMainEditorFullToolbar, getTableToolbarContent
 } from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
 import {image as imageFormDefinition, link as linkFormDefinition, source as sourceFormDefinition} from "./defaults/form-definitions";
@@ -59,6 +59,14 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
     manager.registerContextToolbar('code', {
         selector: '.editor-code-block-wrap',
         content: getCodeToolbarContent(),
+    });
+
+    manager.registerContextToolbar('table', {
+        selector: 'td,th',
+        content: getTableToolbarContent(),
+        displayTargetLocator(originalTarget: HTMLElement): HTMLElement {
+            return originalTarget.closest('table') as HTMLTableElement;
+        }
     });
 
     // Register image decorator listener

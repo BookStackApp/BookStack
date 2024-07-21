@@ -2,12 +2,22 @@
 
 ## In progress
 
+- Add Type: Video/media/embed
+    - TinyMce media embed supported:
+      - iframe
+      - embed
+      - object
+      - video - Can take sources
+      - audio  - Can take sources
+    - Pretty much all attributes look like they were supported.
+    - Core old logic seen here: https://github.com/tinymce/tinymce/blob/main/modules/tinymce/src/plugins/media/main/ts/core/DataToHtml.ts
+    - Copy/store attributes on node based on allow list?
+      - width, height, src, controls, etc... Take valid values from MDN
 
 ## Main Todo
 
 - Alignments: Use existing classes for blocks
 - Alignments: Handle inline block content (image, video)
-- Add Type: Video/media/embed
 - Table features
 - Image paste upload
 - Keyboard shortcuts support
