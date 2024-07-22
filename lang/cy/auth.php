@@ -41,7 +41,7 @@ return [
     // Login auto-initiation
     'auto_init_starting' => 'Wrthi\'n ceisio mewngofnodi',
     'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
-    'auto_init_start_link' => 'Proceed with authentication',
+    'auto_init_start_link' => 'Parhau gyda dilysu',
 
     // Password Reset
     'reset_password' => 'Ailosod cyfrinair',
