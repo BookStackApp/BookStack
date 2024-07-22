@@ -10,7 +10,7 @@ return [
     'image_details' => '圖片詳細資訊',
     'image_upload' => '上傳圖片',
     'image_intro' => '您可以在這裡選取和管理上傳到系統的圖片。',
-    'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_intro_upload' => '透過拖曳圖檔至視窗中，或是使用下方的「上傳圖片」按鍵',
     'image_all' => '全部',
     'image_all_title' => '檢視所有圖片',
     'image_book_title' => '檢視上傳到此書本的圖片',
@@ -34,8 +34,8 @@ return [
     'image_delete_success' => '圖片刪除成功',
     'image_replace' => '替換圖片',
     'image_replace_success' => '圖片更新成功',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => '重建影像縮圖',
+    'image_rebuild_thumbs_success' => '縮圖建立成功',
 
     // Code Editor
     'code_editor' => '編輯程式碼',
