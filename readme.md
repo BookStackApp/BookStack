@@ -85,6 +85,11 @@ Big thanks to these companies for supporting the project.
 <td align="center"><a href="https://transporttalent.com" target="_blank">
     <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/transport-talent.png" alt="Transport Talent">
 </a></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><a href="https://route4me.com/" target="_blank">
+    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
+</a></td>
 </tr></tbody></table>
 
 ## 🛠️ Development & Testing
