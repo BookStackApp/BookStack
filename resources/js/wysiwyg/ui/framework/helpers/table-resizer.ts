@@ -8,7 +8,7 @@ type MarkerDomRecord = {x: HTMLElement, y: HTMLElement};
 
 class TableResizer {
     protected editor: LexicalEditor;
-    protected editArea: HTMLElement;
+    protected editScrollContainer: HTMLElement;
     protected markerDom: MarkerDomRecord|null = null;
     protected mouseTracker: MouseDragTracker|null = null;
     protected dragging: boolean = false;
@@ -16,15 +16,17 @@ class TableResizer {
     protected xMarkerAtStart : boolean = false;
     protected yMarkerAtStart : boolean = false;
 
-    constructor(editor: LexicalEditor, editArea: HTMLElement) {
+    constructor(editor: LexicalEditor, editScrollContainer: HTMLElement) {
         this.editor = editor;
-        this.editArea = editArea;
+        this.editScrollContainer = editScrollContainer;
 
         this.setupListeners();
     }
 
     teardown() {
-        this.editArea.removeEventListener('mousemove', this.onCellMouseMove);
+        this.editScrollContainer.removeEventListener('mousemove', this.onCellMouseMove);
+        window.removeEventListener('scroll', this.onScrollOrResize, {capture: true});
+        window.removeEventListener('resize', this.onScrollOrResize);
         if (this.mouseTracker) {
             this.mouseTracker.teardown();
         }
@@ -32,7 +34,14 @@ class TableResizer {
 
     protected setupListeners() {
         this.onCellMouseMove = this.onCellMouseMove.bind(this);
-        this.editArea.addEventListener('mousemove', this.onCellMouseMove);
+        this.onScrollOrResize = this.onScrollOrResize.bind(this);
+        this.editScrollContainer.addEventListener('mousemove', this.onCellMouseMove);
+        window.addEventListener('scroll', this.onScrollOrResize, {capture: true, passive: true});
+        window.addEventListener('resize', this.onScrollOrResize, {passive: true});
+    }
+
+    protected onScrollOrResize(): void {
+        this.updateCurrentMarkerTargetPosition();
     }
 
     protected onCellMouseMove(event: MouseEvent) {
@@ -58,14 +67,33 @@ class TableResizer {
         const markers: MarkerDomRecord = this.getMarkers();
         const table = cell.closest('table') as HTMLElement;
         const tableRect = table.getBoundingClientRect();
+        const editBounds = this.editScrollContainer.getBoundingClientRect();
 
+        const maxTop = Math.max(tableRect.top, editBounds.top);
+        const maxBottom = Math.min(tableRect.bottom, editBounds.bottom);
+        const maxHeight = maxBottom - maxTop;
         markers.x.style.left = xPos + 'px';
-        markers.x.style.height = tableRect.height + 'px';
-        markers.x.style.top = tableRect.top + 'px';
+        markers.x.style.top = maxTop + 'px';
+        markers.x.style.height = maxHeight + 'px';
 
         markers.y.style.top = yPos + 'px';
         markers.y.style.left = tableRect.left + 'px';
         markers.y.style.width = tableRect.width + 'px';
+
+        // Hide markers when out of bounds
+        markers.y.hidden = yPos < editBounds.top || yPos > editBounds.bottom;
+        markers.x.hidden = tableRect.top > editBounds.bottom || tableRect.bottom < editBounds.top;
+    }
+
+    protected updateCurrentMarkerTargetPosition(): void {
+        if (!this.targetCell) {
+            return;
+        }
+
+        const rect = this.targetCell.getBoundingClientRect();
+        const xMarkerPos = this.xMarkerAtStart ? rect.left : rect.right;
+        const yMarkerPos = this.yMarkerAtStart ? rect.top : rect.bottom;
+        this.updateMarkersTo(this.targetCell, xMarkerPos, yMarkerPos);
     }
 
     protected getMarkers(): MarkerDomRecord {
@@ -77,7 +105,7 @@ class TableResizer {
             const wrapper = el('div', {
                 class: 'editor-table-marker-wrap',
             }, [this.markerDom.x, this.markerDom.y]);
-            this.editArea.after(wrapper);
+            this.editScrollContainer.after(wrapper);
             this.watchMarkerMouseDrags(wrapper);
         }
 
@@ -180,8 +208,8 @@ class TableResizer {
 }
 
 
-export function registerTableResizer(editor: LexicalEditor, editorArea: HTMLElement): (() => void) {
-    const resizer = new TableResizer(editor, editorArea);
+export function registerTableResizer(editor: LexicalEditor, editScrollContainer: HTMLElement): (() => void) {
+    const resizer = new TableResizer(editor, editScrollContainer);
 
     return () => {
         resizer.teardown();
