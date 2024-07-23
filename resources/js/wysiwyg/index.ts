@@ -44,7 +44,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerTableResizer(editor, editArea),
+        registerTableResizer(editor, editWrap),
     );
 
     setEditorContentFromHtml(editor, htmlContent);
