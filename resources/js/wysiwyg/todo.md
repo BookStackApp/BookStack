@@ -21,7 +21,6 @@
 - Table features
 - Image paste upload
 - Keyboard shortcuts support
-- Global/shared editor events support
 - Draft/change management (connect with page editor component)
 - Add ID support to all block types
 - Template drag & drop / insert
