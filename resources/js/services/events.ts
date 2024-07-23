@@ -1,7 +1,7 @@
 import {HttpError} from "./http";
 
 export class EventManager {
-    protected listeners: Record<string, ((data: {}) => void)[]> = {};
+    protected listeners: Record<string, ((data: any) => void)[]> = {};
     protected stack: {name: string, data: {}}[] = [];
 
     /**
@@ -19,7 +19,7 @@ export class EventManager {
     /**
      * Listen to a custom event and run the given callback when that event occurs.
      */
-    listen(eventName: string, callback: (data: {}) => void): void {
+    listen<T>(eventName: string, callback: (data: T) => void): void {
         if (typeof this.listeners[eventName] === 'undefined') this.listeners[eventName] = [];
         this.listeners[eventName].push(callback);
     }

@@ -8,6 +8,7 @@ import {getEditorContentAsHtml, setEditorContentFromHtml} from "./actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {el} from "./helpers";
 import {EditorUiContext} from "./ui/framework/core";
+import {listen as listenToCommonEvents} from "./common-events";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -46,6 +47,8 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerTableResizer(editor, editWrap),
     );
+
+    listenToCommonEvents(editor);
 
     setEditorContentFromHtml(editor, htmlContent);
 
