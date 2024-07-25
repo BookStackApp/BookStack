@@ -4,6 +4,7 @@ import {$createLinkNode} from "@lexical/link";
 import {$createTextNode, $getSelection} from "lexical";
 import {$createImageNode} from "../../nodes/image";
 import {setEditorContentFromHtml} from "../../actions";
+import {$createMediaNodeFromHtml} from "../../nodes/media";
 
 
 export const link: EditorFormDefinition = {
@@ -85,6 +86,55 @@ export const image: EditorFormDefinition = {
             label: 'Height',
             name: 'height',
             type: 'text',
+        },
+    ],
+};
+
+export const media: EditorFormDefinition = {
+    submitText: 'Save',
+    action(formData, context: EditorUiContext) {
+
+        // TODO - Get media from selection
+
+        const embedCode = (formData.get('embed') || '').toString().trim();
+        if (embedCode) {
+            context.editor.update(() => {
+                const node = $createMediaNodeFromHtml(embedCode);
+                // TODO - Replace existing or insert new
+            });
+
+            return true;
+        }
+
+        const src = (formData.get('src') || '').toString().trim();
+        const height = (formData.get('height') || '').toString().trim();
+        const width = (formData.get('width') || '').toString().trim();
+
+        // TODO - Update existing or insert new
+
+        return true;
+    },
+    fields: [
+        {
+            label: 'Source',
+            name: 'src',
+            type: 'text',
+        },
+        {
+            label: 'Width',
+            name: 'width',
+            type: 'text',
+        },
+        {
+            label: 'Height',
+            name: 'height',
+            type: 'text',
+        },
+        // TODO - Tabbed interface to separate this option
+        {
+            label: 'Paste your embed code below:',
+            name: 'embed',
+            type: 'textarea',
         },
     ],
 };

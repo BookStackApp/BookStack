@@ -2,17 +2,7 @@
 
 ## In progress
 
-- Add Type: Video/media/embed
-    - TinyMce media embed supported:
-      - iframe
-      - embed
-      - object
-      - video - Can take sources
-      - audio  - Can take sources
-    - Pretty much all attributes look like they were supported.
-    - Core old logic seen here: https://github.com/tinymce/tinymce/blob/main/modules/tinymce/src/plugins/media/main/ts/core/DataToHtml.ts
-    - Copy/store attributes on node based on allow list?
-      - width, height, src, controls, etc... Take valid values from MDN
+- Finish initial media node & form integration
 
 ## Main Todo
 
@@ -31,6 +21,7 @@
 - Image gallery integration for insert
 - Image gallery integration for form
 - Drawing gallery integration
+- Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 
 ## Bugs
 
