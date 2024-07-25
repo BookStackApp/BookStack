@@ -23,7 +23,9 @@ import editIcon from "@icons/edit.svg";
 import diagramIcon from "@icons/editor/diagram.svg";
 import {$createDiagramNode, $isDiagramNode, $openDrawingEditorForNode, DiagramNode} from "../../../nodes/diagram";
 import detailsIcon from "@icons/editor/details.svg";
+import mediaIcon from "@icons/editor/media.svg";
 import {$createDetailsNode, $isDetailsNode} from "../../../nodes/details";
+import {$isMediaNode, MediaNode} from "../../../nodes/media";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
@@ -32,7 +34,7 @@ export const link: EditorButtonDefinition = {
         const linkModal = context.manager.createModal('link');
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode | null;
 
             let formDefaults = {};
             if (selectedLink) {
@@ -53,7 +55,7 @@ export const link: EditorButtonDefinition = {
             linkModal.show(formDefaults);
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isLinkNode);
     }
 };
@@ -64,7 +66,7 @@ export const unlink: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.update(() => {
             const selection = context.lastSelection;
-            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode|null;
+            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode | null;
             const selectionPoints = selection?.getStartEndPoints();
 
             if (selectedLink) {
@@ -78,11 +80,10 @@ export const unlink: EditorButtonDefinition = {
             }
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return false;
     }
 };
-
 
 
 export const image: EditorButtonDefinition = {
@@ -91,7 +92,7 @@ export const image: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         const imageModal = context.manager.createModal('image');
         const selection = context.lastSelection;
-        const selectedImage = $getNodeFromSelection(selection, $isImageNode) as ImageNode|null;
+        const selectedImage = $getNodeFromSelection(selection, $isImageNode) as ImageNode | null;
 
         context.editor.getEditorState().read(() => {
             let formDefaults = {};
@@ -113,7 +114,7 @@ export const image: EditorButtonDefinition = {
             imageModal.show(formDefaults);
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isImageNode);
     }
 };
@@ -126,7 +127,7 @@ export const horizontalRule: EditorButtonDefinition = {
             $insertNewBlockNodeAtSelection($createHorizontalRuleNode(), false);
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isHorizontalRuleNode);
     }
 };
@@ -137,7 +138,7 @@ export const codeBlock: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const codeBlock = $getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode|null);
+            const codeBlock = $getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode | null);
             if (codeBlock === null) {
                 context.editor.update(() => {
                     const codeBlock = $createCodeBlockNode();
@@ -151,7 +152,7 @@ export const codeBlock: EditorButtonDefinition = {
             }
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isCodeBlockNode);
     }
 };
@@ -167,7 +168,7 @@ export const diagram: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
-            const diagramNode = $getNodeFromSelection(context.lastSelection, $isDiagramNode) as (DiagramNode|null);
+            const diagramNode = $getNodeFromSelection(context.lastSelection, $isDiagramNode) as (DiagramNode | null);
             if (diagramNode === null) {
                 context.editor.update(() => {
                     const diagram = $createDiagramNode();
@@ -180,11 +181,39 @@ export const diagram: EditorButtonDefinition = {
             }
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isDiagramNode);
     }
 };
 
+export const media: EditorButtonDefinition = {
+    label: 'Insert/edit Media',
+    icon: mediaIcon,
+    action(context: EditorUiContext) {
+        const mediaModal = context.manager.createModal('media');
+
+        context.editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const selectedNode = $getNodeFromSelection(selection, $isMediaNode) as MediaNode | null;
+
+            let formDefaults = {};
+            if (selectedNode) {
+                const nodeAttrs = selectedNode.getAttributes();
+                formDefaults = {
+                    src: nodeAttrs.src || nodeAttrs.data || '',
+                    width: nodeAttrs.width,
+                    height: nodeAttrs.height,
+                    embed: '',
+                }
+            }
+
+            mediaModal.show(formDefaults);
+        });
+    },
+    isActive(selection: BaseSelection | null): boolean {
+        return $selectionContainsNodeType(selection, $isMediaNode);
+    }
+};
 
 export const details: EditorButtonDefinition = {
     label: 'Insert collapsible block',
@@ -209,7 +238,7 @@ export const details: EditorButtonDefinition = {
             }
         });
     },
-    isActive(selection: BaseSelection|null): boolean {
+    isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isDetailsNode);
     }
 }

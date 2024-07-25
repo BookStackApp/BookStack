@@ -1,10 +1,8 @@
 import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {CalloutNode} from './callout';
 import {
-    $getNodeByKey,
     ElementNode,
     KlassConstructor,
-    LexicalEditor,
     LexicalNode,
     LexicalNodeReplacement, NodeMutation,
     ParagraphNode
@@ -19,8 +17,8 @@ import {CustomTableNode} from "./custom-table";
 import {HorizontalRuleNode} from "./horizontal-rule";
 import {CodeBlockNode} from "./code-block";
 import {DiagramNode} from "./diagram";
-import {EditorUIManager} from "../ui/framework/manager";
 import {EditorUiContext} from "../ui/framework/core";
+import {MediaNode} from "./media";
 
 /**
  * Load the nodes for lexical.
@@ -40,6 +38,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         DetailsNode, SummaryNode,
         CodeBlockNode,
         DiagramNode,
+        MediaNode,
         CustomParagraphNode,
         LinkNode,
         {

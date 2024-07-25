@@ -47,7 +47,7 @@ import {
     editCodeBlock,
     horizontalRule,
     image,
-    link,
+    link, media,
     unlink
 } from "./defaults/buttons/objects";
 
@@ -110,7 +110,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Insert types
-        new EditorOverflowContainer(6, [
+        new EditorOverflowContainer(8, [
             new EditorButton(link),
             new EditorDropdownButton(table, false, [
                 new EditorTableCreator(),
@@ -119,6 +119,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorButton(horizontalRule),
             new EditorButton(codeBlock),
             new EditorButton(diagram),
+            new EditorButton(media),
             new EditorButton(details),
         ]),
 
