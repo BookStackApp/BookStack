@@ -2,7 +2,8 @@
 
 ## In progress
 
-- Finish initial media node & form integration
+- Update forms to allow panels (Media)
+  - Will be used for table forms also. 
 
 ## Main Todo
 
