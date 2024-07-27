@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplicació mòbil',
     'mfa_option_totp_desc' => 'Per a fer servir l’autenticació de múltiple factor us caldrà una aplicació mòbil que suporti TOTP, com ara Google Authenticador, Authy o Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Codis de seguretat',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Genera un conjunt de codis de seguretat d\'un sol ús que hauràs d\'introduir en iniciar sessió per verificar la teva identitat. Assegura\'t de guardar-los en un lloc segur.',
     'mfa_gen_confirm_and_enable' => 'Confirma i activa',
     'mfa_gen_backup_codes_title' => 'Configuració de codis de seguretat',
     'mfa_gen_backup_codes_desc' => 'Deseu la següent llista de codis en un lloc segur. Quan accediu al sistema, podeu fer servir un dels codis com a segon mètode d’autenticació.',
