@@ -20,7 +20,7 @@ return [
     'description' => 'Descripció',
     'role' => 'Rol',
     'cover_image' => 'Imatge de portada',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Aquesta imatge hauria de tenir aproximadament 440x250 píxels, encara que es redimensionarà i retallarà de manera flexible per adaptar-se a la interfície d\'usuari en diferents situacions segons sigui necessari, de manera que les dimensions reals per a la visualització poden variar.',
 
     // Actions
     'actions' => 'Accions',
