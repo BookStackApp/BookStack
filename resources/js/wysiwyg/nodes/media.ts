@@ -30,7 +30,7 @@ const attributeAllowList = [
 
 function filterAttributes(attributes: Record<string, string>): Record<string, string> {
     const filtered: Record<string, string> = {};
-    for (const key in Object.keys(attributes)) {
+    for (const key of Object.keys(attributes)) {
         if (attributeAllowList.includes(key)) {
             filtered[key] = attributes[key];
         }
@@ -170,7 +170,7 @@ export class MediaNode extends ElementNode {
     exportJSON(): SerializedMediaNode {
         return {
             ...super.exportJSON(),
-            type: 'callout',
+            type: 'media',
             version: 1,
             tag: this.__tag,
             attributes: this.__attributes,
@@ -204,6 +204,25 @@ export function $createMediaNodeFromHtml(html: string): MediaNode | null {
     }
 
     return domElementToNode(tag as MediaNodeTag, el);
+}
+
+const videoExtensions = ['mp4', 'mpeg', 'm4v', 'm4p', 'mov'];
+const audioExtensions = ['3gp', 'aac', 'flac', 'mp3', 'm4a', 'ogg', 'wav', 'webm'];
+const iframeExtensions = ['html', 'htm', 'php', 'asp', 'aspx'];
+
+export function $createMediaNodeFromSrc(src: string): MediaNode {
+    let nodeTag: MediaNodeTag = 'iframe';
+    const srcEnd = src.split('?')[0].split('/').pop() || '';
+    const extension = (srcEnd.split('.').pop() || '').toLowerCase();
+    if (videoExtensions.includes(extension)) {
+        nodeTag = 'video';
+    } else if (audioExtensions.includes(extension)) {
+        nodeTag = 'audio';
+    } else if (extension && !iframeExtensions.includes(extension)) {
+        nodeTag = 'embed';
+    }
+
+    return new MediaNode(nodeTag);
 }
 
 export function $isMediaNode(node: LexicalNode | null | undefined) {

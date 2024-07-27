@@ -14,7 +14,7 @@ export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefiniti
 
 export interface EditorFormDefinition {
     submitText: string;
-    action: (formData: FormData, context: EditorUiContext) => boolean;
+    action: (formData: FormData, context: EditorUiContext) => Promise<boolean>;
     fields: EditorFormFieldDefinition[];
 }
 

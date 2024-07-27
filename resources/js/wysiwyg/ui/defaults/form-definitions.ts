@@ -1,15 +1,17 @@
 import {EditorFormDefinition, EditorSelectFormFieldDefinition} from "../framework/forms";
 import {EditorUiContext} from "../framework/core";
 import {$createLinkNode} from "@lexical/link";
-import {$createTextNode, $getSelection} from "lexical";
+import {$createTextNode, $getSelection, LexicalNode} from "lexical";
 import {$createImageNode} from "../../nodes/image";
 import {setEditorContentFromHtml} from "../../actions";
-import {$createMediaNodeFromHtml} from "../../nodes/media";
+import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../nodes/media";
+import {$getNodeFromSelection} from "../../helpers";
+import {$insertNodeToNearestRoot} from "@lexical/utils";
 
 
 export const link: EditorFormDefinition = {
     submitText: 'Apply',
-    action(formData, context: EditorUiContext) {
+    async action(formData, context: EditorUiContext) {
         context.editor.update(() => {
 
             const selection = $getSelection();
@@ -54,7 +56,7 @@ export const link: EditorFormDefinition = {
 
 export const image: EditorFormDefinition = {
     submitText: 'Apply',
-    action(formData, context: EditorUiContext) {
+    async action(formData, context: EditorUiContext) {
         context.editor.update(() => {
             const selection = $getSelection();
             const imageNode = $createImageNode(formData.get('src')?.toString() || '', {
@@ -92,25 +94,40 @@ export const image: EditorFormDefinition = {
 
 export const media: EditorFormDefinition = {
     submitText: 'Save',
-    action(formData, context: EditorUiContext) {
-
-        // TODO - Get media from selection
+    async action(formData, context: EditorUiContext) {
+        const selectedNode: MediaNode|null = await (new Promise((res, rej) => {
+            context.editor.getEditorState().read(() => {
+                const node = $getNodeFromSelection($getSelection(), $isMediaNode);
+                res(node as MediaNode|null);
+            });
+        }));
 
         const embedCode = (formData.get('embed') || '').toString().trim();
         if (embedCode) {
             context.editor.update(() => {
                 const node = $createMediaNodeFromHtml(embedCode);
-                // TODO - Replace existing or insert new
+                if (selectedNode && node) {
+                    selectedNode.replace(node)
+                } else if (node) {
+                    $insertNodeToNearestRoot(node);
+                }
             });
 
             return true;
         }
 
-        const src = (formData.get('src') || '').toString().trim();
-        const height = (formData.get('height') || '').toString().trim();
-        const width = (formData.get('width') || '').toString().trim();
+        context.editor.update(() => {
+            const src = (formData.get('src') || '').toString().trim();
+            const height = (formData.get('height') || '').toString().trim();
+            const width = (formData.get('width') || '').toString().trim();
 
-        // TODO - Update existing or insert new
+            const updateNode = selectedNode || $createMediaNodeFromSrc(src);
+            updateNode.setSrc(src);
+            updateNode.setWidthAndHeight(width, height);
+            if (!selectedNode) {
+                $insertNodeToNearestRoot(updateNode);
+            }
+        });
 
         return true;
     },
@@ -141,7 +158,7 @@ export const media: EditorFormDefinition = {
 
 export const source: EditorFormDefinition = {
     submitText: 'Save',
-    action(formData, context: EditorUiContext) {
+    async action(formData, context: EditorUiContext) {
         setEditorContentFromHtml(context.editor, formData.get('source')?.toString() || '');
         return true;
     },
