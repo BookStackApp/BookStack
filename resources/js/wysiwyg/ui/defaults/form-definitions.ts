@@ -1,4 +1,4 @@
-import {EditorFormDefinition, EditorSelectFormFieldDefinition} from "../framework/forms";
+import {EditorFormDefinition, EditorFormTabs, EditorSelectFormFieldDefinition} from "../framework/forms";
 import {EditorUiContext} from "../framework/core";
 import {$createLinkNode} from "@lexical/link";
 import {$createTextNode, $getSelection, LexicalNode} from "lexical";
@@ -133,25 +133,40 @@ export const media: EditorFormDefinition = {
     },
     fields: [
         {
-            label: 'Source',
-            name: 'src',
-            type: 'text',
-        },
-        {
-            label: 'Width',
-            name: 'width',
-            type: 'text',
-        },
-        {
-            label: 'Height',
-            name: 'height',
-            type: 'text',
-        },
-        // TODO - Tabbed interface to separate this option
-        {
-            label: 'Paste your embed code below:',
-            name: 'embed',
-            type: 'textarea',
+            build() {
+                return new EditorFormTabs([
+                    {
+                        label: 'General',
+                        contents: [
+                            {
+                                label: 'Source',
+                                name: 'src',
+                                type: 'text',
+                            },
+                            {
+                                label: 'Width',
+                                name: 'width',
+                                type: 'text',
+                            },
+                            {
+                                label: 'Height',
+                                name: 'height',
+                                type: 'text',
+                            },
+                        ],
+                    },
+                    {
+                        label: 'Embed',
+                        contents: [
+                            {
+                                label: 'Paste your embed code below:',
+                                name: 'embed',
+                                type: 'textarea',
+                            },
+                        ],
+                    }
+                ])
+            }
         },
     ],
 };

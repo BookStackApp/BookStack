@@ -18,6 +18,14 @@ export type EditorUiContext = {
     options: Record<string, any>; // General user options which may be used by sub elements
 };
 
+export interface EditorUiBuilderDefinition {
+    build: () => EditorUiElement;
+}
+
+export function isUiBuilderDefinition(object: any): object is EditorUiBuilderDefinition {
+    return 'build' in object;
+}
+
 export abstract class EditorUiElement {
     protected dom: HTMLElement|null = null;
     private context: EditorUiContext|null = null;

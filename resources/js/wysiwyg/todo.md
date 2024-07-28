@@ -2,8 +2,7 @@
 
 ## In progress
 
-- Update forms to allow panels (Media)
-  - Will be used for table forms also. 
+//
 
 ## Main Todo
 
@@ -23,6 +22,7 @@
 - Image gallery integration for form
 - Drawing gallery integration
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
+- Media resize support (like images)
 
 ## Bugs
 
