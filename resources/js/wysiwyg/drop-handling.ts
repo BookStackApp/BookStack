@@ -1,7 +1,4 @@
 import {
-    $getNearestNodeFromDOMNode,
-    $getRoot,
-    $insertNodes,
     $isDecoratorNode,
     LexicalEditor,
     LexicalNode
@@ -9,7 +6,7 @@ import {
 import {
     $getNearestBlockNodeForCoords,
     $htmlToBlockNodes,
-    $insertNewBlockNodeAtSelection, $insertNewBlockNodesAtSelection,
+    $insertNewBlockNodesAtSelection,
     $selectSingleNode
 } from "./helpers";
 
@@ -54,8 +51,19 @@ function createDropListener(editor: LexicalEditor): (event: DragEvent) => void {
         // Template handling
         const templateId = event.dataTransfer?.getData('bookstack/template') || '';
         if (templateId) {
-            event.preventDefault();
             insertTemplateToEditor(editor, templateId, event);
+            event.preventDefault();
+            return;
+        }
+
+        // HTML contents drop
+        const html = event.dataTransfer?.getData('text/html') || '';
+        if (html) {
+            editor.update(() => {
+                const newNodes = $htmlToBlockNodes(editor, html);
+                $insertNodesAtEvent(newNodes, event, editor);
+            });
+            event.preventDefault();
             return;
         }
     };
