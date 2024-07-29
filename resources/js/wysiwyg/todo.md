@@ -13,7 +13,6 @@
 - Keyboard shortcuts support
 - Draft/change management (connect with page editor component)
 - Add ID support to all block types
-- Template drag & drop / insert
 - Video attachment drop / insert
 - Task list render/import from existing format
 - Link popup menu for cross-content reference
@@ -29,3 +28,4 @@
 - Image resizing currently bugged, maybe change to ghost resizer in decorator instead of updating core node.
 - Removing link around image via button deletes image, not just link 
 - `SELECTION_CHANGE_COMMAND` not fired when clicking out of a table cell. Prevents toolbar hiding on table unselect.
+- Template drag/drop not handled when outside core editor area (ignored in margin area).
