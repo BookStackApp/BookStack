@@ -2,7 +2,7 @@
 
 ## In progress
 
-//
+- Draft/change management (connect with page editor component)
 
 ## Main Todo
 
@@ -11,9 +11,7 @@
 - Table features
 - Image paste upload
 - Keyboard shortcuts support
-- Draft/change management (connect with page editor component)
 - Add ID support to all block types
-- Video attachment drop / insert
 - Task list render/import from existing format
 - Link popup menu for cross-content reference
 - Link heading-based ID reference menu
