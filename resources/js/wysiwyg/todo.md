@@ -2,7 +2,7 @@
 
 ## In progress
 
-- Draft/change management (connect with page editor component)
+//
 
 ## Main Todo
 
