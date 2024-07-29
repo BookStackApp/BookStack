@@ -3,12 +3,14 @@ import {
     $createParagraphNode, $getRoot,
     $getSelection, $isElementNode,
     $isTextNode, $setSelection,
-    BaseSelection, ElementFormatType, ElementNode,
+    BaseSelection, ElementFormatType, ElementNode, LexicalEditor,
     LexicalNode, TextFormatType
 } from "lexical";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "./nodes";
 import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {$setBlocksType} from "@lexical/selection";
+import {$createCustomParagraphNode} from "./nodes/custom-paragraph";
+import {$generateNodesFromDOM} from "@lexical/html";
 
 export function el(tag: string, attrs: Record<string, string|null> = {}, children: (string|HTMLElement)[] = []): HTMLElement {
     const el = document.createElement(tag);
@@ -28,6 +30,28 @@ export function el(tag: string, attrs: Record<string, string|null> = {}, childre
     }
 
     return el;
+}
+
+function htmlToDom(html: string): Document {
+    const parser = new DOMParser();
+    return parser.parseFromString(html, 'text/html');
+}
+
+function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
+    return nodes.map(node => {
+        if ($isTextNode(node)) {
+            const paragraph = $createCustomParagraphNode();
+            paragraph.append(node);
+            return paragraph;
+        }
+        return node;
+    });
+}
+
+export function $htmlToBlockNodes(editor: LexicalEditor, html: string): LexicalNode[] {
+    const dom = htmlToDom(html);
+    const nodes = $generateNodesFromDOM(editor, dom);
+    return wrapTextNodes(nodes);
 }
 
 export function $selectionContainsNodeType(selection: BaseSelection|null, matcher: LexicalNodeMatcher): boolean {
@@ -88,17 +112,25 @@ export function $toggleSelectionBlockNodeType(matcher: LexicalNodeMatcher, creat
 }
 
 export function $insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: boolean = true) {
+    $insertNewBlockNodesAtSelection([node], insertAfter);
+}
+
+export function $insertNewBlockNodesAtSelection(nodes: LexicalNode[], insertAfter: boolean = true) {
     const selection = $getSelection();
     const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
 
     if (blockElement) {
         if (insertAfter) {
-            blockElement.insertAfter(node);
+            for (let i = nodes.length - 1; i >= 0; i--) {
+                blockElement.insertAfter(nodes[i]);
+            }
         } else {
-            blockElement.insertBefore(node);
+            for (const node of nodes) {
+                blockElement.insertBefore(node);
+            }
         }
     } else {
-        $getRoot().append(node);
+        $getRoot().append(...nodes);
     }
 }
 
@@ -151,4 +183,25 @@ export function $getBlockElementNodesInSelection(selection: BaseSelection|null):
     }
 
     return Array.from(blockNodes.values());
+}
+
+/**
+ * Get the nearest root/block level node for the given position.
+ */
+export function $getNearestBlockNodeForCoords(editor: LexicalEditor, x: number, y: number): LexicalNode|null {
+    // TODO - Take into account x for floated blocks?
+    const rootNodes = $getRoot().getChildren();
+    for (const node of rootNodes) {
+        const nodeDom = editor.getElementByKey(node.__key);
+        if (!nodeDom) {
+            continue;
+        }
+
+        const bounds = nodeDom.getBoundingClientRect();
+        if (y <= bounds.bottom) {
+            return node;
+        }
+    }
+
+    return null;
 }

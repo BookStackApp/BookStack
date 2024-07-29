@@ -1,30 +1,10 @@
-import {$getRoot, $getSelection, $isTextNode, LexicalEditor, LexicalNode, RootNode} from "lexical";
-import {$generateHtmlFromNodes, $generateNodesFromDOM} from "@lexical/html";
-import {$createCustomParagraphNode} from "./nodes/custom-paragraph";
+import {$getRoot, $getSelection, LexicalEditor} from "lexical";
+import {$generateHtmlFromNodes} from "@lexical/html";
+import {$htmlToBlockNodes} from "./helpers";
 
-function htmlToDom(html: string): Document {
-    const parser = new DOMParser();
-    return parser.parseFromString(html, 'text/html');
-}
 
-function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
-    return nodes.map(node => {
-        if ($isTextNode(node)) {
-            const paragraph = $createCustomParagraphNode();
-            paragraph.append(node);
-            return paragraph;
-        }
-        return node;
-    });
-}
-
-function appendNodesToRoot(root: RootNode, nodes: LexicalNode[]) {
-    root.append(...wrapTextNodes(nodes));
-}
 
 export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
-    const dom = htmlToDom(html);
-
     editor.update(() => {
         // Empty existing
         const root = $getRoot();
@@ -32,27 +12,23 @@ export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
             child.remove(true);
         }
 
-        const nodes = $generateNodesFromDOM(editor, dom);
-        root.append(...wrapTextNodes(nodes));
+        const nodes = $htmlToBlockNodes(editor, html);
+        root.append(...nodes);
     });
 }
 
 export function appendHtmlToEditor(editor: LexicalEditor, html: string) {
-    const dom = htmlToDom(html);
-
     editor.update(() => {
         const root = $getRoot();
-        const nodes = $generateNodesFromDOM(editor, dom);
-        root.append(...wrapTextNodes(nodes));
+        const nodes = $htmlToBlockNodes(editor, html);
+        root.append(...nodes);
     });
 }
 
 export function prependHtmlToEditor(editor: LexicalEditor, html: string) {
-    const dom = htmlToDom(html);
-
     editor.update(() => {
         const root = $getRoot();
-        const nodes = wrapTextNodes($generateNodesFromDOM(editor, dom));
+        const nodes = $htmlToBlockNodes(editor, html);
         let reference = root.getChildren()[0];
         for (let i = nodes.length - 1; i >= 0; i--) {
             if (reference) {
@@ -66,10 +42,9 @@ export function prependHtmlToEditor(editor: LexicalEditor, html: string) {
 }
 
 export function insertHtmlIntoEditor(editor: LexicalEditor, html: string) {
-    const dom = htmlToDom(html);
     editor.update(() => {
         const selection = $getSelection();
-        const nodes = wrapTextNodes($generateNodesFromDOM(editor, dom));
+        const nodes = $htmlToBlockNodes(editor, html);
 
         const reference = selection?.getNodes()[0];
         const referencesParents = reference?.getParents() || [];
