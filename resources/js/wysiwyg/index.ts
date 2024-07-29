@@ -58,8 +58,21 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     if (debugView) {
         debugView.hidden = true;
     }
-    editor.registerUpdateListener(({editorState}) => {
-        console.log('editorState', editorState.toJSON());
+
+    let changeFromLoading = true;
+    editor.registerUpdateListener(({editorState, dirtyElements, dirtyLeaves}) => {
+
+        // Emit change event to component system (for draft detection) on actual user content change
+        if (dirtyElements.size > 0 || dirtyLeaves.size > 0) {
+            if (changeFromLoading) {
+                changeFromLoading = false;
+            } else {
+                window.$events.emit('editor-html-change', '');
+            }
+        }
+
+        // Debug logic
+        // console.log('editorState', editorState.toJSON());
         if (debugView) {
             debugView.textContent = JSON.stringify(editorState.toJSON(), null, 2);
         }

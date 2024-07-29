@@ -175,7 +175,6 @@ export class EditorUIManager {
     protected setupEditor(editor: LexicalEditor) {
         // Update button states on editor selection change
         editor.registerCommand(SELECTION_CHANGE_COMMAND, () => {
-            console.log('select change', arguments);
             this.triggerStateUpdate({
                 editor: editor,
                 selection: $getSelection(),
