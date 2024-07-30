@@ -19,6 +19,7 @@ import {CodeBlockNode} from "./code-block";
 import {DiagramNode} from "./diagram";
 import {EditorUiContext} from "../ui/framework/core";
 import {MediaNode} from "./media";
+import {CustomListItemNode} from "./custom-list-item";
 
 /**
  * Load the nodes for lexical.
@@ -29,7 +30,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         HeadingNode, // Todo - Create custom
         QuoteNode, // Todo - Create custom
         ListNode, // Todo - Create custom
-        ListItemNode,
+        CustomListItemNode,
         CustomTableNode,
         TableRowNode,
         TableCellNode,
@@ -53,6 +54,12 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
                 return new CustomTableNode();
             }
         },
+        {
+            replace: ListItemNode,
+            with: (node: ListItemNode) => {
+                return new CustomListItemNode(node.__value, node.__checked);
+            }
+        }
     ];
 }
 
