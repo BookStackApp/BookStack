@@ -12,7 +12,6 @@
 - Image paste upload
 - Keyboard shortcuts support
 - Add ID support to all block types
-- Task list render/import from existing format
 - Link popup menu for cross-content reference
 - Link heading-based ID reference menu
 - Image gallery integration for insert
