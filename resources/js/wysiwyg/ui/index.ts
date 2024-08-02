@@ -6,11 +6,11 @@ import {
     getMainEditorFullToolbar, getTableToolbarContent
 } from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
-import {image as imageFormDefinition, link as linkFormDefinition, media as mediaFormDefinition, source as sourceFormDefinition} from "./defaults/form-definitions";
 import {ImageDecorator} from "./decorators/image";
 import {EditorUiContext} from "./framework/core";
 import {CodeBlockDecorator} from "./decorators/code-block";
 import {DiagramDecorator} from "./decorators/diagram";
+import {modals} from "./defaults/modals";
 
 export function buildEditorUI(container: HTMLElement, element: HTMLElement, scrollContainer: HTMLElement, editor: LexicalEditor, options: Record<string, any>): EditorUiContext {
     const manager = new EditorUIManager();
@@ -30,22 +30,9 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
     manager.setToolbar(getMainEditorFullToolbar());
 
     // Register modals
-    manager.registerModal('link', {
-        title: 'Insert/Edit link',
-        form: linkFormDefinition,
-    });
-    manager.registerModal('image', {
-        title: 'Insert/Edit Image',
-        form: imageFormDefinition
-    });
-    manager.registerModal('media', {
-        title: 'Insert/Edit Media',
-        form: mediaFormDefinition,
-    });
-    manager.registerModal('source', {
-        title: 'Source code',
-        form: sourceFormDefinition,
-    });
+    for (const key of Object.keys(modals)) {
+        manager.registerModal(key, modals[key]);
+    }
 
     // Register context toolbars
     manager.registerContextToolbar('image', {

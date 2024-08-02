@@ -9,12 +9,13 @@ import {EditorTableCreator} from "./framework/blocks/table-creator";
 import {EditorColorButton} from "./framework/blocks/color-button";
 import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
 import {
+    cellProperties,
     deleteColumn,
     deleteRow,
     deleteTable, deleteTableMenuAction, insertColumnAfter,
     insertColumnBefore,
     insertRowAbove,
-    insertRowBelow,
+    insertRowBelow, mergeCells, splitCell,
     table
 } from "./defaults/buttons/tables";
 import {fullscreen, redo, source, undo} from "./defaults/buttons/controls";
@@ -117,6 +118,11 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorDropdownButton({button: table, direction: 'vertical'}, [
                 new EditorDropdownButton({button: {...table, format: 'long'}, showOnHover: true}, [
                     new EditorTableCreator(),
+                ]),
+                new EditorDropdownButton({button: {label: 'Cell'}}, [
+                    new EditorButton(cellProperties),
+                    new EditorButton(mergeCells),
+                    new EditorButton(splitCell),
                 ]),
                 new EditorButton(deleteTableMenuAction),
             ]),

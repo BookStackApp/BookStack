@@ -3,7 +3,9 @@
 ## In progress
 
 - Table features
-  - Continued table dropdown menu 
+  - Continued table dropdown menu
+  - Connect up cell properties form
+  - Merge cell action
 
 ## Main Todo
 
@@ -20,6 +22,10 @@
 - Drawing gallery integration
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 - Media resize support (like images)
+
+## Secondary Todo
+
+- Color picker support in table form color fields
 
 ## Bugs
 

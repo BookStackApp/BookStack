@@ -1,13 +1,49 @@
-import {EditorFormDefinition, EditorFormTabs, EditorSelectFormFieldDefinition} from "../framework/forms";
-import {EditorUiContext} from "../framework/core";
+import {EditorFormDefinition, EditorFormTabs, EditorSelectFormFieldDefinition} from "../../framework/forms";
+import {EditorUiContext} from "../../framework/core";
+import {$createTextNode, $getSelection} from "lexical";
+import {$createImageNode} from "../../../nodes/image";
 import {$createLinkNode} from "@lexical/link";
-import {$createTextNode, $getSelection, LexicalNode} from "lexical";
-import {$createImageNode} from "../../nodes/image";
-import {setEditorContentFromHtml} from "../../actions";
-import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../nodes/media";
-import {$getNodeFromSelection} from "../../helpers";
+import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
+import {$getNodeFromSelection} from "../../../helpers";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
 
+export const image: EditorFormDefinition = {
+    submitText: 'Apply',
+    async action(formData, context: EditorUiContext) {
+        context.editor.update(() => {
+            const selection = $getSelection();
+            const imageNode = $createImageNode(formData.get('src')?.toString() || '', {
+                alt: formData.get('alt')?.toString() || '',
+                height: Number(formData.get('height')?.toString() || '0'),
+                width: Number(formData.get('width')?.toString() || '0'),
+            });
+            selection?.insertNodes([imageNode]);
+        });
+        return true;
+    },
+    fields: [
+        {
+            label: 'Source',
+            name: 'src',
+            type: 'text',
+        },
+        {
+            label: 'Alternative description',
+            name: 'alt',
+            type: 'text',
+        },
+        {
+            label: 'Width',
+            name: 'width',
+            type: 'text',
+        },
+        {
+            label: 'Height',
+            name: 'height',
+            type: 'text',
+        },
+    ],
+};
 
 export const link: EditorFormDefinition = {
     submitText: 'Apply',
@@ -51,44 +87,6 @@ export const link: EditorFormDefinition = {
                 'New window': '_blank',
             }
         } as EditorSelectFormFieldDefinition,
-    ],
-};
-
-export const image: EditorFormDefinition = {
-    submitText: 'Apply',
-    async action(formData, context: EditorUiContext) {
-        context.editor.update(() => {
-            const selection = $getSelection();
-            const imageNode = $createImageNode(formData.get('src')?.toString() || '', {
-                alt: formData.get('alt')?.toString() || '',
-                height: Number(formData.get('height')?.toString() || '0'),
-                width: Number(formData.get('width')?.toString() || '0'),
-            });
-            selection?.insertNodes([imageNode]);
-        });
-        return true;
-    },
-    fields: [
-        {
-            label: 'Source',
-            name: 'src',
-            type: 'text',
-        },
-        {
-            label: 'Alternative description',
-            name: 'alt',
-            type: 'text',
-        },
-        {
-            label: 'Width',
-            name: 'width',
-            type: 'text',
-        },
-        {
-            label: 'Height',
-            name: 'height',
-            type: 'text',
-        },
     ],
 };
 
@@ -167,21 +165,6 @@ export const media: EditorFormDefinition = {
                     }
                 ])
             }
-        },
-    ],
-};
-
-export const source: EditorFormDefinition = {
-    submitText: 'Save',
-    async action(formData, context: EditorUiContext) {
-        setEditorContentFromHtml(context.editor, formData.get('source')?.toString() || '');
-        return true;
-    },
-    fields: [
-        {
-            label: 'Source',
-            name: 'source',
-            type: 'textarea',
         },
     ],
 };
