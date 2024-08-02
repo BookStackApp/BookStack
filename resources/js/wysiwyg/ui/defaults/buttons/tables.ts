@@ -18,8 +18,8 @@ import {
     $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
-    $insertTableRow__EXPERIMENTAL,
-    $isTableNode,
+    $insertTableRow__EXPERIMENTAL, $isTableCellNode,
+    $isTableNode, $isTableSelection, $unmergeCell, TableCellNode,
 } from "@lexical/table";
 
 
@@ -127,5 +127,63 @@ export const deleteColumn: EditorButtonDefinition = {
     },
     isActive() {
         return false;
+    }
+};
+
+export const cellProperties: EditorButtonDefinition = {
+    label: 'Cell properties',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if ($isTableCellNode(cell)) {
+
+                const modalForm = context.manager.createModal('cell_properties');
+                modalForm.show({});
+            }
+        });
+    },
+    isActive() {
+        return false;
+    },
+    isDisabled(selection) {
+        return !$selectionContainsNodeType(selection, $isTableCellNode);
+    }
+};
+
+export const mergeCells: EditorButtonDefinition = {
+    label: 'Merge cells',
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            // Todo - Needs to be done manually
+            // Playground reference:
+            // https://github.com/facebook/lexical/blob/f373759a7849f473d34960a6bf4e34b2a011e762/packages/lexical-playground/src/plugins/TableActionMenuPlugin/index.tsx#L299
+        });
+    },
+    isActive() {
+        return false;
+    },
+    isDisabled(selection) {
+        return !$isTableSelection(selection);
+    }
+};
+
+export const splitCell: EditorButtonDefinition = {
+    label: 'Split cell',
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            $unmergeCell();
+        });
+    },
+    isActive() {
+        return false;
+    },
+    isDisabled(selection) {
+        const cell = $getNodeFromSelection(selection, $isTableCellNode) as TableCellNode|null;
+        if (cell) {
+            const merged = cell.getRowSpan() > 1 || cell.getColSpan() > 1;
+            return !merged;
+        }
+
+        return true;
     }
 };

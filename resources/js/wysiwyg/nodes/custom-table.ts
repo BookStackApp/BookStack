@@ -157,7 +157,7 @@ export function $createCustomTableNode(): CustomTableNode {
     return new CustomTableNode();
 }
 
-export function $isCustomTableNode(node: LexicalNode | null | undefined): boolean {
+export function $isCustomTableNode(node: LexicalNode | null | undefined): node is CustomTableNode {
     return node instanceof CustomTableNode;
 }
 

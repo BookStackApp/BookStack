@@ -11,6 +11,7 @@ import {EditorUiContext} from "./ui/framework/core";
 import {listen as listenToCommonEvents} from "./common-events";
 import {handleDropEvents} from "./drop-handling";
 import {registerTaskListHandler} from "./ui/framework/helpers/task-list-handler";
+import {registerTableSelectionHandler} from "./ui/framework/helpers/table-selection-handler";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -48,6 +49,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerTableResizer(editor, editWrap),
+        registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, editArea),
     );
 
