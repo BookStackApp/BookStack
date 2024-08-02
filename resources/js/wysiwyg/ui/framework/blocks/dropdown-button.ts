@@ -3,22 +3,34 @@ import {handleDropdown} from "../helpers/dropdowns";
 import {EditorContainerUiElement, EditorUiElement} from "../core";
 import {EditorBasicButtonDefinition, EditorButton} from "../buttons";
 
+export type EditorDropdownButtonOptions = {
+    showOnHover?: boolean;
+    direction?: 'vertical'|'horizontal';
+    button: EditorBasicButtonDefinition|EditorButton;
+};
+
+const defaultOptions: EditorDropdownButtonOptions = {
+    showOnHover: false,
+    direction: 'horizontal',
+    button: {label: 'Menu'},
+}
+
 export class EditorDropdownButton extends EditorContainerUiElement {
     protected button: EditorButton;
     protected childItems: EditorUiElement[];
     protected open: boolean = false;
-    protected showOnHover: boolean = false;
+    protected options: EditorDropdownButtonOptions;
 
-    constructor(button: EditorBasicButtonDefinition|EditorButton, showOnHover: boolean, children: EditorUiElement[]) {
+    constructor(options: EditorDropdownButtonOptions, children: EditorUiElement[]) {
         super(children);
         this.childItems = children;
-        this.showOnHover = showOnHover;
+        this.options = Object.assign(defaultOptions, options);
 
-        if (button instanceof EditorButton) {
-            this.button = button;
+        if (options.button instanceof EditorButton) {
+            this.button = options.button;
         } else {
             this.button = new EditorButton({
-                ...button,
+                ...options.button,
                 action() {
                     return false;
                 },
@@ -41,7 +53,7 @@ export class EditorDropdownButton extends EditorContainerUiElement {
 
         const childElements: HTMLElement[] = this.childItems.map(child => child.getDOMElement());
         const menu = el('div', {
-            class: 'editor-dropdown-menu',
+            class: `editor-dropdown-menu editor-dropdown-menu-${this.options.direction}`,
             hidden: 'true',
         }, childElements);
 
@@ -50,7 +62,7 @@ export class EditorDropdownButton extends EditorContainerUiElement {
         }, [button, menu]);
 
         handleDropdown({toggle : button, menu : menu,
-            showOnHover: this.showOnHover,
+            showOnHover: this.options.showOnHover,
             onOpen : () => {
             this.open = true;
             this.getContext().manager.triggerStateUpdateForElement(this.button);

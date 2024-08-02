@@ -8,17 +8,18 @@ import insertColumnBeforeIcon from "@icons/editor/table-insert-column-before.svg
 import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
-import {$getBlockElementNodesInSelection, $getNodeFromSelection, $getParentOfType} from "../../../helpers";
-import {$getSelection} from "lexical";
-import {$isCustomTableNode, CustomTableNode} from "../../../nodes/custom-table";
 import {
-    $deleteTableColumn, $deleteTableColumn__EXPERIMENTAL,
+    $getNodeFromSelection,
+    $selectionContainsNodeType
+} from "../../../helpers";
+import {$getSelection} from "lexical";
+import {$isCustomTableNode} from "../../../nodes/custom-table";
+import {
+    $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
-    $getTableRowIndexFromTableCellNode, $insertTableColumn, $insertTableColumn__EXPERIMENTAL,
-    $insertTableRow, $insertTableRow__EXPERIMENTAL,
-    $isTableCellNode,
-    $isTableRowNode,
-    TableCellNode
+    $insertTableColumn__EXPERIMENTAL,
+    $insertTableRow__EXPERIMENTAL,
+    $isTableNode,
 } from "@lexical/table";
 
 
@@ -41,6 +42,14 @@ export const deleteTable: EditorButtonDefinition = {
     isActive() {
         return false;
     }
+};
+
+export const deleteTableMenuAction: EditorButtonDefinition = {
+    ...deleteTable,
+    format: 'long',
+    isDisabled(selection) {
+        return !$selectionContainsNodeType(selection, $isTableNode);
+    },
 };
 
 export const insertRowAbove: EditorButtonDefinition = {

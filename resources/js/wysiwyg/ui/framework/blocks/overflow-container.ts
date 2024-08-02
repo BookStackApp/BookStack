@@ -15,9 +15,11 @@ export class EditorOverflowContainer extends EditorContainerUiElement {
         this.size = size;
         this.content = children;
         this.overflowButton = new EditorDropdownButton({
-            label: 'More',
-            icon: moreHorizontal,
-        }, false, []);
+            button: {
+                label: 'More',
+                icon: moreHorizontal,
+            },
+        }, []);
         this.addChildren(this.overflowButton);
     }
 
