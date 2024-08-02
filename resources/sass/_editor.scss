@@ -59,6 +59,18 @@ body.editor-is-fullscreen {
   background-color: #ceebff;
   color: #000;
 }
+.editor-button-long {
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: .5rem;
+}
+.editor-button-text {
+  font-weight: 400;
+  color: #000;
+  font-size: 12.2px;
+}
 .editor-button-format-preview {
   padding: 4px 6px;
   display: block;
@@ -84,21 +96,20 @@ body.editor-is-fullscreen {
   display: flex;
   flex-direction: row;
 }
-.editor-menu-list {
+.editor-dropdown-menu-vertical {
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
-.editor-menu-list .editor-button {
+.editor-dropdown-menu-vertical .editor-button {
   border-bottom: 0;
   text-align: start;
   display: block;
   width: 100%;
 }
-.editor-menu-list > .editor-dropdown-menu-container .editor-dropdown-menu {
+.editor-dropdown-menu-vertical > .editor-dropdown-menu-container .editor-dropdown-menu {
   inset-inline-start: 100%;
   top: 0;
-  flex-direction: column;
 }
 
 .editor-format-menu-toggle {

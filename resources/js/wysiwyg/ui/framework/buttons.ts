@@ -5,11 +5,13 @@ import {el} from "../../helpers";
 export interface EditorBasicButtonDefinition {
     label: string;
     icon?: string|undefined;
+    format?: 'small' | 'long';
 }
 
 export interface EditorButtonDefinition extends EditorBasicButtonDefinition {
     action: (context: EditorUiContext, button: EditorButton) => void;
     isActive: (selection: BaseSelection|null, context: EditorUiContext) => boolean;
+    isDisabled?: (selection: BaseSelection|null, context: EditorUiContext) => boolean;
     setup?: (context: EditorUiContext, button: EditorButton) => void;
 }
 
@@ -47,20 +49,27 @@ export class EditorButton extends EditorUiElement {
     }
 
     protected buildDOM(): HTMLButtonElement {
-
         const label = this.getLabel();
-        let child: string|HTMLElement = label;
-        if (this.definition.icon) {
-            child = el('div', {class: 'editor-button-icon'});
-            child.innerHTML = this.definition.icon;
+        const format = this.definition.format || 'small';
+        const children: (string|HTMLElement)[] = [];
+
+        if (this.definition.icon || format === 'long') {
+            const icon = el('div', {class: 'editor-button-icon'});
+            icon.innerHTML = this.definition.icon || '';
+            children.push(icon);
+        }
+
+        if (!this.definition.icon ||format === 'long') {
+            const text = el('div', {class: 'editor-button-text'}, [label]);
+            children.push(text);
         }
 
         const button = el('button', {
             type: 'button',
-            class: 'editor-button',
+            class: `editor-button editor-button-${format}`,
             title: this.definition.icon ? label : null,
             disabled: this.disabled ? 'true' : null,
-        }, [child]) as HTMLButtonElement;
+        }, children) as HTMLButtonElement;
 
         button.addEventListener('click', this.onClick.bind(this));
 
@@ -71,9 +80,16 @@ export class EditorButton extends EditorUiElement {
         this.definition.action(this.getContext(), this);
     }
 
-    updateActiveState(selection: BaseSelection|null) {
+    protected updateActiveState(selection: BaseSelection|null) {
         const isActive = this.definition.isActive(selection, this.getContext());
         this.setActiveState(isActive);
+    }
+
+    protected updateDisabledState(selection: BaseSelection|null) {
+        if (this.definition.isDisabled) {
+            const isDisabled = this.definition.isDisabled(selection, this.getContext());
+            this.toggleDisabled(isDisabled);
+        }
     }
 
     setActiveState(active: boolean) {
@@ -83,6 +99,7 @@ export class EditorButton extends EditorUiElement {
 
     updateState(state: EditorUiStateUpdate): void {
         this.updateActiveState(state.selection);
+        this.updateDisabledState(state.selection);
     }
 
     isActive(): boolean {

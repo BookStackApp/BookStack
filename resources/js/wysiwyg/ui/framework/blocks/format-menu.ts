@@ -7,7 +7,7 @@ export class EditorFormatMenu extends EditorContainerUiElement {
     buildDOM(): HTMLElement {
         const childElements: HTMLElement[] = this.getChildren().map(child => child.getDOMElement());
         const menu = el('div', {
-            class: 'editor-format-menu-dropdown editor-dropdown-menu editor-menu-list',
+            class: 'editor-format-menu-dropdown editor-dropdown-menu editor-dropdown-menu-vertical',
             hidden: 'true',
         }, childElements);
 

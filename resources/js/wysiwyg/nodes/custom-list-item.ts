@@ -1,4 +1,4 @@
-import {$isListNode, ListItemNode, ListNode, SerializedListItemNode} from "@lexical/list";
+import {$isListNode, ListItemNode, SerializedListItemNode} from "@lexical/list";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {DOMExportOutput, LexicalEditor, LexicalNode} from "lexical";
 import {el} from "../helpers";

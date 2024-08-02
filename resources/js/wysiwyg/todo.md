@@ -2,13 +2,14 @@
 
 ## In progress
 
-//
+- Table features
+  - Continued table dropdown menu 
 
 ## Main Todo
 
 - Alignments: Use existing classes for blocks
 - Alignments: Handle inline block content (image, video)
-- Table features
+
 - Image paste upload
 - Keyboard shortcuts support
 - Add ID support to all block types
