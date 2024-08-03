@@ -1,7 +1,8 @@
 import {$isListNode, ListItemNode, SerializedListItemNode} from "@lexical/list";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {DOMExportOutput, LexicalEditor, LexicalNode} from "lexical";
-import {el} from "../helpers";
+
+import {el} from "../utils/dom";
 
 function updateListItemChecked(
     dom: HTMLElement,

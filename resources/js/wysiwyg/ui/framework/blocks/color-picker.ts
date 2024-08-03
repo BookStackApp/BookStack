@@ -1,7 +1,7 @@
-import {el} from "../../../helpers";
 import {EditorUiElement} from "../core";
 import {$getSelection} from "lexical";
 import {$patchStyleText} from "@lexical/selection";
+import {el} from "../../../utils/dom";
 
 const colorChoices = [
     '#000000',

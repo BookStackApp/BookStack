@@ -1,5 +1,5 @@
-import {el} from "../../../helpers";
 import {EditorButton, EditorButtonDefinition} from "../buttons";
+import {el} from "../../../utils/dom";
 
 export class FormatPreviewButton extends EditorButton {
     protected previewSampleElement: HTMLElement;

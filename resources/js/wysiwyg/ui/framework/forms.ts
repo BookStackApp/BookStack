@@ -5,8 +5,8 @@ import {
     EditorUiBuilderDefinition,
     isUiBuilderDefinition
 } from "./core";
-import {el} from "../../helpers";
 import {uniqueId} from "../../../services/util";
+import {el} from "../../utils/dom";
 
 export interface EditorFormFieldDefinition {
     label: string;

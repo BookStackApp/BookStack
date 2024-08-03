@@ -1,7 +1,6 @@
 import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "../../../nodes/callout";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
-import {$selectionContainsNodeType, $toggleSelectionBlockNodeType} from "../../../helpers";
 import {$createParagraphNode, $isParagraphNode, BaseSelection, LexicalNode} from "lexical";
 import {
     $createHeadingNode,
@@ -11,6 +10,7 @@ import {
     HeadingNode,
     HeadingTagType
 } from "@lexical/rich-text";
+import {$selectionContainsNodeType, $toggleSelectionBlockNodeType} from "../../../utils/selection";
 
 function buildCalloutButton(category: CalloutCategory, name: string): EditorButtonDefinition {
     return {

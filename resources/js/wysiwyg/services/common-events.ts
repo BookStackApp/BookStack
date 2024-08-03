@@ -5,7 +5,7 @@ import {
     insertHtmlIntoEditor,
     prependHtmlToEditor,
     setEditorContentFromHtml
-} from "./actions";
+} from "../utils/actions";
 
 type EditorEventContent = {
     html: string;

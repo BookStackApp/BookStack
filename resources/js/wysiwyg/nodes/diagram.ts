@@ -8,11 +8,11 @@ import {
     Spread
 } from "lexical";
 import type {EditorConfig} from "lexical/LexicalEditor";
-import {el} from "../helpers";
 import {EditorDecoratorAdapter} from "../ui/framework/decorator";
 import * as DrawIO from '../../services/drawio';
 import {EditorUiContext} from "../ui/framework/core";
 import {HttpError} from "../../services/http";
+import {el} from "../utils/dom";
 
 export type SerializedDiagramNode = Spread<{
     id: string;

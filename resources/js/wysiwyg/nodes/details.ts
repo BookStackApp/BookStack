@@ -7,7 +7,8 @@ import {
     SerializedElementNode,
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
-import {el} from "../helpers";
+
+import {el} from "../utils/dom";
 
 export class DetailsNode extends ElementNode {
 

@@ -7,7 +7,8 @@ import {
     SerializedElementNode, Spread
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
-import {el} from "../helpers";
+
+import {el} from "../utils/dom";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {

@@ -1,9 +1,10 @@
 import {EditorDecorator} from "../framework/decorator";
-import {el, $selectSingleNode} from "../../helpers";
 import {$createNodeSelection, $setSelection} from "lexical";
 import {EditorUiContext} from "../framework/core";
 import {ImageNode} from "../../nodes/image";
 import {MouseDragTracker, MouseDragTrackerDistance} from "../framework/helpers/mouse-drag-tracker";
+import {$selectSingleNode} from "../../utils/selection";
+import {el} from "../../utils/dom";
 
 
 export class ImageDecorator extends EditorDecorator {

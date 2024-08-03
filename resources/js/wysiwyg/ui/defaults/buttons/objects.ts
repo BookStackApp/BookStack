@@ -10,7 +10,6 @@ import {
     BaseSelection,
     ElementNode
 } from "lexical";
-import {$getNodeFromSelection, $insertNewBlockNodeAtSelection, $selectionContainsNodeType} from "../../../helpers";
 import {$isLinkNode, LinkNode} from "@lexical/link";
 import unlinkIcon from "@icons/editor/unlink.svg";
 import imageIcon from "@icons/editor/image.svg";
@@ -26,6 +25,11 @@ import detailsIcon from "@icons/editor/details.svg";
 import mediaIcon from "@icons/editor/media.svg";
 import {$createDetailsNode, $isDetailsNode} from "../../../nodes/details";
 import {$isMediaNode, MediaNode} from "../../../nodes/media";
+import {
+    $getNodeFromSelection,
+    $insertNewBlockNodeAtSelection,
+    $selectionContainsNodeType
+} from "../../../utils/selection";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',

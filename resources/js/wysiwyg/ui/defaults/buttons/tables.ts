@@ -8,10 +8,6 @@ import insertColumnBeforeIcon from "@icons/editor/table-insert-column-before.svg
 import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
-import {
-    $getNodeFromSelection, $getParentOfType,
-    $selectionContainsNodeType
-} from "../../../helpers";
 import {$getSelection, BaseSelection} from "lexical";
 import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
@@ -22,6 +18,8 @@ import {
     $insertTableRow__EXPERIMENTAL, $isTableCellNode,
     $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode, TableNode,
 } from "@lexical/table";
+import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
+import {$getParentOfType} from "../../../utils/nodes";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isTableCellNode);

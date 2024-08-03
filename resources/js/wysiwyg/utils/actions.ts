@@ -1,8 +1,6 @@
 import {$getRoot, $getSelection, LexicalEditor} from "lexical";
 import {$generateHtmlFromNodes} from "@lexical/html";
-import {$htmlToBlockNodes} from "./helpers";
-
-
+import {$htmlToBlockNodes} from "./nodes";
 
 export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
     editor.update(() => {

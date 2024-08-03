@@ -1,7 +1,7 @@
 import {EditorContainerUiElement, EditorUiElement} from "../core";
-import {el} from "../../../helpers";
 import {EditorDropdownButton} from "./dropdown-button";
 import moreHorizontal from "@icons/editor/more-horizontal.svg"
+import {el} from "../../../utils/dom";
 
 
 export class EditorOverflowContainer extends EditorContainerUiElement {

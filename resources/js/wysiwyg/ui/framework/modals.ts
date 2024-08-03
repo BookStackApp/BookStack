@@ -1,7 +1,7 @@
 import {EditorForm, EditorFormDefinition} from "./forms";
-import {el} from "../../helpers";
 import {EditorContainerUiElement} from "./core";
 import closeIcon from "@icons/close.svg";
+import {el} from "../../utils/dom";
 
 export interface EditorModalDefinition {
     title: string;

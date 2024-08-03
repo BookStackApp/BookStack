@@ -1,6 +1,5 @@
 import {EditorButton} from "./framework/buttons";
 import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiElement} from "./framework/core";
-import {$selectionContainsNodeType, el} from "../helpers";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
 import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
@@ -65,6 +64,8 @@ import {
     unlink
 } from "./defaults/buttons/objects";
 import {$isTableNode} from "@lexical/table";
+import {$selectionContainsNodeType} from "../utils/selection";
+import {el} from "../utils/dom";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [

@@ -1,7 +1,7 @@
-import {el} from "../../../helpers";
 import {handleDropdown} from "../helpers/dropdowns";
 import {EditorContainerUiElement, EditorUiElement} from "../core";
 import {EditorBasicButtonDefinition, EditorButton} from "../buttons";
+import {el} from "../../../utils/dom";
 
 export type EditorDropdownButtonOptions = {
     showOnHover?: boolean;

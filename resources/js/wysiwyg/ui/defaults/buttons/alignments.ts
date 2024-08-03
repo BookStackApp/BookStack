@@ -1,11 +1,11 @@
 import {$getSelection, BaseSelection, ElementFormatType} from "lexical";
-import {$getBlockElementNodesInSelection, $selectionContainsElementFormat} from "../../../helpers";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import alignLeftIcon from "@icons/editor/align-left.svg";
 import {EditorUiContext} from "../../framework/core";
 import alignCenterIcon from "@icons/editor/align-center.svg";
 import alignRightIcon from "@icons/editor/align-right.svg";
 import alignJustifyIcon from "@icons/editor/align-justify.svg";
+import {$getBlockElementNodesInSelection, $selectionContainsElementFormat} from "../../../utils/selection";
 
 
 function setAlignmentForSection(alignment: ElementFormatType): void {
