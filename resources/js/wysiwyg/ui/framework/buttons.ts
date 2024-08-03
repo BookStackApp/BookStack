@@ -1,6 +1,7 @@
 import {BaseSelection} from "lexical";
 import {EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
-import {el} from "../../helpers";
+
+import {el} from "../../utils/dom";
 
 export interface EditorBasicButtonDefinition {
     label: string;

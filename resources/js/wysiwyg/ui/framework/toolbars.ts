@@ -1,5 +1,6 @@
 import {EditorContainerUiElement, EditorUiElement} from "./core";
-import {el} from "../../helpers";
+
+import {el} from "../../utils/dom";
 
 export type EditorContextToolbarDefinition = {
     selector: string;

@@ -1,8 +1,8 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
-import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
 import {BaseSelection} from "lexical";
 import {$openDrawingEditorForNode, DiagramNode} from "../../nodes/diagram";
+import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";
 
 
 export class DiagramDecorator extends EditorDecorator {

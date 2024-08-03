@@ -1,6 +1,6 @@
 import {EditorFormDefinition} from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {setEditorContentFromHtml} from "../../../actions";
+import {setEditorContentFromHtml} from "../../../utils/actions";
 
 export const source: EditorFormDefinition = {
     submitText: 'Save',

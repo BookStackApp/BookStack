@@ -4,8 +4,8 @@ import {$createTextNode, $getSelection} from "lexical";
 import {$createImageNode} from "../../../nodes/image";
 import {$createLinkNode} from "@lexical/link";
 import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
-import {$getNodeFromSelection} from "../../../helpers";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
+import {$getNodeFromSelection} from "../../../utils/selection";
 
 export const image: EditorFormDefinition = {
     submitText: 'Apply',

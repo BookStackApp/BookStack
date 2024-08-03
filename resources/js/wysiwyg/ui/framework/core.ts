@@ -1,6 +1,7 @@
 import {BaseSelection, LexicalEditor} from "lexical";
 import {EditorUIManager} from "./manager";
-import {el} from "../../helpers";
+
+import {el} from "../../utils/dom";
 
 export type EditorUiStateUpdate = {
     editor: LexicalEditor;

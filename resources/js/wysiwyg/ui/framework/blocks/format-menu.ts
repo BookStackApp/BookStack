@@ -1,7 +1,7 @@
-import {el} from "../../../helpers";
 import {EditorUiStateUpdate, EditorContainerUiElement} from "../core";
 import {EditorButton} from "../buttons";
 import {handleDropdown} from "../helpers/dropdowns";
+import {el} from "../../../utils/dom";
 
 export class EditorFormatMenu extends EditorContainerUiElement {
     buildDOM(): HTMLElement {

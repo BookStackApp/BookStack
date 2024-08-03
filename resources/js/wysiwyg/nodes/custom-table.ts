@@ -1,7 +1,8 @@
 import {SerializedTableNode, TableNode, TableRowNode} from "@lexical/table";
 import {DOMConversion, DOMConversionMap, DOMConversionOutput, LexicalEditor, LexicalNode, Spread} from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
-import {el} from "../helpers";
+
+import {el} from "../utils/dom";
 
 export type SerializedCustomTableNode = Spread<{
     id: string;

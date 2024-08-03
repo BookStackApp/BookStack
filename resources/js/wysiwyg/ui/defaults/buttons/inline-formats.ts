@@ -1,7 +1,6 @@
 import {$getSelection, $isTextNode, BaseSelection, FORMAT_TEXT_COMMAND, TextFormatType} from "lexical";
 import {EditorBasicButtonDefinition, EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
-import {$selectionContainsTextFormat} from "../../../helpers";
 import boldIcon from "@icons/editor/bold.svg";
 import italicIcon from "@icons/editor/italic.svg";
 import underlinedIcon from "@icons/editor/underlined.svg";
@@ -12,6 +11,7 @@ import superscriptIcon from "@icons/editor/superscript.svg";
 import subscriptIcon from "@icons/editor/subscript.svg";
 import codeIcon from "@icons/editor/code.svg";
 import formatClearIcon from "@icons/editor/format-clear.svg";
+import {$selectionContainsTextFormat} from "../../../utils/selection";
 
 function buildFormatButton(label: string, format: TextFormatType, icon: string): EditorButtonDefinition {
     return {

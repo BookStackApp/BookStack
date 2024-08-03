@@ -1,8 +1,8 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
-import {$selectionContainsNode, $selectSingleNode} from "../../helpers";
 import {BaseSelection} from "lexical";
+import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";
 
 
 export class CodeBlockDecorator extends EditorDecorator {

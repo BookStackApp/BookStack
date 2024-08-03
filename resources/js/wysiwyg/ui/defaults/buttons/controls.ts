@@ -11,7 +11,7 @@ import {
 } from "lexical";
 import redoIcon from "@icons/editor/redo.svg";
 import sourceIcon from "@icons/editor/source-view.svg";
-import {getEditorContentAsHtml} from "../../../actions";
+import {getEditorContentAsHtml} from "../../../utils/actions";
 import fullscreenIcon from "@icons/editor/fullscreen.svg";
 
 export const undo: EditorButtonDefinition = {

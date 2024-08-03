@@ -1,7 +1,8 @@
-import {el, $insertNewBlockNodeAtSelection} from "../../../helpers";
 import {EditorUiElement} from "../core";
 import {$createTableNodeWithDimensions} from "@lexical/table";
 import {CustomTableNode} from "../../../nodes/custom-table";
+import {$insertNewBlockNodeAtSelection} from "../../../utils/selection";
+import {el} from "../../../utils/dom";
 
 
 export class EditorTableCreator extends EditorUiElement {

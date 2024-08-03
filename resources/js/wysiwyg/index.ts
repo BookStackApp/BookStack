@@ -4,14 +4,14 @@ import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
 import {getNodesForPageEditor, registerCommonNodeMutationListeners} from './nodes';
 import {buildEditorUI} from "./ui";
-import {getEditorContentAsHtml, setEditorContentFromHtml} from "./actions";
+import {getEditorContentAsHtml, setEditorContentFromHtml} from "./utils/actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
-import {el} from "./helpers";
 import {EditorUiContext} from "./ui/framework/core";
-import {listen as listenToCommonEvents} from "./common-events";
-import {handleDropEvents} from "./drop-handling";
+import {listen as listenToCommonEvents} from "./services/common-events";
+import {handleDropEvents} from "./services/drop-handling";
 import {registerTaskListHandler} from "./ui/framework/helpers/task-list-handler";
 import {registerTableSelectionHandler} from "./ui/framework/helpers/table-selection-handler";
+import {el} from "./utils/dom";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {

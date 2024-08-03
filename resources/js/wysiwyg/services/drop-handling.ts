@@ -3,12 +3,8 @@ import {
     LexicalEditor,
     LexicalNode
 } from "lexical";
-import {
-    $getNearestBlockNodeForCoords,
-    $htmlToBlockNodes,
-    $insertNewBlockNodesAtSelection,
-    $selectSingleNode
-} from "./helpers";
+import {$insertNewBlockNodesAtSelection, $selectSingleNode} from "../utils/selection";
+import {$getNearestBlockNodeForCoords, $htmlToBlockNodes} from "../utils/nodes";
 
 function $getNodeFromMouseEvent(event: MouseEvent, editor: LexicalEditor): LexicalNode|null {
     const x = event.clientX;

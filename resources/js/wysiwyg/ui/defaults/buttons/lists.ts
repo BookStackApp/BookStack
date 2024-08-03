@@ -2,10 +2,10 @@ import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/
 import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
 import {$getSelection, BaseSelection, LexicalNode} from "lexical";
-import {$selectionContainsNodeType} from "../../../helpers";
 import listBulletIcon from "@icons/editor/list-bullet.svg";
 import listNumberedIcon from "@icons/editor/list-numbered.svg";
 import listCheckIcon from "@icons/editor/list-check.svg";
+import {$selectionContainsNodeType} from "../../../utils/selection";
 
 
 function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
