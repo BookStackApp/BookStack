@@ -9,14 +9,27 @@ import {EditorTableCreator} from "./framework/blocks/table-creator";
 import {EditorColorButton} from "./framework/blocks/color-button";
 import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
 import {
-    cellProperties,
+    cellProperties, clearTableFormatting,
+    copyColumn,
+    copyRow,
+    cutColumn,
+    cutRow,
     deleteColumn,
     deleteRow,
-    deleteTable, deleteTableMenuAction, insertColumnAfter,
+    deleteTable,
+    deleteTableMenuAction,
+    insertColumnAfter,
     insertColumnBefore,
     insertRowAbove,
-    insertRowBelow, mergeCells, splitCell,
-    table
+    insertRowBelow,
+    mergeCells,
+    pasteColumnAfter,
+    pasteColumnBefore,
+    pasteRowAfter,
+    pasteRowBefore, resizeTableToContents,
+    rowProperties,
+    splitCell,
+    table, tableProperties
 } from "./defaults/buttons/tables";
 import {fullscreen, redo, source, undo} from "./defaults/buttons/controls";
 import {
@@ -119,11 +132,33 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
                 new EditorDropdownButton({button: {...table, format: 'long'}, showOnHover: true}, [
                     new EditorTableCreator(),
                 ]),
-                new EditorDropdownButton({button: {label: 'Cell'}}, [
+                new EditorDropdownButton({button: {label: 'Cell'}, direction: 'vertical', showOnHover: true}, [
                     new EditorButton(cellProperties),
                     new EditorButton(mergeCells),
                     new EditorButton(splitCell),
                 ]),
+                new EditorDropdownButton({button: {label: 'Row'}, direction: 'vertical', showOnHover: true}, [
+                    new EditorButton({...insertRowAbove, format: 'long'}),
+                    new EditorButton({...insertRowBelow, format: 'long'}),
+                    new EditorButton({...deleteRow, format: 'long'}),
+                    new EditorButton(rowProperties),
+                    new EditorButton(cutRow),
+                    new EditorButton(copyRow),
+                    new EditorButton(pasteRowBefore),
+                    new EditorButton(pasteRowAfter),
+                ]),
+                new EditorDropdownButton({button: {label: 'Column'}, direction: 'vertical', showOnHover: true}, [
+                    new EditorButton({...insertColumnBefore, format: 'long'}),
+                    new EditorButton({...insertColumnAfter, format: 'long'}),
+                    new EditorButton({...deleteColumn, format: 'long'}),
+                    new EditorButton(cutColumn),
+                    new EditorButton(copyColumn),
+                    new EditorButton(pasteColumnBefore),
+                    new EditorButton(pasteColumnAfter),
+                ]),
+                new EditorButton({...tableProperties, format: 'long'}),
+                new EditorButton(clearTableFormatting),
+                new EditorButton(resizeTableToContents),
                 new EditorButton(deleteTableMenuAction),
             ]),
 
@@ -176,7 +211,7 @@ export function getCodeToolbarContent(): EditorUiElement[] {
 export function getTableToolbarContent(): EditorUiElement[] {
     return [
         new EditorOverflowContainer(2, [
-            // Todo - Table properties
+            new EditorButton(tableProperties),
             new EditorButton(deleteTable),
         ]),
         new EditorOverflowContainer(3, [

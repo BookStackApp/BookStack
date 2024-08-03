@@ -44,5 +44,5 @@ export function handleDropdown(options: HandleDropdownParams) {
         toggle.addEventListener('mouseenter', toggleShowing);
     }
 
-    menu.addEventListener('mouseleave', hide);
+    menu.parentElement?.addEventListener('mouseleave', hide);
 }

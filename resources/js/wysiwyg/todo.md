@@ -3,15 +3,18 @@
 ## In progress
 
 - Table features
-  - Continued table dropdown menu
-  - Connect up cell properties form
+  - Cell properties form logic
   - Merge cell action
+  - Row properties form logic
+  - Table properties form logic
+    - Caption text support 
+  - Resize to contents button
+  - Remove formatting button
 
 ## Main Todo
 
 - Alignments: Use existing classes for blocks
 - Alignments: Handle inline block content (image, video)
-
 - Image paste upload
 - Keyboard shortcuts support
 - Add ID support to all block types

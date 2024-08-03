@@ -9,23 +9,91 @@ import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
 import {
-    $getNodeFromSelection,
+    $getNodeFromSelection, $getParentOfType,
     $selectionContainsNodeType
 } from "../../../helpers";
-import {$getSelection} from "lexical";
+import {$getSelection, BaseSelection} from "lexical";
 import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
+    $createTableRowNode,
     $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
     $insertTableRow__EXPERIMENTAL, $isTableCellNode,
-    $isTableNode, $isTableSelection, $unmergeCell, TableCellNode,
+    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode, TableNode,
 } from "@lexical/table";
 
+const neverActive = (): boolean => false;
+const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isTableCellNode);
 
 export const table: EditorBasicButtonDefinition = {
     label: 'Table',
     icon: tableIcon,
+};
+
+export const tableProperties: EditorButtonDefinition = {
+    label: 'Table properties',
+    icon: tableIcon,
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
+                return;
+            }
+
+            const table = $getParentOfType(cell, $isTableNode);
+            const modalForm = context.manager.createModal('table_properties');
+            modalForm.show({});
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const clearTableFormatting: EditorButtonDefinition = {
+    label: 'Clear table formatting',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
+                return;
+            }
+
+            const table = $getParentOfType(cell, $isTableNode);
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const resizeTableToContents: EditorButtonDefinition = {
+    label: 'Resize to contents',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
+                return;
+            }
+
+            const table = $getParentOfType(cell, $isCustomTableNode);
+            if (!$isCustomTableNode(table)) {
+                return;
+            }
+
+            for (const row of table.getChildren()) {
+                if ($isTableRowNode(row)) {
+                    // TODO - Come back later as this may depend on if we
+                    //   are using a custom table row
+                }
+            }
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
 };
 
 export const deleteTable: EditorButtonDefinition = {
@@ -53,29 +121,27 @@ export const deleteTableMenuAction: EditorButtonDefinition = {
 };
 
 export const insertRowAbove: EditorButtonDefinition = {
-    label: 'Insert row above',
+    label: 'Insert row before',
     icon: insertRowAboveIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
             $insertTableRow__EXPERIMENTAL(false);
         });
     },
-    isActive() {
-        return false;
-    }
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
 };
 
 export const insertRowBelow: EditorButtonDefinition = {
-    label: 'Insert row below',
+    label: 'Insert row after',
     icon: insertRowBelowIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
             $insertTableRow__EXPERIMENTAL(true);
         });
     },
-    isActive() {
-        return false;
-    }
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
 };
 
 export const deleteRow: EditorButtonDefinition = {
@@ -86,9 +152,124 @@ export const deleteRow: EditorButtonDefinition = {
             $deleteTableRow__EXPERIMENTAL();
         });
     },
-    isActive() {
-        return false;
-    }
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const rowProperties: EditorButtonDefinition = {
+    label: 'Row properties',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
+                return;
+            }
+
+            const row = $getParentOfType(cell, $isTableRowNode);
+            const modalForm = context.manager.createModal('row_properties');
+            modalForm.show({});
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const cutRow: EditorButtonDefinition = {
+    label: 'Cut row',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const copyRow: EditorButtonDefinition = {
+    label: 'Copy row',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const pasteRowBefore: EditorButtonDefinition = {
+    label: 'Paste row before',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const pasteRowAfter: EditorButtonDefinition = {
+    label: 'Paste row after',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const cutColumn: EditorButtonDefinition = {
+    label: 'Cut column',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const copyColumn: EditorButtonDefinition = {
+    label: 'Copy column',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const pasteColumnBefore: EditorButtonDefinition = {
+    label: 'Paste column before',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
+};
+
+export const pasteColumnAfter: EditorButtonDefinition = {
+    label: 'Paste column after',
+    format: 'long',
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            // TODO
+        });
+    },
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
 };
 
 export const insertColumnBefore: EditorButtonDefinition = {
@@ -142,12 +323,8 @@ export const cellProperties: EditorButtonDefinition = {
             }
         });
     },
-    isActive() {
-        return false;
-    },
-    isDisabled(selection) {
-        return !$selectionContainsNodeType(selection, $isTableCellNode);
-    }
+    isActive: neverActive,
+    isDisabled: cellNotSelected,
 };
 
 export const mergeCells: EditorButtonDefinition = {
@@ -159,9 +336,7 @@ export const mergeCells: EditorButtonDefinition = {
             // https://github.com/facebook/lexical/blob/f373759a7849f473d34960a6bf4e34b2a011e762/packages/lexical-playground/src/plugins/TableActionMenuPlugin/index.tsx#L299
         });
     },
-    isActive() {
-        return false;
-    },
+    isActive: neverActive,
     isDisabled(selection) {
         return !$isTableSelection(selection);
     }
@@ -174,9 +349,7 @@ export const splitCell: EditorButtonDefinition = {
             $unmergeCell();
         });
     },
-    isActive() {
-        return false;
-    },
+    isActive: neverActive,
     isDisabled(selection) {
         const cell = $getNodeFromSelection(selection, $isTableCellNode) as TableCellNode|null;
         if (cell) {

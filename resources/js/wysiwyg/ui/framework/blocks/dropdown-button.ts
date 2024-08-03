@@ -24,7 +24,7 @@ export class EditorDropdownButton extends EditorContainerUiElement {
     constructor(options: EditorDropdownButtonOptions, children: EditorUiElement[]) {
         super(children);
         this.childItems = children;
-        this.options = Object.assign(defaultOptions, options);
+        this.options = Object.assign({}, defaultOptions, options);
 
         if (options.button instanceof EditorButton) {
             this.button = options.button;
@@ -61,7 +61,7 @@ export class EditorDropdownButton extends EditorContainerUiElement {
             class: 'editor-dropdown-menu-container',
         }, [button, menu]);
 
-        handleDropdown({toggle : button, menu : menu,
+        handleDropdown({toggle: button, menu : menu,
             showOnHover: this.options.showOnHover,
             onOpen : () => {
             this.open = true;
