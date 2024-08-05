@@ -22,3 +22,11 @@ export function htmlToDom(html: string): Document {
     const parser = new DOMParser();
     return parser.parseFromString(html, 'text/html');
 }
+
+export function formatSizeValue(size: number | string, defaultSuffix: string = 'px'): string {
+    if (typeof size === 'number' || /^-?\d+$/.test(size)) {
+        return `${size}${defaultSuffix}`;
+    }
+
+    return size;
+}

@@ -1,8 +1,9 @@
 import {$getNearestNodeFromDOMNode, LexicalEditor} from "lexical";
 import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
-import {$getTableColumnWidth, $setTableColumnWidth, CustomTableNode} from "../../../nodes/custom-table";
+import {CustomTableNode} from "../../../nodes/custom-table";
 import {TableRowNode} from "@lexical/table";
 import {el} from "../../../utils/dom";
+import {$getTableColumnWidth, $setTableColumnWidth} from "../../../utils/tables";
 
 type MarkerDomRecord = {x: HTMLElement, y: HTMLElement};
 

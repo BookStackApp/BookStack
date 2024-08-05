@@ -3,7 +3,7 @@
 ## In progress
 
 - Table features
-  - Cell properties form logic
+  - CustomTableCellNode importDOM logic
   - Merge cell action
   - Row properties form logic
   - Table properties form logic

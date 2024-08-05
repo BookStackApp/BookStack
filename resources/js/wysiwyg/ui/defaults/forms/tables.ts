@@ -5,11 +5,11 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {$isCustomTableCellNode, CustomTableCellNode} from "../../../nodes/custom-table-cell-node";
+import {CustomTableCellNode} from "../../../nodes/custom-table-cell-node";
 import {EditorFormModal} from "../../framework/modals";
-import {$getNodeFromSelection} from "../../../utils/selection";
 import {$getSelection, ElementFormatType} from "lexical";
-import {TableCellHeaderStates} from "@lexical/table";
+import {$getTableCellsFromSelection, $setTableCellColumnWidth} from "../../../utils/tables";
+import {formatSizeValue} from "../../../utils/dom";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -61,7 +61,7 @@ export function showCellPropertiesForm(cell: CustomTableCellNode, context: Edito
         width: '', // TODO
         height: styles.get('height') || '',
         type: cell.getTag(),
-        h_align: '', // TODO
+        h_align: cell.getFormatType(),
         v_align: styles.get('vertical-align') || '',
         border_width: styles.get('border-width') || '',
         border_style: styles.get('border-style') || '',
@@ -74,18 +74,19 @@ export function showCellPropertiesForm(cell: CustomTableCellNode, context: Edito
 export const cellProperties: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
-        // TODO - Set for cell selection range
         context.editor.update(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if ($isCustomTableCellNode(cell)) {
-                // TODO - Set width
-                cell.setFormat((formData.get('h_align')?.toString() || '') as ElementFormatType);
+            const cells = $getTableCellsFromSelection($getSelection());
+            for (const cell of cells) {
+                const width = formData.get('width')?.toString() || '';
+
+                $setTableCellColumnWidth(cell, width);
                 cell.updateTag(formData.get('type')?.toString() || '');
+                cell.setFormat((formData.get('h_align')?.toString() || '') as ElementFormatType);
 
                 const styles = cell.getStyles();
-                styles.set('height', formData.get('height')?.toString() || '');
+                styles.set('height', formatSizeValue(formData.get('height')?.toString() || ''));
                 styles.set('vertical-align', formData.get('v_align')?.toString() || '');
-                styles.set('border-width', formData.get('border_width')?.toString() || '');
+                styles.set('border-width', formatSizeValue(formData.get('border_width')?.toString() || ''));
                 styles.set('border-style', formData.get('border_style')?.toString() || '');
                 styles.set('border-color', formData.get('border_color')?.toString() || '');
                 styles.set('background-color', formData.get('background_color')?.toString() || '');

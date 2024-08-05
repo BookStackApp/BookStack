@@ -1,8 +1,9 @@
-import {SerializedTableNode, TableNode, TableRowNode} from "@lexical/table";
-import {DOMConversion, DOMConversionMap, DOMConversionOutput, LexicalEditor, LexicalNode, Spread} from "lexical";
+import {SerializedTableNode, TableNode} from "@lexical/table";
+import {DOMConversion, DOMConversionMap, DOMConversionOutput, LexicalNode, Spread} from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
 
 import {el} from "../utils/dom";
+import {getTableColumnWidths} from "../utils/tables";
 
 export type SerializedCustomTableNode = Spread<{
     id: string;
@@ -111,95 +112,10 @@ export class CustomTableNode extends TableNode {
     }
 }
 
-function getTableColumnWidths(table: HTMLTableElement): string[] {
-    const maxColRow = getMaxColRowFromTable(table);
-
-    const colGroup = table.querySelector('colgroup');
-    let widths: string[] = [];
-    if (colGroup && (colGroup.childElementCount === maxColRow?.childElementCount || !maxColRow)) {
-        widths = extractWidthsFromRow(colGroup);
-    }
-    if (widths.filter(Boolean).length === 0 && maxColRow) {
-        widths = extractWidthsFromRow(maxColRow);
-    }
-
-    return widths;
-}
-
-function getMaxColRowFromTable(table: HTMLTableElement): HTMLTableRowElement|null {
-    const rows = table.querySelectorAll('tr');
-    let maxColCount: number = 0;
-    let maxColRow: HTMLTableRowElement|null = null;
-
-    for (const row of rows) {
-        if (row.childElementCount > maxColCount) {
-            maxColRow = row;
-            maxColCount = row.childElementCount;
-        }
-    }
-
-    return maxColRow;
-}
-
-function extractWidthsFromRow(row: HTMLTableRowElement|HTMLTableColElement) {
-    return [...row.children].map(child => extractWidthFromElement(child as HTMLElement))
-}
-
-function extractWidthFromElement(element: HTMLElement): string {
-    let width = element.style.width || element.getAttribute('width');
-    if (width && !Number.isNaN(Number(width))) {
-        width = width + 'px';
-    }
-
-    return width || '';
-}
-
 export function $createCustomTableNode(): CustomTableNode {
     return new CustomTableNode();
 }
 
 export function $isCustomTableNode(node: LexicalNode | null | undefined): node is CustomTableNode {
     return node instanceof CustomTableNode;
-}
-
-export function $setTableColumnWidth(node: CustomTableNode, columnIndex: number, width: number): void {
-    const rows = node.getChildren() as TableRowNode[];
-    let maxCols = 0;
-    for (const row of rows) {
-        const cellCount = row.getChildren().length;
-        if (cellCount > maxCols) {
-            maxCols = cellCount;
-        }
-    }
-
-    let colWidths = node.getColWidths();
-    if (colWidths.length === 0 || colWidths.length < maxCols) {
-        colWidths = Array(maxCols).fill('');
-    }
-
-    if (columnIndex + 1 > colWidths.length) {
-        console.error(`Attempted to set table column width for column [${columnIndex}] but only ${colWidths.length} columns found`);
-    }
-
-    colWidths[columnIndex] = width + 'px';
-    node.setColWidths(colWidths);
-}
-
-export function $getTableColumnWidth(editor: LexicalEditor, node: CustomTableNode, columnIndex: number): number {
-    const colWidths = node.getColWidths();
-    if (colWidths.length > columnIndex && colWidths[columnIndex].endsWith('px')) {
-        return Number(colWidths[columnIndex].replace('px', ''));
-    }
-
-    // Otherwise, get from table element
-    const table = editor.getElementByKey(node.__key) as HTMLTableElement|null;
-    if (table) {
-        const maxColRow = getMaxColRowFromTable(table);
-        if (maxColRow && maxColRow.children.length > columnIndex) {
-            const cell = maxColRow.children[columnIndex];
-            return cell.clientWidth;
-        }
-    }
-
-    return 0;
 }
