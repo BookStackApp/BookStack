@@ -20,6 +20,7 @@ import {DiagramNode} from "./diagram";
 import {EditorUiContext} from "../ui/framework/core";
 import {MediaNode} from "./media";
 import {CustomListItemNode} from "./custom-list-item";
+import {CustomTableCellNode} from "./custom-table-cell-node";
 
 /**
  * Load the nodes for lexical.
@@ -33,7 +34,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         CustomListItemNode,
         CustomTableNode,
         TableRowNode,
-        TableCellNode,
+        CustomTableCellNode,
         ImageNode,
         HorizontalRuleNode,
         DetailsNode, SummaryNode,
@@ -59,7 +60,19 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
             with: (node: ListItemNode) => {
                 return new CustomListItemNode(node.__value, node.__checked);
             }
-        }
+        },
+        {
+            replace: TableCellNode,
+            with: (node: TableCellNode) => {
+                const cell = new CustomTableCellNode(
+                    node.__headerState,
+                    node.__colSpan,
+                    node.__width,
+                );
+                cell.__rowSpan = node.__rowSpan;
+                return cell;
+            }
+        },
     ];
 }
 

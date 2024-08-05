@@ -11,18 +11,19 @@ import {EditorUiContext} from "../../framework/core";
 import {$getSelection, BaseSelection} from "lexical";
 import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
-    $createTableRowNode,
     $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
-    $insertTableRow__EXPERIMENTAL, $isTableCellNode,
-    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode, TableNode,
+    $insertTableRow__EXPERIMENTAL,
+    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode,
 } from "@lexical/table";
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
+import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell-node";
+import {showCellPropertiesForm} from "../forms/tables";
 
 const neverActive = (): boolean => false;
-const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isTableCellNode);
+const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
 
 export const table: EditorBasicButtonDefinition = {
     label: 'Table',
@@ -34,8 +35,8 @@ export const tableProperties: EditorButtonDefinition = {
     icon: tableIcon,
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
-            if (!$isTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
@@ -54,8 +55,8 @@ export const clearTableFormatting: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
-            if (!$isTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
@@ -72,8 +73,8 @@ export const resizeTableToContents: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
-            if (!$isTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
@@ -159,8 +160,8 @@ export const rowProperties: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
-            if (!$isTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
@@ -313,11 +314,9 @@ export const cellProperties: EditorButtonDefinition = {
     label: 'Cell properties',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
-            if ($isTableCellNode(cell)) {
-
-                const modalForm = context.manager.createModal('cell_properties');
-                modalForm.show({});
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if ($isCustomTableCellNode(cell)) {
+                showCellPropertiesForm(cell, context);
             }
         });
     },
@@ -349,7 +348,7 @@ export const splitCell: EditorButtonDefinition = {
     },
     isActive: neverActive,
     isDisabled(selection) {
-        const cell = $getNodeFromSelection(selection, $isTableCellNode) as TableCellNode|null;
+        const cell = $getNodeFromSelection(selection, $isCustomTableCellNode) as TableCellNode|null;
         if (cell) {
             const merged = cell.getRowSpan() > 1 || cell.getColSpan() > 1;
             return !merged;
