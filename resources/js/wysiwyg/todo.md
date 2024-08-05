@@ -13,7 +13,7 @@
 
 ## Main Todo
 
-- Alignments: Use existing classes for blocks
+- Alignments: Use existing classes for blocks (including table cells)
 - Alignments: Handle inline block content (image, video)
 - Image paste upload
 - Keyboard shortcuts support

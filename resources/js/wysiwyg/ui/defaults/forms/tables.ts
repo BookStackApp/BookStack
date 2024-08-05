@@ -5,6 +5,11 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
+import {$isCustomTableCellNode, CustomTableCellNode} from "../../../nodes/custom-table-cell-node";
+import {EditorFormModal} from "../../framework/modals";
+import {$getNodeFromSelection} from "../../../utils/selection";
+import {$getSelection, ElementFormatType} from "lexical";
+import {TableCellHeaderStates} from "@lexical/table";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -49,10 +54,46 @@ const alignmentInput: EditorSelectFormFieldDefinition = {
     }
 };
 
+export function showCellPropertiesForm(cell: CustomTableCellNode, context: EditorUiContext): EditorFormModal {
+    const styles = cell.getStyles();
+    const modalForm = context.manager.createModal('cell_properties');
+    modalForm.show({
+        width: '', // TODO
+        height: styles.get('height') || '',
+        type: cell.getTag(),
+        h_align: '', // TODO
+        v_align: styles.get('vertical-align') || '',
+        border_width: styles.get('border-width') || '',
+        border_style: styles.get('border-style') || '',
+        border_color: styles.get('border-color') || '',
+        background_color: styles.get('background-color') || '',
+    });
+    return modalForm;
+}
+
 export const cellProperties: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
-        // TODO
+        // TODO - Set for cell selection range
+        context.editor.update(() => {
+            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
+            if ($isCustomTableCellNode(cell)) {
+                // TODO - Set width
+                cell.setFormat((formData.get('h_align')?.toString() || '') as ElementFormatType);
+                cell.updateTag(formData.get('type')?.toString() || '');
+
+                const styles = cell.getStyles();
+                styles.set('height', formData.get('height')?.toString() || '');
+                styles.set('vertical-align', formData.get('v_align')?.toString() || '');
+                styles.set('border-width', formData.get('border_width')?.toString() || '');
+                styles.set('border-style', formData.get('border_style')?.toString() || '');
+                styles.set('border-color', formData.get('border_color')?.toString() || '');
+                styles.set('background-color', formData.get('background_color')?.toString() || '');
+
+                cell.setStyles(styles);
+            }
+        });
+
         return true;
     },
     fields: [
@@ -60,31 +101,31 @@ export const cellProperties: EditorFormDefinition = {
             build() {
                 const generalFields: EditorFormFieldDefinition[] = [
                     {
-                        label: 'Width',
+                        label: 'Width', // Colgroup width
                         name: 'width',
                         type: 'text',
                     },
                     {
-                        label: 'Height',
+                        label: 'Height', // inline-style: height
                         name: 'height',
                         type: 'text',
                     },
                     {
-                        label: 'Cell type',
+                        label: 'Cell type', // element
                         name: 'type',
                         type: 'select',
                         valuesByLabel: {
-                            'Cell': 'cell',
-                            'Header cell': 'header',
+                            'Cell': 'td',
+                            'Header cell': 'th',
                         }
                     } as EditorSelectFormFieldDefinition,
                     {
-                        ...alignmentInput,
+                        ...alignmentInput, // class: 'align-right/left/center'
                         label: 'Horizontal align',
                         name: 'h_align',
                     },
                     {
-                        label: 'Vertical align',
+                        label: 'Vertical align', // inline-style: vertical-align
                         name: 'v_align',
                         type: 'select',
                         valuesByLabel: {
@@ -98,13 +139,13 @@ export const cellProperties: EditorFormDefinition = {
 
                 const advancedFields: EditorFormFieldDefinition[] = [
                     {
-                        label: 'Border width',
+                        label: 'Border width', // inline-style: border-width
                         name: 'border_width',
                         type: 'text',
                     },
-                    borderStyleInput,
-                    borderColorInput,
-                    backgroundColorInput,
+                    borderStyleInput, // inline-style: border-style
+                    borderColorInput, // inline-style: border-color
+                    backgroundColorInput, // inline-style: background-color
                 ];
 
                 return new EditorFormTabs([
@@ -170,7 +211,6 @@ export const rowProperties: EditorFormDefinition = {
         },
     ],
 };
-
 export const tableProperties: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
