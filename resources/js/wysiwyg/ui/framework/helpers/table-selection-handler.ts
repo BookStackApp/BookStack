@@ -1,7 +1,6 @@
 import {$getNodeByKey, LexicalEditor} from "lexical";
 import {NodeKey} from "lexical/LexicalNode";
 import {
-    $isTableNode,
     applyTableHandlers,
     HTMLTableElementWithWithTableSelectionState,
     TableNode,

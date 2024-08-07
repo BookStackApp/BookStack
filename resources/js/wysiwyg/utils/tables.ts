@@ -1,10 +1,11 @@
 import {BaseSelection, LexicalEditor} from "lexical";
-import {$isTableRowNode, $isTableSelection, TableRowNode} from "@lexical/table";
+import {$isTableRowNode, $isTableSelection, TableRowNode, TableSelection, TableSelectionShape} from "@lexical/table";
 import {$isCustomTableNode, CustomTableNode} from "../nodes/custom-table";
 import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell-node";
 import {$getParentOfType} from "./nodes";
 import {$getNodeFromSelection} from "./selection";
 import {formatSizeValue} from "./dom";
+import {TableMap} from "./table-map";
 
 function $getTableFromCell(cell: CustomTableCellNode): CustomTableNode|null {
     return $getParentOfType(cell, $isCustomTableNode) as CustomTableNode|null;
@@ -132,3 +133,61 @@ export function $getTableCellsFromSelection(selection: BaseSelection|null): Cust
     const cell = $getNodeFromSelection(selection, $isCustomTableCellNode) as CustomTableCellNode;
     return cell ? [cell] : [];
 }
+
+export function $mergeTableCellsInSelection(selection: TableSelection): void {
+    const selectionShape = selection.getShape();
+    const cells = $getTableCellsFromSelection(selection);
+    if (cells.length === 0) {
+        return;
+    }
+
+    const table = $getTableFromCell(cells[0]);
+    if (!table) {
+        return;
+    }
+
+    const tableMap = new TableMap(table);
+    const headCell = tableMap.getCellAtPosition(selectionShape.toX, selectionShape.toY);
+    if (!headCell) {
+        return;
+    }
+
+    // We have to adjust the shape since it won't take into account spans for the head corner position.
+    const fixedToX = selectionShape.toX + ((headCell.getColSpan() || 1) - 1);
+    const fixedToY = selectionShape.toY + ((headCell.getRowSpan() || 1) - 1);
+
+    const mergeCells = tableMap.getCellsInRange(
+        selectionShape.fromX,
+        selectionShape.fromY,
+        fixedToX,
+        fixedToY,
+    );
+
+    if (mergeCells.length === 0) {
+        return;
+    }
+
+    const firstCell = mergeCells[0];
+    const newWidth = Math.abs(selectionShape.fromX - fixedToX) + 1;
+    const newHeight = Math.abs(selectionShape.fromY - fixedToY) + 1;
+
+    for (let i = 1; i < mergeCells.length; i++) {
+        const mergeCell = mergeCells[i];
+        firstCell.append(...mergeCell.getChildren());
+        mergeCell.remove();
+    }
+
+    firstCell.setColSpan(newWidth);
+    firstCell.setRowSpan(newHeight);
+}
+
+
+
+
+
+
+
+
+
+
+
