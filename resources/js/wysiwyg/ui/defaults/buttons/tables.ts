@@ -21,6 +21,7 @@ import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/
 import {$getParentOfType} from "../../../utils/nodes";
 import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell-node";
 import {showCellPropertiesForm} from "../forms/tables";
+import {$mergeTableCellsInSelection} from "../../../utils/tables";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
@@ -328,9 +329,10 @@ export const mergeCells: EditorButtonDefinition = {
     label: 'Merge cells',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            // Todo - Needs to be done manually
-            // Playground reference:
-            // https://github.com/facebook/lexical/blob/f373759a7849f473d34960a6bf4e34b2a011e762/packages/lexical-playground/src/plugins/TableActionMenuPlugin/index.tsx#L299
+            const selection = $getSelection();
+            if ($isTableSelection(selection)) {
+                $mergeTableCellsInSelection(selection);
+            }
         });
     },
     isActive: neverActive,
