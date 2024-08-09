@@ -8,7 +8,7 @@ import insertColumnBeforeIcon from "@icons/editor/table-insert-column-before.svg
 import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
-import {$getSelection, BaseSelection} from "lexical";
+import {$createNodeSelection, $createRangeSelection, $getSelection, BaseSelection} from "lexical";
 import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
     $deleteTableColumn__EXPERIMENTAL,
@@ -21,8 +21,11 @@ import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/
 import {$getParentOfType} from "../../../utils/nodes";
 import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {$showCellPropertiesForm, $showRowPropertiesForm} from "../forms/tables";
-import {$mergeTableCellsInSelection} from "../../../utils/tables";
-import {$isCustomTableRowNode} from "../../../nodes/custom-table-row";
+import {$getTableRowsFromSelection, $mergeTableCellsInSelection} from "../../../utils/tables";
+import {$isCustomTableRowNode, CustomTableRowNode} from "../../../nodes/custom-table-row";
+import {NodeClipboard} from "../../../services/node-clipboard";
+import {r} from "@codemirror/legacy-modes/mode/r";
+import {$generateHtmlFromNodes} from "@lexical/html";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
@@ -177,12 +180,18 @@ export const rowProperties: EditorButtonDefinition = {
     isDisabled: cellNotSelected,
 };
 
+const rowClipboard: NodeClipboard<CustomTableRowNode> = new NodeClipboard<CustomTableRowNode>(CustomTableRowNode);
+
 export const cutRow: EditorButtonDefinition = {
     label: 'Cut row',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            const rows = $getTableRowsFromSelection($getSelection());
+            rowClipboard.set(...rows);
+            for (const row of rows) {
+                row.remove();
+            }
         });
     },
     isActive: neverActive,
@@ -194,7 +203,8 @@ export const copyRow: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            // TODO
+            const rows = $getTableRowsFromSelection($getSelection());
+            rowClipboard.set(...rows);
         });
     },
     isActive: neverActive,
@@ -205,24 +215,36 @@ export const pasteRowBefore: EditorButtonDefinition = {
     label: 'Paste row before',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            const rows = $getTableRowsFromSelection($getSelection());
+            const lastRow = rows[rows.length - 1];
+            if (lastRow) {
+                for (const row of rowClipboard.get(context.editor)) {
+                    lastRow.insertBefore(row);
+                }
+            }
         });
     },
     isActive: neverActive,
-    isDisabled: cellNotSelected,
+    isDisabled: (selection) => cellNotSelected(selection) || rowClipboard.size() === 0,
 };
 
 export const pasteRowAfter: EditorButtonDefinition = {
     label: 'Paste row after',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            const rows = $getTableRowsFromSelection($getSelection());
+            const lastRow = rows[rows.length - 1];
+            if (lastRow) {
+                for (const row of rowClipboard.get(context.editor).reverse()) {
+                    lastRow.insertAfter(row);
+                }
+            }
         });
     },
     isActive: neverActive,
-    isDisabled: cellNotSelected,
+    isDisabled: (selection) => cellNotSelected(selection) || rowClipboard.size() === 0,
 };
 
 export const cutColumn: EditorButtonDefinition = {
