@@ -8,8 +8,14 @@ import {EditorUiContext} from "../../framework/core";
 import {CustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {EditorFormModal} from "../../framework/modals";
 import {$getSelection, ElementFormatType} from "lexical";
-import {$getTableCellColumnWidth, $getTableCellsFromSelection, $setTableCellColumnWidth} from "../../../utils/tables";
+import {
+    $getTableCellColumnWidth,
+    $getTableCellsFromSelection,
+    $getTableRowsFromSelection,
+    $setTableCellColumnWidth
+} from "../../../utils/tables";
 import {formatSizeValue} from "../../../utils/dom";
+import {CustomTableRowNode} from "../../../nodes/custom-table-row";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -164,10 +170,32 @@ export const cellProperties: EditorFormDefinition = {
     ],
 };
 
+export function $showRowPropertiesForm(row: CustomTableRowNode, context: EditorUiContext): EditorFormModal {
+    const styles = row.getStyles();
+    const modalForm = context.manager.createModal('row_properties');
+    modalForm.show({
+        height: styles.get('height') || '',
+        border_style: styles.get('border-style') || '',
+        border_color: styles.get('border-color') || '',
+        background_color: styles.get('background-color') || '',
+    });
+    return modalForm;
+}
+
 export const rowProperties: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
-        // TODO
+        context.editor.update(() => {
+            const rows = $getTableRowsFromSelection($getSelection());
+            for (const row of rows) {
+                const styles = row.getStyles();
+                styles.set('height', formatSizeValue(formData.get('height')?.toString() || ''));
+                styles.set('border-style', formData.get('border_style')?.toString() || '');
+                styles.set('border-color', formData.get('border_color')?.toString() || '');
+                styles.set('background-color', formData.get('background_color')?.toString() || '');
+                row.setStyles(styles);
+            }
+        });
         return true;
     },
     fields: [

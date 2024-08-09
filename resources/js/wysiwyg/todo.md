@@ -3,7 +3,6 @@
 ## In progress
 
 - Table features
-  - Row properties form logic
   - Table properties form logic
     - Caption text support 
   - Resize to contents button
