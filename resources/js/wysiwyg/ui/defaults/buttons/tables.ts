@@ -20,8 +20,9 @@ import {
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
 import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell";
-import {$showCellPropertiesForm} from "../forms/tables";
+import {$showCellPropertiesForm, $showRowPropertiesForm} from "../forms/tables";
 import {$mergeTableCellsInSelection} from "../../../utils/tables";
+import {$isCustomTableRowNode} from "../../../nodes/custom-table-row";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
@@ -166,10 +167,10 @@ export const rowProperties: EditorButtonDefinition = {
                 return;
             }
 
-            const row = $getParentOfType(cell, $isTableRowNode);
-            const modalForm = context.manager.createModal('row_properties');
-            modalForm.show({});
-            // TODO
+            const row = $getParentOfType(cell, $isCustomTableRowNode);
+            if ($isCustomTableRowNode(row)) {
+                $showRowPropertiesForm(row, context);
+            }
         });
     },
     isActive: neverActive,

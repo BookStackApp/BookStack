@@ -6,6 +6,7 @@ import {$getParentOfType} from "./nodes";
 import {$getNodeFromSelection} from "./selection";
 import {formatSizeValue} from "./dom";
 import {TableMap} from "./table-map";
+import {$isCustomTableRowNode, CustomTableRowNode} from "../nodes/custom-table-row";
 
 function $getTableFromCell(cell: CustomTableCellNode): CustomTableNode|null {
     return $getParentOfType(cell, $isCustomTableNode) as CustomTableNode|null;
@@ -190,6 +191,19 @@ export function $mergeTableCellsInSelection(selection: TableSelection): void {
 
     firstCell.setColSpan(newWidth);
     firstCell.setRowSpan(newHeight);
+}
+
+export function $getTableRowsFromSelection(selection: BaseSelection|null): CustomTableRowNode[] {
+    const cells = $getTableCellsFromSelection(selection);
+    const rowsByKey: Record<string, CustomTableRowNode> = {};
+    for (const cell of cells) {
+        const row = cell.getParent();
+        if ($isCustomTableRowNode(row)) {
+            rowsByKey[row.getKey()] = row;
+        }
+    }
+
+    return Object.values(rowsByKey);
 }
 
 
