@@ -1,5 +1,5 @@
 import {CustomTableNode} from "../nodes/custom-table";
-import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell-node";
+import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
 import {$isTableRowNode} from "@lexical/table";
 
 export class TableMap {

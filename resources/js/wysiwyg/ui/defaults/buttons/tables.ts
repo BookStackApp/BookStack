@@ -19,8 +19,8 @@ import {
 } from "@lexical/table";
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
-import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell-node";
-import {showCellPropertiesForm} from "../forms/tables";
+import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell";
+import {$showCellPropertiesForm} from "../forms/tables";
 import {$mergeTableCellsInSelection} from "../../../utils/tables";
 
 const neverActive = (): boolean => false;
@@ -317,7 +317,7 @@ export const cellProperties: EditorButtonDefinition = {
         context.editor.getEditorState().read(() => {
             const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
             if ($isCustomTableCellNode(cell)) {
-                showCellPropertiesForm(cell, context);
+                $showCellPropertiesForm(cell, context);
             }
         });
     },

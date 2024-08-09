@@ -20,13 +20,14 @@ import {
     TableCellNode
 } from "@lexical/table";
 import {TableCellHeaderState} from "@lexical/table/LexicalTableCellNode";
+import {createStyleMapFromDomStyles, StyleMap} from "../utils/styles";
 
 export type SerializedCustomTableCellNode = Spread<{
     styles: Record<string, string>,
 }, SerializedTableCellNode>
 
 export class CustomTableCellNode extends TableCellNode {
-    __styles: Map<string, string> = new Map;
+    __styles: StyleMap = new Map;
 
     static getType(): string {
         return 'custom-table-cell';
@@ -44,12 +45,12 @@ export class CustomTableCellNode extends TableCellNode {
         return cellNode;
     }
 
-    getStyles(): Map<string, string> {
+    getStyles(): StyleMap {
         const self = this.getLatest();
         return new Map(self.__styles);
     }
 
-    setStyles(styles: Map<string, string>): void {
+    setStyles(styles: StyleMap): void {
         const self = this.getWritable();
         self.__styles = new Map(styles);
     }
@@ -103,7 +104,7 @@ export class CustomTableCellNode extends TableCellNode {
             serializedNode.width,
         );
 
-        node.setStyles(new Map<string, string>(Object.entries(serializedNode.styles)));
+        node.setStyles(new Map(Object.entries(serializedNode.styles)));
 
         return node;
     }
@@ -121,12 +122,7 @@ function $convertCustomTableCellNodeElement(domNode: Node): DOMConversionOutput 
     const output =  $convertTableCellNodeElement(domNode);
 
     if (domNode instanceof HTMLElement && output.node instanceof CustomTableCellNode) {
-        const styleMap = new Map<string, string>();
-        const styleNames = Array.from(domNode.style);
-        for (const style of styleNames) {
-            styleMap.set(style, domNode.style.getPropertyValue(style));
-        }
-        output.node.setStyles(styleMap);
+        output.node.setStyles(createStyleMapFromDomStyles(domNode.style));
     }
 
     return output;

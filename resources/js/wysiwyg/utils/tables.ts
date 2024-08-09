@@ -1,7 +1,7 @@
 import {BaseSelection, LexicalEditor} from "lexical";
 import {$isTableRowNode, $isTableSelection, TableRowNode, TableSelection, TableSelectionShape} from "@lexical/table";
 import {$isCustomTableNode, CustomTableNode} from "../nodes/custom-table";
-import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell-node";
+import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
 import {$getParentOfType} from "./nodes";
 import {$getNodeFromSelection} from "./selection";
 import {formatSizeValue} from "./dom";
@@ -122,6 +122,17 @@ export function $setTableCellColumnWidth(cell: CustomTableCellNode, width: strin
     if (table && index >= 0) {
         $setTableColumnWidth(table, index, width);
     }
+}
+
+export function $getTableCellColumnWidth(editor: LexicalEditor, cell: CustomTableCellNode): string {
+    const table = $getTableFromCell(cell)
+    const index = $getCellColumnIndex(cell);
+    if (!table) {
+        return '';
+    }
+
+    const widths = table.getColWidths();
+    return (widths.length > index) ? widths[index] : '';
 }
 
 export function $getTableCellsFromSelection(selection: BaseSelection|null): CustomTableCellNode[]  {

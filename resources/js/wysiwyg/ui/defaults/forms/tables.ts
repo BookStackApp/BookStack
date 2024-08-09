@@ -5,10 +5,10 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {CustomTableCellNode} from "../../../nodes/custom-table-cell-node";
+import {CustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {EditorFormModal} from "../../framework/modals";
 import {$getSelection, ElementFormatType} from "lexical";
-import {$getTableCellsFromSelection, $setTableCellColumnWidth} from "../../../utils/tables";
+import {$getTableCellColumnWidth, $getTableCellsFromSelection, $setTableCellColumnWidth} from "../../../utils/tables";
 import {formatSizeValue} from "../../../utils/dom";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
@@ -54,11 +54,11 @@ const alignmentInput: EditorSelectFormFieldDefinition = {
     }
 };
 
-export function showCellPropertiesForm(cell: CustomTableCellNode, context: EditorUiContext): EditorFormModal {
+export function $showCellPropertiesForm(cell: CustomTableCellNode, context: EditorUiContext): EditorFormModal {
     const styles = cell.getStyles();
     const modalForm = context.manager.createModal('cell_properties');
     modalForm.show({
-        width: '', // TODO
+        width: $getTableCellColumnWidth(context.editor, cell),
         height: styles.get('height') || '',
         type: cell.getTag(),
         h_align: cell.getFormatType(),
@@ -171,45 +171,18 @@ export const rowProperties: EditorFormDefinition = {
         return true;
     },
     fields: [
+        // Removed fields:
+        // Removed 'Row Type' as we don't currently support thead/tfoot elements
+        //  TinyMCE would move rows up/down into these parents when set
+        // Removed 'Alignment' since this was broken in our editor (applied alignment class to whole parent table)
         {
-            build() {
-                const generalFields: EditorFormFieldDefinition[] = [
-                    {
-                        label: 'Row type',
-                        name: 'type',
-                        type: 'select',
-                        valuesByLabel: {
-                            'Body': 'body',
-                            'Header': 'header',
-                            'Footer': 'footer',
-                        }
-                    } as EditorSelectFormFieldDefinition,
-                    alignmentInput,
-                    {
-                        label: 'Height',
-                        name: 'height',
-                        type: 'text',
-                    },
-                ];
-
-                const advancedFields: EditorFormFieldDefinition[] = [
-                    borderStyleInput,
-                    borderColorInput,
-                    backgroundColorInput,
-                ];
-
-                return new EditorFormTabs([
-                    {
-                        label: 'General',
-                        contents: generalFields,
-                    },
-                    {
-                        label: 'Advanced',
-                        contents: advancedFields,
-                    }
-                ])
-            }
+            label: 'Height', // style on tr: height
+            name: 'height',
+            type: 'text',
         },
+        borderStyleInput, // style on tr: height
+        borderColorInput, // style on tr: height
+        backgroundColorInput, // style on tr: height
     ],
 };
 export const tableProperties: EditorFormDefinition = {
