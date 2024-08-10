@@ -2,13 +2,6 @@
 
 ## In progress
 
-- Table features
-  - Table properties form logic
-    - Caption text support 
-  - Resize to contents button
-  - Remove formatting button
-  - Cut/Copy/Paste column
-
 ## Main Todo
 
 - Alignments: Use existing classes for blocks (including table cells)
@@ -23,6 +16,8 @@
 - Drawing gallery integration
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 - Media resize support (like images)
+- Table caption text support
+- Table Cut/Copy/Paste column
 
 ## Secondary Todo
 

@@ -1,8 +1,4 @@
 import {
-    $createParagraphNode,
-    $isElementNode,
-    $isLineBreakNode,
-    $isTextNode,
     DOMConversionMap,
     DOMConversionOutput,
     EditorConfig,
@@ -11,14 +7,11 @@ import {
 } from "lexical";
 
 import {
-    $createTableCellNode,
-    $isTableCellNode,
     SerializedTableRowNode,
-    TableCellHeaderStates,
     TableRowNode
 } from "@lexical/table";
-import {createStyleMapFromDomStyles, StyleMap} from "../utils/styles";
 import {NodeKey} from "lexical/LexicalNode";
+import {extractStyleMapFromElement, StyleMap} from "../utils/dom";
 
 export type SerializedCustomTableRowNode = Spread<{
     styles: Record<string, string>,
@@ -98,7 +91,7 @@ export function $convertTableRowElement(domNode: Node): DOMConversionOutput {
     const rowNode = $createCustomTableRowNode();
 
     if (domNode instanceof HTMLElement) {
-        rowNode.setStyles(createStyleMapFromDomStyles(domNode.style));
+        rowNode.setStyles(extractStyleMapFromElement(domNode));
     }
 
     return {node: rowNode};

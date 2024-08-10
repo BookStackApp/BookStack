@@ -20,7 +20,7 @@ import {
     TableCellNode
 } from "@lexical/table";
 import {TableCellHeaderState} from "@lexical/table/LexicalTableCellNode";
-import {createStyleMapFromDomStyles, StyleMap} from "../utils/styles";
+import {extractStyleMapFromElement, StyleMap} from "../utils/dom";
 
 export type SerializedCustomTableCellNode = Spread<{
     styles: Record<string, string>,
@@ -43,6 +43,11 @@ export class CustomTableCellNode extends TableCellNode {
         cellNode.__rowSpan = node.__rowSpan;
         cellNode.__styles = new Map(node.__styles);
         return cellNode;
+    }
+
+    clearWidth(): void {
+        const self = this.getWritable();
+        self.__width = undefined;
     }
 
     getStyles(): StyleMap {
@@ -122,7 +127,7 @@ function $convertCustomTableCellNodeElement(domNode: Node): DOMConversionOutput 
     const output =  $convertTableCellNodeElement(domNode);
 
     if (domNode instanceof HTMLElement && output.node instanceof CustomTableCellNode) {
-        output.node.setStyles(createStyleMapFromDomStyles(domNode.style));
+        output.node.setStyles(extractStyleMapFromElement(domNode));
     }
 
     return output;

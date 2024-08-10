@@ -30,3 +30,28 @@ export function formatSizeValue(size: number | string, defaultSuffix: string = '
 
     return size;
 }
+
+export type StyleMap = Map<string, string>;
+
+/**
+ * Creates a map from an element's styles.
+ * Uses direct attribute value string handling since attempting to iterate
+ * over .style will expand out any shorthand properties (like 'padding') making
+ * rather than being representative of the actual properties set.
+ */
+export function extractStyleMapFromElement(element: HTMLElement): StyleMap {
+    const map: StyleMap = new Map();
+    const styleText= element.getAttribute('style') || '';
+
+    const rules = styleText.split(';');
+    for (const rule of rules) {
+        const [name, value] = rule.split(':');
+        if (!name || !value) {
+            continue;
+        }
+
+        map.set(name.trim().toLowerCase(), value.trim());
+    }
+
+    return map;
+}
