@@ -9,13 +9,15 @@ import {CustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {EditorFormModal} from "../../framework/modals";
 import {$getSelection, ElementFormatType} from "lexical";
 import {
+    $forEachTableCell, $getCellPaddingForTable,
     $getTableCellColumnWidth,
-    $getTableCellsFromSelection,
+    $getTableCellsFromSelection, $getTableFromSelection,
     $getTableRowsFromSelection,
     $setTableCellColumnWidth
 } from "../../../utils/tables";
 import {formatSizeValue} from "../../../utils/dom";
 import {CustomTableRowNode} from "../../../nodes/custom-table-row";
+import {CustomTableNode} from "../../../nodes/custom-table";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -213,10 +215,58 @@ export const rowProperties: EditorFormDefinition = {
         backgroundColorInput, // style on tr: height
     ],
 };
+
+export function $showTablePropertiesForm(table: CustomTableNode, context: EditorUiContext): EditorFormModal {
+    const styles = table.getStyles();
+    const modalForm = context.manager.createModal('table_properties');
+    modalForm.show({
+        width: styles.get('width') || '',
+        height: styles.get('height') || '',
+        cell_spacing: styles.get('cell-spacing') || '',
+        cell_padding: $getCellPaddingForTable(table),
+        border_width: styles.get('border-width') || '',
+        border_style: styles.get('border-style') || '',
+        border_color: styles.get('border-color') || '',
+        background_color: styles.get('background-color') || '',
+        // caption: '', TODO
+        align: table.getFormatType(),
+    });
+    return modalForm;
+}
+
 export const tableProperties: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
-        // TODO
+        context.editor.update(() => {
+            const table = $getTableFromSelection($getSelection());
+            if (!table) {
+                return;
+            }
+
+            const styles = table.getStyles();
+            styles.set('width', formatSizeValue(formData.get('width')?.toString() || ''));
+            styles.set('height', formatSizeValue(formData.get('height')?.toString() || ''));
+            styles.set('cell-spacing', formatSizeValue(formData.get('cell_spacing')?.toString() || ''));
+            styles.set('border-width', formatSizeValue(formData.get('border_width')?.toString() || ''));
+            styles.set('border-style', formData.get('border_style')?.toString() || '');
+            styles.set('border-color', formData.get('border_color')?.toString() || '');
+            styles.set('background-color', formData.get('background_color')?.toString() || '');
+            table.setStyles(styles);
+
+            table.setFormat(formData.get('align') as ElementFormatType);
+
+            const cellPadding = (formData.get('cell_padding')?.toString() || '');
+            if (cellPadding) {
+                const cellPaddingFormatted = formatSizeValue(cellPadding);
+                $forEachTableCell(table, (cell: CustomTableCellNode) => {
+                    const styles = cell.getStyles();
+                    styles.set('padding', cellPaddingFormatted);
+                    cell.setStyles(styles);
+                });
+            }
+
+            // TODO - cell caption
+        });
         return true;
     },
     fields: [
@@ -224,42 +274,42 @@ export const tableProperties: EditorFormDefinition = {
             build() {
                 const generalFields: EditorFormFieldDefinition[] = [
                     {
-                        label: 'Width',
+                        label: 'Width', // Style - width
                         name: 'width',
                         type: 'text',
                     },
                     {
-                        label: 'Height',
+                        label: 'Height', // Style - height
                         name: 'height',
                         type: 'text',
                     },
                     {
-                        label: 'Cell spacing',
+                        label: 'Cell spacing', // Style - border-spacing
                         name: 'cell_spacing',
                         type: 'text',
                     },
                     {
-                        label: 'Cell padding',
+                        label: 'Cell padding', // Style - padding on child cells?
                         name: 'cell_padding',
                         type: 'text',
                     },
                     {
-                        label: 'Border width',
+                        label: 'Border width', // Style - border-width
                         name: 'border_width',
                         type: 'text',
                     },
                     {
-                        label: 'caption',
-                        name: 'height',
+                        label: 'caption', // Caption element
+                        name: 'caption',
                         type: 'text', // TODO -
                     },
-                    alignmentInput,
+                    alignmentInput, // alignment class
                 ];
 
                 const advancedFields: EditorFormFieldDefinition[] = [
-                    borderStyleInput,
-                    borderColorInput,
-                    backgroundColorInput,
+                    borderStyleInput, // Style - border-style
+                    borderColorInput, // Style - border-color
+                    backgroundColorInput, // Style - background-color
                 ];
 
                 return new EditorFormTabs([

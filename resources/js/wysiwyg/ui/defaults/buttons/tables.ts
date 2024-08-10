@@ -8,24 +8,27 @@ import insertColumnBeforeIcon from "@icons/editor/table-insert-column-before.svg
 import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
-import {$createNodeSelection, $createRangeSelection, $getSelection, BaseSelection} from "lexical";
+import {$getSelection, BaseSelection} from "lexical";
 import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
     $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
     $insertTableRow__EXPERIMENTAL,
-    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode,
+    $isTableNode, $isTableSelection, $unmergeCell, TableCellNode,
 } from "@lexical/table";
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
 import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell";
-import {$showCellPropertiesForm, $showRowPropertiesForm} from "../forms/tables";
-import {$getTableRowsFromSelection, $mergeTableCellsInSelection} from "../../../utils/tables";
+import {$showCellPropertiesForm, $showRowPropertiesForm, $showTablePropertiesForm} from "../forms/tables";
+import {
+    $clearTableFormatting,
+    $clearTableSizes, $getTableFromSelection,
+    $getTableRowsFromSelection,
+    $mergeTableCellsInSelection
+} from "../../../utils/tables";
 import {$isCustomTableRowNode, CustomTableRowNode} from "../../../nodes/custom-table-row";
 import {NodeClipboard} from "../../../services/node-clipboard";
-import {r} from "@codemirror/legacy-modes/mode/r";
-import {$generateHtmlFromNodes} from "@lexical/html";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
@@ -40,15 +43,10 @@ export const tableProperties: EditorButtonDefinition = {
     icon: tableIcon,
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if (!$isCustomTableCellNode(cell)) {
-                return;
+            const table = $getTableFromSelection($getSelection());
+            if ($isCustomTableNode(table)) {
+                $showTablePropertiesForm(table, context);
             }
-
-            const table = $getParentOfType(cell, $isTableNode);
-            const modalForm = context.manager.createModal('table_properties');
-            modalForm.show({});
-            // TODO
         });
     },
     isActive: neverActive,
@@ -59,14 +57,16 @@ export const clearTableFormatting: EditorButtonDefinition = {
     label: 'Clear table formatting',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
+        context.editor.update(() => {
             const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
             if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
             const table = $getParentOfType(cell, $isTableNode);
-            // TODO
+            if ($isCustomTableNode(table)) {
+                $clearTableFormatting(table);
+            }
         });
     },
     isActive: neverActive,
@@ -77,22 +77,15 @@ export const resizeTableToContents: EditorButtonDefinition = {
     label: 'Resize to contents',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
+        context.editor.update(() => {
             const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
             if (!$isCustomTableCellNode(cell)) {
                 return;
             }
 
             const table = $getParentOfType(cell, $isCustomTableNode);
-            if (!$isCustomTableNode(table)) {
-                return;
-            }
-
-            for (const row of table.getChildren()) {
-                if ($isTableRowNode(row)) {
-                    // TODO - Come back later as this may depend on if we
-                    //   are using a custom table row
-                }
+            if ($isCustomTableNode(table)) {
+                $clearTableSizes(table);
             }
         });
     },
@@ -165,14 +158,9 @@ export const rowProperties: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if (!$isCustomTableCellNode(cell)) {
-                return;
-            }
-
-            const row = $getParentOfType(cell, $isCustomTableRowNode);
-            if ($isCustomTableRowNode(row)) {
-                $showRowPropertiesForm(row, context);
+            const rows = $getTableRowsFromSelection($getSelection());
+            if ($isCustomTableRowNode(rows[0])) {
+                $showRowPropertiesForm(rows[0], context);
             }
         });
     },

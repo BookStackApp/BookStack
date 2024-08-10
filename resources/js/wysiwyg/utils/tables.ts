@@ -206,8 +206,107 @@ export function $getTableRowsFromSelection(selection: BaseSelection|null): Custo
     return Object.values(rowsByKey);
 }
 
+export function $getTableFromSelection(selection: BaseSelection|null): CustomTableNode|null {
+    const cells = $getTableCellsFromSelection(selection);
+    if (cells.length === 0) {
+        return null;
+    }
 
+    const table = $getParentOfType(cells[0], $isCustomTableNode);
+    if ($isCustomTableNode(table)) {
+        return table;
+    }
 
+    return null;
+}
+
+export function $clearTableSizes(table: CustomTableNode): void {
+    table.setColWidths([]);
+
+    // TODO - Extra form things once table properties and extra things
+    //   are supported
+
+    for (const row of table.getChildren()) {
+        if (!$isCustomTableRowNode(row)) {
+            continue;
+        }
+
+        const rowStyles = row.getStyles();
+        rowStyles.delete('height');
+        rowStyles.delete('width');
+        row.setStyles(rowStyles);
+
+        const cells = row.getChildren().filter(c => $isCustomTableCellNode(c));
+        for (const cell of cells) {
+            const cellStyles = cell.getStyles();
+            cellStyles.delete('height');
+            cellStyles.delete('width');
+            cell.setStyles(cellStyles);
+            cell.clearWidth();
+        }
+    }
+}
+
+export function $clearTableFormatting(table: CustomTableNode): void {
+    table.setColWidths([]);
+    table.setStyles(new Map);
+
+    for (const row of table.getChildren()) {
+        if (!$isCustomTableRowNode(row)) {
+            continue;
+        }
+
+        row.setStyles(new Map);
+        row.setFormat('');
+
+        const cells = row.getChildren().filter(c => $isCustomTableCellNode(c));
+        for (const cell of cells) {
+            cell.setStyles(new Map);
+            cell.clearWidth();
+            cell.setFormat('');
+        }
+    }
+}
+
+/**
+ * Perform the given callback for each cell in the given table.
+ * Returning false from the callback stops the function early.
+ */
+export function $forEachTableCell(table: CustomTableNode, callback: (c: CustomTableCellNode) => void|false): void {
+    outer: for (const row of table.getChildren()) {
+        if (!$isCustomTableRowNode(row)) {
+            continue;
+        }
+        const cells = row.getChildren();
+        for (const cell of cells) {
+            if (!$isCustomTableCellNode(cell)) {
+                return;
+            }
+            const result = callback(cell);
+            if (result === false) {
+                break outer;
+            }
+        }
+    }
+}
+
+export function $getCellPaddingForTable(table: CustomTableNode): string {
+    let padding: string|null = null;
+
+    $forEachTableCell(table, (cell: CustomTableCellNode) => {
+        const cellPadding = cell.getStyles().get('padding') || ''
+        if (padding === null) {
+            padding = cellPadding;
+        }
+
+        if (cellPadding !== padding) {
+            padding = null;
+            return false;
+        }
+    });
+
+    return padding || '';
+}
 
 
 
