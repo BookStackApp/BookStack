@@ -66,7 +66,6 @@ function domElementToNode(tag: MediaNodeTag, element: Element): MediaNode {
 }
 
 export class MediaNode extends ElementNode {
-
     __tag: MediaNodeTag;
     __attributes: Record<string, string> = {};
     __sources: MediaNodeSource[] = [];
@@ -76,7 +75,10 @@ export class MediaNode extends ElementNode {
     }
 
     static clone(node: MediaNode) {
-        return new MediaNode(node.__tag, node.__key);
+        const newNode = new MediaNode(node.__tag, node.__key);
+        newNode.__attributes = Object.assign({}, node.__attributes);
+        newNode.__sources = node.__sources.map(s => Object.assign({}, s));
+        return newNode;
     }
 
     constructor(tag: MediaNodeTag, key?: string) {
@@ -226,10 +228,10 @@ export function $createMediaNodeFromSrc(src: string): MediaNode {
     return new MediaNode(nodeTag);
 }
 
-export function $isMediaNode(node: LexicalNode | null | undefined) {
+export function $isMediaNode(node: LexicalNode | null | undefined): node is MediaNode {
     return node instanceof MediaNode;
 }
 
-export function $isMediaNodeOfTag(node: LexicalNode | null | undefined, tag: MediaNodeTag) {
+export function $isMediaNodeOfTag(node: LexicalNode | null | undefined, tag: MediaNodeTag): boolean {
     return node instanceof MediaNode && (node as MediaNode).getTag() === tag;
 }

@@ -4,28 +4,50 @@ import {
     ElementNode,
     LexicalEditor,
     LexicalNode,
-    SerializedElementNode,
+    SerializedElementNode, Spread,
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
 import {el} from "../utils/dom";
 
+export type SerializedDetailsNode = Spread<{
+    id: string;
+}, SerializedElementNode>
+
 export class DetailsNode extends ElementNode {
+    __id: string = '';
 
     static getType() {
         return 'details';
     }
 
-    static clone(node: DetailsNode) {
-        return new DetailsNode(node.__key);
+    setId(id: string) {
+        const self = this.getWritable();
+        self.__id = id;
+    }
+
+    getId(): string {
+        const self = this.getLatest();
+        return self.__id;
+    }
+
+    static clone(node: DetailsNode): DetailsNode {
+        const newNode =  new DetailsNode(node.__key);
+        newNode.__id = node.__id;
+        return newNode;
     }
 
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
-        return el('details');
+        const el = document.createElement('details');
+        if (this.__id) {
+            el.setAttribute('id', this.__id);
+        }
+
+        return el;
     }
 
     updateDOM(prevNode: DetailsNode, dom: HTMLElement) {
-        return false;
+        return prevNode.__id !== this.__id;
     }
 
     static importDOM(): DOMConversionMap|null {
@@ -33,9 +55,12 @@ export class DetailsNode extends ElementNode {
             details(node: HTMLElement): DOMConversion|null {
                 return {
                     conversion: (element: HTMLElement): DOMConversionOutput|null => {
-                        return {
-                            node: new DetailsNode(),
-                        };
+                        const node = new DetailsNode();
+                        if (element.id) {
+                            node.setId(element.id);
+                        }
+
+                        return {node};
                     },
                     priority: 3,
                 };
@@ -43,16 +68,19 @@ export class DetailsNode extends ElementNode {
         };
     }
 
-    exportJSON(): SerializedElementNode {
+    exportJSON(): SerializedDetailsNode {
         return {
             ...super.exportJSON(),
             type: 'details',
             version: 1,
+            id: this.__id,
         };
     }
 
-    static importJSON(serializedNode: SerializedElementNode): DetailsNode {
-        return $createDetailsNode();
+    static importJSON(serializedNode: SerializedDetailsNode): DetailsNode {
+        const node = $createDetailsNode();
+        node.setId(serializedNode.id);
+        return node;
     }
 
 }
@@ -61,7 +89,7 @@ export function $createDetailsNode() {
     return new DetailsNode();
 }
 
-export function $isDetailsNode(node: LexicalNode | null | undefined) {
+export function $isDetailsNode(node: LexicalNode | null | undefined): node is DetailsNode {
     return node instanceof DetailsNode;
 }
 
@@ -106,16 +134,16 @@ export class SummaryNode extends ElementNode {
         };
     }
 
-    static importJSON(serializedNode: SerializedElementNode): DetailsNode {
+    static importJSON(serializedNode: SerializedElementNode): SummaryNode {
         return $createSummaryNode();
     }
 
 }
 
-export function $createSummaryNode() {
+export function $createSummaryNode(): SummaryNode {
     return new SummaryNode();
 }
 
-export function $isSummaryNode(node: LexicalNode | null | undefined) {
+export function $isSummaryNode(node: LexicalNode | null | undefined): node is SummaryNode {
     return node instanceof SummaryNode;
 }

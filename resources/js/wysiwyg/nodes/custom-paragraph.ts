@@ -31,7 +31,7 @@ export class CustomParagraphNode extends ParagraphNode {
         return self.__id;
     }
 
-    static clone(node: CustomParagraphNode) {
+    static clone(node: CustomParagraphNode): CustomParagraphNode {
         const newNode = new CustomParagraphNode(node.__key);
         newNode.__id = node.__id;
         return newNode;
@@ -39,9 +39,8 @@ export class CustomParagraphNode extends ParagraphNode {
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        const id = this.getId();
-        if (id) {
-            dom.setAttribute('id', id);
+        if (this.__id) {
+            dom.setAttribute('id', this.__id);
         }
 
         return dom;
@@ -89,7 +88,7 @@ export class CustomParagraphNode extends ParagraphNode {
     }
 }
 
-export function $createCustomParagraphNode() {
+export function $createCustomParagraphNode(): CustomParagraphNode {
     return new CustomParagraphNode();
 }
 

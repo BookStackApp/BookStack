@@ -4,26 +4,48 @@ import {
     ElementNode,
     LexicalEditor,
     LexicalNode,
-    SerializedElementNode,
+    SerializedElementNode, Spread,
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
+export type SerializedHorizontalRuleNode = Spread<{
+    id: string;
+}, SerializedElementNode>
+
 export class HorizontalRuleNode extends ElementNode {
+    __id: string = '';
 
     static getType() {
         return 'horizontal-rule';
     }
 
+    setId(id: string) {
+        const self = this.getWritable();
+        self.__id = id;
+    }
+
+    getId(): string {
+        const self = this.getLatest();
+        return self.__id;
+    }
+
     static clone(node: HorizontalRuleNode): HorizontalRuleNode {
-        return new HorizontalRuleNode(node.__key);
+        const newNode = new HorizontalRuleNode(node.__key);
+        newNode.__id = node.__id;
+        return newNode;
     }
 
-    createDOM(_config: EditorConfig, _editor: LexicalEditor) {
-        return document.createElement('hr');
+    createDOM(_config: EditorConfig, _editor: LexicalEditor): HTMLElement {
+        const el = document.createElement('hr');
+        if (this.__id) {
+            el.setAttribute('id', this.__id);
+        }
+
+        return el;
     }
 
-    updateDOM(prevNode: unknown, dom: HTMLElement) {
-        return false;
+    updateDOM(prevNode: HorizontalRuleNode, dom: HTMLElement) {
+        return prevNode.__id !== this.__id;
     }
 
     static importDOM(): DOMConversionMap|null {
@@ -31,9 +53,12 @@ export class HorizontalRuleNode extends ElementNode {
             hr(node: HTMLElement): DOMConversion|null {
                 return {
                     conversion: (element: HTMLElement): DOMConversionOutput|null => {
-                        return {
-                            node: new HorizontalRuleNode(),
-                        };
+                        const node = new HorizontalRuleNode();
+                        if (element.id) {
+                            node.setId(element.id);
+                        }
+
+                        return {node};
                     },
                     priority: 3,
                 };
@@ -41,24 +66,27 @@ export class HorizontalRuleNode extends ElementNode {
         };
     }
 
-    exportJSON(): SerializedElementNode {
+    exportJSON(): SerializedHorizontalRuleNode {
         return {
             ...super.exportJSON(),
             type: 'horizontal-rule',
             version: 1,
+            id: this.__id,
         };
     }
 
-    static importJSON(serializedNode: SerializedElementNode): HorizontalRuleNode {
-        return $createHorizontalRuleNode();
+    static importJSON(serializedNode: SerializedHorizontalRuleNode): HorizontalRuleNode {
+        const node = $createHorizontalRuleNode();
+        node.setId(serializedNode.id);
+        return node;
     }
 
 }
 
-export function $createHorizontalRuleNode() {
+export function $createHorizontalRuleNode(): HorizontalRuleNode {
     return new HorizontalRuleNode();
 }
 
-export function $isHorizontalRuleNode(node: LexicalNode | null | undefined) {
+export function $isHorizontalRuleNode(node: LexicalNode | null | undefined): node is HorizontalRuleNode {
     return node instanceof HorizontalRuleNode;
 }

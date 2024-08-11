@@ -2,7 +2,7 @@ import {
     DecoratorNode,
     DOMConversion,
     DOMConversionMap,
-    DOMConversionOutput,
+    DOMConversionOutput, DOMExportOutput,
     LexicalEditor, LexicalNode,
     SerializedLexicalNode,
     Spread
@@ -33,7 +33,9 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
     }
 
     static clone(node: CodeBlockNode): CodeBlockNode {
-        return new CodeBlockNode(node.__language, node.__code);
+        const newNode = new CodeBlockNode(node.__language, node.__code);
+        newNode.__id = node.__id;
+        return newNode;
     }
 
     constructor(language: string = '', code: string = '', key?: string) {
@@ -118,6 +120,13 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
         return false;
     }
 
+    exportDOM(editor: LexicalEditor): DOMExportOutput {
+        const dom = this.createDOM(editor._config, editor);
+        return {
+            element: dom.querySelector('pre') as HTMLElement,
+        };
+    }
+
     static importDOM(): DOMConversionMap|null {
         return {
             pre(node: HTMLElement): DOMConversion|null {
@@ -130,10 +139,13 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
                                         || '';
 
                         const code = codeEl ? (codeEl.textContent || '').trim() : (element.textContent || '').trim();
+                        const node = $createCodeBlockNode(language, code);
 
-                        return {
-                            node: $createCodeBlockNode(language, code),
-                        };
+                        if (element.id) {
+                            node.setId(element.id);
+                        }
+
+                        return { node };
                     },
                     priority: 3,
                 };

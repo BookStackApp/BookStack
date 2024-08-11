@@ -22,16 +22,19 @@ import {MediaNode} from "./media";
 import {CustomListItemNode} from "./custom-list-item";
 import {CustomTableCellNode} from "./custom-table-cell";
 import {CustomTableRowNode} from "./custom-table-row";
+import {CustomHeadingNode} from "./custom-heading";
+import {CustomQuoteNode} from "./custom-quote";
+import {CustomListNode} from "./custom-list";
 
 /**
  * Load the nodes for lexical.
  */
 export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> | LexicalNodeReplacement)[] {
     return [
-        CalloutNode, // Todo - Create custom
-        HeadingNode, // Todo - Create custom
-        QuoteNode, // Todo - Create custom
-        ListNode, // Todo - Create custom
+        CalloutNode,
+        CustomHeadingNode,
+        CustomQuoteNode,
+        CustomListNode,
         CustomListItemNode,
         CustomTableNode,
         CustomTableRowNode,
@@ -42,12 +45,30 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         CodeBlockNode,
         DiagramNode,
         MediaNode,
-        CustomParagraphNode,
+        CustomParagraphNode, // TODO - ID
         LinkNode,
         {
             replace: ParagraphNode,
             with: (node: ParagraphNode) => {
                 return new CustomParagraphNode();
+            }
+        },
+        {
+            replace: HeadingNode,
+            with: (node: HeadingNode) => {
+                return new CustomHeadingNode(node.__tag);
+            }
+        },
+        {
+            replace: QuoteNode,
+            with: (node: QuoteNode) => {
+                return new CustomQuoteNode();
+            }
+        },
+        {
+            replace: ListNode,
+            with: (node: ListNode) => {
+                return new CustomListNode(node.getListType(), node.getStart());
             }
         },
         {
