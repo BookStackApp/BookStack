@@ -82,6 +82,11 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         }
     });
 
+    // @ts-ignore
+    window.debugEditorState = () => {
+        console.log(editor.getEditorState().toJSON());
+    };
+
     const context: EditorUiContext = buildEditorUI(container, editArea, editWrap, editor, options);
     registerCommonNodeMutationListeners(context);
 

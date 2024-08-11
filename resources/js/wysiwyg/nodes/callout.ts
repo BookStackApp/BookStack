@@ -9,15 +9,17 @@ import {
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 import type {RangeSelection} from "lexical/LexicalSelection";
+import {el} from "../utils/dom";
 
 export type CalloutCategory = 'info' | 'danger' | 'warning' | 'success';
 
 export type SerializedCalloutNode = Spread<{
     category: CalloutCategory;
+    id: string;
 }, SerializedElementNode>
 
 export class CalloutNode extends ElementNode {
-
+    __id: string = '';
     __category: CalloutCategory = 'info';
 
     static getType() {
@@ -25,7 +27,9 @@ export class CalloutNode extends ElementNode {
     }
 
     static clone(node: CalloutNode) {
-        return new CalloutNode(node.__category, node.__key);
+        const newNode = new CalloutNode(node.__category, node.__key);
+        newNode.__id = node.__id;
+        return newNode;
     }
 
     constructor(category: CalloutCategory, key?: string) {
@@ -43,9 +47,22 @@ export class CalloutNode extends ElementNode {
         return self.__category;
     }
 
+    setId(id: string) {
+        const self = this.getWritable();
+        self.__id = id;
+    }
+
+    getId(): string {
+        const self = this.getLatest();
+        return self.__id;
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('p');
         element.classList.add('callout', this.__category || '');
+        if (this.__id) {
+            element.setAttribute('id', this.__id);
+        }
         return element;
     }
 
@@ -88,8 +105,13 @@ export class CalloutNode extends ElementNode {
                                 }
                             }
 
+                            const node = new CalloutNode(category);
+                            if (element.id) {
+                                node.setId(element.id);
+                            }
+
                             return {
-                                node: new CalloutNode(category),
+                                node,
                             };
                         },
                         priority: 3,
@@ -106,11 +128,14 @@ export class CalloutNode extends ElementNode {
             type: 'callout',
             version: 1,
             category: this.__category,
+            id: this.__id,
         };
     }
 
     static importJSON(serializedNode: SerializedCalloutNode): CalloutNode {
-        return $createCalloutNode(serializedNode.category);
+        const node = $createCalloutNode(serializedNode.category);
+        node.setId(serializedNode.id);
+        return node;
     }
 
 }
@@ -119,7 +144,7 @@ export function $createCalloutNode(category: CalloutCategory = 'info') {
     return new CalloutNode(category);
 }
 
-export function $isCalloutNode(node: LexicalNode | null | undefined) {
+export function $isCalloutNode(node: LexicalNode | null | undefined): node is CalloutNode {
     return node instanceof CalloutNode;
 }
 

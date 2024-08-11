@@ -30,7 +30,9 @@ export class DiagramNode extends DecoratorNode<EditorDecoratorAdapter> {
     }
 
     static clone(node: DiagramNode): DiagramNode {
-        return new DiagramNode(node.__drawingId, node.__drawingUrl);
+        const newNode = new DiagramNode(node.__drawingId, node.__drawingUrl);
+        newNode.__id = node.__id;
+        return newNode;
     }
 
     constructor(drawingId: string, drawingUrl: string, key?: string) {
@@ -120,10 +122,13 @@ export class DiagramNode extends DecoratorNode<EditorDecoratorAdapter> {
                         const img = element.querySelector('img');
                         const drawingUrl = img?.getAttribute('src') || '';
                         const drawingId = element.getAttribute('drawio-diagram') || '';
+                        const node = $createDiagramNode(drawingId, drawingUrl);
 
-                        return {
-                            node: $createDiagramNode(drawingId, drawingUrl),
-                        };
+                        if (element.id) {
+                            node.setId(element.id);
+                        }
+
+                        return { node };
                     },
                     priority: 3,
                 };
@@ -152,7 +157,7 @@ export function $createDiagramNode(drawingId: string = '', drawingUrl: string = 
     return new DiagramNode(drawingId, drawingUrl);
 }
 
-export function $isDiagramNode(node: LexicalNode | null | undefined) {
+export function $isDiagramNode(node: LexicalNode | null | undefined): node is DiagramNode {
     return node instanceof DiagramNode;
 }
 
