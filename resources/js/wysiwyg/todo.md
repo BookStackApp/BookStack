@@ -2,7 +2,7 @@
 
 ## In progress
 
-// 
+//
 
 ## Main Todo
 
@@ -12,8 +12,6 @@
 - Keyboard shortcuts support
 - Link popup menu for cross-content reference
 - Link heading-based ID reference menu
-- Image gallery integration for insert
-- Image gallery integration for form
 - Drawing gallery integration
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 - Media resize support (like images)

@@ -5,7 +5,7 @@ import {
     $createNodeSelection,
     $createTextNode,
     $getRoot,
-    $getSelection,
+    $getSelection, $insertNodes,
     $setSelection,
     BaseSelection,
     ElementNode
@@ -20,7 +20,7 @@ import codeBlockIcon from "@icons/editor/code-block.svg";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../../nodes/code-block";
 import editIcon from "@icons/edit.svg";
 import diagramIcon from "@icons/editor/diagram.svg";
-import {$createDiagramNode, $isDiagramNode, $openDrawingEditorForNode, DiagramNode} from "../../../nodes/diagram";
+import {$createDiagramNode, DiagramNode} from "../../../nodes/diagram";
 import detailsIcon from "@icons/editor/details.svg";
 import mediaIcon from "@icons/editor/media.svg";
 import {$createDetailsNode, $isDetailsNode} from "../../../nodes/details";
@@ -30,6 +30,9 @@ import {
     $insertNewBlockNodeAtSelection,
     $selectionContainsNodeType
 } from "../../../utils/selection";
+import {$isDiagramNode, $openDrawingEditorForNode} from "../../../utils/diagrams";
+import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
+import {$showImageForm} from "../forms/objects";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
@@ -94,28 +97,19 @@ export const image: EditorButtonDefinition = {
     label: 'Insert/Edit Image',
     icon: imageIcon,
     action(context: EditorUiContext) {
-        const imageModal = context.manager.createModal('image');
-        const selection = context.lastSelection;
-        const selectedImage = $getNodeFromSelection(selection, $isImageNode) as ImageNode | null;
-
         context.editor.getEditorState().read(() => {
-            let formDefaults = {};
+            const selectedImage = $getNodeFromSelection(context.lastSelection, $isImageNode) as ImageNode | null;
             if (selectedImage) {
-                formDefaults = {
-                    src: selectedImage.getSrc(),
-                    alt: selectedImage.getAltText(),
-                    height: selectedImage.getHeight(),
-                    width: selectedImage.getWidth(),
-                }
-
-                context.editor.update(() => {
-                    const selection = $createNodeSelection();
-                    selection.add(selectedImage.getKey());
-                    $setSelection(selection);
-                });
+                $showImageForm(selectedImage, context);
+                return;
             }
 
-            imageModal.show(formDefaults);
+            showImageManager((image) => {
+                context.editor.update(() => {
+                    const link = $createLinkedImageNodeFromImageData(image);
+                    $insertNodes([link]);
+                });
+            })
         });
     },
     isActive(selection: BaseSelection | null): boolean {

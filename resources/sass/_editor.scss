@@ -479,6 +479,16 @@ textarea.editor-form-field-input {
 .editor-form-tab-contents {
   width: 360px;
 }
+.editor-action-input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  gap: .1rem;
+  .editor-button {
+    margin-bottom: 12px;
+  }
+}
 
 // Editor theme styles
 .editor-theme-bold {

@@ -1,31 +1,78 @@
-import {EditorFormDefinition, EditorFormTabs, EditorSelectFormFieldDefinition} from "../../framework/forms";
+import {
+    EditorFormDefinition,
+    EditorFormField,
+    EditorFormTabs,
+    EditorSelectFormFieldDefinition
+} from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
 import {$createTextNode, $getSelection} from "lexical";
-import {$createImageNode} from "../../../nodes/image";
+import {$isImageNode, ImageNode} from "../../../nodes/image";
 import {$createLinkNode} from "@lexical/link";
 import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
 import {$getNodeFromSelection} from "../../../utils/selection";
+import {EditorFormModal} from "../../framework/modals";
+import {EditorActionField} from "../../framework/blocks/action-field";
+import {EditorButton} from "../../framework/buttons";
+import {showImageManager} from "../../../utils/images";
+import searchImageIcon from "@icons/editor/image-search.svg";
+
+export function $showImageForm(image: ImageNode, context: EditorUiContext) {
+    const imageModal: EditorFormModal = context.manager.createModal('image');
+    const height = image.getHeight();
+    const width = image.getWidth();
+
+    const formData = {
+        src: image.getSrc(),
+        alt: image.getAltText(),
+        height: height === 0 ? '' : String(height),
+        width: width === 0 ? '' : String(width),
+    };
+
+    imageModal.show(formData);
+}
 
 export const image: EditorFormDefinition = {
     submitText: 'Apply',
     async action(formData, context: EditorUiContext) {
         context.editor.update(() => {
-            const selection = $getSelection();
-            const imageNode = $createImageNode(formData.get('src')?.toString() || '', {
-                alt: formData.get('alt')?.toString() || '',
-                height: Number(formData.get('height')?.toString() || '0'),
-                width: Number(formData.get('width')?.toString() || '0'),
-            });
-            selection?.insertNodes([imageNode]);
+            const selectedImage = $getNodeFromSelection(context.lastSelection, $isImageNode);
+            if ($isImageNode(selectedImage)) {
+                selectedImage.setSrc(formData.get('src')?.toString() || '');
+                selectedImage.setAltText(formData.get('alt')?.toString() || '');
+
+                selectedImage.setWidth(Number(formData.get('width')?.toString() || '0'));
+                selectedImage.setHeight(Number(formData.get('height')?.toString() || '0'));
+            }
         });
         return true;
     },
     fields: [
         {
-            label: 'Source',
-            name: 'src',
-            type: 'text',
+            build() {
+                return new EditorActionField(
+                    new EditorFormField({
+                        label: 'Source',
+                        name: 'src',
+                        type: 'text',
+                    }),
+                    new EditorButton({
+                        label: 'Browse files',
+                        icon: searchImageIcon,
+                        action(context: EditorUiContext) {
+                            showImageManager((image) => {
+                                 const modal =  context.manager.getActiveModal('image');
+                                 if (modal) {
+                                     modal.getForm().setValues({
+                                         src: image.thumbs?.display || image.url,
+                                         alt: image.name,
+                                     });
+                                 }
+                            });
+                        }
+                    }),
+                );
+            },
         },
         {
             label: 'Alternative description',

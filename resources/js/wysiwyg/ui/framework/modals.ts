@@ -13,10 +13,12 @@ export interface EditorFormModalDefinition extends EditorModalDefinition {
 
 export class EditorFormModal extends EditorContainerUiElement {
     protected definition: EditorFormModalDefinition;
+    protected key: string;
 
-    constructor(definition: EditorFormModalDefinition) {
+    constructor(definition: EditorFormModalDefinition, key: string) {
         super([new EditorForm(definition.form)]);
         this.definition = definition;
+        this.key = key;
     }
 
     show(defaultValues: Record<string, string>) {
@@ -26,13 +28,16 @@ export class EditorFormModal extends EditorContainerUiElement {
         const form = this.getForm();
         form.setValues(defaultValues);
         form.setOnCancel(this.hide.bind(this));
+
+        this.getContext().manager.setModalActive(this.key, this);
     }
 
     hide() {
         this.getDOMElement().remove();
+        this.getContext().manager.setModalInactive(this.key);
     }
 
-    protected getForm(): EditorForm {
+    getForm(): EditorForm {
         return this.children[0] as EditorForm;
     }
 
