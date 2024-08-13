@@ -340,7 +340,7 @@ return [
     'attach' => 'Attach',
     'attachments_insert_link' => 'Add Attachment Link to Page',
     'attachments_edit_file' => 'Edit File',
-    'attachments_edit_file_name' => 'File Name',
+    'attachments_edit_file_name' => 'Enw\'r Ffeil',
     'attachments_edit_drop_upload' => 'Drop files or click here to upload and overwrite',
     'attachments_order_updated' => 'Attachment order updated',
     'attachments_updated_success' => 'Attachment details updated',
@@ -412,12 +412,12 @@ return [
     'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 
     // Watch Options
-    'watch' => 'Watch',
+    'watch' => 'Gwylio',
     'watch_title_default' => 'Default Preferences',
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
     'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
-    'watch_title_new' => 'New Pages',
+    'watch_title_new' => 'Tudalennau Newydd',
     'watch_desc_new' => 'Notify when any new page is created within this item.',
     'watch_title_updates' => 'All Page Updates',
     'watch_desc_updates' => 'Notify upon all new pages and page changes.',
