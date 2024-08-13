@@ -11,6 +11,7 @@ export type SelectionChangeHandler = (selection: BaseSelection|null) => void;
 export class EditorUIManager {
 
     protected modalDefinitionsByKey: Record<string, EditorFormModalDefinition> = {};
+    protected activeModalsByKey: Record<string, EditorFormModal> = {};
     protected decoratorConstructorsByType: Record<string, typeof EditorDecorator> = {};
     protected decoratorInstancesByNodeKey: Record<string, EditorDecorator> = {};
     protected context: EditorUiContext|null = null;
@@ -50,10 +51,22 @@ export class EditorUIManager {
             throw new Error(`Attempted to show modal of key [${key}] but no modal registered for that key`);
         }
 
-        const modal = new EditorFormModal(modalDefinition);
+        const modal = new EditorFormModal(modalDefinition, key);
         modal.setContext(this.getContext());
 
         return modal;
+    }
+
+    setModalActive(key: string, modal: EditorFormModal): void {
+        this.activeModalsByKey[key] = modal;
+    }
+
+    setModalInactive(key: string): void {
+        delete this.activeModalsByKey[key];
+    }
+
+    getActiveModal(key: string): EditorFormModal|null {
+        return this.activeModalsByKey[key];
     }
 
     registerDecoratorType(type: string, decorator: typeof EditorDecorator) {
