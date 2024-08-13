@@ -7,13 +7,13 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
+    'settings' => 'Gosodiadau',
     'settings_save' => 'Save Settings',
     'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'categories' => 'Categorïau',
 
     // App Settings
-    'app_customization' => 'Customization',
+    'app_customization' => 'Addasiad',
     'app_features_security' => 'Features & Security',
     'app_name' => 'Application Name',
     'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
@@ -33,7 +33,7 @@ return [
     'app_custom_html_disabled_notice' => 'Custom HTML head content is disabled on this settings page to ensure any breaking changes can be reverted.',
     'app_logo' => 'Application Logo',
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
-    'app_icon' => 'Application Icon',
+    'app_icon' => 'Eicon yr Ap',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
     'app_homepage' => 'Application Homepage',
     'app_homepage_desc' => 'Select a view to show on the homepage instead of the default view. Page permissions are ignored for selected pages.',
@@ -51,17 +51,17 @@ return [
     'color_scheme' => 'Application Color Scheme',
     'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
-    'app_color' => 'Primary Color',
+    'app_color' => 'Prif Liw',
     'link_color' => 'Default Link Color',
     'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
-    'bookshelf_color' => 'Shelf Color',
-    'book_color' => 'Book Color',
-    'chapter_color' => 'Chapter Color',
-    'page_color' => 'Page Color',
+    'bookshelf_color' => 'Lliw Silff',
+    'book_color' => 'Lliw Llyfr',
+    'chapter_color' => 'Lliw Pennod',
+    'page_color' => 'Lliw Tudalen',
     'page_draft_color' => 'Page Draft Color',
 
     // Registration Settings
-    'reg_settings' => 'Registration',
+    'reg_settings' => 'Cofrestriad',
     'reg_enable' => 'Enable Registration',
     'reg_enable_toggle' => 'Enable registration',
     'reg_enable_desc' => 'When registration is enabled user will be able to sign themselves up as an application user. Upon registration they are given a single, default user role.',
@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
 
     // Maintenance settings
-    'maint' => 'Maintenance',
+    'maint' => 'Cynnal',
     'maint_image_cleanup' => 'Cleanup Images',
     'maint_image_cleanup_desc' => 'Scans page & revision content to check which images and drawings are currently in use and which images are redundant. Ensure you create a full database and image backup before running this.',
     'maint_delete_images_only_in_revisions' => 'Also delete images that only exist in old page revisions',
@@ -98,7 +98,7 @@ return [
     'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
-    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin' => 'Bin Ailgylchu',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Deleted Item',
     'recycle_bin_deleted_parent' => 'Parent',
