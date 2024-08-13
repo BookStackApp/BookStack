@@ -205,7 +205,7 @@ return [
     'users_none_selected' => 'No user selected',
     'users_edit' => 'Edit User',
     'users_edit_profile' => 'Edit Profile',
-    'users_avatar' => 'User Avatar',
+    'users_avatar' => 'Afatar Defnyddiwr',
     'users_avatar_desc' => 'Select an image to represent this user. This should be approx 256px square.',
     'users_preferred_language' => 'Preferred Language',
     'users_preferred_language_desc' => 'This option will change the language used for the user-interface of the application. This will not affect any user-created content.',
@@ -231,7 +231,7 @@ return [
 
     // API Tokens
     'user_api_token_create' => 'Create API Token',
-    'user_api_token_name' => 'Name',
+    'user_api_token_name' => 'Enw',
     'user_api_token_name_desc' => 'Give your token a readable name as a future reminder of its intended purpose.',
     'user_api_token_expiry' => 'Expiry Date',
     'user_api_token_expiry_desc' => 'Set a date at which this token expires. After this date, requests made using this token will no longer work. Leaving this field blank will set an expiry 100 years into the future.',
@@ -265,7 +265,7 @@ return [
     'webhooks_timeout' => 'Webhook Request Timeout (Seconds)',
     'webhooks_endpoint' => 'Webhook Endpoint',
     'webhooks_active' => 'Webhook Active',
-    'webhook_events_table_header' => 'Events',
+    'webhook_events_table_header' => 'Digwyddiadau',
     'webhooks_delete' => 'Delete Webhook',
     'webhooks_delete_warning' => 'This will fully delete this webhook, with the name \':webhookName\', from the system.',
     'webhooks_delete_confirm' => 'Are you sure you want to delete this webhook?',
