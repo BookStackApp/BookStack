@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilapplikasjon',
     'mfa_option_totp_desc' => 'For å bruke flerfaktorautentisering trenger du en mobilapplikasjon som støtter TOTP-teknologien, slik som Google Authenticator, Authy eller Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Sikkerhetskoder',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Genererer et sett med engangskoder som du kan bruke ved innlogging for å bekrefte identiteten din. Sørg for å lagre disse på et sikkert sted.',
     'mfa_gen_confirm_and_enable' => 'Bekreft og aktiver',
     'mfa_gen_backup_codes_title' => 'Konfigurasjon av sikkerhetskoder',
     'mfa_gen_backup_codes_desc' => 'Lagre nedeforstående liste med koder på et trygt sted. Når du skal ha tilgang til systemet kan du bruke en av disse som en faktor under innlogging.',
