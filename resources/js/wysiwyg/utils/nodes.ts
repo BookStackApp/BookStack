@@ -1,4 +1,4 @@
-import {$getRoot, $isTextNode, LexicalEditor, LexicalNode} from "lexical";
+import {$getRoot, $isElementNode, $isTextNode, ElementNode, LexicalEditor, LexicalNode} from "lexical";
 import {LexicalNodeMatcher} from "../nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$generateNodesFromDOM} from "@lexical/html";
@@ -29,6 +29,26 @@ export function $getParentOfType(node: LexicalNode, matcher: LexicalNodeMatcher)
     }
 
     return null;
+}
+
+export function $getAllNodesOfType(matcher: LexicalNodeMatcher, root?: ElementNode): LexicalNode[] {
+    if (!root) {
+        root = $getRoot();
+    }
+
+    const matches = [];
+
+    for (const child of root.getChildren()) {
+        if (matcher(child)) {
+            matches.push(child);
+        }
+
+        if ($isElementNode(child)) {
+            matches.push(...$getAllNodesOfType(matcher, child));
+        }
+    }
+
+    return matches;
 }
 
 /**

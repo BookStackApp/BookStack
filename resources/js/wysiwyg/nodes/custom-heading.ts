@@ -30,9 +30,7 @@ export class CustomHeadingNode extends HeadingNode {
     }
 
     static clone(node: CustomHeadingNode) {
-        const newNode = new CustomHeadingNode(node.__tag, node.__key);
-        newNode.__id = node.__id;
-        return newNode;
+        return new CustomHeadingNode(node.__tag, node.__key);
     }
 
     createDOM(config: EditorConfig): HTMLElement {
