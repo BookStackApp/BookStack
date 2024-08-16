@@ -27,7 +27,7 @@ return [
     'app_secure_images_toggle' => '啟用更高安全性的圖片上傳',
     'app_secure_images_desc' => '因為效能因素，所有圖片都是公開的。此選項會在圖片的網址前加入一串隨機且難以猜測的字串。確保未啟用目錄索引，讓直接進入變得更困難。',
     'app_default_editor' => '預設頁面編輯器',
-    'app_default_editor_desc' => '选择编辑新页面时默认使用的编辑器。这可以在权限允许的页面级别被覆盖。',
+    'app_default_editor_desc' => '選擇編輯頁面時預設使用的編輯器，這項設定值可被頁面的權限覆蓋',
     'app_custom_html' => '自訂 HTML 標題內容',
     'app_custom_html_desc' => '此處加入的任何內容都將插入到每個頁面的 <head> 部分的底部，這對於覆蓋樣式或加入分析程式碼很方便。',
     'app_custom_html_disabled_notice' => '在此設定頁面上停用了自訂 HTML 標題內容，以確保任何重大變更都能被還原。',
@@ -49,7 +49,7 @@ return [
 
     // Color settings
     'color_scheme' => '應用程式配色',
-    'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
+    'color_scheme_desc' => '設定使用者頁面欲使用的顏色。可分別針對淺色模式與暗色模式設定顏色，以確保容易閱讀',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
     'app_color' => '主要顏色',
     'link_color' => '連結預設顏色',
