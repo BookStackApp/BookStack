@@ -1,14 +1,13 @@
 import {EditorContainerUiElement, EditorUiElement} from "../core";
 import {el} from "../../../utils/dom";
-import {EditorFormField} from "../forms";
 import {EditorButton} from "../buttons";
 
 
 export class EditorActionField extends EditorContainerUiElement {
-    protected input: EditorFormField;
+    protected input: EditorUiElement;
     protected action: EditorButton;
 
-    constructor(input: EditorFormField, action: EditorButton) {
+    constructor(input: EditorUiElement, action: EditorButton) {
         super([input, action]);
 
         this.input = input;

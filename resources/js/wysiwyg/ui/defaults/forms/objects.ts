@@ -18,6 +18,7 @@ import {showImageManager} from "../../../utils/images";
 import searchImageIcon from "@icons/editor/image-search.svg";
 import searchIcon from "@icons/search.svg";
 import {showLinkSelector} from "../../../utils/links";
+import {LinkField} from "../../framework/blocks/link-field";
 
 export function $showImageForm(image: ImageNode, context: EditorUiContext) {
     const imageModal: EditorFormModal = context.manager.createModal('image');
@@ -132,11 +133,11 @@ export const link: EditorFormDefinition = {
         {
             build() {
                 return new EditorActionField(
-                    new EditorFormField({
+                    new LinkField(new EditorFormField({
                         label: 'URL',
                         name: 'url',
                         type: 'text',
-                    }),
+                    })),
                     new EditorButton({
                         label: 'Browse links',
                         icon: searchIcon,

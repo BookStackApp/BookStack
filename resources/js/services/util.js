@@ -85,6 +85,17 @@ export function uniqueId() {
 }
 
 /**
+ * Generate a random smaller unique ID.
+ *
+ * @returns {string}
+ */
+export function uniqueIdSmall() {
+    // eslint-disable-next-line no-bitwise
+    const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    return S4();
+}
+
+/**
  * Create a promise that resolves after the given time.
  * @param {int} timeMs
  * @returns {Promise}
