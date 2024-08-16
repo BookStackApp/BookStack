@@ -5,9 +5,9 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {$createTextNode, $getSelection} from "lexical";
+import {$createTextNode, $getSelection, $insertNodes} from "lexical";
 import {$isImageNode, ImageNode} from "../../../nodes/image";
-import {$createLinkNode} from "@lexical/link";
+import {$createLinkNode, $isLinkNode} from "@lexical/link";
 import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
 import {$getNodeFromSelection} from "../../../utils/selection";
@@ -16,6 +16,8 @@ import {EditorActionField} from "../../framework/blocks/action-field";
 import {EditorButton} from "../../framework/buttons";
 import {showImageManager} from "../../../utils/images";
 import searchImageIcon from "@icons/editor/image-search.svg";
+import searchIcon from "@icons/search.svg";
+import {showLinkSelector} from "../../../utils/links";
 
 export function $showImageForm(image: ImageNode, context: EditorUiContext) {
     const imageModal: EditorFormModal = context.manager.createModal('image');
@@ -97,23 +99,62 @@ export const link: EditorFormDefinition = {
     async action(formData, context: EditorUiContext) {
         context.editor.update(() => {
 
+            const url = formData.get('url')?.toString() || '';
+            const title = formData.get('title')?.toString() || ''
+            const target = formData.get('target')?.toString() || '';
+            const text = formData.get('text')?.toString() || '';
+
             const selection = $getSelection();
+            let link = $getNodeFromSelection(selection, $isLinkNode);
+            if ($isLinkNode(link)) {
+                link.setURL(url);
+                link.setTarget(target);
+                link.setTitle(title);
+            } else {
+                link = $createLinkNode(url, {
+                    title: title,
+                    target: target,
+                });
 
-            const linkNode = $createLinkNode(formData.get('url')?.toString() || '', {
-                title: formData.get('title')?.toString() || '',
-                target: formData.get('target')?.toString() || '',
-            });
-            linkNode.append($createTextNode(formData.get('text')?.toString() || ''));
+                $insertNodes([link]);
+            }
 
-            selection?.insertNodes([linkNode]);
+            if ($isLinkNode(link)) {
+                for (const child of link.getChildren()) {
+                    child.remove(true);
+                }
+                link.append($createTextNode(text));
+            }
         });
         return true;
     },
     fields: [
         {
-            label: 'URL',
-            name: 'url',
-            type: 'text',
+            build() {
+                return new EditorActionField(
+                    new EditorFormField({
+                        label: 'URL',
+                        name: 'url',
+                        type: 'text',
+                    }),
+                    new EditorButton({
+                        label: 'Browse links',
+                        icon: searchIcon,
+                        action(context: EditorUiContext) {
+                            showLinkSelector(entity => {
+                                const modal =  context.manager.getActiveModal('link');
+                                if (modal) {
+                                    modal.getForm().setValues({
+                                        url: entity.link,
+                                        text: entity.name,
+                                        title: entity.name,
+                                    });
+                                }
+                            });
+                        }
+                    }),
+                );
+            },
         },
         {
             label: 'Text to display',
