@@ -50,7 +50,7 @@ return [
     // Color settings
     'color_scheme' => '應用程式配色',
     'color_scheme_desc' => '設定使用者頁面欲使用的顏色。可分別針對淺色模式與暗色模式設定顏色，以確保容易閱讀',
-    'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
+    'ui_colors_desc' => '設定頁面主要色彩以及頁面連結預設顏色。主要色彩用於標題橫幅、按鈕以及主要操作界面，頁面連結顏色，主要用於主頁面、編輯頁面中的文字連結、操作按鈕。',
     'app_color' => '主要顏色',
     'link_color' => '連結預設顏色',
     'content_colors_desc' => '設定頁面層次結構中的元素顏色；為了提高可讀性，建議選擇亮度與預設顏色相似的顏色。',
