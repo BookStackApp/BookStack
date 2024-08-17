@@ -116,5 +116,5 @@ return [
     'maintenance_test_email_failure' => '寄送測試電子郵件時發生錯誤:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL 與設置的 SSR 主機不符',
 ];
