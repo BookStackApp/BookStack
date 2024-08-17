@@ -1,8 +1,11 @@
-import {LexicalEditor, LexicalNode} from "lexical";
+import {$getSelection, $insertNodes, LexicalEditor, LexicalNode} from "lexical";
 import {HttpError} from "../../services/http";
 import {EditorUiContext} from "../ui/framework/core";
 import * as DrawIO from "../../services/drawio";
-import {DiagramNode} from "../nodes/diagram";
+import {$createDiagramNode, DiagramNode} from "../nodes/diagram";
+import {ImageManager} from "../../components";
+import {EditorImageData} from "./images";
+import {$getNodeFromSelection} from "./selection";
 
 export function $isDiagramNode(node: LexicalNode | null | undefined): node is DiagramNode {
     return node instanceof DiagramNode;
@@ -66,5 +69,27 @@ export function $openDrawingEditorForNode(context: EditorUiContext, node: Diagra
         return isNew ? '' : DrawIO.load(drawingId);
     }, async (pngData: string) => {
         return updateDrawingNodeFromData(context, node, pngData, isNew);
+    });
+}
+
+export function showDiagramManager(callback: (image: EditorImageData) => any) {
+    const imageManager: ImageManager = window.$components.first('image-manager') as ImageManager;
+    imageManager.show((image: EditorImageData) => {
+        callback(image);
+    }, 'drawio');
+}
+
+export function showDiagramManagerForInsert(context: EditorUiContext) {
+    const selection = context.lastSelection;
+    showDiagramManager((image: EditorImageData) => {
+        context.editor.update(() => {
+            const diagramNode = $createDiagramNode(image.id, image.url);
+            const selectedDiagram = $getNodeFromSelection(selection, $isDiagramNode);
+            if ($isDiagramNode(selectedDiagram)) {
+                selectedDiagram.replace(diagramNode);
+            } else {
+                $insertNodes([diagramNode]);
+            }
+        });
     });
 }

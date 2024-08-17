@@ -56,16 +56,15 @@ import {bulletList, numberList, taskList} from "./defaults/buttons/lists";
 import {
     codeBlock,
     details,
-    diagram,
+    diagram, diagramManager,
     editCodeBlock,
     horizontalRule,
     image,
     link, media,
     unlink
 } from "./defaults/buttons/objects";
-import {$isTableNode} from "@lexical/table";
-import {$selectionContainsNodeType} from "../utils/selection";
 import {el} from "../utils/dom";
+import {EditorButtonWithMenu} from "./framework/blocks/button-with-menu";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -166,7 +165,10 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new EditorButton(image),
             new EditorButton(horizontalRule),
             new EditorButton(codeBlock),
-            new EditorButton(diagram),
+            new EditorButtonWithMenu(
+                new EditorButton(diagram),
+                [new EditorButton(diagramManager)],
+            ),
             new EditorButton(media),
             new EditorButton(details),
         ]),

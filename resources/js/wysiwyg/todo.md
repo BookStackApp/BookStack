@@ -10,7 +10,6 @@
 - Alignments: Handle inline block content (image, video)
 - Image paste upload
 - Keyboard shortcuts support
-- Drawing gallery integration
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 - Media resize support (like images)
 - Table caption text support
