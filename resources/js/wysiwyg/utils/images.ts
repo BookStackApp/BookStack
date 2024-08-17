@@ -2,7 +2,8 @@ import {ImageManager} from "../../components";
 import {$createImageNode} from "../nodes/image";
 import {$createLinkNode, LinkNode} from "@lexical/link";
 
-type EditorImageData = {
+export type EditorImageData = {
+    id: string;
     url: string;
     thumbs?: {display: string};
     name: string;

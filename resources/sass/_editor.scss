@@ -82,6 +82,31 @@ body.editor-is-fullscreen {
   fill: currentColor;
   display: block;
 }
+.editor-button-with-menu-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  align-items: stretch;
+  border-radius: 4px;
+  .editor-dropdown-menu-container {
+    display: flex;
+  }
+  .editor-dropdown-menu-container > .editor-dropdown-menu {
+    top: 100%;
+  }
+  .editor-dropdown-menu-container > .editor-button {
+    padding-inline: 4px;
+    margin-inline-start: -3px;
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  &:hover {
+    outline: 1px solid #DDD;
+    outline-offset: -3px;
+  }
+}
 
 // Containers
 .editor-dropdown-menu-container {

@@ -30,7 +30,7 @@ import {
     $insertNewBlockNodeAtSelection,
     $selectionContainsNodeType
 } from "../../../utils/selection";
-import {$isDiagramNode, $openDrawingEditorForNode} from "../../../utils/diagrams";
+import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} from "../../../utils/diagrams";
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
 import {$showImageForm} from "../forms/objects";
 
@@ -181,6 +181,16 @@ export const diagram: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isDiagramNode);
+    }
+};
+
+export const diagramManager: EditorButtonDefinition = {
+    label: 'Drawing manager',
+    action(context: EditorUiContext) {
+        showDiagramManagerForInsert(context);
+    },
+    isActive(): boolean {
+        return false;
     }
 };
 
