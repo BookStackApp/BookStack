@@ -21,13 +21,16 @@ import {
 } from "@lexical/table";
 import {TableCellHeaderState} from "@lexical/table/LexicalTableCellNode";
 import {extractStyleMapFromElement, StyleMap} from "../utils/dom";
+import {CommonBlockAlignment, extractAlignmentFromElement} from "./_common";
 
 export type SerializedCustomTableCellNode = Spread<{
-    styles: Record<string, string>,
+    styles: Record<string, string>;
+    alignment: CommonBlockAlignment;
 }, SerializedTableCellNode>
 
 export class CustomTableCellNode extends TableCellNode {
     __styles: StyleMap = new Map;
+    __alignment: CommonBlockAlignment = '';
 
     static getType(): string {
         return 'custom-table-cell';
@@ -42,6 +45,7 @@ export class CustomTableCellNode extends TableCellNode {
         );
         cellNode.__rowSpan = node.__rowSpan;
         cellNode.__styles = new Map(node.__styles);
+        cellNode.__alignment = node.__alignment;
         return cellNode;
     }
 
@@ -60,6 +64,16 @@ export class CustomTableCellNode extends TableCellNode {
         self.__styles = new Map(styles);
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     updateTag(tag: string): void {
         const isHeader = tag.toLowerCase() === 'th';
         const state = isHeader ? TableCellHeaderStates.ROW : TableCellHeaderStates.NO_STATUS;
@@ -74,12 +88,17 @@ export class CustomTableCellNode extends TableCellNode {
             element.style.setProperty(name, value);
         }
 
+        if (this.__alignment) {
+            element.classList.add('align-' + this.__alignment);
+        }
+
         return element;
     }
 
     updateDOM(prevNode: CustomTableCellNode): boolean {
         return super.updateDOM(prevNode)
-            || this.__styles !== prevNode.__styles;
+            || this.__styles !== prevNode.__styles
+            || this.__alignment !== prevNode.__alignment;
     }
 
     static importDOM(): DOMConversionMap | null {
@@ -110,6 +129,7 @@ export class CustomTableCellNode extends TableCellNode {
         );
 
         node.setStyles(new Map(Object.entries(serializedNode.styles)));
+        node.setAlignment(serializedNode.alignment);
 
         return node;
     }
@@ -119,6 +139,7 @@ export class CustomTableCellNode extends TableCellNode {
             ...super.exportJSON(),
             type: 'custom-table-cell',
             styles: Object.fromEntries(this.__styles),
+            alignment: this.__alignment,
         };
     }
 }
@@ -128,6 +149,7 @@ function $convertCustomTableCellNodeElement(domNode: Node): DOMConversionOutput 
 
     if (domNode instanceof HTMLElement && output.node instanceof CustomTableCellNode) {
         output.node.setStyles(extractStyleMapFromElement(domNode));
+        output.node.setAlignment(extractAlignmentFromElement(domNode));
     }
 
     return output;

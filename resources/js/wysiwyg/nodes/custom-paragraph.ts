@@ -1,21 +1,23 @@
 import {
     DOMConversion,
     DOMConversionMap,
-    DOMConversionOutput, ElementFormatType,
+    DOMConversionOutput,
     LexicalNode,
-    ParagraphNode,
-    SerializedParagraphNode,
-    Spread
+    ParagraphNode, SerializedParagraphNode, Spread,
 } from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
+import {
+    CommonBlockAlignment, commonPropertiesDifferent,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
 
-
-export type SerializedCustomParagraphNode = Spread<{
-    id: string;
-}, SerializedParagraphNode>
+export type SerializedCustomParagraphNode = Spread<SerializedCommonBlockNode, SerializedParagraphNode>
 
 export class CustomParagraphNode extends ParagraphNode {
     __id: string = '';
+    __alignment: CommonBlockAlignment = '';
 
     static getType() {
         return 'custom-paragraph';
@@ -31,19 +33,32 @@ export class CustomParagraphNode extends ParagraphNode {
         return self.__id;
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     static clone(node: CustomParagraphNode): CustomParagraphNode {
         const newNode = new CustomParagraphNode(node.__key);
         newNode.__id = node.__id;
+        newNode.__alignment = node.__alignment;
         return newNode;
     }
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        if (this.__id) {
-            dom.setAttribute('id', this.__id);
-        }
-
+        updateElementWithCommonBlockProps(dom, this);
         return dom;
+    }
+
+    updateDOM(prevNode: CustomParagraphNode, dom: HTMLElement, config: EditorConfig): boolean {
+        return super.updateDOM(prevNode, dom, config)
+            || commonPropertiesDifferent(prevNode, this);
     }
 
     exportJSON(): SerializedCustomParagraphNode {
@@ -52,12 +67,14 @@ export class CustomParagraphNode extends ParagraphNode {
             type: 'custom-paragraph',
             version: 1,
             id: this.__id,
+            alignment: this.__alignment,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomParagraphNode): CustomParagraphNode {
         const node = $createCustomParagraphNode();
         node.setId(serializedNode.id);
+        node.setAlignment(serializedNode.alignment);
         return node;
     }
 
@@ -67,17 +84,14 @@ export class CustomParagraphNode extends ParagraphNode {
                 return {
                     conversion: (element: HTMLElement): DOMConversionOutput|null => {
                         const node = $createCustomParagraphNode();
-                        if (element.style) {
-                            node.setFormat(element.style.textAlign as ElementFormatType);
+                        if (element.style.textIndent) {
                             const indent = parseInt(element.style.textIndent, 10) / 20;
                             if (indent > 0) {
                                 node.setIndent(indent);
                             }
                         }
 
-                        if (element.id) {
-                            node.setId(element.id);
-                        }
+                        setCommonBlockPropsFromElement(element, node);
 
                         return {node};
                     },

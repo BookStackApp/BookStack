@@ -1,19 +1,24 @@
 import {
     DOMConversionMap,
-    DOMConversionOutput, ElementFormatType,
+    DOMConversionOutput,
     LexicalNode,
     Spread
 } from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {HeadingNode, HeadingTagType, SerializedHeadingNode} from "@lexical/rich-text";
+import {
+    CommonBlockAlignment, commonPropertiesDifferent,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
 
 
-export type SerializedCustomHeadingNode = Spread<{
-    id: string;
-}, SerializedHeadingNode>
+export type SerializedCustomHeadingNode = Spread<SerializedCommonBlockNode, SerializedHeadingNode>
 
 export class CustomHeadingNode extends HeadingNode {
     __id: string = '';
+    __alignment: CommonBlockAlignment = '';
 
     static getType() {
         return 'custom-heading';
@@ -29,17 +34,31 @@ export class CustomHeadingNode extends HeadingNode {
         return self.__id;
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     static clone(node: CustomHeadingNode) {
-        return new CustomHeadingNode(node.__tag, node.__key);
+        const newNode = new CustomHeadingNode(node.__tag, node.__key);
+        newNode.__alignment = node.__alignment;
+        return newNode;
     }
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        if (this.__id) {
-            dom.setAttribute('id', this.__id);
-        }
-
+        updateElementWithCommonBlockProps(dom, this);
         return dom;
+    }
+
+    updateDOM(prevNode: CustomHeadingNode, dom: HTMLElement): boolean {
+        return super.updateDOM(prevNode, dom)
+            || commonPropertiesDifferent(prevNode, this);
     }
 
     exportJSON(): SerializedCustomHeadingNode {
@@ -48,12 +67,14 @@ export class CustomHeadingNode extends HeadingNode {
             type: 'custom-heading',
             version: 1,
             id: this.__id,
+            alignment: this.__alignment,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomHeadingNode): CustomHeadingNode {
         const node = $createCustomHeadingNode(serializedNode.tag);
         node.setId(serializedNode.id);
+        node.setAlignment(serializedNode.alignment);
         return node;
     }
 
@@ -99,12 +120,7 @@ function $convertHeadingElement(element: HTMLElement): DOMConversionOutput {
         nodeName === 'h6'
     ) {
         node = $createCustomHeadingNode(nodeName);
-        if (element.style !== null) {
-            node.setFormat(element.style.textAlign as ElementFormatType);
-        }
-        if (element.id) {
-            node.setId(element.id);
-        }
+        setCommonBlockPropsFromElement(element, node);
     }
     return {node};
 }

@@ -3,6 +3,7 @@ import {LexicalNodeMatcher} from "../nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
+import {NodeHasAlignment} from "../nodes/_common";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
@@ -70,4 +71,8 @@ export function $getNearestBlockNodeForCoords(editor: LexicalEditor, x: number, 
     }
 
     return null;
+}
+
+export function nodeHasAlignment(node: object): node is NodeHasAlignment {
+    return '__alignment' in node;
 }

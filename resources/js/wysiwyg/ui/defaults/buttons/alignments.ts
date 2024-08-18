@@ -1,4 +1,4 @@
-import {$getSelection, BaseSelection, ElementFormatType} from "lexical";
+import {$getSelection, BaseSelection} from "lexical";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import alignLeftIcon from "@icons/editor/align-left.svg";
 import {EditorUiContext} from "../../framework/core";
@@ -6,13 +6,17 @@ import alignCenterIcon from "@icons/editor/align-center.svg";
 import alignRightIcon from "@icons/editor/align-right.svg";
 import alignJustifyIcon from "@icons/editor/align-justify.svg";
 import {$getBlockElementNodesInSelection, $selectionContainsElementFormat} from "../../../utils/selection";
+import {CommonBlockAlignment} from "../../../nodes/_common";
+import {nodeHasAlignment} from "../../../utils/nodes";
 
 
-function setAlignmentForSection(alignment: ElementFormatType): void {
+function setAlignmentForSection(alignment: CommonBlockAlignment): void {
     const selection = $getSelection();
     const elements = $getBlockElementNodesInSelection(selection);
     for (const node of elements) {
-        node.setFormat(alignment);
+        if (nodeHasAlignment(node)) {
+            node.setAlignment(alignment)
+        }
     }
 }
 

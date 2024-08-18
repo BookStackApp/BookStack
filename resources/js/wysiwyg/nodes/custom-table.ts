@@ -4,17 +4,23 @@ import {EditorConfig} from "lexical/LexicalEditor";
 
 import {el, extractStyleMapFromElement, StyleMap} from "../utils/dom";
 import {getTableColumnWidths} from "../utils/tables";
+import {
+    CommonBlockAlignment,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
 
-export type SerializedCustomTableNode = Spread<{
-    id: string;
+export type SerializedCustomTableNode = Spread<Spread<{
     colWidths: string[];
     styles: Record<string, string>,
-}, SerializedTableNode>
+}, SerializedTableNode>, SerializedCommonBlockNode>
 
 export class CustomTableNode extends TableNode {
     __id: string = '';
     __colWidths: string[] = [];
     __styles: StyleMap = new Map;
+    __alignment: CommonBlockAlignment = '';
 
     static getType() {
         return 'custom-table';
@@ -28,6 +34,16 @@ export class CustomTableNode extends TableNode {
     getId(): string {
         const self = this.getLatest();
         return self.__id;
+    }
+
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
     }
 
     setColWidths(widths: string[]) {
@@ -55,15 +71,13 @@ export class CustomTableNode extends TableNode {
         newNode.__id = node.__id;
         newNode.__colWidths = node.__colWidths;
         newNode.__styles = new Map(node.__styles);
+        newNode.__alignment = node.__alignment;
         return newNode;
     }
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        const id = this.getId();
-        if (id) {
-            dom.setAttribute('id', id);
-        }
+        updateElementWithCommonBlockProps(dom, this);
 
         const colWidths = this.getColWidths();
         if (colWidths.length > 0) {
@@ -97,6 +111,7 @@ export class CustomTableNode extends TableNode {
             id: this.__id,
             colWidths: this.__colWidths,
             styles: Object.fromEntries(this.__styles),
+            alignment: this.__alignment,
         };
     }
 
@@ -105,6 +120,7 @@ export class CustomTableNode extends TableNode {
         node.setId(serializedNode.id);
         node.setColWidths(serializedNode.colWidths);
         node.setStyles(new Map(Object.entries(serializedNode.styles)));
+        node.setAlignment(serializedNode.alignment);
         return node;
     }
 
@@ -114,10 +130,7 @@ export class CustomTableNode extends TableNode {
                 return {
                     conversion: (element: HTMLElement): DOMConversionOutput|null => {
                         const node = $createCustomTableNode();
-
-                        if (element.id) {
-                            node.setId(element.id);
-                        }
+                        setCommonBlockPropsFromElement(element, node);
 
                         const colWidths = getTableColumnWidths(element as HTMLTableElement);
                         node.setColWidths(colWidths);
