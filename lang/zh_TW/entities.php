@@ -46,8 +46,8 @@ return [
     // Permissions and restrictions
     'permissions' => '權限',
     'permissions_desc' => '設定權限，並覆蓋角色預設權限',
-    'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
-    'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
+    'permissions_book_cascade' => '除非章節、頁面有自訂權限，否則書籍設定的權限將自動套用',
+    'permissions_chapter_cascade' => '除非章節、頁面有自訂權限，否則章節的權限將自動套用',
     'permissions_save' => '儲存權限',
     'permissions_owner' => '擁有者',
     'permissions_role_everyone_else' => '所有其他人',
@@ -145,7 +145,7 @@ return [
     'books_search_this' => '搜尋此書本',
     'books_navigation' => '書本導覽',
     'books_sort' => '排序書本內容',
-    'books_sort_desc' => 'Move chapters and pages within a book to reorganise its contents. Other books can be added which allows easy moving of chapters and pages between books.',
+    'books_sort_desc' => '移動章節、頁面來重新組織內容。也可以透過顯示多本書籍來調整書籍之間的內容',
     'books_sort_named' => '排序書本 :bookName',
     'books_sort_name' => '按名稱排序',
     'books_sort_created' => '按建立時間排序',
@@ -154,7 +154,7 @@ return [
     'books_sort_chapters_last' => '最後一章',
     'books_sort_show_other' => '顯示其他書本',
     'books_sort_save' => '儲存新順序',
-    'books_sort_show_other_desc' => 'Add other books here to include them in the sort operation, and allow easy cross-book reorganisation.',
+    'books_sort_show_other_desc' => '新增書籍到排序清單中，以便跨書籍重組資料',
     'books_sort_move_up' => '上移',
     'books_sort_move_down' => '下移',
     'books_sort_move_prev_book' => '移動至前一書籍',
@@ -191,7 +191,7 @@ return [
     'chapters_permissions_active' => '章節權限已啟用',
     'chapters_permissions_success' => '章節權限已更新',
     'chapters_search_this' => '搜尋此章節',
-    'chapter_sort_book' => 'Sort Book',
+    'chapter_sort_book' => '排序書籍內容',
 
     // Pages
     'page' => '頁面',
