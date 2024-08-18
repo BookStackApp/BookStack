@@ -5,22 +5,27 @@ import {
     ElementNode,
     LexicalEditor,
     LexicalNode,
-    ParagraphNode, SerializedElementNode, Spread
+    ParagraphNode, Spread
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 import type {RangeSelection} from "lexical/LexicalSelection";
-import {el} from "../utils/dom";
+import {
+    CommonBlockAlignment, commonPropertiesDifferent,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
 
 export type CalloutCategory = 'info' | 'danger' | 'warning' | 'success';
 
 export type SerializedCalloutNode = Spread<{
     category: CalloutCategory;
-    id: string;
-}, SerializedElementNode>
+}, SerializedCommonBlockNode>
 
 export class CalloutNode extends ElementNode {
     __id: string = '';
     __category: CalloutCategory = 'info';
+    __alignment: CommonBlockAlignment = '';
 
     static getType() {
         return 'callout';
@@ -57,19 +62,26 @@ export class CalloutNode extends ElementNode {
         return self.__id;
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('p');
         element.classList.add('callout', this.__category || '');
-        if (this.__id) {
-            element.setAttribute('id', this.__id);
-        }
+        updateElementWithCommonBlockProps(element, this);
         return element;
     }
 
-    updateDOM(prevNode: unknown, dom: HTMLElement) {
-        // Returning false tells Lexical that this node does not need its
-        // DOM element replacing with a new copy from createDOM.
-        return false;
+    updateDOM(prevNode: CalloutNode): boolean {
+        return prevNode.__category !== this.__category ||
+            commonPropertiesDifferent(prevNode, this);
     }
 
     insertNewAfter(selection: RangeSelection, restoreSelection?: boolean): CalloutNode|ParagraphNode {
@@ -106,9 +118,7 @@ export class CalloutNode extends ElementNode {
                             }
 
                             const node = new CalloutNode(category);
-                            if (element.id) {
-                                node.setId(element.id);
-                            }
+                            setCommonBlockPropsFromElement(element, node);
 
                             return {
                                 node,
@@ -129,12 +139,14 @@ export class CalloutNode extends ElementNode {
             version: 1,
             category: this.__category,
             id: this.__id,
+            alignment: this.__alignment,
         };
     }
 
     static importJSON(serializedNode: SerializedCalloutNode): CalloutNode {
         const node = $createCalloutNode(serializedNode.category);
         node.setId(serializedNode.id);
+        node.setAlignment(serializedNode.alignment);
         return node;
     }
 

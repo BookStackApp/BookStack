@@ -1,19 +1,24 @@
 import {
     DOMConversionMap,
-    DOMConversionOutput, ElementFormatType,
+    DOMConversionOutput,
     LexicalNode,
     Spread
 } from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {QuoteNode, SerializedQuoteNode} from "@lexical/rich-text";
+import {
+    CommonBlockAlignment, commonPropertiesDifferent,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
 
 
-export type SerializedCustomQuoteNode = Spread<{
-    id: string;
-}, SerializedQuoteNode>
+export type SerializedCustomQuoteNode = Spread<SerializedCommonBlockNode, SerializedQuoteNode>
 
 export class CustomQuoteNode extends QuoteNode {
     __id: string = '';
+    __alignment: CommonBlockAlignment = '';
 
     static getType() {
         return 'custom-quote';
@@ -29,19 +34,31 @@ export class CustomQuoteNode extends QuoteNode {
         return self.__id;
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     static clone(node: CustomQuoteNode) {
         const newNode = new CustomQuoteNode(node.__key);
         newNode.__id = node.__id;
+        newNode.__alignment = node.__alignment;
         return newNode;
     }
 
     createDOM(config: EditorConfig): HTMLElement {
         const dom = super.createDOM(config);
-        if (this.__id) {
-            dom.setAttribute('id', this.__id);
-        }
-
+        updateElementWithCommonBlockProps(dom, this);
         return dom;
+    }
+
+    updateDOM(prevNode: CustomQuoteNode): boolean {
+        return commonPropertiesDifferent(prevNode, this);
     }
 
     exportJSON(): SerializedCustomQuoteNode {
@@ -50,12 +67,14 @@ export class CustomQuoteNode extends QuoteNode {
             type: 'custom-quote',
             version: 1,
             id: this.__id,
+            alignment: this.__alignment,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomQuoteNode): CustomQuoteNode {
         const node = $createCustomQuoteNode();
         node.setId(serializedNode.id);
+        node.setAlignment(serializedNode.alignment);
         return node;
     }
 
@@ -71,12 +90,7 @@ export class CustomQuoteNode extends QuoteNode {
 
 function $convertBlockquoteElement(element: HTMLElement): DOMConversionOutput {
     const node = $createCustomQuoteNode();
-    if (element.style !== null) {
-        node.setFormat(element.style.textAlign as ElementFormatType);
-    }
-    if (element.id) {
-        node.setId(element.id);
-    }
+    setCommonBlockPropsFromElement(element, node);
     return {node};
 }
 

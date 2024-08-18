@@ -35,17 +35,17 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         CustomHeadingNode,
         CustomQuoteNode,
         CustomListNode,
-        CustomListItemNode,
+        CustomListItemNode, // TODO - Alignment?
         CustomTableNode,
         CustomTableRowNode,
         CustomTableCellNode,
-        ImageNode,
+        ImageNode, // TODO - Alignment
         HorizontalRuleNode,
         DetailsNode, SummaryNode,
         CodeBlockNode,
         DiagramNode,
-        MediaNode,
-        CustomParagraphNode, // TODO - ID
+        MediaNode, // TODO - Alignment
+        CustomParagraphNode,
         LinkNode,
         {
             replace: ParagraphNode,
