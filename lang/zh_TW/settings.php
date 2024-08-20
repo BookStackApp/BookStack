@@ -194,7 +194,7 @@ return [
     'users_send_invite_text' => '您可以選擇向此使用者傳送邀請電子郵件，讓他們可以設定自己的密碼，您也可以自行設定他們的密碼。',
     'users_send_invite_option' => '傳送邀請電子郵件給使用者',
     'users_external_auth_id' => '外部身份驗證 ID',
-    'users_external_auth_id_desc' => 'When an external authentication system is in use (such as SAML2, OIDC or LDAP) this is the ID which links this BookStack user to the authentication system account. You can ignore this field if using the default email-based authentication.',
+    'users_external_auth_id_desc' => '使用外部驗證系統時 (如 SAML2、OIDC、LDAP)，將使這個帳號與驗證系統帳號連結。若使用一般的 email 認證方式，可以忽略此欄位。',
     'users_password_warning' => 'Only fill the below if you would like to change the password for this user.',
     'users_system_public' => '此使用者代表造訪您站台的任何訪客使用者。其不能用於登入，而會自動分配。',
     'users_delete' => '刪除使用者',
