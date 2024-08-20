@@ -2,7 +2,7 @@
 
 ## In progress
 
-- Keyboard shortcuts support
+// 
 
 ## Main Todo
 
@@ -13,6 +13,7 @@
 - Media resize support (like images)
 - Table caption text support
 - Table Cut/Copy/Paste column
+- Mac: Shortcut support via command.
 
 ## Secondary Todo
 

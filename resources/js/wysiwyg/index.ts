@@ -45,11 +45,12 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     const editor = createEditor(config);
     editor.setRootElement(editArea);
+    const context: EditorUiContext = buildEditorUI(container, editArea, editWrap, editor, options);
 
     mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(editor),
+        registerShortcuts(context),
         registerTableResizer(editor, editWrap),
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, editArea),
@@ -89,7 +90,6 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         console.log(editor.getEditorState().toJSON());
     };
 
-    const context: EditorUiContext = buildEditorUI(container, editArea, editWrap, editor, options);
     registerCommonNodeMutationListeners(context);
 
     return new SimpleWysiwygEditorInterface(editor);
