@@ -28,11 +28,12 @@ import {$isMediaNode, MediaNode} from "../../../nodes/media";
 import {
     $getNodeFromSelection,
     $insertNewBlockNodeAtSelection,
-    $selectionContainsNodeType
+    $selectionContainsNodeType, getLastSelection
 } from "../../../utils/selection";
 import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} from "../../../utils/diagrams";
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
 import {$showImageForm} from "../forms/objects";
+import {formatCodeBlock} from "../../../utils/formats";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
@@ -72,7 +73,7 @@ export const unlink: EditorButtonDefinition = {
     icon: unlinkIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const selection = context.lastSelection;
+            const selection = getLastSelection(context.editor);
             const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode | null;
             const selectionPoints = selection?.getStartEndPoints();
 
@@ -98,7 +99,8 @@ export const image: EditorButtonDefinition = {
     icon: imageIcon,
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const selectedImage = $getNodeFromSelection(context.lastSelection, $isImageNode) as ImageNode | null;
+            const selection = getLastSelection(context.editor);
+            const selectedImage = $getNodeFromSelection(selection, $isImageNode) as ImageNode | null;
             if (selectedImage) {
                 $showImageForm(selectedImage, context);
                 return;
@@ -134,21 +136,7 @@ export const codeBlock: EditorButtonDefinition = {
     label: 'Insert code block',
     icon: codeBlockIcon,
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            const selection = $getSelection();
-            const codeBlock = $getNodeFromSelection(context.lastSelection, $isCodeBlockNode) as (CodeBlockNode | null);
-            if (codeBlock === null) {
-                context.editor.update(() => {
-                    const codeBlock = $createCodeBlockNode();
-                    codeBlock.setCode(selection?.getTextContent() || '');
-                    $insertNewBlockNodeAtSelection(codeBlock, true);
-                    $openCodeEditorForNode(context.editor, codeBlock);
-                    codeBlock.selectStart();
-                });
-            } else {
-                $openCodeEditorForNode(context.editor, codeBlock);
-            }
-        });
+        formatCodeBlock(context.editor);
     },
     isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isCodeBlockNode);
@@ -165,8 +153,8 @@ export const diagram: EditorButtonDefinition = {
     icon: diagramIcon,
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const selection = $getSelection();
-            const diagramNode = $getNodeFromSelection(context.lastSelection, $isDiagramNode) as (DiagramNode | null);
+            const selection = getLastSelection(context.editor);
+            const diagramNode = $getNodeFromSelection(selection, $isDiagramNode) as (DiagramNode | null);
             if (diagramNode === null) {
                 context.editor.update(() => {
                     const diagram = $createDiagramNode();

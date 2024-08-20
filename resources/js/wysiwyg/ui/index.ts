@@ -21,7 +21,6 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
         scrollDOM: scrollContainer,
         manager,
         translate: (text: string): string => text,
-        lastSelection: null,
         options,
     };
     manager.setContext(context);

@@ -10,7 +10,7 @@ import {$isImageNode, ImageNode} from "../../../nodes/image";
 import {$createLinkNode, $isLinkNode} from "@lexical/link";
 import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
-import {$getNodeFromSelection} from "../../../utils/selection";
+import {$getNodeFromSelection, getLastSelection} from "../../../utils/selection";
 import {EditorFormModal} from "../../framework/modals";
 import {EditorActionField} from "../../framework/blocks/action-field";
 import {EditorButton} from "../../framework/buttons";
@@ -39,7 +39,8 @@ export const image: EditorFormDefinition = {
     submitText: 'Apply',
     async action(formData, context: EditorUiContext) {
         context.editor.update(() => {
-            const selectedImage = $getNodeFromSelection(context.lastSelection, $isImageNode);
+            const selection = getLastSelection(context.editor);
+            const selectedImage = $getNodeFromSelection(selection, $isImageNode);
             if ($isImageNode(selectedImage)) {
                 selectedImage.setSrc(formData.get('src')?.toString() || '');
                 selectedImage.setAltText(formData.get('alt')?.toString() || '');

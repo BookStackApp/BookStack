@@ -5,6 +5,7 @@ import {$getSelection, BaseSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELEC
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
+import {getLastSelection, setLastSelection} from "../../utils/selection";
 
 export type SelectionChangeHandler = (selection: BaseSelection|null) => void;
 
@@ -108,8 +109,7 @@ export class EditorUIManager {
     }
 
     protected triggerStateUpdate(update: EditorUiStateUpdate): void {
-        const context = this.getContext();
-        context.lastSelection = update.selection;
+        setLastSelection(update.editor, update.selection);
         this.toolbar?.updateState(update);
         this.updateContextToolbars(update);
         for (const toolbar of this.activeContextToolbars) {
@@ -119,9 +119,10 @@ export class EditorUIManager {
     }
 
     triggerStateRefresh(): void {
+        const editor = this.getContext().editor;
         this.triggerStateUpdate({
-            editor: this.getContext().editor,
-            selection: this.getContext().lastSelection,
+            editor,
+            selection: getLastSelection(editor),
         });
     }
 
