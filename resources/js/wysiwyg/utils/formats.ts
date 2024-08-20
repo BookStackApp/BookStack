@@ -1,9 +1,9 @@
 import {$isQuoteNode, HeadingNode, HeadingTagType} from "@lexical/rich-text";
-import {$getSelection, LexicalEditor, LexicalNode} from "lexical";
+import {$createTextNode, $getSelection, $insertNodes, LexicalEditor, LexicalNode} from "lexical";
 import {
     $getBlockElementNodesInSelection,
     $getNodeFromSelection,
-    $insertNewBlockNodeAtSelection,
+    $insertNewBlockNodeAtSelection, $selectionContainsNodeType,
     $toggleSelectionBlockNodeType,
     getLastSelection
 } from "./selection";
@@ -12,6 +12,9 @@ import {$createCustomParagraphNode, $isCustomParagraphNode} from "../nodes/custo
 import {$createCustomQuoteNode} from "../nodes/custom-quote";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../nodes/code-block";
 import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "../nodes/callout";
+import {insertList, ListNode, ListType, removeList} from "@lexical/list";
+import {$isCustomListNode} from "../nodes/custom-list";
+import {$createLinkNode, $isLinkNode} from "@lexical/link";
 
 const $isHeaderNodeOfTag = (node: LexicalNode | null | undefined, tag: HeadingTagType) => {
     return $isCustomHeadingNode(node) && (node as HeadingNode).getTag() === tag;
@@ -35,6 +38,21 @@ export function toggleSelectionAsParagraph(editor: LexicalEditor) {
 export function toggleSelectionAsBlockquote(editor: LexicalEditor) {
     editor.update(() => {
         $toggleSelectionBlockNodeType($isQuoteNode, $createCustomQuoteNode);
+    });
+}
+
+export function toggleSelectionAsList(editor: LexicalEditor, type: ListType) {
+    editor.getEditorState().read(() => {
+        const selection = $getSelection();
+        const listSelected = $selectionContainsNodeType(selection, (node: LexicalNode | null | undefined): boolean => {
+            return $isCustomListNode(node) && (node as ListNode).getListType() === type;
+        });
+
+        if (listSelected) {
+            removeList(editor);
+        } else {
+            insertList(editor, type);
+        }
     });
 }
 
@@ -83,6 +101,32 @@ export function cycleSelectionCalloutFormats(editor: LexicalEditor) {
                 const newType = types[newIndex];
                 block.setCategory(newType);
             }
+        }
+    });
+}
+
+export function insertOrUpdateLink(editor: LexicalEditor, linkDetails: {text: string, title: string, target: string, url: string}) {
+    editor.update(() => {
+        const selection = $getSelection();
+        let link = $getNodeFromSelection(selection, $isLinkNode);
+        if ($isLinkNode(link)) {
+            link.setURL(linkDetails.url);
+            link.setTarget(linkDetails.target);
+            link.setTitle(linkDetails.title);
+        } else {
+            link = $createLinkNode(linkDetails.url, {
+                title: linkDetails.title,
+                target: linkDetails.target,
+            });
+
+            $insertNodes([link]);
+        }
+
+        if ($isLinkNode(link)) {
+            for (const child of link.getChildren()) {
+                child.remove(true);
+            }
+            link.append($createTextNode(linkDetails.text));
         }
     });
 }

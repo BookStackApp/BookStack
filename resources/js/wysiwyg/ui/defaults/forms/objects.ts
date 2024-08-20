@@ -5,9 +5,9 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {$createTextNode, $getSelection, $insertNodes} from "lexical";
+import {$createNodeSelection, $createTextNode, $getSelection, $insertNodes, $setSelection} from "lexical";
 import {$isImageNode, ImageNode} from "../../../nodes/image";
-import {$createLinkNode, $isLinkNode} from "@lexical/link";
+import {$createLinkNode, $isLinkNode, LinkNode} from "@lexical/link";
 import {$createMediaNodeFromHtml, $createMediaNodeFromSrc, $isMediaNode, MediaNode} from "../../../nodes/media";
 import {$insertNodeToNearestRoot} from "@lexical/utils";
 import {$getNodeFromSelection, getLastSelection} from "../../../utils/selection";
@@ -19,6 +19,7 @@ import searchImageIcon from "@icons/editor/image-search.svg";
 import searchIcon from "@icons/search.svg";
 import {showLinkSelector} from "../../../utils/links";
 import {LinkField} from "../../framework/blocks/link-field";
+import {insertOrUpdateLink} from "../../../utils/formats";
 
 export function $showImageForm(image: ImageNode, context: EditorUiContext) {
     const imageModal: EditorFormModal = context.manager.createModal('image');
@@ -96,37 +97,36 @@ export const image: EditorFormDefinition = {
     ],
 };
 
+export function $showLinkForm(link: LinkNode|null, context: EditorUiContext) {
+    const linkModal = context.manager.createModal('link');
+
+    let formDefaults = {};
+    if (link) {
+        formDefaults = {
+            url: link.getURL(),
+            text: link.getTextContent(),
+            title: link.getTitle(),
+            target: link.getTarget(),
+        }
+
+        context.editor.update(() => {
+            const selection = $createNodeSelection();
+            selection.add(link.getKey());
+            $setSelection(selection);
+        });
+    }
+
+    linkModal.show(formDefaults);
+}
+
 export const link: EditorFormDefinition = {
     submitText: 'Apply',
     async action(formData, context: EditorUiContext) {
-        context.editor.update(() => {
-
-            const url = formData.get('url')?.toString() || '';
-            const title = formData.get('title')?.toString() || ''
-            const target = formData.get('target')?.toString() || '';
-            const text = formData.get('text')?.toString() || '';
-
-            const selection = $getSelection();
-            let link = $getNodeFromSelection(selection, $isLinkNode);
-            if ($isLinkNode(link)) {
-                link.setURL(url);
-                link.setTarget(target);
-                link.setTitle(title);
-            } else {
-                link = $createLinkNode(url, {
-                    title: title,
-                    target: target,
-                });
-
-                $insertNodes([link]);
-            }
-
-            if ($isLinkNode(link)) {
-                for (const child of link.getChildren()) {
-                    child.remove(true);
-                }
-                link.append($createTextNode(text));
-            }
+        insertOrUpdateLink(context.editor, {
+            url: formData.get('url')?.toString() || '',
+            title: formData.get('title')?.toString() || '',
+            target: formData.get('target')?.toString() || '',
+            text: formData.get('text')?.toString() || '',
         });
         return true;
     },

@@ -2,11 +2,9 @@ import {EditorButtonDefinition} from "../../framework/buttons";
 import linkIcon from "@icons/editor/link.svg";
 import {EditorUiContext} from "../../framework/core";
 import {
-    $createNodeSelection,
     $createTextNode,
     $getRoot,
     $getSelection, $insertNodes,
-    $setSelection,
     BaseSelection,
     ElementNode
 } from "lexical";
@@ -17,7 +15,7 @@ import {$isImageNode, ImageNode} from "../../../nodes/image";
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg";
 import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../../nodes/horizontal-rule";
 import codeBlockIcon from "@icons/editor/code-block.svg";
-import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../../../nodes/code-block";
+import {$isCodeBlockNode} from "../../../nodes/code-block";
 import editIcon from "@icons/edit.svg";
 import diagramIcon from "@icons/editor/diagram.svg";
 import {$createDiagramNode, DiagramNode} from "../../../nodes/diagram";
@@ -32,35 +30,16 @@ import {
 } from "../../../utils/selection";
 import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} from "../../../utils/diagrams";
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
-import {$showImageForm} from "../forms/objects";
+import {$showImageForm, $showLinkForm} from "../forms/objects";
 import {formatCodeBlock} from "../../../utils/formats";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
     icon: linkIcon,
     action(context: EditorUiContext) {
-        const linkModal = context.manager.createModal('link');
         context.editor.getEditorState().read(() => {
-            const selection = $getSelection();
-            const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode | null;
-
-            let formDefaults = {};
-            if (selectedLink) {
-                formDefaults = {
-                    url: selectedLink.getURL(),
-                    text: selectedLink.getTextContent(),
-                    title: selectedLink.getTitle(),
-                    target: selectedLink.getTarget(),
-                }
-
-                context.editor.update(() => {
-                    const selection = $createNodeSelection();
-                    selection.add(selectedLink.getKey());
-                    $setSelection(selection);
-                });
-            }
-
-            linkModal.show(formDefaults);
+            const selectedLink = $getNodeFromSelection($getSelection(), $isLinkNode) as LinkNode | null;
+            $showLinkForm(selectedLink, context);
         });
     },
     isActive(selection: BaseSelection | null): boolean {
