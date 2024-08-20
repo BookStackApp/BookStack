@@ -7,7 +7,7 @@ export class EventManager {
     /**
      * Emit a custom event for any handlers to pick-up.
      */
-    emit(eventName: string, eventData: {}): void {
+    emit(eventName: string, eventData: {} = {}): void {
         this.stack.push({name: eventName, data: eventData});
 
         const listenersToRun = this.listeners[eventName] || [];

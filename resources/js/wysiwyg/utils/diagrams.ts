@@ -5,7 +5,7 @@ import * as DrawIO from "../../services/drawio";
 import {$createDiagramNode, DiagramNode} from "../nodes/diagram";
 import {ImageManager} from "../../components";
 import {EditorImageData} from "./images";
-import {$getNodeFromSelection} from "./selection";
+import {$getNodeFromSelection, getLastSelection} from "./selection";
 
 export function $isDiagramNode(node: LexicalNode | null | undefined): node is DiagramNode {
     return node instanceof DiagramNode;
@@ -80,7 +80,7 @@ export function showDiagramManager(callback: (image: EditorImageData) => any) {
 }
 
 export function showDiagramManagerForInsert(context: EditorUiContext) {
-    const selection = context.lastSelection;
+    const selection = getLastSelection(context.editor);
     showDiagramManager((image: EditorImageData) => {
         context.editor.update(() => {
             const diagramNode = $createDiagramNode(image.id, image.url);
