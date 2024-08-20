@@ -221,7 +221,7 @@ return [
     'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
     'pages_edit_discard_draft' => '放棄草稿',
     'pages_edit_switch_to_markdown' => 'Switch to Markdown Editor',
-    'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
+    'pages_edit_switch_to_markdown_clean' => '(清除內容)',
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'Switch to WYSIWYG Editor',
     'pages_edit_set_changelog' => '設定變更日誌',
