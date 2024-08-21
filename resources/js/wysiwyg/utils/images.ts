@@ -25,3 +25,20 @@ export function $createLinkedImageNodeFromImageData(image: EditorImageData): Lin
     linkNode.append(imageNode);
     return linkNode;
 }
+
+/**
+ * Upload an image file to the server
+ */
+export async function uploadImageFile(file: File, pageId: string): Promise<EditorImageData> {
+    if (file === null || file.type.indexOf('image') !== 0) {
+        throw new Error('Not an image file');
+    }
+
+    const remoteFilename = file.name || `image-${Date.now()}.png`;
+    const formData = new FormData();
+    formData.append('file', file, remoteFilename);
+    formData.append('uploaded_to', pageId);
+
+    const resp = await window.$http.post('/images/gallery', formData);
+    return resp.data as EditorImageData;
+}
