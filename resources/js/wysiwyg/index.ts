@@ -8,7 +8,7 @@ import {getEditorContentAsHtml, setEditorContentFromHtml} from "./utils/actions"
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {EditorUiContext} from "./ui/framework/core";
 import {listen as listenToCommonEvents} from "./services/common-events";
-import {handleDropEvents} from "./services/drop-handling";
+import {registerDropPasteHandling} from "./services/drop-paste-handling";
 import {registerTaskListHandler} from "./ui/framework/helpers/task-list-handler";
 import {registerTableSelectionHandler} from "./ui/framework/helpers/table-selection-handler";
 import {el} from "./utils/dom";
@@ -54,10 +54,10 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerTableResizer(editor, editWrap),
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, editArea),
+        registerDropPasteHandling(context),
     );
 
     listenToCommonEvents(editor);
-    handleDropEvents(editor);
 
     setEditorContentFromHtml(editor, htmlContent);
 
