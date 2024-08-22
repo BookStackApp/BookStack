@@ -2,7 +2,7 @@
 
 ## In progress
 
-// 
+- Table Cut/Copy/Paste column
 
 ## Main Todo
 
@@ -10,7 +10,6 @@
 - Support media src conversions (https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts)
 - Media resize support (like images)
 - Table caption text support
-- Table Cut/Copy/Paste column
 - Mac: Shortcut support via command.
 
 ## Secondary Todo

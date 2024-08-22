@@ -27,8 +27,12 @@ import {
     $getTableRowsFromSelection,
     $mergeTableCellsInSelection
 } from "../../../utils/tables";
-import {$isCustomTableRowNode, CustomTableRowNode} from "../../../nodes/custom-table-row";
-import {NodeClipboard} from "../../../services/node-clipboard";
+import {$isCustomTableRowNode} from "../../../nodes/custom-table-row";
+import {
+    $copySelectedRowsToClipboard,
+    $cutSelectedRowsToClipboard,
+    $pasteClipboardRowsBefore, $pasteRowsAfter, isRowClipboardEmpty
+} from "../../../utils/table-copy-paste";
 
 const neverActive = (): boolean => false;
 const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
@@ -168,17 +172,15 @@ export const rowProperties: EditorButtonDefinition = {
     isDisabled: cellNotSelected,
 };
 
-const rowClipboard: NodeClipboard<CustomTableRowNode> = new NodeClipboard<CustomTableRowNode>(CustomTableRowNode);
-
 export const cutRow: EditorButtonDefinition = {
     label: 'Cut row',
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const rows = $getTableRowsFromSelection($getSelection());
-            rowClipboard.set(...rows);
-            for (const row of rows) {
-                row.remove();
+            try {
+                $cutSelectedRowsToClipboard();
+            } catch (e: any) {
+                context.error(e.toString());
             }
         });
     },
@@ -191,8 +193,11 @@ export const copyRow: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const rows = $getTableRowsFromSelection($getSelection());
-            rowClipboard.set(...rows);
+            try {
+                $copySelectedRowsToClipboard();
+            } catch (e: any) {
+                context.error(e.toString());
+            }
         });
     },
     isActive: neverActive,
@@ -204,17 +209,15 @@ export const pasteRowBefore: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const rows = $getTableRowsFromSelection($getSelection());
-            const lastRow = rows[rows.length - 1];
-            if (lastRow) {
-                for (const row of rowClipboard.get(context.editor)) {
-                    lastRow.insertBefore(row);
-                }
+            try {
+                $pasteClipboardRowsBefore(context.editor);
+            } catch (e: any) {
+                context.error(e.toString());
             }
         });
     },
     isActive: neverActive,
-    isDisabled: (selection) => cellNotSelected(selection) || rowClipboard.size() === 0,
+    isDisabled: (selection) => cellNotSelected(selection) || isRowClipboardEmpty(),
 };
 
 export const pasteRowAfter: EditorButtonDefinition = {
@@ -222,17 +225,15 @@ export const pasteRowAfter: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const rows = $getTableRowsFromSelection($getSelection());
-            const lastRow = rows[rows.length - 1];
-            if (lastRow) {
-                for (const row of rowClipboard.get(context.editor).reverse()) {
-                    lastRow.insertAfter(row);
-                }
+            try {
+                $pasteRowsAfter(context.editor);
+            } catch (e: any) {
+                context.error(e.toString());
             }
         });
     },
     isActive: neverActive,
-    isDisabled: (selection) => cellNotSelected(selection) || rowClipboard.size() === 0,
+    isDisabled: (selection) => cellNotSelected(selection) || isRowClipboardEmpty(),
 };
 
 export const cutColumn: EditorButtonDefinition = {
