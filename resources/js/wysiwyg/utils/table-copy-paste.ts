@@ -1,12 +1,14 @@
 import {NodeClipboard} from "./node-clipboard";
 import {CustomTableRowNode} from "../nodes/custom-table-row";
-import {$getTableFromSelection, $getTableRowsFromSelection} from "./tables";
-import {$getSelection, LexicalEditor} from "lexical";
-import {$createCustomTableCellNode, $isCustomTableCellNode} from "../nodes/custom-table-cell";
+import {$getTableCellsFromSelection, $getTableFromSelection, $getTableRowsFromSelection} from "./tables";
+import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
+import {$createCustomTableCellNode, $isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
 import {CustomTableNode} from "../nodes/custom-table";
 import {TableMap} from "./table-map";
+import {$isTableSelection} from "@lexical/table";
+import {$getNodeFromSelection} from "./selection";
 
-const rowClipboard: NodeClipboard<CustomTableRowNode> = new NodeClipboard<CustomTableRowNode>(CustomTableRowNode);
+const rowClipboard: NodeClipboard<CustomTableRowNode> = new NodeClipboard<CustomTableRowNode>();
 
 export function isRowClipboardEmpty(): boolean {
     return rowClipboard.size() === 0;
@@ -82,7 +84,7 @@ export function $pasteClipboardRowsBefore(editor: LexicalEditor): void {
     }
 }
 
-export function $pasteRowsAfter(editor: LexicalEditor): void {
+export function $pasteClipboardRowsAfter(editor: LexicalEditor): void {
     const selection = $getSelection();
     const rows = $getTableRowsFromSelection(selection);
     const table = $getTableFromSelection(selection);
@@ -94,4 +96,177 @@ export function $pasteRowsAfter(editor: LexicalEditor): void {
             lastRow.insertAfter(row);
         }
     }
+}
+
+const columnClipboard: NodeClipboard<CustomTableCellNode>[] = [];
+
+function setColumnClipboard(columns: CustomTableCellNode[][]): void {
+    const newClipboards = columns.map(cells => {
+        const clipboard = new NodeClipboard<CustomTableCellNode>();
+        clipboard.set(...cells);
+        return clipboard;
+    });
+
+    columnClipboard.splice(0, columnClipboard.length, ...newClipboards);
+}
+
+type TableRange = {from: number, to: number};
+
+export function isColumnClipboardEmpty(): boolean {
+    return columnClipboard.length === 0;
+}
+
+function $getSelectionColumnRange(selection: BaseSelection|null): TableRange|null {
+    if ($isTableSelection(selection)) {
+        const shape = selection.getShape()
+        return {from: shape.fromX, to: shape.toX};
+    }
+
+    const cell = $getNodeFromSelection(selection, $isCustomTableCellNode);
+    const table = $getTableFromSelection(selection);
+    if (!$isCustomTableCellNode(cell) || !table) {
+        return null;
+    }
+
+    const map = new TableMap(table);
+    const range = map.getRangeForCell(cell);
+    if (!range) {
+        return null;
+    }
+
+    return {from: range.fromX, to: range.toX};
+}
+
+function $getTableColumnCellsFromSelection(range: TableRange, table: CustomTableNode): CustomTableCellNode[][] {
+    const map = new TableMap(table);
+    const columns = [];
+    for (let x = range.from; x <= range.to; x++) {
+        const cells = map.getCellsInColumn(x);
+        columns.push(cells);
+    }
+
+    return columns;
+}
+
+function validateColumnsToCopy(columns: CustomTableCellNode[][]): void {
+    let commonColSize: number|null = null;
+
+    for (const cells of columns) {
+        let colSize = 0;
+        for (const cell of cells) {
+            colSize += cell.getRowSpan() || 1;
+            if (cell.getColSpan() > 1) {
+                throw Error('Cannot copy columns with merged cells');
+            }
+        }
+
+        if (commonColSize === null) {
+            commonColSize = colSize;
+        } else if (commonColSize !== colSize) {
+            throw Error('Cannot copy columns with inconsistent sizes');
+        }
+    }
+}
+
+export function $cutSelectedColumnsToClipboard(): void {
+    const selection = $getSelection();
+    const range = $getSelectionColumnRange(selection);
+    const table = $getTableFromSelection(selection);
+    if (!range || !table) {
+        return;
+    }
+
+    const colWidths = table.getColWidths();
+    const columns = $getTableColumnCellsFromSelection(range, table);
+    validateColumnsToCopy(columns);
+    setColumnClipboard(columns);
+    for (const cells of columns) {
+        for (const cell of cells) {
+            cell.remove();
+        }
+    }
+
+    const newWidths = [...colWidths].splice(range.from, (range.to - range.from) + 1);
+    table.setColWidths(newWidths);
+}
+
+export function $copySelectedColumnsToClipboard(): void {
+    const selection = $getSelection();
+    const range = $getSelectionColumnRange(selection);
+    const table = $getTableFromSelection(selection);
+    if (!range || !table) {
+        return;
+    }
+
+    const columns = $getTableColumnCellsFromSelection(range, table);
+    validateColumnsToCopy(columns);
+    setColumnClipboard(columns);
+}
+
+function validateColumnsToPaste(columns: CustomTableCellNode[][], targetTable: CustomTableNode) {
+    const tableRowCount = (new TableMap(targetTable)).rowCount;
+    for (const cells of columns) {
+        let colSize = 0;
+        for (const cell of cells) {
+            colSize += cell.getRowSpan() || 1;
+        }
+
+        if (colSize > tableRowCount) {
+            throw Error('Cannot paste columns that are taller than target table');
+        }
+
+        while (colSize < tableRowCount) {
+            cells.push($createCustomTableCellNode());
+            colSize++;
+        }
+    }
+}
+
+function $pasteClipboardColumns(editor: LexicalEditor, isBefore: boolean): void {
+    const selection = $getSelection();
+    const table = $getTableFromSelection(selection);
+    const cells = $getTableCellsFromSelection(selection);
+    const referenceCell = cells[isBefore ? 0 : cells.length - 1];
+    if (!table || !referenceCell) {
+        return;
+    }
+
+    const clipboardCols = columnClipboard.map(cb => cb.get(editor));
+    if (!isBefore) {
+        clipboardCols.reverse();
+    }
+
+    validateColumnsToPaste(clipboardCols, table);
+    const map = new TableMap(table);
+    const cellRange = map.getRangeForCell(referenceCell);
+    if (!cellRange) {
+        return;
+    }
+
+    const colIndex = isBefore ? cellRange.fromX : cellRange.toX;
+    const colWidths = table.getColWidths();
+
+    for (let y = 0; y < map.rowCount; y++) {
+        const relCell = map.getCellAtPosition(colIndex, y);
+        for (const cells of clipboardCols) {
+            const newCell = cells[y];
+            if (isBefore) {
+                relCell.insertBefore(newCell);
+            } else {
+                relCell.insertAfter(newCell);
+            }
+        }
+    }
+
+    const refWidth = colWidths[colIndex];
+    const addedWidths = clipboardCols.map(_ => refWidth);
+    colWidths.splice(isBefore ? colIndex : colIndex + 1, 0, ...addedWidths);
+}
+
+export function $pasteClipboardColumnsBefore(editor: LexicalEditor): void {
+    $pasteClipboardColumns(editor, true);
+}
+
+export function $pasteClipboardColumnsAfter(editor: LexicalEditor): void {
+    $pasteClipboardColumns(editor, false);
 }

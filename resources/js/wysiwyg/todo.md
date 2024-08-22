@@ -2,7 +2,7 @@
 
 ## In progress
 
-- Table Cut/Copy/Paste column
+//
 
 ## Main Todo
 

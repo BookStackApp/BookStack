@@ -30,12 +30,7 @@ function unserializeNodeRecursive(editor: LexicalEditor, {node, children}: Seria
 }
 
 export class NodeClipboard<T extends LexicalNode> {
-    nodeClass: {importJSON: (s: SerializedLexicalNode) => T};
     protected store: SerializedLexicalNodeWithChildren[] = [];
-
-    constructor(nodeClass: {importJSON: (s: any) => T}) {
-        this.nodeClass = nodeClass;
-    }
 
     set(...nodes: LexicalNode[]): void {
         this.store.splice(0, this.store.length);
