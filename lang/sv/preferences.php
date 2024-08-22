@@ -14,7 +14,7 @@ return [
     'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
     'shortcuts_section_navigation' => 'Navigation',
     'shortcuts_section_actions' => 'Common Actions',
-    'shortcuts_save' => 'Save Shortcuts',
+    'shortcuts_save' => 'Spara genvägar',
     'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
     'shortcuts_update_success' => 'Shortcut preferences have been updated!',
     'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
