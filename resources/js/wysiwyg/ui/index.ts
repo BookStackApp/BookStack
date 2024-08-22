@@ -20,7 +20,10 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
         editorDOM: element,
         scrollDOM: scrollContainer,
         manager,
-        translate: (text: string): string => text,
+        translate: (text: string): string => text, // TODO - Implement
+        error(error: string): void {
+            window.$events.error(error); // TODO - Translate
+        },
         options,
     };
     manager.setContext(context);

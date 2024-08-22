@@ -235,7 +235,7 @@ export function $convertTableCellNodeElement(
 
 
 export function $createCustomTableCellNode(
-    headerState: TableCellHeaderState,
+    headerState: TableCellHeaderState = TableCellHeaderStates.NO_STATUS,
     colSpan = 1,
     width?: number,
 ): CustomTableCellNode {

@@ -14,6 +14,7 @@ export type EditorUiContext = {
     containerDOM: HTMLElement; // DOM element which contains all editor elements
     scrollDOM: HTMLElement; // DOM element which is the main content scroll container
     translate: (text: string) => string; // Translate function
+    error: (text: string) => void; // Error reporting function
     manager: EditorUIManager; // UI Manager instance for this editor
     options: Record<string, any>; // General user options which may be used by sub elements
 };

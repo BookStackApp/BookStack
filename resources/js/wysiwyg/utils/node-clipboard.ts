@@ -44,10 +44,10 @@ export class NodeClipboard<T extends LexicalNode> {
         }
     }
 
-    get(editor: LexicalEditor): LexicalNode[] {
+    get(editor: LexicalEditor): T[] {
         return this.store.map(json => unserializeNodeRecursive(editor, json)).filter((node) => {
             return node !== null;
-        });
+        }) as T[];
     }
 
     size(): number {
