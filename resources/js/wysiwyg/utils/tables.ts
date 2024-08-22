@@ -168,12 +168,12 @@ export function $mergeTableCellsInSelection(selection: TableSelection): void {
     const fixedToX = selectionShape.toX + ((headCell.getColSpan() || 1) - 1);
     const fixedToY = selectionShape.toY + ((headCell.getRowSpan() || 1) - 1);
 
-    const mergeCells = tableMap.getCellsInRange(
-        selectionShape.fromX,
-        selectionShape.fromY,
-        fixedToX,
-        fixedToY,
-    );
+    const mergeCells = tableMap.getCellsInRange({
+        fromX: selectionShape.fromX,
+        fromY: selectionShape.fromY,
+        toX: fixedToX,
+        toY: fixedToY,
+    });
 
     if (mergeCells.length === 0) {
         return;

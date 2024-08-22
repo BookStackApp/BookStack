@@ -2,6 +2,13 @@ import {CustomTableNode} from "../nodes/custom-table";
 import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
 import {$isTableRowNode} from "@lexical/table";
 
+export type CellRange = {
+    fromX: number;
+    fromY: number;
+    toX: number;
+    toY: number;
+}
+
 export class TableMap {
 
     rowCount: number = 0;
@@ -77,11 +84,11 @@ export class TableMap {
         return this.cells[position];
     }
 
-    public getCellsInRange(fromX: number, fromY: number, toX: number, toY: number): CustomTableCellNode[] {
-        const minX = Math.max(Math.min(fromX, toX), 0);
-        const maxX = Math.min(Math.max(fromX, toX), this.columnCount - 1);
-        const minY = Math.max(Math.min(fromY, toY), 0);
-        const maxY = Math.min(Math.max(fromY, toY), this.rowCount - 1);
+    public getCellsInRange(range: CellRange): CustomTableCellNode[] {
+        const minX = Math.max(Math.min(range.fromX, range.toX), 0);
+        const maxX = Math.min(Math.max(range.fromX, range.toX), this.columnCount - 1);
+        const minY = Math.max(Math.min(range.fromY, range.toY), 0);
+        const maxY = Math.min(Math.max(range.fromY, range.toY), this.rowCount - 1);
 
         const cells = new Set<CustomTableCellNode>();
 
@@ -92,5 +99,38 @@ export class TableMap {
         }
 
         return [...cells.values()];
+    }
+
+    public getCellsInColumn(columnIndex: number): CustomTableCellNode[] {
+        return this.getCellsInRange({
+            fromX: columnIndex,
+            toX: columnIndex,
+            fromY: 0,
+            toY: this.rowCount - 1,
+        });
+    }
+
+    public getRangeForCell(cell: CustomTableCellNode): CellRange|null {
+        let range: CellRange|null = null;
+        const cellKey = cell.getKey();
+
+        for (let y = 0; y < this.rowCount; y++) {
+            for (let x = 0; x < this.columnCount; x++) {
+                const index = (y * this.columnCount) + x;
+                const lCell = this.cells[index];
+                if (lCell.getKey() === cellKey) {
+                    if (range === null) {
+                        range = {fromX: x, toX: x, fromY: y, toY: y};
+                    } else {
+                        range.fromX = Math.min(range.fromX, x);
+                        range.toX = Math.max(range.toX, x);
+                        range.fromY = Math.min(range.fromY, y);
+                        range.toY = Math.max(range.toY, y);
+                    }
+                }
+            }
+        }
+
+        return range;
     }
 }

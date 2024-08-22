@@ -29,9 +29,15 @@ import {
 } from "../../../utils/tables";
 import {$isCustomTableRowNode} from "../../../nodes/custom-table-row";
 import {
+    $copySelectedColumnsToClipboard,
     $copySelectedRowsToClipboard,
+    $cutSelectedColumnsToClipboard,
     $cutSelectedRowsToClipboard,
-    $pasteClipboardRowsBefore, $pasteRowsAfter, isRowClipboardEmpty
+    $pasteClipboardRowsBefore,
+    $pasteClipboardRowsAfter,
+    isColumnClipboardEmpty,
+    isRowClipboardEmpty,
+    $pasteClipboardColumnsBefore, $pasteClipboardColumnsAfter
 } from "../../../utils/table-copy-paste";
 
 const neverActive = (): boolean => false;
@@ -180,7 +186,7 @@ export const cutRow: EditorButtonDefinition = {
             try {
                 $cutSelectedRowsToClipboard();
             } catch (e: any) {
-                context.error(e.toString());
+                context.error(e);
             }
         });
     },
@@ -196,7 +202,7 @@ export const copyRow: EditorButtonDefinition = {
             try {
                 $copySelectedRowsToClipboard();
             } catch (e: any) {
-                context.error(e.toString());
+                context.error(e);
             }
         });
     },
@@ -212,7 +218,7 @@ export const pasteRowBefore: EditorButtonDefinition = {
             try {
                 $pasteClipboardRowsBefore(context.editor);
             } catch (e: any) {
-                context.error(e.toString());
+                context.error(e);
             }
         });
     },
@@ -226,9 +232,9 @@ export const pasteRowAfter: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.update(() => {
             try {
-                $pasteRowsAfter(context.editor);
+                $pasteClipboardRowsAfter(context.editor);
             } catch (e: any) {
-                context.error(e.toString());
+                context.error(e);
             }
         });
     },
@@ -240,8 +246,12 @@ export const cutColumn: EditorButtonDefinition = {
     label: 'Cut column',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            try {
+                $cutSelectedColumnsToClipboard();
+            } catch (e: any) {
+                context.error(e);
+            }
         });
     },
     isActive: neverActive,
@@ -253,7 +263,11 @@ export const copyColumn: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            // TODO
+            try {
+                $copySelectedColumnsToClipboard();
+            } catch (e: any) {
+                context.error(e);
+            }
         });
     },
     isActive: neverActive,
@@ -264,24 +278,32 @@ export const pasteColumnBefore: EditorButtonDefinition = {
     label: 'Paste column before',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            try {
+                $pasteClipboardColumnsBefore(context.editor);
+            } catch (e: any) {
+                context.error(e);
+            }
         });
     },
     isActive: neverActive,
-    isDisabled: cellNotSelected,
+    isDisabled: (selection) => cellNotSelected(selection) || isColumnClipboardEmpty(),
 };
 
 export const pasteColumnAfter: EditorButtonDefinition = {
     label: 'Paste column after',
     format: 'long',
     action(context: EditorUiContext) {
-        context.editor.getEditorState().read(() => {
-            // TODO
+        context.editor.update(() => {
+            try {
+                $pasteClipboardColumnsAfter(context.editor);
+            } catch (e: any) {
+                context.error(e);
+            }
         });
     },
     isActive: neverActive,
-    isDisabled: cellNotSelected,
+    isDisabled: (selection) => cellNotSelected(selection) || isColumnClipboardEmpty(),
 };
 
 export const insertColumnBefore: EditorButtonDefinition = {
