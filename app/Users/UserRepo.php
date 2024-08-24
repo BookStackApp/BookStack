@@ -54,7 +54,7 @@ class UserRepo
      *
      * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
      */
-    public function createWithoutActivity(array $data, bool $emailConfirmed = false): User
+    public function createWithoutActivity(array $data, bool $emailConfirmed = false, string $picture = null): User
     {
         $user = new User();
         $user->name = $data['name'];
@@ -74,7 +74,7 @@ class UserRepo
             $this->setUserRoles($user, $data['roles']);
         }
 
-        $this->downloadAndAssignUserAvatar($user);
+        $this->downloadAndAssignUserAvatar($user, $picture);
 
         return $user;
     }
@@ -199,10 +199,10 @@ class UserRepo
      * Get an avatar image for a user and set it as their avatar.
      * Returns early if avatars disabled or not set in config.
      */
-    protected function downloadAndAssignUserAvatar(User $user): void
+    protected function downloadAndAssignUserAvatar(User $user, string $picture = null): void
     {
         try {
-            $this->userAvatar->fetchAndAssignToUser($user);
+            $this->userAvatar->fetchAndAssignToUser($user, $picture);
         } catch (Exception $e) {
             Log::error('Failed to save user avatar image');
         }
