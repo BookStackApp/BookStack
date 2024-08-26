@@ -63,7 +63,7 @@ return [
     'search_for_term' => 'recherche pour :term',
     'search_more' => 'Plus de résultats',
     'search_advanced' => 'Recherche avancée',
-    'search_terms' => 'Mot-clé',
+    'search_terms' => 'Termes de recherche',
     'search_content_type' => 'Type de contenu',
     'search_exact_matches' => 'Correspondances exactes',
     'search_tags' => 'Recherche par mots-clés',
