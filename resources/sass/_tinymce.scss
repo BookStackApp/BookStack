@@ -173,7 +173,7 @@ body.page-content.mce-content-body  {
  * Fake task list checkboxes
  */
 .page-content.mce-content-body .task-list-item {
-  margin-left: 0;
+  margin-inline-start: 0;
   position: relative;
 }
 .page-content.mce-content-body .task-list-item > input[type="checkbox"] {
@@ -186,11 +186,11 @@ body.page-content.mce-content-body  {
   width: 12px;
   height: 12px;
   border-radius: 2px;
-  margin-right: 8px;
+  margin-inline-end: 8px;
   vertical-align: text-top;
   cursor: pointer;
   position: absolute;
-  left: -24px;
+  inset-inline-start: -24px;
   top: 4px;
 }
 
