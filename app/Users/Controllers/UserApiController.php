@@ -37,27 +37,28 @@ class UserApiController extends ApiController
     {
         return [
             'create' => [
-                'name'  => ['required', 'min:2', 'max:100'],
+                'name'  => ['required', 'string', 'min:2', 'max:100'],
                 'email' => [
-                    'required', 'min:2', 'email', new Unique('users', 'email'),
+                    'required', 'string', 'email', 'min:2', new Unique('users', 'email'),
                 ],
                 'external_auth_id' => ['string'],
                 'language'         => ['string', 'max:15', 'alpha_dash'],
-                'password'         => [Password::default()],
+                'password'         => ['string', Password::default()],
                 'roles'            => ['array'],
                 'roles.*'          => ['integer'],
                 'send_invite'      => ['boolean'],
             ],
             'update' => [
-                'name'  => ['min:2', 'max:100'],
+                'name'  => ['string', 'min:2', 'max:100'],
                 'email' => [
-                    'min:2',
+                    'string',
                     'email',
+                    'min:2',
                     (new Unique('users', 'email'))->ignore($userId ?? null),
                 ],
                 'external_auth_id' => ['string'],
                 'language'         => ['string', 'max:15', 'alpha_dash'],
-                'password'         => [Password::default()],
+                'password'         => ['string', Password::default()],
                 'roles'            => ['array'],
                 'roles.*'          => ['integer'],
             ],
