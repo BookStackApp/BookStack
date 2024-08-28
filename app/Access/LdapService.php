@@ -334,7 +334,7 @@ class LdapService
             ]);
         }
 
-        return $allGroups;
+        return $formattedGroups;
     }
 
     protected function extractGroupNamesFromLdapGroupDns(array $groupDNs): array
