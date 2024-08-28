@@ -435,6 +435,44 @@ class LdapTest extends TestCase
         ]);
     }
 
+    public function test_recursive_group_search_queries_via_full_dn()
+    {
+        app('config')->set([
+            'services.ldap.user_to_groups'     => true,
+            'services.ldap.group_attribute'    => 'memberOf',
+        ]);
+
+        $userResp = ['count' => 1, 0 => [
+            'uid'      => [$this->mockUser->name],
+            'cn'       => [$this->mockUser->name],
+            'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
+            'mail'     => [$this->mockUser->email],
+        ]];
+        $groupResp = ['count' => 1,
+                      0 => [
+                          'dn'       => 'dc=test,' . config('services.ldap.base_dn'),
+                          'memberof' => [
+                              'count' => 1,
+                              0       => 'cn=ldaptester,ou=groups,dc=example,dc=com',
+                          ],
+                      ],
+        ];
+
+        $this->commonLdapMocks(1, 1, 3, 4, 3, 1);
+
+        $escapedName = ldap_escape($this->mockUser->name);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->twice()
+            ->with($this->resourceId, config('services.ldap.base_dn'), "(&(uid={$escapedName}))", \Mockery::type('array'))
+            ->andReturn($userResp, $groupResp);
+
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), $groupResp[0]['dn'], ['memberof'])
+            ->andReturn(['count' => 0]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/');
+    }
+
     public function test_external_auth_id_visible_in_roles_page_when_ldap_active()
     {
         $role = Role::factory()->create(['display_name' => 'ldaptester', 'external_auth_id' => 'ex-auth-a, test-second-param']);

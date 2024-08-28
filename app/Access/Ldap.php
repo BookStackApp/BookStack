@@ -52,11 +52,23 @@ class Ldap
      *
      * @param resource|\LDAP\Connection   $ldapConnection
      *
-     * @return resource|\LDAP\Result
+     * @return \LDAP\Result|array|false
      */
     public function search($ldapConnection, string $baseDn, string $filter, array $attributes = null)
     {
         return ldap_search($ldapConnection, $baseDn, $filter, $attributes);
+    }
+
+    /**
+     * Read an entry from the LDAP tree.
+     *
+     * @param resource|\Ldap\Connection $ldapConnection
+     *
+     * @return \LDAP\Result|array|false
+     */
+    public function read($ldapConnection, string $baseDn, string $filter, array $attributes = null)
+    {
+        return ldap_read($ldapConnection, $baseDn, $filter, $attributes);
     }
 
     /**
