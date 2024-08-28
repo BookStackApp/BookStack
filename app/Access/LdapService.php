@@ -321,94 +321,105 @@ class LdapService
             return [];
         }
 
-        $userGroups = $this->groupFilter($user);
+        $userGroups = $this->extractGroupsFromSearchResponseEntry($user);
         $allGroups = $this->getGroupsRecursive($userGroups, []);
+        $formattedGroups = $this->extractGroupNamesFromLdapGroupDns($allGroups);
 
         if ($this->config['dump_user_groups']) {
             throw new JsonDebugException([
-                'details_from_ldap'             => $user,
-                'parsed_direct_user_groups'     => $userGroups,
-                'parsed_recursive_user_groups'  => $allGroups,
+                'details_from_ldap'            => $user,
+                'parsed_direct_user_groups'    => $userGroups,
+                'parsed_recursive_user_groups' => $allGroups,
+                'parsed_resulting_group_names' => $formattedGroups,
             ]);
         }
 
         return $allGroups;
     }
 
-    /**
-     * Get the parent groups of an array of groups.
-     *
-     * @throws LdapException
-     */
-    private function getGroupsRecursive(array $groupsArray, array $checked): array
+    protected function extractGroupNamesFromLdapGroupDns(array $groupDNs): array
     {
-        $groupsToAdd = [];
-        foreach ($groupsArray as $groupName) {
-            if (in_array($groupName, $checked)) {
-                continue;
+        $names = [];
+
+        foreach ($groupDNs as $groupDN) {
+            $exploded = $this->ldap->explodeDn($groupDN, 1);
+            if ($exploded !== false && count($exploded) > 0) {
+                $names[] = $exploded[0];
             }
-
-            $parentGroups = $this->getGroupGroups($groupName);
-            $groupsToAdd = array_merge($groupsToAdd, $parentGroups);
-            $checked[] = $groupName;
         }
 
-        $groupsArray = array_unique(array_merge($groupsArray, $groupsToAdd), SORT_REGULAR);
-
-        if (empty($groupsToAdd)) {
-            return $groupsArray;
-        }
-
-        return $this->getGroupsRecursive($groupsArray, $checked);
+        return array_unique($names);
     }
 
     /**
-     * Get the parent groups of a single group.
+     * Build an array of all relevant groups DNs after recursively scanning
+     * across parents of the groups given.
      *
      * @throws LdapException
      */
-    private function getGroupGroups(string $groupName): array
+    protected function getGroupsRecursive(array $groupDNs, array $checked): array
     {
+        $groupsToAdd = [];
+        foreach ($groupDNs as $groupDN) {
+            if (in_array($groupDN, $checked)) {
+                continue;
+            }
+
+            $parentGroups = $this->getParentsOfGroup($groupDN);
+            $groupsToAdd = array_merge($groupsToAdd, $parentGroups);
+            $checked[] = $groupDN;
+        }
+
+        $uniqueDNs = array_unique(array_merge($groupDNs, $groupsToAdd), SORT_REGULAR);
+
+        if (empty($groupsToAdd)) {
+            return $uniqueDNs;
+        }
+
+        return $this->getGroupsRecursive($uniqueDNs, $checked);
+    }
+
+    /**
+     * @throws LdapException
+     */
+    protected function getParentsOfGroup(string $groupDN): array
+    {
+        $groupsAttr = strtolower($this->config['group_attribute']);
         $ldapConnection = $this->getConnection();
         $this->bindSystemUser($ldapConnection);
 
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
         $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
-
-        $baseDn = $this->config['base_dn'];
-        $groupsAttr = strtolower($this->config['group_attribute']);
-
-        $groupFilter = 'CN=' . $this->ldap->escape($groupName);
-        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $groupFilter, [$groupsAttr]);
-        if ($groups['count'] === 0) {
+        $read = $this->ldap->read($ldapConnection, $groupDN, '(objectClass=*)', [$groupsAttr]);
+        $results = $this->ldap->getEntries($ldapConnection, $read);
+        if ($results['count'] === 0) {
             return [];
         }
 
-        return $this->groupFilter($groups[0]);
+        return $this->extractGroupsFromSearchResponseEntry($results[0]);
     }
 
     /**
-     * Filter out LDAP CN and DN language in a ldap search return.
-     * Gets the base CN (common name) of the string.
+     * Extract an array of group DN values from the given LDAP search response entry
      */
-    protected function groupFilter(array $userGroupSearchResponse): array
+    protected function extractGroupsFromSearchResponseEntry(array $ldapEntry): array
     {
         $groupsAttr = strtolower($this->config['group_attribute']);
-        $ldapGroups = [];
+        $groupDNs = [];
         $count = 0;
 
-        if (isset($userGroupSearchResponse[$groupsAttr]['count'])) {
-            $count = (int) $userGroupSearchResponse[$groupsAttr]['count'];
+        if (isset($ldapEntry[$groupsAttr]['count'])) {
+            $count = (int) $ldapEntry[$groupsAttr]['count'];
         }
 
         for ($i = 0; $i < $count; $i++) {
-            $dnComponents = $this->ldap->explodeDn($userGroupSearchResponse[$groupsAttr][$i], 1);
-            if (!in_array($dnComponents[0], $ldapGroups)) {
-                $ldapGroups[] = $dnComponents[0];
+            $dn = $ldapEntry[$groupsAttr][$i];
+            if (!in_array($dn, $groupDNs)) {
+                $groupDNs[] = $dn;
             }
         }
 
-        return $ldapGroups;
+        return $groupDNs;
     }
 
     /**
