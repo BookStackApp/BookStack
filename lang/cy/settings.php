@@ -8,19 +8,19 @@ return [
 
     // Common Messages
     'settings' => 'Gosodiadau',
-    'settings_save' => 'Save Settings',
-    'system_version' => 'System Version',
+    'settings_save' => 'Cadw Gosodiadau',
+    'system_version' => 'Fersiwn System',
     'categories' => 'Categorïau',
 
     // App Settings
     'app_customization' => 'Addasiad',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
-    'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
-    'app_name_header' => 'Show name in header',
-    'app_public_access' => 'Public Access',
-    'app_public_access_desc' => 'Enabling this option will allow visitors, that are not logged-in, to access content in your BookStack instance.',
-    'app_public_access_desc_guest' => 'Access for public visitors can be controlled through the "Guest" user.',
+    'app_features_security' => 'Nodweddion & Diogelwch',
+    'app_name' => 'Enw\'r Rhaglen',
+    'app_name_desc' => 'Dangosir yr enw hwn yn y pennawd ac mewn unrhyw negeseuon e-bost a anfonir gan y system.',
+    'app_name_header' => 'Dangos enw yn y pennyn',
+    'app_public_access' => 'Mynediad Cyhoeddus',
+    'app_public_access_desc' => 'Bydd galluogi\'r opsiwn hwn yn caniatáu i ymwelwyr, nad ydynt wedi mewngofnodi, gael mynediad at gynnwys yn achos BookStack.',
+    'app_public_access_desc_guest' => 'Gellir rheoli mynediad i ymwelwyr cyhoeddus trwy\'r defnyddiwr "Gwestai".',
     'app_public_access_toggle' => 'Allow public access',
     'app_public_viewing' => 'Allow public viewing?',
     'app_secure_images' => 'Higher Security Image Uploads',
