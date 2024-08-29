@@ -171,16 +171,16 @@ class AttachmentApiController extends ApiController
     {
         return [
             'create' => [
-                'name'        => ['required', 'min:1', 'max:255', 'string'],
+                'name'        => ['required', 'string', 'min:1', 'max:255'],
                 'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
                 'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
-                'link'        => ['required_without:file', 'min:1', 'max:2000', 'safe_url'],
+                'link'        => ['required_without:file', 'string', 'min:1', 'max:2000', 'safe_url'],
             ],
             'update' => [
-                'name'        => ['min:1', 'max:255', 'string'],
+                'name'        => ['string', 'min:1', 'max:255'],
                 'uploaded_to' => ['integer', 'exists:pages,id'],
                 'file'        => $this->attachmentService->getFileValidationRules(),
-                'link'        => ['min:1', 'max:2000', 'safe_url'],
+                'link'        => ['string', 'min:1', 'max:2000', 'safe_url'],
             ],
         ];
     }

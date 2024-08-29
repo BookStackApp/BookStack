@@ -49,7 +49,7 @@ Big thanks to these companies for supporting the project.
 
 <table><tbody><tr>
 <td align="center"><a href="https://www.federated.computer/bookstack/" target="_blank">
-    <img width="480" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/federated-computer.png" alt="Federated.computer">
+    <img width="480" src="https://www.bookstackapp.com/images/sponsors/federated-computer.png" alt="Federated.computer">
 </a></td>
 </tr></tbody></table>
 
@@ -57,33 +57,38 @@ Big thanks to these companies for supporting the project.
 
 <table><tbody><tr>
 <td align="center"><a href="https://www.diagrams.net/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/diagramsnet.png" alt="Diagrams.net">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/diagramsnet.png" alt="Diagrams.net">
 </a></td>
 <td align="center"><a href="https://cloudabove.com/hosting" target="_blank">
-    <img width="200" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/cloudabove.png" alt="Cloudabove">
+    <img width="200" src="https://www.bookstackapp.com/images/sponsors/cloudabove.png" alt="Cloudabove">
 </a></td>
 </tr><tr>
 <td align="center"><a href="https://www.practicali.be" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practicali.png" alt="Practicali">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/practicali.png" alt="Practicali">
 </a></td>
 <td align="center"><a href="https://www.stellarhosted.com/bookstack/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/stellarhosted.png" alt="Stellar Hosted">
 </a></td>
 </tr>
 <tr>
 <td align="center" style="text-align: center"><a href="https://nws.netways.de/apps/bookstack/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/netways.png" alt="NETWAYS Web Services">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/netways.png" alt="NETWAYS Web Services">
 </a></td>
 <td align="center" style="text-align: center"><a href="https://www.schroeck-consulting.de/" target="_blank">
-    <img width="200" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/schroeck-consulting.png" alt="Schroeck IT Consulting">
+    <img width="200" src="https://www.bookstackapp.com/images/sponsors/schroeck-consulting.png" alt="Schroeck IT Consulting">
 </a></td>
 </tr>
 <tr>
 <td align="center"><a href="https://practinet.be/" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/practinet.png" alt="Practinet">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/practinet.png" alt="Practinet">
 </a></td>
 <td align="center"><a href="https://transporttalent.com" target="_blank">
-    <img width="240" src="https://media.githubusercontent.com/media/BookStackApp/website/main/static/images/sponsors/transport-talent.png" alt="Transport Talent">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/transport-talent.png" alt="Transport Talent">
+</a></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><a href="https://route4me.com/" target="_blank">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
 </a></td>
 </tr></tbody></table>
 

@@ -7,8 +7,8 @@ return [
     // Buttons
     'cancel' => 'Cancel·la',
     'close' => 'Tanca',
-    'confirm' => 'D’acord',
-    'back' => 'Enrere',
+    'confirm' => 'Confirma',
+    'back' => 'Torna',
     'save' => 'Desa',
     'continue' => 'Continua',
     'select' => 'Selecciona',
@@ -18,14 +18,14 @@ return [
     // Form Labels
     'name' => 'Nom',
     'description' => 'Descripció',
-    'role' => 'Rol',
-    'cover_image' => 'Imatge de portada',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'role' => 'Funció',
+    'cover_image' => 'Imatge de coberta',
+    'cover_image_description' => 'La imatge ha de ser d’uns 440×250px, però quan calgui se n’ajustarà la mida o s’escapçarà per a adaptar-la a la interfície d’usuari i les mides amb què es mostrarà canviaran.',
 
     // Actions
     'actions' => 'Accions',
-    'view' => 'Visualitza',
-    'view_all' => 'Visualitza-ho tot',
+    'view' => 'Mostra',
+    'view_all' => 'Mostra-ho tot',
     'new' => 'Nou',
     'create' => 'Crea',
     'update' => 'Actualitza',
@@ -44,10 +44,10 @@ return [
     'configure' => 'Configura',
     'manage' => 'Gestiona',
     'fullscreen' => 'Pantalla completa',
-    'favourite' => 'Afegeix a preferits',
-    'unfavourite' => 'Suprimeix de preferits',
-    'next' => 'Següent',
-    'previous' => 'Anterior',
+    'favourite' => 'Afegeix als favorits',
+    'unfavourite' => 'Suprimeix dels favorits',
+    'next' => 'Endavant',
+    'previous' => 'Endarrere',
     'filter_active' => 'Filtre actiu:',
     'filter_clear' => 'Esborra el filtre',
     'download' => 'Baixa',
@@ -56,26 +56,26 @@ return [
 
     // Sort Options
     'sort_options' => 'Opcions d’ordenació',
-    'sort_direction_toggle' => 'Commuta la direcció de l’ordenació',
-    'sort_ascending' => 'Ordre ascendent',
-    'sort_descending' => 'Ordre descendent',
+    'sort_direction_toggle' => 'Inverteix l’ordre',
+    'sort_ascending' => 'Ordenació ascendent',
+    'sort_descending' => 'Ordenació descendent',
     'sort_name' => 'Nom',
-    'sort_default' => 'Per defecte',
+    'sort_default' => 'Predeterminat',
     'sort_created_at' => 'Data de creació',
     'sort_updated_at' => 'Data d’actualització',
 
     // Misc
     'deleted_user' => 'Usuari suprimit',
-    'no_activity' => 'No hi ha activitat',
-    'no_items' => 'No hi ha cap element',
-    'back_to_top' => 'Torna a dalt',
-    'skip_to_main_content' => 'Vés al contingut',
+    'no_activity' => 'No hi ha cap activitat per mostrar',
+    'no_items' => 'No hi ha cap element disponible',
+    'back_to_top' => 'Amunt',
+    'skip_to_main_content' => 'Ves al contingut principal',
     'toggle_details' => 'Commuta els detalls',
     'toggle_thumbnails' => 'Commuta les miniatures',
     'details' => 'Detalls',
     'grid_view' => 'Visualització en graella',
     'list_view' => 'Visualització en llista',
-    'default' => 'Per defecte',
+    'default' => 'Predeterminat',
     'breadcrumb' => 'Ruta de navegació',
     'status' => 'Estat',
     'status_active' => 'Actiu',
@@ -84,8 +84,8 @@ return [
     'none' => 'Cap',
 
     // Header
-    'homepage' => 'Pàgina principal',
-    'header_menu_expand' => 'Expandeix el menú de la capçalera',
+    'homepage' => 'Pàgina d’inici',
+    'header_menu_expand' => 'Desplega el menú de la capçalera',
     'profile_menu' => 'Menú del perfil',
     'view_profile' => 'Mostra el perfil',
     'edit_profile' => 'Edita el perfil',
@@ -100,7 +100,7 @@ return [
     'tab_content_label' => 'Pestanya: Mostra el contingut principal',
 
     // Email Content
-    'email_action_help' => 'Si teniu problemes per a fer clic al botó «:actionText», copieu i enganxeu l’URL següent al vostre navegador web:',
+    'email_action_help' => 'Si el botó &laquo;:actionText&raquo; no funciona, copieu i enganxeu l’URL següent al vostre navegador:',
     'email_rights' => 'Tots els drets reservats',
 
     // Footer Link Options

@@ -20,7 +20,7 @@ return [
     'description' => 'Apraksts',
     'role' => 'Loma',
     'cover_image' => 'Vāka attēls',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Šim attēlam jābūt apmēram 440x250px izmērā, taču tas tiks pielāgots lietotāja saskarnei dažādos scenārijos pēc nepieciešamības, un attēla izmēri tad var atšķirties.',
 
     // Actions
     'actions' => 'Darbības',

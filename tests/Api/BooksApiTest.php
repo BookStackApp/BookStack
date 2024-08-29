@@ -149,6 +149,23 @@ class BooksApiTest extends TestCase
         ]);
     }
 
+    public function test_read_endpoint_contents_nested_pages_has_permissions_applied()
+    {
+        $this->actingAsApiEditor();
+
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters()->first();
+        $chapterPage = $chapter->pages()->first();
+        $customName = 'MyNonVisiblePageWithinAChapter';
+        $chapterPage->name = $customName;
+        $chapterPage->save();
+
+        $this->permissions->disableEntityInheritedPermissions($chapterPage);
+
+        $resp = $this->getJson($this->baseEndpoint . "/{$book->id}");
+        $resp->assertJsonMissing(['name' => $customName]);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();

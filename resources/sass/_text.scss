@@ -309,15 +309,26 @@ li > ol, li > ul {
   padding-right: $-m * 1.2;
 }
 
+/**
+ * Checkbox lists
+ * Some styles duplicated for supporting logical units (eg. inline-end) while
+ * providing fallbacks to non-logical rules, so RTL is natively supported where possible.
+ */
 li.checkbox-item, li.task-list-item {
   display: list-item;
   list-style: none;
   margin-left: -($-m * 1.2);
+  margin-inline-start: -($-m * 1.2);
+  margin-inline-end: 0;
   input[type="checkbox"] {
     margin-right: $-xs;
+    margin-inline-end: $-xs;
+    margin-inline-start: 0;
   }
   li.checkbox-item, li.task-list-item {
     margin-left: $-xs;
+    margin-inline-start: $-xs;
+    margin-inline-end: 0;
   }
 }
 
