@@ -34,8 +34,8 @@ return [
     'image_delete_success' => 'Bilden har tagits bort',
     'image_replace' => 'Ersätt bild',
     'image_replace_success' => 'Bildfilen har uppdaterats',
-    'image_rebuild_thumbs' => 'Regenerate Size Variations',
-    'image_rebuild_thumbs_success' => 'Image size variations successfully rebuilt!',
+    'image_rebuild_thumbs' => 'Återskapa variationer av bildstorlekar',
+    'image_rebuild_thumbs_success' => 'Variationer av bildstorlekar har återskapats!',
 
     // Code Editor
     'code_editor' => 'Redigera kod',

@@ -20,7 +20,7 @@ return [
     'description' => 'توضیحات',
     'role' => 'نقش',
     'cover_image' => 'تصویر روی جلد',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'تصویر باید حدودا 250*440 پیکسل باشد اما از آنجا که متناسب با رابط کاربری کوچک و بزرگ شده و بریده میشود، پس ابعاد نمایش داده شده متفاوت خواهند بود.',
 
     // Actions
     'actions' => 'عملیات',

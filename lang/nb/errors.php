@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Autentiseringstjeneste fra sosiale medier er ikke installert',
     'social_driver_not_configured' => 'Dine :socialAccount innstilliner er ikke angitt.',
     'invite_token_expired' => 'Invitasjonslenken har utgått, du kan forsøke å be om nytt passord istede.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'En bruker for denne handlingen ble ikke funnet.',
 
     // System
     'path_not_writable' => 'Filstien :filePath aksepterer ikke filer, du må sjekke filstitilganger i systemet.',
@@ -76,7 +76,7 @@ return [
     'guests_cannot_save_drafts' => 'Gjester kan ikke lagre utkast',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Du kan ikke kaste ut den eneste administratoren',
+    'users_cannot_delete_only_admin' => 'Du kan ikke slette den eneste administratoren',
     'users_cannot_delete_guest' => 'Du kan ikke slette gjestebrukeren (Du kan deaktivere offentlig visning istede)',
 
     // Roles

@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Mobilā aplikācija',
     'mfa_option_totp_desc' => 'Lai lietotu vairākfaktoru autentifikāciju, jums būs nepieciešama mobilā aplikācija, kas atbalsta TOTP, piemēram, Google Authenticator, Authy vai Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Rezerves kodi',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Izveido vienreizējas lietošanas rezerves kodus, ko var izmantot pierakstoties, lai apstiprinātu savu identitāti. Pārliecinieties, ka tie ir noglabāti drošā vietā.',
     'mfa_gen_confirm_and_enable' => 'Apstiprināt un ieslēgt',
     'mfa_gen_backup_codes_title' => 'Rezerves kodu iestatījumi',
     'mfa_gen_backup_codes_desc' => 'Noglabājiet zemāk esošo kodu sarakstu drošā vietā. Kad piekļūsiet sistēmai, jūs varēsiet izmantot vienu no kodiem kā papildus autentifikācijas mehānismu.',
