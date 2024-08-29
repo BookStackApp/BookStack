@@ -33,8 +33,8 @@ return [
     'app_custom_html_disabled_notice' => 'Anpassat innehåll i HTML-huvudet är inaktiverat på denna inställningssida för att säkerställa att eventuella ändringar som påverkar funktionaliteten kan återställas.',
     'app_logo' => 'Applikationslogotyp',
     'app_logo_desc' => 'Detta används bland annat i applikationshuvudet. Bilden bör vara 86 pixlar i höjd. Stora bilder skalas ned.',
-    'app_icon' => 'Application Icon',
-    'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
+    'app_icon' => 'Applikationsikon',
+    'app_icon_desc' => 'Den här ikonen syns i webbläsarens flikar, bokmärken och genvägar. Den skall vara 256x256 pixlar i PNG format.',
     'app_homepage' => 'Startsida',
     'app_homepage_desc' => 'Välj en vy att använda som startsida istället för standardvyn. Behörigheter för valda sidor kommer att ignoreras.',
     'app_homepage_select' => 'Välj en sida',
@@ -279,11 +279,11 @@ return [
     // Licensing
     'licenses' => 'Licenser',
     'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
+    'licenses_bookstack' => 'BookStack licens',
+    'licenses_php' => 'Licenser för PHP-bibliotek',
+    'licenses_js' => 'Licenser för JavaScript-bibliotek',
     'licenses_other' => 'Andra licenser',
-    'license_details' => 'License Details',
+    'license_details' => 'Licensinformation',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.

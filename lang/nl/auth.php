@@ -47,11 +47,11 @@ return [
     'reset_password' => 'Wachtwoord Herstellen',
     'reset_password_send_instructions' => 'Geef je e-mailadres op en er wordt een link gestuurd om je wachtwoord te herstellen.',
     'reset_password_send_button' => 'Stuur Herstel Link',
-    'reset_password_sent' => 'Een link om het wachtwoord te resetten zal verstuurd worden naar :email als dat e-mailadres in het systeem gevonden is.',
+    'reset_password_sent' => 'Een wachtwoordherstel-link zal worden verstuurd naar :email als dat e-mailadres in het systeem gevonden is.',
     'reset_password_success' => 'Je wachtwoord is succesvol hersteld.',
     'email_reset_subject' => 'Herstel je wachtwoord van :appName',
-    'email_reset_text' => 'Je ontvangt deze e-mail omdat we een wachtwoordresetverzoek voor uw account hebben ontvangen.',
-    'email_reset_not_requested' => 'Als je geen wachtwoord herstel hebt aangevraagd, hoef je niets te doen.',
+    'email_reset_text' => 'Je ontvangt deze e-mail omdat we een wachtwoordherstelverzoek voor uw account hebben ontvangen.',
+    'email_reset_not_requested' => 'Als je geen wachtwoordherstel hebt aangevraagd, hoef je niets te doen.',
 
     // Email Confirmation
     'email_confirm_subject' => 'Bevestig je e-mailadres op :appName',
