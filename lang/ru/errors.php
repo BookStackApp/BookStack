@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Драйвер для Соцсети не найден',
     'social_driver_not_configured' => 'Настройки вашего :socialAccount заданы неправильно.',
     'invite_token_expired' => 'Срок действия приглашения истек. Вместо этого вы можете попытаться сбросить пароль своей учетной записи.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Пользователь для этого действия не найден.',
 
     // System
     'path_not_writable' => 'Невозможно загрузить файл по пути :filePath. Убедитесь что сервер доступен для записи.',

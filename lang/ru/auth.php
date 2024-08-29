@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'Учетная запись не найдена.',
+    'failed' => 'Введенные вами данные не найдены в нашей базе.',
     'throttle' => 'Слишком много попыток входа. Пожалуйста, повторите попытку через :seconds секунд.',
 
     // Login & Register
@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Мобильное приложение',
     'mfa_option_totp_desc' => 'Для использования многофакторной аутентификации вам понадобится мобильное приложение, поддерживающее TOTP, например Google Authenticator, Authy или Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Резервные коды',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Генерирует набор одноразовых резервных кодов, которые вы вводите при входе, чтобы проверить вашу личность. Не забудьте сохранить их в безопасном месте.',
     'mfa_gen_confirm_and_enable' => 'Подтвердить и включить',
     'mfa_gen_backup_codes_title' => 'Настройка резервных кодов',
     'mfa_gen_backup_codes_desc' => 'Сохраните приведенный ниже список кодов в безопасном месте. При доступе к системе вы сможете использовать один из кодов в качестве второго механизма аутентификации.',

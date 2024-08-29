@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'הדף שוחזר',
     'page_restore_notification'   => 'הדף שוחזר בהצלחה',
     'page_move'                   => 'דף הועבר',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'הדף הוזז בהצלחה',
 
     // Chapters
     'chapter_create'              => 'פרק נוצר',
@@ -25,7 +25,7 @@ return [
     'chapter_delete'              => 'פרק נמחק',
     'chapter_delete_notification' => 'הפרק נמחק בהצלחה',
     'chapter_move'                => 'פרק הועבר',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'פרק הוזז בהצלחה',
 
     // Books
     'book_create'                 => 'ספר נוצר',
@@ -50,13 +50,13 @@ return [
     'bookshelf_delete_notification'    => 'מדף נמחק בהצלחה',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'גרסא שוחזרה',
+    'revision_delete' => 'גרסא הוסרה',
+    'revision_delete_notification' => 'גרסא הוסרה בהצלחה',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" הוסף למועדפים',
+    'favourite_remove_notification' => '":name" הוסר מהמועדפים',
 
     // Watching
     'watch_update_level_notification' => 'Watch preferences successfully updated',

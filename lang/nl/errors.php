@@ -36,7 +36,7 @@ return [
     'social_account_register_instructions' => 'Als je nog geen account hebt, kun je je registreren met de :socialAccount optie.',
     'social_driver_not_found' => 'Social driver niet gevonden',
     'social_driver_not_configured' => 'Je :socialAccount instellingen zijn niet correct geconfigureerd.',
-    'invite_token_expired' => 'Deze uitnodigingslink is verlopen. Je kunt in plaats daarvan proberen je wachtwoord opnieuw in te stellen.',
+    'invite_token_expired' => 'Deze uitnodigingslink is verlopen. Je kunt in plaats daarvan proberen je wachtwoord te herstellen.',
     'login_user_not_found' => 'Er is geen gebruiker gevonden voor deze actie.',
 
     // System
