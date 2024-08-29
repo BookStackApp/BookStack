@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Http\ApiController;
@@ -18,6 +19,7 @@ class BookApiController extends ApiController
     public function __construct(
         protected BookRepo $bookRepo,
         protected BookQueries $queries,
+        protected PageQueries $pageQueries,
     ) {
     }
 
@@ -69,7 +71,8 @@ class BookApiController extends ApiController
             ->withType()
             ->withField('pages', function (Entity $entity) {
                 if ($entity instanceof Chapter) {
-                    return (new ApiEntityListFormatter($entity->pages->all()))->format();
+                    $pages = $this->pageQueries->visibleForChapterList($entity->id)->get()->all();
+                    return (new ApiEntityListFormatter($pages))->format();
                 }
                 return null;
             })->format();
