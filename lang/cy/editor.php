@@ -136,7 +136,7 @@ return [
     'cell_border_ridge' => 'Ridge',
     'cell_border_inset' => 'Inset',
     'cell_border_outset' => 'Outset',
-    'cell_border_none' => 'None',
+    'cell_border_none' => 'Dim un',
     'cell_border_hidden' => 'Hidden',
 
     // Images, links, details/summary & embed

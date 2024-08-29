@@ -94,11 +94,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'API-token aangemaakt',
-    'api_token_create_notification' => 'API-token met succes aangemaakt',
+    'api_token_create_notification' => 'API-token succesvol aangemaakt',
     'api_token_update' => 'wijzigde API-token',
-    'api_token_update_notification' => 'API-token met succes bijgewerkt',
+    'api_token_update_notification' => 'API-token succesvol bijgewerkt',
     'api_token_delete' => 'verwijderde API-token',
-    'api_token_delete_notification' => 'API-token met succes verwijderd',
+    'api_token_delete_notification' => 'API-token succesvol verwijderd',
 
     // Roles
     'role_create' => 'maakte rol aan',
@@ -110,8 +110,8 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'leegde prullenbak',
-    'recycle_bin_restore' => 'is van prullenbak hersteld',
-    'recycle_bin_destroy' => 'is van prullenbak verwijderd',
+    'recycle_bin_restore' => 'herstelde van prullenbak',
+    'recycle_bin_destroy' => 'verwijderde van prullenbak',
 
     // Comments
     'commented_on'                => 'reageerde op',

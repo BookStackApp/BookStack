@@ -5,7 +5,7 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'Fy Nghyfrif',
 
     'shortcuts' => 'Shortcuts',
     'shortcuts_interface' => 'UI Shortcut Preferences',

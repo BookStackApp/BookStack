@@ -40,14 +40,14 @@ return [
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
     // Bookshelves
-    'bookshelf_create'            => 'vytvořit knihovnu',
-    'bookshelf_create_notification'    => 'Knihovna byla úspěšně vytvořena',
-    'bookshelf_create_from_book'    => 'převést knihu na knihovnu',
-    'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na knihovnu',
-    'bookshelf_update'                 => 'aktualizovat knihovnu',
-    'bookshelf_update_notification'    => 'Knihovna byla úspěšně aktualizována',
+    'bookshelf_create'            => 'vytvořil polici',
+    'bookshelf_create_notification'    => 'Police byla úspěšně vytvořena',
+    'bookshelf_create_from_book'    => 'převést knihu na polici',
+    'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na polici',
+    'bookshelf_update'                 => 'aktualizovat polici',
+    'bookshelf_update_notification'    => 'Police byla úspěšně aktualizována',
     'bookshelf_delete'                 => 'odstranit knihovnu',
-    'bookshelf_delete_notification'    => 'Knihovna byla úspěšně smazána',
+    'bookshelf_delete_notification'    => 'Police byla úspěšně odstraněna',
 
     // Revisions
     'revision_restore' => 'obnovil revizi',

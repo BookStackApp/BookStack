@@ -4,24 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => '頁面上有新評論：:pageName',
+    'new_comment_intro' => '一位用戶在 :appName: 的頁面上發表了評論',
+    'new_page_subject' => '新頁面：:pageName',
+    'new_page_intro' => ':appName: 中創建了一個新頁面',
+    'updated_page_subject' => '頁面更新：:pageName',
+    'updated_page_intro' => ':appName: 中的一個頁面已被更新',
+    'updated_page_debounce' => '為了防止出現大量通知，一段時間內您不會收到同一編輯者再次編輯本頁面的通知。',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_page_path' => 'Page Path:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => '頁面名稱:',
+    'detail_page_path' => '頁面路徑：',
+    'detail_commenter' => '評論者:',
+    'detail_comment' => '評論:',
+    'detail_created_by' => '建立者:',
+    'detail_updated_by' => '更新者：',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => '檢視評論',
+    'action_view_page' => '查看頁面',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => '向您發送此通知是因為 :link 涵蓋了該項目的此類活動。',
+    'footer_reason_link' => '個人偏好通知設定',
 ];
