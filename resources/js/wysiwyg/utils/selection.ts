@@ -2,11 +2,11 @@ import {
     $createNodeSelection,
     $createParagraphNode,
     $getRoot,
-    $getSelection,
+    $getSelection, $isDecoratorNode,
     $isElementNode,
     $isTextNode,
     $setSelection,
-    BaseSelection,
+    BaseSelection, DecoratorNode,
     ElementFormatType,
     ElementNode, LexicalEditor,
     LexicalNode,
@@ -16,8 +16,9 @@ import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexi
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
-import {$getParentOfType} from "./nodes";
+import {$getParentOfType, nodeHasAlignment} from "./nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
+import {CommonBlockAlignment} from "../nodes/_common";
 
 const lastSelectionByEditor = new WeakMap<LexicalEditor, BaseSelection|null>;
 
@@ -120,10 +121,10 @@ export function $selectionContainsNode(selection: BaseSelection | null, node: Le
     return false;
 }
 
-export function $selectionContainsElementFormat(selection: BaseSelection | null, format: ElementFormatType): boolean {
+export function $selectionContainsAlignment(selection: BaseSelection | null, alignment: CommonBlockAlignment): boolean {
     const nodes = $getBlockElementNodesInSelection(selection);
     for (const node of nodes) {
-        if (node.getFormatType() === format) {
+        if (nodeHasAlignment(node) && node.getAlignment() === alignment) {
             return true;
         }
     }
@@ -148,4 +149,12 @@ export function $getBlockElementNodesInSelection(selection: BaseSelection | null
     }
 
     return Array.from(blockNodes.values());
+}
+
+export function $getDecoratorNodesInSelection(selection: BaseSelection | null): DecoratorNode<any>[] {
+    if (!selection) {
+        return [];
+    }
+
+    return selection.getNodes().filter(node => $isDecoratorNode(node));
 }
