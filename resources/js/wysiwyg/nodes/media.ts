@@ -9,6 +9,13 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 
 import {el} from "../utils/dom";
+import {
+    CommonBlockAlignment,
+    SerializedCommonBlockNode,
+    setCommonBlockPropsFromElement,
+    updateElementWithCommonBlockProps
+} from "./_common";
+import {elem} from "../../services/dom";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {
@@ -20,10 +27,10 @@ export type SerializedMediaNode = Spread<{
     tag: MediaNodeTag;
     attributes: Record<string, string>;
     sources: MediaNodeSource[];
-}, SerializedElementNode>
+}, SerializedCommonBlockNode>
 
 const attributeAllowList = [
-    'id', 'width', 'height', 'style', 'title', 'name',
+    'width', 'height', 'style', 'title', 'name',
     'src', 'allow', 'allowfullscreen', 'loading', 'sandbox',
     'type', 'data', 'controls', 'autoplay', 'controlslist', 'loop',
     'muted', 'playsinline', 'poster', 'preload'
@@ -39,7 +46,7 @@ function filterAttributes(attributes: Record<string, string>): Record<string, st
     return filtered;
 }
 
-function domElementToNode(tag: MediaNodeTag, element: Element): MediaNode {
+function domElementToNode(tag: MediaNodeTag, element: HTMLElement): MediaNode {
     const node = $createMediaNode(tag);
 
     const attributes: Record<string, string> = {};
@@ -62,10 +69,14 @@ function domElementToNode(tag: MediaNodeTag, element: Element): MediaNode {
         node.setSources(sources);
     }
 
+    setCommonBlockPropsFromElement(element, node);
+
     return node;
 }
 
 export class MediaNode extends ElementNode {
+    __id: string = '';
+    __alignment: CommonBlockAlignment = '';
     __tag: MediaNodeTag;
     __attributes: Record<string, string> = {};
     __sources: MediaNodeSource[] = [];
@@ -135,11 +146,32 @@ export class MediaNode extends ElementNode {
         this.setAttributes(attrs);
     }
 
+    setId(id: string) {
+        const self = this.getWritable();
+        self.__id = id;
+    }
+
+    getId(): string {
+        const self = this.getLatest();
+        return self.__id;
+    }
+
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const sources = (this.__tag === 'video' || this.__tag === 'audio') ? this.__sources : [];
         const sourceEls = sources.map(source => el('source', source));
-
-        return el(this.__tag, this.__attributes, sourceEls);
+        const element = el(this.__tag, this.__attributes, sourceEls);
+        updateElementWithCommonBlockProps(element, this);
+        return element;
     }
 
     updateDOM(prevNode: unknown, dom: HTMLElement) {
@@ -175,6 +207,8 @@ export class MediaNode extends ElementNode {
             ...super.exportJSON(),
             type: 'media',
             version: 1,
+            id: this.__id,
+            alignment: this.__alignment,
             tag: this.__tag,
             attributes: this.__attributes,
             sources: this.__sources,
@@ -182,7 +216,10 @@ export class MediaNode extends ElementNode {
     }
 
     static importJSON(serializedNode: SerializedMediaNode): MediaNode {
-        return $createMediaNode(serializedNode.tag);
+        const node = $createMediaNode(serializedNode.tag);
+        node.setId(serializedNode.id);
+        node.setAlignment(serializedNode.alignment);
+        return node;
     }
 
 }
@@ -196,7 +233,7 @@ export function $createMediaNodeFromHtml(html: string): MediaNode | null {
     const doc = parser.parseFromString(`<body>${html}</body>`, 'text/html');
 
     const el = doc.body.children[0];
-    if (!el) {
+    if (!(el instanceof HTMLElement)) {
         return null;
     }
 

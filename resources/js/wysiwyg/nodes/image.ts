@@ -10,6 +10,7 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {EditorDecoratorAdapter} from "../ui/framework/decorator";
 import {el} from "../utils/dom";
+import {CommonBlockAlignment, extractAlignmentFromElement} from "./_common";
 
 export interface ImageNodeOptions {
     alt?: string;
@@ -22,6 +23,7 @@ export type SerializedImageNode = Spread<{
     alt: string;
     width: number;
     height: number;
+    alignment: CommonBlockAlignment;
 }, SerializedLexicalNode>
 
 export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
@@ -29,7 +31,7 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
     __alt: string = '';
     __width: number = 0;
     __height: number = 0;
-    // TODO - Alignment
+    __alignment: CommonBlockAlignment = '';
 
     static getType(): string {
         return 'image';
@@ -97,6 +99,16 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
         return self.__width;
     }
 
+    setAlignment(alignment: CommonBlockAlignment) {
+        const self = this.getWritable();
+        self.__alignment = alignment;
+    }
+
+    getAlignment(): CommonBlockAlignment {
+        const self = this.getLatest();
+        return self.__alignment;
+    }
+
     isInline(): boolean {
         return true;
     }
@@ -121,6 +133,11 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
         if (this.__alt) {
             element.setAttribute('alt', this.__alt);
         }
+
+        if (this.__alignment) {
+            element.classList.add('align-' + this.__alignment);
+        }
+
         return el('span', {class: 'editor-image-wrap'}, [
             element,
         ]);
@@ -158,6 +175,15 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
             }
         }
 
+        if (prevNode.__alignment !== this.__alignment) {
+            if (prevNode.__alignment) {
+                image.classList.remove('align-' + prevNode.__alignment);
+            }
+            if (this.__alignment) {
+                image.classList.add('align-' + this.__alignment);
+            }
+        }
+
         return false;
     }
 
@@ -174,9 +200,10 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
                             width: Number.parseInt(element.getAttribute('width') || '0'),
                         }
 
-                        return {
-                            node: new ImageNode(src, options),
-                        };
+                        const node = new ImageNode(src, options);
+                        node.setAlignment(extractAlignmentFromElement(element));
+
+                        return { node };
                     },
                     priority: 3,
                 };
@@ -191,16 +218,19 @@ export class ImageNode extends DecoratorNode<EditorDecoratorAdapter> {
             src: this.__src,
             alt: this.__alt,
             height: this.__height,
-            width: this.__width
+            width: this.__width,
+            alignment: this.__alignment,
         };
     }
 
     static importJSON(serializedNode: SerializedImageNode): ImageNode {
-        return $createImageNode(serializedNode.src, {
+        const node = $createImageNode(serializedNode.src, {
             alt: serializedNode.alt,
             width: serializedNode.width,
             height: serializedNode.height,
         });
+        node.setAlignment(serializedNode.alignment);
+        return node;
     }
 }
 
