@@ -6,7 +6,6 @@ import {
     getMainEditorFullToolbar, getTableToolbarContent
 } from "./toolbars";
 import {EditorUIManager} from "./framework/manager";
-import {ImageDecorator} from "./decorators/image";
 import {EditorUiContext} from "./framework/core";
 import {CodeBlockDecorator} from "./decorators/code-block";
 import {DiagramDecorator} from "./decorators/diagram";
@@ -64,7 +63,6 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
     });
 
     // Register image decorator listener
-    manager.registerDecoratorType('image', ImageDecorator);
     manager.registerDecoratorType('code', CodeBlockDecorator);
     manager.registerDecoratorType('diagram', DiagramDecorator);
 

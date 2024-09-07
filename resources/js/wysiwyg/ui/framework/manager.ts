@@ -144,6 +144,14 @@ export class EditorUIManager {
         this.selectionChangeHandlers.delete(handler);
     }
 
+    triggerLayoutUpdate(): void {
+        window.requestAnimationFrame(() => {
+            for (const toolbar of this.activeContextToolbars) {
+                toolbar.updatePosition();
+            }
+        });
+    }
+
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
         for (let i = this.activeContextToolbars.length - 1; i >= 0; i--) {
             const toolbar = this.activeContextToolbars[i];
@@ -220,13 +228,8 @@ export class EditorUIManager {
     }
 
     protected setupEventListeners(context: EditorUiContext) {
-        const updateToolbars = (event: Event) => {
-            for (const toolbar of this.activeContextToolbars) {
-                toolbar.updatePosition();
-            }
-        };
-
-        window.addEventListener('scroll', updateToolbars, {capture: true, passive: true});
-        window.addEventListener('resize', updateToolbars, {passive: true});
+        const layoutUpdate = this.triggerLayoutUpdate.bind(this);
+        window.addEventListener('scroll', layoutUpdate, {capture: true, passive: true});
+        window.addEventListener('resize', layoutUpdate, {passive: true});
     }
 }
