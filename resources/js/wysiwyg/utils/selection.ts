@@ -1,6 +1,6 @@
 import {
     $createNodeSelection,
-    $createParagraphNode,
+    $createParagraphNode, $createRangeSelection,
     $getRoot,
     $getSelection, $isDecoratorNode,
     $isElementNode,
@@ -106,6 +106,18 @@ export function $selectSingleNode(node: LexicalNode) {
     $setSelection(nodeSelection);
 }
 
+export function $toggleSelection(editor: LexicalEditor) {
+    const lastSelection = getLastSelection(editor);
+
+    if (lastSelection) {
+        window.requestAnimationFrame(() => {
+            editor.update(() => {
+                $setSelection(lastSelection.clone());
+            })
+        });
+    }
+}
+
 export function $selectionContainsNode(selection: BaseSelection | null, node: LexicalNode): boolean {
     if (!selection) {
         return false;
@@ -122,7 +134,11 @@ export function $selectionContainsNode(selection: BaseSelection | null, node: Le
 }
 
 export function $selectionContainsAlignment(selection: BaseSelection | null, alignment: CommonBlockAlignment): boolean {
-    const nodes = $getBlockElementNodesInSelection(selection);
+
+    const nodes = [
+        ...(selection?.getNodes() || []),
+        ...$getBlockElementNodesInSelection(selection)
+    ];
     for (const node of nodes) {
         if (nodeHasAlignment(node) && node.getAlignment() === alignment) {
             return true;

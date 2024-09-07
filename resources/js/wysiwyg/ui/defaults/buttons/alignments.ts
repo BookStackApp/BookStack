@@ -1,4 +1,4 @@
-import {BaseSelection, LexicalEditor} from "lexical";
+import {$isElementNode, BaseSelection, LexicalEditor} from "lexical";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import alignLeftIcon from "@icons/editor/align-left.svg";
 import {EditorUiContext} from "../../framework/core";
@@ -7,8 +7,7 @@ import alignRightIcon from "@icons/editor/align-right.svg";
 import alignJustifyIcon from "@icons/editor/align-justify.svg";
 import {
     $getBlockElementNodesInSelection,
-    $getDecoratorNodesInSelection,
-    $selectionContainsAlignment, getLastSelection
+    $selectionContainsAlignment, $selectSingleNode, $toggleSelection, getLastSelection
 } from "../../../utils/selection";
 import {CommonBlockAlignment} from "../../../nodes/_common";
 import {nodeHasAlignment} from "../../../utils/nodes";
@@ -17,12 +16,12 @@ import {nodeHasAlignment} from "../../../utils/nodes";
 function setAlignmentForSection(editor: LexicalEditor, alignment: CommonBlockAlignment): void {
     const selection = getLastSelection(editor);
     const selectionNodes = selection?.getNodes() || [];
-    const decorators = $getDecoratorNodesInSelection(selection);
 
-    // Handle decorator node selection alignment
-    if (selectionNodes.length === 1 && decorators.length === 1 && nodeHasAlignment(decorators[0])) {
-        decorators[0].setAlignment(alignment);
-        console.log('setting for decorator!');
+    // Handle inline node selection alignment
+    if (selectionNodes.length === 1 && $isElementNode(selectionNodes[0]) && selectionNodes[0].isInline() && nodeHasAlignment(selectionNodes[0])) {
+        selectionNodes[0].setAlignment(alignment);
+        $selectSingleNode(selectionNodes[0]);
+        $toggleSelection(editor);
         return;
     }
 
@@ -33,6 +32,7 @@ function setAlignmentForSection(editor: LexicalEditor, alignment: CommonBlockAli
             node.setAlignment(alignment)
         }
     }
+    $toggleSelection(editor);
 }
 
 export const alignLeft: EditorButtonDefinition = {
