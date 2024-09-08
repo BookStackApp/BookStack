@@ -31,6 +31,22 @@ export function formatSizeValue(size: number | string, defaultSuffix: string = '
     return size;
 }
 
+export function sizeToPixels(size: string): number {
+    if (/^-?\d+$/.test(size)) {
+        return Number(size);
+    }
+
+    if (/^-?\d+\.\d+$/.test(size)) {
+        return Math.round(Number(size));
+    }
+
+    if (/^-?\d+px\s*$/.test(size)) {
+        return Number(size.trim().replace('px', ''));
+    }
+
+    return 0;
+}
+
 export type StyleMap = Map<string, string>;
 
 /**

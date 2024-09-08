@@ -288,14 +288,14 @@ body.editor-is-fullscreen {
   position: relative;
   display: inline-flex;
 }
-.editor-image-resizer {
+.editor-node-resizer {
   position: absolute;
   left: 0;
   right: 0;
   display: inline-block;
   outline: 2px dashed var(--editor-color-primary);
 }
-.editor-image-resizer-handle {
+.editor-node-resizer-handle {
   position: absolute;
   display: block;
   width: 10px;
@@ -325,7 +325,7 @@ body.editor-is-fullscreen {
     cursor: sw-resize;
   }
 }
-.editor-image-resizer-ghost {
+.editor-node-resizer-ghost {
   opacity: 0.5;
   display: none;
   position: absolute;
@@ -335,8 +335,9 @@ body.editor-is-fullscreen {
   height: 100%;
   z-index: 2;
   pointer-events: none;
+  background-color: var(--editor-color-primary);
 }
-.editor-image-resizer.active .editor-image-resizer-ghost {
+.editor-node-resizer.active .editor-node-resizer-ghost {
   display: block;
 }
 
@@ -370,6 +371,13 @@ body.editor-is-fullscreen {
 }
 .editor-diagram.selected {
   outline: 2px dashed var(--editor-color-primary);
+}
+
+.editor-media-wrap {
+  cursor: not-allowed;
+  iframe {
+    pointer-events: none;
+  }
 }
 
 /**

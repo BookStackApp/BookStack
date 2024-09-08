@@ -64,3 +64,10 @@ export function updateElementWithCommonBlockProps(element: HTMLElement, node: Co
         element.classList.add('align-' + node.__alignment);
     }
 }
+
+export interface NodeHasSize {
+    setHeight(height: number): void;
+    setWidth(width: number): void;
+    getHeight(): number;
+    getWidth(): number;
+}
