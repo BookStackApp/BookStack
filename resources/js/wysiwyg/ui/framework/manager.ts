@@ -108,7 +108,7 @@ export class EditorUIManager {
         this.contextToolbarDefinitionsByKey[key] = definition;
     }
 
-    protected triggerStateUpdate(update: EditorUiStateUpdate): void {
+    triggerStateUpdate(update: EditorUiStateUpdate): void {
         setLastSelection(update.editor, update.selection);
         this.toolbar?.updateState(update);
         this.updateContextToolbars(update);
@@ -120,9 +120,20 @@ export class EditorUIManager {
 
     triggerStateRefresh(): void {
         const editor = this.getContext().editor;
-        this.triggerStateUpdate({
+        const update = {
             editor,
             selection: getLastSelection(editor),
+        };
+
+        this.triggerStateUpdate(update);
+        this.updateContextToolbars(update);
+    }
+
+    triggerFutureStateRefresh(): void {
+        requestAnimationFrame(() => {
+            this.getContext().editor.getEditorState().read(() => {
+                this.triggerStateRefresh();
+            });
         });
     }
 
@@ -195,15 +206,6 @@ export class EditorUIManager {
     }
 
     protected setupEditor(editor: LexicalEditor) {
-        // Update button states on editor selection change
-        editor.registerCommand(SELECTION_CHANGE_COMMAND, () => {
-            this.triggerStateUpdate({
-                editor: editor,
-                selection: $getSelection(),
-            });
-            return false;
-        }, COMMAND_PRIORITY_LOW);
-
         // Register our DOM decorate listener with the editor
         const domDecorateListener: DecoratorListener<EditorDecoratorAdapter> = (decorators: Record<NodeKey, EditorDecoratorAdapter>) => {
             editor.getEditorState().read(() => {

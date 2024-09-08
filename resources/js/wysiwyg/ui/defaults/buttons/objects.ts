@@ -6,7 +6,7 @@ import {
     $getRoot,
     $getSelection, $insertNodes,
     BaseSelection,
-    ElementNode
+    ElementNode, isCurrentlyReadOnlyMode
 } from "lexical";
 import {$isLinkNode, LinkNode} from "@lexical/link";
 import unlinkIcon from "@icons/editor/unlink.svg";
@@ -54,16 +54,17 @@ export const unlink: EditorButtonDefinition = {
         context.editor.update(() => {
             const selection = getLastSelection(context.editor);
             const selectedLink = $getNodeFromSelection(selection, $isLinkNode) as LinkNode | null;
-            const selectionPoints = selection?.getStartEndPoints();
 
             if (selectedLink) {
-                const newNode = $createTextNode(selectedLink.getTextContent());
-                selectedLink.replace(newNode);
-                if (selectionPoints?.length === 2) {
-                    newNode.select(selectionPoints[0].offset, selectionPoints[1].offset);
-                } else {
-                    newNode.select();
+                const contents = selectedLink.getChildren().reverse();
+                for (const child of contents) {
+                    selectedLink.insertAfter(child);
                 }
+                selectedLink.remove();
+
+                contents[contents.length - 1].selectStart();
+
+                context.manager.triggerFutureStateRefresh();
             }
         });
     },

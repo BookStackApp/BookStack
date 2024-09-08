@@ -16,6 +16,4 @@
 
 ## Bugs
 
-- Removing link around image via button deletes image, not just link 
-- `SELECTION_CHANGE_COMMAND` not fired when clicking out of a table cell. Prevents toolbar hiding on table unselect.
 - Template drag/drop not handled when outside core editor area (ignored in margin area).

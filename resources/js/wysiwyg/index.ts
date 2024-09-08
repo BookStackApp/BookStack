@@ -1,4 +1,4 @@
-import {createEditor, CreateEditorArgs, LexicalEditor} from 'lexical';
+import {$getSelection, createEditor, CreateEditorArgs, isCurrentlyReadOnlyMode, LexicalEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
@@ -69,7 +69,19 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     }
 
     let changeFromLoading = true;
-    editor.registerUpdateListener(({editorState, dirtyElements, dirtyLeaves}) => {
+    editor.registerUpdateListener(({dirtyElements, dirtyLeaves, editorState, prevEditorState}) => {
+        // Watch for selection changes to update the UI on change
+        // Used to be done via SELECTION_CHANGE_COMMAND but this would not always emit
+        // for all selection changes, so this proved more reliable.
+        const selectionChange = !(prevEditorState._selection?.is(editorState._selection) || false);
+        if (selectionChange) {
+            editor.update(() => {
+                const selection = $getSelection();
+                context.manager.triggerStateUpdate({
+                    editor, selection,
+                });
+            });
+        }
 
         // Emit change event to component system (for draft detection) on actual user content change
         if (dirtyElements.size > 0 || dirtyLeaves.size > 0) {
