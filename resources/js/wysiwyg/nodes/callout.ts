@@ -34,6 +34,7 @@ export class CalloutNode extends ElementNode {
     static clone(node: CalloutNode) {
         const newNode = new CalloutNode(node.__category, node.__key);
         newNode.__id = node.__id;
+        newNode.__alignment = node.__alignment;
         return newNode;
     }
 

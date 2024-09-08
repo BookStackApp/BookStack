@@ -1,6 +1,6 @@
 import {
     DOMConversion,
-    DOMConversionMap, DOMConversionOutput,
+    DOMConversionMap, DOMConversionOutput, DOMExportOutput,
     ElementNode,
     LexicalEditor,
     LexicalNode,
@@ -8,7 +8,7 @@ import {
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
-import {el} from "../utils/dom";
+import {el, sizeToPixels} from "../utils/dom";
 import {
     CommonBlockAlignment,
     SerializedCommonBlockNode,
@@ -16,6 +16,7 @@ import {
     updateElementWithCommonBlockProps
 } from "./_common";
 import {elem} from "../../services/dom";
+import {$selectSingleNode} from "../utils/selection";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {
@@ -89,6 +90,8 @@ export class MediaNode extends ElementNode {
         const newNode = new MediaNode(node.__tag, node.__key);
         newNode.__attributes = Object.assign({}, node.__attributes);
         newNode.__sources = node.__sources.map(s => Object.assign({}, s));
+        newNode.__id = node.__id;
+        newNode.__alignment = node.__alignment;
         return newNode;
     }
 
@@ -166,12 +169,53 @@ export class MediaNode extends ElementNode {
         return self.__alignment;
     }
 
-    createDOM(_config: EditorConfig, _editor: LexicalEditor) {
+    setHeight(height: number): void {
+        if (!height) {
+            return;
+        }
+
+        const attrs = Object.assign({}, this.getAttributes(), {height});
+        this.setAttributes(attrs);
+    }
+
+    getHeight(): number {
+        const self = this.getLatest();
+        return sizeToPixels(self.__attributes.height || '0');
+    }
+
+    setWidth(width: number): void {
+        const attrs = Object.assign({}, this.getAttributes(), {width});
+        this.setAttributes(attrs);
+    }
+
+    getWidth(): number {
+        const self = this.getLatest();
+        return sizeToPixels(self.__attributes.width || '0');
+    }
+
+    isInline(): boolean {
+        return true;
+    }
+
+    createInnerDOM() {
         const sources = (this.__tag === 'video' || this.__tag === 'audio') ? this.__sources : [];
         const sourceEls = sources.map(source => el('source', source));
         const element = el(this.__tag, this.__attributes, sourceEls);
         updateElementWithCommonBlockProps(element, this);
         return element;
+    }
+
+    createDOM(_config: EditorConfig, _editor: LexicalEditor) {
+        const media = this.createInnerDOM();
+        const wrap = el('span', {
+            class: media.className + ' editor-media-wrap',
+        }, [media]);
+
+        wrap.addEventListener('click', e => {
+            _editor.update(() => $selectSingleNode(this));
+        });
+
+        return wrap;
     }
 
     updateDOM(prevNode: unknown, dom: HTMLElement) {
@@ -200,6 +244,11 @@ export class MediaNode extends ElementNode {
             video: buildConverter('video'),
             audio: buildConverter('audio'),
         };
+    }
+
+    exportDOM(editor: LexicalEditor): DOMExportOutput {
+        const element = this.createInnerDOM();
+        return { element };
     }
 
     exportJSON(): SerializedMediaNode {

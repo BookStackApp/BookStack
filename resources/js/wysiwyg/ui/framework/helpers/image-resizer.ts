@@ -1,10 +1,16 @@
-import {BaseSelection,} from "lexical";
+import {BaseSelection, LexicalNode,} from "lexical";
 import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
 import {el} from "../../../utils/dom";
-import {$isImageNode, ImageNode} from "../../../nodes/image";
+import {$isImageNode} from "../../../nodes/image";
 import {EditorUiContext} from "../core";
+import {NodeHasSize} from "../../../nodes/_common";
+import {$isMediaNode} from "../../../nodes/media";
 
-class ImageResizer {
+function isNodeWithSize(node: LexicalNode): node is NodeHasSize&LexicalNode {
+    return $isImageNode(node) || $isMediaNode(node);
+}
+
+class NodeResizer {
     protected context: EditorUiContext;
     protected dom: HTMLElement|null = null;
     protected scrollContainer: HTMLElement;
@@ -26,13 +32,17 @@ class ImageResizer {
             this.hide();
         }
 
-        if (nodes.length === 1 && $isImageNode(nodes[0])) {
-            const imageNode = nodes[0];
-            const nodeKey = imageNode.getKey();
-            const imageDOM = this.context.editor.getElementByKey(nodeKey);
+        if (nodes.length === 1 && isNodeWithSize(nodes[0])) {
+            const node = nodes[0];
+            const nodeKey = node.getKey();
+            let nodeDOM = this.context.editor.getElementByKey(nodeKey);
 
-            if (imageDOM) {
-                this.showForImage(imageNode, imageDOM);
+            if (nodeDOM && nodeDOM.nodeName === 'SPAN') {
+                nodeDOM = nodeDOM.firstElementChild as HTMLElement;
+            }
+
+            if (nodeDOM) {
+                this.showForNode(node, nodeDOM);
             }
         }
     }
@@ -42,10 +52,13 @@ class ImageResizer {
         this.hide();
     }
 
-    protected showForImage(node: ImageNode, dom: HTMLElement) {
+    protected showForNode(node: NodeHasSize&LexicalNode, dom: HTMLElement) {
         this.dom = this.buildDOM();
 
-        const ghost = el('img', {src: dom.getAttribute('src'), class: 'editor-image-resizer-ghost'});
+        let ghost = el('span', {class: 'editor-node-resizer-ghost'});
+        if ($isImageNode(node)) {
+            ghost = el('img', {src: dom.getAttribute('src'), class: 'editor-node-resizer-ghost'});
+        }
         this.dom.append(ghost);
 
         this.context.scrollDOM.append(this.dom);
@@ -55,16 +68,16 @@ class ImageResizer {
         this.activeSelection = node.getKey();
     }
 
-    protected updateDOMPosition(imageDOM: HTMLElement) {
+    protected updateDOMPosition(nodeDOM: HTMLElement) {
         if (!this.dom) {
             return;
         }
 
-        const imageBounds = imageDOM.getBoundingClientRect();
-        this.dom.style.left = imageDOM.offsetLeft + 'px';
-        this.dom.style.top = imageDOM.offsetTop + 'px';
-        this.dom.style.width = imageBounds.width + 'px';
-        this.dom.style.height = imageBounds.height + 'px';
+        const nodeDOMBounds = nodeDOM.getBoundingClientRect();
+        this.dom.style.left = nodeDOM.offsetLeft + 'px';
+        this.dom.style.top = nodeDOM.offsetTop + 'px';
+        this.dom.style.width = nodeDOMBounds.width + 'px';
+        this.dom.style.height = nodeDOMBounds.height + 'px';
     }
 
     protected updateDOMSize(width: number, height: number): void {
@@ -85,15 +98,15 @@ class ImageResizer {
     protected buildDOM() {
         const handleClasses = ['nw', 'ne', 'se', 'sw'];
         const handleElems = handleClasses.map(c => {
-            return el('div', {class: `editor-image-resizer-handle ${c}`});
+            return el('div', {class: `editor-node-resizer-handle ${c}`});
         });
 
         return el('div', {
-            class: 'editor-image-resizer',
+            class: 'editor-node-resizer',
         }, handleElems);
     }
 
-    setupTracker(container: HTMLElement, node: ImageNode, imageDOM: HTMLElement): MouseDragTracker {
+    setupTracker(container: HTMLElement, node: NodeHasSize, nodeDOM: HTMLElement): MouseDragTracker {
         let startingWidth: number = 0;
         let startingHeight: number = 0;
         let startingRatio: number = 0;
@@ -116,22 +129,22 @@ class ImageResizer {
             const increase = xChange + yChange > 0;
             const directedChange = increase ? balancedChange : 0-balancedChange;
             const newWidth = Math.max(5, Math.round(startingWidth + directedChange));
-            const newHeight = newWidth * startingRatio;
+            const newHeight = Math.round(newWidth * startingRatio);
 
             return {width: newWidth, height: newHeight};
         };
 
-        return new MouseDragTracker(container, '.editor-image-resizer-handle', {
+        return new MouseDragTracker(container, '.editor-node-resizer-handle', {
             down(event: MouseEvent, handle: HTMLElement) {
                 _this.dom?.classList.add('active');
                 _this.context.editor.getEditorState().read(() => {
-                    const imageRect = imageDOM.getBoundingClientRect();
-                    startingWidth = node.getWidth() || imageRect.width;
-                    startingHeight = node.getHeight() || imageRect.height;
+                    const domRect = nodeDOM.getBoundingClientRect();
+                    startingWidth = node.getWidth() || domRect.width;
+                    startingHeight = node.getHeight() || domRect.height;
                     if (node.getHeight()) {
                         hasHeight = true;
                     }
-                    startingRatio = startingWidth / startingHeight;
+                    startingRatio = startingHeight / startingWidth;
                 });
 
                 flipXChange = handle.classList.contains('nw') || handle.classList.contains('sw');
@@ -148,7 +161,7 @@ class ImageResizer {
                     node.setHeight(hasHeight ? size.height : 0);
                     _this.context.manager.triggerLayoutUpdate();
                     requestAnimationFrame(() => {
-                        _this.updateDOMPosition(imageDOM);
+                        _this.updateDOMPosition(nodeDOM);
                     })
                 });
                 _this.dom?.classList.remove('active');
@@ -158,8 +171,8 @@ class ImageResizer {
 }
 
 
-export function registerImageResizer(context: EditorUiContext): (() => void) {
-    const resizer = new ImageResizer(context);
+export function registerNodeResizer(context: EditorUiContext): (() => void) {
+    const resizer = new NodeResizer(context);
 
     return () => {
         resizer.teardown();

@@ -13,7 +13,7 @@ import {registerTaskListHandler} from "./ui/framework/helpers/task-list-handler"
 import {registerTableSelectionHandler} from "./ui/framework/helpers/table-selection-handler";
 import {el} from "./utils/dom";
 import {registerShortcuts} from "./services/shortcuts";
-import {registerImageResizer} from "./ui/framework/helpers/image-resizer";
+import {registerNodeResizer} from "./ui/framework/helpers/image-resizer";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -56,7 +56,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, editArea),
         registerDropPasteHandling(context),
-        registerImageResizer(context),
+        registerNodeResizer(context),
     );
 
     listenToCommonEvents(editor);
