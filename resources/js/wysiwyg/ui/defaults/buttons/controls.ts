@@ -19,6 +19,7 @@ export const undo: EditorButtonDefinition = {
     icon: undoIcon,
     action(context: EditorUiContext) {
         context.editor.dispatchCommand(UNDO_COMMAND, undefined);
+        context.manager.triggerFutureStateRefresh();
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;
@@ -38,6 +39,7 @@ export const redo: EditorButtonDefinition = {
     icon: redoIcon,
     action(context: EditorUiContext) {
         context.editor.dispatchCommand(REDO_COMMAND, undefined);
+        context.manager.triggerFutureStateRefresh();
     },
     isActive(selection: BaseSelection|null): boolean {
         return false;

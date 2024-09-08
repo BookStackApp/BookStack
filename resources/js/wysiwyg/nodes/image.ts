@@ -40,7 +40,7 @@ export class ImageNode extends ElementNode {
             alt: node.__alt,
             width: node.__width,
             height: node.__height,
-        });
+        }, node.__key);
         newNode.__alignment = node.__alignment;
         return newNode;
     }
