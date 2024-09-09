@@ -70,11 +70,17 @@ body.editor-is-fullscreen {
 .editor-button-text {
   font-weight: 400;
   color: #000;
-  font-size: 12.2px;
+  font-size: 14px;
+  flex: 1;
+  padding-inline-end: 4px;
 }
 .editor-button-format-preview {
   padding: 4px 6px;
   display: block;
+}
+.editor-button-long .editor-button-icon {
+  width: 24px;
+  height: 24px;
 }
 .editor-button-icon svg {
   width: 24px;
@@ -82,6 +88,13 @@ body.editor-is-fullscreen {
   color: inherit;
   fill: currentColor;
   display: block;
+}
+.editor-menu-button-icon {
+  width: 24px;
+  height: 24px;
+  svg {
+    fill: #888;
+  }
 }
 .editor-button-with-menu-container {
   display: flex;
@@ -126,6 +139,7 @@ body.editor-is-fullscreen {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  min-width: 160px;
 }
 .editor-dropdown-menu-vertical .editor-button {
   border-bottom: 0;
@@ -138,9 +152,17 @@ body.editor-is-fullscreen {
   top: 0;
 }
 
+.editor-separator {
+  display: block;
+  height: 1px;
+  background-color: #DDD;
+  opacity: .8;
+}
+
 .editor-format-menu-toggle {
   width: 130px;
   height: 32px;
+  font-size: 13px;
   overflow: hidden;
   padding-inline: 12px;
   justify-content: start;
@@ -153,6 +175,9 @@ body.editor-is-fullscreen {
   min-width: 300px;
   .editor-dropdown-menu {
     min-width: 220px;
+  }
+  .editor-button-icon {
+    display: none;
   }
 }
 .editor-format-menu .editor-dropdown-menu .editor-dropdown-menu-container > .editor-button {
@@ -259,12 +284,20 @@ body.editor-is-fullscreen {
   width: 28px;
   height: 28px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .editor-color-select-option:hover {
   border-radius: 3px;
   box-sizing: border-box;
   z-index: 3;
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.25);
+}
+.editor-color-select-option[data-color=""] svg {
+  width: 20px;
+  height: 20px;
+  fill: #888;
 }
 .editor-table-creator-row {
   display: flex;
@@ -422,7 +455,9 @@ body.editor-is-fullscreen {
   background-size: 100% 100%;
 }
 
-// Editor form elements
+/**
+ * Form elements
+ */
 .editor-form-field-wrapper {
   margin-bottom: .5rem;
 }

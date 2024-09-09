@@ -65,6 +65,7 @@ import {
 } from "./defaults/buttons/objects";
 import {el} from "../utils/dom";
 import {EditorButtonWithMenu} from "./framework/blocks/button-with-menu";
+import {EditorSeparator} from "./framework/blocks/separator";
 
 export function getMainEditorFullToolbar(): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
@@ -83,7 +84,7 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
             new FormatPreviewButton(el('h5'), h5),
             new FormatPreviewButton(el('blockquote'), blockquote),
             new FormatPreviewButton(el('p'), paragraph),
-            new EditorDropdownButton({button: {label: 'Callouts'}, showOnHover: true, direction: 'vertical'}, [
+            new EditorDropdownButton({button: {label: 'Callouts', format: 'long'}, showOnHover: true, direction: 'vertical'}, [
                 new FormatPreviewButton(el('p', {class: 'callout info'}), infoCallout),
                 new FormatPreviewButton(el('p', {class: 'callout success'}), successCallout),
                 new FormatPreviewButton(el('p', {class: 'callout warning'}), warningCallout),
@@ -125,37 +126,41 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Insert types
-        new EditorOverflowContainer(8, [
+        new EditorOverflowContainer(4, [
             new EditorButton(link),
 
             new EditorDropdownButton({button: table, direction: 'vertical'}, [
-                new EditorDropdownButton({button: {...table, format: 'long'}, showOnHover: true}, [
+                new EditorDropdownButton({button: {label: 'Insert', format: 'long'}, showOnHover: true}, [
                     new EditorTableCreator(),
                 ]),
-                new EditorDropdownButton({button: {label: 'Cell'}, direction: 'vertical', showOnHover: true}, [
+                new EditorSeparator(),
+                new EditorDropdownButton({button: {label: 'Cell', format: 'long'}, direction: 'vertical', showOnHover: true}, [
                     new EditorButton(cellProperties),
                     new EditorButton(mergeCells),
                     new EditorButton(splitCell),
                 ]),
-                new EditorDropdownButton({button: {label: 'Row'}, direction: 'vertical', showOnHover: true}, [
+                new EditorDropdownButton({button: {label: 'Row', format: 'long'}, direction: 'vertical', showOnHover: true}, [
                     new EditorButton({...insertRowAbove, format: 'long'}),
                     new EditorButton({...insertRowBelow, format: 'long'}),
                     new EditorButton({...deleteRow, format: 'long'}),
                     new EditorButton(rowProperties),
+                    new EditorSeparator(),
                     new EditorButton(cutRow),
                     new EditorButton(copyRow),
                     new EditorButton(pasteRowBefore),
                     new EditorButton(pasteRowAfter),
                 ]),
-                new EditorDropdownButton({button: {label: 'Column'}, direction: 'vertical', showOnHover: true}, [
+                new EditorDropdownButton({button: {label: 'Column', format: 'long'}, direction: 'vertical', showOnHover: true}, [
                     new EditorButton({...insertColumnBefore, format: 'long'}),
                     new EditorButton({...insertColumnAfter, format: 'long'}),
                     new EditorButton({...deleteColumn, format: 'long'}),
+                    new EditorSeparator(),
                     new EditorButton(cutColumn),
                     new EditorButton(copyColumn),
                     new EditorButton(pasteColumnBefore),
                     new EditorButton(pasteColumnAfter),
                 ]),
+                new EditorSeparator(),
                 new EditorButton({...tableProperties, format: 'long'}),
                 new EditorButton(clearTableFormatting),
                 new EditorButton(resizeTableToContents),
