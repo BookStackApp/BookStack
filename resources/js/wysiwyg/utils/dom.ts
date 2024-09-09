@@ -71,3 +71,11 @@ export function extractStyleMapFromElement(element: HTMLElement): StyleMap {
 
     return map;
 }
+
+export function setOrRemoveAttribute(element: HTMLElement, name: string, value: string|null|undefined) {
+    if (value) {
+        element.setAttribute(name, value);
+    } else {
+        element.removeAttribute(name);
+    }
+}

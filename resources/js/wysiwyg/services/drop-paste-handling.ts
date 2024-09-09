@@ -103,6 +103,7 @@ function createDropListener(context: EditorUiContext): (event: DragEvent) => boo
         if (templateId) {
             insertTemplateToEditor(editor, templateId, event);
             event.preventDefault();
+            event.stopPropagation();
             return true;
         }
 
@@ -114,6 +115,7 @@ function createDropListener(context: EditorUiContext): (event: DragEvent) => boo
                 $insertNodesAtEvent(newNodes, event, editor);
             });
             event.preventDefault();
+            event.stopPropagation();
             return true;
         }
 
@@ -121,6 +123,7 @@ function createDropListener(context: EditorUiContext): (event: DragEvent) => boo
             const handled = handleMediaInsert(event.dataTransfer, context);
             if (handled) {
                 event.preventDefault();
+                event.stopPropagation();
                 return true;
             }
         }
@@ -150,9 +153,11 @@ export function registerDropPasteHandling(context: EditorUiContext): () => void 
 
     const unregisterDrop = context.editor.registerCommand(DROP_COMMAND, dropListener, COMMAND_PRIORITY_HIGH);
     const unregisterPaste = context.editor.registerCommand(PASTE_COMMAND, pasteListener, COMMAND_PRIORITY_HIGH);
+    context.scrollDOM.addEventListener('drop', dropListener);
 
     return () => {
         unregisterDrop();
         unregisterPaste();
+        context.scrollDOM.removeEventListener('drop', dropListener);
     };
 }

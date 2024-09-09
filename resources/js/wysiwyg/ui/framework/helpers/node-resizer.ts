@@ -73,11 +73,15 @@ class NodeResizer {
             return;
         }
 
-        const nodeDOMBounds = nodeDOM.getBoundingClientRect();
-        this.dom.style.left = nodeDOM.offsetLeft + 'px';
-        this.dom.style.top = nodeDOM.offsetTop + 'px';
-        this.dom.style.width = nodeDOMBounds.width + 'px';
-        this.dom.style.height = nodeDOMBounds.height + 'px';
+        const scrollAreaRect = this.scrollContainer.getBoundingClientRect();
+        const nodeRect = nodeDOM.getBoundingClientRect();
+        const top = nodeRect.top - (scrollAreaRect.top - this.scrollContainer.scrollTop);
+        const left = nodeRect.left - scrollAreaRect.left;
+
+        this.dom.style.top = `${top}px`;
+        this.dom.style.left = `${left}px`;
+        this.dom.style.width = nodeRect.width + 'px';
+        this.dom.style.height = nodeRect.height + 'px';
     }
 
     protected updateDOMSize(width: number, height: number): void {

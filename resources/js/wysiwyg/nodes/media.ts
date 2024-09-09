@@ -4,18 +4,17 @@ import {
     ElementNode,
     LexicalEditor,
     LexicalNode,
-    SerializedElementNode, Spread
+    Spread
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
-import {el, sizeToPixels} from "../utils/dom";
+import {el, setOrRemoveAttribute, sizeToPixels} from "../utils/dom";
 import {
     CommonBlockAlignment,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
 } from "./_common";
-import {elem} from "../../services/dom";
 import {$selectSingleNode} from "../utils/selection";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
@@ -218,8 +217,37 @@ export class MediaNode extends ElementNode {
         return wrap;
     }
 
-    updateDOM(prevNode: unknown, dom: HTMLElement) {
-        return true;
+    updateDOM(prevNode: MediaNode, dom: HTMLElement): boolean {
+        if (prevNode.__tag !== this.__tag) {
+            return true;
+        }
+
+        if (JSON.stringify(prevNode.__sources) !== JSON.stringify(this.__sources)) {
+            return true;
+        }
+
+        if (JSON.stringify(prevNode.__attributes) !== JSON.stringify(this.__attributes)) {
+            return true;
+        }
+
+        const mediaEl = dom.firstElementChild as HTMLElement;
+
+        if (prevNode.__id !== this.__id) {
+            setOrRemoveAttribute(mediaEl, 'id', this.__id);
+        }
+
+        if (prevNode.__alignment !== this.__alignment) {
+            if (prevNode.__alignment) {
+                dom.classList.remove(`align-${prevNode.__alignment}`);
+                mediaEl.classList.remove(`align-${prevNode.__alignment}`);
+            }
+            if (this.__alignment) {
+                dom.classList.add(`align-${this.__alignment}`);
+                mediaEl.classList.add(`align-${this.__alignment}`);
+            }
+        }
+
+        return false;
     }
 
     static importDOM(): DOMConversionMap|null {
