@@ -14,6 +14,7 @@ import {registerTableSelectionHandler} from "./ui/framework/helpers/table-select
 import {el} from "./utils/dom";
 import {registerShortcuts} from "./services/shortcuts";
 import {registerNodeResizer} from "./ui/framework/helpers/node-resizer";
+import {registerKeyboardHandling} from "./services/keyboard-handling";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -52,6 +53,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerShortcuts(context),
+        registerKeyboardHandling(context),
         registerTableResizer(editor, editWrap),
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, editArea),
