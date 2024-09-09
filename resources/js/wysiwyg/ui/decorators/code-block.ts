@@ -1,7 +1,7 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {$openCodeEditorForNode, CodeBlockNode} from "../../nodes/code-block";
-import {BaseSelection} from "lexical";
+import {$isDecoratorNode, BaseSelection} from "lexical";
 import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";
 
 
@@ -34,9 +34,11 @@ export class CodeBlockDecorator extends EditorDecorator {
         const startTime = Date.now();
 
         element.addEventListener('click', event => {
-            context.editor.update(() => {
-                $selectSingleNode(this.getNode());
-            })
+            requestAnimationFrame(() => {
+                context.editor.update(() => {
+                    $selectSingleNode(this.getNode());
+                });
+            });
         });
 
         element.addEventListener('dblclick', event => {

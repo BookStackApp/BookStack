@@ -33,7 +33,7 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
     }
 
     static clone(node: CodeBlockNode): CodeBlockNode {
-        const newNode = new CodeBlockNode(node.__language, node.__code);
+        const newNode = new CodeBlockNode(node.__language, node.__code, node.__key);
         newNode.__id = node.__id;
         return newNode;
     }
