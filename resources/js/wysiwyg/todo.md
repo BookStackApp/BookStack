@@ -16,4 +16,4 @@
 
 ## Bugs
 
-- Template drag/drop not handled when outside core editor area (ignored in margin area).
+//

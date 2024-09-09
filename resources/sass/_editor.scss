@@ -374,9 +374,20 @@ body.editor-is-fullscreen {
 }
 
 .editor-media-wrap {
+  display: inline-block;
   cursor: not-allowed;
   iframe {
     pointer-events: none;
+  }
+  &.align-left {
+    float: left;
+  }
+  &.align-right {
+    float: right;
+  }
+  &.align-center {
+    display: block;
+    margin-inline: auto;
   }
 }
 
