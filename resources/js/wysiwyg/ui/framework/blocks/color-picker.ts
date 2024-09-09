@@ -3,6 +3,8 @@ import {$getSelection} from "lexical";
 import {$patchStyleText} from "@lexical/selection";
 import {el} from "../../../utils/dom";
 
+import removeIcon from "@icons/editor/color-clear.svg";
+
 const colorChoices = [
     '#000000',
     '#ffffff',
@@ -52,11 +54,13 @@ export class EditorColorPicker extends EditorUiElement {
             });
         });
 
-        colorOptions.push(el('div', {
+        const removeButton = el('div', {
             class: 'editor-color-select-option',
             'data-color': '',
             title: 'Clear color',
-        }, ['x']));
+        }, []);
+        removeButton.innerHTML = removeIcon;
+        colorOptions.push(removeButton);
 
         const colorRows = [];
         for (let i = 0; i < colorOptions.length; i+=5) {

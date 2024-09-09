@@ -2,6 +2,7 @@ import {handleDropdown} from "../helpers/dropdowns";
 import {EditorContainerUiElement, EditorUiElement} from "../core";
 import {EditorBasicButtonDefinition, EditorButton} from "../buttons";
 import {el} from "../../../utils/dom";
+import {EditorMenuButton} from "./menu-button";
 
 export type EditorDropdownButtonOptions = {
     showOnHover?: boolean;
@@ -29,7 +30,8 @@ export class EditorDropdownButton extends EditorContainerUiElement {
         if (options.button instanceof EditorButton) {
             this.button = options.button;
         } else {
-            this.button = new EditorButton({
+            const type = options.button.format === 'long' ? EditorMenuButton : EditorButton;
+            this.button = new type({
                 ...options.button,
                 action() {
                     return false;

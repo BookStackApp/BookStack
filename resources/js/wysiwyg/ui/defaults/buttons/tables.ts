@@ -347,6 +347,7 @@ export const deleteColumn: EditorButtonDefinition = {
 
 export const cellProperties: EditorButtonDefinition = {
     label: 'Cell properties',
+    format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
@@ -361,6 +362,7 @@ export const cellProperties: EditorButtonDefinition = {
 
 export const mergeCells: EditorButtonDefinition = {
     label: 'Merge cells',
+    format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
             const selection = $getSelection();
@@ -377,6 +379,7 @@ export const mergeCells: EditorButtonDefinition = {
 
 export const splitCell: EditorButtonDefinition = {
     label: 'Split cell',
+    format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
             $unmergeCell();
