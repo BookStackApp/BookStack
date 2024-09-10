@@ -5,7 +5,7 @@ import {EditorConfig} from "lexical/LexicalEditor";
 import {el, extractStyleMapFromElement, StyleMap} from "../utils/dom";
 import {getTableColumnWidths} from "../utils/tables";
 import {
-    CommonBlockAlignment,
+    CommonBlockAlignment, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -21,6 +21,7 @@ export class CustomTableNode extends TableNode {
     __colWidths: string[] = [];
     __styles: StyleMap = new Map;
     __alignment: CommonBlockAlignment = '';
+    __inset: number = 0;
 
     static getType() {
         return 'custom-table';
@@ -44,6 +45,16 @@ export class CustomTableNode extends TableNode {
     getAlignment(): CommonBlockAlignment {
         const self = this.getLatest();
         return self.__alignment;
+    }
+
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
     }
 
     setColWidths(widths: string[]) {
@@ -72,6 +83,7 @@ export class CustomTableNode extends TableNode {
         newNode.__colWidths = node.__colWidths;
         newNode.__styles = new Map(node.__styles);
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -112,15 +124,15 @@ export class CustomTableNode extends TableNode {
             colWidths: this.__colWidths,
             styles: Object.fromEntries(this.__styles),
             alignment: this.__alignment,
+            inset: this.__inset,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomTableNode): CustomTableNode {
         const node = $createCustomTableNode();
-        node.setId(serializedNode.id);
+        deserializeCommonBlockNode(serializedNode, node);
         node.setColWidths(serializedNode.colWidths);
         node.setStyles(new Map(Object.entries(serializedNode.styles)));
-        node.setAlignment(serializedNode.alignment);
         return node;
     }
 

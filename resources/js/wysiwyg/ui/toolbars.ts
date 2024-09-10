@@ -52,7 +52,13 @@ import {
     underline
 } from "./defaults/buttons/inline-formats";
 import {alignCenter, alignJustify, alignLeft, alignRight} from "./defaults/buttons/alignments";
-import {bulletList, numberList, taskList} from "./defaults/buttons/lists";
+import {
+    bulletList,
+    indentDecrease,
+    indentIncrease,
+    numberList,
+    taskList
+} from "./defaults/buttons/lists";
 import {
     codeBlock,
     details,
@@ -119,10 +125,12 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Lists
-        new EditorOverflowContainer(3, [
+        new EditorOverflowContainer(5, [
             new EditorButton(bulletList),
             new EditorButton(numberList),
             new EditorButton(taskList),
+            new EditorButton(indentDecrease),
+            new EditorButton(indentIncrease),
         ]),
 
         // Insert types

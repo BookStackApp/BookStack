@@ -7,7 +7,7 @@ import {
 } from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
 import {
-    CommonBlockAlignment, commonPropertiesDifferent,
+    CommonBlockAlignment, commonPropertiesDifferent, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -18,6 +18,7 @@ export type SerializedCustomParagraphNode = Spread<SerializedCommonBlockNode, Se
 export class CustomParagraphNode extends ParagraphNode {
     __id: string = '';
     __alignment: CommonBlockAlignment = '';
+    __inset: number = 0;
 
     static getType() {
         return 'custom-paragraph';
@@ -43,10 +44,21 @@ export class CustomParagraphNode extends ParagraphNode {
         return self.__alignment;
     }
 
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
+    }
+
     static clone(node: CustomParagraphNode): CustomParagraphNode {
         const newNode = new CustomParagraphNode(node.__key);
         newNode.__id = node.__id;
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -68,13 +80,13 @@ export class CustomParagraphNode extends ParagraphNode {
             version: 1,
             id: this.__id,
             alignment: this.__alignment,
+            inset: this.__inset,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomParagraphNode): CustomParagraphNode {
         const node = $createCustomParagraphNode();
-        node.setId(serializedNode.id);
-        node.setAlignment(serializedNode.alignment);
+        deserializeCommonBlockNode(serializedNode, node);
         return node;
     }
 

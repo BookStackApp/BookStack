@@ -11,7 +11,7 @@ import {LexicalNodeMatcher} from "../nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
-import {NodeHasAlignment} from "../nodes/_common";
+import {NodeHasAlignment, NodeHasInset} from "../nodes/_common";
 import {$findMatchingParent} from "@lexical/utils";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
@@ -96,4 +96,8 @@ export function $getNearestNodeBlockParent(node: LexicalNode): LexicalNode|null 
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {
     return '__alignment' in node;
+}
+
+export function nodeHasInset(node: object): node is NodeHasInset {
+    return '__inset' in node;
 }

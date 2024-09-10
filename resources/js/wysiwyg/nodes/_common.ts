@@ -1,5 +1,6 @@
 import {LexicalNode, Spread} from "lexical";
 import type {SerializedElementNode} from "lexical/nodes/LexicalElementNode";
+import {sizeToPixels} from "../utils/dom";
 
 export type CommonBlockAlignment = 'left' | 'right' | 'center' | 'justify' | '';
 const validAlignments: CommonBlockAlignment[] = ['left', 'right', 'center', 'justify'];
@@ -7,6 +8,7 @@ const validAlignments: CommonBlockAlignment[] = ['left', 'right', 'center', 'jus
 export type SerializedCommonBlockNode = Spread<{
     id: string;
     alignment: CommonBlockAlignment;
+    inset: number;
 }, SerializedElementNode>
 
 export interface NodeHasAlignment {
@@ -21,7 +23,13 @@ export interface NodeHasId {
     getId(): string;
 }
 
-interface CommonBlockInterface extends NodeHasId, NodeHasAlignment {}
+export interface NodeHasInset {
+    readonly __inset: number;
+    setInset(inset: number): void;
+    getInset(): number;
+}
+
+interface CommonBlockInterface extends NodeHasId, NodeHasAlignment, NodeHasInset {}
 
 export function extractAlignmentFromElement(element: HTMLElement): CommonBlockAlignment {
     const textAlignStyle: string = element.style.textAlign || '';
@@ -42,17 +50,24 @@ export function extractAlignmentFromElement(element: HTMLElement): CommonBlockAl
     return '';
 }
 
+export function extractInsetFromElement(element: HTMLElement): number {
+    const elemPadding: string = element.style.paddingLeft || '0';
+    return sizeToPixels(elemPadding);
+}
+
 export function setCommonBlockPropsFromElement(element: HTMLElement, node: CommonBlockInterface): void {
     if (element.id) {
         node.setId(element.id);
     }
 
     node.setAlignment(extractAlignmentFromElement(element));
+    node.setInset(extractInsetFromElement(element));
 }
 
 export function commonPropertiesDifferent(nodeA: CommonBlockInterface, nodeB: CommonBlockInterface): boolean {
     return nodeA.__id !== nodeB.__id ||
-        nodeA.__alignment !== nodeB.__alignment;
+        nodeA.__alignment !== nodeB.__alignment ||
+        nodeA.__inset !== nodeB.__inset;
 }
 
 export function updateElementWithCommonBlockProps(element: HTMLElement, node: CommonBlockInterface): void {
@@ -63,6 +78,16 @@ export function updateElementWithCommonBlockProps(element: HTMLElement, node: Co
     if (node.__alignment) {
         element.classList.add('align-' + node.__alignment);
     }
+
+    if (node.__inset) {
+        element.style.paddingLeft = `${node.__inset}px`;
+    }
+}
+
+export function deserializeCommonBlockNode(serializedNode: SerializedCommonBlockNode, node: CommonBlockInterface): void {
+    node.setId(serializedNode.id);
+    node.setAlignment(serializedNode.alignment);
+    node.setInset(serializedNode.inset);
 }
 
 export interface NodeHasSize {

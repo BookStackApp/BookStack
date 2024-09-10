@@ -7,7 +7,7 @@ import {
 import {EditorConfig} from "lexical/LexicalEditor";
 import {QuoteNode, SerializedQuoteNode} from "@lexical/rich-text";
 import {
-    CommonBlockAlignment, commonPropertiesDifferent,
+    CommonBlockAlignment, commonPropertiesDifferent, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -19,6 +19,7 @@ export type SerializedCustomQuoteNode = Spread<SerializedCommonBlockNode, Serial
 export class CustomQuoteNode extends QuoteNode {
     __id: string = '';
     __alignment: CommonBlockAlignment = '';
+    __inset: number = 0;
 
     static getType() {
         return 'custom-quote';
@@ -44,10 +45,21 @@ export class CustomQuoteNode extends QuoteNode {
         return self.__alignment;
     }
 
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
+    }
+
     static clone(node: CustomQuoteNode) {
         const newNode = new CustomQuoteNode(node.__key);
         newNode.__id = node.__id;
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -68,13 +80,13 @@ export class CustomQuoteNode extends QuoteNode {
             version: 1,
             id: this.__id,
             alignment: this.__alignment,
+            inset: this.__inset,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomQuoteNode): CustomQuoteNode {
         const node = $createCustomQuoteNode();
-        node.setId(serializedNode.id);
-        node.setAlignment(serializedNode.alignment);
+        deserializeCommonBlockNode(serializedNode, node);
         return node;
     }
 

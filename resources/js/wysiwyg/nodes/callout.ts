@@ -10,7 +10,7 @@ import {
 import type {EditorConfig} from "lexical/LexicalEditor";
 import type {RangeSelection} from "lexical/LexicalSelection";
 import {
-    CommonBlockAlignment, commonPropertiesDifferent,
+    CommonBlockAlignment, commonPropertiesDifferent, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -26,6 +26,7 @@ export class CalloutNode extends ElementNode {
     __id: string = '';
     __category: CalloutCategory = 'info';
     __alignment: CommonBlockAlignment = '';
+    __inset: number = 0;
 
     static getType() {
         return 'callout';
@@ -35,6 +36,7 @@ export class CalloutNode extends ElementNode {
         const newNode = new CalloutNode(node.__category, node.__key);
         newNode.__id = node.__id;
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -71,6 +73,16 @@ export class CalloutNode extends ElementNode {
     getAlignment(): CommonBlockAlignment {
         const self = this.getLatest();
         return self.__alignment;
+    }
+
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
     }
 
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
@@ -141,13 +153,13 @@ export class CalloutNode extends ElementNode {
             category: this.__category,
             id: this.__id,
             alignment: this.__alignment,
+            inset: this.__inset,
         };
     }
 
     static importJSON(serializedNode: SerializedCalloutNode): CalloutNode {
         const node = $createCalloutNode(serializedNode.category);
-        node.setId(serializedNode.id);
-        node.setAlignment(serializedNode.alignment);
+        deserializeCommonBlockNode(serializedNode, node);
         return node;
     }
 
