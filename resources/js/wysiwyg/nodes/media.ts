@@ -196,6 +196,10 @@ export class MediaNode extends ElementNode {
         return true;
     }
 
+    isParentRequired(): boolean {
+        return true;
+    }
+
     createInnerDOM() {
         const sources = (this.__tag === 'video' || this.__tag === 'audio') ? this.__sources : [];
         const sourceEls = sources.map(source => el('source', source));
@@ -325,12 +329,13 @@ export function $createMediaNodeFromHtml(html: string): MediaNode | null {
 
 const videoExtensions = ['mp4', 'mpeg', 'm4v', 'm4p', 'mov'];
 const audioExtensions = ['3gp', 'aac', 'flac', 'mp3', 'm4a', 'ogg', 'wav', 'webm'];
-const iframeExtensions = ['html', 'htm', 'php', 'asp', 'aspx'];
+const iframeExtensions = ['html', 'htm', 'php', 'asp', 'aspx', ''];
 
 export function $createMediaNodeFromSrc(src: string): MediaNode {
     let nodeTag: MediaNodeTag = 'iframe';
     const srcEnd = src.split('?')[0].split('/').pop() || '';
-    const extension = (srcEnd.split('.').pop() || '').toLowerCase();
+    const srcEndSplit = srcEnd.split('.');
+    const extension = (srcEndSplit.length > 1 ? srcEndSplit[srcEndSplit.length - 1] : '').toLowerCase();
     if (videoExtensions.includes(extension)) {
         nodeTag = 'video';
     } else if (audioExtensions.includes(extension)) {

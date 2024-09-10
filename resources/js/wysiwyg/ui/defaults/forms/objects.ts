@@ -197,7 +197,7 @@ export const media: EditorFormDefinition = {
                 if (selectedNode && node) {
                     selectedNode.replace(node)
                 } else if (node) {
-                    $insertNodeToNearestRoot(node);
+                    $insertNodes([node]);
                 }
             });
 
@@ -213,7 +213,7 @@ export const media: EditorFormDefinition = {
             updateNode.setSrc(src);
             updateNode.setWidthAndHeight(width, height);
             if (!selectedNode) {
-                $insertNodeToNearestRoot(updateNode);
+                $insertNodes([updateNode]);
             }
         });
 
