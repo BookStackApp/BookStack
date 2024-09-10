@@ -16,7 +16,7 @@ import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexi
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
-import {$getParentOfType, nodeHasAlignment} from "./nodes";
+import {$getNearestNodeBlockParent, $getParentOfType, nodeHasAlignment} from "./nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {CommonBlockAlignment} from "../nodes/_common";
 
@@ -155,11 +155,8 @@ export function $getBlockElementNodesInSelection(selection: BaseSelection | null
 
     const blockNodes: Map<string, ElementNode> = new Map();
     for (const node of selection.getNodes()) {
-        const blockElement = $findMatchingParent(node, (node) => {
-            return $isElementNode(node) && !node.isInline();
-        }) as ElementNode | null;
-
-        if (blockElement) {
+        const blockElement = $getNearestNodeBlockParent(node);
+        if ($isElementNode(blockElement)) {
             blockNodes.set(blockElement.getKey(), blockElement);
         }
     }

@@ -4,22 +4,55 @@ import {
     COMMAND_PRIORITY_LOW,
     KEY_BACKSPACE_COMMAND,
     KEY_DELETE_COMMAND,
-    LexicalEditor
+    KEY_ENTER_COMMAND,
+    LexicalEditor,
+    LexicalNode
 } from "lexical";
 import {$isImageNode} from "../nodes/image";
 import {$isMediaNode} from "../nodes/media";
 import {getLastSelection} from "../utils/selection";
+import {$getNearestNodeBlockParent} from "../utils/nodes";
+import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
+
+function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
+    if (nodes.length === 1) {
+        const node = nodes[0];
+        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function deleteSingleSelectedNode(editor: LexicalEditor) {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
-    if (selectionNodes.length === 1) {
+    if (isSingleSelectedNode(selectionNodes)) {
+        editor.update(() => {
+            selectionNodes[0].remove();
+        });
+    }
+}
+
+function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
+    const selectionNodes = getLastSelection(editor)?.getNodes() || [];
+    if (isSingleSelectedNode(selectionNodes)) {
         const node = selectionNodes[0];
-        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node)) {
-            editor.update(() => {
-                node.remove();
+        const nearestBlock = $getNearestNodeBlockParent(node) || node;
+        if (nearestBlock) {
+            requestAnimationFrame(() => {
+                editor.update(() => {
+                    const newParagraph = $createCustomParagraphNode();
+                    nearestBlock.insertAfter(newParagraph);
+                    newParagraph.select();
+                });
             });
+            event?.preventDefault();
+            return true;
         }
     }
+
+    return false;
 }
 
 export function registerKeyboardHandling(context: EditorUiContext): () => void {
@@ -33,8 +66,13 @@ export function registerKeyboardHandling(context: EditorUiContext): () => void {
         return false;
     }, COMMAND_PRIORITY_LOW);
 
+    const unregisterEnter = context.editor.registerCommand(KEY_ENTER_COMMAND, (event): boolean => {
+        return insertAfterSingleSelectedNode(context.editor, event);
+    }, COMMAND_PRIORITY_LOW);
+
     return () => {
-          unregisterBackspace();
-          unregisterDelete();
+        unregisterBackspace();
+        unregisterDelete();
+        unregisterEnter();
     };
 }
