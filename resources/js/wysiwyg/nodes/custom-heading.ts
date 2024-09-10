@@ -7,7 +7,7 @@ import {
 import {EditorConfig} from "lexical/LexicalEditor";
 import {HeadingNode, HeadingTagType, SerializedHeadingNode} from "@lexical/rich-text";
 import {
-    CommonBlockAlignment, commonPropertiesDifferent,
+    CommonBlockAlignment, commonPropertiesDifferent, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -19,6 +19,7 @@ export type SerializedCustomHeadingNode = Spread<SerializedCommonBlockNode, Seri
 export class CustomHeadingNode extends HeadingNode {
     __id: string = '';
     __alignment: CommonBlockAlignment = '';
+    __inset: number = 0;
 
     static getType() {
         return 'custom-heading';
@@ -44,9 +45,20 @@ export class CustomHeadingNode extends HeadingNode {
         return self.__alignment;
     }
 
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
+    }
+
     static clone(node: CustomHeadingNode) {
         const newNode = new CustomHeadingNode(node.__tag, node.__key);
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -68,13 +80,13 @@ export class CustomHeadingNode extends HeadingNode {
             version: 1,
             id: this.__id,
             alignment: this.__alignment,
+            inset: this.__inset,
         };
     }
 
     static importJSON(serializedNode: SerializedCustomHeadingNode): CustomHeadingNode {
         const node = $createCustomHeadingNode(serializedNode.tag);
-        node.setId(serializedNode.id);
-        node.setAlignment(serializedNode.alignment);
+        deserializeCommonBlockNode(serializedNode, node);
         return node;
     }
 

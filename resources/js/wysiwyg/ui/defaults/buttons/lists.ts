@@ -1,12 +1,24 @@
 import {$isListNode, ListNode, ListType} from "@lexical/list";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
-import {BaseSelection, LexicalNode} from "lexical";
+import {
+    BaseSelection,
+    LexicalEditor,
+    LexicalNode,
+} from "lexical";
 import listBulletIcon from "@icons/editor/list-bullet.svg";
 import listNumberedIcon from "@icons/editor/list-numbered.svg";
 import listCheckIcon from "@icons/editor/list-check.svg";
-import {$selectionContainsNodeType} from "../../../utils/selection";
+import indentIncreaseIcon from "@icons/editor/indent-increase.svg";
+import indentDecreaseIcon from "@icons/editor/indent-decrease.svg";
+import {
+    $getBlockElementNodesInSelection,
+    $selectionContainsNodeType,
+    $toggleSelection,
+    getLastSelection
+} from "../../../utils/selection";
 import {toggleSelectionAsList} from "../../../utils/formats";
+import {nodeHasInset} from "../../../utils/nodes";
 
 
 function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
@@ -27,3 +39,45 @@ function buildListButton(label: string, type: ListType, icon: string): EditorBut
 export const bulletList: EditorButtonDefinition = buildListButton('Bullet list', 'bullet', listBulletIcon);
 export const numberList: EditorButtonDefinition = buildListButton('Numbered list', 'number', listNumberedIcon);
 export const taskList: EditorButtonDefinition = buildListButton('Task list', 'check', listCheckIcon);
+
+
+function setInsetForSelection(editor: LexicalEditor, change: number): void {
+    const selection = getLastSelection(editor);
+
+    const elements = $getBlockElementNodesInSelection(selection);
+    for (const node of elements) {
+        if (nodeHasInset(node)) {
+            const currentInset = node.getInset();
+            const newInset = Math.min(Math.max(currentInset + change, 0), 500);
+            node.setInset(newInset)
+        }
+    }
+
+    $toggleSelection(editor);
+}
+
+export const indentIncrease: EditorButtonDefinition = {
+    label: 'Increase indent',
+    icon: indentIncreaseIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            setInsetForSelection(context.editor, 40);
+        });
+    },
+    isActive() {
+        return false;
+    }
+};
+
+export const indentDecrease: EditorButtonDefinition = {
+    label: 'Decrease indent',
+    icon: indentDecreaseIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            setInsetForSelection(context.editor, -40);
+        });
+    },
+    isActive() {
+        return false;
+    }
+};

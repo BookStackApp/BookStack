@@ -10,7 +10,7 @@ import type {EditorConfig} from "lexical/LexicalEditor";
 
 import {el, setOrRemoveAttribute, sizeToPixels} from "../utils/dom";
 import {
-    CommonBlockAlignment,
+    CommonBlockAlignment, deserializeCommonBlockNode,
     SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
@@ -80,6 +80,7 @@ export class MediaNode extends ElementNode {
     __tag: MediaNodeTag;
     __attributes: Record<string, string> = {};
     __sources: MediaNodeSource[] = [];
+    __inset: number = 0;
 
     static getType() {
         return 'media';
@@ -91,6 +92,7 @@ export class MediaNode extends ElementNode {
         newNode.__sources = node.__sources.map(s => Object.assign({}, s));
         newNode.__id = node.__id;
         newNode.__alignment = node.__alignment;
+        newNode.__inset = node.__inset;
         return newNode;
     }
 
@@ -166,6 +168,16 @@ export class MediaNode extends ElementNode {
     getAlignment(): CommonBlockAlignment {
         const self = this.getLatest();
         return self.__alignment;
+    }
+
+    setInset(size: number) {
+        const self = this.getWritable();
+        self.__inset = size;
+    }
+
+    getInset(): number {
+        const self = this.getLatest();
+        return self.__inset;
     }
 
     setHeight(height: number): void {
@@ -251,6 +263,10 @@ export class MediaNode extends ElementNode {
             }
         }
 
+        if (prevNode.__inset !== this.__inset) {
+            dom.style.paddingLeft = `${this.__inset}px`;
+        }
+
         return false;
     }
 
@@ -290,6 +306,7 @@ export class MediaNode extends ElementNode {
             version: 1,
             id: this.__id,
             alignment: this.__alignment,
+            inset: this.__inset,
             tag: this.__tag,
             attributes: this.__attributes,
             sources: this.__sources,
@@ -298,8 +315,7 @@ export class MediaNode extends ElementNode {
 
     static importJSON(serializedNode: SerializedMediaNode): MediaNode {
         const node = $createMediaNode(serializedNode.tag);
-        node.setId(serializedNode.id);
-        node.setAlignment(serializedNode.alignment);
+        deserializeCommonBlockNode(serializedNode, node);
         return node;
     }
 

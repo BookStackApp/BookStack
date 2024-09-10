@@ -6,6 +6,7 @@
 
 ## Main Todo
 
+- Align list nesting with old editor
 - Mac: Shortcut support via command.
 
 ## Secondary Todo
