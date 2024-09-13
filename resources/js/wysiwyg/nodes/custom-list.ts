@@ -5,7 +5,8 @@ import {
     Spread
 } from "lexical";
 import {EditorConfig} from "lexical/LexicalEditor";
-import {ListNode, ListType, SerializedListNode} from "@lexical/list";
+import {$isListItemNode, ListItemNode, ListNode, ListType, SerializedListNode} from "@lexical/list";
+import {$createCustomListItemNode} from "./custom-list-item";
 
 
 export type SerializedCustomListNode = Spread<{
@@ -30,7 +31,7 @@ export class CustomListNode extends ListNode {
     }
 
     static clone(node: CustomListNode) {
-        const newNode = new CustomListNode(node.__listType, 0, node.__key);
+        const newNode = new CustomListNode(node.__listType, node.__start, node.__key);
         newNode.__id = node.__id;
         return newNode;
     }
@@ -67,6 +68,11 @@ export class CustomListNode extends ListNode {
             if (element.id && baseResult?.node) {
                 (baseResult.node as CustomListNode).setId(element.id);
             }
+
+            if (baseResult) {
+                baseResult.after = $normalizeChildren;
+            }
+
             return baseResult;
         };
 
@@ -83,8 +89,34 @@ export class CustomListNode extends ListNode {
     }
 }
 
+/*
+ * This function is a custom normalization function to allow nested lists within list item elements.
+ * Original taken from https://github.com/facebook/lexical/blob/6e10210fd1e113ccfafdc999b1d896733c5c5bea/packages/lexical-list/src/LexicalListNode.ts#L284-L303
+ * With modifications made.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * MIT license
+ */
+function $normalizeChildren(nodes: Array<LexicalNode>): Array<ListItemNode> {
+    const normalizedListItems: Array<ListItemNode> = [];
+
+    for (const node of nodes) {
+        if ($isListItemNode(node)) {
+            normalizedListItems.push(node);
+        } else {
+            normalizedListItems.push($wrapInListItem(node));
+        }
+    }
+
+    return normalizedListItems;
+}
+
+function $wrapInListItem(node: LexicalNode): ListItemNode {
+    const listItemWrapper = $createCustomListItemNode();
+    return listItemWrapper.append(node);
+}
+
 export function $createCustomListNode(type: ListType): CustomListNode {
-    return new CustomListNode(type, 0);
+    return new CustomListNode(type, 1);
 }
 
 export function $isCustomListNode(node: LexicalNode | null | undefined): node is CustomListNode {

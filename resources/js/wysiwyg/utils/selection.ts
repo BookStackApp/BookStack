@@ -10,7 +10,7 @@ import {
     ElementFormatType,
     ElementNode, LexicalEditor,
     LexicalNode,
-    TextFormatType
+    TextFormatType, TextNode
 } from "lexical";
 import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
@@ -104,6 +104,57 @@ export function $selectSingleNode(node: LexicalNode) {
     const nodeSelection = $createNodeSelection();
     nodeSelection.add(node.getKey());
     $setSelection(nodeSelection);
+}
+
+function getFirstTextNodeInNodes(nodes: LexicalNode[]): TextNode|null {
+    for (const node of nodes) {
+        if ($isTextNode(node)) {
+            return node;
+        }
+
+        if ($isElementNode(node)) {
+            const children = node.getChildren();
+            const textNode = getFirstTextNodeInNodes(children);
+            if (textNode !== null) {
+                return textNode;
+            }
+        }
+    }
+
+    return null;
+}
+
+function getLastTextNodeInNodes(nodes: LexicalNode[]): TextNode|null {
+    const revNodes = [...nodes].reverse();
+    for (const node of revNodes) {
+        if ($isTextNode(node)) {
+            return node;
+        }
+
+        if ($isElementNode(node)) {
+            const children = [...node.getChildren()].reverse();
+            const textNode = getLastTextNodeInNodes(children);
+            if (textNode !== null) {
+                return textNode;
+            }
+        }
+    }
+
+    return null;
+}
+
+export function $selectNodes(nodes: LexicalNode[]) {
+    if (nodes.length === 0) {
+        return;
+    }
+
+    const selection = $createRangeSelection();
+    const firstText = getFirstTextNodeInNodes(nodes);
+    const lastText = getLastTextNodeInNodes(nodes);
+    if (firstText && lastText) {
+        selection.setTextNodeRange(firstText, 0, lastText, lastText.getTextContentSize() || 0)
+        $setSelection(selection);
+    }
 }
 
 export function $toggleSelection(editor: LexicalEditor) {

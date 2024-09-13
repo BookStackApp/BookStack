@@ -13,12 +13,14 @@ import indentIncreaseIcon from "@icons/editor/indent-increase.svg";
 import indentDecreaseIcon from "@icons/editor/indent-decrease.svg";
 import {
     $getBlockElementNodesInSelection,
-    $selectionContainsNodeType,
+    $selectionContainsNodeType, $selectNodes, $selectSingleNode,
     $toggleSelection,
     getLastSelection
 } from "../../../utils/selection";
 import {toggleSelectionAsList} from "../../../utils/formats";
 import {nodeHasInset} from "../../../utils/nodes";
+import {$isCustomListItemNode, CustomListItemNode} from "../../../nodes/custom-list-item";
+import {$nestListItem, $setInsetForSelection, $unnestListItem} from "../../../utils/lists";
 
 
 function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
@@ -40,28 +42,12 @@ export const bulletList: EditorButtonDefinition = buildListButton('Bullet list',
 export const numberList: EditorButtonDefinition = buildListButton('Numbered list', 'number', listNumberedIcon);
 export const taskList: EditorButtonDefinition = buildListButton('Task list', 'check', listCheckIcon);
 
-
-function setInsetForSelection(editor: LexicalEditor, change: number): void {
-    const selection = getLastSelection(editor);
-
-    const elements = $getBlockElementNodesInSelection(selection);
-    for (const node of elements) {
-        if (nodeHasInset(node)) {
-            const currentInset = node.getInset();
-            const newInset = Math.min(Math.max(currentInset + change, 0), 500);
-            node.setInset(newInset)
-        }
-    }
-
-    $toggleSelection(editor);
-}
-
 export const indentIncrease: EditorButtonDefinition = {
     label: 'Increase indent',
     icon: indentIncreaseIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            setInsetForSelection(context.editor, 40);
+            $setInsetForSelection(context.editor, 40);
         });
     },
     isActive() {
@@ -74,7 +60,7 @@ export const indentDecrease: EditorButtonDefinition = {
     icon: indentDecreaseIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            setInsetForSelection(context.editor, -40);
+            $setInsetForSelection(context.editor, -40);
         });
     },
     isActive() {

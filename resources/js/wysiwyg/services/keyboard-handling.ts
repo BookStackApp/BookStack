@@ -1,10 +1,11 @@
 import {EditorUiContext} from "../ui/framework/core";
 import {
+    $getSelection,
     $isDecoratorNode,
     COMMAND_PRIORITY_LOW,
     KEY_BACKSPACE_COMMAND,
     KEY_DELETE_COMMAND,
-    KEY_ENTER_COMMAND,
+    KEY_ENTER_COMMAND, KEY_TAB_COMMAND,
     LexicalEditor,
     LexicalNode
 } from "lexical";
@@ -13,6 +14,8 @@ import {$isMediaNode} from "../nodes/media";
 import {getLastSelection} from "../utils/selection";
 import {$getNearestNodeBlockParent} from "../utils/nodes";
 import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
+import {$isCustomListItemNode} from "../nodes/custom-list-item";
+import {$setInsetForSelection} from "../utils/lists";
 
 function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
@@ -55,6 +58,17 @@ function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEve
     return false;
 }
 
+function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null) {
+    const change = event?.shiftKey ? -40 : 40;
+    editor.update(() => {
+        const selection = $getSelection();
+        const nodes = selection?.getNodes() || [];
+        if (nodes.length > 1 || (nodes.length === 1 && $isCustomListItemNode(nodes[0].getParent()))) {
+            $setInsetForSelection(editor, change);
+        }
+    });
+}
+
 export function registerKeyboardHandling(context: EditorUiContext): () => void {
     const unregisterBackspace = context.editor.registerCommand(KEY_BACKSPACE_COMMAND, (): boolean => {
         deleteSingleSelectedNode(context.editor);
@@ -70,9 +84,14 @@ export function registerKeyboardHandling(context: EditorUiContext): () => void {
         return insertAfterSingleSelectedNode(context.editor, event);
     }, COMMAND_PRIORITY_LOW);
 
+    const unregisterTab = context.editor.registerCommand(KEY_TAB_COMMAND, (event): boolean => {
+        return handleInsetOnTab(context.editor, event);
+    }, COMMAND_PRIORITY_LOW);
+
     return () => {
         unregisterBackspace();
         unregisterDelete();
         unregisterEnter();
+        unregisterTab();
     };
 }
