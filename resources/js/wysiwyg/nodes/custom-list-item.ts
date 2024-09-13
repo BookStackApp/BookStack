@@ -3,6 +3,7 @@ import {EditorConfig} from "lexical/LexicalEditor";
 import {DOMExportOutput, LexicalEditor, LexicalNode} from "lexical";
 
 import {el} from "../utils/dom";
+import {$isCustomListNode} from "./custom-list";
 
 function updateListItemChecked(
     dom: HTMLElement,
@@ -37,6 +38,10 @@ export class CustomListItemNode extends ListItemNode {
         }
 
         element.value = this.__value;
+
+        if ($hasNestedListWithoutLabel(this)) {
+            element.style.listStyle = 'none';
+        }
 
         return element;
     }
@@ -86,8 +91,28 @@ export class CustomListItemNode extends ListItemNode {
     }
 }
 
+function $hasNestedListWithoutLabel(node: CustomListItemNode): boolean {
+    const children = node.getChildren();
+    let hasLabel = false;
+    let hasNestedList = false;
+
+    for (const child of children) {
+        if ($isCustomListNode(child)) {
+            hasNestedList = true;
+        } else if (child.getTextContent().trim().length > 0) {
+            hasLabel = true;
+        }
+    }
+
+    return hasNestedList && !hasLabel;
+}
+
 export function $isCustomListItemNode(
     node: LexicalNode | null | undefined,
 ): node is CustomListItemNode {
     return node instanceof CustomListItemNode;
+}
+
+export function $createCustomListItemNode(): CustomListItemNode {
+    return new CustomListItemNode();
 }
