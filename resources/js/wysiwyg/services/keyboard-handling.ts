@@ -58,15 +58,19 @@ function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEve
     return false;
 }
 
-function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null) {
+function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
     const change = event?.shiftKey ? -40 : 40;
-    editor.update(() => {
-        const selection = $getSelection();
-        const nodes = selection?.getNodes() || [];
-        if (nodes.length > 1 || (nodes.length === 1 && $isCustomListItemNode(nodes[0].getParent()))) {
+    const selection = $getSelection();
+    const nodes = selection?.getNodes() || [];
+    if (nodes.length > 1 || (nodes.length === 1 && $isCustomListItemNode(nodes[0].getParent()))) {
+        editor.update(() => {
             $setInsetForSelection(editor, change);
-        }
-    });
+        });
+        event?.preventDefault();
+        return true;
+    }
+
+    return false;
 }
 
 export function registerKeyboardHandling(context: EditorUiContext): () => void {
