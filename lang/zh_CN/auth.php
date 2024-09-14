@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => '移动设备 App',
     'mfa_option_totp_desc' => '要使用多重身份认证功能，您需要一个支持 TOTP（基于时间的一次性密码算法） 的移动设备 App，如谷歌身份验证器（Google Authenticator）、Authy 或微软身份验证器（Microsoft Authenticator）。',
     'mfa_option_backup_codes_title' => '备用认证码',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => '生成一组一次性使用的备份码，您将在登录时输入以验证您的身份。 请确保将它们存储在一个安全可靠的地方。',
     'mfa_gen_confirm_and_enable' => '确认并启用',
     'mfa_gen_backup_codes_title' => '备用认证码设置',
     'mfa_gen_backup_codes_desc' => '将下面的认证码存放在一个安全的地方。访问系统时，您可以使用其中的一个验证码进行二次认证。',
