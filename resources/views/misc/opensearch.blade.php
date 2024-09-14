@@ -6,6 +6,6 @@
   <Image width="128" height="128" type="image/png">{{ setting('app-icon-128') ?: url('/icon-128.png') }}</Image>
   <Image width="64" height="64" type="image/png">{{ setting('app-icon-64') ?: url('/icon-64.png') }}</Image>
   <Image width="32" height="32" type="image/png">{{ setting('app-icon-32') ?: url('/icon-32.png') }}</Image>
-  <Url type="text/html" rel="results" method="get" template="{{ url('/search') }}?term={searchTerms}"/>
+  <Url type="text/html" rel="results" template="{{ url('/search') }}?term={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="{{ url('/opensearch.xml') }}"/>
 </OpenSearchDescription>
