@@ -1,6 +1,6 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>{{ mb_strimwidth(setting('app-name'), 0, 16) }}</ShortName>
-  <Description>Search {{ setting('app-name') }}</Description>
+  <Description>{{ trans('common.opensearch_description', ['appName' => setting('app-name')]) }}</Description>
   <Image width="256" height="256" type="image/png">{{ setting('app-icon') ?: url('/icon.png') }}</Image>
   <Image width="180" height="180" type="image/png">{{ setting('app-icon-180') ?: url('/icon-180.png') }}</Image>
   <Image width="128" height="128" type="image/png">{{ setting('app-icon-128') ?: url('/icon-128.png') }}</Image>
