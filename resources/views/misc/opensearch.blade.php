@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>{{ mb_strimwidth(setting('app-name'), 0, 16) }}</ShortName>
   <Description>{{ trans('common.opensearch_description', ['appName' => setting('app-name')]) }}</Description>
