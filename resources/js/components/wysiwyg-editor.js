@@ -15,6 +15,8 @@ export class WysiwygEditor extends Component {
             this.editor = wysiwyg.createPageEditorInstance(this.editContainer, editorContent, {
                 drawioUrl: this.getDrawIoUrl(),
                 pageId: Number(this.$opts.pageId),
+                darkMode: document.documentElement.classList.contains('dark-mode'),
+                textDirection: this.$opts.textDirection,
                 translations: {
                     imageUploadErrorText: this.$opts.imageUploadErrorText,
                     serverUploadLimitText: this.$opts.serverUploadLimitText,

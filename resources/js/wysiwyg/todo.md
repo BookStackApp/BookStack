@@ -2,12 +2,12 @@
 
 ## In progress
 
-//
+- RTL/LTR support
 
 ## Main Todo
 
 - Mac: Shortcut support via command.
-- RTL/LTR support
+- Translations
 
 ## Secondary Todo
 

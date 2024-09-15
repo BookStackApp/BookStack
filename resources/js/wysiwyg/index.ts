@@ -42,8 +42,13 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     const editWrap = el('div', {
         class: 'editor-content-wrap',
     }, [editArea]);
+
     container.append(editWrap);
     container.classList.add('editor-container');
+    container.setAttribute('dir', options.textDirection);
+    if (options.darkMode) {
+        container.classList.add('editor-dark');
+    }
 
     const editor = createEditor(config);
     editor.setRootElement(editArea);
