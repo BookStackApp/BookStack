@@ -96,6 +96,9 @@ body.editor-is-fullscreen {
     fill: #888;
   }
 }
+.editor-container[dir="rtl"] .editor-menu-button-icon {
+  rotate: 180deg;
+}
 .editor-button-with-menu-container {
   display: flex;
   flex-direction: row;
@@ -170,6 +173,9 @@ body.editor-is-fullscreen {
   background-repeat: no-repeat;
   background-position: 98% 50%;
   background-size: 28px;
+}
+.editor-container[dir="rtl"] .editor-format-menu-toggle {
+  background-position: 2% 50%;
 }
 .editor-format-menu .editor-dropdown-menu {
   min-width: 300px;
@@ -324,9 +330,10 @@ body.editor-is-fullscreen {
 .editor-node-resizer {
   position: absolute;
   left: 0;
-  right: 0;
+  right: auto;
   display: inline-block;
   outline: 2px dashed var(--editor-color-primary);
+  direction: ltr;
 }
 .editor-node-resizer-handle {
   position: absolute;
