@@ -51,7 +51,14 @@ import {
     textColor,
     underline
 } from "./defaults/buttons/inline-formats";
-import {alignCenter, alignJustify, alignLeft, alignRight} from "./defaults/buttons/alignments";
+import {
+    alignCenter,
+    alignJustify,
+    alignLeft,
+    alignRight,
+    directionLTR,
+    directionRTL
+} from "./defaults/buttons/alignments";
 import {
     bulletList,
     indentDecrease,
@@ -117,11 +124,13 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Alignment
-        new EditorOverflowContainer(4, [
+        new EditorOverflowContainer(6, [ // TODO - Dynamic
             new EditorButton(alignLeft),
             new EditorButton(alignCenter),
             new EditorButton(alignRight),
             new EditorButton(alignJustify),
+            new EditorButton(directionLTR), // TODO - Dynamic
+            new EditorButton(directionRTL), // TODO - Dynamic
         ]),
 
         // Lists

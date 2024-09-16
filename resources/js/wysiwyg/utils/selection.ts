@@ -2,7 +2,7 @@ import {
     $createNodeSelection,
     $createParagraphNode, $createRangeSelection,
     $getRoot,
-    $getSelection, $isDecoratorNode,
+    $getSelection, $isBlockElementNode, $isDecoratorNode,
     $isElementNode,
     $isTextNode,
     $setSelection,
@@ -192,6 +192,22 @@ export function $selectionContainsAlignment(selection: BaseSelection | null, ali
     ];
     for (const node of nodes) {
         if (nodeHasAlignment(node) && node.getAlignment() === alignment) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+export function $selectionContainsDirection(selection: BaseSelection | null, direction: 'rtl'|'ltr'): boolean {
+
+    const nodes = [
+        ...(selection?.getNodes() || []),
+        ...$getBlockElementNodesInSelection(selection)
+    ];
+
+    for (const node of nodes) {
+        if ($isBlockElementNode(node) && node.getDirection() === direction) {
             return true;
         }
     }
