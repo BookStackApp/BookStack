@@ -19,6 +19,7 @@ use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
 use BookStack\Util\SimpleListOptions;
+use BookStack\Settings\SettingService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -31,6 +32,7 @@ class BookController extends Controller
         protected BookQueries $queries,
         protected BookshelfQueries $shelfQueries,
         protected ReferenceFetcher $referenceFetcher,
+        protected SettingService $settingService,
     ) {
     }
 
@@ -115,6 +117,17 @@ class BookController extends Controller
         if ($bookshelf) {
             $bookshelf->appendBook($book);
             Activity::add(ActivityType::BOOKSHELF_UPDATE, $bookshelf);
+
+            $should_inherit_perms = $bookshelf->new_books_inherit_perms ?? $this->settingService->get("app-new-books-inherit-perms");
+
+            if ($should_inherit_perms) {
+                // Copy permissions from the shelf to the book on creation
+                // https://github.com/BookStackApp/BookStack/issues/4411#issuecomment-1962302337
+                $shelfPermissions = $bookshelf->permissions()->get(['role_id', 'view', 'create', 'update', 'delete'])->toArray();
+                $book->permissions()->delete();
+                $book->permissions()->createMany($shelfPermissions);
+                $book->rebuildPermissions();
+            }
         }
 
         return redirect($book->getUrl());

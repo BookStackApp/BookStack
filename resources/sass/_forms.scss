@@ -239,6 +239,10 @@ select {
   @include rtl {
     background-position: 20px 70%;
   }
+
+  &.small {
+    width: 170px;
+  }
 }
 
 input[type=date] {

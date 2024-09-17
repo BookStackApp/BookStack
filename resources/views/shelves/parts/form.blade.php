@@ -84,6 +84,24 @@
     </div>
 </div>
 
+@if($edit_perms)
+<div class="form-group">
+    {{ trans('entities.shelves_new_books_inherit_perms') }}
+    <select
+      name="new_books_inherit_perms"
+      id="new_books_inherit_perms"
+      class="small"
+      >
+        <option value="null" @if(old("new_books_inherit_perms") === null || $shelf->new_books_inherit_perms === null) selected @endif> Use global setting </option>
+        <option value="true" @if(old("new_books_inherit_perms") || $shelf->new_books_inherit_perms) selected @endif> Yes </option>
+        <option value="false" @if(old("new_books_inherit_perms") === 0 || $shelf->new_books_inherit_perms === 0) selected @endif> No </option>
+    </select>
+    @if($errors->has('new_books_inherit_perms'))
+    <div class="text-neg text-small">{{ $errors->first('new_books_inherit_perms') }}</div>
+    @endif
+</div>
+@endif
+
 <div class="form-group text-right">
     <a href="{{ isset($shelf) ? $shelf->getUrl() : url('/shelves') }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.shelves_save') }}</button>

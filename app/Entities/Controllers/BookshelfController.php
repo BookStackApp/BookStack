@@ -16,6 +16,7 @@ use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rule;
 
 class BookshelfController extends Controller
 {
@@ -156,6 +157,7 @@ class BookshelfController extends Controller
         return view('shelves.edit', [
             'shelf' => $shelf,
             'books' => $books,
+            'edit_perms' => userCan('restrictions-manage', $shelf),
         ]);
     }
 
@@ -171,16 +173,25 @@ class BookshelfController extends Controller
         $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
-            'name'             => ['required', 'string', 'max:255'],
-            'description_html' => ['string', 'max:2000'],
-            'image'            => array_merge(['nullable'], $this->getImageValidationRules()),
-            'tags'             => ['array'],
+            'name'                    => ['required', 'string', 'max:255'],
+            'description_html'        => ['string', 'max:2000'],
+            'image'                   => array_merge(['nullable'], $this->getImageValidationRules()),
+            'tags'                    => ['array'],
+            'new_books_inherit_perms' => ['string', Rule::in(['true', 'false', 'null'])],
         ]);
 
         if ($request->has('image_reset')) {
             $validated['image'] = null;
         } elseif (array_key_exists('image', $validated) && is_null($validated['image'])) {
             unset($validated['image']);
+        }
+
+        if ($request->has('new_books_inherit_perms')) {
+            $this->checkOwnablePermission('restrictions-manage', $shelf);
+            $p = $validated['new_books_inherit_perms'];
+            $validated['new_books_inherit_perms'] = $p == "true" ? true : ($p == "false" ? false : null);
+        } else {
+            unset($validated['new_books_inherit_perms']);
         }
 
         $bookIds = explode(',', $request->get('books', ''));
