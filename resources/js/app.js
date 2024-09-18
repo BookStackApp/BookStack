@@ -4,6 +4,9 @@ import Translations from './services/translations';
 import * as componentMap from './components';
 import {ComponentStore} from './services/components.ts';
 
+// eslint-disable-next-line no-underscore-dangle
+window.__DEV__ = false;
+
 // Url retrieval function
 window.baseUrl = function baseUrl(path) {
     let targetPath = path;
