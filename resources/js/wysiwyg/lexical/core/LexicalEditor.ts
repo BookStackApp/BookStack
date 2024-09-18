@@ -1237,6 +1237,13 @@ export class LexicalEditor {
   }
 
   /**
+   * Commits any currently pending updates scheduled for the editor.
+   */
+  commitUpdates(): void {
+    $commitPendingUpdates(this);
+  }
+
+  /**
    * Removes focus from the editor.
    */
   blur(): void {

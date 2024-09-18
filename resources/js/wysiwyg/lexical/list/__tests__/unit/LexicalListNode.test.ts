@@ -6,7 +6,7 @@
  *
  */
 import {ParagraphNode, TextNode} from 'lexical';
-import {initializeUnitTest} from 'lexical/src/__tests__/utils';
+import {initializeUnitTest} from 'lexical/__tests__/utils';
 
 import {
   $createListItemNode,

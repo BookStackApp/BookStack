@@ -19,7 +19,7 @@ import {
   $createTestElementNode,
   initializeUnitTest,
   invariant,
-} from 'lexical/src/__tests__/utils';
+} from 'lexical/__tests__/utils';
 
 import {$dfs} from '../..';
 

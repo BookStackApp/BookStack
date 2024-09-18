@@ -23,7 +23,7 @@ import {
 } from '@lexical/selection/src/__tests__/utils';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 import {LexicalEditor} from 'lexical';
-import {initializeClipboard, TestComposer} from 'lexical/src/__tests__/utils';
+import {initializeClipboard, TestComposer} from 'lexical/__tests__/utils';
 import {createRoot} from 'react-dom/client';
 import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 

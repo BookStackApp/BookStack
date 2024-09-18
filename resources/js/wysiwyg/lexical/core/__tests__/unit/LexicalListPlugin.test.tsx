@@ -20,7 +20,7 @@ import {
   expectHtmlToBeEqual,
   html,
   TestComposer,
-} from 'lexical/src/__tests__/utils';
+} from 'lexical/__tests__/utils';
 import {createRoot, Root} from 'react-dom/client';
 import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 

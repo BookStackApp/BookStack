@@ -12,7 +12,7 @@ import {
   $rootTextContent,
 } from '@lexical/text';
 import {$createParagraphNode, $createTextNode, $getRoot} from 'lexical';
-import {initializeUnitTest} from 'lexical/src/__tests__/utils';
+import {initializeUnitTest} from 'lexical/__tests__/utils';
 
 describe('LexicalRootHelpers tests', () => {
   initializeUnitTest((testEnv) => {
