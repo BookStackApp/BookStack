@@ -57,11 +57,13 @@ import {
 
 describe('LexicalEditor tests', () => {
   let container: HTMLElement;
-  let reactRoot: Root;
+  function setContainerChild(el: HTMLElement) {
+    container.innerHTML = '';
+    container.append(el);
+  }
 
   beforeEach(() => {
     container = document.createElement('div');
-    reactRoot = createRoot(container);
     document.body.appendChild(container);
   });
 
@@ -74,49 +76,33 @@ describe('LexicalEditor tests', () => {
   });
 
   function useLexicalEditor(
-    rootElementRef: React.RefObject<HTMLDivElement>,
+    rootElement: HTMLDivElement,
     onError?: (error: Error) => void,
     nodes?: ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>,
   ) {
-    const editor = useMemo(
-      () =>
-        createTestEditor({
-          nodes: nodes ?? [],
-          onError: onError || jest.fn(),
-          theme: {
-            text: {
-              bold: 'editor-text-bold',
-              italic: 'editor-text-italic',
-              underline: 'editor-text-underline',
-            },
-          },
-        }),
-      [onError, nodes],
-    );
-
-    useEffect(() => {
-      const rootElement = rootElementRef.current;
-
-      editor.setRootElement(rootElement);
-    }, [rootElementRef, editor]);
-
+    const editor = createTestEditor({
+      nodes: nodes ?? [],
+      onError: onError || jest.fn(),
+      theme: {
+        text: {
+          bold: 'editor-text-bold',
+          italic: 'editor-text-italic',
+          underline: 'editor-text-underline',
+        },
+      },
+    });
+    editor.setRootElement(rootElement);
     return editor;
   }
 
   let editor: LexicalEditor;
 
   function init(onError?: (error: Error) => void) {
-    const ref = createRef<HTMLDivElement>();
+    const edContainer = document.createElement('div');
+    edContainer.setAttribute('contenteditable', 'true');
 
-    function TestBase() {
-      editor = useLexicalEditor(ref, onError);
-
-      return <div ref={ref} contentEditable={true} />;
-    }
-
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase />);
-    });
+    setContainerChild(edContainer);
+    editor = useLexicalEditor(edContainer, onError);
   }
 
   async function update(fn: () => void) {
@@ -870,21 +856,12 @@ describe('LexicalEditor tests', () => {
   });
 
   it('Should be able to update an editor state without a root element', () => {
-    const ref = createRef<HTMLDivElement>();
+    const element = document.createElement('div');
+    element.setAttribute('contenteditable', 'true');
+    setContainerChild(element);
 
-    function TestBase({element}: {element: HTMLElement | null}) {
-      editor = useMemo(() => createTestEditor(), []);
+    editor = createTestEditor();
 
-      useEffect(() => {
-        editor.setRootElement(element);
-      }, [element]);
-
-      return <div ref={ref} contentEditable={true} />;
-    }
-
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase element={null} />);
-    });
     editor.update(() => {
       const root = $getRoot();
       const paragraph = $createParagraphNode();
@@ -895,9 +872,7 @@ describe('LexicalEditor tests', () => {
 
     expect(container.innerHTML).toBe('<div contenteditable="true"></div>');
 
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase element={ref.current} />);
-    });
+    editor.setRootElement(element);
 
     expect(container.innerHTML).toBe(
       '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p dir="ltr"><span data-lexical-text="true">This works!</span></p></div>',
@@ -945,57 +920,48 @@ describe('LexicalEditor tests', () => {
     const rootListener = jest.fn();
     const updateListener = jest.fn();
 
-    function TestBase({changeElement}: {changeElement: boolean}) {
-      editor = useMemo(() => createTestEditor(), []);
+    let editorInstance = createTestEditor();
+    editorInstance.registerRootListener(rootListener);
+    editorInstance.registerUpdateListener(updateListener);
 
-      useEffect(() => {
-        editor.update(() => {
-          const root = $getRoot();
-          const firstChild = root.getFirstChild() as ParagraphNode | null;
-          const text = changeElement ? 'Change successful' : 'Not changed';
+    let edContainer: HTMLElement = document.createElement('div');
+    edContainer.setAttribute('contenteditable', 'true');
+    setContainerChild(edContainer);
+    editorInstance.setRootElement(edContainer);
 
-          if (firstChild === null) {
-            const paragraph = $createParagraphNode();
-            const textNode = $createTextNode(text);
-            paragraph.append(textNode);
-            root.append(paragraph);
-          } else {
-            const textNode = firstChild.getFirstChild() as TextNode;
-            textNode.setTextContent(text);
-          }
-        });
-      }, [changeElement]);
+    function runUpdate(changeElement: boolean) {
+      editorInstance.update(() => {
+        const root = $getRoot();
+        const firstChild = root.getFirstChild() as ParagraphNode | null;
+        const text = changeElement ? 'Change successful' : 'Not changed';
 
-      useEffect(() => {
-        return editor.registerRootListener(rootListener);
-      }, []);
-
-      useEffect(() => {
-        return editor.registerUpdateListener(updateListener);
-      }, []);
-
-      const ref = useCallback((node: HTMLElement | null) => {
-        editor.setRootElement(node);
-      }, []);
-
-      return changeElement ? (
-        <span ref={ref} contentEditable={true} />
-      ) : (
-        <div ref={ref} contentEditable={true} />
-      );
+        if (firstChild === null) {
+          const paragraph = $createParagraphNode();
+          const textNode = $createTextNode(text);
+          paragraph.append(textNode);
+          root.append(paragraph);
+        } else {
+          const textNode = firstChild.getFirstChild() as TextNode;
+          textNode.setTextContent(text);
+        }
+      });
     }
 
-    await ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase changeElement={false} />);
-    });
+    setContainerChild(edContainer);
+    editorInstance.setRootElement(edContainer);
+    runUpdate(false);
+    editorInstance.commitUpdates();
 
     expect(container.innerHTML).toBe(
       '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p dir="ltr"><span data-lexical-text="true">Not changed</span></p></div>',
     );
 
-    await ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase changeElement={true} />);
-    });
+    edContainer = document.createElement('span');
+    edContainer.setAttribute('contenteditable', 'true');
+    runUpdate(true);
+    editorInstance.setRootElement(edContainer);
+    setContainerChild(edContainer);
+    editorInstance.commitUpdates();
 
     expect(rootListener).toHaveBeenCalledTimes(3);
     expect(updateListener).toHaveBeenCalledTimes(3);
@@ -1025,178 +991,6 @@ describe('LexicalEditor tests', () => {
       );
     });
   }
-
-  describe('With node decorators', () => {
-    function useDecorators() {
-      const [decorators, setDecorators] = useState(() =>
-        editor.getDecorators<ReactNode>(),
-      );
-
-      // Subscribe to changes
-      useEffect(() => {
-        return editor.registerDecoratorListener<ReactNode>((nextDecorators) => {
-          setDecorators(nextDecorators);
-        });
-      }, []);
-
-      const decoratedPortals = useMemo(
-        () =>
-          Object.keys(decorators).map((nodeKey) => {
-            const reactDecorator = decorators[nodeKey];
-            const element = editor.getElementByKey(nodeKey)!;
-
-            return createPortal(reactDecorator, element);
-          }),
-        [decorators],
-      );
-
-      return decoratedPortals;
-    }
-
-    afterEach(async () => {
-      // Clean up so we are not calling setState outside of act
-      await ReactTestUtils.act(async () => {
-        reactRoot.render(null);
-        await Promise.resolve().then();
-      });
-    });
-
-    it('Should correctly render React component into Lexical node #1', async () => {
-      const listener = jest.fn();
-
-      function Test() {
-        editor = useMemo(() => createTestEditor(), []);
-
-        useEffect(() => {
-          editor.registerRootListener(listener);
-        }, []);
-
-        const ref = useCallback((node: HTMLDivElement | null) => {
-          editor.setRootElement(node);
-        }, []);
-
-        const decorators = useDecorators();
-
-        return (
-          <>
-            <div ref={ref} contentEditable={true} />
-            {decorators}
-          </>
-        );
-      }
-
-      ReactTestUtils.act(() => {
-        reactRoot.render(<Test />);
-      });
-      // Update the editor with the decorator
-      await ReactTestUtils.act(async () => {
-        await editor.update(() => {
-          const paragraph = $createParagraphNode();
-          const test = $createTestDecoratorNode();
-          paragraph.append(test);
-          $getRoot().append(paragraph);
-        });
-      });
-
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(container.innerHTML).toBe(
-        '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p>' +
-          '<span data-lexical-decorator="true"><span>Hello world</span></span><br></p></div>',
-      );
-    });
-
-    it('Should correctly render React component into Lexical node #2', async () => {
-      const listener = jest.fn();
-
-      function Test({divKey}: {divKey: number}): JSX.Element {
-        function TestPlugin() {
-          [editor] = useLexicalComposerContext();
-
-          useEffect(() => {
-            return editor.registerRootListener(listener);
-          }, []);
-
-          return null;
-        }
-
-        return (
-          <TestComposer>
-            <RichTextPlugin
-              contentEditable={
-                // @ts-ignore
-                // eslint-disable-next-line jsx-a11y/aria-role
-                <ContentEditable key={divKey} role={null} spellCheck={null} />
-              }
-              placeholder={null}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <TestPlugin />
-          </TestComposer>
-        );
-      }
-
-      await ReactTestUtils.act(async () => {
-        reactRoot.render(<Test divKey={0} />);
-        // Wait for update to complete
-        await Promise.resolve().then();
-      });
-
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(container.innerHTML).toBe(
-        '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p><br></p></div>',
-      );
-
-      await ReactTestUtils.act(async () => {
-        reactRoot.render(<Test divKey={1} />);
-        // Wait for update to complete
-        await Promise.resolve().then();
-      });
-
-      expect(listener).toHaveBeenCalledTimes(5);
-      expect(container.innerHTML).toBe(
-        '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p><br></p></div>',
-      );
-
-      // Wait for update to complete
-      await Promise.resolve().then();
-
-      editor.getEditorState().read(() => {
-        const root = $getRoot();
-        const paragraph = root.getFirstChild()!;
-        expect(root).toEqual({
-          __cachedText: '',
-          __dir: null,
-          __first: paragraph.getKey(),
-          __format: 0,
-          __indent: 0,
-          __key: 'root',
-          __last: paragraph.getKey(),
-          __next: null,
-          __parent: null,
-          __prev: null,
-          __size: 1,
-          __style: '',
-          __type: 'root',
-        });
-        expect(paragraph).toEqual({
-          __dir: null,
-          __first: null,
-          __format: 0,
-          __indent: 0,
-          __key: paragraph.getKey(),
-          __last: null,
-          __next: null,
-          __parent: 'root',
-          __prev: null,
-          __size: 0,
-          __style: '',
-          __textFormat: 0,
-          __textStyle: '',
-          __type: 'paragraph',
-        });
-      });
-    });
-  });
 
   describe('parseEditorState()', () => {
     let originalText: TextNode;
@@ -1872,10 +1666,12 @@ describe('LexicalEditor tests', () => {
   });
 
   it('mutation listener set for original node should work with the replaced node', async () => {
-    const ref = createRef<HTMLDivElement>();
 
     function TestBase() {
-      editor = useLexicalEditor(ref, undefined, [
+      const edContainer = document.createElement('div');
+      edContainer.contentEditable = 'true';
+
+      editor = useLexicalEditor(edContainer, undefined, [
         TestTextNode,
         {
           replace: TextNode,
@@ -1884,12 +1680,10 @@ describe('LexicalEditor tests', () => {
         },
       ]);
 
-      return <div ref={ref} contentEditable={true} />;
+      return edContainer;
     }
 
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase />);
-    });
+    setContainerChild(TestBase());
 
     const textNodeMutations = jest.fn();
     const textNodeMutationsB = jest.fn();
@@ -1969,10 +1763,12 @@ describe('LexicalEditor tests', () => {
   });
 
   it('mutation listener should work with the replaced node', async () => {
-    const ref = createRef<HTMLDivElement>();
 
     function TestBase() {
-      editor = useLexicalEditor(ref, undefined, [
+      const edContainer = document.createElement('div');
+      edContainer.contentEditable = 'true';
+
+      editor = useLexicalEditor(edContainer, undefined, [
         TestTextNode,
         {
           replace: TextNode,
@@ -1981,12 +1777,10 @@ describe('LexicalEditor tests', () => {
         },
       ]);
 
-      return <div ref={ref} contentEditable={true} />;
+      return edContainer;
     }
 
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase />);
-    });
+    setContainerChild(TestBase());
 
     const textNodeMutations = jest.fn();
     const textNodeMutationsB = jest.fn();
@@ -2580,6 +2374,8 @@ describe('LexicalEditor tests', () => {
         $createTextNode('123');
         expect(false).toBe('unreachable');
       });
+
+      newEditor.commitUpdates();
 
       expect(onError).toHaveBeenCalledWith(
         expect.objectContaining({

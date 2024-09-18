@@ -41,7 +41,7 @@ import {
   createTestHeadlessEditor,
   invariant,
   TestDecoratorNode,
-} from 'lexical/src/__tests__/utils';
+} from 'lexical/__tests__/utils';
 
 import {$setAnchorPoint, $setFocusPoint} from '../utils';
 

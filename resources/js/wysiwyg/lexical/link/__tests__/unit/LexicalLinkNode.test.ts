@@ -20,7 +20,7 @@ import {
   SerializedParagraphNode,
   TextNode,
 } from 'lexical/src';
-import {initializeUnitTest} from 'lexical/src/__tests__/utils';
+import {initializeUnitTest} from 'lexical/__tests__/utils';
 
 const editorConfig = Object.freeze({
   namespace: '',

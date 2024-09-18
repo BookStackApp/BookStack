@@ -29,7 +29,6 @@ import {
   SerializedTextNode,
   TextNode,
 } from 'lexical';
-import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 
 import {
   CreateEditorArgs,
@@ -89,38 +88,13 @@ export function initializeUnitTest(
     testEnv.container = document.createElement('div');
     document.body.appendChild(testEnv.container);
 
-    const useLexicalEditor = (
-      rootElementRef: React.RefObject<HTMLDivElement>,
-    ) => {
-      const lexicalEditor = React.useMemo(() => {
-        const lexical = createTestEditor(editorConfig);
-        return lexical;
-      }, []);
+    const editorEl = document.createElement('div');
+    editorEl.contentEditable = 'true';
+    testEnv.container.append(editorEl);
 
-      React.useEffect(() => {
-        const rootElement = rootElementRef.current;
-        lexicalEditor.setRootElement(rootElement);
-      }, [rootElementRef, lexicalEditor]);
-      return lexicalEditor;
-    };
-
-    const Editor = () => {
-      testEnv.editor = useLexicalEditor(ref);
-      const context = createLexicalComposerContext(
-        null,
-        editorConfig?.theme ?? {},
-      );
-      return (
-        <LexicalComposerContext.Provider value={[testEnv.editor, context]}>
-          <div ref={ref} contentEditable={true} />
-          {plugins}
-        </LexicalComposerContext.Provider>
-      );
-    };
-
-    ReactTestUtils.act(() => {
-      createRoot(testEnv.container).render(<Editor />);
-    });
+    const lexicalEditor = createTestEditor(editorConfig);
+    lexicalEditor.setRootElement(editorEl);
+    testEnv.editor = lexicalEditor;
   });
 
   afterEach(() => {
@@ -381,7 +355,7 @@ export function $createTestExcludeFromCopyElementNode(): TestExcludeFromCopyElem
 
 export type SerializedTestDecoratorNode = SerializedLexicalNode;
 
-export class TestDecoratorNode extends DecoratorNode<JSX.Element> {
+export class TestDecoratorNode extends DecoratorNode<HTMLElement> {
   static getType(): string {
     return 'test_decorator';
   }
@@ -433,32 +407,26 @@ export class TestDecoratorNode extends DecoratorNode<JSX.Element> {
   }
 
   decorate() {
-    return <Decorator text={'Hello world'} />;
+    const decorator = document.createElement('span');
+    decorator.textContent = 'Hello world';
+    return decorator;
   }
-}
-
-function Decorator({text}: {text: string}): JSX.Element {
-  return <span>{text}</span>;
 }
 
 export function $createTestDecoratorNode(): TestDecoratorNode {
   return new TestDecoratorNode();
 }
 
-const DEFAULT_NODES: NonNullable<InitialConfigType['nodes']> = [
+const DEFAULT_NODES: NonNullable<ReadonlyArray<Klass<LexicalNode> | LexicalNodeReplacement>> = [
   HeadingNode,
   ListNode,
   ListItemNode,
   QuoteNode,
-  CodeNode,
   TableNode,
   TableCellNode,
   TableRowNode,
-  HashtagNode,
-  CodeHighlightNode,
   AutoLinkNode,
   LinkNode,
-  OverflowNode,
   TestElementNode,
   TestSegmentedNode,
   TestExcludeFromCopyElementNode,
