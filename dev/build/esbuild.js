@@ -38,6 +38,8 @@ esbuild.build({
     absWorkingDir: path.join(__dirname, '../..'),
     alias: {
         '@icons': './resources/icons',
+        lexical: './resources/js/wysiwyg/lexical/core',
+        '@lexical': './resources/js/wysiwyg/lexical',
     },
     banner: {
         js: '// See the "/licenses" URI for full package license details',
