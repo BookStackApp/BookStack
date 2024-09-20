@@ -21,9 +21,6 @@ import {
   TextModeType,
   TextNode,
 } from 'lexical';
-import * as React from 'react';
-import {createRef, useEffect, useMemo} from 'react';
-import {createRoot} from 'react-dom/client';
 import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 
 import {
@@ -78,35 +75,20 @@ describe('LexicalTextNode tests', () => {
 
   async function update(fn: () => void) {
     editor.update(fn);
+    editor.commitUpdates();
     return Promise.resolve().then();
-  }
-
-  function useLexicalEditor(rootElementRef: React.RefObject<HTMLDivElement>) {
-    const editor = useMemo(() => createTestEditor(editorConfig), []);
-
-    useEffect(() => {
-      const rootElement = rootElementRef.current;
-
-      editor.setRootElement(rootElement);
-    }, [rootElementRef, editor]);
-
-    return editor;
   }
 
   let editor: LexicalEditor;
 
   async function init() {
-    const ref = createRef<HTMLDivElement>();
+    const root = document.createElement('div');
+    root.setAttribute('contenteditable', 'true');
+    container.innerHTML = '';
+    container.appendChild(root);
 
-    function TestBase() {
-      editor = useLexicalEditor(ref);
-
-      return <div ref={ref} contentEditable={true} />;
-    }
-
-    ReactTestUtils.act(() => {
-      createRoot(container).render(<TestBase />);
-    });
+    editor = createTestEditor();
+    editor.setRootElement(root);
 
     // Insert initial block
     await update(() => {
