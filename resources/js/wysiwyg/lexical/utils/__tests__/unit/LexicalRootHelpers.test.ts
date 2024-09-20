@@ -6,13 +6,38 @@
  *
  */
 
-import {
-  $isRootTextContentEmpty,
-  $isRootTextContentEmptyCurry,
-  $rootTextContent,
-} from '@lexical/text';
 import {$createParagraphNode, $createTextNode, $getRoot} from 'lexical';
 import {initializeUnitTest} from 'lexical/__tests__/utils';
+
+export function $rootTextContent(): string {
+  const root = $getRoot();
+
+  return root.getTextContent();
+}
+
+export function $isRootTextContentEmpty(
+    isEditorComposing: boolean,
+    trim = true,
+): boolean {
+  if (isEditorComposing) {
+    return false;
+  }
+
+  let text = $rootTextContent();
+
+  if (trim) {
+    text = text.trim();
+  }
+
+  return text === '';
+}
+
+export function $isRootTextContentEmptyCurry(
+    isEditorComposing: boolean,
+    trim?: boolean,
+): () => boolean {
+  return () => $isRootTextContentEmpty(isEditorComposing, trim);
+}
 
 describe('LexicalRootHelpers tests', () => {
   initializeUnitTest((testEnv) => {

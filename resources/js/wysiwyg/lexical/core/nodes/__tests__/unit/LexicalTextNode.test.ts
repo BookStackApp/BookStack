@@ -21,7 +21,6 @@ import {
   TextModeType,
   TextNode,
 } from 'lexical';
-import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 
 import {
   $createTestSegmentedNode,

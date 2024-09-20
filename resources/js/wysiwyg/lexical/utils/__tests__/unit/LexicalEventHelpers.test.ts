@@ -5,27 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
-import {CodeHighlightNode, CodeNode} from '@lexical/code';
-import {HashtagNode} from '@lexical/hashtag';
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
-import {OverflowNode} from '@lexical/overflow';
-import {AutoFocusPlugin} from '@lexical/react/LexicalAutoFocusPlugin';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
-import {RichTextPlugin} from '@lexical/react/LexicalRichTextPlugin';
-import {HeadingNode, QuoteNode} from '@lexical/rich-text';
+import {HeadingNode, QuoteNode, registerRichText} from '@lexical/rich-text';
 import {
   applySelectionInputs,
   pasteHTML,
-} from '@lexical/selection/src/__tests__/utils';
+} from '@lexical/selection/__tests__/utils';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
-import {LexicalEditor} from 'lexical';
-import {initializeClipboard, TestComposer} from 'lexical/__tests__/utils';
-import {createRoot} from 'react-dom/client';
-import * as ReactTestUtils from 'lexical/shared/react-test-utils';
+import {$createParagraphNode, $insertNodes, LexicalEditor} from 'lexical';
+import {createTestEditor, initializeClipboard} from 'lexical/__tests__/utils';
 
 jest.mock('lexical/shared/environment', () => {
   const originalModule = jest.requireActual('lexical/shared/environment');
@@ -89,85 +78,69 @@ describe('LexicalEventHelpers', () => {
   let editor: LexicalEditor | null = null;
 
   async function init() {
-    function TestBase() {
-      function TestPlugin(): null {
-        [editor] = useLexicalComposerContext();
 
-        return null;
-      }
+    const config = {
+      nodes: [
+        LinkNode,
+        HeadingNode,
+        ListNode,
+        ListItemNode,
+        QuoteNode,
+        TableNode,
+        TableCellNode,
+        TableRowNode,
+        AutoLinkNode,
+      ],
+      theme: {
+        code: 'editor-code',
+        heading: {
+          h1: 'editor-heading-h1',
+          h2: 'editor-heading-h2',
+          h3: 'editor-heading-h3',
+          h4: 'editor-heading-h4',
+          h5: 'editor-heading-h5',
+          h6: 'editor-heading-h6',
+        },
+        image: 'editor-image',
+        list: {
+          listitem: 'editor-listitem',
+          olDepth: ['editor-list-ol'],
+          ulDepth: ['editor-list-ul'],
+        },
+        paragraph: 'editor-paragraph',
+        placeholder: 'editor-placeholder',
+        quote: 'editor-quote',
+        text: {
+          bold: 'editor-text-bold',
+          code: 'editor-text-code',
+          hashtag: 'editor-text-hashtag',
+          italic: 'editor-text-italic',
+          link: 'editor-text-link',
+          strikethrough: 'editor-text-strikethrough',
+          underline: 'editor-text-underline',
+          underlineStrikethrough: 'editor-text-underlineStrikethrough',
+        },
+      },
+    };
 
-      return (
-        <TestComposer
-          config={{
-            nodes: [
-              LinkNode,
-              HeadingNode,
-              ListNode,
-              ListItemNode,
-              QuoteNode,
-              CodeNode,
-              TableNode,
-              TableCellNode,
-              TableRowNode,
-              HashtagNode,
-              CodeHighlightNode,
-              AutoLinkNode,
-              OverflowNode,
-            ],
-            theme: {
-              code: 'editor-code',
-              heading: {
-                h1: 'editor-heading-h1',
-                h2: 'editor-heading-h2',
-                h3: 'editor-heading-h3',
-                h4: 'editor-heading-h4',
-                h5: 'editor-heading-h5',
-                h6: 'editor-heading-h6',
-              },
-              image: 'editor-image',
-              list: {
-                listitem: 'editor-listitem',
-                olDepth: ['editor-list-ol'],
-                ulDepth: ['editor-list-ul'],
-              },
-              paragraph: 'editor-paragraph',
-              placeholder: 'editor-placeholder',
-              quote: 'editor-quote',
-              text: {
-                bold: 'editor-text-bold',
-                code: 'editor-text-code',
-                hashtag: 'editor-text-hashtag',
-                italic: 'editor-text-italic',
-                link: 'editor-text-link',
-                strikethrough: 'editor-text-strikethrough',
-                underline: 'editor-text-underline',
-                underlineStrikethrough: 'editor-text-underlineStrikethrough',
-              },
-            },
-          }}>
-          <RichTextPlugin
-            contentEditable={
-              // eslint-disable-next-line jsx-a11y/aria-role, @typescript-eslint/no-explicit-any
-              <ContentEditable role={null as any} spellCheck={null as any} />
-            }
-            placeholder={null}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
-          <AutoFocusPlugin />
-          <TestPlugin />
-        </TestComposer>
-      );
-    }
+    editor = createTestEditor(config);
+    registerRichText(editor);
 
-    ReactTestUtils.act(() => {
-      createRoot(container!).render(<TestBase />);
+    const root = document.createElement('div');
+    root.setAttribute('contenteditable', 'true');
+    container?.append(root);
+
+    editor.setRootElement(root);
+
+    editor.update(() => {
+      $insertNodes([$createParagraphNode()])
     });
+    editor.commitUpdates();
   }
 
   async function update(fn: () => void) {
-    await ReactTestUtils.act(async () => {
-      await editor!.update(fn);
-    });
+    await editor!.update(fn);
+    editor?.commitUpdates();
 
     return Promise.resolve().then();
   }
@@ -549,24 +522,6 @@ describe('LexicalEventHelpers', () => {
           ],
           name: 'collapsible spaces with nested structures',
         },
-        // TODO no proper support for divs #4465
-        // {
-        //   expectedHTML:
-        //     '<p class="editor-paragraph" dir="ltr"><span data-lexical-text="true">a</span></p><p class="editor-paragraph" dir="ltr"><span data-lexical-text="true">b</span></p>',
-        //   inputs: [
-        //     pasteHTML(`
-        //     <div>
-        //     <div>
-        //     a
-        //     </div>
-        //     <div>
-        //     b
-        //     </div>
-        //     </div>
-        //     `),
-        //   ],
-        //   name: 'collapsible spaces with nested structures (2)',
-        // },
         {
           expectedHTML:
             '<p class="editor-paragraph" dir="ltr"><strong class="editor-text-bold" data-lexical-text="true">a b</strong></p>',
@@ -611,32 +566,6 @@ describe('LexicalEventHelpers', () => {
             `),
           ],
           name: 'forced line break with tabs',
-        },
-        // The 3 below are not correct, they're missing the first \n -> <br> but that's a fault with
-        // the implementation of DOMParser, it works correctly in Safari
-        {
-          expectedHTML:
-            '<code class="editor-code" spellcheck="false" dir="ltr"><span data-lexical-text="true">a</span><br><span data-lexical-text="true">b</span><br><br></code>',
-          inputs: [pasteHTML(`<pre>\na\r\nb\r\n</pre>`)],
-          name: 'pre (no touchy) (1)',
-        },
-        {
-          expectedHTML:
-            '<code class="editor-code" spellcheck="false" dir="ltr"><span data-lexical-text="true">a</span><br><span data-lexical-text="true">b</span><br><br></code>',
-          inputs: [
-            pasteHTML(`
-              <pre>\na\r\nb\r\n</pre>
-          `),
-          ],
-          name: 'pre (no touchy) (2)',
-        },
-        {
-          expectedHTML:
-            '<p class="editor-paragraph" dir="ltr"><br><span data-lexical-text="true">a</span><br><span data-lexical-text="true">b</span><br><br></p>',
-          inputs: [
-            pasteHTML(`<span style="white-space: pre">\na\r\nb\r\n</span>`),
-          ],
-          name: 'white-space: pre (no touchy) (2)',
         },
         {
           expectedHTML:

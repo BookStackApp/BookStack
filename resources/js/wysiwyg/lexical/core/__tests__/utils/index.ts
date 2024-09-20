@@ -717,3 +717,11 @@ export function html(
   }
   return output;
 }
+
+export function expectHtmlToBeEqual(expected: string, actual: string): void {
+  expect(formatHtml(expected)).toBe(formatHtml(actual));
+}
+
+function formatHtml(s: string): string {
+  return s.replace(/>\s+</g, '><').replace(/\s*\n\s*/g, ' ').trim();
+}

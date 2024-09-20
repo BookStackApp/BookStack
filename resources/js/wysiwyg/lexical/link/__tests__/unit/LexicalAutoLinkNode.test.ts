@@ -19,7 +19,7 @@ import {
   ParagraphNode,
   SerializedParagraphNode,
   TextNode,
-} from 'lexical/src';
+} from 'lexical';
 import {initializeUnitTest} from 'lexical/__tests__/utils';
 
 const editorConfig = Object.freeze({

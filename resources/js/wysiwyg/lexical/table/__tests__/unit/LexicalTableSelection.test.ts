@@ -19,9 +19,6 @@ import {
   TextNode,
 } from 'lexical';
 import {createTestEditor} from 'lexical/__tests__/utils';
-import {createRef, useEffect, useMemo} from 'react';
-import {createRoot, Root} from 'react-dom/client';
-import * as ReactTestUtils from 'lexical/shared/react-test-utils';
 
 describe('table selection', () => {
   let originalText: TextNode;
@@ -31,57 +28,35 @@ describe('table selection', () => {
   let paragraphKey: string;
   let textKey: string;
   let parsedEditorState: EditorState;
-  let reactRoot: Root;
+  let root: HTMLDivElement;
   let container: HTMLDivElement | null = null;
   let editor: LexicalEditor | null = null;
 
   beforeEach(() => {
     container = document.createElement('div');
-    reactRoot = createRoot(container);
+    root = document.createElement('div');
+    root.setAttribute('contenteditable', 'true');
     document.body.appendChild(container);
   });
 
-  function useLexicalEditor(
-    rootElementRef: React.RefObject<HTMLDivElement>,
-    onError?: () => void,
-  ) {
-    const editorInHook = useMemo(
-      () =>
-        createTestEditor({
-          nodes: [],
-          onError: onError || jest.fn(),
-          theme: {
-            text: {
-              bold: 'editor-text-bold',
-              italic: 'editor-text-italic',
-              underline: 'editor-text-underline',
-            },
-          },
-        }),
-      [onError],
-    );
-
-    useEffect(() => {
-      const rootElement = rootElementRef.current;
-
-      editorInHook.setRootElement(rootElement);
-    }, [rootElementRef, editorInHook]);
-
-    return editorInHook;
-  }
+  afterEach(() => {
+    container?.remove();
+  });
 
   function init(onError?: () => void) {
-    const ref = createRef<HTMLDivElement>();
+    editor = createTestEditor({
+      nodes: [],
+      onError: onError || jest.fn(),
+      theme: {
+        text: {
+          bold: 'editor-text-bold',
+          italic: 'editor-text-italic',
+          underline: 'editor-text-underline',
+        },
+      },
+    })
 
-    function TestBase() {
-      editor = useLexicalEditor(ref, onError);
-
-      return <div ref={ref} contentEditable={true} />;
-    }
-
-    ReactTestUtils.act(() => {
-      reactRoot.render(<TestBase />);
-    });
+    editor.setRootElement(root);
   }
 
   async function update(fn: () => void) {
