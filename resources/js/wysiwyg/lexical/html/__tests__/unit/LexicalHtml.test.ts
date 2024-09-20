@@ -112,7 +112,6 @@ describe('HTML', () => {
         ListNode,
         ListItemNode,
         QuoteNode,
-        CodeNode,
         LinkNode,
       ],
     });

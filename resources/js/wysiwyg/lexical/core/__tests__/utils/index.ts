@@ -89,7 +89,7 @@ export function initializeUnitTest(
     document.body.appendChild(testEnv.container);
 
     const editorEl = document.createElement('div');
-    editorEl.contentEditable = 'true';
+    editorEl.setAttribute('contenteditable', 'true');
     testEnv.container.append(editorEl);
 
     const lexicalEditor = createTestEditor(editorConfig);
