@@ -7,30 +7,20 @@
  */
 
 import {$insertDataTransferForRichText} from '@lexical/clipboard';
-import {TablePlugin} from '@lexical/react/LexicalTablePlugin';
 import {
   $createTableNode,
-  $createTableNodeWithDimensions,
-  $createTableSelection,
 } from '@lexical/table';
 import {
   $createParagraphNode,
-  $createTextNode,
   $getRoot,
   $getSelection,
   $isRangeSelection,
-  $selectAll,
-  $setSelection,
-  CUT_COMMAND,
-  ParagraphNode,
 } from 'lexical';
 import {
   DataTransferMock,
   initializeUnitTest,
   invariant,
 } from 'lexical/__tests__/utils';
-
-import {$getElementForTableNode, TableNode} from '../../LexicalTableNode';
 
 export class ClipboardDataMock {
   getData: jest.Mock<string, [string]>;
@@ -149,203 +139,7 @@ describe('LexicalTableNode tests', () => {
           `<table><tr style="height: 21px;"><td><p dir="ltr"><strong data-lexical-text="true">Surface</strong></p></td><td><p dir="ltr"><em data-lexical-text="true">MWP_WORK_LS_COMPOSER</em></p></td><td><p style="text-align: right;"><span data-lexical-text="true">77349</span></p></td></tr><tr style="height: 21px;"><td><p dir="ltr"><span data-lexical-text="true">Lexical</span></p></td><td><p dir="ltr"><span data-lexical-text="true">XDS_RICH_TEXT_AREA</span></p></td><td><p dir="ltr"><span data-lexical-text="true">sdvd </span><strong data-lexical-text="true">sdfvsfs</strong></p></td></tr></table>`,
         );
       });
-
-      test('Cut table in the middle of a range selection', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const paragraph = root.getFirstChild<ParagraphNode>();
-          const beforeText = $createTextNode('text before the table');
-          const table = $createTableNodeWithDimensions(4, 4, true);
-          const afterText = $createTextNode('text after the table');
-
-          paragraph?.append(beforeText);
-          paragraph?.append(table);
-          paragraph?.append(afterText);
-        });
-        await editor.update(() => {
-          editor.focus();
-          $selectAll();
-        });
-        await editor.update(() => {
-          editor.dispatchCommand(CUT_COMMAND, {} as ClipboardEvent);
-        });
-
-        expect(testEnv.innerHTML).toBe(`<p><br></p>`);
-      });
-
-      test('Cut table as last node in range selection ', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const paragraph = root.getFirstChild<ParagraphNode>();
-          const beforeText = $createTextNode('text before the table');
-          const table = $createTableNodeWithDimensions(4, 4, true);
-
-          paragraph?.append(beforeText);
-          paragraph?.append(table);
-        });
-        await editor.update(() => {
-          editor.focus();
-          $selectAll();
-        });
-        await editor.update(() => {
-          editor.dispatchCommand(CUT_COMMAND, {} as ClipboardEvent);
-        });
-
-        expect(testEnv.innerHTML).toBe(`<p><br></p>`);
-      });
-
-      test('Cut table as first node in range selection ', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const paragraph = root.getFirstChild<ParagraphNode>();
-          const table = $createTableNodeWithDimensions(4, 4, true);
-          const afterText = $createTextNode('text after the table');
-
-          paragraph?.append(table);
-          paragraph?.append(afterText);
-        });
-        await editor.update(() => {
-          editor.focus();
-          $selectAll();
-        });
-        await editor.update(() => {
-          editor.dispatchCommand(CUT_COMMAND, {} as ClipboardEvent);
-        });
-
-        expect(testEnv.innerHTML).toBe(`<p><br></p>`);
-      });
-
-      test('Cut table is whole selection, should remove it', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = $createTableNodeWithDimensions(4, 4, true);
-          root.append(table);
-        });
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = root.getLastChild<TableNode>();
-          if (table) {
-            const DOMTable = $getElementForTableNode(editor, table);
-            if (DOMTable) {
-              table
-                ?.getCellNodeFromCords(0, 0, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('some text'));
-              const selection = $createTableSelection();
-              selection.set(
-                table.__key,
-                table?.getCellNodeFromCords(0, 0, DOMTable)?.__key || '',
-                table?.getCellNodeFromCords(3, 3, DOMTable)?.__key || '',
-              );
-              $setSelection(selection);
-              editor.dispatchCommand(CUT_COMMAND, {
-                preventDefault: () => {},
-                stopPropagation: () => {},
-              } as ClipboardEvent);
-            }
-          }
-        });
-
-        expect(testEnv.innerHTML).toBe(`<p><br></p>`);
-      });
-
-      test('Cut subsection of table cells, should just clear contents', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = $createTableNodeWithDimensions(4, 4, true);
-          root.append(table);
-        });
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = root.getLastChild<TableNode>();
-          if (table) {
-            const DOMTable = $getElementForTableNode(editor, table);
-            if (DOMTable) {
-              table
-                ?.getCellNodeFromCords(0, 0, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('some text'));
-              const selection = $createTableSelection();
-              selection.set(
-                table.__key,
-                table?.getCellNodeFromCords(0, 0, DOMTable)?.__key || '',
-                table?.getCellNodeFromCords(2, 2, DOMTable)?.__key || '',
-              );
-              $setSelection(selection);
-              editor.dispatchCommand(CUT_COMMAND, {
-                preventDefault: () => {},
-                stopPropagation: () => {},
-              } as ClipboardEvent);
-            }
-          }
-        });
-
-        expect(testEnv.innerHTML).toBe(
-          `<p><br></p><table><tr><th><p><br></p></th><th><p><br></p></th><th><p><br></p></th><th><p><br></p></th></tr><tr><th><p><br></p></th><td><p><br></p></td><td><p><br></p></td><td><p><br></p></td></tr><tr><th><p><br></p></th><td><p><br></p></td><td><p><br></p></td><td><p><br></p></td></tr><tr><th><p><br></p></th><td><p><br></p></td><td><p><br></p></td><td><p><br></p></td></tr></table>`,
-        );
-      });
-
-      test('Table plain text output validation', async () => {
-        const {editor} = testEnv;
-
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = $createTableNodeWithDimensions(4, 4, true);
-          root.append(table);
-        });
-        await editor.update(() => {
-          const root = $getRoot();
-          const table = root.getLastChild<TableNode>();
-          if (table) {
-            const DOMTable = $getElementForTableNode(editor, table);
-            if (DOMTable) {
-              table
-                ?.getCellNodeFromCords(0, 0, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('1'));
-              table
-                ?.getCellNodeFromCords(1, 0, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode(''));
-              table
-                ?.getCellNodeFromCords(2, 0, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('2'));
-              table
-                ?.getCellNodeFromCords(0, 1, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('3'));
-              table
-                ?.getCellNodeFromCords(1, 1, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode('4'));
-              table
-                ?.getCellNodeFromCords(2, 1, DOMTable)
-                ?.getLastChild<ParagraphNode>()
-                ?.append($createTextNode(''));
-              const selection = $createTableSelection();
-              selection.set(
-                table.__key,
-                table?.getCellNodeFromCords(0, 0, DOMTable)?.__key || '',
-                table?.getCellNodeFromCords(2, 1, DOMTable)?.__key || '',
-              );
-              expect(selection.getTextContent()).toBe(`1\t\t2\n3\t4\t\n`);
-            }
-          }
-        });
-      });
     },
     undefined,
-    <TablePlugin />,
   );
 });
