@@ -3,7 +3,6 @@ import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
 import {
     BaseSelection,
-    LexicalEditor,
     LexicalNode,
 } from "lexical";
 import listBulletIcon from "@icons/editor/list-bullet.svg";
@@ -12,15 +11,10 @@ import listCheckIcon from "@icons/editor/list-check.svg";
 import indentIncreaseIcon from "@icons/editor/indent-increase.svg";
 import indentDecreaseIcon from "@icons/editor/indent-decrease.svg";
 import {
-    $getBlockElementNodesInSelection,
-    $selectionContainsNodeType, $selectNodes, $selectSingleNode,
-    $toggleSelection,
-    getLastSelection
+    $selectionContainsNodeType,
 } from "../../../utils/selection";
 import {toggleSelectionAsList} from "../../../utils/formats";
-import {nodeHasInset} from "../../../utils/nodes";
-import {$isCustomListItemNode, CustomListItemNode} from "../../../nodes/custom-list-item";
-import {$nestListItem, $setInsetForSelection, $unnestListItem} from "../../../utils/lists";
+import {$setInsetForSelection} from "../../../utils/lists";
 
 
 function buildListButton(label: string, type: ListType, icon: string): EditorButtonDefinition {
