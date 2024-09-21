@@ -22,5 +22,4 @@
 
 ## Bugs
 
-- Focus/click area reduced to content area, single line on initial access
 - List selection can get lost on nesting/unnesting

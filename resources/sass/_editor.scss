@@ -26,6 +26,7 @@ body.editor-is-fullscreen {
   }
 }
 .editor-content-area {
+  min-height: 100%;
   &:focus {
     outline: 0;
   }
@@ -33,6 +34,7 @@ body.editor-is-fullscreen {
 .editor-content-wrap {
   position: relative;
   overflow-y: scroll;
+  flex: 1;
 }
 
 // Buttons
