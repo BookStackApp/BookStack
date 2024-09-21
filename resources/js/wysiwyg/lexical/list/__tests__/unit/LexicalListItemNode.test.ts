@@ -182,13 +182,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -215,13 +215,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">bar</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -245,13 +245,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -273,10 +273,10 @@ describe('LexicalListItemNode tests', () => {
               data-lexical-editor="true">
               <p><br></p>
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -301,10 +301,10 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
               </ul>
@@ -330,13 +330,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
               </ul>
               <p><br></p>
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -361,7 +361,7 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
               </ul>
@@ -421,13 +421,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">A</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">x</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">B</span>
                 </li>
               </ul>
@@ -445,10 +445,10 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">A</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">B</span>
                 </li>
               </ul>
@@ -495,15 +495,15 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">x</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">B</span>
                 </li>
               </ul>
@@ -523,12 +523,12 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">B</span>
                 </li>
               </ul>
@@ -573,15 +573,15 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">A</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">x</span>
                 </li>
                 <li value="3">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -601,12 +601,12 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">A</span>
                 </li>
                 <li value="2">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -659,17 +659,17 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">x</span>
                 </li>
                 <li value="2">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -691,10 +691,10 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
-                    <li value="2" dir="ltr">
+                    <li value="2">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -755,24 +755,24 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A1</span>
                     </li>
                     <li value="2">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">A2</span>
                         </li>
                       </ul>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">x</span>
                 </li>
                 <li value="2">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -794,17 +794,17 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A1</span>
                     </li>
                     <li value="2">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">A2</span>
                         </li>
                       </ul>
                     </li>
-                    <li value="2" dir="ltr">
+                    <li value="2">
                       <span data-lexical-text="true">B</span>
                     </li>
                   </ul>
@@ -865,24 +865,24 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">x</span>
                 </li>
                 <li value="2">
                   <ul>
                     <li value="1">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">B1</span>
                         </li>
                       </ul>
                     </li>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B2</span>
                     </li>
                   </ul>
@@ -904,17 +904,17 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A</span>
                     </li>
                     <li value="2">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">B1</span>
                         </li>
                       </ul>
                     </li>
-                    <li value="2" dir="ltr">
+                    <li value="2">
                       <span data-lexical-text="true">B2</span>
                     </li>
                   </ul>
@@ -983,31 +983,31 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A1</span>
                     </li>
                     <li value="2">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">A2</span>
                         </li>
                       </ul>
                     </li>
                   </ul>
                 </li>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">x</span>
                 </li>
                 <li value="2">
                   <ul>
                     <li value="1">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">B1</span>
                         </li>
                       </ul>
                     </li>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">B2</span>
                     </li>
                   </ul>
@@ -1029,20 +1029,20 @@ describe('LexicalListItemNode tests', () => {
               <ul>
                 <li value="1">
                   <ul>
-                    <li value="1" dir="ltr">
+                    <li value="1">
                       <span data-lexical-text="true">A1</span>
                     </li>
                     <li value="2">
                       <ul>
-                        <li value="1" dir="ltr">
+                        <li value="1">
                           <span data-lexical-text="true">A2</span>
                         </li>
-                        <li value="2" dir="ltr">
+                        <li value="2">
                           <span data-lexical-text="true">B1</span>
                         </li>
                       </ul>
                     </li>
-                    <li value="2" dir="ltr">
+                    <li value="2">
                       <span data-lexical-text="true">B2</span>
                     </li>
                   </ul>
@@ -1087,13 +1087,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -1117,14 +1117,14 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
                 <li value="2"><br></li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="4" dir="ltr">
+                <li value="4">
                   <span data-lexical-text="true">three</span>
                 </li>
               </ul>
@@ -1148,13 +1148,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
                 <li value="4"><br></li>
@@ -1179,13 +1179,13 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
-                <li value="2" dir="ltr">
+                <li value="2">
                   <span data-lexical-text="true">two</span>
                 </li>
-                <li value="3" dir="ltr">
+                <li value="3">
                   <span data-lexical-text="true">three</span>
                 </li>
                 <li value="4"><br></li>
@@ -1211,7 +1211,7 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
               </ul>
@@ -1231,7 +1231,7 @@ describe('LexicalListItemNode tests', () => {
               style="user-select: text; white-space: pre-wrap; word-break: break-word;"
               data-lexical-editor="true">
               <ul>
-                <li value="1" dir="ltr">
+                <li value="1">
                   <span data-lexical-text="true">one</span>
                 </li>
                 <li value="2"><br></li>
@@ -1308,7 +1308,7 @@ describe('LexicalListItemNode tests', () => {
                     <ul>
                       <li value="1">
                         <ul>
-                          <li value="1" dir="ltr">
+                          <li value="1">
                             <span data-lexical-text="true">one</span>
                           </li>
                         </ul>
@@ -1317,7 +1317,7 @@ describe('LexicalListItemNode tests', () => {
                   </li>
                 </ul>
               </li>
-              <li value="1" dir="ltr">
+              <li value="1">
                 <span data-lexical-text="true">two</span>
               </li>
             </ul>
@@ -1336,10 +1336,10 @@ describe('LexicalListItemNode tests', () => {
           editor.getRootElement()!.innerHTML,
           html`
             <ul>
-              <li value="1" dir="ltr">
+              <li value="1">
                 <span data-lexical-text="true">one</span>
               </li>
-              <li value="2" dir="ltr">
+              <li value="2">
                 <span data-lexical-text="true">two</span>
               </li>
             </ul>

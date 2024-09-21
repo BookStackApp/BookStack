@@ -42,14 +42,12 @@ import {
   $textContentRequiresDoubleLinebreakAtEnd,
   cloneDecorators,
   getElementByKeyOrThrow,
-  getTextDirection,
   setMutatedNode,
 } from './LexicalUtils';
 
 type IntentionallyMarkedAsDirtyElement = boolean;
 
 let subTreeTextContent = '';
-let subTreeDirectionedTextContent = '';
 let subTreeTextFormat: number | null = null;
 let subTreeTextStyle: string = '';
 let editorTextContent = '';
@@ -59,7 +57,6 @@ let activeEditorNodes: RegisteredNodes;
 let treatAllNodesAsDirty = false;
 let activeEditorStateReadOnly = false;
 let activeMutationListeners: MutationListeners;
-let activeTextDirection: 'ltr' | 'rtl' | null = null;
 let activeDirtyElements: Map<NodeKey, IntentionallyMarkedAsDirtyElement>;
 let activeDirtyLeaves: Set<NodeKey>;
 let activePrevNodeMap: NodeMap;
@@ -197,7 +194,7 @@ function $createNode(
     if (childrenSize !== 0) {
       const endIndex = childrenSize - 1;
       const children = createChildrenArray(node, activeNextNodeMap);
-      $createChildrenWithDirection(children, endIndex, node, dom);
+      $createChildren(children, node, 0, endIndex, dom, null);
     }
     const format = node.__format;
 
@@ -222,10 +219,6 @@ function $createNode(
       }
       // Decorators are always non editable
       dom.contentEditable = 'false';
-    } else if ($isTextNode(node)) {
-      if (!node.isDirectionless()) {
-        subTreeDirectionedTextContent += text;
-      }
     }
     subTreeTextContent += text;
     editorTextContent += text;
@@ -259,19 +252,6 @@ function $createNode(
     'created',
   );
   return dom;
-}
-
-function $createChildrenWithDirection(
-  children: Array<NodeKey>,
-  endIndex: number,
-  element: ElementNode,
-  dom: HTMLElement,
-): void {
-  const previousSubTreeDirectionedTextContent = subTreeDirectionedTextContent;
-  subTreeDirectionedTextContent = '';
-  $createChildren(children, element, 0, endIndex, dom, null);
-  reconcileBlockDirection(element, dom);
-  subTreeDirectionedTextContent = previousSubTreeDirectionedTextContent;
 }
 
 function $createChildren(
@@ -388,93 +368,16 @@ function reconcileParagraphStyle(element: ElementNode): void {
   }
 }
 
-function reconcileBlockDirection(element: ElementNode, dom: HTMLElement): void {
-  const previousSubTreeDirectionTextContent: string =
-    // @ts-expect-error: internal field
-    dom.__lexicalDirTextContent;
-  // @ts-expect-error: internal field
-  const previousDirection: string = dom.__lexicalDir;
-
-  if (
-    previousSubTreeDirectionTextContent !== subTreeDirectionedTextContent ||
-    previousDirection !== activeTextDirection
-  ) {
-    const hasEmptyDirectionedTextContent = subTreeDirectionedTextContent === '';
-    const direction = hasEmptyDirectionedTextContent
-      ? activeTextDirection
-      : getTextDirection(subTreeDirectionedTextContent);
-
-    if (direction !== previousDirection) {
-      const classList = dom.classList;
-      const theme = activeEditorConfig.theme;
-      let previousDirectionTheme =
-        previousDirection !== null ? theme[previousDirection] : undefined;
-      let nextDirectionTheme =
-        direction !== null ? theme[direction] : undefined;
-
-      // Remove the old theme classes if they exist
-      if (previousDirectionTheme !== undefined) {
-        if (typeof previousDirectionTheme === 'string') {
-          const classNamesArr = normalizeClassNames(previousDirectionTheme);
-          previousDirectionTheme = theme[previousDirection] = classNamesArr;
-        }
-
-        // @ts-ignore: intentional
-        classList.remove(...previousDirectionTheme);
-      }
-
-      if (
-        direction === null ||
-        (hasEmptyDirectionedTextContent && direction === 'ltr')
-      ) {
-        // Remove direction
-        dom.removeAttribute('dir');
-      } else {
-        // Apply the new theme classes if they exist
-        if (nextDirectionTheme !== undefined) {
-          if (typeof nextDirectionTheme === 'string') {
-            const classNamesArr = normalizeClassNames(nextDirectionTheme);
-            // @ts-expect-error: intentional
-            nextDirectionTheme = theme[direction] = classNamesArr;
-          }
-
-          if (nextDirectionTheme !== undefined) {
-            classList.add(...nextDirectionTheme);
-          }
-        }
-
-        // Update direction
-        dom.dir = direction;
-      }
-
-      if (!activeEditorStateReadOnly) {
-        const writableNode = element.getWritable();
-        writableNode.__dir = direction;
-      }
-    }
-
-    activeTextDirection = direction;
-    // @ts-expect-error: internal field
-    dom.__lexicalDirTextContent = subTreeDirectionedTextContent;
-    // @ts-expect-error: internal field
-    dom.__lexicalDir = direction;
-  }
-}
-
 function $reconcileChildrenWithDirection(
   prevElement: ElementNode,
   nextElement: ElementNode,
   dom: HTMLElement,
 ): void {
-  const previousSubTreeDirectionTextContent = subTreeDirectionedTextContent;
-  subTreeDirectionedTextContent = '';
   subTreeTextFormat = null;
   subTreeTextStyle = '';
   $reconcileChildren(prevElement, nextElement, dom);
-  reconcileBlockDirection(nextElement, dom);
   reconcileParagraphFormat(nextElement);
   reconcileParagraphStyle(nextElement);
-  subTreeDirectionedTextContent = previousSubTreeDirectionTextContent;
 }
 
 function createChildrenArray(
@@ -624,19 +527,8 @@ function $reconcileNode(
         subTreeTextContent += previousSubTreeTextContent;
         editorTextContent += previousSubTreeTextContent;
       }
-
-      // @ts-expect-error: internal field
-      const previousSubTreeDirectionTextContent = dom.__lexicalDirTextContent;
-
-      if (previousSubTreeDirectionTextContent !== undefined) {
-        subTreeDirectionedTextContent += previousSubTreeDirectionTextContent;
-      }
     } else {
       const text = prevNode.getTextContent();
-
-      if ($isTextNode(prevNode) && !prevNode.isDirectionless()) {
-        subTreeDirectionedTextContent += text;
-      }
 
       editorTextContent += text;
       subTreeTextContent += text;
@@ -702,9 +594,6 @@ function $reconcileNode(
       if (decorator !== null) {
         reconcileDecorator(key, decorator);
       }
-    } else if ($isTextNode(nextNode) && !nextNode.isDirectionless()) {
-      // Handle text content, for LTR, LTR cases.
-      subTreeDirectionedTextContent += text;
     }
 
     subTreeTextContent += text;
@@ -871,11 +760,9 @@ export function $reconcileRoot(
   // The cache must be rebuilt during reconciliation to account for any changes.
   subTreeTextContent = '';
   editorTextContent = '';
-  subTreeDirectionedTextContent = '';
   // Rather than pass around a load of arguments through the stack recursively
   // we instead set them as bindings within the scope of the module.
   treatAllNodesAsDirty = dirtyType === FULL_RECONCILE;
-  activeTextDirection = null;
   activeEditor = editor;
   activeEditorConfig = editor._config;
   activeEditorNodes = editor._nodes;

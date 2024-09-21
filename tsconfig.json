@@ -1,5 +1,6 @@
 {
   "include": ["resources/js/**/*"],
+  "exclude": ["resources/js/wysiwyg/lexical/yjs/*"],
   "compilerOptions": {
     "target": "es2019",
     "module": "commonjs",

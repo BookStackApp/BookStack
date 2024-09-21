@@ -99,7 +99,7 @@ describe('table selection', () => {
   it('Parses the nodes of a stringified editor state', async () => {
     expect(parsedRoot).toEqual({
       __cachedText: null,
-      __dir: 'ltr',
+      __dir: null,
       __first: paragraphKey,
       __format: 0,
       __indent: 0,
@@ -113,7 +113,7 @@ describe('table selection', () => {
       __type: 'root',
     });
     expect(parsedParagraph).toEqual({
-      __dir: 'ltr',
+      __dir: null,
       __first: textKey,
       __format: 0,
       __indent: 0,

@@ -1,9 +1,11 @@
 import {LexicalNode, Spread} from "lexical";
 import type {SerializedElementNode} from "lexical/nodes/LexicalElementNode";
-import {sizeToPixels} from "../utils/dom";
+import {el, sizeToPixels} from "../utils/dom";
 
 export type CommonBlockAlignment = 'left' | 'right' | 'center' | 'justify' | '';
 const validAlignments: CommonBlockAlignment[] = ['left', 'right', 'center', 'justify'];
+
+type EditorNodeDirection = 'ltr' | 'rtl' | null;
 
 export type SerializedCommonBlockNode = Spread<{
     id: string;
@@ -29,7 +31,13 @@ export interface NodeHasInset {
     getInset(): number;
 }
 
-interface CommonBlockInterface extends NodeHasId, NodeHasAlignment, NodeHasInset {}
+export interface NodeHasDirection {
+    readonly __dir: EditorNodeDirection;
+    setDirection(direction: EditorNodeDirection): void;
+    getDirection(): EditorNodeDirection;
+}
+
+interface CommonBlockInterface extends NodeHasId, NodeHasAlignment, NodeHasInset, NodeHasDirection {}
 
 export function extractAlignmentFromElement(element: HTMLElement): CommonBlockAlignment {
     const textAlignStyle: string = element.style.textAlign || '';
@@ -55,6 +63,15 @@ export function extractInsetFromElement(element: HTMLElement): number {
     return sizeToPixels(elemPadding);
 }
 
+function extractDirectionFromElement(element: HTMLElement): EditorNodeDirection {
+    const elemDir = (element.dir || '').toLowerCase();
+    if (elemDir === 'rtl' || elemDir === 'ltr') {
+        return elemDir;
+    }
+
+    return null;
+}
+
 export function setCommonBlockPropsFromElement(element: HTMLElement, node: CommonBlockInterface): void {
     if (element.id) {
         node.setId(element.id);
@@ -62,12 +79,14 @@ export function setCommonBlockPropsFromElement(element: HTMLElement, node: Commo
 
     node.setAlignment(extractAlignmentFromElement(element));
     node.setInset(extractInsetFromElement(element));
+    node.setDirection(extractDirectionFromElement(element));
 }
 
 export function commonPropertiesDifferent(nodeA: CommonBlockInterface, nodeB: CommonBlockInterface): boolean {
     return nodeA.__id !== nodeB.__id ||
         nodeA.__alignment !== nodeB.__alignment ||
-        nodeA.__inset !== nodeB.__inset;
+        nodeA.__inset !== nodeB.__inset ||
+        nodeA.__dir !== nodeB.__dir;
 }
 
 export function updateElementWithCommonBlockProps(element: HTMLElement, node: CommonBlockInterface): void {
@@ -82,12 +101,17 @@ export function updateElementWithCommonBlockProps(element: HTMLElement, node: Co
     if (node.__inset) {
         element.style.paddingLeft = `${node.__inset}px`;
     }
+
+    if (node.__dir) {
+        element.dir = node.__dir;
+    }
 }
 
 export function deserializeCommonBlockNode(serializedNode: SerializedCommonBlockNode, node: CommonBlockInterface): void {
     node.setId(serializedNode.id);
     node.setAlignment(serializedNode.alignment);
     node.setInset(serializedNode.inset);
+    node.setDirection(serializedNode.direction);
 }
 
 export interface NodeHasSize {

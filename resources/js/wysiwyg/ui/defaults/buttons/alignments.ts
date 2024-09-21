@@ -37,14 +37,15 @@ function setAlignmentForSelection(editor: LexicalEditor, alignment: CommonBlockA
     $toggleSelection(editor);
 }
 
-function setDirectionForSelection(editor: LexicalEditor, direction: 'ltr' | 'rtl'): void {
-    const selection = getLastSelection(editor);
+function setDirectionForSelection(context: EditorUiContext, direction: 'ltr' | 'rtl'): void {
+    const selection = getLastSelection(context.editor);
 
     const elements = $getBlockElementNodesInSelection(selection);
     for (const node of elements) {
-        console.log('setting direction', node);
         node.setDirection(direction);
     }
+
+    context.manager.triggerFutureStateRefresh();
 }
 
 export const alignLeft: EditorButtonDefinition = {
@@ -95,7 +96,7 @@ export const directionLTR: EditorButtonDefinition = {
     label: 'Left to right',
     icon: ltrIcon,
     action(context: EditorUiContext) {
-        context.editor.update(() => setDirectionForSelection(context.editor, 'ltr'));
+        context.editor.update(() => setDirectionForSelection(context, 'ltr'));
     },
     isActive(selection: BaseSelection|null) {
         return $selectionContainsDirection(selection, 'ltr');
@@ -106,7 +107,7 @@ export const directionRTL: EditorButtonDefinition = {
     label: 'Right to left',
     icon: rtlIcon,
     action(context: EditorUiContext) {
-        context.editor.update(() => setDirectionForSelection(context.editor, 'rtl'));
+        context.editor.update(() => setDirectionForSelection(context, 'rtl'));
     },
     isActive(selection: BaseSelection|null) {
         return $selectionContainsDirection(selection, 'rtl');

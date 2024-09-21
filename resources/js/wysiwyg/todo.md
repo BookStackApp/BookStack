@@ -3,6 +3,10 @@
 ## In progress
 
 - RTL/LTR support
+  - Basic implementation added 
+  - Test across main range of content blocks
+  - Test that HTML is being set as expected
+  - Test editor defaults when between RTL/LTR modes
 
 ## Main Todo
 
