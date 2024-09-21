@@ -4,9 +4,9 @@
      option:wysiwyg-editor:text-direction="{{ $locale->htmlDirection() }}"
      option:wysiwyg-editor:image-upload-error-text="{{ trans('errors.image_upload_error') }}"
      option:wysiwyg-editor:server-upload-limit-text="{{ trans('errors.server_upload_limit') }}"
-     class="flex-container-column flex-fill">
+     class="flex-container-column flex-fill flex">
 
-    <div class="editor-container flex-container-column flex-fill" refs="wysiwyg-editor@edit-container">
+    <div class="editor-container flex-container-column flex-fill flex" refs="wysiwyg-editor@edit-container">
     </div>
 
     <div id="lexical-debug" style="white-space: pre-wrap; font-size: 12px; height: 200px; overflow-y: scroll; background-color: #000; padding: 1rem; border-radius: 4px; color: #FFF;"></div>
