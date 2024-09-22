@@ -63,7 +63,7 @@ export function extractInsetFromElement(element: HTMLElement): number {
     return sizeToPixels(elemPadding);
 }
 
-function extractDirectionFromElement(element: HTMLElement): EditorNodeDirection {
+export function extractDirectionFromElement(element: HTMLElement): EditorNodeDirection {
     const elemDir = (element.dir || '').toLowerCase();
     if (elemDir === 'rtl' || elemDir === 'ltr') {
         return elemDir;

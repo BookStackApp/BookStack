@@ -158,11 +158,6 @@ export class QuoteNode extends ElementNode {
 
       const formatType = this.getFormatType();
       element.style.textAlign = formatType;
-
-      const direction = this.getDirection();
-      if (direction) {
-        element.dir = direction;
-      }
     }
 
     return {
@@ -174,7 +169,6 @@ export class QuoteNode extends ElementNode {
     const node = $createQuoteNode();
     node.setFormat(serializedNode.format);
     node.setIndent(serializedNode.indent);
-    node.setDirection(serializedNode.direction);
     return node;
   }
 
@@ -324,11 +318,6 @@ export class HeadingNode extends ElementNode {
 
       const formatType = this.getFormatType();
       element.style.textAlign = formatType;
-
-      const direction = this.getDirection();
-      if (direction) {
-        element.dir = direction;
-      }
     }
 
     return {
@@ -340,7 +329,6 @@ export class HeadingNode extends ElementNode {
     const node = $createHeadingNode(serializedNode.tag);
     node.setFormat(serializedNode.format);
     node.setIndent(serializedNode.indent);
-    node.setDirection(serializedNode.direction);
     return node;
   }
 

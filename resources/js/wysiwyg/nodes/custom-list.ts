@@ -1,12 +1,12 @@
 import {
     DOMConversionFn,
-    DOMConversionMap,
+    DOMConversionMap, EditorConfig,
     LexicalNode,
     Spread
 } from "lexical";
-import {EditorConfig} from "lexical/LexicalEditor";
 import {$isListItemNode, ListItemNode, ListNode, ListType, SerializedListNode} from "@lexical/list";
 import {$createCustomListItemNode} from "./custom-list-item";
+import {extractDirectionFromElement} from "./_common";
 
 
 export type SerializedCustomListNode = Spread<{
@@ -33,6 +33,7 @@ export class CustomListNode extends ListNode {
     static clone(node: CustomListNode) {
         const newNode = new CustomListNode(node.__listType, node.__start, node.__key);
         newNode.__id = node.__id;
+        newNode.__dir = node.__dir;
         return newNode;
     }
 
@@ -42,7 +43,16 @@ export class CustomListNode extends ListNode {
             dom.setAttribute('id', this.__id);
         }
 
+        if (this.__dir) {
+            dom.setAttribute('dir', this.__dir);
+        }
+
         return dom;
+    }
+
+    updateDOM(prevNode: ListNode, dom: HTMLElement, config: EditorConfig): boolean {
+        return super.updateDOM(prevNode, dom, config) ||
+            prevNode.__dir !== this.__dir;
     }
 
     exportJSON(): SerializedCustomListNode {
@@ -57,6 +67,7 @@ export class CustomListNode extends ListNode {
     static importJSON(serializedNode: SerializedCustomListNode): CustomListNode {
         const node = $createCustomListNode(serializedNode.listType);
         node.setId(serializedNode.id);
+        node.setDirection(serializedNode.direction);
         return node;
     }
 
@@ -67,6 +78,10 @@ export class CustomListNode extends ListNode {
             const baseResult = converter(element);
             if (element.id && baseResult?.node) {
                 (baseResult.node as CustomListNode).setId(element.id);
+            }
+
+            if (element.dir && baseResult?.node) {
+                (baseResult.node as CustomListNode).setDirection(extractDirectionFromElement(element));
             }
 
             if (baseResult) {
