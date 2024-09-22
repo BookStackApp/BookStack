@@ -12,6 +12,7 @@ use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditorData;
+use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
@@ -126,7 +127,9 @@ class PageRepo
         }
 
         $pageContent = new PageContent($page);
-        $currentEditor = $page->editor ?: PageEditorData::getSystemDefaultEditor();
+        $defaultEditor = PageEditorType::getSystemDefault();
+        $currentEditor = PageEditorType::forPage($page) ?: $defaultEditor;
+        $inputEditor = PageEditorType::fromRequestValue($input['editor'] ?? '') ?? $currentEditor;
         $newEditor = $currentEditor;
 
         $haveInput = isset($input['markdown']) || isset($input['html']);
@@ -135,15 +138,15 @@ class PageRepo
         if ($haveInput && $inputEmpty) {
             $pageContent->setNewHTML('', user());
         } elseif (!empty($input['markdown']) && is_string($input['markdown'])) {
-            $newEditor = 'markdown';
+            $newEditor = PageEditorType::Markdown;
             $pageContent->setNewMarkdown($input['markdown'], user());
         } elseif (isset($input['html'])) {
-            $newEditor = 'wysiwyg';
+            $newEditor = ($inputEditor->isHtmlBased() ? $inputEditor : null) ?? ($defaultEditor->isHtmlBased() ? $defaultEditor : null) ?? PageEditorType::WysiwygTinymce;
             $pageContent->setNewHTML($input['html'], user());
         }
 
         if ($newEditor !== $currentEditor && userCan('editor-change')) {
-            $page->editor = $newEditor;
+            $page->editor = $newEditor->value;
         }
     }
 

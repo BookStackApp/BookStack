@@ -55,7 +55,7 @@
                         <hr>
                     </li>
                     <li>
-                        @if($editor === 'wysiwyg')
+                        @if($editor !== \BookStack\Entities\Tools\PageEditorType::Markdown)
                             <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" refs="page-editor@changeEditor" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>
@@ -72,10 +72,21 @@
                                     <small>{{ trans('entities.pages_edit_switch_to_markdown_stable') }}</small>
                                 </div>
                             </a>
-                        @else
+                        @endif
+                        @if($editor !== \BookStack\Entities\Tools\PageEditorType::WysiwygTinymce)
                             <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg" refs="page-editor@changeEditor" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>{{ trans('entities.pages_edit_switch_to_wysiwyg') }}</div>
+                            </a>
+                        @endif
+                        @if($editor !== \BookStack\Entities\Tools\PageEditorType::WysiwygLexical)
+                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg2024" refs="page-editor@changeEditor" class="icon-item">
+                                @icon('swap-horizontal')
+                                <div>
+                                    {{ trans('entities.pages_edit_switch_to_new_wysiwyg') }}
+                                    <br>
+                                    <small>{{ trans('entities.pages_edit_switch_to_new_wysiwyg_desc') }}</small>
+                                </div>
                             </a>
                         @endif
                     </li>

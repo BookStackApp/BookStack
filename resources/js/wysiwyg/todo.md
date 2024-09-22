@@ -19,5 +19,6 @@
 
 ## Bugs
 
+- Editor theme classes remain on items after export
 - List selection can get lost on nesting/unnesting
 - Content not properly saving on new pages
