@@ -17,7 +17,7 @@ import {
 
 function buildCalloutButton(category: CalloutCategory, name: string): EditorButtonDefinition {
     return {
-        label: `${name} Callout`,
+        label: name,
         action(context: EditorUiContext) {
             context.editor.update(() => {
                 $toggleSelectionBlockNodeType(

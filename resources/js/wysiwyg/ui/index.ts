@@ -19,7 +19,10 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
         editorDOM: element,
         scrollDOM: scrollContainer,
         manager,
-        translate: (text: string): string => text, // TODO - Implement
+        translate(text: string): string {
+            const translations = options.translations;
+            return translations[text] || text;
+        },
         error(error: string|Error): void {
             const message = error instanceof Error ? error.message : error;
             window.$events.error(message); // TODO - Translate

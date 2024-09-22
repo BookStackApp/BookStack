@@ -30,12 +30,12 @@ export const bold: EditorButtonDefinition = buildFormatButton('Bold', 'bold', bo
 export const italic: EditorButtonDefinition = buildFormatButton('Italic', 'italic', italicIcon);
 export const underline: EditorButtonDefinition = buildFormatButton('Underline', 'underline', underlinedIcon);
 export const textColor: EditorBasicButtonDefinition = {label: 'Text color', icon: textColorIcon};
-export const highlightColor: EditorBasicButtonDefinition = {label: 'Highlight color', icon: highlightIcon};
+export const highlightColor: EditorBasicButtonDefinition = {label: 'Background color', icon: highlightIcon};
 
 export const strikethrough: EditorButtonDefinition = buildFormatButton('Strikethrough', 'strikethrough', strikethroughIcon);
 export const superscript: EditorButtonDefinition = buildFormatButton('Superscript', 'superscript', superscriptIcon);
 export const subscript: EditorButtonDefinition = buildFormatButton('Subscript', 'subscript', subscriptIcon);
-export const code: EditorButtonDefinition = buildFormatButton('Inline Code', 'code', codeIcon);
+export const code: EditorButtonDefinition = buildFormatButton('Inline code', 'code', codeIcon);
 export const clearFormating: EditorButtonDefinition = {
     label: 'Clear formatting',
     icon: formatClearIcon,

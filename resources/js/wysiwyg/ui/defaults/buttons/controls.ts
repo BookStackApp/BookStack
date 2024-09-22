@@ -56,7 +56,7 @@ export const redo: EditorButtonDefinition = {
 
 
 export const source: EditorButtonDefinition = {
-    label: 'Source code',
+    label: 'Source',
     icon: sourceIcon,
     async action(context: EditorUiContext) {
         const modal = context.manager.createModal('source');

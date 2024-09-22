@@ -54,7 +54,7 @@ export class EditorFormField extends EditorUiElement {
         if (this.definition.type === 'select') {
             const options = (this.definition as EditorSelectFormFieldDefinition).valuesByLabel
             const labels = Object.keys(options);
-            const optionElems = labels.map(label => el('option', {value: options[label]}, [label]));
+            const optionElems = labels.map(label => el('option', {value: options[label]}, [this.trans(label)]));
             input = el('select', {id, name: this.definition.name, class: 'editor-form-field-input'}, optionElems);
         } else if (this.definition.type === 'textarea') {
             input = el('textarea', {id, name: this.definition.name, class: 'editor-form-field-input'});
