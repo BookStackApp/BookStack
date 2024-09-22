@@ -5,7 +5,7 @@ import {cellProperties, rowProperties, tableProperties} from "./forms/tables";
 
 export const modals: Record<string, EditorFormModalDefinition> = {
     link: {
-        title: 'Insert/Edit link',
+        title: 'Insert/Edit Link',
         form: link,
     },
     image: {

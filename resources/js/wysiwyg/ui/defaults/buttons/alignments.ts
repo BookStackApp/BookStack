@@ -84,7 +84,7 @@ export const alignRight: EditorButtonDefinition = {
 };
 
 export const alignJustify: EditorButtonDefinition = {
-    label: 'Align justify',
+    label: 'Justify',
     icon: alignJustifyIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => setAlignmentForSelection(context, 'justify'));

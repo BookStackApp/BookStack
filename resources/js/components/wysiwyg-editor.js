@@ -10,6 +10,12 @@ export class WysiwygEditor extends Component {
         /** @var {SimpleWysiwygEditorInterface|null} */
         this.editor = null;
 
+        const translations = {
+            ...window.editor_translations,
+            imageUploadErrorText: this.$opts.imageUploadErrorText,
+            serverUploadLimitText: this.$opts.serverUploadLimitText,
+        };
+
         window.importVersioned('wysiwyg').then(wysiwyg => {
             const editorContent = this.input.value;
             this.editor = wysiwyg.createPageEditorInstance(this.editContainer, editorContent, {
@@ -17,10 +23,7 @@ export class WysiwygEditor extends Component {
                 pageId: Number(this.$opts.pageId),
                 darkMode: document.documentElement.classList.contains('dark-mode'),
                 textDirection: this.$opts.textDirection,
-                translations: {
-                    imageUploadErrorText: this.$opts.imageUploadErrorText,
-                    serverUploadLimitText: this.$opts.serverUploadLimitText,
-                },
+                translations,
             });
         });
 
