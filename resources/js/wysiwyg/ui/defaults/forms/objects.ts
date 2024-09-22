@@ -100,13 +100,12 @@ export const image: EditorFormDefinition = {
 export function $showLinkForm(link: LinkNode|null, context: EditorUiContext) {
     const linkModal = context.manager.createModal('link');
 
-    let formDefaults = {};
     if (link) {
-        formDefaults = {
+        const formDefaults: Record<string, string> = {
             url: link.getURL(),
             text: link.getTextContent(),
-            title: link.getTitle(),
-            target: link.getTarget(),
+            title: link.getTitle() || '',
+            target: link.getTarget() || '',
         }
 
         context.editor.update(() => {
@@ -114,9 +113,16 @@ export function $showLinkForm(link: LinkNode|null, context: EditorUiContext) {
             selection.add(link.getKey());
             $setSelection(selection);
         });
-    }
 
-    linkModal.show(formDefaults);
+        linkModal.show(formDefaults);
+    } else {
+        context.editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const text = selection?.getTextContent() || '';
+            const formDefaults = {text};
+            linkModal.show(formDefaults);
+        });
+    }
 }
 
 export const link: EditorFormDefinition = {

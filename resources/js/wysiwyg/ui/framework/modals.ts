@@ -28,6 +28,7 @@ export class EditorFormModal extends EditorContainerUiElement {
         const form = this.getForm();
         form.setValues(defaultValues);
         form.setOnCancel(this.hide.bind(this));
+        form.setOnSuccessfulSubmit(this.hide.bind(this));
 
         this.getContext().manager.setModalActive(this.key, this);
     }

@@ -259,9 +259,21 @@ export class ListItemNode extends ElementNode {
     _: RangeSelection,
     restoreSelection = true,
   ): ListItemNode | ParagraphNode {
+
+    if (this.getTextContent().trim() === '' && this.isLastChild()) {
+      const list = this.getParentOrThrow<ListNode>();
+      if (!$isListItemNode(list.getParent())) {
+        const paragraph = $createParagraphNode();
+        list.insertAfter(paragraph, restoreSelection);
+        this.remove();
+        return paragraph;
+      }
+    }
+
     const newElement = $createListItemNode(
       this.__checked == null ? undefined : false,
     );
+
     this.insertAfter(newElement, restoreSelection);
 
     return newElement;
