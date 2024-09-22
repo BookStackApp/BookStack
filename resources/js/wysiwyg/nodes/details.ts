@@ -5,10 +5,11 @@ import {
     LexicalEditor,
     LexicalNode,
     SerializedElementNode, Spread,
+    EditorConfig,
 } from 'lexical';
-import type {EditorConfig} from "lexical/LexicalEditor";
 
 import {el} from "../utils/dom";
+import {extractDirectionFromElement} from "./_common";
 
 export type SerializedDetailsNode = Spread<{
     id: string;
@@ -34,6 +35,7 @@ export class DetailsNode extends ElementNode {
     static clone(node: DetailsNode): DetailsNode {
         const newNode =  new DetailsNode(node.__key);
         newNode.__id = node.__id;
+        newNode.__dir = node.__dir;
         return newNode;
     }
 
@@ -43,11 +45,16 @@ export class DetailsNode extends ElementNode {
             el.setAttribute('id', this.__id);
         }
 
+        if (this.__dir) {
+            el.setAttribute('dir', this.__dir);
+        }
+
         return el;
     }
 
     updateDOM(prevNode: DetailsNode, dom: HTMLElement) {
-        return prevNode.__id !== this.__id;
+        return prevNode.__id !== this.__id
+        || prevNode.__dir !== this.__dir;
     }
 
     static importDOM(): DOMConversionMap|null {
@@ -58,6 +65,10 @@ export class DetailsNode extends ElementNode {
                         const node = new DetailsNode();
                         if (element.id) {
                             node.setId(element.id);
+                        }
+
+                        if (element.dir) {
+                            node.setDirection(extractDirectionFromElement(element));
                         }
 
                         return {node};
@@ -80,6 +91,7 @@ export class DetailsNode extends ElementNode {
     static importJSON(serializedNode: SerializedDetailsNode): DetailsNode {
         const node = $createDetailsNode();
         node.setId(serializedNode.id);
+        node.setDirection(serializedNode.direction);
         return node;
     }
 

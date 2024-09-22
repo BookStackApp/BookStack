@@ -135,10 +135,6 @@ export class ParagraphNode extends ElementNode {
       const formatType = this.getFormatType();
       element.style.textAlign = formatType;
 
-      const direction = this.getDirection();
-      if (direction) {
-        element.dir = direction;
-      }
       const indent = this.getIndent();
       if (indent > 0) {
         // padding-inline-start is not widely supported in email HTML, but
@@ -156,7 +152,6 @@ export class ParagraphNode extends ElementNode {
     const node = $createParagraphNode();
     node.setFormat(serializedNode.format);
     node.setIndent(serializedNode.indent);
-    node.setDirection(serializedNode.direction);
     node.setTextFormat(serializedNode.textFormat);
     return node;
   }
