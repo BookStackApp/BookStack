@@ -72,6 +72,7 @@ export class EditorFormField extends EditorUiElement {
 export class EditorForm extends EditorContainerUiElement {
     protected definition: EditorFormDefinition;
     protected onCancel: null|(() => void) = null;
+    protected onSuccessfulSubmit: null|(() => void) = null;
 
     constructor(definition: EditorFormDefinition) {
         let children: (EditorFormField|EditorUiElement)[] = definition.fields.map(fieldDefinition => {
@@ -96,6 +97,10 @@ export class EditorForm extends EditorContainerUiElement {
 
     setOnCancel(callback: () => void) {
         this.onCancel = callback;
+    }
+
+    setOnSuccessfulSubmit(callback: () => void) {
+        this.onSuccessfulSubmit = callback;
     }
 
     protected getFieldByName(name: string): EditorFormField|null {
@@ -128,10 +133,13 @@ export class EditorForm extends EditorContainerUiElement {
             ])
         ]);
 
-        form.addEventListener('submit', (event) => {
+        form.addEventListener('submit', async (event) => {
             event.preventDefault();
             const formData = new FormData(form as HTMLFormElement);
-            this.definition.action(formData, this.getContext());
+            const result = await this.definition.action(formData, this.getContext());
+            if (result && this.onSuccessfulSubmit) {
+                this.onSuccessfulSubmit();
+            }
         });
 
         cancelButton.addEventListener('click', (event) => {
