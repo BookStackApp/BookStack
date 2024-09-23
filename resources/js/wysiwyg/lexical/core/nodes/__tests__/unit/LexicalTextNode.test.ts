@@ -8,7 +8,7 @@
 
 import {
   $createParagraphNode,
-  $createTextNode,
+  $createTextNode, $getEditor,
   $getNodeByKey,
   $getRoot,
   $getSelection,
@@ -41,6 +41,9 @@ import {
   $setCompositionKey,
   getEditorStateTextContent,
 } from '../../../LexicalUtils';
+import {Text} from "@codemirror/state";
+import {$generateHtmlFromNodes} from "@lexical/html";
+import {formatBold} from "@lexical/selection/__tests__/utils";
 
 const editorConfig = Object.freeze({
   namespace: '',
@@ -790,6 +793,58 @@ describe('LexicalTextNode tests', () => {
         });
       },
     );
+  });
+
+  describe('exportDOM()', () => {
+
+    test('simple text exports as a text node', async () => {
+      await update(() => {
+        const paragraph = $getRoot().getFirstChild<ElementNode>()!;
+        const textNode = $createTextNode('hello');
+        paragraph.append(textNode);
+
+        const html = $generateHtmlFromNodes($getEditor(), null);
+        expect(html).toBe('<p>hello</p>');
+      });
+    });
+
+    test('simple text wrapped in span if leading or ending spacing', async () => {
+
+      const textByExpectedHtml = {
+        'hello ': '<p><span style="white-space: pre-wrap;">hello </span></p>',
+        ' hello': '<p><span style="white-space: pre-wrap;"> hello</span></p>',
+        ' hello ': '<p><span style="white-space: pre-wrap;"> hello </span></p>',
+      }
+
+      await update(() => {
+        const paragraph = $getRoot().getFirstChild<ElementNode>()!;
+        for (const [text, expectedHtml] of Object.entries(textByExpectedHtml)) {
+          paragraph.getChildren().forEach(c => c.remove(true));
+          const textNode = $createTextNode(text);
+          paragraph.append(textNode);
+
+          const html = $generateHtmlFromNodes($getEditor(), null);
+          expect(html).toBe(expectedHtml);
+        }
+      });
+    });
+
+    test('text with formats exports using format elements instead of classes', async () => {
+      await update(() => {
+        const paragraph = $getRoot().getFirstChild<ElementNode>()!;
+        const textNode = $createTextNode('hello');
+        textNode.toggleFormat('bold');
+        textNode.toggleFormat('subscript');
+        textNode.toggleFormat('italic');
+        textNode.toggleFormat('underline');
+        textNode.toggleFormat('code');
+        paragraph.append(textNode);
+
+        const html = $generateHtmlFromNodes($getEditor(), null);
+        expect(html).toBe('<p><u><em><b><code spellcheck="false"><strong>hello</strong></code></b></em></u></p>');
+      });
+    });
+
   });
 
   test('mergeWithSibling', async () => {
