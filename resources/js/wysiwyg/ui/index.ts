@@ -32,7 +32,7 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
     manager.setContext(context);
 
     // Create primary toolbar
-    manager.setToolbar(getMainEditorFullToolbar());
+    manager.setToolbar(getMainEditorFullToolbar(context));
 
     // Register modals
     for (const key of Object.keys(modals)) {

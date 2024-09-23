@@ -624,7 +624,28 @@ export class TextNode extends LexicalNode {
       element !== null && isHTMLElement(element),
       'Expected TextNode createDOM to always return a HTMLElement',
     );
-    element.style.whiteSpace = 'pre-wrap';
+
+    // Wrap up to retain space if head/tail whitespace exists
+    const text = this.getTextContent();
+    if (/^\s|\s$/.test(text)) {
+      element.style.whiteSpace = 'pre-wrap';
+    }
+
+    // Strip editor theme classes
+    for (const className of Array.from(element.classList.values())) {
+      if (className.startsWith('editor-theme-')) {
+        element.classList.remove(className);
+      }
+    }
+    if (element.classList.length === 0) {
+      element.removeAttribute('class');
+    }
+
+    // Remove placeholder tag if redundant
+    if (element.nodeName === 'SPAN' && !element.getAttribute('style')) {
+      element = document.createTextNode(text);
+    }
+
     // This is the only way to properly add support for most clients,
     // even if it's semantically incorrect to have to resort to using
     // <b>, <u>, <s>, <i> elements.
@@ -632,7 +653,7 @@ export class TextNode extends LexicalNode {
       element = wrapElementWith(element, 'b');
     }
     if (this.hasFormat('italic')) {
-      element = wrapElementWith(element, 'i');
+      element = wrapElementWith(element, 'em');
     }
     if (this.hasFormat('strikethrough')) {
       element = wrapElementWith(element, 's');
@@ -1329,6 +1350,10 @@ function applyTextFormatFromStyle(
   // Google Docs uses span tags + vertical-align to specify subscript and superscript
   const verticalAlign = style.verticalAlign;
 
+  // Styles to copy to node
+  const color = style.color;
+  const backgroundColor = style.backgroundColor;
+
   return (lexicalNode: LexicalNode) => {
     if (!$isTextNode(lexicalNode)) {
       return lexicalNode;
@@ -1353,6 +1378,18 @@ function applyTextFormatFromStyle(
     }
     if (verticalAlign === 'super' && !lexicalNode.hasFormat('superscript')) {
       lexicalNode.toggleFormat('superscript');
+    }
+
+    // Apply styles
+    let style = lexicalNode.getStyle();
+    if (color) {
+      style += `color: ${color};`;
+    }
+    if (backgroundColor && backgroundColor !== 'transparent') {
+      style += `background-color: ${backgroundColor};`;
+    }
+    if (style) {
+      lexicalNode.setStyle(style);
     }
 
     if (shouldApply && !lexicalNode.hasFormat(shouldApply)) {

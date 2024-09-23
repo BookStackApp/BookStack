@@ -1,5 +1,5 @@
 import {EditorButton} from "./framework/buttons";
-import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiElement} from "./framework/core";
+import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "./framework/core";
 import {EditorFormatMenu} from "./framework/blocks/format-menu";
 import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
 import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
@@ -80,7 +80,10 @@ import {el} from "../utils/dom";
 import {EditorButtonWithMenu} from "./framework/blocks/button-with-menu";
 import {EditorSeparator} from "./framework/blocks/separator";
 
-export function getMainEditorFullToolbar(): EditorContainerUiElement {
+export function getMainEditorFullToolbar(context: EditorUiContext): EditorContainerUiElement {
+
+    const inRtlMode = context.manager.getDefaultDirection() === 'rtl';
+
     return new EditorSimpleClassContainer('editor-toolbar-main', [
 
         // History state
@@ -124,17 +127,17 @@ export function getMainEditorFullToolbar(): EditorContainerUiElement {
         ]),
 
         // Alignment
-        new EditorOverflowContainer(6, [ // TODO - Dynamic
+        new EditorOverflowContainer(6, [
             new EditorButton(alignLeft),
             new EditorButton(alignCenter),
             new EditorButton(alignRight),
             new EditorButton(alignJustify),
-            new EditorButton(directionLTR), // TODO - Dynamic
-            new EditorButton(directionRTL), // TODO - Dynamic
-        ]),
+            inRtlMode ? new EditorButton(directionLTR) : null,
+            inRtlMode ? new EditorButton(directionRTL) : null,
+        ].filter(x => x !== null)),
 
         // Lists
-        new EditorOverflowContainer(5, [
+        new EditorOverflowContainer(3, [
             new EditorButton(bulletList),
             new EditorButton(numberList),
             new EditorButton(taskList),

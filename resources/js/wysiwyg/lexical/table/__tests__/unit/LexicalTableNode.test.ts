@@ -115,7 +115,7 @@ describe('LexicalTableNode tests', () => {
         // Make sure paragraph is inserted inside empty cells
         const emptyCell = '<td><p><br></p></td>';
         expect(testEnv.innerHTML).toBe(
-          `<table><tr><td><p><span data-lexical-text="true">Hello there</span></p></td><td><p><span data-lexical-text="true">General Kenobi!</span></p></td></tr><tr><td><p><span data-lexical-text="true">Lexical is nice</span></p></td>${emptyCell}</tr></table>`,
+          `<table><tr><td><p><span style="color: rgb(0, 0, 0);" data-lexical-text="true">Hello there</span></p></td><td><p><span style="color: rgb(0, 0, 0);" data-lexical-text="true">General Kenobi!</span></p></td></tr><tr><td><p><span style="color: rgb(0, 0, 0);" data-lexical-text="true">Lexical is nice</span></p></td>${emptyCell}</tr></table>`,
         );
       });
 

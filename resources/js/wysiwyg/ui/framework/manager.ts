@@ -163,6 +163,10 @@ export class EditorUIManager {
         });
     }
 
+    getDefaultDirection(): 'rtl' | 'ltr' {
+        return this.getContext().options.textDirection === 'rtl' ? 'rtl' : 'ltr';
+    }
+
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
         for (let i = this.activeContextToolbars.length - 1; i >= 0; i--) {
             const toolbar = this.activeContextToolbars[i];

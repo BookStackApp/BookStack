@@ -27,6 +27,7 @@ body.editor-is-fullscreen {
 }
 .editor-content-area {
   min-height: 100%;
+  padding-block: 1rem;
   &:focus {
     outline: 0;
   }
@@ -136,7 +137,6 @@ body.editor-is-fullscreen {
   background-color: #FFF;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
   z-index: 99;
-  min-width: 120px;
   display: flex;
   flex-direction: row;
 }
