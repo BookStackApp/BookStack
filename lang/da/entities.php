@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Clean Content)',
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'Skift til WYSIWYG redigering',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Sæt ændringsoversigt',
     'pages_edit_enter_changelog_desc' => 'Indtast en kort beskrivelse af ændringer du har lavet',
     'pages_edit_enter_changelog' => 'Indtast ændringsoversigt',
