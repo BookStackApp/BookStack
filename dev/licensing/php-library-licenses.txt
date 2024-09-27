@@ -128,7 +128,7 @@ Link: https://github.com/fruitcake/php-cors
 graham-campbell/result-type
 License: MIT
 License File: vendor/graham-campbell/result-type/LICENSE
-Copyright: Copyright (c) 2020-2023 Graham Campbell <*****@**********.**.**>
+Copyright: Copyright (c) 2020-2024 Graham Campbell <*****@**********.**.**>
 Source: https://github.com/GrahamCampbell/Result-Type.git
 Link: https://github.com/GrahamCampbell/Result-Type.git
 -----------
@@ -674,13 +674,6 @@ License: MIT
 License File: vendor/symfony/polyfill-mbstring/LICENSE
 Copyright: Copyright (c) 2015-present Fabien Potencier
 Source: https://github.com/symfony/polyfill-mbstring.git
-Link: https://symfony.com
------------
-symfony/polyfill-php72
-License: MIT
-License File: vendor/symfony/polyfill-php72/LICENSE
-Copyright: Copyright (c) 2015-present Fabien Potencier
-Source: https://github.com/symfony/polyfill-php72.git
 Link: https://symfony.com
 -----------
 symfony/polyfill-php80

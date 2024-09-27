@@ -262,7 +262,7 @@ function $patchStyle(
       }
       return styles;
     },
-    {...prevStyles} || {},
+    {...prevStyles},
   );
   const newCSSText = getCSSFromStyleObject(newStyles);
   target.setStyle(newCSSText);
