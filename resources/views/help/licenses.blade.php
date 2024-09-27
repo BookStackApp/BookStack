@@ -54,6 +54,12 @@
                 License File: https://github.com/tinymce/tinymce/blob/release/6.7/LICENSE.TXT
                 Copyright: Copyright (c) 2022 Ephox Corporation DBA Tiny Technologies, Inc.
                 Link: https://github.com/tinymce/tinymce
+                -----------
+                BookStack's newer WYSIWYG editor is based upon lexical code:
+                License: MIT
+                License File: https://github.com/facebook/lexical/blob/v0.17.1/LICENSE
+                Copyright: Copyright (c) Meta Platforms, Inc. and affiliates.
+                Link: https://github.com/facebook/lexical
             </div>
         </div>
     </div>
