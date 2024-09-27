@@ -1,5 +1,5 @@
 import {Component} from './component';
-import {buildForInput} from '../wysiwyg/config';
+import {buildForInput} from '../wysiwyg-tinymce/config';
 
 export class WysiwygInput extends Component {
 

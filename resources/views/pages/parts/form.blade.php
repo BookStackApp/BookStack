@@ -32,14 +32,19 @@
             <div class="flex-fill flex">
                 {{--Editors--}}
                 <div class="edit-area flex-fill flex">
+                    <input type="hidden" name="editor" value="{{ $editor->value }}">
 
-                    {{--WYSIWYG Editor--}}
-                    @if($editor === 'wysiwyg')
+                    @if($editor === \BookStack\Entities\Tools\PageEditorType::WysiwygLexical)
                         @include('pages.parts.wysiwyg-editor', ['model' => $model])
                     @endif
 
+                    {{--WYSIWYG Editor (TinyMCE - Deprecated)--}}
+                    @if($editor === \BookStack\Entities\Tools\PageEditorType::WysiwygTinymce)
+                        @include('pages.parts.wysiwyg-editor-tinymce', ['model' => $model])
+                    @endif
+
                     {{--Markdown Editor--}}
-                    @if($editor === 'markdown')
+                    @if($editor === \BookStack\Entities\Tools\PageEditorType::Markdown)
                         @include('pages.parts.markdown-editor', ['model' => $model])
                     @endif
 

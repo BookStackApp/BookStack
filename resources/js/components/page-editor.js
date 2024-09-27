@@ -118,7 +118,7 @@ export class PageEditor extends Component {
     async saveDraft() {
         const data = {name: this.titleElem.value.trim()};
 
-        const editorContent = this.getEditorComponent().getContent();
+        const editorContent = await this.getEditorComponent().getContent();
         Object.assign(data, editorContent);
 
         let didSave = false;
@@ -235,10 +235,12 @@ export class PageEditor extends Component {
     }
 
     /**
-     * @return MarkdownEditor|WysiwygEditor
+     * @return {MarkdownEditor|WysiwygEditor|WysiwygEditorTinymce}
      */
     getEditorComponent() {
-        return window.$components.first('markdown-editor') || window.$components.first('wysiwyg-editor');
+        return window.$components.first('markdown-editor')
+            || window.$components.first('wysiwyg-editor')
+            || window.$components.first('wysiwyg-editor-tinymce');
     }
 
 }
