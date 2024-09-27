@@ -441,12 +441,8 @@ input[type=color] {
     padding: 0;
     cursor: pointer;
     position: absolute;
-    left: 8px;
-    top: 9px;
-    @include rtl {
-      right: 8px;
-      left: auto;
-    }
+    inset-inline-start: 8px;
+    top: 10px;
   }
   input {
     display: block;

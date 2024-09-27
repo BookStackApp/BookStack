@@ -79,7 +79,9 @@
 
                     <form action="{{ url('/search') }}" method="GET"  class="search-box flexible hide-over-l">
                         <input value="{{$searchTerm}}" type="text" name="term" placeholder="{{ trans('common.search') }}">
-                        <button type="submit">@icon('search')</button>
+                        <button type="submit"
+                                aria-label="{{ trans('common.search') }}"
+                                tabindex="-1">@icon('search')</button>
                     </form>
 
                     <h6 class="text-muted">{{ trans_choice('entities.search_total_results_found', $totalResults, ['count' => $totalResults]) }}</h6>
