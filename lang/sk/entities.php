@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Vyčistiť obsah)',
     'pages_edit_switch_to_markdown_stable' => '(Stabilný obsah)',
     'pages_edit_switch_to_wysiwyg' => 'Prepnite na WYSIWYG Editor',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Nastaviť záznam zmien',
     'pages_edit_enter_changelog_desc' => 'Zadajte krátky popis zmien, ktoré ste urobili',
     'pages_edit_enter_changelog' => 'Zadať záznam zmien',
