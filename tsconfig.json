@@ -1,0 +1,22 @@
+{
+  "include": ["resources/js/**/*"],
+  "exclude": ["resources/js/wysiwyg/lexical/yjs/*"],
+  "compilerOptions": {
+    "target": "es2019",
+    "module": "commonjs",
+    "rootDir": "./resources/js/",
+    "baseUrl": "./",
+    "paths": {
+      "@icons/*": ["resources/icons/*"],
+      "lexical": ["resources/js/wysiwyg/lexical/core/index.ts"],
+      "lexical/*": ["resources/js/wysiwyg/lexical/core/*"],
+      "@lexical/*": ["resources/js/wysiwyg/lexical/*"]
+    },
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}

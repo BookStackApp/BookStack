@@ -1,9 +1,11 @@
-import * as events from './services/events';
-import * as httpInstance from './services/http';
+import {EventManager} from './services/events.ts';
+import {HttpManager} from './services/http.ts';
 import Translations from './services/translations';
-
-import * as components from './services/components';
 import * as componentMap from './components';
+import {ComponentStore} from './services/components.ts';
+
+// eslint-disable-next-line no-underscore-dangle
+window.__DEV__ = false;
 
 // Url retrieval function
 window.baseUrl = function baseUrl(path) {
@@ -21,8 +23,8 @@ window.importVersioned = function importVersioned(moduleName) {
 };
 
 // Set events and http services on window
-window.$http = httpInstance;
-window.$events = events;
+window.$http = new HttpManager();
+window.$events = new EventManager();
 
 // Translation setup
 // Creates a global function with name 'trans' to be used in the same way as the Laravel translation system
@@ -32,6 +34,6 @@ window.trans_choice = translator.getPlural.bind(translator);
 window.trans_plural = translator.parsePlural.bind(translator);
 
 // Load & initialise components
-components.register(componentMap);
-window.$components = components;
-components.init();
+window.$components = new ComponentStore();
+window.$components.register(componentMap);
+window.$components.init();

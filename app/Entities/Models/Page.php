@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;

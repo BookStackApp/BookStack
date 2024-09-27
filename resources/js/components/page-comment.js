@@ -1,6 +1,6 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
-import {buildForInput} from '../wysiwyg/config';
+import {buildForInput} from '../wysiwyg-tinymce/config';
 
 export class PageComment extends Component {
 
