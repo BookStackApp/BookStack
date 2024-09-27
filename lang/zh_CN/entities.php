@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '（整理内容）',
     'pages_edit_switch_to_markdown_stable' => '（保留内容）',
     'pages_edit_switch_to_wysiwyg' => '切换到所见即所得编辑器',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => '更新说明',
     'pages_edit_enter_changelog_desc' => '输入对您所做更改的简要说明',
     'pages_edit_enter_changelog' => '输入更新说明',
