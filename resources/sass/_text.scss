@@ -44,11 +44,6 @@ h1, h2, h3, h4, h5, h6 {
   display: block;
   font-family: var(--font-heading, var(--font-body));
   @include lightDark(color, #222, #BBB);
-  .subheader {
-    font-size: 0.5em;
-    line-height: 1em;
-    color: lighten($text-dark, 32%);
-  }
 }
 
 h5 {
@@ -223,7 +218,7 @@ blockquote {
     position: absolute;
     top: $-s;
     left: $-s;
-    color: lighten($text-dark, 20%);
+    color: #777;
   }
 }
 
