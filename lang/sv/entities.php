@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Rent innehåll)',
     'pages_edit_switch_to_markdown_stable' => '(Stabilt innehåll)',
     'pages_edit_switch_to_wysiwyg' => 'Växla till WYSIWYG-redigerare',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Beskriv dina ändringar',
     'pages_edit_enter_changelog_desc' => 'Ange en kort beskrivning av de ändringar du har gjort',
     'pages_edit_enter_changelog' => 'Ändringslogg',
