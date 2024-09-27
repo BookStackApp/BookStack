@@ -1,13 +1,15 @@
-name: lint-js
+name: test-js
 
 on:
   push:
     paths:
       - '**.js'
+      - '**.ts'
       - '**.json'
   pull_request:
     paths:
       - '**.js'
+      - '**.ts'
       - '**.json'
 
 jobs:
@@ -20,5 +22,8 @@ jobs:
     - name: Install NPM deps
       run: npm ci
 
-    - name: Run formatting check
-      run: npm run lint
+    - name: Run TypeScript type checking
+      run: npm run ts:lint
+
+    - name: Run JavaScript tests
+      run: npm run test
