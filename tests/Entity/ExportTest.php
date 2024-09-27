@@ -529,6 +529,22 @@ class ExportTest extends TestCase
         }, PdfExportException::class);
     }
 
+    public function test_pdf_command_timout_option_limits_export_time()
+    {
+        $page = $this->entities->page();
+        $command = 'php -r \'sleep(4);\'';
+        config()->set('exports.pdf_command', $command);
+        config()->set('exports.pdf_command_timeout', 1);
+
+        $this->assertThrows(function () use ($page) {
+            $start = time();
+            $this->withoutExceptionHandling()->asEditor()->get($page->getUrl('/export/pdf'));
+
+            $this->assertTrue(time() < ($start + 3));
+        }, PdfExportException::class,
+            "PDF Export via command failed due to timeout at 1 second(s)");
+    }
+
     public function test_html_exports_contain_csp_meta_tag()
     {
         $entities = [

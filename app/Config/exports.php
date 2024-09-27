@@ -29,6 +29,10 @@ return [
     // Example: EXPORT_PDF_COMMAND="/scripts/convert.sh {input_html_path} {output_pdf_path}"
     'pdf_command' => env('EXPORT_PDF_COMMAND', false),
 
+    // The amount of time allowed for PDF generation command to run
+    // before the process times out and is stopped.
+    'pdf_command_timeout' => env('EXPORT_PDF_COMMAND_TIMEOUT', 15),
+
     // 2024-04: Snappy/WKHTMLtoPDF now considered deprecated in regard to BookStack support.
     'snappy' => [
         'pdf_binary' => env('WKHTMLTOPDF', false),
