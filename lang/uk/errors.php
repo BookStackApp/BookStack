@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Ви не можете видалити єдиного адміністратора',
     'users_cannot_delete_guest' => 'Ви не можете видалити гостьового користувача',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Цю роль не можна редагувати',
