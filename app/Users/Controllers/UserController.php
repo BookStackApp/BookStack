@@ -96,7 +96,6 @@ class UserController extends Controller
         try {
             DB::transaction(function () use ($validated, $sendInvite) {
                 $this->userRepo->create($validated, $sendInvite);
-                dd('post-create');
             });
         } catch (UserInviteException $e) {
             Log::error("Failed to send user invite with error: {$e->getMessage()}");
