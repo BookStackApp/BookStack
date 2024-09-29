@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Nie możesz usunąć jedynego administratora',
     'users_cannot_delete_guest' => 'Nie możesz usunąć użytkownika-gościa',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Ta rola nie może być edytowana',
