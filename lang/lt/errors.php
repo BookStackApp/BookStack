@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Negalite ištrinti vienintelio administratoriaus',
     'users_cannot_delete_guest' => 'Negalite ištrinti svečio naudotojo',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Šio vaidmens negalima redaguoti',
