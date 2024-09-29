@@ -24,6 +24,21 @@ class PageEditorTest extends TestCase
         $this->withHtml($this->followRedirects($resp))->assertElementExists('#html-editor');
     }
 
+    public function test_editor_set_for_new_pages()
+    {
+        $book = $this->page->book;
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $newPage = $book->pages()->orderBy('id', 'desc')->first();
+        $this->assertEquals('wysiwyg', $newPage->editor);
+
+        $this->setSettings(['app-editor' => PageEditorType::Markdown->value]);
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $newPage = $book->pages()->orderBy('id', 'desc')->first();
+        $this->assertEquals('markdown', $newPage->editor);
+    }
+
     public function test_markdown_setting_shows_markdown_editor_for_new_pages()
     {
         $this->setSettings(['app-editor' => PageEditorType::Markdown->value]);
