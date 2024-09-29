@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Siz yagona administratorni oʻchira olmaysiz',
     'users_cannot_delete_guest' => 'Siz mehmon foydalanuvchini oʻchira olmaysiz',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Bu rolni tahrirlab bo‘lmaydi',
