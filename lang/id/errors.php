@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Anda tidak dapat menghapus satu-satunya admin',
     'users_cannot_delete_guest' => 'Anda tidak dapat menghapus pengguna tamu',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Peran ini tidak dapat disunting',
