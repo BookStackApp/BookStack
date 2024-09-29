@@ -11,7 +11,6 @@ use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Tools\PageEditorData;
 use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
@@ -44,6 +43,7 @@ class PageRepo
             'owned_by'   => user()->id,
             'updated_by' => user()->id,
             'draft'      => true,
+            'editor'     => PageEditorType::getSystemDefault()->value,
         ]);
 
         if ($parent instanceof Chapter) {
@@ -146,8 +146,10 @@ class PageRepo
             $pageContent->setNewHTML($input['html'], user());
         }
 
-        if ($newEditor !== $currentEditor && userCan('editor-change')) {
+        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan('editor-change')) {
             $page->editor = $newEditor->value;
+        } elseif (empty($page->editor)) {
+            $page->editor = $defaultEditor->value;
         }
     }
 
