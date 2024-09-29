@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan ikke slette den eneste admin',
     'users_cannot_delete_guest' => 'Du kan ikke slette gæstebrugeren',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Denne rolle kan ikke redigeres',
