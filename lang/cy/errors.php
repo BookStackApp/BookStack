@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Ni allwch ddileu\'r unig weinyddwr',
     'users_cannot_delete_guest' => 'Ni allwch ddileu\'r defnyddiwr gwadd',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Nid oes modd golygu\'r rôl hon',
