@@ -2,6 +2,7 @@
 
 namespace Tests\User;
 
+use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
 use BookStack\Uploads\Image;
@@ -229,7 +230,7 @@ class UserManagementTest extends TestCase
 
         // Simulate an invitation sending failure
         $this->mock(UserInviteService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('sendInvitation')->once()->andThrow(RuntimeException::class);
+            $mock->shouldReceive('sendInvitation')->once()->andThrow(UserInviteException::class);
         });
 
         $this->asAdmin()->post('/settings/users/create', [
@@ -247,20 +248,40 @@ class UserManagementTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->make();
-        $adminRole = Role::getRole('admin');
 
         $this->mock(UserInviteService::class, function (MockInterface $mock) {
-            $mock->shouldReceive('sendInvitation')->once()->andThrow(RuntimeException::class);
+            $mock->shouldReceive('sendInvitation')->once()->andThrow(UserInviteException::class);
         });
 
         $this->asAdmin()->post('/settings/users/create', [
             'name'                          => $user->name,
             'email'                         => $user->email,
             'send_invite'                   => 'true',
-            'roles[' . $adminRole->id . ']' => 'true',
         ]);
 
         $this->assertDatabaseMissing('activities', ['type' => 'USER_CREATE']);
+    }
+
+    public function test_return_to_form_with_warning_if_the_invitation_sending_fails()
+    {
+        $logger = $this->withTestLogger();
+        /** @var User $user */
+        $user = User::factory()->make();
+
+        $this->mock(UserInviteService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('sendInvitation')->once()->andThrow(UserInviteException::class);
+        });
+
+        $resp = $this->asAdmin()->post('/settings/users/create', [
+            'name'                          => $user->name,
+            'email'                         => $user->email,
+            'send_invite'                   => 'true',
+        ]);
+
+        $resp->assertRedirect('/settings/users/create');
+        $this->assertSessionError('Could not create user since invite email failed to send');
+        $this->assertEquals($user->email, session()->getOldInput('email'));
+        $this->assertTrue($logger->hasErrorThatContains('Failed to send user invite with error:'));
     }
 
     public function test_user_create_update_fails_if_locale_is_invalid()
