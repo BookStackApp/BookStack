@@ -1,6 +1,8 @@
 <?php
 
-namespace Tests;
+namespace Tests\Meta;
+
+use Tests\TestCase;
 
 class HelpTest extends TestCase
 {

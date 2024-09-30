@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests;
+namespace Tests\Meta;
 
 use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Entities\Repos\BookRepo;
 use Illuminate\Support\Str;
 use Illuminate\Testing\TestResponse;
+use Tests\TestCase;
 
 class OpenGraphTest extends TestCase
 {
