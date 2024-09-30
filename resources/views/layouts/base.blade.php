@@ -32,6 +32,9 @@
     <link rel="manifest" href="{{ url('/manifest.json') }}">
     <meta name="mobile-web-app-capable" content="yes">
 
+    <!-- OpenSearch -->
+    <link rel="search" type="application/opensearchdescription+xml" title="{{ setting('app-name') }}" href="{{ url('/opensearch.xml') }}">
+
     @yield('head')
 
     <!-- Custom Styles & Head Content -->

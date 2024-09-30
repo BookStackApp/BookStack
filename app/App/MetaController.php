@@ -64,4 +64,14 @@ class MetaController extends Controller
             'jsLibData' => file_get_contents(base_path('dev/licensing/js-library-licenses.txt')),
         ]);
     }
+
+    /**
+     * Show the view for /opensearch.xml.
+     */
+    public function opensearch()
+    {
+        return response()
+            ->view('misc.opensearch')
+            ->header('Content-Type', 'application/opensearchdescription+xml');
+    }
 }

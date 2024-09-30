@@ -23,6 +23,7 @@ Route::get('/robots.txt', [MetaController::class, 'robots']);
 Route::get('/favicon.ico', [MetaController::class, 'favicon']);
 Route::get('/manifest.json', [MetaController::class, 'pwaManifest']);
 Route::get('/licenses', [MetaController::class, 'licenses']);
+Route::get('/opensearch.xml', [MetaController::class, 'opensearch']);
 
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
