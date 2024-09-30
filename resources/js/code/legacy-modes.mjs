@@ -16,8 +16,10 @@ export {pascal} from '@codemirror/legacy-modes/mode/pascal';
 export {powerShell} from '@codemirror/legacy-modes/mode/powershell';
 export {properties} from '@codemirror/legacy-modes/mode/properties';
 export {python} from '@codemirror/legacy-modes/mode/python';
+export {r} from '@codemirror/legacy-modes/mode/r';
 export {ruby} from '@codemirror/legacy-modes/mode/ruby';
 export {rust} from '@codemirror/legacy-modes/mode/rust';
+export {sas} from '@codemirror/legacy-modes/mode/sas';
 export {scheme} from '@codemirror/legacy-modes/mode/scheme';
 export {shell} from '@codemirror/legacy-modes/mode/shell';
 export {

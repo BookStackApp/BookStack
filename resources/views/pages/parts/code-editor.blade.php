@@ -26,7 +26,7 @@
                                 'Bash', 'CSS', 'C', 'C++', 'C#', 'Clojure', 'Dart', 'Diff', 'Fortran', 'F#', 'Go', 'Haskell', 'HTML', 'INI',
                                 'Java', 'JavaScript', 'JSON', 'Julia', 'Kotlin', 'LaTeX', 'Lua', 'MarkDown', 'MATLAB', 'MSSQL', 'MySQL',
                                 'Nginx', 'OCaml', 'Octave', 'Pascal', 'Perl', 'PHP', 'PL/SQL', 'PostgreSQL', 'Powershell', 'Python',
-                                'Ruby', 'Rust', 'Scala', 'Scheme', 'Shell', 'Smarty', 'SQL', 'SQLite', 'Swift',
+                                'R', 'Ruby', 'Rust', 'SAS', 'Scala', 'Scheme', 'Shell', 'Smarty', 'SQL', 'SQLite', 'Swift',
                                 'Twig', 'TypeScript', 'VBScript', 'VB.NET', 'XML', 'YAML',
                             ];
                         @endphp
