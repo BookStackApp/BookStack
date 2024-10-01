@@ -144,10 +144,12 @@ export function handleTableCellRangeEvents(editor) {
             cell.removeAttribute('align');
             cleanChildAlignment(cell);
         },
-        JustifyRight: this.JustifyLeft,
-        JustifyCenter: this.JustifyLeft,
-        JustifyFull: this.JustifyLeft,
     };
+
+    // Copy justify left action to other alignment actions
+    actionByCommand.JustifyRight = actionByCommand.JustifyLeft;
+    actionByCommand.JustifyCenter = actionByCommand.JustifyLeft;
+    actionByCommand.JustifyFull = actionByCommand.JustifyLeft;
 
     editor.on('ExecCommand', event => {
         const action = actionByCommand[event.command];
