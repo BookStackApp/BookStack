@@ -36,11 +36,9 @@
     @endif
 
     @if(userCan('comment-create-all') || $commentTree->canUpdateAny())
-        @push('post-app-scripts')
-            <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
+        @push('body-end')
+            <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}" defer></script>
             @include('form.editor-translations')
-        @endpush
-        @push('post-app-html')
             @include('entities.selector-popup')
         @endpush
     @endif

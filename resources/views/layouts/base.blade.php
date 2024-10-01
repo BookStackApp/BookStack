@@ -35,8 +35,6 @@
     <!-- OpenSearch -->
     <link rel="search" type="application/opensearchdescription+xml" title="{{ setting('app-name') }}" href="{{ url('/opensearch.xml') }}">
 
-    @yield('head')
-
     <!-- Custom Styles & Head Content -->
     @include('layouts.parts.custom-styles')
     @include('layouts.parts.custom-head')
@@ -70,14 +68,10 @@
         </div>
     </div>
 
-    @yield('bottom')
-    @stack('post-app-html')
-
     @if($cspNonce ?? false)
-        <script src="{{ versioned_asset('dist/app.js') }}" nonce="{{ $cspNonce }}"></script>
+        <script src="{{ versioned_asset('dist/app.js') }}" type="module" nonce="{{ $cspNonce }}"></script>
     @endif
-    @yield('scripts')
-    @stack('post-app-scripts')
+    @stack('body-end')
 
     @include('layouts.parts.base-body-end')
 </body>
