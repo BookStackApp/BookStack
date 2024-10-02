@@ -55,10 +55,11 @@ class SearchRunner
         $entityTypes = array_keys($this->entityProvider->all());
         $entityTypesToSearch = $entityTypes;
 
+        $filterMap = $searchOpts->filters->toValueMap();
         if ($entityType !== 'all') {
             $entityTypesToSearch = [$entityType];
-        } elseif (isset($searchOpts->filters['type'])) {
-            $entityTypesToSearch = explode('|', $searchOpts->filters['type']);
+        } elseif (isset($filterMap['type'])) {
+            $entityTypesToSearch = explode('|', $filterMap['type']);
         }
 
         $results = collect();
@@ -97,7 +98,8 @@ class SearchRunner
     {
         $opts = SearchOptions::fromString($searchString);
         $entityTypes = ['page', 'chapter'];
-        $entityTypesToSearch = isset($opts->filters['type']) ? explode('|', $opts->filters['type']) : $entityTypes;
+        $filterMap = $opts->filters->toValueMap();
+        $entityTypesToSearch = isset($filterMap['type']) ? explode('|', $filterMap['type']) : $entityTypes;
 
         $results = collect();
         foreach ($entityTypesToSearch as $entityType) {
@@ -161,7 +163,7 @@ class SearchRunner
         $this->applyTermSearch($entityQuery, $searchOpts, $entityType);
 
         // Handle exact term matching
-        foreach ($searchOpts->exacts as $inputTerm) {
+        foreach ($searchOpts->exacts->toValueArray() as $inputTerm) {
             $entityQuery->where(function (EloquentBuilder $query) use ($inputTerm, $entityModelInstance) {
                 $inputTerm = str_replace('\\', '\\\\', $inputTerm);
                 $query->where('name', 'like', '%' . $inputTerm . '%')
@@ -170,12 +172,12 @@ class SearchRunner
         }
 
         // Handle tag searches
-        foreach ($searchOpts->tags as $inputTerm) {
+        foreach ($searchOpts->tags->toValueArray() as $inputTerm) {
             $this->applyTagSearch($entityQuery, $inputTerm);
         }
 
         // Handle filters
-        foreach ($searchOpts->filters as $filterTerm => $filterValue) {
+        foreach ($searchOpts->filters->toValueMap() as $filterTerm => $filterValue) {
             $functionName = Str::camel('filter_' . $filterTerm);
             if (method_exists($this, $functionName)) {
                 $this->$functionName($entityQuery, $entityModelInstance, $filterValue);
@@ -190,7 +192,7 @@ class SearchRunner
      */
     protected function applyTermSearch(EloquentBuilder $entityQuery, SearchOptions $options, string $entityType): void
     {
-        $terms = $options->searches;
+        $terms = $options->searches->toValueArray();
         if (count($terms) === 0) {
             return;
         }
@@ -209,8 +211,8 @@ class SearchRunner
         $subQuery->where('entity_type', '=', $entityType);
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $inputTerm = str_replace('\\', '\\\\', $inputTerm);
-                $query->orWhere('term', 'like', $inputTerm . '%');
+                $escapedTerm = str_replace('\\', '\\\\', $inputTerm);
+                $query->orWhere('term', 'like', $escapedTerm . '%');
             }
         });
         $subQuery->groupBy('entity_type', 'entity_id');
@@ -264,7 +266,7 @@ class SearchRunner
         $whenStatements = [];
         $whenBindings = [];
 
-        foreach ($options->searches as $term) {
+        foreach ($options->searches->toValueArray() as $term) {
             $whenStatements[] = 'WHEN term LIKE ? THEN ?';
             $whenBindings[] = $term . '%';
             $whenBindings[] = $term;
