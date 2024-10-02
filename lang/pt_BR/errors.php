@@ -14,7 +14,7 @@ return [
     'email_already_confirmed' => 'E-mail já foi confirmado. Tente efetuar o login.',
     'email_confirmation_invalid' => 'Esse token de confirmação não é válido ou já foi utilizado. Por favor, tente cadastrar-se novamente.',
     'email_confirmation_expired' => 'O token de confirmação já expirou. Um novo e-mail foi enviado.',
-    'email_confirmation_awaiting' => 'O endereço de e-mail da conta em uso precisa ser confirmado',
+    'email_confirmation_awaiting' => 'O endereço de correio eletrônico da conta em uso precisa ser confirmado',
     'ldap_fail_anonymous' => 'O acesso LDAP falhou ao tentar usar o anonymous bind',
     'ldap_fail_authed' => 'O acesso LDAP falhou ao tentar os detalhes do dn e senha fornecidos',
     'ldap_extension_not_installed' => 'A extensão LDAP PHP não está instalada',
