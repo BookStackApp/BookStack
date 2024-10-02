@@ -63,7 +63,7 @@ return [
     // Pages
     'page_draft_autosave_fail' => 'Falha ao tentar salvar o rascunho. Certifique-se que a conexão de internet está funcional antes de tentar salvar essa página',
     'page_draft_delete_fail' => 'Falha ao excluir o rascunho da página e buscar conteúdo salvo na página atual',
-    'page_custom_home_deletion' => 'Não é possível excluir uma página que está definida como página inicial',
+    'page_custom_home_deletion' => 'Não é possível excluir uma página definida como página inicial',
 
     // Entities
     'entity_not_found' => 'Entidade não encontrada',
