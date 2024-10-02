@@ -6,22 +6,26 @@ use Illuminate\Http\Request;
 
 class SearchOptions
 {
-    public array $searches = [];
-    public array $exacts = [];
-    public array $tags = [];
-    public array $filters = [];
+    public SearchOptionSet $searches;
+    public SearchOptionSet $exacts;
+    public SearchOptionSet $tags;
+    public SearchOptionSet $filters;
+
+    public function __construct()
+    {
+        $this->searches = new SearchOptionSet();
+        $this->exacts = new SearchOptionSet();
+        $this->tags = new SearchOptionSet();
+        $this->filters = new SearchOptionSet();
+    }
 
     /**
      * Create a new instance from a search string.
      */
     public static function fromString(string $search): self
     {
-        $decoded = static::decode($search);
-        $instance = new SearchOptions();
-        foreach ($decoded as $type => $value) {
-            $instance->$type = $value;
-        }
-
+        $instance = new self();
+        $instance->addOptionsFromString($search);
         return $instance;
     }
 
@@ -44,34 +48,37 @@ class SearchOptions
         $inputs = $request->only(['search', 'types', 'filters', 'exact', 'tags']);
 
         $parsedStandardTerms = static::parseStandardTermString($inputs['search'] ?? '');
-        $instance->searches = array_filter($parsedStandardTerms['terms']);
-        $instance->exacts = array_filter($parsedStandardTerms['exacts']);
+        $inputExacts = array_filter($inputs['exact'] ?? []);
+        $instance->searches = SearchOptionSet::fromValueArray(array_filter($parsedStandardTerms['terms']));
+        $instance->exacts = SearchOptionSet::fromValueArray(array_filter($parsedStandardTerms['exacts']));
+        $instance->exacts = $instance->exacts->merge(SearchOptionSet::fromValueArray($inputExacts));
+        $instance->tags = SearchOptionSet::fromValueArray(array_filter($inputs['tags'] ?? []));
 
-        array_push($instance->exacts, ...array_filter($inputs['exact'] ?? []));
-
-        $instance->tags = array_filter($inputs['tags'] ?? []);
-
+        $keyedFilters = [];
         foreach (($inputs['filters'] ?? []) as $filterKey => $filterVal) {
             if (empty($filterVal)) {
                 continue;
             }
-            $instance->filters[$filterKey] = $filterVal === 'true' ? '' : $filterVal;
+            $cleanedFilterVal = $filterVal === 'true' ? '' : $filterVal;
+            $keyedFilters[$filterKey] = new SearchOption($cleanedFilterVal);
         }
 
         if (isset($inputs['types']) && count($inputs['types']) < 4) {
-            $instance->filters['type'] = implode('|', $inputs['types']);
+            $keyedFilters['type'] = new SearchOption(implode('|', $inputs['types']));
         }
+
+        $instance->filters = new SearchOptionSet($keyedFilters);
 
         return $instance;
     }
 
     /**
-     * Decode a search string into an array of terms.
+     * Decode a search string and add its contents to this instance.
      */
-    protected static function decode(string $searchString): array
+    protected function addOptionsFromString(string $searchString): void
     {
+        /** @var array<string, string[]> $terms */
         $terms = [
-            'searches' => [],
             'exacts'   => [],
             'tags'     => [],
             'filters'  => [],
@@ -94,28 +101,30 @@ class SearchOptions
         }
 
         // Unescape exacts and backslash escapes
-        foreach ($terms['exacts'] as $index => $exact) {
-            $terms['exacts'][$index] = static::decodeEscapes($exact);
-        }
+        $escapedExacts = array_map(fn(string $term) => static::decodeEscapes($term), $terms['exacts']);
 
         // Parse standard terms
         $parsedStandardTerms = static::parseStandardTermString($searchString);
-        array_push($terms['searches'], ...$parsedStandardTerms['terms']);
-        array_push($terms['exacts'], ...$parsedStandardTerms['exacts']);
+        $this->searches = $this->searches
+            ->merge(SearchOptionSet::fromValueArray($parsedStandardTerms['terms']))
+            ->filterEmpty();
+        $this->exacts = $this->exacts
+            ->merge(SearchOptionSet::fromValueArray($escapedExacts))
+            ->merge(SearchOptionSet::fromValueArray($parsedStandardTerms['exacts']))
+            ->filterEmpty();
+
+        // Add tags
+        $this->tags = $this->tags->merge(SearchOptionSet::fromValueArray($terms['tags']));
 
         // Split filter values out
+        /** @var array<string, SearchOption> $splitFilters */
         $splitFilters = [];
         foreach ($terms['filters'] as $filter) {
             $explodedFilter = explode(':', $filter, 2);
-            $splitFilters[$explodedFilter[0]] = (count($explodedFilter) > 1) ? $explodedFilter[1] : '';
+            $filterValue = (count($explodedFilter) > 1) ? $explodedFilter[1] : '';
+            $splitFilters[$explodedFilter[0]] = new SearchOption($filterValue);
         }
-        $terms['filters'] = $splitFilters;
-
-        // Filter down terms where required
-        $terms['exacts'] = array_filter($terms['exacts']);
-        $terms['searches'] = array_filter($terms['searches']);
-
-        return $terms;
+        $this->filters = $this->filters->merge(new SearchOptionSet($splitFilters));
     }
 
     /**
@@ -175,7 +184,9 @@ class SearchOptions
      */
     public function setFilter(string $filterName, string $filterValue = ''): void
     {
-        $this->filters[$filterName] = $filterValue;
+        $this->filters = $this->filters->merge(
+            new SearchOptionSet([$filterName => new SearchOption($filterValue)])
+        );
     }
 
     /**
@@ -183,22 +194,47 @@ class SearchOptions
      */
     public function toString(): string
     {
-        $parts = $this->searches;
+        $parts = $this->searches->toValueArray();
 
-        foreach ($this->exacts as $term) {
+        foreach ($this->exacts->toValueArray() as $term) {
             $escaped = str_replace('\\', '\\\\', $term);
             $escaped = str_replace('"', '\"', $escaped);
             $parts[] = '"' . $escaped . '"';
         }
 
-        foreach ($this->tags as $term) {
+        foreach ($this->tags->toValueArray() as $term) {
             $parts[] = "[{$term}]";
         }
 
-        foreach ($this->filters as $filterName => $filterVal) {
+        foreach ($this->filters->toValueMap() as $filterName => $filterVal) {
             $parts[] = '{' . $filterName . ($filterVal ? ':' . $filterVal : '') . '}';
         }
 
         return implode(' ', $parts);
+    }
+
+    /**
+     * Get the search options that don't have UI controls provided for.
+     * Provided back as a key => value array with the keys being expected
+     * input names for a search form, and values being the option value.
+     *
+     * @return array<string, string>
+     */
+    public function getHiddenInputValuesByFieldName(): array
+    {
+        $options = [];
+
+        // Non-[created/updated]-by-me options
+        $filterMap = $this->filters->toValueMap();
+        foreach (['updated_by', 'created_by', 'owned_by'] as $filter) {
+            $value = $filterMap[$filter] ?? null;
+            if ($value !== null && $value !== 'me') {
+                $options["filters[$filter]"] = $value;
+            }
+        }
+
+        // TODO - Negated
+
+        return $options;
     }
 }
