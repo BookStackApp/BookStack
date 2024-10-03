@@ -244,9 +244,9 @@ class SearchOptions
         }
 
         // Negated items
-        array_push($options, ...$this->exacts->negated());
-        array_push($options, ...$this->tags->negated());
-        array_push($options, ...$this->filters->negated());
+        array_push($options, ...$this->exacts->negated()->all());
+        array_push($options, ...$this->tags->negated()->all());
+        array_push($options, ...$this->filters->negated()->all());
 
         return implode(' ', array_map(fn(SearchOption $o) => $o->toString(), $options));
     }

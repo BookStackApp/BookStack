@@ -123,7 +123,7 @@ class SearchOptionsTest extends TestCase
 
         $options = SearchOptions::fromRequest($request);
         $this->assertCount(2, $options->tags->all());
-        $this->assertEquals('b=c', $options->tags->negated()[0]->value);
+        $this->assertEquals('b=c', $options->tags->negated()->all()[0]->value);
         $this->assertEquals('viewed_by_me', $options->filters->all()[0]->getKey());
         $this->assertTrue($options->filters->all()[0]->negated);
         $this->assertEquals('dino', $options->exacts->all()[0]->value);

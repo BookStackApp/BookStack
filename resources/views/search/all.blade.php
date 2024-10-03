@@ -9,7 +9,7 @@
                     <h5>{{ trans('entities.search_advanced') }}</h5>
 
                     @php
-                        $filterMap = $options->filters->toValueMap();
+                        $filterMap = $options->filters->nonNegated()->toValueMap();
                     @endphp
                     <form method="get" action="{{ url('/search') }}">
                         <h6>{{ trans('entities.search_terms') }}</h6>
@@ -30,10 +30,10 @@
                         </div>
 
                         <h6>{{ trans('entities.search_exact_matches') }}</h6>
-                        @include('search.parts.term-list', ['type' => 'exact', 'currentList' => $options->exacts->toValueArray()])
+                        @include('search.parts.term-list', ['type' => 'exact', 'currentList' => $options->exacts->nonNegated()->toValueArray()])
 
                         <h6>{{ trans('entities.search_tags') }}</h6>
-                        @include('search.parts.term-list', ['type' => 'tags', 'currentList' => $options->tags->toValueArray()])
+                        @include('search.parts.term-list', ['type' => 'tags', 'currentList' => $options->tags->nonNegated()->toValueArray()])
 
                         @if(!user()->isGuest())
                             <h6>{{ trans('entities.search_options') }}</h6>

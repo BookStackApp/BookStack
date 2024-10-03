@@ -63,10 +63,20 @@ class SearchOptionSet
     }
 
     /**
-     * @return T[]
+     * @return self<T>
      */
-    public function negated(): array
+    public function negated(): self
     {
-        return array_values(array_filter($this->options, fn (SearchOption $option) => $option->negated));
+        $values = array_values(array_filter($this->options, fn (SearchOption $option) => $option->negated));
+        return new self($values);
+    }
+
+    /**
+     * @return self<T>
+     */
+    public function nonNegated(): self
+    {
+        $values = array_values(array_filter($this->options, fn (SearchOption $option) => !$option->negated));
+        return new self($values);
     }
 }
