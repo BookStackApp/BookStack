@@ -25,8 +25,8 @@
                             @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('page', $types), 'entity' => 'page', 'transKey' => 'page'])
                             @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('chapter', $types), 'entity' => 'chapter', 'transKey' => 'chapter'])
                             <br>
-                                @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('book', $types), 'entity' => 'book', 'transKey' => 'book'])
-                                @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('bookshelf', $types), 'entity' => 'bookshelf', 'transKey' => 'shelf'])
+                            @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('book', $types), 'entity' => 'book', 'transKey' => 'book'])
+                            @include('search.parts.type-filter', ['checked' => !$hasTypes || in_array('bookshelf', $types), 'entity' => 'bookshelf', 'transKey' => 'shelf'])
                         </div>
 
                         <h6>{{ trans('entities.search_exact_matches') }}</h6>
@@ -64,10 +64,7 @@
                         @include('search.parts.date-filter', ['name' => 'created_after', 'filters' => $filterMap])
                         @include('search.parts.date-filter', ['name' => 'created_before', 'filters' => $filterMap])
 
-                        @foreach($options->getHiddenInputValuesByFieldName() as $fieldName => $value)
-                            <input type="hidden" name="{{ $fieldName }}" value="{{ $value }}">
-                        @endforeach
-
+                        <input type="hidden" name="extras" value="{{ $options->getAdditionalOptionsString() }}">
                         <button type="submit" class="button">{{ trans('entities.search_update') }}</button>
                     </form>
 
@@ -77,8 +74,9 @@
                 <div class="card content-wrap">
                     <h1 class="list-heading">{{ trans('entities.search_results') }}</h1>
 
-                    <form action="{{ url('/search') }}" method="GET"  class="search-box flexible hide-over-l">
-                        <input value="{{$searchTerm}}" type="text" name="term" placeholder="{{ trans('common.search') }}">
+                    <form action="{{ url('/search') }}" method="GET" class="search-box flexible hide-over-l">
+                        <input value="{{$searchTerm}}" type="text" name="term"
+                               placeholder="{{ trans('common.search') }}">
                         <button type="submit"
                                 aria-label="{{ trans('common.search') }}"
                                 tabindex="-1">@icon('search')</button>

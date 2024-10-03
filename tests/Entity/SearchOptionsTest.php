@@ -2,6 +2,10 @@
 
 namespace Tests\Entity;
 
+use BookStack\Search\Options\ExactSearchOption;
+use BookStack\Search\Options\FilterSearchOption;
+use BookStack\Search\Options\TagSearchOption;
+use BookStack\Search\Options\TermSearchOption;
 use BookStack\Search\SearchOptions;
 use BookStack\Search\SearchOptionSet;
 use Illuminate\Http\Request;
@@ -19,6 +23,16 @@ class SearchOptionsTest extends TestCase
         $this->assertEquals(['is_tree' => ''], $options->filters->toValueMap());
     }
 
+    public function test_from_string_parses_negations()
+    {
+        $options = SearchOptions::fromString('cat -"dog" -[tag=good] -{is_tree}');
+
+        $this->assertEquals(['cat'], $options->searches->toValueArray());
+        $this->assertTrue($options->exacts->all()[0]->negated);
+        $this->assertTrue($options->tags->all()[0]->negated);
+        $this->assertTrue($options->filters->all()[0]->negated);
+    }
+
     public function test_from_string_properly_parses_escaped_quotes()
     {
         $options = SearchOptions::fromString('"\"cat\"" surprise "\"\"" "\"donkey" "\"" "\\\\"');
@@ -28,12 +42,32 @@ class SearchOptionsTest extends TestCase
 
     public function test_to_string_includes_all_items_in_the_correct_format()
     {
-        $expected = 'cat "dog" [tag=good] {is_tree}';
+        $expected = 'cat "dog" [tag=good] {is_tree} {beans:valid}';
         $options = new SearchOptions();
-        $options->searches = SearchOptionSet::fromValueArray(['cat']);
-        $options->exacts = SearchOptionSet::fromValueArray(['dog']);
-        $options->tags = SearchOptionSet::fromValueArray(['tag=good']);
-        $options->filters = SearchOptionSet::fromMapArray(['is_tree' => '']);
+        $options->searches = SearchOptionSet::fromValueArray(['cat'], TermSearchOption::class);
+        $options->exacts = SearchOptionSet::fromValueArray(['dog'], ExactSearchOption::class);
+        $options->tags = SearchOptionSet::fromValueArray(['tag=good'], TagSearchOption::class);
+        $options->filters = new SearchOptionSet([
+            new FilterSearchOption('', 'is_tree'),
+            new FilterSearchOption('valid', 'beans'),
+        ]);
+
+        $output = $options->toString();
+        foreach (explode(' ', $expected) as $term) {
+            $this->assertStringContainsString($term, $output);
+        }
+    }
+
+    public function test_to_string_handles_negations_as_expected()
+    {
+        $expected = 'cat -"dog" -[tag=good] -{is_tree}';
+        $options = new SearchOptions();
+        $options->searches = new SearchOptionSet([new TermSearchOption('cat')]);
+        $options->exacts = new SearchOptionSet([new ExactSearchOption('dog', true)]);
+        $options->tags = new SearchOptionSet([new TagSearchOption('tag=good', true)]);
+        $options->filters = new SearchOptionSet([
+            new FilterSearchOption('', 'is_tree', true),
+        ]);
 
         $output = $options->toString();
         foreach (explode(' ', $expected) as $term) {
@@ -44,7 +78,7 @@ class SearchOptionsTest extends TestCase
     public function test_to_string_escapes_as_expected()
     {
         $options = new SearchOptions();
-        $options->exacts = SearchOptionSet::fromValueArray(['"cat"', '""', '"donkey', '"', '\\', '\\"']);
+        $options->exacts = SearchOptionSet::fromValueArray(['"cat"', '""', '"donkey', '"', '\\', '\\"'], ExactSearchOption::class);
 
         $output = $options->toString();
         $this->assertEquals('"\"cat\"" "\"\"" "\"donkey" "\"" "\\\\" "\\\\\""', $output);
@@ -77,5 +111,22 @@ class SearchOptionsTest extends TestCase
         $options = SearchOptions::fromRequest($request);
         $this->assertEquals(["biscuits"], $options->searches->toValueArray());
         $this->assertEquals(['"cheese"', '""', '"baked',  'beans"'], $options->exacts->toValueArray());
+    }
+
+    public function test_from_request_properly_parses_out_extras_as_string()
+    {
+        $request = new Request([
+            'search' => '',
+            'tags' => ['a=b'],
+            'extras' => '-[b=c] -{viewed_by_me} -"dino"'
+        ]);
+
+        $options = SearchOptions::fromRequest($request);
+        $this->assertCount(2, $options->tags->all());
+        $this->assertEquals('b=c', $options->tags->negated()[0]->value);
+        $this->assertEquals('viewed_by_me', $options->filters->all()[0]->getKey());
+        $this->assertTrue($options->filters->all()[0]->negated);
+        $this->assertEquals('dino', $options->exacts->all()[0]->value);
+        $this->assertTrue($options->exacts->all()[0]->negated);
     }
 }

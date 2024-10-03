@@ -545,11 +545,10 @@ class EntitySearchTest extends TestCase
         $search->assertSee($page->getUrl(), false);
     }
 
-    public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
+    public function test_searches_with_terms_without_controls_includes_them_in_extras()
     {
-        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan}'));
-        $this->withHtml($resp)->assertElementExists('form input[name="filters[updated_by]"][value="dan"]');
-        $this->withHtml($resp)->assertElementExists('form input[name="filters[created_by]"][value="dan"]');
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan} -{viewed_by_me} -[a=b] -"dog"'));
+        $this->withHtml($resp)->assertFieldHasValue('extras', '{updated_by:dan} {created_by:dan} -"dog" -[a=b] -{viewed_by_me}');
     }
 
     public function test_searches_with_user_filters_using_me_adds_them_into_advanced_search_form()

@@ -2,12 +2,14 @@
 
 namespace BookStack\Search;
 
+use BookStack\Search\Options\SearchOption;
+
 class SearchOptionSet
 {
     /**
      * @var SearchOption[]
      */
-    public array $options = [];
+    protected array $options = [];
 
     public function __construct(array $options = [])
     {
@@ -22,7 +24,8 @@ class SearchOptionSet
     public function toValueMap(): array
     {
         $map = [];
-        foreach ($this->options as $key => $option) {
+        foreach ($this->options as $index => $option) {
+            $key = $option->getKey() ?? $index;
             $map[$key] = $option->value;
         }
         return $map;
@@ -35,22 +38,32 @@ class SearchOptionSet
 
     public function filterEmpty(): self
     {
-        $filteredOptions = array_filter($this->options, fn (SearchOption $option) => !empty($option->value));
+        $filteredOptions = array_values(array_filter($this->options, fn (SearchOption $option) => !empty($option->value)));
         return new self($filteredOptions);
     }
 
-    public static function fromValueArray(array $values): self
+    /**
+     * @param class-string<SearchOption> $class
+     */
+    public static function fromValueArray(array $values, string $class): self
     {
-        $options = array_map(fn($val) => new SearchOption($val), $values);
+        $options = array_map(fn($val) => new $class($val), $values);
         return new self($options);
     }
 
-    public static function fromMapArray(array $values): self
+    /**
+     * @return SearchOption[]
+     */
+    public function all(): array
     {
-        $options = [];
-        foreach ($values as $key => $value) {
-            $options[$key] = new SearchOption($value);
-        }
-        return new self($options);
+        return $this->options;
+    }
+
+    /**
+     * @return SearchOption[]
+     */
+    public function negated(): array
+    {
+        return array_values(array_filter($this->options, fn (SearchOption $option) => $option->negated));
     }
 }
