@@ -11,9 +11,13 @@ use Illuminate\Http\Request;
 
 class SearchOptions
 {
+    /** @var SearchOptionSet<TermSearchOption> */
     public SearchOptionSet $searches;
+    /** @var SearchOptionSet<ExactSearchOption> */
     public SearchOptionSet $exacts;
+    /** @var SearchOptionSet<TagSearchOption> */
     public SearchOptionSet $tags;
+    /** @var SearchOptionSet<FilterSearchOption> */
     public SearchOptionSet $filters;
 
     public function __construct()

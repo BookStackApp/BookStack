@@ -4,10 +4,13 @@ namespace BookStack\Search;
 
 use BookStack\Search\Options\SearchOption;
 
+/**
+ * @template T of SearchOption
+ */
 class SearchOptionSet
 {
     /**
-     * @var SearchOption[]
+     * @var T[]
      */
     protected array $options = [];
 
@@ -52,7 +55,7 @@ class SearchOptionSet
     }
 
     /**
-     * @return SearchOption[]
+     * @return T[]
      */
     public function all(): array
     {
@@ -60,7 +63,7 @@ class SearchOptionSet
     }
 
     /**
-     * @return SearchOption[]
+     * @return T[]
      */
     public function negated(): array
     {
