@@ -577,6 +577,14 @@ class EntitySearchTest extends TestCase
         $this->withHtml($resp)->assertFieldHasValue('extras', '{updated_by:dan} {created_by:dan} -"dog" -[a=b] -{viewed_by_me}');
     }
 
+    public function test_negated_searches_dont_show_in_inputs()
+    {
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('-{created_by:me} -[a=b] -"dog"'));
+        $this->withHtml($resp)->assertElementNotExists('input[name="tags[]"][value="a=b"]');
+        $this->withHtml($resp)->assertElementNotExists('input[name="exact[]"][value="dog"]');
+        $this->withHtml($resp)->assertElementNotExists('input[name="filters[created_by]"][value="me"][checked="checked"]');
+    }
+
     public function test_searches_with_user_filters_using_me_adds_them_into_advanced_search_form()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:me} {created_by:me}'));
