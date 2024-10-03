@@ -118,6 +118,32 @@ class EntitySearchTest extends TestCase
         $exactSearchB->assertStatus(200)->assertDontSee($page->name);
     }
 
+    public function test_negated_searches()
+    {
+        $page = $this->entities->newPage(['name' => 'My new test negation page', 'html' => '<p>An angry tortoise wore trumpeted plimsoles</p>']);
+        $page->tags()->saveMany([new Tag(['name' => 'DonkCount', 'value' => '500'])]);
+        $page->created_by = $this->users->admin()->id;
+        $page->save();
+
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $exactSearch = $this->get('/search?term=' . urlencode('negation -"tortoise"'));
+        $exactSearch->assertStatus(200)->assertDontSeeText($page->name);
+
+        $tagSearchA = $this->get('/search?term=' . urlencode('negation [DonkCount=500]'));
+        $tagSearchA->assertStatus(200)->assertSeeText($page->name);
+        $tagSearchB = $this->get('/search?term=' . urlencode('negation -[DonkCount=500]'));
+        $tagSearchB->assertStatus(200)->assertDontSeeText($page->name);
+
+        $filterSearchA = $this->get('/search?term=' . urlencode('negation -{created_by:me}'));
+        $filterSearchA->assertStatus(200)->assertSeeText($page->name);
+        $page->created_by = $editor->id;
+        $page->save();
+        $filterSearchB = $this->get('/search?term=' . urlencode('negation -{created_by:me}'));
+        $filterSearchB->assertStatus(200)->assertDontSeeText($page->name);
+    }
+
     public function test_search_terms_with_delimiters_are_converted_to_exact_matches()
     {
         $this->asEditor();
