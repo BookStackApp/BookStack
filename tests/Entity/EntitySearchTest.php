@@ -118,6 +118,32 @@ class EntitySearchTest extends TestCase
         $exactSearchB->assertStatus(200)->assertDontSee($page->name);
     }
 
+    public function test_negated_searches()
+    {
+        $page = $this->entities->newPage(['name' => 'My new test negation page', 'html' => '<p>An angry tortoise wore trumpeted plimsoles</p>']);
+        $page->tags()->saveMany([new Tag(['name' => 'DonkCount', 'value' => '500'])]);
+        $page->created_by = $this->users->admin()->id;
+        $page->save();
+
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $exactSearch = $this->get('/search?term=' . urlencode('negation -"tortoise"'));
+        $exactSearch->assertStatus(200)->assertDontSeeText($page->name);
+
+        $tagSearchA = $this->get('/search?term=' . urlencode('negation [DonkCount=500]'));
+        $tagSearchA->assertStatus(200)->assertSeeText($page->name);
+        $tagSearchB = $this->get('/search?term=' . urlencode('negation -[DonkCount=500]'));
+        $tagSearchB->assertStatus(200)->assertDontSeeText($page->name);
+
+        $filterSearchA = $this->get('/search?term=' . urlencode('negation -{created_by:me}'));
+        $filterSearchA->assertStatus(200)->assertSeeText($page->name);
+        $page->created_by = $editor->id;
+        $page->save();
+        $filterSearchB = $this->get('/search?term=' . urlencode('negation -{created_by:me}'));
+        $filterSearchB->assertStatus(200)->assertDontSeeText($page->name);
+    }
+
     public function test_search_terms_with_delimiters_are_converted_to_exact_matches()
     {
         $this->asEditor();
@@ -545,11 +571,18 @@ class EntitySearchTest extends TestCase
         $search->assertSee($page->getUrl(), false);
     }
 
-    public function test_searches_with_user_filters_adds_them_into_advanced_search_form()
+    public function test_searches_with_terms_without_controls_includes_them_in_extras()
     {
-        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan}'));
-        $this->withHtml($resp)->assertElementExists('form input[name="filters[updated_by]"][value="dan"]');
-        $this->withHtml($resp)->assertElementExists('form input[name="filters[created_by]"][value="dan"]');
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan} -{viewed_by_me} -[a=b] -"dog"'));
+        $this->withHtml($resp)->assertFieldHasValue('extras', '{updated_by:dan} {created_by:dan} -"dog" -[a=b] -{viewed_by_me}');
+    }
+
+    public function test_negated_searches_dont_show_in_inputs()
+    {
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('-{created_by:me} -[a=b] -"dog"'));
+        $this->withHtml($resp)->assertElementNotExists('input[name="tags[]"][value="a=b"]');
+        $this->withHtml($resp)->assertElementNotExists('input[name="exact[]"][value="dog"]');
+        $this->withHtml($resp)->assertElementNotExists('input[name="filters[created_by]"][value="me"][checked="checked"]');
     }
 
     public function test_searches_with_user_filters_using_me_adds_them_into_advanced_search_form()
