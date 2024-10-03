@@ -25,11 +25,12 @@ class SearchResultsFormatter
      * Update the given entity model to set attributes used for previews of the item
      * primarily within search result lists.
      */
-    protected function setSearchPreview(Entity $entity, SearchOptions $options)
+    protected function setSearchPreview(Entity $entity, SearchOptions $options): void
     {
         $textProperty = $entity->textField;
         $textContent = $entity->$textProperty;
-        $terms = array_merge($options->exacts, $options->searches);
+        $relevantSearchOptions = $options->exacts->merge($options->searches);
+        $terms = $relevantSearchOptions->toValueArray();
 
         $originalContentByNewAttribute = [
             'preview_name'    => $entity->name,
