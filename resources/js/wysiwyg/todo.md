@@ -20,4 +20,4 @@
 
 ## Bugs
 
-- List selection can get lost on nesting/unnesting
+//

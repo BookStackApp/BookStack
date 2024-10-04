@@ -55,6 +55,8 @@ export class CustomListItemNode extends ListItemNode {
         if ($isListNode(parent) && parent.getListType() === 'check') {
             updateListItemChecked(dom, this);
         }
+
+        dom.style.listStyle = $hasNestedListWithoutLabel(this) ? 'none' : '';
         // @ts-expect-error - this is always HTMLListItemElement
         dom.value = this.__value;
 
