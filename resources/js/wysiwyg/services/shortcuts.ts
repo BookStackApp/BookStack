@@ -32,39 +32,43 @@ function toggleInlineCode(editor: LexicalEditor): boolean {
 
 type ShortcutAction = (editor: LexicalEditor, context: EditorUiContext) => boolean;
 
+/**
+ * List of action functions by their shortcut combo.
+ * We use "meta" as an abstraction for ctrl/cmd depending on platform.
+ */
 const actionsByKeys: Record<string, ShortcutAction> = {
-    'ctrl+s': () => {
+    'meta+s': () => {
         window.$events.emit('editor-save-draft');
         return true;
     },
-    'ctrl+enter': () => {
+    'meta+enter': () => {
         window.$events.emit('editor-save-page');
         return true;
     },
-    'ctrl+1': (editor) => headerHandler(editor, 'h1'),
-    'ctrl+2': (editor) => headerHandler(editor, 'h2'),
-    'ctrl+3': (editor) => headerHandler(editor, 'h3'),
-    'ctrl+4': (editor) => headerHandler(editor, 'h4'),
-    'ctrl+5': wrapFormatAction(toggleSelectionAsParagraph),
-    'ctrl+d': wrapFormatAction(toggleSelectionAsParagraph),
-    'ctrl+6': wrapFormatAction(toggleSelectionAsBlockquote),
-    'ctrl+q': wrapFormatAction(toggleSelectionAsBlockquote),
-    'ctrl+7': wrapFormatAction(formatCodeBlock),
-    'ctrl+e': wrapFormatAction(formatCodeBlock),
-    'ctrl+8': toggleInlineCode,
-    'ctrl+shift+e': toggleInlineCode,
-    'ctrl+9': wrapFormatAction(cycleSelectionCalloutFormats),
+    'meta+1': (editor) => headerHandler(editor, 'h1'),
+    'meta+2': (editor) => headerHandler(editor, 'h2'),
+    'meta+3': (editor) => headerHandler(editor, 'h3'),
+    'meta+4': (editor) => headerHandler(editor, 'h4'),
+    'meta+5': wrapFormatAction(toggleSelectionAsParagraph),
+    'meta+d': wrapFormatAction(toggleSelectionAsParagraph),
+    'meta+6': wrapFormatAction(toggleSelectionAsBlockquote),
+    'meta+q': wrapFormatAction(toggleSelectionAsBlockquote),
+    'meta+7': wrapFormatAction(formatCodeBlock),
+    'meta+e': wrapFormatAction(formatCodeBlock),
+    'meta+8': toggleInlineCode,
+    'meta+shift+e': toggleInlineCode,
+    'meta+9': wrapFormatAction(cycleSelectionCalloutFormats),
 
-    'ctrl+o': wrapFormatAction((e) => toggleSelectionAsList(e, 'number')),
-    'ctrl+p': wrapFormatAction((e) => toggleSelectionAsList(e, 'bullet')),
-    'ctrl+k': (editor, context) => {
+    'meta+o': wrapFormatAction((e) => toggleSelectionAsList(e, 'number')),
+    'meta+p': wrapFormatAction((e) => toggleSelectionAsList(e, 'bullet')),
+    'meta+k': (editor, context) => {
         editor.getEditorState().read(() => {
             const selectedLink = $getNodeFromSelection($getSelection(), $isLinkNode) as LinkNode | null;
             $showLinkForm(selectedLink, context);
         });
         return true;
     },
-    'ctrl+shift+k': (editor, context) => {
+    'meta+shift+k': (editor, context) => {
         showLinkSelector(entity => {
             insertOrUpdateLink(editor, {
                 text: entity.name,
@@ -79,8 +83,7 @@ const actionsByKeys: Record<string, ShortcutAction> = {
 
 function createKeyDownListener(context: EditorUiContext): (e: KeyboardEvent) => void {
     return (event: KeyboardEvent) => {
-        // TODO - Mac Cmd support
-        const combo = `${event.ctrlKey ? 'ctrl+' : ''}${event.shiftKey ? 'shift+' : ''}${event.key}`.toLowerCase();
+        const combo = keyboardEventToKeyComboString(event);
         // console.log(`pressed: ${combo}`);
         if (actionsByKeys[combo]) {
             const handled = actionsByKeys[combo](context.editor, context);
@@ -92,10 +95,29 @@ function createKeyDownListener(context: EditorUiContext): (e: KeyboardEvent) => 
     };
 }
 
+function keyboardEventToKeyComboString(event: KeyboardEvent): string {
+    const metaKeyPressed = isMac() ? event.metaKey : event.ctrlKey;
+
+    const parts = [
+        metaKeyPressed ? 'meta' : '',
+        event.shiftKey ? 'shift' : '',
+        event.key,
+    ];
+
+    return parts.filter(Boolean).join('+').toLowerCase();
+}
+
+function isMac(): boolean {
+    return window.navigator.userAgent.includes('Mac OS X');
+}
+
 function overrideDefaultCommands(editor: LexicalEditor) {
     // Prevent default ctrl+enter command
     editor.registerCommand(KEY_ENTER_COMMAND, (event) => {
-        return event?.ctrlKey ? true : false
+        if (isMac()) {
+            return event?.metaKey || false;
+        }
+        return event?.ctrlKey || false;
     }, COMMAND_PRIORITY_HIGH);
 }
 

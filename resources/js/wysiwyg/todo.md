@@ -6,7 +6,7 @@
 
 ## Main Todo
 
-- Mac: Shortcut support via command.
+//
 
 ## Secondary Todo
 
