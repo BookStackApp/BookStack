@@ -1,14 +1,14 @@
 import {$createCustomListItemNode, $isCustomListItemNode, CustomListItemNode} from "../nodes/custom-list-item";
 import {$createCustomListNode, $isCustomListNode} from "../nodes/custom-list";
-import {BaseSelection, LexicalEditor} from "lexical";
-import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection, getLastSelection} from "./selection";
+import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
+import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection} from "./selection";
 import {nodeHasInset} from "./nodes";
 
 
-export function $nestListItem(node: CustomListItemNode) {
+export function $nestListItem(node: CustomListItemNode): CustomListItemNode {
     const list = node.getParent();
     if (!$isCustomListNode(list)) {
-        return;
+        return node;
     }
 
     const listItems = list.getChildren() as CustomListItemNode[];
@@ -27,14 +27,16 @@ export function $nestListItem(node: CustomListItemNode) {
         prevListItem.append(newList);
         node.remove();
     }
+
+    return newListItem;
 }
 
-export function $unnestListItem(node: CustomListItemNode) {
+export function $unnestListItem(node: CustomListItemNode): CustomListItemNode {
     const list = node.getParent();
     const parentListItem = list?.getParent();
     const outerList = parentListItem?.getParent();
     if (!$isCustomListNode(list) || !$isCustomListNode(outerList) || !$isCustomListItemNode(parentListItem)) {
-        return;
+        return node;
     }
 
     parentListItem.insertAfter(node);
@@ -45,6 +47,8 @@ export function $unnestListItem(node: CustomListItemNode) {
     if (parentListItem.getChildren().length === 0) {
         parentListItem.remove();
     }
+
+    return node;
 }
 
 function getListItemsForSelection(selection: BaseSelection|null): (CustomListItemNode|null)[] {
@@ -89,24 +93,25 @@ function $reduceDedupeListItems(listItems: (CustomListItemNode|null)[]): CustomL
 }
 
 export function $setInsetForSelection(editor: LexicalEditor, change: number): void {
-    const selection = getLastSelection(editor);
-
+    const selection = $getSelection();
     const listItemsInSelection = getListItemsForSelection(selection);
     const isListSelection = listItemsInSelection.length > 0 && !listItemsInSelection.includes(null);
 
     if (isListSelection) {
+        const alteredListItems = [];
         const listItems = $reduceDedupeListItems(listItemsInSelection);
         if (change > 0) {
             for (const listItem of listItems) {
-                $nestListItem(listItem);
+                alteredListItems.push($nestListItem(listItem));
             }
         } else if (change < 0) {
             for (const listItem of [...listItems].reverse()) {
-                $unnestListItem(listItem);
+                alteredListItems.push($unnestListItem(listItem));
             }
+            alteredListItems.reverse();
         }
 
-        $selectNodes(listItems);
+        $selectNodes(alteredListItems);
         return;
     }
 
