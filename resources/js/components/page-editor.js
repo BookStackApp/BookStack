@@ -1,7 +1,7 @@
-import * as Dates from '../services/dates';
 import {onSelect} from '../services/dom';
 import {debounce} from '../services/util';
 import {Component} from './component';
+import {utcTimeStampToLocalTime} from '../services/dates.ts';
 
 export class PageEditor extends Component {
 
@@ -129,7 +129,7 @@ export class PageEditor extends Component {
                 this.deleteDraftWrap.toggleAttribute('hidden', false);
             }
 
-            this.draftNotifyChange(`${resp.data.message} ${Dates.utcTimeStampToLocalTime(resp.data.timestamp)}`);
+            this.draftNotifyChange(`${resp.data.message} ${utcTimeStampToLocalTime(resp.data.timestamp)}`);
             this.autoSave.last = Date.now();
             if (resp.data.warning && !this.shownWarningsCache.has(resp.data.warning)) {
                 window.$events.emit('warning', resp.data.warning);

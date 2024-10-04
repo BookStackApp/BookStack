@@ -3,13 +3,13 @@ import {
     attributesModule,
     toVNode,
 } from 'snabbdom';
+import {VNode} from "snabbdom/build/vnode";
 
-let patcher;
+type vDomPatcher = (oldVnode: VNode | Element | DocumentFragment, vnode: VNode) => VNode;
 
-/**
- * @returns {Function}
- */
-function getPatcher() {
+let patcher: vDomPatcher;
+
+function getPatcher(): vDomPatcher {
     if (patcher) return patcher;
 
     patcher = init([
@@ -19,11 +19,7 @@ function getPatcher() {
     return patcher;
 }
 
-/**
- * @param {Element} domTarget
- * @param {String} html
- */
-export function patchDomFromHtmlString(domTarget, html) {
+export function patchDomFromHtmlString(domTarget: Element, html: string): void {
     const contentDom = document.createElement('div');
     contentDom.innerHTML = html;
     getPatcher()(toVNode(domTarget), toVNode(contentDom));
