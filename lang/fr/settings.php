@@ -295,6 +295,7 @@ return [
         'bs' => 'Bosniaque',
         'ca' => 'Catalan',
         'cs' => 'Tchèque',
+        'cy' => 'Cymraeg',
         'da' => 'Danois',
         'de' => 'Allemand',
         'de_informal' => 'Allemand (informel)',
