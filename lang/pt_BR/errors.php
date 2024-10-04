@@ -66,7 +66,8 @@ return [
     'page_custom_home_deletion' => 'Não é possível excluir uma página definida como página inicial',
 
     // Entities
-    'entity_not_found' => 'Entidade não encontrada',
+    'entity_not_found' => 'Entidade não encontrada
+',
     'bookshelf_not_found' => 'Prateleira não encontrada',
     'book_not_found' => 'Livro não encontrado',
     'page_not_found' => 'Página não encontrada',
