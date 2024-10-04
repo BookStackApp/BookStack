@@ -77,20 +77,20 @@ return [
     'guests_cannot_save_drafts' => 'Convidados não podem salvar rascunhos',
 
     // Users
-    'users_cannot_delete_only_admin' => 'Você não pode excluir o único admin',
+    'users_cannot_delete_only_admin' => 'Você não pode excluir o único administrador',
     'users_cannot_delete_guest' => 'Você não pode excluir o usuário convidado',
     'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
-    'role_cannot_be_edited' => 'Esse cargo não pode ser editado',
-    'role_system_cannot_be_deleted' => 'Esse cargo é um cargo do sistema e não pode ser excluído',
-    'role_registration_default_cannot_delete' => 'Esse cargo não poderá se excluído enquanto estiver registrado como o cargo padrão',
-    'role_cannot_remove_only_admin' => 'Este usuário é o único usuário vinculado ao cargo de administrador. Atribua o cargo de administrador a outro usuário antes de tentar removê-lo aqui.',
+    'role_cannot_be_edited' => 'Essa função não pode ser editada',
+    'role_system_cannot_be_deleted' => 'Essa é uma função do sistema e não pode ser excluída',
+    'role_registration_default_cannot_delete' => 'Essa função não poderá se excluída enquanto estiver registrada como função de registro padrão',
+    'role_cannot_remove_only_admin' => 'Este usuário é o único vinculado ao cargo de administrador. Atribua o cargo de administrador a outro usuário antes de tentar removê-lo aqui.',
 
     // Comments
     'comment_list' => 'Ocorreu um erro ao buscar os comentários.',
     'cannot_add_comment_to_draft' => 'Você não pode adicionar comentários a um rascunho.',
-    'comment_add' => 'Ocorreu um erro ao adicionar o comentário.',
+    'comment_add' => 'Ocorreu um erro ao adicionar / atualizar o comentário.',
     'comment_delete' => 'Ocorreu um erro ao excluir o comentário.',
     'empty_comment' => 'Não é possível adicionar um comentário vazio.',
 
@@ -103,20 +103,20 @@ return [
     'image_not_found_details' => 'Se você esperava que esta imagem existisse, ela pode ter sido excluída.',
     'return_home' => 'Retornar à página inicial',
     'error_occurred' => 'Ocorreu um Erro',
-    'app_down' => ':appName está fora do ar no momento',
-    'back_soon' => 'Voltaremos em breve.',
+    'app_down' => 'Agora está baixo',
+    'back_soon' => 'Vai estar de volta em breve.',
 
     // API errors
-    'api_no_authorization_found' => 'Nenhum token de autorização encontrado na requisição',
-    'api_bad_authorization_format' => 'Um token de autorização foi encontrado na requisição, mas o formato parece incorreto',
-    'api_user_token_not_found' => 'Nenhum token de API correspondente foi encontrado para o token de autorização fornecido',
-    'api_incorrect_token_secret' => 'O segredo fornecido para o token de API usado está incorreto',
-    'api_user_no_api_permission' => 'O proprietário do token de API utilizado não tem permissão para fazer requisições de API',
-    'api_user_token_expired' => 'O token de autenticação expirou',
+    'api_no_authorization_found' => 'Nenhum código de autorização encontrado na requisição',
+    'api_bad_authorization_format' => 'Um código de autorização foi encontrado na requisição, mas o formato parece incorreto',
+    'api_user_token_not_found' => 'Nenhum código de API correspondente foi encontrado para o código de autorização fornecido',
+    'api_incorrect_token_secret' => 'O segredo fornecido para o código de API usado está incorreto',
+    'api_user_no_api_permission' => 'O proprietário do código de API utilizado não tem permissão para fazer requisições de API',
+    'api_user_token_expired' => 'O código de autenticação expirou',
 
     // Settings & Maintenance
-    'maintenance_test_email_failure' => 'Erro encontrado ao enviar um e-mail de teste:',
+    'maintenance_test_email_failure' => 'Erro encontrado ao enviar uma mensagem eletrônica de teste:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'A URL não corresponde aos hosts SSR configurados como permitidos',
+    'http_ssr_url_no_match' => 'A \'URL\' não corresponde aos anfitriões SSR configurados como permitidos ',
 ];
