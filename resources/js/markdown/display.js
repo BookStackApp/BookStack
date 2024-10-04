@@ -1,4 +1,4 @@
-import {patchDomFromHtmlString} from '../services/vdom';
+import {patchDomFromHtmlString} from '../services/vdom.ts';
 
 export class Display {
 

@@ -1,4 +1,4 @@
-import {Clipboard} from '../services/clipboard';
+import {Clipboard} from '../services/clipboard.ts';
 
 let wrap;
 let draggedContentEditable;

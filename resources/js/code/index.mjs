@@ -1,6 +1,6 @@
 import {EditorView, keymap} from '@codemirror/view';
 
-import {copyTextToClipboard} from '../services/clipboard';
+import {copyTextToClipboard} from '../services/clipboard.ts';
 import {viewerExtensions, editorExtensions} from './setups';
 import {createView} from './views';
 import {SimpleEditorInterface} from './simple-editor-interface';
