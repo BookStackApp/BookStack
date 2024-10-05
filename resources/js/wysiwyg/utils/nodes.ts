@@ -1,7 +1,7 @@
 import {
     $getRoot,
     $isDecoratorNode,
-    $isElementNode,
+    $isElementNode, $isRootNode,
     $isTextNode,
     ElementNode,
     LexicalEditor,
@@ -84,7 +84,7 @@ export function $getNearestBlockNodeForCoords(editor: LexicalEditor, x: number, 
 
 export function $getNearestNodeBlockParent(node: LexicalNode): LexicalNode|null {
     const isBlockNode = (node: LexicalNode): boolean => {
-        return ($isElementNode(node) || $isDecoratorNode(node)) && !node.isInline();
+        return ($isElementNode(node) || $isDecoratorNode(node)) && !node.isInline() && !$isRootNode(node);
     };
 
     if (isBlockNode(node)) {

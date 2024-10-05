@@ -83,30 +83,26 @@ export class TableNode extends ElementNode {
     return {
       ...super.exportDOM(editor),
       after: (tableElement) => {
-        if (tableElement) {
-          const newElement = tableElement.cloneNode() as ParentNode;
-          const colGroup = document.createElement('colgroup');
-          const tBody = document.createElement('tbody');
-          if (isHTMLElement(tableElement)) {
-            tBody.append(...tableElement.children);
-          }
-          const firstRow = this.getFirstChildOrThrow<TableRowNode>();
-
-          if (!$isTableRowNode(firstRow)) {
-            throw new Error('Expected to find row node.');
-          }
-
-          const colCount = firstRow.getChildrenSize();
-
-          for (let i = 0; i < colCount; i++) {
-            const col = document.createElement('col');
-            colGroup.append(col);
-          }
-
-          newElement.replaceChildren(colGroup, tBody);
-
-          return newElement as HTMLElement;
+        if (!tableElement) {
+          return;
         }
+
+        const newElement = tableElement.cloneNode() as ParentNode;
+        const tBody = document.createElement('tbody');
+
+        if (isHTMLElement(tableElement)) {
+          for (const child of Array.from(tableElement.children)) {
+            if (child.nodeName === 'TR') {
+              tBody.append(child);
+            } else {
+              newElement.append(child);
+            }
+          }
+        }
+
+        newElement.append(tBody);
+
+        return newElement as HTMLElement;
       },
     };
   }
