@@ -73,7 +73,7 @@ class SearchOptions
         }
 
         if (isset($inputs['types']) && count($inputs['types']) < 4) {
-            $cleanedFilters[] = new FilterSearchOption(implode('|', $inputs['types']), 'types');
+            $cleanedFilters[] = new FilterSearchOption(implode('|', $inputs['types']), 'type');
         }
 
         $instance->filters = new SearchOptionSet($cleanedFilters);
@@ -235,10 +235,13 @@ class SearchOptions
     {
         $options = [];
 
-        // Non-[created/updated]-by-me options
+        // Handle filters without UI support
         $userFilters = ['updated_by', 'created_by', 'owned_by'];
+        $unsupportedFilters = ['is_template', 'sort_by'];
         foreach ($this->filters->all() as $filter) {
             if (in_array($filter->getKey(), $userFilters, true) && $filter->value !== null && $filter->value !== 'me') {
+                $options[] = $filter;
+            } else if (in_array($filter->getKey(), $unsupportedFilters, true)) {
                 $options[] = $filter;
             }
         }
