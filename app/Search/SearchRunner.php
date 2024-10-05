@@ -463,7 +463,7 @@ class SearchRunner
         $morphClass = str_replace('\\', '\\\\', $model->getMorphClass());
         $commentQuery = DB::raw('(SELECT c1.entity_id, c1.entity_type, c1.created_at as last_commented FROM ' . $commentsTable . ' c1 LEFT JOIN ' . $commentsTable . ' c2 ON (c1.entity_id = c2.entity_id AND c1.entity_type = c2.entity_type AND c1.created_at < c2.created_at) WHERE c1.entity_type = \'' . $morphClass . '\' AND c2.created_at IS NULL) as comments');
 
-        $query->join($commentQuery, $model->getTable() . '.id', '=', 'comments.entity_id')
+        $query->join($commentQuery, $model->getTable() . '.id', '=', DB::raw('comments.entity_id'))
             ->orderBy('last_commented', $negated ? 'asc' : 'desc');
     }
 }
