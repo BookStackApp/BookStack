@@ -573,8 +573,8 @@ class EntitySearchTest extends TestCase
 
     public function test_searches_with_terms_without_controls_includes_them_in_extras()
     {
-        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan} -{viewed_by_me} -[a=b] -"dog"'));
-        $this->withHtml($resp)->assertFieldHasValue('extras', '{updated_by:dan} {created_by:dan} -"dog" -[a=b] -{viewed_by_me}');
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('test {updated_by:dan} {created_by:dan} -{viewed_by_me} -[a=b] -"dog" {is_template} {sort_by:last_commented}'));
+        $this->withHtml($resp)->assertFieldHasValue('extras', '{updated_by:dan} {created_by:dan} {is_template} {sort_by:last_commented} -"dog" -[a=b] -{viewed_by_me}');
     }
 
     public function test_negated_searches_dont_show_in_inputs()

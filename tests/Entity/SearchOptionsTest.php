@@ -113,6 +113,19 @@ class SearchOptionsTest extends TestCase
         $this->assertEquals(['"cheese"', '""', '"baked',  'beans"'], $options->exacts->toValueArray());
     }
 
+    public function test_from_request_properly_parses_provided_types()
+    {
+        $request = new Request([
+            'search' => '',
+            'types' => ['page', 'book'],
+        ]);
+
+        $options = SearchOptions::fromRequest($request);
+        $filters = $options->filters->toValueMap();
+        $this->assertCount(1, $filters);
+        $this->assertEquals('page|book', $filters['type'] ?? 'notfound');
+    }
+
     public function test_from_request_properly_parses_out_extras_as_string()
     {
         $request = new Request([
