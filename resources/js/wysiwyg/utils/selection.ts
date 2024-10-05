@@ -82,8 +82,8 @@ export function $insertNewBlockNodeAtSelection(node: LexicalNode, insertAfter: b
 }
 
 export function $insertNewBlockNodesAtSelection(nodes: LexicalNode[], insertAfter: boolean = true) {
-    const selection = $getSelection();
-    const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
+    const selectionNodes = $getSelection()?.getNodes() || [];
+    const blockElement = selectionNodes.length > 0 ? $getNearestNodeBlockParent(selectionNodes[0]) : null;
 
     if (blockElement) {
         if (insertAfter) {

@@ -3,7 +3,7 @@ import {$createTextNode, $getSelection, $insertNodes, LexicalEditor, LexicalNode
 import {
     $getBlockElementNodesInSelection,
     $getNodeFromSelection,
-    $insertNewBlockNodeAtSelection, $selectionContainsNodeType,
+    $insertNewBlockNodeAtSelection, $selectionContainsNodeType, $selectSingleNode,
     $toggleSelectionBlockNodeType,
     getLastSelection
 } from "./selection";
@@ -65,9 +65,19 @@ export function formatCodeBlock(editor: LexicalEditor) {
             editor.update(() => {
                 const codeBlock = $createCodeBlockNode();
                 codeBlock.setCode(selection?.getTextContent() || '');
-                $insertNewBlockNodeAtSelection(codeBlock, true);
+
+                const selectionNodes = $getBlockElementNodesInSelection(selection);
+                const firstSelectionNode = selectionNodes[0];
+                const extraNodes = selectionNodes.slice(1);
+                if (firstSelectionNode) {
+                    firstSelectionNode.replace(codeBlock);
+                    extraNodes.forEach(n => n.remove());
+                } else {
+                    $insertNewBlockNodeAtSelection(codeBlock, true);
+                }
+
                 $openCodeEditorForNode(editor, codeBlock);
-                codeBlock.selectStart();
+                $selectSingleNode(codeBlock);
             });
         } else {
             $openCodeEditorForNode(editor, codeBlock);
