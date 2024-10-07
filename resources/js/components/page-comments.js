@@ -40,7 +40,7 @@ export class PageComments extends Component {
 
     setupListeners() {
         this.elem.addEventListener('page-comment-delete', () => {
-            this.updateCount();
+            setTimeout(() => this.updateCount(), 1);
             this.hideForm();
         });
 
@@ -72,7 +72,13 @@ export class PageComments extends Component {
 
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
             const newElem = htmlToDom(resp.data);
-            this.formContainer.after(newElem);
+
+            if (reqData.parent_id) {
+                this.formContainer.after(newElem);
+            } else {
+                this.container.append(newElem);
+            }
+
             window.$events.success(this.createdText);
             this.hideForm();
             this.updateCount();
@@ -87,7 +93,8 @@ export class PageComments extends Component {
 
     updateCount() {
         const count = this.getCommentCount();
-        this.commentsTitle.textContent = window.trans_plural(this.countText, count, {count});
+        console.log('update count', count, this.container);
+        this.commentsTitle.textContent = window.$trans.choice(this.countText, count, {count});
     }
 
     resetForm() {

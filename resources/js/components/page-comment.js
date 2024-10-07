@@ -104,9 +104,9 @@ export class PageComment extends Component {
         this.showLoading();
 
         await window.$http.delete(`/comment/${this.commentId}`);
+        this.$emit('delete');
         this.container.closest('.comment-branch').remove();
         window.$events.success(this.deletedText);
-        this.$emit('delete');
     }
 
     showLoading() {
