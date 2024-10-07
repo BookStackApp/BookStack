@@ -137,8 +137,8 @@ window.$events.showValidationErrors(error);
 // Translator
 // Take the given plural text and count to decide on what plural option
 // to use, Similar to laravel's trans_choice function but instead
-// takes the direction directly instead of a translation key.
-window.trans_plural(translationString, count, replacements);
+// takes the translation text directly instead of a translation key.
+window.$trans.choice(translationString, count, replacements);
 
 // Component System
 // Parse and initialise any components from the given root el down.
