@@ -141,7 +141,7 @@ Kauê Sena (kaue.sena.ks) :: Portuguese, Brazilian
 MatthieuParis :: French
 Douradinho :: Portuguese, Brazilian; Portuguese
 Gaku Yaguchi (tama11) :: Japanese
-johnroyer :: Chinese Traditional
+Zero Huang (johnroyer) :: Chinese Traditional
 jackaaa :: Chinese Traditional
 Irfan Hukama Arsyad (IrfanArsyad) :: Indonesian
 Jeff Huang (s8321414) :: Chinese Traditional
@@ -431,3 +431,21 @@ Michal Melich (michalmelich) :: Czech
 David (david-prv) :: German; German Informal
 Larry (lahoje) :: Swedish
 Marcia dos Santos (marciab80) :: Portuguese
+Ricard López Torres (richilpez.torres) :: Catalan
+sarahalves7 :: Portuguese, Brazilian
+petr.husak :: Czech
+javadataherian :: Persian
+Ludo-code :: French
+hollsten :: Swedish
+Ngoc Lan Phung (lanpncz) :: Vietnamese
+Worive :: Catalan
+Илья Скаба (skabailya) :: Russian
+Irjan Olsen (Irch) :: Norwegian Bokmal
+Aleksandar Jovanovic (jovanoviczaleksandar) :: Serbian (Cyrillic)
+Red (RedVortex) :: Hebrew
+xgrug :: Chinese Simplified
+HrCalmar :: Danish
+Avishay Rapp (AvishayRapp) :: Hebrew
+matthias4217 :: French
+Berke BOYLU2 (berkeboylu2) :: Turkish
+etwas7B :: German

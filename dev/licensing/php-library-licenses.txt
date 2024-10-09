@@ -96,6 +96,22 @@ Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
 Source: https://github.com/dompdf/dompdf.git
 Link: https://github.com/dompdf/dompdf
 -----------
+dompdf/php-font-lib
+License: LGPL-2.1-or-later
+License File: vendor/dompdf/php-font-lib/LICENSE
+Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+Source: https://github.com/dompdf/php-font-lib.git
+Link: https://github.com/dompdf/php-font-lib
+-----------
+dompdf/php-svg-lib
+License: LGPL-3.0-or-later
+License File: vendor/dompdf/php-svg-lib/LICENSE
+Copyright: Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+Source: https://github.com/dompdf/php-svg-lib.git
+Link: https://github.com/dompdf/php-svg-lib
+-----------
 dragonmantank/cron-expression
 License: MIT
 License File: vendor/dragonmantank/cron-expression/LICENSE
@@ -374,22 +390,6 @@ License File: vendor/paragonie/random_compat/LICENSE
 Copyright: Copyright (c) 2015 Paragon Initiative Enterprises
 Source: https://github.com/paragonie/random_compat.git
 Link: https://github.com/paragonie/random_compat.git
------------
-phenx/php-font-lib
-License: LGPL-2.1-or-later
-License File: vendor/phenx/php-font-lib/LICENSE
-Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
-Source: https://github.com/dompdf/php-font-lib.git
-Link: https://github.com/PhenX/php-font-lib
------------
-phenx/php-svg-lib
-License: LGPL-3.0-or-later
-License File: vendor/phenx/php-svg-lib/LICENSE
-Copyright: Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
-Source: https://github.com/dompdf/php-svg-lib.git
-Link: https://github.com/PhenX/php-svg-lib
 -----------
 phpoption/phpoption
 License: Apache-2.0
