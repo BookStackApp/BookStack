@@ -13,11 +13,17 @@ class UserInviteService extends UserTokenService
     /**
      * Send an invitation to a user to sign into BookStack
      * Removes existing invitation tokens.
+     * @throws UserInviteException
      */
     public function sendInvitation(User $user)
     {
         $this->deleteByUser($user);
         $token = $this->createTokenForUser($user);
-        $user->notify(new UserInviteNotification($token));
+
+        try {
+            $user->notify(new UserInviteNotification($token));
+        } catch (\Exception $exception) {
+            throw new UserInviteException($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 }

@@ -2,13 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  overflow: hidden;
 
   .edit-area {
     flex: 1;
     flex-direction: column;
     z-index: 10;
-    overflow: hidden;
     border-radius: 0 0 8px 8px;
   }
 
@@ -37,12 +35,15 @@
 }
 
 @include larger-than($xxl) {
+  .page-editor-wysiwyg2024 .page-edit-toolbar,
+  .page-editor-wysiwyg2024 .page-editor-page-area,
   .page-editor-wysiwyg .page-edit-toolbar,
   .page-editor-wysiwyg .page-editor-page-area {
     max-width: 1140px;
   }
 
-  .page-editor-wysiwyg .floating-toolbox {
+  .page-editor-wysiwyg .floating-toolbox,
+  .page-editor-wysiwyg2024 .floating-toolbox {
     position: absolute;
   }
 }

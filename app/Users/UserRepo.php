@@ -2,6 +2,7 @@
 
 namespace BookStack\Users;
 
+use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\EntityProvider;
@@ -83,6 +84,7 @@ class UserRepo
      * As per "createWithoutActivity" but records a "create" activity.
      *
      * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data
+     * @throws UserInviteException
      */
     public function create(array $data, bool $sendInvite = false): User
     {

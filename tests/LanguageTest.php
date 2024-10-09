@@ -35,7 +35,8 @@ class LanguageTest extends TestCase
         $diffs = array_diff($this->langs, $dropdownLocales);
         if (count($diffs) > 0) {
             $diffText = implode(',', $diffs);
-            $this->addWarning("Languages: {$diffText} found in files but not in language select dropdown.");
+            $warning = "Languages: {$diffText} found in files but not in language select dropdown.";
+            $this->fail($warning);
         }
         $this->assertTrue(true);
     }

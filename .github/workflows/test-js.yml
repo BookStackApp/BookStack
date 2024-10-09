@@ -1,0 +1,29 @@
+name: test-js
+
+on:
+  push:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+
+jobs:
+  build:
+    if: ${{ github.ref != 'refs/heads/l10n_development' }}
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install NPM deps
+      run: npm ci
+
+    - name: Run TypeScript type checking
+      run: npm run ts:lint
+
+    - name: Run JavaScript tests
+      run: npm run test

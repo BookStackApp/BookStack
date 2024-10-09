@@ -5,7 +5,7 @@
     "build:css:watch": "sass ./resources/sass:./public/dist --watch --embed-sources",
     "build:css:production": "sass ./resources/sass:./public/dist -s compressed",
     "build:js:dev": "node dev/build/esbuild.js",
-    "build:js:watch": "chokidar --initial \"./resources/**/*.js\" \"./resources/**/*.mjs\" -c \"npm run build:js:dev\"",
+    "build:js:watch": "chokidar --initial \"./resources/**/*.js\" \"./resources/**/*.mjs\" \"./resources/**/*.ts\" -c \"npm run build:js:dev\"",
     "build:js:production": "node dev/build/esbuild.js production",
     "build": "npm-run-all --parallel build:*:dev",
     "production": "npm-run-all --parallel build:*:production",
@@ -14,7 +14,9 @@
     "livereload": "livereload ./public/dist/",
     "permissions": "chown -R $USER:$USER bootstrap/cache storage public/uploads",
     "lint": "eslint \"resources/**/*.js\" \"resources/**/*.mjs\"",
-    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\""
+    "fix": "eslint --fix \"resources/**/*.js\" \"resources/**/*.mjs\"",
+    "ts:lint": "tsc --noEmit",
+    "test": "jest"
   },
   "devDependencies": {
     "@lezer/generator": "^1.5.1",
@@ -23,9 +25,14 @@
     "eslint": "^8.55.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "livereload": "^0.9.3",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "5.6.*"
   },
   "dependencies": {
     "@codemirror/commands": "^6.3.2",
@@ -44,6 +51,7 @@
     "@lezer/highlight": "^1.2.0",
     "@ssddanbrown/codemirror-lang-smarty": "^1.0.0",
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
+    "@types/jest": "^29.5.13",
     "codemirror": "^6.0.1",
     "idb-keyval": "^6.2.1",
     "markdown-it": "^14.1.0",
@@ -59,7 +67,8 @@
     },
     "extends": "airbnb-base",
     "ignorePatterns": [
-      "resources/**/*-stub.js"
+      "resources/**/*-stub.js",
+      "resources/**/*.ts"
     ],
     "overrides": [],
     "parserOptions": {

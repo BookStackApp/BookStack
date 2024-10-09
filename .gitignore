@@ -2,6 +2,7 @@
 /node_modules
 /.vscode
 /composer
+/coverage
 Homestead.yaml
 .env
 .idea

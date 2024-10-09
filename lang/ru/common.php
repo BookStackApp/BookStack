@@ -107,4 +107,7 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Политика конфиденциальности',
     'terms_of_service' => 'Условия использования',
+
+    // OpenSearch
+    'opensearch_description' => 'Search :appName',
 ];

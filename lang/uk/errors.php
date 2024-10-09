@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Драйвер для СоціальноїМережі не знайдено',
     'social_driver_not_configured' => 'Ваші соціальні настройки :socialAccount не правильно налаштовані.',
     'invite_token_expired' => 'Термін дії цього запрошення закінчився. Замість цього ви можете спробувати скинути пароль свого облікового запису.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Користувач для цієї дії не знайдений.',
 
     // System
     'path_not_writable' => 'Не вдається завантажити шлях до файлу :filePath. Переконайтеся, що він доступний для запису на сервер.',
@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Ви не можете видалити єдиного адміністратора',
     'users_cannot_delete_guest' => 'Ви не можете видалити гостьового користувача',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Цю роль не можна редагувати',

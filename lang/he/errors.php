@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'אינך יכול למחוק את המנהל היחיד',
     'users_cannot_delete_guest' => 'אינך יכול למחוק את משתמש האורח',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'לא ניתן לערוך תפקיד זה',

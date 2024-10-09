@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Не можете обрисати јединог администратора',
     'users_cannot_delete_guest' => 'Не можете обрисати госта',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Ова улога се не може мењати',

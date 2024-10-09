@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'No podeu suprimir l’administrador únic.',
     'users_cannot_delete_guest' => 'No podeu suprimir l’usuari convidat.',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'No es pot editar aquest rol.',

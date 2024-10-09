@@ -1,6 +1,6 @@
 import * as DOM from '../services/dom';
 import {Component} from './component';
-import {copyTextToClipboard} from '../services/clipboard';
+import {copyTextToClipboard} from '../services/clipboard.ts';
 
 export class Pointer extends Component {
 

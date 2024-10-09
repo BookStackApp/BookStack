@@ -59,22 +59,22 @@ return [
     'favourite_remove_notification' => 'Mae ":name" wedi\'i tynnu o\'ch ffefrynnau',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Dewisiadau gwylio wedi’u diweddaru\'n llwyddiannus',
 
     // Auth
     'auth_login' => 'wedi\'u mewngofnodi',
     'auth_register' => 'wedi\'i cofrestru\'n ddefnyddiwr newydd',
     'auth_password_reset_request' => 'wedi ceisio ailosod gair pass defnyddiwr',
     'auth_password_reset_update' => 'ailosododd air pass defnyddiwr',
-    'mfa_setup_method' => 'configured MFA method',
+    'mfa_setup_method' => 'Dull Dilysu Aml-ffactor wedi’i ffurfweddu',
     'mfa_setup_method_notification' => 'Dull aml-ffactor wedi\'i ffurfweddu\'n llwyddiannus',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'Dull Dilysu Aml-ffactor wedi\'i ddileu',
     'mfa_remove_method_notification' => 'Llwyddwyd i ddileu dull aml-ffactor',
 
     // Settings
     'settings_update' => 'diweddarodd osodiadau',
     'settings_update_notification' => 'Gosodiadau wedi\'i diweddaru\'n llwyddiannus',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'rhedeg gweithred cynnal a chadw',
 
     // Webhooks
     'webhook_create' => 'webhook wedi creu',
@@ -111,7 +111,7 @@ return [
     // Recycle Bin
     'recycle_bin_empty' => 'gwagodd fin ailgylchu',
     'recycle_bin_restore' => 'wedi\'i adfer o\'r bin ailgylchu',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_destroy' => 'symudwyd o’r bin ailgylchu',
 
     // Comments
     'commented_on'                => 'gwnaeth sylwadau ar',

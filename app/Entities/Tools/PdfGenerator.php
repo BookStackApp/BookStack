@@ -5,6 +5,7 @@ namespace BookStack\Entities\Tools;
 use BookStack\Exceptions\PdfExportException;
 use Knp\Snappy\Pdf as SnappyPdf;
 use Dompdf\Dompdf;
+use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Symfony\Component\Process\Process;
 
 class PdfGenerator
@@ -85,9 +86,15 @@ class PdfGenerator
 
         file_put_contents($inputHtml, $html);
 
+        $timeout = intval(config('exports.pdf_command_timeout'));
         $process = Process::fromShellCommandline($command);
-        $process->setTimeout(15);
-        $process->run();
+        $process->setTimeout($timeout);
+
+        try {
+            $process->run();
+        } catch (ProcessTimedOutException $e) {
+            throw new PdfExportException("PDF Export via command failed due to timeout at {$timeout} second(s)");
+        }
 
         if (!$process->isSuccessful()) {
             throw new PdfExportException("PDF Export via command failed with exit code {$process->getExitCode()}, stdout: {$process->getOutput()}, stderr: {$process->getErrorOutput()}");

@@ -4,6 +4,7 @@ namespace Tests\Entity;
 
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\PageEditorType;
 use Tests\TestCase;
 
 class PageEditorTest extends TestCase
@@ -23,9 +24,24 @@ class PageEditorTest extends TestCase
         $this->withHtml($this->followRedirects($resp))->assertElementExists('#html-editor');
     }
 
+    public function test_editor_set_for_new_pages()
+    {
+        $book = $this->page->book;
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $newPage = $book->pages()->orderBy('id', 'desc')->first();
+        $this->assertEquals('wysiwyg', $newPage->editor);
+
+        $this->setSettings(['app-editor' => PageEditorType::Markdown->value]);
+
+        $this->asEditor()->get($book->getUrl('/create-page'));
+        $newPage = $book->pages()->orderBy('id', 'desc')->first();
+        $this->assertEquals('markdown', $newPage->editor);
+    }
+
     public function test_markdown_setting_shows_markdown_editor_for_new_pages()
     {
-        $this->setSettings(['app-editor' => 'markdown']);
+        $this->setSettings(['app-editor' => PageEditorType::Markdown->value]);
 
         $resp = $this->asAdmin()->get($this->page->book->getUrl('/create-page'));
         $this->withHtml($this->followRedirects($resp))
@@ -37,7 +53,7 @@ class PageEditorTest extends TestCase
     {
         $mdContent = '# hello. This is a test';
         $this->page->markdown = $mdContent;
-        $this->page->editor = 'markdown';
+        $this->page->editor = PageEditorType::Markdown;
         $this->page->save();
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
@@ -135,6 +151,19 @@ class PageEditorTest extends TestCase
 
         $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=wysiwyg'));
         $resp->assertStatus(200);
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
+        $resp->assertSee("<h2>A Header</h2>\n<p>Some content with <strong>bold</strong> text!</p>", true);
+    }
+
+    public function test_switching_from_markdown_to_wysiwyg2024_works()
+    {
+        $page = $this->entities->page();
+        $page->html = '';
+        $page->markdown = "## A Header\n\nSome content with **bold** text!";
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('/edit?editor=wysiwyg2024'));
+        $resp->assertStatus(200);
         $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
         $resp->assertSee("<h2>A Header</h2>\n<p>Some content with <strong>bold</strong> text!</p>", true);
     }
@@ -142,7 +171,7 @@ class PageEditorTest extends TestCase
     public function test_page_editor_changes_with_editor_property()
     {
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
 
         $this->page->markdown = "## A Header\n\nSome content with **bold** text!";
         $this->page->editor = 'markdown';
@@ -150,6 +179,12 @@ class PageEditorTest extends TestCase
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
         $this->withHtml($resp)->assertElementExists('[component="markdown-editor"]');
+
+        $this->page->editor = 'wysiwyg2024';
+        $this->page->save();
+
+        $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
     }
 
     public function test_editor_type_switch_options_show()
@@ -158,6 +193,7 @@ class PageEditorTest extends TestCase
         $editLink = $this->page->getUrl('/edit') . '?editor=';
         $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}markdown-clean\"]", '(Clean Content)');
         $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}markdown-stable\"]", '(Stable Content)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}wysiwyg2024\"]", '(In Alpha Testing)');
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit?editor=markdown-stable'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';
@@ -179,7 +215,7 @@ class PageEditorTest extends TestCase
 
         $resp = $this->asEditor()->get($page->getUrl('/edit?editor=markdown-stable'));
         $resp->assertStatus(200);
-        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
         $this->withHtml($resp)->assertElementNotExists('[component="markdown-editor"]');
     }
 
@@ -192,5 +228,41 @@ class PageEditorTest extends TestCase
 
         $this->asEditor()->put($page->getUrl(), ['name' => $page->name, 'markdown' => '## Updated content abc']);
         $this->assertEquals('wysiwyg', $page->refresh()->editor);
+    }
+
+    public function test_editor_type_change_to_wysiwyg_infers_type_from_request_or_uses_system_default()
+    {
+        $tests = [
+            [
+                'setting' => 'wysiwyg',
+                'request' => 'wysiwyg2024',
+                'expected' => 'wysiwyg2024',
+            ],
+            [
+                'setting' => 'wysiwyg2024',
+                'request' => 'wysiwyg',
+                'expected' => 'wysiwyg',
+            ],
+            [
+                'setting' => 'wysiwyg',
+                'request' => null,
+                'expected' => 'wysiwyg',
+            ],
+            [
+                'setting' => 'wysiwyg2024',
+                'request' => null,
+                'expected' => 'wysiwyg2024',
+            ]
+        ];
+
+        $page = $this->entities->page();
+        foreach ($tests as $test) {
+            $page->editor = 'markdown';
+            $page->save();
+
+            $this->setSettings(['app-editor' => $test['setting']]);
+            $this->asAdmin()->put($page->getUrl(), ['name' => $page->name, 'html' => '<p>Hello</p>', 'editor' => $test['request']]);
+            $this->assertEquals($test['expected'], $page->refresh()->editor, "Failed asserting global editor {$test['setting']} with request editor {$test['request']} results in {$test['expected']} set for the page");
+        }
     }
 }

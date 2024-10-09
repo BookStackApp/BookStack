@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => '唯一の管理者を削除することはできません',
     'users_cannot_delete_guest' => 'ゲストユーザを削除することはできません',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'この役割は編集できません',
