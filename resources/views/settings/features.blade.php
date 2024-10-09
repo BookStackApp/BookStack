@@ -56,6 +56,20 @@
                 </div>
             </div>
 
+            <div class="grid half gap-xl">
+                <div>
+                    <label class="setting-list-label">{{ trans('settings.app_new_books_inherit_perms') }}</label>
+                    <p class="small">{!! trans('settings.app_new_books_inherit_perms_desc') !!}</p>
+                </div>
+                <div>
+                    @include('form.toggle-switch', [
+                        'name' => 'setting-app-new-books-inherit-perms',
+                        'value' => setting('app-new-books-inherit-perms'),
+                        'label' => trans('settings.app_new_books_inherit_perms_toggle'),
+                    ])
+                </div>
+            </div>
+
 
         </div>
 

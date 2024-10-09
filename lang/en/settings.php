@@ -46,6 +46,9 @@ return [
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+    'app_new_books_inherit_perms' => 'New Books Inherit Permissions',
+    'app_new_books_inherit_perms_toggle' => 'New books inherit permissions',
+    'app_new_books_inherit_perms_desc' => 'Enabling this option will cause the bookshelve\'s permissions to be copied to any new book created under the shelf. This fixes the issue where someone creates a book, but cannot access it.<br>This can be overriden on an individual bookshelf.',
 
     // Color settings
     'color_scheme' => 'Application Color Scheme',
