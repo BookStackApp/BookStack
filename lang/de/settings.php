@@ -296,6 +296,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
         'bs' => 'Bosnisch',
         'ca' => 'Katalanisch',
         'cs' => 'Tschechisch',
+        'cy' => 'Cymraeg',
         'da' => 'Dänisch',
         'de' => 'Deutsch (Sie)',
         'de_informal' => 'Deutsch (Du)',

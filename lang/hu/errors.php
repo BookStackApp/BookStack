@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Nem lehet törölni az egyetlen adminisztrátort',
     'users_cannot_delete_guest' => 'A vendég felhasználót nem lehet törölni',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Ezt a szerepkört nem lehet szerkeszteni',

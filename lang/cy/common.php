@@ -19,8 +19,8 @@ return [
     'name' => 'Enw',
     'description' => 'Disgrifiad',
     'role' => 'Rôl',
-    'cover_image' => 'Cover image',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image' => 'Delwedd y clawr',
+    'cover_image_description' => 'Dylai\'r ddelwedd hon fod oddeutu 440x250px er y bydd wedi\'i graddio a’i thocio i ffitio rhyngwyneb y defnyddiwr mewn gwahanol senarios yn ôl yr angen, felly bydd y dimensiynau arddangos gwirioneddol yn amrywio.',
 
     // Actions
     'actions' => 'Gweithredoedd',
@@ -56,7 +56,7 @@ return [
 
     // Sort Options
     'sort_options' => 'Trefnu\'r opsiynau',
-    'sort_direction_toggle' => 'Sort Direction Toggle',
+    'sort_direction_toggle' => 'Trefnu Cyfeiriad Togl',
     'sort_ascending' => 'Trefnu\'n esgynnol',
     'sort_descending' => 'Trefnu\'n ddisgynnol',
     'sort_name' => 'Enw',
@@ -76,7 +76,7 @@ return [
     'grid_view' => 'Golwg Grid',
     'list_view' => 'Golwg Rhestr',
     'default' => 'Diofyn',
-    'breadcrumb' => 'Breadcrumb',
+    'breadcrumb' => 'Briwsion bara',
     'status' => 'Statws',
     'status_active' => 'Gweithredol',
     'status_inactive' => 'Anweithredol',
@@ -85,26 +85,29 @@ return [
 
     // Header
     'homepage' => 'Tudalen cartref',
-    'header_menu_expand' => 'Expand Header Menu',
+    'header_menu_expand' => 'Ehangu Dewislen Pennawd',
     'profile_menu' => 'Dewislen Proffil',
     'view_profile' => 'Gweld proffil',
     'edit_profile' => 'Golygu Proffil',
     'dark_mode' => 'Modd Tywyll',
     'light_mode' => 'Modd Golau',
-    'global_search' => 'Global Search',
+    'global_search' => 'Chwilio Byd-eang',
 
     // Layout tabs
     'tab_info' => 'Gwybodaeth',
-    'tab_info_label' => 'Tab: Show Secondary Information',
+    'tab_info_label' => 'Tab: Dangos Gwybodaeth Eilaidd',
     'tab_content' => 'Cynnwys',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_content_label' => 'Tab: Dangos Prif Gynnwys',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'Os ydych chi\'n cael trafferth clicio ar y botwm ":actionText", copïwch a gludwch yr URL isod i\'ch porwr gwe:',
+    'email_rights' => 'Cedwir pob hawl',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Polisi Preifatrwydd',
-    'terms_of_service' => 'Terms of Service',
+    'terms_of_service' => 'Telerau Gwasanaeth',
+
+    // OpenSearch
+    'opensearch_description' => 'Chwilio :appName',
 ];

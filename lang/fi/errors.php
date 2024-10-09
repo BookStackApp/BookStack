@@ -79,6 +79,7 @@ Sovellus ei tunnista ulkoisen todennuspalvelun pyyntöä. Ongelman voi aiheuttaa
     // Users
     'users_cannot_delete_only_admin' => 'Ainoaa ylläpitäjää ei voi poistaa',
     'users_cannot_delete_guest' => 'Vieraskäyttäjää ei voi poistaa',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Tätä roolia ei voi muokata',

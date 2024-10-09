@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Nu poți șterge singurul administrator',
     'users_cannot_delete_guest' => 'Nu se poate șterge utilizatorul "Vizitator"',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Acest rol nu poate fi editat',

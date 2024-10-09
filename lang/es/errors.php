@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'No se puede borrar el único administrador',
     'users_cannot_delete_guest' => 'No se puede borrar el usuario invitado',
+    'users_could_not_send_invite' => 'No se pudo crear el usuario porque no se pudo enviar el correo de invitación',
 
     // Roles
     'role_cannot_be_edited' => 'Este rol no puede ser editado',

@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Não pode excluir o único administrador',
     'users_cannot_delete_guest' => 'Não pode excluir o usuário convidado',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Este cargo não pode ser editado',

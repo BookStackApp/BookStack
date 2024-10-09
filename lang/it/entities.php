@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Contenuto Chiaro)',
     'pages_edit_switch_to_markdown_stable' => '(Contenuto Stabile)',
     'pages_edit_switch_to_wysiwyg' => 'Passa all\'editor WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Imposta Changelog',
     'pages_edit_enter_changelog_desc' => 'Inserisci una breve descrizione dei cambiamenti che hai apportato',
     'pages_edit_enter_changelog' => 'Inserisci Changelog',

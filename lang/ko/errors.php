@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Admin을 삭제할 수 없습니다.',
     'users_cannot_delete_guest' => 'Guest를 삭제할 수 없습니다.',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => '권한을 수정할 수 없습니다.',

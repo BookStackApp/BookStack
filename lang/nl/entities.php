@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Opgeschoonde Inhoud)',
     'pages_edit_switch_to_markdown_stable' => '(Stabiele Inhoud)',
     'pages_edit_switch_to_wysiwyg' => 'Schakel naar de WYSIWYG Bewerker',
+    'pages_edit_switch_to_new_wysiwyg' => 'Schakel naar de nieuwe WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alfa-testfase)',
     'pages_edit_set_changelog' => 'Logboek instellen',
     'pages_edit_enter_changelog_desc' => 'Geef een korte omschrijving van de wijzigingen die je gemaakt hebt',
     'pages_edit_enter_changelog' => 'Voeg toe aan logboek',

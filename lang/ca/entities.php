@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Contingut net)',
     'pages_edit_switch_to_markdown_stable' => '(Contingut estable)',
     'pages_edit_switch_to_wysiwyg' => 'Canvia a l’editor WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Registre de canvis',
     'pages_edit_enter_changelog_desc' => 'Introduïu una descripció breu dels canvis que heu fet',
     'pages_edit_enter_changelog' => 'Registra un canvi',

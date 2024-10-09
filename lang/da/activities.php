@@ -65,7 +65,7 @@ return [
     'auth_login' => 'loggede ind',
     'auth_register' => 'registered as new user',
     'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
+    'auth_password_reset_update' => 'nulstil adgangskode',
     'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Multi-faktor metode konfigureret',
     'mfa_remove_method' => 'removed MFA method',
@@ -85,8 +85,8 @@ return [
     'webhook_delete_notification' => 'Webhooken blev slettet',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
+    'user_create' => 'opret bruger',
+    'user_create_notification' => 'Bruger oprettet korrekt',
     'user_update' => 'updated user',
     'user_update_notification' => 'Brugeren blev opdateret',
     'user_delete' => 'deleted user',

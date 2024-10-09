@@ -89,7 +89,7 @@ return [
     'user_create_notification' => 'Kullanıcı başarıyla oluşturuldu',
     'user_update' => 'updated user',
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'kullanıcı silindi',
     'user_delete_notification' => 'Kullanıcı başarıyla silindi',
 
     // API Tokens

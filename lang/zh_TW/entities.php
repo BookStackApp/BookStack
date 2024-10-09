@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(清除內容)',
     'pages_edit_switch_to_markdown_stable' => '(保留內容)',
     'pages_edit_switch_to_wysiwyg' => '切換到所見即所得編輯器',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => '設定變更日誌',
     'pages_edit_enter_changelog_desc' => '輸入對您所做變動的簡易描述',
     'pages_edit_enter_changelog' => '輸入變更日誌',

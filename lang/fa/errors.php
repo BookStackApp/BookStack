@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'شما نمی توانید تنها ادمین را حذف کنید',
     'users_cannot_delete_guest' => 'شما نمی توانید کاربر مهمان را حذف کنید',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'این نقش قابل ویرایش نیست',

@@ -6,7 +6,7 @@ return [
 
     'new_comment_subject' => 'New comment on page: :pageName',
     'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
+    'new_page_subject' => 'Yeni sayfa :pageName',
     'new_page_intro' => 'A new page has been created in :appName:',
     'updated_page_subject' => 'Updated page: :pageName',
     'updated_page_intro' => 'A page has been updated in :appName:',

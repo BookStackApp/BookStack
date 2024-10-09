@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" הוסר מהמועדפים',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'העדפות צפייה עודכנו בהצלחה',
 
     // Auth
     'auth_login' => 'logged in',
@@ -117,7 +117,7 @@ return [
     'commented_on'                => 'הגיב/ה על',
     'comment_create'              => 'added comment',
     'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_delete'              => 'תגובה נמחקה',
 
     // Other
     'permissions_update'          => 'הרשאות עודכנו',

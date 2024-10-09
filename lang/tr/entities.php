@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Temiz İçerik)',
     'pages_edit_switch_to_markdown_stable' => '(Kararlı İçerik)',
     'pages_edit_switch_to_wysiwyg' => 'WYSIWYG düzenleyiciye geç',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Değişim Günlüğünü Ayarla',
     'pages_edit_enter_changelog_desc' => 'Yaptığınız değişiklikler hakkında kısa bir açıklama girin',
     'pages_edit_enter_changelog' => 'Değişim Günlüğünü Yazın',

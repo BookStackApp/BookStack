@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Puhdas sisältö)',
     'pages_edit_switch_to_markdown_stable' => '(Vakaa sisältö)',
     'pages_edit_switch_to_wysiwyg' => 'Vaihda WYSIWYG-editoriin',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Aseta muutosloki',
     'pages_edit_enter_changelog_desc' => 'Kirjoita lyhyt kuvaus tekemistäsi muutoksista',
     'pages_edit_enter_changelog' => 'Syötä muutosloki',

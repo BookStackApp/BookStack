@@ -107,4 +107,7 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Chính Sách Quyền Riêng Tư',
     'terms_of_service' => 'Điều khoản Dịch vụ',
+
+    // OpenSearch
+    'opensearch_description' => 'Search :appName',
 ];

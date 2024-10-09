@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Je kunt niet het enige admin account verwijderen',
     'users_cannot_delete_guest' => 'Je kunt het gastaccount niet verwijderen',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Deze rol kan niet bewerkt worden',

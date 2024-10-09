@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Ne morete odstraniti edinega administratorja',
     'users_cannot_delete_guest' => 'Ne morete odstraniti uporabnika gost',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Te vloge mi možno urejati',

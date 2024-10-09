@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Tek olan yöneticiyi silemezsiniz',
     'users_cannot_delete_guest' => 'Misafir kullanıyıcıyı silemezsiniz',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Bu rol düzenlenemez',
