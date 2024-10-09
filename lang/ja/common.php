@@ -109,5 +109,5 @@ return [
     'terms_of_service' => '利用規約',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => ':appName を検索',
 ];
