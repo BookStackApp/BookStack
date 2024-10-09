@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Bạn không thể xóa quản trị viên duy nhất',
     'users_cannot_delete_guest' => 'Bạn không thể xóa người dùng khách',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Không thể chỉnh sửa quyền này',

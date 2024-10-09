@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Ainsat administraatorit ei saa kustutada',
     'users_cannot_delete_guest' => 'Külaliskasutajat ei saa kustutada',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Seda rolli ei saa muuta',

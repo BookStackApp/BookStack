@@ -107,4 +107,7 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privātuma politika',
     'terms_of_service' => 'Pakalpojuma noteikumi',
+
+    // OpenSearch
+    'opensearch_description' => 'Search :appName',
 ];

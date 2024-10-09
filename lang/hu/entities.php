@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Tisztított tartalom)',
     'pages_edit_switch_to_markdown_stable' => '(Stabil tartalom)',
     'pages_edit_switch_to_wysiwyg' => 'Váltás a WYSIWYG szerkesztőre',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'Változásnapló beállítása',
     'pages_edit_enter_changelog_desc' => 'A végrehajtott módosítások rövid leírása',
     'pages_edit_enter_changelog' => 'Változásnapló megadása',

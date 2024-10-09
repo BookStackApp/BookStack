@@ -224,6 +224,8 @@ return [
     'pages_edit_switch_to_markdown_clean' => '(Toza tarkib)',
     'pages_edit_switch_to_markdown_stable' => '(Barqaror tarkib)',
     'pages_edit_switch_to_wysiwyg' => 'WYSIWYG muharririga o\'ting',
+    'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
     'pages_edit_set_changelog' => 'O\'zgarishlar jurnalini o\'rnating',
     'pages_edit_enter_changelog_desc' => 'Siz kiritgan o\'zgarishlarning qisqacha tavsifini kiriting',
     'pages_edit_enter_changelog' => 'O\'zgarishlar jurnaliga kiring',

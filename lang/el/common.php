@@ -107,4 +107,7 @@ return [
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Πολιτική Απορρήτου',
     'terms_of_service' => 'Όροι χρήσης',
+
+    // OpenSearch
+    'opensearch_description' => 'Search :appName',
 ];

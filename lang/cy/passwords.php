@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Rhaid i gyfrineiriau fod yn 8 nod o leiaf ac yn cyd-fynd â\'r cadarnhad.',
+    'user' => "Ni allwn ddod o hyd i ddefnyddiwr gyda'r cyfeiriad e-bost hwn.",
+    'token' => 'Mae\'r tocyn ailosod cyfrinair yn annilys ar gyfer y cyfeiriad e-bost hwn.',
+    'sent' => 'Rydym wedi e-bostio eich dolen ailosod cyfrinair!',
+    'reset' => 'Mae eich cyfrinair wedi\'i ailosod!',
 
 ];

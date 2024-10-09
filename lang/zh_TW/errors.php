@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => '您不能刪除唯一的管理員帳號',
     'users_cannot_delete_guest' => '您不能刪除訪客使用者',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => '無法編輯這個角色',

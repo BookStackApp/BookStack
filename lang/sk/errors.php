@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Nemôžete zmazať posledného správcu',
     'users_cannot_delete_guest' => 'Nemôžete zmazať hosťa',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Táto rola nemôže byť upravovaná',

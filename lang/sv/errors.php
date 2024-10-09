@@ -78,6 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan inte ta bort den enda admin-användaren',
     'users_cannot_delete_guest' => 'Du kan inte ta bort gästanvändaren',
+    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
 
     // Roles
     'role_cannot_be_edited' => 'Den här rollen kan inte redigeras',

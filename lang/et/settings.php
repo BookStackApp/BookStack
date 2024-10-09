@@ -295,6 +295,7 @@ return [
         'bs' => 'Bosanski (bosnia keel)',
         'ca' => 'Català (katalaani keel)',
         'cs' => 'Česky (tšehhi keel)',
+        'cy' => 'Cymraeg',
         'da' => 'Dansk (taani keel)',
         'de' => 'Deutsch (saksa keel)',
         'de_informal' => 'Deutsch (Du) (mitteformaalne saksa keel)',
