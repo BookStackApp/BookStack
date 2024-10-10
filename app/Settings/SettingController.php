@@ -29,7 +29,7 @@ class SettingController extends Controller
         // Get application version
         $version = trim(file_get_contents(base_path('version')));
 
-        return view('settings.' . $category, [
+        return view('settings.categories.' . $category, [
             'category'  => $category,
             'version'   => $version,
             'guestUser' => User::getGuest(),
@@ -57,7 +57,7 @@ class SettingController extends Controller
 
     protected function ensureCategoryExists(string $category): void
     {
-        if (!view()->exists('settings.' . $category)) {
+        if (!view()->exists('settings.categories.' . $category)) {
             abort(404, 'Category not found');
         }
     }
