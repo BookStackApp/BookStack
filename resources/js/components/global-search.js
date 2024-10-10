@@ -1,5 +1,5 @@
 import {htmlToDom} from '../services/dom';
-import {debounce} from '../services/util';
+import {debounce} from '../services/util.ts';
 import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
 import {Component} from './component';
 
