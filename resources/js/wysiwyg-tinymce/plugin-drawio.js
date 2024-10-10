@@ -1,5 +1,5 @@
 import * as DrawIO from '../services/drawio.ts';
-import {wait} from '../services/util';
+import {wait} from '../services/util.ts';
 
 let pageEditor = null;
 let currentNode = null;

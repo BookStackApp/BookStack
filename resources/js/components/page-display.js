@@ -1,5 +1,5 @@
 import * as DOM from '../services/dom';
-import {scrollAndHighlightElement} from '../services/util';
+import {scrollAndHighlightElement} from '../services/util.ts';
 import {Component} from './component';
 
 function toggleAnchorHighlighting(elementId, shouldHighlight) {

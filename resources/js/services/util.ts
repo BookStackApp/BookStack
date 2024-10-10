@@ -4,37 +4,39 @@
  * N milliseconds. If `immediate` is passed, trigger the function on the
  * leading edge, instead of the trailing.
  * @attribution https://davidwalsh.name/javascript-debounce-function
- * @param {Function} func
- * @param {Number} waitMs
- * @param {Boolean} immediate
- * @returns {Function}
  */
-export function debounce(func, waitMs, immediate) {
-    let timeout;
-    return function debouncedWrapper(...args) {
-        const context = this;
+export function debounce(func: Function, waitMs: number, immediate: boolean): Function {
+    let timeout: number|null = null;
+    return function debouncedWrapper(this: any, ...args: any[]) {
+        const context: any = this;
         const later = function debouncedTimeout() {
             timeout = null;
             if (!immediate) func.apply(context, args);
         };
         const callNow = immediate && !timeout;
-        clearTimeout(timeout);
-        timeout = setTimeout(later, waitMs);
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = window.setTimeout(later, waitMs);
         if (callNow) func.apply(context, args);
     };
 }
 
+function isDetailsElement(element: HTMLElement): element is HTMLDetailsElement {
+    return element.nodeName === 'DETAILS';
+}
+
 /**
- * Scroll and highlight an element.
- * @param {HTMLElement} element
+ * Scroll-to and highlight an element.
  */
-export function scrollAndHighlightElement(element) {
+export function scrollAndHighlightElement(element: HTMLElement): void {
     if (!element) return;
 
+    // Open up parent <details> elements if within
     let parent = element;
     while (parent.parentElement) {
         parent = parent.parentElement;
-        if (parent.nodeName === 'DETAILS' && !parent.open) {
+        if (isDetailsElement(parent) && !parent.open) {
             parent.open = true;
         }
     }
@@ -44,15 +46,15 @@ export function scrollAndHighlightElement(element) {
     const highlight = getComputedStyle(document.body).getPropertyValue('--color-link');
     element.style.outline = `2px dashed ${highlight}`;
     element.style.outlineOffset = '5px';
-    element.style.transition = null;
+    element.style.removeProperty('transition');
     setTimeout(() => {
         element.style.transition = 'outline linear 3s';
         element.style.outline = '2px dashed rgba(0, 0, 0, 0)';
         const listener = () => {
             element.removeEventListener('transitionend', listener);
-            element.style.transition = null;
-            element.style.outline = null;
-            element.style.outlineOffset = null;
+            element.style.removeProperty('transition');
+            element.style.removeProperty('outline');
+            element.style.removeProperty('outlineOffset');
         };
         element.addEventListener('transitionend', listener);
     }, 1000);
@@ -61,10 +63,8 @@ export function scrollAndHighlightElement(element) {
 /**
  * Escape any HTML in the given 'unsafe' string.
  * Take from https://stackoverflow.com/a/6234804.
- * @param {String} unsafe
- * @returns {string}
  */
-export function escapeHtml(unsafe) {
+export function escapeHtml(unsafe: string): string {
     return unsafe
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
@@ -75,10 +75,8 @@ export function escapeHtml(unsafe) {
 
 /**
  * Generate a random unique ID.
- *
- * @returns {string}
  */
-export function uniqueId() {
+export function uniqueId(): string {
     // eslint-disable-next-line no-bitwise
     const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return (`${S4() + S4()}-${S4()}-${S4()}-${S4()}-${S4()}${S4()}${S4()}`);
@@ -86,10 +84,8 @@ export function uniqueId() {
 
 /**
  * Generate a random smaller unique ID.
- *
- * @returns {string}
  */
-export function uniqueIdSmall() {
+export function uniqueIdSmall(): string {
     // eslint-disable-next-line no-bitwise
     const S4 = () => (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     return S4();
@@ -97,10 +93,8 @@ export function uniqueIdSmall() {
 
 /**
  * Create a promise that resolves after the given time.
- * @param {int} timeMs
- * @returns {Promise}
  */
-export function wait(timeMs) {
+export function wait(timeMs: number): Promise<any> {
     return new Promise(res => {
         setTimeout(res, timeMs);
     });

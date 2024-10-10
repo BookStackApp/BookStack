@@ -1,5 +1,5 @@
 import {provideKeyBindings} from './shortcuts';
-import {debounce} from '../services/util';
+import {debounce} from '../services/util.ts';
 import {Clipboard} from '../services/clipboard.ts';
 
 /**

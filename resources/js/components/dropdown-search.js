@@ -1,4 +1,4 @@
-import {debounce} from '../services/util';
+import {debounce} from '../services/util.ts';
 import {transitionHeight} from '../services/animations';
 import {Component} from './component';
 
