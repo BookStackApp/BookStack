@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    protected array $settingCategories = ['features', 'customization', 'registration'];
-
     /**
      * Handle requests to the settings index path.
      */
@@ -59,8 +57,8 @@ class SettingController extends Controller
 
     protected function ensureCategoryExists(string $category): void
     {
-        if (!in_array($category, $this->settingCategories)) {
-            abort(404);
+        if (!view()->exists('settings.' . $category)) {
+            abort(404, 'Category not found');
         }
     }
 }
