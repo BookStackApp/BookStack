@@ -1,4 +1,4 @@
-import {onChildEvent, onEnterPress, onSelect} from '../services/dom';
+import {onChildEvent, onEnterPress, onSelect} from '../services/dom.ts';
 import {Component} from './component';
 
 export class CodeEditor extends Component {

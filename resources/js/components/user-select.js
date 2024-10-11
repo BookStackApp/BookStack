@@ -1,4 +1,4 @@
-import {onChildEvent} from '../services/dom';
+import {onChildEvent} from '../services/dom.ts';
 import {Component} from './component';
 
 export class UserSelect extends Component {

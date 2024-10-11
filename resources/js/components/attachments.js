@@ -1,4 +1,4 @@
-import {showLoading} from '../services/dom';
+import {showLoading} from '../services/dom.ts';
 import {Component} from './component';
 
 export class Attachments extends Component {

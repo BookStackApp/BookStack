@@ -1,4 +1,4 @@
-import * as DOM from '../services/dom';
+import * as DOM from '../services/dom.ts';
 import {Component} from './component';
 
 export class TemplateManager extends Component {

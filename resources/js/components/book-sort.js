@@ -1,6 +1,6 @@
 import Sortable, {MultiDrag} from 'sortablejs';
 import {Component} from './component';
-import {htmlToDom} from '../services/dom';
+import {htmlToDom} from '../services/dom.ts';
 
 // Auto sort control
 const sortOperations = {
