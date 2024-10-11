@@ -58,7 +58,7 @@ class SettingController extends Controller
     protected function ensureCategoryExists(string $category): void
     {
         if (!view()->exists('settings.categories.' . $category)) {
-            abort(404, 'Category not found');
+            abort(404);
         }
     }
 }
