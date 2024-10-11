@@ -451,6 +451,19 @@ END;
         });
     }
 
+    public function test_custom_settings_category_page_can_be_added_via_view_file()
+    {
+        $content = 'My SuperCustomSettings';
+
+        $this->usingThemeFolder(function (string $folder) use ($content) {
+            $viewDir = theme_path('settings/categories');
+            mkdir($viewDir, 0777, true);
+            file_put_contents($viewDir . '/beans.blade.php', $content);
+
+            $this->asAdmin()->get('/settings/beans')->assertSee($content);
+        });
+    }
+
     protected function usingThemeFolder(callable $callback)
     {
         // Create a folder and configure a theme
