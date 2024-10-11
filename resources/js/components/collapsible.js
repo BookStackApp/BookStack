@@ -1,4 +1,4 @@
-import {slideDown, slideUp} from '../services/animations';
+import {slideDown, slideUp} from '../services/animations.ts';
 import {Component} from './component';
 
 /**
