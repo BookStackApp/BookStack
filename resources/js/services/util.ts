@@ -99,3 +99,49 @@ export function wait(timeMs: number): Promise<any> {
         setTimeout(res, timeMs);
     });
 }
+
+/**
+ * Generate a full URL from the given relative URL, using a base
+ * URL defined in the head of the page.
+ */
+export function baseUrl(path: string): string {
+    let targetPath = path;
+    const baseUrlMeta = document.querySelector('meta[name="base-url"]');
+    if (!baseUrlMeta) {
+        throw new Error('Could not find expected base-url meta tag in document');
+    }
+
+    let basePath = baseUrlMeta.getAttribute('content') || '';
+    if (basePath[basePath.length - 1] === '/') {
+        basePath = basePath.slice(0, basePath.length - 1);
+    }
+
+    if (targetPath[0] === '/') {
+        targetPath = targetPath.slice(1);
+    }
+
+    return `${basePath}/${targetPath}`;
+}
+
+/**
+ * Get the current version of BookStack in use.
+ * Grabs this from the version query used on app assets.
+ */
+function getVersion(): string {
+    const styleLink = document.querySelector('link[href*="/dist/styles.css?version="]');
+    if (!styleLink) {
+        throw new Error('Could not find expected style link in document for version use');
+    }
+
+    const href = (styleLink.getAttribute('href') || '');
+    return href.split('?version=').pop() || '';
+}
+
+/**
+ * Perform a module import, Ensuring the import is fetched with the current
+ * app version as a cache-breaker.
+ */
+export function importVersioned(moduleName: string): Promise<object> {
+    const importPath = window.baseUrl(`dist/${moduleName}.js?version=${getVersion()}`);
+    return import(importPath);
+}

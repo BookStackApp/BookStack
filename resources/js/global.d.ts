@@ -7,10 +7,12 @@ declare global {
     const __DEV__: boolean;
 
     interface Window {
+        __DEV__: boolean;
         $components: ComponentStore;
         $events: EventManager;
         $trans: Translator;
         $http: HttpManager;
         baseUrl: (path: string) => string;
+        importVersioned: (module: string) => Promise<object>;
     }
 }

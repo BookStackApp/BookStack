@@ -1,4 +1,4 @@
-import {slideUp, slideDown} from '../services/animations';
+import {slideUp, slideDown} from '../services/animations.ts';
 import {Component} from './component';
 
 export class ExpandToggle extends Component {

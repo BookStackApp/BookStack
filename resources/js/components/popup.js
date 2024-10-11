@@ -1,4 +1,4 @@
-import {fadeIn, fadeOut} from '../services/animations';
+import {fadeIn, fadeOut} from '../services/animations.ts';
 import {onSelect} from '../services/dom';
 import {Component} from './component';
 
