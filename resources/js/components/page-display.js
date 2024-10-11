@@ -1,4 +1,4 @@
-import * as DOM from '../services/dom';
+import * as DOM from '../services/dom.ts';
 import {scrollAndHighlightElement} from '../services/util.ts';
 import {Component} from './component';
 

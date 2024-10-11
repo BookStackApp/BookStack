@@ -1,4 +1,4 @@
-import {htmlToDom} from '../services/dom';
+import {htmlToDom} from '../services/dom.ts';
 import {Component} from './component';
 
 export class EntityPermissions extends Component {

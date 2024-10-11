@@ -1,6 +1,6 @@
-import {htmlToDom} from '../services/dom';
+import {htmlToDom} from '../services/dom.ts';
 import {debounce} from '../services/util.ts';
-import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation.ts';
 import {Component} from './component';
 
 /**

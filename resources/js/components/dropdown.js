@@ -1,5 +1,5 @@
-import {onSelect} from '../services/dom';
-import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
+import {onSelect} from '../services/dom.ts';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation.ts';
 import {Component} from './component';
 
 /**
