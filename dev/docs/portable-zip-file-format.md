@@ -59,11 +59,22 @@ The `id_ciphertext` is the ciphertext of encrypting the text `bookstack`. This i
 
 #### Book
 
-TODO
+- `id` - Number, optional, original ID for the book from exported system.
+- `name` - String, required, name/title of the book.
+- `description_html` - String, optional, HTML description content.
+- `chapters` - [Chapter](#chapter) array, optional, chapters within this book.
+- `pages` - [Page](#page) array, optional, direct child pages for this book.
+- `tags` - [Tag](#tag) array, optional, tags assigned to this book.
+
+The `pages` are not all pages within the book, just those that are direct children (not in a chapter). To build an ordered mixed chapter/page list for the book, as what you'd see in BookStack, you'd need to combine `chapters` and `pages` together and sort by their `priority` value (low to high).
 
 #### Chapter
 
-TODO
+- `id` - Number, optional, original ID for the chapter from exported system.
+- `name` - String, required, name/title of the chapter.
+- `description_html` - String, optional, HTML description content.
+- `pages` - [Page](#page) array, optional, pages within this chapter.
+- `tags` - [Tag](#tag) array, optional, tags assigned to this chapter.
 
 #### Page
 
@@ -79,4 +90,6 @@ TODO
 
 #### Tag
 
-TODO
+- `name` - String, required, name of the tag.
+- `value` - String, optional, value of the tag (can be empty).
+- `order` - Number, optional, integer order for the tags (shown low to high).
