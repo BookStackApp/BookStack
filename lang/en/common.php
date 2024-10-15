@@ -63,6 +63,7 @@ return [
     'sort_default' => 'Default',
     'sort_created_at' => 'Created Date',
     'sort_updated_at' => 'Updated Date',
+    'sort_popularity' => 'Popularity',
 
     // Misc
     'deleted_user' => 'Deleted User',
