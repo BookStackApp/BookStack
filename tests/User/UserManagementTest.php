@@ -11,7 +11,6 @@ use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Mockery\MockInterface;
-use RuntimeException;
 use Tests\TestCase;
 
 class UserManagementTest extends TestCase
@@ -84,6 +83,16 @@ class UserManagementTest extends TestCase
 
         $userPassword = User::query()->find($user->id)->password;
         $this->assertTrue(Hash::check('newpassword', $userPassword));
+    }
+
+    public function test_user_can_be_updated_with_single_char_name()
+    {
+        $user = $this->users->viewer();
+        $this->asAdmin()->put("/settings/users/{$user->id}", [
+            'name' => 'b'
+        ])->assertRedirect('/settings/users');
+
+        $this->assertEquals('b', $user->refresh()->name);
     }
 
     public function test_user_cannot_be_deleted_if_last_admin()
