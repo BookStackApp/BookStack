@@ -21,18 +21,38 @@ The format is intended to be very simple, readable and based on open standards t
 The below outlines the structure of the format:
 
 - **ZIP archive container**
-   - **data.json** - Application data.
+   - **data.json** - Export data.
    - **files/** - Directory containing referenced files.
-     -  *...file.ext*
+     - *file-a*
+     - *file-b*
+     - *...*
 
 ## References
 
+Some properties in the export data JSON are indicated as `String reference`, and these are direct references to a file name within the `files/` directory of the ZIP. For example, the below book cover is directly referencing a `files/4a5m4a.jpg` within the ZIP which would be expected to exist.
+
+```json
+{
+  "book": {
+    "cover": "4a5m4a.jpg"
+  }
+}
+```
+
+TODO - Jotting out idea below.
+Would need to validate image/attachment paths against image/attachments listed across all pages in export.
+Probably good to ensure filenames are ascii-alpha-num.
+`[[bsexport:image:an-image-path.png]]`
+`[[bsexport:attachment:an-image-path.png]]`
+`[[bsexport:page:1]]`
+`[[bsexport:chapter:2]]`
+`[[bsexport:book:3]]`
+
 TODO - Define how we reference across content:
-TODO - References to files from data.json
 TODO - References from in-content to file URLs
 TODO - References from in-content to in-export content (page cross links within same export).
 
-## Application Data - `data.json`
+## Export Data - `data.json`
 
 The `data.json` file is a JSON format file which contains all structured data for the export. The properties are as follows:
 
@@ -62,6 +82,7 @@ The `id_ciphertext` is the ciphertext of encrypting the text `bookstack`. This i
 - `id` - Number, optional, original ID for the book from exported system.
 - `name` - String, required, name/title of the book.
 - `description_html` - String, optional, HTML description content.
+- `cover` - String reference, options, reference to book cover image.
 - `chapters` - [Chapter](#chapter) array, optional, chapters within this book.
 - `pages` - [Page](#page) array, optional, direct child pages for this book.
 - `tags` - [Tag](#tag) array, optional, tags assigned to this book.
@@ -73,23 +94,43 @@ The `pages` are not all pages within the book, just those that are direct childr
 - `id` - Number, optional, original ID for the chapter from exported system.
 - `name` - String, required, name/title of the chapter.
 - `description_html` - String, optional, HTML description content.
+- `priority` - Number, optional, integer order for when shown within a book (shown low to high).
 - `pages` - [Page](#page) array, optional, pages within this chapter.
 - `tags` - [Tag](#tag) array, optional, tags assigned to this chapter.
 
 #### Page
 
-TODO
+- `id` - Number, optional, original ID for the page from exported system.
+- `name` - String, required, name/title of the page.
+- `html` - String, optional, page HTML content.
+- `markdown` - String, optional, user markdown content for this page.
+- `priority` - Number, optional, integer order for when shown within a book (shown low to high).
+- `attachments` - [Attachment](#attachment) array, optional, attachments uploaded to this page.
+- `images` - [Image](#image) array, optional, images used in this page.
+- `tags` - [Tag](#tag) array, optional, tags assigned to this page.
+
+To define the page content, either `markdown` or `html` should be provided. Ideally these should be limited to the range of markdown and HTML which BookStack supports.
+
+The page editor type, and edit content will be determined by what content is provided. If non-empty `markdown` is provided, the page will be assumed as a markdown editor page (where permissions allow) and the HTML will be rendered from the markdown content. Otherwise, the provided `html` will be used as editor and display content.
 
 #### Image
 
-TODO
+- `name` - String, required, name of image.
+- `file` - String reference, required, reference to image file.
+
+File must be an image type accepted by BookStack (png, jpg, gif, webp)
 
 #### Attachment
 
-TODO
+- `name` - String, required, name of attachment.
+- `link` - String, semi-optional, URL of attachment.
+- `file` - String reference, semi-optional, reference to attachment file.
+- `order` - Number, optional, integer order of the attachments (shown low to high).
+
+Either `link` or `file` must be present, as that will determine the type of attachment. 
 
 #### Tag
 
 - `name` - String, required, name of the tag.
 - `value` - String, optional, value of the tag (can be empty).
-- `order` - Number, optional, integer order for the tags (shown low to high).
+- `order` - Number, optional, integer order of the tags (shown low to high).
