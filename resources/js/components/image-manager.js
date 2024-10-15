@@ -1,6 +1,6 @@
 import {
     onChildEvent, onSelect, removeLoading, showLoading,
-} from '../services/dom';
+} from '../services/dom.ts';
 import {Component} from './component';
 
 export class ImageManager extends Component {

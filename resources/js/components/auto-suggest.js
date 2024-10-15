@@ -1,7 +1,7 @@
-import {escapeHtml} from '../services/util';
-import {onChildEvent} from '../services/dom';
+import {escapeHtml} from '../services/util.ts';
+import {onChildEvent} from '../services/dom.ts';
 import {Component} from './component';
-import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation.ts';
 
 const ajaxCache = {};
 

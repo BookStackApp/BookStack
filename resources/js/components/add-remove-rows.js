@@ -1,5 +1,5 @@
-import {onChildEvent} from '../services/dom';
-import {uniqueId} from '../services/util';
+import {onChildEvent} from '../services/dom.ts';
+import {uniqueId} from '../services/util.ts';
 import {Component} from './component';
 
 /**
