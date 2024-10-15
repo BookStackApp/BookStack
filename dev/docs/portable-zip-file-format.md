@@ -39,18 +39,24 @@ Some properties in the export data JSON are indicated as `String reference`, and
 }
 ```
 
-TODO - Jotting out idea below.
-Would need to validate image/attachment paths against image/attachments listed across all pages in export.
-Probably good to ensure filenames are ascii-alpha-num.
-`[[bsexport:image:an-image-path.png]]`
-`[[bsexport:attachment:an-image-path.png]]`
-`[[bsexport:page:1]]`
-`[[bsexport:chapter:2]]`
-`[[bsexport:book:3]]`
+Within HTML and markdown content, you may require references across to other items within the export content.
+This can be done using the following format:
 
-TODO - Define how we reference across content:
-TODO - References from in-content to file URLs
-TODO - References from in-content to in-export content (page cross links within same export).
+```
+[[bsexport:<object>:<reference>]]
+```
+
+Images and attachments are referenced via their file name within the `files/` directory.
+Otherwise, other content types are referenced by `id`.
+Here's an example of each type of such reference that could be used:
+
+```
+[[bsexport:image:an-image-path.png]]
+[[bsexport:attachment:an-image-path.png]]
+[[bsexport:page:40]]
+[[bsexport:chapter:2]]
+[[bsexport:book:8]]
+```
 
 ## Export Data - `data.json`
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\PageQueries;
-use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exports\ExportFormatter;
 use BookStack\Http\Controller;
 use Throwable;
 
