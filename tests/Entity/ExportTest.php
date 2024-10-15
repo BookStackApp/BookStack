@@ -5,8 +5,8 @@ namespace Tests\Entity;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Tools\PdfGenerator;
 use BookStack\Exceptions\PdfExportException;
+use BookStack\Exports\PdfGenerator;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\ChapterQueries;
-use BookStack\Entities\Tools\ExportFormatter;
+use BookStack\Exports\ExportFormatter;
 use BookStack\Http\ApiController;
 use Throwable;
 
