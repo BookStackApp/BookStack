@@ -16,6 +16,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-xml": "*",
+        "ext-zip": "*",
         "bacon/bacon-qr-code": "^3.0",
         "doctrine/dbal": "^3.5",
         "dompdf/dompdf": "^3.0",
