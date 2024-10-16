@@ -214,7 +214,8 @@ class OidcService
             $user = $this->registrationService->findOrRegister(
                 $userDetails->name,
                 $userDetails->email,
-                $userDetails->externalId
+                $userDetails->externalId,
+                $userDetails->picture,
             );
         } catch (UserRegistrationException $exception) {
             throw new OidcException($exception->getMessage());

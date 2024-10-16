@@ -50,7 +50,7 @@ class RegistrationService
      *
      * @throws UserRegistrationException
      */
-    public function findOrRegister(string $name, string $email, string $externalId): User
+    public function findOrRegister(string $name, string $email, string $externalId, string $picture = null): User
     {
         $user = User::query()
             ->where('external_auth_id', '=', $externalId)
@@ -64,7 +64,7 @@ class RegistrationService
                 'external_auth_id' => $externalId,
             ];
 
-            $user = $this->registerUser($userData, null, false);
+            $user = $this->registerUser($userData, null, false, $picture);
         }
 
         return $user;
@@ -75,7 +75,7 @@ class RegistrationService
      *
      * @throws UserRegistrationException
      */
-    public function registerUser(array $userData, ?SocialAccount $socialAccount = null, bool $emailConfirmed = false): User
+    public function registerUser(array $userData, ?SocialAccount $socialAccount = null, bool $emailConfirmed = false, string $picture = null): User
     {
         $userEmail = $userData['email'];
         $authSystem = $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver();
@@ -96,7 +96,7 @@ class RegistrationService
         }
 
         // Create the user
-        $newUser = $this->userRepo->createWithoutActivity($userData, $emailConfirmed);
+        $newUser = $this->userRepo->createWithoutActivity($userData, $emailConfirmed, $picture);
         $newUser->attachDefaultRole();
 
         // Assign social account if given
