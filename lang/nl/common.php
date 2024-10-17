@@ -109,5 +109,5 @@ return [
     'terms_of_service' => 'Algemene voorwaarden',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Zoek in :appName',
 ];
