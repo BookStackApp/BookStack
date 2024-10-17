@@ -19,7 +19,7 @@ return [
     'revisions' => 'Revisies',
     'meta_revision' => 'Revisie #:revisionCount',
     'meta_created' => 'Gemaakt op: :timeLength',
-    'meta_created_name' => 'Gemaakt op :timeLength door :user',
+    'meta_created_name' => 'Gemaakt: :timeLength door :user',
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
     'meta_owned_name' => 'Eigendom van :user',
