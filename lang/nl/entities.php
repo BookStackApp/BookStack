@@ -18,7 +18,7 @@ return [
     'create_now' => 'Maak er nu één',
     'revisions' => 'Revisies',
     'meta_revision' => 'Revisie #:revisionCount',
-    'meta_created' => 'Gemaakt op: :timeLength',
+    'meta_created' => 'Gemaakt: :timeLength',
     'meta_created_name' => 'Gemaakt: :timeLength door :user',
     'meta_updated' => 'Bijgewerkt: :timeLength',
     'meta_updated_name' => 'Bijgewerkt: :timeLength door :user',
