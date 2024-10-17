@@ -31,7 +31,7 @@ return [
     'update' => 'Aggiorna',
     'edit' => 'Modifica',
     'sort' => 'Ordina',
-    'move' => 'Muovi',
+    'move' => 'Sposta',
     'copy' => 'Copia',
     'reply' => 'Rispondi',
     'delete' => 'Elimina',
@@ -50,31 +50,31 @@ return [
     'previous' => 'Precedente',
     'filter_active' => 'Filtro attivo:',
     'filter_clear' => 'Pulisci filtro',
-    'download' => 'Download',
+    'download' => 'Scarica',
     'open_in_tab' => 'Apri nella scheda',
     'open' => 'Apri',
 
     // Sort Options
-    'sort_options' => 'Opzioni Ordinamento',
+    'sort_options' => 'Opzioni ordinamento',
     'sort_direction_toggle' => 'Inverti direzione ordinamento',
-    'sort_ascending' => 'Ordine ascendente',
-    'sort_descending' => 'Ordine discendente',
+    'sort_ascending' => 'Ordine crescente',
+    'sort_descending' => 'Ordine decrescente',
     'sort_name' => 'Nome',
     'sort_default' => 'Predefinito',
-    'sort_created_at' => 'Data Creazione',
-    'sort_updated_at' => 'Data Aggiornamento',
+    'sort_created_at' => 'Data creazione',
+    'sort_updated_at' => 'Data aggiornamento',
 
     // Misc
-    'deleted_user' => 'Utente Eliminato',
+    'deleted_user' => 'Utente eliminato',
     'no_activity' => 'Nessuna attività da mostrare',
     'no_items' => 'Nessun elemento disponibile',
     'back_to_top' => 'Torna in alto',
     'skip_to_main_content' => 'Passa al contenuto principale',
-    'toggle_details' => 'Mostra Dettagli',
-    'toggle_thumbnails' => 'Mostra Miniature',
+    'toggle_details' => 'Mostra dettagli',
+    'toggle_thumbnails' => 'Mostra miniature',
     'details' => 'Dettagli',
-    'grid_view' => 'Visualizzazione Griglia',
-    'list_view' => 'Visualizzazione Lista',
+    'grid_view' => 'Visualizzazione griglia',
+    'list_view' => 'Visualizzazione lista',
     'default' => 'Predefinito',
     'breadcrumb' => 'Navigazione',
     'status' => 'Stato',
@@ -85,29 +85,29 @@ return [
 
     // Header
     'homepage' => 'Homepage',
-    'header_menu_expand' => 'Espandi Menù Intestazione',
+    'header_menu_expand' => 'Espandi menù intestazione',
     'profile_menu' => 'Menù del profilo',
-    'view_profile' => 'Visualizza Profilo',
-    'edit_profile' => 'Modifica Profilo',
-    'dark_mode' => 'Modalità Scura',
-    'light_mode' => 'Modalità Chiara',
-    'global_search' => 'Ricerca Globale',
+    'view_profile' => 'Visualizza profilo',
+    'edit_profile' => 'Modifica profilo',
+    'dark_mode' => 'Modalità scura',
+    'light_mode' => 'Modalità chiara',
+    'global_search' => 'Ricerca globale',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Mostra Informazioni Secondarie',
+    'tab_info' => 'Informazioni',
+    'tab_info_label' => 'Scheda: Mostra informazioni secondarie',
     'tab_content' => 'Contenuto',
-    'tab_content_label' => 'Tab: Mostra Contenuto Principale',
+    'tab_content_label' => 'Scheda: Mostra contenuto principale',
 
     // Email Content
-    'email_action_help' => 'Se hai problemi nel cliccare il pulsante ":actionText", copia e incolla lo URL sotto nel tuo browser:',
+    'email_action_help' => 'Se hai problemi nel cliccare il pulsante ":actionText", copia e incolla l\'URL qui sotto nel tuo browser:',
     'email_rights' => 'Tutti i diritti riservati',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Norme sulla privacy',
-    'terms_of_service' => 'Condizioni del Servizio',
+    'terms_of_service' => 'Condizioni del servizio',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Cerca :appName',
 ];
