@@ -13,6 +13,7 @@ use League\HTMLToMarkdown\Converter\LinkConverter;
 use League\HTMLToMarkdown\Converter\ListBlockConverter;
 use League\HTMLToMarkdown\Converter\ListItemConverter;
 use League\HTMLToMarkdown\Converter\PreformattedConverter;
+use League\HTMLToMarkdown\Converter\TableConverter;
 use League\HTMLToMarkdown\Converter\TextConverter;
 use League\HTMLToMarkdown\Environment;
 use League\HTMLToMarkdown\HtmlConverter;
@@ -32,6 +33,8 @@ class HtmlToMarkdown
     public function convert(): string
     {
         $converter = new HtmlConverter($this->getConverterEnvironment());
+        $converter->getEnvironment()->addConverter(new TableConverter());
+
         $html = $this->prepareHtml($this->html);
 
         return $converter->convert($html);
