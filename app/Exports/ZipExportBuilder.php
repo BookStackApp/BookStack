@@ -2,10 +2,9 @@
 
 namespace BookStack\Exports;
 
-use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ZipExportException;
-use BookStack\Uploads\Attachment;
+use BookStack\Exports\ZipExportModels\ZipExportPage;
 use ZipArchive;
 
 class ZipExportBuilder
@@ -13,7 +12,8 @@ class ZipExportBuilder
     protected array $data = [];
 
     public function __construct(
-        protected ZipExportFiles $files
+        protected ZipExportFiles $files,
+        protected ZipExportReferences $references,
     ) {
     }
 
@@ -22,50 +22,12 @@ class ZipExportBuilder
      */
     public function buildForPage(Page $page): string
     {
-        $this->data['page'] = $this->convertPage($page);
+        $exportPage = ZipExportPage::fromModel($page, $this->files);
+        $this->data['page'] = $exportPage;
+
+        $this->references->addPage($exportPage);
+
         return $this->build();
-    }
-
-    protected function convertPage(Page $page): array
-    {
-        $tags = array_map($this->convertTag(...), $page->tags()->get()->all());
-        $attachments = array_map($this->convertAttachment(...), $page->attachments()->get()->all());
-
-        return [
-            'id'          => $page->id,
-            'name'        => $page->name,
-            'html'        => '', // TODO
-            'markdown'    => '', // TODO
-            'priority'    => $page->priority,
-            'attachments' => $attachments,
-            'images'      => [], // TODO
-            'tags'        => $tags,
-        ];
-    }
-
-    protected function convertAttachment(Attachment $attachment): array
-    {
-        $data = [
-            'name'  => $attachment->name,
-            'order' => $attachment->order,
-        ];
-
-        if ($attachment->external) {
-            $data['link'] = $attachment->path;
-        } else {
-            $data['file'] = $this->files->referenceForAttachment($attachment);
-        }
-
-        return $data;
-    }
-
-    protected function convertTag(Tag $tag): array
-    {
-        return [
-            'name'  => $tag->name,
-            'value' => $tag->value,
-            'order' => $tag->order,
-        ];
     }
 
     /**
@@ -73,6 +35,8 @@ class ZipExportBuilder
      */
     protected function build(): string
     {
+        $this->references->buildReferences();
+
         $this->data['exported_at'] = date(DATE_ATOM);
         $this->data['instance'] = [
             'version'       => trim(file_get_contents(base_path('version'))),
