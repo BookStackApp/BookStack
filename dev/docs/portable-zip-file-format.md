@@ -128,6 +128,7 @@ File must be an image type accepted by BookStack (png, jpg, gif, webp)
 
 #### Attachment
 
+- `id` - Number, optional, original ID for the attachment from exported system.
 - `name` - String, required, name of attachment.
 - `link` - String, semi-optional, URL of attachment.
 - `file` - String reference, semi-optional, reference to attachment file.
