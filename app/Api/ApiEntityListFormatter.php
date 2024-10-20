@@ -106,6 +106,10 @@ class ApiEntityListFormatter
      */
     public function format(): array
     {
+        if ($this->includeRelatedTitles) {
+            $this->loadRelatedTitles();
+        }
+
         $results = [];
 
         foreach ($this->list as $item) {
@@ -113,6 +117,23 @@ class ApiEntityListFormatter
         }
 
         return $results;
+    }
+
+    /**
+     * Eager load the related book and chapter data when needed.
+     */
+    protected function loadRelatedTitles(): void
+    {
+        $pages = collect($this->list)->filter(fn($item) => $item instanceof Page);
+
+        foreach ($this->list as $entity) {
+            if (method_exists($entity, 'book')) {
+                $entity->load('book');
+            }
+            if ($entity instanceof Page && $entity->chapter_id) {
+                $entity->load('chapter');
+            }
+        }
     }
 
     /**
