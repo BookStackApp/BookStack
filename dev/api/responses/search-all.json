@@ -9,6 +9,7 @@
       "updated_at": "2021-11-14T15:57:35.000000Z",
       "type": "chapter",
       "url": "https://example.com/books/my-book/chapter/a-chapter-for-cats",
+      "book_title": "Cats",
       "preview_html": {
         "name": "A chapter for <strong>cats</strong>",
         "content": "...once a bunch of <strong>cats</strong> named tony...behaviour of <strong>cats</strong> is unsuitable"
@@ -27,6 +28,8 @@
       "updated_at": "2021-11-14T15:56:49.000000Z",
       "type": "page",
       "url": "https://example.com/books/my-book/page/the-hows-and-whys-of-cats",
+      "book_title": "Cats",
+      "chapter_title": "A chapter for cats",
       "preview_html": {
         "name": "The hows and whys of <strong>cats</strong>",
         "content": "...people ask why <strong>cats</strong>? but there are...the reason that <strong>cats</strong> are fast are due to..."
@@ -56,6 +59,8 @@
       "updated_at": "2021-11-14T16:02:39.000000Z",
       "type": "page",
       "url": "https://example.com/books/my-book/page/how-advanced-are-cats",
+      "book_title": "Cats",
+      "chapter_title": "A chapter for cats",
       "preview_html": {
         "name": "How advanced are <strong>cats</strong>?",
         "content": "<strong>cats</strong> are some of the most advanced animals in the world."

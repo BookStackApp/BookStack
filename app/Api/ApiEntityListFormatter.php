@@ -3,6 +3,7 @@
 namespace BookStack\Api;
 
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 
 class ApiEntityListFormatter
 {
@@ -13,6 +14,11 @@ class ApiEntityListFormatter
     protected array $list = [];
 
     /**
+     * Whether to include related titles in the response.
+     */
+    protected bool $includeRelatedTitles = false;
+
+    /**
      * The fields to show in the formatted data.
      * Can be a plain string array item for a direct model field (If existing on model).
      * If the key is a string, with a callable value, the return value of the callable
@@ -20,8 +26,16 @@ class ApiEntityListFormatter
      * @var array<string|int, string|callable>
      */
     protected array $fields = [
-        'id', 'name', 'slug', 'book_id', 'chapter_id', 'draft',
-        'template', 'priority', 'created_at', 'updated_at',
+        'id',
+        'name',
+        'slug',
+        'book_id',
+        'chapter_id',
+        'draft',
+        'template',
+        'priority',
+        'created_at',
+        'updated_at',
     ];
 
     public function __construct(array $list)
@@ -59,6 +73,30 @@ class ApiEntityListFormatter
     public function withTags(): self
     {
         $this->withField('tags', fn(Entity $entity) => $entity->tags);
+        return $this;
+    }
+
+    /**
+     * Enable the inclusion of related book and chapter titles in the response.
+     */
+    public function withRelatedTitles(): self
+    {
+        $this->includeRelatedTitles = true;
+
+        $this->withField('book_title', function (Entity $entity) {
+            if (method_exists($entity, 'book')) {
+                return $entity->book?->name;
+            }
+            return null;
+        });
+
+        $this->withField('chapter_title', function (Entity $entity) {
+            if ($entity instanceof Page && $entity->chapter_id) {
+                return optional($entity->getAttribute('chapter'))->name;
+            }
+            return null;
+        });
+
         return $this;
     }
 
