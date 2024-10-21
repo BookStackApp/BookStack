@@ -35,7 +35,7 @@ class ZipExportBuilder
      */
     protected function build(): string
     {
-        $this->references->buildReferences();
+        $this->references->buildReferences($this->files);
 
         $this->data['exported_at'] = date(DATE_ATOM);
         $this->data['instance'] = [
