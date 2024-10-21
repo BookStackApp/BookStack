@@ -4,9 +4,11 @@ namespace BookStack\Exports;
 
 use BookStack\App\Model;
 use BookStack\Entities\Queries\EntityQueries;
+use BookStack\References\ModelResolvers\AttachmentModelResolver;
 use BookStack\References\ModelResolvers\BookLinkModelResolver;
 use BookStack\References\ModelResolvers\ChapterLinkModelResolver;
 use BookStack\References\ModelResolvers\CrossLinkModelResolver;
+use BookStack\References\ModelResolvers\ImageModelResolver;
 use BookStack\References\ModelResolvers\PageLinkModelResolver;
 use BookStack\References\ModelResolvers\PagePermalinkModelResolver;
 
@@ -24,8 +26,8 @@ class ZipReferenceParser
             new PageLinkModelResolver($queries->pages),
             new ChapterLinkModelResolver($queries->chapters),
             new BookLinkModelResolver($queries->books),
-            // TODO - Image
-            // TODO - Attachment
+            new ImageModelResolver(),
+            new AttachmentModelResolver(),
         ];
     }
 

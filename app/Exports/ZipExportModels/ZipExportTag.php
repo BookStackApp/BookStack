@@ -4,7 +4,7 @@ namespace BookStack\Exports\ZipExportModels;
 
 use BookStack\Activity\Models\Tag;
 
-class ZipExportTag implements ZipExportModel
+class ZipExportTag extends ZipExportModel
 {
     public string $name;
     public ?string $value = null;
