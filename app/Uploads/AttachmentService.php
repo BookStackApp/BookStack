@@ -13,14 +13,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
 {
-    protected FilesystemManager $fileSystem;
-
-    /**
-     * AttachmentService constructor.
-     */
-    public function __construct(FilesystemManager $fileSystem)
-    {
-        $this->fileSystem = $fileSystem;
+    public function __construct(
+        protected FilesystemManager $fileSystem
+    ) {
     }
 
     /**

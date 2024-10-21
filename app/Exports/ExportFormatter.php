@@ -1,11 +1,13 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Exports;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
+use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\CspService;
 use BookStack\Util\HtmlDocument;

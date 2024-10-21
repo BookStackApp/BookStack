@@ -1,10 +1,10 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Exports;
 
 use BookStack\Exceptions\PdfExportException;
-use Knp\Snappy\Pdf as SnappyPdf;
 use Dompdf\Dompdf;
+use Knp\Snappy\Pdf as SnappyPdf;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Symfony\Component\Process\Process;
 

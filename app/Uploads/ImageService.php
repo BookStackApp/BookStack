@@ -134,6 +134,19 @@ class ImageService
     }
 
     /**
+     * Get the raw data content from an image.
+     *
+     * @throws Exception
+     * @returns ?resource
+     */
+    public function getImageStream(Image $image): mixed
+    {
+        $disk = $this->storage->getDisk();
+
+        return $disk->stream($image->path);
+    }
+
+    /**
      * Destroy an image along with its revisions, thumbnails and remaining folders.
      *
      * @throws Exception
