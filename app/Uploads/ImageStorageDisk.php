@@ -56,6 +56,15 @@ class ImageStorageDisk
     }
 
     /**
+     * Get a stream to the file at the given path.
+     * @returns ?resource
+     */
+    public function stream(string $path): mixed
+    {
+        return $this->filesystem->readStream($this->adjustPathForDisk($path));
+    }
+
+    /**
      * Save the given image data at the given path. Can choose to set
      * the image as public which will update its visibility after saving.
      */

@@ -46,13 +46,12 @@ This can be done using the following format:
 [[bsexport:<object>:<reference>]]
 ```
 
-Images and attachments are referenced via their file name within the `files/` directory.
-Otherwise, other content types are referenced by `id`.
+References are to the `id` for data objects.
 Here's an example of each type of such reference that could be used:
 
 ```
-[[bsexport:image:an-image-path.png]]
-[[bsexport:attachment:an-image-path.png]]
+[[bsexport:image:22]]
+[[bsexport:attachment:55]]
 [[bsexport:page:40]]
 [[bsexport:chapter:2]]
 [[bsexport:book:8]]
@@ -121,10 +120,14 @@ The page editor type, and edit content will be determined by what content is pro
 
 #### Image
 
+- `id` - Number, optional, original ID for the page from exported system.
 - `name` - String, required, name of image.
 - `file` - String reference, required, reference to image file.
+- `type` - String, required, must be 'gallery' or 'drawio'
 
-File must be an image type accepted by BookStack (png, jpg, gif, webp)
+File must be an image type accepted by BookStack (png, jpg, gif, webp).
+Images of type 'drawio' are expected to be png with draw.io drawing data
+embedded within it.
 
 #### Attachment
 
