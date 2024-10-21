@@ -5,7 +5,7 @@ namespace BookStack\Exports\ZipExportModels;
 use BookStack\Exports\ZipExportFiles;
 use BookStack\Uploads\Attachment;
 
-class ZipExportAttachment implements ZipExportModel
+class ZipExportAttachment extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;

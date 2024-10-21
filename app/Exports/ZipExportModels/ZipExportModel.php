@@ -2,10 +2,19 @@
 
 namespace BookStack\Exports\ZipExportModels;
 
-use BookStack\App\Model;
-use BookStack\Exports\ZipExportFiles;
+use JsonSerializable;
 
-interface ZipExportModel
+abstract class ZipExportModel implements JsonSerializable
 {
-//    public static function fromModel(Model $model, ZipExportFiles $files): self;
+    /**
+     * Handle the serialization to JSON.
+     * For these exports, we filter out optional (represented as nullable) fields
+     * just to clean things up and prevent confusion to avoid null states in the
+     * resulting export format itself.
+     */
+    public function jsonSerialize(): array
+    {
+        $publicProps = get_object_vars(...)->__invoke($this);
+        return array_filter($publicProps, fn ($value) => $value !== null);
+    }
 }

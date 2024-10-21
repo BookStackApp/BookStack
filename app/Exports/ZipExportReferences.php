@@ -44,11 +44,14 @@ class ZipExportReferences
                 // TODO - Handle found link to $model
                 //   - Validate we can see/access $model, or/and that it's
                 //     part of the export in progress.
+
+                // TODO - Add images after the above to files
                 return '[CAT]';
             });
             // TODO - markdown
         }
 
+//        dd('end');
         // TODO - Parse chapter desc html
         // TODO - Parse book desc html
     }

@@ -6,7 +6,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exports\ZipExportFiles;
 
-class ZipExportPage implements ZipExportModel
+class ZipExportPage extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
