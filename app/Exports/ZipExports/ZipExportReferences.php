@@ -4,6 +4,8 @@ namespace BookStack\Exports\ZipExports;
 
 use BookStack\App\Model;
 use BookStack\Exports\ZipExports\Models\ZipExportAttachment;
+use BookStack\Exports\ZipExports\Models\ZipExportBook;
+use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportImage;
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
@@ -14,8 +16,10 @@ class ZipExportReferences
 {
     /** @var ZipExportPage[] */
     protected array $pages = [];
-    protected array $books = [];
+    /** @var ZipExportChapter[] */
     protected array $chapters = [];
+    /** @var ZipExportBook[] */
+    protected array $books = [];
 
     /** @var ZipExportAttachment[] */
     protected array $attachments = [];
@@ -41,23 +45,64 @@ class ZipExportReferences
         }
     }
 
+    public function addChapter(ZipExportChapter $chapter): void
+    {
+        if ($chapter->id) {
+            $this->chapters[$chapter->id] = $chapter;
+        }
+
+        foreach ($chapter->pages as $page) {
+            $this->addPage($page);
+        }
+    }
+
+    public function addBook(ZipExportBook $book): void
+    {
+        if ($book->id) {
+            $this->chapters[$book->id] = $book;
+        }
+
+        foreach ($book->pages as $page) {
+            $this->addPage($page);
+        }
+
+        foreach ($book->chapters as $chapter) {
+            $this->addChapter($chapter);
+        }
+    }
+
     public function buildReferences(ZipExportFiles $files): void
     {
+        $createHandler = function (ZipExportModel $zipModel) use ($files) {
+            return function (Model $model) use ($files, $zipModel) {
+                return $this->handleModelReference($model, $zipModel, $files);
+            };
+        };
+
         // Parse page content first
         foreach ($this->pages as $page) {
-            $handler = function (Model $model) use ($files, $page) {
-                return $this->handleModelReference($model, $page, $files);
-            };
-
+            $handler = $createHandler($page);
             $page->html = $this->parser->parse($page->html ?? '', $handler);
             if ($page->markdown) {
                 $page->markdown = $this->parser->parse($page->markdown, $handler);
             }
         }
 
-//        dd('end');
-        // TODO - Parse chapter desc html
-        // TODO - Parse book desc html
+        // Parse chapter description HTML
+        foreach ($this->chapters as $chapter) {
+            if ($chapter->description_html) {
+                $handler = $createHandler($chapter);
+                $chapter->description_html = $this->parser->parse($chapter->description_html, $handler);
+            }
+        }
+
+        // Parse book description HTML
+        foreach ($this->books as $book) {
+            if ($book->description_html) {
+                $handler = $createHandler($book);
+                $book->description_html = $this->parser->parse($book->description_html, $handler);
+            }
+        }
     }
 
     protected function handleModelReference(Model $model, ZipExportModel $exportModel, ZipExportFiles $files): ?string
