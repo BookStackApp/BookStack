@@ -309,10 +309,64 @@ class LdapService
     /**
      * Get the groups a user is a part of on ldap.
      *
+     * @throws JsonDebugException
+     * @throws LdapException
+     */
+    public function getUserGroups(string $userName): array
+    {
+        if ($this->config['group_style'] == 'RFC2307') {
+            return $this->getUserGroupsRFC2307($userName);
+        } else {
+            return $this->getUserGroupsRFC2307bis($userName);
+        }
+    }
+
+    /**
      * @throws LdapException
      * @throws JsonDebugException
      */
-    public function getUserGroups(string $userName): array
+    public function getUserGroupsRFC2307(string $userName): array
+    {
+        $memberAttr = $this->config['group_member_attribute'];
+        $additionalGroupFilters = $this->buildFilter($this->config['group_filter'], ['user' => $userName]);
+        $baseDn = $this->config['group_base_dn'];
+
+        $ldapConnection = $this->getConnection();
+        $this->bindSystemUser($ldapConnection);
+
+        $filter = sprintf("(&(%s=%s)%s)", $memberAttr, $userName, $additionalGroupFilters);
+
+        $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
+        $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
+        $groups = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $filter, ["CN"]);
+        if ($groups['count'] === 0) {
+            return [];
+        }
+
+        $groupDNs = $this->extractGroupDNsFromSearchResponse($groups);
+        $formattedGroups = $this->extractGroupNamesFromLdapGroupDns($groupDNs);
+
+        if ($this->config['dump_user_groups']) {
+            throw new JsonDebugException([
+                'username'                     => $userName,
+                'group_details_from_ldap'            => $groups,
+                'parsed_resulting_group_names' => $formattedGroups,
+            ]);
+        }
+
+        return $formattedGroups;
+    }
+
+    /**
+     * Get the groups a user is a part of on ldap.
+     * Assuming RFC2307bis style group memberships, i.e.
+     * memberOf and member Attributes in User and Group
+     * respectively
+     *
+     * @throws LdapException
+     * @throws JsonDebugException
+     */
+    public function getUserGroupsRFC2307bis(string $userName): array
     {
         $groupsAttr = $this->config['group_attribute'];
         $user = $this->getUserWithAttributes($userName, [$groupsAttr]);
@@ -414,6 +468,28 @@ class LdapService
 
         for ($i = 0; $i < $count; $i++) {
             $dn = $ldapEntry[$groupsAttr][$i];
+            if (!in_array($dn, $groupDNs)) {
+                $groupDNs[] = $dn;
+            }
+        }
+
+        return $groupDNs;
+    }
+
+    /**
+     * Extract an array of group DN values from the given LDAP search response
+     */
+    protected function extractGroupDNsFromSearchResponse(array $searchResult): array
+    {
+        $groupDNs = [];
+        $count = 0;
+
+        if (isset($searchResult['count'])) {
+            $count = (int) $searchResult['count'];
+        }
+
+        for ($i = 0; $i < $count; $i++) {
+            $dn = $searchResult[$i]['dn'];
             if (!in_array($dn, $groupDNs)) {
                 $groupDNs[] = $dn;
             }
