@@ -309,7 +309,7 @@ class LdapTest extends TestCase
         $this->mockUser->attachRole($existingRole);
 
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => false,
@@ -355,7 +355,7 @@ class LdapTest extends TestCase
         $this->mockUser->attachRole($existingRole);
 
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => true,
@@ -391,7 +391,7 @@ class LdapTest extends TestCase
     public function test_dump_user_groups_shows_group_related_details_as_json()
     {
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => true,
@@ -456,7 +456,7 @@ class LdapTest extends TestCase
     public function test_recursive_group_search_queries_via_full_dn()
     {
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
         ]);
@@ -508,7 +508,7 @@ class LdapTest extends TestCase
         $roleToNotReceive = Role::factory()->create(['display_name' => 'ex-auth-a', 'external_auth_id' => 'test-second-param']);
 
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => true,
@@ -550,7 +550,7 @@ class LdapTest extends TestCase
         setting()->put('registration-role', $roleToReceive->id);
 
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => true,
@@ -791,7 +791,7 @@ class LdapTest extends TestCase
         setting()->put('registration-confirmation', 'true');
 
         app('config')->set([
-            'services.ldap.group_style'        => 'RFC2703bis',
+            'services.ldap.group_style'        => 'RFC2307bis',
             'services.ldap.user_to_groups'     => true,
             'services.ldap.group_attribute'    => 'memberOf',
             'services.ldap.remove_from_groups' => true,
