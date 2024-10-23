@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Exports;
+namespace BookStack\Exports\ZipExports;
 
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;

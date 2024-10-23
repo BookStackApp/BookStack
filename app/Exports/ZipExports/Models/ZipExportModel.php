@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Exports\ZipExportModels;
+namespace BookStack\Exports\ZipExports\Models;
 
 use JsonSerializable;
 

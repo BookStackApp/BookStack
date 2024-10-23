@@ -1,8 +1,8 @@
 <?php
 
-namespace BookStack\Exports\ZipExportModels;
+namespace BookStack\Exports\ZipExports\Models;
 
-use BookStack\Exports\ZipExportFiles;
+use BookStack\Exports\ZipExports\ZipExportFiles;
 use BookStack\Uploads\Attachment;
 
 class ZipExportAttachment extends ZipExportModel

@@ -1,10 +1,10 @@
 <?php
 
-namespace BookStack\Exports\ZipExportModels;
+namespace BookStack\Exports\ZipExports\Models;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Exports\ZipExportFiles;
+use BookStack\Exports\ZipExports\ZipExportFiles;
 
 class ZipExportPage extends ZipExportModel
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Exports;
+namespace BookStack\Exports\ZipExports;
 
 use BookStack\App\Model;
 use BookStack\Entities\Queries\EntityQueries;
