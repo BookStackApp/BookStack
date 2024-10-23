@@ -322,6 +322,11 @@ class LdapService
     }
 
     /**
+     * Get the groups a user is a part of on ldap.
+     * Assuming RFC2307 style group memberships, i.e.
+     * memberUid in groups with extra query required
+     * to resolve groups
+     *
      * @throws LdapException
      * @throws JsonDebugException
      */
