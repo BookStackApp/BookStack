@@ -60,6 +60,7 @@ class Chapter extends BookChild
 
     /**
      * Get the visible pages in this chapter.
+     * @returns Collection<Page>
      */
     public function getVisiblePages(): Collection
     {

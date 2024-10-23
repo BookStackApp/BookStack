@@ -87,7 +87,7 @@ The `id_ciphertext` is the ciphertext of encrypting the text `bookstack`. This i
 - `id` - Number, optional, original ID for the book from exported system.
 - `name` - String, required, name/title of the book.
 - `description_html` - String, optional, HTML description content.
-- `cover` - String reference, options, reference to book cover image.
+- `cover` - String reference, optional, reference to book cover image.
 - `chapters` - [Chapter](#chapter) array, optional, chapters within this book.
 - `pages` - [Page](#page) array, optional, direct child pages for this book.
 - `tags` - [Tag](#tag) array, optional, tags assigned to this book.

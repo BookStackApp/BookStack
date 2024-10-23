@@ -2,8 +2,12 @@
 
 namespace BookStack\Exports\ZipExports;
 
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ZipExportException;
+use BookStack\Exports\ZipExports\Models\ZipExportBook;
+use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use ZipArchive;
 
@@ -26,6 +30,32 @@ class ZipExportBuilder
         $this->data['page'] = $exportPage;
 
         $this->references->addPage($exportPage);
+
+        return $this->build();
+    }
+
+    /**
+     * @throws ZipExportException
+     */
+    public function buildForChapter(Chapter $chapter): string
+    {
+        $exportChapter = ZipExportChapter::fromModel($chapter, $this->files);
+        $this->data['chapter'] = $exportChapter;
+
+        $this->references->addChapter($exportChapter);
+
+        return $this->build();
+    }
+
+    /**
+     * @throws ZipExportException
+     */
+    public function buildForBook(Book $book): string
+    {
+        $exportBook = ZipExportBook::fromModel($book, $this->files);
+        $this->data['book'] = $exportBook;
+
+        $this->references->addBook($exportBook);
 
         return $this->build();
     }

@@ -26,6 +26,7 @@ class ZipExportPage extends ZipExportModel
         $instance->id = $model->id;
         $instance->name = $model->name;
         $instance->html = (new PageContent($model))->render();
+        $instance->priority = $model->priority;
 
         if (!empty($model->markdown)) {
             $instance->markdown = $model->markdown;
@@ -35,5 +36,16 @@ class ZipExportPage extends ZipExportModel
         $instance->attachments = ZipExportAttachment::fromModelArray($model->attachments()->get()->all(), $files);
 
         return $instance;
+    }
+
+    /**
+     * @param Page[] $pageArray
+     * @return self[]
+     */
+    public static function fromModelArray(array $pageArray, ZipExportFiles $files): array
+    {
+        return array_values(array_map(function (Page $page) use ($files) {
+            return self::fromModel($page, $files);
+        }, $pageArray));
     }
 }
