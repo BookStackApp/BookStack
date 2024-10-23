@@ -3,6 +3,9 @@
 namespace BookStack\Exports\ZipExports;
 
 use BookStack\App\Model;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Exports\ZipExports\Models\ZipExportAttachment;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
@@ -107,8 +110,6 @@ class ZipExportReferences
 
     protected function handleModelReference(Model $model, ZipExportModel $exportModel, ZipExportFiles $files): ?string
     {
-        // TODO - References to other entities
-
         // Handle attachment references
         // No permission check needed here since they would only already exist in this
         // reference context if already allowed via their entity access.
@@ -141,6 +142,15 @@ class ZipExportReferences
                 return "[[bsexport:image:{$model->id}]]";
             }
             return null;
+        }
+
+        // Handle entity references
+        if ($model instanceof Book && isset($this->books[$model->id])) {
+            return "[[bsexport:book:{$model->id}]]";
+        } else if ($model instanceof Chapter && isset($this->chapters[$model->id])) {
+            return "[[bsexport:chapter:{$model->id}]]";
+        } else if ($model instanceof Page && isset($this->pages[$model->id])) {
+            return "[[bsexport:page:{$model->id}]]";
         }
 
         return null;
