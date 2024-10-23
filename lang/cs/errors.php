@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Nemůžete odstranit posledního administrátora',
     'users_cannot_delete_guest' => 'Uživatele Host není možno odstranit',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Nebylo možné vytvořit uživatele, protože se nepodařilo odeslat email s pozvánkou',
 
     // Roles
     'role_cannot_be_edited' => 'Tuto roli nelze editovat',

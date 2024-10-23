@@ -208,7 +208,7 @@ return [
     'users_avatar' => 'Avatar',
     'users_avatar_desc' => 'Selecteer een afbeelding om deze gebruiker voor te stellen. Deze moet ongeveer 256px breed en vierkant zijn.',
     'users_preferred_language' => 'Voorkeurstaal',
-    'users_preferred_language_desc' => 'Deze optie wijzigt de taal die gebruikt wordt voor de gebruikersinterface. Dit heeft geen invloed op door gebruiker gemaakte inhoud.',
+    'users_preferred_language_desc' => 'Deze optie wijzigt de taal die gebruikt wordt voor de gebruikersinterface. Dit heeft geen invloed op door gebruikers gemaakte inhoud.',
     'users_social_accounts' => 'Sociale media accounts',
     'users_social_accounts_desc' => 'Bekijk de status van de verbonden socialmedia-accounts voor deze gebruiker. socialmedia-accounts kunnen worden gebruikt naast het primaire authenticatiesysteem voor systeemtoegang.',
     'users_social_accounts_info' => 'Hier kun je je andere accounts koppelen om sneller en eenvoudiger in te loggen. Als je hier een account loskoppelt, wordt de eerder gemachtigde toegang niet ingetrokken. Je kunt de toegang intrekken via je profielinstellingen op het gekoppelde socialemedia-account zelf.',
