@@ -132,6 +132,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/html', [ExportControllers\ChapterExportController::class, 'html']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/markdown', [ExportControllers\ChapterExportController::class, 'markdown']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/plaintext', [ExportControllers\ChapterExportController::class, 'plainText']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/export/zip', [ExportControllers\ChapterExportController::class, 'zip']);
     Route::put('/books/{bookSlug}/chapter/{chapterSlug}/permissions', [PermissionsController::class, 'updateForChapter']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/references', [ReferenceController::class, 'chapter']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [EntityControllers\ChapterController::class, 'showDelete']);

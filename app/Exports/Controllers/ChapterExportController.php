@@ -5,6 +5,7 @@ namespace BookStack\Exports\Controllers;
 use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exports\ExportFormatter;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\Controller;
 use Throwable;
 
@@ -69,5 +70,17 @@ class ChapterExportController extends Controller
         $chapterText = $this->exportFormatter->chapterToMarkdown($chapter);
 
         return $this->download()->directly($chapterText, $chapterSlug . '.md');
+    }
+
+    /**
+     * Export a book to a contained ZIP export file.
+     * @throws NotFoundException
+     */
+    public function zip(string $bookSlug, string $chapterSlug, ZipExportBuilder $builder)
+    {
+        $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        $zip = $builder->buildForChapter($chapter);
+
+        return $this->download()->streamedDirectly(fopen($zip, 'r'), $chapterSlug . '.zip', filesize($zip));
     }
 }
