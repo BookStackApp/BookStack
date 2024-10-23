@@ -6,7 +6,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exports\ExportFormatter;
-use BookStack\Exports\ZipExportBuilder;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\Controller;
 use Throwable;
 

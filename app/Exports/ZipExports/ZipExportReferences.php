@@ -1,13 +1,12 @@
 <?php
 
-namespace BookStack\Exports;
+namespace BookStack\Exports\ZipExports;
 
 use BookStack\App\Model;
-use BookStack\Entities\Models\Page;
-use BookStack\Exports\ZipExportModels\ZipExportAttachment;
-use BookStack\Exports\ZipExportModels\ZipExportImage;
-use BookStack\Exports\ZipExportModels\ZipExportModel;
-use BookStack\Exports\ZipExportModels\ZipExportPage;
+use BookStack\Exports\ZipExports\Models\ZipExportAttachment;
+use BookStack\Exports\ZipExports\Models\ZipExportImage;
+use BookStack\Exports\ZipExports\Models\ZipExportModel;
+use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 
@@ -44,12 +43,16 @@ class ZipExportReferences
 
     public function buildReferences(ZipExportFiles $files): void
     {
-        // TODO - Parse page MD & HTML
+        // Parse page content first
         foreach ($this->pages as $page) {
-            $page->html = $this->parser->parse($page->html ?? '', function (Model $model) use ($files, $page) {
+            $handler = function (Model $model) use ($files, $page) {
                 return $this->handleModelReference($model, $page, $files);
-            });
-            // TODO - markdown
+            };
+
+            $page->html = $this->parser->parse($page->html ?? '', $handler);
+            if ($page->markdown) {
+                $page->markdown = $this->parser->parse($page->markdown, $handler);
+            }
         }
 
 //        dd('end');
