@@ -82,10 +82,12 @@ class LdapService
         $idAttr = $this->config['id_attribute'];
         $emailAttr = $this->config['email_attribute'];
         $displayNameAttr = $this->config['display_name_attribute'];
+        $firstNameAttr = $this->config['first_name_attribute'];
+        $lastNameAttr = $this->config['last_name_attribute'];
         $thumbnailAttr = $this->config['thumbnail_attribute'];
 
         $user = $this->getUserWithAttributes($userName, array_filter([
-            'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $thumbnailAttr,
+            'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $firstNameAttr, $lastNameAttr, $thumbnailAttr
         ]));
 
         if (is_null($user)) {
@@ -93,9 +95,18 @@ class LdapService
         }
 
         $userCn = $this->getUserResponseProperty($user, 'cn', null);
+
+        $name = $this->getUserResponseProperty($user, $displayNameAttr, $userCn);
+
+        if ($firstNameAttr and $lastNameAttr) {
+            $firstName = $this->getUserResponseProperty($user, $firstNameAttr, null);
+            $lastName = $this->getUserResponseProperty($user, $lastNameAttr, null);
+            $name = $firstName . ' ' . $lastName;
+        }
+
         $formatted = [
             'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
-            'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
+            'name'  => $name,
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
             'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
