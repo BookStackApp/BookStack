@@ -1,6 +1,6 @@
 <?php
 
-namespace Activity;
+namespace Tests\Activity;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Activity;
