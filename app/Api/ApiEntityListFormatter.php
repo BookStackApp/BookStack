@@ -14,11 +14,6 @@ class ApiEntityListFormatter
     protected array $list = [];
 
     /**
-     * Whether to include related titles in the response.
-     */
-    protected bool $includeRelatedTitles = false;
-
-    /**
      * The fields to show in the formatted data.
      * Can be a plain string array item for a direct model field (If existing on model).
      * If the key is a string, with a callable value, the return value of the callable
@@ -79,20 +74,18 @@ class ApiEntityListFormatter
     /**
      * Enable the inclusion of related book and chapter titles in the response.
      */
-    public function withRelatedTitles(): self
+    public function withRelatedData(): self
     {
-        $this->includeRelatedTitles = true;
-
-        $this->withField('book_title', function (Entity $entity) {
+        $this->withField('book', function (Entity $entity) {
             if (method_exists($entity, 'book')) {
-                return $entity->book?->name;
+                return $entity->book()->select(['id', 'name', 'slug'])->first();
             }
             return null;
         });
 
-        $this->withField('chapter_title', function (Entity $entity) {
+        $this->withField('chapter', function (Entity $entity) {
             if ($entity instanceof Page && $entity->chapter_id) {
-                return optional($entity->getAttribute('chapter'))->name;
+                return $entity->chapter()->select(['id', 'name', 'slug'])->first();
             }
             return null;
         });
@@ -106,9 +99,7 @@ class ApiEntityListFormatter
      */
     public function format(): array
     {
-        if ($this->includeRelatedTitles) {
-            $this->loadRelatedTitles();
-        }
+        $this->loadRelatedData();
 
         $results = [];
 
@@ -122,7 +113,7 @@ class ApiEntityListFormatter
     /**
      * Eager load the related book and chapter data when needed.
      */
-    protected function loadRelatedTitles(): void
+    protected function loadRelatedData(): void
     {
         $pages = collect($this->list)->filter(fn($item) => $item instanceof Page);
 
