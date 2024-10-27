@@ -18,6 +18,7 @@ class ZipExportAttachment extends ZipExportModel
         $instance = new self();
         $instance->id = $model->id;
         $instance->name = $model->name;
+        $instance->order = $model->order;
 
         if ($model->external) {
             $instance->link = $model->path;

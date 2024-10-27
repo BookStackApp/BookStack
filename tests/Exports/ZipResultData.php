@@ -10,4 +10,13 @@ class ZipResultData
         public array $data,
     ) {
     }
+
+    /**
+     * Build a path to a location the extracted content, using the given relative $path.
+     */
+    public function extractPath(string $path): string
+    {
+        $relPath = implode(DIRECTORY_SEPARATOR, explode('/', $path));
+        return $this->extractedDirPath . DIRECTORY_SEPARATOR . ltrim($relPath, DIRECTORY_SEPARATOR);
+    }
 }

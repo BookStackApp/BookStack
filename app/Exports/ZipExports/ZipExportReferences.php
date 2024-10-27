@@ -62,7 +62,7 @@ class ZipExportReferences
     public function addBook(ZipExportBook $book): void
     {
         if ($book->id) {
-            $this->chapters[$book->id] = $book;
+            $this->books[$book->id] = $book;
         }
 
         foreach ($book->pages as $page) {

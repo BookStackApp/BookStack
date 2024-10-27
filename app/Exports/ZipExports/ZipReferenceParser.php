@@ -38,7 +38,7 @@ class ZipReferenceParser
     public function parse(string $content, callable $handler): string
     {
         $escapedBase = preg_quote(url('/'), '/');
-        $linkRegex = "/({$escapedBase}.*?)[\\t\\n\\f>\"'=?#]/";
+        $linkRegex = "/({$escapedBase}.*?)[\\t\\n\\f>\"'=?#()]/";
         $matches = [];
         preg_match_all($linkRegex, $content, $matches);
 
