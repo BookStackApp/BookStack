@@ -72,6 +72,28 @@ class LdapService
     }
 
     /**
+     * Calculate the display name.
+     */
+    protected function getUserDisplayName(array $displayNameAttr, array $userDetails, string $defaultValue): string
+    {
+        $displayName = [];
+        foreach ($displayNameAttr as $dnAttr) {
+            $dnComponent = $this->getUserResponseProperty($userDetails, $dnAttr, null);
+            if ($dnComponent !== null) {
+                $displayName[] = $dnComponent;
+            }
+        }
+
+        if (count($displayName) == 0) {
+            $displayName = $defaultValue;
+        } else {
+            $displayName = implode(' ', $displayName);
+        }
+
+        return $displayName;
+    }
+
+    /**
      * Get the details of a user from LDAP using the given username.
      * User found via configurable user filter.
      *
@@ -84,9 +106,9 @@ class LdapService
         $displayNameAttr = $this->config['display_name_attribute'];
         $thumbnailAttr = $this->config['thumbnail_attribute'];
 
-        $user = $this->getUserWithAttributes($userName, array_filter([
-            'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $thumbnailAttr,
-        ]));
+        $user = $this->getUserWithAttributes($userName, array_filter(array_merge($displayNameAttr, [
+            'cn', 'dn', $idAttr, $emailAttr, $thumbnailAttr,
+        ])));
 
         if (is_null($user)) {
             return null;
@@ -95,7 +117,7 @@ class LdapService
         $userCn = $this->getUserResponseProperty($user, 'cn', null);
         $formatted = [
             'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
-            'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
+            'name'  => $this->getUserDisplayName($displayNameAttr, $user, $userCn),
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
             'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,

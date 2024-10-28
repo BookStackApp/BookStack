@@ -127,7 +127,7 @@ return [
         'version'                => env('LDAP_VERSION', false),
         'id_attribute'           => env('LDAP_ID_ATTRIBUTE', 'uid'),
         'email_attribute'        => env('LDAP_EMAIL_ATTRIBUTE', 'mail'),
-        'display_name_attribute' => env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn'),
+        'display_name_attribute' => explode('|', env('LDAP_DISPLAY_NAME_ATTRIBUTE', 'cn')),
         'follow_referrals'       => env('LDAP_FOLLOW_REFERRALS', false),
         'user_to_groups'         => env('LDAP_USER_TO_GROUPS', false),
         'group_attribute'        => env('LDAP_GROUP_ATTRIBUTE', 'memberOf'),
