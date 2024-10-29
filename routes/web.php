@@ -206,6 +206,10 @@ Route::middleware('auth')->group(function () {
     // Watching
     Route::put('/watching/update', [ActivityControllers\WatchController::class, 'update']);
 
+    // Importing
+    Route::get('/import', [ExportControllers\ImportController::class, 'start']);
+    Route::post('/import', [ExportControllers\ImportController::class, 'upload']);
+
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/home', [HomeController::class, 'index']);
