@@ -545,6 +545,43 @@ input[type=color] {
   outline: 1px solid var(--color-primary);
 }
 
+.custom-simple-file-input {
+  max-width: 100%;
+  border: 1px solid;
+  @include lightDark(border-color, #DDD, #666);
+  border-radius: 4px;
+  padding: $-s $-m;
+}
+.custom-simple-file-input::file-selector-button {
+  background-color: transparent;
+  text-decoration: none;
+  font-size: 0.8rem;
+  line-height: 1.4em;
+  padding: $-xs $-s;
+  border: 1px solid;
+  font-weight: 400;
+  outline: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: $-m;
+  @include lightDark(color, #666, #AAA);
+  @include lightDark(border-color, #CCC, #666);
+  &:hover, &:focus, &:active {
+    @include lightDark(color, #444, #BBB);
+    border: 1px solid #CCC;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    background-color: #F2F2F2;
+    @include lightDark(background-color, #f8f8f8, #444);
+    filter: none;
+  }
+  &:active {
+    border-color: #BBB;
+    background-color: #DDD;
+    color: #666;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+}
+
 input.shortcut-input {
   width: auto;
   max-width: 120px;
