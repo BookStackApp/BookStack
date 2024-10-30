@@ -34,6 +34,6 @@ class ZipExportTag extends ZipExportModel
             'order' => ['nullable', 'integer'],
         ];
 
-        return $context->validateArray($data, $rules);
+        return $context->validateData($data, $rules);
     }
 }

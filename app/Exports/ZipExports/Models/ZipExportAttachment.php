@@ -47,6 +47,6 @@ class ZipExportAttachment extends ZipExportModel
             'file'  => ['required_without:link', 'nullable', 'string', $context->fileReferenceRule()],
         ];
 
-        return $context->validateArray($data, $rules);
+        return $context->validateData($data, $rules);
     }
 }

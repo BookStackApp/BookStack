@@ -2,6 +2,7 @@
 
 namespace BookStack\Exports\Controllers;
 
+use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,13 @@ class ImportController extends Controller
         ]);
 
         $file = $request->file('file');
-        $file->getRealPath();
+        $zipPath = $file->getRealPath();
+
+        $errors = (new ZipExportValidator($zipPath))->validate();
+        if ($errors) {
+            dd($errors);
+        }
+        dd('passed');
         // TODO - Read existing ZIP upload and send through validator
             // TODO - If invalid, return user with errors
         // TODO - Upload to storage

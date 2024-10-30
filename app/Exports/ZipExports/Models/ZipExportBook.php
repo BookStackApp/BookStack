@@ -6,6 +6,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exports\ZipExports\ZipExportFiles;
+use BookStack\Exports\ZipExports\ZipValidationHelper;
 
 class ZipExportBook extends ZipExportModel
 {
@@ -49,5 +50,25 @@ class ZipExportBook extends ZipExportModel
         $instance->chapters = ZipExportChapter::fromModelArray($chapters, $files);
 
         return $instance;
+    }
+
+    public static function validate(ZipValidationHelper $context, array $data): array
+    {
+        $rules = [
+            'id'    => ['nullable', 'int'],
+            'name'  => ['required', 'string', 'min:1'],
+            'description_html' => ['nullable', 'string'],
+            'cover' => ['nullable', 'string', $context->fileReferenceRule()],
+            'tags' => ['array'],
+            'pages' => ['array'],
+            'chapters' => ['array'],
+        ];
+
+        $errors = $context->validateData($data, $rules);
+        $errors['tags'] = $context->validateRelations($data['tags'] ?? [], ZipExportTag::class);
+        $errors['pages'] = $context->validateRelations($data['pages'] ?? [], ZipExportPage::class);
+        $errors['chapters'] = $context->validateRelations($data['chapters'] ?? [], ZipExportChapter::class);
+
+        return $errors;
     }
 }

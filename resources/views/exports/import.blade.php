@@ -6,7 +6,7 @@
 
         <main class="card content-wrap auto-height mt-xxl">
             <h1 class="list-heading">{{ trans('entities.import') }}</h1>
-            <form action="{{ url('/import') }}" method="POST">
+            <form action="{{ url('/import') }}" enctype="multipart/form-data" method="POST">
                 {{ csrf_field() }}
                 <div class="flex-container-row justify-space-between wrap gap-x-xl gap-y-s">
                     <p class="flex min-width-l text-muted mb-s">
@@ -22,6 +22,7 @@
                                    name="file"
                                    id="file"
                                    class="custom-simple-file-input">
+                            @include('form.errors', ['name' => 'file'])
                         </div>
                     </div>
                 </div>
