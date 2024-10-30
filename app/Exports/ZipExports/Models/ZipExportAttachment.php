@@ -3,6 +3,7 @@
 namespace BookStack\Exports\ZipExports\Models;
 
 use BookStack\Exports\ZipExports\ZipExportFiles;
+use BookStack\Exports\ZipExports\ZipValidationHelper;
 use BookStack\Uploads\Attachment;
 
 class ZipExportAttachment extends ZipExportModel
@@ -34,5 +35,18 @@ class ZipExportAttachment extends ZipExportModel
         return array_values(array_map(function (Attachment $attachment) use ($files) {
             return self::fromModel($attachment, $files);
         }, $attachmentArray));
+    }
+
+    public static function validate(ZipValidationHelper $context, array $data): array
+    {
+        $rules = [
+            'id'    => ['nullable', 'int'],
+            'name'  => ['required', 'string', 'min:1'],
+            'order' => ['nullable', 'integer'],
+            'link'  => ['required_without:file', 'nullable', 'string'],
+            'file'  => ['required_without:link', 'nullable', 'string', $context->fileReferenceRule()],
+        ];
+
+        return $context->validateArray($data, $rules);
     }
 }

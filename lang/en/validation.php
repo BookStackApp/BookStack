@@ -105,6 +105,8 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
+    'zip_file'            => 'The :attribute needs to reference a file within the ZIP.',
+
     // Custom validation lines
     'custom' => [
         'password-confirm' => [

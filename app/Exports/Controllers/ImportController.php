@@ -21,6 +21,12 @@ class ImportController extends Controller
 
     public function upload(Request $request)
     {
+        $this->validate($request, [
+            'file' => ['required', 'file']
+        ]);
+
+        $file = $request->file('file');
+        $file->getRealPath();
         // TODO - Read existing ZIP upload and send through validator
             // TODO - If invalid, return user with errors
         // TODO - Upload to storage

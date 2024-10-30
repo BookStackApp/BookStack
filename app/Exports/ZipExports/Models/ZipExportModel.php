@@ -2,6 +2,7 @@
 
 namespace BookStack\Exports\ZipExports\Models;
 
+use BookStack\Exports\ZipExports\ZipValidationHelper;
 use JsonSerializable;
 
 abstract class ZipExportModel implements JsonSerializable
@@ -17,4 +18,12 @@ abstract class ZipExportModel implements JsonSerializable
         $publicProps = get_object_vars(...)->__invoke($this);
         return array_filter($publicProps, fn ($value) => $value !== null);
     }
+
+    /**
+     * Validate the given array of data intended for this model.
+     * Return an array of validation errors messages.
+     * Child items can be considered in the validation result by returning a keyed
+     * item in the array for its own validation messages.
+     */
+    abstract public static function validate(ZipValidationHelper $context, array $data): array;
 }
