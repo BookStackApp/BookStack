@@ -2,16 +2,17 @@
 
 namespace BookStack\Exports\Controllers;
 
-use BookStack\Exports\Import;
-use BookStack\Exports\ZipExports\ZipExportReader;
-use BookStack\Exports\ZipExports\ZipExportValidator;
+use BookStack\Exceptions\ZipValidationException;
+use BookStack\Exports\ImportRepo;
 use BookStack\Http\Controller;
+use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\Request;
 
 class ImportController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(
+        protected ImportRepo $imports,
+    ) {
         $this->middleware('can:content-import');
     }
 
@@ -27,35 +28,17 @@ class ImportController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'file' => ['required', 'file']
+            'file' => ['required', ...AttachmentService::getFileValidationRules()]
         ]);
 
         $file = $request->file('file');
-        $zipPath = $file->getRealPath();
-
-        $errors = (new ZipExportValidator($zipPath))->validate();
-        if ($errors) {
-            session()->flash('validation_errors', $errors);
+        try {
+            $import = $this->imports->storeFromUpload($file);
+        } catch (ZipValidationException $exception) {
+            session()->flash('validation_errors', $exception->errors);
             return redirect('/import');
         }
 
-        $zipEntityInfo = (new ZipExportReader($zipPath))->getEntityInfo();
-        $import = new Import();
-        $import->name = $zipEntityInfo['name'];
-        $import->book_count = $zipEntityInfo['book_count'];
-        $import->chapter_count = $zipEntityInfo['chapter_count'];
-        $import->page_count = $zipEntityInfo['page_count'];
-        $import->created_by = user()->id;
-        $import->size = filesize($zipPath);
-        // TODO - Set path
-        // TODO - Save
-
-        // TODO - Split out attachment service to separate out core filesystem/disk stuff
-        //        To reuse for import handling
-
-        dd('passed');
-        // TODO - Upload to storage
-        // TODO - Store info/results for display:
-        // TODO - Send user to next import stage
+        return redirect("imports/{$import->id}");
     }
 }
