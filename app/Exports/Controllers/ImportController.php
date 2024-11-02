@@ -2,6 +2,8 @@
 
 namespace BookStack\Exports\Controllers;
 
+use BookStack\Exports\Import;
+use BookStack\Exports\ZipExports\ZipExportReader;
 use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -37,17 +39,23 @@ class ImportController extends Controller
             return redirect('/import');
         }
 
+        $zipEntityInfo = (new ZipExportReader($zipPath))->getEntityInfo();
+        $import = new Import();
+        $import->name = $zipEntityInfo['name'];
+        $import->book_count = $zipEntityInfo['book_count'];
+        $import->chapter_count = $zipEntityInfo['chapter_count'];
+        $import->page_count = $zipEntityInfo['page_count'];
+        $import->created_by = user()->id;
+        $import->size = filesize($zipPath);
+        // TODO - Set path
+        // TODO - Save
+
+        // TODO - Split out attachment service to separate out core filesystem/disk stuff
+        //        To reuse for import handling
+
         dd('passed');
         // TODO - Upload to storage
         // TODO - Store info/results for display:
-          // - zip_path
-          // - name (From name of thing being imported)
-          // - size
-          // - book_count
-          // - chapter_count
-          // - page_count
-          // - created_by
-          // - created_at/updated_at
         // TODO - Send user to next import stage
     }
 }

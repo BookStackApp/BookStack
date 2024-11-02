@@ -19,7 +19,7 @@ class ZipFileReferenceRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->context->zipFileExists($value)) {
+        if (!$this->context->zipReader->fileExists($value)) {
             $fail('validation.zip_file')->translate();
         }
     }

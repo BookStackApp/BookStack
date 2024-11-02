@@ -2,10 +2,10 @@
 
 namespace BookStack\Exports\ZipExports;
 
+use BookStack\Exceptions\ZipExportException;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
-use ZipArchive;
 
 class ZipExportValidator
 {
@@ -16,26 +16,14 @@ class ZipExportValidator
 
     public function validate(): array
     {
-        // Validate file exists
-        if (!file_exists($this->zipPath) || !is_readable($this->zipPath)) {
-            return ['format' => trans('errors.import_zip_cant_read')];
+        $reader = new ZipExportReader($this->zipPath);
+        try {
+            $importData = $reader->readData();
+        } catch (ZipExportException $exception) {
+            return ['format' => $exception->getMessage()];
         }
 
-        // Validate file is valid zip
-        $zip = new \ZipArchive();
-        $opened = $zip->open($this->zipPath, ZipArchive::RDONLY);
-        if ($opened !== true) {
-            return ['format' => trans('errors.import_zip_cant_read')];
-        }
-
-        // Validate json data exists, including metadata
-        $jsonData = $zip->getFromName('data.json') ?: '';
-        $importData = json_decode($jsonData, true);
-        if (!$importData) {
-            return ['format' => trans('errors.import_zip_cant_decode_data')];
-        }
-
-        $helper = new ZipValidationHelper($zip);
+        $helper = new ZipValidationHelper($reader);
 
         if (isset($importData['book'])) {
             $modelErrors = ZipExportBook::validate($helper, $importData['book']);

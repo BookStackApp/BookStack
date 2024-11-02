@@ -4,14 +4,13 @@ namespace BookStack\Exports\ZipExports;
 
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use Illuminate\Validation\Factory;
-use ZipArchive;
 
 class ZipValidationHelper
 {
     protected Factory $validationFactory;
 
     public function __construct(
-        protected ZipArchive $zip,
+        public ZipExportReader $zipReader,
     ) {
         $this->validationFactory = app(Factory::class);
     }
@@ -25,11 +24,6 @@ class ZipValidationHelper
         }
 
         return $messages;
-    }
-
-    public function zipFileExists(string $name): bool
-    {
-        return $this->zip->statName("files/{$name}") !== false;
     }
 
     public function fileReferenceRule(): ZipFileReferenceRule
