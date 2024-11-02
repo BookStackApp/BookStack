@@ -17,7 +17,9 @@ class ImportController extends Controller
     {
         // TODO - Show existing imports for user (or for all users if admin-level user)
 
-        return view('exports.import');
+        return view('exports.import', [
+            'zipErrors' => session()->pull('validation_errors') ?? [],
+        ]);
     }
 
     public function upload(Request $request)
@@ -31,13 +33,21 @@ class ImportController extends Controller
 
         $errors = (new ZipExportValidator($zipPath))->validate();
         if ($errors) {
-            dd($errors);
+            session()->flash('validation_errors', $errors);
+            return redirect('/import');
         }
+
         dd('passed');
-        // TODO - Read existing ZIP upload and send through validator
-            // TODO - If invalid, return user with errors
         // TODO - Upload to storage
-        // TODO - Store info/results from validator
+        // TODO - Store info/results for display:
+          // - zip_path
+          // - name (From name of thing being imported)
+          // - size
+          // - book_count
+          // - chapter_count
+          // - page_count
+          // - created_by
+          // - created_at/updated_at
         // TODO - Send user to next import stage
     }
 }

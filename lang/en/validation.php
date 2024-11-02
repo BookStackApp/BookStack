@@ -106,7 +106,7 @@ return [
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
     'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_model_expected' => 'Data object expected but ":type" found',
+    'zip_model_expected' => 'Data object expected but ":type" found.',
 
     // Custom validation lines
     'custom' => [

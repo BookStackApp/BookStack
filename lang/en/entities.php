@@ -45,6 +45,9 @@ return [
     'default_template_select' => 'Select a template page',
     'import' => 'Import',
     'import_validate' => 'Validate Import',
+    'import_desc' => 'Import books, chapters & pages using a portable zip export from the same, or a different, instance. Select a ZIP file to import then press "Validate Import" to proceed. After the file has been uploaded and validated you\'ll be able to configure & confirm the import in the next view.',
+    'import_zip_select' => 'Select ZIP file to upload',
+    'import_zip_validation_errors' => 'Errors were detected while validating the provided ZIP file:',
 
     // Permissions and restrictions
     'permissions' => 'Permissions',

@@ -9,14 +9,10 @@
             <form action="{{ url('/import') }}" enctype="multipart/form-data" method="POST">
                 {{ csrf_field() }}
                 <div class="flex-container-row justify-space-between wrap gap-x-xl gap-y-s">
-                    <p class="flex min-width-l text-muted mb-s">
-                        Import books, chapters & pages using a portable zip export from the same, or a different, instance.
-                        Select a ZIP file to import then press "Validate Import" to proceed.
-                        After the file has been uploaded and validated you'll be able to configure & confirm the import in the next view.
-                    </p>
+                    <p class="flex min-width-l text-muted mb-s">{{ trans('entities.import_desc') }}</p>
                     <div class="flex-none min-width-l flex-container-row justify-flex-end">
                         <div class="mb-m">
-                            <label for="file">Select ZIP file to upload</label>
+                            <label for="file">{{ trans('entities.import_zip_select') }}</label>
                             <input type="file"
                                    accept=".zip,application/zip,application/x-zip-compressed"
                                    name="file"
@@ -26,6 +22,15 @@
                         </div>
                     </div>
                 </div>
+
+                @if(count($zipErrors) > 0)
+                    <p class="mb-xs"><strong class="text-neg">{{ trans('entities.import_zip_validation_errors') }}</strong></p>
+                    <ul class="mb-m">
+                        @foreach($zipErrors as $key => $error)
+                            <li><strong class="text-neg">[{{ $key }}]</strong>: {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
 
                 <div class="text-right">
                     <a href="{{ url('/books') }}" class="button outline">{{ trans('common.cancel') }}</a>

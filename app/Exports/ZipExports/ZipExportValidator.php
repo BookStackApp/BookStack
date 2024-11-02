@@ -18,21 +18,21 @@ class ZipExportValidator
     {
         // Validate file exists
         if (!file_exists($this->zipPath) || !is_readable($this->zipPath)) {
-            return ['format' => "Could not read ZIP file"];
+            return ['format' => trans('errors.import_zip_cant_read')];
         }
 
         // Validate file is valid zip
         $zip = new \ZipArchive();
         $opened = $zip->open($this->zipPath, ZipArchive::RDONLY);
         if ($opened !== true) {
-            return ['format' => "Could not read ZIP file"];
+            return ['format' => trans('errors.import_zip_cant_read')];
         }
 
         // Validate json data exists, including metadata
         $jsonData = $zip->getFromName('data.json') ?: '';
         $importData = json_decode($jsonData, true);
         if (!$importData) {
-            return ['format' => "Could not find and decode ZIP data.json content"];
+            return ['format' => trans('errors.import_zip_cant_decode_data')];
         }
 
         $helper = new ZipValidationHelper($zip);
@@ -47,8 +47,9 @@ class ZipExportValidator
             $modelErrors = ZipExportPage::validate($helper, $importData['page']);
             $keyPrefix = 'page';
         } else {
-            return ['format' => "ZIP file has no book, chapter or page data"];
+            return ['format' => trans('errors.import_zip_no_data')];
         }
+
 
         return $this->flattenModelErrors($modelErrors, $keyPrefix);
     }
