@@ -6,7 +6,44 @@
 
         <main class="card content-wrap auto-height mt-xxl">
             <h1 class="list-heading">{{ trans('entities.import_continue') }}</h1>
-            <form action="{{ url('/import') }}" enctype="multipart/form-data" method="POST">
+            <p class="text-muted">{{ trans('entities.import_continue_desc') }}</p>
+
+            <div class="mb-m">
+                @php
+                    $type = $import->getType();
+                @endphp
+                <div class="flex-container-row items-center justify-space-between wrap">
+                    <div class="py-s">
+                        <p class="text-{{ $type }} mb-xs bold">@icon($type) {{ $import->name }}</p>
+                        @if($type === 'book')
+                            <p class="text-chapter mb-xs ml-l">@icon('chapter') {{ trans_choice('entities.x_chapters', $import->chapter_count) }}</p>
+                        @endif
+                        @if($type === 'book' || $type === 'chapter')
+                            <p class="text-page mb-xs ml-l">@icon('page') {{ trans_choice('entities.x_pages', $import->page_count) }}</p>
+                        @endif
+                    </div>
+                    <div class="py-s">
+                        <div class="opacity-80">
+                            <strong>{{ trans('entities.import_size') }}</strong>
+                            <span>{{ $import->getSizeString() }}</span>
+                        </div>
+                        <div class="opacity-80">
+                            <strong>{{ trans('entities.import_uploaded_at') }}</strong>
+                            <span title="{{ $import->created_at->toISOString() }}">{{ $import->created_at->diffForHumans() }}</span>
+                        </div>
+                        @if($import->createdBy)
+                            <div class="opacity-80">
+                                <strong>{{ trans('entities.import_uploaded_by') }}</strong>
+                                <a href="{{ $import->createdBy->getProfileUrl() }}">{{ $import->createdBy->name }}</a>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <form id="import-run-form"
+                  action="{{ $import->getUrl() }}"
+                  method="POST">
                 {{ csrf_field() }}
             </form>
 
@@ -23,7 +60,7 @@
                         <button type="submit" form="import-delete-form" class="text-link small text-item">{{ trans('common.confirm') }}</button>
                     </div>
                 </div>
-                <button type="submit" class="button">{{ trans('entities.import_run') }}</button>
+                <button type="submit" form="import-run-form" class="button">{{ trans('entities.import_run') }}</button>
             </div>
         </main>
     </div>

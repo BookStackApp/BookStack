@@ -51,7 +51,11 @@ return [
     'import_pending' => 'Pending Imports',
     'import_pending_none' => 'No imports have been started.',
     'import_continue' => 'Continue Import',
+    'import_continue_desc' => 'Review the content due to be imported from the uploaded ZIP file. When ready, run the import to add its contents to this system. The uploaded ZIP import file will be automatically removed on successful import.',
     'import_run' => 'Run Import',
+    'import_size' => 'Import ZIP Size:',
+    'import_uploaded_at' => 'Uploaded:',
+    'import_uploaded_by' => 'Uploaded by:',
     'import_delete_confirm' => 'Are you sure you want to delete this import?',
     'import_delete_desc' => 'This will delete the uploaded import ZIP file, and cannot be undone.',
 

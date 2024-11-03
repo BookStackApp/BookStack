@@ -3,11 +3,14 @@
 namespace BookStack\Exports;
 
 use BookStack\Activity\Models\Loggable;
+use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * @property int $id
  * @property string $path
  * @property string $name
  * @property int $size - ZIP size in bytes
@@ -17,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $created_by
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property User $createdBy
  */
 class Import extends Model implements Loggable
 {
@@ -58,5 +62,10 @@ class Import extends Model implements Loggable
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}";
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

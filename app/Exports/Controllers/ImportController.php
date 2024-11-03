@@ -23,9 +23,8 @@ class ImportController extends Controller
      * Show the view to start a new import, and also list out the existing
      * in progress imports that are visible to the user.
      */
-    public function start(Request $request)
+    public function start()
     {
-        // TODO - Test visibility access for listed items
         $imports = $this->imports->getVisibleImports();
 
         $this->setPageTitle(trans('entities.import'));
@@ -64,7 +63,6 @@ class ImportController extends Controller
      */
     public function show(int $id)
     {
-        // TODO - Test visibility access
         $import = $this->imports->findVisible($id);
 
         $this->setPageTitle(trans('entities.import_continue'));
@@ -74,12 +72,23 @@ class ImportController extends Controller
         ]);
     }
 
+    public function run(int $id)
+    {
+        // TODO - Test access/visibility
+
+        $import = $this->imports->findVisible($id);
+
+        // TODO  - Run import
+           // Validate again before
+        // TODO - Redirect to result
+        // TOOD - Or redirect back with errors
+    }
+
     /**
      * Delete an active pending import from the filesystem and database.
      */
     public function delete(int $id)
     {
-        // TODO - Test visibility access
         $import = $this->imports->findVisible($id);
         $this->imports->deleteImport($import);
 
