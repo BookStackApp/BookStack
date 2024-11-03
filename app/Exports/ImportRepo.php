@@ -6,6 +6,7 @@ use BookStack\Exceptions\ZipValidationException;
 use BookStack\Exports\ZipExports\ZipExportReader;
 use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Uploads\FileStorage;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImportRepo
@@ -13,6 +14,31 @@ class ImportRepo
     public function __construct(
         protected FileStorage $storage,
     ) {
+    }
+
+    /**
+     * @return Collection<Import>
+     */
+    public function getVisibleImports(): Collection
+    {
+        $query = Import::query();
+
+        if (!userCan('settings-manage')) {
+            $query->where('created_by', user()->id);
+        }
+
+        return $query->get();
+    }
+
+    public function findVisible(int $id): Import
+    {
+        $query = Import::query();
+
+        if (!userCan('settings-manage')) {
+            $query->where('created_by', user()->id);
+        }
+
+        return $query->findOrFail($id);
     }
 
     public function storeFromUpload(UploadedFile $file): Import
@@ -44,5 +70,11 @@ class ImportRepo
         $import->save();
 
         return $import;
+    }
+
+    public function deleteImport(Import $import): void
+    {
+        $this->storage->delete($import->path);
+        $import->delete();
     }
 }

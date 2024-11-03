@@ -209,6 +209,8 @@ Route::middleware('auth')->group(function () {
     // Importing
     Route::get('/import', [ExportControllers\ImportController::class, 'start']);
     Route::post('/import', [ExportControllers\ImportController::class, 'upload']);
+    Route::get('/import/{id}', [ExportControllers\ImportController::class, 'show']);
+    Route::delete('/import/{id}', [ExportControllers\ImportController::class, 'delete']);
 
     // Other Pages
     Route::get('/', [HomeController::class, 'index']);

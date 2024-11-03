@@ -38,6 +38,19 @@
                 </div>
             </form>
         </main>
+
+        <main class="card content-wrap auto-height mt-xxl">
+            <h2 class="list-heading">{{ trans('entities.import_pending') }}</h2>
+            @if(count($imports) === 0)
+                <p>{{ trans('entities.import_pending_none') }}</p>
+            @else
+                <div class="item-list my-m">
+                    @foreach($imports as $import)
+                        @include('exports.parts.import', ['import' => $import])
+                    @endforeach
+                </div>
+            @endif
+        </main>
     </div>
 
 @stop

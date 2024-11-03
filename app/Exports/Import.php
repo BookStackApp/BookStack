@@ -2,6 +2,7 @@
 
 namespace BookStack\Exports;
 
+use BookStack\Activity\Models\Loggable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class Import extends Model
+class Import extends Model implements Loggable
 {
     use HasFactory;
 
@@ -37,5 +38,25 @@ class Import extends Model
         }
 
         return self::TYPE_PAGE;
+    }
+
+    public function getSizeString(): string
+    {
+        $mb = round($this->size / 1000000, 2);
+        return "{$mb} MB";
+    }
+
+    /**
+     * Get the URL to view/continue this import.
+     */
+    public function getUrl(string $path = ''): string
+    {
+        $path = ltrim($path, '/');
+        return url("/import/{$this->id}" . ($path ? '/' . $path : ''));
+    }
+
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}";
     }
 }

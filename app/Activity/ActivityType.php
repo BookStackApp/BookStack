@@ -67,6 +67,10 @@ class ActivityType
     const WEBHOOK_UPDATE = 'webhook_update';
     const WEBHOOK_DELETE = 'webhook_delete';
 
+    const IMPORT_CREATE = 'import_create';
+    const IMPORT_RUN = 'import_run';
+    const IMPORT_DELETE = 'import_delete';
+
     /**
      * Get all the possible values.
      */

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BookStack\Exports\Controllers;
 
+use BookStack\Activity\ActivityType;
 use BookStack\Exceptions\ZipValidationException;
 use BookStack\Exports\ImportRepo;
 use BookStack\Http\Controller;
@@ -16,15 +19,26 @@ class ImportController extends Controller
         $this->middleware('can:content-import');
     }
 
+    /**
+     * Show the view to start a new import, and also list out the existing
+     * in progress imports that are visible to the user.
+     */
     public function start(Request $request)
     {
-        // TODO - Show existing imports for user (or for all users if admin-level user)
+        // TODO - Test visibility access for listed items
+        $imports = $this->imports->getVisibleImports();
+
+        $this->setPageTitle(trans('entities.import'));
 
         return view('exports.import', [
+            'imports' => $imports,
             'zipErrors' => session()->pull('validation_errors') ?? [],
         ]);
     }
 
+    /**
+     * Upload, validate and store an import file.
+     */
     public function upload(Request $request)
     {
         $this->validate($request, [
@@ -39,6 +53,38 @@ class ImportController extends Controller
             return redirect('/import');
         }
 
-        return redirect("imports/{$import->id}");
+        $this->logActivity(ActivityType::IMPORT_CREATE, $import);
+
+        return redirect($import->getUrl());
+    }
+
+    /**
+     * Show a pending import, with a form to allow progressing
+     * with the import process.
+     */
+    public function show(int $id)
+    {
+        // TODO - Test visibility access
+        $import = $this->imports->findVisible($id);
+
+        $this->setPageTitle(trans('entities.import_continue'));
+
+        return view('exports.import-show', [
+            'import' => $import,
+        ]);
+    }
+
+    /**
+     * Delete an active pending import from the filesystem and database.
+     */
+    public function delete(int $id)
+    {
+        // TODO - Test visibility access
+        $import = $this->imports->findVisible($id);
+        $this->imports->deleteImport($import);
+
+        $this->logActivity(ActivityType::IMPORT_DELETE, $import);
+
+        return redirect('/import');
     }
 }

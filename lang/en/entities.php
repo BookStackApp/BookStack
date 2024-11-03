@@ -48,6 +48,12 @@ return [
     'import_desc' => 'Import books, chapters & pages using a portable zip export from the same, or a different, instance. Select a ZIP file to import then press "Validate Import" to proceed. After the file has been uploaded and validated you\'ll be able to configure & confirm the import in the next view.',
     'import_zip_select' => 'Select ZIP file to upload',
     'import_zip_validation_errors' => 'Errors were detected while validating the provided ZIP file:',
+    'import_pending' => 'Pending Imports',
+    'import_pending_none' => 'No imports have been started.',
+    'import_continue' => 'Continue Import',
+    'import_run' => 'Run Import',
+    'import_delete_confirm' => 'Are you sure you want to delete this import?',
+    'import_delete_desc' => 'This will delete the uploaded import ZIP file, and cannot be undone.',
 
     // Permissions and restrictions
     'permissions' => 'Permissions',
