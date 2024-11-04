@@ -72,14 +72,22 @@ class ImportController extends Controller
         ]);
     }
 
-    public function run(int $id)
+    public function run(int $id, Request $request)
     {
         // TODO - Test access/visibility
-
         $import = $this->imports->findVisible($id);
+        $parent = null;
+
+        if ($import->getType() === 'page' || $import->getType() === 'chapter') {
+            $data = $this->validate($request, [
+                'parent' => ['required', 'string']
+            ]);
+            $parent = $data['parent'];
+        }
 
         // TODO  - Run import
-           // Validate again before
+           // TODO - Validate again before
+           // TODO - Check permissions before (create for main item, create for children, create for related items [image, attachments])
         // TODO - Redirect to result
         // TOOD - Or redirect back with errors
     }

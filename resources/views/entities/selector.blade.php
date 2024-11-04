@@ -1,3 +1,11 @@
+{{--
+$name - string
+$autofocus - boolean, optional
+$entityTypes - string, optional
+$entityPermission - string, optional
+$selectorEndpoint - string, optional
+$selectorSize - string, optional (compact)
+--}}
 <div class="form-group entity-selector-container">
     <div component="entity-selector"
          refs="entity-selector-popup@selector"

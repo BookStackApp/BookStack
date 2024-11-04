@@ -56,6 +56,8 @@ return [
     'import_size' => 'Import ZIP Size:',
     'import_uploaded_at' => 'Uploaded:',
     'import_uploaded_by' => 'Uploaded by:',
+    'import_location' => 'Import Location',
+    'import_location_desc' => 'Select a target location for your imported content. You\'ll need the relevant permissions to create within the location you choose.',
     'import_delete_confirm' => 'Are you sure you want to delete this import?',
     'import_delete_desc' => 'This will delete the uploaded import ZIP file, and cannot be undone.',
 

@@ -2,6 +2,10 @@
 
 @section('body')
 
+    @php
+        $type = $import->getType();
+    @endphp
+
     <div class="container small">
 
         <main class="card content-wrap auto-height mt-xxl">
@@ -9,11 +13,9 @@
             <p class="text-muted">{{ trans('entities.import_continue_desc') }}</p>
 
             <div class="mb-m">
-                @php
-                    $type = $import->getType();
-                @endphp
+                <label class="setting-list-label">Import Details</label>
                 <div class="flex-container-row items-center justify-space-between wrap">
-                    <div class="py-s">
+                    <div>
                         <p class="text-{{ $type }} mb-xs bold">@icon($type) {{ $import->name }}</p>
                         @if($type === 'book')
                             <p class="text-chapter mb-xs ml-l">@icon('chapter') {{ trans_choice('entities.x_chapters', $import->chapter_count) }}</p>
@@ -22,7 +24,7 @@
                             <p class="text-page mb-xs ml-l">@icon('page') {{ trans_choice('entities.x_pages', $import->page_count) }}</p>
                         @endif
                     </div>
-                    <div class="py-s">
+                    <div>
                         <div class="opacity-80">
                             <strong>{{ trans('entities.import_size') }}</strong>
                             <span>{{ $import->getSizeString() }}</span>
@@ -45,6 +47,19 @@
                   action="{{ $import->getUrl() }}"
                   method="POST">
                 {{ csrf_field() }}
+
+                @if($type === 'page' || $type === 'chapter')
+                    <hr>
+                    <label class="setting-list-label">{{ trans('entities.import_location') }}</label>
+                    <p class="small mb-m">{{ trans('entities.import_location_desc') }}</p>
+                    @include('entities.selector', [
+                        'name' => 'parent',
+                        'entityTypes' => $type === 'page' ? 'chapter,book' : 'book',
+                        'entityPermission' => "{$type}-create",
+                        'selectorSize' => 'compact small',
+                    ])
+                    @include('form.errors', ['name' => 'parent'])
+                @endif
             </form>
 
             <div class="text-right">

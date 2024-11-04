@@ -138,6 +138,11 @@ $loadingSize: 10px;
     font-size: 16px;
     padding: $-s $-m;
   }
+  input[type="text"]:focus {
+    outline: 1px solid var(--color-primary);
+    border-radius: 3px 3px 0 0;
+    outline-offset: -1px;
+  }
   .entity-list {
     overflow-y: scroll;
     height: 400px;
@@ -169,6 +174,19 @@ $loadingSize: 10px;
     }
     h4 {
       font-size: 14px;
+    }
+  }
+  &.small {
+    .entity-list-item {
+      padding: $-xs $-m;
+    }
+    .entity-list, .loading {
+      height: 300px;
+    }
+    input[type="text"] {
+      font-size: 13px;
+      padding: $-xs $-m;
+      height: auto;
     }
   }
 }
