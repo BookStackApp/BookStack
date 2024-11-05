@@ -249,3 +249,8 @@ $loadingSize: 10px;
     }
   }
 }
+
+.import-item {
+  border-inline-start: 2px solid currentColor;
+  padding-inline-start: $-xs;
+}

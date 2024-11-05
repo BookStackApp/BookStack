@@ -38,7 +38,6 @@ class ZipExportValidator
             return ['format' => trans('errors.import_zip_no_data')];
         }
 
-
         return $this->flattenModelErrors($modelErrors, $keyPrefix);
     }
 

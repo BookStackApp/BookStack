@@ -65,10 +65,13 @@ class ImportController extends Controller
     {
         $import = $this->imports->findVisible($id);
 
+//        dd($import->decodeMetadata());
+
         $this->setPageTitle(trans('entities.import_continue'));
 
         return view('exports.import-show', [
             'import' => $import,
+            'data' => $import->decodeMetadata(),
         ]);
     }
 
@@ -89,7 +92,7 @@ class ImportController extends Controller
            // TODO - Validate again before
            // TODO - Check permissions before (create for main item, create for children, create for related items [image, attachments])
         // TODO - Redirect to result
-        // TOOD - Or redirect back with errors
+        // TODO - Or redirect back with errors
     }
 
     /**

@@ -4,6 +4,9 @@ namespace Tests\Exports;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Exports\Import;
+use BookStack\Exports\ZipExports\Models\ZipExportBook;
+use BookStack\Exports\ZipExports\Models\ZipExportChapter;
+use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -130,7 +133,7 @@ class ZipImportTest extends TestCase
     {
         $admin = $this->users->admin();
         $this->actingAs($admin);
-        $resp = $this->runImportFromFile($this->zipUploadFromData([
+        $data = [
             'book' => [
                 'name' => 'My great book name',
                 'chapters' => [
@@ -149,13 +152,13 @@ class ZipImportTest extends TestCase
                     ]
                 ],
             ],
-        ]));
+        ];
+
+        $resp = $this->runImportFromFile($this->zipUploadFromData($data));
 
         $this->assertDatabaseHas('imports', [
             'name' => 'My great book name',
-            'book_count' => 1,
-            'chapter_count' => 1,
-            'page_count' => 2,
+            'type' => 'book',
             'created_by' => $admin->id,
         ]);
 
@@ -168,11 +171,25 @@ class ZipImportTest extends TestCase
 
     public function test_import_show_page()
     {
-        $import = Import::factory()->create(['name' => 'MySuperAdminImport']);
+        $exportBook = new ZipExportBook();
+        $exportBook->name = 'My exported book';
+        $exportChapter = new ZipExportChapter();
+        $exportChapter->name = 'My exported chapter';
+        $exportPage = new ZipExportPage();
+        $exportPage->name = 'My exported page';
+        $exportBook->chapters = [$exportChapter];
+        $exportChapter->pages = [$exportPage];
+
+        $import = Import::factory()->create([
+            'name' => 'MySuperAdminImport',
+            'metadata' => json_encode($exportBook)
+        ]);
 
         $resp = $this->asAdmin()->get("/import/{$import->id}");
         $resp->assertOk();
-        $resp->assertSee('MySuperAdminImport');
+        $resp->assertSeeText('My exported book');
+        $resp->assertSeeText('My exported chapter');
+        $resp->assertSeeText('My exported page');
     }
 
     public function test_import_show_page_access_limited()

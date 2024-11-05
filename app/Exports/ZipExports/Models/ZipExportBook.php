@@ -21,6 +21,21 @@ class ZipExportBook extends ZipExportModel
     /** @var ZipExportTag[] */
     public array $tags = [];
 
+    public function metadataOnly(): void
+    {
+        $this->description_html = $this->cover = null;
+
+        foreach ($this->chapters as $chapter) {
+            $chapter->metadataOnly();
+        }
+        foreach ($this->pages as $page) {
+            $page->metadataOnly();
+        }
+        foreach ($this->tags as $tag) {
+            $tag->metadataOnly();
+        }
+    }
+
     public static function fromModel(Book $model, ZipExportFiles $files): self
     {
         $instance = new self();
@@ -70,5 +85,20 @@ class ZipExportBook extends ZipExportModel
         $errors['chapters'] = $context->validateRelations($data['chapters'] ?? [], ZipExportChapter::class);
 
         return $errors;
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $model = new self();
+
+        $model->id = $data['id'] ?? null;
+        $model->name = $data['name'];
+        $model->description_html = $data['description_html'] ?? null;
+        $model->cover = $data['cover'] ?? null;
+        $model->tags = ZipExportTag::fromManyArray($data['tags'] ?? []);
+        $model->pages = ZipExportPage::fromManyArray($data['pages'] ?? []);
+        $model->chapters = ZipExportChapter::fromManyArray($data['chapters'] ?? []);
+
+        return $model;
     }
 }

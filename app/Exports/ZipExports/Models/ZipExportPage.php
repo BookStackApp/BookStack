@@ -21,6 +21,21 @@ class ZipExportPage extends ZipExportModel
     /** @var ZipExportTag[] */
     public array $tags = [];
 
+    public function metadataOnly(): void
+    {
+        $this->html = $this->markdown = $this->priority = null;
+
+        foreach ($this->attachments as $attachment) {
+            $attachment->metadataOnly();
+        }
+        foreach ($this->images as $image) {
+            $image->metadataOnly();
+        }
+        foreach ($this->tags as $tag) {
+            $tag->metadataOnly();
+        }
+    }
+
     public static function fromModel(Page $model, ZipExportFiles $files): self
     {
         $instance = new self();
@@ -69,5 +84,21 @@ class ZipExportPage extends ZipExportModel
         $errors['tags'] = $context->validateRelations($data['tags'] ?? [], ZipExportTag::class);
 
         return $errors;
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $model = new self();
+
+        $model->id = $data['id'] ?? null;
+        $model->name = $data['name'];
+        $model->html = $data['html'] ?? null;
+        $model->markdown = $data['markdown'] ?? null;
+        $model->priority = isset($data['priority']) ? intval($data['priority']) : null;
+        $model->attachments = ZipExportAttachment::fromManyArray($data['attachments'] ?? []);
+        $model->images = ZipExportImage::fromManyArray($data['images'] ?? []);
+        $model->tags = ZipExportTag::fromManyArray($data['tags'] ?? []);
+
+        return $model;
     }
 }

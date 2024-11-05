@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('path');
             $table->integer('size');
-            $table->integer('book_count');
-            $table->integer('chapter_count');
-            $table->integer('page_count');
-            $table->integer('created_by');
+            $table->string('type');
+            $table->longText('metadata');
+            $table->integer('created_by')->index();
             $table->timestamps();
         });
     }

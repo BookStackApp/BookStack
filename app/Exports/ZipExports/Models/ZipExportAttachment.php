@@ -14,6 +14,11 @@ class ZipExportAttachment extends ZipExportModel
     public ?string $link = null;
     public ?string $file = null;
 
+    public function metadataOnly(): void
+    {
+        $this->order = $this->link = $this->file = null;
+    }
+
     public static function fromModel(Attachment $model, ZipExportFiles $files): self
     {
         $instance = new self();
@@ -48,5 +53,18 @@ class ZipExportAttachment extends ZipExportModel
         ];
 
         return $context->validateData($data, $rules);
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $model = new self();
+
+        $model->id = $data['id'] ?? null;
+        $model->name = $data['name'];
+        $model->order = isset($data['order']) ? intval($data['order']) : null;
+        $model->link = $data['link'] ?? null;
+        $model->file = $data['file'] ?? null;
+
+        return $model;
     }
 }

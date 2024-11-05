@@ -3,6 +3,10 @@
 namespace BookStack\Exports\ZipExports;
 
 use BookStack\Exceptions\ZipExportException;
+use BookStack\Exports\ZipExports\Models\ZipExportBook;
+use BookStack\Exports\ZipExports\Models\ZipExportChapter;
+use BookStack\Exports\ZipExports\Models\ZipExportModel;
+use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use ZipArchive;
 
 class ZipExportReader
@@ -71,32 +75,18 @@ class ZipExportReader
 
     /**
      * @throws ZipExportException
-     * @returns array{name: string, book_count: int, chapter_count: int, page_count: int}
      */
-    public function getEntityInfo(): array
+    public function decodeDataToExportModel(): ZipExportBook|ZipExportChapter|ZipExportPage
     {
         $data = $this->readData();
-        $info = ['name' => '', 'book_count' => 0, 'chapter_count' => 0, 'page_count' => 0];
-
         if (isset($data['book'])) {
-            $info['name'] = $data['book']['name'] ?? '';
-            $info['book_count']++;
-            $chapters = $data['book']['chapters'] ?? [];
-            $pages = $data['book']['pages'] ?? [];
-            $info['chapter_count'] += count($chapters);
-            $info['page_count'] += count($pages);
-            foreach ($chapters as $chapter) {
-                $info['page_count'] += count($chapter['pages'] ?? []);
-            }
-        } elseif (isset($data['chapter'])) {
-            $info['name'] = $data['chapter']['name'] ?? '';
-            $info['chapter_count']++;
-            $info['page_count'] += count($data['chapter']['pages'] ?? []);
-        } elseif (isset($data['page'])) {
-            $info['name'] = $data['page']['name'] ?? '';
-            $info['page_count']++;
+            return ZipExportBook::fromArray($data['book']);
+        } else if (isset($data['chapter'])) {
+            return ZipExportChapter::fromArray($data['chapter']);
+        } else if (isset($data['page'])) {
+            return ZipExportPage::fromArray($data['page']);
         }
 
-        return $info;
+        throw new ZipExportException("Could not identify content in ZIP file data.");
     }
 }

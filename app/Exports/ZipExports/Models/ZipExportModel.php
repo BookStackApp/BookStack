@@ -26,4 +26,32 @@ abstract class ZipExportModel implements JsonSerializable
      * item in the array for its own validation messages.
      */
     abstract public static function validate(ZipValidationHelper $context, array $data): array;
+
+    /**
+     * Decode the array of data into this export model.
+     */
+    abstract public static function fromArray(array $data): self;
+
+    /**
+     * Decode an array of array data into an array of export models.
+     * @param array[] $data
+     * @return self[]
+     */
+    public static function fromManyArray(array $data): array
+    {
+        $results = [];
+        foreach ($data as $item) {
+            $results[] = static::fromArray($item);
+        }
+        return $results;
+    }
+
+    /**
+     * Remove additional content in this model to reduce it down
+     * to just essential id/name values for identification.
+     *
+     * The result of this may be something that does not pass validation, but is
+     * simple for the purpose of creating a contents.
+     */
+    abstract public function metadataOnly(): void;
 }

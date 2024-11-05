@@ -2,7 +2,12 @@
 
 namespace BookStack\Exports;
 
+use BookStack\Exceptions\FileUploadException;
+use BookStack\Exceptions\ZipExportException;
 use BookStack\Exceptions\ZipValidationException;
+use BookStack\Exports\ZipExports\Models\ZipExportBook;
+use BookStack\Exports\ZipExports\Models\ZipExportChapter;
+use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Exports\ZipExports\ZipExportReader;
 use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Uploads\FileStorage;
@@ -41,6 +46,11 @@ class ImportRepo
         return $query->findOrFail($id);
     }
 
+    /**
+     * @throws FileUploadException
+     * @throws ZipValidationException
+     * @throws ZipExportException
+     */
     public function storeFromUpload(UploadedFile $file): Import
     {
         $zipPath = $file->getRealPath();
@@ -50,14 +60,22 @@ class ImportRepo
             throw new ZipValidationException($errors);
         }
 
-        $zipEntityInfo = (new ZipExportReader($zipPath))->getEntityInfo();
+        $reader = new ZipExportReader($zipPath);
+        $exportModel = $reader->decodeDataToExportModel();
+
         $import = new Import();
-        $import->name = $zipEntityInfo['name'];
-        $import->book_count = $zipEntityInfo['book_count'];
-        $import->chapter_count = $zipEntityInfo['chapter_count'];
-        $import->page_count = $zipEntityInfo['page_count'];
+        $import->type = match (get_class($exportModel)) {
+            ZipExportPage::class => 'page',
+            ZipExportChapter::class => 'chapter',
+            ZipExportBook::class => 'book',
+        };
+
+        $import->name = $exportModel->name;
         $import->created_by = user()->id;
         $import->size = filesize($zipPath);
+
+        $exportModel->metadataOnly();
+        $import->metadata = json_encode($exportModel);
 
         $path = $this->storage->uploadFile(
             $file,
@@ -70,6 +88,13 @@ class ImportRepo
         $import->save();
 
         return $import;
+    }
+
+    public function runImport(Import $import, ?string $parent = null)
+    {
+        // TODO - Download import zip (if needed)
+        // TODO - Validate zip file again
+        // TODO - Check permissions before (create for main item, create for children, create for related items [image, attachments])
     }
 
     public function deleteImport(Import $import): void

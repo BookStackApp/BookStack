@@ -1,11 +1,6 @@
 @extends('layouts.simple')
 
 @section('body')
-
-    @php
-        $type = $import->getType();
-    @endphp
-
     <div class="container small">
 
         <main class="card content-wrap auto-height mt-xxl">
@@ -13,29 +8,17 @@
             <p class="text-muted">{{ trans('entities.import_continue_desc') }}</p>
 
             <div class="mb-m">
-                <label class="setting-list-label">Import Details</label>
-                <div class="flex-container-row items-center justify-space-between wrap">
+                <label class="setting-list-label mb-m">Import Details</label>
+                <div class="flex-container-row justify-space-between wrap">
                     <div>
-                        <p class="text-{{ $type }} mb-xs bold">@icon($type) {{ $import->name }}</p>
-                        @if($type === 'book')
-                            <p class="text-chapter mb-xs ml-l">@icon('chapter') {{ trans_choice('entities.x_chapters', $import->chapter_count) }}</p>
-                        @endif
-                        @if($type === 'book' || $type === 'chapter')
-                            <p class="text-page mb-xs ml-l">@icon('page') {{ trans_choice('entities.x_pages', $import->page_count) }}</p>
-                        @endif
+                        @include('exports.parts.import-item', ['type' => $import->type, 'model' => $data])
                     </div>
-                    <div>
-                        <div class="opacity-80">
-                            <strong>{{ trans('entities.import_size') }}</strong>
-                            <span>{{ $import->getSizeString() }}</span>
-                        </div>
-                        <div class="opacity-80">
-                            <strong>{{ trans('entities.import_uploaded_at') }}</strong>
-                            <span title="{{ $import->created_at->toISOString() }}">{{ $import->created_at->diffForHumans() }}</span>
-                        </div>
+                    <div class="text-right text-muted">
+                        <div>{{ trans('entities.import_size', ['size' => $import->getSizeString()]) }}</div>
+                        <div><span title="{{ $import->created_at->toISOString() }}">{{ trans('entities.import_uploaded_at', ['relativeTime' => $import->created_at->diffForHumans()]) }}</span></div>
                         @if($import->createdBy)
-                            <div class="opacity-80">
-                                <strong>{{ trans('entities.import_uploaded_by') }}</strong>
+                            <div>
+                                {{ trans('entities.import_uploaded_by') }}
                                 <a href="{{ $import->createdBy->getProfileUrl() }}">{{ $import->createdBy->name }}</a>
                             </div>
                         @endif
@@ -48,14 +31,14 @@
                   method="POST">
                 {{ csrf_field() }}
 
-                @if($type === 'page' || $type === 'chapter')
+                @if($import->type === 'page' || $import->type === 'chapter')
                     <hr>
                     <label class="setting-list-label">{{ trans('entities.import_location') }}</label>
                     <p class="small mb-m">{{ trans('entities.import_location_desc') }}</p>
                     @include('entities.selector', [
                         'name' => 'parent',
-                        'entityTypes' => $type === 'page' ? 'chapter,book' : 'book',
-                        'entityPermission' => "{$type}-create",
+                        'entityTypes' => $import->type === 'page' ? 'chapter,book' : 'book',
+                        'entityPermission' => "{$import->type}-create",
                         'selectorSize' => 'compact small',
                     ])
                     @include('form.errors', ['name' => 'parent'])

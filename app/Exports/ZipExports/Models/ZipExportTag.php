@@ -11,6 +11,11 @@ class ZipExportTag extends ZipExportModel
     public ?string $value = null;
     public ?int $order = null;
 
+    public function metadataOnly(): void
+    {
+        $this->value = $this->order = null;
+    }
+
     public static function fromModel(Tag $model): self
     {
         $instance = new self();
@@ -35,5 +40,16 @@ class ZipExportTag extends ZipExportModel
         ];
 
         return $context->validateData($data, $rules);
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $model = new self();
+
+        $model->name = $data['name'];
+        $model->value = $data['value'] ?? null;
+        $model->order = isset($data['order']) ? intval($data['order']) : null;
+
+        return $model;
     }
 }

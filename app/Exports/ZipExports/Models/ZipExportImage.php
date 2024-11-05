@@ -25,6 +25,11 @@ class ZipExportImage extends ZipExportModel
         return $instance;
     }
 
+    public function metadataOnly(): void
+    {
+        //
+    }
+
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
@@ -35,5 +40,17 @@ class ZipExportImage extends ZipExportModel
         ];
 
         return $context->validateData($data, $rules);
+    }
+
+    public static function fromArray(array $data): self
+    {
+        $model = new self();
+
+        $model->id = $data['id'] ?? null;
+        $model->name = $data['name'];
+        $model->file = $data['file'];
+        $model->type = $data['type'];
+
+        return $model;
     }
 }
