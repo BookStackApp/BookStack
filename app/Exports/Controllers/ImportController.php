@@ -65,8 +65,6 @@ class ImportController extends Controller
     {
         $import = $this->imports->findVisible($id);
 
-//        dd($import->decodeMetadata());
-
         $this->setPageTitle(trans('entities.import_continue'));
 
         return view('exports.import-show', [

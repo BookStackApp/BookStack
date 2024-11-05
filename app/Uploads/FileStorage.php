@@ -5,6 +5,7 @@ namespace BookStack\Uploads;
 use BookStack\Exceptions\FileUploadException;
 use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -71,6 +72,26 @@ class FileStorage
     }
 
     /**
+     * Check whether the configured storage is remote from the host of this app.
+     */
+    public function isRemote(): bool
+    {
+        return $this->getStorageDiskName() === 's3';
+    }
+
+    /**
+     * Get the actual path on system for the given relative file path.
+     */
+    public function getSystemPath(string $filePath): string
+    {
+        if ($this->isRemote()) {
+            return '';
+        }
+
+        return storage_path('uploads/files/' . ltrim($this->adjustPathForStorageDisk($filePath), '/'));
+    }
+
+    /**
      * Get the storage that will be used for storing files.
      */
     protected function getStorageDisk(): Storage
@@ -83,7 +104,7 @@ class FileStorage
      */
     protected function getStorageDiskName(): string
     {
-        $storageType = config('filesystems.attachments');
+        $storageType = trim(strtolower(config('filesystems.attachments')));
 
         // Change to our secure-attachment disk if any of the local options
         // are used to prevent escaping that location.

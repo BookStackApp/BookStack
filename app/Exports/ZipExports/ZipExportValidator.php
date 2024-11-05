@@ -10,20 +10,19 @@ use BookStack\Exports\ZipExports\Models\ZipExportPage;
 class ZipExportValidator
 {
     public function __construct(
-        protected string $zipPath,
+        protected ZipExportReader $reader,
     ) {
     }
 
     public function validate(): array
     {
-        $reader = new ZipExportReader($this->zipPath);
         try {
-            $importData = $reader->readData();
+            $importData = $this->reader->readData();
         } catch (ZipExportException $exception) {
             return ['format' => $exception->getMessage()];
         }
 
-        $helper = new ZipValidationHelper($reader);
+        $helper = new ZipValidationHelper($this->reader);
 
         if (isset($importData['book'])) {
             $modelErrors = ZipExportBook::validate($helper, $importData['book']);
