@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Vous ne pouvez pas supprimer le dernier administrateur',
     'users_cannot_delete_guest' => 'Vous ne pouvez pas supprimer l\'utilisateur invité',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Impossible de créer l\'utilisateur à cause d\'une erreur d\'envoi de l\'email d\'invitation',
 
     // Roles
     'role_cannot_be_edited' => 'Ce rôle ne peut pas être modifié',

@@ -6,26 +6,26 @@
 return [
 
     // Pages
-    'page_create'                 => '생성된 페이지',
+    'page_create'                 => '페이지 생성',
     'page_create_notification'    => '페이지가 성공적으로 생성되었습니다.',
-    'page_update'                 => '페이지 업데이트됨',
+    'page_update'                 => '페이지 업데이트',
     'page_update_notification'    => '페이지가 성공적으로 업데이트되었습니다.',
-    'page_delete'                 => '삭제된 페이지',
+    'page_delete'                 => '페이지 삭제',
     'page_delete_notification'    => '페이지가 성공적으로 삭제되었습니다.',
-    'page_restore'                => '복구된 페이지',
+    'page_restore'                => '페이지 복원',
     'page_restore_notification'   => '페이지가 성공적으로 복원되었습니다.',
-    'page_move'                   => '이동된 페이지',
+    'page_move'                   => '페이지 이동',
     'page_move_notification'      => '페이지가 성공적으로 이동되었습니다.',
 
     // Chapters
-    'chapter_create'              => '챕터 만들기',
+    'chapter_create'              => '챕터 생성',
     'chapter_create_notification' => '챕터가 성공적으로 생성되었습니다.',
-    'chapter_update'              => '업데이트된 챕터',
-    'chapter_update_notification' => '챕터가 성공적으로 업데이트되었습니다.',
-    'chapter_delete'              => '삭제된 챕터',
+    'chapter_update'              => '챕터 수정',
+    'chapter_update_notification' => '챕터가 성공적으로 수정되었습니다.',
+    'chapter_delete'              => '챕터 삭제',
     'chapter_delete_notification' => '챕터가 성공적으로 삭제되었습니다.',
-    'chapter_move'                => '이동된 챕터',
-    'chapter_move_notification' => '챕터를 성공적으로 이동했습니다.',
+    'chapter_move'                => '챕터 이동',
+    'chapter_move_notification' => '페이지가 성공적으로 이동되었습니다.',
 
     // Books
     'book_create'                 => '생성된 책',
@@ -36,7 +36,7 @@ return [
     'book_update_notification'    => '책이 성공적으로 업데이트되었습니다.',
     'book_delete'                 => '삭제된 책',
     'book_delete_notification'    => '책이 성공적으로 삭제되었습니다.',
-    'book_sort'                   => '정렬된 책',
+    'book_sort'                   => '책 정렬',
     'book_sort_notification'      => '책이 성공적으로 재정렬되었습니다.',
 
     // Bookshelves
@@ -51,8 +51,8 @@ return [
 
     // Revisions
     'revision_restore' => '복구된 리비전',
-    'revision_delete' => '삭제된 리비전',
-    'revision_delete_notification' => '리비전을 성공적으로 삭제하였습니다.',
+    'revision_delete' => '버전 삭제',
+    'revision_delete_notification' => '버전 삭제 성공',
 
     // Favourites
     'favourite_add_notification' => '":name" 을 북마크에 추가하였습니다.',
@@ -62,14 +62,14 @@ return [
     'watch_update_level_notification' => '주시 환경설정이 성공적으로 업데이트되었습니다.',
 
     // Auth
-    'auth_login' => '로그인 됨',
+    'auth_login' => '로그인 완료',
     'auth_register' => '신규 사용자 등록',
     'auth_password_reset_request' => '사용자 비밀번호 초기화 요청',
     'auth_password_reset_update' => '사용자 비밀번호 초기화',
-    'mfa_setup_method' => '구성된 MFA 방법',
+    'mfa_setup_method' => '다중인증(MFA)이 구성되었습니다.',
     'mfa_setup_method_notification' => '다중 인증 설정함',
     'mfa_remove_method' => 'MFA 메서드 제거',
-    'mfa_remove_method_notification' => '다중 인증 해제함',
+    'mfa_remove_method_notification' => '다중인증(MFA)이 성공적으로 제거되었습니다.',
 
     // Settings
     'settings_update' => '설정 변경',
@@ -80,7 +80,7 @@ return [
     'webhook_create' => '웹 훅 만들기',
     'webhook_create_notification' => '웹 훅 생성함',
     'webhook_update' => '웹 훅 수정하기',
-    'webhook_update_notification' => '웹 훅 수정함',
+    'webhook_update_notification' => '웹훅 설정이 수정되었습니다.',
     'webhook_delete' => '웹 훅 지우기',
     'webhook_delete_notification' => '웹 훅 삭제함',
 

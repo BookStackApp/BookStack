@@ -62,61 +62,61 @@ return [
     'watch_update_level_notification' => 'העדפות צפייה עודכנו בהצלחה',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'auth_login' => 'מחובר',
+    'auth_register' => 'נרשם כמשתמש חדש',
+    'auth_password_reset_request' => 'בקשת איפוס סיסמה למשתמש בוצעה בהצלחה',
+    'auth_password_reset_update' => 'איפוס סיסמה למשתמש',
+    'mfa_setup_method' => 'הגדרת אימות דו-שלבי פעיל',
+    'mfa_setup_method_notification' => 'הגדרת אימות דו-שלבי בוצע בהצלחה',
+    'mfa_remove_method' => 'הגדרת אימות דו-שלבי הוסר',
+    'mfa_remove_method_notification' => 'אפשרות אימות דו-שלבי הוסר בהצלחה',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'הגדרות עודכנו בהצלחה',
+    'settings_update_notification' => 'ההגדרות עודכנו בהצלחה',
+    'maintenance_action_run' => 'פעולות תחזוקה שהופעלו',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook נוצר בהצלחה',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'webook נוצר',
+    'webhook_create_notification' => 'יצירת Webhook בוצעה בהצלחה',
+    'webhook_update' => 'webhook עודכן',
+    'webhook_update_notification' => 'webook עודכן בהצלחה',
+    'webhook_delete' => 'Webhook נמחק',
+    'webhook_delete_notification' => 'Webook נמחק בהצלחה',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
+    'user_create' => 'משתמש חדש נוצר',
+    'user_create_notification' => 'משתמש נוצר בהצלחה',
+    'user_update' => 'משתמש עודכן',
     'user_update_notification' => 'משתמש עודכן בהצלחה',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'משתמש נמחק',
     'user_delete_notification' => 'משתמש הוסר בהצלחה',
 
     // API Tokens
-    'api_token_create' => 'created API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'API Token נוצר',
+    'api_token_create_notification' => 'API Token נוצר בהצלחה',
+    'api_token_update' => 'API Token עודכן',
+    'api_token_update_notification' => 'API Token עודכן בהצלחה',
+    'api_token_delete' => 'API Token נמחק',
+    'api_token_delete_notification' => 'API Token נמחק בהצלחה',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'תפקיד נוצר',
     'role_create_notification' => 'תפקיד נוצר בהצלחה',
-    'role_update' => 'updated role',
+    'role_update' => 'תפקיד עודכן',
     'role_update_notification' => 'תפקיד עודכן בהצלחה',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'תפקיד נמחק',
     'role_delete_notification' => 'תפקיד נמחק בהצלחה',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'סל המחזור רוקן',
+    'recycle_bin_restore' => 'שוחזר מסל המחזור',
+    'recycle_bin_destroy' => 'נמחק מסל המחזור',
 
     // Comments
     'commented_on'                => 'הגיב/ה על',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
+    'comment_create'              => 'הערה הוספה',
+    'comment_update'              => 'תגובה הוספה',
     'comment_delete'              => 'תגובה נמחקה',
 
     // Other

@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Aplikacja mobilna',
     'mfa_option_totp_desc' => 'Aby korzystać z uwierzytelniania wieloskładnikowego, potrzebujesz aplikacji mobilnej, która obsługuje TOTP, takiej jak Google Authenticator, Authy lub Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Kody zapasowe',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Generuje zestaw jednorazowych kodów zapasowych, które wprowadzisz przy logowaniu, aby zweryfikować Twoją tożsamość. Upewnij się, że przechowujesz je w bezpiecznym miejscu.',
     'mfa_gen_confirm_and_enable' => 'Potwierdź i włącz',
     'mfa_gen_backup_codes_title' => 'Ustawienia kopii zapasowych kodów',
     'mfa_gen_backup_codes_desc' => 'Przechowuj poniższą listę kodów w bezpiecznym miejscu. Przy dostępie do systemu będziesz mógł użyć jednego z kodów jako drugiego mechanizmu uwierzytelniania.',

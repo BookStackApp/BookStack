@@ -31,7 +31,7 @@ return [
     'header_large' => 'Cabeçalho Grande',
     'header_medium' => 'Cabeçalho Médio',
     'header_small' => 'Cabeçalho Pequeno',
-    'header_tiny' => 'Cabeçalho Pequeno',
+    'header_tiny' => 'Cabeçalho Minúsculo',
     'paragraph' => 'Parágrafo',
     'blockquote' => 'Bloco de Citação',
     'inline_code' => 'Código embutido',

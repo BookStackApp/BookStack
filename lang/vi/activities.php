@@ -85,7 +85,7 @@ return [
     'webhook_delete_notification' => 'Webhook đã được xóa thành công',
 
     // Users
-    'user_create' => 'người dùng đã tạo',
+    'user_create' => 'đã tạo người dùng',
     'user_create_notification' => 'Người dùng được tạo thành công',
     'user_update' => 'người dùng được cập nhật',
     'user_update_notification' => 'Người dùng được cập nhật thành công',

@@ -9,8 +9,8 @@ return [
     // Common Messages
     'settings' => 'הגדרות',
     'settings_save' => 'שמור הגדרות',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'גירסת מערכת',
+    'categories' => 'קטגוריות',
 
     // App Settings
     'app_customization' => 'התאמה אישית',
@@ -26,7 +26,7 @@ return [
     'app_secure_images' => 'העלאת תמונות מאובטחת',
     'app_secure_images_toggle' => 'אפשר העלאת תמונות מאובטחת',
     'app_secure_images_desc' => 'משיקולי ביצועים, כל התמונות הינן ציבוריות. אפשרות זו מוסיפה מחרוזת אקראית שקשה לנחש לכל כתובת של תמונה. אנא ודא שאפשרות הצגת תוכן התיקייה מבוטל.',
-    'app_default_editor' => 'Default Page Editor',
+    'app_default_editor' => 'עורך דפים ברירת מחדל',
     'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
     'app_custom_html' => 'HTML מותאם אישית לחלק העליון',
     'app_custom_html_desc' => 'כל קוד שיתווסף כאן, יופיע בתחתית תגית ה head של כל דף. חלק זה שימושי על מנת להגדיר עיצובי CSS והתקנת קוד Analytics',
