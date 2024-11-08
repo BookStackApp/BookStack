@@ -60,6 +60,7 @@ class LocaleManager
         'sq'          => 'sq_AL',
         'sr'          => 'sr_RS',
         'sv'          => 'sv_SE',
+        'tk'          => 'tk_TM',
         'tr'          => 'tr_TR',
         'uk'          => 'uk_UA',
         'uz'          => 'uz_UZ',
