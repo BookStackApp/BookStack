@@ -449,3 +449,7 @@ Avishay Rapp (AvishayRapp) :: Hebrew
 matthias4217 :: French
 Berke BOYLU2 (berkeboylu2) :: Turkish
 etwas7B :: German
+Mohammed srhiri (m.sghiri20) :: Arabic
+YongMin Kim (kym0118) :: Korean
+Rivo Zängov (Eraser) :: Estonian
+Francisco Rafael Fonseca (chicoraf) :: Portuguese, Brazilian
