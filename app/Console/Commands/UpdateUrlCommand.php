@@ -49,6 +49,7 @@ class UpdateUrlCommand extends Command
             'chapters'    => ['description_html'],
             'books'       => ['description_html'],
             'bookshelves' => ['description_html'],
+            'page_revisions' => ['html', 'text', 'markdown'],
             'images'      => ['url'],
             'settings'    => ['value'],
             'comments'    => ['html', 'text'],
@@ -77,6 +78,12 @@ class UpdateUrlCommand extends Command
         $this->info('URL update procedure complete.');
         $this->info('============================================================================');
         $this->info('Be sure to run "php artisan cache:clear" to clear any old URLs in the cache.');
+
+        if (!str_starts_with($newUrl, url('/'))) {
+            $this->warn('You still need to update your APP_URL env value. This is currently set to:');
+            $this->warn(url('/'));
+        }
+
         $this->info('============================================================================');
 
         return 0;
