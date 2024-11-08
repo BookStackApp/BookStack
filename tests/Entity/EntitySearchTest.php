@@ -393,11 +393,11 @@ class EntitySearchTest extends TestCase
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextBook->id}&entity_type=book");
         $this->withHtml($search)->assertElementNotContains('a:first-child', 'Zebras');
 
-        $searchBook->name = 'AAAAAAArdvarks';
+        $searchBook->name = '1AAAAAAArdvarks';
         $searchBook->save();
 
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextBook->id}&entity_type=book");
-        $this->withHtml($search)->assertElementContains('a:first-child', 'AAAAAAArdvarks');
+        $this->withHtml($search)->assertElementContains('a:first-child', '1AAAAAAArdvarks');
     }
 
     public function test_sibling_search_for_shelves_provides_results_in_alphabetical_order()
@@ -411,11 +411,11 @@ class EntitySearchTest extends TestCase
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextShelf->id}&entity_type=bookshelf");
         $this->withHtml($search)->assertElementNotContains('a:first-child', 'Zebras');
 
-        $searchShelf->name = 'AAAAAAArdvarks';
+        $searchShelf->name = '1AAAAAAArdvarks';
         $searchShelf->save();
 
         $search = $this->actingAs($this->users->viewer())->get("/search/entity/siblings?entity_id={$contextShelf->id}&entity_type=bookshelf");
-        $this->withHtml($search)->assertElementContains('a:first-child', 'AAAAAAArdvarks');
+        $this->withHtml($search)->assertElementContains('a:first-child', '1AAAAAAArdvarks');
     }
 
     public function test_search_works_on_updated_page_content()

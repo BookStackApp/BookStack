@@ -102,6 +102,7 @@ class UpdateUrlCommandTest extends TestCase
         setting()->flushCache();
 
         $this->assertDatabaseHas('page_revisions', [
+            'page_id' => $page->id,
             'markdown' => '[A link 1](https://cats.example.com/donkey/cat)',
             'html' => '<p id="bkmrk-a-link-1"><a href="https://cats.example.com/donkey/cat">A link 1</a></p>' . "\n"
         ]);
