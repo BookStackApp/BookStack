@@ -9,11 +9,10 @@ class ZipExportTag extends ZipExportModel
 {
     public string $name;
     public ?string $value = null;
-    public ?int $order = null;
 
     public function metadataOnly(): void
     {
-        $this->value = $this->order = null;
+        $this->value =  null;
     }
 
     public static function fromModel(Tag $model): self
@@ -21,7 +20,6 @@ class ZipExportTag extends ZipExportModel
         $instance = new self();
         $instance->name = $model->name;
         $instance->value = $model->value;
-        $instance->order = $model->order;
 
         return $instance;
     }
@@ -36,7 +34,6 @@ class ZipExportTag extends ZipExportModel
         $rules = [
             'name'  => ['required', 'string', 'min:1'],
             'value' => ['nullable', 'string'],
-            'order' => ['nullable', 'integer'],
         ];
 
         return $context->validateData($data, $rules);
@@ -48,7 +45,6 @@ class ZipExportTag extends ZipExportModel
 
         $model->name = $data['name'];
         $model->value = $data['value'] ?? null;
-        $model->order = isset($data['order']) ? intval($data['order']) : null;
 
         return $model;
     }

@@ -74,6 +74,14 @@ class ZipExportReader
     }
 
     /**
+     * @return false|resource
+     */
+    public function streamFile(string $fileName)
+    {
+        return $this->zip->getStream("files/{$fileName}");
+    }
+
+    /**
      * @throws ZipExportException
      */
     public function decodeDataToExportModel(): ZipExportBook|ZipExportChapter|ZipExportPage

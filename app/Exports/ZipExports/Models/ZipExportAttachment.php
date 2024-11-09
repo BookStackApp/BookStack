@@ -10,13 +10,12 @@ class ZipExportAttachment extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
-    public ?int $order = null;
     public ?string $link = null;
     public ?string $file = null;
 
     public function metadataOnly(): void
     {
-        $this->order = $this->link = $this->file = null;
+        $this->link = $this->file = null;
     }
 
     public static function fromModel(Attachment $model, ZipExportFiles $files): self
@@ -24,7 +23,6 @@ class ZipExportAttachment extends ZipExportModel
         $instance = new self();
         $instance->id = $model->id;
         $instance->name = $model->name;
-        $instance->order = $model->order;
 
         if ($model->external) {
             $instance->link = $model->path;
@@ -47,7 +45,6 @@ class ZipExportAttachment extends ZipExportModel
         $rules = [
             'id'    => ['nullable', 'int'],
             'name'  => ['required', 'string', 'min:1'],
-            'order' => ['nullable', 'integer'],
             'link'  => ['required_without:file', 'nullable', 'string'],
             'file'  => ['required_without:link', 'nullable', 'string', $context->fileReferenceRule()],
         ];
@@ -61,7 +58,6 @@ class ZipExportAttachment extends ZipExportModel
 
         $model->id = $data['id'] ?? null;
         $model->name = $data['name'];
-        $model->order = isset($data['order']) ? intval($data['order']) : null;
         $model->link = $data['link'] ?? null;
         $model->file = $data['file'] ?? null;
 

@@ -135,7 +135,6 @@ embedded within it.
 - `name` - String, required, name of attachment.
 - `link` - String, semi-optional, URL of attachment.
 - `file` - String reference, semi-optional, reference to attachment file.
-- `order` - Number, optional, integer order of the attachments (shown low to high).
 
 Either `link` or `file` must be present, as that will determine the type of attachment. 
 
@@ -143,4 +142,3 @@ Either `link` or `file` must be present, as that will determine the type of atta
 
 - `name` - String, required, name of the tag.
 - `value` - String, optional, value of the tag (can be empty).
-- `order` - Number, optional, integer order of the tags (shown low to high).
