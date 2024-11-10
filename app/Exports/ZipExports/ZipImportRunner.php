@@ -23,8 +23,6 @@ use Illuminate\Http\UploadedFile;
 class ZipImportRunner
 {
     protected array $tempFilesToCleanup = []; // TODO
-    protected array $createdImages = []; // TODO
-    protected array $createdAttachments = []; // TODO
 
     public function __construct(
         protected FileStorage $storage,
@@ -32,6 +30,7 @@ class ZipImportRunner
         protected ChapterRepo $chapterRepo,
         protected BookRepo $bookRepo,
         protected ImageService $imageService,
+        protected ZipImportReferences $references,
     ) {
     }
 
@@ -68,6 +67,11 @@ class ZipImportRunner
         // TODO - Run import
           // TODO - In transaction?
             // TODO - Revert uploaded files if goes wrong
+              // TODO - Attachments
+              // TODO - Images
+              // (Both listed/stored in references)
+
+        $this->references->replaceReferences();
     }
 
     protected function importBook(ZipExportBook $exportBook, ZipExportReader $reader): Book
@@ -82,14 +86,16 @@ class ZipImportRunner
         // TODO - Parse/format description_html references
 
         if ($book->cover) {
-            $this->createdImages[] = $book->cover;
+            $this->references->addImage($book->cover, null);
         }
 
         // TODO - Pages
         foreach ($exportBook->chapters as $exportChapter) {
-            $this->importChapter($exportChapter, $book);
+            $this->importChapter($exportChapter, $book, $reader);
         }
         // TODO - Sort chapters/pages by order
+
+        $this->references->addBook($book, $exportBook);
 
         return $book;
     }
@@ -114,6 +120,8 @@ class ZipImportRunner
         }
         // TODO - Pages
 
+        $this->references->addChapter($chapter, $exportChapter);
+
         return $chapter;
     }
 
@@ -122,7 +130,9 @@ class ZipImportRunner
         $page = $this->pageRepo->getNewDraftPage($parent);
 
         // TODO - Import attachments
+          // TODO - Add attachment references
         // TODO - Import images
+          // TODO - Add image references
         // TODO - Parse/format HTML
 
         $this->pageRepo->publishDraft($page, [
@@ -131,6 +141,8 @@ class ZipImportRunner
             'html' => $exportPage->html,
             'tags' => $this->exportTagsToInputArray($exportPage->tags ?? []),
         ]);
+
+        $this->references->addPage($page, $exportPage);
 
         return $page;
     }

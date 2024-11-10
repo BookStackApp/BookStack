@@ -88,6 +88,17 @@ class PageRepo
     }
 
     /**
+     * Directly update the content for the given page from the provided input.
+     * Used for direct content access in a way that performs required changes
+     * (Search index & reference regen) without performing an official update.
+     */
+    public function setContentFromInput(Page $page, array $input): void
+    {
+        $this->updateTemplateStatusAndContentFromInput($page, $input);
+        $this->baseRepo->update($page, []);
+    }
+
+    /**
      * Update a page in the system.
      */
     public function update(Page $page, array $input): Page
@@ -121,7 +132,7 @@ class PageRepo
         return $page;
     }
 
-    protected function updateTemplateStatusAndContentFromInput(Page $page, array $input)
+    protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
     {
         if (isset($input['template']) && userCan('templates-manage')) {
             $page->template = ($input['template'] === 'true');

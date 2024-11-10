@@ -15,27 +15,23 @@ use BookStack\References\ModelResolvers\PagePermalinkModelResolver;
 class ZipReferenceParser
 {
     /**
-     * @var CrossLinkModelResolver[]
+     * @var CrossLinkModelResolver[]|null
      */
-    protected array $modelResolvers;
+    protected ?array $modelResolvers = null;
 
-    public function __construct(EntityQueries $queries)
-    {
-        $this->modelResolvers = [
-            new PagePermalinkModelResolver($queries->pages),
-            new PageLinkModelResolver($queries->pages),
-            new ChapterLinkModelResolver($queries->chapters),
-            new BookLinkModelResolver($queries->books),
-            new ImageModelResolver(),
-            new AttachmentModelResolver(),
-        ];
+    public function __construct(
+        protected EntityQueries $queries
+    ) {
     }
 
     /**
      * Parse and replace references in the given content.
+     * Calls the handler for each model link detected and replaces the link
+     * with the handler return value if provided.
+     * Returns the resulting content with links replaced.
      * @param callable(Model):(string|null) $handler
      */
-    public function parse(string $content, callable $handler): string
+    public function parseLinks(string $content, callable $handler): string
     {
         $escapedBase = preg_quote(url('/'), '/');
         $linkRegex = "/({$escapedBase}.*?)[\\t\\n\\f>\"'=?#()]/";
@@ -59,13 +55,43 @@ class ZipReferenceParser
         return $content;
     }
 
+    /**
+     * Parse and replace references in the given content.
+     * Calls the handler for each reference detected and replaces the link
+     * with the handler return value if provided.
+     * Returns the resulting content string with references replaced.
+     * @param callable(string $type, int $id):(string|null) $handler
+     */
+    public function parseReferences(string $content, callable $handler): string
+    {
+        $referenceRegex = '/\[\[bsexport:([a-z]+):(\d+)]]/';
+        $matches = [];
+        preg_match_all($referenceRegex, $content, $matches);
+
+        if (count($matches) < 3) {
+            return $content;
+        }
+
+        for ($i = 0; $i < count($matches[0]); $i++) {
+            $referenceText = $matches[0][$i];
+            $type = strtolower($matches[1][$i]);
+            $id = intval($matches[2][$i]);
+            $result = $handler($type, $id);
+            if ($result !== null) {
+                $content = str_replace($referenceText, $result, $content);
+            }
+        }
+
+        return $content;
+    }
+
 
     /**
      * Attempt to resolve the given link to a model using the instance model resolvers.
      */
     protected function linkToModel(string $link): ?Model
     {
-        foreach ($this->modelResolvers as $resolver) {
+        foreach ($this->getModelResolvers() as $resolver) {
             $model = $resolver->resolve($link);
             if (!is_null($model)) {
                 return $model;
@@ -73,5 +99,23 @@ class ZipReferenceParser
         }
 
         return null;
+    }
+
+    protected function getModelResolvers(): array
+    {
+        if (isset($this->modelResolvers)) {
+            return $this->modelResolvers;
+        }
+
+        $this->modelResolvers = [
+            new PagePermalinkModelResolver($this->queries->pages),
+            new PageLinkModelResolver($this->queries->pages),
+            new ChapterLinkModelResolver($this->queries->chapters),
+            new BookLinkModelResolver($this->queries->books),
+            new ImageModelResolver(),
+            new AttachmentModelResolver(),
+        ];
+
+        return $this->modelResolvers;
     }
 }

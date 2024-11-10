@@ -85,9 +85,9 @@ class ZipExportReferences
         // Parse page content first
         foreach ($this->pages as $page) {
             $handler = $createHandler($page);
-            $page->html = $this->parser->parse($page->html ?? '', $handler);
+            $page->html = $this->parser->parseLinks($page->html ?? '', $handler);
             if ($page->markdown) {
-                $page->markdown = $this->parser->parse($page->markdown, $handler);
+                $page->markdown = $this->parser->parseLinks($page->markdown, $handler);
             }
         }
 
@@ -95,7 +95,7 @@ class ZipExportReferences
         foreach ($this->chapters as $chapter) {
             if ($chapter->description_html) {
                 $handler = $createHandler($chapter);
-                $chapter->description_html = $this->parser->parse($chapter->description_html, $handler);
+                $chapter->description_html = $this->parser->parseLinks($chapter->description_html, $handler);
             }
         }
 
@@ -103,7 +103,7 @@ class ZipExportReferences
         foreach ($this->books as $book) {
             if ($book->description_html) {
                 $handler = $createHandler($book);
-                $book->description_html = $this->parser->parse($book->description_html, $handler);
+                $book->description_html = $this->parser->parseLinks($book->description_html, $handler);
             }
         }
     }
