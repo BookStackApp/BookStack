@@ -79,18 +79,21 @@ class ImportController extends Controller
         $import = $this->imports->findVisible($id);
         $parent = null;
 
-        if ($import->getType() === 'page' || $import->getType() === 'chapter') {
+        if ($import->type === 'page' || $import->type === 'chapter') {
             $data = $this->validate($request, [
                 'parent' => ['required', 'string']
             ]);
             $parent = $data['parent'];
         }
 
-        // TODO  - Run import
-           // TODO - Validate again before
-           // TODO - Check permissions before (create for main item, create for children, create for related items [image, attachments])
+        $entity = $this->imports->runImport($import, $parent);
+        if ($entity) {
+            $this->logActivity(ActivityType::IMPORT_RUN, $import);
+            return redirect($entity->getUrl());
+        }
         // TODO - Redirect to result
         // TODO - Or redirect back with errors
+        return 'failed';
     }
 
     /**

@@ -110,7 +110,7 @@ class ZipImportReferences
     {
         foreach ($this->books as $book) {
             $exportBook = $this->zipExportBookMap[$book->id];
-            $content = $exportBook->description_html || '';
+            $content = $exportBook->description_html ?? '';
             $parsed = $this->parser->parseReferences($content, $this->handleReference(...));
 
             $this->baseRepo->update($book, [
@@ -120,7 +120,7 @@ class ZipImportReferences
 
         foreach ($this->chapters as $chapter) {
             $exportChapter = $this->zipExportChapterMap[$chapter->id];
-            $content = $exportChapter->description_html || '';
+            $content = $exportChapter->description_html ?? '';
             $parsed = $this->parser->parseReferences($content, $this->handleReference(...));
 
             $this->baseRepo->update($chapter, [

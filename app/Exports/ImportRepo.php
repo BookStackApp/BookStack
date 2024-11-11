@@ -2,9 +2,11 @@
 
 namespace BookStack\Exports;
 
+use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Exceptions\ZipExportException;
+use BookStack\Exceptions\ZipImportException;
 use BookStack\Exceptions\ZipValidationException;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
@@ -95,9 +97,9 @@ class ImportRepo
     }
 
     /**
-     * @throws ZipValidationException
+     * @throws ZipValidationException|ZipImportException
      */
-    public function runImport(Import $import, ?string $parent = null)
+    public function runImport(Import $import, ?string $parent = null): ?Entity
     {
         $parentModel = null;
         if ($import->type === 'page' || $import->type === 'chapter') {

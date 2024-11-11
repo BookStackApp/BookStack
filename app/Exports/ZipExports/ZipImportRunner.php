@@ -12,17 +12,22 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\ZipExportException;
 use BookStack\Exceptions\ZipImportException;
 use BookStack\Exports\Import;
+use BookStack\Exports\ZipExports\Models\ZipExportAttachment;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
+use BookStack\Exports\ZipExports\Models\ZipExportImage;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Exports\ZipExports\Models\ZipExportTag;
+use BookStack\Uploads\Attachment;
+use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\FileStorage;
+use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\UploadedFile;
 
 class ZipImportRunner
 {
-    protected array $tempFilesToCleanup = []; // TODO
+    protected array $tempFilesToCleanup = [];
 
     public function __construct(
         protected FileStorage $storage,
@@ -30,14 +35,19 @@ class ZipImportRunner
         protected ChapterRepo $chapterRepo,
         protected BookRepo $bookRepo,
         protected ImageService $imageService,
+        protected AttachmentService $attachmentService,
         protected ZipImportReferences $references,
     ) {
     }
 
     /**
+     * Run the import.
+     * Performs re-validation on zip, validation on parent provided, and permissions for importing
+     * the planned content, before running the import process.
+     * Returns the top-level entity item which was imported.
      * @throws ZipImportException
      */
-    public function run(Import $import, ?Entity $parent = null): void
+    public function run(Import $import, ?Entity $parent = null): ?Entity
     {
         $zipPath = $this->getZipPath($import);
         $reader = new ZipExportReader($zipPath);
@@ -63,8 +73,16 @@ class ZipImportRunner
         }
 
         $this->ensurePermissionsPermitImport($exportModel);
+        $entity = null;
 
-        // TODO - Run import
+        if ($exportModel instanceof ZipExportBook) {
+            $entity = $this->importBook($exportModel, $reader);
+        } else if ($exportModel instanceof ZipExportChapter) {
+            $entity = $this->importChapter($exportModel, $parent, $reader);
+        } else if ($exportModel instanceof ZipExportPage) {
+            $entity = $this->importPage($exportModel, $parent, $reader);
+        }
+
           // TODO - In transaction?
             // TODO - Revert uploaded files if goes wrong
               // TODO - Attachments
@@ -72,6 +90,23 @@ class ZipImportRunner
               // (Both listed/stored in references)
 
         $this->references->replaceReferences();
+
+        $reader->close();
+        $this->cleanup();
+
+        dd('stop');
+
+        // TODO - Delete import/zip after import?
+          // Do this in parent repo?
+
+        return $entity;
+    }
+
+    protected function cleanup()
+    {
+        foreach ($this->tempFilesToCleanup as $file) {
+            unlink($file);
+        }
     }
 
     protected function importBook(ZipExportBook $exportBook, ZipExportReader $reader): Book
@@ -83,17 +118,26 @@ class ZipImportRunner
             'tags' => $this->exportTagsToInputArray($exportBook->tags ?? []),
         ]);
 
-        // TODO - Parse/format description_html references
-
         if ($book->cover) {
             $this->references->addImage($book->cover, null);
         }
 
-        // TODO - Pages
-        foreach ($exportBook->chapters as $exportChapter) {
-            $this->importChapter($exportChapter, $book, $reader);
+        $children = [
+            ...$exportBook->chapters,
+            ...$exportBook->pages,
+        ];
+
+        usort($children, function (ZipExportPage|ZipExportChapter $a, ZipExportPage|ZipExportChapter $b) {
+            return ($a->priority ?? 0) - ($b->priority ?? 0);
+        });
+
+        foreach ($children as $child) {
+            if ($child instanceof ZipExportChapter) {
+                $this->importChapter($child, $book, $reader);
+            } else if ($child instanceof ZipExportPage) {
+                $this->importPage($child, $book, $reader);
+            }
         }
-        // TODO - Sort chapters/pages by order
 
         $this->references->addBook($book, $exportBook);
 
@@ -108,17 +152,14 @@ class ZipImportRunner
             'tags' => $this->exportTagsToInputArray($exportChapter->tags ?? []),
         ], $parent);
 
-        // TODO - Parse/format description_html references
-
         $exportPages = $exportChapter->pages;
         usort($exportPages, function (ZipExportPage $a, ZipExportPage $b) {
             return ($a->priority ?? 0) - ($b->priority ?? 0);
         });
 
         foreach ($exportPages as $exportPage) {
-            //
+            $this->importPage($exportPage, $chapter, $reader);
         }
-        // TODO - Pages
 
         $this->references->addChapter($chapter, $exportChapter);
 
@@ -129,11 +170,13 @@ class ZipImportRunner
     {
         $page = $this->pageRepo->getNewDraftPage($parent);
 
-        // TODO - Import attachments
-          // TODO - Add attachment references
-        // TODO - Import images
-          // TODO - Add image references
-        // TODO - Parse/format HTML
+        foreach ($exportPage->attachments as $exportAttachment) {
+            $this->importAttachment($exportAttachment, $page, $reader);
+        }
+
+        foreach ($exportPage->images as $exportImage) {
+            $this->importImage($exportImage, $page, $reader);
+        }
 
         $this->pageRepo->publishDraft($page, [
             'name' => $exportPage->name,
@@ -145,6 +188,40 @@ class ZipImportRunner
         $this->references->addPage($page, $exportPage);
 
         return $page;
+    }
+
+    protected function importAttachment(ZipExportAttachment $exportAttachment, Page $page, ZipExportReader $reader): Attachment
+    {
+        if ($exportAttachment->file) {
+            $file = $this->zipFileToUploadedFile($exportAttachment->file, $reader);
+            $attachment = $this->attachmentService->saveNewUpload($file, $page->id);
+            $attachment->name = $exportAttachment->name;
+            $attachment->save();
+        } else {
+            $attachment = $this->attachmentService->saveNewFromLink(
+                $exportAttachment->name,
+                $exportAttachment->link ?? '',
+                $page->id,
+            );
+        }
+
+        $this->references->addAttachment($attachment, $exportAttachment->id);
+
+        return $attachment;
+    }
+
+    protected function importImage(ZipExportImage $exportImage, Page $page, ZipExportReader $reader): Image
+    {
+        $file = $this->zipFileToUploadedFile($exportImage->file, $reader);
+        $image = $this->imageService->saveNewFromUpload(
+            $file,
+            $exportImage->type,
+            $page->id,
+        );
+
+        $this->references->addImage($image, $exportImage->id);
+
+        return $image;
     }
 
     protected function exportTagsToInputArray(array $exportTags): array
@@ -235,7 +312,7 @@ class ZipImportRunner
         }
 
         if (count($attachments) > 0) {
-            if (userCan('attachment-create-all')) {
+            if (!userCan('attachment-create-all')) {
                 $errors[] = 'You are lacking the required permissions to create attachments.';
             }
         }
@@ -256,6 +333,8 @@ class ZipImportRunner
         $stream = $this->storage->getReadStream($import->path);
         stream_copy_to_stream($stream, $tempFile);
         fclose($tempFile);
+
+        $this->tempFilesToCleanup[] = $tempFilePath;
 
         return $tempFilePath;
     }
