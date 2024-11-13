@@ -46,7 +46,7 @@ return [
     'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na polici',
     'bookshelf_update'                 => 'aktualizovat polici',
     'bookshelf_update_notification'    => 'Police byla úspěšně aktualizována',
-    'bookshelf_delete'                 => 'odstranit knihovnu',
+    'bookshelf_delete'                 => 'odstranil polici',
     'bookshelf_delete_notification'    => 'Police byla úspěšně odstraněna',
 
     // Revisions

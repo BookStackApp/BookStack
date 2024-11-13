@@ -83,8 +83,8 @@ return [
     'search_update' => 'Aktualizovat hledání',
 
     // Shelves
-    'shelf' => 'Knihovna',
-    'shelves' => 'Knihovny',
+    'shelf' => 'Police',
+    'shelves' => 'Police',
     'x_shelves' => '{0}:count polic|{1}:count police|[2,4]:count police|[5,*]:count polic',
     'shelves_empty' => 'Nebyly vytvořeny žádné police',
     'shelves_create' => 'Vytvořit novou polici',
