@@ -22,7 +22,7 @@
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^3.5",
         "knplabs/knp-snappy": "^1.5",
-        "laravel/framework": "^10.10",
+        "laravel/framework": "^10.48.23",
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.3",
