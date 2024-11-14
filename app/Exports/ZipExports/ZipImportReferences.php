@@ -139,4 +139,21 @@ class ZipImportReferences
             ]);
         }
     }
+
+
+    /**
+     * @return Image[]
+     */
+    public function images(): array
+    {
+        return $this->images;
+    }
+
+    /**
+     * @return Attachment[]
+     */
+    public function attachments(): array
+    {
+        return $this->attachments;
+    }
 }

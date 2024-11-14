@@ -153,9 +153,17 @@ class ImageService
      */
     public function destroy(Image $image): void
     {
-        $disk = $this->storage->getDisk($image->type);
-        $disk->destroyAllMatchingNameFromPath($image->path);
+        $this->destroyFileAtPath($image->type, $image->path);
         $image->delete();
+    }
+
+    /**
+     * Destroy the underlying image file at the given path.
+     */
+    public function destroyFileAtPath(string $type, string $path): void
+    {
+        $disk = $this->storage->getDisk($type);
+        $disk->destroyAllMatchingNameFromPath($path);
     }
 
     /**

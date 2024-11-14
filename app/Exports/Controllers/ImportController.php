@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BookStack\Exports\Controllers;
 
-use BookStack\Activity\ActivityType;
+use BookStack\Exceptions\ZipImportException;
 use BookStack\Exceptions\ZipValidationException;
 use BookStack\Exports\ImportRepo;
 use BookStack\Http\Controller;
@@ -48,11 +48,8 @@ class ImportController extends Controller
         try {
             $import = $this->imports->storeFromUpload($file);
         } catch (ZipValidationException $exception) {
-            session()->flash('validation_errors', $exception->errors);
-            return redirect('/import');
+            return redirect('/import')->with('validation_errors', $exception->errors);
         }
-
-        $this->logActivity(ActivityType::IMPORT_CREATE, $import);
 
         return redirect($import->getUrl());
     }
@@ -80,20 +77,20 @@ class ImportController extends Controller
         $parent = null;
 
         if ($import->type === 'page' || $import->type === 'chapter') {
+            session()->setPreviousUrl($import->getUrl());
             $data = $this->validate($request, [
-                'parent' => ['required', 'string']
+                'parent' => ['required', 'string'],
             ]);
             $parent = $data['parent'];
         }
 
-        $entity = $this->imports->runImport($import, $parent);
-        if ($entity) {
-            $this->logActivity(ActivityType::IMPORT_RUN, $import);
-            return redirect($entity->getUrl());
+        try {
+            $entity = $this->imports->runImport($import, $parent);
+        } catch (ZipImportException $exception) {
+            return redirect($import->getUrl())->with('import_errors', $exception->errors);
         }
-        // TODO - Redirect to result
-        // TODO - Or redirect back with errors
-        return 'failed';
+
+        return redirect($entity->getUrl());
     }
 
     /**
@@ -103,8 +100,6 @@ class ImportController extends Controller
     {
         $import = $this->imports->findVisible($id);
         $this->imports->deleteImport($import);
-
-        $this->logActivity(ActivityType::IMPORT_DELETE, $import);
 
         return redirect('/import');
     }

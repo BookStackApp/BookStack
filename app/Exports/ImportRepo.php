@@ -2,6 +2,7 @@
 
 namespace BookStack\Exports;
 
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\FileUploadException;
@@ -14,8 +15,10 @@ use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Exports\ZipExports\ZipExportReader;
 use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Exports\ZipExports\ZipImportRunner;
+use BookStack\Facades\Activity;
 use BookStack\Uploads\FileStorage;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImportRepo
@@ -93,25 +96,42 @@ class ImportRepo
         $import->path = $path;
         $import->save();
 
+        Activity::add(ActivityType::IMPORT_CREATE, $import);
+
         return $import;
     }
 
     /**
-     * @throws ZipValidationException|ZipImportException
+     * @throws ZipImportException
      */
-    public function runImport(Import $import, ?string $parent = null): ?Entity
+    public function runImport(Import $import, ?string $parent = null): Entity
     {
         $parentModel = null;
         if ($import->type === 'page' || $import->type === 'chapter') {
             $parentModel = $parent ? $this->entityQueries->findVisibleByStringIdentifier($parent) : null;
         }
 
-        return $this->importer->run($import, $parentModel);
+        DB::beginTransaction();
+        try {
+            $model = $this->importer->run($import, $parentModel);
+        } catch (ZipImportException $e) {
+            DB::rollBack();
+            $this->importer->revertStoredFiles();
+            throw $e;
+        }
+
+        DB::commit();
+        $this->deleteImport($import);
+        Activity::add(ActivityType::IMPORT_RUN, $import);
+
+        return $model;
     }
 
     public function deleteImport(Import $import): void
     {
         $this->storage->delete($import->path);
         $import->delete();
+
+        Activity::add(ActivityType::IMPORT_DELETE, $import);
     }
 }

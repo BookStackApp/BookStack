@@ -151,7 +151,7 @@ class AttachmentService
      * Delete a file from the filesystem it sits on.
      * Cleans any empty leftover folders.
      */
-    protected function deleteFileInStorage(Attachment $attachment): void
+    public function deleteFileInStorage(Attachment $attachment): void
     {
         $this->storage->delete($attachment->path);
     }

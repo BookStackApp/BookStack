@@ -52,6 +52,7 @@ return [
     'import_pending_none' => 'No imports have been started.',
     'import_continue' => 'Continue Import',
     'import_continue_desc' => 'Review the content due to be imported from the uploaded ZIP file. When ready, run the import to add its contents to this system. The uploaded ZIP import file will be automatically removed on successful import.',
+    'import_details' => 'Import Details',
     'import_run' => 'Run Import',
     'import_size' => ':size Import ZIP Size',
     'import_uploaded_at' => 'Uploaded :relativeTime',
@@ -60,6 +61,8 @@ return [
     'import_location_desc' => 'Select a target location for your imported content. You\'ll need the relevant permissions to create within the location you choose.',
     'import_delete_confirm' => 'Are you sure you want to delete this import?',
     'import_delete_desc' => 'This will delete the uploaded import ZIP file, and cannot be undone.',
+    'import_errors' => 'Import Errors',
+    'import_errors_desc' => 'The follow errors occurred during the import attempt:',
 
     // Permissions and restrictions
     'permissions' => 'Permissions',

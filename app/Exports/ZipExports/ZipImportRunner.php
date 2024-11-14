@@ -47,14 +47,17 @@ class ZipImportRunner
      * Returns the top-level entity item which was imported.
      * @throws ZipImportException
      */
-    public function run(Import $import, ?Entity $parent = null): ?Entity
+    public function run(Import $import, ?Entity $parent = null): Entity
     {
         $zipPath = $this->getZipPath($import);
         $reader = new ZipExportReader($zipPath);
 
         $errors = (new ZipExportValidator($reader))->validate();
         if ($errors) {
-            throw new ZipImportException(["ZIP failed to validate"]);
+            throw new ZipImportException([
+                trans('errors.import_validation_failed'),
+                ...$errors,
+            ]);
         }
 
         try {
@@ -65,15 +68,14 @@ class ZipImportRunner
 
         // Validate parent type
         if ($exportModel instanceof ZipExportBook && ($parent !== null)) {
-            throw new ZipImportException(["Must not have a parent set for a Book import"]);
-        } else if ($exportModel instanceof ZipExportChapter && (!$parent instanceof Book)) {
-            throw new ZipImportException(["Parent book required for chapter import"]);
+            throw new ZipImportException(["Must not have a parent set for a Book import."]);
+        } else if ($exportModel instanceof ZipExportChapter && !($parent instanceof Book)) {
+            throw new ZipImportException(["Parent book required for chapter import."]);
         } else if ($exportModel instanceof ZipExportPage && !($parent instanceof Book || $parent instanceof Chapter)) {
-            throw new ZipImportException(["Parent book or chapter required for page import"]);
+            throw new ZipImportException(["Parent book or chapter required for page import."]);
         }
 
-        $this->ensurePermissionsPermitImport($exportModel);
-        $entity = null;
+        $this->ensurePermissionsPermitImport($exportModel, $parent);
 
         if ($exportModel instanceof ZipExportBook) {
             $entity = $this->importBook($exportModel, $reader);
@@ -81,32 +83,46 @@ class ZipImportRunner
             $entity = $this->importChapter($exportModel, $parent, $reader);
         } else if ($exportModel instanceof ZipExportPage) {
             $entity = $this->importPage($exportModel, $parent, $reader);
+        } else {
+            throw new ZipImportException(['No importable data found in import data.']);
         }
-
-          // TODO - In transaction?
-            // TODO - Revert uploaded files if goes wrong
-              // TODO - Attachments
-              // TODO - Images
-              // (Both listed/stored in references)
 
         $this->references->replaceReferences();
 
         $reader->close();
         $this->cleanup();
 
-        dd('stop');
-
-        // TODO - Delete import/zip after import?
-          // Do this in parent repo?
-
         return $entity;
     }
 
-    protected function cleanup()
+    /**
+     * Revert any files which have been stored during this import process.
+     * Considers files only, and avoids the database under the
+     * assumption that the database may already have been
+     * reverted as part of a transaction rollback.
+     */
+    public function revertStoredFiles(): void
+    {
+        foreach ($this->references->images() as $image) {
+            $this->imageService->destroyFileAtPath($image->type, $image->path);
+        }
+
+        foreach ($this->references->attachments() as $attachment) {
+            if (!$attachment->external) {
+                $this->attachmentService->deleteFileInStorage($attachment);
+            }
+        }
+
+        $this->cleanup();
+    }
+
+    protected function cleanup(): void
     {
         foreach ($this->tempFilesToCleanup as $file) {
             unlink($file);
         }
+
+        $this->tempFilesToCleanup = [];
     }
 
     protected function importBook(ZipExportBook $exportBook, ZipExportReader $reader): Book
@@ -256,9 +272,6 @@ class ZipImportRunner
     {
         $errors = [];
 
-        // TODO - Extract messages to language files
-        // TODO - Ensure these are shown to users on failure
-
         $chapters = [];
         $pages = [];
         $images = [];
@@ -266,7 +279,7 @@ class ZipImportRunner
 
         if ($exportModel instanceof ZipExportBook) {
             if (!userCan('book-create-all')) {
-                $errors[] = 'You are lacking the required permission to create books.';
+                $errors[] = trans('errors.import_perms_books');
             }
             array_push($pages, ...$exportModel->pages);
             array_push($chapters, ...$exportModel->chapters);
@@ -283,7 +296,7 @@ class ZipImportRunner
         if (count($chapters) > 0) {
             $permission = 'chapter-create' . ($parent ? '' : '-all');
             if (!userCan($permission, $parent)) {
-                $errors[] = 'You are lacking the required permission to create chapters.';
+                $errors[] = trans('errors.import_perms_chapters');
             }
         }
 
@@ -295,25 +308,25 @@ class ZipImportRunner
         if (count($pages) > 0) {
             if ($parent) {
                 if (!userCan('page-create', $parent)) {
-                    $errors[] = 'You are lacking the required permission to create pages.';
+                    $errors[] = trans('errors.import_perms_pages');
                 }
             } else {
                 $hasPermission = userCan('page-create-all') || userCan('page-create-own');
                 if (!$hasPermission) {
-                    $errors[] = 'You are lacking the required permission to create pages.';
+                    $errors[] = trans('errors.import_perms_pages');
                 }
             }
         }
 
         if (count($images) > 0) {
             if (!userCan('image-create-all')) {
-                $errors[] = 'You are lacking the required permissions to create images.';
+                $errors[] = trans('errors.import_perms_images');
             }
         }
 
         if (count($attachments) > 0) {
             if (!userCan('attachment-create-all')) {
-                $errors[] = 'You are lacking the required permissions to create attachments.';
+                $errors[] = trans('errors.import_perms_attachments');
             }
         }
 
