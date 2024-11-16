@@ -3,6 +3,7 @@
 namespace Tests\Exports;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exports\ZipExports\ZipImportRunner;
 use BookStack\Uploads\Image;
@@ -167,7 +168,194 @@ class ZipImportRunnerTest extends TestCase
         ZipTestHelper::deleteZipForImport($import);
     }
 
-    // TODO - Test full book import
-    // TODO - Test full chapter import
-    // TODO - Test full page import
+    public function test_chapter_import()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $testFilePath = $this->files->testFilePath('test-file.txt');
+        $parent = $this->entities->book();
+
+        $import = ZipTestHelper::importFromData([], [
+            'chapter' => [
+                'id' => 6,
+                'name' => 'Chapter A',
+                'description_html' => '<p><a href="[[bsexport:page:3]]">Link to page</a></p>',
+                'priority' => 1,
+                'tags' => [
+                    ['name' => 'Reviewed', 'value' => '2024'],
+                ],
+                'pages' => [
+                    [
+                        'id' => 3,
+                        'name' => 'Page A',
+                        'priority' => 6,
+                        'html' => '<p><a href="[[bsexport:chapter:6]]">Link to chapter</a></p>
+<p><a href="[[bsexport:image:2]]">Link to dog drawing</a></p>
+<p><a href="[[bsexport:attachment:4]]">Link to text attachment</a></p>',
+                        'tags' => [
+                            ['name' => 'Unreviewed'],
+                        ],
+                        'attachments' => [
+                            [
+                                'id' => 4,
+                                'name' => 'Text attachment',
+                                'file' => 'file_attachment'
+                            ]
+                        ],
+                        'images' => [
+                            [
+                                'id' => 2,
+                                'name' => 'Dog Drawing',
+                                'type' => 'drawio',
+                                'file' => 'dog_image'
+                            ]
+                        ],
+                    ],
+                    [
+                        'name' => 'Page B',
+                        'markdown' => '[Link to page A]([[bsexport:page:3]])',
+                        'priority' => 9,
+                    ],
+                ],
+            ],
+        ], [
+            'file_attachment'  => $testFilePath,
+            'dog_image' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Chapter $chapter */
+        $chapter = $this->runner->run($import, $parent);
+
+        // Chapter checks
+        $this->assertEquals('Chapter A', $chapter->name);
+        $this->assertEquals($parent->id, $chapter->book_id);
+        $this->assertCount(1, $chapter->tags);
+        $firstChapterTag = $chapter->tags()->first();
+        $this->assertEquals('Reviewed', $firstChapterTag->name);
+        $this->assertEquals('2024', $firstChapterTag->value);
+        $this->assertCount(2, $chapter->pages);
+
+        // Page checks
+        /** @var Page $pageA */
+        $pageA = $chapter->pages->first();
+        $this->assertEquals('Page A', $pageA->name);
+        $this->assertCount(1, $pageA->tags);
+        $this->assertCount(1, $pageA->attachments);
+        $pageAImages = Image::where('uploaded_to', '=', $pageA->id)->whereIn('type', ['gallery', 'drawio'])->get();
+        $this->assertCount(1, $pageAImages);
+
+        // Reference checks
+        $attachment = $pageA->attachments->first();
+        $this->assertStringContainsString($pageA->getUrl(), $chapter->description_html);
+        $this->assertStringContainsString($chapter->getUrl(), $pageA->html);
+        $this->assertStringContainsString($pageAImages[0]->url, $pageA->html);
+        $this->assertStringContainsString($attachment->getUrl(), $pageA->html);
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_page_import()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $testFilePath = $this->files->testFilePath('test-file.txt');
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'id' => 3,
+                'name' => 'Page A',
+                'priority' => 6,
+                'html' => '<p><a href="[[bsexport:page:3]]">Link to self</a></p>
+<p><a href="[[bsexport:image:2]]">Link to dog drawing</a></p>
+<p><a href="[[bsexport:attachment:4]]">Link to text attachment</a></p>',
+                'tags' => [
+                    ['name' => 'Unreviewed'],
+                ],
+                'attachments' => [
+                    [
+                        'id' => 4,
+                        'name' => 'Text attachment',
+                        'file' => 'file_attachment'
+                    ]
+                ],
+                'images' => [
+                    [
+                        'id' => 2,
+                        'name' => 'Dog Drawing',
+                        'type' => 'drawio',
+                        'file' => 'dog_image'
+                    ]
+                ],
+            ],
+        ], [
+            'file_attachment'  => $testFilePath,
+            'dog_image' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Page $page */
+        $page = $this->runner->run($import, $parent);
+
+        // Page checks
+        $this->assertEquals('Page A', $page->name);
+        $this->assertCount(1, $page->tags);
+        $this->assertCount(1, $page->attachments);
+        $pageImages = Image::where('uploaded_to', '=', $page->id)->whereIn('type', ['gallery', 'drawio'])->get();
+        $this->assertCount(1, $pageImages);
+        $this->assertFileEquals($testImagePath, public_path($pageImages[0]->path));
+
+        // Reference checks
+        $this->assertStringContainsString($page->getUrl(), $page->html);
+        $this->assertStringContainsString($pageImages[0]->url, $page->html);
+        $this->assertStringContainsString($page->attachments->first()->getUrl(), $page->html);
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_revert_cleans_up_uploaded_files()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $testFilePath = $this->files->testFilePath('test-file.txt');
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>Hello</p>',
+                'attachments' => [
+                    [
+                        'name' => 'Text attachment',
+                        'file' => 'file_attachment'
+                    ]
+                ],
+                'images' => [
+                    [
+                        'name' => 'Dog Image',
+                        'type' => 'gallery',
+                        'file' => 'dog_image'
+                    ]
+                ],
+            ],
+        ], [
+            'file_attachment'  => $testFilePath,
+            'dog_image' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Page $page */
+        $page = $this->runner->run($import, $parent);
+
+        $attachment = $page->attachments->first();
+        $image = Image::query()->where('uploaded_to', '=', $page->id)->where('type', '=', 'gallery')->first();
+
+        $this->assertFileExists(public_path($image->path));
+        $this->assertFileExists(storage_path($attachment->path));
+
+        $this->runner->revertStoredFiles();
+
+        $this->assertFileDoesNotExist(public_path($image->path));
+        $this->assertFileDoesNotExist(storage_path($attachment->path));
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
 }
