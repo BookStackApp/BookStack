@@ -233,6 +233,10 @@ class ZipImportRunner
             $file,
             $exportImage->type,
             $page->id,
+            null,
+            null,
+            true,
+            $exportImage->name,
         );
 
         $this->references->addImage($image, $exportImage->id);

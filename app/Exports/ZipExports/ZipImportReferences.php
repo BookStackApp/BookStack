@@ -97,10 +97,12 @@ class ZipImportReferences
         } else if ($model instanceof Image) {
             if ($model->type === 'gallery') {
                 $this->imageResizer->loadGalleryThumbnailsForImage($model, false);
-                return $model->thumbs['gallery'] ?? $model->url;
+                return $model->thumbs['display'] ?? $model->url;
             }
 
             return $model->url;
+        } else if ($model instanceof Attachment) {
+            return $model->getUrl(false);
         }
 
         return null;

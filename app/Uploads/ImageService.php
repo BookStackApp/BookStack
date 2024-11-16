@@ -33,9 +33,10 @@ class ImageService
         int $uploadedTo = 0,
         int $resizeWidth = null,
         int $resizeHeight = null,
-        bool $keepRatio = true
+        bool $keepRatio = true,
+        string $imageName = '',
     ): Image {
-        $imageName = $uploadedFile->getClientOriginalName();
+        $imageName = $imageName ?: $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
         if ($resizeWidth !== null || $resizeHeight !== null) {

@@ -8,7 +8,7 @@ use ZipArchive;
 
 class ZipTestHelper
 {
-    public static function importFromData(array $importData, array $zipData): Import
+    public static function importFromData(array $importData, array $zipData, array $files = []): Import
     {
         if (isset($zipData['book'])) {
             $importData['type'] = 'book';
@@ -19,7 +19,7 @@ class ZipTestHelper
         }
 
         $import = Import::factory()->create($importData);
-        $zip = static::zipUploadFromData($zipData);
+        $zip = static::zipUploadFromData($zipData, $files);
         rename($zip->getRealPath(), storage_path($import->path));
 
         return $import;
@@ -33,13 +33,18 @@ class ZipTestHelper
         }
     }
 
-    public static function zipUploadFromData(array $data): UploadedFile
+    public static function zipUploadFromData(array $data, array $files = []): UploadedFile
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
 
         $zip = new ZipArchive();
         $zip->open($zipFile, ZipArchive::CREATE);
         $zip->addFromString('data.json', json_encode($data));
+
+        foreach ($files as $name => $file) {
+            $zip->addFile($file, "files/$name");
+        }
+
         $zip->close();
 
         return new UploadedFile($zipFile, 'upload.zip', 'application/zip', null, true);
