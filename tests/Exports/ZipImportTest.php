@@ -3,6 +3,7 @@
 namespace Tests\Exports;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Entities\Models\Book;
 use BookStack\Exports\Import;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
@@ -91,7 +92,7 @@ class ZipImportTest extends TestCase
     public function test_error_shown_if_no_importable_key()
     {
         $this->asAdmin();
-        $resp = $this->runImportFromFile($this->zipUploadFromData([
+        $resp = $this->runImportFromFile(ZipTestHelper::zipUploadFromData([
             'instance' => []
         ]));
 
@@ -103,7 +104,7 @@ class ZipImportTest extends TestCase
     public function test_zip_data_validation_messages_shown()
     {
         $this->asAdmin();
-        $resp = $this->runImportFromFile($this->zipUploadFromData([
+        $resp = $this->runImportFromFile(ZipTestHelper::zipUploadFromData([
             'book' => [
                 'id' => 4,
                 'pages' => [
@@ -154,7 +155,7 @@ class ZipImportTest extends TestCase
             ],
         ];
 
-        $resp = $this->runImportFromFile($this->zipUploadFromData($data));
+        $resp = $this->runImportFromFile(ZipTestHelper::zipUploadFromData($data));
 
         $this->assertDatabaseHas('imports', [
             'name' => 'My great book name',
@@ -217,7 +218,7 @@ class ZipImportTest extends TestCase
     public function test_import_delete()
     {
         $this->asAdmin();
-        $this->runImportFromFile($this->zipUploadFromData([
+        $this->runImportFromFile(ZipTestHelper::zipUploadFromData([
             'book' => [
                 'name' => 'My great book name'
             ],
@@ -262,20 +263,126 @@ class ZipImportTest extends TestCase
         $this->delete("/import/{$adminImport->id}")->assertRedirect('/import');
     }
 
+    public function test_run_simple_success_scenario()
+    {
+        $import = ZipTestHelper::importFromData([], [
+            'book' => [
+                'name' => 'My imported book',
+                'pages' => [
+                    [
+                        'name' => 'My imported book page',
+                        'html' => '<p>Hello there from child page!</p>'
+                    ]
+                ],
+            ]
+        ]);
+
+        $resp = $this->asAdmin()->post("/import/{$import->id}");
+        $book = Book::query()->where('name', '=', 'My imported book')->latest()->first();
+        $resp->assertRedirect($book->getUrl());
+
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('My imported book page');
+        $resp->assertSee('Hello there from child page!');
+
+        $this->assertDatabaseMissing('imports', ['id' => $import->id]);
+        $this->assertFileDoesNotExist(storage_path($import->path));
+        $this->assertActivityExists(ActivityType::IMPORT_RUN, null, $import->logDescriptor());
+    }
+
+    public function test_import_run_access_limited()
+    {
+        $user = $this->users->editor();
+        $admin = $this->users->admin();
+        $userImport = Import::factory()->create(['name' => 'MySuperUserImport', 'created_by' => $user->id]);
+        $adminImport = Import::factory()->create(['name' => 'MySuperAdminImport', 'created_by' => $admin->id]);
+        $this->actingAs($user);
+
+        $this->post("/import/{$userImport->id}")->assertRedirect('/');
+        $this->post("/import/{$adminImport->id}")->assertRedirect('/');
+
+        $this->permissions->grantUserRolePermissions($user, ['content-import']);
+
+        $this->post("/import/{$userImport->id}")->assertRedirect($userImport->getUrl()); // Getting validation response instead of access issue response
+        $this->post("/import/{$adminImport->id}")->assertStatus(404);
+
+        $this->permissions->grantUserRolePermissions($user, ['settings-manage']);
+
+        $this->post("/import/{$adminImport->id}")->assertRedirect($adminImport->getUrl()); // Getting validation response instead of access issue response
+    }
+
+    public function test_run_revalidates_content()
+    {
+        $import = ZipTestHelper::importFromData([], [
+            'book' => [
+                'id' => 'abc',
+            ]
+        ]);
+
+        $resp = $this->asAdmin()->post("/import/{$import->id}");
+        $resp->assertRedirect($import->getUrl());
+
+        $resp = $this->followRedirects($resp);
+        $resp->assertSeeText('The name field is required.');
+        $resp->assertSeeText('The id must be an integer.');
+    }
+
+    public function test_run_checks_permissions_on_import()
+    {
+        $viewer = $this->users->viewer();
+        $this->permissions->grantUserRolePermissions($viewer, ['content-import']);
+        $import = ZipTestHelper::importFromData(['created_by' => $viewer->id], [
+            'book' => ['name' => 'My import book'],
+        ]);
+
+        $resp = $this->asViewer()->post("/import/{$import->id}");
+        $resp->assertRedirect($import->getUrl());
+
+        $resp = $this->followRedirects($resp);
+        $resp->assertSeeText('You are lacking the required permissions to create books.');
+    }
+
+    public function test_run_requires_parent_for_chapter_and_page_imports()
+    {
+        $book = $this->entities->book();
+        $pageImport = ZipTestHelper::importFromData([], [
+            'page' => ['name' => 'My page', 'html' => '<p>page test!</p>'],
+        ]);
+        $chapterImport = ZipTestHelper::importFromData([], [
+            'chapter' => ['name' => 'My chapter'],
+        ]);
+
+        $resp = $this->asAdmin()->post("/import/{$pageImport->id}");
+        $resp->assertRedirect($pageImport->getUrl());
+        $this->followRedirects($resp)->assertSee('The parent field is required.');
+
+        $resp = $this->asAdmin()->post("/import/{$pageImport->id}", ['parent' => "book:{$book->id}"]);
+        $resp->assertRedirectContains($book->getUrl());
+
+        $resp = $this->asAdmin()->post("/import/{$chapterImport->id}");
+        $resp->assertRedirect($chapterImport->getUrl());
+        $this->followRedirects($resp)->assertSee('The parent field is required.');
+
+        $resp = $this->asAdmin()->post("/import/{$chapterImport->id}", ['parent' => "book:{$book->id}"]);
+        $resp->assertRedirectContains($book->getUrl());
+    }
+
+    public function test_run_validates_correct_parent_type()
+    {
+        $chapter = $this->entities->chapter();
+        $import = ZipTestHelper::importFromData([], [
+            'chapter' => ['name' => 'My chapter'],
+        ]);
+
+        $resp = $this->asAdmin()->post("/import/{$import->id}", ['parent' => "chapter:{$chapter->id}"]);
+        $resp->assertRedirect($import->getUrl());
+
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('Parent book required for chapter import.');
+    }
+
     protected function runImportFromFile(UploadedFile $file): TestResponse
     {
         return $this->call('POST', '/import', [], [], ['file' => $file]);
-    }
-
-    protected function zipUploadFromData(array $data): UploadedFile
-    {
-        $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
-
-        $zip = new ZipArchive();
-        $zip->open($zipFile, ZipArchive::CREATE);
-        $zip->addFromString('data.json', json_encode($data));
-        $zip->close();
-
-        return new UploadedFile($zipFile, 'upload.zip', 'application/zip', null, true);
     }
 }

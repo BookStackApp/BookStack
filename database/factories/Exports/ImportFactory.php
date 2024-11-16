@@ -21,7 +21,7 @@ class ImportFactory extends Factory
     public function definition(): array
     {
         return [
-            'path' => 'uploads/imports/' . Str::random(10) . '.zip',
+            'path' => 'uploads/files/imports/' . Str::random(10) . '.zip',
             'name' => $this->faker->words(3, true),
             'type' => 'book',
             'metadata' => '{"name": "My book"}',

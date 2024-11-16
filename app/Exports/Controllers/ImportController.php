@@ -70,9 +70,11 @@ class ImportController extends Controller
         ]);
     }
 
+    /**
+     * Run the import process against an uploaded import ZIP.
+     */
     public function run(int $id, Request $request)
     {
-        // TODO - Test access/visibility
         $import = $this->imports->findVisible($id);
         $parent = null;
 
