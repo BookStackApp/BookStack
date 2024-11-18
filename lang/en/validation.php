@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
     'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
+    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
     'zip_model_expected' => 'Data object expected but ":type" found.',
     'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
 

@@ -228,6 +228,9 @@ class ZipImportRunner
 
     protected function importImage(ZipExportImage $exportImage, Page $page, ZipExportReader $reader): Image
     {
+        $mime = $reader->sniffFileMime($exportImage->file);
+        $extension = explode('/', $mime)[1];
+
         $file = $this->zipFileToUploadedFile($exportImage->file, $reader);
         $image = $this->imageService->saveNewFromUpload(
             $file,
@@ -236,8 +239,11 @@ class ZipImportRunner
             null,
             null,
             true,
-            $exportImage->name,
+            $exportImage->name . '.' . $extension,
         );
+
+        $image->name = $exportImage->name;
+        $image->save();
 
         $this->references->addImage($image, $exportImage->id);
 

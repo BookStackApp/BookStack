@@ -358,4 +358,39 @@ class ZipImportRunnerTest extends TestCase
 
         ZipTestHelper::deleteZipForImport($import);
     }
+
+    public function test_imported_images_have_their_detected_extension_added()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>hello</p>',
+                'images' => [
+                    [
+                        'id' => 2,
+                        'name' => 'Cat',
+                        'type' => 'gallery',
+                        'file' => 'cat_image'
+                    ]
+                ],
+            ],
+        ], [
+            'cat_image' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Page $page */
+        $page = $this->runner->run($import, $parent);
+
+        $pageImages = Image::where('uploaded_to', '=', $page->id)->whereIn('type', ['gallery', 'drawio'])->get();
+
+        $this->assertCount(1, $pageImages);
+        $this->assertStringEndsWith('.png', $pageImages[0]->url);
+        $this->assertStringEndsWith('.png', $pageImages[0]->path);
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
 }

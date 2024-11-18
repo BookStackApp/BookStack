@@ -33,9 +33,9 @@ class ZipValidationHelper
         return $messages;
     }
 
-    public function fileReferenceRule(): ZipFileReferenceRule
+    public function fileReferenceRule(array $acceptedMimes = []): ZipFileReferenceRule
     {
-        return new ZipFileReferenceRule($this);
+        return new ZipFileReferenceRule($this, $acceptedMimes);
     }
 
     public function uniqueIdRule(string $type): ZipUniqueIdRule
@@ -43,7 +43,7 @@ class ZipValidationHelper
         return new ZipUniqueIdRule($this, $type);
     }
 
-    public function hasIdBeenUsed(string $type, int $id): bool
+    public function hasIdBeenUsed(string $type, mixed $id): bool
     {
         $key = $type . ':' . $id;
         if (isset($this->validatedIds[$key])) {

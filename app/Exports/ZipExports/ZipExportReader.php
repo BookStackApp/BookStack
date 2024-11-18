@@ -7,6 +7,7 @@ use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
+use BookStack\Util\WebSafeMimeSniffer;
 use ZipArchive;
 
 class ZipExportReader
@@ -79,6 +80,17 @@ class ZipExportReader
     public function streamFile(string $fileName)
     {
         return $this->zip->getStream("files/{$fileName}");
+    }
+
+    /**
+     * Sniff the mime type from the file of given name.
+     */
+    public function sniffFileMime(string $fileName): string
+    {
+        $stream = $this->streamFile($fileName);
+        $sniffContent = fread($stream, 2000);
+
+        return (new WebSafeMimeSniffer())->sniff($sniffContent);
     }
 
     /**

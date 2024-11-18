@@ -9,6 +9,7 @@ class ZipFileReferenceRule implements ValidationRule
 {
     public function __construct(
         protected ZipValidationHelper $context,
+        protected array $acceptedMimes,
     ) {
     }
 
@@ -20,6 +21,17 @@ class ZipFileReferenceRule implements ValidationRule
     {
         if (!$this->context->zipReader->fileExists($value)) {
             $fail('validation.zip_file')->translate();
+        }
+
+        if (!empty($this->acceptedMimes)) {
+            $fileMime = $this->context->zipReader->sniffFileMime($value);
+            if (!in_array($fileMime, $this->acceptedMimes)) {
+                $fail('validation.zip_file_mime')->translate([
+                    'attribute' => $attribute,
+                    'validTypes' => implode(',', $this->acceptedMimes),
+                    'foundType' => $fileMime
+                ]);
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ use BookStack\Exports\ZipExports\ZipImportRunner;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
 
-class ZipExportValidatorTests extends TestCase
+class ZipExportValidatorTest extends TestCase
 {
     protected array $filesToRemove = [];
 
@@ -70,5 +70,24 @@ class ZipExportValidatorTests extends TestCase
         $this->assertEquals($expectedMessage, $results['book.pages.0.images.1.id']);
         $this->assertEquals($expectedMessage, $results['book.pages.1.id']);
         $this->assertEquals($expectedMessage, $results['book.chapters.1.id']);
+    }
+
+    public function test_image_files_need_to_be_a_valid_detected_image_file()
+    {
+        $validator = $this->getValidatorForData([
+            'page' => [
+                'id' => 4,
+                'name' => 'My page',
+                'markdown' => 'hello',
+                'images' => [
+                    ['id' => 4, 'name' => 'Image A', 'type' => 'gallery', 'file' => 'cat'],
+                ],
+            ]
+        ], ['cat' => $this->files->testFilePath('test-file.txt')]);
+
+        $results = $validator->validate();
+        $this->assertCount(1, $results);
+
+        $this->assertEquals('The file needs to reference a file of type image/png,image/jpeg,image/gif,image/webp, found text/plain.', $results['page.images.0.file']);
     }
 }

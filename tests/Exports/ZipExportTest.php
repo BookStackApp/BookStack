@@ -107,12 +107,10 @@ class ZipExportTest extends TestCase
             [
                 'name' => 'Exporty',
                 'value' => 'Content',
-                'order' => 1,
             ],
             [
                 'name' => 'Another',
                 'value' => '',
-                'order' => 2,
             ]
         ], $pageData['tags']);
     }
@@ -162,7 +160,6 @@ class ZipExportTest extends TestCase
         $attachmentData = $pageData['attachments'][0];
         $this->assertEquals('PageAttachmentExport.txt', $attachmentData['name']);
         $this->assertEquals($attachment->id, $attachmentData['id']);
-        $this->assertEquals(1, $attachmentData['order']);
         $this->assertArrayNotHasKey('link', $attachmentData);
         $this->assertNotEmpty($attachmentData['file']);
 
@@ -193,7 +190,6 @@ class ZipExportTest extends TestCase
         $attachmentData = $pageData['attachments'][0];
         $this->assertEquals('My link attachment for export', $attachmentData['name']);
         $this->assertEquals($attachment->id, $attachmentData['id']);
-        $this->assertEquals(1, $attachmentData['order']);
         $this->assertEquals('https://example.com/cats', $attachmentData['link']);
         $this->assertArrayNotHasKey('file', $attachmentData);
     }
