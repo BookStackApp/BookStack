@@ -43,7 +43,7 @@ class ZipExportAttachment extends ZipExportModel
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
-            'id'    => ['nullable', 'int'],
+            'id'    => ['nullable', 'int', $context->uniqueIdRule('attachment')],
             'name'  => ['required', 'string', 'min:1'],
             'link'  => ['required_without:file', 'nullable', 'string'],
             'file'  => ['required_without:link', 'nullable', 'string', $context->fileReferenceRule()],

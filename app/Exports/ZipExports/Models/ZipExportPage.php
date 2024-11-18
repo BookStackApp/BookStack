@@ -68,7 +68,7 @@ class ZipExportPage extends ZipExportModel
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
-            'id'    => ['nullable', 'int'],
+            'id'    => ['nullable', 'int', $context->uniqueIdRule('page')],
             'name'  => ['required', 'string', 'min:1'],
             'html' => ['nullable', 'string'],
             'markdown' => ['nullable', 'string'],

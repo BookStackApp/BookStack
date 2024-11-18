@@ -33,7 +33,7 @@ class ZipExportImage extends ZipExportModel
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
-            'id'    => ['nullable', 'int'],
+            'id'    => ['nullable', 'int', $context->uniqueIdRule('image')],
             'name'  => ['required', 'string', 'min:1'],
             'file'  => ['required', 'string', $context->fileReferenceRule()],
             'type'  => ['required', 'string', Rule::in(['gallery', 'drawio'])],

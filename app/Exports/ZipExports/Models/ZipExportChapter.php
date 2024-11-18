@@ -59,7 +59,7 @@ class ZipExportChapter extends ZipExportModel
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
-            'id'    => ['nullable', 'int'],
+            'id'    => ['nullable', 'int', $context->uniqueIdRule('chapter')],
             'name'  => ['required', 'string', 'min:1'],
             'description_html' => ['nullable', 'string'],
             'priority' => ['nullable', 'int'],

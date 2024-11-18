@@ -70,7 +70,7 @@ class ZipExportBook extends ZipExportModel
     public static function validate(ZipValidationHelper $context, array $data): array
     {
         $rules = [
-            'id'    => ['nullable', 'int'],
+            'id'    => ['nullable', 'int', $context->uniqueIdRule('book')],
             'name'  => ['required', 'string', 'min:1'],
             'description_html' => ['nullable', 'string'],
             'cover' => ['nullable', 'string', $context->fileReferenceRule()],

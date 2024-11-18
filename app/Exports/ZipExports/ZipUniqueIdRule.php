@@ -5,10 +5,11 @@ namespace BookStack\Exports\ZipExports;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class ZipFileReferenceRule implements ValidationRule
+class ZipUniqueIdRule implements ValidationRule
 {
     public function __construct(
         protected ZipValidationHelper $context,
+        protected string $modelType,
     ) {
     }
 
@@ -18,8 +19,8 @@ class ZipFileReferenceRule implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!$this->context->zipReader->fileExists($value)) {
-            $fail('validation.zip_file')->translate();
+        if ($this->context->hasIdBeenUsed($this->modelType, $value)) {
+            $fail('validation.zip_unique')->translate(['attribute' => $attribute]);
         }
     }
 }

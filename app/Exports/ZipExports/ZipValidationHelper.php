@@ -9,6 +9,13 @@ class ZipValidationHelper
 {
     protected Factory $validationFactory;
 
+    /**
+     * Local store of validated IDs (in format "<type>:<id>". Example: "book:2")
+     * which we can use to check uniqueness.
+     * @var array<string, bool>
+     */
+    protected array $validatedIds = [];
+
     public function __construct(
         public ZipExportReader $zipReader,
     ) {
@@ -29,6 +36,23 @@ class ZipValidationHelper
     public function fileReferenceRule(): ZipFileReferenceRule
     {
         return new ZipFileReferenceRule($this);
+    }
+
+    public function uniqueIdRule(string $type): ZipUniqueIdRule
+    {
+        return new ZipUniqueIdRule($this, $type);
+    }
+
+    public function hasIdBeenUsed(string $type, int $id): bool
+    {
+        $key = $type . ':' . $id;
+        if (isset($this->validatedIds[$key])) {
+            return true;
+        }
+
+        $this->validatedIds[$key] = true;
+
+        return false;
     }
 
     /**
