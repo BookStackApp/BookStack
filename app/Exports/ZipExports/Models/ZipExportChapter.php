@@ -20,7 +20,7 @@ class ZipExportChapter extends ZipExportModel
 
     public function metadataOnly(): void
     {
-        $this->description_html = $this->priority = null;
+        $this->description_html = null;
 
         foreach ($this->pages as $page) {
             $page->metadataOnly();
@@ -28,6 +28,11 @@ class ZipExportChapter extends ZipExportModel
         foreach ($this->tags as $tag) {
             $tag->metadataOnly();
         }
+    }
+
+    public function children(): array
+    {
+        return $this->pages;
     }
 
     public static function fromModel(Chapter $model, ZipExportFiles $files): self

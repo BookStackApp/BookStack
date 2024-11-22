@@ -5,7 +5,6 @@ namespace BookStack\Exports\ZipExports;
 use BookStack\Exceptions\ZipExportException;
 use BookStack\Exports\ZipExports\Models\ZipExportBook;
 use BookStack\Exports\ZipExports\Models\ZipExportChapter;
-use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Util\WebSafeMimeSniffer;
 use ZipArchive;

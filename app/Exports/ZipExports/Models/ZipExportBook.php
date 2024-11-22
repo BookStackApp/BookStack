@@ -36,6 +36,20 @@ class ZipExportBook extends ZipExportModel
         }
     }
 
+    public function children(): array
+    {
+        $children = [
+            ...$this->pages,
+            ...$this->chapters,
+        ];
+
+        usort($children, function ($a, $b) {
+            return ($a->priority ?? 0) - ($b->priority ?? 0);
+        });
+
+        return $children;
+    }
+
     public static function fromModel(Book $model, ZipExportFiles $files): self
     {
         $instance = new self();

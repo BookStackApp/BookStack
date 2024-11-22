@@ -23,7 +23,7 @@ class ZipExportPage extends ZipExportModel
 
     public function metadataOnly(): void
     {
-        $this->html = $this->markdown = $this->priority = null;
+        $this->html = $this->markdown = null;
 
         foreach ($this->attachments as $attachment) {
             $attachment->metadataOnly();

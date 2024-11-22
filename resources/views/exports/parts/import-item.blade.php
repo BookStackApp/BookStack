@@ -16,11 +16,13 @@ $model - object
                 <span>@icon('tag'){{ count($model->tags) }}</span>
             @endif
         </div>
-        @foreach($model->chapters ?? [] as $chapter)
-            @include('exports.parts.import-item', ['type' => 'chapter', 'model' => $chapter])
-        @endforeach
-        @foreach($model->pages ?? [] as $page)
-            @include('exports.parts.import-item', ['type' => 'page', 'model' => $page])
-        @endforeach
+        @if(method_exists($model, 'children'))
+            @foreach($model->children() as $child)
+                @include('exports.parts.import-item', [
+                    'type' => ($child instanceof \BookStack\Exports\ZipExports\Models\ZipExportPage) ? 'page' : 'chapter',
+                    'model' => $child
+                ])
+            @endforeach
+        @endif
     </div>
 </div>
