@@ -59,7 +59,7 @@
                     ])
                 @endif
 
-                <div class="text-right">
+                <div class="flex-container-row items-center justify-flex-end">
                     <a href="{{ url('/import') }}" class="button outline">{{ trans('common.cancel') }}</a>
                     <div component="dropdown" class="inline block mx-s">
                         <button refs="dropdown@toggle"
@@ -72,7 +72,7 @@
                             <button type="submit" form="import-delete-form" class="text-link small text-item">{{ trans('common.confirm') }}</button>
                         </div>
                     </div>
-                    <button type="submit" class="button">{{ trans('entities.import_run') }}</button>
+                    <button component="loading-button" type="submit" class="button">{{ trans('entities.import_run') }}</button>
                 </div>
             </form>
         </main>

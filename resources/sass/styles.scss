@@ -106,6 +106,10 @@ $loadingSize: 10px;
   }
 }
 
+.inline.block .loading-container {
+  margin: $-xs $-s;
+}
+
 .skip-to-content-link {
   position: fixed;
   top: -52px;
