@@ -110,6 +110,7 @@ return [
     'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
     'import_validation_failed' => 'Import ZIP failed to validate with errors:',
+    'import_zip_failed_notification' => 'Failed to import ZIP file.',
     'import_perms_books' => 'You are lacking the required permissions to create books.',
     'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
     'import_perms_pages' => 'You are lacking the required permissions to create pages.',

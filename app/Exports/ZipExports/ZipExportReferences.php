@@ -127,11 +127,12 @@ class ZipExportReferences
                 return null;
             }
 
-            // We don't expect images to be part of book/chapter content
-            if (!($exportModel instanceof ZipExportPage)) {
-                return null;
+            // Handle simple links outside of page content
+            if (!($exportModel instanceof ZipExportPage) && isset($this->images[$model->id])) {
+                return "[[bsexport:image:{$model->id}]]";
             }
 
+            // Find and include images if in visibility
             $page = $model->getPage();
             if ($page && userCan('view', $page)) {
                 if (!isset($this->images[$model->id])) {

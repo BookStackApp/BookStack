@@ -274,6 +274,32 @@ class ZipExportTest extends TestCase
         $this->assertStringContainsString('href="[[bsexport:book:' . $book->id . ']]?view=true"', $pageData['html']);
     }
 
+    public function test_book_and_chapter_description_links_to_images_in_pages_are_converted()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters()->first();
+        $page = $chapter->pages()->first();
+
+        $this->asEditor();
+        $this->files->uploadGalleryImageToPage($this, $page);
+        /** @var Image $image */
+        $image = Image::query()->where('type', '=', 'gallery')
+            ->where('uploaded_to', '=', $page->id)->first();
+
+        $book->description_html = '<p><a href="' . $image->url . '">Link to image</a></p>';
+        $book->save();
+        $chapter->description_html = '<p><a href="' . $image->url . '">Link to image</a></p>';
+        $chapter->save();
+
+        $zipResp = $this->get($book->getUrl("/export/zip"));
+        $zip = $this->extractZipResponse($zipResp);
+        $bookData = $zip->data['book'];
+        $chapterData = $bookData['chapters'][0];
+
+        $this->assertStringContainsString('href="[[bsexport:image:' . $image->id . ']]"', $bookData['description_html']);
+        $this->assertStringContainsString('href="[[bsexport:image:' . $image->id . ']]"', $chapterData['description_html']);
+    }
+
     public function test_cross_reference_links_external_to_export_are_not_converted()
     {
         $page = $this->entities->page();
