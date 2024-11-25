@@ -168,6 +168,8 @@ class ZipImportTest extends TestCase
         $resp->assertRedirect("/import/{$import->id}");
         $this->assertFileExists(storage_path($import->path));
         $this->assertActivityExists(ActivityType::IMPORT_CREATE);
+
+        ZipTestHelper::deleteZipForImport($import);
     }
 
     public function test_import_show_page()
@@ -325,6 +327,8 @@ class ZipImportTest extends TestCase
         $resp = $this->followRedirects($resp);
         $resp->assertSeeText('The name field is required.');
         $resp->assertSeeText('The id must be an integer.');
+
+        ZipTestHelper::deleteZipForImport($import);
     }
 
     public function test_run_checks_permissions_on_import()
@@ -340,6 +344,8 @@ class ZipImportTest extends TestCase
 
         $resp = $this->followRedirects($resp);
         $resp->assertSeeText('You are lacking the required permissions to create books.');
+
+        ZipTestHelper::deleteZipForImport($import);
     }
 
     public function test_run_requires_parent_for_chapter_and_page_imports()
@@ -379,6 +385,8 @@ class ZipImportTest extends TestCase
 
         $resp = $this->followRedirects($resp);
         $resp->assertSee('Parent book required for chapter import.');
+
+        ZipTestHelper::deleteZipForImport($import);
     }
 
     protected function runImportFromFile(UploadedFile $file): TestResponse

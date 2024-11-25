@@ -20,7 +20,14 @@ class ZipTestHelper
 
         $import = Import::factory()->create($importData);
         $zip = static::zipUploadFromData($zipData, $files);
-        rename($zip->getRealPath(), storage_path($import->path));
+        $targetPath = storage_path($import->path);
+        $targetDir = dirname($targetPath);
+
+        if (!file_exists($targetDir)) {
+            mkdir($targetDir);
+        }
+
+        rename($zip->getRealPath(), $targetPath);
 
         return $import;
     }
