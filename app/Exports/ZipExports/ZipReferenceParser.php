@@ -11,6 +11,7 @@ use BookStack\References\ModelResolvers\CrossLinkModelResolver;
 use BookStack\References\ModelResolvers\ImageModelResolver;
 use BookStack\References\ModelResolvers\PageLinkModelResolver;
 use BookStack\References\ModelResolvers\PagePermalinkModelResolver;
+use BookStack\Uploads\ImageStorage;
 
 class ZipReferenceParser
 {
@@ -33,8 +34,7 @@ class ZipReferenceParser
      */
     public function parseLinks(string $content, callable $handler): string
     {
-        $escapedBase = preg_quote(url('/'), '/');
-        $linkRegex = "/({$escapedBase}.*?)[\\t\\n\\f>\"'=?#()]/";
+        $linkRegex = $this->getLinkRegex();
         $matches = [];
         preg_match_all($linkRegex, $content, $matches);
 
@@ -117,5 +117,24 @@ class ZipReferenceParser
         ];
 
         return $this->modelResolvers;
+    }
+
+    /**
+     * Build the regex to identify links we should handle in content.
+     */
+    protected function getLinkRegex(): string
+    {
+        $urls = [rtrim(url('/'), '/')];
+        $imageUrl = rtrim(ImageStorage::getPublicUrl('/'), '/');
+        if ($urls[0] !== $imageUrl) {
+            $urls[] = $imageUrl;
+        }
+
+
+        $urlBaseRegex = implode('|', array_map(function ($url) {
+            return preg_quote($url, '/');
+        }, $urls));
+
+        return "/(({$urlBaseRegex}).*?)[\\t\\n\\f>\"'=?#()]/";
     }
 }

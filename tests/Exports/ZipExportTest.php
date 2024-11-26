@@ -300,6 +300,30 @@ class ZipExportTest extends TestCase
         $this->assertStringContainsString('href="[[bsexport:image:' . $image->id . ']]"', $chapterData['description_html']);
     }
 
+    public function test_image_links_are_handled_when_using_external_storage_url()
+    {
+        $page = $this->entities->page();
+
+        $this->asEditor();
+        $this->files->uploadGalleryImageToPage($this, $page);
+        /** @var Image $image */
+        $image = Image::query()->where('type', '=', 'gallery')
+            ->where('uploaded_to', '=', $page->id)->first();
+
+        config()->set('filesystems.url', 'https://i.example.com/content');
+
+        $storageUrl = 'https://i.example.com/content/' . ltrim($image->path, '/');
+        $page->html = '<p><a href="' . $image->url . '">Original URL</a><a href="' . $storageUrl . '">Storage URL</a></p>';
+        $page->save();
+
+        $zipResp = $this->get($page->getUrl("/export/zip"));
+        $zip = $this->extractZipResponse($zipResp);
+        $pageData = $zip->data['page'];
+
+        $ref = '[[bsexport:image:' . $image->id . ']]';
+        $this->assertStringContainsString("<a href=\"{$ref}\">Original URL</a><a href=\"{$ref}\">Storage URL</a>", $pageData['html']);
+    }
+
     public function test_cross_reference_links_external_to_export_are_not_converted()
     {
         $page = $this->entities->page();
