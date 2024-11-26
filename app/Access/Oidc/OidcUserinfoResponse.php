@@ -11,7 +11,7 @@ class OidcUserinfoResponse implements ProvidesClaims
 
     public function __construct(ResponseInterface $response, string $issuer, array $keys)
     {
-        $contentType = $response->getHeader('Content-Type')[0];
+        $contentType = explode(';', $response->getHeader('Content-Type')[0], 2)[0];
         if ($contentType === 'application/json') {
             $this->claims = json_decode($response->getBody()->getContents(), true);
         }
