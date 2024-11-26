@@ -13,7 +13,8 @@ Following the goals & ideals of BookStack, stability is very important. We aim f
 - Where reasonably possible, we will attempt to avoid modifications/removals of existing features/properties.
 - Where potentially breaking changes do have to be made, these will be noted in BookStack release/update notes.
 
-The addition of new features/properties alone are not considered as a breaking change to the format. Breaking changes are considered as such where they could impact common/expected use of the existing properties and features we document, they are not considered based upon user assumptions or any possible breakage. For example if your application, using the format, breaks because we added a new property while you hard-coded your application to use the third property (instead of a property name), then that's on you.
+The addition of new features/properties alone are not considered as a breaking change to the format. Breaking changes are considered as such where they could impact common/expected use of the existing properties and features we document, they are not considered based upon user assumptions or any possible breakage.
+For example if your application, using the format, breaks because we added a new property while you hard-coded your application to use the third property (instead of a property name), then that's on you.
 
 ## Format Outline
 
@@ -56,6 +57,23 @@ Here's an example of each type of such reference that could be used:
 [[bsexport:chapter:2]]
 [[bsexport:book:8]]
 ```
+
+## HTML & Markdown Content
+
+BookStack commonly stores & utilises content in the HTML format.
+Properties that expect or provided HTML will either be named `html` or contain `html` in the property name.
+While BookStack supports a range of HTML, not all HTML content will be supported by BookStack and be assured to work as desired across all BookStack features.
+The HTML supported by BookStack is not yet formally documented, but you can inspect to what the WYSIWYG editor produces as a basis.
+Generally, top-level elements should keep to common block formats (p, blockquote, h1, h2 etc...) with no nesting or custom structure apart from common inline elements.
+Some areas of BookStack where HTML is used, like book & chapter descriptions, will strictly limit/filter HTML tag & attributes to an allow-list.
+
+For markdown content, in BookStack we target [the commonmark spec](https://commonmark.org/) with the addition of tables & task-lists.
+HTML within markdown is supported but not all HTML is assured to work as advised above.
+
+### Content Security
+
+If you're consuming HTML or markdown within an export please consider that the content is not assured to be safe, even if provided directly by a BookStack instance. It's best to treat such content as potentially unsafe.
+By default, BookStack performs some basic filtering to remove scripts among other potentially dangerous elements but this is not foolproof. BookStack itself relies on additional security mechanisms such as [CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) to help prevent a range of exploits.
 
 ## Export Data - `data.json`
 
@@ -114,9 +132,9 @@ The `pages` are not all pages within the book, just those that are direct childr
 - `images` - [Image](#image) array, optional, images used in this page.
 - `tags` - [Tag](#tag) array, optional, tags assigned to this page.
 
-To define the page content, either `markdown` or `html` should be provided. Ideally these should be limited to the range of markdown and HTML which BookStack supports.
+To define the page content, either `markdown` or `html` should be provided. Ideally these should be limited to the range of markdown and HTML which BookStack supports. See the ["HTML & Markdown Content"](#html--markdown-content) section.
 
-The page editor type, and edit content will be determined by what content is provided. If non-empty `markdown` is provided, the page will be assumed as a markdown editor page (where permissions allow) and the HTML will be rendered from the markdown content. Otherwise, the provided `html` will be used as editor and display content.
+The page editor type, and edit content will be determined by what content is provided. If non-empty `markdown` is provided, the page will be assumed as a markdown editor page (where permissions allow) and the HTML will be rendered from the markdown content. Otherwise, the provided `html` will be used as editor & display content.
 
 #### Image
 
