@@ -54,8 +54,10 @@ class ZipExportTest extends TestCase
         $version = trim(file_get_contents(base_path('version')));
         $this->assertEquals($version, $zip->data['instance']['version']);
 
-        $instanceId = decrypt($zip->data['instance']['id_ciphertext']);
-        $this->assertEquals('bookstack', $instanceId);
+        $zipInstanceId = $zip->data['instance']['id'];
+        $instanceId = setting('instance-id');
+        $this->assertNotEmpty($instanceId);
+        $this->assertEquals($instanceId, $zipInstanceId);
     }
 
     public function test_page_export()

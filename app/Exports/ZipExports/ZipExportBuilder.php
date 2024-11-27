@@ -69,8 +69,8 @@ class ZipExportBuilder
 
         $this->data['exported_at'] = date(DATE_ATOM);
         $this->data['instance'] = [
-            'version'       => trim(file_get_contents(base_path('version'))),
-            'id_ciphertext' => encrypt('bookstack'),
+            'id'      => setting('instance-id', ''),
+            'version' => trim(file_get_contents(base_path('version'))),
         ];
 
         $zipFile = tempnam(sys_get_temp_dir(), 'bszip-');

@@ -93,12 +93,10 @@ The below details the objects & their properties used in Application Data.
 
 #### Instance
 
-These details are mainly informational regarding the exporting BookStack instance from where an export was created from.
+These details are informational regarding the exporting BookStack instance from where an export was created from.
 
+- `id` - String, required, unique identifier for the BookStack instance.
 - `version` - String, required, BookStack version of the export source instance.
-- `id_ciphertext` - String, required, identifier for the BookStack instance.
-
-The `id_ciphertext` is the ciphertext of encrypting the text `bookstack`. This is used as a simple & rough way for a BookStack instance to be able to identify if they were the source (by attempting to decrypt the ciphertext).
 
 #### Book
 
