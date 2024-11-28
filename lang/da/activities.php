@@ -63,17 +63,17 @@ return [
 
     // Auth
     'auth_login' => 'loggede ind',
-    'auth_register' => 'registered as new user',
+    'auth_register' => 'registreret som ny bruger',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'nulstil adgangskode',
-    'mfa_setup_method' => 'configured MFA method',
+    'mfa_setup_method' => 'konfigureret MFA metode',
     'mfa_setup_method_notification' => 'Multi-faktor metode konfigureret',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'fjernet MFA metode',
     'mfa_remove_method_notification' => 'Multi-faktor metode fjernet',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
+    'settings_update' => 'opdaterede indstillinger',
+    'settings_update_notification' => 'Indstillinger opdateret',
     'maintenance_action_run' => 'ran maintenance action',
 
     // Webhooks
@@ -87,13 +87,13 @@ return [
     // Users
     'user_create' => 'opret bruger',
     'user_create_notification' => 'Bruger oprettet korrekt',
-    'user_update' => 'updated user',
+    'user_update' => 'opdateret bruger',
     'user_update_notification' => 'Brugeren blev opdateret',
-    'user_delete' => 'deleted user',
+    'user_delete' => 'slettet bruger',
     'user_delete_notification' => 'Brugeren blev fjernet',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'oprettet API token',
     'api_token_create_notification' => 'API token successfully created',
     'api_token_update' => 'updated API token',
     'api_token_update_notification' => 'API token successfully updated',
@@ -101,12 +101,12 @@ return [
     'api_token_delete_notification' => 'API token successfully deleted',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'oprettet rolle',
+    'role_create_notification' => 'Rolle oprettet',
+    'role_update' => 'opdateret rolle',
+    'role_update_notification' => 'Rolle opdateret',
+    'role_delete' => 'slettet rolle',
+    'role_delete_notification' => 'Rollen blev slettet',
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
