@@ -104,10 +104,10 @@ class PageIncludeParser
 
             if ($currentOffset < $tagStartOffset) {
                 $previousText = substr($text, $currentOffset, $tagStartOffset - $currentOffset);
-                $textNode->parentNode->insertBefore(new DOMText($previousText), $textNode);
+                $textNode->parentNode->insertBefore($this->doc->createTextNode($previousText), $textNode);
             }
 
-            $node = $textNode->parentNode->insertBefore(new DOMText($tagOuterContent), $textNode);
+            $node = $textNode->parentNode->insertBefore($this->doc->createTextNode($tagOuterContent), $textNode);
             $includeTags[] = new PageIncludeTag($tagInnerContent, $node);
             $currentOffset = $tagStartOffset + strlen($tagOuterContent);
         }

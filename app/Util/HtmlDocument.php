@@ -6,6 +6,7 @@ use DOMDocument;
 use DOMElement;
 use DOMNode;
 use DOMNodeList;
+use DOMText;
 use DOMXPath;
 
 /**
@@ -79,6 +80,14 @@ class HtmlDocument
         }
 
         return $element;
+    }
+
+    /**
+     * Create a new text node within this document.
+     */
+    public function createTextNode(string $text): DOMText
+    {
+        return $this->document->createTextNode($text);
     }
 
     /**
