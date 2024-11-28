@@ -33,7 +33,7 @@ return [
     'app_custom_html_disabled_notice' => 'Brugerdefineret HTML head indhold er deaktiveret på denne indstillingsside for at, at ændringer kan rulles tilbage.',
     'app_logo' => 'Applikationslogo',
     'app_logo_desc' => 'This is used in the application header bar, among other areas. This image should be 86px in height. Large images will be scaled down.',
-    'app_icon' => 'Application Icon',
+    'app_icon' => 'Program ikon',
     'app_icon_desc' => 'This icon is used for browser tabs and shortcut icons. This should be a 256px square PNG image.',
     'app_homepage' => 'Applikationsforside',
     'app_homepage_desc' => 'Vælg en visning, der skal vises på forsiden i stedet for standardvisningen. Sidetilladelser ignoreres for de valgte sider.',
