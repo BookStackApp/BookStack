@@ -787,6 +787,20 @@ class OidcTest extends TestCase
         $this->assertTrue($user->hasRole($roleA->id));
     }
 
+    public function test_userinfo_endpoint_response_with_complex_json_content_type_handled()
+    {
+        $userinfoResponseData = [
+            'sub' => OidcJwtHelper::defaultPayload()['sub'],
+            'name' => 'Barry',
+        ];
+        $userinfoResponse = new Response(200, ['Content-Type'  => 'Application/Json ; charset=utf-8'], json_encode($userinfoResponseData));
+        $resp = $this->runLogin(['name' => null], [$userinfoResponse]);
+        $resp->assertRedirect('/');
+
+        $user = User::where('email', OidcJwtHelper::defaultPayload()['email'])->first();
+        $this->assertEquals('Barry', $user->name);
+    }
+
     public function test_userinfo_endpoint_jwks_response_handled()
     {
         $userinfoResponseData = OidcJwtHelper::idToken(['name' => 'Barry Jwks']);
