@@ -415,7 +415,7 @@ predis/predis
 License: MIT
 License File: vendor/predis/predis/LICENSE
 Copyright: Copyright (c) 2009-2020 Daniele Alessandri (original work)
-Copyright (c) 2021-2023 Till Krüss (modified work)
+Copyright (c) 2021-2024 Till Krüss (modified work)
 Source: https://github.com/predis/predis.git
 Link: http://github.com/predis/predis
 -----------
@@ -514,7 +514,7 @@ Link: https://github.com/ramsey/uuid.git
 robrichards/xmlseclibs
 License: BSD-3-Clause
 License File: vendor/robrichards/xmlseclibs/LICENSE
-Copyright: Copyright (c) 2007-2019, Robert Richards <*********@*********.***>.
+Copyright: Copyright (c) 2007-2024, Robert Richards <*********@*********.***>.
 Source: https://github.com/robrichards/xmlseclibs.git
 Link: https://github.com/robrichards/xmlseclibs
 -----------
