@@ -404,8 +404,8 @@ class AttachmentTest extends TestCase
             $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=0-2010']);
             $resp->assertStreamedContent($content);
             $resp->assertHeader('Content-Length', '2005');
-            $resp->assertHeaderMissing('Content-Range');
-            $resp->assertStatus(200);
+            $resp->assertHeader('Content-Range', 'bytes 0-2004/2005');
+            $resp->assertStatus(206);
 
             // Range start before end
             $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=50-10']);
@@ -413,6 +413,13 @@ class AttachmentTest extends TestCase
             $resp->assertHeader('Content-Length', '2005');
             $resp->assertHeader('Content-Range', 'bytes */2005');
             $resp->assertStatus(416);
+
+            // Full range request
+            $resp = $this->get($attachment->getUrl($isInline), ['Range' => 'bytes=0-']);
+            $resp->assertStreamedContent($content);
+            $resp->assertHeader('Content-Length', '2005');
+            $resp->assertHeader('Content-Range', 'bytes 0-2004/2005');
+            $resp->assertStatus(206);
         }
 
         $this->files->deleteAllAttachmentFiles();
