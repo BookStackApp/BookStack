@@ -69,7 +69,7 @@ return [
     'mfa_setup_method' => 'configured MFA method',
     'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
     'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_remove_method_notification' => 'მულტი-ფაქტორული მეთოდი წარმატებით მოიხსნა',
 
     // Settings
     'settings_update' => 'updated settings',

@@ -103,7 +103,7 @@ return [
     'totp'                 => '提供的代碼無效或已過期。',
     'unique'               => ':attribute 已經被使用。',
     'url'                  => ':attribute 格式無效。',
-    'uploaded'             => '無法上傳文件， 服務器可能不接受此大小的文件。',
+    'uploaded'             => '無法上傳文檔案， 伺服器可能不接受此大小的檔案。',
 
     // Custom validation lines
     'custom' => [
