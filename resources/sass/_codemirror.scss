@@ -14,6 +14,10 @@
   border-radius: 4px;
 }
 
+.cm-editor .cm-line {
+  line-height: 1.6;
+}
+
 .cm-editor .cm-line, .cm-editor .cm-gutter {
   font-family: var(--font-code);
 }
