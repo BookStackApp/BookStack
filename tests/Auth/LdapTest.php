@@ -29,7 +29,7 @@ class LdapTest extends TestCase
             'auth.defaults.guard'                  => 'ldap',
             'services.ldap.base_dn'                => 'dc=ldap,dc=local',
             'services.ldap.email_attribute'        => 'mail',
-            'services.ldap.display_name_attribute' => ['cn'],
+            'services.ldap.display_name_attribute' => 'cn',
             'services.ldap.id_attribute'           => 'uid',
             'services.ldap.user_to_groups'         => false,
             'services.ldap.version'                => '3',
@@ -581,7 +581,7 @@ class LdapTest extends TestCase
     public function test_login_uses_specified_display_name_attribute()
     {
         app('config')->set([
-            'services.ldap.display_name_attribute' => ['displayName'],
+            'services.ldap.display_name_attribute' => 'displayName',
         ]);
 
         $this->commonLdapMocks(1, 1, 2, 4, 2);
@@ -603,10 +603,37 @@ class LdapTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $this->mockUser->name, 'name' => 'displayNameAttribute']);
     }
 
+    public function test_login_uses_multiple_display_properties_if_defined()
+    {
+        app('config')->set([
+            'services.ldap.display_name_attribute' => 'firstname|middlename|noname|lastname',
+        ]);
+
+        $this->commonLdapMocks(1, 1, 1, 2, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'uid'         => [$this->mockUser->name],
+                'cn'          => [$this->mockUser->name],
+                'dn'          => 'dc=test' . config('services.ldap.base_dn'),
+                'firstname' => ['Barry'],
+                'middlename' => ['Elliott'],
+                'lastname' => ['Chuckle'],
+                'mail'     => [$this->mockUser->email],
+            ]]);
+
+        $this->mockUserLogin();
+
+        $this->assertDatabaseHas('users', [
+            'email' => $this->mockUser->email,
+            'name' => 'Barry Elliott Chuckle',
+        ]);
+    }
+
     public function test_login_uses_default_display_name_attribute_if_specified_not_present()
     {
         app('config')->set([
-            'services.ldap.display_name_attribute' => ['displayName'],
+            'services.ldap.display_name_attribute' => 'displayName',
         ]);
 
         $this->commonLdapMocks(1, 1, 2, 4, 2);
