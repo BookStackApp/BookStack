@@ -49,6 +49,13 @@
                 <span>@icon('tag')</span>
                 <span>{{ trans('entities.tags_view_tags') }}</span>
             </a>
+
+            @if(userCan('content-import'))
+                <a href="{{ url('/import') }}" class="icon-list-item">
+                    <span>@icon('upload')</span>
+                    <span>{{ trans('entities.import') }}</span>
+                </a>
+            @endif
         </div>
     </div>
 

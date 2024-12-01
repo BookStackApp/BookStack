@@ -1,11 +1,12 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\PageQueries;
-use BookStack\Entities\Tools\ExportFormatter;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exports\ExportFormatter;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\Controller;
 use Throwable;
 
@@ -73,5 +74,17 @@ class PageExportController extends Controller
         $pageText = $this->exportFormatter->pageToMarkdown($page);
 
         return $this->download()->directly($pageText, $pageSlug . '.md');
+    }
+
+    /**
+     * Export a page to a contained ZIP export file.
+     * @throws NotFoundException
+     */
+    public function zip(string $bookSlug, string $pageSlug, ZipExportBuilder $builder)
+    {
+        $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $zip = $builder->buildForPage($page);
+
+        return $this->download()->streamedDirectly(fopen($zip, 'r'), $pageSlug . '.zip', filesize($zip));
     }
 }

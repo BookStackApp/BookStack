@@ -37,6 +37,7 @@
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'templates-manage', 'label' => trans('settings.role_manage_page_templates')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'access-api', 'label' => trans('settings.role_access_api')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'content-export', 'label' => trans('settings.role_export_content')])</div>
+                <div>@include('settings.roles.parts.checkbox', ['permission' => 'content-import', 'label' => trans('settings.role_import_content')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'editor-change', 'label' => trans('settings.role_editor_change')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'receive-notifications', 'label' => trans('settings.role_notifications')])</div>
             </div>

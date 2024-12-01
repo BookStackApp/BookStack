@@ -93,7 +93,6 @@ export class PageComments extends Component {
 
     updateCount() {
         const count = this.getCommentCount();
-        console.log('update count', count, this.container);
         this.commentsTitle.textContent = window.$trans.choice(this.countText, count, {count});
     }
 

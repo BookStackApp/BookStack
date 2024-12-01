@@ -1,9 +1,11 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\BookQueries;
-use BookStack\Entities\Tools\ExportFormatter;
+use BookStack\Exceptions\NotFoundException;
+use BookStack\Exports\ExportFormatter;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\Controller;
 use Throwable;
 
@@ -62,5 +64,17 @@ class BookExportController extends Controller
         $textContent = $this->exportFormatter->bookToMarkdown($book);
 
         return $this->download()->directly($textContent, $bookSlug . '.md');
+    }
+
+    /**
+     * Export a book to a contained ZIP export file.
+     * @throws NotFoundException
+     */
+    public function zip(string $bookSlug, ZipExportBuilder $builder)
+    {
+        $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
+        $zip = $builder->buildForBook($book);
+
+        return $this->download()->streamedDirectly(fopen($zip, 'r'), $bookSlug . '.zip', filesize($zip));
     }
 }

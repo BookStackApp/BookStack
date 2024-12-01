@@ -18,17 +18,12 @@ use Illuminate\Http\UploadedFile;
 
 class Cloner
 {
-    protected PageRepo $pageRepo;
-    protected ChapterRepo $chapterRepo;
-    protected BookRepo $bookRepo;
-    protected ImageService $imageService;
-
-    public function __construct(PageRepo $pageRepo, ChapterRepo $chapterRepo, BookRepo $bookRepo, ImageService $imageService)
-    {
-        $this->pageRepo = $pageRepo;
-        $this->chapterRepo = $chapterRepo;
-        $this->bookRepo = $bookRepo;
-        $this->imageService = $imageService;
+    public function __construct(
+        protected PageRepo $pageRepo,
+        protected ChapterRepo $chapterRepo,
+        protected BookRepo $bookRepo,
+        protected ImageService $imageService,
+    ) {
     }
 
     /**
