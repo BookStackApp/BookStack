@@ -72,6 +72,26 @@ class LdapService
     }
 
     /**
+     * Build the user display name from the (potentially multiple) attributes defined by the configuration.
+     */
+    protected function getUserDisplayName(array $userDetails, array $displayNameAttrs, string $defaultValue): string
+    {
+        $displayNameParts = [];
+        foreach ($displayNameAttrs as $dnAttr) {
+            $dnComponent = $this->getUserResponseProperty($userDetails, $dnAttr, null);
+            if ($dnComponent) {
+                $displayNameParts[] = $dnComponent;
+            }
+        }
+
+        if (empty($displayNameParts)) {
+            return $defaultValue;
+        }
+
+        return implode(' ', $displayNameParts);
+    }
+
+    /**
      * Get the details of a user from LDAP using the given username.
      * User found via configurable user filter.
      *
@@ -81,11 +101,11 @@ class LdapService
     {
         $idAttr = $this->config['id_attribute'];
         $emailAttr = $this->config['email_attribute'];
-        $displayNameAttr = $this->config['display_name_attribute'];
+        $displayNameAttrs = explode('|', $this->config['display_name_attribute']);
         $thumbnailAttr = $this->config['thumbnail_attribute'];
 
         $user = $this->getUserWithAttributes($userName, array_filter([
-            'cn', 'dn', $idAttr, $emailAttr, $displayNameAttr, $thumbnailAttr,
+            'cn', 'dn', $idAttr, $emailAttr, ...$displayNameAttrs, $thumbnailAttr,
         ]));
 
         if (is_null($user)) {
@@ -95,7 +115,7 @@ class LdapService
         $userCn = $this->getUserResponseProperty($user, 'cn', null);
         $formatted = [
             'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
-            'name'  => $this->getUserResponseProperty($user, $displayNameAttr, $userCn),
+            'name'  => $this->getUserDisplayName($user, $displayNameAttrs, $userCn),
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
             'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
