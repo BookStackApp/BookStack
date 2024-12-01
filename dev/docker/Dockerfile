@@ -6,15 +6,18 @@ RUN apt-get update && \
         git \
         zip \
         unzip \
-        libpng-dev \
+        libfreetype-dev \
+        libjpeg62-turbo-dev \
         libldap2-dev \
+        libpng-dev \
         libzip-dev \
         wait-for-it && \
     rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-configure ldap --with-libdir="lib/$(gcc -dumpmachine)" && \
-    docker-php-ext-install pdo_mysql gd ldap zip && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install -j$(nproc) pdo_mysql gd ldap zip && \
     pecl install xdebug && \
     docker-php-ext-enable xdebug
 
