@@ -2,7 +2,7 @@ import {Component} from './component';
 import {Clipboard} from '../services/clipboard.ts';
 import {
     elem, getLoading, onSelect, removeLoading,
-} from '../services/dom';
+} from '../services/dom.ts';
 
 export class Dropzone extends Component {
 

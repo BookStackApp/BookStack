@@ -1,5 +1,5 @@
-import {debounce} from '../services/util';
-import {transitionHeight} from '../services/animations';
+import {debounce} from '../services/util.ts';
+import {transitionHeight} from '../services/animations.ts';
 import {Component} from './component';
 
 export class DropdownSearch extends Component {

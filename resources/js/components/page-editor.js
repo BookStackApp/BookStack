@@ -1,5 +1,5 @@
-import {onSelect} from '../services/dom';
-import {debounce} from '../services/util';
+import {onSelect} from '../services/dom.ts';
+import {debounce} from '../services/util.ts';
 import {Component} from './component';
 import {utcTimeStampToLocalTime} from '../services/dates.ts';
 
