@@ -317,7 +317,12 @@ class ExportFormatter
     public function chapterToMarkdown(Chapter $chapter): string
     {
         $text = '# ' . $chapter->name . "\n\n";
-        $text .= $chapter->description . "\n\n";
+
+        $description = (new HtmlToMarkdown($chapter->descriptionHtml()))->convert();
+        if ($description) {
+            $text .= $description . "\n\n";
+        }
+
         foreach ($chapter->pages as $page) {
             $text .= $this->pageToMarkdown($page) . "\n\n";
         }
@@ -332,6 +337,12 @@ class ExportFormatter
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
         $text = '# ' . $book->name . "\n\n";
+
+        $description = (new HtmlToMarkdown($book->descriptionHtml()))->convert();
+        if ($description) {
+            $text .= $description . "\n\n";
+        }
+
         foreach ($bookTree as $bookChild) {
             if ($bookChild instanceof Chapter) {
                 $text .= $this->chapterToMarkdown($bookChild) . "\n\n";
