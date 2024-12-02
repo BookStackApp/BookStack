@@ -417,23 +417,35 @@ class ExportTest extends TestCase
     public function test_chapter_markdown_export()
     {
         $chapter = $this->entities->chapter();
+        $chapter->description_html = '<p>My <strong>chapter</strong> description</p>';
+        $chapter->save();
         $page = $chapter->pages()->first();
+
         $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
 
         $resp->assertSee('# ' . $chapter->name);
         $resp->assertSee('# ' . $page->name);
+        $resp->assertSee('My **chapter** description');
     }
 
     public function test_book_markdown_export()
     {
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
+        $book->description_html = '<p>My <strong>book</strong> description</p>';
+        $book->save();
+
         $chapter = $book->chapters()->first();
+        $chapter->description_html = '<p>My <strong>chapter</strong> description</p>';
+        $chapter->save();
+
         $page = $chapter->pages()->first();
         $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
 
         $resp->assertSee('# ' . $book->name);
         $resp->assertSee('# ' . $chapter->name);
         $resp->assertSee('# ' . $page->name);
+        $resp->assertSee('My **book** description');
+        $resp->assertSee('My **chapter** description');
     }
 
     public function test_book_markdown_export_concats_immediate_pages_with_newlines()
