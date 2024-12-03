@@ -5,7 +5,7 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'আমার অ্যাকাউন্ট',
 
     'shortcuts' => 'Shortcuts',
     'shortcuts_interface' => 'UI Shortcut Preferences',
