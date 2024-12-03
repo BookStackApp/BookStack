@@ -9,21 +9,18 @@ use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
 {
-    protected SearchRunner $searchRunner;
-    protected SearchResultsFormatter $resultsFormatter;
-
     protected $rules = [
         'all' => [
             'query' => ['required'],
-            'page' => ['integer', 'min:1'],
+            'page'  => ['integer', 'min:1'],
             'count' => ['integer', 'min:1', 'max:100'],
         ],
     ];
 
-    public function __construct(SearchRunner $searchRunner, SearchResultsFormatter $resultsFormatter)
-    {
-        $this->searchRunner = $searchRunner;
-        $this->resultsFormatter = $resultsFormatter;
+    public function __construct(
+        protected SearchRunner $searchRunner,
+        protected SearchResultsFormatter $resultsFormatter
+    ) {
     }
 
     /**
@@ -50,7 +47,7 @@ class SearchApiController extends ApiController
         $this->resultsFormatter->format($results['results']->all(), $options);
 
         $data = (new ApiEntityListFormatter($results['results']->all()))
-            ->withType()->withTags()->withRelatedData()
+            ->withType()->withTags()->withParents()
             ->withField('preview_html', function (Entity $entity) {
                 return [
                     'name' => (string) $entity->getAttribute('preview_name'),

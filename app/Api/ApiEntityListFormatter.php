@@ -2,6 +2,7 @@
 
 namespace BookStack\Api;
 
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 
@@ -72,20 +73,20 @@ class ApiEntityListFormatter
     }
 
     /**
-     * Enable the inclusion of related book and chapter titles in the response.
+     * Include parent book/chapter info in the formatted data.
      */
-    public function withRelatedData(): self
+    public function withParents(): self
     {
         $this->withField('book', function (Entity $entity) {
-            if (method_exists($entity, 'book')) {
-                return $entity->book()->select(['id', 'name', 'slug'])->first();
+            if ($entity instanceof BookChild && $entity->book) {
+                return $entity->book->only(['id', 'name', 'slug']);
             }
             return null;
         });
 
         $this->withField('chapter', function (Entity $entity) {
-            if ($entity instanceof Page && $entity->chapter_id) {
-                return $entity->chapter()->select(['id', 'name', 'slug'])->first();
+            if ($entity instanceof Page && $entity->chapter) {
+                return $entity->chapter->only(['id', 'name', 'slug']);
             }
             return null;
         });
@@ -99,8 +100,6 @@ class ApiEntityListFormatter
      */
     public function format(): array
     {
-        $this->loadRelatedData();
-
         $results = [];
 
         foreach ($this->list as $item) {
@@ -108,23 +107,6 @@ class ApiEntityListFormatter
         }
 
         return $results;
-    }
-
-    /**
-     * Eager load the related book and chapter data when needed.
-     */
-    protected function loadRelatedData(): void
-    {
-        $pages = collect($this->list)->filter(fn($item) => $item instanceof Page);
-
-        foreach ($this->list as $entity) {
-            if (method_exists($entity, 'book')) {
-                $entity->load('book');
-            }
-            if ($entity instanceof Page && $entity->chapter_id) {
-                $entity->load('chapter');
-            }
-        }
     }
 
     /**
