@@ -79,35 +79,35 @@ return [
     'breadcrumb' => 'Breadcrumb',
     'status' => 'অবস্থা',
     'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
+    'status_inactive' => 'নিষ্ক্রিয়',
+    'never' => 'অভূতপূর্ব',
     'none' => 'None',
 
     // Header
-    'homepage' => 'Homepage',
-    'header_menu_expand' => 'Expand Header Menu',
-    'profile_menu' => 'Profile Menu',
-    'view_profile' => 'View Profile',
-    'edit_profile' => 'Edit Profile',
-    'dark_mode' => 'Dark Mode',
-    'light_mode' => 'Light Mode',
-    'global_search' => 'Global Search',
+    'homepage' => 'নীড়পাতা',
+    'header_menu_expand' => 'হেডার মেন্যু প্রসারিত করুন',
+    'profile_menu' => 'প্রোফাইল মেন্যু',
+    'view_profile' => 'প্রোফাইল দেখুন',
+    'edit_profile' => 'প্রোফাইল সম্পাদনা করুন',
+    'dark_mode' => 'নৈশরূপ',
+    'light_mode' => 'দিবারূপ',
+    'global_search' => 'সকল স্থানে অনুসন্ধান',
 
     // Layout tabs
-    'tab_info' => 'Info',
-    'tab_info_label' => 'Tab: Show Secondary Information',
-    'tab_content' => 'Content',
-    'tab_content_label' => 'Tab: Show Primary Content',
+    'tab_info' => 'তথ্য',
+    'tab_info_label' => 'ট্যাব: গৌণ তথ্য',
+    'tab_content' => 'কনটেন্ট',
+    'tab_content_label' => 'ট্যাব: মূখ্য তথ্য',
 
     // Email Content
-    'email_action_help' => 'If you’re having trouble clicking the ":actionText" button, copy and paste the URL below into your web browser:',
-    'email_rights' => 'All rights reserved',
+    'email_action_help' => 'আপনার যদি ":actionText"-এ ক্লিক করতে সমস্যা হয়, তবে নিচের লিংকটি কপি করে আপনার ওয়েব ব্রাউজারে পেস্ট করুন:',
+    'email_rights' => 'সর্বস্বত্ব সংরক্ষিত',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.
-    'privacy_policy' => 'Privacy Policy',
+    'privacy_policy' => 'গোপনীয়তা নীতি',
     'terms_of_service' => 'পরিষেবার শর্তাবলী',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'অনুসন্ধান :appName',
 ];
