@@ -17,10 +17,8 @@ import {CodeBlockNode} from "./code-block";
 import {DiagramNode} from "./diagram";
 import {EditorUiContext} from "../ui/framework/core";
 import {MediaNode} from "./media";
-import {CustomListItemNode} from "./custom-list-item";
 import {CustomTableCellNode} from "./custom-table-cell";
 import {CustomTableRowNode} from "./custom-table-row";
-import {CustomListNode} from "./custom-list";
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
@@ -32,8 +30,8 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         CalloutNode,
         HeadingNode,
         QuoteNode,
-        CustomListNode,
-        CustomListItemNode, // TODO - Alignment?
+        ListNode,
+        ListItemNode,
         CustomTableNode,
         CustomTableRowNode,
         CustomTableCellNode,
@@ -45,18 +43,6 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         MediaNode, // TODO - Alignment
         ParagraphNode,
         LinkNode,
-        {
-            replace: ListNode,
-            with: (node: ListNode) => {
-                return new CustomListNode(node.getListType(), node.getStart());
-            }
-        },
-        {
-            replace: ListItemNode,
-            with: (node: ListItemNode) => {
-                return new CustomListItemNode(node.__value, node.__checked);
-            }
-        },
         {
             replace: TableNode,
             with(node: TableNode) {

@@ -16,8 +16,7 @@ import {
 } from "./selection";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../nodes/code-block";
 import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "../nodes/callout";
-import {insertList, ListNode, ListType, removeList} from "@lexical/list";
-import {$isCustomListNode} from "../nodes/custom-list";
+import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
 import {$createLinkNode, $isLinkNode} from "@lexical/link";
 import {$createHeadingNode, $isHeadingNode, HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
 import {$createQuoteNode, $isQuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
@@ -51,7 +50,7 @@ export function toggleSelectionAsList(editor: LexicalEditor, type: ListType) {
     editor.getEditorState().read(() => {
         const selection = $getSelection();
         const listSelected = $selectionContainsNodeType(selection, (node: LexicalNode | null | undefined): boolean => {
-            return $isCustomListNode(node) && (node as ListNode).getListType() === type;
+            return $isListNode(node) && (node as ListNode).getListType() === type;
         });
 
         if (listSelected) {
