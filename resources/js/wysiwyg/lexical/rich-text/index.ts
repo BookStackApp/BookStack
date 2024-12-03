@@ -155,9 +155,6 @@ export class QuoteNode extends ElementNode {
       if (this.isEmpty()) {
         element.append(document.createElement('br'));
       }
-
-      const formatType = this.getFormatType();
-      element.style.textAlign = formatType;
     }
 
     return {
@@ -167,8 +164,6 @@ export class QuoteNode extends ElementNode {
 
   static importJSON(serializedNode: SerializedQuoteNode): QuoteNode {
     const node = $createQuoteNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     return node;
   }
 
@@ -315,9 +310,6 @@ export class HeadingNode extends ElementNode {
       if (this.isEmpty()) {
         element.append(document.createElement('br'));
       }
-
-      const formatType = this.getFormatType();
-      element.style.textAlign = formatType;
     }
 
     return {
@@ -326,10 +318,7 @@ export class HeadingNode extends ElementNode {
   }
 
   static importJSON(serializedNode: SerializedHeadingNode): HeadingNode {
-    const node = $createHeadingNode(serializedNode.tag);
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
-    return node;
+    return $createHeadingNode(serializedNode.tag);
   }
 
   exportJSON(): SerializedHeadingNode {
@@ -402,18 +391,12 @@ function $convertHeadingElement(element: HTMLElement): DOMConversionOutput {
     nodeName === 'h6'
   ) {
     node = $createHeadingNode(nodeName);
-    if (element.style !== null) {
-      node.setFormat(element.style.textAlign as ElementFormatType);
-    }
   }
   return {node};
 }
 
 function $convertBlockquoteElement(element: HTMLElement): DOMConversionOutput {
   const node = $createQuoteNode();
-  if (element.style !== null) {
-    node.setFormat(element.style.textAlign as ElementFormatType);
-  }
   return {node};
 }
 
@@ -651,9 +634,6 @@ export function registerRichText(editor: LexicalEditor): () => void {
             (parentNode): parentNode is ElementNode =>
               $isElementNode(parentNode) && !parentNode.isInline(),
           );
-          if (element !== null) {
-            element.setFormat(format);
-          }
         }
         return true;
       },
@@ -688,28 +668,6 @@ export function registerRichText(editor: LexicalEditor): () => void {
       () => {
         $insertNodes([$createTabNode()]);
         return true;
-      },
-      COMMAND_PRIORITY_EDITOR,
-    ),
-    editor.registerCommand(
-      INDENT_CONTENT_COMMAND,
-      () => {
-        return $handleIndentAndOutdent((block) => {
-          const indent = block.getIndent();
-          block.setIndent(indent + 1);
-        });
-      },
-      COMMAND_PRIORITY_EDITOR,
-    ),
-    editor.registerCommand(
-      OUTDENT_CONTENT_COMMAND,
-      () => {
-        return $handleIndentAndOutdent((block) => {
-          const indent = block.getIndent();
-          if (indent > 0) {
-            block.setIndent(indent - 1);
-          }
-        });
       },
       COMMAND_PRIORITY_EDITOR,
     ),
@@ -846,19 +804,7 @@ export function registerRichText(editor: LexicalEditor): () => void {
           return false;
         }
         event.preventDefault();
-        const {anchor} = selection;
-        const anchorNode = anchor.getNode();
 
-        if (
-          selection.isCollapsed() &&
-          anchor.offset === 0 &&
-          !$isRootNode(anchorNode)
-        ) {
-          const element = $getNearestBlockElementAncestorOrThrow(anchorNode);
-          if (element.getIndent() > 0) {
-            return editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
-          }
-        }
         return editor.dispatchCommand(DELETE_CHARACTER_COMMAND, true);
       },
       COMMAND_PRIORITY_EDITOR,

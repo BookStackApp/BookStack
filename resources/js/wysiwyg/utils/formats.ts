@@ -1,5 +1,13 @@
 import {$isQuoteNode, HeadingNode, HeadingTagType} from "@lexical/rich-text";
-import {$createTextNode, $getSelection, $insertNodes, LexicalEditor, LexicalNode} from "lexical";
+import {
+    $createParagraphNode,
+    $createTextNode,
+    $getSelection,
+    $insertNodes,
+    $isParagraphNode,
+    LexicalEditor,
+    LexicalNode
+} from "lexical";
 import {
     $getBlockElementNodesInSelection,
     $getNodeFromSelection,
@@ -8,7 +16,6 @@ import {
     getLastSelection
 } from "./selection";
 import {$createCustomHeadingNode, $isCustomHeadingNode} from "../nodes/custom-heading";
-import {$createCustomParagraphNode, $isCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$createCustomQuoteNode} from "../nodes/custom-quote";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../nodes/code-block";
 import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "../nodes/callout";
@@ -31,7 +38,7 @@ export function toggleSelectionAsHeading(editor: LexicalEditor, tag: HeadingTagT
 
 export function toggleSelectionAsParagraph(editor: LexicalEditor) {
     editor.update(() => {
-        $toggleSelectionBlockNodeType($isCustomParagraphNode, $createCustomParagraphNode);
+        $toggleSelectionBlockNodeType($isParagraphNode, $createParagraphNode);
     });
 }
 

@@ -96,15 +96,6 @@ function shouldUpdateTextNodeFromMutation(
   targetDOM: Node,
   targetNode: TextNode,
 ): boolean {
-  if ($isRangeSelection(selection)) {
-    const anchorNode = selection.anchor.getNode();
-    if (
-      anchorNode.is(targetNode) &&
-      selection.format !== anchorNode.getFormat()
-    ) {
-      return false;
-    }
-  }
   return targetDOM.nodeType === DOM_TEXT_TYPE && targetNode.isAttached();
 }
 

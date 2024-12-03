@@ -126,14 +126,12 @@ export class ListItemNode extends ElementNode {
     const node = $createListItemNode();
     node.setChecked(serializedNode.checked);
     node.setValue(serializedNode.value);
-    node.setFormat(serializedNode.format);
     node.setDirection(serializedNode.direction);
     return node;
   }
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const element = this.createDOM(editor._config);
-    element.style.textAlign = this.getFormatType();
     return {
       element,
     };
@@ -172,7 +170,6 @@ export class ListItemNode extends ElementNode {
     if ($isListItemNode(replaceWithNode)) {
       return super.replace(replaceWithNode);
     }
-    this.setIndent(0);
     const list = this.getParentOrThrow();
     if (!$isListNode(list)) {
       return replaceWithNode;
@@ -349,41 +346,6 @@ export class ListItemNode extends ElementNode {
 
   toggleChecked(): void {
     this.setChecked(!this.__checked);
-  }
-
-  getIndent(): number {
-    // If we don't have a parent, we are likely serializing
-    const parent = this.getParent();
-    if (parent === null) {
-      return this.getLatest().__indent;
-    }
-    // ListItemNode should always have a ListNode for a parent.
-    let listNodeParent = parent.getParentOrThrow();
-    let indentLevel = 0;
-    while ($isListItemNode(listNodeParent)) {
-      listNodeParent = listNodeParent.getParentOrThrow().getParentOrThrow();
-      indentLevel++;
-    }
-
-    return indentLevel;
-  }
-
-  setIndent(indent: number): this {
-    invariant(typeof indent === 'number', 'Invalid indent value.');
-    indent = Math.floor(indent);
-    invariant(indent >= 0, 'Indent value must be non-negative.');
-    let currentIndent = this.getIndent();
-    while (currentIndent !== indent) {
-      if (currentIndent < indent) {
-        $handleIndent(this);
-        currentIndent++;
-      } else {
-        $handleOutdent(this);
-        currentIndent--;
-      }
-    }
-
-    return this;
   }
 
   /** @deprecated @internal */

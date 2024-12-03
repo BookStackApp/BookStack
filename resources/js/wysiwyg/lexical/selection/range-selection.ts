@@ -81,8 +81,6 @@ export function $setBlocksType(
     invariant($isElementNode(node), 'Expected block node to be an ElementNode');
 
     const targetElement = createElement();
-    targetElement.setFormat(node.getFormatType());
-    targetElement.setIndent(node.getIndent());
     node.replace(targetElement, true);
   }
 }
@@ -136,8 +134,6 @@ export function $wrapNodes(
         : anchor.getNode();
     const children = target.getChildren();
     let element = createElement();
-    element.setFormat(target.getFormatType());
-    element.setIndent(target.getIndent());
     children.forEach((child) => element.append(child));
 
     if (wrappingElement) {
@@ -277,8 +273,6 @@ export function $wrapNodesImpl(
 
       if (elementMapping.get(parentKey) === undefined) {
         const targetElement = createElement();
-        targetElement.setFormat(parent.getFormatType());
-        targetElement.setIndent(parent.getIndent());
         elements.push(targetElement);
         elementMapping.set(parentKey, targetElement);
         // Move node and its siblings to the new
@@ -299,8 +293,6 @@ export function $wrapNodesImpl(
         'Expected node in emptyElements to be an ElementNode',
       );
       const targetElement = createElement();
-      targetElement.setFormat(node.getFormatType());
-      targetElement.setIndent(node.getIndent());
       elements.push(targetElement);
       node.remove(true);
     }

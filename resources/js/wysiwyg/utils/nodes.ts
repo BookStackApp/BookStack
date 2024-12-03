@@ -1,4 +1,5 @@
 import {
+    $createParagraphNode,
     $getRoot,
     $isDecoratorNode,
     $isElementNode, $isRootNode,
@@ -8,7 +9,6 @@ import {
     LexicalNode
 } from "lexical";
 import {LexicalNodeMatcher} from "../nodes";
-import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
 import {NodeHasAlignment, NodeHasInset} from "../nodes/_common";
@@ -17,7 +17,7 @@ import {$findMatchingParent} from "@lexical/utils";
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
         if ($isTextNode(node)) {
-            const paragraph = $createCustomParagraphNode();
+            const paragraph = $createParagraphNode();
             paragraph.append(node);
             return paragraph;
         }

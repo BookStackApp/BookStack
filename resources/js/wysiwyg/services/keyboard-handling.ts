@@ -1,5 +1,6 @@
 import {EditorUiContext} from "../ui/framework/core";
 import {
+    $createParagraphNode,
     $getSelection,
     $isDecoratorNode,
     COMMAND_PRIORITY_LOW,
@@ -13,7 +14,6 @@ import {$isImageNode} from "../nodes/image";
 import {$isMediaNode} from "../nodes/media";
 import {getLastSelection} from "../utils/selection";
 import {$getNearestNodeBlockParent} from "../utils/nodes";
-import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
 import {$isCustomListItemNode} from "../nodes/custom-list-item";
 import {$setInsetForSelection} from "../utils/lists";
 
@@ -45,7 +45,7 @@ function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEve
         if (nearestBlock) {
             requestAnimationFrame(() => {
                 editor.update(() => {
-                    const newParagraph = $createCustomParagraphNode();
+                    const newParagraph = $createParagraphNode();
                     nearestBlock.insertAfter(newParagraph);
                     newParagraph.select();
                 });

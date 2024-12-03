@@ -7,7 +7,6 @@ import {
     LexicalNodeReplacement, NodeMutation,
     ParagraphNode
 } from "lexical";
-import {CustomParagraphNode} from "./custom-paragraph";
 import {LinkNode} from "@lexical/link";
 import {ImageNode} from "./image";
 import {DetailsNode, SummaryNode} from "./details";
@@ -45,14 +44,8 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         CodeBlockNode,
         DiagramNode,
         MediaNode, // TODO - Alignment
-        CustomParagraphNode,
+        ParagraphNode,
         LinkNode,
-        {
-            replace: ParagraphNode,
-            with: (node: ParagraphNode) => {
-                return new CustomParagraphNode();
-            }
-        },
         {
             replace: HeadingNode,
             with: (node: HeadingNode) => {

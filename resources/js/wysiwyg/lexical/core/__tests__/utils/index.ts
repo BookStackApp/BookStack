@@ -129,8 +129,6 @@ export class TestElementNode extends ElementNode {
     serializedNode: SerializedTestElementNode,
   ): TestInlineElementNode {
     const node = $createTestInlineElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -195,8 +193,6 @@ export class TestInlineElementNode extends ElementNode {
     serializedNode: SerializedTestInlineElementNode,
   ): TestInlineElementNode {
     const node = $createTestInlineElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -241,8 +237,6 @@ export class TestShadowRootNode extends ElementNode {
     serializedNode: SerializedTestShadowRootNode,
   ): TestShadowRootNode {
     const node = $createTestShadowRootNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -322,8 +316,6 @@ export class TestExcludeFromCopyElementNode extends ElementNode {
     serializedNode: SerializedTestExcludeFromCopyElementNode,
   ): TestExcludeFromCopyElementNode {
     const node = $createTestExcludeFromCopyElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
