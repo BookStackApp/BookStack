@@ -77,7 +77,7 @@ return [
     'list_view' => 'List View',
     'default' => 'Default',
     'breadcrumb' => 'Breadcrumb',
-    'status' => 'Status',
+    'status' => 'অবস্থা',
     'status_active' => 'Active',
     'status_inactive' => 'Inactive',
     'never' => 'Never',
@@ -106,7 +106,7 @@ return [
     // Footer Link Options
     // Not directly used but available for convenience to users.
     'privacy_policy' => 'Privacy Policy',
-    'terms_of_service' => 'Terms of Service',
+    'terms_of_service' => 'পরিষেবার শর্তাবলী',
 
     // OpenSearch
     'opensearch_description' => 'Search :appName',
