@@ -13,7 +13,7 @@ class SearchApiTest extends TestCase
 {
     use TestsApi;
 
-    protected $baseEndpoint = '/api/search';
+    protected string $baseEndpoint = '/api/search';
 
     public function test_all_endpoint_returns_search_filtered_results_with_query()
     {
@@ -45,7 +45,7 @@ class SearchApiTest extends TestCase
         $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
         $resp->assertJsonFragment([
             'type' => 'page',
-            'url'  => $page->getUrl(),
+            'url' => $page->getUrl(),
         ]);
     }
 
@@ -57,10 +57,10 @@ class SearchApiTest extends TestCase
 
         $resp = $this->actingAsApiAdmin()->getJson($this->baseEndpoint . '?query=superuniquevalue');
         $resp->assertJsonFragment([
-            'type'         => 'book',
-            'url'          => $book->getUrl(),
+            'type' => 'book',
+            'url' => $book->getUrl(),
             'preview_html' => [
-                'name'    => 'name with <strong>superuniquevalue</strong> within',
+                'name' => 'name with <strong>superuniquevalue</strong> within',
                 'content' => 'Description with <strong>superuniquevalue</strong> within',
             ],
         ]);
@@ -73,5 +73,47 @@ class SearchApiTest extends TestCase
 
         $resp = $this->actingAsApiEditor()->get($this->baseEndpoint . '?query=myqueryvalue');
         $resp->assertOk();
+    }
+
+    public function test_all_endpoint_includes_parent_details_where_visible()
+    {
+        $page = $this->entities->pageWithinChapter();
+        $chapter = $page->chapter;
+        $book = $page->book;
+
+        $page->update(['name' => 'name with superextrauniquevalue within']);
+        $page->indexForSearch();
+
+        $editor = $this->users->editor();
+        $this->actingAsApiEditor();
+        $resp = $this->getJson($this->baseEndpoint . '?query=superextrauniquevalue');
+        $resp->assertJsonFragment([
+            'id' => $page->id,
+            'type' => 'page',
+            'book' => [
+                'id' => $book->id,
+                'name' => $book->name,
+                'slug' => $book->slug,
+            ],
+            'chapter' => [
+                'id' => $chapter->id,
+                'name' => $chapter->name,
+                'slug' => $chapter->slug,
+            ],
+        ]);
+
+        $this->permissions->disableEntityInheritedPermissions($chapter);
+        $this->permissions->setEntityPermissions($page, ['view'], [$editor->roles()->first()]);
+
+        $resp = $this->getJson($this->baseEndpoint . '?query=superextrauniquevalue');
+        $resp->assertJsonPath('data.0.id', $page->id);
+        $resp->assertJsonPath('data.0.book.name', $book->name);
+        $resp->assertJsonMissingPath('data.0.chapter');
+
+        $this->permissions->disableEntityInheritedPermissions($book);
+
+        $resp = $this->getJson($this->baseEndpoint . '?query=superextrauniquevalue');
+        $resp->assertJsonPath('data.0.id', $page->id);
+        $resp->assertJsonMissingPath('data.0.book.name');
     }
 }

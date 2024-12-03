@@ -2,7 +2,9 @@
 
 namespace BookStack\Api;
 
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 
 class ApiEntityListFormatter
 {
@@ -20,8 +22,16 @@ class ApiEntityListFormatter
      * @var array<string|int, string|callable>
      */
     protected array $fields = [
-        'id', 'name', 'slug', 'book_id', 'chapter_id', 'draft',
-        'template', 'priority', 'created_at', 'updated_at',
+        'id',
+        'name',
+        'slug',
+        'book_id',
+        'chapter_id',
+        'draft',
+        'template',
+        'priority',
+        'created_at',
+        'updated_at',
     ];
 
     public function __construct(array $list)
@@ -59,6 +69,28 @@ class ApiEntityListFormatter
     public function withTags(): self
     {
         $this->withField('tags', fn(Entity $entity) => $entity->tags);
+        return $this;
+    }
+
+    /**
+     * Include parent book/chapter info in the formatted data.
+     */
+    public function withParents(): self
+    {
+        $this->withField('book', function (Entity $entity) {
+            if ($entity instanceof BookChild && $entity->book) {
+                return $entity->book->only(['id', 'name', 'slug']);
+            }
+            return null;
+        });
+
+        $this->withField('chapter', function (Entity $entity) {
+            if ($entity instanceof Page && $entity->chapter) {
+                return $entity->chapter->only(['id', 'name', 'slug']);
+            }
+            return null;
+        });
+
         return $this;
     }
 
