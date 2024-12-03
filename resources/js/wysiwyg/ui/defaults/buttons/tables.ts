@@ -9,17 +9,15 @@ import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
 import {EditorUiContext} from "../../framework/core";
 import {$getSelection, BaseSelection} from "lexical";
-import {$isCustomTableNode} from "../../../nodes/custom-table";
 import {
     $deleteTableColumn__EXPERIMENTAL,
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
-    $insertTableRow__EXPERIMENTAL,
-    $isTableNode, $isTableSelection, $unmergeCell, TableCellNode,
+    $insertTableRow__EXPERIMENTAL, $isTableCellNode,
+    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode,
 } from "@lexical/table";
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
-import {$isCustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {$showCellPropertiesForm, $showRowPropertiesForm, $showTablePropertiesForm} from "../forms/tables";
 import {
     $clearTableFormatting,
@@ -27,7 +25,6 @@ import {
     $getTableRowsFromSelection,
     $mergeTableCellsInSelection
 } from "../../../utils/tables";
-import {$isCustomTableRowNode} from "../../../nodes/custom-table-row";
 import {
     $copySelectedColumnsToClipboard,
     $copySelectedRowsToClipboard,
@@ -41,7 +38,7 @@ import {
 } from "../../../utils/table-copy-paste";
 
 const neverActive = (): boolean => false;
-const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isCustomTableCellNode);
+const cellNotSelected = (selection: BaseSelection|null) => !$selectionContainsNodeType(selection, $isTableCellNode);
 
 export const table: EditorBasicButtonDefinition = {
     label: 'Table',
@@ -54,7 +51,7 @@ export const tableProperties: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const table = $getTableFromSelection($getSelection());
-            if ($isCustomTableNode(table)) {
+            if ($isTableNode(table)) {
                 $showTablePropertiesForm(table, context);
             }
         });
@@ -68,13 +65,13 @@ export const clearTableFormatting: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if (!$isCustomTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
                 return;
             }
 
             const table = $getParentOfType(cell, $isTableNode);
-            if ($isCustomTableNode(table)) {
+            if ($isTableNode(table)) {
                 $clearTableFormatting(table);
             }
         });
@@ -88,13 +85,13 @@ export const resizeTableToContents: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if (!$isCustomTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if (!$isTableCellNode(cell)) {
                 return;
             }
 
-            const table = $getParentOfType(cell, $isCustomTableNode);
-            if ($isCustomTableNode(table)) {
+            const table = $getParentOfType(cell, $isTableNode);
+            if ($isTableNode(table)) {
                 $clearTableSizes(table);
             }
         });
@@ -108,7 +105,7 @@ export const deleteTable: EditorButtonDefinition = {
     icon: deleteIcon,
     action(context: EditorUiContext) {
         context.editor.update(() => {
-            const table = $getNodeFromSelection($getSelection(), $isCustomTableNode);
+            const table = $getNodeFromSelection($getSelection(), $isTableNode);
             if (table) {
                 table.remove();
             }
@@ -169,7 +166,7 @@ export const rowProperties: EditorButtonDefinition = {
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
             const rows = $getTableRowsFromSelection($getSelection());
-            if ($isCustomTableRowNode(rows[0])) {
+            if ($isTableRowNode(rows[0])) {
                 $showRowPropertiesForm(rows[0], context);
             }
         });
@@ -350,8 +347,8 @@ export const cellProperties: EditorButtonDefinition = {
     format: 'long',
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
-            const cell = $getNodeFromSelection($getSelection(), $isCustomTableCellNode);
-            if ($isCustomTableCellNode(cell)) {
+            const cell = $getNodeFromSelection($getSelection(), $isTableCellNode);
+            if ($isTableCellNode(cell)) {
                 $showCellPropertiesForm(cell, context);
             }
         });
@@ -387,7 +384,7 @@ export const splitCell: EditorButtonDefinition = {
     },
     isActive: neverActive,
     isDisabled(selection) {
-        const cell = $getNodeFromSelection(selection, $isCustomTableCellNode) as TableCellNode|null;
+        const cell = $getNodeFromSelection(selection, $isTableCellNode) as TableCellNode|null;
         if (cell) {
             const merged = cell.getRowSpan() > 1 || cell.getColSpan() > 1;
             return !merged;

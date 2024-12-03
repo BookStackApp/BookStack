@@ -1,24 +1,28 @@
 import {NodeClipboard} from "./node-clipboard";
-import {CustomTableRowNode} from "../nodes/custom-table-row";
 import {$getTableCellsFromSelection, $getTableFromSelection, $getTableRowsFromSelection} from "./tables";
 import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
-import {$createCustomTableCellNode, $isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
-import {CustomTableNode} from "../nodes/custom-table";
 import {TableMap} from "./table-map";
-import {$isTableSelection} from "@lexical/table";
+import {
+    $createTableCellNode,
+    $isTableCellNode,
+    $isTableSelection,
+    TableCellNode,
+    TableNode,
+    TableRowNode
+} from "@lexical/table";
 import {$getNodeFromSelection} from "./selection";
 
-const rowClipboard: NodeClipboard<CustomTableRowNode> = new NodeClipboard<CustomTableRowNode>();
+const rowClipboard: NodeClipboard<TableRowNode> = new NodeClipboard<TableRowNode>();
 
 export function isRowClipboardEmpty(): boolean {
     return rowClipboard.size() === 0;
 }
 
-export function validateRowsToCopy(rows: CustomTableRowNode[]): void {
+export function validateRowsToCopy(rows: TableRowNode[]): void {
     let commonRowSize: number|null = null;
 
     for (const row of rows) {
-        const cells = row.getChildren().filter(n => $isCustomTableCellNode(n));
+        const cells = row.getChildren().filter(n => $isTableCellNode(n));
         let rowSize = 0;
         for (const cell of cells) {
             rowSize += cell.getColSpan() || 1;
@@ -35,10 +39,10 @@ export function validateRowsToCopy(rows: CustomTableRowNode[]): void {
     }
 }
 
-export function validateRowsToPaste(rows: CustomTableRowNode[], targetTable: CustomTableNode): void {
+export function validateRowsToPaste(rows: TableRowNode[], targetTable: TableNode): void {
     const tableColCount = (new TableMap(targetTable)).columnCount;
     for (const row of rows) {
-        const cells = row.getChildren().filter(n => $isCustomTableCellNode(n));
+        const cells = row.getChildren().filter(n => $isTableCellNode(n));
         let rowSize = 0;
         for (const cell of cells) {
             rowSize += cell.getColSpan() || 1;
@@ -49,7 +53,7 @@ export function validateRowsToPaste(rows: CustomTableRowNode[], targetTable: Cus
         }
 
         while (rowSize < tableColCount) {
-            row.append($createCustomTableCellNode());
+            row.append($createTableCellNode());
             rowSize++;
         }
     }
@@ -98,11 +102,11 @@ export function $pasteClipboardRowsAfter(editor: LexicalEditor): void {
     }
 }
 
-const columnClipboard: NodeClipboard<CustomTableCellNode>[] = [];
+const columnClipboard: NodeClipboard<TableCellNode>[] = [];
 
-function setColumnClipboard(columns: CustomTableCellNode[][]): void {
+function setColumnClipboard(columns: TableCellNode[][]): void {
     const newClipboards = columns.map(cells => {
-        const clipboard = new NodeClipboard<CustomTableCellNode>();
+        const clipboard = new NodeClipboard<TableCellNode>();
         clipboard.set(...cells);
         return clipboard;
     });
@@ -122,9 +126,9 @@ function $getSelectionColumnRange(selection: BaseSelection|null): TableRange|nul
         return {from: shape.fromX, to: shape.toX};
     }
 
-    const cell = $getNodeFromSelection(selection, $isCustomTableCellNode);
+    const cell = $getNodeFromSelection(selection, $isTableCellNode);
     const table = $getTableFromSelection(selection);
-    if (!$isCustomTableCellNode(cell) || !table) {
+    if (!$isTableCellNode(cell) || !table) {
         return null;
     }
 
@@ -137,7 +141,7 @@ function $getSelectionColumnRange(selection: BaseSelection|null): TableRange|nul
     return {from: range.fromX, to: range.toX};
 }
 
-function $getTableColumnCellsFromSelection(range: TableRange, table: CustomTableNode): CustomTableCellNode[][] {
+function $getTableColumnCellsFromSelection(range: TableRange, table: TableNode): TableCellNode[][] {
     const map = new TableMap(table);
     const columns = [];
     for (let x = range.from; x <= range.to; x++) {
@@ -148,7 +152,7 @@ function $getTableColumnCellsFromSelection(range: TableRange, table: CustomTable
     return columns;
 }
 
-function validateColumnsToCopy(columns: CustomTableCellNode[][]): void {
+function validateColumnsToCopy(columns: TableCellNode[][]): void {
     let commonColSize: number|null = null;
 
     for (const cells of columns) {
@@ -203,7 +207,7 @@ export function $copySelectedColumnsToClipboard(): void {
     setColumnClipboard(columns);
 }
 
-function validateColumnsToPaste(columns: CustomTableCellNode[][], targetTable: CustomTableNode) {
+function validateColumnsToPaste(columns: TableCellNode[][], targetTable: TableNode) {
     const tableRowCount = (new TableMap(targetTable)).rowCount;
     for (const cells of columns) {
         let colSize = 0;
@@ -216,7 +220,7 @@ function validateColumnsToPaste(columns: CustomTableCellNode[][], targetTable: C
         }
 
         while (colSize < tableRowCount) {
-            cells.push($createCustomTableCellNode());
+            cells.push($createTableCellNode());
             colSize++;
         }
     }

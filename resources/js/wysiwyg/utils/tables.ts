@@ -1,15 +1,19 @@
 import {BaseSelection, LexicalEditor} from "lexical";
-import {$isTableRowNode, $isTableSelection, TableRowNode, TableSelection, TableSelectionShape} from "@lexical/table";
-import {$isCustomTableNode, CustomTableNode} from "../nodes/custom-table";
-import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
+import {
+    $isTableCellNode,
+    $isTableNode,
+    $isTableRowNode,
+    $isTableSelection, TableCellNode, TableNode,
+    TableRowNode,
+    TableSelection,
+} from "@lexical/table";
 import {$getParentOfType} from "./nodes";
 import {$getNodeFromSelection} from "./selection";
 import {formatSizeValue} from "./dom";
 import {TableMap} from "./table-map";
-import {$isCustomTableRowNode, CustomTableRowNode} from "../nodes/custom-table-row";
 
-function $getTableFromCell(cell: CustomTableCellNode): CustomTableNode|null {
-    return $getParentOfType(cell, $isCustomTableNode) as CustomTableNode|null;
+function $getTableFromCell(cell: TableCellNode): TableNode|null {
+    return $getParentOfType(cell, $isTableNode) as TableNode|null;
 }
 
 export function getTableColumnWidths(table: HTMLTableElement): string[] {
@@ -55,7 +59,7 @@ function extractWidthFromElement(element: HTMLElement): string {
     return width || '';
 }
 
-export function $setTableColumnWidth(node: CustomTableNode, columnIndex: number, width: number|string): void {
+export function $setTableColumnWidth(node: TableNode, columnIndex: number, width: number|string): void {
     const rows = node.getChildren() as TableRowNode[];
     let maxCols = 0;
     for (const row of rows) {
@@ -78,7 +82,7 @@ export function $setTableColumnWidth(node: CustomTableNode, columnIndex: number,
     node.setColWidths(colWidths);
 }
 
-export function $getTableColumnWidth(editor: LexicalEditor, node: CustomTableNode, columnIndex: number): number {
+export function $getTableColumnWidth(editor: LexicalEditor, node: TableNode, columnIndex: number): number {
     const colWidths = node.getColWidths();
     if (colWidths.length > columnIndex && colWidths[columnIndex].endsWith('px')) {
         return Number(colWidths[columnIndex].replace('px', ''));
@@ -97,14 +101,14 @@ export function $getTableColumnWidth(editor: LexicalEditor, node: CustomTableNod
     return 0;
 }
 
-function $getCellColumnIndex(node: CustomTableCellNode): number {
+function $getCellColumnIndex(node: TableCellNode): number {
     const row = node.getParent();
     if (!$isTableRowNode(row)) {
         return -1;
     }
 
     let index = 0;
-    const cells = row.getChildren<CustomTableCellNode>();
+    const cells = row.getChildren<TableCellNode>();
     for (const cell of cells) {
         let colSpan = cell.getColSpan() || 1;
         index += colSpan;
@@ -116,7 +120,7 @@ function $getCellColumnIndex(node: CustomTableCellNode): number {
     return index - 1;
 }
 
-export function $setTableCellColumnWidth(cell: CustomTableCellNode, width: string): void {
+export function $setTableCellColumnWidth(cell: TableCellNode, width: string): void {
     const table = $getTableFromCell(cell)
     const index = $getCellColumnIndex(cell);
 
@@ -125,7 +129,7 @@ export function $setTableCellColumnWidth(cell: CustomTableCellNode, width: strin
     }
 }
 
-export function $getTableCellColumnWidth(editor: LexicalEditor, cell: CustomTableCellNode): string {
+export function $getTableCellColumnWidth(editor: LexicalEditor, cell: TableCellNode): string {
     const table = $getTableFromCell(cell)
     const index = $getCellColumnIndex(cell);
     if (!table) {
@@ -136,13 +140,13 @@ export function $getTableCellColumnWidth(editor: LexicalEditor, cell: CustomTabl
     return (widths.length > index) ? widths[index] : '';
 }
 
-export function $getTableCellsFromSelection(selection: BaseSelection|null): CustomTableCellNode[]  {
+export function $getTableCellsFromSelection(selection: BaseSelection|null): TableCellNode[]  {
     if ($isTableSelection(selection)) {
         const nodes = selection.getNodes();
-        return nodes.filter(n => $isCustomTableCellNode(n));
+        return nodes.filter(n => $isTableCellNode(n));
     }
 
-    const cell = $getNodeFromSelection(selection, $isCustomTableCellNode) as CustomTableCellNode;
+    const cell = $getNodeFromSelection(selection, $isTableCellNode) as TableCellNode;
     return cell ? [cell] : [];
 }
 
@@ -193,12 +197,12 @@ export function $mergeTableCellsInSelection(selection: TableSelection): void {
     firstCell.setRowSpan(newHeight);
 }
 
-export function $getTableRowsFromSelection(selection: BaseSelection|null): CustomTableRowNode[] {
+export function $getTableRowsFromSelection(selection: BaseSelection|null): TableRowNode[] {
     const cells = $getTableCellsFromSelection(selection);
-    const rowsByKey: Record<string, CustomTableRowNode> = {};
+    const rowsByKey: Record<string, TableRowNode> = {};
     for (const cell of cells) {
         const row = cell.getParent();
-        if ($isCustomTableRowNode(row)) {
+        if ($isTableRowNode(row)) {
             rowsByKey[row.getKey()] = row;
         }
     }
@@ -206,28 +210,28 @@ export function $getTableRowsFromSelection(selection: BaseSelection|null): Custo
     return Object.values(rowsByKey);
 }
 
-export function $getTableFromSelection(selection: BaseSelection|null): CustomTableNode|null {
+export function $getTableFromSelection(selection: BaseSelection|null): TableNode|null {
     const cells = $getTableCellsFromSelection(selection);
     if (cells.length === 0) {
         return null;
     }
 
-    const table = $getParentOfType(cells[0], $isCustomTableNode);
-    if ($isCustomTableNode(table)) {
+    const table = $getParentOfType(cells[0], $isTableNode);
+    if ($isTableNode(table)) {
         return table;
     }
 
     return null;
 }
 
-export function $clearTableSizes(table: CustomTableNode): void {
+export function $clearTableSizes(table: TableNode): void {
     table.setColWidths([]);
 
     // TODO - Extra form things once table properties and extra things
     //   are supported
 
     for (const row of table.getChildren()) {
-        if (!$isCustomTableRowNode(row)) {
+        if (!$isTableRowNode(row)) {
             continue;
         }
 
@@ -236,7 +240,7 @@ export function $clearTableSizes(table: CustomTableNode): void {
         rowStyles.delete('width');
         row.setStyles(rowStyles);
 
-        const cells = row.getChildren().filter(c => $isCustomTableCellNode(c));
+        const cells = row.getChildren().filter(c => $isTableCellNode(c));
         for (const cell of cells) {
             const cellStyles = cell.getStyles();
             cellStyles.delete('height');
@@ -247,23 +251,21 @@ export function $clearTableSizes(table: CustomTableNode): void {
     }
 }
 
-export function $clearTableFormatting(table: CustomTableNode): void {
+export function $clearTableFormatting(table: TableNode): void {
     table.setColWidths([]);
     table.setStyles(new Map);
 
     for (const row of table.getChildren()) {
-        if (!$isCustomTableRowNode(row)) {
+        if (!$isTableRowNode(row)) {
             continue;
         }
 
         row.setStyles(new Map);
-        row.setFormat('');
 
-        const cells = row.getChildren().filter(c => $isCustomTableCellNode(c));
+        const cells = row.getChildren().filter(c => $isTableCellNode(c));
         for (const cell of cells) {
             cell.setStyles(new Map);
             cell.clearWidth();
-            cell.setFormat('');
         }
     }
 }
@@ -272,14 +274,14 @@ export function $clearTableFormatting(table: CustomTableNode): void {
  * Perform the given callback for each cell in the given table.
  * Returning false from the callback stops the function early.
  */
-export function $forEachTableCell(table: CustomTableNode, callback: (c: CustomTableCellNode) => void|false): void {
+export function $forEachTableCell(table: TableNode, callback: (c: TableCellNode) => void|false): void {
     outer: for (const row of table.getChildren()) {
-        if (!$isCustomTableRowNode(row)) {
+        if (!$isTableRowNode(row)) {
             continue;
         }
         const cells = row.getChildren();
         for (const cell of cells) {
-            if (!$isCustomTableCellNode(cell)) {
+            if (!$isTableCellNode(cell)) {
                 return;
             }
             const result = callback(cell);
@@ -290,10 +292,10 @@ export function $forEachTableCell(table: CustomTableNode, callback: (c: CustomTa
     }
 }
 
-export function $getCellPaddingForTable(table: CustomTableNode): string {
+export function $getCellPaddingForTable(table: TableNode): string {
     let padding: string|null = null;
 
-    $forEachTableCell(table, (cell: CustomTableCellNode) => {
+    $forEachTableCell(table, (cell: TableCellNode) => {
         const cellPadding = cell.getStyles().get('padding') || ''
         if (padding === null) {
             padding = cellPadding;

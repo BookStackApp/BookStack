@@ -11,14 +11,11 @@ import {ImageNode} from "./image";
 import {DetailsNode, SummaryNode} from "./details";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
-import {CustomTableNode} from "./custom-table";
 import {HorizontalRuleNode} from "./horizontal-rule";
 import {CodeBlockNode} from "./code-block";
 import {DiagramNode} from "./diagram";
 import {EditorUiContext} from "../ui/framework/core";
 import {MediaNode} from "./media";
-import {CustomTableCellNode} from "./custom-table-cell";
-import {CustomTableRowNode} from "./custom-table-row";
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
@@ -32,9 +29,9 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         QuoteNode,
         ListNode,
         ListItemNode,
-        CustomTableNode,
-        CustomTableRowNode,
-        CustomTableCellNode,
+        TableNode,
+        TableRowNode,
+        TableCellNode,
         ImageNode, // TODO - Alignment
         HorizontalRuleNode,
         DetailsNode, SummaryNode,
@@ -43,30 +40,6 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         MediaNode, // TODO - Alignment
         ParagraphNode,
         LinkNode,
-        {
-            replace: TableNode,
-            with(node: TableNode) {
-                return new CustomTableNode();
-            }
-        },
-        {
-            replace: TableRowNode,
-            with(node: TableRowNode) {
-                return new CustomTableRowNode();
-            }
-        },
-        {
-            replace: TableCellNode,
-            with: (node: TableCellNode) => {
-                const cell = new CustomTableCellNode(
-                    node.__headerState,
-                    node.__colSpan,
-                    node.__width,
-                );
-                cell.__rowSpan = node.__rowSpan;
-                return cell;
-            }
-        },
     ];
 }
 

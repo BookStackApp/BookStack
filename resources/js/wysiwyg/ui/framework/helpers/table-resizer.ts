@@ -1,7 +1,6 @@
 import {$getNearestNodeFromDOMNode, LexicalEditor} from "lexical";
 import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
-import {CustomTableNode} from "../../../nodes/custom-table";
-import {TableRowNode} from "@lexical/table";
+import {TableNode, TableRowNode} from "@lexical/table";
 import {el} from "../../../utils/dom";
 import {$getTableColumnWidth, $setTableColumnWidth} from "../../../utils/tables";
 
@@ -148,7 +147,7 @@ class TableResizer {
 
                     _this.editor.update(() => {
                         const table = $getNearestNodeFromDOMNode(parentTable);
-                        if (table instanceof CustomTableNode) {
+                        if (table instanceof TableNode) {
                             const originalWidth = $getTableColumnWidth(_this.editor, table, cellIndex);
                             const newWidth = Math.max(originalWidth + change, 10);
                             $setTableColumnWidth(table, cellIndex, newWidth);
