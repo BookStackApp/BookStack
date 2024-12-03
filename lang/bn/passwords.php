@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'পাসওয়ার্ড কমপক্ষে আট অক্ষরের হতে হবে এবং পাসওয়ার্ড নিশ্চিতকরণের ঘরে প্রদত্ত পাসওয়ার্ডের সাথে মিলতে হবে।',
+    'user' => "প্রদত্ত ইমেইল ঠিকানার স্বাপেক্ষে কোন ব্যবহারকারী খুঁজে পাওয়া যায়নি।",
+    'token' => 'প্রদত্ত পাসওয়ার্ড রিসেট টোকেন অত্র ইমেল ঠিকানার জন্য বৈধ নয়৷',
+    'sent' => 'আপনার পাসওয়ার্ড রিসেট লিঙ্কটি ই-মেইলের মাধ্যমে প্রেরণ করা হয়েছে!',
+    'reset' => 'আপনার পাসওয়ার্ডটি রিসেট করা হয়েছে!',
 
 ];
