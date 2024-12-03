@@ -7,7 +7,6 @@
  */
 
 import {$createLinkNode} from '@lexical/link';
-import {$createHeadingNode, $isHeadingNode} from '@lexical/rich-text';
 import {
   $getSelectionStyleValueForProperty,
   $patchStyleText,
@@ -44,6 +43,7 @@ import {
 } from 'lexical/__tests__/utils';
 
 import {$setAnchorPoint, $setFocusPoint} from '../utils';
+import {$createHeadingNode, $isHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 Range.prototype.getBoundingClientRect = function (): DOMRect {
   const rect = {

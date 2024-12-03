@@ -7,7 +7,7 @@
  */
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
-import {HeadingNode, QuoteNode, registerRichText} from '@lexical/rich-text';
+import {registerRichText} from '@lexical/rich-text';
 import {
   applySelectionInputs,
   pasteHTML,
@@ -15,6 +15,8 @@ import {
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 import {$createParagraphNode, $insertNodes, LexicalEditor} from 'lexical';
 import {createTestEditor, initializeClipboard} from 'lexical/__tests__/utils';
+import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
+import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 jest.mock('lexical/shared/environment', () => {
   const originalModule = jest.requireActual('lexical/shared/environment');

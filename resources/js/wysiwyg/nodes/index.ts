@@ -1,4 +1,3 @@
-import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {CalloutNode} from './callout';
 import {
     ElementNode,
@@ -21,9 +20,9 @@ import {MediaNode} from "./media";
 import {CustomListItemNode} from "./custom-list-item";
 import {CustomTableCellNode} from "./custom-table-cell";
 import {CustomTableRowNode} from "./custom-table-row";
-import {CustomHeadingNode} from "./custom-heading";
-import {CustomQuoteNode} from "./custom-quote";
 import {CustomListNode} from "./custom-list";
+import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
+import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 /**
  * Load the nodes for lexical.
@@ -31,8 +30,8 @@ import {CustomListNode} from "./custom-list";
 export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> | LexicalNodeReplacement)[] {
     return [
         CalloutNode,
-        CustomHeadingNode,
-        CustomQuoteNode,
+        HeadingNode,
+        QuoteNode,
         CustomListNode,
         CustomListItemNode, // TODO - Alignment?
         CustomTableNode,
@@ -46,18 +45,6 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         MediaNode, // TODO - Alignment
         ParagraphNode,
         LinkNode,
-        {
-            replace: HeadingNode,
-            with: (node: HeadingNode) => {
-                return new CustomHeadingNode(node.__tag);
-            }
-        },
-        {
-            replace: QuoteNode,
-            with: (node: QuoteNode) => {
-                return new CustomQuoteNode();
-            }
-        },
         {
             replace: ListNode,
             with: (node: ListNode) => {

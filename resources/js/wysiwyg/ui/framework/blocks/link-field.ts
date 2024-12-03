@@ -1,14 +1,13 @@
 import {EditorContainerUiElement} from "../core";
 import {el} from "../../../utils/dom";
 import {EditorFormField} from "../forms";
-import {CustomHeadingNode} from "../../../nodes/custom-heading";
 import {$getAllNodesOfType} from "../../../utils/nodes";
-import {$isHeadingNode} from "@lexical/rich-text";
 import {uniqueIdSmall} from "../../../../services/util";
+import {$isHeadingNode, HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 export class LinkField extends EditorContainerUiElement {
     protected input: EditorFormField;
-    protected headerMap = new Map<string, CustomHeadingNode>();
+    protected headerMap = new Map<string, HeadingNode>();
 
     constructor(input: EditorFormField) {
         super([input]);
@@ -43,7 +42,7 @@ export class LinkField extends EditorContainerUiElement {
         return container;
     }
 
-    updateFormFromHeader(header: CustomHeadingNode) {
+    updateFormFromHeader(header: HeadingNode) {
         this.getHeaderIdAndText(header).then(({id, text}) => {
             console.log('updating form', id, text);
             const modal =  this.getContext().manager.getActiveModal('link');
@@ -57,7 +56,7 @@ export class LinkField extends EditorContainerUiElement {
         });
     }
 
-    getHeaderIdAndText(header: CustomHeadingNode): Promise<{id: string, text: string}> {
+    getHeaderIdAndText(header: HeadingNode): Promise<{id: string, text: string}> {
         return new Promise((res) => {
             this.getContext().editor.update(() => {
                 let id = header.getId();
@@ -75,7 +74,7 @@ export class LinkField extends EditorContainerUiElement {
 
     updateDataList(listEl: HTMLElement) {
         this.getContext().editor.getEditorState().read(() => {
-            const headers = $getAllNodesOfType($isHeadingNode) as CustomHeadingNode[];
+            const headers = $getAllNodesOfType($isHeadingNode) as HeadingNode[];
 
             this.headerMap.clear();
             const listEls: HTMLElement[] = [];

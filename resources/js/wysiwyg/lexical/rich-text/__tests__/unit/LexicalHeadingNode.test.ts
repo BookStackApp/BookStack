@@ -7,11 +7,6 @@
  */
 
 import {
-  $createHeadingNode,
-  $isHeadingNode,
-  HeadingNode,
-} from '@lexical/rich-text';
-import {
   $createTextNode,
   $getRoot,
   $getSelection,
@@ -19,6 +14,7 @@ import {
   RangeSelection,
 } from 'lexical';
 import {initializeUnitTest} from 'lexical/__tests__/utils';
+import {$createHeadingNode, $isHeadingNode, HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 const editorConfig = Object.freeze({
   namespace: '',

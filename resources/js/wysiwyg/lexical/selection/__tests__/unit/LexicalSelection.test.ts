@@ -8,7 +8,7 @@
 
 import {$createLinkNode} from '@lexical/link';
 import {$createListItemNode, $createListNode} from '@lexical/list';
-import {$createHeadingNode, registerRichText} from '@lexical/rich-text';
+import {registerRichText} from '@lexical/rich-text';
 import {
   $addNodeStyle,
   $getSelectionStyleValueForProperty,
@@ -74,6 +74,7 @@ import {
 } from '../utils';
 import {createEmptyHistoryState, registerHistory} from "@lexical/history";
 import {mergeRegister} from "@lexical/utils";
+import {$createHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 interface ExpectedSelection {
   anchorPath: number[];

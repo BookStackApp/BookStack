@@ -10,7 +10,6 @@ import {createHeadlessEditor} from '@lexical/headless';
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
 
-import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 
 import {
@@ -36,6 +35,8 @@ import {
   LexicalNodeReplacement,
 } from '../../LexicalEditor';
 import {resetRandomKey} from '../../LexicalUtils';
+import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
+import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 
 type TestEnv = {

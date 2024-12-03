@@ -48,7 +48,7 @@ export class CommonBlockNode extends ElementNode {
 }
 
 export function copyCommonBlockProperties(from: CommonBlockNode, to: CommonBlockNode): void {
-    to.__id = from.__id;
+    // to.__id = from.__id;
     to.__alignment = from.__alignment;
     to.__inset = from.__inset;
 }

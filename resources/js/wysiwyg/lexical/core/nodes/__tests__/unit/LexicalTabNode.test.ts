@@ -11,7 +11,7 @@ import {
   $insertDataTransferForRichText,
 } from '@lexical/clipboard';
 import {$createListItemNode, $createListNode} from '@lexical/list';
-import {$createHeadingNode, registerRichText} from '@lexical/rich-text';
+import {registerRichText} from '@lexical/rich-text';
 import {
   $createParagraphNode,
   $createRangeSelection,
@@ -32,6 +32,7 @@ import {
   initializeUnitTest,
   invariant,
 } from '../../../__tests__/utils';
+import {$createHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 describe('LexicalTabNode tests', () => {
   initializeUnitTest((testEnv) => {

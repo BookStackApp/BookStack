@@ -6,9 +6,9 @@
  *
  */
 
-import {$createQuoteNode, QuoteNode} from '@lexical/rich-text';
 import {$createRangeSelection, $getRoot, ParagraphNode} from 'lexical';
 import {initializeUnitTest} from 'lexical/__tests__/utils';
+import {$createQuoteNode, QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 const editorConfig = Object.freeze({
   namespace: '',

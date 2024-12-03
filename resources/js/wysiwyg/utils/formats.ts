@@ -1,4 +1,3 @@
-import {$isQuoteNode, HeadingNode, HeadingTagType} from "@lexical/rich-text";
 import {
     $createParagraphNode,
     $createTextNode,
@@ -15,23 +14,23 @@ import {
     $toggleSelectionBlockNodeType,
     getLastSelection
 } from "./selection";
-import {$createCustomHeadingNode, $isCustomHeadingNode} from "../nodes/custom-heading";
-import {$createCustomQuoteNode} from "../nodes/custom-quote";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../nodes/code-block";
 import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "../nodes/callout";
 import {insertList, ListNode, ListType, removeList} from "@lexical/list";
 import {$isCustomListNode} from "../nodes/custom-list";
 import {$createLinkNode, $isLinkNode} from "@lexical/link";
+import {$createHeadingNode, $isHeadingNode, HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
+import {$createQuoteNode, $isQuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 const $isHeaderNodeOfTag = (node: LexicalNode | null | undefined, tag: HeadingTagType) => {
-    return $isCustomHeadingNode(node) && (node as HeadingNode).getTag() === tag;
+    return $isHeadingNode(node) && node.getTag() === tag;
 };
 
 export function toggleSelectionAsHeading(editor: LexicalEditor, tag: HeadingTagType) {
     editor.update(() => {
         $toggleSelectionBlockNodeType(
             (node) => $isHeaderNodeOfTag(node, tag),
-            () => $createCustomHeadingNode(tag),
+            () => $createHeadingNode(tag),
         )
     });
 }
@@ -44,7 +43,7 @@ export function toggleSelectionAsParagraph(editor: LexicalEditor) {
 
 export function toggleSelectionAsBlockquote(editor: LexicalEditor) {
     editor.update(() => {
-        $toggleSelectionBlockNodeType($isQuoteNode, $createCustomQuoteNode);
+        $toggleSelectionBlockNodeType($isQuoteNode, $createQuoteNode);
     });
 }
 
