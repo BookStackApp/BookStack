@@ -6,29 +6,29 @@
 return [
 
     // Pages
-    'page_create'                 => 'created page',
+    'page_create'                 => 'নতুন পৃষ্ঠা সৃষ্টি করেছেন',
     'page_create_notification'    => 'Page successfully created',
-    'page_update'                 => 'updated page',
+    'page_update'                 => 'পৃষ্ঠা হালনাগাদ করেছেন',
     'page_update_notification'    => 'Page successfully updated',
-    'page_delete'                 => 'deleted page',
+    'page_delete'                 => 'পৃষ্ঠা মুছে ফেলেছেন',
     'page_delete_notification'    => 'Page successfully deleted',
-    'page_restore'                => 'restored page',
+    'page_restore'                => 'মুছে ফেলা পৃষ্ঠা পুনরুদ্ধার করেছেন',
     'page_restore_notification'   => 'Page successfully restored',
-    'page_move'                   => 'moved page',
+    'page_move'                   => 'পৃষ্ঠা স্থানান্তর করেছেন',
     'page_move_notification'      => 'Page successfully moved',
 
     // Chapters
-    'chapter_create'              => 'created chapter',
+    'chapter_create'              => 'নতুন অধ্যায় সৃষ্টি করেছেন',
     'chapter_create_notification' => 'Chapter successfully created',
-    'chapter_update'              => 'updated chapter',
+    'chapter_update'              => 'অধ্যায় হালনাগাদ করেছেন',
     'chapter_update_notification' => 'Chapter successfully updated',
-    'chapter_delete'              => 'deleted chapter',
+    'chapter_delete'              => 'অধ্যায় মুছে ফেলেছেন',
     'chapter_delete_notification' => 'Chapter successfully deleted',
-    'chapter_move'                => 'moved chapter',
+    'chapter_move'                => 'অধ্যায় স্থানান্তর করেছেন',
     'chapter_move_notification' => 'Chapter successfully moved',
 
     // Books
-    'book_create'                 => 'created book',
+    'book_create'                 => 'নতুন বই সৃষ্টি করেছেন',
     'book_create_notification'    => 'Book successfully created',
     'book_create_from_chapter'              => 'converted chapter to book',
     'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
