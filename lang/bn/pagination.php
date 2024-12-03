@@ -6,7 +6,7 @@
  */
 return [
 
-    'previous' => '&laquo; পূর্বপৃষ্ঠা',
-    'next'     => 'পরপৃষ্ঠা &raquo;',
+    'previous' => '&laquo; পূর্ববর্তী',
+    'next'     => 'পরবর্তী &raquo;',
 
 ];
