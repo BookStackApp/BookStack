@@ -62,27 +62,27 @@ return [
     'watch_update_level_notification' => 'পর্যবেক্ষণনীতি স্বার্থকভাবে হালনাগাদ করা হয়েছে',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'লগড ইন অবস্থায় আছেন',
     'auth_register' => 'নতুন ব্যবহারকারী হিসাবে নিবন্ধিত',
-    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_request' => 'ব্যবহারকারীর পাসওয়ার্ড রিসেটের আবেদন করেছেন',
     'auth_password_reset_update' => 'ব্যবহারকারী পাসওয়ার্ড রিসেট করুন',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'mfa_setup_method' => 'মাল্টি ফ্যাক্টর অথেনটিকেশন সক্রিয় করেছেন',
+    'mfa_setup_method_notification' => 'মাল্টি ফ্যাক্টর অথেনটিকেশন স্বার্থকভাবে সক্রিয় করা হয়েছে',
+    'mfa_remove_method' => 'মাল্টি ফ্যাক্টর অথেনটিকেশন নিষ্ক্রিয় করেছেন',
+    'mfa_remove_method_notification' => 'মাল্টি ফ্যাক্টর অথেনটিকেশন স্বার্থকভাবে নিষ্ক্রিয় করা হয়েছে',
 
     // Settings
-    'settings_update' => 'সেটিংস হালনাগাদ করা হয়েছে',
+    'settings_update' => 'সেটিংস হালনাগাদ করেছেন',
     'settings_update_notification' => 'সেটিংস স্বার্থকভাবে হালনাগাদ করা হয়েছে',
     'maintenance_action_run' => 'রক্ষণাবেক্ষণ কার্যক্রম চালু করেছেন',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'নতুন ওয়েবহুক তৈরী করেছেন',
+    'webhook_create_notification' => 'নতুন ওয়েবহুক স্বার্থকভাবে তৈরী করা হয়েছে',
+    'webhook_update' => 'ওয়েবহুকটি হালনাগাদ করেছেন',
+    'webhook_update_notification' => 'ওয়েবহুকটি স্বার্থকভাবে হালনাগাদ করা হয়েছে',
+    'webhook_delete' => 'ওয়েবহুকটি মুছে ফেলেছেন',
+    'webhook_delete_notification' => 'ওয়েবহুকটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
 
     // Imports
     'import_create' => 'created import',
@@ -93,12 +93,12 @@ return [
     'import_delete_notification' => 'Import successfully deleted',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
-    'user_update_notification' => 'User successfully updated',
-    'user_delete' => 'deleted user',
-    'user_delete_notification' => 'User successfully removed',
+    'user_create' => 'নতুন ব্যবহারকারী তৈরী করেছেন',
+    'user_create_notification' => 'নতুন ব্যবহারকারী স্বার্থকভাবে তৈরী করা হয়েছে',
+    'user_update' => 'ব্যবহারকারীটি হালনাগাদ করেছেন',
+    'user_update_notification' => 'ব্যবহারকারীটি স্বার্থকভাবে হালনাগাদ করা হয়েছে',
+    'user_delete' => 'ব্যবহারকারীটি মুছে ফেলেছেন',
+    'user_delete_notification' => 'ব্যবহারকারীটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
 
     // API Tokens
     'api_token_create' => 'created API token',
@@ -122,11 +122,11 @@ return [
     'recycle_bin_destroy' => 'removed from recycle bin',
 
     // Comments
-    'commented_on'                => 'commented on',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'commented_on'                => 'মন্তব্য প্রদান করেছেন',
+    'comment_create'              => 'মন্তব্য যোগ করেছেন',
+    'comment_update'              => 'মন্তব্য হালনাগাদ করেছেন',
+    'comment_delete'              => 'মন্তব্য মুছে ফেলেছেন',
 
     // Other
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'অনুমতিক্রম হালনাগাদ করেছেন',
 ];
