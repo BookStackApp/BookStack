@@ -44,10 +44,10 @@ return [
     'bookshelf_create_notification'    => 'বুকশেলফটি স্বার্থকভাবে তৈরী করা হয়েছে',
     'bookshelf_create_from_book'    => 'বইটিকে বুকশেলফে রূপান্তরিত করার প্রক্রিয়া সফলভাবে সম্পন্ন হয়েছে',
     'bookshelf_create_from_book_notification'    => 'বইকে বুকশেলফে রূপান্তর করার প্রক্রিয়া সফলভাবে সম্পন্ন হয়েছে',
-    'bookshelf_update'                 => 'বইয়ের তাক হালনাগাদ করেছেন',
-    'bookshelf_update_notification'    => 'বইয়ের তাকটি স্বার্থকভাবে হালনাগাদ করা হয়েছে',
-    'bookshelf_delete'                 => 'বইয়ের তাক মুছে ফেলেছেন',
-    'bookshelf_delete_notification'    => 'বইয়ের তাকটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
+    'bookshelf_update'                 => 'বুকশেলফটি হালনাগাদ করেছেন',
+    'bookshelf_update_notification'    => 'বুকশেলফটি স্বার্থকভাবে হালনাগাদ করা হয়েছে',
+    'bookshelf_delete'                 => 'বুকশেলফটি মুছে ফেলেছেন',
+    'bookshelf_delete_notification'    => 'বুকশেলফটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
 
     // Revisions
     'revision_restore' => 'সংশোধনী পুনঃস্থাপন করেছেন',
