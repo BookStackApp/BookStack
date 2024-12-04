@@ -11,16 +11,15 @@ import {
     type NodeKey,
     type ParagraphNode,
     type RangeSelection,
-    type SerializedElementNode,
     type Spread
 } from "lexical";
 import {addClassNamesToElement} from "@lexical/utils";
-import {CommonBlockNode, copyCommonBlockProperties} from "lexical/nodes/CommonBlockNode";
+import {CommonBlockNode, copyCommonBlockProperties, SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 import {
     commonPropertiesDifferent, deserializeCommonBlockNode,
-    SerializedCommonBlockNode, setCommonBlockPropsFromElement,
+    setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
-} from "../../nodes/_common";
+} from "lexical/nodes/common";
 
 export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 

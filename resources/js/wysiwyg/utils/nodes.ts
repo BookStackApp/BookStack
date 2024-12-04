@@ -11,7 +11,7 @@ import {
 import {LexicalNodeMatcher} from "../nodes";
 import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
-import {NodeHasAlignment, NodeHasInset} from "../nodes/_common";
+import {NodeHasAlignment, NodeHasInset} from "lexical/nodes/common";
 import {$findMatchingParent} from "@lexical/utils";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {

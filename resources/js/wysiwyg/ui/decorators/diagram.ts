@@ -1,7 +1,7 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
 import {BaseSelection} from "lexical";
-import {DiagramNode} from "../../nodes/diagram";
+import {DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";
 import {$openDrawingEditorForNode} from "../../utils/diagrams";
 

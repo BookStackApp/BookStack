@@ -1,5 +1,5 @@
 import {ImageManager} from "../../components";
-import {$createImageNode} from "../nodes/image";
+import {$createImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$createLinkNode, LinkNode} from "@lexical/link";
 
 export type EditorImageData = {

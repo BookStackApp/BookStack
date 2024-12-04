@@ -1,4 +1,4 @@
-import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "../../../nodes/callout";
+import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "@lexical/rich-text/LexicalCalloutNode";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
 import {$isParagraphNode, BaseSelection, LexicalNode} from "lexical";

@@ -1,10 +1,10 @@
 import {BaseSelection, LexicalNode,} from "lexical";
 import {MouseDragTracker, MouseDragTrackerDistance} from "./mouse-drag-tracker";
 import {el} from "../../../utils/dom";
-import {$isImageNode} from "../../../nodes/image";
+import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {EditorUiContext} from "../core";
-import {NodeHasSize} from "../../../nodes/_common";
-import {$isMediaNode} from "../../../nodes/media";
+import {NodeHasSize} from "lexical/nodes/common";
+import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 
 function isNodeWithSize(node: LexicalNode): node is NodeHasSize&LexicalNode {
     return $isImageNode(node) || $isMediaNode(node);

@@ -47,7 +47,6 @@ import {
 import invariant from 'lexical/shared/invariant';
 
 import {
-  $createTestDecoratorNode,
   $createTestElementNode,
   $createTestInlineElementNode,
   createTestEditor,

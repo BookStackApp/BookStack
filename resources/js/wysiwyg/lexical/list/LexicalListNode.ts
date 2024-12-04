@@ -36,7 +36,7 @@ import {
   updateChildrenListItemValue,
 } from './formatList';
 import {$getListDepth, $wrapInListItem} from './utils';
-import {extractDirectionFromElement} from "../../nodes/_common";
+import {extractDirectionFromElement} from "lexical/nodes/common";
 
 export type SerializedListNode = Spread<
   {

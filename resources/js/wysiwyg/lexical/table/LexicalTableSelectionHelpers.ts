@@ -16,7 +16,6 @@ import type {
 } from './LexicalTableSelection';
 import type {
   BaseSelection,
-  ElementFormatType,
   LexicalCommand,
   LexicalEditor,
   LexicalNode,
@@ -50,7 +49,6 @@ import {
   DELETE_LINE_COMMAND,
   DELETE_WORD_COMMAND,
   FOCUS_COMMAND,
-  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INSERT_PARAGRAPH_COMMAND,
   KEY_ARROW_DOWN_COMMAND,

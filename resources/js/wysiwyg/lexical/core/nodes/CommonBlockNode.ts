@@ -1,8 +1,15 @@
-import {ElementNode} from "./LexicalElementNode";
-import {CommonBlockAlignment, SerializedCommonBlockNode} from "../../../nodes/_common";
+import {ElementNode, type SerializedElementNode} from "./LexicalElementNode";
+import {CommonBlockAlignment, CommonBlockInterface} from "./common";
+import {Spread} from "lexical";
 
 
-export class CommonBlockNode extends ElementNode {
+export type SerializedCommonBlockNode = Spread<{
+    id: string;
+    alignment: CommonBlockAlignment;
+    inset: number;
+}, SerializedElementNode>
+
+export class CommonBlockNode extends ElementNode implements CommonBlockInterface {
     __id: string = '';
     __alignment: CommonBlockAlignment = '';
     __inset: number = 0;

@@ -16,7 +16,7 @@ import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
 import {$getNearestNodeBlockParent, $getParentOfType, nodeHasAlignment} from "./nodes";
-import {CommonBlockAlignment} from "../nodes/_common";
+import {CommonBlockAlignment} from "lexical/nodes/common";
 
 const lastSelectionByEditor = new WeakMap<LexicalEditor, BaseSelection|null>;
 

@@ -16,7 +16,6 @@ import {
   $getSelection,
   $isDecoratorNode,
   $isElementNode,
-  $isRangeSelection,
   $isTextNode,
   $setSelection,
 } from '.';

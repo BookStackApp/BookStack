@@ -29,12 +29,12 @@ import {
 import {
   DOUBLE_LINE_BREAK,
   FULL_RECONCILE,
-  IS_ALIGN_CENTER,
-  IS_ALIGN_END,
-  IS_ALIGN_JUSTIFY,
-  IS_ALIGN_LEFT,
-  IS_ALIGN_RIGHT,
-  IS_ALIGN_START,
+
+
+
+
+
+
 } from './LexicalConstants';
 import {EditorState} from './LexicalEditorState';
 import {

@@ -1,4 +1,4 @@
-import {$getSelection, createEditor, CreateEditorArgs, isCurrentlyReadOnlyMode, LexicalEditor} from 'lexical';
+import {$getSelection, createEditor, CreateEditorArgs, LexicalEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';

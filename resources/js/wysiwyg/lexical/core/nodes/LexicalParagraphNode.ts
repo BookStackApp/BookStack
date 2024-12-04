@@ -29,10 +29,10 @@ import {
 import {$isTextNode} from './LexicalTextNode';
 import {
   commonPropertiesDifferent, deserializeCommonBlockNode,
-  SerializedCommonBlockNode, setCommonBlockPropsFromElement,
+  setCommonBlockPropsFromElement,
   updateElementWithCommonBlockProps
-} from "../../../nodes/_common";
-import {CommonBlockNode, copyCommonBlockProperties} from "lexical/nodes/CommonBlockNode";
+} from "./common";
+import {CommonBlockNode, copyCommonBlockProperties, SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type SerializedParagraphNode = Spread<
   {

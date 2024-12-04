@@ -1,4 +1,4 @@
-import {CalloutNode} from './callout';
+import {CalloutNode} from '@lexical/rich-text/LexicalCalloutNode';
 import {
     ElementNode,
     KlassConstructor,
@@ -7,15 +7,15 @@ import {
     ParagraphNode
 } from "lexical";
 import {LinkNode} from "@lexical/link";
-import {ImageNode} from "./image";
-import {DetailsNode, SummaryNode} from "./details";
+import {ImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {DetailsNode, SummaryNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {ListItemNode, ListNode} from "@lexical/list";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
-import {HorizontalRuleNode} from "./horizontal-rule";
-import {CodeBlockNode} from "./code-block";
-import {DiagramNode} from "./diagram";
-import {EditorUiContext} from "../ui/framework/core";
-import {MediaNode} from "./media";
+import {HorizontalRuleNode} from "@lexical/rich-text/LexicalHorizontalRuleNode";
+import {CodeBlockNode} from "@lexical/rich-text/LexicalCodeBlockNode";
+import {DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
+import {EditorUiContext} from "./ui/framework/core";
+import {MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 

@@ -5,22 +5,20 @@ import {
     type DOMConversionOutput,
     type DOMExportOutput,
     type EditorConfig,
-    ElementNode,
     isHTMLElement,
     type LexicalEditor,
     LexicalNode,
     type NodeKey,
     type ParagraphNode,
-    type RangeSelection,
-    SerializedElementNode
+    type RangeSelection
 } from "lexical";
 import {addClassNamesToElement} from "@lexical/utils";
-import {CommonBlockNode, copyCommonBlockProperties} from "lexical/nodes/CommonBlockNode";
+import {CommonBlockNode, copyCommonBlockProperties, SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 import {
     commonPropertiesDifferent, deserializeCommonBlockNode,
-    SerializedCommonBlockNode, setCommonBlockPropsFromElement,
+    setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
-} from "../../nodes/_common";
+} from "lexical/nodes/common";
 
 export type SerializedQuoteNode = SerializedCommonBlockNode;
 

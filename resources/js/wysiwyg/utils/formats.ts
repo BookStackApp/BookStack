@@ -14,8 +14,8 @@ import {
     $toggleSelectionBlockNodeType,
     getLastSelection
 } from "./selection";
-import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "../nodes/code-block";
-import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "../nodes/callout";
+import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "@lexical/rich-text/LexicalCodeBlockNode";
+import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "@lexical/rich-text/LexicalCalloutNode";
 import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
 import {$createLinkNode, $isLinkNode} from "@lexical/link";
 import {$createHeadingNode, $isHeadingNode, HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";

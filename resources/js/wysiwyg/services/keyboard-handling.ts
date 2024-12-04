@@ -10,8 +10,8 @@ import {
     LexicalEditor,
     LexicalNode
 } from "lexical";
-import {$isImageNode} from "../nodes/image";
-import {$isMediaNode} from "../nodes/media";
+import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {getLastSelection} from "../utils/selection";
 import {$getNearestNodeBlockParent} from "../utils/nodes";
 import {$setInsetForSelection} from "../utils/lists";

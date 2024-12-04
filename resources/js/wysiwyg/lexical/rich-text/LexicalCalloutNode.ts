@@ -11,10 +11,10 @@ import type {EditorConfig} from "lexical/LexicalEditor";
 import type {RangeSelection} from "lexical/LexicalSelection";
 import {
     CommonBlockAlignment, commonPropertiesDifferent, deserializeCommonBlockNode,
-    SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
-} from "./_common";
+} from "lexical/nodes/common";
+import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type CalloutCategory = 'info' | 'danger' | 'warning' | 'success';
 

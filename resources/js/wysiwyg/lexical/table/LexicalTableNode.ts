@@ -15,25 +15,25 @@ import {
   LexicalEditor,
   LexicalNode,
   NodeKey,
-  SerializedElementNode, Spread,
+  Spread,
 } from 'lexical';
 
 import {addClassNamesToElement, isHTMLElement} from '@lexical/utils';
 import {
   $applyNodeReplacement,
   $getNearestNodeFromDOMNode,
-  ElementNode,
+
 } from 'lexical';
 
 import {$isTableCellNode} from './LexicalTableCellNode';
 import {TableDOMCell, TableDOMTable} from './LexicalTableObserver';
 import {getTable} from './LexicalTableSelectionHelpers';
-import {CommonBlockNode, copyCommonBlockProperties} from "lexical/nodes/CommonBlockNode";
+import {CommonBlockNode, copyCommonBlockProperties, SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 import {
   commonPropertiesDifferent, deserializeCommonBlockNode,
-  SerializedCommonBlockNode, setCommonBlockPropsFromElement,
+  setCommonBlockPropsFromElement,
   updateElementWithCommonBlockProps
-} from "../../nodes/_common";
+} from "lexical/nodes/common";
 import {el, extractStyleMapFromElement, StyleMap} from "../../utils/dom";
 import {getTableColumnWidths} from "../../utils/tables";
 

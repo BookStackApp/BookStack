@@ -41,9 +41,7 @@ import {
   $setCompositionKey,
   getEditorStateTextContent,
 } from '../../../LexicalUtils';
-import {Text} from "@codemirror/state";
 import {$generateHtmlFromNodes} from "@lexical/html";
-import {formatBold} from "@lexical/selection/__tests__/utils";
 
 const editorConfig = Object.freeze({
   namespace: '',

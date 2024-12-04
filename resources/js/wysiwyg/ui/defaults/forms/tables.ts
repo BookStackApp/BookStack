@@ -6,7 +6,7 @@ import {
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
 import {EditorFormModal} from "../../framework/modals";
-import {$getSelection, ElementFormatType} from "lexical";
+import {$getSelection} from "lexical";
 import {
     $forEachTableCell, $getCellPaddingForTable,
     $getTableCellColumnWidth,
@@ -16,7 +16,7 @@ import {
 } from "../../../utils/tables";
 import {formatSizeValue} from "../../../utils/dom";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
-import {CommonBlockAlignment} from "../../../nodes/_common";
+import {CommonBlockAlignment} from "lexical/nodes/common";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',

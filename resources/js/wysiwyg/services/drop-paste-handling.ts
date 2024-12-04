@@ -8,7 +8,7 @@ import {
 import {$insertNewBlockNodesAtSelection, $selectSingleNode} from "../utils/selection";
 import {$getNearestBlockNodeForCoords, $htmlToBlockNodes} from "../utils/nodes";
 import {Clipboard} from "../../services/clipboard";
-import {$createImageNode} from "../nodes/image";
+import {$createImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$createLinkNode} from "@lexical/link";
 import {EditorImageData, uploadImageFile} from "../utils/images";
 import {EditorUiContext} from "../ui/framework/core";

@@ -29,7 +29,7 @@ import {
 } from 'lexical';
 
 import {extractStyleMapFromElement, StyleMap} from "../../utils/dom";
-import {CommonBlockAlignment, extractAlignmentFromElement} from "../../nodes/_common";
+import {CommonBlockAlignment, extractAlignmentFromElement} from "lexical/nodes/common";
 
 export const TableCellHeaderStates = {
   BOTH: 3,

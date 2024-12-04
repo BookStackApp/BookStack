@@ -1,17 +1,10 @@
-import {LexicalNode, Spread} from "lexical";
-import type {SerializedElementNode} from "lexical/nodes/LexicalElementNode";
-import {el, sizeToPixels} from "../utils/dom";
+import {sizeToPixels} from "../../../utils/dom";
+import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type CommonBlockAlignment = 'left' | 'right' | 'center' | 'justify' | '';
 const validAlignments: CommonBlockAlignment[] = ['left', 'right', 'center', 'justify'];
 
 type EditorNodeDirection = 'ltr' | 'rtl' | null;
-
-export type SerializedCommonBlockNode = Spread<{
-    id: string;
-    alignment: CommonBlockAlignment;
-    inset: number;
-}, SerializedElementNode>
 
 export interface NodeHasAlignment {
     readonly __alignment: CommonBlockAlignment;
@@ -37,7 +30,7 @@ export interface NodeHasDirection {
     getDirection(): EditorNodeDirection;
 }
 
-interface CommonBlockInterface extends NodeHasId, NodeHasAlignment, NodeHasInset, NodeHasDirection {}
+export interface CommonBlockInterface extends NodeHasId, NodeHasAlignment, NodeHasInset, NodeHasDirection {}
 
 export function extractAlignmentFromElement(element: HTMLElement): CommonBlockAlignment {
     const textAlignStyle: string = element.style.textAlign || '';

@@ -1,7 +1,7 @@
 import {EditorFormModal, EditorFormModalDefinition} from "./modals";
 import {EditorContainerUiElement, EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {EditorDecorator, EditorDecoratorAdapter} from "./decorator";
-import {$getSelection, BaseSelection, COMMAND_PRIORITY_LOW, LexicalEditor, SELECTION_CHANGE_COMMAND} from "lexical";
+import {BaseSelection, LexicalEditor} from "lexical";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
