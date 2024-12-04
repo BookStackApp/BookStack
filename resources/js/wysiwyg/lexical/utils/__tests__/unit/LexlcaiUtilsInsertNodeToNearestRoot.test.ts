@@ -56,11 +56,11 @@ describe('LexicalUtils#insertNodeToNearestRoot', () => {
       expectedHtml:
         '<ul>' +
         '<li>Before</li>' +
-        '<li><ul><li>Hello</li></ul></li>' +
+        '<li style="list-style: none;"><ul><li>Hello</li></ul></li>' +
         '</ul>' +
         '<test-decorator></test-decorator>' +
         '<ul>' +
-        '<li><ul><li>world</li></ul></li>' +
+        '<li style="list-style: none;"><ul><li>world</li></ul></li>' +
         '<li>After</li>' +
         '</ul>',
       initialHtml:

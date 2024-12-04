@@ -1,5 +1,5 @@
 import {$getNearestNodeFromDOMNode, LexicalEditor} from "lexical";
-import {$isCustomListItemNode} from "../../../nodes/custom-list-item";
+import {$isListItemNode} from "@lexical/list";
 
 class TaskListHandler {
     protected editorContainer: HTMLElement;
@@ -38,7 +38,7 @@ class TaskListHandler {
 
         this.editor.update(() => {
             const node = $getNearestNodeFromDOMNode(listItem);
-            if ($isCustomListItemNode(node)) {
+            if ($isListItemNode(node)) {
                 node.setChecked(!node.getChecked());
             }
         });

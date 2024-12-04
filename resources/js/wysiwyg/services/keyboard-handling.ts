@@ -1,5 +1,6 @@
 import {EditorUiContext} from "../ui/framework/core";
 import {
+    $createParagraphNode,
     $getSelection,
     $isDecoratorNode,
     COMMAND_PRIORITY_LOW,
@@ -9,13 +10,12 @@ import {
     LexicalEditor,
     LexicalNode
 } from "lexical";
-import {$isImageNode} from "../nodes/image";
-import {$isMediaNode} from "../nodes/media";
+import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {getLastSelection} from "../utils/selection";
 import {$getNearestNodeBlockParent} from "../utils/nodes";
-import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
-import {$isCustomListItemNode} from "../nodes/custom-list-item";
 import {$setInsetForSelection} from "../utils/lists";
+import {$isListItemNode} from "@lexical/list";
 
 function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
@@ -45,7 +45,7 @@ function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEve
         if (nearestBlock) {
             requestAnimationFrame(() => {
                 editor.update(() => {
-                    const newParagraph = $createCustomParagraphNode();
+                    const newParagraph = $createParagraphNode();
                     nearestBlock.insertAfter(newParagraph);
                     newParagraph.select();
                 });
@@ -62,7 +62,7 @@ function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null): boo
     const change = event?.shiftKey ? -40 : 40;
     const selection = $getSelection();
     const nodes = selection?.getNodes() || [];
-    if (nodes.length > 1 || (nodes.length === 1 && $isCustomListItemNode(nodes[0].getParent()))) {
+    if (nodes.length > 1 || (nodes.length === 1 && $isListItemNode(nodes[0].getParent()))) {
         editor.update(() => {
             $setInsetForSelection(editor, change);
         });

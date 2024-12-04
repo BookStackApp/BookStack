@@ -10,21 +10,14 @@ import {
   $insertDataTransferForPlainText,
   $insertDataTransferForRichText,
 } from '@lexical/clipboard';
-import {$createListItemNode, $createListNode} from '@lexical/list';
-import {$createHeadingNode, registerRichText} from '@lexical/rich-text';
 import {
   $createParagraphNode,
-  $createRangeSelection,
   $createTabNode,
-  $createTextNode,
   $getRoot,
   $getSelection,
   $insertNodes,
-  $isElementNode,
   $isRangeSelection,
-  $isTextNode,
-  $setSelection,
-  KEY_TAB_COMMAND,
+
 } from 'lexical';
 
 import {

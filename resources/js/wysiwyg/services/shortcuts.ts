@@ -6,12 +6,12 @@ import {
     toggleSelectionAsHeading, toggleSelectionAsList,
     toggleSelectionAsParagraph
 } from "../utils/formats";
-import {HeadingTagType} from "@lexical/rich-text";
 import {EditorUiContext} from "../ui/framework/core";
 import {$getNodeFromSelection} from "../utils/selection";
 import {$isLinkNode, LinkNode} from "@lexical/link";
 import {$showLinkForm} from "../ui/defaults/forms/objects";
 import {showLinkSelector} from "../utils/links";
+import {HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
 
 function headerHandler(editor: LexicalEditor, tag: HeadingTagType): boolean {
     toggleSelectionAsHeading(editor, tag);

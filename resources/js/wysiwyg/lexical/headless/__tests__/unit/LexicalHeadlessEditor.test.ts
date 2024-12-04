@@ -206,7 +206,7 @@ describe('LexicalHeadlessEditor', () => {
     cleanup();
 
     expect(html).toBe(
-      '<p>hello world</p>',
+      '<p dir="ltr">hello world</p>',
     );
   });
 });

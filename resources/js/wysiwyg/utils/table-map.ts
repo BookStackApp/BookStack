@@ -1,6 +1,4 @@
-import {CustomTableNode} from "../nodes/custom-table";
-import {$isCustomTableCellNode, CustomTableCellNode} from "../nodes/custom-table-cell";
-import {$isTableRowNode} from "@lexical/table";
+import {$isTableCellNode, $isTableRowNode, TableCellNode, TableNode} from "@lexical/table";
 
 export type CellRange = {
     fromX: number;
@@ -16,15 +14,15 @@ export class TableMap {
 
     // Represents an array (rows*columns in length) of cell nodes from top-left to
     // bottom right. Cells may repeat where merged and covering multiple spaces.
-    cells: CustomTableCellNode[] = [];
+    cells: TableCellNode[] = [];
 
-    constructor(table: CustomTableNode) {
+    constructor(table: TableNode) {
         this.buildCellMap(table);
     }
 
-    protected buildCellMap(table: CustomTableNode) {
-        const rowsAndCells: CustomTableCellNode[][] = [];
-        const setCell = (x: number, y: number, cell: CustomTableCellNode) => {
+    protected buildCellMap(table: TableNode) {
+        const rowsAndCells: TableCellNode[][] = [];
+        const setCell = (x: number, y: number, cell: TableCellNode) => {
             if (typeof rowsAndCells[y] === 'undefined') {
                 rowsAndCells[y] = [];
             }
@@ -36,7 +34,7 @@ export class TableMap {
         const rowNodes = table.getChildren().filter(r => $isTableRowNode(r));
         for (let rowIndex = 0; rowIndex < rowNodes.length; rowIndex++) {
             const rowNode = rowNodes[rowIndex];
-            const cellNodes = rowNode.getChildren().filter(c => $isCustomTableCellNode(c));
+            const cellNodes = rowNode.getChildren().filter(c => $isTableCellNode(c));
             let targetColIndex: number = 0;
             for (let cellIndex = 0; cellIndex < cellNodes.length; cellIndex++) {
                 const cellNode = cellNodes[cellIndex];
@@ -60,7 +58,7 @@ export class TableMap {
         this.columnCount = Math.max(...rowsAndCells.map(r => r.length));
 
         const cells = [];
-        let lastCell: CustomTableCellNode = rowsAndCells[0][0];
+        let lastCell: TableCellNode = rowsAndCells[0][0];
         for (let y = 0; y < this.rowCount; y++) {
             for (let x = 0; x < this.columnCount; x++) {
                 if (!rowsAndCells[y] || !rowsAndCells[y][x]) {
@@ -75,7 +73,7 @@ export class TableMap {
         this.cells = cells;
     }
 
-    public getCellAtPosition(x: number, y: number): CustomTableCellNode {
+    public getCellAtPosition(x: number, y: number): TableCellNode {
         const position = (y * this.columnCount) + x;
         if (position >= this.cells.length) {
             throw new Error(`TableMap Error: Attempted to get cell ${position+1} of ${this.cells.length}`);
@@ -84,13 +82,13 @@ export class TableMap {
         return this.cells[position];
     }
 
-    public getCellsInRange(range: CellRange): CustomTableCellNode[] {
+    public getCellsInRange(range: CellRange): TableCellNode[] {
         const minX = Math.max(Math.min(range.fromX, range.toX), 0);
         const maxX = Math.min(Math.max(range.fromX, range.toX), this.columnCount - 1);
         const minY = Math.max(Math.min(range.fromY, range.toY), 0);
         const maxY = Math.min(Math.max(range.fromY, range.toY), this.rowCount - 1);
 
-        const cells = new Set<CustomTableCellNode>();
+        const cells = new Set<TableCellNode>();
 
         for (let y = minY; y <= maxY; y++) {
             for (let x = minX; x <= maxX; x++) {
@@ -101,7 +99,7 @@ export class TableMap {
         return [...cells.values()];
     }
 
-    public getCellsInColumn(columnIndex: number): CustomTableCellNode[] {
+    public getCellsInColumn(columnIndex: number): TableCellNode[] {
         return this.getCellsInRange({
             fromX: columnIndex,
             toX: columnIndex,
@@ -110,7 +108,7 @@ export class TableMap {
         });
     }
 
-    public getRangeForCell(cell: CustomTableCellNode): CellRange|null {
+    public getRangeForCell(cell: TableCellNode): CellRange|null {
         let range: CellRange|null = null;
         const cellKey = cell.getKey();
 

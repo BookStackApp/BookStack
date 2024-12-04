@@ -13,13 +13,14 @@ import {createHeadlessEditor} from '@lexical/headless';
 import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
 import {LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
-import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {
   $createParagraphNode,
   $createRangeSelection,
   $createTextNode,
   $getRoot,
 } from 'lexical';
+import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
+import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 describe('HTML', () => {
   type Input = Array<{
@@ -175,7 +176,7 @@ describe('HTML', () => {
     });
 
     expect(html).toBe(
-      '<p style="text-align: center;">Hello world!</p>',
+      '<p class="align-center">Hello world!</p>',
     );
   });
 
@@ -205,7 +206,7 @@ describe('HTML', () => {
     });
 
     expect(html).toBe(
-      '<p style="text-align: center;">Hello world!</p>',
+      '<p class="align-center">Hello world!</p>',
     );
   });
 });

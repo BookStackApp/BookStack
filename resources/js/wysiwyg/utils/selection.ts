@@ -7,18 +7,16 @@ import {
     $isTextNode,
     $setSelection,
     BaseSelection, DecoratorNode,
-    ElementFormatType,
     ElementNode, LexicalEditor,
     LexicalNode,
     TextFormatType, TextNode
 } from "lexical";
-import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
+import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
 import {$getNearestNodeBlockParent, $getParentOfType, nodeHasAlignment} from "./nodes";
-import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
-import {CommonBlockAlignment} from "../nodes/_common";
+import {CommonBlockAlignment} from "lexical/nodes/common";
 
 const lastSelectionByEditor = new WeakMap<LexicalEditor, BaseSelection|null>;
 
@@ -71,7 +69,7 @@ export function $toggleSelectionBlockNodeType(matcher: LexicalNodeMatcher, creat
     const selection = $getSelection();
     const blockElement = selection ? $getNearestBlockElementAncestorOrThrow(selection.getNodes()[0]) : null;
     if (selection && matcher(blockElement)) {
-        $setBlocksType(selection, $createCustomParagraphNode);
+        $setBlocksType(selection, $createParagraphNode);
     } else {
         $setBlocksType(selection, creator);
     }

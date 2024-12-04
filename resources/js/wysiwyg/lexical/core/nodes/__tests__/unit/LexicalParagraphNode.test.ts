@@ -48,11 +48,11 @@ describe('LexicalParagraphNode tests', () => {
         // logic is in place in the corresponding importJSON  method
         // to accomodate these changes.
         expect(node.exportJSON()).toStrictEqual({
+          alignment: '',
           children: [],
           direction: null,
-          format: '',
-          indent: 0,
-          textFormat: 0,
+          id: '',
+          inset: 0,
           textStyle: '',
           type: 'paragraph',
           version: 1,
@@ -125,6 +125,21 @@ describe('LexicalParagraphNode tests', () => {
           '<div contenteditable="true" style="user-select: text; white-space: pre-wrap; word-break: break-word;" data-lexical-editor="true"><p><br></p></div>',
         );
       });
+    });
+
+    test('id is supported', async () => {
+      const {editor} = testEnv;
+      let paragraphNode: ParagraphNode;
+
+      await editor.update(() => {
+        paragraphNode = new ParagraphNode();
+        paragraphNode.setId('testid')
+        $getRoot().append(paragraphNode);
+      });
+
+      expect(testEnv.innerHTML).toBe(
+          '<p id="testid"><br></p>',
+      );
     });
 
     test('$createParagraphNode()', async () => {

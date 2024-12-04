@@ -2,27 +2,26 @@ import {EditorButtonDefinition} from "../../framework/buttons";
 import linkIcon from "@icons/editor/link.svg";
 import {EditorUiContext} from "../../framework/core";
 import {
-    $createTextNode,
     $getRoot,
     $getSelection, $insertNodes,
     BaseSelection,
-    ElementNode, isCurrentlyReadOnlyMode
+    ElementNode
 } from "lexical";
 import {$isLinkNode, LinkNode} from "@lexical/link";
 import unlinkIcon from "@icons/editor/unlink.svg";
 import imageIcon from "@icons/editor/image.svg";
-import {$isImageNode, ImageNode} from "../../../nodes/image";
+import {$isImageNode, ImageNode} from "@lexical/rich-text/LexicalImageNode";
 import horizontalRuleIcon from "@icons/editor/horizontal-rule.svg";
-import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "../../../nodes/horizontal-rule";
+import {$createHorizontalRuleNode, $isHorizontalRuleNode} from "@lexical/rich-text/LexicalHorizontalRuleNode";
 import codeBlockIcon from "@icons/editor/code-block.svg";
-import {$isCodeBlockNode} from "../../../nodes/code-block";
+import {$isCodeBlockNode} from "@lexical/rich-text/LexicalCodeBlockNode";
 import editIcon from "@icons/edit.svg";
 import diagramIcon from "@icons/editor/diagram.svg";
-import {$createDiagramNode, DiagramNode} from "../../../nodes/diagram";
+import {$createDiagramNode, DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import detailsIcon from "@icons/editor/details.svg";
 import mediaIcon from "@icons/editor/media.svg";
-import {$createDetailsNode, $isDetailsNode} from "../../../nodes/details";
-import {$isMediaNode, MediaNode} from "../../../nodes/media";
+import {$createDetailsNode, $isDetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
+import {$isMediaNode, MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {
     $getNodeFromSelection,
     $insertNewBlockNodeAtSelection,

@@ -8,8 +8,8 @@ import {
     EditorConfig,
 } from 'lexical';
 
-import {el} from "../utils/dom";
-import {extractDirectionFromElement} from "./_common";
+import {el} from "../../utils/dom";
+import {extractDirectionFromElement} from "lexical/nodes/common";
 
 export type SerializedDetailsNode = Spread<{
     id: string;

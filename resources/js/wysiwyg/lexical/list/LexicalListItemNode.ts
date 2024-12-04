@@ -13,7 +13,6 @@ import type {
   DOMConversionOutput,
   DOMExportOutput,
   EditorConfig,
-  EditorThemeClasses,
   LexicalNode,
   NodeKey,
   ParagraphNode,
@@ -22,10 +21,6 @@ import type {
   Spread,
 } from 'lexical';
 
-import {
-  addClassNamesToElement,
-  removeClassNamesFromElement,
-} from '@lexical/utils';
 import {
   $applyNodeReplacement,
   $createParagraphNode,
@@ -36,11 +31,11 @@ import {
   LexicalEditor,
 } from 'lexical';
 import invariant from 'lexical/shared/invariant';
-import normalizeClassNames from 'lexical/shared/normalizeClassNames';
 
 import {$createListNode, $isListNode} from './';
-import {$handleIndent, $handleOutdent, mergeLists} from './formatList';
+import {mergeLists} from './formatList';
 import {isNestedListNode} from './utils';
+import {el} from "../../utils/dom";
 
 export type SerializedListItemNode = Spread<
   {
@@ -74,11 +69,17 @@ export class ListItemNode extends ElementNode {
   createDOM(config: EditorConfig): HTMLElement {
     const element = document.createElement('li');
     const parent = this.getParent();
+
     if ($isListNode(parent) && parent.getListType() === 'check') {
-      updateListItemChecked(element, this, null, parent);
+      updateListItemChecked(element, this);
     }
+
     element.value = this.__value;
-    $setListItemThemeClassNames(element, config.theme, this);
+
+    if ($hasNestedListWithoutLabel(this)) {
+      element.style.listStyle = 'none';
+    }
+
     return element;
   }
 
@@ -89,11 +90,12 @@ export class ListItemNode extends ElementNode {
   ): boolean {
     const parent = this.getParent();
     if ($isListNode(parent) && parent.getListType() === 'check') {
-      updateListItemChecked(dom, this, prevNode, parent);
+      updateListItemChecked(dom, this);
     }
+
+    dom.style.listStyle = $hasNestedListWithoutLabel(this) ? 'none' : '';
     // @ts-expect-error - this is always HTMLListItemElement
     dom.value = this.__value;
-    $setListItemThemeClassNames(dom, config.theme, this);
 
     return false;
   }
@@ -126,14 +128,26 @@ export class ListItemNode extends ElementNode {
     const node = $createListItemNode();
     node.setChecked(serializedNode.checked);
     node.setValue(serializedNode.value);
-    node.setFormat(serializedNode.format);
     node.setDirection(serializedNode.direction);
     return node;
   }
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const element = this.createDOM(editor._config);
-    element.style.textAlign = this.getFormatType();
+
+    if (element.classList.contains('task-list-item')) {
+      const input = el('input', {
+        type: 'checkbox',
+        disabled: 'disabled',
+      });
+      if (element.hasAttribute('checked')) {
+        input.setAttribute('checked', 'checked');
+        element.removeAttribute('checked');
+      }
+
+      element.prepend(input);
+    }
+
     return {
       element,
     };
@@ -172,7 +186,6 @@ export class ListItemNode extends ElementNode {
     if ($isListItemNode(replaceWithNode)) {
       return super.replace(replaceWithNode);
     }
-    this.setIndent(0);
     const list = this.getParentOrThrow();
     if (!$isListNode(list)) {
       return replaceWithNode;
@@ -351,41 +364,6 @@ export class ListItemNode extends ElementNode {
     this.setChecked(!this.__checked);
   }
 
-  getIndent(): number {
-    // If we don't have a parent, we are likely serializing
-    const parent = this.getParent();
-    if (parent === null) {
-      return this.getLatest().__indent;
-    }
-    // ListItemNode should always have a ListNode for a parent.
-    let listNodeParent = parent.getParentOrThrow();
-    let indentLevel = 0;
-    while ($isListItemNode(listNodeParent)) {
-      listNodeParent = listNodeParent.getParentOrThrow().getParentOrThrow();
-      indentLevel++;
-    }
-
-    return indentLevel;
-  }
-
-  setIndent(indent: number): this {
-    invariant(typeof indent === 'number', 'Invalid indent value.');
-    indent = Math.floor(indent);
-    invariant(indent >= 0, 'Indent value must be non-negative.');
-    let currentIndent = this.getIndent();
-    while (currentIndent !== indent) {
-      if (currentIndent < indent) {
-        $handleIndent(this);
-        currentIndent++;
-      } else {
-        $handleOutdent(this);
-        currentIndent--;
-      }
-    }
-
-    return this;
-  }
-
   /** @deprecated @internal */
   canInsertAfter(node: LexicalNode): boolean {
     return $isListItemNode(node);
@@ -428,89 +406,33 @@ export class ListItemNode extends ElementNode {
   }
 }
 
-function $setListItemThemeClassNames(
-  dom: HTMLElement,
-  editorThemeClasses: EditorThemeClasses,
-  node: ListItemNode,
-): void {
-  const classesToAdd = [];
-  const classesToRemove = [];
-  const listTheme = editorThemeClasses.list;
-  const listItemClassName = listTheme ? listTheme.listitem : undefined;
-  let nestedListItemClassName;
+function $hasNestedListWithoutLabel(node: ListItemNode): boolean {
+  const children = node.getChildren();
+  let hasLabel = false;
+  let hasNestedList = false;
 
-  if (listTheme && listTheme.nested) {
-    nestedListItemClassName = listTheme.nested.listitem;
-  }
-
-  if (listItemClassName !== undefined) {
-    classesToAdd.push(...normalizeClassNames(listItemClassName));
-  }
-
-  if (listTheme) {
-    const parentNode = node.getParent();
-    const isCheckList =
-      $isListNode(parentNode) && parentNode.getListType() === 'check';
-    const checked = node.getChecked();
-
-    if (!isCheckList || checked) {
-      classesToRemove.push(listTheme.listitemUnchecked);
-    }
-
-    if (!isCheckList || !checked) {
-      classesToRemove.push(listTheme.listitemChecked);
-    }
-
-    if (isCheckList) {
-      classesToAdd.push(
-        checked ? listTheme.listitemChecked : listTheme.listitemUnchecked,
-      );
+  for (const child of children) {
+    if ($isListNode(child)) {
+      hasNestedList = true;
+    } else if (child.getTextContent().trim().length > 0) {
+      hasLabel = true;
     }
   }
 
-  if (nestedListItemClassName !== undefined) {
-    const nestedListItemClasses = normalizeClassNames(nestedListItemClassName);
-
-    if (node.getChildren().some((child) => $isListNode(child))) {
-      classesToAdd.push(...nestedListItemClasses);
-    } else {
-      classesToRemove.push(...nestedListItemClasses);
-    }
-  }
-
-  if (classesToRemove.length > 0) {
-    removeClassNamesFromElement(dom, ...classesToRemove);
-  }
-
-  if (classesToAdd.length > 0) {
-    addClassNamesToElement(dom, ...classesToAdd);
-  }
+  return hasNestedList && !hasLabel;
 }
 
 function updateListItemChecked(
   dom: HTMLElement,
   listItemNode: ListItemNode,
-  prevListItemNode: ListItemNode | null,
-  listNode: ListNode,
 ): void {
-  // Only add attributes for leaf list items
-  if ($isListNode(listItemNode.getFirstChild())) {
-    dom.removeAttribute('role');
-    dom.removeAttribute('tabIndex');
-    dom.removeAttribute('aria-checked');
+  // Only set task list attrs for leaf list items
+  const shouldBeTaskItem = !$isListNode(listItemNode.getFirstChild());
+  dom.classList.toggle('task-list-item', shouldBeTaskItem);
+  if (listItemNode.__checked) {
+    dom.setAttribute('checked', 'checked');
   } else {
-    dom.setAttribute('role', 'checkbox');
-    dom.setAttribute('tabIndex', '-1');
-
-    if (
-      !prevListItemNode ||
-      listItemNode.__checked !== prevListItemNode.__checked
-    ) {
-      dom.setAttribute(
-        'aria-checked',
-        listItemNode.getChecked() ? 'true' : 'false',
-      );
-    }
+    dom.removeAttribute('checked');
   }
 }
 

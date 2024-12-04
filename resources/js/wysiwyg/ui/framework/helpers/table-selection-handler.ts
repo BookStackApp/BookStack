@@ -1,12 +1,12 @@
 import {$getNodeByKey, LexicalEditor} from "lexical";
 import {NodeKey} from "lexical/LexicalNode";
 import {
+    $isTableNode,
     applyTableHandlers,
     HTMLTableElementWithWithTableSelectionState,
     TableNode,
     TableObserver
 } from "@lexical/table";
-import {$isCustomTableNode, CustomTableNode} from "../../../nodes/custom-table";
 
 // File adapted from logic in:
 // https://github.com/facebook/lexical/blob/f373759a7849f473d34960a6bf4e34b2a011e762/packages/lexical-react/src/LexicalTablePlugin.ts#L49
@@ -25,12 +25,12 @@ class TableSelectionHandler {
     }
 
     protected init() {
-        this.unregisterMutationListener = this.editor.registerMutationListener(CustomTableNode, (mutations) => {
+        this.unregisterMutationListener = this.editor.registerMutationListener(TableNode, (mutations) => {
             for (const [nodeKey, mutation] of mutations) {
                 if (mutation === 'created') {
                     this.editor.getEditorState().read(() => {
-                        const tableNode = $getNodeByKey<CustomTableNode>(nodeKey);
-                        if ($isCustomTableNode(tableNode)) {
+                        const tableNode = $getNodeByKey<TableNode>(nodeKey);
+                        if ($isTableNode(tableNode)) {
                             this.initializeTableNode(tableNode);
                         }
                     });

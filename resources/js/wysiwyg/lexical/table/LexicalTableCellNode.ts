@@ -28,7 +28,8 @@ import {
   ElementNode,
 } from 'lexical';
 
-import {COLUMN_WIDTH, PIXEL_VALUE_REG_EXP} from './constants';
+import {extractStyleMapFromElement, StyleMap} from "../../utils/dom";
+import {CommonBlockAlignment, extractAlignmentFromElement} from "lexical/nodes/common";
 
 export const TableCellHeaderStates = {
   BOTH: 3,
@@ -47,6 +48,8 @@ export type SerializedTableCellNode = Spread<
     headerState: TableCellHeaderState;
     width?: number;
     backgroundColor?: null | string;
+    styles: Record<string, string>;
+    alignment: CommonBlockAlignment;
   },
   SerializedElementNode
 >;
@@ -63,6 +66,10 @@ export class TableCellNode extends ElementNode {
   __width?: number;
   /** @internal */
   __backgroundColor: null | string;
+  /** @internal */
+  __styles: StyleMap = new Map;
+  /** @internal */
+  __alignment: CommonBlockAlignment = '';
 
   static getType(): string {
     return 'tablecell';
@@ -77,6 +84,8 @@ export class TableCellNode extends ElementNode {
     );
     cellNode.__rowSpan = node.__rowSpan;
     cellNode.__backgroundColor = node.__backgroundColor;
+    cellNode.__styles = new Map(node.__styles);
+    cellNode.__alignment = node.__alignment;
     return cellNode;
   }
 
@@ -94,16 +103,20 @@ export class TableCellNode extends ElementNode {
   }
 
   static importJSON(serializedNode: SerializedTableCellNode): TableCellNode {
-    const colSpan = serializedNode.colSpan || 1;
-    const rowSpan = serializedNode.rowSpan || 1;
-    const cellNode = $createTableCellNode(
-      serializedNode.headerState,
-      colSpan,
-      serializedNode.width || undefined,
+    const node = $createTableCellNode(
+        serializedNode.headerState,
+        serializedNode.colSpan,
+        serializedNode.width,
     );
-    cellNode.__rowSpan = rowSpan;
-    cellNode.__backgroundColor = serializedNode.backgroundColor || null;
-    return cellNode;
+
+    if (serializedNode.rowSpan) {
+        node.setRowSpan(serializedNode.rowSpan);
+    }
+
+    node.setStyles(new Map(Object.entries(serializedNode.styles)));
+    node.setAlignment(serializedNode.alignment);
+
+    return node;
   }
 
   constructor(
@@ -144,34 +157,19 @@ export class TableCellNode extends ElementNode {
       this.hasHeader() && config.theme.tableCellHeader,
     );
 
+    for (const [name, value] of this.__styles.entries()) {
+      element.style.setProperty(name, value);
+    }
+
+    if (this.__alignment) {
+      element.classList.add('align-' + this.__alignment);
+    }
+
     return element;
   }
 
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     const {element} = super.exportDOM(editor);
-
-    if (element) {
-      const element_ = element as HTMLTableCellElement;
-      element_.style.border = '1px solid black';
-      if (this.__colSpan > 1) {
-        element_.colSpan = this.__colSpan;
-      }
-      if (this.__rowSpan > 1) {
-        element_.rowSpan = this.__rowSpan;
-      }
-      element_.style.width = `${this.getWidth() || COLUMN_WIDTH}px`;
-
-      element_.style.verticalAlign = 'top';
-      element_.style.textAlign = 'start';
-
-      const backgroundColor = this.getBackgroundColor();
-      if (backgroundColor !== null) {
-        element_.style.backgroundColor = backgroundColor;
-      } else if (this.hasHeader()) {
-        element_.style.backgroundColor = '#f2f3f5';
-      }
-    }
-
     return {
       element,
     };
@@ -186,6 +184,8 @@ export class TableCellNode extends ElementNode {
       rowSpan: this.__rowSpan,
       type: 'tablecell',
       width: this.getWidth(),
+      styles: Object.fromEntries(this.__styles),
+      alignment: this.__alignment,
     };
   }
 
@@ -231,6 +231,38 @@ export class TableCellNode extends ElementNode {
     return this.getLatest().__width;
   }
 
+  clearWidth(): void {
+    const self = this.getWritable();
+    self.__width = undefined;
+  }
+
+  getStyles(): StyleMap {
+    const self = this.getLatest();
+    return new Map(self.__styles);
+  }
+
+  setStyles(styles: StyleMap): void {
+    const self = this.getWritable();
+    self.__styles = new Map(styles);
+  }
+
+  setAlignment(alignment: CommonBlockAlignment) {
+    const self = this.getWritable();
+    self.__alignment = alignment;
+  }
+
+  getAlignment(): CommonBlockAlignment {
+    const self = this.getLatest();
+    return self.__alignment;
+  }
+
+  updateTag(tag: string): void {
+    const isHeader = tag.toLowerCase() === 'th';
+    const state = isHeader ? TableCellHeaderStates.ROW : TableCellHeaderStates.NO_STATUS;
+    const self = this.getWritable();
+    self.__headerState = state;
+  }
+
   getBackgroundColor(): null | string {
     return this.getLatest().__backgroundColor;
   }
@@ -265,7 +297,9 @@ export class TableCellNode extends ElementNode {
       prevNode.__width !== this.__width ||
       prevNode.__colSpan !== this.__colSpan ||
       prevNode.__rowSpan !== this.__rowSpan ||
-      prevNode.__backgroundColor !== this.__backgroundColor
+      prevNode.__backgroundColor !== this.__backgroundColor ||
+      prevNode.__styles !== this.__styles ||
+      prevNode.__alignment !== this.__alignment
     );
   }
 
@@ -287,38 +321,42 @@ export class TableCellNode extends ElementNode {
 }
 
 export function $convertTableCellNodeElement(
-  domNode: Node,
+    domNode: Node,
 ): DOMConversionOutput {
   const domNode_ = domNode as HTMLTableCellElement;
   const nodeName = domNode.nodeName.toLowerCase();
 
   let width: number | undefined = undefined;
 
+
+  const PIXEL_VALUE_REG_EXP = /^(\d+(?:\.\d+)?)px$/;
   if (PIXEL_VALUE_REG_EXP.test(domNode_.style.width)) {
     width = parseFloat(domNode_.style.width);
   }
 
   const tableCellNode = $createTableCellNode(
-    nodeName === 'th'
-      ? TableCellHeaderStates.ROW
-      : TableCellHeaderStates.NO_STATUS,
-    domNode_.colSpan,
-    width,
+      nodeName === 'th'
+          ? TableCellHeaderStates.ROW
+          : TableCellHeaderStates.NO_STATUS,
+      domNode_.colSpan,
+      width,
   );
 
   tableCellNode.__rowSpan = domNode_.rowSpan;
-  const backgroundColor = domNode_.style.backgroundColor;
-  if (backgroundColor !== '') {
-    tableCellNode.__backgroundColor = backgroundColor;
-  }
 
   const style = domNode_.style;
   const textDecoration = style.textDecoration.split(' ');
   const hasBoldFontWeight =
-    style.fontWeight === '700' || style.fontWeight === 'bold';
+      style.fontWeight === '700' || style.fontWeight === 'bold';
   const hasLinethroughTextDecoration = textDecoration.includes('line-through');
   const hasItalicFontStyle = style.fontStyle === 'italic';
   const hasUnderlineTextDecoration = textDecoration.includes('underline');
+
+  if (domNode instanceof HTMLElement) {
+    tableCellNode.setStyles(extractStyleMapFromElement(domNode));
+    tableCellNode.setAlignment(extractAlignmentFromElement(domNode));
+  }
+
   return {
     after: (childLexicalNodes) => {
       if (childLexicalNodes.length === 0) {
@@ -330,8 +368,8 @@ export function $convertTableCellNodeElement(
       if ($isTableCellNode(parentLexicalNode) && !$isElementNode(lexicalNode)) {
         const paragraphNode = $createParagraphNode();
         if (
-          $isLineBreakNode(lexicalNode) &&
-          lexicalNode.getTextContent() === '\n'
+            $isLineBreakNode(lexicalNode) &&
+            lexicalNode.getTextContent() === '\n'
         ) {
           return null;
         }
@@ -360,7 +398,7 @@ export function $convertTableCellNodeElement(
 }
 
 export function $createTableCellNode(
-  headerState: TableCellHeaderState,
+  headerState: TableCellHeaderState = TableCellHeaderStates.NO_STATUS,
   colSpan = 1,
   width?: number,
 ): TableCellNode {

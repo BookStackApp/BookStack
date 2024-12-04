@@ -54,8 +54,6 @@ describe('LexicalEditorState tests', () => {
         __cachedText: 'foo',
         __dir: null,
         __first: '1',
-        __format: 0,
-        __indent: 0,
         __key: 'root',
         __last: '1',
         __next: null,
@@ -66,10 +64,11 @@ describe('LexicalEditorState tests', () => {
         __type: 'root',
       });
       expect(paragraph).toEqual({
+        "__alignment": "",
         __dir: null,
         __first: '2',
-        __format: 0,
-        __indent: 0,
+        __id: '',
+        __inset: 0,
         __key: '1',
         __last: '2',
         __next: null,
@@ -77,7 +76,6 @@ describe('LexicalEditorState tests', () => {
         __prev: null,
         __size: 1,
         __style: '',
-        __textFormat: 0,
         __textStyle: '',
         __type: 'paragraph',
       });
@@ -113,7 +111,7 @@ describe('LexicalEditorState tests', () => {
       });
 
       expect(JSON.stringify(editor.getEditorState().toJSON())).toEqual(
-        `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hello world","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}`,
+        `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hello world","type":"text","version":1}],"direction":null,"type":"paragraph","version":1,"id":"","alignment":"","inset":0,"textStyle":""}],"direction":null,"type":"root","version":1}}`,
       );
     });
 
@@ -140,8 +138,6 @@ describe('LexicalEditorState tests', () => {
               __cachedText: '',
               __dir: null,
               __first: null,
-              __format: 0,
-              __indent: 0,
               __key: 'root',
               __last: null,
               __next: null,

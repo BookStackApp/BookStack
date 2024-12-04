@@ -39,10 +39,9 @@ describe('LexicalTableRowNode tests', () => {
           `<tr class="${editorConfig.theme.tableRow}"></tr>`,
         );
 
-        const rowHeight = 36;
-        const rowWithCustomHeightNode = $createTableRowNode(36);
+        const rowWithCustomHeightNode = $createTableRowNode();
         expect(rowWithCustomHeightNode.createDOM(editorConfig).outerHTML).toBe(
-          `<tr style="height: ${rowHeight}px;" class="${editorConfig.theme.tableRow}"></tr>`,
+          `<tr class="${editorConfig.theme.tableRow}"></tr>`,
         );
       });
     });

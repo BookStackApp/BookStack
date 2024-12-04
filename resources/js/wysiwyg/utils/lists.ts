@@ -1,22 +1,21 @@
-import {$createCustomListItemNode, $isCustomListItemNode, CustomListItemNode} from "../nodes/custom-list-item";
-import {$createCustomListNode, $isCustomListNode} from "../nodes/custom-list";
 import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
 import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection} from "./selection";
 import {nodeHasInset} from "./nodes";
+import {$createListItemNode, $createListNode, $isListItemNode, $isListNode, ListItemNode} from "@lexical/list";
 
 
-export function $nestListItem(node: CustomListItemNode): CustomListItemNode {
+export function $nestListItem(node: ListItemNode): ListItemNode {
     const list = node.getParent();
-    if (!$isCustomListNode(list)) {
+    if (!$isListNode(list)) {
         return node;
     }
 
-    const listItems = list.getChildren() as CustomListItemNode[];
+    const listItems = list.getChildren() as ListItemNode[];
     const nodeIndex = listItems.findIndex((n) => n.getKey() === node.getKey());
     const isFirst = nodeIndex === 0;
 
-    const newListItem = $createCustomListItemNode();
-    const newList = $createCustomListNode(list.getListType());
+    const newListItem = $createListItemNode();
+    const newList = $createListNode(list.getListType());
     newList.append(newListItem);
     newListItem.append(...node.getChildren());
 
@@ -31,11 +30,11 @@ export function $nestListItem(node: CustomListItemNode): CustomListItemNode {
     return newListItem;
 }
 
-export function $unnestListItem(node: CustomListItemNode): CustomListItemNode {
+export function $unnestListItem(node: ListItemNode): ListItemNode {
     const list = node.getParent();
     const parentListItem = list?.getParent();
     const outerList = parentListItem?.getParent();
-    if (!$isCustomListNode(list) || !$isCustomListNode(outerList) || !$isCustomListItemNode(parentListItem)) {
+    if (!$isListNode(list) || !$isListNode(outerList) || !$isListItemNode(parentListItem)) {
         return node;
     }
 
@@ -51,19 +50,19 @@ export function $unnestListItem(node: CustomListItemNode): CustomListItemNode {
     return node;
 }
 
-function getListItemsForSelection(selection: BaseSelection|null): (CustomListItemNode|null)[] {
+function getListItemsForSelection(selection: BaseSelection|null): (ListItemNode|null)[] {
     const nodes = selection?.getNodes() || [];
     const listItemNodes = [];
 
     outer: for (const node of nodes) {
-        if ($isCustomListItemNode(node)) {
+        if ($isListItemNode(node)) {
             listItemNodes.push(node);
             continue;
         }
 
         const parents = node.getParents();
         for (const parent of parents) {
-            if ($isCustomListItemNode(parent)) {
+            if ($isListItemNode(parent)) {
                 listItemNodes.push(parent);
                 continue outer;
             }
@@ -75,8 +74,8 @@ function getListItemsForSelection(selection: BaseSelection|null): (CustomListIte
     return listItemNodes;
 }
 
-function $reduceDedupeListItems(listItems: (CustomListItemNode|null)[]): CustomListItemNode[] {
-    const listItemMap: Record<string, CustomListItemNode> = {};
+function $reduceDedupeListItems(listItems: (ListItemNode|null)[]): ListItemNode[] {
+    const listItemMap: Record<string, ListItemNode> = {};
 
     for (const item of listItems) {
         if (item === null) {

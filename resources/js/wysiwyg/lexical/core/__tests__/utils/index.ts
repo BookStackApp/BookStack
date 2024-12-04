@@ -10,7 +10,6 @@ import {createHeadlessEditor} from '@lexical/headless';
 import {AutoLinkNode, LinkNode} from '@lexical/link';
 import {ListItemNode, ListNode} from '@lexical/list';
 
-import {HeadingNode, QuoteNode} from '@lexical/rich-text';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 
 import {
@@ -36,6 +35,8 @@ import {
   LexicalNodeReplacement,
 } from '../../LexicalEditor';
 import {resetRandomKey} from '../../LexicalUtils';
+import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
+import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 
 type TestEnv = {
@@ -129,8 +130,6 @@ export class TestElementNode extends ElementNode {
     serializedNode: SerializedTestElementNode,
   ): TestInlineElementNode {
     const node = $createTestInlineElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -195,8 +194,6 @@ export class TestInlineElementNode extends ElementNode {
     serializedNode: SerializedTestInlineElementNode,
   ): TestInlineElementNode {
     const node = $createTestInlineElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -241,8 +238,6 @@ export class TestShadowRootNode extends ElementNode {
     serializedNode: SerializedTestShadowRootNode,
   ): TestShadowRootNode {
     const node = $createTestShadowRootNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -322,8 +317,6 @@ export class TestExcludeFromCopyElementNode extends ElementNode {
     serializedNode: SerializedTestExcludeFromCopyElementNode,
   ): TestExcludeFromCopyElementNode {
     const node = $createTestExcludeFromCopyElementNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }

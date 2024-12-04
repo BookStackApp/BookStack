@@ -36,9 +36,11 @@ import {
   updateChildrenListItemValue,
 } from './formatList';
 import {$getListDepth, $wrapInListItem} from './utils';
+import {extractDirectionFromElement} from "lexical/nodes/common";
 
 export type SerializedListNode = Spread<
   {
+    id: string;
     listType: ListType;
     start: number;
     tag: ListNodeTagType;
@@ -58,15 +60,18 @@ export class ListNode extends ElementNode {
   __start: number;
   /** @internal */
   __listType: ListType;
+  /** @internal */
+  __id: string = '';
 
   static getType(): string {
     return 'list';
   }
 
   static clone(node: ListNode): ListNode {
-    const listType = node.__listType || TAG_TO_LIST_TYPE[node.__tag];
-
-    return new ListNode(listType, node.__start, node.__key);
+    const newNode = new ListNode(node.__listType, node.__start, node.__key);
+    newNode.__id = node.__id;
+    newNode.__dir = node.__dir;
+    return newNode;
   }
 
   constructor(listType: ListType, start: number, key?: NodeKey) {
@@ -79,6 +84,16 @@ export class ListNode extends ElementNode {
 
   getTag(): ListNodeTagType {
     return this.__tag;
+  }
+
+  setId(id: string) {
+    const self = this.getWritable();
+    self.__id = id;
+  }
+
+  getId(): string {
+    const self = this.getLatest();
+    return self.__id;
   }
 
   setListType(type: ListType): void {
@@ -108,6 +123,14 @@ export class ListNode extends ElementNode {
     dom.__lexicalListType = this.__listType;
     $setListThemeClassNames(dom, config.theme, this);
 
+    if (this.__id) {
+      dom.setAttribute('id', this.__id);
+    }
+
+    if (this.__dir) {
+      dom.setAttribute('dir', this.__dir);
+    }
+
     return dom;
   }
 
@@ -116,7 +139,11 @@ export class ListNode extends ElementNode {
     dom: HTMLElement,
     config: EditorConfig,
   ): boolean {
-    if (prevNode.__tag !== this.__tag) {
+    if (
+        prevNode.__tag !== this.__tag
+        || prevNode.__dir !== this.__dir
+        || prevNode.__id !== this.__id
+    ) {
       return true;
     }
 
@@ -148,8 +175,7 @@ export class ListNode extends ElementNode {
 
   static importJSON(serializedNode: SerializedListNode): ListNode {
     const node = $createListNode(serializedNode.listType, serializedNode.start);
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
+    node.setId(serializedNode.id);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -177,6 +203,7 @@ export class ListNode extends ElementNode {
       tag: this.getTag(),
       type: 'list',
       version: 1,
+      id: this.__id,
     };
   }
 
@@ -277,28 +304,21 @@ function $setListThemeClassNames(
 }
 
 /*
- * This function normalizes the children of a ListNode after the conversion from HTML,
- * ensuring that they are all ListItemNodes and contain either a single nested ListNode
- * or some other inline content.
+ * This function is a custom normalization function to allow nested lists within list item elements.
+ * Original taken from https://github.com/facebook/lexical/blob/6e10210fd1e113ccfafdc999b1d896733c5c5bea/packages/lexical-list/src/LexicalListNode.ts#L284-L303
+ * With modifications made.
  */
 function $normalizeChildren(nodes: Array<LexicalNode>): Array<ListItemNode> {
   const normalizedListItems: Array<ListItemNode> = [];
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
+
+  for (const node of nodes) {
     if ($isListItemNode(node)) {
       normalizedListItems.push(node);
-      const children = node.getChildren();
-      if (children.length > 1) {
-        children.forEach((child) => {
-          if ($isListNode(child)) {
-            normalizedListItems.push($wrapInListItem(child));
-          }
-        });
-      }
     } else {
       normalizedListItems.push($wrapInListItem(node));
     }
   }
+
   return normalizedListItems;
 }
 
@@ -332,6 +352,14 @@ function $convertListNode(domNode: HTMLElement): DOMConversionOutput {
     } else {
       node = $createListNode('bullet');
     }
+  }
+
+  if (domNode.id && node) {
+    node.setId(domNode.id);
+  }
+
+  if (domNode.dir && node) {
+    node.setDirection(extractDirectionFromElement(domNode));
   }
 
   return {

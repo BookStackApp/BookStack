@@ -1,8 +1,8 @@
-import {$getSelection, $insertNodes, LexicalEditor, LexicalNode} from "lexical";
+import {$insertNodes, LexicalEditor, LexicalNode} from "lexical";
 import {HttpError} from "../../services/http";
 import {EditorUiContext} from "../ui/framework/core";
 import * as DrawIO from "../../services/drawio";
-import {$createDiagramNode, DiagramNode} from "../nodes/diagram";
+import {$createDiagramNode, DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import {ImageManager} from "../../components";
 import {EditorImageData} from "./images";
 import {$getNodeFromSelection, getLastSelection} from "./selection";

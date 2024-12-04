@@ -5,9 +5,8 @@ import {
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
 import {EditorUiContext} from "../../framework/core";
-import {CustomTableCellNode} from "../../../nodes/custom-table-cell";
 import {EditorFormModal} from "../../framework/modals";
-import {$getSelection, ElementFormatType} from "lexical";
+import {$getSelection} from "lexical";
 import {
     $forEachTableCell, $getCellPaddingForTable,
     $getTableCellColumnWidth,
@@ -16,8 +15,8 @@ import {
     $setTableCellColumnWidth
 } from "../../../utils/tables";
 import {formatSizeValue} from "../../../utils/dom";
-import {CustomTableRowNode} from "../../../nodes/custom-table-row";
-import {CustomTableNode} from "../../../nodes/custom-table";
+import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
+import {CommonBlockAlignment} from "lexical/nodes/common";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -62,14 +61,14 @@ const alignmentInput: EditorSelectFormFieldDefinition = {
     }
 };
 
-export function $showCellPropertiesForm(cell: CustomTableCellNode, context: EditorUiContext): EditorFormModal {
+export function $showCellPropertiesForm(cell: TableCellNode, context: EditorUiContext): EditorFormModal {
     const styles = cell.getStyles();
     const modalForm = context.manager.createModal('cell_properties');
     modalForm.show({
         width: $getTableCellColumnWidth(context.editor, cell),
         height: styles.get('height') || '',
         type: cell.getTag(),
-        h_align: cell.getFormatType(),
+        h_align: cell.getAlignment(),
         v_align: styles.get('vertical-align') || '',
         border_width: styles.get('border-width') || '',
         border_style: styles.get('border-style') || '',
@@ -89,7 +88,7 @@ export const cellProperties: EditorFormDefinition = {
 
                 $setTableCellColumnWidth(cell, width);
                 cell.updateTag(formData.get('type')?.toString() || '');
-                cell.setFormat((formData.get('h_align')?.toString() || '') as ElementFormatType);
+                cell.setAlignment((formData.get('h_align')?.toString() || '') as CommonBlockAlignment);
 
                 const styles = cell.getStyles();
                 styles.set('height', formatSizeValue(formData.get('height')?.toString() || ''));
@@ -172,7 +171,7 @@ export const cellProperties: EditorFormDefinition = {
     ],
 };
 
-export function $showRowPropertiesForm(row: CustomTableRowNode, context: EditorUiContext): EditorFormModal {
+export function $showRowPropertiesForm(row: TableRowNode, context: EditorUiContext): EditorFormModal {
     const styles = row.getStyles();
     const modalForm = context.manager.createModal('row_properties');
     modalForm.show({
@@ -216,7 +215,7 @@ export const rowProperties: EditorFormDefinition = {
     ],
 };
 
-export function $showTablePropertiesForm(table: CustomTableNode, context: EditorUiContext): EditorFormModal {
+export function $showTablePropertiesForm(table: TableNode, context: EditorUiContext): EditorFormModal {
     const styles = table.getStyles();
     const modalForm = context.manager.createModal('table_properties');
     modalForm.show({
@@ -229,7 +228,7 @@ export function $showTablePropertiesForm(table: CustomTableNode, context: Editor
         border_color: styles.get('border-color') || '',
         background_color: styles.get('background-color') || '',
         // caption: '', TODO
-        align: table.getFormatType(),
+        align: table.getAlignment(),
     });
     return modalForm;
 }
@@ -253,12 +252,12 @@ export const tableProperties: EditorFormDefinition = {
             styles.set('background-color', formData.get('background_color')?.toString() || '');
             table.setStyles(styles);
 
-            table.setFormat(formData.get('align') as ElementFormatType);
+            table.setAlignment(formData.get('align') as CommonBlockAlignment);
 
             const cellPadding = (formData.get('cell_padding')?.toString() || '');
             if (cellPadding) {
                 const cellPaddingFormatted = formatSizeValue(cellPadding);
-                $forEachTableCell(table, (cell: CustomTableCellNode) => {
+                $forEachTableCell(table, (cell: TableCellNode) => {
                     const styles = cell.getStyles();
                     styles.set('padding', cellPaddingFormatted);
                     cell.setStyles(styles);

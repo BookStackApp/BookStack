@@ -20,11 +20,12 @@ import {
   SerializedElementNode,
 } from 'lexical';
 
-import {PIXEL_VALUE_REG_EXP} from './constants';
+import {extractStyleMapFromElement, sizeToPixels, StyleMap} from "../../utils/dom";
 
 export type SerializedTableRowNode = Spread<
   {
-    height?: number;
+    styles: Record<string, string>,
+    height?: number,
   },
   SerializedElementNode
 >;
@@ -33,13 +34,17 @@ export type SerializedTableRowNode = Spread<
 export class TableRowNode extends ElementNode {
   /** @internal */
   __height?: number;
+  /** @internal */
+  __styles: StyleMap = new Map();
 
   static getType(): string {
     return 'tablerow';
   }
 
   static clone(node: TableRowNode): TableRowNode {
-    return new TableRowNode(node.__height, node.__key);
+    const newNode = new TableRowNode(node.__key);
+    newNode.__styles = new Map(node.__styles);
+    return newNode;
   }
 
   static importDOM(): DOMConversionMap | null {
@@ -52,20 +57,24 @@ export class TableRowNode extends ElementNode {
   }
 
   static importJSON(serializedNode: SerializedTableRowNode): TableRowNode {
-    return $createTableRowNode(serializedNode.height);
+    const node = $createTableRowNode();
+
+    node.setStyles(new Map(Object.entries(serializedNode.styles)));
+
+    return node;
   }
 
-  constructor(height?: number, key?: NodeKey) {
+  constructor(key?: NodeKey) {
     super(key);
-    this.__height = height;
   }
 
   exportJSON(): SerializedTableRowNode {
     return {
       ...super.exportJSON(),
-      ...(this.getHeight() && {height: this.getHeight()}),
       type: 'tablerow',
       version: 1,
+      styles: Object.fromEntries(this.__styles),
+      height: this.__height || 0,
     };
   }
 
@@ -76,6 +85,10 @@ export class TableRowNode extends ElementNode {
       element.style.height = `${this.__height}px`;
     }
 
+    for (const [name, value] of this.__styles.entries()) {
+      element.style.setProperty(name, value);
+    }
+
     addClassNamesToElement(element, config.theme.tableRow);
 
     return element;
@@ -83,6 +96,16 @@ export class TableRowNode extends ElementNode {
 
   isShadowRoot(): boolean {
     return true;
+  }
+
+  getStyles(): StyleMap {
+    const self = this.getLatest();
+    return new Map(self.__styles);
+  }
+
+  setStyles(styles: StyleMap): void {
+    const self = this.getWritable();
+    self.__styles = new Map(styles);
   }
 
   setHeight(height: number): number | null | undefined {
@@ -96,7 +119,8 @@ export class TableRowNode extends ElementNode {
   }
 
   updateDOM(prevNode: TableRowNode): boolean {
-    return prevNode.__height !== this.__height;
+    return prevNode.__height !== this.__height
+        || prevNode.__styles !== this.__styles;
   }
 
   canBeEmpty(): false {
@@ -109,18 +133,21 @@ export class TableRowNode extends ElementNode {
 }
 
 export function $convertTableRowElement(domNode: Node): DOMConversionOutput {
-  const domNode_ = domNode as HTMLTableCellElement;
-  let height: number | undefined = undefined;
+  const rowNode = $createTableRowNode();
+  const domNode_ = domNode as HTMLElement;
 
-  if (PIXEL_VALUE_REG_EXP.test(domNode_.style.height)) {
-    height = parseFloat(domNode_.style.height);
+  const height = sizeToPixels(domNode_.style.height);
+  rowNode.setHeight(height);
+
+  if (domNode instanceof HTMLElement) {
+    rowNode.setStyles(extractStyleMapFromElement(domNode));
   }
 
-  return {node: $createTableRowNode(height)};
+  return {node: rowNode};
 }
 
-export function $createTableRowNode(height?: number): TableRowNode {
-  return $applyNodeReplacement(new TableRowNode(height));
+export function $createTableRowNode(): TableRowNode {
+  return $applyNodeReplacement(new TableRowNode());
 }
 
 export function $isTableRowNode(

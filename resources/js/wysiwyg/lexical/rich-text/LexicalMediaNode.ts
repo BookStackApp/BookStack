@@ -8,14 +8,14 @@ import {
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
-import {el, setOrRemoveAttribute, sizeToPixels} from "../utils/dom";
+import {el, setOrRemoveAttribute, sizeToPixels} from "../../utils/dom";
 import {
     CommonBlockAlignment, deserializeCommonBlockNode,
-    SerializedCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
-} from "./_common";
-import {$selectSingleNode} from "../utils/selection";
+} from "lexical/nodes/common";
+import {$selectSingleNode} from "../../utils/selection";
+import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {

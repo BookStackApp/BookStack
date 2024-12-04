@@ -9,9 +9,9 @@ import ltrIcon from "@icons/editor/direction-ltr.svg";
 import rtlIcon from "@icons/editor/direction-rtl.svg";
 import {
     $getBlockElementNodesInSelection,
-    $selectionContainsAlignment, $selectionContainsDirection, $selectSingleNode, $toggleSelection, getLastSelection
+    $selectionContainsAlignment, $selectionContainsDirection, $selectSingleNode, getLastSelection
 } from "../../../utils/selection";
-import {CommonBlockAlignment} from "../../../nodes/_common";
+import {CommonBlockAlignment} from "lexical/nodes/common";
 import {nodeHasAlignment} from "../../../utils/nodes";
 
 

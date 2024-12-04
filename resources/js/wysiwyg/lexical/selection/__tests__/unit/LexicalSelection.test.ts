@@ -8,7 +8,7 @@
 
 import {$createLinkNode} from '@lexical/link';
 import {$createListItemNode, $createListNode} from '@lexical/list';
-import {$createHeadingNode, registerRichText} from '@lexical/rich-text';
+import {registerRichText} from '@lexical/rich-text';
 import {
   $addNodeStyle,
   $getSelectionStyleValueForProperty,
@@ -74,6 +74,7 @@ import {
 } from '../utils';
 import {createEmptyHistoryState, registerHistory} from "@lexical/history";
 import {mergeRegister} from "@lexical/utils";
+import {$createHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 interface ExpectedSelection {
   anchorPath: number[];
@@ -2604,7 +2605,7 @@ describe('LexicalSelection tests', () => {
           return $createHeadingNode('h1');
         });
         expect(JSON.stringify(testEditor._pendingEditorState?.toJSON())).toBe(
-          '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[{"children":[{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"}],"direction":null,"format":"","indent":0,"type":"tablecell","version":1,"backgroundColor":null,"colSpan":1,"headerState":3,"rowSpan":1},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"},{"children":[],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"}],"direction":null,"format":"","indent":0,"type":"tablecell","version":1,"backgroundColor":null,"colSpan":1,"headerState":1,"rowSpan":1}],"direction":null,"format":"","indent":0,"type":"tablerow","version":1}],"direction":null,"format":"","indent":0,"type":"table","version":1},{"children":[],"direction":null,"format":"","indent":0,"type":"heading","version":1,"tag":"h1"}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
+          '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[{"children":[{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"}],"direction":null,"type":"tablecell","version":1,"backgroundColor":null,"colSpan":1,"headerState":3,"rowSpan":1,"styles":{},"alignment":""},{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"","type":"text","version":1}],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"},{"children":[],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"}],"direction":null,"type":"tablecell","version":1,"backgroundColor":null,"colSpan":1,"headerState":1,"rowSpan":1,"styles":{},"alignment":""}],"direction":null,"type":"tablerow","version":1,"styles":{},"height":0}],"direction":null,"type":"table","version":1,"id":"","alignment":"","inset":0,"colWidths":[],"styles":{}},{"children":[],"direction":null,"type":"heading","version":1,"id":"","alignment":"","inset":0,"tag":"h1"}],"direction":null,"type":"root","version":1}}',
         );
       });
     });
@@ -2694,7 +2695,7 @@ describe('LexicalSelection tests', () => {
         });
       });
       expect(element.innerHTML).toStrictEqual(
-        `<h1><span data-lexical-text="true">1</span></h1><h1 style="padding-inline-start: calc(1 * 40px);"><span data-lexical-text="true">1.1</span></h1>`,
+        `<h1><span data-lexical-text="true">1</span></h1><ul><li value="1"><h1><span data-lexical-text="true">1.1</span></h1></li></ul>`,
       );
     });
 
@@ -2733,7 +2734,7 @@ describe('LexicalSelection tests', () => {
         });
       });
       expect(element.innerHTML).toStrictEqual(
-        `<h1 style="padding-inline-start: calc(1 * 40px);"><span data-lexical-text="true">1.1</span></h1>`,
+        `<ul><li value="1"><h1><span data-lexical-text="true">1.1</span></h1></li></ul>`,
       );
     });
   });

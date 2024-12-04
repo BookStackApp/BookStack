@@ -8,8 +8,8 @@ import {
     Spread
 } from "lexical";
 import type {EditorConfig} from "lexical/LexicalEditor";
-import {EditorDecoratorAdapter} from "../ui/framework/decorator";
-import {el} from "../utils/dom";
+import {EditorDecoratorAdapter} from "../../ui/framework/decorator";
+import {el} from "../../utils/dom";
 
 export type SerializedDiagramNode = Spread<{
     id: string;

@@ -162,8 +162,6 @@ export class LinkNode extends ElementNode {
       target: serializedNode.target,
       title: serializedNode.title,
     });
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }
@@ -402,8 +400,6 @@ export class AutoLinkNode extends LinkNode {
       target: serializedNode.target,
       title: serializedNode.title,
     });
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
     node.setDirection(serializedNode.direction);
     return node;
   }

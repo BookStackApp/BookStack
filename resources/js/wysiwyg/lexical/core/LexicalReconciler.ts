@@ -17,7 +17,6 @@ import type {NodeKey, NodeMap} from './LexicalNode';
 import type {ElementNode} from './nodes/LexicalElementNode';
 
 import invariant from 'lexical/shared/invariant';
-import normalizeClassNames from 'lexical/shared/normalizeClassNames';
 
 import {
   $isDecoratorNode,
@@ -30,12 +29,12 @@ import {
 import {
   DOUBLE_LINE_BREAK,
   FULL_RECONCILE,
-  IS_ALIGN_CENTER,
-  IS_ALIGN_END,
-  IS_ALIGN_JUSTIFY,
-  IS_ALIGN_LEFT,
-  IS_ALIGN_RIGHT,
-  IS_ALIGN_START,
+
+
+
+
+
+
 } from './LexicalConstants';
 import {EditorState} from './LexicalEditorState';
 import {
@@ -117,51 +116,6 @@ function setTextAlign(domStyle: CSSStyleDeclaration, value: string): void {
   domStyle.setProperty('text-align', value);
 }
 
-const DEFAULT_INDENT_VALUE = '40px';
-
-function setElementIndent(dom: HTMLElement, indent: number): void {
-  const indentClassName = activeEditorConfig.theme.indent;
-
-  if (typeof indentClassName === 'string') {
-    const elementHasClassName = dom.classList.contains(indentClassName);
-
-    if (indent > 0 && !elementHasClassName) {
-      dom.classList.add(indentClassName);
-    } else if (indent < 1 && elementHasClassName) {
-      dom.classList.remove(indentClassName);
-    }
-  }
-
-  const indentationBaseValue =
-    getComputedStyle(dom).getPropertyValue('--lexical-indent-base-value') ||
-    DEFAULT_INDENT_VALUE;
-
-  dom.style.setProperty(
-    'padding-inline-start',
-    indent === 0 ? '' : `calc(${indent} * ${indentationBaseValue})`,
-  );
-}
-
-function setElementFormat(dom: HTMLElement, format: number): void {
-  const domStyle = dom.style;
-
-  if (format === 0) {
-    setTextAlign(domStyle, '');
-  } else if (format === IS_ALIGN_LEFT) {
-    setTextAlign(domStyle, 'left');
-  } else if (format === IS_ALIGN_CENTER) {
-    setTextAlign(domStyle, 'center');
-  } else if (format === IS_ALIGN_RIGHT) {
-    setTextAlign(domStyle, 'right');
-  } else if (format === IS_ALIGN_JUSTIFY) {
-    setTextAlign(domStyle, 'justify');
-  } else if (format === IS_ALIGN_START) {
-    setTextAlign(domStyle, 'start');
-  } else if (format === IS_ALIGN_END) {
-    setTextAlign(domStyle, 'end');
-  }
-}
-
 function $createNode(
   key: NodeKey,
   parentDOM: null | HTMLElement,
@@ -185,22 +139,14 @@ function $createNode(
   }
 
   if ($isElementNode(node)) {
-    const indent = node.__indent;
     const childrenSize = node.__size;
 
-    if (indent !== 0) {
-      setElementIndent(dom, indent);
-    }
     if (childrenSize !== 0) {
       const endIndex = childrenSize - 1;
       const children = createChildrenArray(node, activeNextNodeMap);
       $createChildren(children, node, 0, endIndex, dom, null);
     }
-    const format = node.__format;
 
-    if (format !== 0) {
-      setElementFormat(dom, format);
-    }
     if (!node.isInline()) {
       reconcileElementTerminatingLineBreak(null, node, dom);
     }
@@ -349,10 +295,8 @@ function reconcileParagraphFormat(element: ElementNode): void {
   if (
     $isParagraphNode(element) &&
     subTreeTextFormat != null &&
-    subTreeTextFormat !== element.__textFormat &&
     !activeEditorStateReadOnly
   ) {
-    element.setTextFormat(subTreeTextFormat);
     element.setTextStyle(subTreeTextStyle);
   }
 }
@@ -563,17 +507,6 @@ function $reconcileNode(
 
   if ($isElementNode(prevNode) && $isElementNode(nextNode)) {
     // Reconcile element children
-    const nextIndent = nextNode.__indent;
-
-    if (nextIndent !== prevNode.__indent) {
-      setElementIndent(dom, nextIndent);
-    }
-
-    const nextFormat = nextNode.__format;
-
-    if (nextFormat !== prevNode.__format) {
-      setElementFormat(dom, nextFormat);
-    }
     if (isDirty) {
       $reconcileChildrenWithDirection(prevNode, nextNode, dom);
       if (!$isRootNode(nextNode) && !nextNode.isInline()) {

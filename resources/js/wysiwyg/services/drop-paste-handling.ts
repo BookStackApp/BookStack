@@ -1,4 +1,5 @@
 import {
+    $createParagraphNode,
     $insertNodes,
     $isDecoratorNode, COMMAND_PRIORITY_HIGH, DROP_COMMAND,
     LexicalEditor,
@@ -7,8 +8,7 @@ import {
 import {$insertNewBlockNodesAtSelection, $selectSingleNode} from "../utils/selection";
 import {$getNearestBlockNodeForCoords, $htmlToBlockNodes} from "../utils/nodes";
 import {Clipboard} from "../../services/clipboard";
-import {$createImageNode} from "../nodes/image";
-import {$createCustomParagraphNode} from "../nodes/custom-paragraph";
+import {$createImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$createLinkNode} from "@lexical/link";
 import {EditorImageData, uploadImageFile} from "../utils/images";
 import {EditorUiContext} from "../ui/framework/core";
@@ -67,7 +67,7 @@ function handleMediaInsert(data: DataTransfer, context: EditorUiContext): boolea
         for (const imageFile of images) {
             const loadingImage = window.baseUrl('/loading.gif');
             const loadingNode = $createImageNode(loadingImage);
-            const imageWrap = $createCustomParagraphNode();
+            const imageWrap = $createParagraphNode();
             imageWrap.append(loadingNode);
             $insertNodes([imageWrap]);
 

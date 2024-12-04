@@ -8,42 +8,14 @@
 
 import type {
   CommandPayloadType,
-  DOMConversionMap,
-  DOMConversionOutput,
-  DOMExportOutput,
-  EditorConfig,
   ElementFormatType,
   LexicalCommand,
   LexicalEditor,
-  LexicalNode,
-  NodeKey,
-  ParagraphNode,
   PasteCommandType,
   RangeSelection,
-  SerializedElementNode,
-  Spread,
   TextFormatType,
 } from 'lexical';
-
 import {
-  $insertDataTransferForRichText,
-  copyToClipboard,
-} from '@lexical/clipboard';
-import {
-  $moveCharacter,
-  $shouldOverrideDefaultCharacterSelection,
-} from '@lexical/selection';
-import {
-  $findMatchingParent,
-  $getNearestBlockElementAncestorOrThrow,
-  addClassNamesToElement,
-  isHTMLElement,
-  mergeRegister,
-  objectKlassEquals,
-} from '@lexical/utils';
-import {
-  $applyNodeReplacement,
-  $createParagraphNode,
   $createRangeSelection,
   $createTabNode,
   $getAdjacentNode,
@@ -55,7 +27,6 @@ import {
   $isElementNode,
   $isNodeSelection,
   $isRangeSelection,
-  $isRootNode,
   $isTextNode,
   $normalizeSelection__EXPERIMENTAL,
   $selectAll,
@@ -75,7 +46,6 @@ import {
   ElementNode,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
-  INDENT_CONTENT_COMMAND,
   INSERT_LINE_BREAK_COMMAND,
   INSERT_PARAGRAPH_COMMAND,
   INSERT_TAB_COMMAND,
@@ -88,344 +58,22 @@ import {
   KEY_DELETE_COMMAND,
   KEY_ENTER_COMMAND,
   KEY_ESCAPE_COMMAND,
-  OUTDENT_CONTENT_COMMAND,
   PASTE_COMMAND,
   REMOVE_TEXT_COMMAND,
   SELECT_ALL_COMMAND,
 } from 'lexical';
-import caretFromPoint from 'lexical/shared/caretFromPoint';
-import {
-  CAN_USE_BEFORE_INPUT,
-  IS_APPLE_WEBKIT,
-  IS_IOS,
-  IS_SAFARI,
-} from 'lexical/shared/environment';
 
-export type SerializedHeadingNode = Spread<
-  {
-    tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-  },
-  SerializedElementNode
->;
+import {$insertDataTransferForRichText, copyToClipboard,} from '@lexical/clipboard';
+import {$moveCharacter, $shouldOverrideDefaultCharacterSelection,} from '@lexical/selection';
+import {$findMatchingParent, mergeRegister, objectKlassEquals,} from '@lexical/utils';
+import caretFromPoint from 'lexical/shared/caretFromPoint';
+import {CAN_USE_BEFORE_INPUT, IS_APPLE_WEBKIT, IS_IOS, IS_SAFARI,} from 'lexical/shared/environment';
 
 export const DRAG_DROP_PASTE: LexicalCommand<Array<File>> = createCommand(
   'DRAG_DROP_PASTE_FILE',
 );
 
-export type SerializedQuoteNode = SerializedElementNode;
 
-/** @noInheritDoc */
-export class QuoteNode extends ElementNode {
-  static getType(): string {
-    return 'quote';
-  }
-
-  static clone(node: QuoteNode): QuoteNode {
-    return new QuoteNode(node.__key);
-  }
-
-  constructor(key?: NodeKey) {
-    super(key);
-  }
-
-  // View
-
-  createDOM(config: EditorConfig): HTMLElement {
-    const element = document.createElement('blockquote');
-    addClassNamesToElement(element, config.theme.quote);
-    return element;
-  }
-  updateDOM(prevNode: QuoteNode, dom: HTMLElement): boolean {
-    return false;
-  }
-
-  static importDOM(): DOMConversionMap | null {
-    return {
-      blockquote: (node: Node) => ({
-        conversion: $convertBlockquoteElement,
-        priority: 0,
-      }),
-    };
-  }
-
-  exportDOM(editor: LexicalEditor): DOMExportOutput {
-    const {element} = super.exportDOM(editor);
-
-    if (element && isHTMLElement(element)) {
-      if (this.isEmpty()) {
-        element.append(document.createElement('br'));
-      }
-
-      const formatType = this.getFormatType();
-      element.style.textAlign = formatType;
-    }
-
-    return {
-      element,
-    };
-  }
-
-  static importJSON(serializedNode: SerializedQuoteNode): QuoteNode {
-    const node = $createQuoteNode();
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
-    return node;
-  }
-
-  exportJSON(): SerializedElementNode {
-    return {
-      ...super.exportJSON(),
-      type: 'quote',
-    };
-  }
-
-  // Mutation
-
-  insertNewAfter(_: RangeSelection, restoreSelection?: boolean): ParagraphNode {
-    const newBlock = $createParagraphNode();
-    const direction = this.getDirection();
-    newBlock.setDirection(direction);
-    this.insertAfter(newBlock, restoreSelection);
-    return newBlock;
-  }
-
-  collapseAtStart(): true {
-    const paragraph = $createParagraphNode();
-    const children = this.getChildren();
-    children.forEach((child) => paragraph.append(child));
-    this.replace(paragraph);
-    return true;
-  }
-
-  canMergeWhenEmpty(): true {
-    return true;
-  }
-}
-
-export function $createQuoteNode(): QuoteNode {
-  return $applyNodeReplacement(new QuoteNode());
-}
-
-export function $isQuoteNode(
-  node: LexicalNode | null | undefined,
-): node is QuoteNode {
-  return node instanceof QuoteNode;
-}
-
-export type HeadingTagType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
-
-/** @noInheritDoc */
-export class HeadingNode extends ElementNode {
-  /** @internal */
-  __tag: HeadingTagType;
-
-  static getType(): string {
-    return 'heading';
-  }
-
-  static clone(node: HeadingNode): HeadingNode {
-    return new HeadingNode(node.__tag, node.__key);
-  }
-
-  constructor(tag: HeadingTagType, key?: NodeKey) {
-    super(key);
-    this.__tag = tag;
-  }
-
-  getTag(): HeadingTagType {
-    return this.__tag;
-  }
-
-  // View
-
-  createDOM(config: EditorConfig): HTMLElement {
-    const tag = this.__tag;
-    const element = document.createElement(tag);
-    const theme = config.theme;
-    const classNames = theme.heading;
-    if (classNames !== undefined) {
-      const className = classNames[tag];
-      addClassNamesToElement(element, className);
-    }
-    return element;
-  }
-
-  updateDOM(prevNode: HeadingNode, dom: HTMLElement): boolean {
-    return false;
-  }
-
-  static importDOM(): DOMConversionMap | null {
-    return {
-      h1: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      h2: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      h3: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      h4: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      h5: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      h6: (node: Node) => ({
-        conversion: $convertHeadingElement,
-        priority: 0,
-      }),
-      p: (node: Node) => {
-        // domNode is a <p> since we matched it by nodeName
-        const paragraph = node as HTMLParagraphElement;
-        const firstChild = paragraph.firstChild;
-        if (firstChild !== null && isGoogleDocsTitle(firstChild)) {
-          return {
-            conversion: () => ({node: null}),
-            priority: 3,
-          };
-        }
-        return null;
-      },
-      span: (node: Node) => {
-        if (isGoogleDocsTitle(node)) {
-          return {
-            conversion: (domNode: Node) => {
-              return {
-                node: $createHeadingNode('h1'),
-              };
-            },
-            priority: 3,
-          };
-        }
-        return null;
-      },
-    };
-  }
-
-  exportDOM(editor: LexicalEditor): DOMExportOutput {
-    const {element} = super.exportDOM(editor);
-
-    if (element && isHTMLElement(element)) {
-      if (this.isEmpty()) {
-        element.append(document.createElement('br'));
-      }
-
-      const formatType = this.getFormatType();
-      element.style.textAlign = formatType;
-    }
-
-    return {
-      element,
-    };
-  }
-
-  static importJSON(serializedNode: SerializedHeadingNode): HeadingNode {
-    const node = $createHeadingNode(serializedNode.tag);
-    node.setFormat(serializedNode.format);
-    node.setIndent(serializedNode.indent);
-    return node;
-  }
-
-  exportJSON(): SerializedHeadingNode {
-    return {
-      ...super.exportJSON(),
-      tag: this.getTag(),
-      type: 'heading',
-      version: 1,
-    };
-  }
-
-  // Mutation
-  insertNewAfter(
-    selection?: RangeSelection,
-    restoreSelection = true,
-  ): ParagraphNode | HeadingNode {
-    const anchorOffet = selection ? selection.anchor.offset : 0;
-    const lastDesc = this.getLastDescendant();
-    const isAtEnd =
-      !lastDesc ||
-      (selection &&
-        selection.anchor.key === lastDesc.getKey() &&
-        anchorOffet === lastDesc.getTextContentSize());
-    const newElement =
-      isAtEnd || !selection
-        ? $createParagraphNode()
-        : $createHeadingNode(this.getTag());
-    const direction = this.getDirection();
-    newElement.setDirection(direction);
-    this.insertAfter(newElement, restoreSelection);
-    if (anchorOffet === 0 && !this.isEmpty() && selection) {
-      const paragraph = $createParagraphNode();
-      paragraph.select();
-      this.replace(paragraph, true);
-    }
-    return newElement;
-  }
-
-  collapseAtStart(): true {
-    const newElement = !this.isEmpty()
-      ? $createHeadingNode(this.getTag())
-      : $createParagraphNode();
-    const children = this.getChildren();
-    children.forEach((child) => newElement.append(child));
-    this.replace(newElement);
-    return true;
-  }
-
-  extractWithChild(): boolean {
-    return true;
-  }
-}
-
-function isGoogleDocsTitle(domNode: Node): boolean {
-  if (domNode.nodeName.toLowerCase() === 'span') {
-    return (domNode as HTMLSpanElement).style.fontSize === '26pt';
-  }
-  return false;
-}
-
-function $convertHeadingElement(element: HTMLElement): DOMConversionOutput {
-  const nodeName = element.nodeName.toLowerCase();
-  let node = null;
-  if (
-    nodeName === 'h1' ||
-    nodeName === 'h2' ||
-    nodeName === 'h3' ||
-    nodeName === 'h4' ||
-    nodeName === 'h5' ||
-    nodeName === 'h6'
-  ) {
-    node = $createHeadingNode(nodeName);
-    if (element.style !== null) {
-      node.setFormat(element.style.textAlign as ElementFormatType);
-    }
-  }
-  return {node};
-}
-
-function $convertBlockquoteElement(element: HTMLElement): DOMConversionOutput {
-  const node = $createQuoteNode();
-  if (element.style !== null) {
-    node.setFormat(element.style.textAlign as ElementFormatType);
-  }
-  return {node};
-}
-
-export function $createHeadingNode(headingTag: HeadingTagType): HeadingNode {
-  return $applyNodeReplacement(new HeadingNode(headingTag));
-}
-
-export function $isHeadingNode(
-  node: LexicalNode | null | undefined,
-): node is HeadingNode {
-  return node instanceof HeadingNode;
-}
 
 function onPasteForRichText(
   event: CommandPayloadType<typeof PASTE_COMMAND>,
@@ -651,9 +299,6 @@ export function registerRichText(editor: LexicalEditor): () => void {
             (parentNode): parentNode is ElementNode =>
               $isElementNode(parentNode) && !parentNode.isInline(),
           );
-          if (element !== null) {
-            element.setFormat(format);
-          }
         }
         return true;
       },
@@ -688,28 +333,6 @@ export function registerRichText(editor: LexicalEditor): () => void {
       () => {
         $insertNodes([$createTabNode()]);
         return true;
-      },
-      COMMAND_PRIORITY_EDITOR,
-    ),
-    editor.registerCommand(
-      INDENT_CONTENT_COMMAND,
-      () => {
-        return $handleIndentAndOutdent((block) => {
-          const indent = block.getIndent();
-          block.setIndent(indent + 1);
-        });
-      },
-      COMMAND_PRIORITY_EDITOR,
-    ),
-    editor.registerCommand(
-      OUTDENT_CONTENT_COMMAND,
-      () => {
-        return $handleIndentAndOutdent((block) => {
-          const indent = block.getIndent();
-          if (indent > 0) {
-            block.setIndent(indent - 1);
-          }
-        });
       },
       COMMAND_PRIORITY_EDITOR,
     ),
@@ -846,19 +469,7 @@ export function registerRichText(editor: LexicalEditor): () => void {
           return false;
         }
         event.preventDefault();
-        const {anchor} = selection;
-        const anchorNode = anchor.getNode();
 
-        if (
-          selection.isCollapsed() &&
-          anchor.offset === 0 &&
-          !$isRootNode(anchorNode)
-        ) {
-          const element = $getNearestBlockElementAncestorOrThrow(anchorNode);
-          if (element.getIndent() > 0) {
-            return editor.dispatchCommand(OUTDENT_CONTENT_COMMAND, undefined);
-          }
-        }
         return editor.dispatchCommand(DELETE_CHARACTER_COMMAND, true);
       },
       COMMAND_PRIORITY_EDITOR,

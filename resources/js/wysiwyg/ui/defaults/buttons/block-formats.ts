@@ -1,19 +1,15 @@
-import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "../../../nodes/callout";
+import {$createCalloutNode, $isCalloutNodeOfCategory, CalloutCategory} from "@lexical/rich-text/LexicalCalloutNode";
 import {EditorButtonDefinition} from "../../framework/buttons";
 import {EditorUiContext} from "../../framework/core";
 import {$isParagraphNode, BaseSelection, LexicalNode} from "lexical";
-import {
-    $isHeadingNode,
-    $isQuoteNode,
-    HeadingNode,
-    HeadingTagType
-} from "@lexical/rich-text";
 import {$selectionContainsNodeType, $toggleSelectionBlockNodeType} from "../../../utils/selection";
 import {
     toggleSelectionAsBlockquote,
     toggleSelectionAsHeading,
     toggleSelectionAsParagraph
 } from "../../../utils/formats";
+import {$isHeadingNode, HeadingNode, HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
+import {$isQuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 
 function buildCalloutButton(category: CalloutCategory, name: string): EditorButtonDefinition {
     return {
