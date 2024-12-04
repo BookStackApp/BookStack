@@ -62,7 +62,7 @@ describe('LexicalListItemNode tests', () => {
         expectHtmlToBeEqual(
           listItemNode.createDOM(editorConfig).outerHTML,
           html`
-            <li value="1" class="my-listItem-item-class"></li>
+            <li value="1"></li>
           `,
         );
 
@@ -90,7 +90,7 @@ describe('LexicalListItemNode tests', () => {
           expectHtmlToBeEqual(
             domElement.outerHTML,
             html`
-              <li value="1" class="my-listItem-item-class"></li>
+              <li value="1"></li>
             `,
           );
           const newListItemNode = new ListItemNode();
@@ -106,7 +106,7 @@ describe('LexicalListItemNode tests', () => {
           expectHtmlToBeEqual(
             domElement.outerHTML,
             html`
-              <li value="1" class="my-listItem-item-class"></li>
+              <li value="1"></li>
             `,
           );
         });
@@ -125,7 +125,7 @@ describe('LexicalListItemNode tests', () => {
           expectHtmlToBeEqual(
             domElement.outerHTML,
             html`
-              <li value="1" class="my-listItem-item-class"></li>
+              <li value="1"></li>
             `,
           );
           const nestedListNode = new ListNode('bullet', 1);
@@ -142,7 +142,7 @@ describe('LexicalListItemNode tests', () => {
           expectHtmlToBeEqual(
             domElement.outerHTML,
             html`
-              <li value="1" class="my-listItem-item-class my-nested-list-listItem-class"></li>
+              <li value="1" style="list-style: none;"></li>
             `,
           );
         });
@@ -486,53 +486,43 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="2">
-                  <span data-lexical-text="true">B</span>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="2">
+                <span data-lexical-text="true">B</span>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">B</span>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">B</span>
+              </li>
+            </ul>
           `,
         );
       });
@@ -566,53 +556,43 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <span data-lexical-text="true">A</span>
-                </li>
-                <li value="2">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="3">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1">
+                <span data-lexical-text="true">A</span>
+              </li>
+              <li value="2">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="3" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <span data-lexical-text="true">A</span>
-                </li>
-                <li value="2">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1">
+                <span data-lexical-text="true">A</span>
+              </li>
+              <li value="2" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
       });
@@ -650,57 +630,47 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="2">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="2" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                    <li value="2">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                  <li value="2">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
       });
@@ -746,71 +716,61 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A1</span>
-                    </li>
-                    <li value="2">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">A2</span>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="2">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A1</span>
+                  </li>
+                  <li value="2" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">A2</span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="2" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A1</span>
-                    </li>
-                    <li value="2">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">A2</span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li value="2">
-                      <span data-lexical-text="true">B</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A1</span>
+                  </li>
+                  <li value="2" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">A2</span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li value="2">
+                    <span data-lexical-text="true">B</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
       });
@@ -856,71 +816,61 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="2">
-                  <ul>
-                    <li value="1">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">B1</span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li value="1">
-                      <span data-lexical-text="true">B2</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="2" style="list-style: none;">
+                <ul>
+                  <li value="1" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">B1</span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li value="1">
+                    <span data-lexical-text="true">B2</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A</span>
-                    </li>
-                    <li value="2">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">B1</span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li value="2">
-                      <span data-lexical-text="true">B2</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A</span>
+                  </li>
+                  <li value="2" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">B1</span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li value="2">
+                    <span data-lexical-text="true">B2</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
       });
@@ -974,81 +924,71 @@ describe('LexicalListItemNode tests', () => {
         });
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A1</span>
-                    </li>
-                    <li value="2">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">A2</span>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li value="1">
-                  <span data-lexical-text="true">x</span>
-                </li>
-                <li value="2">
-                  <ul>
-                    <li value="1">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">B1</span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li value="1">
-                      <span data-lexical-text="true">B2</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A1</span>
+                  </li>
+                  <li value="2" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">A2</span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li value="1">
+                <span data-lexical-text="true">x</span>
+              </li>
+              <li value="2" style="list-style: none;">
+                <ul>
+                  <li value="1" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">B1</span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li value="1">
+                    <span data-lexical-text="true">B2</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
 
         await editor.update(() => x.remove());
 
         expectHtmlToBeEqual(
-          testEnv.outerHTML,
+          testEnv.innerHTML,
           html`
-            <div
-              contenteditable="true"
-              style="user-select: text; white-space: pre-wrap; word-break: break-word;"
-              data-lexical-editor="true">
-              <ul>
-                <li value="1">
-                  <ul>
-                    <li value="1">
-                      <span data-lexical-text="true">A1</span>
-                    </li>
-                    <li value="2">
-                      <ul>
-                        <li value="1">
-                          <span data-lexical-text="true">A2</span>
-                        </li>
-                        <li value="2">
-                          <span data-lexical-text="true">B1</span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li value="2">
-                      <span data-lexical-text="true">B2</span>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+            <ul>
+              <li value="1" style="list-style: none;">
+                <ul>
+                  <li value="1">
+                    <span data-lexical-text="true">A1</span>
+                  </li>
+                  <li value="2" style="list-style: none;">
+                    <ul>
+                      <li value="1">
+                        <span data-lexical-text="true">A2</span>
+                      </li>
+                      <li value="2">
+                        <span data-lexical-text="true">B1</span>
+                      </li>
+                    </ul>
+                  </li>
+                  <li value="2">
+                    <span data-lexical-text="true">B2</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           `,
         );
       });

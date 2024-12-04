@@ -84,8 +84,6 @@ describe('LexicalElementNode tests', () => {
         expect(node.exportJSON()).toStrictEqual({
           children: [],
           direction: null,
-          format: '',
-          indent: 0,
           type: 'test_block',
           version: 1,
         });

@@ -101,8 +101,6 @@ describe('table selection', () => {
       __cachedText: null,
       __dir: null,
       __first: paragraphKey,
-      __format: 0,
-      __indent: 0,
       __key: 'root',
       __last: paragraphKey,
       __next: null,
@@ -113,10 +111,11 @@ describe('table selection', () => {
       __type: 'root',
     });
     expect(parsedParagraph).toEqual({
+      __alignment: "",
       __dir: null,
       __first: textKey,
-      __format: 0,
-      __indent: 0,
+      __id: '',
+      __inset: 0,
       __key: paragraphKey,
       __last: textKey,
       __next: null,
@@ -124,7 +123,6 @@ describe('table selection', () => {
       __prev: null,
       __size: 1,
       __style: '',
-      __textFormat: 0,
       __textStyle: '',
       __type: 'paragraph',
     });

@@ -176,7 +176,7 @@ describe('HTML', () => {
     });
 
     expect(html).toBe(
-      '<p style="text-align: center;">Hello world!</p>',
+      '<p class="align-center">Hello world!</p>',
     );
   });
 
@@ -206,7 +206,7 @@ describe('HTML', () => {
     });
 
     expect(html).toBe(
-      '<p style="text-align: center;">Hello world!</p>',
+      '<p class="align-center">Hello world!</p>',
     );
   });
 });
