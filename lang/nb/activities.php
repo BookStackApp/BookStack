@@ -87,11 +87,11 @@ return [
 
     // Imports
     'import_create' => 'import opprettet',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create_notification' => 'Importen ble opplastet',
+    'import_run' => 'oppdatert import',
+    'import_run_notification' => 'Innhold importert',
+    'import_delete' => 'import slettet',
+    'import_delete_notification' => 'Importering ble slettet',
 
     // Users
     'user_create' => 'opprettet bruker',
