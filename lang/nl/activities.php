@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook succesvol verwijderd',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'maakte import',
+    'import_create_notification' => 'Import succesvol geüpload',
+    'import_run' => 'wijzigde import',
+    'import_run_notification' => 'Inhoud succesvol geïmporteerd',
+    'import_delete' => 'verwijderde import',
+    'import_delete_notification' => 'Import succesvol verwijderd',
 
     // Users
     'user_create' => 'maakte gebruiker aan',
