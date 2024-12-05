@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan ikke slette den eneste administratoren',
     'users_cannot_delete_guest' => 'Du kan ikke slette gjestebrukeren (Du kan deaktivere offentlig visning istede)',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Kunne ikke opprette bruker fordi invitasjons e-post ikke kunne sendes',
 
     // Roles
     'role_cannot_be_edited' => 'Denne rollen kan ikke endres',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Den vil snart komme tilbake.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'Kunne ikke lese ZIP-filen.',
+    'import_zip_cant_decode_data' => 'Kunne ikke finne og dekode ZIP data.json innhold.',
+    'import_zip_no_data' => 'ZIP-fildata har ingen forventet bok, kapittel eller sideinnhold.',
+    'import_validation_failed' => 'Import av ZIP feilet i å validere med feil:',
+    'import_zip_failed_notification' => 'Kunne ikke importere ZIP-fil.',
+    'import_perms_books' => 'Du mangler nødvendige tillatelser for å lage bøker.',
+    'import_perms_chapters' => 'Du mangler de nødvendige tillatelsene for å opprette kapittel.',
+    'import_perms_pages' => 'Du mangler nødvendige tillatelser for å opprette sider.',
+    'import_perms_images' => 'Du mangler de nødvendige tillatelsene for å opprette bilder.',
+    'import_perms_attachments' => 'Du mangler nødvendig tillatelse for å opprette vedlegg.',
 
     // API errors
     'api_no_authorization_found' => 'Ingen autorisasjonstoken ble funnet på forespørselen',
