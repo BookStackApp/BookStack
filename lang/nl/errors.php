@@ -106,7 +106,7 @@ return [
     'back_soon' => 'Komt snel weer online.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
+    'import_zip_cant_read' => 'Kon het ZIP-bestand niet lezen.',
     'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
     'import_validation_failed' => 'Import ZIP failed to validate with errors:',
