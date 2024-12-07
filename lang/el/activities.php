@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => 'Η σελίδα διαγράφηκε επιτυχώς',
     'page_restore'                => 'αποκατεστημένη σελίδα',
     'page_restore_notification'   => 'Η σελίδα αποκαταστάθηκε με επιτυχία',
-    'page_move'                   => 'Η σελίδα μετακινήθηκε',
+    'page_move'                   => 'σελίδα που μετακινήθηκε',
     'page_move_notification'      => 'Η σελίδα μετακινήθηκε με επιτυχία',
 
     // Chapters
@@ -85,7 +85,7 @@ return [
     'webhook_delete_notification' => 'Το Webhook διαγράφηκε επιτυχώς',
 
     // Imports
-    'import_create' => 'created import',
+    'import_create' => 'δημιουργημένη εισαγωγή',
     'import_create_notification' => 'Import successfully uploaded',
     'import_run' => 'updated import',
     'import_run_notification' => 'Content successfully imported',
