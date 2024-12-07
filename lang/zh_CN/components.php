@@ -17,7 +17,7 @@ return [
     'image_page_title' => '查看上传到本页面的图片',
     'image_search_hint' => '按图片名称搜索',
     'image_uploaded' => '上传于 :uploadedDate',
-    'image_uploaded_by' => '由 :username 上传',
+    'image_uploaded_by' => '由 :userName 上传',
     'image_uploaded_to' => '上传到 :pageLink',
     'image_updated' => ':updateDate 更新',
     'image_load_more' => '显示更多',
