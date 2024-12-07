@@ -105,10 +105,10 @@ return [
     'url'                  => 'Η μορφή του :attribute δεν είναι έγκυρη.',
     'uploaded'             => 'Δεν ήταν δυνατή η αποστολή του αρχείου. Ο διακομιστής ενδέχεται να μην δέχεται αρχεία αυτού του μεγέθους.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'Το :attribute πρέπει να παραπέμπει σε ένα αρχείο εντός του ZIP.',
+    'zip_file_mime' => 'Το :attribute πρέπει να αναφέρεται σε αρχείο τύπου :validTypes, βρέθηκε :foundType.',
+    'zip_model_expected' => 'Αναμενόταν αντικείμενο δεδομένων, αλλά ":type" βρέθηκε.',
+    'zip_unique' => 'Το :attribute πρέπει να είναι μοναδικό για τον τύπο αντικειμένου εντός του ZIP.',
 
     // Custom validation lines
     'custom' => [
