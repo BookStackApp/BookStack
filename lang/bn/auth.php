@@ -12,8 +12,8 @@ return [
     // Login & Register
     'sign_up' => 'নিবন্ধিত হোন',
     'log_in' => 'লগ ইন করুন',
-    'log_in_with' => 'Login with :socialDriver',
-    'sign_up_with' => 'Sign up with :socialDriver',
+    'log_in_with' => ':socialDriver দ্বারা লগইন করুন',
+    'sign_up_with' => ':socialDriver দ্বারা নিবন্ধিত হোন',
     'logout' => 'Logout',
 
     'name' => 'Name',
