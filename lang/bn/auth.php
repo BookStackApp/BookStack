@@ -6,12 +6,12 @@
  */
 return [
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'failed' => 'প্রদত্ত তথ্যনিরূপিত কোন রেকর্ড পাওয়া যায়নি।',
+    'throttle' => 'লগইন প্রচেষ্টার সীমা অতিক্রান্ত। দয়া করে :seconds সেকেন্ড পর আবার চেষ্টা করুন।',
 
     // Login & Register
-    'sign_up' => 'Sign up',
-    'log_in' => 'Log in',
+    'sign_up' => 'নিবন্ধিত হোন',
+    'log_in' => 'লগ ইন করুন',
     'log_in_with' => 'Login with :socialDriver',
     'sign_up_with' => 'Sign up with :socialDriver',
     'logout' => 'Logout',
