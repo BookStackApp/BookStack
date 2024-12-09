@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 
 // Custom full screen mode
 .tox.tox-fullscreen {
@@ -35,7 +38,7 @@
   padding: 1rem;
   top: 4px;
   font-style: italic;
-  @include lightDark(color, rgba(34,47,62,.5), rgba(155,155,155,.5))
+  @include mixins.lightDark(color, rgba(34,47,62,.5), rgba(155,155,155,.5))
 }
 
 // Default styles for our custom root nodes
@@ -74,23 +77,23 @@ body.page-content.mce-content-body  {
   pointer-events: none;
 }
 .page-content.mce-content-body details doc-root {
-  padding: $-s;
-  margin-left: (2px - $-s);
-  margin-right: (2px - $-s);
-  margin-bottom: (2px - $-s);
-  margin-top: (2px - $-s);
+  padding: vars.$s;
+  margin-left: (2px - vars.$s);
+  margin-right: (2px - vars.$s);
+  margin-bottom: (2px - vars.$s);
+  margin-top: (2px - vars.$s);
   overflow: hidden;
 }
 
 // Allow alignment to be reflected in media embed wrappers
 .page-content.mce-content-body .mce-preview-object.align-right {
   float: right !important;
-  margin: $-xs 0 $-xs $-s;
+  margin: vars.$xs 0 vars.$xs vars.$s;
 }
 
 .page-content.mce-content-body .mce-preview-object.align-left {
   float: left !important;
-  margin: $-xs $-m $-m 0;
+  margin: vars.$xs vars.$m vars.$m 0;
 }
 
 .page-content.mce-content-body .mce-preview-object.align-center {

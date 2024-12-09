@@ -1,16 +1,21 @@
+@use "sass:math";
+
+@use "mixins";
+@use "vars";
+
 
 // System wide notifications
 .notification {
   position: fixed;
   top: 0;
   right: 0;
-  margin: $-xl;
-  padding: $-m $-l;
+  margin: vars.$xl;
+  padding: vars.$m vars.$l;
   background-color: #FFF;
-  @include lightDark(background-color, #fff, #444);
+  @include mixins.lightDark(background-color, #fff, #444);
   border-radius: 4px;
   border-inline-start: 6px solid currentColor;
-  box-shadow: $bs-large;
+  box-shadow: vars.$bs-large;
   z-index: 999999;
   cursor: pointer;
   max-width: 360px;
@@ -28,20 +33,20 @@
   svg {
     width: 2.8rem;
     height: 2.8rem;
-    padding-inline-end: $-s;
+    padding-inline-end: vars.$s;
     fill: currentColor;
   }
   .dismiss {
     margin-top: -8px;
     svg {
       height: 1.0rem;
-      @include lightDark(color, #444, #888);
+      @include mixins.lightDark(color, #444, #888);
     }
   }
   span {
     vertical-align: middle;
     line-height: 1.3;
-    @include whenDark {
+    @include mixins.whenDark {
       color: #BBB;
     }
   }
@@ -78,12 +83,12 @@
     transform: rotate(90deg);
   }
   svg[data-icon="caret-right"] + * {
-    margin-inline-start: $-xxs;
+    margin-inline-start: vars.$xxs;
   }
 }
 
 [overlay], .popup-background {
-  @include lightDark(background-color, rgba(0, 0, 0, 0.333), rgba(0, 0, 0, 0.6));
+  @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.333), rgba(0, 0, 0, 0.6));
   position: fixed;
   z-index: 95536;
   width: 100%;
@@ -104,7 +109,7 @@
 }
 
 .popup-body {
-  @include lightDark(background-color, #fff, #333);
+  @include mixins.lightDark(background-color, #fff, #333);
   max-height: 90%;
   max-width: 1200px;
   width: 90%;
@@ -144,7 +149,7 @@
   border-radius: 0;
   box-shadow: none;
   color: #FFF;
-  padding: $-xs $-m;
+  padding: vars.$xs vars.$m;
   cursor: pointer;
 }
 
@@ -161,7 +166,7 @@
   background-color: var(--color-primary-light);
   min-height: 41px;
   button {
-    padding: 10px $-m;
+    padding: 10px vars.$m;
   }
 }
 
@@ -183,7 +188,7 @@
   .popup-title {
     color: #FFF;
     margin-inline-end: auto;
-    padding: 8px $-m;
+    padding: 8px vars.$m;
   }
   &.flex-container-row {
     display: flex !important;
@@ -226,7 +231,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .dropzone-landing-area {
   background-color: var(--color-primary-light);
-  padding: $-m $-l;
+  padding: vars.$m vars.$l;
   width: 100%;
   border: 1px dashed var(--color-primary);
   color: var(--color-primary);
@@ -275,8 +280,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: flex;
   margin: 1rem;
   flex-direction: row;
-  @include lightDark(background, #FFF, #444);
-  box-shadow: $bs-large;
+  @include mixins.lightDark(background, #FFF, #444);
+  box-shadow: vars.$bs-large;
   border-radius: 4px;
   overflow: hidden;
   padding-bottom: 3px;
@@ -354,7 +359,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   position: sticky;
   top: 0;
   z-index: 5;
-  @include lightDark(background-color, rgba(255, 255, 255, 0.85), rgba(80, 80, 80, 0.85));
+  @include mixins.lightDark(background-color, rgba(255, 255, 255, 0.85), rgba(80, 80, 80, 0.85));
 }
 .image-manager-filter-bar-bg {
   position: absolute;
@@ -367,16 +372,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .image-manager-filters {
-  box-shadow: $bs-med;
+  box-shadow: vars.$bs-med;
   border-radius: 4px;
   overflow: hidden;
   border-bottom: 0 !important;
-  @include whenDark {
+  @include mixins.whenDark {
     border: 1px solid #000 !important;
   }
   button {
     line-height: 0;
-    @include lightDark(background-color, #FFF, #333);
+    @include mixins.lightDark(background-color, #FFF, #333);
   }
   svg {
     margin: 0;
@@ -404,7 +409,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   padding: 0;
   cursor: pointer;
   aspect-ratio: 1;
-  @include lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(border-color, #ddd, #000);
   transition: all linear 80ms;
   overflow: hidden;
   &.selected {
@@ -441,7 +446,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   &:focus .image-meta {
     opacity: 1;
   }
-  @include smaller-than($m) {
+  @include mixins.smaller-than(vars.$bp-m) {
     .image-meta {
       display: none;
     }
@@ -450,7 +455,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .image-manager .load-more {
   text-align: center;
-  padding: $-s $-m;
+  padding: vars.$s vars.$m;
   clear: both;
   .loading-container {
     margin: 0;
@@ -467,7 +472,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .image-manager-warning {
-  @include lightDark(background, #FFF, #333);
+  @include mixins.lightDark(background, #FFF, #333);
   color: var(--color-warning);
   font-weight: bold;
   border-inline: 3px solid var(--color-warning);
@@ -479,16 +484,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   overflow-y: auto;
   overflow-x: hidden;
   border-inline-start: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(border-color, #ddd, #000);
   .inner {
     min-height: auto;
-    padding: $-m;
+    padding: vars.$m;
   }
   .image-manager-viewer img {
     max-width: 100%;
     max-height: 180px;
     display: block;
-    margin: 0 auto $-m auto;
+    margin: 0 auto vars.$m auto;
     box-shadow: 0 1px 21px 1px rgba(76, 76, 76, 0.3);
   }
   .image-manager-viewer {
@@ -501,7 +506,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     }
   }
 }
-@include smaller-than($m) {
+@include mixins.smaller-than(vars.$bp-m) {
   .image-manager-sidebar {
     border-inline-start: 0;
   }
@@ -522,7 +527,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .tab-container.bordered [role="tablist"] button[role="tab"] {
   border-inline-end: 1px solid #DDD;
-  @include lightDark(border-inline-end-color, #DDD, #000);
+  @include mixins.lightDark(border-inline-end-color, #DDD, #000);
   &:last-child {
     border-inline-end: none;
   }
@@ -534,14 +539,14 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   justify-items: start;
   text-align: start;
   border-bottom: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #444);
-  margin-bottom: $-m;
+  @include mixins.lightDark(border-color, #ddd, #444);
+  margin-bottom: vars.$m;
 }
 
 .tab-container [role="tablist"] button[role="tab"] {
   display: inline-block;
-  padding: $-s;
-  @include lightDark(color, rgba(0, 0, 0, .5), rgba(255, 255, 255, .5));
+  padding: vars.$s;
+  @include mixins.lightDark(color, rgba(0, 0, 0, .5), rgba(255, 255, 255, .5));
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -551,8 +556,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     outline: 0 !important;
   }
   &:hover, &:focus {
-    @include lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
-    @include lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
+    @include mixins.lightDark(color, rgba(0, 0, 0, .8), rgba(255, 255, 255, .8));
+    @include mixins.lightDark(border-bottom-color,  rgba(0, 0, 0, .2), rgba(255, 255, 255, .2));
   }
   &:focus {
     outline: 1px dotted var(--color-primary);
@@ -562,7 +567,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .tab-container [role="tablist"].controls-card {
   margin-bottom: 0;
   border-bottom: 0;
-  padding: 0 $-xs;
+  padding: 0 vars.$xs;
 }
 
 .image-picker .none {
@@ -583,16 +588,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .code-editor .lang-options button {
   display: block;
-  padding: $-xs $-m;
+  padding: vars.$xs vars.$m;
   border-bottom: 1px solid;
-  @include lightDark(color, #333, #AAA);
-  @include lightDark(border-bottom-color, #EEE, #000);
+  @include mixins.lightDark(color, #333, #AAA);
+  @include mixins.lightDark(border-bottom-color, #EEE, #000);
   cursor: pointer;
   width: 100%;
   text-align: left;
   font-family: var(--font-code);
   font-size: 0.7rem;
-  padding-left: 24px + $-xs;
+  padding-left: 24px + vars.$xs;
   &:hover, &.active {
     background-color: var(--color-primary-light);
     color: var(--color-primary);
@@ -633,7 +638,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   background-color: var(--color-primary-light);
   width: 100%;
   color: var(--color-primary);
-  padding: $-xxs $-s;
+  padding: vars.$xxs vars.$s;
   margin-bottom: 0;
 }
 
@@ -648,7 +653,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-radius: 0;
   border: 0;
   border-bottom: 1px solid #DDD;
-  padding: $-xs $-s;
+  padding: vars.$xs vars.$s;
   height: auto;
 }
 
@@ -667,7 +672,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   height: 80vh;
 }
 
-@include smaller-than($s) {
+@include mixins.smaller-than(vars.$bp-s) {
   .code-editor .lang-options {
     display: none;
   }
@@ -680,21 +685,21 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comments-container {
-  padding-inline: $-xl;
-  @include smaller-than($m) {
-    padding-inline: $-xs;
+  padding-inline: vars.$xl;
+  @include mixins.smaller-than(vars.$bp-m) {
+    padding-inline: vars.$xs;
   }
 }
 .comment-box {
   border-radius: 4px;
   border: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #000);
-  @include lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(background-color, #FFF, #222);
   .content {
     font-size: 0.666em;
-    padding: $-xs $-s;
+    padding: vars.$xs vars.$s;
     p, ul, ol {
-      font-size: $fs-m;
+      font-size: vars.$fs-m;
       margin: .5em 0;
     }
   }
@@ -708,7 +713,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   .actions button:focus {
     outline: 1px dotted var(--color-primary);
   }
-  @include smaller-than($m) {
+  @include mixins.smaller-than(vars.$bp-m) {
     .actions {
       opacity: 1;
     }
@@ -717,8 +722,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-box .header {
   border-bottom: 1px solid #DDD;
-  padding: $-xs $-s;
-  @include lightDark(border-color, #DDD, #000);
+  padding: vars.$xs vars.$s;
+  @include mixins.lightDark(border-color, #DDD, #000);
   a {
     color: inherit;
   }
@@ -735,10 +740,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 
 .comment-thread-indicator {
   border-inline-start: 3px dotted #DDD;
-  @include lightDark(border-color, #DDD, #444);
-  margin-inline-start: $-xs;
-  width: $-l;
-  height: calc(100% - $-m);
+  @include mixins.lightDark(border-color, #DDD, #444);
+  margin-inline-start: vars.$xs;
+  width: vars.$l;
+  height: calc(100% - vars.$m);
 }
 
 .comment-branch .comment-branch .comment-branch .comment-branch .comment-thread-indicator {
@@ -748,7 +753,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 .comment-reply {
   display: none;
   margin: 0 !important;
-  margin-bottom: -$-xxs !important;
+  margin-bottom: -(vars.$xxs) !important;
 }
 
 .comment-branch .comment-branch .comment-branch .comment-branch .comment-reply {
@@ -760,17 +765,17 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     font-size: 0.8rem;
   }
   .header {
-    padding: $-xs;
+    padding: vars.$xs;
   }
   .right-meta {
     display: none;
   }
   .content {
-    padding: $-xs $-s;
+    padding: vars.$xs vars.$s;
   }
 }
 .comment-container-compact .comment-thread-indicator {
-  width: $-m;
+  width: vars.$m;
 }
 
 #tag-manager .drag-card {
@@ -792,15 +797,15 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     display: flex;
     flex-direction: column;
     border-inline-start: 1px solid;
-    @include lightDark(border-color, #ddd, #000);
+    @include mixins.lightDark(border-color, #ddd, #000);
   }
   .template-item-actions button {
     cursor: pointer;
     flex: 1;
-    @include lightDark(background-color, #FFF, #222);
+    @include mixins.lightDark(background-color, #FFF, #222);
     border: 0;
     border-top: 1px solid;
-    @include lightDark(border-color, #DDD, #000);
+    @include mixins.lightDark(border-color, #DDD, #000);
   }
   .template-item-actions button svg {
     margin: 0;
@@ -818,7 +823,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border: 1px solid transparent;
   border-radius: 4px;
   line-height: normal;
-  padding: $-xs;
+  padding: vars.$xs;
   &:hover {
     border-color: #DDD;
   }
@@ -828,7 +833,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 .dropdown-search-toggle-select {
   display: flex;
-  gap: $-s;
+  gap: vars.$s;
   line-height: normal;
   .svg-icon {
     height: 26px;
@@ -862,7 +867,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .dropdown-search-dropdown {
-  box-shadow: $bs-med;
+  box-shadow: vars.$bs-med;
   overflow: hidden;
   min-height: 100px;
   width: 240px;
@@ -871,16 +876,16 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   z-index: 80;
   right: 0;
   top: 0;
-  margin-top: $-m;
-  @include rtl {
+  margin-top: vars.$m;
+  @include mixins.rtl {
     right: auto;
-    left: -$-m;
+    left: -(vars.$m);
   }
   .dropdown-search-search .svg-icon {
     position: absolute;
-    left: $-s;
-    @include rtl {
-      right: $-s;
+    left: vars.$s;
+    @include mixins.rtl {
+      right: vars.$s;
       left: auto;
     }
     top: 11px;
@@ -893,14 +898,14 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     text-align: start;
   }
   .dropdown-search-item {
-    padding: $-s $-m;
+    padding: vars.$s vars.$m;
     &:hover,&:focus {
       background-color: #F2F2F2;
       text-decoration: none;
     }
   }
   input, input:focus {
-    padding-inline-start: $-xl;
+    padding-inline-start: vars.$xl;
     border-radius: 0;
     border: 0;
     border-bottom: 1px solid #DDD;
@@ -910,9 +915,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   }
 }
 
-@include smaller-than($l) {
+@include mixins.smaller-than(vars.$bp-l) {
   .dropdown-search-dropdown {
-    inset-inline: $-m auto;
+    inset-inline: vars.$m auto;
   }
   .dropdown-search-dropdown .dropdown-search-list {
     max-height: 240px;
@@ -924,13 +929,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 .item-list-row {
   border: 1.5px solid;
-  @include lightDark(border-color, #E2E2E2, #444);
+  @include mixins.lightDark(border-color, #E2E2E2, #444);
   border-bottom-width: 0;
   label {
     padding-bottom: 0;
   }
   &:hover {
-    @include lightDark(background-color, #F6F6F6, #333);
+    @include mixins.lightDark(background-color, #F6F6F6, #333);
   }
 }
 .item-list-row:first-child {
@@ -980,7 +985,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 .shortcut-hint {
   position: fixed;
-  padding: $-xxs $-xxs;
+  padding: vars.$xxs vars.$xxs;
   font-size: .85rem;
   font-weight: 700;
   line-height: 1;
@@ -996,8 +1001,8 @@ $btt-size: 40px;
 .back-to-top {
   background-color: var(--color-primary);
   position: fixed;
-  bottom: $-m;
-  right: $-l;
+  bottom: vars.$m;
+  right: vars.$l;
   padding: 5px 7px;
   cursor: pointer;
   color: #FFF;
@@ -1036,17 +1041,17 @@ $btt-size: 40px;
   max-height: 280px;
   overflow-y: scroll;
   border: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
+  @include mixins.lightDark(border-color, #DDD, #000);
   border-radius: 3px;
   min-height: 20px;
-  @include lightDark(background-color, #EEE, #000);
+  @include mixins.lightDark(background-color, #EEE, #000);
 }
 .scroll-box-item {
   border-bottom: 1px solid;
   border-top: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
+  @include mixins.lightDark(border-color, #DDD, #000);
   margin-top: -1px;
-  @include lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(background-color, #FFF, #222);
   display: flex;
   align-items: flex-start;
   padding: 1px;
@@ -1055,7 +1060,7 @@ $btt-size: 40px;
   }
   &:hover {
     cursor: pointer;
-    @include lightDark(background-color, #f8f8f8, #333);
+    @include mixins.lightDark(background-color, #f8f8f8, #333);
   }
   .handle {
     color: #AAA;
@@ -1068,13 +1073,13 @@ $btt-size: 40px;
     margin: 0;
   }
   > * {
-    padding: $-xs $-m;
+    padding: vars.$xs vars.$m;
   }
   .handle + * {
     padding-left: 0;
   }
   &:hover .handle {
-    @include lightDark(color, #444, #FFF);
+    @include mixins.lightDark(color, #444, #FFF);
   }
   &:hover button {
     opacity: 1;
@@ -1087,8 +1092,8 @@ $btt-size: 40px;
 input.scroll-box-search, .scroll-box-header-item {
   font-size: 0.8rem;
   border: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
-  @include lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(border-color, #DDD, #000);
+  @include mixins.lightDark(background-color, #FFF, #222);
   margin-bottom: -1px;
   border-radius: 3px 3px 0 0;
   width: 100%;

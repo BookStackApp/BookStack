@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 .page-editor {
   display: flex;
   flex-direction: column;
@@ -22,8 +25,8 @@
 .page-editor-page-area {
   width: 100%;
   border-radius: 8px;
-  box-shadow: $bs-card;
-  @include lightDark(background-color, #FFF, #333)
+  box-shadow: vars.$bs-card;
+  @include mixins.lightDark(background-color, #FFF, #333)
 }
 
 .page-edit-toolbar {
@@ -34,7 +37,7 @@
   align-items: center;
 }
 
-@include larger-than($xxl) {
+@include mixins.larger-than(vars.$bp-xxl) {
   .page-editor-wysiwyg2024 .page-edit-toolbar,
   .page-editor-wysiwyg2024 .page-editor-page-area,
   .page-editor-wysiwyg .page-edit-toolbar,
@@ -48,7 +51,7 @@
   }
 }
 
-@include smaller-than($m) {
+@include mixins.smaller-than(vars.$bp-m) {
   .page-edit-toolbar {
     display: flex;
     flex-direction: row;
@@ -76,7 +79,7 @@
     position: relative;
     outline-offset: -1px;
     outline: 1px dashed var(--color-primary);
-    box-shadow: $bs-card;
+    box-shadow: vars.$bs-card;
     z-index: 50;
   }
 }
@@ -96,7 +99,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-@include smaller-than($s) {
+@include mixins.smaller-than(vars.$bp-s) {
   .page-edit-toolbar {
     overflow-x: scroll;
     overflow-y: visible;
@@ -116,9 +119,9 @@ body.tox-fullscreen, body.markdown-fullscreen {
   width: 52px;
   height: 52px;
   font-size: 26px;
-  inset-inline-end: $-xs;
-  bottom: $-s;
-  box-shadow: $bs-hover;
+  inset-inline-end: vars.$xs;
+  bottom: vars.$s;
+  box-shadow: vars.$bs-hover;
   background-color: currentColor;
   text-align: center;
   svg {
@@ -150,10 +153,10 @@ body.tox-fullscreen, body.markdown-fullscreen {
 }
 .pointer {
   border: 1px solid #CCC;
-  @include lightDark(border-color, #ccc, #000);
+  @include mixins.lightDark(border-color, #ccc, #000);
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
-  @include lightDark(background-color, #fff, #333);
+  @include mixins.lightDark(background-color, #fff, #333);
   width: 275px;
 
   &.is-page-editable {
@@ -174,8 +177,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border-right: 1px solid #CCC;
     border-bottom: 1px solid #CCC;
     z-index: 56;
-    @include lightDark(background-color, #fff, #333);
-    @include lightDark(border-color, #ccc, #000);
+    @include mixins.lightDark(background-color, #fff, #333);
+    @include mixins.lightDark(border-color, #ccc, #000);
   }
   input, button, a {
     position: relative;
@@ -188,14 +191,14 @@ body.tox-fullscreen, body.markdown-fullscreen {
   input {
     background-color: #FFF;
     border: 1px solid #DDD;
-    @include lightDark(border-color, #ddd, #000);
+    @include mixins.lightDark(border-color, #ddd, #000);
     color: #666;
     width: 160px;
     z-index: 40;
     padding: 5px 10px;
   }
   .text-button {
-    @include lightDark(color, #444, #AAA);
+    @include mixins.lightDark(color, #444, #AAA);
   }
   .input-group .button {
     line-height: 1;
@@ -210,22 +213,22 @@ body.tox-fullscreen, body.markdown-fullscreen {
     height: 1.2em;
   }
   .button {
-    @include lightDark(border-color, #ddd, #000);
+    @include mixins.lightDark(border-color, #ddd, #000);
   }
 }
 
 // Page editor sidebar toolbox
 .floating-toolbox {
-  @include lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(background-color, #FFF, #222);
   overflow: hidden;
   align-items: stretch;
   flex-direction: row;
   display: flex;
   max-height: 100%;
   border-radius: 8px;
-  box-shadow: $bs-card;
+  box-shadow: vars.$bs-card;
   margin-bottom: auto;
-  margin-inline-start: $-l;
+  margin-inline-start: vars.$l;
   position: relative;
   &.open {
     position: relative;
@@ -254,23 +257,23 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   .tabs {
     border-inline-end: 1px solid #DDD;
-    @include lightDark(border-inline-end-color, #DDD, #000);
+    @include mixins.lightDark(border-inline-end-color, #DDD, #000);
     width: 40px;
     flex: 0 1 auto;
     margin-inline-end: -1px;
   }
   .tabs-inner {
-    @include lightDark(background-color, #FFFFFF, #222);
+    @include mixins.lightDark(background-color, #FFFFFF, #222);
   }
   .tabs svg {
     padding: 0;
     margin: 0;
   }
   .tabs-inner > button {
-    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
+    @include mixins.lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.5));
     display: block;
     cursor: pointer;
-    padding: 10px $-xs;
+    padding: 10px vars.$xs;
     font-size: 18px;
     line-height: 1.6;
   }
@@ -295,8 +298,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   h4 {
     font-size: 24px;
-    margin: $-m 0 0 0;
-    padding: 0 $-l $-s $-l;
+    margin: vars.$m 0 0 0;
+    padding: 0 vars.$l vars.$s vars.$l;
   }
   .tags input {
     max-width: 100%;
@@ -304,8 +307,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
     min-width: 50px;
   }
   .tags td, .inline-start-table > div > div > div {
-    padding-inline-end: $-s;
-    padding-top: $-s;
+    padding-inline-end: vars.$s;
+    padding-top: vars.$s;
     position: relative;
   }
   .handle {
@@ -324,13 +327,13 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
 }
 
-@include smaller-than($xxl) {
+@include mixins.smaller-than(vars.$bp-xxl) {
   .floating-toolbox {
-    margin-inline-start: $-s;
+    margin-inline-start: vars.$s;
   }
 }
 
-@include smaller-than($s) {
+@include mixins.smaller-than(vars.$bp-s) {
   .page-editor-page-area-wrap {
     margin: 4px !important;
   }
@@ -429,7 +432,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   border-radius: 3px;
   position: relative;
   overflow: hidden;
-  padding: $-xs $-s;
+  padding: vars.$xs vars.$s;
   fill: currentColor;
   opacity: 0.85;
   transition: opacity ease-in-out 120ms;

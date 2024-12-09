@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 /**
  * Page Content
  * Styles specific to blocks used within page content.
@@ -13,14 +16,14 @@
   }
   img.align-left, table.align-left, iframe.align-left, video.align-left {
     float: left !important;
-    margin: $-xs $-m $-m 0;
+    margin: vars.$xs vars.$m vars.$m 0;
   }
   .align-right {
     text-align: right !important;
   }
   img.align-right, table.align-right, iframe.align-right, video.align-right {
     float: right !important;
-    margin: $-xs 0 $-xs $-s;
+    margin: vars.$xs 0 vars.$xs vars.$s;
   }
   .align-center {
     text-align: center;
@@ -40,7 +43,7 @@
   }
   hr {
     clear: both;
-    margin: $-m 0;
+    margin: vars.$m 0;
   }
   table {
     hyphens: auto;
@@ -63,23 +66,23 @@
 
   details {
     border: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
+    @include mixins.lightDark(border-color, #DDD, #555);
     margin-bottom: 1em;
-    padding: $-s;
+    padding: vars.$s;
   }
   details > summary {
-    margin-top: -$-s;
-    margin-left: -$-s;
-    margin-right: -$-s;
-    margin-bottom: -$-s;
+    margin-top: -(vars.$s);
+    margin-left: -(vars.$s);
+    margin-right: -(vars.$s);
+    margin-bottom: -(vars.$s);
     font-weight: bold;
-    @include lightDark(background-color, #EEE, #333);
-    padding: $-xs $-s;
+    @include mixins.lightDark(background-color, #EEE, #333);
+    padding: vars.$xs vars.$s;
   }
   details[open] > summary {
-    margin-bottom: $-s;
+    margin-bottom: vars.$s;
     border-bottom: 1px solid;
-    @include lightDark(border-color, #DDD, #555);
+    @include mixins.lightDark(border-color, #DDD, #555);
   }
   details > summary + * {
     margin-top: .2em;
@@ -138,10 +141,10 @@ body .page-content img,
   border-inline-start: 3px solid #BBB;
   border-inline-end: none;
   background-color: #EEE;
-  padding: $-s;
-  padding-left: $-xl;
-  padding-inline-start: $-xl;
-  padding-inline-end: $-s;
+  padding: vars.$s;
+  padding-left: vars.$xl;
+  padding-inline-start: vars.$xl;
+  padding-inline-end: vars.$s;
   display: block;
   position: relative;
   overflow: auto;
@@ -151,8 +154,8 @@ body .page-content img,
     content: '';
     width: 1.2em;
     height: 1.2em;
-    left: $-xs + 2px;
-    inset-inline-start: $-xs + 2px;
+    left: vars.$xs + 2px;
+    inset-inline-start: vars.$xs + 2px;
     inset-inline-end: unset;
     top: 50%;
     margin-top: -9px;
@@ -162,30 +165,30 @@ body .page-content img,
     opacity: 0.8;
   }
   &.success {
-    @include lightDark(border-color, $positive, $positive-dark);
-    @include lightDark(background-color, #eafdeb, #122913);
-    @include lightDark(color, #063409, $positive-dark);
+    @include mixins.lightDark(border-color, vars.$positive, vars.$positive-dark);
+    @include mixins.lightDark(background-color, #eafdeb, #122913);
+    @include mixins.lightDark(color, #063409, vars.$positive-dark);
   }
   &.success:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiMzNzZjMzkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bS0yIDE1bC01LTUgMS40MS0xLjQxTDEwIDE0LjE3bDcuNTktNy41OUwxOSA4bC05IDl6Ii8+PC9zdmc+");
   }
   &.danger {
-    @include lightDark(border-color, $negative, $negative-dark);
-    @include lightDark(background-color, #fcdbdb, #250505);
-    @include lightDark(color, #4d0706, $negative-dark);
+    @include mixins.lightDark(border-color, vars.$negative, vars.$negative-dark);
+    @include mixins.lightDark(background-color, #fcdbdb, #250505);
+    @include mixins.lightDark(color, #4d0706, vars.$negative-dark);
   }
   &.danger:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiOTE4MTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0xNS43MyAzSDguMjdMMyA4LjI3djcuNDZMOC4yNyAyMWg3LjQ2TDIxIDE1LjczVjguMjdMMTUuNzMgM3pNMTIgMTcuM2MtLjcyIDAtMS4zLS41OC0xLjMtMS4zIDAtLjcyLjU4LTEuMyAxLjMtMS4zLjcyIDAgMS4zLjU4IDEuMyAxLjMgMCAuNzItLjU4IDEuMy0xLjMgMS4zem0xLTQuM2gtMlY3aDJ2NnoiLz4gICAgPHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==");
   }
   &.info {
-    @include lightDark(border-color, $info, $info-dark);
-    @include lightDark(background-color, #d3efff, #001825);
-    @include lightDark(color, #01466c, $info-dark);
+    @include mixins.lightDark(border-color, vars.$info, vars.$info-dark);
+    @include mixins.lightDark(background-color, #d3efff, #001825);
+    @include mixins.lightDark(color, #01466c, vars.$info-dark);
   }
   &.warning {
-    @include lightDark(border-color, $warning, $warning-dark);
-    @include lightDark(background-color, #fee3d3, #30170a);
-    @include lightDark(color, #6a2802, $warning-dark);
+    @include mixins.lightDark(border-color, vars.$warning, vars.$warning-dark);
+    @include mixins.lightDark(background-color, #fee3d3, #30170a);
+    @include mixins.lightDark(color, #6a2802, vars.$warning-dark);
   }
   &.warning:before {
     background-image: url("data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNiNjUzMWMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+ICAgIDxwYXRoIGQ9Ik0wIDBoMjR2MjRIMHoiIGZpbGw9Im5vbmUiLz4gICAgPHBhdGggZD0iTTEgMjFoMjJMMTIgMiAxIDIxem0xMi0zaC0ydi0yaDJ2MnptMC00aC0ydi00aDJ2NHoiLz48L3N2Zz4=");

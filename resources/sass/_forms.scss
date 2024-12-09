@@ -1,13 +1,18 @@
+@use "sass:math";
+
+@use "mixins";
+@use "vars";
+
 
 .input-base {
   border-radius: 3px;
   border: 1px solid #D4D4D4;
-  @include lightDark(background-color, #fff, #333);
-  @include lightDark(border-color, #d4d4d4, #111);
-  @include lightDark(color, #666, #AAA);
+  @include mixins.lightDark(background-color, #fff, #333);
+  @include mixins.lightDark(border-color, #d4d4d4, #111);
+  @include mixins.lightDark(color, #666, #AAA);
   display: inline-block;
-  font-size: $fs-m;
-  padding: $-xs*1.8;
+  font-size: vars.$fs-m;
+  padding: vars.$xs*1.8;
   height: 40px;
   width: 250px;
   max-width: 100%;
@@ -49,7 +54,7 @@
   #markdown-editor-input {
     font-style: normal;
     font-weight: 400;
-    padding: $-xs $-m;
+    padding: vars.$xs vars.$m;
     color: #444;
     border-radius: 0;
     max-height: 100%;
@@ -72,7 +77,7 @@
 .markdown-editor-wrap {
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(border-color, #ddd, #000);
   position: relative;
   flex: 1;
   min-width: 0;
@@ -92,11 +97,11 @@
 
 .markdown-panel-divider {
   width: 2px;
-  @include lightDark(background-color, #ddd, #000);
+  @include mixins.lightDark(background-color, #ddd, #000);
   cursor: col-resize;
 }
 
-@include smaller-than($m) {
+@include mixins.smaller-than(vars.$bp-m) {
   #markdown-editor {
     flex-direction: column;
   }
@@ -109,7 +114,7 @@
   }
   .editor-toolbar-label {
     float: none !important;
-    @include lightDark(border-color, #DDD, #555);
+    @include mixins.lightDark(border-color, #DDD, #555);
     display: block;
   }
   .markdown-editor-wrap:not(.active) .editor-toolbar + div,
@@ -150,10 +155,10 @@ html.markdown-editor-display.dark-mode {
   font-size: 11px;
   line-height: 1.6;
   border-bottom: 1px solid #CCC;
-  @include lightDark(background-color, #FFF, #333);
-  @include lightDark(border-color, #CCC, #000);
+  @include mixins.lightDark(background-color, #FFF, #333);
+  @include mixins.lightDark(border-color, #CCC, #000);
   flex: none;
-  @include whenDark {
+  @include mixins.whenDark {
     button {
       color: #AAA;
     }
@@ -161,12 +166,12 @@ html.markdown-editor-display.dark-mode {
 }
 
 .editor-toolbar .buttons {
-  font-size: $fs-m;
+  font-size: vars.$fs-m;
   .dropdown-menu {
     padding: 0;
   }
   .toggle-switch {
-    margin: $-s 0;
+    margin: vars.$s 0;
   }
 }
 
@@ -175,18 +180,18 @@ html.markdown-editor-display.dark-mode {
   width: 2rem;
   text-align: center;
   border-left: 1px solid;
-  @include lightDark(border-color, #DDD, #555);
+  @include mixins.lightDark(border-color, #DDD, #555);
   svg {
     margin-inline-end: 0;
   }
   &:hover {
-    @include lightDark(background-color, #DDD, #222);
+    @include mixins.lightDark(background-color, #DDD, #222);
   }
 }
 
 
 label {
-  @include lightDark(color, #666, #ddd);
+  @include mixins.lightDark(color, #666, #ddd);
   display: block;
   line-height: 1.4em;
   font-size: 0.94em;
@@ -202,12 +207,12 @@ label.radio, label.checkbox {
   font-weight: 400;
   user-select: none;
   input[type="radio"], input[type="checkbox"] {
-    margin-inline-end: $-xs;
+    margin-inline-end: vars.$xs;
   }
 }
 
 label.inline.checkbox {
-  margin-inline-end: $-m;
+  margin-inline-end: vars.$m;
 }
 
 label + p.small {
@@ -218,7 +223,7 @@ table.form-table {
   max-width: 100%;
   td {
     overflow: hidden;
-    padding: math.div($-xxs, 2) 0;
+    padding: math.div(vars.$xxs, 2) 0;
   }
 }
 
@@ -236,7 +241,7 @@ select {
   background-position: calc(100% - 20px) 64%;
   background-repeat: no-repeat;
 
-  @include rtl {
+  @include mixins.rtl {
     background-position: 20px 70%;
   }
 }
@@ -257,9 +262,9 @@ input[type=color] {
 .toggle-switch {
   user-select: none;
   display: inline-grid;
-  grid-template-columns: (16px + $-s) 1fr;
+  grid-template-columns: (16px + vars.$s) 1fr;
   align-items: center;
-  margin: $-m 0;
+  margin: vars.$m 0;
   .custom-checkbox {
     width: 16px;
     height: 16px;
@@ -302,7 +307,7 @@ input[type=color] {
 }
 .toggle-switch-list {
   .toggle-switch {
-    margin: $-xs 0;
+    margin: vars.$xs 0;
   }
   &.compact .toggle-switch {
     margin: 1px 0;
@@ -310,18 +315,18 @@ input[type=color] {
 }
 
 .form-group {
-  margin-bottom: $-s;
+  margin-bottom: vars.$s;
 }
 
 .setting-list > div {
   border-bottom: 1px solid #DDD;
-  padding: $-xl 0;
+  padding: vars.$xl 0;
   &:last-child {
     border-bottom: none;
   }
 }
 .setting-list-label {
-  @include lightDark(color, #222, #DDD);
+  @include mixins.lightDark(color, #222, #DDD);
   color: #222;
   font-size: 1rem;
 }
@@ -329,7 +334,7 @@ input[type=color] {
   margin-bottom: 0;
 }
 .setting-list-label + .grid {
-  margin-top: $-m;
+  margin-top: vars.$m;
 }
 
 .setting-list .grid, .stretch-inputs {
@@ -349,19 +354,19 @@ input[type=color] {
 
 .form-group {
   div.text-pos, div.text-neg, p.text-post, p.text-neg {
-    padding: $-xs 0;
+    padding: vars.$xs 0;
   }
 }
 
 .form-group.collapsible {
-  padding: 0 $-m;
+  padding: 0 vars.$m;
   border: 1px solid;
-  @include lightDark(border-color, #DDD, #000);
+  @include mixins.lightDark(border-color, #DDD, #000);
   border-radius: 4px;
   .collapse-title {
-    margin-inline-start: -$-m;
-    margin-inline-end: -$-m;
-    padding: $-s $-m;
+    margin-inline-start: -(vars.$m);
+    margin-inline-end: -(vars.$m);
+    padding: vars.$s vars.$m;
     display: block;
     width: calc(100% + 32px);
     text-align: start;
@@ -377,13 +382,13 @@ input[type=color] {
   .collapse-title label:before {
     display: inline-block;
     content: '▸';
-    margin-inline-end: $-m;
+    margin-inline-end: vars.$m;
     transition: all ease-in-out 400ms;
     transform: rotate(0);
   }
   .collapse-content {
     display: none;
-    padding-bottom: $-m;
+    padding-bottom: vars.$m;
   }
   &.open .collapse-title label:before {
     transform: rotate(90deg);
@@ -407,7 +412,7 @@ input[type=color] {
 .title-input input[type="text"] {
   display: block;
   width: 100%;
-  padding: $-s;
+  padding: vars.$s;
   margin-top: 0;
   font-size: 2em;
   height: auto;
@@ -416,15 +421,15 @@ input[type=color] {
 .description-input textarea {
   display: block;
   width: 100%;
-  padding: $-s;
-  font-size: $fs-m;
+  padding: vars.$s;
+  font-size: vars.$fs-m;
   color: #666;
   height: auto;
 }
 
 .description-input > .tox-tinymce {
   border: 1px solid #DDD !important;
-  @include lightDark(border-color, #DDD !important, #000 !important);
+  @include mixins.lightDark(border-color, #DDD !important, #000 !important);
   border-radius: 3px;
   .tox-toolbar__primary {
     justify-content: end;
@@ -437,7 +442,7 @@ input[type=color] {
   button[tabindex="-1"] {
     background-color: transparent;
     border: none;
-    @include lightDark(color, #666, #AAA);
+    @include mixins.lightDark(color, #666, #AAA);
     padding: 0;
     cursor: pointer;
     position: absolute;
@@ -446,8 +451,8 @@ input[type=color] {
   }
   input {
     display: block;
-    padding: $-xs * 1.5;
-    padding-inline-start: $-l + 4px;
+    padding: vars.$xs * 1.5;
+    padding-inline-start: vars.$l + 4px;
     width: 300px;
     max-width: 100%;
     height: auto;
@@ -466,10 +471,10 @@ input[type=color] {
   height: 38px;
   z-index: -1;
   &.floating {
-    box-shadow: $bs-med;
+    box-shadow: vars.$bs-med;
     border-radius: 4px;
     overflow: hidden;
-    @include whenDark {
+    @include mixins.whenDark {
       border: 1px solid #000;
     }
   }
@@ -477,7 +482,7 @@ input[type=color] {
     height: 100%;
     border-radius: 0;
     border: 1px solid #ddd;
-    @include lightDark(border-color, #ddd, #000);
+    @include mixins.lightDark(border-color, #ddd, #000);
     margin-inline-start: -1px;
     &:last-child {
       border-inline-end: 0;
@@ -486,7 +491,7 @@ input[type=color] {
   input {
     border: 0;
     flex: 5;
-    padding: $-xs $-s;
+    padding: vars.$xs vars.$s;
     &:focus, &:active {
       outline: 1px dotted var(--color-primary);
       outline-offset: -2px;
@@ -498,8 +503,8 @@ input[type=color] {
     width: 48px;
     border-inline-start: 1px solid #DDD;
     background-color: #FFF;
-    @include lightDark(background-color, #FFF, #333);
-    @include lightDark(color, #444, #AAA);
+    @include mixins.lightDark(background-color, #FFF, #333);
+    @include mixins.lightDark(color, #444, #AAA);
   }
   button:focus {
     outline: 1px dotted var(--color-primary);
@@ -508,7 +513,7 @@ input[type=color] {
   svg {
     margin: 0;
   }
-  @include smaller-than($s) {
+  @include mixins.smaller-than(vars.$bp-s) {
     width: 180px;
   }
 }
@@ -548,30 +553,30 @@ input[type=color] {
 .custom-simple-file-input {
   max-width: 100%;
   border: 1px solid;
-  @include lightDark(border-color, #DDD, #666);
+  @include mixins.lightDark(border-color, #DDD, #666);
   border-radius: 4px;
-  padding: $-s $-m;
+  padding: vars.$s vars.$m;
 }
 .custom-simple-file-input::file-selector-button {
   background-color: transparent;
   text-decoration: none;
   font-size: 0.8rem;
   line-height: 1.4em;
-  padding: $-xs $-s;
+  padding: vars.$xs vars.$s;
   border: 1px solid;
   font-weight: 400;
   outline: 0;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: $-m;
-  @include lightDark(color, #666, #AAA);
-  @include lightDark(border-color, #CCC, #666);
+  margin-right: vars.$m;
+  @include mixins.lightDark(color, #666, #AAA);
+  @include mixins.lightDark(border-color, #CCC, #666);
   &:hover, &:focus, &:active {
-    @include lightDark(color, #444, #BBB);
+    @include mixins.lightDark(color, #444, #BBB);
     border: 1px solid #CCC;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     background-color: #F2F2F2;
-    @include lightDark(background-color, #f8f8f8, #444);
+    @include mixins.lightDark(background-color, #f8f8f8, #444);
     filter: none;
   }
   &:active {

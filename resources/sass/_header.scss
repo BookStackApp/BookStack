@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 /**
  * Includes the main navigation header and the faded toolbar.
  */
@@ -6,7 +9,7 @@ header.grid {
   grid-template-columns: minmax(max-content, 2fr) 1fr minmax(max-content, 2fr);
 }
 
-@include smaller-than($l) {
+@include mixins.smaller-than(vars.$bp-l) {
   header.grid {
     grid-template-columns: 1fr;
     grid-row-gap: 0;
@@ -20,8 +23,8 @@ header {
   top: 0;
   color: rgb(250, 250, 250);
   border-bottom: 1px solid #DDD;
-  box-shadow: $bs-card;
-  @include lightDark(border-bottom-color, #DDD, #000);
+  box-shadow: vars.$bs-card;
+  @include mixins.lightDark(border-bottom-color, #DDD, #000);
   .header-links {
     display: flex;
     align-items: center;
@@ -33,7 +36,7 @@ header {
   }
   .links a {
     display: inline-block;
-    padding: 10px $-m;
+    padding: 10px vars.$m;
     color: #FFF;
     border-radius: 3px;
   }
@@ -42,7 +45,7 @@ header {
     background-color: rgba(255, 255, 255, .15);
   }
   .dropdown-container {
-    padding-inline-start: $-m;
+    padding-inline-start: vars.$m;
     padding-inline-end: 0;
   }
   .avatar, .user-name {
@@ -58,12 +61,12 @@ header {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
-    padding: $-s;
-    margin: 0 (-$-s);
+    padding: vars.$s;
+    margin: 0 (-(vars.$s));
     border-radius: 3px;
-    gap: $-xs;
+    gap: vars.$xs;
     > span {
-      padding-inline-start: $-xs;
+      padding-inline-start: vars.$xs;
       display: inline-block;
       line-height: 1;
     }
@@ -75,8 +78,8 @@ header {
     &:hover {
       background-color: rgba(255, 255, 255, 0.15);
     }
-    @include between($l, $xl) {
-      padding-inline-start: $-xs;
+    @include mixins.between(vars.$bp-l, vars.$bp-xl) {
+      padding-inline-start: vars.$xs;
       .name {
         display: none;
       }
@@ -98,7 +101,7 @@ header .search-box {
     color: #EEE;
     z-index: 2;
     height: auto;
-    padding: $-xs*1.5;
+    padding: vars.$xs*1.5;
     padding-inline-start: 40px;
     &:focus {
       outline: none;
@@ -109,7 +112,7 @@ header .search-box {
     color: #FFF;
     opacity: 0.6;
   }
-  @include between($l, $xl) {
+  @include mixins.between(vars.$bp-l, vars.$bp-xl) {
     max-width: 200px;
   }
   &:focus-within #header-search-box-button {
@@ -122,7 +125,7 @@ header .search-box {
   top: 10px;
   color: #FFF;
   opacity: 0.6;
-  @include lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
+  @include mixins.lightDark(color, rgba(255, 255, 255, 0.8), #AAA);
   svg {
     margin-inline-end: 0;
   }
@@ -131,15 +134,15 @@ header .search-box {
 .global-search-suggestions {
   display: none;
   position: absolute;
-  top: -$-s;
+  top: -(vars.$s);
   left: 0;
   right: 0;
   z-index: -1;
-  margin-left: -$-xxl;
-  margin-right: -$-xxl;
+  margin-left: -(vars.$xxl);
+  margin-right: -(vars.$xxl);
   padding-top: 56px;
   border-radius: 3px;
-  box-shadow: $bs-hover;
+  box-shadow: vars.$bs-hover;
   transform-origin: top center;
   opacity: .5;
   transform: scale(0.9);
@@ -166,19 +169,19 @@ header .search-box.search-active:focus-within {
     display: block;
   }
   input {
-    @include lightDark(background-color, #EEE, #333);
-    @include lightDark(border-color, #DDD, #111);
+    @include mixins.lightDark(background-color, #EEE, #333);
+    @include mixins.lightDark(border-color, #DDD, #111);
   }
   #header-search-box-button, input {
-    @include lightDark(color, #444, #AAA);
+    @include mixins.lightDark(color, #444, #AAA);
   }
 }
 
 .logo {
   display: inline-flex;
-  padding: ($-s - 6px) $-s;
-  margin: 6px (-$-s);
-  gap: $-s;
+  padding: (vars.$s - 6px) vars.$s;
+  margin: 6px (-(vars.$s));
+  gap: vars.$s;
   align-items: center;
   border-radius: 4px;
   &:hover {
@@ -204,7 +207,7 @@ header .search-box.search-active:focus-within {
   font-size: 2em;
   border: 2px solid rgba(255, 255, 255, 0.8);
   border-radius: 4px;
-  padding: 0 $-xs;
+  padding: 0 vars.$xs;
   line-height: 1;
   cursor: pointer;
   user-select: none;
@@ -215,18 +218,18 @@ header .search-box.search-active:focus-within {
 }
 
 
-@include smaller-than($l) {
+@include mixins.smaller-than(vars.$bp-l) {
   header .header-links {
-    @include lightDark(background-color, #fff, #333);
+    @include mixins.lightDark(background-color, #fff, #333);
     display: none;
     z-index: 10;
-    inset-inline-end: $-m;
+    inset-inline-end: vars.$m;
     border-radius: 4px;
     overflow: hidden;
     position: absolute;
-    box-shadow: $bs-hover;
-    margin-top: $-m;
-    padding: $-xs 0;
+    box-shadow: vars.$bs-hover;
+    margin-top: vars.$m;
+    padding: vars.$xs 0;
     &.show {
       display: block;
     }
@@ -235,14 +238,14 @@ header .search-box.search-active:focus-within {
     text-align: start;
     display: grid;
     align-items: center;
-    padding: 8px $-m;
-    gap: $-m;
-    color: $text-dark;
+    padding: 8px vars.$m;
+    gap: vars.$m;
+    color: vars.$text-dark;
     grid-template-columns: 16px auto;
     line-height: 1.4;
-    @include lightDark(color, $text-dark, #eee);
+    @include mixins.lightDark(color, vars.$text-dark, #eee);
     svg {
-      margin-inline-end: $-s;
+      margin-inline-end: vars.$s;
       width: 16px;
     }
     &:hover {
@@ -251,7 +254,7 @@ header .search-box.search-active:focus-within {
       text-decoration: none;
     }
     &:focus {
-      @include lightDark(background-color, #eee, #333);
+      @include mixins.lightDark(background-color, #eee, #333);
       outline-color: var(--color-primary);
       color: var(--color-primary);
     }
@@ -280,19 +283,19 @@ header .search-box.search-active:focus-within {
   z-index: 5;
   background-color: #FFF;
   border-bottom: 1px solid #DDD;
-  @include lightDark(border-bottom-color, #DDD, #333);
-  box-shadow: $bs-card;
+  @include mixins.lightDark(border-bottom-color, #DDD, #333);
+  box-shadow: vars.$bs-card;
 }
 .tri-layout-mobile-tab {
   text-align: center;
   border-bottom: 3px solid #BBB;
   cursor: pointer;
   margin: 0;
-  @include lightDark(background-color, #FFF, #222);
-  @include lightDark(border-bottom-color, #BBB, #333);
+  @include mixins.lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(border-bottom-color, #BBB, #333);
   &:first-child {
     border-inline-end: 1px solid #DDD;
-    @include lightDark(border-inline-end-color, #DDD, #000);
+    @include mixins.lightDark(border-inline-end-color, #DDD, #000);
   }
   &[aria-selected="true"] {
     border-bottom-color: currentColor !important;
@@ -308,8 +311,8 @@ header .search-box.search-active:focus-within {
   opacity: 0.7;
   .icon-list-item {
     width: auto;
-    padding-top: $-xs;
-    padding-bottom: $-xs;
+    padding-top: vars.$xs;
+    padding-bottom: vars.$xs;
   }
   .separator {
     display: inline-block;
@@ -326,9 +329,9 @@ header .search-box.search-active:focus-within {
   }
 }
 
-@include smaller-than($l) {
+@include mixins.smaller-than(vars.$bp-l) {
   .breadcrumbs .icon-list-item {
-    padding: $-xs;
+    padding: vars.$xs;
     > span + span {
       display: none;
     }
@@ -355,5 +358,5 @@ header .search-box.search-active:focus-within {
 
 .faded span.faded-text {
   display: inline-block;
-  padding: $-s;
+  padding: vars.$s;
 }

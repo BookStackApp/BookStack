@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 
 .book-contents .entity-list-item {
   .icon {
@@ -6,7 +9,7 @@
     justify-self: stretch;
     align-self: stretch;
     height: auto;
-    margin-inline-end: $-xs;
+    margin-inline-end: vars.$xs;
   }
   .icon:after {
     opacity: 0.5;
@@ -25,7 +28,7 @@
 
 .entity-list-item + .chapter-expansion {
   display: flex;
-  padding: 0 $-m $-m $-m;
+  padding: 0 vars.$m vars.$m vars.$m;
   align-items: center;
   border: 0;
   width: 100%;
@@ -58,7 +61,7 @@
   }
   .chapter-contents-toggle {
     border-radius: 0 4px 4px 0;
-    padding: $-xs ($-m + $-xxs);
+    padding: vars.$xs (vars.$m + vars.$xxs);
     width: 100%;
     text-align: start;
   }
@@ -86,20 +89,20 @@
 }
 
 .sidebar-page-nav {
-  $nav-indent: $-m;
+  $nav-indent: vars.$m;
   list-style: none;
-  @include margin($-s, 0, $-m, $-xs);
+  @include mixins.margin(vars.$s, 0, vars.$m, vars.$xs);
   position: relative;
   &:after {
     content: '';
     display: block;
     position: absolute;
     left: 0;
-    @include rtl {
+    @include mixins.rtl {
       left: auto;
       right: 0;
     }
-    @include lightDark(background-color, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
     width: 2px;
     top: 5px;
     bottom: 5px;
@@ -132,7 +135,7 @@
     font-weight: bold;
   }
   li:not(.current-heading) .sidebar-page-nav-bullet {
-    @include lightDark(background-color, #BBB, #666, true);
+    @include mixins.lightDark(background-color, #BBB, #666, true);
   }
   .sidebar-page-nav-bullet {
     width: 6px;
@@ -142,9 +145,9 @@
     top: 30%;
     border-radius: 50%;
     box-shadow: 0 0 0 6px #F2F2F2;
-    @include lightDark(box-shadow, 0 0 0 6px #F2F2F2, 0 0 0 6px #111);
+    @include mixins.lightDark(box-shadow, 0 0 0 6px #F2F2F2, 0 0 0 6px #111);
     z-index: 1;
-    @include rtl {
+    @include mixins.rtl {
       left: auto;
       right: -2px;
     }
@@ -154,7 +157,7 @@
 // Sidebar list
 .book-tree .sidebar-page-list  {
   list-style: none;
-  @include margin($-xs, -$-s, 0, -$-s);
+  @include mixins.margin(vars.$xs, -(vars.$s), 0, -(vars.$s));
   padding-inline-start: 0;
   padding-inline-end: 0;
 
@@ -172,22 +175,22 @@
     padding-inline-end: 0;
     .content {
       width: 100%;
-      padding-top: $-xs;
-      padding-bottom: $-xs;
+      padding-top: vars.$xs;
+      padding-bottom: vars.$xs;
       max-width: calc(100% - 20px);
     }
   }
   .entity-list-item.selected {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
   }
   .entity-list-item.no-hover {
-    margin-top: -$-xs;
+    margin-top: -(vars.$xs);
     padding-inline-end: 0;
   }
   .entity-list-item-name {
     font-size: 1em;
     margin: 0;
-    margin-inline-end: $-m;
+    margin-inline-end: vars.$m;
   }
   .chapter-child-menu {
     font-size: .8rem;
@@ -198,13 +201,13 @@
     display: block;
     width: 100%;
     text-align: start;
-    padding: $-xxs $-s ($-xxs * 2) $-s;
+    padding: vars.$xxs vars.$s (vars.$xxs * 2) vars.$s;
     border-radius: 0 3px 3px 0;
     line-height: 1;
-    margin-top: -$-xxs;
-    margin-bottom: -$-xxs;
+    margin-top: -(vars.$xxs);
+    margin-bottom: -(vars.$xxs);
     &:hover {
-      @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+      @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
     }
   }
   .entity-list-item .icon {
@@ -236,8 +239,8 @@
   list-style: none;
 }
 .sort-box {
-  margin-bottom: $-m;
-  padding: $-m $-xl;
+  margin-bottom: vars.$m;
+  padding: vars.$m vars.$xl;
   position: relative;
   &::before {
     pointer-events: none;
@@ -279,14 +282,14 @@
     margin-inline-start: 0;
   }
   .sortable-page-sublist {
-    margin-bottom: $-m;
+    margin-bottom: vars.$m;
     margin-top: 0;
-    padding-inline-start: $-m;
+    padding-inline-start: vars.$m;
   }
   li {
-    @include lightDark(background-color, #FFF, #222);
+    @include mixins.lightDark(background-color, #FFF, #222);
     border: 1px solid;
-    @include lightDark(border-color, #DDD, #666);
+    @include mixins.lightDark(border-color, #DDD, #666);
     margin-top: -1px;
     min-height: 38px;
   }
@@ -294,7 +297,7 @@
     border-inline-start: 2px solid currentColor;
   }
   li:first-child {
-    margin-top: $-xs;
+    margin-top: vars.$xs;
   }
 }
 .sortable-page-list li.placeholder {
@@ -335,21 +338,21 @@ details.sort-box[open] summary .caret-container svg {
 }
 
 .activity-list-item {
-  padding: $-s 0;
+  padding: vars.$s 0;
   display: grid;
   grid-template-columns: min-content 1fr;
-  grid-column-gap: $-m;
+  grid-column-gap: vars.$m;
   font-size: 0.9em;
 }
 .card .activity-list-item {
-  padding-block: $-s;
+  padding-block: vars.$s;
 }
 
 .user-list-item {
   display: inline-grid;
-  padding: $-s;
+  padding: vars.$s;
   grid-template-columns: min-content 1fr;
-  grid-column-gap: $-m;
+  grid-column-gap: vars.$m;
   font-size: 0.9em;
   align-items: center;
   > div:first-child {
@@ -360,7 +363,7 @@ details.sort-box[open] summary .caret-container svg {
 ul.pagination {
   display: inline-flex;
   list-style: none;
-  margin: $-m 0;
+  margin: vars.$m 0;
   padding-inline-start: 1px;
   li:first-child {
     a, span {
@@ -374,19 +377,19 @@ ul.pagination {
   }
   a, span {
     display: block;
-    padding: $-xxs $-s;
+    padding: vars.$xxs vars.$s;
     border: 1px solid #CCC;
     margin-inline-start: -1px;
     user-select: none;
-    @include lightDark(color, #555, #eee);
-    @include lightDark(border-color, #ccc, #666);
+    @include mixins.lightDark(color, #555, #eee);
+    @include mixins.lightDark(border-color, #ccc, #666);
   }
   li.disabled {
     cursor: not-allowed;
   }
   li.active span {
-    @include lightDark(color, #111, #eee);
-    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5));
+    @include mixins.lightDark(color, #111, #eee);
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -395,7 +398,7 @@ ul.pagination {
 }
 
 .entity-list, .icon-list {
-  margin: 0 (-$-m);
+  margin: 0 (-(vars.$m));
   h4 {
     margin: 0;
   }
@@ -405,7 +408,7 @@ ul.pagination {
   .text-small.text-muted {
     color: #AAA;
     font-size: 0.75em;
-    margin-top: $-xs;
+    margin-top: vars.$xs;
   }
   .text-muted p.text-muted {
     margin-top: 0;
@@ -420,7 +423,7 @@ ul.pagination {
 }
 
 .icon-list hr {
-  margin: $-s $-m;
+  margin: vars.$s vars.$m;
   max-width: 140px;
   opacity: 0.25;
   height: 1.1px;
@@ -431,10 +434,10 @@ ul.pagination {
 }
 
 .entity-list-item, .icon-list-item {
-  padding: $-s $-m;
+  padding: vars.$s vars.$m;
   display: flex;
   align-items: center;
-  gap: $-m;
+  gap: vars.$m;
   background-color: transparent;
   border: 0;
   width: 100%;
@@ -458,7 +461,7 @@ ul.pagination {
     cursor: pointer;
   }
   &:not(.no-hover):hover {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
     text-decoration: none;
     border-radius: 4px;
   }
@@ -466,7 +469,7 @@ ul.pagination {
     background-color: transparent;
   }
   &:focus {
-    @include lightDark(background-color, #eee, #222);
+    @include mixins.lightDark(background-color, #eee, #222);
     outline: 1px dotted #666;
     outline-offset: -2px;
   }
@@ -493,7 +496,7 @@ ul.pagination {
 .split-icon-list-item {
   display: flex;
   align-items: center;
-  gap: $-m;
+  gap: vars.$m;
   background-color: transparent;
   border: 0;
   width: 100%;
@@ -501,10 +504,10 @@ ul.pagination {
   word-break: break-word;
   border-radius: 4px;
   > a {
-    padding: $-s $-m;
+    padding: vars.$s vars.$m;
     display: flex;
     align-items: center;
-    gap: $-m;
+    gap: vars.$m;
     flex: 1;
   }
   > a:hover {
@@ -515,7 +518,7 @@ ul.pagination {
     flex: none;
   }
   &:hover {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
   }
 }
 
@@ -532,21 +535,21 @@ ul.pagination {
   visibility: visible;
 }
 .icon-list-item-dropdown-toggle {
-  padding: $-xs;
+  padding: vars.$xs;
   display: flex;
   align-items: center;
   cursor: pointer;
-  @include lightDark(color, #888, #999);
+  @include mixins.lightDark(color, #888, #999);
   svg {
     margin: 0;
   }
   &:hover {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.06), rgba(255, 255, 255, 0.06));
   }
 }
 
 .card .entity-list-item:not(.no-hover, .book-contents .entity-list-item):hover {
-  @include lightDark(background-color, #F2F2F2, #2d2d2d);
+  @include mixins.lightDark(background-color, #F2F2F2, #2d2d2d);
   border-radius: 0;
 }
 .card .entity-list-item .entity-list-item:hover {
@@ -554,10 +557,10 @@ ul.pagination {
 }
 
 .entity-list-item-children {
-  padding: $-m $-l;
+  padding: vars.$m vars.$l;
   > div {
     overflow: hidden;
-    padding: 0 0 $-xs 0;
+    padding: 0 0 vars.$xs 0;
   }
   .entity-chip {
     text-overflow: ellipsis;
@@ -568,7 +571,7 @@ ul.pagination {
     white-space: nowrap;
   }
   > .entity-list > .entity-list-item:last-child {
-    margin-bottom: -$-xs;
+    margin-bottom: -(vars.$xs);
   }
 }
 
@@ -580,22 +583,22 @@ ul.pagination {
   background-position: 50% 50%;
   border-radius: 3px;
   position: relative;
-  margin-inline-end: $-l;
+  margin-inline-end: vars.$l;
 
   &.entity-list-item-image-wide {
     width: 220px;
   }
 
   .svg-icon {
-    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
+    @include mixins.lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 1.66rem;
     margin-inline-end: 0;
     position: absolute;
-    bottom: $-xs;
-    left: $-xs;
+    bottom: vars.$xs;
+    left: vars.$xs;
   }
 
-  @include smaller-than($m) {
+  @include mixins.smaller-than(vars.$bp-m) {
     width: 80px;
   }
 }
@@ -605,7 +608,7 @@ ul.pagination {
 }
 
 .entity-list.compact {
-  font-size: 0.6 * $fs-m;
+  font-size: 0.6 * vars.$fs-m;
   h4, a {
     line-height: 1.2;
   }
@@ -613,8 +616,8 @@ ul.pagination {
     display: none;
   }
   .entity-list-item p {
-    font-size: $fs-m * 0.8;
-    padding-top: $-xs;
+    font-size: vars.$fs-m * 0.8;
+    padding-top: vars.$xs;
   }
   .entity-list-item p:empty {
     padding-top: 0;
@@ -624,12 +627,12 @@ ul.pagination {
   }
   > p.empty-text {
     display: block;
-    font-size: $fs-m;
+    font-size: vars.$fs-m;
   }
   hr {
     margin: 0;
   }
-  @include smaller-than($m) {
+  @include mixins.smaller-than(vars.$bp-m) {
     h4 {
       font-size: 1.666em;
     }
@@ -660,13 +663,13 @@ ul.pagination {
   top: 0;
   list-style: none;
   inset-inline-end: 0;
-  margin: $-m 0;
-  @include lightDark(background-color, #fff, #333);
+  margin: vars.$m 0;
+  @include mixins.lightDark(background-color, #fff, #333);
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.18);
   border-radius: 3px;
   min-width: 180px;
-  padding: $-xs 0;
-  @include lightDark(color, #555, #eee);
+  padding: vars.$xs 0;
+  @include mixins.lightDark(color, #555, #eee);
   fill: currentColor;
   text-align: start !important;
   max-height: 500px;
@@ -697,11 +700,11 @@ ul.pagination {
     border-bottom: 1px solid #DDD;
   }
   li hr {
-    margin: $-xs 0;
+    margin: vars.$xs 0;
   }
   .icon-item, .text-item, .label-item {
-    padding: 8px $-m;
-    @include lightDark(color, #555, #eee);
+    padding: 8px vars.$m;
+    @include mixins.lightDark(color, #555, #eee);
     fill: currentColor;
     white-space: nowrap;
     line-height: 1.4;
@@ -721,7 +724,7 @@ ul.pagination {
       outline-offset: -2px;
     }
     svg {
-      margin-inline-end: $-s;
+      margin-inline-end: vars.$s;
       display: inline-block;
       width: 16px;
     }
@@ -733,7 +736,7 @@ ul.pagination {
     display: grid;
     align-items: center;
     grid-template-columns: auto min-content;
-    gap: $-m;
+    gap: vars.$m;
   }
   .label-item > *:nth-child(2) {
     opacity: 0.7;
@@ -745,7 +748,7 @@ ul.pagination {
     display: grid;
     align-items: start;
     grid-template-columns: 16px auto;
-    gap: $-m;
+    gap: vars.$m;
     svg {
       margin-inline-end: 0;
       margin-block-start: 1px;
@@ -757,7 +760,7 @@ ul.pagination {
 // being cut by scrollable container.
 .tri-layout-right .dropdown-menu,
 .tri-layout-left .dropdown-menu {
-  inset-inline-end: $-xs;
+  inset-inline-end: vars.$xs;
 }
 
 // Books grid view
@@ -781,7 +784,7 @@ ul.pagination {
 .featured-image-container-wrap {
   position: relative;
   .svg-icon {
-    @include lightDark(color, #fff, rgba(255, 255, 255, 0.6));
+    @include mixins.lightDark(color, #fff, rgba(255, 255, 255, 0.6));
     font-size: 2rem;
     margin-inline-end: 0;
     position: absolute;
@@ -800,30 +803,30 @@ ul.pagination {
   background: transparent;
   border: none;
   color: currentColor;
-  padding: $-m 0;
+  padding: vars.$m 0;
 }
 
 .active-link-list {
   a {
     display: inline-block;
-    padding: $-s;
+    padding: vars.$s;
   }
   a:not(.active) {
-    @include lightDark(color, #444, #888);
+    @include mixins.lightDark(color, #444, #888);
   }
   a:hover {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
     border-radius: 4px;
     text-decoration: none;
   }
   &.in-sidebar {
     a {
       display: block;
-      margin-bottom: $-xs;
+      margin-bottom: vars.$xs;
     }
     a.active {
       border-radius: 4px;
-      @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+      @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
     }
   }
 }
@@ -833,7 +836,7 @@ ul.pagination {
   line-height: 1.2;
   margin: 0.6em 0;
   align-content: start;
-  gap: $-s;
+  gap: vars.$s;
   a {
     line-height: 1.2;
   }

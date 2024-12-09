@@ -1,14 +1,17 @@
+@use "mixins";
+@use "vars";
+
 /**
  * Card-style blocks
  */
 
 .card {
-  @include lightDark(background-color, #FFF, #222);
-  box-shadow: $bs-card;
+  @include mixins.lightDark(background-color, #FFF, #222);
+  box-shadow: vars.$bs-card;
   border-radius: 3px;
   break-inside: avoid;
   .body, p.empty-text {
-    padding-block: $-m;
+    padding-block: vars.$m;
   }
   a, p {
     word-wrap: break-word;
@@ -17,9 +20,9 @@
 }
 
 .card-title {
-  padding: $-m $-m $-xs;
+  padding: vars.$m vars.$m vars.$xs;
   margin: 0;
-  font-size: $fs-m;
+  font-size: vars.$fs-m;
   color: #222;
   fill: #222;
   font-weight: 400;
@@ -29,21 +32,21 @@
 }
 .card-footer-link, button.card-footer-link  {
   display: block;
-  padding: $-s $-m;
+  padding: vars.$s vars.$m;
   line-height: 1;
   border-top: 1px solid;
   width: 100%;
   text-align: left;
-  @include lightDark(border-color, #DDD, #555);
+  @include mixins.lightDark(border-color, #DDD, #555);
   border-radius: 0 0 3px 3px;
   font-size: 0.9em;
-  margin-top: $-xs;
+  margin-top: vars.$xs;
   &:hover {
     text-decoration: none;
-    @include lightDark(background-color, #f2f2f2, #2d2d2d);
+    @include mixins.lightDark(background-color, #f2f2f2, #2d2d2d);
   }
   &:focus {
-    @include lightDark(background-color, #eee, #222);
+    @include mixins.lightDark(background-color, #eee, #222);
     outline: 1px dotted #666;
     outline-offset: -2px;
   }
@@ -51,17 +54,17 @@
 
 .card.border-card {
   border: 1px solid;
-  @include lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(border-color, #ddd, #000);
 }
 
 .card.drag-card {
   border: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #000);
-  @include lightDark(background-color, #fff, #333);
+  @include mixins.lightDark(border-color, #ddd, #000);
+  @include mixins.lightDark(background-color, #fff, #333);
   border-radius: 4px;
   display: flex;
-  padding: 0 0 0 ($-s + 28px);
-  margin: $-s 0;
+  padding: 0 0 0 (vars.$s + 28px);
+  margin: vars.$s 0;
   position: relative;
   .drag-card-action {
     cursor: pointer;
@@ -73,30 +76,30 @@
     justify-content: center;
     width: 28px;
     flex-grow: 0;
-    padding: 0 $-xs;
+    padding: 0 vars.$xs;
     &:hover {
-      @include lightDark(background-color, #eee, #2d2d2d);
+      @include mixins.lightDark(background-color, #eee, #2d2d2d);
     }
     .svg-icon {
       margin-inline-end: 0px;
     }
   }
   .outline input {
-    margin: $-s 0;
+    margin: vars.$s 0;
     width: 100%;
   }
   .outline {
     position: relative;
   }
   .handle {
-    @include lightDark(background-color, #eee, #2d2d2d);
+    @include mixins.lightDark(background-color, #eee, #2d2d2d);
     left: 0;
     position: absolute;
     top: 0;
     bottom: 0;
   }
   > div {
-    padding: 0 $-s;
+    padding: 0 vars.$s;
     max-width: 80%;
     flex: 1;
   }
@@ -106,17 +109,17 @@
   display: flex;
   flex-direction: column;
   border: 1px solid #ddd;
-  @include lightDark(border-color, #ddd, #000);
-  margin-bottom: $-l;
+  @include mixins.lightDark(border-color, #ddd, #000);
+  margin-bottom: vars.$l;
   border-radius: 4px;
   overflow: hidden;
   min-width: 100px;
-  color: $text-dark;
+  color: vars.$text-dark;
   transition: border-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
   &:hover {
-    color: $text-dark;
+    color: vars.$text-dark;
     text-decoration: none;
-    @include lightDark(box-shadow, $bs-card, $bs-card-dark);
+    @include mixins.lightDark(box-shadow, vars.$bs-card, vars.$bs-card-dark);
   }
   h2 {
     width: 100%;
@@ -134,7 +137,7 @@
     border-bottom-width: 2px;
   }
   .grid-card-content, .grid-card-footer {
-    padding: $-l;
+    padding: vars.$l;
   }
   .grid-card-content + .grid-card-footer {
     padding-top: 0;
@@ -149,10 +152,10 @@
 }
 
 .content-wrap.card {
-  padding: $-m $-xxl;
+  padding: vars.$m vars.$xxl;
   margin-inline-start: auto;
   margin-inline-end: auto;
-  margin-bottom: $-l;
+  margin-bottom: vars.$l;
   overflow: initial;
   min-height: 60vh;
   border-radius: 8px;
@@ -163,26 +166,26 @@
     width: 100%;
   }
 }
-@include smaller-than($xxl) {
+@include mixins.smaller-than(vars.$bp-xxl) {
   .content-wrap.card {
-    padding: $-m $-xl;
+    padding: vars.$m vars.$xl;
   }
 }
-@include smaller-than($m) {
+@include mixins.smaller-than(vars.$bp-m) {
   .content-wrap.card {
-    padding: $-m $-l;
+    padding: vars.$m vars.$l;
   }
 }
-@include smaller-than($s) {
+@include mixins.smaller-than(vars.$bp-s) {
   .content-wrap.card {
-    padding: $-m $-m;
+    padding: vars.$m vars.$m;
   }
 }
 
 .sub-card {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border: 1.5px solid;
-  @include lightDark(border-color, #E2E2E2, #444);
+  @include mixins.lightDark(border-color, #E2E2E2, #444);
   border-radius: 4px;
 }
 
@@ -194,7 +197,7 @@
 }
 
 .fade-in-when-active {
-  @include lightDark(opacity, 0.6, 0.7);
+  @include mixins.lightDark(opacity, 0.6, 0.7);
   transition: opacity ease-in-out 120ms;
   &:hover, &:focus-within {
     opacity: 1 !important;
@@ -209,29 +212,29 @@
  */
 .tag-item {
   display: inline-flex;
-  margin-bottom: $-xs;
-  margin-inline-end: $-xs;
+  margin-bottom: vars.$xs;
+  margin-inline-end: vars.$xs;
   border-radius: 4px;
   border: 1px solid;
   overflow: hidden;
   font-size: 0.85em;
-  @include lightDark(border-color, #CCC, #666);
+  @include mixins.lightDark(border-color, #CCC, #666);
   a, span, a:hover, a:active {
     padding: 4px 8px;
-    @include lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.8));
+    @include mixins.lightDark(color, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.8));
     transition: background-color ease-in-out 80ms;
     text-decoration: none;
   }
   a:hover {
-    @include lightDark(background-color, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    @include mixins.lightDark(background-color, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
   }
   svg {
-    @include lightDark(fill, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    @include mixins.lightDark(fill, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
   }
   .tag-value {
     border-inline-start: 1px solid;
-    @include lightDark(border-color, #DDD, #666);
-    @include lightDark(background-color, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2))
+    @include mixins.lightDark(border-color, #DDD, #666);
+    @include mixins.lightDark(background-color, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2))
   }
 }
 
@@ -253,7 +256,7 @@
 .api-method {
   font-size: 0.75rem;
   background-color: #888;
-  padding: $-xs;
+  padding: vars.$xs;
   line-height: 1.3;
   opacity: 0.7;
   vertical-align: top;
@@ -271,7 +274,7 @@
 
 .sticky-sidebar {
   position: sticky;
-  top: $-m;
-  max-height: calc(100vh - #{$-m});
+  top: vars.$m;
+  max-height: calc(100vh - #{vars.$m});
   overflow-y: auto;
 }

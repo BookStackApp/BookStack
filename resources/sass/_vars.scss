@@ -2,30 +2,30 @@
 ///////////////
 
 // Screen breakpoints
-$xxxl: 1700px;
-$xxl: 1400px;
-$xl: 1100px;
-$l: 1000px;
-$m: 880px;
-$s: 600px;
-$xs: 400px;
-$xxs: 360px;
+$bp-xxxl: 1700px;
+$bp-xxl: 1400px;
+$bp-xl: 1100px;
+$bp-l: 1000px;
+$bp-m: 880px;
+$bp-s: 600px;
+$bp-xs: 400px;
+$bp-xxs: 360px;
 
 // List of screen sizes
-$screen-sizes: (('xxs', $xxs), ('xs', $xs), ('s', $s), ('m', $m), ('l', $l), ('xl', $xl));
+$screen-sizes: (('xxs', $bp-xxs), ('xs', $bp-xs), ('s', $bp-s), ('m', $bp-m), ('l', $bp-l), ('xl', $bp-xl));
 
 // Spacing (Margins+Padding)
-$-xxxl: 64px;
-$-xxl: 48px;
-$-xl: 32px;
-$-l: 24px;
-$-m: 16px;
-$-s: 12px;
-$-xs: 6px;
-$-xxs: 3px;
+$xxxl: 64px;
+$xxl: 48px;
+$xl: 32px;
+$l: 24px;
+$m: 16px;
+$s: 12px;
+$xs: 6px;
+$xxs: 3px;
 
 // List of our spacing sizes
-$spacing: (('none', 0), ('xxs', $-xxs), ('xs', $-xs), ('s', $-s), ('m', $-m), ('l', $-l), ('xl', $-xl), ('xxl', $-xxl), ('auto', auto));
+$spacing: (('none', 0), ('xxs', $xxs), ('xs', $xs), ('s', $s), ('m', $m), ('l', $l), ('xl', $xl), ('xxl', $xxl), ('auto', auto));
 
 // Fonts
 $font-body: -apple-system, BlinkMacSystemFont,

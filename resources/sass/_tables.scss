@@ -1,8 +1,11 @@
+@use "mixins";
+@use "vars";
+
 table {
   min-width: 100px;
   max-width: 100%;
   thead {
-    @include lightDark(background-color, #f8f8f8, #333);
+    @include mixins.lightDark(background-color, #f8f8f8, #333);
     font-weight: 500;
   }
   td, th {
@@ -27,7 +30,7 @@ table.table {
   th, td {
     text-align: start;
     border: none;
-    padding: $-s $-s;
+    padding: vars.$s vars.$s;
     vertical-align: middle;
     margin: 0;
     overflow: visible;
@@ -36,7 +39,7 @@ table.table {
     font-weight: bold;
   }
   tr:hover {
-    @include lightDark(background-color, #F2F2F2, #333);
+    @include mixins.lightDark(background-color, #F2F2F2, #333);
   }
   .text-right {
     text-align: end;
@@ -51,10 +54,10 @@ table.table {
     display: inline-block;
   }
   &.expand-to-padding {
-    margin-left: -$-s;
-    margin-right: -$-s;
-    width: calc(100% + (2*#{$-s}));
-    max-width: calc(100% + (2*#{$-s}));
+    margin-left: -(vars.$s);
+    margin-right: -(vars.$s);
+    width: calc(100% + (2*#{vars.$s}));
+    max-width: calc(100% + (2*#{vars.$s}));
   }
 }
 
@@ -66,10 +69,10 @@ table.no-style {
 }
 
 table.list-table {
-  margin: 0 (-$-xs);
+  margin: 0 (-(vars.$xs));
   td {
     border: 0;
     vertical-align: middle;
-    padding: $-xs;
+    padding: vars.$xs;
   }
 }

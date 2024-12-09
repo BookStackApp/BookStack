@@ -1,3 +1,5 @@
+@use "mixins";
+
 /**
  * Background colors
  */
@@ -7,7 +9,7 @@
 }
 .primary-background-light {
   background-color: var(--color-primary-light);
-  @include whenDark {
+  @include mixins.whenDark {
     background: #000;
     .text-link {
       color: #AAA !important;
@@ -50,12 +52,12 @@
 }
 
 .text-muted {
-  @include lightDark(color, #575757, #888888, true);
+  @include mixins.lightDark(color, #575757, #888888, true);
   fill: currentColor !important;
 }
 
 .text-dark {
-  @include lightDark(color, #222, #ccc, true);
+  @include mixins.lightDark(color, #222, #ccc, true);
   fill: currentColor !important;
 }
 

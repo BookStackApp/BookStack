@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 * {
   box-sizing: border-box;
   outline-color: var(--color-primary);
@@ -21,9 +24,9 @@ html {
 }
 
 body {
-  font-size: $fs-m;
+  font-size: vars.$fs-m;
   line-height: 1.6;
-  @include lightDark(color, #444, #AAA);
+  @include mixins.lightDark(color, #444, #AAA);
   -webkit-font-smoothing: antialiased;
   height: 100%;
   display: flex;

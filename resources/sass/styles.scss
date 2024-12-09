@@ -1,31 +1,31 @@
-@use "sass:math";
+@use "sass:meta";
 
-@import "reset";
-@import "variables";
-@import "mixins";
-@import "spacing";
-@import "opacity";
-@import "html";
-@import "text";
-@import "colors";
-@import "layout";
-@import "blocks";
-@import "buttons";
-@import "tables";
-@import "forms";
-@import "animations";
-@import "tinymce";
-@import "editor";
-@import "codemirror";
-@import "components";
-@import "header";
-@import "footer";
-@import "lists";
-@import "pages";
-@import "content";
+@use "reset";
+@use "vars";
+@use "mixins";
+@use "spacing";
+@use "opacity";
+@use "html";
+@use "text";
+@use "colors";
+@use "layout";
+@use "blocks";
+@use "buttons";
+@use "tables";
+@use "forms";
+@use "animations";
+@use "tinymce";
+@use "editor";
+@use "codemirror";
+@use "components";
+@use "header";
+@use "footer";
+@use "lists";
+@use "pages";
+@use "content";
 
 @media print {
-  @import "print";
+  @include meta.load-css("print");
 }
 
 // Jquery Sortable Styles
@@ -41,7 +41,7 @@ body.dragging, body.dragging * {
 // User Avatar Images
 .avatar {
   border-radius: 100%;
-  @include lightDark(background-color, #eee, #000);
+  @include mixins.lightDark(background-color, #eee, #000);
   width: 30px;
   height: 30px;
   &.med {
@@ -60,7 +60,7 @@ body.dragging, body.dragging * {
     border-radius: 3px;
   }
   &[src$="user_avatar.png"] {
-    @include whenDark {
+    @include mixins.whenDark {
       filter: invert(1);
     }
   }
@@ -71,7 +71,7 @@ $loadingSize: 10px;
 .loading-container {
   position: relative;
   display: block;
-  margin: $-xl auto;
+  margin: vars.$xl auto;
   > div {
     width: $loadingSize;
     height: $loadingSize;
@@ -79,7 +79,7 @@ $loadingSize: 10px;
     display: inline-block;
     vertical-align: top;
     transform: translate3d(-10px, 0, 0);
-    margin-top: $-xs;
+    margin-top: vars.$xs;
     animation-name: loadingBob;
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
@@ -89,17 +89,17 @@ $loadingSize: 10px;
     animation-delay: -300ms;
   }
   > div:first-child {
-      left: -($loadingSize+$-xs);
+      left: -($loadingSize+vars.$xs);
       background-color: var(--color-book);
       animation-delay: -600ms;
   }
   > div:last-of-type {
-    left: $loadingSize+$-xs;
+    left: $loadingSize+vars.$xs;
     background-color: var(--color-chapter);
     animation-delay: 0ms;
   }
   > span {
-    margin-inline-start: $-s;
+    margin-inline-start: vars.$s;
     font-style: italic;
     color: #888;
     vertical-align: top;
@@ -107,7 +107,7 @@ $loadingSize: 10px;
 }
 
 .inline.block .loading-container {
-  margin: $-xs $-s;
+  margin: vars.$xs vars.$s;
 }
 
 .skip-to-content-link {
@@ -118,10 +118,10 @@ $loadingSize: 10px;
   z-index: 15;
   border-radius: 0 4px 4px 0;
   display: block;
-  box-shadow: $bs-dark;
+  box-shadow: vars.$bs-dark;
   font-weight: bold;
   &:focus {
-    top: $-xl;
+    top: vars.$xl;
     outline-offset: -10px;
     outline: 2px dotted var(--color-link);
   }
@@ -129,7 +129,7 @@ $loadingSize: 10px;
 
 .entity-selector {
   border: 1px solid #DDD;
-  @include lightDark(border-color, #ddd, #111);
+  @include mixins.lightDark(border-color, #ddd, #111);
   border-radius: 3px;
   overflow: hidden;
   font-size: 0.8em;
@@ -140,7 +140,7 @@ $loadingSize: 10px;
     border: 0;
     border-bottom: 1px solid #DDD;
     font-size: 16px;
-    padding: $-s $-m;
+    padding: vars.$s vars.$m;
   }
   input[type="text"]:focus {
     outline: 1px solid var(--color-primary);
@@ -150,12 +150,12 @@ $loadingSize: 10px;
   .entity-list {
     overflow-y: scroll;
     height: 400px;
-    @include lightDark(background-color, #eee, #222);
+    @include mixins.lightDark(background-color, #eee, #222);
     margin-inline-end: 0;
     margin-inline-start: 0;
   }
   .entity-list-item {
-    @include lightDark(background-color, #fff, #222);
+    @include mixins.lightDark(background-color, #fff, #222);
   }
   .entity-list-item p {
     margin-bottom: 0;
@@ -165,11 +165,11 @@ $loadingSize: 10px;
     outline-offset: -4px;
   }
   .entity-list-item.selected {
-    @include lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+    @include mixins.lightDark(background-color, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
   }
   .loading {
     height: 400px;
-    padding-top: $-l;
+    padding-top: vars.$l;
   }
   &.compact {
     font-size: 10px;
@@ -182,14 +182,14 @@ $loadingSize: 10px;
   }
   &.small {
     .entity-list-item {
-      padding: $-xs $-m;
+      padding: vars.$xs vars.$m;
     }
     .entity-list, .loading {
       height: 300px;
     }
     input[type="text"] {
       font-size: 13px;
-      padding: $-xs $-m;
+      padding: vars.$xs vars.$m;
       height: auto;
     }
   }
@@ -207,11 +207,11 @@ $loadingSize: 10px;
   z-index: 150;
 }
 
-@include between($s, $m) {
+@include mixins.between(vars.$bp-s, vars.$bp-m) {
   #home-default > .grid.third {
     display: block;
     columns: 2;
-    column-gap: $-l !important;
+    column-gap: vars.$l !important;
   }
 }
 
@@ -222,29 +222,29 @@ $loadingSize: 10px;
   }
   .list-sort {
     display: inline-grid;
-    margin-inline-start: $-s;
+    margin-inline-start: vars.$s;
     grid-template-columns: minmax(120px, max-content) 40px;
     font-size: 0.9rem;
     border: 2px solid #DDD;
-    @include lightDark(border-color, #ddd, #444);
+    @include mixins.lightDark(border-color, #ddd, #444);
     border-radius: 4px;
   }
   .list-sort-label {
     font-weight: bold;
     display: inline-block;
-    @include lightDark(color, #555, #888);
+    @include mixins.lightDark(color, #555, #888);
   }
   .list-sort-type {
     text-align: start;
   }
   .list-sort-type, .list-sort-dir {
-    padding: $-xs $-s;
+    padding: vars.$xs vars.$s;
     cursor: pointer;
   }
   .list-sort-dir {
     border-inline-start: 2px solid #DDD;
     color: #888;
-    @include lightDark(border-color, #ddd, #444);
+    @include mixins.lightDark(border-color, #ddd, #444);
     .svg-icon {
       transition: transform ease-in-out 120ms;
     }
@@ -256,5 +256,5 @@ $loadingSize: 10px;
 
 .import-item {
   border-inline-start: 2px solid currentColor;
-  padding-inline-start: $-xs;
+  padding-inline-start: vars.$xs;
 }

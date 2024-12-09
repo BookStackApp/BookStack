@@ -1,3 +1,6 @@
+@use "mixins";
+@use "vars";
+
 // Common variables
 :root {
   --editor-color-primary: #206ea7;
@@ -262,11 +265,11 @@ body.editor-is-fullscreen {
   color: #FFF;
 }
 .editor-modal-title {
-  padding: 8px $-m;
+  padding: 8px vars.$m;
 }
 .editor-modal-close {
   color: #FFF;
-  padding: 8px $-m;
+  padding: 8px vars.$m;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -281,7 +284,7 @@ body.editor-is-fullscreen {
   }
 }
 .editor-modal-body {
-  padding: $-m;
+  padding: vars.$m;
 }
 
 // Specific UI elements
@@ -493,21 +496,21 @@ textarea.editor-form-field-input {
 .editor-form-actions {
   display: flex;
   justify-content: end;
-  gap: $-s;
-  margin-top: $-m;
+  gap: vars.$s;
+  margin-top: vars.$m;
 }
 .editor-form-actions > button {
   display: block;
   font-size: 0.85rem;
   line-height: 1.4em;
-  padding: $-xs*1.3 $-m;
+  padding: vars.$xs*1.3 vars.$m;
   font-weight: 400;
   border-radius: 4px;
   cursor: pointer;
   box-shadow: none;
   &:focus {
     outline: 1px dotted currentColor;
-    outline-offset: -$-xs;
+    outline-offset: -(vars.$xs);
     box-shadow: none;
     filter: brightness(90%);
   }
@@ -517,20 +520,20 @@ textarea.editor-form-field-input {
   color: #FFF;
   border: 1px solid var(--color-primary);
   &:hover {
-    @include lightDark(box-shadow, $bs-light, $bs-dark);
+    @include mixins.lightDark(box-shadow, vars.$bs-light, vars.$bs-dark);
     filter: brightness(110%);
   }
 }
 .editor-form-action-secondary {
   border: 1px solid;
-  @include lightDark(border-color, #CCC, #666);
-  @include lightDark(color, #666, #AAA);
+  @include mixins.lightDark(border-color, #CCC, #666);
+  @include mixins.lightDark(color, #666, #AAA);
   &:hover, &:focus, &:active {
-    @include lightDark(color, #444, #BBB);
+    @include mixins.lightDark(color, #444, #BBB);
     border: 1px solid #CCC;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     background-color: #F2F2F2;
-    @include lightDark(background-color, #f8f8f8, #444);
+    @include mixins.lightDark(background-color, #f8f8f8, #444);
     filter: none;
   }
   &:active {

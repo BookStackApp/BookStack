@@ -1,10 +1,11 @@
 @use "sass:math";
-@import "variables";
-@import "mixins";
-@import "html";
-@import "text";
-@import "tables";
-@import "content";
+
+@use "vars";
+@use "mixins";
+@use "html";
+@use "text";
+@use "tables";
+@use "content";
 
 html, body {
   background-color: #FFF;
