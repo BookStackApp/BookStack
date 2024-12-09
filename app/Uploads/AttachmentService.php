@@ -116,16 +116,18 @@ class AttachmentService
      */
     public function updateFile(Attachment $attachment, array $requestData): Attachment
     {
-        $attachment->name = $requestData['name'];
-        $link = trim($requestData['link'] ?? '');
+        if (isset($requestData['name'])) {
+            $attachment->name = $requestData['name'];
+        }
 
+        $link = trim($requestData['link'] ?? '');
         if (!empty($link)) {
             if (!$attachment->external) {
                 $this->deleteFileInStorage($attachment);
                 $attachment->external = true;
                 $attachment->extension = '';
             }
-            $attachment->path = $requestData['link'];
+            $attachment->path = $link;
         }
 
         $attachment->save();

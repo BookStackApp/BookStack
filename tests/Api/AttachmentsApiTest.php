@@ -12,7 +12,7 @@ class AttachmentsApiTest extends TestCase
 {
     use TestsApi;
 
-    protected $baseEndpoint = '/api/attachments';
+    protected string $baseEndpoint = '/api/attachments';
 
     public function test_index_endpoint_returns_expected_book()
     {
@@ -302,6 +302,23 @@ class AttachmentsApiTest extends TestCase
     }
 
     public function test_update_file_attachment_to_link()
+    {
+        $this->actingAsApiAdmin();
+        $page = $this->entities->page();
+        $attachment = $this->createAttachmentForPage($page);
+
+        $resp = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", [
+            'link' => 'https://example.com/donkey',
+        ]);
+
+        $resp->assertStatus(200);
+        $this->assertDatabaseHas('attachments', [
+            'id' => $attachment->id,
+            'path' => 'https://example.com/donkey',
+        ]);
+    }
+
+    public function test_update_does_not_require_name()
     {
         $this->actingAsApiAdmin();
         $page = $this->entities->page();
