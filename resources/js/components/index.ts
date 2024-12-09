@@ -30,7 +30,7 @@ export {HeaderMobileToggle} from './header-mobile-toggle';
 export {ImageManager} from './image-manager';
 export {ImagePicker} from './image-picker';
 export {ListSortControl} from './list-sort-control';
-export {LoadingButton} from './loading-button.ts';
+export {LoadingButton} from './loading-button';
 export {MarkdownEditor} from './markdown-editor';
 export {NewUserPassword} from './new-user-password';
 export {Notification} from './notification';
