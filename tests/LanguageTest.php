@@ -27,8 +27,10 @@ class LanguageTest extends TestCase
     }
 
     // Not part of standard phpunit test runs since we sometimes expect non-added langs.
-    public function do_test_locales_all_have_language_dropdown_entry()
+    public function test_locales_all_have_language_dropdown_entry()
     {
+        $this->markTestSkipped('Only used when checking language inclusion');
+
         $dropdownLocales = array_keys(trans('settings.language_select', [], 'en'));
         sort($dropdownLocales);
         sort($this->langs);

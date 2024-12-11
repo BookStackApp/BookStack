@@ -6,6 +6,7 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
@@ -475,6 +476,25 @@ class EntitySearchTest extends TestCase
         $this->assertEquals(2, $scoreByTerm->get('TermF'));
         // Is 1.5 but stored as integer, rounding up
         $this->assertEquals(2, $scoreByTerm->get('TermG'));
+    }
+
+    public function test_indexing_works_as_expected_for_page_with_lots_of_terms()
+    {
+        $this->markTestSkipped('Time consuming test');
+
+        $count = 100000;
+        $text = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_#';
+        for ($i = 0; $i < $count; $i++) {
+            $text .= substr(str_shuffle($chars), 0, 5) . ' ';
+        }
+
+        $page = $this->entities->newPage(['name' => 'Test page A', 'html' => '<p>' . $text . '</p>']);
+
+        $termCount = $page->searchTerms()->count();
+
+        // Expect at least 90% unique rate
+        $this->assertGreaterThan($count * 0.9, $termCount);
     }
 
     public function test_name_and_content_terms_are_merged_to_single_score()
