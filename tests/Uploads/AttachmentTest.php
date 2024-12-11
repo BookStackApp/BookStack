@@ -267,6 +267,50 @@ class AttachmentTest extends TestCase
         }
     }
 
+    public function test_attachment_delete_only_shows_with_permission()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+        $this->files->uploadAttachmentFile($this, 'upload_test.txt', $page->id);
+        $attachment = $page->attachments()->first();
+        $viewer = $this->users->viewer();
+
+        $this->permissions->grantUserRolePermissions($viewer, ['page-update-all', 'attachment-create-all']);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $html = $this->withHtml($resp);
+        $html->assertElementExists(".card[data-id=\"{$attachment->id}\"]");
+        $html->assertElementNotExists(".card[data-id=\"{$attachment->id}\"] button[title=\"Delete\"]");
+
+        $this->permissions->grantUserRolePermissions($viewer, ['attachment-delete-all']);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $html = $this->withHtml($resp);
+        $html->assertElementExists(".card[data-id=\"{$attachment->id}\"] button[title=\"Delete\"]");
+    }
+
+    public function test_attachment_edit_only_shows_with_permission()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+        $this->files->uploadAttachmentFile($this, 'upload_test.txt', $page->id);
+        $attachment = $page->attachments()->first();
+        $viewer = $this->users->viewer();
+
+        $this->permissions->grantUserRolePermissions($viewer, ['page-update-all', 'attachment-create-all']);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $html = $this->withHtml($resp);
+        $html->assertElementExists(".card[data-id=\"{$attachment->id}\"]");
+        $html->assertElementNotExists(".card[data-id=\"{$attachment->id}\"] button[title=\"Edit\"]");
+
+        $this->permissions->grantUserRolePermissions($viewer, ['attachment-update-all']);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $html = $this->withHtml($resp);
+        $html->assertElementExists(".card[data-id=\"{$attachment->id}\"] button[title=\"Edit\"]");
+    }
+
     public function test_file_access_with_open_query_param_provides_inline_response_with_correct_content_type()
     {
         $page = $this->entities->page();

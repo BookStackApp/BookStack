@@ -1,12 +1,16 @@
-import {onSelect} from '../services/dom.ts';
+import {onSelect} from '../services/dom';
 import {Component} from './component';
 
 export class AjaxDeleteRow extends Component {
 
+    protected row!: HTMLElement;
+    protected url!: string;
+    protected deleteButtons: HTMLElement[] = [];
+
     setup() {
         this.row = this.$el;
         this.url = this.$opts.url;
-        this.deleteButtons = this.$manyRefs.delete;
+        this.deleteButtons = this.$manyRefs.delete || [];
 
         onSelect(this.deleteButtons, this.runDelete.bind(this));
     }
@@ -21,8 +25,8 @@ export class AjaxDeleteRow extends Component {
             }
             this.row.remove();
         }).catch(() => {
-            this.row.style.opacity = null;
-            this.row.style.pointerEvents = null;
+            this.row.style.removeProperty('opacity');
+            this.row.style.removeProperty('pointer-events');
         });
     }
 
