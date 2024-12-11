@@ -3,6 +3,7 @@
 namespace Tests\Auth;
 
 use BookStack\Access\Mfa\MfaSession;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -142,6 +143,25 @@ class AuthTest extends TestCase
         // Check the fifth attempt provides a lockout response
         $resp = $this->followRedirects($this->login('bennynotexisting@example.com', 'pw123'));
         $resp->assertSee('Too many login attempts. Please try again in');
+    }
+
+    public function test_login_specifically_disabled_for_guest_account()
+    {
+        $guest = $this->users->guest();
+
+        $resp = $this->post('/login', ['email' => $guest->email, 'password' => 'password']);
+        $resp->assertRedirect('/login');
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('These credentials do not match our records.');
+
+        // Test login even with password somehow set
+        $guest->password = Hash::make('password');
+        $guest->save();
+
+        $resp = $this->post('/login', ['email' => $guest->email, 'password' => 'password']);
+        $resp->assertRedirect('/login');
+        $resp = $this->followRedirects($resp);
+        $resp->assertSee('These credentials do not match our records.');
     }
 
     /**
