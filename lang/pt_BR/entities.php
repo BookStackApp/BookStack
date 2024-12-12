@@ -106,7 +106,7 @@ return [
     // Shelves
     'shelf' => 'Estante',
     'shelves' => 'Estantes',
-    'x_shelves' => ': count Estante|: count Estantes',
+    'x_shelves' => ':count Estante|:count Estantes',
     'shelves_empty' => 'Nenhuma estante foi criada',
     'shelves_create' => 'Criar Prateleira',
     'shelves_popular' => 'Estantes Populares',
