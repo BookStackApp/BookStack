@@ -7,6 +7,7 @@ use BookStack\Activity\Notifications\Messages\BaseActivityNotification;
 use BookStack\Entities\Models\Entity;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
+use Illuminate\Support\Facades\Log;
 
 abstract class BaseNotificationHandler implements NotificationHandler
 {
@@ -36,7 +37,11 @@ abstract class BaseNotificationHandler implements NotificationHandler
             }
 
             // Send the notification
-            $user->notify(new $notification($detail, $initiator));
+            try {
+                $user->notify(new $notification($detail, $initiator));
+            } catch (\Exception $exception) {
+                Log::error("Failed to send email notification to user [id:{$user->id}] with error: {$exception->getMessage()}");
+            }
         }
     }
 }
