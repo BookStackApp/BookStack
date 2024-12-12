@@ -7,15 +7,15 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
-    'settings_save' => 'Save Settings',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'settings' => 'সেটিংস',
+    'settings_save' => 'সেটিংস সংরক্ষণ করুন',
+    'system_version' => 'সিস্টেম ভার্সন',
+    'categories' => 'শ্রেণীবিভাগ সমূহ',
 
     // App Settings
-    'app_customization' => 'Customization',
-    'app_features_security' => 'Features & Security',
-    'app_name' => 'Application Name',
+    'app_customization' => 'নিজস্বীকরণ',
+    'app_features_security' => 'ফিচারসমূহ ও নিরাপত্তা',
+    'app_name' => 'এপ্লিকেশনের নাম',
     'app_name_desc' => 'This name is shown in the header and in any system-sent emails.',
     'app_name_header' => 'Show name in header',
     'app_public_access' => 'Public Access',
