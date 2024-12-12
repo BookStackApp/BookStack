@@ -5,7 +5,7 @@
 return [
 
     // Permissions
-    'permission' => 'You do not have permission to access the requested page.',
+    'permission' => 'অনুরোধকৃত পৃষ্ঠাটিতে আপনার ব্যবহারাধিকারের অনুমতি নেই।',
     'permissionJson' => 'You do not have permission to perform the requested action.',
 
     // Auth
