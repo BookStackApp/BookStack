@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'ওয়েবহুকটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'ইমপোর্টটি তৈরী করেছেন',
+    'import_create_notification' => 'ইমপোর্টটি স্বার্থকভাবে আপলোড করা হয়েছে',
+    'import_run' => 'ইমপোর্টটি হালনাগাদ করেছেন',
+    'import_run_notification' => 'কনটেন্ট স্বার্থকভাবে ইমপোর্ট করা হয়েছে',
+    'import_delete' => 'ইমপোর্টটি মুছে ফেলেছেন',
+    'import_delete_notification' => 'ইমপোর্টটি স্বার্থকভাবে মুছে ফেলা হয়েছে',
 
     // Users
     'user_create' => 'নতুন ব্যবহারকারী তৈরী করেছেন',
