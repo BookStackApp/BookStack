@@ -9,7 +9,12 @@
       "updated_at": "2020-04-10T13:00:45.000000Z",
       "created_by": 4,
       "updated_by": 1,
-      "owned_by": 1
+      "owned_by": 1,
+      "cover": {
+        "id": 4,
+        "name": "shelf.jpg",
+        "url": "https://example.com/uploads/images/cover_bookshelf/2024-12/shelf.jpg"
+      }
     },
     {
       "id": 9,
@@ -20,7 +25,8 @@
       "updated_at": "2020-04-10T13:00:58.000000Z",
       "created_by": 4,
       "updated_by": 1,
-      "owned_by": 1
+      "owned_by": 1,
+      "cover": null
     },
     {
       "id": 10,
@@ -31,7 +37,8 @@
       "updated_at": "2020-04-10T13:00:53.000000Z",
       "created_by": 4,
       "updated_by": 1,
-      "owned_by": 4
+      "owned_by": 4,
+      "cover": null
     }
   ],
   "total": 3

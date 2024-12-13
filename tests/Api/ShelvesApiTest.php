@@ -4,6 +4,7 @@ namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Repos\BaseRepo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -28,6 +29,28 @@ class ShelvesApiTest extends TestCase
                 'owned_by' => $firstBookshelf->owned_by,
                 'created_by' => $firstBookshelf->created_by,
                 'updated_by' => $firstBookshelf->updated_by,
+                'cover' => null,
+            ],
+        ]]);
+    }
+
+    public function test_index_endpoint_includes_cover_if_set()
+    {
+        $this->actingAsApiEditor();
+        $shelf = $this->entities->shelf();
+
+        $baseRepo = $this->app->make(BaseRepo::class);
+        $image = $this->files->uploadedImage('shelf_cover');
+        $baseRepo->updateCoverImage($shelf, $image);
+
+        $resp = $this->getJson($this->baseEndpoint . '?filter[id]=' . $shelf->id);
+        $resp->assertJson(['data' => [
+            [
+                'id'   => $shelf->id,
+                'cover' => [
+                    'id' => $shelf->cover->id,
+                    'url' => $shelf->cover->url,
+                ],
             ],
         ]]);
     }

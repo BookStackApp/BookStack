@@ -3,6 +3,7 @@
 namespace Tests\Api;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Repos\BaseRepo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -27,6 +28,28 @@ class BooksApiTest extends TestCase
                 'owned_by' => $firstBook->owned_by,
                 'created_by' => $firstBook->created_by,
                 'updated_by' => $firstBook->updated_by,
+                'cover' => null,
+            ],
+        ]]);
+    }
+
+    public function test_index_endpoint_includes_cover_if_set()
+    {
+        $this->actingAsApiEditor();
+        $book = $this->entities->book();
+
+        $baseRepo = $this->app->make(BaseRepo::class);
+        $image = $this->files->uploadedImage('book_cover');
+        $baseRepo->updateCoverImage($book, $image);
+
+        $resp = $this->getJson($this->baseEndpoint . '?filter[id]=' . $book->id);
+        $resp->assertJson(['data' => [
+            [
+                'id'   => $book->id,
+                'cover' => [
+                    'id' => $book->cover->id,
+                    'url' => $book->cover->url,
+                ],
             ],
         ]]);
     }
