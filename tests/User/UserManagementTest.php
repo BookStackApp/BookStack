@@ -202,9 +202,13 @@ class UserManagementTest extends TestCase
     public function test_guest_profile_shows_limited_form()
     {
         $guest = $this->users->guest();
+
         $resp = $this->asAdmin()->get('/settings/users/' . $guest->id);
         $resp->assertSee('Guest');
-        $this->withHtml($resp)->assertElementNotExists('#password');
+        $html = $this->withHtml($resp);
+
+        $html->assertElementNotExists('#password');
+        $html->assertElementNotExists('[name="language"]');
     }
 
     public function test_guest_profile_cannot_be_deleted()

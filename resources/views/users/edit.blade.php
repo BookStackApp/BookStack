@@ -34,7 +34,9 @@
                         </div>
                     </div>
 
-                    @include('users.parts.language-option-row', ['value' => old('language') ?? $user->getLocale()->appLocale()])
+                    @if(!$user->isGuest())
+                        @include('users.parts.language-option-row', ['value' => old('language') ?? $user->getLocale()->appLocale()])
+                    @endif
                 </div>
 
                 <div class="text-right">
