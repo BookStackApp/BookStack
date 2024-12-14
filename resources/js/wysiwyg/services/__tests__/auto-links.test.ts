@@ -24,7 +24,7 @@ describe('Auto-link service tests', () => {
                 pNode.append(text);
                 $getRoot().append(pNode);
 
-                text.select(35, 35);
+                text.select(34, 34);
             });
 
             editor.commitUpdates();
@@ -62,7 +62,7 @@ describe('Auto-link service tests', () => {
                 pNode.append(text);
                 $getRoot().append(pNode);
 
-                text.select(35, 35);
+                text.select(34, 34);
             });
 
             editor.commitUpdates();

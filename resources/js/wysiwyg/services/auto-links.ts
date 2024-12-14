@@ -27,7 +27,7 @@ function handlePotentialLinkEvent(node: TextNode, selection: BaseSelection, edit
         return;
     }
 
-    const cursorPoint = selectionRange[0].offset - 1;
+    const cursorPoint = selectionRange[0].offset;
     const nodeText = node.getTextContent();
     const rTrimText = nodeText.slice(0, cursorPoint);
     const priorSpaceIndex = rTrimText.lastIndexOf(' ');
