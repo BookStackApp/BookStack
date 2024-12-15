@@ -16,6 +16,7 @@ export class EditorButtonWithMenu extends EditorContainerUiElement {
             button: {label: 'Menu', icon: caretDownIcon},
             showOnHover: false,
             direction: 'vertical',
+            showAside: false,
         }, menuItems);
         this.addChildren(this.dropdownButton);
     }

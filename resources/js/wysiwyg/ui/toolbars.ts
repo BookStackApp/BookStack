@@ -149,8 +149,8 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         new EditorOverflowContainer(4, [
             new EditorButton(link),
 
-            new EditorDropdownButton({button: table, direction: 'vertical'}, [
-                new EditorDropdownButton({button: {label: 'Insert', format: 'long'}, showOnHover: true}, [
+            new EditorDropdownButton({button: table, direction: 'vertical', showAside: false}, [
+                new EditorDropdownButton({button: {label: 'Insert', format: 'long'}, showOnHover: true, showAside: true}, [
                     new EditorTableCreator(),
                 ]),
                 new EditorSeparator(),

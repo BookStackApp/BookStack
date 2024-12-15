@@ -24,6 +24,14 @@
   @include mixins.lightDark(border-color, #DDD, #000);
 }
 
+@include mixins.smaller-than(vars.$bp-xl) {
+  .editor-toolbar-main {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    justify-content: start;
+  }
+}
+
 body.editor-is-fullscreen {
   overflow: hidden;
   .edit-area {
