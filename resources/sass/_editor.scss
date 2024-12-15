@@ -48,6 +48,7 @@ body.editor-is-fullscreen {
 .editor-content-wrap {
   position: relative;
   overflow-y: scroll;
+  padding-inline: vars.$s;
   flex: 1;
 }
 
@@ -275,6 +276,9 @@ body.editor-is-fullscreen {
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  margin: vars.$xs;
+  max-height: 100%;
+  overflow-y: auto;
 }
 .editor-modal-header {
   display: flex;
@@ -490,19 +494,29 @@ body.editor-is-fullscreen {
 /**
  * Form elements
  */
+$inputWidth: 260px;
+
 .editor-form-field-wrapper {
   margin-bottom: .5rem;
 }
 .editor-form-field-input {
   display: block;
-  width: 100%;
-  min-width: 250px;
+  width: $inputWidth;
+  min-width: 100px;
+  max-width: 100%;
   border: 1px solid;
   @include mixins.lightDark(border-color, #DDD, #000);
   padding: .5rem;
   border-radius: 4px;
   @include mixins.lightDark(color, #444, #BBB);
 }
+
+@include mixins.smaller-than(vars.$bp-xs) {
+  .editor-form-field-input {
+    min-width: 160px;
+  }
+}
+
 textarea.editor-form-field-input {
   font-family: var(--font-code);
   width: 350px;
@@ -575,6 +589,17 @@ textarea.editor-form-field-input {
   align-items: stretch;
   gap: .25rem;
 }
+
+@include mixins.smaller-than(vars.$bp-m) {
+  .editor-form-tab-container {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .editor-form-tab-controls {
+    flex-direction: row;
+  }
+}
+
 .editor-form-tab-control {
   font-weight: bold;
   font-size: 14px;
@@ -601,7 +626,8 @@ textarea.editor-form-field-input {
   }
 }
 .editor-form-tab-contents {
-  width: 360px;
+  width: $inputWidth;
+  max-width: 100%;
 }
 .editor-action-input-container {
   display: flex;
@@ -611,6 +637,9 @@ textarea.editor-form-field-input {
   gap: .1rem;
   .editor-button {
     margin-bottom: 12px;
+  }
+  input {
+    width: $inputWidth - 40px;
   }
 }
 
