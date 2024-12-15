@@ -19,6 +19,7 @@ import searchIcon from "@icons/search.svg";
 import {showLinkSelector} from "../../../utils/links";
 import {LinkField} from "../../framework/blocks/link-field";
 import {insertOrUpdateLink} from "../../../utils/formats";
+import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 
 export function $showImageForm(image: ImageNode, context: EditorUiContext) {
     const imageModal: EditorFormModal = context.manager.createModal('image');
@@ -260,6 +261,39 @@ export const media: EditorFormDefinition = {
                     }
                 ])
             }
+        },
+    ],
+};
+
+export function $showDetailsForm(details: DetailsNode|null, context: EditorUiContext) {
+    const linkModal = context.manager.createModal('details');
+    if (!details) {
+        return;
+    }
+
+    linkModal.show({
+        summary: details.getSummary()
+    });
+}
+
+export const details: EditorFormDefinition = {
+    submitText: 'Save',
+    async action(formData, context: EditorUiContext) {
+        context.editor.update(() => {
+            const node = $getNodeFromSelection($getSelection(), $isDetailsNode);
+            const summary = (formData.get('summary') || '').toString().trim();
+            if ($isDetailsNode(node)) {
+                node.setSummary(summary);
+            }
+        });
+
+        return true;
+    },
+    fields: [
+        {
+            label: 'Toggle label',
+            name: 'summary',
+            type: 'text',
         },
     ],
 };

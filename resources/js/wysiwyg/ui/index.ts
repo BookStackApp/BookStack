@@ -1,6 +1,6 @@
 import {LexicalEditor} from "lexical";
 import {
-    getCodeToolbarContent,
+    getCodeToolbarContent, getDetailsToolbarContent,
     getImageToolbarContent,
     getLinkToolbarContent,
     getMainEditorFullToolbar, getTableToolbarContent
@@ -56,13 +56,16 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
         selector: '.editor-code-block-wrap',
         content: getCodeToolbarContent(),
     });
-
     manager.registerContextToolbar('table', {
         selector: 'td,th',
         content: getTableToolbarContent(),
         displayTargetLocator(originalTarget: HTMLElement): HTMLElement {
             return originalTarget.closest('table') as HTMLTableElement;
         }
+    });
+    manager.registerContextToolbar('details', {
+        selector: 'details',
+        content: getDetailsToolbarContent(),
     });
 
     // Register image decorator listener

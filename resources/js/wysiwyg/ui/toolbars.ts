@@ -68,7 +68,7 @@ import {
 } from "./defaults/buttons/lists";
 import {
     codeBlock,
-    details,
+    details, detailsEditLabel, detailsToggle, detailsUnwrap,
     diagram, diagramManager,
     editCodeBlock,
     horizontalRule,
@@ -252,5 +252,13 @@ export function getTableToolbarContent(): EditorUiElement[] {
             new EditorButton(insertColumnAfter),
             new EditorButton(deleteColumn),
         ]),
+    ];
+}
+
+export function getDetailsToolbarContent(): EditorUiElement[] {
+    return [
+        new EditorButton(detailsEditLabel),
+        new EditorButton(detailsToggle),
+        new EditorButton(detailsUnwrap),
     ];
 }

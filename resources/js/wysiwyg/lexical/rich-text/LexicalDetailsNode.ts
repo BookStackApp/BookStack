@@ -18,6 +18,7 @@ export type SerializedDetailsNode = Spread<{
 export class DetailsNode extends ElementNode {
     __id: string = '';
     __summary: string = '';
+    __open: boolean = false;
 
     static getType() {
         return 'details';
@@ -43,11 +44,22 @@ export class DetailsNode extends ElementNode {
         return self.__summary;
     }
 
+    setOpen(open: boolean) {
+        const self = this.getWritable();
+        self.__open = open;
+    }
+
+    getOpen(): boolean {
+        const self = this.getLatest();
+        return self.__open;
+    }
+
     static clone(node: DetailsNode): DetailsNode {
         const newNode =  new DetailsNode(node.__key);
         newNode.__id = node.__id;
         newNode.__dir = node.__dir;
         newNode.__summary = node.__summary;
+        newNode.__open = node.__open;
         return newNode;
     }
 
@@ -61,17 +73,34 @@ export class DetailsNode extends ElementNode {
             el.setAttribute('dir', this.__dir);
         }
 
+        if (this.__open) {
+            el.setAttribute('open', 'true');
+        }
+
         const summary = document.createElement('summary');
         summary.textContent = this.__summary;
         summary.setAttribute('contenteditable', 'false');
+        summary.addEventListener('click', event => {
+            event.preventDefault();
+            _editor.update(() => {
+                this.select();
+            })
+        });
+
         el.append(summary);
 
         return el;
     }
 
     updateDOM(prevNode: DetailsNode, dom: HTMLElement) {
+
+        if (prevNode.__open !== this.__open) {
+            dom.toggleAttribute('open', this.__open);
+        }
+
         return prevNode.__id !== this.__id
-        || prevNode.__dir !== this.__dir;
+        || prevNode.__dir !== this.__dir
+        || prevNode.__summary !== this.__summary;
     }
 
     static importDOM(): DOMConversionMap|null {
@@ -113,6 +142,8 @@ export class DetailsNode extends ElementNode {
         for (const elem of editable) {
             elem.removeAttribute('contenteditable');
         }
+
+        element.removeAttribute('open');
 
         return {element};
     }

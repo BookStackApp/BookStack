@@ -19,6 +19,9 @@ import editIcon from "@icons/edit.svg";
 import diagramIcon from "@icons/editor/diagram.svg";
 import {$createDiagramNode, DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import detailsIcon from "@icons/editor/details.svg";
+import detailsToggleIcon from "@icons/editor/details-toggle.svg";
+import tableDeleteIcon from "@icons/editor/table-delete.svg";
+import tagIcon from "@icons/tag.svg";
 import mediaIcon from "@icons/editor/media.svg";
 import {$createDetailsNode, $isDetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {$isMediaNode, MediaNode} from "@lexical/rich-text/LexicalMediaNode";
@@ -29,7 +32,7 @@ import {
 } from "../../../utils/selection";
 import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} from "../../../utils/diagrams";
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
-import {$showImageForm, $showLinkForm} from "../forms/objects";
+import {$showDetailsForm, $showImageForm, $showLinkForm} from "../forms/objects";
 import {formatCodeBlock} from "../../../utils/formats";
 
 export const link: EditorButtonDefinition = {
@@ -215,5 +218,59 @@ export const details: EditorButtonDefinition = {
     },
     isActive(selection: BaseSelection | null): boolean {
         return $selectionContainsNodeType(selection, $isDetailsNode);
+    }
+}
+
+export const detailsEditLabel: EditorButtonDefinition = {
+    label: 'Edit label',
+    icon: tagIcon,
+    action(context: EditorUiContext) {
+        context.editor.getEditorState().read(() => {
+            const details = $getNodeFromSelection($getSelection(), $isDetailsNode);
+            if ($isDetailsNode(details)) {
+                $showDetailsForm(details, context);
+            }
+        })
+    },
+    isActive(selection: BaseSelection | null): boolean {
+        return false;
+    }
+}
+
+export const detailsToggle: EditorButtonDefinition = {
+    label: 'Toggle open/closed',
+    icon: detailsToggleIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            const details = $getNodeFromSelection($getSelection(), $isDetailsNode);
+            if ($isDetailsNode(details)) {
+                details.setOpen(!details.getOpen());
+                context.manager.triggerLayoutUpdate();
+            }
+        })
+    },
+    isActive(selection: BaseSelection | null): boolean {
+        return false;
+    }
+}
+
+export const detailsUnwrap: EditorButtonDefinition = {
+    label: 'Unwrap',
+    icon: tableDeleteIcon,
+    action(context: EditorUiContext) {
+        context.editor.update(() => {
+            const details = $getNodeFromSelection($getSelection(), $isDetailsNode);
+            if ($isDetailsNode(details)) {
+                const children = details.getChildren();
+                for (const child of children) {
+                    details.insertBefore(child);
+                }
+                details.remove();
+                context.manager.triggerLayoutUpdate();
+            }
+        })
+    },
+    isActive(selection: BaseSelection | null): boolean {
+        return false;
     }
 }
