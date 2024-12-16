@@ -13,6 +13,7 @@ import {ListItemNode, ListNode} from '@lexical/list';
 import {TableCellNode, TableNode, TableRowNode} from '@lexical/table';
 
 import {
+  $getSelection,
   $isRangeSelection,
   createEditor,
   DecoratorNode,
@@ -37,6 +38,10 @@ import {
 import {resetRandomKey} from '../../LexicalUtils';
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
+import {DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
+import {EditorUiContext} from "../../../../ui/framework/core";
+import {EditorUIManager} from "../../../../ui/framework/manager";
+import {registerRichText} from "@lexical/rich-text";
 
 
 type TestEnv = {
@@ -420,6 +425,7 @@ const DEFAULT_NODES: NonNullable<ReadonlyArray<Klass<LexicalNode> | LexicalNodeR
   TableRowNode,
   AutoLinkNode,
   LinkNode,
+  DetailsNode,
   TestElementNode,
   TestSegmentedNode,
   TestExcludeFromCopyElementNode,
@@ -451,6 +457,7 @@ export function createTestEditor(
     ...config,
     nodes: DEFAULT_NODES.concat(customNodes),
   });
+
   return editor;
 }
 
@@ -463,6 +470,26 @@ export function createTestHeadlessEditor(
       throw error;
     },
   });
+}
+
+export function createTestContext(env: TestEnv): EditorUiContext {
+  const context = {
+    containerDOM: document.createElement('div'),
+    editor: env.editor,
+    editorDOM: document.createElement('div'),
+    error(text: string | Error): void {
+    },
+    manager: new EditorUIManager(),
+    options: {},
+    scrollDOM: document.createElement('div'),
+    translate(text: string): string {
+      return "";
+    }
+  };
+
+  context.manager.setContext(context);
+
+  return context;
 }
 
 export function $assertRangeSelection(selection: unknown): RangeSelection {
@@ -717,4 +744,23 @@ export function expectHtmlToBeEqual(expected: string, actual: string): void {
 
 function formatHtml(s: string): string {
   return s.replace(/>\s+</g, '><').replace(/\s*\n\s*/g, ' ').trim();
+}
+
+export function dispatchKeydownEventForNode(node: LexicalNode, editor: LexicalEditor, key: string) {
+  const nodeDomEl = editor.getElementByKey(node.getKey());
+  const event = new KeyboardEvent('keydown', {
+    bubbles: true,
+    cancelable: true,
+    key,
+  });
+  nodeDomEl?.dispatchEvent(event);
+}
+
+export function dispatchKeydownEventForSelectedNode(editor: LexicalEditor, key: string) {
+  editor.getEditorState().read((): void => {
+    const node = $getSelection()?.getNodes()[0] || null;
+    if (node) {
+      dispatchKeydownEventForNode(node, editor, key);
+    }
+  });
 }
