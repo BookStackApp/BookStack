@@ -48,7 +48,6 @@ describe('Keyboard-handling service tests', () => {
         expect(lastRootChild).toBeInstanceOf(DetailsNode);
 
         dispatchKeydownEventForNode(detailsPara, editor, 'ArrowDown');
-        editor.commitUpdates();
 
         editor.getEditorState().read(() => {
             lastRootChild = $getRoot().getLastChild();
@@ -79,10 +78,7 @@ describe('Keyboard-handling service tests', () => {
         expect(lastRootChild).toBeInstanceOf(DetailsNode);
 
         dispatchKeydownEventForNode(detailsPara, editor, 'Enter');
-        editor.commitUpdates();
-
         dispatchKeydownEventForSelectedNode(editor, 'Enter');
-        editor.commitUpdates();
 
         let detailsChildren!: LexicalNode[];
         let lastDetailsText!: string;
@@ -115,7 +111,6 @@ describe('Keyboard-handling service tests', () => {
         });
 
         dispatchKeydownEventForNode(listItemB, editor, 'Tab');
-        editor.commitUpdates();
 
         editor.getEditorState().read(() => {
             const list = $getRoot().getChildren()[0] as ListNode;

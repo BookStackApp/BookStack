@@ -776,6 +776,7 @@ export function dispatchKeydownEventForNode(node: LexicalNode, editor: LexicalEd
     key,
   });
   nodeDomEl?.dispatchEvent(event);
+  editor.commitUpdates();
 }
 
 export function dispatchKeydownEventForSelectedNode(editor: LexicalEditor, key: string) {
