@@ -4,7 +4,7 @@
 function register(editor) {
     const aboutDialog = {
         title: 'About the WYSIWYG Editor',
-        url: window.baseUrl('/help/wysiwyg'),
+        url: window.baseUrl('/help/tinymce'),
     };
 
     editor.ui.registry.addButton('about', {

@@ -1,6 +1,7 @@
 import {EditorFormDefinition} from "../../framework/forms";
-import {EditorUiContext} from "../../framework/core";
+import {EditorUiContext, EditorUiElement} from "../../framework/core";
 import {setEditorContentFromHtml} from "../../../utils/actions";
+import {ExternalContent} from "../../framework/blocks/external-content";
 
 export const source: EditorFormDefinition = {
     submitText: 'Save',
@@ -14,5 +15,19 @@ export const source: EditorFormDefinition = {
             name: 'source',
             type: 'textarea',
         },
+    ],
+};
+
+export const about: EditorFormDefinition = {
+    submitText: 'Close',
+    async action() {
+        return true;
+    },
+    fields: [
+        {
+            build(): EditorUiElement {
+                return new ExternalContent('/help/wysiwyg');
+            }
+        }
     ],
 };

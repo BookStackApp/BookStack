@@ -4,7 +4,7 @@ import {
     getImageToolbarContent,
     getLinkToolbarContent,
     getMainEditorFullToolbar, getTableToolbarContent
-} from "./toolbars";
+} from "./defaults/toolbars";
 import {EditorUIManager} from "./framework/manager";
 import {EditorUiContext} from "./framework/core";
 import {CodeBlockDecorator} from "./decorators/code-block";

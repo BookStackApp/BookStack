@@ -350,6 +350,13 @@ body.editor-is-fullscreen {
   text-align: center;
   padding: 0.2em;
 }
+.editor-external-content {
+  min-width: 500px;
+  min-height: 500px;
+  h4:first-child {
+    margin-top: 0;
+  }
+}
 
 // In-editor elements
 .editor-image-wrap {
