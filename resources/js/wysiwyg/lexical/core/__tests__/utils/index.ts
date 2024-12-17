@@ -30,18 +30,14 @@ import {
   TextNode,
 } from 'lexical';
 
-import {
-  CreateEditorArgs,
-  HTMLConfig,
-  LexicalNodeReplacement,
-} from '../../LexicalEditor';
+import {CreateEditorArgs, HTMLConfig, LexicalNodeReplacement,} from '../../LexicalEditor';
 import {resetRandomKey} from '../../LexicalUtils';
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 import {DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {EditorUiContext} from "../../../../ui/framework/core";
 import {EditorUIManager} from "../../../../ui/framework/manager";
-import {registerRichText} from "@lexical/rich-text";
+import {turtle} from "@codemirror/legacy-modes/mode/turtle";
 
 
 type TestEnv = {
@@ -762,6 +758,41 @@ export function html(
 
 export function expectHtmlToBeEqual(expected: string, actual: string): void {
   expect(formatHtml(expected)).toBe(formatHtml(actual));
+}
+
+type nodeTextShape = {
+  text: string;
+};
+
+type nodeShape = {
+  type: string;
+  children?: (nodeShape|nodeTextShape)[];
+}
+
+export function getNodeShape(node: SerializedLexicalNode): nodeShape|nodeTextShape {
+  // @ts-ignore
+  const children: SerializedLexicalNode[] = (node.children || []);
+
+  const shape: nodeShape = {
+    type: node.type,
+  };
+
+  if (shape.type === 'text') {
+    // @ts-ignore
+    return  {text: node.text}
+  }
+
+  if (children.length > 0) {
+    shape.children = children.map(c => getNodeShape(c));
+  }
+
+  return shape;
+}
+
+export function expectNodeShapeToMatch(editor: LexicalEditor, expected: nodeShape[]) {
+  const json = editor.getEditorState().toJSON();
+  const shape = getNodeShape(json.root) as nodeShape;
+  expect(shape.children).toMatchObject(expected);
 }
 
 function formatHtml(s: string): string {

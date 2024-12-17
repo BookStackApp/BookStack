@@ -10,6 +10,9 @@ export function $nestListItem(node: ListItemNode): ListItemNode {
         return node;
     }
 
+    const nodeChildList = node.getChildren().filter(n => $isListNode(n))[0] || null;
+    const nodeChildItems = nodeChildList?.getChildren() || [];
+
     const listItems = list.getChildren() as ListItemNode[];
     const nodeIndex = listItems.findIndex((n) => n.getKey() === node.getKey());
     const isFirst = nodeIndex === 0;
@@ -27,6 +30,13 @@ export function $nestListItem(node: ListItemNode): ListItemNode {
         node.remove();
     }
 
+    if (nodeChildList) {
+        for (const child of nodeChildItems) {
+            newListItem.insertAfter(child);
+        }
+        nodeChildList.remove();
+    }
+
     return newListItem;
 }
 
@@ -38,6 +48,8 @@ export function $unnestListItem(node: ListItemNode): ListItemNode {
         return node;
     }
 
+    const laterSiblings = node.getNextSiblings();
+
     parentListItem.insertAfter(node);
     if (list.getChildren().length === 0) {
         list.remove();
@@ -45,6 +57,16 @@ export function $unnestListItem(node: ListItemNode): ListItemNode {
 
     if (parentListItem.getChildren().length === 0) {
         parentListItem.remove();
+    }
+
+    if (laterSiblings.length > 0) {
+        const childList = $createListNode(list.getListType());
+        childList.append(...laterSiblings);
+        node.append(childList);
+    }
+
+    if (list.getChildrenSize() === 0) {
+        list.remove();
     }
 
     return node;
