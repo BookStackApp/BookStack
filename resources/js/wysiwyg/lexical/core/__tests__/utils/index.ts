@@ -472,16 +472,34 @@ export function createTestHeadlessEditor(
   });
 }
 
-export function createTestContext(env: TestEnv): EditorUiContext {
+export function createTestContext(): EditorUiContext {
+
+  const container = document.createElement('div');
+  document.body.appendChild(container);
+
+  const scrollWrap = document.createElement('div');
+  const editorDOM = document.createElement('div');
+  editorDOM.setAttribute('contenteditable', 'true');
+
+  scrollWrap.append(editorDOM);
+  container.append(scrollWrap);
+
+  const editor = createTestEditor({
+    namespace: 'testing',
+    theme: {},
+  });
+
+  editor.setRootElement(editorDOM);
+
   const context = {
-    containerDOM: document.createElement('div'),
-    editor: env.editor,
-    editorDOM: document.createElement('div'),
+    containerDOM: container,
+    editor: editor,
+    editorDOM: editorDOM,
     error(text: string | Error): void {
     },
     manager: new EditorUIManager(),
     options: {},
-    scrollDOM: document.createElement('div'),
+    scrollDOM: scrollWrap,
     translate(text: string): string {
       return "";
     }
@@ -490,6 +508,10 @@ export function createTestContext(env: TestEnv): EditorUiContext {
   context.manager.setContext(context);
 
   return context;
+}
+
+export function destroyFromContext(context: EditorUiContext) {
+  context.containerDOM.remove();
 }
 
 export function $assertRangeSelection(selection: unknown): RangeSelection {

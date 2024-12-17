@@ -151,6 +151,15 @@ function getDetailsScenario(editor: LexicalEditor): {
     }
 }
 
+function $isSingleListItem(nodes: LexicalNode[]): boolean {
+    if (nodes.length !== 1) {
+        return false;
+    }
+
+    const node = nodes[0];
+    return $isListItemNode(node) || $isListItemNode(node.getParent());
+}
+
 /**
  * Inset the nodes within selection when a range of nodes is selected
  * or if a list node is selected.
@@ -159,7 +168,7 @@ function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null): boo
     const change = event?.shiftKey ? -40 : 40;
     const selection = $getSelection();
     const nodes = selection?.getNodes() || [];
-    if (nodes.length > 1 || (nodes.length === 1 && $isListItemNode(nodes[0].getParent()))) {
+    if (nodes.length > 1 || $isSingleListItem(nodes)) {
         editor.update(() => {
             $setInsetForSelection(editor, change);
         });

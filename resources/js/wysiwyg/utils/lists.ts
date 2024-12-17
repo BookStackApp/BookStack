@@ -1,4 +1,4 @@
-import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
+import {$createTextNode, $getSelection, BaseSelection, LexicalEditor, TextNode} from "lexical";
 import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection} from "./selection";
 import {nodeHasInset} from "./nodes";
 import {$createListItemNode, $createListNode, $isListItemNode, $isListNode, ListItemNode} from "@lexical/list";
@@ -93,6 +93,7 @@ function $reduceDedupeListItems(listItems: (ListItemNode|null)[]): ListItemNode[
 
 export function $setInsetForSelection(editor: LexicalEditor, change: number): void {
     const selection = $getSelection();
+    const selectionBounds = selection?.getStartEndPoints();
     const listItemsInSelection = getListItemsForSelection(selection);
     const isListSelection = listItemsInSelection.length > 0 && !listItemsInSelection.includes(null);
 
@@ -110,7 +111,19 @@ export function $setInsetForSelection(editor: LexicalEditor, change: number): vo
             alteredListItems.reverse();
         }
 
-        $selectNodes(alteredListItems);
+        if (alteredListItems.length === 1 && selectionBounds) {
+            // Retain selection range if moving just one item
+            const listItem = alteredListItems[0] as ListItemNode;
+            let child = listItem.getChildren()[0] as TextNode;
+            if (!child) {
+                child = $createTextNode('');
+                listItem.append(child);
+            }
+            child.select(selectionBounds[0].offset, selectionBounds[1].offset);
+        } else {
+            $selectNodes(alteredListItems);
+        }
+
         return;
     }
 
