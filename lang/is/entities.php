@@ -239,7 +239,7 @@ return [
     'pages_editing_page' => 'Breyta síðu',
     'pages_edit_draft_save_at' => 'Vista uppkast ',
     'pages_edit_delete_draft' => 'Eyða uppkasti',
-    'pages_edit_delete_draft_confirm' => 'Are you sure you want to delete your draft page changes? All of your changes, since the last full save, will be lost and the editor will be updated with the latest page non-draft save state.',
+    'pages_edit_delete_draft_confirm' => 'Ertu viss um að þú viljir eyða uppkasti síðu? Allar breytingar sem gerðar hafa verið frá síðustu vistun á síðunni munu tapast.',
     'pages_edit_discard_draft' => 'Henda uppkasti',
     'pages_edit_switch_to_markdown' => 'Færa þig yfir í Markdown ritil',
     'pages_edit_switch_to_markdown_clean' => '(Hreinsa innihald)',
@@ -318,8 +318,8 @@ return [
     ],
     'pages_draft_discarded' => 'Draft discarded! The editor has been updated with the current page content',
     'pages_draft_deleted' => 'Draft deleted! The editor has been updated with the current page content',
-    'pages_specific' => 'Specific Page',
-    'pages_is_template' => 'Page Template',
+    'pages_specific' => 'Tilgreind síða',
+    'pages_is_template' => 'Forsnið síðu',
 
     // Editor Sidebar
     'toggle_sidebar' => 'Toggle Sidebar',
