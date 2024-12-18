@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kannst den einzigen Administrator nicht löschen.',
     'users_cannot_delete_guest' => 'Du kannst den Gast-Benutzer nicht löschen',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Benutzer konnte nicht erstellt werden, da die Einladungs-E-Mail nicht gesendet werden konnte',
 
     // Roles
     'role_cannot_be_edited' => 'Diese Rolle kann nicht bearbeitet werden.',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Wir werden so schnell wie möglich wieder online sein.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'ZIP-Datei konnte nicht gelesen werden.',
+    'import_zip_cant_decode_data' => 'Konnte Inhalt der data.json im ZIP nicht finden und dekodieren.',
+    'import_zip_no_data' => 'ZIP-Datei hat kein erwartetes Buch, Kapitel oder Seiteninhalt.',
+    'import_validation_failed' => 'ZIP Import konnte aufgrund folgender Fehler nicht validiert werden:',
+    'import_zip_failed_notification' => 'Importieren der ZIP-Datei fehlgeschlagen.',
+    'import_perms_books' => 'Dir fehlt die erforderliche Berechtigung, um Bücher zu erstellen.',
+    'import_perms_chapters' => 'Dir fehlt die erforderliche Berechtigung, um Kapitel zu erstellen.',
+    'import_perms_pages' => 'Dir fehlt die erforderliche Berechtigung, um Seiten zu erstellen.',
+    'import_perms_images' => 'Dir fehlt die erforderliche Berechtigung, um Bilder zu erstellen.',
+    'import_perms_attachments' => 'Dir fehlt die erforderliche Berechtigung, um Anhänge zu erstellen.',
 
     // API errors
     'api_no_authorization_found' => 'Kein Autorisierungs-Token für die Anfrage gefunden',
