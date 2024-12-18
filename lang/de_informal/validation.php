@@ -75,7 +75,7 @@ return [
     ],
     'mimes'                => ':attribute muss eine Datei vom Typ: :values sein.',
     'min'                  => [
-        'numeric' => ':attribute muss mindestens :min sein',
+        'numeric' => ':attribute muss mindestens :min sein.',
         'file'    => ':attribute muss mindestens :min Kilobyte groß sein.',
         'string'  => ':attribute muss mindestens :min Zeichen lang sein.',
         'array'   => ':attribute muss mindesten :min Elemente enthalten.',
@@ -106,7 +106,7 @@ return [
     'uploaded'             => 'Die Datei konnte nicht hochgeladen werden. Der Server akzeptiert möglicherweise keine Dateien dieser Größe.',
 
     'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
+    'zip_file_mime' => ':attribute muss auf eine Datei des Typs :validType verweisen, gefunden :foundType.',
     'zip_model_expected' => 'Data object expected but ":type" found.',
     'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
 
