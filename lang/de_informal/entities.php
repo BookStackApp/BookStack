@@ -43,7 +43,7 @@ return [
     'default_template' => 'Standard Seitenvorlage',
     'default_template_explain' => 'Zuweisen einer Seitenvorlage, die als Standardinhalt für alle Seiten verwendet wird, die innerhalb dieses Elements erstellt wurden. Beachten Sie, dass dies nur dann verwendet wird, wenn der Ersteller der Seite Zugriff auf die ausgewählte Vorlagen-Seite hat.',
     'default_template_select' => 'Wähle eine Seitenvorlage',
-    'import' => 'Import',
+    'import' => 'Importieren',
     'import_validate' => 'Validate Import',
     'import_desc' => 'Import books, chapters & pages using a portable zip export from the same, or a different, instance. Select a ZIP file to proceed. After the file has been uploaded and validated you\'ll be able to configure & confirm the import in the next view.',
     'import_zip_select' => 'Select ZIP file to upload',
