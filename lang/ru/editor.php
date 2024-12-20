@@ -163,6 +163,8 @@ return [
     'about' => 'О редакторе',
     'about_title' => 'О редакторе WYSIWYG',
     'editor_license' => 'Лицензия редактора и авторские права',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Этот редактор собран с помощью :tinyLink, который предоставляется под MIT лицензией.',
     'editor_tiny_license_link' => 'Авторские права и подробности лицензии TinyMCE вы можете найти здесь.',
     'save_continue' => 'Сохранить страницу и продолжить',
