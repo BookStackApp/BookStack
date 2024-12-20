@@ -163,6 +163,8 @@ return [
     'about' => 'Giới thiệu về trình soạn thảo',
     'about_title' => 'Giới thiệu về trình soạn thảo WYSIWYG',
     'editor_license' => 'Giáy phép & Bản quyền của trình soạn thảo',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Trình soạn thảo này được xây dựng bằng các sử dụng :tinyLink theo giấy phép MIT.',
     'editor_tiny_license_link' => 'Chi tiết về bản quyền và giấy phép của TinyMCE có thể được tìm thấy tại đây.',
     'save_continue' => 'Lưu trang & Tiếp tục',
