@@ -163,6 +163,8 @@ return [
     'about' => 'Despre editor',
     'about_title' => 'Despre editorul WYSIWYG',
     'editor_license' => 'Editor licență și drepturi de autor',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Acest editor este construit folosind :tinyLink care este furnizat sub licența MIT.',
     'editor_tiny_license_link' => 'Detaliile privind drepturile de autor şi licența TinyMCE pot fi consultate aici.',
     'save_continue' => 'Salvează pagina și continuă',
