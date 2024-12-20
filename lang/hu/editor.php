@@ -163,6 +163,8 @@ return [
     'about' => 'A szerkesztőről',
     'about_title' => 'A WYSIWYG szerkesztőről',
     'editor_license' => 'Szerkesztő Licensz és Copyright információi',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Ez a szerkesztő az MIT licenc alatt szolgáltatott :tinyLink segítségével készült.',
     'editor_tiny_license_link' => 'A TinyMCE szerzői jogi és licencinformációi itt találhatók.',
     'save_continue' => 'Mentés és Folytatás',
