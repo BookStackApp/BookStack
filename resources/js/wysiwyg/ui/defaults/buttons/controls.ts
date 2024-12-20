@@ -11,8 +11,9 @@ import {
 } from "lexical";
 import redoIcon from "@icons/editor/redo.svg";
 import sourceIcon from "@icons/editor/source-view.svg";
-import {getEditorContentAsHtml} from "../../../utils/actions";
 import fullscreenIcon from "@icons/editor/fullscreen.svg";
+import aboutIcon from "@icons/editor/about.svg";
+import {getEditorContentAsHtml} from "../../../utils/actions";
 
 export const undo: EditorButtonDefinition = {
     label: 'Undo',
@@ -79,5 +80,17 @@ export const fullscreen: EditorButtonDefinition = {
     },
     isActive(selection, context: EditorUiContext) {
         return context.containerDOM.classList.contains('fullscreen');
+    }
+};
+
+export const about: EditorButtonDefinition = {
+    label: 'About the editor',
+    icon: aboutIcon,
+    async action(context: EditorUiContext, button: EditorButton) {
+        const modal = context.manager.createModal('about');
+        modal.show({});
+    },
+    isActive(selection, context: EditorUiContext) {
+        return false;
     }
 };

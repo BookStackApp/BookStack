@@ -8,18 +8,28 @@
 
 // Main UI elements
 .editor-container {
-  background-color: #FFF;
+  @include mixins.lightDark(background-color, #FFF, #222);
   position: relative;
   &.fullscreen {
     z-index: 500;
   }
 }
+
 .editor-toolbar-main {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
+  @include mixins.lightDark(border-color, #DDD, #000);
+}
+
+@include mixins.smaller-than(vars.$bp-xl) {
+  .editor-toolbar-main {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    justify-content: start;
+  }
 }
 
 body.editor-is-fullscreen {
@@ -38,6 +48,7 @@ body.editor-is-fullscreen {
 .editor-content-wrap {
   position: relative;
   overflow-y: scroll;
+  padding-inline: vars.$s;
   flex: 1;
 }
 
@@ -46,6 +57,7 @@ body.editor-is-fullscreen {
   font-size: 12px;
   padding: 4px;
   color: #444;
+  @include mixins.lightDark(color, #444, #999);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -54,6 +66,7 @@ body.editor-is-fullscreen {
 }
 .editor-button:hover {
   background-color: #EEE;
+  @include mixins.lightDark(background-color, #EEE, #333);
   cursor: pointer;
   color: #000;
 }
@@ -63,7 +76,7 @@ body.editor-is-fullscreen {
   opacity: .6;
 }
 .editor-button-active, .editor-button-active:hover {
-  background-color: #ceebff;
+  @include mixins.lightDark(background-color, #ceebff, #444);
   color: #000;
 }
 .editor-button-long {
@@ -75,7 +88,7 @@ body.editor-is-fullscreen {
 }
 .editor-button-text {
   font-weight: 400;
-  color: #000;
+  @include mixins.lightDark(color, #000, #AAA);
   font-size: 14px;
   flex: 1;
   padding-inline-end: 4px;
@@ -126,7 +139,8 @@ body.editor-is-fullscreen {
     }
   }
   &:hover {
-    outline: 1px solid #DDD;
+    outline: 1px solid;
+    @include mixins.lightDark(outline-color, #DDD, #111);
     outline-offset: -3px;
   }
 }
@@ -137,11 +151,14 @@ body.editor-is-fullscreen {
 }
 .editor-dropdown-menu {
   position: absolute;
-  background-color: #FFF;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.15);
+  border: 1px solid;
+  @include mixins.lightDark(background-color, #FFF, #292929);
+  @include mixins.lightDark(border-color, #FFF, #333);
+  @include mixins.lightDark(box-shadow, 0 0 6px 0 rgba(0, 0, 0, 0.15), 0 1px 4px 0 rgba(0, 0, 0, 0.4));
   z-index: 99;
   display: flex;
   flex-direction: row;
+  border-radius: 3px;
 }
 .editor-dropdown-menu-vertical {
   display: flex;
@@ -163,8 +180,8 @@ body.editor-is-fullscreen {
 .editor-separator {
   display: block;
   height: 1px;
-  background-color: #DDD;
   opacity: .8;
+  @include mixins.lightDark(background-color, #DDD, #000);
 }
 
 .editor-format-menu-toggle {
@@ -199,6 +216,7 @@ body.editor-is-fullscreen {
   display: flex;
   border-inline: 1px solid #DDD;
   padding-inline: 4px;
+  @include mixins.lightDark(border-color, #DDD, #000);
   &:first-child {
     border-inline-start: none;
   }
@@ -212,11 +230,12 @@ body.editor-is-fullscreen {
 
 .editor-context-toolbar {
   position: fixed;
-  background-color: #FFF;
   border: 1px solid #DDD;
+  @include mixins.lightDark(background-color, #FFF, #222);
+  @include mixins.lightDark(border-color, #DDD, #333);
+  @include mixins.lightDark(box-shadow, 0 2px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 4px 0 rgba(0, 0, 0, 0.4));
   padding: .2rem;
   border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: row;
   &:before {
@@ -226,9 +245,10 @@ body.editor-is-fullscreen {
     width: 8px;
     height: 8px;
     position: absolute;
-    background-color: #FFF;
+    @include mixins.lightDark(background-color, #FFF, #222);
     border-top: 1px solid #DDD;
     border-left: 1px solid #DDD;
+    @include mixins.lightDark(border-color, #DDD, #333);
     transform: rotate(45deg);
     left: 50%;
     margin-left: -4px;
@@ -252,10 +272,13 @@ body.editor-is-fullscreen {
   height: 100%;
 }
 .editor-modal {
-  background-color: #FFF;
+  @include mixins.lightDark(background-color, #FFF, #222);
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  margin: vars.$xs;
+  max-height: 100%;
+  overflow-y: auto;
 }
 .editor-modal-header {
   display: flex;
@@ -314,7 +337,8 @@ body.editor-is-fullscreen {
   display: flex;
 }
 .editor-table-creator-cell {
-  border: 1px solid #DDD;
+  border: 1px solid;
+  @include mixins.lightDark(border-color, #DDD, #000);
   width: 15px;
   height: 15px;
   cursor: pointer;
@@ -325,6 +349,13 @@ body.editor-is-fullscreen {
 .editor-table-creator-display {
   text-align: center;
   padding: 0.2em;
+}
+.editor-external-content {
+  min-width: 500px;
+  min-height: 500px;
+  h4:first-child {
+    margin-top: 0;
+  }
 }
 
 // In-editor elements
@@ -347,7 +378,7 @@ body.editor-is-fullscreen {
   height: 10px;
   border: 2px solid var(--editor-color-primary);
   z-index: 3;
-  background-color: #FFF;
+  @include mixins.lightDark(background-color, #FFF, #000);
   user-select: none;
   &.nw {
     inset-inline-start: -5px;
@@ -470,18 +501,29 @@ body.editor-is-fullscreen {
 /**
  * Form elements
  */
+$inputWidth: 260px;
+
 .editor-form-field-wrapper {
   margin-bottom: .5rem;
 }
 .editor-form-field-input {
   display: block;
-  width: 100%;
-  min-width: 250px;
-  border: 1px solid #DDD;
+  width: $inputWidth;
+  min-width: 100px;
+  max-width: 100%;
+  border: 1px solid;
+  @include mixins.lightDark(border-color, #DDD, #000);
   padding: .5rem;
   border-radius: 4px;
-  color: #444;
+  @include mixins.lightDark(color, #444, #BBB);
 }
+
+@include mixins.smaller-than(vars.$bp-xs) {
+  .editor-form-field-input {
+    min-width: 160px;
+  }
+}
+
 textarea.editor-form-field-input {
   font-family: var(--font-code);
   width: 350px;
@@ -554,10 +596,21 @@ textarea.editor-form-field-input {
   align-items: stretch;
   gap: .25rem;
 }
+
+@include mixins.smaller-than(vars.$bp-m) {
+  .editor-form-tab-container {
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .editor-form-tab-controls {
+    flex-direction: row;
+  }
+}
+
 .editor-form-tab-control {
   font-weight: bold;
   font-size: 14px;
-  color: #444;
+  @include mixins.lightDark(color, #444, #666);
   border-bottom: 2px solid transparent;
   position: relative;
   cursor: pointer;
@@ -565,7 +618,7 @@ textarea.editor-form-field-input {
   text-align: start;
   &[aria-selected="true"] {
     border-color: var(--editor-color-primary);
-    color: var(--editor-color-primary);
+    color: var(--editor-color-primary) !important;
   }
   &[aria-selected="true"]:after, &:hover:after {
     background-color: var(--editor-color-primary);
@@ -580,7 +633,8 @@ textarea.editor-form-field-input {
   }
 }
 .editor-form-tab-contents {
-  width: 360px;
+  width: $inputWidth;
+  max-width: 100%;
 }
 .editor-action-input-container {
   display: flex;
@@ -590,6 +644,9 @@ textarea.editor-form-field-input {
   gap: .1rem;
   .editor-button {
     margin-bottom: 12px;
+  }
+  input {
+    width: $inputWidth - 40px;
   }
 }
 

@@ -361,6 +361,7 @@ Route::get('/password/reset/{token}', [AccessControllers\ResetPasswordController
 Route::post('/password/reset', [AccessControllers\ResetPasswordController::class, 'reset'])->middleware('throttle:public');
 
 // Metadata routes
+Route::view('/help/tinymce', 'help.tinymce');
 Route::view('/help/wysiwyg', 'help.wysiwyg');
 
 Route::fallback([MetaController::class, 'notFound'])->name('fallback');

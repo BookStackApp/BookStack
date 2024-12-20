@@ -1,6 +1,6 @@
 import {EditorFormModalDefinition} from "../framework/modals";
-import {image, link, media} from "./forms/objects";
-import {source} from "./forms/controls";
+import {details, image, link, media} from "./forms/objects";
+import {about, source} from "./forms/controls";
 import {cellProperties, rowProperties, tableProperties} from "./forms/tables";
 
 export const modals: Record<string, EditorFormModalDefinition> = {
@@ -32,4 +32,12 @@ export const modals: Record<string, EditorFormModalDefinition> = {
         title: 'Table Properties',
         form: tableProperties,
     },
+    details: {
+        title: 'Edit collapsible block',
+        form: details,
+    },
+    about: {
+        title: 'About the WYSIWYG Editor',
+        form: about,
+    }
 };

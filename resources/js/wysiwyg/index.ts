@@ -15,6 +15,7 @@ import {el} from "./utils/dom";
 import {registerShortcuts} from "./services/shortcuts";
 import {registerNodeResizer} from "./ui/framework/helpers/node-resizer";
 import {registerKeyboardHandling} from "./services/keyboard-handling";
+import {registerAutoLinks} from "./services/auto-links";
 
 export function createPageEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const config: CreateEditorArgs = {
@@ -64,6 +65,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerTaskListHandler(editor, editArea),
         registerDropPasteHandling(context),
         registerNodeResizer(context),
+        registerAutoLinks(editor),
     );
 
     listenToCommonEvents(editor);
@@ -73,38 +75,12 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     const debugView = document.getElementById('lexical-debug');
     if (debugView) {
         debugView.hidden = true;
-    }
-
-    let changeFromLoading = true;
-    editor.registerUpdateListener(({dirtyElements, dirtyLeaves, editorState, prevEditorState}) => {
-        // Watch for selection changes to update the UI on change
-        // Used to be done via SELECTION_CHANGE_COMMAND but this would not always emit
-        // for all selection changes, so this proved more reliable.
-        const selectionChange = !(prevEditorState._selection?.is(editorState._selection) || false);
-        if (selectionChange) {
-            editor.update(() => {
-                const selection = $getSelection();
-                context.manager.triggerStateUpdate({
-                    editor, selection,
-                });
-            });
-        }
-
-        // Emit change event to component system (for draft detection) on actual user content change
-        if (dirtyElements.size > 0 || dirtyLeaves.size > 0) {
-            if (changeFromLoading) {
-                changeFromLoading = false;
-            } else {
-                window.$events.emit('editor-html-change', '');
-            }
-        }
-
-        // Debug logic
-        // console.log('editorState', editorState.toJSON());
-        if (debugView) {
+        editor.registerUpdateListener(({dirtyElements, dirtyLeaves, editorState, prevEditorState}) => {
+            // Debug logic
+            // console.log('editorState', editorState.toJSON());
             debugView.textContent = JSON.stringify(editorState.toJSON(), null, 2);
-        }
-    });
+        });
+    }
 
     // @ts-ignore
     window.debugEditorState = () => {

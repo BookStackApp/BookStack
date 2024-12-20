@@ -51,6 +51,10 @@ export function $getNodeFromSelection(selection: BaseSelection | null, matcher: 
     return null;
 }
 
+export function $getTextNodeFromSelection(selection: BaseSelection | null): TextNode|null {
+    return $getNodeFromSelection(selection, $isTextNode) as TextNode|null;
+}
+
 export function $selectionContainsTextFormat(selection: BaseSelection | null, format: TextFormatType): boolean {
     if (!selection) {
         return false;

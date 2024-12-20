@@ -5,18 +5,20 @@ import {
     LexicalEditor,
     LexicalNode,
     SerializedElementNode, Spread,
-    EditorConfig,
+    EditorConfig, DOMExportOutput,
 } from 'lexical';
 
-import {el} from "../../utils/dom";
 import {extractDirectionFromElement} from "lexical/nodes/common";
 
 export type SerializedDetailsNode = Spread<{
     id: string;
+    summary: string;
 }, SerializedElementNode>
 
 export class DetailsNode extends ElementNode {
     __id: string = '';
+    __summary: string = '';
+    __open: boolean = false;
 
     static getType() {
         return 'details';
@@ -32,10 +34,32 @@ export class DetailsNode extends ElementNode {
         return self.__id;
     }
 
+    setSummary(summary: string) {
+        const self = this.getWritable();
+        self.__summary = summary;
+    }
+
+    getSummary(): string {
+        const self = this.getLatest();
+        return self.__summary;
+    }
+
+    setOpen(open: boolean) {
+        const self = this.getWritable();
+        self.__open = open;
+    }
+
+    getOpen(): boolean {
+        const self = this.getLatest();
+        return self.__open;
+    }
+
     static clone(node: DetailsNode): DetailsNode {
         const newNode =  new DetailsNode(node.__key);
         newNode.__id = node.__id;
         newNode.__dir = node.__dir;
+        newNode.__summary = node.__summary;
+        newNode.__open = node.__open;
         return newNode;
     }
 
@@ -49,12 +73,34 @@ export class DetailsNode extends ElementNode {
             el.setAttribute('dir', this.__dir);
         }
 
+        if (this.__open) {
+            el.setAttribute('open', 'true');
+        }
+
+        const summary = document.createElement('summary');
+        summary.textContent = this.__summary;
+        summary.setAttribute('contenteditable', 'false');
+        summary.addEventListener('click', event => {
+            event.preventDefault();
+            _editor.update(() => {
+                this.select();
+            })
+        });
+
+        el.append(summary);
+
         return el;
     }
 
     updateDOM(prevNode: DetailsNode, dom: HTMLElement) {
+
+        if (prevNode.__open !== this.__open) {
+            dom.toggleAttribute('open', this.__open);
+        }
+
         return prevNode.__id !== this.__id
-        || prevNode.__dir !== this.__dir;
+        || prevNode.__dir !== this.__dir
+        || prevNode.__summary !== this.__summary;
     }
 
     static importDOM(): DOMConversionMap|null {
@@ -71,12 +117,35 @@ export class DetailsNode extends ElementNode {
                             node.setDirection(extractDirectionFromElement(element));
                         }
 
+                        const summaryElem = Array.from(element.children).find(e => e.nodeName === 'SUMMARY');
+                        node.setSummary(summaryElem?.textContent || '');
+
                         return {node};
                     },
                     priority: 3,
                 };
             },
+            summary(node: HTMLElement): DOMConversion|null {
+                return {
+                    conversion: (element: HTMLElement): DOMConversionOutput|null => {
+                        return {node: 'ignore'};
+                    },
+                    priority: 3,
+                };
+            },
         };
+    }
+
+    exportDOM(editor: LexicalEditor): DOMExportOutput {
+        const element = this.createDOM(editor._config, editor);
+        const editable = element.querySelectorAll('[contenteditable]');
+        for (const elem of editable) {
+            elem.removeAttribute('contenteditable');
+        }
+
+        element.removeAttribute('open');
+
+        return {element};
     }
 
     exportJSON(): SerializedDetailsNode {
@@ -85,6 +154,7 @@ export class DetailsNode extends ElementNode {
             type: 'details',
             version: 1,
             id: this.__id,
+            summary: this.__summary,
         };
     }
 
@@ -103,59 +173,4 @@ export function $createDetailsNode() {
 
 export function $isDetailsNode(node: LexicalNode | null | undefined): node is DetailsNode {
     return node instanceof DetailsNode;
-}
-
-export class SummaryNode extends ElementNode {
-
-    static getType() {
-        return 'summary';
-    }
-
-    static clone(node: SummaryNode) {
-        return new SummaryNode(node.__key);
-    }
-
-    createDOM(_config: EditorConfig, _editor: LexicalEditor) {
-        return el('summary');
-    }
-
-    updateDOM(prevNode: DetailsNode, dom: HTMLElement) {
-        return false;
-    }
-
-    static importDOM(): DOMConversionMap|null {
-        return {
-            summary(node: HTMLElement): DOMConversion|null {
-                return {
-                    conversion: (element: HTMLElement): DOMConversionOutput|null => {
-                        return {
-                            node: new SummaryNode(),
-                        };
-                    },
-                    priority: 3,
-                };
-            },
-        };
-    }
-
-    exportJSON(): SerializedElementNode {
-        return {
-            ...super.exportJSON(),
-            type: 'summary',
-            version: 1,
-        };
-    }
-
-    static importJSON(serializedNode: SerializedElementNode): SummaryNode {
-        return $createSummaryNode();
-    }
-
-}
-
-export function $createSummaryNode(): SummaryNode {
-    return new SummaryNode();
-}
-
-export function $isSummaryNode(node: LexicalNode | null | undefined): node is SummaryNode {
-    return node instanceof SummaryNode;
 }

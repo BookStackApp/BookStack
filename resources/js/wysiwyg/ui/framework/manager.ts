@@ -1,7 +1,7 @@
 import {EditorFormModal, EditorFormModalDefinition} from "./modals";
 import {EditorContainerUiElement, EditorUiContext, EditorUiElement, EditorUiStateUpdate} from "./core";
 import {EditorDecorator, EditorDecoratorAdapter} from "./decorator";
-import {BaseSelection, LexicalEditor} from "lexical";
+import {$getSelection, BaseSelection, LexicalEditor} from "lexical";
 import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
@@ -231,6 +231,22 @@ export class EditorUIManager {
             });
         }
         editor.registerDecoratorListener(domDecorateListener);
+
+        // Watch for changes to update local state
+        editor.registerUpdateListener(({editorState, prevEditorState}) => {
+            // Watch for selection changes to update the UI on change
+            // Used to be done via SELECTION_CHANGE_COMMAND but this would not always emit
+            // for all selection changes, so this proved more reliable.
+            const selectionChange = !(prevEditorState._selection?.is(editorState._selection) || false);
+            if (selectionChange) {
+                editor.update(() => {
+                    const selection = $getSelection();
+                    this.triggerStateUpdate({
+                        editor, selection,
+                    });
+                });
+            }
+        });
     }
 
     protected setupEventListeners(context: EditorUiContext) {

@@ -26,6 +26,7 @@
   width: 100%;
   border-radius: 8px;
   box-shadow: vars.$bs-card;
+  min-width: 300px;
   @include mixins.lightDark(background-color, #FFF, #333)
 }
 

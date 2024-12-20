@@ -1189,6 +1189,14 @@ export class LexicalEditor {
   }
 
   /**
+   * Helper to run the update and commitUpdates methods in a single call.
+   */
+  updateAndCommit(updateFn: () => void, options?: EditorUpdateOptions): void {
+    this.update(updateFn, options);
+    this.commitUpdates();
+  }
+
+  /**
    * Focuses the editor
    * @param callbackFn - A function to run after the editor is focused.
    * @param options - A bag of options

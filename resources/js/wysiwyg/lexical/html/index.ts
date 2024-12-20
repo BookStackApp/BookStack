@@ -217,6 +217,11 @@ function $createNodesFromDOM(
   if (transformOutput !== null) {
     postTransform = transformOutput.after;
     const transformNodes = transformOutput.node;
+
+    if (transformNodes === 'ignore') {
+      return lexicalNodes;
+    }
+
     currentLexicalNode = Array.isArray(transformNodes)
       ? transformNodes[transformNodes.length - 1]
       : transformNodes;

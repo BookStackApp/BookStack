@@ -142,10 +142,15 @@ export type DOMConversionMap<T extends HTMLElement = HTMLElement> = Record<
 >;
 type NodeName = string;
 
+/**
+ * Output for a DOM conversion.
+ * Node can be set to 'ignore' to ignore the conversion and handling of the DOMNode
+ * including all its children.
+ */
 export type DOMConversionOutput = {
   after?: (childLexicalNodes: Array<LexicalNode>) => Array<LexicalNode>;
   forChild?: DOMChildConversion;
-  node: null | LexicalNode | Array<LexicalNode>;
+  node: null | LexicalNode | Array<LexicalNode> | 'ignore';
 };
 
 export type DOMExportOutputMap = Map<

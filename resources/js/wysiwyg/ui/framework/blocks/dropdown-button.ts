@@ -7,12 +7,14 @@ import {EditorMenuButton} from "./menu-button";
 export type EditorDropdownButtonOptions = {
     showOnHover?: boolean;
     direction?: 'vertical'|'horizontal';
+    showAside?: boolean;
     button: EditorBasicButtonDefinition|EditorButton;
 };
 
 const defaultOptions: EditorDropdownButtonOptions = {
     showOnHover: false,
     direction: 'horizontal',
+    showAside: undefined,
     button: {label: 'Menu'},
 }
 
@@ -65,6 +67,7 @@ export class EditorDropdownButton extends EditorContainerUiElement {
 
         handleDropdown({toggle: button, menu : menu,
             showOnHover: this.options.showOnHover,
+            showAside: typeof this.options.showAside === 'boolean' ? this.options.showAside : (this.options.direction === 'vertical'),
             onOpen : () => {
             this.open = true;
             this.getContext().manager.triggerStateUpdateForElement(this.button);

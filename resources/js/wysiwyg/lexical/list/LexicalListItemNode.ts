@@ -271,11 +271,18 @@ export class ListItemNode extends ElementNode {
   insertNewAfter(
     _: RangeSelection,
     restoreSelection = true,
-  ): ListItemNode | ParagraphNode {
+  ): ListItemNode | ParagraphNode | null {
 
     if (this.getTextContent().trim() === '' && this.isLastChild()) {
       const list = this.getParentOrThrow<ListNode>();
-      if (!$isListItemNode(list.getParent())) {
+      const parentListItem = list.getParent();
+      if ($isListItemNode(parentListItem)) {
+        // Un-nest list item if empty nested item
+        parentListItem.insertAfter(this);
+        this.selectStart();
+        return null;
+      } else {
+        // Insert empty paragraph after list if adding after last empty child
         const paragraph = $createParagraphNode();
         list.insertAfter(paragraph, restoreSelection);
         this.remove();

@@ -1,12 +1,12 @@
-import {EditorButton} from "./framework/buttons";
-import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "./framework/core";
-import {EditorFormatMenu} from "./framework/blocks/format-menu";
-import {FormatPreviewButton} from "./framework/blocks/format-preview-button";
-import {EditorDropdownButton} from "./framework/blocks/dropdown-button";
-import {EditorColorPicker} from "./framework/blocks/color-picker";
-import {EditorTableCreator} from "./framework/blocks/table-creator";
-import {EditorColorButton} from "./framework/blocks/color-button";
-import {EditorOverflowContainer} from "./framework/blocks/overflow-container";
+import {EditorButton} from "../framework/buttons";
+import {EditorContainerUiElement, EditorSimpleClassContainer, EditorUiContext, EditorUiElement} from "../framework/core";
+import {EditorFormatMenu} from "../framework/blocks/format-menu";
+import {FormatPreviewButton} from "../framework/blocks/format-preview-button";
+import {EditorDropdownButton} from "../framework/blocks/dropdown-button";
+import {EditorColorPicker} from "../framework/blocks/color-picker";
+import {EditorTableCreator} from "../framework/blocks/table-creator";
+import {EditorColorButton} from "../framework/blocks/color-button";
+import {EditorOverflowContainer} from "../framework/blocks/overflow-container";
 import {
     cellProperties, clearTableFormatting,
     copyColumn,
@@ -29,8 +29,8 @@ import {
     rowProperties,
     splitCell,
     table, tableProperties
-} from "./defaults/buttons/tables";
-import {fullscreen, redo, source, undo} from "./defaults/buttons/controls";
+} from "./buttons/tables";
+import {about, fullscreen, redo, source, undo} from "./buttons/controls";
 import {
     blockquote, dangerCallout,
     h2,
@@ -41,7 +41,7 @@ import {
     paragraph,
     successCallout,
     warningCallout
-} from "./defaults/buttons/block-formats";
+} from "./buttons/block-formats";
 import {
     bold, clearFormating, code,
     highlightColor,
@@ -50,7 +50,7 @@ import {
     superscript,
     textColor,
     underline
-} from "./defaults/buttons/inline-formats";
+} from "./buttons/inline-formats";
 import {
     alignCenter,
     alignJustify,
@@ -58,27 +58,27 @@ import {
     alignRight,
     directionLTR,
     directionRTL
-} from "./defaults/buttons/alignments";
+} from "./buttons/alignments";
 import {
     bulletList,
     indentDecrease,
     indentIncrease,
     numberList,
     taskList
-} from "./defaults/buttons/lists";
+} from "./buttons/lists";
 import {
     codeBlock,
-    details,
+    details, detailsEditLabel, detailsToggle, detailsUnwrap,
     diagram, diagramManager,
     editCodeBlock,
     horizontalRule,
     image,
     link, media,
     unlink
-} from "./defaults/buttons/objects";
-import {el} from "../utils/dom";
-import {EditorButtonWithMenu} from "./framework/blocks/button-with-menu";
-import {EditorSeparator} from "./framework/blocks/separator";
+} from "./buttons/objects";
+import {el} from "../../utils/dom";
+import {EditorButtonWithMenu} from "../framework/blocks/button-with-menu";
+import {EditorSeparator} from "../framework/blocks/separator";
 
 export function getMainEditorFullToolbar(context: EditorUiContext): EditorContainerUiElement {
 
@@ -149,8 +149,8 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         new EditorOverflowContainer(4, [
             new EditorButton(link),
 
-            new EditorDropdownButton({button: table, direction: 'vertical'}, [
-                new EditorDropdownButton({button: {label: 'Insert', format: 'long'}, showOnHover: true}, [
+            new EditorDropdownButton({button: table, direction: 'vertical', showAside: false}, [
+                new EditorDropdownButton({button: {label: 'Insert', format: 'long'}, showOnHover: true, showAside: true}, [
                     new EditorTableCreator(),
                 ]),
                 new EditorSeparator(),
@@ -201,6 +201,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         // Meta elements
         new EditorOverflowContainer(3, [
             new EditorButton(source),
+            new EditorButton(about),
             new EditorButton(fullscreen),
 
             // Test
@@ -252,5 +253,13 @@ export function getTableToolbarContent(): EditorUiElement[] {
             new EditorButton(insertColumnAfter),
             new EditorButton(deleteColumn),
         ]),
+    ];
+}
+
+export function getDetailsToolbarContent(): EditorUiElement[] {
+    return [
+        new EditorButton(detailsEditLabel),
+        new EditorButton(detailsToggle),
+        new EditorButton(detailsUnwrap),
     ];
 }
