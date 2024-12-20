@@ -163,6 +163,8 @@ return [
     'about' => 'Par redaktoru',
     'about_title' => 'Par WYSIWYG redaktoru',
     'editor_license' => 'Redaktora licence un autortiesības',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Šis redaktors ir izveidots, izmantojot :tinyLink, kas ir publicēts ar MIT licenci.',
     'editor_tiny_license_link' => 'TinyMCE autortiesības un licences detaļas var atrast šeit.',
     'save_continue' => 'Saglabāt lapu un turpināt',
