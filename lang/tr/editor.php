@@ -163,6 +163,8 @@ return [
     'about' => 'Editör hakkında',
     'about_title' => 'WYSIWYG editor hakkında',
     'editor_license' => 'Editor Lisans ve Telif Hakkı',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Bu düzenleyici, MIT lisansı altında sağlanan :tinyLink kullanılarak oluşturulmuştur.',
     'editor_tiny_license_link' => 'TinyMCE telif ve lisans bilgilerini burada bulabilirsiniz.',
     'save_continue' => 'Kaydet & Devam Et',
