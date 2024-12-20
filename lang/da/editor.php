@@ -163,6 +163,8 @@ return [
     'about' => 'About the editor',
     'about_title' => 'About the WYSIWYG Editor',
     'editor_license' => 'Editor License & Copyright',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'This editor is built using :tinyLink which is provided under the MIT license.',
     'editor_tiny_license_link' => 'The copyright and license details of TinyMCE can be found here.',
     'save_continue' => 'Gem og fortsæt',
