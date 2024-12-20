@@ -163,6 +163,8 @@ return [
     'about' => '關於編輯器',
     'about_title' => '關於所見即所得（WYSIWYG）編輯器',
     'editor_license' => '編輯器許可證與版權信息',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => '此編輯器是用 :tinyLink 構建的，基於 MIT 許可證。',
     'editor_tiny_license_link' => 'TinyMCE 的版權和許可證詳細信息可以在這裡找到。',
     'save_continue' => '保存頁面並繼續',
