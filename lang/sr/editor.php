@@ -163,6 +163,8 @@ return [
     'about' => 'О уређивачу',
     'about_title' => 'О уређивачу WYSIWYG',
     'editor_license' => 'Уредничка лиценца и ауторска права',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Овај уређивач је направљен помоћу :tinyLink који је обезбеђен под МИТ лиценцом.',
     'editor_tiny_license_link' => 'Детаље о ауторским правима и лиценци за ТиниМЦЕ можете пронаћи овде.',
     'save_continue' => 'Сачувај страницу и настави',
