@@ -163,6 +163,8 @@ return [
     'about' => 'Σχετικά',
     'about_title' => 'Σχετικά με τον επεξεργαστή WYSIWYG',
     'editor_license' => 'Άδεια εκδότη και πνευματικά δικαιώματα',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Αυτός ο επεξεργαστής έχει δημιουργηθεί χρησιμοποιώντας :tinyLink που παρέχεται με την άδεια MIT.',
     'editor_tiny_license_link' => 'Τα πνευματικά δικαιώματα και τα στοιχεία άδειας χρήσης του TinyMCE μπορείτε να τα βρείτε εδώ.',
     'save_continue' => 'Αποθήκευση σελίδας & Συνέχεια',
