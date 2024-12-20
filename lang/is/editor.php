@@ -163,6 +163,8 @@ return [
     'about' => 'Um ritilinn',
     'about_title' => 'Um WYSIWYG ritilinn',
     'editor_license' => 'Leyfi og höfundaréttur ritilsins',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Þessi ritill er smíðaður með :tinyLink sem er undir MIT leyfi.',
     'editor_tiny_license_link' => 'Höfundarétt og leyfi TinyMCE má finna hér.',
     'save_continue' => 'Vista síðu og halda áfram',
