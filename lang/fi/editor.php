@@ -163,6 +163,8 @@ return [
     'about' => 'Tietoja editorista',
     'about_title' => 'Tietoja WYSIWYG-editorista',
     'editor_license' => 'Editorin lisenssi ja tekijänoikeus',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Tämä editori on rakennettu käyttäen sovellusta :tinyLink, joka on MIT-lisenssin alainen.',
     'editor_tiny_license_link' => 'TinyMCE-editorin tekijänoikeus- ja lisenssitiedot löytyvät täältä.',
     'save_continue' => 'Tallenna sivu ja jatka',
