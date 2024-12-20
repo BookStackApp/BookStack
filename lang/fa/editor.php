@@ -163,6 +163,8 @@ return [
     'about' => 'درباره ویرایشگر',
     'about_title' => 'درباره ویرایشگر WYSIWYG',
     'editor_license' => 'مجوز و حق کپی رایت ویرایشگر',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'این ویرایشگر توسط :tinyLink و تحت مجوز MIT ساخته شده است.',
     'editor_tiny_license_link' => 'جزئیات کپی رایت و مجوز TinyMCE را می توانید در اینجا پیدا کنید.',
     'save_continue' => 'ذخیره صفحه و ادامه',
