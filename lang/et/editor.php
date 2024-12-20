@@ -163,6 +163,8 @@ return [
     'about' => 'Redaktori info',
     'about_title' => 'Info WYSIWYG redaktori kohta',
     'editor_license' => 'Redaktori litsents ja autoriõigused',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'See redaktor on loodud :tinyLink abil, mis on saadaval MIT litsentsi alusel.',
     'editor_tiny_license_link' => 'TinyMCE autoriõigused ja litsents on saadaval siin.',
     'save_continue' => 'Salvesta leht ja jätka',
