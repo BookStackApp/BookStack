@@ -198,7 +198,7 @@ class ZipExportTest extends TestCase
 
     public function test_book_export()
     {
-        $book = $this->entities->book();
+        $book = $this->entities->bookHasChaptersAndPages();
         $book->tags()->saveMany(Tag::factory()->count(2)->make());
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
@@ -249,6 +249,35 @@ class ZipExportTest extends TestCase
         $this->assertCount(2, $chapterData['tags']);
         $this->assertEquals($chapter->priority, $chapterData['priority']);
         $this->assertCount($chapter->pages()->count(), $chapterData['pages']);
+    }
+
+    public function test_draft_pages_are_not_included()
+    {
+        $editor = $this->users->editor();
+        $entities = $this->entities->createChainBelongingToUser($editor);
+        $book = $entities['book'];
+        $page = $entities['page'];
+        $chapter = $entities['chapter'];
+        $book->tags()->saveMany(Tag::factory()->count(2)->make());
+
+        $page->created_by = $editor->id;
+        $page->draft = true;
+        $page->save();
+
+        $zipResp = $this->actingAs($editor)->get($book->getUrl("/export/zip"));
+        $zip = $this->extractZipResponse($zipResp);
+        $this->assertCount(0, $zip->data['book']['chapters'][0]['pages'] ?? ['cat']);
+
+        $zipResp = $this->actingAs($editor)->get($chapter->getUrl("/export/zip"));
+        $zip = $this->extractZipResponse($zipResp);
+        $this->assertCount(0, $zip->data['chapter']['pages'] ?? ['cat']);
+
+        $page->chapter_id = 0;
+        $page->save();
+
+        $zipResp = $this->actingAs($editor)->get($book->getUrl("/export/zip"));
+        $zip = $this->extractZipResponse($zipResp);
+        $this->assertCount(0, $zip->data['book']['pages'] ?? ['cat']);
     }
 
 

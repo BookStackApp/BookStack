@@ -70,7 +70,7 @@ class ZipExportBook extends ZipExportModel
         foreach ($children as $child) {
             if ($child instanceof Chapter) {
                 $chapters[] = $child;
-            } else if ($child instanceof Page) {
+            } else if ($child instanceof Page && !$child->draft) {
                 $pages[] = $child;
             }
         }
