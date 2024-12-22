@@ -77,7 +77,7 @@ return [
     'maintenance_action_run' => '유지 관리 작업 실행',
 
     // Webhooks
-    'webhook_create' => '웹 훅 만들기',
+    'webhook_create' => '웹 훅 생성',
     'webhook_create_notification' => '웹 훅 생성함',
     'webhook_update' => '웹 훅 수정하기',
     'webhook_update_notification' => '웹훅 설정이 수정되었습니다.',
