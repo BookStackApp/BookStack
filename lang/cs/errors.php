@@ -106,8 +106,8 @@ return [
     'back_soon' => 'Brzy bude opět v provozu.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
+    'import_zip_cant_read' => 'Nelze načíst ZIP soubor.',
+    'import_zip_cant_decode_data' => 'Nelze najít a dekódovat data.json v archivu ZIP.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
     'import_validation_failed' => 'Import ZIP failed to validate with errors:',
     'import_zip_failed_notification' => 'Failed to import ZIP file.',
