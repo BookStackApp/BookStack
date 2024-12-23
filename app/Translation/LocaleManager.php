@@ -21,6 +21,7 @@ class LocaleManager
     protected array $localeMap = [
         'ar'          => 'ar',
         'bg'          => 'bg_BG',
+        'bn'          => 'bn_BD',
         'bs'          => 'bs_BA',
         'ca'          => 'ca',
         'cs'          => 'cs_CZ',
@@ -41,6 +42,7 @@ class LocaleManager
         'hr'          => 'hr_HR',
         'hu'          => 'hu_HU',
         'id'          => 'id_ID',
+        'is'          => 'is_IS',
         'it'          => 'it_IT',
         'ja'          => 'ja',
         'ka'          => 'ka_GE',
