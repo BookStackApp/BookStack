@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook eliminado correctamente',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'importación creada',
+    'import_create_notification' => 'Importación cargada correctamente',
+    'import_run' => 'importación actualizada',
+    'import_run_notification' => 'Contenido importado correctamente',
+    'import_delete' => 'importación borrada',
+    'import_delete_notification' => 'Importación borrada correctamente',
 
     // Users
     'user_create' => 'usuario creado',
