@@ -94,7 +94,7 @@ return [
     'empty_comment' => '빈 댓글은 등록할 수 없습니다.',
 
     // Error pages
-    '404_page_not_found' => '404 Not Found',
+    '404_page_not_found' => '페이지를 찾을 수 없습니다.',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
     'sorry_page_not_found_permission_warning' => '문서를 볼 권한이 없습니다.',
     'image_not_found' => '이미지를 찾을 수 없습니다',
