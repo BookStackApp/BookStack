@@ -163,6 +163,8 @@ return [
     'about' => 'O editore',
     'about_title' => 'O WYSIWYG Editore',
     'editor_license' => 'Licencia editora a autorské práva',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Tento editor je vytvorený pomocou :tinyLink, ktorý je poskytovaný pod licenciou MIT.',
     'editor_tiny_license_link' => 'Podrobnosti o autorských právach a licenciách TinyMCE nájdete tu.',
     'save_continue' => 'Uložiť a pokračovať',

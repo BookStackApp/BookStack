@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Εφαρμογή για κινητό',
     'mfa_option_totp_desc' => 'Για να χρησιμοποιήσετε τον έλεγχο ταυτότητας πολλαπλών παραγόντων, θα χρειαστείτε μια εφαρμογή για κινητά που υποστηρίζει TOTP, όπως το Google Authenticator, το Authy ή το Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Εφεδρικοί κωδικοί',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Δημιουργεί ένα σύνολο εφεδρικών κωδικών μίας χρήσης τους οποίους θα εισάγετε κατά τη σύνδεση σας, για να πιστοποιήσετε την ταυτότητά σας. Φροντίστε να τους αποθηκεύσετε σε ασφαλές σημείο.',
     'mfa_gen_confirm_and_enable' => 'Επιβεβαίωση και ενεργοποίηση',
     'mfa_gen_backup_codes_title' => 'Ρύθμιση εφεδρικών κωδικών',
     'mfa_gen_backup_codes_desc' => 'Αποθηκεύστε την παρακάτω λίστα κωδικών σε ασφαλές μέρος. Κατά την πρόσβαση στο σύστημα, θα μπορείτε να χρησιμοποιήσετε έναν από τους κωδικούς ως δεύτερο μηχανισμό ελέγχου ταυτότητας.',

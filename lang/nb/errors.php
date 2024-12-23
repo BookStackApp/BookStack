@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan ikke slette den eneste administratoren',
     'users_cannot_delete_guest' => 'Du kan ikke slette gjestebrukeren (Du kan deaktivere offentlig visning istede)',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Kunne ikke opprette bruker fordi invitasjons e-post ikke kunne sendes',
 
     // Roles
     'role_cannot_be_edited' => 'Denne rollen kan ikke endres',
@@ -104,6 +104,18 @@ return [
     'error_occurred' => 'En feil oppsto',
     'app_down' => ':appName er nede for øyeblikket',
     'back_soon' => 'Den vil snart komme tilbake.',
+
+    // Import
+    'import_zip_cant_read' => 'Kunne ikke lese ZIP-filen.',
+    'import_zip_cant_decode_data' => 'Kunne ikke finne og dekode ZIP data.json innhold.',
+    'import_zip_no_data' => 'ZIP-fildata har ingen forventet bok, kapittel eller sideinnhold.',
+    'import_validation_failed' => 'Import av ZIP feilet i å validere med feil:',
+    'import_zip_failed_notification' => 'Kunne ikke importere ZIP-fil.',
+    'import_perms_books' => 'Du mangler nødvendige tillatelser for å lage bøker.',
+    'import_perms_chapters' => 'Du mangler de nødvendige tillatelsene for å opprette kapittel.',
+    'import_perms_pages' => 'Du mangler nødvendige tillatelser for å opprette sider.',
+    'import_perms_images' => 'Du mangler de nødvendige tillatelsene for å opprette bilder.',
+    'import_perms_attachments' => 'Du mangler nødvendig tillatelse for å opprette vedlegg.',
 
     // API errors
     'api_no_authorization_found' => 'Ingen autorisasjonstoken ble funnet på forespørselen',

@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Достъп до API на системата',
     'role_manage_settings' => 'Управление на настройките на приложението',
     'role_export_content' => 'Експортирай съдържанието',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Настройки за достъп до активи',

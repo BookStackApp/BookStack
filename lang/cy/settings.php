@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Mynediad i Ryngwyneb Rhaglennu Cymwysiadau (API) system',
     'role_manage_settings' => 'Rheoli gosodiadau apiau',
     'role_export_content' => 'Cynnwys allforio',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Newid golygydd tudalen',
     'role_notifications' => 'Derbyn a rheoli hysbysiadau',
     'role_asset' => 'Caniatâd Asedau',

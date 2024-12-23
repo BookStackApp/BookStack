@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'システムのAPIへのアクセス',
     'role_manage_settings' => 'アプリケーション設定の管理',
     'role_export_content' => 'コンテンツのエクスポート',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'ページエディタの変更',
     'role_notifications' => '通知の受信と管理',
     'role_asset' => 'アセット権限',

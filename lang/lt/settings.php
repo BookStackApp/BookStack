@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Gauti prieigą prie sistemos API',
     'role_manage_settings' => 'Tvarkyti programos nustatymus',
     'role_export_content' => 'Export content',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Nuosavybės leidimai',

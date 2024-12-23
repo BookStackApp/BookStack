@@ -14,7 +14,7 @@ return [
     'page_delete_notification'    => 'Η σελίδα διαγράφηκε επιτυχώς',
     'page_restore'                => 'αποκατεστημένη σελίδα',
     'page_restore_notification'   => 'Η σελίδα αποκαταστάθηκε με επιτυχία',
-    'page_move'                   => 'Η σελίδα μετακινήθηκε',
+    'page_move'                   => 'σελίδα που μετακινήθηκε',
     'page_move_notification'      => 'Η σελίδα μετακινήθηκε με επιτυχία',
 
     // Chapters
@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" προστέθηκε στα αγαπημένα σας',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Οι προτιμήσεις παρακολούθησης ενημερώθηκαν επιτυχώς',
 
     // Auth
     'auth_login' => 'συνδεδεμένος',
@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'διαγραμμένο webhook',
     'webhook_delete_notification' => 'Το Webhook διαγράφηκε επιτυχώς',
 
+    // Imports
+    'import_create' => 'δημιουργημένη εισαγωγή',
+    'import_create_notification' => 'Το εισαγόμενο αρχείο μεταφορτώθηκε επιτυχώς',
+    'import_run' => 'ενημερωμένη εισαγωγή',
+    'import_run_notification' => 'Το περιεχόμενο εισήχθη επιτυχώς',
+    'import_delete' => 'διαγραμμένη εισαγωγή',
+    'import_delete_notification' => 'Η εισαγωγή διαγράφηκε επιτυχώς',
+
     // Users
     'user_create' => 'δημιουργημένος χρήστης',
     'user_create_notification' => 'Ο χρήστης δημιουργήθηκε με επιτυχία',
@@ -105,19 +113,19 @@ return [
     'role_create_notification' => 'Ο Ρόλος δημιουργήθηκε με επιτυχία',
     'role_update' => 'Ενημέρωση ρόλου',
     'role_update_notification' => 'Ο Ρόλος ενημερώθηκε με επιτυχία',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'διαγραμμένος ρόλος',
     'role_delete_notification' => 'Ο Ρόλος διαγράφηκε επιτυχώς',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'αδειασμένος κάδος ανακύκλωσης',
+    'recycle_bin_restore' => 'αποκαταστάθηκε από τον κάδο ανακύκλωσης',
+    'recycle_bin_destroy' => 'αφαιρέθηκε από τον κάδο ανακύκλωσης',
 
     // Comments
     'commented_on'                => 'σχολίασε',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'προστέθηκε σχόλιο',
+    'comment_update'              => 'ενημερώθηκε σχόλιο',
+    'comment_delete'              => 'διαγράφηκε σχόλιο',
 
     // Other
     'permissions_update'          => 'ενημερωμένα δικαιώματα',

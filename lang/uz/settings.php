@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Kirish tizimi API',
     'role_manage_settings' => 'Ilova sozlamalarini boshqaring',
     'role_export_content' => 'Kontentni eksport qilish',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Sahifa muharririni o\'zgartirish',
     'role_notifications' => 'Bildirishnomalarni qabul qilish va boshqarish',
     'role_asset' => 'Obyektga ruxsatlar',

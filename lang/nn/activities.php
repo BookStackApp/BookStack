@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'sletta webhook',
     'webhook_delete_notification' => 'Webhook vart sletta',
 
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
+
     // Users
     'user_create' => 'oppretta brukar',
     'user_create_notification' => 'Brukar vart oppretta',

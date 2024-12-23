@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'ha suprimit el webhook',
     'webhook_delete_notification' => 'S’ha suprimit el webhook',
 
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
+
     // Users
     'user_create' => 'ha creat l’usuari',
     'user_create_notification' => 'S’ha creat l’usuari',

@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Tilgå system-API',
     'role_manage_settings' => 'Administrer app-indstillinger',
     'role_export_content' => 'Eksporter indhold',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Skift side editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Tilladelser for medier og "assets"',

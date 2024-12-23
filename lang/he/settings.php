@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'גש ל-API המערכת',
     'role_manage_settings' => 'ניהול הגדרות יישום',
     'role_export_content' => 'Export content',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'הרשאות משאבים',

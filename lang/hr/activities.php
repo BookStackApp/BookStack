@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'web- dojavnik izbrisan',
     'webhook_delete_notification' => 'Web-dojavnik je uspješno izbrisan',
 
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
+
     // Users
     'user_create' => 'kreirani korisnik',
     'user_create_notification' => 'Korisnik je uspješno kreiran',

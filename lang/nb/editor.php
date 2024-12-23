@@ -163,6 +163,8 @@ return [
     'about' => 'Om tekstredigeringsprogrammet',
     'about_title' => 'Om HDSEHDF-tekstredigeringsprogrammet',
     'editor_license' => 'Tekstbehandlerlisens og opphavsrett',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Denne tekstredigereren er laget med :tinyLink som er lisensiert under MIT.',
     'editor_tiny_license_link' => 'Informasjon om opphavsrett og lisens for TinyMCE finnes her.',
     'save_continue' => 'Lagre side og fortsett',

@@ -77,12 +77,20 @@ return [
     'maintenance_action_run' => '유지 관리 작업 실행',
 
     // Webhooks
-    'webhook_create' => '웹 훅 만들기',
+    'webhook_create' => '웹 훅 생성',
     'webhook_create_notification' => '웹 훅 생성함',
     'webhook_update' => '웹 훅 수정하기',
     'webhook_update_notification' => '웹훅 설정이 수정되었습니다.',
     'webhook_delete' => '웹 훅 지우기',
     'webhook_delete_notification' => '웹 훅 삭제함',
+
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
 
     // Users
     'user_create' => '사용자 생성',

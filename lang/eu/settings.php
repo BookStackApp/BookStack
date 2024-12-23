@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Sistemako APIra sarrera',
     'role_manage_settings' => 'Kudeatu aplikazio ezarpenak',
     'role_export_content' => 'Exportatu edukia',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Fitxategi baimenak',

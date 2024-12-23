@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'API prístupového systému',
     'role_manage_settings' => 'Spravovať nastavenia aplikácie',
     'role_export_content' => 'Exportovať obsah',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Zmeniť editor stránky',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Oprávnenia majetku',

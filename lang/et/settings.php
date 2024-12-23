@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Süsteemi API ligipääs',
     'role_manage_settings' => 'Rakenduse seadete haldamine',
     'role_export_content' => 'Sisu eksport',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Lehe redaktori muutmine',
     'role_notifications' => 'Võta vastu ja halda teavitusi',
     'role_asset' => 'Sisu õigused',

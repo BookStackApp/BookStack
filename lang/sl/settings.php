@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'API za dostop do sistema',
     'role_manage_settings' => 'Nastavitve za upravljanje',
     'role_export_content' => 'Export content',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Sistemska dovoljenja',

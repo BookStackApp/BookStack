@@ -163,6 +163,8 @@ return [
     'about' => 'O edytorze',
     'about_title' => 'O edytorze WYSIWYG',
     'editor_license' => 'Licencja edytora i prawa autorskie',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Ten edytor jest zbudowany przy użyciu :tinyLink, który jest udostępniany na licencji MIT.',
     'editor_tiny_license_link' => 'Szczegóły dotyczące praw autorskich i licencji TinyMCE można znaleźć tutaj.',
     'save_continue' => 'Zapisz stronę i kontynuuj',

@@ -163,6 +163,8 @@ return [
     'about' => 'Quant a l’Editor',
     'about_title' => 'Quant a l’Editor WYSIWYG',
     'editor_license' => 'Llicència i copyright de l’Editor',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Aquest editor s’ha creat amb :tinyLink que es proporciona amb la llicència MIT.',
     'editor_tiny_license_link' => 'Detalls de la llicència i el copyright de TinyMCE.',
     'save_continue' => 'Desa la pàgina i continua',

@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'الوصول إلى واجهة برمجة تطبيقات النظام API',
     'role_manage_settings' => 'إدارة إعدادات التطبيق',
     'role_export_content' => 'Export content',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'أذونات الأصول',

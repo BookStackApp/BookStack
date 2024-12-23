@@ -163,6 +163,8 @@ return [
     'about' => 'Om redigeraren',
     'about_title' => 'Om WYSIWYG-redigeraren',
     'editor_license' => 'Licens och upphovsrätt för redigerare',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Denna redigerare är byggd med :tinyLink som tillhandahålls under MIT licensen.',
     'editor_tiny_license_link' => 'Upphovsrätten och licensuppgifterna för TinyMCE hittar du här.',
     'save_continue' => 'Spara sida & fortsätt',

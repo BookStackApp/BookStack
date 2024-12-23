@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'حذف وب هوک',
     'webhook_delete_notification' => 'وب هوک با موفقیت حذف شد',
 
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
+
     // Users
     'user_create' => 'کاربر ایجاد شده',
     'user_create_notification' => 'کاربر با موفقیت به ایجاد شد',

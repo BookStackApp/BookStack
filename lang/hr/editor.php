@@ -163,6 +163,8 @@ return [
     'about' => 'O Editoru',
     'about_title' => 'O WYSIWYG Editoru',
     'editor_license' => 'Licenca i autorsko pravo uređivača',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Ovaj uređivač je izrađen pomoću: tinyLink koji je dostupan pod MIT licencom.',
     'editor_tiny_license_link' => 'Detalji o autorskim pravima i licenci za TinyMCE mogu se pronaći ovdje.',
     'save_continue' => 'Spremi Stranicu i Nastavi',

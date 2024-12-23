@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'Webhook 已删除',
     'webhook_delete_notification' => 'Webhook 删除成功',
 
+    // Imports
+    'import_create' => 'created import',
+    'import_create_notification' => 'Import successfully uploaded',
+    'import_run' => 'updated import',
+    'import_run_notification' => 'Content successfully imported',
+    'import_delete' => 'deleted import',
+    'import_delete_notification' => 'Import successfully deleted',
+
     // Users
     'user_create' => '用户已创建',
     'user_create_notification' => '用户创建成功',

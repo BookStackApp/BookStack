@@ -162,6 +162,7 @@ return [
     'role_access_api' => '시스템 접근 API',
     'role_manage_settings' => '사이트 설정 관리',
     'role_export_content' => '항목 내보내기',
+    'role_import_content' => 'Import content',
     'role_editor_change' => '페이지 편집기 변경',
     'role_notifications' => '알림 수신 및 관리',
     'role_asset' => '권한 항목',

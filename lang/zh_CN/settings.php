@@ -162,6 +162,7 @@ return [
     'role_access_api' => '访问系统 API',
     'role_manage_settings' => '管理 App 设置',
     'role_export_content' => '导出内容',
+    'role_import_content' => 'Import content',
     'role_editor_change' => '更改页面编辑器',
     'role_notifications' => '管理和接收通知',
     'role_asset' => '资源许可',

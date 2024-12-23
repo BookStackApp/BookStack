@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Pääsy järjestelmän ohjelmointirajapintaan',
     'role_manage_settings' => 'Hallinnoi sivuston asetuksia',
     'role_export_content' => 'Vie sisältöjä',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Vaihda sivun editoria',
     'role_notifications' => 'Vastaanota ja hallinnoi ilmoituksia',
     'role_asset' => 'Sisältöjen oikeudet',

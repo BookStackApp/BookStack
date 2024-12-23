@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Accés a l’API del sistema',
     'role_manage_settings' => 'Gestió de la configuració de l’aplicació',
     'role_export_content' => 'Exportació de contingut',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Canvi de l’editor de pàgina',
     'role_notifications' => 'Recepció i gestió de notificacions',
     'role_asset' => 'Permisos de recursos',

@@ -163,6 +163,8 @@ return [
     'about' => '이 편집기에 대하여',
     'about_title' => 'WYSIWYG 편집기에 대하여',
     'editor_license' => '편집기 라이선스 & 저작권',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => '전체 라이센스 세부 사항은 여기에서 확인할 수 있습니다.',
     'editor_tiny_license' => '이 편집기는 MIT 라이선스에 따라 제공되는 :tinyLink를 사용하여 제작되었습니다.',
     'editor_tiny_license_link' => 'TinyMCE의 저작권 및 라이선스 세부 정보는 여기에서 확인할 수 있습니다.',
     'save_continue' => '저장하고 계속하기',

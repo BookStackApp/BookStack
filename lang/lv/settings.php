@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Piekļūt sistēmas API',
     'role_manage_settings' => 'Pārvaldīt iestatījumus',
     'role_export_content' => 'Eksportēt saturu',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Mainīt lapu redaktoru',
     'role_notifications' => 'Saņemt un pārvaldīt paziņojumus',
     'role_asset' => 'Resursa piekļuves tiesības',

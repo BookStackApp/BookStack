@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'دسترسی به API سیستم',
     'role_manage_settings' => 'تنظیمات برنامه را مدیریت کنید',
     'role_export_content' => 'صادرات محتوا',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'تغییر ویرایشگر صفحه',
     'role_notifications' => 'دریافت و مدیریت اعلان‌ها',
     'role_asset' => 'مجوزهای دارایی',

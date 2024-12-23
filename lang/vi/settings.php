@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Truy cập đến API hệ thống',
     'role_manage_settings' => 'Quản lý cài đặt của ứng dụng',
     'role_export_content' => 'Export content',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Change page editor',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Quyền tài sản (asset)',

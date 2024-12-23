@@ -85,6 +85,14 @@ return [
     'webhook_delete' => 'slettet webhook',
     'webhook_delete_notification' => 'Webhook ble slettet',
 
+    // Imports
+    'import_create' => 'import opprettet',
+    'import_create_notification' => 'Importen ble opplastet',
+    'import_run' => 'oppdatert import',
+    'import_run_notification' => 'Innhold importert',
+    'import_delete' => 'import slettet',
+    'import_delete_notification' => 'Importering ble slettet',
+
     // Users
     'user_create' => 'opprettet bruker',
     'user_create_notification' => 'Bruker ble opprettet',

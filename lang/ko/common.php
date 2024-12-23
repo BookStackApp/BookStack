@@ -71,7 +71,7 @@ return [
     'back_to_top' => '맨 위로',
     'skip_to_main_content' => '메인 항목으로',
     'toggle_details' => '내용 보기',
-    'toggle_thumbnails' => '섬네일 보기',
+    'toggle_thumbnails' => '썸네일 보기',
     'details' => '정보',
     'grid_view' => '격자 보기',
     'list_view' => '목록 보기',
@@ -101,7 +101,7 @@ return [
 
     // Email Content
     'email_action_help' => ':actionText를 클릭할 수 없을 때는 웹 브라우저에서 다음 링크로 접속할 수 있습니다.',
-    'email_rights' => 'All rights reserved.',
+    'email_rights' => '모든 권리는 보호됩니다.',
 
     // Footer Link Options
     // Not directly used but available for convenience to users.

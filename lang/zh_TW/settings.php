@@ -163,6 +163,7 @@ return [
     'role_access_api' => '存取系統 API',
     'role_manage_settings' => '管理應用程式設定',
     'role_export_content' => '匯出內容',
+    'role_import_content' => '匯入內容',
     'role_editor_change' => '重設頁面編輯器',
     'role_notifications' => '管理和接收通知',
     'role_asset' => '資源權限',

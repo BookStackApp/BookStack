@@ -105,6 +105,11 @@ return [
     'url'                  => 'El atributo :attribute tiene un formato inválido.',
     'uploaded'             => 'El archivo no se pudo subir. Puede ser que el servidor no acepte archivos de este tamaño.',
 
+    'zip_file' => 'El :attribute necesita hacer referencia a un archivo dentro del ZIP.',
+    'zip_file_mime' => 'El :attribute necesita hacer referencia a un archivo de tipo :validTypes, encontrado :foundType.',
+    'zip_model_expected' => 'Se esperaba un objeto de datos, pero se encontró ":type".',
+    'zip_unique' => 'El :attribute debe ser único para el tipo de objeto dentro del ZIP.',
+
     // Custom validation lines
     'custom' => [
         'password-confirm' => [

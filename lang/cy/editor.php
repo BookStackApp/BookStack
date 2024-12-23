@@ -163,6 +163,8 @@ return [
     'about' => 'Ynglŷn â\'r golygydd',
     'about_title' => 'Ynglŷn â\'r Golygydd WYSIWYG',
     'editor_license' => 'Trwydded a Hawlfraint Golygydd',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Mae\'r golygydd hwn wedi\'i adeiladu gan ddefnyddio :tinyLink sy\'n cael ei ddarparu o dan y drwydded MIT.',
     'editor_tiny_license_link' => 'Gellir dod o hyd i fanylion hawlfraint a thrwydded TinyMCE yma.',
     'save_continue' => 'Cadw Tudalen a Pharhau',

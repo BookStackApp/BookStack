@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Sistem programlama arayüzüne (API) eriş',
     'role_manage_settings' => 'Uygulama ayarlarını yönet',
     'role_export_content' => 'İçeriği dışa aktar',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Yazı editörünü değiştir',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Varlık Yetkileri',

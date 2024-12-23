@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Systemtilgang API',
     'role_manage_settings' => 'Behandle applikasjonsinnstillinger',
     'role_export_content' => 'Eksporter innhold',
+    'role_import_content' => 'Import innhold',
     'role_editor_change' => 'Endre sideredigering',
     'role_notifications' => 'Motta og administrere varslinger',
     'role_asset' => 'Eiendomstillatelser',

@@ -163,6 +163,7 @@ return [
     'role_access_api' => 'API de sistema de acceso',
     'role_manage_settings' => 'Gestionar ajustes de activos',
     'role_export_content' => 'Exportar contenido',
+    'role_import_content' => 'Importar contenido',
     'role_editor_change' => 'Cambiar editor de página',
     'role_notifications' => 'Recibir y gestionar notificaciones',
     'role_asset' => 'Permisos de activos',

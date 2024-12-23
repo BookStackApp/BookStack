@@ -163,6 +163,8 @@ return [
     'about' => 'За редактора',
     'about_title' => 'Относно визуалния редактор',
     'editor_license' => 'Лиценз, авторски и сходни права на редактора',
+    'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
+    'editor_lexical_license_link' => 'Full license details can be found here.',
     'editor_tiny_license' => 'Този редактор е изграден посредством :tinyLink, което е предоставен под лиценз MIT.',
     'editor_tiny_license_link' => 'Авторското и сходните му права, както и лицензът на TinyMCE, могат да бъдат намерени тук.',
     'save_continue' => 'Запази страницата и продължи',

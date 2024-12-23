@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Åtkomst till systemets API',
     'role_manage_settings' => 'Hantera appinställningar',
     'role_export_content' => 'Exportera innehåll',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Ändra sidredigerare',
     'role_notifications' => 'Receive & manage notifications',
     'role_asset' => 'Tillgång till innehåll',

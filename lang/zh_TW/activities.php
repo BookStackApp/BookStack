@@ -84,6 +84,14 @@ return [
     'webhook_delete' => 'webhook 已刪除',
     'webhook_delete_notification' => 'Webhook 已刪除成功',
 
+    // Imports
+    'import_create' => '已建立匯入',
+    'import_create_notification' => '成功上傳匯入',
+    'import_run' => '已更新匯入',
+    'import_run_notification' => '成功匯入內容',
+    'import_delete' => '已刪除匯入',
+    'import_delete_notification' => '匯入刪除成功',
+
     // Users
     'user_create' => '建立使用者',
     'user_create_notification' => '使用者已成功建立。',

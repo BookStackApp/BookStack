@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => '您不能刪除唯一的管理員帳號',
     'users_cannot_delete_guest' => '您不能刪除訪客使用者',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => '由於寄送邀請電子郵件失敗，因此無法建立使用者',
 
     // Roles
     'role_cannot_be_edited' => '無法編輯這個角色',
@@ -104,6 +104,18 @@ return [
     'error_occurred' => '發生錯誤',
     'app_down' => ':appName 離線中',
     'back_soon' => '它應該很快就會重新上線。',
+
+    // Import
+    'import_zip_cant_read' => '無法讀取 ZIP 檔案。',
+    'import_zip_cant_decode_data' => '無法尋找並解碼 ZIP data.json 內容。',
+    'import_zip_no_data' => 'ZIP 檔案資料沒有預期的書本、章節或頁面內容。',
+    'import_validation_failed' => '匯入 ZIP 驗證失敗，發生錯誤：',
+    'import_zip_failed_notification' => '匯入 ZIP 檔案失敗。',
+    'import_perms_books' => '您缺乏建立書本所需的權限。',
+    'import_perms_chapters' => '您缺乏建立章節所需的權限。',
+    'import_perms_pages' => '您缺乏建立頁面所需的權限。',
+    'import_perms_images' => '您缺乏建立影像所需的權限。',
+    'import_perms_attachments' => '您缺乏建立附件所需的權限。',
 
     // API errors
     'api_no_authorization_found' => '在請求上找不到授權權杖',

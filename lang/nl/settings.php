@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Ga naar systeem API',
     'role_manage_settings' => 'Beheer app instellingen',
     'role_export_content' => 'Exporteer inhoud',
+    'role_import_content' => 'Importeer inhoud',
     'role_editor_change' => 'Wijzig pagina bewerker',
     'role_notifications' => 'Meldingen ontvangen & beheren',
     'role_asset' => 'Asset Machtigingen',

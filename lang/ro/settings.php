@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Accesează API sistem',
     'role_manage_settings' => 'Gestionează setările aplicației',
     'role_export_content' => 'Exportă conținut',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Schimbă editorul de pagină',
     'role_notifications' => 'Primire și gestionare notificări',
     'role_asset' => 'Permisiuni active',

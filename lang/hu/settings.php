@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Hozzáférés a rendszer API-hoz',
     'role_manage_settings' => 'Alkalmazás beállításainak kezelése',
     'role_export_content' => 'Tartalom exportálása',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Oldalszerkesztő módosítása',
     'role_notifications' => 'Értesítések fogadása és kezelése',
     'role_asset' => 'Eszköz jogosultságok',

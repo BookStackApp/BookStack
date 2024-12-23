@@ -162,6 +162,7 @@ return [
     'role_access_api' => 'Доступ до системного API',
     'role_manage_settings' => 'Керування налаштуваннями програми',
     'role_export_content' => 'Вміст експорту',
+    'role_import_content' => 'Import content',
     'role_editor_change' => 'Змінити редактор сторінок',
     'role_notifications' => 'Отримувати та керувати повідомленнями',
     'role_asset' => 'Дозволи',

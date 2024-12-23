@@ -105,6 +105,11 @@ return [
     'url'                  => ':attribute 格式無效。',
     'uploaded'             => '無法上傳文檔案， 伺服器可能不接受此大小的檔案。',
 
+    'zip_file' => ':attribute 需要參照 ZIP 中的檔案。',
+    'zip_file_mime' => ':attribute 需要參照類型為 :validTypes 的檔案，找到 :foundType。',
+    'zip_model_expected' => '預期為資料物件，但找到「:type」。',
+    'zip_unique' => '對於 ZIP 中的物件類型，:attribute 必須是唯一的。',
+
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
