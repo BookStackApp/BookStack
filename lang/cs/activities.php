@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook byl úspěšně odstraněn',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'vytvořil/a import',
+    'import_create_notification' => 'Import byl úspěšně nahrán',
+    'import_run' => 'aktualizoval/a import',
+    'import_run_notification' => 'Obsah byl úspěšně importován',
+    'import_delete' => 'odstranil/a import',
+    'import_delete_notification' => 'Import byl úspěšně odstraněn',
 
     // Users
     'user_create' => 'vytvořil uživatele',
