@@ -105,10 +105,10 @@ return [
     'url'                  => ':attributeのフォーマットは不正です。',
     'uploaded'             => 'ファイルをアップロードできませんでした。サーバーがこのサイズのファイルを受け付けていない可能性があります。',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute はZIP 内のファイルを参照する必要があります。',
+    'zip_file_mime' => ':attribute は種別 :validType のファイルを参照する必要がありますが、種別 :foundType となっています。',
+    'zip_model_expected' => 'データオブジェクトが期待されますが、":type" が見つかりました。',
+    'zip_unique' => 'ZIP内のオブジェクトタイプに :attribute が一意である必要があります。',
 
     // Custom validation lines
     'custom' => [
