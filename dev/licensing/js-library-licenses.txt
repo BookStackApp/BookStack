@@ -507,6 +507,12 @@ Copyright: Copyright (c) 2011 Debuggable Limited <*****@**********.***>
 Source: git://github.com/felixge/node-delayed-stream.git
 Link: https://github.com/felixge/node-delayed-stream
 -----------
+detect-libc
+License: Apache-2.0
+License File: node_modules/detect-libc/LICENSE
+Source: git://github.com/lovell/detect-libc
+Link: git://github.com/lovell/detect-libc
+-----------
 detect-newline
 License: MIT
 License File: node_modules/detect-newline/license
@@ -1818,6 +1824,13 @@ License File: node_modules/nice-try/LICENSE
 Copyright: Copyright (c) 2018 Tobias Reich
 Source: https://github.com/electerious/nice-try.git
 Link: https://github.com/electerious/nice-try
+-----------
+node-addon-api
+License: MIT
+License File: node_modules/node-addon-api/LICENSE.md
+Copyright: Copyright (c) 2017 [Node.js API collaborators](https://github.com/nodejs/node-addon-api#collaborators)
+Source: git://github.com/nodejs/node-addon-api.git
+Link: https://github.com/nodejs/node-addon-api
 -----------
 node-int64
 License: MIT
@@ -3525,6 +3538,11 @@ Copyright: Copyright (C) 2018 by Marijn Haverbeke <******@*********.******> and 
 Source: https://github.com/lezer-parser/xml.git
 Link: https://github.com/lezer-parser/xml.git
 -----------
+@marijn/find-cluster-break
+License: MIT
+Source: git+https://github.com/marijnh/find-cluster-break.git
+Link: https://github.com/marijnh/find-cluster-break#readme
+-----------
 @nodelib/fs.scandir
 License: MIT
 License File: node_modules/@nodelib/fs.scandir/LICENSE
@@ -3545,6 +3563,27 @@ License File: node_modules/@nodelib/fs.walk/LICENSE
 Copyright: Copyright (c) Denis Malinochkin
 Source: https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.walk
 Link: https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.walk
+-----------
+@parcel/watcher-linux-x64-glibc
+License: MIT
+License File: node_modules/@parcel/watcher-linux-x64-glibc/LICENSE
+Copyright: Copyright (c) 2017-present Devon Govett
+Source: https://github.com/parcel-bundler/watcher.git
+Link: https://github.com/parcel-bundler/watcher.git
+-----------
+@parcel/watcher-linux-x64-musl
+License: MIT
+License File: node_modules/@parcel/watcher-linux-x64-musl/LICENSE
+Copyright: Copyright (c) 2017-present Devon Govett
+Source: https://github.com/parcel-bundler/watcher.git
+Link: https://github.com/parcel-bundler/watcher.git
+-----------
+@parcel/watcher
+License: MIT
+License File: node_modules/@parcel/watcher/LICENSE
+Copyright: Copyright (c) 2017-present Devon Govett
+Source: https://github.com/parcel-bundler/watcher.git
+Link: https://github.com/parcel-bundler/watcher.git
 -----------
 @rtsao/scc
 License: MIT
