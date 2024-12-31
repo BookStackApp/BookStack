@@ -107,16 +107,16 @@ return [
     'back_soon' => 'Vai estar de volta em breve.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'Não foi possível ler o arquivo ZIP.',
+    'import_zip_cant_decode_data' => 'Não foi possível encontrar e decodificar o conteúdo ZIP data.json.',
+    'import_zip_no_data' => 'Os dados do arquivo ZIP não têm o conteúdo esperado livro, capítulo ou página.',
+    'import_validation_failed' => 'Falhou na validação da importação do ZIP com erros:',
+    'import_zip_failed_notification' => 'Falhou ao importar arquivo ZIP.',
+    'import_perms_books' => 'Você não tem as permissões necessárias para criar livros.',
+    'import_perms_chapters' => 'Você não tem as permissões necessárias para criar capítulos.',
+    'import_perms_pages' => 'Você não tem as permissões necessárias para criar páginas.',
+    'import_perms_images' => 'Está não tem permissões necessárias para criar imagens.',
+    'import_perms_attachments' => 'Você não tem a permissão necessária para criar anexos.',
 
     // API errors
     'api_no_authorization_found' => 'Nenhum código de autorização encontrado na requisição',
