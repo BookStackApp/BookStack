@@ -13,7 +13,7 @@ return [
     'categories' => '카테고리',
 
     // App Settings
-    'app_customization' => '맞춤',
+    'app_customization' => '어플리케이션 설정',
     'app_features_security' => '기능 및 보안',
     'app_name' => '애플리케이션 이름 (사이트 제목)',
     'app_name_desc' => '이 이름은 헤더와 시스템에서 보낸 모든 이메일에 표시됩니다.',
