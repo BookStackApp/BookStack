@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class DownloadResponseFactory
 {
     public function __construct(
-        protected Request $request
+        protected Request $request,
     ) {
     }
 
@@ -34,6 +34,32 @@ class DownloadResponseFactory
             $headers,
         );
     }
+
+    /**
+     * Create a response that downloads the given file via a stream.
+     * Has the option to delete the provided file once the stream is closed.
+     */
+    public function streamedFileDirectly(string $filePath, string $fileName, int $fileSize, bool $deleteAfter = false): StreamedResponse
+    {
+        $stream = fopen($filePath, 'r');
+
+        if ($deleteAfter) {
+            // Delete the given file if it still exists after the app terminates
+            $callback = function () use ($filePath) {
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            };
+
+            // We watch both app terminate and php shutdown to cover both normal app termination
+            // as well as other potential scenarios (connection termination).
+            app()->terminating($callback);
+            register_shutdown_function($callback);
+        }
+
+        return $this->streamedDirectly($stream, $fileName, $fileSize);
+    }
+
 
     /**
      * Create a file download response that provides the file with a content-type
