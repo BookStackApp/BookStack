@@ -52,7 +52,7 @@ return [
     'import_pending_none' => '가져오기가 시작되지 않았습니다.',
     'import_continue' => '가져오기 계속하기',
     'import_continue_desc' => '업로드된 ZIP 파일에서 가져올 내용을 검토합니다. 준비가 되면 가져오기를 실행하여 이 시스템에 내용을 추가합니다. 업로드된 ZIP 가져오기 파일은 가져오기가 성공하면 자동으로 제거됩니다.',
-    'import_details' => 'ZIP 파일 가져오기가 시작되지 않았습니다.',
+    'import_details' => 'Portable ZIP 파일 상세',
     'import_run' => '가져오기 실행',
     'import_size' => 'ZIP 파일 사이즈',
     'import_uploaded_at' => '업로드되었습니다. :relativeTime',
