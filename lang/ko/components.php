@@ -33,7 +33,7 @@ return [
     'image_update_success' => '이미지 정보가 수정되었습니다.',
     'image_delete_success' => '이미지가 삭제되었습니다.',
     'image_replace' => '이미지 교체',
-    'image_replace_success' => '이미지 파일 업데이트 성공',
+    'image_replace_success' => '이미지가 수정되었습니다.',
     'image_rebuild_thumbs' => '사이즈 변경 재생성하기',
     'image_rebuild_thumbs_success' => '이미지 크기 변경이 성공적으로 완료되었습니다!',
 
