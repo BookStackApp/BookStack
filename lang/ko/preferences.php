@@ -26,8 +26,8 @@ return [
     'notifications_opt_comment_replies' => '내 댓글에 대한 답글 알림 받기',
     'notifications_save' => '환경설정 저장',
     'notifications_update_success' => '알림 환경설정이 업데이트되었습니다!',
-    'notifications_watched' => '주시 및 무시한 항목',
-    'notifications_watched_desc' => '아래는 사용자 지정 시계 환경설정이 적용된 항목입니다. 이러한 항목에 대한 환경설정을 업데이트하려면 해당 항목을 본 다음 사이드바에서 시계 옵션을 찾습니다.',
+    'notifications_watched' => '알람 설정 및 알람 무시한 항목',
+    'notifications_watched_desc' => '아래는 사용자 지정 알람 환경설정이 적용된 항목입니다. 이러한 항목에 대한 환경설정을 업데이트하려면 해당 항목을 본 다음 사이드바에서 알림 옵션을 찾습니다.',
 
     'auth' => '액세스 및 보안',
     'auth_change_password' => '패스워드 변경',
