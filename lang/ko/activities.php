@@ -85,9 +85,9 @@ return [
     'webhook_delete_notification' => '웹 훅 삭제함',
 
     // Imports
-    'import_create' => '임포트 파일이 생성되었습니다.',
-    'import_create_notification' => '임포트 파일이 업로드 되었습니다.',
-    'import_run' => '임포트를 업데이트하였습니다.',
+    'import_create' => '컨텐츠 ZIP 파일이 생성되었습니다.',
+    'import_create_notification' => '컨텐츠 ZIP 파일이 업로드 되었습니다.',
+    'import_run' => '컨텐츠 ZIP 파일을 업데이트하였습니다.',
     'import_run_notification' => '내용을 가져왔습니다.',
     'import_delete' => '임포트 파일 삭제',
     'import_delete_notification' => '임포트 파일을 삭제하였습니다.',
