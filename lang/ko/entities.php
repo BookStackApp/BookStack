@@ -16,8 +16,8 @@ return [
     'recently_viewed' => '최근에 본 목록',
     'recent_activity' => '최근 활동 기록',
     'create_now' => '바로 만들기',
-    'revisions' => '수정본',
-    'meta_revision' => '판본 #:revisionCount',
+    'revisions' => '버전',
+    'meta_revision' => '버전 #:revisionCount',
     'meta_created' => '생성 :timeLength',
     'meta_created_name' => '생성 :timeLength, :user',
     'meta_updated' => '수정 :timeLength',
@@ -406,8 +406,8 @@ return [
 
     // Revision
     'revision_delete_confirm' => '이 수정본을 지울 건가요?',
-    'revision_restore_confirm' => '이 수정본을 되돌릴 건가요? 현재 판본을 바꿉니다.',
-    'revision_cannot_delete_latest' => '현재 판본은 지울 수 없습니다.',
+    'revision_restore_confirm' => '이 버전을 되돌릴 건가요? 현재 페이지는 대체됩니다.',
+    'revision_cannot_delete_latest' => '현재 버전본은 지울 수 없습니다.',
 
     // Copy view
     'copy_consider' => '항목을 복사할 때 다음을 고려하세요.',
