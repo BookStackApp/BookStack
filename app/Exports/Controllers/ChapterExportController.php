@@ -16,6 +16,7 @@ class ChapterExportController extends Controller
         protected ExportFormatter $exportFormatter,
     ) {
         $this->middleware('can:content-export');
+        $this->middleware('throttle:exports');
     }
 
     /**

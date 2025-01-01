@@ -423,6 +423,28 @@ class ZipExportTest extends TestCase
         $this->assertStringContainsString("[Link to chapter]([[bsexport:chapter:{$chapter->id}]])", $pageData['markdown']);
     }
 
+    public function test_exports_rate_limited_low_for_guest_viewers()
+    {
+        $this->setSettings(['app-public' => 'true']);
+
+        $page = $this->entities->page();
+        for ($i = 0; $i < 4; $i++) {
+            $this->get($page->getUrl("/export/zip"))->assertOk();
+        }
+        $this->get($page->getUrl("/export/zip"))->assertStatus(429);
+    }
+
+    public function test_exports_rate_limited_higher_for_logged_in_viewers()
+    {
+        $this->asAdmin();
+
+        $page = $this->entities->page();
+        for ($i = 0; $i < 10; $i++) {
+            $this->get($page->getUrl("/export/zip"))->assertOk();
+        }
+        $this->get($page->getUrl("/export/zip"))->assertStatus(429);
+    }
+
     protected function extractZipResponse(TestResponse $response): ZipResultData
     {
         $zipData = $response->streamedContent();
