@@ -51,8 +51,8 @@ return [
 
     // Revisions
     'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_delete' => 'odstránil(a) revíziu',
+    'revision_delete_notification' => 'Revízia úspešne odstránená',
 
     // Favourites
     'favourite_add_notification' => '":name" bol pridaný medzi obľúbené',
@@ -62,7 +62,7 @@ return [
     'watch_update_level_notification' => 'Watch preferences successfully updated',
 
     // Auth
-    'auth_login' => 'logged in',
+    'auth_login' => 'sa prihlásil(a)',
     'auth_register' => 'registered as new user',
     'auth_password_reset_request' => 'requested user password reset',
     'auth_password_reset_update' => 'reset user password',
@@ -123,8 +123,8 @@ return [
 
     // Comments
     'commented_on'                => 'komentoval(a)',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
+    'comment_create'              => 'pridal(a) komentár',
+    'comment_update'              => 'aktualizoval(a) komentár',
     'comment_delete'              => 'odstrániť komentár',
 
     // Other
