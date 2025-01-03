@@ -357,6 +357,14 @@ class LdapService
         return $formattedGroups;
     }
 
+    public function isUserInGroup(string $userName, string $groupName): bool
+{
+    
+    $userGroups = $this->getUserGroups($userName);
+
+                
+    return in_array($groupName, $userGroups);
+}
     protected function extractGroupNamesFromLdapGroupDns(array $groupDNs): array
     {
         $names = [];
