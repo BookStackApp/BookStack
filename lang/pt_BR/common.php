@@ -5,13 +5,13 @@
 return [
 
     // Buttons
-    'cancel' => 'Cancela',
-    'close' => 'Fecha',
-    'confirm' => 'Confirma',
-    'back' => 'Volta',
-    'save' => 'Salva',
-    'continue' => 'Continua',
-    'select' => 'Seleciona',
+    'cancel' => 'Cancelar',
+    'close' => 'Fechar',
+    'confirm' => 'Confirmar',
+    'back' => 'Voltar',
+    'save' => 'Salvar',
+    'continue' => 'Continuar',
+    'select' => 'Selecionar',
     'toggle_all' => 'Alternar Tudo',
     'more' => 'Mais
 ',

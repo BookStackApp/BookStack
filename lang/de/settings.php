@@ -163,7 +163,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'role_access_api' => 'Systemzugriffs-API',
     'role_manage_settings' => 'Globaleinstellungen verwalten',
     'role_export_content' => 'Inhalt exportieren',
-    'role_import_content' => 'Import content',
+    'role_import_content' => 'Inhalt importieren',
     'role_editor_change' => 'Seiten-Editor ändern',
     'role_notifications' => 'Empfangen und Verwalten von Benachrichtigungen',
     'role_asset' => 'Berechtigungen',

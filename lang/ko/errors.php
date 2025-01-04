@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Admin을 삭제할 수 없습니다.',
     'users_cannot_delete_guest' => 'Guest를 삭제할 수 없습니다.',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => '초대 이메일을 보내는 데 실패하여 사용자를 생성할 수 없습니다.',
 
     // Roles
     'role_cannot_be_edited' => '권한을 수정할 수 없습니다.',
@@ -94,7 +94,7 @@ return [
     'empty_comment' => '빈 댓글은 등록할 수 없습니다.',
 
     // Error pages
-    '404_page_not_found' => '404 Not Found',
+    '404_page_not_found' => '페이지를 찾을 수 없습니다.',
     'sorry_page_not_found' => '문서를 못 찾았습니다.',
     'sorry_page_not_found_permission_warning' => '문서를 볼 권한이 없습니다.',
     'image_not_found' => '이미지를 찾을 수 없습니다',
@@ -106,16 +106,16 @@ return [
     'back_soon' => '곧 돌아갑니다.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'ZIP 파일을 읽을 수 없습니다.',
+    'import_zip_cant_decode_data' => 'ZIP data.json 콘텐츠를 찾아서 디코딩할 수 없습니다.',
+    'import_zip_no_data' => 'ZIP 파일 데이터에는 예상되는 책, 장 또는 페이지 콘텐츠가 없습니다.',
+    'import_validation_failed' => 'ZIP 파일을 가져오려다 실패했습니다. 이유:',
+    'import_zip_failed_notification' => 'ZIP 파일을 가져오지 못했습니다.',
+    'import_perms_books' => '책을 만드는 데 필요한 권한이 없습니다.',
+    'import_perms_chapters' => '챕터를 만드는 데 필요한 권한이 없습니다.',
+    'import_perms_pages' => '페이지를 만드는 데 필요한 권한이 없습니다.',
+    'import_perms_images' => '이미지를 만드는 데 필요한 권한이 없습니다.',
+    'import_perms_attachments' => '첨부 파일을 만드는 데 필요한 권한이 없습니다.',
 
     // API errors
     'api_no_authorization_found' => '요청에서 인증 토큰을 찾을 수 없습니다.',

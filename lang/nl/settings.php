@@ -155,7 +155,7 @@ return [
     'role_external_auth_id' => 'Externe authenticatie ID\'s',
     'role_system' => 'Systeem Machtigingen',
     'role_manage_users' => 'Gebruikers beheren',
-    'role_manage_roles' => 'Beheer rollen & rolmachtigingen',
+    'role_manage_roles' => 'Beheer rollen & machtigingen',
     'role_manage_entity_permissions' => 'Beheer alle machtigingen voor boeken, hoofdstukken en pagina\'s',
     'role_manage_own_entity_permissions' => 'Beheer machtigingen van je eigen boek, hoofdstuk & pagina\'s',
     'role_manage_page_templates' => 'Paginasjablonen beheren',

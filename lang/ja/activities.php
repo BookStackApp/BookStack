@@ -86,11 +86,11 @@ return [
 
     // Imports
     'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
+    'import_create_notification' => 'インポートファイルが正常にアップロードされました',
     'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
+    'import_run_notification' => 'コンテンツが正常にインポートされました',
     'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_delete_notification' => 'インポートファイルが正常に削除されました',
 
     // Users
     'user_create' => 'がユーザを作成',
