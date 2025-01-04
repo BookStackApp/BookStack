@@ -90,18 +90,28 @@ class PdfGenerator
         $process = Process::fromShellCommandline($command);
         $process->setTimeout($timeout);
 
+        $cleanup = function () use ($inputHtml, $outputPdf) {
+            foreach ([$inputHtml, $outputPdf] as $file) {
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+        };
+
         try {
             $process->run();
         } catch (ProcessTimedOutException $e) {
+            $cleanup();
             throw new PdfExportException("PDF Export via command failed due to timeout at {$timeout} second(s)");
         }
 
         if (!$process->isSuccessful()) {
+            $cleanup();
             throw new PdfExportException("PDF Export via command failed with exit code {$process->getExitCode()}, stdout: {$process->getOutput()}, stderr: {$process->getErrorOutput()}");
         }
 
         $pdfContents = file_get_contents($outputPdf);
-        unlink($outputPdf);
+        $cleanup();
 
         if ($pdfContents === false) {
             throw new PdfExportException("PDF Export via command failed, unable to read PDF output file");

@@ -7,6 +7,7 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
+use FilesystemIterator;
 use Illuminate\Support\Carbon;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -58,6 +59,24 @@ class ZipExportTest extends TestCase
         $instanceId = setting('instance-id');
         $this->assertNotEmpty($instanceId);
         $this->assertEquals($instanceId, $zipInstanceId);
+    }
+
+    public function test_export_leaves_no_temp_files()
+    {
+        $tempDir = sys_get_temp_dir();
+        $startTempFileCount = iterator_count((new FileSystemIterator($tempDir, FilesystemIterator::SKIP_DOTS)));
+
+        $page = $this->entities->pageWithinChapter();
+        $this->asEditor();
+        $pageResp = $this->get($page->getUrl("/export/zip"));
+        $pageResp->streamedContent();
+        $pageResp->assertOk();
+        $this->get($page->chapter->getUrl("/export/zip"))->assertOk();
+        $this->get($page->book->getUrl("/export/zip"))->assertOk();
+
+        $afterTempFileCount = iterator_count((new FileSystemIterator($tempDir, FilesystemIterator::SKIP_DOTS)));
+
+        $this->assertEquals($startTempFileCount, $afterTempFileCount);
     }
 
     public function test_page_export()
@@ -402,6 +421,28 @@ class ZipExportTest extends TestCase
         $pageData = $zip->data['chapter']['pages'][0];
 
         $this->assertStringContainsString("[Link to chapter]([[bsexport:chapter:{$chapter->id}]])", $pageData['markdown']);
+    }
+
+    public function test_exports_rate_limited_low_for_guest_viewers()
+    {
+        $this->setSettings(['app-public' => 'true']);
+
+        $page = $this->entities->page();
+        for ($i = 0; $i < 4; $i++) {
+            $this->get($page->getUrl("/export/zip"))->assertOk();
+        }
+        $this->get($page->getUrl("/export/zip"))->assertStatus(429);
+    }
+
+    public function test_exports_rate_limited_higher_for_logged_in_viewers()
+    {
+        $this->asAdmin();
+
+        $page = $this->entities->page();
+        for ($i = 0; $i < 10; $i++) {
+            $this->get($page->getUrl("/export/zip"))->assertOk();
+        }
+        $this->get($page->getUrl("/export/zip"))->assertStatus(429);
     }
 
     protected function extractZipResponse(TestResponse $response): ZipResultData

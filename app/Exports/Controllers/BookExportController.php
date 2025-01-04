@@ -16,6 +16,7 @@ class BookExportController extends Controller
         protected ExportFormatter $exportFormatter,
     ) {
         $this->middleware('can:content-export');
+        $this->middleware('throttle:exports');
     }
 
     /**
@@ -75,6 +76,6 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $zip = $builder->buildForBook($book);
 
-        return $this->download()->streamedDirectly(fopen($zip, 'r'), $bookSlug . '.zip', filesize($zip));
+        return $this->download()->streamedFileDirectly($zip, $bookSlug . '.zip', filesize($zip), true);
     }
 }

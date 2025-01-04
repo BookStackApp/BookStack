@@ -17,6 +17,7 @@ class PageExportController extends Controller
         protected ExportFormatter $exportFormatter,
     ) {
         $this->middleware('can:content-export');
+        $this->middleware('throttle:exports');
     }
 
     /**
@@ -85,6 +86,6 @@ class PageExportController extends Controller
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $zip = $builder->buildForPage($page);
 
-        return $this->download()->streamedDirectly(fopen($zip, 'r'), $pageSlug . '.zip', filesize($zip));
+        return $this->download()->streamedFileDirectly($zip, $pageSlug . '.zip', filesize($zip), true);
     }
 }

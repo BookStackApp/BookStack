@@ -5,6 +5,7 @@ namespace Tests\Exports;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\PdfExportException;
 use BookStack\Exports\PdfGenerator;
+use FilesystemIterator;
 use Tests\TestCase;
 
 class PdfExportTest extends TestCase
@@ -128,7 +129,7 @@ class PdfExportTest extends TestCase
         }, PdfExportException::class);
     }
 
-    public function test_pdf_command_timout_option_limits_export_time()
+    public function test_pdf_command_timeout_option_limits_export_time()
     {
         $page = $this->entities->page();
         $command = 'php -r \'sleep(4);\'';
@@ -142,5 +143,20 @@ class PdfExportTest extends TestCase
             $this->assertTrue(time() < ($start + 3));
         }, PdfExportException::class,
             "PDF Export via command failed due to timeout at 1 second(s)");
+    }
+
+    public function test_pdf_command_option_does_not_leave_temp_files()
+    {
+        $tempDir = sys_get_temp_dir();
+        $startTempFileCount = iterator_count((new FileSystemIterator($tempDir, FilesystemIterator::SKIP_DOTS)));
+
+        $page = $this->entities->page();
+        $command = 'cp {input_html_path} {output_pdf_path}';
+        config()->set('exports.pdf_command', $command);
+
+        $this->asEditor()->get($page->getUrl('/export/pdf'));
+
+        $afterTempFileCount = iterator_count((new FileSystemIterator($tempDir, FilesystemIterator::SKIP_DOTS)));
+        $this->assertEquals($startTempFileCount, $afterTempFileCount);
     }
 }
