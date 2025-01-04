@@ -445,8 +445,12 @@ export class Actions {
         selectionRange = selectionRange || this.#getSelectionRange();
         const newDoc = this.editor.cm.state.toText(text);
         const newSelectFrom = Math.min(selectionRange.from, newDoc.length);
+        const scrollTop = this.editor.cm.scrollDOM.scrollTop;
         this.#dispatchChange(0, this.editor.cm.state.doc.length, text, newSelectFrom);
         this.focus();
+        window.requestAnimationFrame(() => {
+            this.editor.cm.scrollDOM.scrollTop = scrollTop;
+        });
     }
 
     /**
