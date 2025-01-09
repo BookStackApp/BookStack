@@ -162,7 +162,7 @@ return [
     'role_access_api' => 'Accès à l\'API du système',
     'role_manage_settings' => 'Gérer les préférences de l\'application',
     'role_export_content' => 'Exporter le contenu',
-    'role_import_content' => 'Import content',
+    'role_import_content' => 'Importer le contenu',
     'role_editor_change' => 'Changer l\'éditeur de page',
     'role_notifications' => 'Recevoir et gérer les notifications',
     'role_asset' => 'Permissions des ressources',
