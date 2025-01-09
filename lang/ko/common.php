@@ -18,7 +18,7 @@ return [
     // Form Labels
     'name' => '이름',
     'description' => '설명',
-    'role' => '권한',
+    'role' => '역할',
     'cover_image' => '대표 이미지',
     'cover_image_description' => '이 이미지는 대략 440x250px가 되어야 하지만, 필요에 따라 다양한 시나리오에서 사용자 인터페이스에 맞게 유연하게 크기 조절 및 자르기가 가능하므로 실제로 표시되는 크기는 다를 수 있습니다.',
 
@@ -74,7 +74,7 @@ return [
     'toggle_thumbnails' => '썸네일 보기',
     'details' => '정보',
     'grid_view' => '격자 형식으로 보기',
-    'list_view' => '목록 보기',
+    'list_view' => '리스트 형식으로 보기',
     'default' => '기본 설정',
     'breadcrumb' => '탐색 경로',
     'status' => '상태',
