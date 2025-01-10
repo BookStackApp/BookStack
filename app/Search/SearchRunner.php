@@ -454,6 +454,20 @@ class SearchRunner
         }
     }
 
+    protected function filterBookId(EloquentBuilder $query, Entity $model, string $input, bool $negated)
+    {
+        if ($model instanceof Page || $model instanceof Chapter) {
+            $this->applyNegatableWhere($query, $negated, 'book_id', '=', $input);
+        }
+    }
+
+    protected function filterChapterId(EloquentBuilder $query, Entity $model, string $input, bool $negated)
+    {
+        if ($model instanceof Page) {
+            $this->applyNegatableWhere($query, $negated, 'chapter_id', '=', $input);
+        }
+    }
+
     /**
      * Sorting filter options.
      */

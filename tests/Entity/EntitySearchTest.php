@@ -30,6 +30,25 @@ class EntitySearchTest extends TestCase
         $search->assertSeeText($shelf->name, true);
     }
 
+    public function test_book_id_search()
+    {
+        $book = Book::first();
+
+        $search = $this->asEditor()->get('/search?query={type:page}{book_id:' . $book->id . '}');
+        $search->assertSee('Search Results');
+        $search->assertSeeText($book->id, true);
+    }
+
+    public function test_chapter_id_search()
+    {
+        $book = Book::first();
+        $chapter = $book->chapters->last();
+
+        $search = $this->asEditor()->get('/search?query={type:page}{chapter_id:' . $chapter->id . '}');
+        $search->assertSee('Search Results');
+        $search->assertSeeText($chapter->id, true);
+    }
+
     public function test_invalid_page_search()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('<p>test</p>'));
