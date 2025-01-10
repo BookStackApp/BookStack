@@ -23,7 +23,7 @@ return [
     'password_confirm' => 'পাসওয়ার্ডের পুনরাবৃত্তি',
     'password_hint' => 'ন্যূনতম ৮ অক্ষরের হতে হবে',
     'forgot_password' => 'পাসওয়ার্ড ভুলে গেছেন?',
-    'remember_me' => 'Remember Me',
+    'remember_me' => 'লগইন স্থায়িত্ব ধরে রাখুন',
     'ldap_email_hint' => 'Please enter an email to use for this account.',
     'create_account' => 'Create Account',
     'already_have_account' => 'Already have an account?',
