@@ -38,7 +38,7 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'verify_peer' => env('MAIL_VERIFY_SSL', true),
             'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'local_domain' => null,
             'tls_required' => ($mailEncryption === 'tls' || $mailEncryption === 'ssl'),
         ],
 
@@ -62,14 +62,6 @@ return [
                 'smtp',
                 'log',
             ],
-        ],
-    ],
-
-    // Email markdown configuration
-    'markdown' => [
-        'theme' => 'default',
-        'paths' => [
-            resource_path('views/vendor/mail'),
         ],
     ],
 ];

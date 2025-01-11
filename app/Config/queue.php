@@ -23,6 +23,7 @@ return [
 
         'database' => [
             'driver'       => 'database',
+            'connection'   => null,
             'table'        => 'jobs',
             'queue'        => 'default',
             'retry_after'  => 90,

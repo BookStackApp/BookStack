@@ -35,10 +35,6 @@ return [
     // Available caches stores
     'stores' => [
 
-        'apc' => [
-            'driver' => 'apc',
-        ],
-
         'array' => [
             'driver'    => 'array',
             'serialize' => false,
@@ -49,6 +45,7 @@ return [
             'table'           => 'cache',
             'connection'      => null,
             'lock_connection' => null,
+            'lock_table'      => null,
         ],
 
         'file' => [
