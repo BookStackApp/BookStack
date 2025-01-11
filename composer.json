@@ -46,9 +46,9 @@
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^8.1",
         "larastan/larastan": "^v3.0",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^11.5",
         "squizlabs/php_codesniffer": "^3.7",
-        "ssddanbrown/asserthtml": "^3.0"
+        "ssddanbrown/asserthtml": "^3.1"
     },
     "autoload": {
         "psr-4": {
