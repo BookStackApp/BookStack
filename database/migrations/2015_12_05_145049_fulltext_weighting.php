@@ -26,25 +26,19 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $sm = Schema::getConnection()->getDoctrineSchemaManager();
-        $prefix = DB::getTablePrefix();
-        $pages = $sm->introspectTable($prefix . 'pages');
-        $books = $sm->introspectTable($prefix . 'books');
-        $chapters = $sm->introspectTable($prefix . 'chapters');
-
-        if ($pages->hasIndex('name_search')) {
+        if (Schema::hasIndex('pages', 'name_search')) {
             Schema::table('pages', function (Blueprint $table) {
                 $table->dropIndex('name_search');
             });
         }
 
-        if ($books->hasIndex('name_search')) {
+        if (Schema::hasIndex('books', 'name_search')) {
             Schema::table('books', function (Blueprint $table) {
                 $table->dropIndex('name_search');
             });
         }
 
-        if ($chapters->hasIndex('name_search')) {
+        if (Schema::hasIndex('chapters', 'name_search')) {
             Schema::table('chapters', function (Blueprint $table) {
                 $table->dropIndex('name_search');
             });
