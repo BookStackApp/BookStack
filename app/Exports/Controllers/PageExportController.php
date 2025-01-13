@@ -86,6 +86,6 @@ class PageExportController extends Controller
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $zip = $builder->buildForPage($page);
 
-        return $this->download()->streamedFileDirectly($zip, $pageSlug . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $pageSlug . '.zip', true);
     }
 }

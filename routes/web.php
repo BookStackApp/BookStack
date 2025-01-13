@@ -13,12 +13,14 @@ use BookStack\Permissions\PermissionsController;
 use BookStack\References\ReferenceController;
 use BookStack\Search\SearchController;
 use BookStack\Settings as SettingControllers;
+use BookStack\Theming\ThemeController;
 use BookStack\Uploads\Controllers as UploadControllers;
 use BookStack\Users\Controllers as UserControllers;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+// Status & Meta routes
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
 Route::get('/robots.txt', [MetaController::class, 'robots']);
 Route::get('/favicon.ico', [MetaController::class, 'favicon']);
@@ -360,8 +362,12 @@ Route::post('/password/email', [AccessControllers\ForgotPasswordController::clas
 Route::get('/password/reset/{token}', [AccessControllers\ResetPasswordController::class, 'showResetForm']);
 Route::post('/password/reset', [AccessControllers\ResetPasswordController::class, 'reset'])->middleware('throttle:public');
 
-// Metadata routes
+// Help & Info routes
 Route::view('/help/tinymce', 'help.tinymce');
 Route::view('/help/wysiwyg', 'help.wysiwyg');
+
+// Theme Routes
+Route::get('/theme/{theme}/{path}', [ThemeController::class, 'publicFile'])
+    ->where('path', '.*$');
 
 Route::fallback([MetaController::class, 'notFound'])->name('fallback');

@@ -8,6 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 class PreventResponseCaching
 {
     /**
+     * Paths to ignore when preventing response caching.
+     */
+    protected array $ignoredPathPrefixes = [
+        'theme/',
+    ];
+
+    /**
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
@@ -19,6 +26,13 @@ class PreventResponseCaching
     {
         /** @var Response $response */
         $response = $next($request);
+
+        $path = $request->path();
+        foreach ($this->ignoredPathPrefixes as $ignoredPath) {
+            if (str_starts_with($path, $ignoredPath)) {
+                return $response;
+            }
+        }
 
         $response->headers->set('Cache-Control', 'no-cache, no-store, private');
         $response->headers->set('Expires', 'Sun, 12 Jul 2015 19:01:00 GMT');

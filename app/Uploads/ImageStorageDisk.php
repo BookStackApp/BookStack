@@ -2,9 +2,9 @@
 
 namespace BookStack\Uploads;
 
+use BookStack\Util\FilePathNormalizer;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemAdapter;
-use League\Flysystem\WhitespacePathNormalizer;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageStorageDisk
@@ -30,13 +30,14 @@ class ImageStorageDisk
      */
     protected function adjustPathForDisk(string $path): string
     {
-        $path = (new WhitespacePathNormalizer())->normalizePath(str_replace('uploads/images/', '', $path));
+        $trimmed = str_replace('uploads/images/', '', $path);
+        $normalized = FilePathNormalizer::normalize($trimmed);
 
         if ($this->usingSecureImages()) {
-            return $path;
+            return $normalized;
         }
 
-        return 'uploads/images/' . $path;
+        return 'uploads/images/' . $normalized;
     }
 
     /**
