@@ -70,7 +70,7 @@ class DownloadResponseFactory
     public function streamedInline($stream, string $fileName, int $fileSize): StreamedResponse
     {
         $rangeStream = new RangeSupportedStream($stream, $fileSize, $this->request);
-        $mime = $rangeStream->sniffMime();
+        $mime = $rangeStream->sniffMime(pathinfo($fileName, PATHINFO_EXTENSION));
         $headers = array_merge($this->getHeaders($fileName, $fileSize, $mime), $rangeStream->getResponseHeaders());
 
         return response()->stream(
