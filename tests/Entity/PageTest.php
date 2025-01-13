@@ -300,7 +300,7 @@ class PageTest extends TestCase
         ]);
 
         $resp = $this->asAdmin()->get('/pages/recently-updated');
-        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 1 second ago by ' . $user->name);
+        $this->withHtml($resp)->assertElementContains('.entity-list .page:nth-child(1)', 'Updated 0 seconds ago by ' . $user->name);
     }
 
     public function test_recently_updated_pages_view_shows_parent_chain()

@@ -42,4 +42,12 @@ class EventServiceProvider extends ServiceProvider
     {
         return false;
     }
+
+    /**
+     * Overrides the registration of Laravel's default email verification system
+     */
+    protected function configureEmailVerification(): void
+    {
+        //
+    }
 }

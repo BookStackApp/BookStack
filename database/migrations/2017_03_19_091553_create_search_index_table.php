@@ -25,27 +25,21 @@ return new class extends Migration
             $table->index('score');
         });
 
-        $sm = Schema::getConnection()->getDoctrineSchemaManager();
-        $prefix = DB::getTablePrefix();
-        $pages = $sm->introspectTable($prefix . 'pages');
-        $books = $sm->introspectTable($prefix . 'books');
-        $chapters = $sm->introspectTable($prefix . 'chapters');
-
-        if ($pages->hasIndex('search')) {
+        if (Schema::hasIndex('pages', 'search')) {
             Schema::table('pages', function (Blueprint $table) {
                 $table->dropIndex('search');
                 $table->dropIndex('name_search');
             });
         }
 
-        if ($books->hasIndex('search')) {
+        if (Schema::hasIndex('books', 'search')) {
             Schema::table('books', function (Blueprint $table) {
                 $table->dropIndex('search');
                 $table->dropIndex('name_search');
             });
         }
 
-        if ($chapters->hasIndex('search')) {
+        if (Schema::hasIndex('chapters', 'search')) {
             Schema::table('chapters', function (Blueprint $table) {
                 $table->dropIndex('search');
                 $table->dropIndex('name_search');

@@ -8,7 +8,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.1.0",
+        "php": "^8.2.0",
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-fileinfo": "*",
@@ -18,12 +18,11 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "bacon/bacon-qr-code": "^3.0",
-        "doctrine/dbal": "^3.5",
         "dompdf/dompdf": "^3.0",
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^3.5",
         "knplabs/knp-snappy": "^1.5",
-        "laravel/framework": "^10.48.23",
+        "laravel/framework": "^v11.37",
         "laravel/socialite": "^5.10",
         "laravel/tinker": "^2.8",
         "league/commonmark": "^2.3",
@@ -40,17 +39,17 @@
         "socialiteproviders/okta": "^4.2",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.2",
-        "ssddanbrown/symfony-mailer": "6.4.x-dev"
+        "ssddanbrown/symfony-mailer": "7.2.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.21",
         "itsgoingd/clockwork": "^5.1",
         "mockery/mockery": "^1.5",
-        "nunomaduro/collision": "^7.0",
-        "larastan/larastan": "^2.7",
-        "phpunit/phpunit": "^10.0",
+        "nunomaduro/collision": "^8.1",
+        "larastan/larastan": "^v3.0",
+        "phpunit/phpunit": "^11.5",
         "squizlabs/php_codesniffer": "^3.7",
-        "ssddanbrown/asserthtml": "^3.0"
+        "ssddanbrown/asserthtml": "^3.1"
     },
     "autoload": {
         "psr-4": {
@@ -104,7 +103,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "platform": {
-            "php": "8.1.0"
+            "php": "8.2.0"
         }
     },
     "extra": {
