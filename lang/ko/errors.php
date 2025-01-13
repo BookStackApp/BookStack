@@ -108,9 +108,9 @@ return [
     // Import
     'import_zip_cant_read' => 'ZIP 파일을 읽을 수 없습니다.',
     'import_zip_cant_decode_data' => 'ZIP data.json 콘텐츠를 찾아서 디코딩할 수 없습니다.',
-    'import_zip_no_data' => 'ZIP 파일 데이터에는 예상되는 책, 장 또는 페이지 콘텐츠가 없습니다.',
-    'import_validation_failed' => 'ZIP 파일을 가져오려다 실패했습니다. 이유:',
-    'import_zip_failed_notification' => 'ZIP 파일을 가져오지 못했습니다.',
+    'import_zip_no_data' => '컨텐츠 ZIP 파일 데이터에 데이터가 비어있습니다.',
+    'import_validation_failed' => '컨텐츠 ZIP 파일을 가져오려다 실패했습니다. 이유:',
+    'import_zip_failed_notification' => '컨텐츠 ZIP 파일을 가져오지 못했습니다.',
     'import_perms_books' => '책을 만드는 데 필요한 권한이 없습니다.',
     'import_perms_chapters' => '챕터를 만드는 데 필요한 권한이 없습니다.',
     'import_perms_pages' => '페이지를 만드는 데 필요한 권한이 없습니다.',

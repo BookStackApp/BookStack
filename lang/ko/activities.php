@@ -50,7 +50,7 @@ return [
     'bookshelf_delete_notification'    => '책장이 성공적으로 삭제되었습니다.',
 
     // Revisions
-    'revision_restore' => '복구된 리비전',
+    'revision_restore' => '복구된 버전',
     'revision_delete' => '버전 삭제',
     'revision_delete_notification' => '버전 삭제 성공',
 
@@ -74,13 +74,13 @@ return [
     // Settings
     'settings_update' => '설정 변경',
     'settings_update_notification' => '설졍 변경 성공',
-    'maintenance_action_run' => '유지 관리 작업 실행',
+    'maintenance_action_run' => '유지관리 작업 실행',
 
     // Webhooks
     'webhook_create' => '웹 훅 생성',
     'webhook_create_notification' => '웹 훅 생성함',
     'webhook_update' => '웹 훅 수정하기',
-    'webhook_update_notification' => '웹훅 설정이 수정되었습니다.',
+    'webhook_update_notification' => '웹 훅 설정이 수정되었습니다.',
     'webhook_delete' => '웹 훅 지우기',
     'webhook_delete_notification' => '웹 훅 삭제함',
 
