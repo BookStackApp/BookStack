@@ -76,6 +76,6 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $zip = $builder->buildForBook($book);
 
-        return $this->download()->streamedFileDirectly($zip, $bookSlug . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $bookSlug . '.zip', true);
     }
 }

@@ -2,7 +2,9 @@
 
 BookStack allows logical customization via the theme system which enables you to add, or extend, functionality within the PHP side of the system without needing to alter the core application files.
 
-WARNING: This system is currently in alpha so may incur changes. Once we've gathered some feedback on usage we'll look to removing this warning. This system will be considered semi-stable in the future. The `Theme::` system will be kept maintained but specific customizations or deeper app/framework usage using this system will not be supported nor considered in any way stable. Customizations using this system should be checked after updates.
+This is part of the theme system alongside the [visual theme system](./visual-theme-system.md).
+
+**Note:** This system is considered semi-stable. The `Theme::` system is kept maintained but specific customizations or deeper app/framework usage using this system will not be supported nor considered in any way stable. Customizations using this system should be checked after updates.
 
 ## Getting Started
 

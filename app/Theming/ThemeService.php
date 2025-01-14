@@ -16,6 +16,15 @@ class ThemeService
     protected array $listeners = [];
 
     /**
+     * Get the currently configured theme.
+     * Returns an empty string if not configured.
+     */
+    public function getTheme(): string
+    {
+        return config('view.theme') ?? '';
+    }
+
+    /**
      * Listen to a given custom theme event,
      * setting up the action to be ran when the event occurs.
      */

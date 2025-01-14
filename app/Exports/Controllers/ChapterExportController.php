@@ -82,6 +82,6 @@ class ChapterExportController extends Controller
         $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $zip = $builder->buildForChapter($chapter);
 
-        return $this->download()->streamedFileDirectly($zip, $chapterSlug . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $chapterSlug . '.zip', true);
     }
 }

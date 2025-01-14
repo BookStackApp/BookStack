@@ -1,6 +1,7 @@
 <?php
 
 use BookStack\App\Model;
+use BookStack\Facades\Theme;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\SettingService;
 use BookStack\Users\Models\User;
@@ -88,8 +89,7 @@ function setting(string $key = null, $default = null)
  */
 function theme_path(string $path = ''): ?string
 {
-    $theme = config('view.theme');
-
+    $theme = Theme::getTheme();
     if (!$theme) {
         return null;
     }

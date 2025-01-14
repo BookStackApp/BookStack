@@ -3,12 +3,12 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\FileUploadException;
+use BookStack\Util\FilePathNormalizer;
 use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem as Storage;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use League\Flysystem\WhitespacePathNormalizer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileStorage
@@ -120,12 +120,13 @@ class FileStorage
      */
     protected function adjustPathForStorageDisk(string $path): string
     {
-        $path = (new WhitespacePathNormalizer())->normalizePath(str_replace('uploads/files/', '', $path));
+        $trimmed = str_replace('uploads/files/', '', $path);
+        $normalized = FilePathNormalizer::normalize($trimmed);
 
         if ($this->getStorageDiskName() === 'local_secure_attachments') {
-            return $path;
+            return $normalized;
         }
 
-        return 'uploads/files/' . $path;
+        return 'uploads/files/' . $normalized;
     }
 }

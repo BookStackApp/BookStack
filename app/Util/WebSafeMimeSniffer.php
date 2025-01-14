@@ -13,7 +13,7 @@ class WebSafeMimeSniffer
     /**
      * @var string[]
      */
-    protected $safeMimes = [
+    protected array $safeMimes = [
         'application/json',
         'application/octet-stream',
         'application/pdf',
@@ -48,15 +48,27 @@ class WebSafeMimeSniffer
         'video/av1',
     ];
 
+    protected array $textTypesByExtension = [
+        'css' => 'text/css',
+        'js' => 'text/javascript',
+        'json' => 'application/json',
+        'csv' => 'text/csv',
+    ];
+
     /**
      * Sniff the mime-type from the given file content while running the result
      * through an allow-list to ensure a web-safe result.
      * Takes the content as a reference since the value may be quite large.
+     * Accepts an optional $extension which can be used for further guessing.
      */
-    public function sniff(string &$content): string
+    public function sniff(string &$content, string $extension = ''): string
     {
         $fInfo = new finfo(FILEINFO_MIME_TYPE);
         $mime = $fInfo->buffer($content) ?: 'application/octet-stream';
+
+        if ($mime === 'text/plain' && $extension) {
+            $mime = $this->textTypesByExtension[$extension] ?? 'text/plain';
+        }
 
         if (in_array($mime, $this->safeMimes)) {
             return $mime;

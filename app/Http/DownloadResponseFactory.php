@@ -39,8 +39,9 @@ class DownloadResponseFactory
      * Create a response that downloads the given file via a stream.
      * Has the option to delete the provided file once the stream is closed.
      */
-    public function streamedFileDirectly(string $filePath, string $fileName, int $fileSize, bool $deleteAfter = false): StreamedResponse
+    public function streamedFileDirectly(string $filePath, string $fileName, bool $deleteAfter = false): StreamedResponse
     {
+        $fileSize = filesize($filePath);
         $stream = fopen($filePath, 'r');
 
         if ($deleteAfter) {
@@ -69,7 +70,7 @@ class DownloadResponseFactory
     public function streamedInline($stream, string $fileName, int $fileSize): StreamedResponse
     {
         $rangeStream = new RangeSupportedStream($stream, $fileSize, $this->request);
-        $mime = $rangeStream->sniffMime();
+        $mime = $rangeStream->sniffMime(pathinfo($fileName, PATHINFO_EXTENSION));
         $headers = array_merge($this->getHeaders($fileName, $fileSize, $mime), $rangeStream->getResponseHeaders());
 
         return response()->stream(
@@ -77,6 +78,22 @@ class DownloadResponseFactory
             $rangeStream->getResponseStatus(),
             $headers,
         );
+    }
+
+    /**
+     * Create a response that provides the given file via a stream with detected content-type.
+     * Has the option to delete the provided file once the stream is closed.
+     */
+    public function streamedFileInline(string $filePath, ?string $fileName = null): StreamedResponse
+    {
+        $fileSize = filesize($filePath);
+        $stream = fopen($filePath, 'r');
+
+        if ($fileName === null) {
+            $fileName = basename($filePath);
+        }
+
+        return $this->streamedInline($stream, $fileName, $fileSize);
     }
 
     /**
