@@ -37,8 +37,6 @@ import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 import {DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {EditorUiContext} from "../../../../ui/framework/core";
 import {EditorUIManager} from "../../../../ui/framework/manager";
-import {turtle} from "@codemirror/legacy-modes/mode/turtle";
-
 
 type TestEnv = {
   readonly container: HTMLDivElement;
@@ -47,6 +45,9 @@ type TestEnv = {
   readonly innerHTML: string;
 };
 
+/**
+ * @deprecated - Consider using `createTestContext` instead within the test case.
+ */
 export function initializeUnitTest(
   runTests: (testEnv: TestEnv) => void,
   editorConfig: CreateEditorArgs = {namespace: 'test', theme: {}},
@@ -793,6 +794,30 @@ export function expectNodeShapeToMatch(editor: LexicalEditor, expected: nodeShap
   const json = editor.getEditorState().toJSON();
   const shape = getNodeShape(json.root) as nodeShape;
   expect(shape.children).toMatchObject(expected);
+}
+
+/**
+ * Expect a given prop within the JSON editor state structure to be the given value.
+ * Uses dot notation for the provided `propPath`. Example:
+ * 0.5.cat => First child, Sixth child, cat property
+ */
+export function expectEditorStateJSONPropToEqual(editor: LexicalEditor, propPath: string, expected: any) {
+  let currentItem: any = editor.getEditorState().toJSON().root;
+  let currentPath = [];
+  const pathParts = propPath.split('.');
+
+  for (const part of pathParts) {
+    currentPath.push(part);
+    const childAccess = Number.isInteger(Number(part)) && Array.isArray(currentItem.children);
+    const target = childAccess ? currentItem.children : currentItem;
+
+    if (typeof target[part] === 'undefined') {
+      throw new Error(`Could not resolve editor state at path ${currentPath.join('.')}`)
+    }
+    currentItem = target[part];
+  }
+
+  expect(currentItem).toBe(expected);
 }
 
 function formatHtml(s: string): string {

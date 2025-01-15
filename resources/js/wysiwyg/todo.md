@@ -2,11 +2,7 @@
 
 ## In progress
 
-Reorg
-  - Merge custom nodes into original nodes
-    - Reduce down to use CommonBlockNode where possible
-    - Remove existing formatType/ElementFormatType references (replaced with alignment).
-    - Remove existing indent references (replaced with inset).
+//
 
 ## Main Todo
 
