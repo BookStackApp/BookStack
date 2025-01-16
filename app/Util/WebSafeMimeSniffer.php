@@ -33,6 +33,7 @@ class WebSafeMimeSniffer
         'image/webp',
         'image/avif',
         'image/heic',
+        'image/svg+xml',
         'text/css',
         'text/csv',
         'text/javascript',

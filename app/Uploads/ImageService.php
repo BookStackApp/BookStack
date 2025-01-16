@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ImageService
 {
-    protected static array $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    protected static array $supportedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
     public function __construct(
         protected ImageStorage $storage,

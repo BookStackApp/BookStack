@@ -32,7 +32,7 @@ class ZipExportImage extends ZipExportModel
 
     public static function validate(ZipValidationHelper $context, array $data): array
     {
-        $acceptedImageTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
+        $acceptedImageTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp', 'image/svg+xml'];
         $rules = [
             'id'    => ['nullable', 'int', $context->uniqueIdRule('image')],
             'name'  => ['required', 'string', 'min:1'],

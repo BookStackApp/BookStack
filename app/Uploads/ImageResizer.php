@@ -66,6 +66,11 @@ class ImageResizer
         bool $keepRatio = false,
         bool $shouldCreate = false
     ): ?string {
+        // Do not attempt to resize SVGs, return the raw value always.
+        if ($this->isSvg($image)) {
+            return $this->storage->getPublicUrl($image->path);
+        }
+
         // Do not resize GIF images where we're not cropping
         if ($keepRatio && $this->isGif($image)) {
             return $this->storage->getPublicUrl($image->path);
@@ -224,6 +229,14 @@ class ImageResizer
     protected function isGif(Image $image): bool
     {
         return $this->getExtension($image) === 'gif';
+    }
+
+    /**
+     * Checks if the image is a svg. Returns true if it is, else false.
+     */
+    protected function isSvg(Image $image): bool
+    {
+        return $this->getExtension($image) === 'svg';
     }
 
     /**
