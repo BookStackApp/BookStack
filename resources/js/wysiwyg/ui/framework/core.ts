@@ -53,6 +53,13 @@ export abstract class EditorUiElement {
         return this.dom;
     }
 
+    rebuildDOM(): HTMLElement {
+        const newDOM = this.buildDOM();
+        this.dom?.replaceWith(newDOM);
+        this.dom = newDOM;
+        return this.dom;
+    }
+
     trans(text: string) {
         return this.getContext().translate(text);
     }
