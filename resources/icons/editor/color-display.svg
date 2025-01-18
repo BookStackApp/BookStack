@@ -1,0 +1,10 @@
+<svg version="1.1" viewBox="0 -960 960 960" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <pattern id="pattern2" x="0.40000001" patternTransform="scale(200)" preserveAspectRatio="xMidYMid" xlink:href="#Checkerboard"/>
+  <pattern id="Checkerboard" width="2" height="2" fill="#b6b6b6" patternTransform="translate(0) scale(10)" patternUnits="userSpaceOnUse" preserveAspectRatio="xMidYMid">
+   <rect width="1" height="1"/>
+   <rect x="1" y="1" width="1" height="1"/>
+  </pattern>
+ </defs>
+ <rect class="editor-icon-color-display" x="103.53" y="-856.47" width="752.94" height="752.94" rx="47.059" ry="47.059" fill="url(#pattern2)" stroke="#666" stroke-linecap="square" stroke-linejoin="round" stroke-width="47.059"/>
+</svg>

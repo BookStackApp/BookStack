@@ -19,15 +19,17 @@ export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefiniti
     valuesByLabel: Record<string, string>
 }
 
+export type EditorFormFields = (EditorFormFieldDefinition|EditorUiBuilderDefinition)[];
+
 interface EditorFormTabDefinition {
     label: string;
-    contents: EditorFormFieldDefinition[];
+    contents: EditorFormFields;
 }
 
 export interface EditorFormDefinition {
     submitText: string;
     action: (formData: FormData, context: EditorUiContext) => Promise<boolean>;
-    fields: (EditorFormFieldDefinition|EditorUiBuilderDefinition)[];
+    fields: EditorFormFields;
 }
 
 export class EditorFormField extends EditorUiElement {
@@ -41,6 +43,7 @@ export class EditorFormField extends EditorUiElement {
     setValue(value: string) {
         const input = this.getDOMElement().querySelector('input,select,textarea') as HTMLInputElement;
         input.value = value;
+        input.dispatchEvent(new Event('change'));
     }
 
     getName(): string {
@@ -155,11 +158,17 @@ export class EditorForm extends EditorContainerUiElement {
 export class EditorFormTab extends EditorContainerUiElement {
 
     protected definition: EditorFormTabDefinition;
-    protected fields: EditorFormField[];
+    protected fields: EditorUiElement[];
     protected id: string;
 
     constructor(definition: EditorFormTabDefinition) {
-        const fields = definition.contents.map(fieldDef => new EditorFormField(fieldDef));
+        const fields = definition.contents.map(fieldDef => {
+            if (isUiBuilderDefinition(fieldDef)) {
+                return fieldDef.build();
+            }
+            return new EditorFormField(fieldDef)
+        });
+
         super(fields);
 
         this.definition = definition;

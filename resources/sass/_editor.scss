@@ -649,6 +649,16 @@ textarea.editor-form-field-input {
     width: $inputWidth - 40px;
   }
 }
+.editor-color-field-container {
+  position: relative;
+  input {
+    padding-left: 36px;
+  }
+  .editor-dropdown-menu-container {
+    position: absolute;
+    bottom: 0;
+  }
+}
 
 // Editor theme styles
 .editor-theme-bold {

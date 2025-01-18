@@ -1,6 +1,6 @@
 import {
     EditorFormDefinition,
-    EditorFormFieldDefinition,
+    EditorFormFieldDefinition, EditorFormFields,
     EditorFormTabs,
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
@@ -17,6 +17,7 @@ import {
 import {formatSizeValue} from "../../../utils/dom";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {CommonBlockAlignment} from "lexical/nodes/common";
+import {colorFieldBuilder} from "../../framework/blocks/color-field";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -145,15 +146,15 @@ export const cellProperties: EditorFormDefinition = {
                     } as EditorSelectFormFieldDefinition,
                 ];
 
-                const advancedFields: EditorFormFieldDefinition[] = [
+                const advancedFields: EditorFormFields = [
                     {
                         label: 'Border width', // inline-style: border-width
                         name: 'border_width',
                         type: 'text',
                     },
                     borderStyleInput, // inline-style: border-style
-                    borderColorInput, // inline-style: border-color
-                    backgroundColorInput, // inline-style: background-color
+                    colorFieldBuilder(borderColorInput),
+                    colorFieldBuilder(backgroundColorInput),
                 ];
 
                 return new EditorFormTabs([
@@ -210,8 +211,8 @@ export const rowProperties: EditorFormDefinition = {
             type: 'text',
         },
         borderStyleInput, // style on tr: height
-        borderColorInput, // style on tr: height
-        backgroundColorInput, // style on tr: height
+        colorFieldBuilder(borderColorInput),
+        colorFieldBuilder(backgroundColorInput),
     ],
 };
 
@@ -305,10 +306,10 @@ export const tableProperties: EditorFormDefinition = {
                     alignmentInput, // alignment class
                 ];
 
-                const advancedFields: EditorFormFieldDefinition[] = [
-                    borderStyleInput, // Style - border-style
-                    borderColorInput, // Style - border-color
-                    backgroundColorInput, // Style - background-color
+                const advancedFields: EditorFormFields = [
+                    borderStyleInput,
+                    colorFieldBuilder(borderColorInput),
+                    colorFieldBuilder(backgroundColorInput),
                 ];
 
                 return new EditorFormTabs([

@@ -1,6 +1,4 @@
-import {EditorUiElement} from "../core";
-import {$getSelection} from "lexical";
-import {$patchStyleText} from "@lexical/selection";
+import {EditorUiContext, EditorUiElement} from "../core";
 import {el} from "../../../utils/dom";
 
 import removeIcon from "@icons/editor/color-clear.svg";
@@ -38,13 +36,15 @@ const colorChoices = [
 
 const storageKey = 'bs-lexical-custom-colors';
 
+export type EditorColorPickerCallback = (color: string, context: EditorUiContext) => void;
+
 export class EditorColorPicker extends EditorUiElement {
 
-    protected styleProperty: string;
+    protected callback: EditorColorPickerCallback;
 
-    constructor(styleProperty: string) {
+    constructor(callback: EditorColorPickerCallback) {
         super();
-        this.styleProperty = styleProperty;
+        this.callback = callback;
     }
 
     buildDOM(): HTMLElement {
@@ -131,11 +131,6 @@ export class EditorColorPicker extends EditorUiElement {
     }
 
     setColor(color: string) {
-        this.getContext().editor.update(() => {
-            const selection = $getSelection();
-            if (selection) {
-                $patchStyleText(selection, {[this.styleProperty]: color || null});
-            }
-        });
+        this.callback(color, this.getContext());
     }
 }
