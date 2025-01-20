@@ -54,6 +54,31 @@ class UserAvatars
     }
 
     /**
+     * Assign a new avatar image to the given user by fetching from a remote URL.
+     */
+    public function assignToUserFromUrl(User $user, string $avatarUrl, ?string $accessToken = null): void
+    {
+        // Quickly skip invalid or non-HTTP URLs
+        if (!$avatarUrl || !str_starts_with($avatarUrl, 'http')) {
+            return;
+        }
+
+        try {
+            $this->destroyAllForUser($user);
+            $imageData = $this->getAvatarImageData($avatarUrl, $accessToken);
+            $avatar = $this->createAvatarImageFromData($user, $imageData, 'png');
+            $user->avatar()->associate($avatar);
+            $user->save();
+        } catch (Exception $e) {
+            Log::error('Failed to save user avatar image from URL', [
+                'exception' => $e,
+                'url'       => $avatarUrl,
+                'user_id'   => $user->id,
+            ]);
+        }
+    }
+
+    /**
      * Destroy all user avatars uploaded to the given user.
      */
     public function destroyAllForUser(User $user): void
@@ -105,15 +130,21 @@ class UserAvatars
     }
 
     /**
-     * Gets an image from url and returns it as a string of image data.
+     * Gets an image from a URL (public or private) and returns it as a string of image data.
      *
      * @throws HttpFetchException
      */
-    protected function getAvatarImageData(string $url): string
+    protected function getAvatarImageData(string $url, ?string $accessToken = null): string
     {
         try {
+            $headers = [];
+            if (!empty($accessToken)) {
+                $headers['Authorization'] = 'Bearer ' . $accessToken;
+            }
+
             $client = $this->http->buildClient(5);
-            $response = $client->sendRequest(new Request('GET', $url));
+            $response = $client->sendRequest(new Request('GET', $url, $headers));
+
             if ($response->getStatusCode() !== 200) {
                 throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));
             }
