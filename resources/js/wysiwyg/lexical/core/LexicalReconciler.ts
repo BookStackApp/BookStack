@@ -171,16 +171,21 @@ function $createNode(
   }
 
   if (parentDOM !== null) {
-    if (insertDOM != null) {
-      parentDOM.insertBefore(dom, insertDOM);
-    } else {
-      // @ts-expect-error: internal field
-      const possibleLineBreak = parentDOM.__lexicalLineBreak;
 
-      if (possibleLineBreak != null) {
-        parentDOM.insertBefore(dom, possibleLineBreak);
+    const inserted = node?.insertDOMIntoParent(dom, parentDOM);
+
+    if (!inserted) {
+      if (insertDOM != null) {
+        parentDOM.insertBefore(dom, insertDOM);
       } else {
-        parentDOM.appendChild(dom);
+        // @ts-expect-error: internal field
+        const possibleLineBreak = parentDOM.__lexicalLineBreak;
+
+        if (possibleLineBreak != null) {
+          parentDOM.insertBefore(dom, possibleLineBreak);
+        } else {
+          parentDOM.appendChild(dom);
+        }
       }
     }
   }

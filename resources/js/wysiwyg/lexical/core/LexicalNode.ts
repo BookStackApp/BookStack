@@ -1165,6 +1165,16 @@ export class LexicalNode {
   markDirty(): void {
     this.getWritable();
   }
+
+  /**
+   * Insert the DOM of this node into that of the parent.
+   * Allows this node to implement custom DOM attachment logic.
+   * Boolean result indicates if the insertion was handled by the function.
+   * A true return value prevents default insertion logic from taking place.
+   */
+  insertDOMIntoParent(nodeDOM: HTMLElement, parentDOM: HTMLElement): boolean {
+    return false;
+  }
 }
 
 function errorOnTypeKlassMismatch(
