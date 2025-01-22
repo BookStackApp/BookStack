@@ -18,6 +18,7 @@ import {formatSizeValue} from "../../../utils/dom";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {CommonBlockAlignment} from "lexical/nodes/common";
 import {colorFieldBuilder} from "../../framework/blocks/color-field";
+import {$addCaptionToTable, $isCaptionNode, $tableHasCaption} from "@lexical/table/LexicalCaptionNode";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -219,6 +220,7 @@ export const rowProperties: EditorFormDefinition = {
 export function $showTablePropertiesForm(table: TableNode, context: EditorUiContext): EditorFormModal {
     const styles = table.getStyles();
     const modalForm = context.manager.createModal('table_properties');
+
     modalForm.show({
         width: styles.get('width') || '',
         height: styles.get('height') || '',
@@ -228,7 +230,7 @@ export function $showTablePropertiesForm(table: TableNode, context: EditorUiCont
         border_style: styles.get('border-style') || '',
         border_color: styles.get('border-color') || '',
         background_color: styles.get('background-color') || '',
-        // caption: '', TODO
+        caption: $tableHasCaption(table) ? 'true' : '',
         align: table.getAlignment(),
     });
     return modalForm;
@@ -265,7 +267,17 @@ export const tableProperties: EditorFormDefinition = {
                 });
             }
 
-            // TODO - cell caption
+            const showCaption = Boolean(formData.get('caption')?.toString() || '');
+            const hasCaption = $tableHasCaption(table);
+            if (showCaption && !hasCaption) {
+                $addCaptionToTable(table, context.translate('Caption'));
+            } else if (!showCaption && hasCaption) {
+                for (const child of table.getChildren()) {
+                    if ($isCaptionNode(child)) {
+                        child.remove();
+                    }
+                }
+            }
         });
         return true;
     },
@@ -299,9 +311,9 @@ export const tableProperties: EditorFormDefinition = {
                         type: 'text',
                     },
                     {
-                        label: 'caption', // Caption element
+                        label: 'Show caption', // Caption element
                         name: 'caption',
-                        type: 'text', // TODO -
+                        type: 'checkbox',
                     },
                     alignmentInput, // alignment class
                 ];

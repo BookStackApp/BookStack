@@ -1,4 +1,5 @@
 import {
+    $createTextNode,
     DOMConversionMap,
     DOMExportOutput,
     EditorConfig,
@@ -7,6 +8,7 @@ import {
     LexicalNode,
     SerializedElementNode
 } from "lexical";
+import {TableNode} from "@lexical/table/LexicalTableNode";
 
 
 export class CaptionNode extends ElementNode {
@@ -71,4 +73,20 @@ export function $createCaptionNode(): CaptionNode {
 
 export function $isCaptionNode(node: LexicalNode | null | undefined): node is CaptionNode {
     return node instanceof CaptionNode;
+}
+
+export function $tableHasCaption(table: TableNode): boolean {
+    for (const child of table.getChildren()) {
+        if ($isCaptionNode(child)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+export function $addCaptionToTable(table: TableNode, text: string = ''): void {
+    const caption = $createCaptionNode();
+    const textNode = $createTextNode(text || ' ');
+    caption.append(textNode);
+    table.append(caption);
 }

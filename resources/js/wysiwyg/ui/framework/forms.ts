@@ -11,7 +11,7 @@ import {el} from "../../utils/dom";
 export interface EditorFormFieldDefinition {
     label: string;
     name: string;
-    type: 'text' | 'select' | 'textarea';
+    type: 'text' | 'select' | 'textarea' | 'checkbox';
 }
 
 export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefinition {
@@ -42,7 +42,11 @@ export class EditorFormField extends EditorUiElement {
 
     setValue(value: string) {
         const input = this.getDOMElement().querySelector('input,select,textarea') as HTMLInputElement;
-        input.value = value;
+        if (this.definition.type === 'checkbox') {
+            input.checked = Boolean(value);
+        } else {
+            input.value = value;
+        }
         input.dispatchEvent(new Event('change'));
     }
 
@@ -61,6 +65,8 @@ export class EditorFormField extends EditorUiElement {
             input = el('select', {id, name: this.definition.name, class: 'editor-form-field-input'}, optionElems);
         } else if (this.definition.type === 'textarea') {
             input = el('textarea', {id, name: this.definition.name, class: 'editor-form-field-input'});
+        } else if (this.definition.type === 'checkbox') {
+            input = el('input', {id, name: this.definition.name, type: 'checkbox', class: 'editor-form-field-input-checkbox', value: 'true'});
         } else {
             input = el('input', {id, name: this.definition.name, class: 'editor-form-field-input'});
         }
