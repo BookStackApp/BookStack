@@ -222,6 +222,23 @@ class PageController extends Controller
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission('page-update', $page);
 
+        $editorRevision = $request->get("revision");
+        // TODO This query is repeated at app/Entities/Tools/PageEditorData.php:73
+        //      Should probably be extracted, also we could fetch other information like the user
+        //      that created the newer revision and when it happened
+        $currentRevisionId = $page->currentRevision()?->get(['id'])->first()->id;
+
+        if ($editorRevision != $currentRevisionId) {
+            // TODO This is probably all kinds of wrong
+            //      We need to send the user back to their copy of the page so they
+            //      can save it or restart from the current revision
+            $this->showWarningNotification(trans("errors.page_update_conflict", [
+                "editorRevision" => $editorRevision,
+                "currentRevision" => $currentRevisionId
+            ]));
+            return $this->edit($request, $bookSlug, $pageSlug);
+        }
+
         $this->pageRepo->update($page, $request->all());
 
         return redirect($page->getUrl());

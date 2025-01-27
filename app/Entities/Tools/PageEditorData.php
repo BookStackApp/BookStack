@@ -70,6 +70,7 @@ class PageEditorData
             'draftsEnabled'   => $draftsEnabled,
             'templates'       => $templates,
             'editor'          => $editorType,
+            'revision'        => $page->currentRevision()->get(['id'])?->first()?->id,
             'comments'        => new CommentTree($page),
         ];
     }

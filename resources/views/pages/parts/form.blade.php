@@ -33,6 +33,7 @@
                 {{--Editors--}}
                 <div class="edit-area flex-fill flex">
                     <input type="hidden" name="editor" value="{{ $editor->value }}">
+                    <input type="hidden" name="revision" value="{{ $revision }}">
 
                     @if($editor === \BookStack\Entities\Tools\PageEditorType::WysiwygLexical)
                         @include('pages.parts.wysiwyg-editor', ['model' => $model])

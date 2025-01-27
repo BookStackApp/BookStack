@@ -64,6 +64,7 @@ return [
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',
     'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
     'page_custom_home_deletion' => 'Cannot delete a page while it is set as a homepage',
+    'page_update_conflict' => 'The page was edited between your revision (:editorRevision) and now (:currentRevision)',
 
     // Entities
     'entity_not_found' => 'Entity not found',
