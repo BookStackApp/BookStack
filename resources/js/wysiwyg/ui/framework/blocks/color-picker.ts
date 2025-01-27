@@ -63,7 +63,7 @@ export class EditorColorPicker extends EditorUiElement {
         const removeButton = el('div', {
             class: 'editor-color-select-option',
             'data-color': '',
-            title: 'Clear color',
+            title: this.getContext().translate('Remove color'),
         }, []);
         removeButton.innerHTML = removeIcon;
         colorOptions.push(removeButton);
@@ -72,7 +72,7 @@ export class EditorColorPicker extends EditorUiElement {
             class: 'editor-color-select-option',
             for: `color-select-${id}`,
             'data-color': '',
-            title: 'Custom color',
+            title: this.getContext().translate('Custom color'),
         }, []);
         selectButton.innerHTML = selectIcon;
         colorOptions.push(selectButton);

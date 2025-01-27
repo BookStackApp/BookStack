@@ -165,7 +165,7 @@ export const diagramManager: EditorButtonDefinition = {
 };
 
 export const media: EditorButtonDefinition = {
-    label: 'Insert/edit Media',
+    label: 'Insert/edit media',
     icon: mediaIcon,
     action(context: EditorUiContext) {
         context.editor.getEditorState().read(() => {
