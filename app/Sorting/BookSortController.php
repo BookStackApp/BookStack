@@ -1,11 +1,10 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Sorting;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\BookContents;
-use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -47,7 +46,7 @@ class BookSortController extends Controller
     /**
      * Sorts a book using a given mapping array.
      */
-    public function update(Request $request, string $bookSlug)
+    public function update(Request $request, BookSorter $sorter, string $bookSlug)
     {
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
@@ -58,8 +57,7 @@ class BookSortController extends Controller
         }
 
         $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
-        $bookContents = new BookContents($book);
-        $booksInvolved = $bookContents->sortUsingMap($sortMap);
+        $booksInvolved = $sorter->sortUsingMap($sortMap);
 
         // Rebuild permissions and add activity for involved books.
         foreach ($booksInvolved as $bookInvolved) {

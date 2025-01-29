@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Entities\Tools;
+namespace BookStack\Sorting;
 
 class BookSortMapItem
 {
