@@ -96,35 +96,3 @@ function theme_path(string $path = ''): ?string
 
     return base_path('themes/' . $theme . ($path ? DIRECTORY_SEPARATOR . $path : $path));
 }
-
-/**
- * Generate a URL with multiple parameters for sorting purposes.
- * Works out the logic to set the correct sorting direction
- * Discards empty parameters and allows overriding.
- */
-function sortUrl(string $path, array $data, array $overrideData = []): string
-{
-    $queryStringSections = [];
-    $queryData = array_merge($data, $overrideData);
-
-    // Change sorting direction is already sorted on current attribute
-    if (isset($overrideData['sort']) && $overrideData['sort'] === $data['sort']) {
-        $queryData['order'] = ($data['order'] === 'asc') ? 'desc' : 'asc';
-    } elseif (isset($overrideData['sort'])) {
-        $queryData['order'] = 'asc';
-    }
-
-    foreach ($queryData as $name => $value) {
-        $trimmedVal = trim($value);
-        if ($trimmedVal === '') {
-            continue;
-        }
-        $queryStringSections[] = urlencode($name) . '=' . urlencode($trimmedVal);
-    }
-
-    if (count($queryStringSections) === 0) {
-        return url($path);
-    }
-
-    return url($path . '?' . implode('&', $queryStringSections));
-}
