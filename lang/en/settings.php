@@ -74,6 +74,13 @@ return [
     'reg_confirm_restrict_domain_desc' => 'Enter a comma separated list of email domains you would like to restrict registration to. Users will be sent an email to confirm their address before being allowed to interact with the application. <br> Note that users will be able to change their email addresses after successful registration.',
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
 
+    // Sorting Settings
+    'sorting' => 'Sorting',
+    'sorting_book_default' => 'Default Book Sort',
+    'sorting_book_default_desc' => 'Select the default sort set to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
+    'sorting_sets' => 'Sort Sets',
+    'sorting_sets_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
+
     // Maintenance settings
     'maint' => 'Maintenance',
     'maint_image_cleanup' => 'Cleanup Images',

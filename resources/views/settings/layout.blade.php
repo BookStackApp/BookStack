@@ -13,6 +13,7 @@
                     <a href="{{ url('/settings/features') }}" class="{{ $category === 'features' ? 'active' : '' }}">@icon('star') {{ trans('settings.app_features_security') }}</a>
                     <a href="{{ url('/settings/customization') }}" class="{{ $category === 'customization' ? 'active' : '' }}">@icon('palette') {{ trans('settings.app_customization') }}</a>
                     <a href="{{ url('/settings/registration') }}" class="{{ $category === 'registration' ? 'active' : '' }}">@icon('security') {{ trans('settings.reg_settings') }}</a>
+                    <a href="{{ url('/settings/sorting') }}" class="{{ $category === 'sorting' ? 'active' : '' }}">@icon('sort') {{ trans('settings.sorting') }}</a>
                 </nav>
 
                 <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>
@@ -29,6 +30,7 @@
                 <div class="card content-wrap auto-height">
                     @yield('card')
                 </div>
+                @yield('after-card')
             </div>
 
         </div>
