@@ -120,7 +120,7 @@ return [
         'client_id'     => env('PLANNING_CENTER_CLIENT_ID'),
         'client_secret' => env('PLANNING_CENTER_CLIENT_SECRET'),
         'redirect'      => env('APP_URL') . '/login/service/planningcenter/callback',
-        'name'          => 'Planning Center Online',
+        'name'          => 'Planning Center',
         'auto_register' => env('PLANNING_CENTER_AUTO_REGISTER', false),
         'auto_confirm'  => env('PLANNING_CENTER_AUTO_CONFIRM_EMAIL', false),
     ],
