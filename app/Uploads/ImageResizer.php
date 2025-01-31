@@ -158,7 +158,10 @@ class ImageResizer
      */
     protected function interventionFromImageData(string $imageData, ?string $fileType): InterventionImage
     {
-        $manager = new ImageManager(new Driver());
+        $manager = new ImageManager(
+            new Driver(),
+            autoOrientation: false,
+        );
 
         // Ensure gif images are decoded natively instead of deferring to intervention GIF
         // handling since we don't need the added animation support.
