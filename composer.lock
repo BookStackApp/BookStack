@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e9b6e95d9222289ce51646e27c1f404",
+    "content-hash": "bc43805bc59ff7dc5b628e65ddafe96b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -5249,6 +5249,56 @@
                 "source": "https://github.com/socialiteproviders/providers"
             },
             "time": "2023-12-12T01:59:17+00:00"
+        },
+        {
+            "name": "socialiteproviders/planningcenter",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SocialiteProviders/PlanningCenter.git",
+                "reference": "18d371964707a411d43bbe636ec5f8d0d5f05b65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SocialiteProviders/PlanningCenter/zipball/18d371964707a411d43bbe636ec5f8d0d5f05b65",
+                "reference": "18d371964707a411d43bbe636ec5f8d0d5f05b65",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0",
+                "socialiteproviders/manager": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SocialiteProviders\\PlanningCenter\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Duncan McClean",
+                    "email": "duncan@duncanmcclean.com"
+                }
+            ],
+            "description": "Planning Center OAuth2 Provider for Laravel Socialite",
+            "keywords": [
+                "laravel",
+                "oauth",
+                "planning center",
+                "provider",
+                "socialite"
+            ],
+            "support": {
+                "docs": "https://socialiteproviders.com/planningcenter",
+                "issues": "https://github.com/socialiteproviders/providers/issues",
+                "source": "https://github.com/socialiteproviders/providers"
+            },
+            "time": "2022-08-04T06:40:43+00:00"
         },
         {
             "name": "socialiteproviders/twitch",

@@ -37,6 +37,7 @@
         "socialiteproviders/gitlab": "^4.1",
         "socialiteproviders/microsoft-azure": "^5.1",
         "socialiteproviders/okta": "^4.2",
+        "socialiteproviders/planningcenter": "^5.0",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^1.0.2",
         "ssddanbrown/symfony-mailer": "7.2.x-dev"

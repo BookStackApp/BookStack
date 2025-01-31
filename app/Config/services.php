@@ -116,6 +116,15 @@ return [
         'auto_confirm'  => env('DISCORD_AUTO_CONFIRM_EMAIL', false),
     ],
 
+    'planningcenter' => [
+        'client_id'     => env('PLANNING_CENTER_CLIENT_ID'),
+        'client_secret' => env('PLANNING_CENTER_CLIENT_SECRET'),
+        'redirect'      => env('APP_URL') . '/login/service/planningcenter/callback',
+        'name'          => 'Planning Center Online',
+        'auto_register' => env('PLANNING_CENTER_AUTO_REGISTER', false),
+        'auto_confirm'  => env('PLANNING_CENTER_AUTO_CONFIRM_EMAIL', false),
+    ],
+
     'ldap' => [
         'server'                 => env('LDAP_SERVER', false),
         'dump_user_details'      => env('LDAP_DUMP_USER_DETAILS', false),

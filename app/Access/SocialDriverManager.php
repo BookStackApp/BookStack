@@ -25,6 +25,7 @@ class SocialDriverManager
         'gitlab',
         'twitch',
         'discord',
+        'planningcenter'
     ];
 
     /**
