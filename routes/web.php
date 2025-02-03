@@ -13,7 +13,7 @@ use BookStack\Permissions\PermissionsController;
 use BookStack\References\ReferenceController;
 use BookStack\Search\SearchController;
 use BookStack\Settings as SettingControllers;
-use BookStack\Sorting\BookSortController;
+use BookStack\Sorting as SortingControllers;
 use BookStack\Theming\ThemeController;
 use BookStack\Uploads\Controllers as UploadControllers;
 use BookStack\Users\Controllers as UserControllers;
@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{slug}/edit', [EntityControllers\BookController::class, 'edit']);
     Route::put('/books/{slug}', [EntityControllers\BookController::class, 'update']);
     Route::delete('/books/{id}', [EntityControllers\BookController::class, 'destroy']);
-    Route::get('/books/{slug}/sort-item', [BookSortController::class, 'showItem']);
+    Route::get('/books/{slug}/sort-item', [SortingControllers\BookSortController::class, 'showItem']);
     Route::get('/books/{slug}', [EntityControllers\BookController::class, 'show']);
     Route::get('/books/{bookSlug}/permissions', [PermissionsController::class, 'showForBook']);
     Route::put('/books/{bookSlug}/permissions', [PermissionsController::class, 'updateForBook']);
@@ -75,8 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/copy', [EntityControllers\BookController::class, 'showCopy']);
     Route::post('/books/{bookSlug}/copy', [EntityControllers\BookController::class, 'copy']);
     Route::post('/books/{bookSlug}/convert-to-shelf', [EntityControllers\BookController::class, 'convertToShelf']);
-    Route::get('/books/{bookSlug}/sort', [BookSortController::class, 'show']);
-    Route::put('/books/{bookSlug}/sort', [BookSortController::class, 'update']);
+    Route::get('/books/{bookSlug}/sort', [SortingControllers\BookSortController::class, 'show']);
+    Route::put('/books/{bookSlug}/sort', [SortingControllers\BookSortController::class, 'update']);
     Route::get('/books/{slug}/references', [ReferenceController::class, 'book']);
     Route::get('/books/{bookSlug}/export/html', [ExportControllers\BookExportController::class, 'html']);
     Route::get('/books/{bookSlug}/export/pdf', [ExportControllers\BookExportController::class, 'pdf']);
@@ -294,6 +294,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/settings/webhooks/{id}', [ActivityControllers\WebhookController::class, 'update']);
     Route::get('/settings/webhooks/{id}/delete', [ActivityControllers\WebhookController::class, 'delete']);
     Route::delete('/settings/webhooks/{id}', [ActivityControllers\WebhookController::class, 'destroy']);
+
+    // Sort Sets
+    Route::get('/settings/sorting/sets/new', [SortingControllers\SortSetController::class, 'create']);
+    Route::post('/settings/sorting/sets', [SortingControllers\SortSetController::class, 'store']);
+    Route::get('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'edit']);
+    Route::put('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'update']);
+    Route::delete('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'destroy']);
 
     // Settings
     Route::get('/settings', [SettingControllers\SettingController::class, 'index'])->name('settings');

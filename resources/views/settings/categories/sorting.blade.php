@@ -42,8 +42,16 @@
 
 @section('after-card')
     <div class="card content-wrap auto-height">
-        <h2 class="list-heading">{{ trans('settings.sorting_sets') }}</h2>
-        <p class="text-muted">{{ trans('settings.sorting_sets_desc') }}</p>
+        <div class="flex-container-row items-center gap-m">
+            <div class="flex">
+                <h2 class="list-heading">{{ trans('settings.sorting_sets') }}</h2>
+                <p class="text-muted">{{ trans('settings.sorting_sets_desc') }}</p>
+            </div>
+            <div>
+                <a href="{{ url('/settings/sorting/sets/new') }}" class="button outline">{{ trans('settings.sort_set_create') }}</a>
+            </div>
+        </div>
+
 {{--        TODO--}}
     </div>
 @endsection
