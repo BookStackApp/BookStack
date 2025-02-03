@@ -307,11 +307,14 @@ Route::middleware('mfa-setup')->group(function () {
     Route::post('/mfa/totp/confirm', [AccessControllers\MfaTotpController::class, 'confirm']);
     Route::get('/mfa/backup_codes/generate', [AccessControllers\MfaBackupCodesController::class, 'generate']);
     Route::post('/mfa/backup_codes/confirm', [AccessControllers\MfaBackupCodesController::class, 'confirm']);
+    Route::get('/mfa/email/generate', [AccessControllers\EmailController::class, 'generate']);
+    Route::post('/mfa/email/confirm', [AccessControllers\EmailController::class, 'confirm']);
 });
 Route::middleware('guest')->group(function () {
     Route::get('/mfa/verify', [AccessControllers\MfaController::class, 'verify']);
     Route::post('/mfa/totp/verify', [AccessControllers\MfaTotpController::class, 'verify']);
     Route::post('/mfa/backup_codes/verify', [AccessControllers\MfaBackupCodesController::class, 'verify']);
+    Route::post('/mfa/email/verify', [AccessControllers\EmailController::class, 'verify']);
 });
 Route::delete('/mfa/{method}/remove', [AccessControllers\MfaController::class, 'remove'])->middleware('auth');
 

@@ -20,13 +20,14 @@ class MfaValue extends Model
 
     const METHOD_TOTP = 'totp';
     const METHOD_BACKUP_CODES = 'backup_codes';
+    const METHOD_EMAIL = 'email';
 
     /**
      * Get all the MFA methods available.
      */
     public static function allMethods(): array
     {
-        return [self::METHOD_TOTP, self::METHOD_BACKUP_CODES];
+        return [self::METHOD_TOTP, self::METHOD_BACKUP_CODES, self::METHOD_EMAIL];
     }
 
     /**

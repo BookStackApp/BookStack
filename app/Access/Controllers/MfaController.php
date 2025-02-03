@@ -6,6 +6,7 @@ use BookStack\Access\Mfa\MfaValue;
 use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
+use BookStack\Access\Notifications\EmailCodeNotification;
 
 class MfaController extends Controller
 {
@@ -23,8 +24,15 @@ class MfaController extends Controller
 
         $this->setPageTitle(trans('auth.mfa_setup'));
 
+        $userMethodList = ['email'];
+        $user = $this->currentOrLastAttemptedUser();
+        if ($user->hasSystemRole('admin')) {
+            $userMethodList = MfaValue::allMethods();
+        }
+
         return view('mfa.setup', [
             'userMethods' => $userMethods,
+            'userMethodList' => $userMethodList,
         ]);
     }
 
@@ -63,6 +71,13 @@ class MfaController extends Controller
         $otherMethods = $userMethods->keys()->filter(function ($userMethod) use ($method) {
             return $method !== $userMethod;
         })->all();
+
+        $user = $this->currentOrLastAttemptedUser();
+        $code = '';
+        if($method == 'email') {
+            $validcode = MfaValue::getValueForUser($user, MfaValue::METHOD_EMAIL) ?? '';
+            $user->notify(new EmailCodeNotification($validcode));
+        }
 
         return view('mfa.verify', [
             'userMethods'  => $userMethods,
