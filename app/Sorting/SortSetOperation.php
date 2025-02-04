@@ -2,7 +2,7 @@
 
 namespace BookStack\Sorting;
 
-enum SortSetOption: string
+enum SortSetOperation: string
 {
     case NameAsc = 'name_asc';
     case NameDesc = 'name_desc';
@@ -34,11 +34,11 @@ enum SortSetOption: string
     }
 
     /**
-     * @return SortSetOption[]
+     * @return SortSetOperation[]
      */
-    public static function allExcluding(array $options): array
+    public static function allExcluding(array $operations): array
     {
-        $all = SortSetOption::cases();
-        return array_diff($all, $options);
+        $all = SortSetOperation::cases();
+        return array_diff($all, $operations);
     }
 }

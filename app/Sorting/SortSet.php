@@ -15,21 +15,21 @@ use Illuminate\Database\Eloquent\Model;
 class SortSet extends Model
 {
     /**
-     * @return SortSetOption[]
+     * @return SortSetOperation[]
      */
-    public function getOptions(): array
+    public function getOperations(): array
     {
         $strOptions = explode(',', $this->sequence);
-        $options = array_map(fn ($val) => SortSetOption::tryFrom($val), $strOptions);
+        $options = array_map(fn ($val) => SortSetOperation::tryFrom($val), $strOptions);
         return array_filter($options);
     }
 
     /**
-     * @param SortSetOption[] $options
+     * @param SortSetOperation[] $options
      */
-    public function setOptions(array $options): void
+    public function setOperations(array $options): void
     {
-        $values = array_map(fn (SortSetOption $opt) => $opt->value, $options);
+        $values = array_map(fn (SortSetOperation $opt) => $opt->value, $options);
         $this->sequence = implode(',', $values);
     }
 }
