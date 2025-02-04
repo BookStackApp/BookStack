@@ -15,9 +15,14 @@
     <div component="sort-set-manager">
         <label class="setting-list-label">{{ trans('settings.sort_set_operations') }}</label>
         <p class="text-muted text-small">{{ trans('settings.sort_set_operations_desc') }}</p>
+        @include('form.errors', ['name' => 'sequence'])
 
-        <input refs="sort-set-manager@input" type="hidden" name="books"
-               value="{{ $model?->sequence ?? '' }}">
+        <input refs="sort-set-manager@input" type="hidden" name="sequence"
+               value="{{ old('sequence') ?? $model?->sequence ?? '' }}">
+
+        @php
+            $configuredOps = old('sequence') ? \BookStack\Sorting\SortSetOperation::fromSequence(old('sequence')) : ($model?->getOperations() ?? []);
+        @endphp
 
         <div class="grid half">
             <div class="form-group">
@@ -27,8 +32,9 @@
                     aria-labelledby="sort-set-configured-operations"
                     class="scroll-box configured-option-list">
                     <li class="text-muted empty-state px-m py-s italic text-small">{{ trans('settings.sort_set_configured_operations_empty') }}</li>
-                    @foreach(($model?->getOperations() ?? []) as $option)
-                        @include('settings.sort-sets.parts.operation')
+
+                    @foreach($configuredOps as $operation)
+                        @include('settings.sort-sets.parts.operation', ['operation' => $operation])
                     @endforeach
                 </ul>
             </div>
@@ -40,7 +46,7 @@
                     aria-labelledby="sort-set-available-operations"
                     class="scroll-box available-option-list">
                     <li class="text-muted empty-state px-m py-s italic text-small">{{ trans('settings.sort_set_available_operations_empty') }}</li>
-                    @foreach(\BookStack\Sorting\SortSetOperation::allExcluding($model?->getOperations() ?? []) as $operation)
+                    @foreach(\BookStack\Sorting\SortSetOperation::allExcluding($configuredOps) as $operation)
                         @include('settings.sort-sets.parts.operation', ['operation' => $operation])
                     @endforeach
                 </ul>

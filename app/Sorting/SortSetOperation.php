@@ -39,6 +39,21 @@ enum SortSetOperation: string
     public static function allExcluding(array $operations): array
     {
         $all = SortSetOperation::cases();
-        return array_diff($all, $operations);
+        $filtered = array_filter($all, function (SortSetOperation $operation) use ($operations) {
+            return !in_array($operation, $operations);
+        });
+        return array_values($filtered);
+    }
+
+    /**
+     * Create a set of operations from a string sequence representation.
+     * (values seperated by commas).
+     * @return SortSetOperation[]
+     */
+    public static function fromSequence(string $sequence): array
+    {
+        $strOptions = explode(',', $sequence);
+        $options = array_map(fn ($val) => SortSetOperation::tryFrom($val), $strOptions);
+        return array_filter($options);
     }
 }

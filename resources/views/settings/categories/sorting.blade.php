@@ -52,6 +52,17 @@
             </div>
         </div>
 
-{{--        TODO--}}
+        @php
+            $sortSets = \BookStack\Sorting\SortSet::query()->orderBy('name', 'asc')->get();
+        @endphp
+        @if(empty($sortSets))
+            <p class="italic text-muted">{{ trans('common.no_items') }}</p>
+        @else
+            <div class="item-list">
+                @foreach($sortSets as $set)
+                    @include('settings.sort-sets.parts.sort-set-list-item', ['set' => $set])
+                @endforeach
+            </div>
+        @endif
     </div>
 @endsection

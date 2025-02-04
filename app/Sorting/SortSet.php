@@ -2,6 +2,7 @@
 
 namespace BookStack\Sorting;
 
+use BookStack\Activity\Models\Loggable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,16 +13,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class SortSet extends Model
+class SortSet extends Model implements Loggable
 {
     /**
      * @return SortSetOperation[]
      */
     public function getOperations(): array
     {
-        $strOptions = explode(',', $this->sequence);
-        $options = array_map(fn ($val) => SortSetOperation::tryFrom($val), $strOptions);
-        return array_filter($options);
+        return SortSetOperation::fromSequence($this->sequence);
     }
 
     /**
@@ -31,5 +30,15 @@ class SortSet extends Model
     {
         $values = array_map(fn (SortSetOperation $opt) => $opt->value, $options);
         $this->sequence = implode(',', $values);
+    }
+
+    public function logDescriptor(): string
+    {
+        return "({$this->id}) {$this->name}";
+    }
+
+    public function getUrl(): string
+    {
+        return url("/settings/sorting/sets/{$this->id}");
     }
 }

@@ -127,6 +127,14 @@ return [
     'comment_update'              => 'updated comment',
     'comment_delete'              => 'deleted comment',
 
+    // Sort Sets
+    'sort_set_create' => 'created sort set',
+    'sort_set_create_notification' => 'Sort set successfully created',
+    'sort_set_update' => 'updated sort set',
+    'sort_set_update_notification' => 'Sort set successfully update',
+    'sort_set_delete' => 'deleted sort set',
+    'sort_set_delete_notification' => 'Sort set successfully deleted',
+
     // Other
     'permissions_update'          => 'updated permissions',
 ];

@@ -82,6 +82,8 @@ return [
     'sorting_sets_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
     'sort_set_create' => 'Create Sort Set',
     'sort_set_edit' => 'Edit Sort Set',
+    'sort_set_delete' => 'Delete Sort Set',
+    'sort_set_delete_desc' => 'Remove this sort set from the system. Deletion will only go ahead if the sort is not in active use.',
     'sort_set_details' => 'Sort Set Details',
     'sort_set_details_desc' => 'Set a name for this sort set, which will appear in lists when users are selecting a sort.',
     'sort_set_operations' => 'Sort Operations',
