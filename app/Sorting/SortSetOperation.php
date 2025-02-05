@@ -2,6 +2,9 @@
 
 namespace BookStack\Sorting;
 
+use Closure;
+use Illuminate\Support\Str;
+
 enum SortSetOperation: string
 {
     case NameAsc = 'name_asc';
@@ -31,6 +34,12 @@ enum SortSetOperation: string
 
         $label = trans('settings.sort_set_op_' . $key) . ' ' . $label;
         return trim($label);
+    }
+
+    public function getSortFunction(): callable
+    {
+        $camelValue = Str::camel($this->value);
+        return SortSetOperationComparisons::$camelValue(...);
     }
 
     /**

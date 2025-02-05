@@ -4,6 +4,7 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
@@ -12,6 +13,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
+use BookStack\Sorting\BookSorter;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Util\HtmlDescriptionFilter;
 use Illuminate\Http\UploadedFile;
@@ -24,6 +26,7 @@ class BaseRepo
         protected ReferenceUpdater $referenceUpdater,
         protected ReferenceStore $referenceStore,
         protected PageQueries $pageQueries,
+        protected BookSorter $bookSorter,
     ) {
     }
 
@@ -132,6 +135,18 @@ class BaseRepo
 
         $entity->default_template_id = $templateExists ? $templateId : null;
         $entity->save();
+    }
+
+    /**
+     * Sort the parent of the given entity, if any auto sort actions are set for it.
+     * Typical ran during create/update/insert events.
+     */
+    public function sortParent(Entity $entity): void
+    {
+        if ($entity instanceof BookChild) {
+            $book = $entity->book;
+            $this->bookSorter->runBookAutoSort($book);
+        }
     }
 
     protected function updateDescription(Entity $entity, array $input): void

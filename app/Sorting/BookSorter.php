@@ -16,6 +16,54 @@ class BookSorter
     ) {
     }
 
+    /**
+     * Runs the auto-sort for a book if the book has a sort set applied to it.
+     * This does not consider permissions since the sort operations are centrally
+     * managed by admins so considered permitted if existing and assigned.
+     */
+    public function runBookAutoSort(Book $book): void
+    {
+        $set = $book->sortSet;
+        if (!$set) {
+            return;
+        }
+
+        $sortFunctions = array_map(function (SortSetOperation $op) {
+            return $op->getSortFunction();
+        }, $set->getOperations());
+
+        $chapters = $book->chapters()
+            ->with('pages:id,name,priority,created_at,updated_at')
+            ->get(['id', 'name', 'priority', 'created_at', 'updated_at']);
+
+        /** @var (Chapter|Book)[] $topItems */
+        $topItems = [
+            ...$book->directPages()->get(['id', 'name', 'priority', 'created_at', 'updated_at']),
+            ...$chapters,
+        ];
+
+        foreach ($sortFunctions as $sortFunction) {
+            usort($topItems, $sortFunction);
+        }
+
+        foreach ($topItems as $index => $topItem) {
+            $topItem->priority = $index + 1;
+            $topItem->save();
+        }
+
+        foreach ($chapters as $chapter) {
+            $pages = $chapter->pages->all();
+            foreach ($sortFunctions as $sortFunction) {
+                usort($pages, $sortFunction);
+            }
+
+            foreach ($pages as $index => $page) {
+                $page->priority = $index + 1;
+                $page->save();
+            }
+        }
+    }
+
 
     /**
      * Sort the books content using the given sort map.
