@@ -29,11 +29,11 @@ A platform for storing and organising information and documentation. Details for
 
 ## 📚 Project Definition
 
-BookStack is an opinionated documentation platform that provides a pleasant and simple out-of-the-box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
+BookStack is an opinionated documentation platform that provides a pleasant and simple out-of-the-box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it, but they should not interfere with the core simple user experience.
 
 BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
 
-In regard to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
+In regard to development philosophy, BookStack has a relaxed, open & positive approach. We aim to slowly yet continuously evolve the platform while providing a stable & easy upgrade path. 
 
 You can read more about the project and its origins in [our FAQ here](https://www.bookstackapp.com/about/project-faq/).
 
@@ -82,15 +82,11 @@ Big thanks to these companies for supporting the project.
 <td align="center"><a href="https://practinet.be/" target="_blank">
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/practinet.png" alt="Practinet">
 </a></td>
-<td align="center"><a href="https://transporttalent.com" target="_blank">
-    <img width="240" src="https://www.bookstackapp.com/images/sponsors/transport-talent.png" alt="Transport Talent">
-</a></td>
-</tr>
-<tr>
-<td colspan="2" align="center"><a href="https://route4me.com/" target="_blank">
+<td align="center"><a href="https://route4me.com/" target="_blank">
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
 </a></td>
-</tr></tbody></table>
+</tr>
+</tbody></table>
 
 ## 🛠️ Development & Testing
 
@@ -134,7 +130,7 @@ We want BookStack to remain accessible to as many people as possible. We aim for
 
 ## 🖥️ Website, Docs & Blog
 
-The website which contains the project docs & blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+The website which contains the project docs & blog can be found in the [BookStackApp/website](https://codeberg.org/bookstack/website) repo.
 
 ## ⚖️ License
 
@@ -161,7 +157,7 @@ Note: This is not an exhaustive list of all libraries and projects that would be
 * [KnpLabs/snappy](https://github.com/KnpLabs/snappy) - _[MIT](https://github.com/KnpLabs/snappy/blob/master/LICENSE)_
 * [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html) - _[LGPL v3.0](https://github.com/wkhtmltopdf/wkhtmltopdf/blob/master/LICENSE)_
 * [diagrams.net](https://github.com/jgraph/drawio) - _[Embedded Version Terms](https://www.diagrams.net/trust/) / [Source Project - Apache-2.0](https://github.com/jgraph/drawio/blob/dev/LICENSE)_
-* [OneLogin's SAML PHP Toolkit](https://github.com/onelogin/php-saml) - _[MIT](https://github.com/onelogin/php-saml/blob/master/LICENSE)_
+* [SAML PHP Toolkit](https://github.com/SAML-Toolkits/php-saml) - _[MIT](https://github.com/SAML-Toolkits/php-saml/blob/master/LICENSE)_
 * [League/CommonMark](https://commonmark.thephpleague.com/) - _[BSD-3-Clause](https://github.com/thephpleague/commonmark/blob/2.2/LICENSE)_
 * [League/Flysystem](https://flysystem.thephpleague.com) - _[MIT](https://github.com/thephpleague/flysystem/blob/3.x/LICENSE)_
 * [League/html-to-markdown](https://github.com/thephpleague/html-to-markdown) - _[MIT](https://github.com/thephpleague/html-to-markdown/blob/master/LICENSE)_
