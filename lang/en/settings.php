@@ -84,6 +84,8 @@ return [
     'sort_set_edit' => 'Edit Sort Set',
     'sort_set_delete' => 'Delete Sort Set',
     'sort_set_delete_desc' => 'Remove this sort set from the system. Deletion will only go ahead if the sort is not in active use.',
+    'sort_set_delete_fail_books' => 'Unable to delete this sort set since it has books assigned.',
+    'sort_set_delete_fail_default' => 'Unable to delete this sort set since it\'s used as the default book sort.',
     'sort_set_details' => 'Sort Set Details',
     'sort_set_details_desc' => 'Set a name for this sort set, which will appear in lists when users are selecting a sort.',
     'sort_set_operations' => 'Sort Operations',

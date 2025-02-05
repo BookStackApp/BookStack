@@ -1,5 +1,9 @@
 @extends('settings.layout')
 
+@php
+    $sortSets = \BookStack\Sorting\SortSet::query()->orderBy('name', 'asc')->get();
+@endphp
+
 @section('card')
     <h1 id="sorting" class="list-heading">{{ trans('settings.sorting') }}</h1>
     <form action="{{ url("/settings/sorting") }}" method="POST">
@@ -19,15 +23,13 @@
                         <option value="0" @if(intval(setting('sorting-book-default', '0')) === 0) selected @endif>
                             -- {{ trans('common.none') }} --
                         </option>
-{{--                        TODO--}}
-{{--                        @foreach(\BookStack\Users\Models\Role::all() as $role)--}}
-{{--                            <option value="{{$role->id}}"--}}
-{{--                                    data-system-role-name="{{ $role->system_name ?? '' }}"--}}
-{{--                                    @if(intval(setting('registration-role', '0')) === $role->id) selected @endif--}}
-{{--                            >--}}
-{{--                                {{ $role->display_name }}--}}
-{{--                            </option>--}}
-{{--                        @endforeach--}}
+                        @foreach($sortSets as $set)
+                            <option value="{{$set->id}}"
+                                    @if(intval(setting('sorting-book-default', '0')) === $set->id) selected @endif
+                            >
+                                {{ $set->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -52,9 +54,6 @@
             </div>
         </div>
 
-        @php
-            $sortSets = \BookStack\Sorting\SortSet::query()->orderBy('name', 'asc')->get();
-        @endphp
         @if(empty($sortSets))
             <p class="italic text-muted">{{ trans('common.no_items') }}</p>
         @else

@@ -3,8 +3,10 @@
 namespace BookStack\Sorting;
 
 use BookStack\Activity\Models\Loggable;
+use BookStack\Entities\Models\Book;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $id
@@ -40,5 +42,10 @@ class SortSet extends Model implements Loggable
     public function getUrl(): string
     {
         return url("/settings/sorting/sets/{$this->id}");
+    }
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
     }
 }

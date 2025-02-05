@@ -62,7 +62,7 @@ class SortSetController extends Controller
         $set = SortSet::query()->findOrFail($id);
         $operations = SortSetOperation::fromSequence($request->input('sequence'));
         if (count($operations) === 0) {
-            return redirect()->withInput()->withErrors(['sequence' => 'No operations set.']);
+            return redirect($set->getUrl())->withInput()->withErrors(['sequence' => 'No operations set.']);
         }
 
         $set->name = $request->input('name');
@@ -78,7 +78,16 @@ class SortSetController extends Controller
     {
         $set = SortSet::query()->findOrFail($id);
 
-        // TODO - Check if it's in use
+        if ($set->books()->count() > 0) {
+            $this->showErrorNotification(trans('settings.sort_set_delete_fail_books'));
+            return redirect($set->getUrl());
+        }
+
+        $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
+        if ($defaultBookSortSetting === intval($id)) {
+            $this->showErrorNotification(trans('settings.sort_set_delete_fail_default'));
+            return redirect($set->getUrl());
+        }
 
         $set->delete();
         $this->logActivity(ActivityType::SORT_SET_DELETE, $set);
