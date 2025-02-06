@@ -16,7 +16,7 @@ class SearchIndex
     /**
      * A list of delimiter characters used to break-up parsed content into terms for indexing.
      */
-    public static string $delimiters = " \n\t.,!?:;()[]{}<>`'\"";
+    public static string $delimiters = " \n\t.,!?:;()[]{}<>`'\"«»";
 
     public function __construct(
         protected EntityProvider $entityProvider
