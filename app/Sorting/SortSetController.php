@@ -52,7 +52,7 @@ class SortSetController extends Controller
         return view('settings.sort-sets.edit', ['set' => $set]);
     }
 
-    public function update(string $id, Request $request)
+    public function update(string $id, Request $request, BookSorter $bookSorter)
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'min:1', 'max:200'],
@@ -67,26 +67,44 @@ class SortSetController extends Controller
 
         $set->name = $request->input('name');
         $set->setOperations($operations);
+        $changedSequence = $set->isDirty('sequence');
         $set->save();
 
         $this->logActivity(ActivityType::SORT_SET_UPDATE, $set);
 
+        if ($changedSequence) {
+            $bookSorter->runBookAutoSortForAllWithSet($set);
+        }
+
         return redirect('/settings/sorting');
     }
 
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
         $set = SortSet::query()->findOrFail($id);
+        $confirmed = $request->input('confirm') === 'true';
+        $booksAssigned = $set->books()->count();
+        $warnings = [];
 
-        if ($set->books()->count() > 0) {
-            $this->showErrorNotification(trans('settings.sort_set_delete_fail_books'));
-            return redirect($set->getUrl());
+        if ($booksAssigned > 0) {
+            if ($confirmed) {
+                $set->books()->update(['sort_set_id' => null]);
+            } else {
+                $warnings[] = trans('settings.sort_set_delete_warn_books', ['count' => $booksAssigned]);
+            }
         }
 
         $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
         if ($defaultBookSortSetting === intval($id)) {
-            $this->showErrorNotification(trans('settings.sort_set_delete_fail_default'));
-            return redirect($set->getUrl());
+            if ($confirmed) {
+                setting()->remove('sorting-book-default');
+            } else {
+                $warnings[] = trans('settings.sort_set_delete_warn_default');
+            }
+        }
+
+        if (count($warnings) > 0) {
+            return redirect($set->getUrl() . '#delete')->withErrors(['delete' => $warnings]);
         }
 
         $set->delete();

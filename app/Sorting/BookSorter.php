@@ -16,6 +16,15 @@ class BookSorter
     ) {
     }
 
+    public function runBookAutoSortForAllWithSet(SortSet $set): void
+    {
+        $set->books()->chunk(50, function ($books) {
+            foreach ($books as $book) {
+                $this->runBookAutoSort($book);
+            }
+        });
+    }
+
     /**
      * Runs the auto-sort for a book if the book has a sort set applied to it.
      * This does not consider permissions since the sort operations are centrally
