@@ -8,6 +8,11 @@
                 <span>@icon('book')</span>
                 <span>{{ $book->name }}</span>
             </div>
+            <div class="flex-container-row items-center text-book">
+                @if($book->sortSet)
+                    <span title="{{ trans('entities.books_sort_auto_sort_active', ['sortName' => $book->sortSet->name]) }}">@icon('auto-sort')</span>
+                @endif
+            </div>
         </h5>
     </summary>
     <div class="sort-box-options pb-sm">

@@ -1,10 +1,7 @@
 @extends('settings.layout')
 
 @php
-    $sortSets = \BookStack\Sorting\SortSet::query()
-        ->withCount('books')
-        ->orderBy('name', 'asc')
-        ->get();
+    $sortSets = \BookStack\Sorting\SortSet::allByName();
 @endphp
 
 @section('card')
