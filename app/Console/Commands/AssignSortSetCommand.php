@@ -50,7 +50,7 @@ class AssignSortSetCommand extends Command
             }
             $query = Book::query()->where('sort_set_id', $sortId);
         } else {
-            $this->error("Either the --all-books or --books-without-sort option must be provided!");
+            $this->error("No option provided to specify target. Run with the -h option to see all available options.");
             return 1;
         }
 
@@ -79,7 +79,7 @@ class AssignSortSetCommand extends Command
             $processed = $max;
         });
 
-        $this->info("Sort applied to {$processed} books!");
+        $this->info("Sort applied to {$processed} book(s)!");
 
         return 0;
     }
