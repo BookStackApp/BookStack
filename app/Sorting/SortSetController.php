@@ -4,14 +4,13 @@ namespace BookStack\Sorting;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
-use BookStack\Http\Request;
+use Illuminate\Http\Request;
 
 class SortSetController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:settings-manage');
-        // TODO - Test
     }
 
     public function create()

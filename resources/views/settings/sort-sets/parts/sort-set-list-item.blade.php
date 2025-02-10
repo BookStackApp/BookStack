@@ -6,7 +6,7 @@
         {{ implode(', ', array_map(fn ($op) => $op->getLabel(), $set->getOperations())) }}
     </div>
     <div>
-        <span title="{{ trans('entities.tags_assigned_books') }}"
+        <span title="{{ trans_choice('settings.sort_set_assigned_to_x_books', $set->books_count ?? 0) }}"
               class="flex fill-area min-width-xxs bold text-right text-book"><span class="opacity-60">@icon('book')</span>{{ $set->books_count ?? 0 }}</span>
     </div>
 </div>

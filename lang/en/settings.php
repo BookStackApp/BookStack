@@ -80,6 +80,7 @@ return [
     'sorting_book_default_desc' => 'Select the default sort set to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_sets' => 'Sort Sets',
     'sorting_sets_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
+    'sort_set_assigned_to_x_books' => 'Assigned to :count Book|Assigned to :count Books',
     'sort_set_create' => 'Create Sort Set',
     'sort_set_edit' => 'Edit Sort Set',
     'sort_set_delete' => 'Delete Sort Set',
