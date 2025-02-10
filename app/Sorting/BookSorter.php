@@ -42,7 +42,7 @@ class BookSorter
         }, $set->getOperations());
 
         $chapters = $book->chapters()
-            ->with('pages:id,name,priority,created_at,updated_at')
+            ->with('pages:id,name,priority,created_at,updated_at,chapter_id')
             ->get(['id', 'name', 'priority', 'created_at', 'updated_at']);
 
         /** @var (Chapter|Book)[] $topItems */
