@@ -2,6 +2,7 @@
 
 namespace BookStack\Sorting;
 
+use BookStack\App\Model;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
@@ -57,7 +58,7 @@ class BookSorter
 
         foreach ($topItems as $index => $topItem) {
             $topItem->priority = $index + 1;
-            $topItem->save();
+            $topItem::withoutTimestamps(fn () => $topItem->save());
         }
 
         foreach ($chapters as $chapter) {
@@ -68,7 +69,7 @@ class BookSorter
 
             foreach ($pages as $index => $page) {
                 $page->priority = $index + 1;
-                $page->save();
+                $page::withoutTimestamps(fn () => $page->save());
             }
         }
     }
@@ -166,7 +167,7 @@ class BookSorter
         }
 
         if ($chapterChanged || $priorityChanged) {
-            $model->save();
+            $model::withoutTimestamps(fn () => $model->save());
         }
     }
 

@@ -207,6 +207,32 @@ class BookSortTest extends TestCase
         ]);
     }
 
+    public function test_book_sort_does_not_change_timestamps_on_just_order_changes()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters()->first();
+        \DB::table('chapters')->where('id', '=', $chapter->id)->update([
+            'priority' => 10001,
+            'updated_at' => \Carbon\Carbon::now()->subYear(5),
+        ]);
+
+        $chapter->refresh();
+        $oldUpdatedAt = $chapter->updated_at->unix();
+
+        $sortData = [
+            'id'            => $chapter->id,
+            'sort'          => 0,
+            'parentChapter' => false,
+            'type'          => 'chapter',
+            'book'          => $book->id,
+        ];
+        $this->asEditor()->put($book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
+
+        $chapter->refresh();
+        $this->assertNotEquals(10001, $chapter->priority);
+        $this->assertEquals($oldUpdatedAt, $chapter->updated_at->unix());
+    }
+
     public function test_book_sort_item_returns_book_content()
     {
         $bookToSort = $this->entities->book();

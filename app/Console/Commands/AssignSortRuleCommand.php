@@ -7,60 +7,60 @@ use BookStack\Sorting\BookSorter;
 use BookStack\Sorting\SortRule;
 use Illuminate\Console\Command;
 
-class AssignSortSetCommand extends Command
+class AssignSortRuleCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'bookstack:assign-sort-set
-                            {sort-set=0: ID of the sort set to apply}
+    protected $signature = 'bookstack:assign-sort-rule
+                            {sort-rule=0: ID of the sort rule to apply}
                             {--all-books : Apply to all books in the system}
-                            {--books-without-sort : Apply to only books without a sort set already assigned}
-                            {--books-with-sort= : Apply to only books with the sort of given id}';
+                            {--books-without-sort : Apply to only books without a sort rule already assigned}
+                            {--books-with-sort= : Apply to only books with the sort rule of given id}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Assign a sort set to content in the system';
+    protected $description = 'Assign a sort rule to content in the system';
 
     /**
      * Execute the console command.
      */
     public function handle(BookSorter $sorter): int
     {
-        $sortSetId = intval($this->argument('sort-set')) ?? 0;
-        if ($sortSetId === 0) {
-            return $this->listSortSets();
+        $sortRuleId = intval($this->argument('sort-rule')) ?? 0;
+        if ($sortRuleId === 0) {
+            return $this->listSortRules();
         }
 
-        $set = SortRule::query()->find($sortSetId);
+        $rule = SortRule::query()->find($sortRuleId);
         if ($this->option('all-books')) {
             $query = Book::query();
         } else if ($this->option('books-without-sort')) {
-            $query = Book::query()->whereNull('sort_set_id');
+            $query = Book::query()->whereNull('sort_rule_id');
         } else if ($this->option('books-with-sort')) {
             $sortId = intval($this->option('books-with-sort')) ?: 0;
             if (!$sortId) {
                 $this->error("Provided --books-with-sort option value is invalid");
                 return 1;
             }
-            $query = Book::query()->where('sort_set_id', $sortId);
+            $query = Book::query()->where('sort_rule_id', $sortId);
         } else {
             $this->error("No option provided to specify target. Run with the -h option to see all available options.");
             return 1;
         }
 
-        if (!$set) {
-            $this->error("Sort set of provided id {$sortSetId} not found!");
+        if (!$rule) {
+            $this->error("Sort rule of provided id {$sortRuleId} not found!");
             return 1;
         }
 
         $count = $query->clone()->count();
-        $this->warn("This will apply sort set [{$set->id}: {$set->name}] to {$count} book(s) and run the sort on each.");
+        $this->warn("This will apply sort rule [{$rule->id}: {$rule->name}] to {$count} book(s) and run the sort on each.");
         $confirmed = $this->confirm("Are you sure you want to continue?");
 
         if (!$confirmed) {
@@ -68,11 +68,11 @@ class AssignSortSetCommand extends Command
         }
 
         $processed = 0;
-        $query->chunkById(10, function ($books) use ($set, $sorter, $count, &$processed) {
+        $query->chunkById(10, function ($books) use ($rule, $sorter, $count, &$processed) {
             $max = min($count, ($processed + 10));
             $this->info("Applying to {$processed}-{$max} of {$count} books");
             foreach ($books as $book) {
-                $book->sort_set_id = $set->id;
+                $book->sort_rule_id = $rule->id;
                 $book->save();
                 $sorter->runBookAutoSort($book);
             }
@@ -84,14 +84,14 @@ class AssignSortSetCommand extends Command
         return 0;
     }
 
-    protected function listSortSets(): int
+    protected function listSortRules(): int
     {
 
-        $sets = SortRule::query()->orderBy('id', 'asc')->get();
-        $this->error("Sort set ID required!");
-        $this->warn("\nAvailable sort sets:");
-        foreach ($sets as $set) {
-            $this->info("{$set->id}: {$set->name}");
+        $rules = SortRule::query()->orderBy('id', 'asc')->get();
+        $this->error("Sort rule ID required!");
+        $this->warn("\nAvailable sort rules:");
+        foreach ($rules as $rule) {
+            $this->info("{$rule->id}: {$rule->name}");
         }
 
         return 1;

@@ -165,6 +165,27 @@ class SortRuleTest extends TestCase
         ]);
     }
 
+    public function test_auto_book_sort_does_not_touch_timestamps()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        $rule = SortRule::factory()->create(['sequence' => 'name_asc,chapters_first']);
+        $book->sort_rule_id = $rule->id;
+        $book->save();
+        $page = $book->pages()->first();
+        $chapter = $book->chapters()->first();
+
+        $resp = $this->actingAsApiEditor()->put("/api/pages/{$page->id}", [
+            'name' => '1111 page',
+        ]);
+        $resp->assertOk();
+
+        $oldTime = $chapter->updated_at->unix();
+        $oldPriority = $chapter->priority;
+        $chapter->refresh();
+        $this->assertEquals($oldTime, $chapter->updated_at->unix());
+        $this->assertNotEquals($oldPriority, $chapter->priority);
+    }
+
     public function test_name_numeric_ordering()
     {
         $book = Book::factory()->create();
