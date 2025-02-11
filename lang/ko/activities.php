@@ -127,6 +127,14 @@ return [
     'comment_update'              => '댓글 변경',
     'comment_delete'              => '댓글 삭제',
 
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully update',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+
     // Other
     'permissions_update'          => '권한 수정함',
 ];
