@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Activity;
+use BookStack\Sorting\SortRule;
 use BookStack\Uploads\ImageRepo;
 use Exception;
 use Illuminate\Http\UploadedFile;
@@ -32,6 +33,12 @@ class BookRepo
         $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
         $this->baseRepo->updateDefaultTemplate($book, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::BOOK_CREATE, $book);
+
+        $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
+        if ($defaultBookSortSetting && SortRule::query()->find($defaultBookSortSetting)) {
+            $book->sort_rule_id = $defaultBookSortSetting;
+            $book->save();
+        }
 
         return $book;
     }

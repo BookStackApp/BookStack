@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@lezer/generator": "^1.7.2",
+    "@types/sortablejs": "^1.15.8",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.24.0",
     "eslint": "^8.57.1",

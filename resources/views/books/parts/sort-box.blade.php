@@ -8,14 +8,24 @@
                 <span>@icon('book')</span>
                 <span>{{ $book->name }}</span>
             </div>
+            <div class="flex-container-row items-center text-book">
+                @if($book->sortRule)
+                    <span title="{{ trans('entities.books_sort_auto_sort_active', ['sortName' => $book->sortRule->name]) }}">@icon('auto-sort')</span>
+                @endif
+            </div>
         </h5>
     </summary>
     <div class="sort-box-options pb-sm">
-        <button type="button" data-sort="name" class="button outline small">{{ trans('entities.books_sort_name') }}</button>
-        <button type="button" data-sort="created" class="button outline small">{{ trans('entities.books_sort_created') }}</button>
-        <button type="button" data-sort="updated" class="button outline small">{{ trans('entities.books_sort_updated') }}</button>
-        <button type="button" data-sort="chaptersFirst" class="button outline small">{{ trans('entities.books_sort_chapters_first') }}</button>
-        <button type="button" data-sort="chaptersLast" class="button outline small">{{ trans('entities.books_sort_chapters_last') }}</button>
+        <button type="button" data-sort="name"
+                class="button outline small">{{ trans('entities.books_sort_name') }}</button>
+        <button type="button" data-sort="created"
+                class="button outline small">{{ trans('entities.books_sort_created') }}</button>
+        <button type="button" data-sort="updated"
+                class="button outline small">{{ trans('entities.books_sort_updated') }}</button>
+        <button type="button" data-sort="chaptersFirst"
+                class="button outline small">{{ trans('entities.books_sort_chapters_first') }}</button>
+        <button type="button" data-sort="chaptersLast"
+                class="button outline small">{{ trans('entities.books_sort_chapters_last') }}</button>
     </div>
     <ul class="sortable-page-list sort-list">
 

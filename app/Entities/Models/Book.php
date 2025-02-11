@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,12 +17,14 @@ use Illuminate\Support\Collection;
  * @property string                                   $description
  * @property int                                      $image_id
  * @property ?int                                     $default_template_id
+ * @property ?int                                     $sort_rule_id
  * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
  * @property ?Page                                    $defaultTemplate
+ * @property ?SortRule                                 $sortRule
  */
 class Book extends Entity implements HasCoverImage
 {
@@ -80,6 +83,14 @@ class Book extends Entity implements HasCoverImage
     public function defaultTemplate(): BelongsTo
     {
         return $this->belongsTo(Page::class, 'default_template_id');
+    }
+
+    /**
+     * Get the sort set assigned to this book, if existing.
+     */
+    public function sortRule(): BelongsTo
+    {
+        return $this->belongsTo(SortRule::class);
     }
 
     /**

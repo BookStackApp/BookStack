@@ -34,6 +34,8 @@ class ChapterRepo
         $this->baseRepo->updateDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
         Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
+        $this->baseRepo->sortParent($chapter);
+
         return $chapter;
     }
 
@@ -49,6 +51,8 @@ class ChapterRepo
         }
 
         Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
+
+        $this->baseRepo->sortParent($chapter);
 
         return $chapter;
     }
@@ -87,6 +91,8 @@ class ChapterRepo
         $chapter->changeBook($parent->id);
         $chapter->rebuildPermissions();
         Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
+
+        $this->baseRepo->sortParent($chapter);
 
         return $parent;
     }

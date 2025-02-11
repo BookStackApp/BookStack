@@ -50,6 +50,7 @@ export {ShelfSort} from './shelf-sort';
 export {Shortcuts} from './shortcuts';
 export {ShortcutInput} from './shortcut-input';
 export {SortableList} from './sortable-list';
+export {SortRuleManager} from './sort-rule-manager'
 export {SubmitOnChange} from './submit-on-change';
 export {Tabs} from './tabs';
 export {TagManager} from './tag-manager';

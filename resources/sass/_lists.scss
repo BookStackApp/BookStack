@@ -242,6 +242,10 @@
   margin-bottom: vars.$m;
   padding: vars.$m vars.$xl;
   position: relative;
+  summary:focus {
+    outline: 1px dashed var(--color-primary);
+    outline-offset: 5px;
+  }
   &::before {
     pointer-events: none;
     content: '';

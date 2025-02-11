@@ -1062,12 +1062,16 @@ $btt-size: 40px;
     cursor: pointer;
     @include mixins.lightDark(background-color, #f8f8f8, #333);
   }
+  &.items-center {
+    align-items: center;
+  }
   .handle {
     color: #AAA;
     cursor: grab;
   }
   button {
     opacity: .6;
+    line-height: 1;
   }
   .handle svg {
     margin: 0;
@@ -1108,12 +1112,19 @@ input.scroll-box-search, .scroll-box-header-item {
   border-radius: 0 0 3px 3px;
 }
 
-.scroll-box[refs="shelf-sort@shelf-book-list"] [data-action="add"] {
+.scroll-box.configured-option-list [data-action="add"] {
   display: none;
 }
-.scroll-box[refs="shelf-sort@all-book-list"] [data-action="remove"],
-.scroll-box[refs="shelf-sort@all-book-list"] [data-action="move_up"],
-.scroll-box[refs="shelf-sort@all-book-list"] [data-action="move_down"],
+.scroll-box.available-option-list [data-action="remove"],
+.scroll-box.available-option-list [data-action="move_up"],
+.scroll-box.available-option-list [data-action="move_down"],
 {
   display: none;
+}
+
+.scroll-box > li.empty-state {
+  display: none;
+}
+.scroll-box > li.empty-state:last-child {
+  display: list-item;
 }

@@ -1,29 +1,6 @@
 import Sortable from 'sortablejs';
 import {Component} from './component';
-
-/**
- * @type {Object<string, function(HTMLElement, HTMLElement, HTMLElement)>}
- */
-const itemActions = {
-    move_up(item) {
-        const list = item.parentNode;
-        const index = Array.from(list.children).indexOf(item);
-        const newIndex = Math.max(index - 1, 0);
-        list.insertBefore(item, list.children[newIndex] || null);
-    },
-    move_down(item) {
-        const list = item.parentNode;
-        const index = Array.from(list.children).indexOf(item);
-        const newIndex = Math.min(index + 2, list.children.length);
-        list.insertBefore(item, list.children[newIndex] || null);
-    },
-    remove(item, shelfBooksList, allBooksList) {
-        allBooksList.appendChild(item);
-    },
-    add(item, shelfBooksList) {
-        shelfBooksList.appendChild(item);
-    },
-};
+import {buildListActions, sortActionClickListener} from '../services/dual-lists.ts';
 
 export class ShelfSort extends Component {
 
@@ -55,12 +32,9 @@ export class ShelfSort extends Component {
     }
 
     setupListeners() {
-        this.elem.addEventListener('click', event => {
-            const sortItemAction = event.target.closest('.scroll-box-item button[data-action]');
-            if (sortItemAction) {
-                this.sortItemActionClick(sortItemAction);
-            }
-        });
+        const listActions = buildListActions(this.allBookList, this.shelfBookList);
+        const sortActionListener = sortActionClickListener(listActions, this.onChange.bind(this));
+        this.elem.addEventListener('click', sortActionListener);
 
         this.bookSearchInput.addEventListener('input', () => {
             this.filterBooksByName(this.bookSearchInput.value);
@@ -91,20 +65,6 @@ export class ShelfSort extends Component {
             const show = !filterVal || bookEl.textContent.toLowerCase().includes(lowerFilter);
             bookEl.style.display = show ? null : 'none';
         }
-    }
-
-    /**
-     * Called when a sort item action button is clicked.
-     * @param {HTMLElement} sortItemAction
-     */
-    sortItemActionClick(sortItemAction) {
-        const sortItem = sortItemAction.closest('.scroll-box-item');
-        const {action} = sortItemAction.dataset;
-
-        const actionFunction = itemActions[action];
-        actionFunction(sortItem, this.shelfBookList, this.allBookList);
-
-        this.onChange();
     }
 
     onChange() {

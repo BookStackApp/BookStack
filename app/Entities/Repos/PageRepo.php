@@ -83,6 +83,7 @@ class PageRepo
         $draft->refresh();
 
         Activity::add(ActivityType::PAGE_CREATE, $draft);
+        $this->baseRepo->sortParent($draft);
 
         return $draft;
     }
@@ -128,6 +129,7 @@ class PageRepo
         }
 
         Activity::add(ActivityType::PAGE_UPDATE, $page);
+        $this->baseRepo->sortParent($page);
 
         return $page;
     }
@@ -243,6 +245,8 @@ class PageRepo
         Activity::add(ActivityType::PAGE_RESTORE, $page);
         Activity::add(ActivityType::REVISION_RESTORE, $revision);
 
+        $this->baseRepo->sortParent($page);
+
         return $page;
     }
 
@@ -271,6 +275,8 @@ class PageRepo
         $page->rebuildPermissions();
 
         Activity::add(ActivityType::PAGE_MOVE, $page);
+
+        $this->baseRepo->sortParent($page);
 
         return $parent;
     }

@@ -26,7 +26,9 @@ class BookFactory extends Factory
             'name'        => $this->faker->sentence(),
             'slug'        => Str::random(10),
             'description' => $description,
-            'description_html' => '<p>' . e($description) . '</p>'
+            'description_html' => '<p>' . e($description) . '</p>',
+            'sort_rule_id' => null,
+            'default_template_id' => null,
         ];
     }
 }

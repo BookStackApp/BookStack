@@ -1,11 +1,10 @@
 <?php
 
-namespace BookStack\Entities\Controllers;
+namespace BookStack\Sorting;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\BookContents;
-use BookStack\Entities\Tools\BookSortMap;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -45,25 +44,40 @@ class BookSortController extends Controller
     }
 
     /**
-     * Sorts a book using a given mapping array.
+     * Update the sort options of a book, setting the auto-sort and/or updating
+     * child order via mapping.
      */
-    public function update(Request $request, string $bookSlug)
+    public function update(Request $request, BookSorter $sorter, string $bookSlug)
     {
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('book-update', $book);
+        $loggedActivityForBook = false;
 
-        // Return if no map sent
-        if (!$request->filled('sort-tree')) {
-            return redirect($book->getUrl());
+        // Sort via map
+        if ($request->filled('sort-tree')) {
+            $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
+            $booksInvolved = $sorter->sortUsingMap($sortMap);
+
+            // Rebuild permissions and add activity for involved books.
+            foreach ($booksInvolved as $bookInvolved) {
+                Activity::add(ActivityType::BOOK_SORT, $bookInvolved);
+                if ($bookInvolved->id === $book->id) {
+                    $loggedActivityForBook = true;
+                }
+            }
         }
 
-        $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
-        $bookContents = new BookContents($book);
-        $booksInvolved = $bookContents->sortUsingMap($sortMap);
-
-        // Rebuild permissions and add activity for involved books.
-        foreach ($booksInvolved as $bookInvolved) {
-            Activity::add(ActivityType::BOOK_SORT, $bookInvolved);
+        if ($request->filled('auto-sort')) {
+            $sortSetId = intval($request->get('auto-sort')) ?: null;
+            if ($sortSetId && SortRule::query()->find($sortSetId) === null) {
+                $sortSetId = null;
+            }
+            $book->sort_rule_id = $sortSetId;
+            $book->save();
+            $sorter->runBookAutoSort($book);
+            if (!$loggedActivityForBook) {
+                Activity::add(ActivityType::BOOK_SORT, $book);
+            }
         }
 
         return redirect($book->getUrl());

@@ -71,6 +71,10 @@ class ActivityType
     const IMPORT_RUN = 'import_run';
     const IMPORT_DELETE = 'import_delete';
 
+    const SORT_RULE_CREATE = 'sort_rule_create';
+    const SORT_RULE_UPDATE = 'sort_rule_update';
+    const SORT_RULE_DELETE = 'sort_rule_delete';
+
     /**
      * Get all the possible values.
      */
