@@ -6,7 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 
-class SortSetController extends Controller
+class SortRuleController extends Controller
 {
     public function __construct()
     {
@@ -15,9 +15,9 @@ class SortSetController extends Controller
 
     public function create()
     {
-        $this->setPageTitle(trans('settings.sort_set_create'));
+        $this->setPageTitle(trans('settings.sort_rule_create'));
 
-        return view('settings.sort-sets.create');
+        return view('settings.sort-rules.create');
     }
 
     public function store(Request $request)
@@ -27,28 +27,28 @@ class SortSetController extends Controller
             'sequence' => ['required', 'string', 'min:1'],
         ]);
 
-        $operations = SortSetOperation::fromSequence($request->input('sequence'));
+        $operations = SortRuleOperation::fromSequence($request->input('sequence'));
         if (count($operations) === 0) {
             return redirect()->withInput()->withErrors(['sequence' => 'No operations set.']);
         }
 
-        $set = new SortSet();
-        $set->name = $request->input('name');
-        $set->setOperations($operations);
-        $set->save();
+        $rule = new SortRule();
+        $rule->name = $request->input('name');
+        $rule->setOperations($operations);
+        $rule->save();
 
-        $this->logActivity(ActivityType::SORT_SET_CREATE, $set);
+        $this->logActivity(ActivityType::SORT_RULE_CREATE, $rule);
 
         return redirect('/settings/sorting');
     }
 
     public function edit(string $id)
     {
-        $set = SortSet::query()->findOrFail($id);
+        $rule = SortRule::query()->findOrFail($id);
 
-        $this->setPageTitle(trans('settings.sort_set_edit'));
+        $this->setPageTitle(trans('settings.sort_rule_edit'));
 
-        return view('settings.sort-sets.edit', ['set' => $set]);
+        return view('settings.sort-rules.edit', ['rule' => $rule]);
     }
 
     public function update(string $id, Request $request, BookSorter $bookSorter)
@@ -58,21 +58,21 @@ class SortSetController extends Controller
             'sequence' => ['required', 'string', 'min:1'],
         ]);
 
-        $set = SortSet::query()->findOrFail($id);
-        $operations = SortSetOperation::fromSequence($request->input('sequence'));
+        $rule = SortRule::query()->findOrFail($id);
+        $operations = SortRuleOperation::fromSequence($request->input('sequence'));
         if (count($operations) === 0) {
-            return redirect($set->getUrl())->withInput()->withErrors(['sequence' => 'No operations set.']);
+            return redirect($rule->getUrl())->withInput()->withErrors(['sequence' => 'No operations set.']);
         }
 
-        $set->name = $request->input('name');
-        $set->setOperations($operations);
-        $changedSequence = $set->isDirty('sequence');
-        $set->save();
+        $rule->name = $request->input('name');
+        $rule->setOperations($operations);
+        $changedSequence = $rule->isDirty('sequence');
+        $rule->save();
 
-        $this->logActivity(ActivityType::SORT_SET_UPDATE, $set);
+        $this->logActivity(ActivityType::SORT_RULE_UPDATE, $rule);
 
         if ($changedSequence) {
-            $bookSorter->runBookAutoSortForAllWithSet($set);
+            $bookSorter->runBookAutoSortForAllWithSet($rule);
         }
 
         return redirect('/settings/sorting');
@@ -80,16 +80,16 @@ class SortSetController extends Controller
 
     public function destroy(string $id, Request $request)
     {
-        $set = SortSet::query()->findOrFail($id);
+        $rule = SortRule::query()->findOrFail($id);
         $confirmed = $request->input('confirm') === 'true';
-        $booksAssigned = $set->books()->count();
+        $booksAssigned = $rule->books()->count();
         $warnings = [];
 
         if ($booksAssigned > 0) {
             if ($confirmed) {
-                $set->books()->update(['sort_set_id' => null]);
+                $rule->books()->update(['sort_rule_id' => null]);
             } else {
-                $warnings[] = trans('settings.sort_set_delete_warn_books', ['count' => $booksAssigned]);
+                $warnings[] = trans('settings.sort_rule_delete_warn_books', ['count' => $booksAssigned]);
             }
         }
 
@@ -98,16 +98,16 @@ class SortSetController extends Controller
             if ($confirmed) {
                 setting()->remove('sorting-book-default');
             } else {
-                $warnings[] = trans('settings.sort_set_delete_warn_default');
+                $warnings[] = trans('settings.sort_rule_delete_warn_default');
             }
         }
 
         if (count($warnings) > 0) {
-            return redirect($set->getUrl() . '#delete')->withErrors(['delete' => $warnings]);
+            return redirect($rule->getUrl() . '#delete')->withErrors(['delete' => $warnings]);
         }
 
-        $set->delete();
-        $this->logActivity(ActivityType::SORT_SET_DELETE, $set);
+        $rule->delete();
+        $this->logActivity(ActivityType::SORT_RULE_DELETE, $rule);
 
         return redirect('/settings/sorting');
     }

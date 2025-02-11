@@ -1,7 +1,7 @@
 @extends('settings.layout')
 
 @php
-    $sortSets = \BookStack\Sorting\SortSet::allByName();
+    $sortRules = \BookStack\Sorting\SortRule::allByName();
 @endphp
 
 @section('card')
@@ -23,7 +23,7 @@
                         <option value="0" @if(intval(setting('sorting-book-default', '0')) === 0) selected @endif>
                             -- {{ trans('common.none') }} --
                         </option>
-                        @foreach($sortSets as $set)
+                        @foreach($sortRules as $set)
                             <option value="{{$set->id}}"
                                     @if(intval(setting('sorting-book-default', '0')) === $set->id) selected @endif
                             >
@@ -46,20 +46,21 @@
     <div class="card content-wrap auto-height">
         <div class="flex-container-row items-center gap-m">
             <div class="flex">
-                <h2 class="list-heading">{{ trans('settings.sorting_sets') }}</h2>
-                <p class="text-muted">{{ trans('settings.sorting_sets_desc') }}</p>
+                <h2 class="list-heading">{{ trans('settings.sorting_rules') }}</h2>
+                <p class="text-muted">{{ trans('settings.sorting_rules_desc') }}</p>
             </div>
             <div>
-                <a href="{{ url('/settings/sorting/sets/new') }}" class="button outline">{{ trans('settings.sort_set_create') }}</a>
+                <a href="{{ url('/settings/sorting/rules/new') }}"
+                   class="button outline">{{ trans('settings.sort_rule_create') }}</a>
             </div>
         </div>
 
-        @if(empty($sortSets))
+        @if(empty($sortRules))
             <p class="italic text-muted">{{ trans('common.no_items') }}</p>
         @else
             <div class="item-list">
-                @foreach($sortSets as $set)
-                    @include('settings.sort-sets.parts.sort-set-list-item', ['set' => $set])
+                @foreach($sortRules as $rule)
+                    @include('settings.sort-rules.parts.sort-rule-list-item', ['rule' => $rule])
                 @endforeach
             </div>
         @endif

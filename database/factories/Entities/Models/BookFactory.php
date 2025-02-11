@@ -27,7 +27,7 @@ class BookFactory extends Factory
             'slug'        => Str::random(10),
             'description' => $description,
             'description_html' => '<p>' . e($description) . '</p>',
-            'sort_set_id' => null,
+            'sort_rule_id' => null,
             'default_template_id' => null,
         ];
     }

@@ -5,7 +5,7 @@ namespace BookStack\Sorting;
 use Closure;
 use Illuminate\Support\Str;
 
-enum SortSetOperation: string
+enum SortRuleOperation: string
 {
     case NameAsc = 'name_asc';
     case NameDesc = 'name_desc';
@@ -26,13 +26,13 @@ enum SortSetOperation: string
         $label = '';
         if (str_ends_with($key, '_asc')) {
             $key = substr($key, 0, -4);
-            $label = trans('settings.sort_set_op_asc');
+            $label = trans('settings.sort_rule_op_asc');
         } elseif (str_ends_with($key, '_desc')) {
             $key = substr($key, 0, -5);
-            $label = trans('settings.sort_set_op_desc');
+            $label = trans('settings.sort_rule_op_desc');
         }
 
-        $label = trans('settings.sort_set_op_' . $key) . ' ' . $label;
+        $label = trans('settings.sort_rule_op_' . $key) . ' ' . $label;
         return trim($label);
     }
 
@@ -43,12 +43,12 @@ enum SortSetOperation: string
     }
 
     /**
-     * @return SortSetOperation[]
+     * @return SortRuleOperation[]
      */
     public static function allExcluding(array $operations): array
     {
-        $all = SortSetOperation::cases();
-        $filtered = array_filter($all, function (SortSetOperation $operation) use ($operations) {
+        $all = SortRuleOperation::cases();
+        $filtered = array_filter($all, function (SortRuleOperation $operation) use ($operations) {
             return !in_array($operation, $operations);
         });
         return array_values($filtered);
@@ -57,12 +57,12 @@ enum SortSetOperation: string
     /**
      * Create a set of operations from a string sequence representation.
      * (values seperated by commas).
-     * @return SortSetOperation[]
+     * @return SortRuleOperation[]
      */
     public static function fromSequence(string $sequence): array
     {
         $strOptions = explode(',', $sequence);
-        $options = array_map(fn ($val) => SortSetOperation::tryFrom($val), $strOptions);
+        $options = array_map(fn ($val) => SortRuleOperation::tryFrom($val), $strOptions);
         return array_filter($options);
     }
 }

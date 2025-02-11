@@ -17,24 +17,24 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
-class SortSet extends Model implements Loggable
+class SortRule extends Model implements Loggable
 {
     use HasFactory;
 
     /**
-     * @return SortSetOperation[]
+     * @return SortRuleOperation[]
      */
     public function getOperations(): array
     {
-        return SortSetOperation::fromSequence($this->sequence);
+        return SortRuleOperation::fromSequence($this->sequence);
     }
 
     /**
-     * @param SortSetOperation[] $options
+     * @param SortRuleOperation[] $options
      */
     public function setOperations(array $options): void
     {
-        $values = array_map(fn (SortSetOperation $opt) => $opt->value, $options);
+        $values = array_map(fn (SortRuleOperation $opt) => $opt->value, $options);
         $this->sequence = implode(',', $values);
     }
 
@@ -45,7 +45,7 @@ class SortSet extends Model implements Loggable
 
     public function getUrl(): string
     {
-        return url("/settings/sorting/sets/{$this->id}");
+        return url("/settings/sorting/rules/{$this->id}");
     }
 
     public function books(): HasMany

@@ -3,7 +3,7 @@ import Sortable from "sortablejs";
 import {buildListActions, sortActionClickListener} from "../services/dual-lists";
 
 
-export class SortSetManager extends Component {
+export class SortRuleManager extends Component {
 
     protected input!: HTMLInputElement;
     protected configuredList!: HTMLElement;
@@ -25,7 +25,7 @@ export class SortSetManager extends Component {
         const scrollBoxes = [this.configuredList, this.availableList];
         for (const scrollBox of scrollBoxes) {
             new Sortable(scrollBox, {
-                group: 'sort-set-operations',
+                group: 'sort-rule-operations',
                 ghostClass: 'primary-background-light',
                 handle: '.handle',
                 animation: 150,

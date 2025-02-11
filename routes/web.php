@@ -295,12 +295,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/webhooks/{id}/delete', [ActivityControllers\WebhookController::class, 'delete']);
     Route::delete('/settings/webhooks/{id}', [ActivityControllers\WebhookController::class, 'destroy']);
 
-    // Sort Sets
-    Route::get('/settings/sorting/sets/new', [SortingControllers\SortSetController::class, 'create']);
-    Route::post('/settings/sorting/sets', [SortingControllers\SortSetController::class, 'store']);
-    Route::get('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'edit']);
-    Route::put('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'update']);
-    Route::delete('/settings/sorting/sets/{id}', [SortingControllers\SortSetController::class, 'destroy']);
+    // Sort Rules
+    Route::get('/settings/sorting/rules/new', [SortingControllers\SortRuleController::class, 'create']);
+    Route::post('/settings/sorting/rules', [SortingControllers\SortRuleController::class, 'store']);
+    Route::get('/settings/sorting/rules/{id}', [SortingControllers\SortRuleController::class, 'edit']);
+    Route::put('/settings/sorting/rules/{id}', [SortingControllers\SortRuleController::class, 'update']);
+    Route::delete('/settings/sorting/rules/{id}', [SortingControllers\SortRuleController::class, 'destroy']);
 
     // Settings
     Route::get('/settings', [SettingControllers\SettingController::class, 'index'])->name('settings');

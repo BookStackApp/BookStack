@@ -16,7 +16,7 @@ class BookSorter
     ) {
     }
 
-    public function runBookAutoSortForAllWithSet(SortSet $set): void
+    public function runBookAutoSortForAllWithSet(SortRule $set): void
     {
         $set->books()->chunk(50, function ($books) {
             foreach ($books as $book) {
@@ -32,12 +32,12 @@ class BookSorter
      */
     public function runBookAutoSort(Book $book): void
     {
-        $set = $book->sortSet;
+        $set = $book->sortRule;
         if (!$set) {
             return;
         }
 
-        $sortFunctions = array_map(function (SortSetOperation $op) {
+        $sortFunctions = array_map(function (SortRuleOperation $op) {
             return $op->getSortFunction();
         }, $set->getOperations());
 

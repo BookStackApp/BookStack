@@ -5,7 +5,7 @@ namespace Sorting;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\PageRepo;
-use BookStack\Sorting\SortSet;
+use BookStack\Sorting\SortRule;
 use Tests\TestCase;
 
 class BookSortTest extends TestCase
@@ -223,13 +223,13 @@ class BookSortTest extends TestCase
 
     public function test_book_sort_item_shows_auto_sort_status()
     {
-        $sort = SortSet::factory()->create(['name' => 'My sort']);
+        $sort = SortRule::factory()->create(['name' => 'My sort']);
         $book = $this->entities->book();
 
         $resp = $this->asAdmin()->get($book->getUrl('/sort-item'));
         $this->withHtml($resp)->assertElementNotExists("span[title='Auto Sort Active: My sort']");
 
-        $book->sort_set_id = $sort->id;
+        $book->sort_rule_id = $sort->id;
         $book->save();
 
         $resp = $this->asAdmin()->get($book->getUrl('/sort-item'));
@@ -238,7 +238,7 @@ class BookSortTest extends TestCase
 
     public function test_auto_sort_options_shown_on_sort_page()
     {
-        $sort = SortSet::factory()->create();
+        $sort = SortRule::factory()->create();
         $book = $this->entities->book();
         $resp = $this->asAdmin()->get($book->getUrl('/sort'));
 
@@ -247,7 +247,7 @@ class BookSortTest extends TestCase
 
     public function test_auto_sort_option_submit_saves_to_book()
     {
-        $sort = SortSet::factory()->create();
+        $sort = SortRule::factory()->create();
         $book = $this->entities->book();
         $bookPage = $book->pages()->first();
         $bookPage->priority = 10000;
@@ -261,7 +261,7 @@ class BookSortTest extends TestCase
         $book->refresh();
         $bookPage->refresh();
 
-        $this->assertEquals($sort->id, $book->sort_set_id);
+        $this->assertEquals($sort->id, $book->sort_rule_id);
         $this->assertNotEquals(10000, $bookPage->priority);
 
         $resp = $this->get($book->getUrl('/sort'));

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->unsignedInteger('sort_set_id')->nullable()->default(null);
+        Schema::create('sort_rules', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->text('sequence');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('books', function (Blueprint $table) {
-            $table->dropColumn('sort_set_id');
-        });
+        Schema::dropIfExists('sort_rules');
     }
 };

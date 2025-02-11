@@ -4,7 +4,7 @@ namespace BookStack\Console\Commands;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Sorting\BookSorter;
-use BookStack\Sorting\SortSet;
+use BookStack\Sorting\SortRule;
 use Illuminate\Console\Command;
 
 class AssignSortSetCommand extends Command
@@ -37,7 +37,7 @@ class AssignSortSetCommand extends Command
             return $this->listSortSets();
         }
 
-        $set = SortSet::query()->find($sortSetId);
+        $set = SortRule::query()->find($sortSetId);
         if ($this->option('all-books')) {
             $query = Book::query();
         } else if ($this->option('books-without-sort')) {
@@ -87,7 +87,7 @@ class AssignSortSetCommand extends Command
     protected function listSortSets(): int
     {
 
-        $sets = SortSet::query()->orderBy('id', 'asc')->get();
+        $sets = SortRule::query()->orderBy('id', 'asc')->get();
         $this->error("Sort set ID required!");
         $this->warn("\nAvailable sort sets:");
         foreach ($sets as $set) {

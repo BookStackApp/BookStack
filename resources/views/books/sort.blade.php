@@ -23,19 +23,21 @@
                         <p class="text-muted flex min-width-s mb-none">{{ trans('entities.books_sort_desc') }}</p>
                         <div class="min-width-s">
                             @php
-                                $autoSortVal = intval(old('auto-sort') ?? $book->sort_set_id ?? 0);
+                                $autoSortVal = intval(old('auto-sort') ?? $book->sort_rule_id ?? 0);
                             @endphp
                             <label for="auto-sort">{{ trans('entities.books_sort_auto_sort') }}</label>
                             <select id="auto-sort"
                                     name="auto-sort"
                                     form="sort-form"
                                     class="{{ $errors->has('auto-sort') ? 'neg' : '' }}">
-                                <option value="0" @if($autoSortVal === 0) selected @endif>-- {{ trans('common.none') }} --</option>
-                                @foreach(\BookStack\Sorting\SortSet::allByName() as $set)
-                                    <option value="{{$set->id}}"
-                                            @if($autoSortVal === $set->id) selected @endif
+                                <option value="0" @if($autoSortVal === 0) selected @endif>-- {{ trans('common.none') }}
+                                    --
+                                </option>
+                                @foreach(\BookStack\Sorting\SortRule::allByName() as $rule)
+                                    <option value="{{$rule->id}}"
+                                            @if($autoSortVal === $rule->id) selected @endif
                                     >
-                                        {{ $set->name }}
+                                        {{ $rule->name }}
                                     </option>
                                 @endforeach
                             </select>

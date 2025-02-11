@@ -69,10 +69,10 @@ class BookSortController extends Controller
 
         if ($request->filled('auto-sort')) {
             $sortSetId = intval($request->get('auto-sort')) ?: null;
-            if ($sortSetId && SortSet::query()->find($sortSetId) === null) {
+            if ($sortSetId && SortRule::query()->find($sortSetId) === null) {
                 $sortSetId = null;
             }
-            $book->sort_set_id = $sortSetId;
+            $book->sort_rule_id = $sortSetId;
             $book->save();
             $sorter->runBookAutoSort($book);
             if (!$loggedActivityForBook) {

@@ -3,14 +3,14 @@
 namespace Commands;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Sorting\SortSet;
+use BookStack\Sorting\SortRule;
 use Tests\TestCase;
 
 class AssignSortSetCommandTest extends TestCase
 {
     public function test_no_given_sort_set_lists_options()
     {
-        $sortSets = SortSet::factory()->createMany(10);
+        $sortSets = SortRule::factory()->createMany(10);
 
         $commandRun = $this->artisan('bookstack:assign-sort-set')
             ->expectsOutputToContain('Sort set ID required!')
@@ -37,7 +37,7 @@ class AssignSortSetCommandTest extends TestCase
 
     public function test_confirmation_required()
     {
-        $sortSet = SortSet::factory()->create();
+        $sortSet = SortRule::factory()->create();
 
         $this->artisan("bookstack:assign-sort-set {$sortSet->id} --all-books")
             ->expectsConfirmation('Are you sure you want to continue?', 'no')
@@ -49,7 +49,7 @@ class AssignSortSetCommandTest extends TestCase
 
     public function test_assign_to_all_books()
     {
-        $sortSet = SortSet::factory()->create();
+        $sortSet = SortRule::factory()->create();
         $booksWithoutSort = Book::query()->whereNull('sort_set_id')->count();
         $this->assertGreaterThan(0, $booksWithoutSort);
 
@@ -67,9 +67,9 @@ class AssignSortSetCommandTest extends TestCase
     {
         $totalBooks = Book::query()->count();
         $book = $this->entities->book();
-        $sortSetA = SortSet::factory()->create();
-        $sortSetB = SortSet::factory()->create();
-        $book->sort_set_id = $sortSetA->id;
+        $sortSetA = SortRule::factory()->create();
+        $sortSetB = SortRule::factory()->create();
+        $book->sort_rule_id = $sortSetA->id;
         $book->save();
 
         $booksWithoutSort = Book::query()->whereNull('sort_set_id')->count();
@@ -88,9 +88,9 @@ class AssignSortSetCommandTest extends TestCase
     public function test_assign_to_all_books_with_sort()
     {
         $book = $this->entities->book();
-        $sortSetA = SortSet::factory()->create();
-        $sortSetB = SortSet::factory()->create();
-        $book->sort_set_id = $sortSetA->id;
+        $sortSetA = SortRule::factory()->create();
+        $sortSetB = SortRule::factory()->create();
+        $book->sort_rule_id = $sortSetA->id;
         $book->save();
 
         $this->artisan("bookstack:assign-sort-set {$sortSetB->id} --books-with-sort={$sortSetA->id}")
@@ -99,7 +99,7 @@ class AssignSortSetCommandTest extends TestCase
             ->assertExitCode(0);
 
         $book->refresh();
-        $this->assertEquals($sortSetB->id, $book->sort_set_id);
+        $this->assertEquals($sortSetB->id, $book->sort_rule_id);
         $this->assertEquals(1, $sortSetB->books()->count());
     }
 
