@@ -127,6 +127,14 @@ return [
     'comment_update'              => '评论已更新',
     'comment_delete'              => '评论已删除',
 
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully update',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+
     // Other
     'permissions_update'          => '权限已更新',
 ];
