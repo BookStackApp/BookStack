@@ -31,7 +31,7 @@ return [
     'book_create'                 => 'criou o livro',
     'book_create_notification'    => 'Livro criado com sucesso',
     'book_create_from_chapter'              => 'capítulo convertido em livro',
-    'book_create_from_chapter_notification' => 'Capítulo convertido com sucesso em um livro',
+    'book_create_from_chapter_notification' => 'Capítulo convertido em livro com sucesso',
     'book_update'                 => 'atualizou o livro',
     'book_update_notification'    => 'Livro atualizado com sucesso',
     'book_delete'                 => 'excluiu o livro',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'Comentário deletado',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully update',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'regra de classificação criada',
+    'sort_rule_create_notification' => 'Regra de classificação criada com sucesso',
+    'sort_rule_update' => 'regra de classificação atualizada',
+    'sort_rule_update_notification' => 'Regra de classificação atualizada com sucesso',
+    'sort_rule_delete' => 'regra de classificação excluída',
+    'sort_rule_delete_notification' => 'Regra de classificação excluída com sucesso',
 
     // Other
     'permissions_update'          => 'atualizou permissões',
