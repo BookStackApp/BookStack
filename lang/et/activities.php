@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Veebihaak on kustutatud',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'lisas impordi',
+    'import_create_notification' => 'Import on üles laaditud',
+    'import_run' => 'muutis importi',
+    'import_run_notification' => 'Sisu on imporditud',
+    'import_delete' => 'kustutas impordi',
+    'import_delete_notification' => 'Import on kustutatud',
 
     // Users
     'user_create' => 'lisas kasutaja',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'kustutas kommentaari',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully update',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'lisas sorteerimisreegli',
+    'sort_rule_create_notification' => 'Sorteerimisreegel on lisatud',
+    'sort_rule_update' => 'muutis sorteerimisreeglit',
+    'sort_rule_update_notification' => 'Sorteerimisreegel on muudetud',
+    'sort_rule_delete' => 'kustutas sorteerimisreegli',
+    'sort_rule_delete_notification' => 'Sorteerimisreegel on kustutatud',
 
     // Other
     'permissions_update'          => 'muutis õiguseid',
