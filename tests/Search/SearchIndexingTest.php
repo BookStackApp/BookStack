@@ -75,6 +75,22 @@ class SearchIndexingTest extends TestCase
         $this->assertEquals(3, $scoreByTerm->get('SuperImportant'));
     }
 
+    public function test_terms_containing_guillemets_handled()
+    {
+        $page = $this->entities->newPage(['html' => '<p>«Hello there» and « there »</p>']);
+
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
+        $expected = ['Hello', 'there', 'and'];
+        foreach ($expected as $term) {
+            $this->assertNotNull($scoreByTerm->get($term), "Failed asserting that \"$term\" is indexed");
+        }
+
+        $nonExpected = ['«', '»'];
+        foreach ($nonExpected as $term) {
+            $this->assertNull($scoreByTerm->get($term), "Failed asserting that \"$term\" is not indexed");
+        }
+    }
+
     public function test_terms_containing_punctuation_within_retain_original_form_and_split_form_in_index()
     {
         $page = $this->entities->newPage(['html' => '<p>super.duper awesome-beans big- barry cheese.</p><p>biscuits</p><p>a-bs</p>']);
