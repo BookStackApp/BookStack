@@ -181,7 +181,7 @@ class SearchOptions
     protected static function parseStandardTermString(string $termString): array
     {
         $terms = explode(' ', $termString);
-        $indexDelimiters = SearchIndex::$delimiters;
+        $indexDelimiters = implode('', array_diff(str_split(SearchIndex::$delimiters), str_split(SearchIndex::$softDelimiters)));
         $parsed = [
             'terms'  => [],
             'exacts' => [],

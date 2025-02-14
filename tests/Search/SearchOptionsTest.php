@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity;
+namespace Search;
 
 use BookStack\Search\Options\ExactSearchOption;
 use BookStack\Search\Options\FilterSearchOption;
