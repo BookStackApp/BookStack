@@ -16,7 +16,13 @@ class SearchIndex
     /**
      * A list of delimiter characters used to break-up parsed content into terms for indexing.
      */
-    public static string $delimiters = " \n\t.,!?:;()[]{}<>`'\"";
+    public static string $delimiters = " \n\t.-,!?:;()[]{}<>`'\"";
+
+    /**
+     * A list of delimiter which could be commonly used within a single term and also indicate a break between terms.
+     * The indexer will index the full term with these delimiters, plus the terms split via these delimiters.
+     */
+    public static string $softDelimiters = ".-";
 
     public function __construct(
         protected EntityProvider $entityProvider
@@ -196,15 +202,36 @@ class SearchIndex
     protected function textToTermCountMap(string $text): array
     {
         $tokenMap = []; // {TextToken => OccurrenceCount}
-        $splitChars = static::$delimiters;
-        $token = strtok($text, $splitChars);
+        $softDelims = static::$softDelimiters;
+        $tokenizer = new SearchTextTokenizer($text, static::$delimiters);
+        $extendedToken = '';
+        $extendedLen = 0;
+
+        $token = $tokenizer->next();
 
         while ($token !== false) {
-            if (!isset($tokenMap[$token])) {
-                $tokenMap[$token] = 0;
+            $delim = $tokenizer->previousDelimiter();
+
+            if ($delim && str_contains($softDelims, $delim) && $token !== '') {
+                $extendedToken .= $delim . $token;
+                $extendedLen++;
+            } else {
+                if ($extendedLen > 1) {
+                    $tokenMap[$extendedToken] = ($tokenMap[$extendedToken] ?? 0) + 1;
+                }
+                $extendedToken = $token;
+                $extendedLen = 1;
             }
-            $tokenMap[$token]++;
-            $token = strtok($splitChars);
+
+            if ($token) {
+                $tokenMap[$token] = ($tokenMap[$token] ?? 0) + 1;
+            }
+
+            $token = $tokenizer->next();
+        }
+
+        if ($extendedLen > 1) {
+            $tokenMap[$extendedToken] = ($tokenMap[$extendedToken] ?? 0) + 1;
         }
 
         return $tokenMap;

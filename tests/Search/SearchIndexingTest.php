@@ -74,4 +74,20 @@ class SearchIndexingTest extends TestCase
         $this->assertEquals(3, $scoreByTerm->get('Animal'));
         $this->assertEquals(3, $scoreByTerm->get('SuperImportant'));
     }
+
+    public function test_terms_containing_punctuation_within_retain_original_form_and_split_form_in_index()
+    {
+        $page = $this->entities->newPage(['html' => '<p>super.duper awesome-beans big- barry cheese.</p><p>biscuits</p><p>a-bs</p>']);
+
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
+        $expected = ['super', 'duper', 'super.duper', 'awesome-beans', 'awesome', 'beans', 'big', 'barry', 'cheese', 'biscuits', 'a-bs', 'a', 'bs'];
+        foreach ($expected as $term) {
+            $this->assertNotNull($scoreByTerm->get($term), "Failed asserting that \"$term\" is indexed");
+        }
+
+        $nonExpected = ['big-', 'big-barry', 'cheese.', 'cheese.biscuits'];
+        foreach ($nonExpected as $term) {
+            $this->assertNull($scoreByTerm->get($term), "Failed asserting that \"$term\" is not indexed");
+        }
+    }
 }
