@@ -16,7 +16,7 @@ class SearchIndex
     /**
      * A list of delimiter characters used to break-up parsed content into terms for indexing.
      */
-    public static string $delimiters = " \n\t.-,!?:;()[]{}<>`'\"";
+    public static string $delimiters = " \n\t.-,!?:;()[]{}<>`'\"«»";
 
     /**
      * A list of delimiter which could be commonly used within a single term and also indicate a break between terms.
