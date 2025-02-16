@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => 'Ordenación',
     'sorting_book_default' => 'Orden por defecto del libro',
-    'sorting_book_default_desc' => 'Seleccione el rol de ordenación por defecto para aplicar a nuevos libros. Esto no afectará a los libros existentes, y puede ser anulado por libro.',
+    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Reglas de ordenación',
     'sorting_rules_desc' => 'Son operaciones de ordenación predefinidas que se pueden aplicar al contenido en el sistema.',
     'sort_rule_assigned_to_x_books' => 'Asignado a :count libro | Asignado a :count libros',
