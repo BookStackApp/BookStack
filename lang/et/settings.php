@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => 'Sorteerimine',
     'sorting_book_default' => 'Vaikimisi raamatu sorteerimine',
-    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
+    'sorting_book_default_desc' => 'Vali vaikimisi uutele raamatutele rakenduv sorteerimisreegel. See ei mõjuta olemasolevaid raamatuid ning seda saab raamatupõhiselt muuta.',
     'sorting_rules' => 'Sorteerimisreeglid',
     'sorting_rules_desc' => 'Need on eeldefineeritud sorteerimistoimingud, mida saab süsteemis olevale sisule rakendada.',
     'sort_rule_assigned_to_x_books' => 'Määratud :count raamatule|Määratud :count raamatule',
