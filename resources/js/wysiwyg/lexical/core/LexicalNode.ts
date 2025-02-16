@@ -146,6 +146,12 @@ type NodeName = string;
  * Output for a DOM conversion.
  * Node can be set to 'ignore' to ignore the conversion and handling of the DOMNode
  * including all its children.
+ *
+ * You can specify a function to run for each converted child (forChild) or on all
+ * the child nodes after the conversion is complete (after).
+ * The key difference here is that forChild runs for every deeply nested child node
+ * of the current node, whereas after will run only once after the
+ * transformation of the node and all its children is complete.
  */
 export type DOMConversionOutput = {
   after?: (childLexicalNodes: Array<LexicalNode>) => Array<LexicalNode>;
@@ -1164,6 +1170,16 @@ export class LexicalNode {
    * */
   markDirty(): void {
     this.getWritable();
+  }
+
+  /**
+   * Insert the DOM of this node into that of the parent.
+   * Allows this node to implement custom DOM attachment logic.
+   * Boolean result indicates if the insertion was handled by the function.
+   * A true return value prevents default insertion logic from taking place.
+   */
+  insertDOMIntoParent(nodeDOM: HTMLElement, parentDOM: HTMLElement): boolean {
+    return false;
   }
 }
 

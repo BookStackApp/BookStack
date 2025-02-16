@@ -11,7 +11,7 @@ import {el} from "../../utils/dom";
 export interface EditorFormFieldDefinition {
     label: string;
     name: string;
-    type: 'text' | 'select' | 'textarea';
+    type: 'text' | 'select' | 'textarea' | 'checkbox';
 }
 
 export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefinition {
@@ -19,15 +19,17 @@ export interface EditorSelectFormFieldDefinition extends EditorFormFieldDefiniti
     valuesByLabel: Record<string, string>
 }
 
+export type EditorFormFields = (EditorFormFieldDefinition|EditorUiBuilderDefinition)[];
+
 interface EditorFormTabDefinition {
     label: string;
-    contents: EditorFormFieldDefinition[];
+    contents: EditorFormFields;
 }
 
 export interface EditorFormDefinition {
     submitText: string;
     action: (formData: FormData, context: EditorUiContext) => Promise<boolean>;
-    fields: (EditorFormFieldDefinition|EditorUiBuilderDefinition)[];
+    fields: EditorFormFields;
 }
 
 export class EditorFormField extends EditorUiElement {
@@ -40,7 +42,12 @@ export class EditorFormField extends EditorUiElement {
 
     setValue(value: string) {
         const input = this.getDOMElement().querySelector('input,select,textarea') as HTMLInputElement;
-        input.value = value;
+        if (this.definition.type === 'checkbox') {
+            input.checked = Boolean(value);
+        } else {
+            input.value = value;
+        }
+        input.dispatchEvent(new Event('change'));
     }
 
     getName(): string {
@@ -58,6 +65,8 @@ export class EditorFormField extends EditorUiElement {
             input = el('select', {id, name: this.definition.name, class: 'editor-form-field-input'}, optionElems);
         } else if (this.definition.type === 'textarea') {
             input = el('textarea', {id, name: this.definition.name, class: 'editor-form-field-input'});
+        } else if (this.definition.type === 'checkbox') {
+            input = el('input', {id, name: this.definition.name, type: 'checkbox', class: 'editor-form-field-input-checkbox', value: 'true'});
         } else {
             input = el('input', {id, name: this.definition.name, class: 'editor-form-field-input'});
         }
@@ -155,11 +164,17 @@ export class EditorForm extends EditorContainerUiElement {
 export class EditorFormTab extends EditorContainerUiElement {
 
     protected definition: EditorFormTabDefinition;
-    protected fields: EditorFormField[];
+    protected fields: EditorUiElement[];
     protected id: string;
 
     constructor(definition: EditorFormTabDefinition) {
-        const fields = definition.contents.map(fieldDef => new EditorFormField(fieldDef));
+        const fields = definition.contents.map(fieldDef => {
+            if (isUiBuilderDefinition(fieldDef)) {
+                return fieldDef.build();
+            }
+            return new EditorFormField(fieldDef)
+        });
+
         super(fields);
 
         this.definition = definition;

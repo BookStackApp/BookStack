@@ -139,6 +139,8 @@ export class TableNode extends CommonBlockNode {
           for (const child of Array.from(tableElement.children)) {
             if (child.nodeName === 'TR') {
               tBody.append(child);
+            } else if (child.nodeName === 'CAPTION') {
+              newElement.insertBefore(child, newElement.firstChild);
             } else {
               newElement.append(child);
             }

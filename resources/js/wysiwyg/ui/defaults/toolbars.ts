@@ -44,11 +44,11 @@ import {
 } from "./buttons/block-formats";
 import {
     bold, clearFormating, code,
-    highlightColor,
+    highlightColor, highlightColorAction,
     italic,
     strikethrough, subscript,
     superscript,
-    textColor,
+    textColor, textColorAction,
     underline
 } from "./buttons/inline-formats";
 import {
@@ -114,10 +114,10 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
             new EditorButton(italic),
             new EditorButton(underline),
             new EditorDropdownButton({ button: new EditorColorButton(textColor, 'color') }, [
-                new EditorColorPicker('color'),
+                new EditorColorPicker(textColorAction),
             ]),
             new EditorDropdownButton({button: new EditorColorButton(highlightColor, 'background-color')}, [
-                new EditorColorPicker('background-color'),
+                new EditorColorPicker(highlightColorAction),
             ]),
             new EditorButton(strikethrough),
             new EditorButton(superscript),

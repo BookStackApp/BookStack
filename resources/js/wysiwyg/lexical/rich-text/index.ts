@@ -8,7 +8,6 @@
 
 import type {
   CommandPayloadType,
-  ElementFormatType,
   LexicalCommand,
   LexicalEditor,
   PasteCommandType,
@@ -44,7 +43,6 @@ import {
   DRAGSTART_COMMAND,
   DROP_COMMAND,
   ElementNode,
-  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INSERT_LINE_BREAK_COMMAND,
   INSERT_PARAGRAPH_COMMAND,
@@ -281,25 +279,6 @@ export function registerRichText(editor: LexicalEditor): () => void {
           return false;
         }
         selection.formatText(format);
-        return true;
-      },
-      COMMAND_PRIORITY_EDITOR,
-    ),
-    editor.registerCommand<ElementFormatType>(
-      FORMAT_ELEMENT_COMMAND,
-      (format) => {
-        const selection = $getSelection();
-        if (!$isRangeSelection(selection) && !$isNodeSelection(selection)) {
-          return false;
-        }
-        const nodes = selection.getNodes();
-        for (const node of nodes) {
-          const element = $findMatchingParent(
-            node,
-            (parentNode): parentNode is ElementNode =>
-              $isElementNode(parentNode) && !parentNode.isInline(),
-          );
-        }
         return true;
       },
       COMMAND_PRIORITY_EDITOR,

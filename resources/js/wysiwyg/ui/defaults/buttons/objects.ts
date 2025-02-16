@@ -32,7 +32,7 @@ import {
 } from "../../../utils/selection";
 import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} from "../../../utils/diagrams";
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
-import {$showDetailsForm, $showImageForm, $showLinkForm} from "../forms/objects";
+import {$showDetailsForm, $showImageForm, $showLinkForm, $showMediaForm} from "../forms/objects";
 import {formatCodeBlock} from "../../../utils/formats";
 
 export const link: EditorButtonDefinition = {
@@ -165,27 +165,14 @@ export const diagramManager: EditorButtonDefinition = {
 };
 
 export const media: EditorButtonDefinition = {
-    label: 'Insert/edit Media',
+    label: 'Insert/edit media',
     icon: mediaIcon,
     action(context: EditorUiContext) {
-        const mediaModal = context.manager.createModal('media');
-
         context.editor.getEditorState().read(() => {
             const selection = $getSelection();
             const selectedNode = $getNodeFromSelection(selection, $isMediaNode) as MediaNode | null;
 
-            let formDefaults = {};
-            if (selectedNode) {
-                const nodeAttrs = selectedNode.getAttributes();
-                formDefaults = {
-                    src: nodeAttrs.src || nodeAttrs.data || '',
-                    width: nodeAttrs.width,
-                    height: nodeAttrs.height,
-                    embed: '',
-                }
-            }
-
-            mediaModal.show(formDefaults);
+            $showMediaForm(selectedNode, context);
         });
     },
     isActive(selection: BaseSelection | null): boolean {

@@ -16,6 +16,7 @@ import {
 } from "lexical/nodes/common";
 import {$selectSingleNode} from "../../utils/selection";
 import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
+import * as url from "node:url";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {
@@ -343,11 +344,55 @@ export function $createMediaNodeFromHtml(html: string): MediaNode | null {
     return domElementToNode(tag as MediaNodeTag, el);
 }
 
+interface UrlPattern {
+    readonly regex: RegExp;
+    readonly w: number;
+    readonly h: number;
+    readonly url: string;
+}
+
+/**
+ * These patterns originate from the tinymce/tinymce project.
+ * https://github.com/tinymce/tinymce/blob/release/6.6/modules/tinymce/src/plugins/media/main/ts/core/UrlPatterns.ts
+ * License: MIT Copyright (c) 2022 Ephox Corporation DBA Tiny Technologies, Inc.
+ * License Link: https://github.com/tinymce/tinymce/blob/584a150679669859a528828e5d2910a083b1d911/LICENSE.TXT
+ */
+const urlPatterns: UrlPattern[] = [
+    {
+        regex: /.*?youtu\.be\/([\w\-_\?&=.]+)/i,
+        w: 560, h: 314,
+        url: 'https://www.youtube.com/embed/$1',
+    },
+    {
+        regex: /.*youtube\.com(.+)v=([^&]+)(&([a-z0-9&=\-_]+))?.*/i,
+        w: 560, h: 314,
+        url: 'https://www.youtube.com/embed/$2?$4',
+    },
+    {
+        regex: /.*youtube.com\/embed\/([a-z0-9\?&=\-_]+).*/i,
+        w: 560, h: 314,
+        url: 'https://www.youtube.com/embed/$1',
+    },
+];
+
 const videoExtensions = ['mp4', 'mpeg', 'm4v', 'm4p', 'mov'];
 const audioExtensions = ['3gp', 'aac', 'flac', 'mp3', 'm4a', 'ogg', 'wav', 'webm'];
 const iframeExtensions = ['html', 'htm', 'php', 'asp', 'aspx', ''];
 
 export function $createMediaNodeFromSrc(src: string): MediaNode {
+
+    for (const pattern of urlPatterns) {
+        const match = src.match(pattern.regex);
+        if (match) {
+            const newSrc = src.replace(pattern.regex, pattern.url);
+            const node = new MediaNode('iframe');
+            node.setSrc(newSrc);
+            node.setHeight(pattern.h);
+            node.setWidth(pattern.w);
+            return node;
+        }
+    }
+
     let nodeTag: MediaNodeTag = 'iframe';
     const srcEnd = src.split('?')[0].split('/').pop() || '';
     const srcEndSplit = srcEnd.split('.');
@@ -360,7 +405,9 @@ export function $createMediaNodeFromSrc(src: string): MediaNode {
         nodeTag = 'embed';
     }
 
-    return new MediaNode(nodeTag);
+    const node = new MediaNode(nodeTag);
+    node.setSrc(src);
+    return node;
 }
 
 export function $isMediaNode(node: LexicalNode | null | undefined): node is MediaNode {

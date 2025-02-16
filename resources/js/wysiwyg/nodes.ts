@@ -18,6 +18,7 @@ import {EditorUiContext} from "./ui/framework/core";
 import {MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
+import {CaptionNode} from "@lexical/table/LexicalCaptionNode";
 
 /**
  * Load the nodes for lexical.
@@ -32,6 +33,7 @@ export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> |
         TableNode,
         TableRowNode,
         TableCellNode,
+        CaptionNode,
         ImageNode, // TODO - Alignment
         HorizontalRuleNode,
         DetailsNode,

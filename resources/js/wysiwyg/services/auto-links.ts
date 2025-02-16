@@ -43,7 +43,7 @@ function handlePotentialLinkEvent(node: TextNode, selection: BaseSelection, edit
         linkNode.append(new TextNode(textSegment));
 
         const splits = node.splitText(startIndex, cursorPoint);
-        const targetIndex = splits.length === 3 ? 1 : 0;
+        const targetIndex = startIndex > 0 ? 1 : 0;
         const targetText = splits[targetIndex];
         if (targetText) {
             targetText.replace(linkNode);

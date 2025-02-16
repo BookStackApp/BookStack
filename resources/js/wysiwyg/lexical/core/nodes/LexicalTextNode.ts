@@ -1314,6 +1314,11 @@ const nodeNameToTextFormat: Record<string, TextFormatType> = {
 
 function convertTextFormatElement(domNode: HTMLElement): DOMConversionOutput {
   const format = nodeNameToTextFormat[domNode.nodeName.toLowerCase()];
+
+  if (format === 'code' && domNode.closest('pre')) {
+    return {node: null};
+  }
+
   if (format === undefined) {
     return {node: null};
   }

@@ -8,7 +8,6 @@
 
 import type {
   BaseSelection,
-  ElementFormatType,
   LexicalCommand,
   LexicalNode,
   TextFormatType,
@@ -91,8 +90,6 @@ export const OUTDENT_CONTENT_COMMAND: LexicalCommand<void> = createCommand(
 );
 export const DROP_COMMAND: LexicalCommand<DragEvent> =
   createCommand('DROP_COMMAND');
-export const FORMAT_ELEMENT_COMMAND: LexicalCommand<ElementFormatType> =
-  createCommand('FORMAT_ELEMENT_COMMAND');
 export const DRAGSTART_COMMAND: LexicalCommand<DragEvent> =
   createCommand('DRAGSTART_COMMAND');
 export const DRAGOVER_COMMAND: LexicalCommand<DragEvent> =

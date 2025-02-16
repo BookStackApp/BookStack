@@ -1,9 +1,9 @@
-import {EditorUiElement} from "../core";
-import {$getSelection} from "lexical";
-import {$patchStyleText} from "@lexical/selection";
+import {EditorUiContext, EditorUiElement} from "../core";
 import {el} from "../../../utils/dom";
 
 import removeIcon from "@icons/editor/color-clear.svg";
+import selectIcon from "@icons/editor/color-select.svg";
+import {uniqueIdSmall} from "../../../../services/util";
 
 const colorChoices = [
     '#000000',
@@ -34,18 +34,24 @@ const colorChoices = [
     '#34495E',
 ];
 
+const storageKey = 'bs-lexical-custom-colors';
+
+export type EditorColorPickerCallback = (color: string, context: EditorUiContext) => void;
+
 export class EditorColorPicker extends EditorUiElement {
 
-    protected styleProperty: string;
+    protected callback: EditorColorPickerCallback;
 
-    constructor(styleProperty: string) {
+    constructor(callback: EditorColorPickerCallback) {
         super();
-        this.styleProperty = styleProperty;
+        this.callback = callback;
     }
 
     buildDOM(): HTMLElement {
+        const id = uniqueIdSmall();
 
-        const colorOptions = colorChoices.map(choice => {
+        const allChoices = [...colorChoices, ...this.getCustomColorChoices()];
+        const colorOptions = allChoices.map(choice => {
             return el('div', {
                 class: 'editor-color-select-option',
                 style: `background-color: ${choice}`,
@@ -57,10 +63,29 @@ export class EditorColorPicker extends EditorUiElement {
         const removeButton = el('div', {
             class: 'editor-color-select-option',
             'data-color': '',
-            title: 'Clear color',
+            title: this.getContext().translate('Remove color'),
         }, []);
         removeButton.innerHTML = removeIcon;
         colorOptions.push(removeButton);
+
+        const selectButton = el('label', {
+            class: 'editor-color-select-option',
+            for: `color-select-${id}`,
+            'data-color': '',
+            title: this.getContext().translate('Custom color'),
+        }, []);
+        selectButton.innerHTML = selectIcon;
+        colorOptions.push(selectButton);
+
+        const input = el('input', {type: 'color', hidden: 'true', id: `color-select-${id}`}) as HTMLInputElement;
+        colorOptions.push(input);
+        input.addEventListener('change', e => {
+            if (input.value) {
+                this.storeCustomColorChoice(input.value);
+                this.setColor(input.value);
+                this.rebuildDOM();
+            }
+        });
 
         const colorRows = [];
         for (let i = 0; i < colorOptions.length; i+=5) {
@@ -79,16 +104,33 @@ export class EditorColorPicker extends EditorUiElement {
         return wrapper;
     }
 
+    storeCustomColorChoice(color: string) {
+        if (colorChoices.includes(color)) {
+            return;
+        }
+
+        const customColors: string[] = this.getCustomColorChoices();
+        if (customColors.includes(color)) {
+            return;
+        }
+
+        customColors.push(color);
+        window.localStorage.setItem(storageKey, JSON.stringify(customColors));
+    }
+
+    getCustomColorChoices(): string[] {
+        return JSON.parse(window.localStorage.getItem(storageKey) || '[]');
+    }
+
     onClick(event: MouseEvent) {
         const colorEl = (event.target as HTMLElement).closest('[data-color]') as HTMLElement;
         if (!colorEl) return;
 
         const color = colorEl.dataset.color as string;
-        this.getContext().editor.update(() => {
-            const selection = $getSelection();
-            if (selection) {
-                $patchStyleText(selection, {[this.styleProperty]: color || null});
-            }
-        });
+        this.setColor(color);
+    }
+
+    setColor(color: string) {
+        this.callback(color, this.getContext());
     }
 }

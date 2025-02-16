@@ -1,6 +1,6 @@
 import {
     EditorFormDefinition,
-    EditorFormFieldDefinition,
+    EditorFormFieldDefinition, EditorFormFields,
     EditorFormTabs,
     EditorSelectFormFieldDefinition
 } from "../../framework/forms";
@@ -17,6 +17,8 @@ import {
 import {formatSizeValue} from "../../../utils/dom";
 import {TableCellNode, TableNode, TableRowNode} from "@lexical/table";
 import {CommonBlockAlignment} from "lexical/nodes/common";
+import {colorFieldBuilder} from "../../framework/blocks/color-field";
+import {$addCaptionToTable, $isCaptionNode, $tableHasCaption} from "@lexical/table/LexicalCaptionNode";
 
 const borderStyleInput: EditorSelectFormFieldDefinition = {
     label: 'Border style',
@@ -145,15 +147,15 @@ export const cellProperties: EditorFormDefinition = {
                     } as EditorSelectFormFieldDefinition,
                 ];
 
-                const advancedFields: EditorFormFieldDefinition[] = [
+                const advancedFields: EditorFormFields = [
                     {
                         label: 'Border width', // inline-style: border-width
                         name: 'border_width',
                         type: 'text',
                     },
                     borderStyleInput, // inline-style: border-style
-                    borderColorInput, // inline-style: border-color
-                    backgroundColorInput, // inline-style: background-color
+                    colorFieldBuilder(borderColorInput),
+                    colorFieldBuilder(backgroundColorInput),
                 ];
 
                 return new EditorFormTabs([
@@ -210,14 +212,15 @@ export const rowProperties: EditorFormDefinition = {
             type: 'text',
         },
         borderStyleInput, // style on tr: height
-        borderColorInput, // style on tr: height
-        backgroundColorInput, // style on tr: height
+        colorFieldBuilder(borderColorInput),
+        colorFieldBuilder(backgroundColorInput),
     ],
 };
 
 export function $showTablePropertiesForm(table: TableNode, context: EditorUiContext): EditorFormModal {
     const styles = table.getStyles();
     const modalForm = context.manager.createModal('table_properties');
+
     modalForm.show({
         width: styles.get('width') || '',
         height: styles.get('height') || '',
@@ -227,7 +230,7 @@ export function $showTablePropertiesForm(table: TableNode, context: EditorUiCont
         border_style: styles.get('border-style') || '',
         border_color: styles.get('border-color') || '',
         background_color: styles.get('background-color') || '',
-        // caption: '', TODO
+        caption: $tableHasCaption(table) ? 'true' : '',
         align: table.getAlignment(),
     });
     return modalForm;
@@ -264,7 +267,17 @@ export const tableProperties: EditorFormDefinition = {
                 });
             }
 
-            // TODO - cell caption
+            const showCaption = Boolean(formData.get('caption')?.toString() || '');
+            const hasCaption = $tableHasCaption(table);
+            if (showCaption && !hasCaption) {
+                $addCaptionToTable(table, context.translate('Caption'));
+            } else if (!showCaption && hasCaption) {
+                for (const child of table.getChildren()) {
+                    if ($isCaptionNode(child)) {
+                        child.remove();
+                    }
+                }
+            }
         });
         return true;
     },
@@ -298,17 +311,17 @@ export const tableProperties: EditorFormDefinition = {
                         type: 'text',
                     },
                     {
-                        label: 'caption', // Caption element
+                        label: 'Show caption', // Caption element
                         name: 'caption',
-                        type: 'text', // TODO -
+                        type: 'checkbox',
                     },
                     alignmentInput, // alignment class
                 ];
 
-                const advancedFields: EditorFormFieldDefinition[] = [
-                    borderStyleInput, // Style - border-style
-                    borderColorInput, // Style - border-color
-                    backgroundColorInput, // Style - background-color
+                const advancedFields: EditorFormFields = [
+                    borderStyleInput,
+                    colorFieldBuilder(borderColorInput),
+                    colorFieldBuilder(backgroundColorInput),
                 ];
 
                 return new EditorFormTabs([

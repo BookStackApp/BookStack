@@ -186,6 +186,23 @@ export const link: EditorFormDefinition = {
     ],
 };
 
+export function $showMediaForm(media: MediaNode|null, context: EditorUiContext): void {
+    const mediaModal = context.manager.createModal('media');
+
+    let formDefaults = {};
+    if (media) {
+        const nodeAttrs = media.getAttributes();
+        formDefaults = {
+            src: nodeAttrs.src || nodeAttrs.data || '',
+            width: nodeAttrs.width,
+            height: nodeAttrs.height,
+            embed: '',
+        }
+    }
+
+    mediaModal.show(formDefaults);
+}
+
 export const media: EditorFormDefinition = {
     submitText: 'Save',
     async action(formData, context: EditorUiContext) {
@@ -215,12 +232,19 @@ export const media: EditorFormDefinition = {
             const height = (formData.get('height') || '').toString().trim();
             const width = (formData.get('width') || '').toString().trim();
 
-            const updateNode = selectedNode || $createMediaNodeFromSrc(src);
-            updateNode.setSrc(src);
-            updateNode.setWidthAndHeight(width, height);
-            if (!selectedNode) {
-                $insertNodes([updateNode]);
+            // Update existing
+            if (selectedNode) {
+                selectedNode.setSrc(src);
+                selectedNode.setWidthAndHeight(width, height);
+                return;
             }
+
+            // Insert new
+            const node = $createMediaNodeFromSrc(src);
+            if (width || height) {
+                node.setWidthAndHeight(width, height);
+            }
+            $insertNodes([node]);
         });
 
         return true;

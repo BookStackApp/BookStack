@@ -44,7 +44,6 @@ export class LinkField extends EditorContainerUiElement {
 
     updateFormFromHeader(header: HeadingNode) {
         this.getHeaderIdAndText(header).then(({id, text}) => {
-            console.log('updating form', id, text);
             const modal =  this.getContext().manager.getActiveModal('link');
             if (modal) {
                 modal.getForm().setValues({
@@ -60,7 +59,6 @@ export class LinkField extends EditorContainerUiElement {
         return new Promise((res) => {
             this.getContext().editor.update(() => {
                 let id = header.getId();
-                console.log('header', id, header.__id);
                 if (!id) {
                     id = 'header-' + uniqueIdSmall();
                     header.setId(id);
