@@ -131,7 +131,7 @@ return [
     'sort_rule_create' => 'luotu lajittelusääntö',
     'sort_rule_create_notification' => 'Lajittelusääntö luotiin onnistuneesti',
     'sort_rule_update' => 'päivitetty lajittelusääntö',
-    'sort_rule_update_notification' => 'Lajittelusääntö päivitettiin onnistuneesti',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
     'sort_rule_delete' => 'poistettu lajittelusääntö',
     'sort_rule_delete_notification' => 'Lajittelusääntö poistettiin onnistuneesti',
 
