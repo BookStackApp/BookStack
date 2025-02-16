@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => 'Classificação',
     'sorting_book_default' => 'Classificação padrão de livros',
-    'sorting_book_default_desc' => 'Selecione a regra de classificação padrão a ser aplicada a novos livros. Isso não afetará os livros existentes e pode ser substituído para cada livro individualmente.',
+    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Regras de classificação',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
     'sort_rule_assigned_to_x_books' => 'Assigned to :count Book|Assigned to :count Books',
