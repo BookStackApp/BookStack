@@ -11,7 +11,6 @@ import type {
   DOMChildConversion,
   DOMConversion,
   DOMConversionFn,
-  ElementFormatType,
   LexicalEditor,
   LexicalNode,
 } from 'lexical';
@@ -58,6 +57,7 @@ export function $generateNodesFromDOM(
       }
     }
   }
+
   $unwrapArtificalNodes(allArtificialNodes);
 
   return lexicalNodes;
@@ -324,8 +324,6 @@ function wrapContinuousInlines(
   nodes: Array<LexicalNode>,
   createWrapperFn: () => ElementNode,
 ): Array<LexicalNode> {
-  const textAlign = (domNode as HTMLElement).style
-    .textAlign as ElementFormatType;
   const out: Array<LexicalNode> = [];
   let continuousInlines: Array<LexicalNode> = [];
   // wrap contiguous inline child nodes in para

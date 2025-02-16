@@ -49,15 +49,12 @@ export type {
 } from './LexicalNode';
 export type {
   BaseSelection,
-  ElementPointType as ElementPoint,
   NodeSelection,
   Point,
   PointType,
   RangeSelection,
-  TextPointType as TextPoint,
 } from './LexicalSelection';
 export type {
-  ElementFormatType,
   SerializedElementNode,
 } from './nodes/LexicalElementNode';
 export type {SerializedRootNode} from './nodes/LexicalRootNode';
@@ -87,7 +84,6 @@ export {
   DRAGSTART_COMMAND,
   DROP_COMMAND,
   FOCUS_COMMAND,
-  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INDENT_CONTENT_COMMAND,
   INSERT_LINE_BREAK_COMMAND,

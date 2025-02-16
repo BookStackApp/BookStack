@@ -18,9 +18,9 @@ export default function invariant(
     return;
   }
 
-  throw new Error(
-    'Internal Lexical error: invariant() is meant to be replaced at compile ' +
-      'time. There is no runtime version. Error: ' +
-      message,
-  );
+  for (const arg of args) {
+    message = (message || '').replace('%s', arg);
+  }
+
+  throw new Error(message);
 }

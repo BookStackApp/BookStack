@@ -145,7 +145,14 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
                             node.setId(element.id);
                         }
 
-                        return { node };
+                        return {
+                            node,
+                            after(childNodes): LexicalNode[] {
+                                // Remove any child nodes that may get parsed since we're manually
+                                // controlling the code contents.
+                                return [];
+                            },
+                        };
                     },
                     priority: 3,
                 };

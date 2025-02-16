@@ -46,15 +46,6 @@ export type SerializedElementNode<
   SerializedLexicalNode
 >;
 
-export type ElementFormatType =
-  | 'left'
-  | 'start'
-  | 'center'
-  | 'right'
-  | 'end'
-  | 'justify'
-  | '';
-
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface ElementNode {
   getTopLevelElement(): ElementNode | null;
