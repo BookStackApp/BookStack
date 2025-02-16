@@ -62,7 +62,7 @@ return [
     'sort_name' => 'Naam',
     'sort_default' => 'Standaard',
     'sort_created_at' => 'Aanmaakdatum',
-    'sort_updated_at' => 'Gewijzigd op',
+    'sort_updated_at' => 'Bijwerkdatum',
 
     // Misc
     'deleted_user' => 'Verwijderde gebruiker',
