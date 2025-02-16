@@ -166,7 +166,7 @@ return [
     'books_search_this' => 'Zoeken in dit boek',
     'books_navigation' => 'Boek navigatie',
     'books_sort' => 'Inhoud van het boek sorteren',
-    'books_sort_desc' => 'Move chapters and pages within a book to reorganise its contents. Other books can be added which allows easy moving of chapters and pages between books. Optionally an auto sort rule can be set to automatically sort this book\'s contents upon changes.',
+    'books_sort_desc' => 'Verplaats hoofdstukken en pagina\'s door het boek om ze te organiseren. Andere boeken kunnen worden toegevoegd zodat hoofdstukken en pagina\'s gemakkelijk tussen boeken kunnen worden verplaatst. Het is mogelijk om een automatische sorteerregel in te stellen die de inhoud zal sorteren bij wijzigingen.',
     'books_sort_auto_sort' => 'Automatisch Sorteren',
     'books_sort_auto_sort_active' => 'Automatisch Sorteren Actief: :sortName',
     'books_sort_named' => 'Sorteer boek :bookName',
