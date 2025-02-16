@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => '정렬',
     'sorting_book_default' => '기본 책 정렬',
-    'sorting_book_default_desc' => '새로운 책에 적용할 기본 정렬을 선택하세요. 이 선택은 기존 책에는 영향을 주지 않고, 기존 책의 설정은 책마다 변경할 수 있습니다.',
+    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => '정렬 규칙',
     'sorting_rules_desc' => '현재 시스템에 미리 정의된 정렬 규칙의 목록입니다.',
     'sort_rule_assigned_to_x_books' => ':count 책에 정렬 규칙 적용',
