@@ -131,7 +131,7 @@ return [
     'sort_rule_create' => 'maakte soorteerregel',
     'sort_rule_create_notification' => 'Sorteerregel succesvol aangemaakt',
     'sort_rule_update' => 'wijzigde sorteerregel',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_update_notification' => 'Sorteerregel succesvol bijgewerkt',
     'sort_rule_delete' => 'verwijderde sorteerregel',
     'sort_rule_delete_notification' => 'Sorteerregel succesvol verwijderd',
 
