@@ -131,7 +131,7 @@ return [
     'sort_rule_create' => 'lisas sorteerimisreegli',
     'sort_rule_create_notification' => 'Sorteerimisreegel on lisatud',
     'sort_rule_update' => 'muutis sorteerimisreeglit',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_update_notification' => 'Sorteerimisreegel on muudetud',
     'sort_rule_delete' => 'kustutas sorteerimisreegli',
     'sort_rule_delete_notification' => 'Sorteerimisreegel on kustutatud',
 
