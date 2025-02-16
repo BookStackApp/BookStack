@@ -131,7 +131,7 @@ return [
     'sort_rule_create' => 'regra de classificação criada',
     'sort_rule_create_notification' => 'Regra de classificação criada com sucesso',
     'sort_rule_update' => 'regra de classificação atualizada',
-    'sort_rule_update_notification' => 'Regra de classificação atualizada com sucesso',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
     'sort_rule_delete' => 'regra de classificação excluída',
     'sort_rule_delete_notification' => 'Regra de classificação excluída com sucesso',
 
