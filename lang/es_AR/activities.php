@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'comentario eliminado',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully update',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'regla de ordenación creada',
+    'sort_rule_create_notification' => 'Rol de ordenación creada con éxito',
+    'sort_rule_update' => 'regla de ordenación actualizada',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => 'regla de ordenación eliminada',
+    'sort_rule_delete_notification' => 'Rol de ordenación borrada con éxito',
 
     // Other
     'permissions_update'          => 'permisos actualizados',
