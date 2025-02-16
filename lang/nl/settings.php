@@ -94,7 +94,7 @@ return [
     'sort_rule_available_operations' => 'Beschikbare Operaties',
     'sort_rule_available_operations_empty' => 'Geen operaties over',
     'sort_rule_configured_operations' => 'Ingestelde Operaties',
-    'sort_rule_configured_operations_empty' => 'Drag/add operations from the "Available Operations" list',
+    'sort_rule_configured_operations_empty' => 'Voeg operaties toe uit de "Beschikbare Operaties" lijst',
     'sort_rule_op_asc' => '(Oplopend)',
     'sort_rule_op_desc' => '(Aflopend)',
     'sort_rule_op_name' => 'Naam - Alfabetisch',
