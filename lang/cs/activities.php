@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'odstranil komentář',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'vytvořil/a pravidlo řazení',
+    'sort_rule_create_notification' => 'Pravidlo řazení bylo úspěšně vytvořeno',
+    'sort_rule_update' => 'aktualizoval/a pravidlo řazení',
+    'sort_rule_update_notification' => 'Pravidlo řazení bylo úspěšně aktualizováno',
+    'sort_rule_delete' => 'odstranil/a pravidlo řazení',
+    'sort_rule_delete_notification' => 'Pravidlo řazení bylo úspěšně odstraněno',
 
     // Other
     'permissions_update'          => 'oprávnění upravena',
