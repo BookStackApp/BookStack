@@ -18,7 +18,7 @@
         "ext-xml": "*",
         "ext-zip": "*",
         "bacon/bacon-qr-code": "^3.0",
-        "dompdf/dompdf": "^3.0",
+        "dompdf/dompdf": "^3.1",
         "guzzlehttp/guzzle": "^7.4",
         "intervention/image": "^3.5",
         "knplabs/knp-snappy": "^1.5",
