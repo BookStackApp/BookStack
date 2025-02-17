@@ -191,20 +191,20 @@ class PageEditorTest extends TestCase
     {
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';
-        $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}markdown-clean\"]", '(Clean Content)');
-        $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}markdown-stable\"]", '(Stable Content)');
-        $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}wysiwyg2024\"]", '(In Alpha Testing)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-clean\"]", '(Clean Content)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-stable\"]", '(Stable Content)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg2024\"]", '(In Alpha Testing)');
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit?editor=markdown-stable'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';
-        $this->withHtml($resp)->assertElementContains("a[href=\"${editLink}wysiwyg\"]", 'Switch to WYSIWYG Editor');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg\"]", 'Switch to WYSIWYG Editor');
     }
 
     public function test_editor_type_switch_options_dont_show_if_without_change_editor_permissions()
     {
         $resp = $this->asEditor()->get($this->page->getUrl('/edit'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';
-        $this->withHtml($resp)->assertElementNotExists("a[href*=\"${editLink}\"]");
+        $this->withHtml($resp)->assertElementNotExists("a[href*=\"{$editLink}\"]");
     }
 
     public function test_page_editor_type_switch_does_not_work_without_change_editor_permissions()

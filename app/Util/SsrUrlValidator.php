@@ -4,11 +4,16 @@ namespace BookStack\Util;
 
 use BookStack\Exceptions\HttpFetchException;
 
+/**
+ * Validate the host we're connecting to when making a server-side-request.
+ * Will use the given hosts config if given during construction otherwise
+ * will look to the app configured config.
+ */
 class SsrUrlValidator
 {
     protected string $config;
 
-    public function __construct(string $config = null)
+    public function __construct(?string $config = null)
     {
         $this->config = $config ?? config('app.ssr_hosts') ?? '';
     }

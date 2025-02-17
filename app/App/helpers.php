@@ -43,9 +43,9 @@ function user(): User
  * Check if the current user has a permission. If an ownable element
  * is passed in the jointPermissions are checked against that particular item.
  */
-function userCan(string $permission, Model $ownable = null): bool
+function userCan(string $permission, ?Model $ownable = null): bool
 {
-    if ($ownable === null) {
+    if (is_null($ownable)) {
         return user()->can($permission);
     }
 
@@ -71,7 +71,7 @@ function userCanOnAny(string $action, string $entityClass = ''): bool
  *
  * @return mixed|SettingService
  */
-function setting(string $key = null, $default = null)
+function setting(?string $key = null, mixed $default = null): mixed
 {
     $settingService = app()->make(SettingService::class);
 

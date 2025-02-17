@@ -70,7 +70,7 @@ class BookController extends Controller
     /**
      * Show the form for creating a new book.
      */
-    public function create(string $shelfSlug = null)
+    public function create(?string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
 
@@ -93,7 +93,7 @@ class BookController extends Controller
      * @throws ImageUploadException
      * @throws ValidationException
      */
-    public function store(Request $request, string $shelfSlug = null)
+    public function store(Request $request, ?string $shelfSlug = null)
     {
         $this->checkPermission('book-create-all');
         $validated = $this->validate($request, [

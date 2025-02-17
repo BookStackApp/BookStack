@@ -54,7 +54,7 @@ class Ldap
      *
      * @return \LDAP\Result|array|false
      */
-    public function search($ldapConnection, string $baseDn, string $filter, array $attributes = null)
+    public function search($ldapConnection, string $baseDn, string $filter, array $attributes = [])
     {
         return ldap_search($ldapConnection, $baseDn, $filter, $attributes);
     }
@@ -66,7 +66,7 @@ class Ldap
      *
      * @return \LDAP\Result|array|false
      */
-    public function read($ldapConnection, string $baseDn, string $filter, array $attributes = null)
+    public function read($ldapConnection, string $baseDn, string $filter, array $attributes = [])
     {
         return ldap_read($ldapConnection, $baseDn, $filter, $attributes);
     }
@@ -87,7 +87,7 @@ class Ldap
      *
      * @param resource|\LDAP\Connection   $ldapConnection
      */
-    public function searchAndGetEntries($ldapConnection, string $baseDn, string $filter, array $attributes = null): array|false
+    public function searchAndGetEntries($ldapConnection, string $baseDn, string $filter, array $attributes = []): array|false
     {
         $search = $this->search($ldapConnection, $baseDn, $filter, $attributes);
 
@@ -99,7 +99,7 @@ class Ldap
      *
      * @param resource|\LDAP\Connection $ldapConnection
      */
-    public function bind($ldapConnection, string $bindRdn = null, string $bindPassword = null): bool
+    public function bind($ldapConnection, ?string $bindRdn = null, ?string $bindPassword = null): bool
     {
         return ldap_bind($ldapConnection, $bindRdn, $bindPassword);
     }

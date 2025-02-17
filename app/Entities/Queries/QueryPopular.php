@@ -18,7 +18,7 @@ class QueryPopular
     ) {
     }
 
-    public function run(int $count, int $page, array $filterModels = null): Collection
+    public function run(int $count, int $page, array $filterModels): Collection
     {
         $query = $this->permissions
             ->restrictEntityRelationQuery(View::query(), 'views', 'viewable_id', 'viewable_type')
@@ -26,7 +26,7 @@ class QueryPopular
             ->groupBy('viewable_id', 'viewable_type')
             ->orderBy('view_count', 'desc');
 
-        if ($filterModels) {
+        if (!empty($filterModels)) {
             $query->whereIn('viewable_type', $this->entityProvider->getMorphClasses($filterModels));
         }
 

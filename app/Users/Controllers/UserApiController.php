@@ -33,7 +33,7 @@ class UserApiController extends ApiController
         });
     }
 
-    protected function rules(int $userId = null): array
+    protected function rules(?int $userId = null): array
     {
         return [
             'create' => [
@@ -54,7 +54,7 @@ class UserApiController extends ApiController
                     'string',
                     'email',
                     'min:2',
-                    (new Unique('users', 'email'))->ignore($userId ?? null),
+                    (new Unique('users', 'email'))->ignore($userId),
                 ],
                 'external_auth_id' => ['string'],
                 'language'         => ['string', 'max:15', 'alpha_dash'],

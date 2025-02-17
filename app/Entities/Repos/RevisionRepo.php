@@ -46,7 +46,7 @@ class RevisionRepo
     /**
      * Store a new revision in the system for the given page.
      */
-    public function storeNewForPage(Page $page, string $summary = null): PageRevision
+    public function storeNewForPage(Page $page, ?string $summary = null): PageRevision
     {
         $revision = new PageRevision();
 

@@ -49,9 +49,9 @@ class ImageRepo
         string $type,
         int $page = 0,
         int $pageSize = 24,
-        int $uploadedTo = null,
-        string $search = null,
-        callable $whereClause = null
+        ?int $uploadedTo = null,
+        ?string $search = null,
+        ?callable $whereClause = null
     ): array {
         $imageQuery = Image::query()->where('type', '=', strtolower($type));
 
@@ -91,7 +91,7 @@ class ImageRepo
             $parentFilter = function (Builder $query) use ($filterType, $contextPage) {
                 if ($filterType === 'page') {
                     $query->where('uploaded_to', '=', $contextPage->id);
-                } elseif ($filterType === 'book') {
+                } else if ($filterType === 'book') {
                     $validPageIds = $contextPage->book->pages()
                         ->scopes('visible')
                         ->pluck('id')
@@ -109,8 +109,14 @@ class ImageRepo
      *
      * @throws ImageUploadException
      */
-    public function saveNew(UploadedFile $uploadFile, string $type, int $uploadedTo = 0, int $resizeWidth = null, int $resizeHeight = null, bool $keepRatio = true): Image
-    {
+    public function saveNew(
+        UploadedFile $uploadFile,
+        string $type,
+        int $uploadedTo = 0,
+        ?int $resizeWidth = null,
+        ?int $resizeHeight = null,
+        bool $keepRatio = true
+    ): Image {
         $image = $this->imageService->saveNewFromUpload($uploadFile, $type, $uploadedTo, $resizeWidth, $resizeHeight, $keepRatio);
 
         if ($type !== 'system') {
@@ -184,7 +190,7 @@ class ImageRepo
      *
      * @throws Exception
      */
-    public function destroyImage(Image $image = null): void
+    public function destroyImage(?Image $image = null): void
     {
         if ($image) {
             $this->imageService->destroy($image);

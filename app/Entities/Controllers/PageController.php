@@ -41,7 +41,7 @@ class PageController extends Controller
      *
      * @throws Throwable
      */
-    public function create(string $bookSlug, string $chapterSlug = null)
+    public function create(string $bookSlug, ?string $chapterSlug = null)
     {
         if ($chapterSlug) {
             $parent = $this->entityQueries->chapters->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
@@ -69,7 +69,7 @@ class PageController extends Controller
      *
      * @throws ValidationException
      */
-    public function createAsGuest(Request $request, string $bookSlug, string $chapterSlug = null)
+    public function createAsGuest(Request $request, string $bookSlug, ?string $chapterSlug = null)
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
