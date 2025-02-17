@@ -13,7 +13,7 @@ return [
     'cancel' => 'Annuleer',
     'save' => 'Opslaan',
     'close' => 'Sluit',
-    'apply' => 'Apply',
+    'apply' => 'Toepassen',
     'undo' => 'Maak ongedaan',
     'redo' => 'Opnieuw uitvoeren',
     'left' => 'Links',
