@@ -148,7 +148,7 @@ return [
     'url' => 'URL',
     'text_to_display' => 'Weer te geven tekst',
     'title' => 'Titel',
-    'browse_links' => 'Browse links',
+    'browse_links' => 'Blader links',
     'open_link' => 'Open koppeling',
     'open_link_in' => 'Open koppeling in...',
     'open_link_current' => 'Huidig venster',
