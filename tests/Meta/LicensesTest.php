@@ -12,7 +12,7 @@ class LicensesTest extends TestCase
         $resp->assertOk();
         $resp->assertSee('Licenses');
         $resp->assertSee('PHP Library Licenses');
-        $resp->assertSee('Dan Brown and the BookStack Project contributors');
+        $resp->assertSee('Dan Brown and the BookStack project contributors');
         $resp->assertSee('doctrine/dbal');
         $resp->assertSee('@codemirror/lang-html');
     }
