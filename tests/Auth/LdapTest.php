@@ -166,6 +166,26 @@ class LdapTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => $ldapDn]);
     }
 
+    public function test_login_works_when_ldap_server_does_not_provide_a_cn_value()
+    {
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+
+        $this->commonLdapMocks(1, 1, 1, 2, 1);
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'dn'   => $ldapDn,
+                'mail' => [$this->mockUser->email],
+            ]]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/');
+        $this->assertDatabaseHas('users', [
+            'name' => 'test-user',
+            'email' => $this->mockUser->email,
+        ]);
+    }
+
     public function test_a_custom_uid_attribute_can_be_specified_and_is_used_properly()
     {
         config()->set(['services.ldap.id_attribute' => 'my_custom_id']);

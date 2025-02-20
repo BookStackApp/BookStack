@@ -112,10 +112,14 @@ class LdapService
             return null;
         }
 
-        $userCn = $this->getUserResponseProperty($user, 'cn', null);
+        $nameDefault = $this->getUserResponseProperty($user, 'cn', null);
+        if (is_null($nameDefault)) {
+            $nameDefault = ldap_explode_dn($user['dn'], 1)[0] ?? $user['dn'];
+        }
+
         $formatted = [
             'uid'   => $this->getUserResponseProperty($user, $idAttr, $user['dn']),
-            'name'  => $this->getUserDisplayName($user, $displayNameAttrs, $userCn),
+            'name'  => $this->getUserDisplayName($user, $displayNameAttrs, $nameDefault),
             'dn'    => $user['dn'],
             'email' => $this->getUserResponseProperty($user, $emailAttr, null),
             'avatar' => $thumbnailAttr ? $this->getUserResponseProperty($user, $thumbnailAttr, null) : null,
