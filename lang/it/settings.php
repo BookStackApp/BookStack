@@ -75,10 +75,10 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nessuna restrizione impostata',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
-    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
-    'sorting_rules' => 'Sort Rules',
+    'sorting' => 'Ordinamento',
+    'sorting_book_default' => 'Ordinamento libri predefinito',
+    'sorting_book_default_desc' => 'Selezionare la regola di ordinamento predefinita da applicare ai nuovi libri. Questa regola non influisce sui libri esistenti e può essere modificata per ogni libro.',
+    'sorting_rules' => 'Regole di ordinamento',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
     'sort_rule_assigned_to_x_books' => 'Assigned to :count Book|Assigned to :count Books',
     'sort_rule_create' => 'Create Sort Rule',
