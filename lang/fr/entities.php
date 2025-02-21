@@ -162,7 +162,7 @@ return [
     'books_empty_create_page' => 'Créer une nouvelle page',
     'books_empty_sort_current_book' => 'Trier les pages du livre',
     'books_empty_add_chapter' => 'Ajouter un chapitre',
-    'books_permissions_active' => 'Permissions personnalisées activées',
+    'books_permissions_active' => 'Permissions de livre actives',
     'books_search_this' => 'Rechercher dans ce livre',
     'books_navigation' => 'Navigation dans le livre',
     'books_sort' => 'Trier les contenus du livre',
