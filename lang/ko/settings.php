@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => '정렬 규칙 세부사항',
     'sort_rule_details_desc' => '이 정렬 규칙의 이름을 지어주세요. 이 이름은 사용자가 정렬할 때 나타납니다.',
     'sort_rule_operations' => '정렬 규칙',
-    'sort_rule_operations_desc' => '사용 가능한 정렬 규칙의 목록에서 이 정렬 활동들을 설정하세요. 이 정렬이 사용될 때, 위에서부터 아래의 순서로 적용됩니다.',
+    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
     'sort_rule_available_operations' => '사용 가능한 정렬 규칙',
     'sort_rule_available_operations_empty' => '사용 가능한 정렬 규칙 없음',
     'sort_rule_configured_operations' => '정렬 규칙 설정',
