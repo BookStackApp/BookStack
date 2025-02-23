@@ -1,6 +1,6 @@
 <?php
 
-namespace Search;
+namespace Tests\Search;
 
 use Tests\TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Commands;
+namespace Tests\Commands;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Sorting\SortRule;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sorting;
+namespace Tests\Sorting;
 
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;

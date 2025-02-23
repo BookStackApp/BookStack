@@ -1,6 +1,6 @@
 <?php
 
-namespace Search;
+namespace Tests\Search;
 
 use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;

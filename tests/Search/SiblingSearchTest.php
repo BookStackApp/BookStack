@@ -1,6 +1,6 @@
 <?php
 
-namespace Search;
+namespace Tests\Search;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
