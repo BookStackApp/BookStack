@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Sort Rule Details',
     'sort_rule_details_desc' => 'Set a name for this sort rule, which will appear in lists when users are selecting a sort.',
     'sort_rule_operations' => 'Sort Operations',
-    'sort_rule_operations_desc' => 'Configure the sort actions to be performed in this set by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom.',
+    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
     'sort_rule_available_operations' => 'Available Operations',
     'sort_rule_available_operations_empty' => 'No operations remaining',
     'sort_rule_configured_operations' => 'Configured Operations',
