@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => 'Ordenación',
     'sorting_book_default' => 'Orden por defecto del libro',
-    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
+    'sorting_book_default_desc' => 'Seleccione la regla de ordenación predeterminada para aplicar a nuevos libros. Esto no afectará a los libros existentes, y puede ser anulado por libro.',
     'sorting_rules' => 'Reglas de ordenación',
     'sorting_rules_desc' => 'Son operaciones de ordenación predefinidas que se pueden aplicar al contenido en el sistema.',
     'sort_rule_assigned_to_x_books' => 'Asignado a :count libro | Asignado a :count libros',
@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Detalles de la regla de ordenación',
     'sort_rule_details_desc' => 'Establezca un nombre para esta regla de ordenación, que aparecerá en las listas cuando los usuarios estén seleccionando un orden.',
     'sort_rule_operations' => 'Operaciones de ordenación',
-    'sort_rule_operations_desc' => 'Configure las acciones de ordenación que se realizarán en este conjunto moviéndolas de la lista de operaciones disponibles. Después de su uso, las operaciones se aplicarán en orden, de arriba a abajo.',
+    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
     'sort_rule_available_operations' => 'Operaciones disponibles',
     'sort_rule_available_operations_empty' => 'No hay operaciones restantes',
     'sort_rule_configured_operations' => 'Operaciones configuradas',
