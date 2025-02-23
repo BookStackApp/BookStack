@@ -92,7 +92,7 @@ class SocialDriverManager
         string $driverName,
         array $config,
         string $socialiteHandler,
-        callable $configureForRedirect = null
+        ?callable $configureForRedirect = null
     ) {
         $this->validDrivers[] = $driverName;
         config()->set('services.' . $driverName, $config);

@@ -49,6 +49,7 @@ This method allows you to register a custom social authentication driver within 
 - string $driverName
 - array $config
 - string $socialiteHandler
+- callable|null $configureForRedirect = null
 
 **Example**
 

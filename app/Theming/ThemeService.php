@@ -93,7 +93,7 @@ class ThemeService
     /**
      * @see SocialDriverManager::addSocialDriver
      */
-    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, callable $configureForRedirect = null): void
+    public function addSocialDriver(string $driverName, array $config, string $socialiteHandler, ?callable $configureForRedirect = null): void
     {
         $driverManager = app()->make(SocialDriverManager::class);
         $driverManager->addSocialDriver($driverName, $config, $socialiteHandler, $configureForRedirect);

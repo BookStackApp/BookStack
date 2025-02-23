@@ -31,8 +31,8 @@ class ImageService
         UploadedFile $uploadedFile,
         string $type,
         int $uploadedTo = 0,
-        int $resizeWidth = null,
-        int $resizeHeight = null,
+        ?int $resizeWidth = null,
+        ?int $resizeHeight = null,
         bool $keepRatio = true,
         string $imageName = '',
     ): Image {
