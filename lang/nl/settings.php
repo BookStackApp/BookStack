@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Details Sorteerregel',
     'sort_rule_details_desc' => 'Stel een naam in voor deze sorteerregel. Deze wordt weergegeven waar gebruikers een regel kunnen selecteren.',
     'sort_rule_operations' => 'Sorteeroperaties',
-    'sort_rule_operations_desc' => 'Configureer de sorteeracties die met deze regel moeten worden uitgevoerd door ze uit de lijst met beschikbare operaties te verplaatsen. Deze zullen worden uitgevoerd van boven naar beneden.',
+    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
     'sort_rule_available_operations' => 'Beschikbare Operaties',
     'sort_rule_available_operations_empty' => 'Geen operaties over',
     'sort_rule_configured_operations' => 'Ingestelde Operaties',
