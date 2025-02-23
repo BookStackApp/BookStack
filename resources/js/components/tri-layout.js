@@ -27,7 +27,7 @@ export class TriLayout extends Component {
     updateLayout() {
         let newLayout = 'tablet';
         if (window.innerWidth <= 1000) newLayout = 'mobile';
-        if (window.innerWidth >= 1400) newLayout = 'desktop';
+        if (window.innerWidth > 1400) newLayout = 'desktop';
         if (newLayout === this.lastLayoutType) return;
 
         if (this.onDestroy) {

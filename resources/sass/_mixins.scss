@@ -3,10 +3,10 @@
     @media screen and (max-width: $size) { @content; }
 }
 @mixin larger-than($size) {
-    @media screen and (min-width: $size) { @content; }
+    @media screen and (min-width: ($size + 1)) { @content; }
 }
 @mixin between($min, $max) {
-  @media screen and (min-width: $min) and (max-width: $max) { @content; }
+  @media screen and (min-width: ($min + 1)) and (max-width: $max) { @content; }
 }
 
 // Padding shorthand using logical operators to better support RTL.
