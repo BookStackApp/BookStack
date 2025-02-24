@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En bruger med email :email eksistere allerede, men med andre legitimationsoplysninger.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Brugerkonto kunne ikke registreres for de angivne detaljer',
     'email_already_confirmed' => 'Email er allerede bekræftet. Prøv at logge ind.',
     'email_confirmation_invalid' => 'Denne bekræftelsestoken er ikke gyldig eller er allerede blevet brugt. Prøv at registrere dig igen.',
     'email_confirmation_expired' => 'Bekræftelsestoken er udløbet. En ny bekræftelsesmail er blevet sendt.',
@@ -37,37 +37,37 @@ return [
     'social_driver_not_found' => 'Socialdriver ikke fundet',
     'social_driver_not_configured' => 'Dine :socialAccount indstillinger er ikke konfigureret korret.',
     'invite_token_expired' => 'Dette invitationslink er udløbet. I stedet kan du prøve at nulstille din kontos kodeord.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Der kunne ikke findes en bruger til denne handling.',
 
     // System
     'path_not_writable' => 'Filsti :filePath kunne ikke uploades til. Sørg for at den kan skrives til af webserveren.',
     'cannot_get_image_from_url' => 'Kan ikke finde billede på :url',
     'cannot_create_thumbs' => 'Serveren kan ikke oprette miniaturer. Kontroller, at GD PHP-udvidelsen er installeret.',
     'server_upload_limit' => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Serveren kan ikke modtage den angivne mængde data. Prøv igen med færre data eller en mindre fil.',
     'uploaded'  => 'Serveren tillader ikke uploads af denne størrelse. Prøv en mindre filstørrelse.',
 
     // Drawing & Images
     'image_upload_error' => 'Der opstod en fejl ved upload af billedet',
     'image_upload_type_error' => 'Billedtypen, der uploades, er ugyldig',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'image_upload_replace_type' => 'Udskiftninger af billedfiler skal være af samme type',
+    'image_upload_memory_limit' => 'Kunne ikke håndtere billedupload og/eller oprette thumbnails på grund af begrænsninger i systemets ressourcer.',
+    'image_thumbnail_memory_limit' => 'Det lykkedes ikke at skabe variationer i billedstørrelsen på grund af begrænsninger i systemets ressourcer.',
+    'image_gallery_thumbnail_memory_limit' => 'Det lykkedes ikke at oprette galleriminiaturer på grund af begrænsede systemressourcer.',
+    'drawing_data_not_found' => 'Tegningsdata kunne ikke indlæses. Tegningsfilen findes måske ikke længere, eller du har måske ikke tilladelse til at få adgang til den.',
 
     // Attachments
     'attachment_not_found' => 'Vedhæftning ikke fundet',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Der opstod en fejl ved upload af den vedhæftede fil',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunne ikke gemme kladde. Tjek at du har internetforbindelse før du gemmer siden',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Kunne ikke slette sideudkast og hente den aktuelle sides gemte indhold',
     'page_custom_home_deletion' => 'Kan ikke slette en side der er sat som forside',
 
     // Entities
     'entity_not_found' => 'Emne ikke fundet',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Hylde ikke fundet',
     'book_not_found' => 'Bog ikke fundet',
     'page_not_found' => 'Side ikke fundet',
     'chapter_not_found' => 'Kapitel ikke fundet',
@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan ikke slette den eneste admin',
     'users_cannot_delete_guest' => 'Du kan ikke slette gæstebrugeren',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Kunne ikke oprette en bruger, da invitationsmailen ikke blev sendt',
 
     // Roles
     'role_cannot_be_edited' => 'Denne rolle kan ikke redigeres',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Den er oppe igen snart.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'Kunne ikke læse ZIP-filen.',
+    'import_zip_cant_decode_data' => 'Kunne ikke finde og afkode ZIP data.json-indhold.',
+    'import_zip_no_data' => 'ZIP-filens data har ikke noget forventet bog-, kapitel- eller sideindhold.',
+    'import_validation_failed' => 'Import ZIP kunne ikke valideres med fejl:',
+    'import_zip_failed_notification' => 'Kunne ikke importere ZIP-fil.',
+    'import_perms_books' => 'Du mangler de nødvendige tilladelser til at oprette bøger.',
+    'import_perms_chapters' => 'Du mangler de nødvendige tilladelser til at oprette kapitler.',
+    'import_perms_pages' => 'Du mangler de nødvendige tilladelser til at oprette sider.',
+    'import_perms_images' => 'Du mangler de nødvendige tilladelser til at oprette billeder.',
+    'import_perms_attachments' => 'Du mangler den nødvendige tilladelse til at oprette vedhæftede filer.',
 
     // API errors
     'api_no_authorization_found' => 'Der blev ikke fundet nogen autorisationstoken på anmodningen',
@@ -129,5 +129,5 @@ return [
     'maintenance_test_email_failure' => 'Følgende fejl opstod under afsendelse af testemail:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL\'en stemmer ikke overens med de konfigurerede tilladte SSR-værter',
 ];
