@@ -5,6 +5,7 @@ namespace Tests\Sorting;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Sorting\SortRule;
+use BookStack\Sorting\SortRuleOperation;
 use Tests\Api\TestsApi;
 use Tests\TestCase;
 
@@ -202,7 +203,8 @@ class SortRuleTest extends TestCase
             "20 - Milk",
         ];
 
-        foreach ($namesToAdd as $name) {
+        $reverseNamesToAdd = array_reverse($namesToAdd);
+        foreach ($reverseNamesToAdd as $name) {
             $this->actingAsApiEditor()->post("/api/pages", [
                 'book_id' => $book->id,
                 'name' => $name,
@@ -216,6 +218,16 @@ class SortRuleTest extends TestCase
                 'name' => $name,
                 'priority' => $index + 1,
             ]);
+        }
+    }
+
+    public function test_each_sort_rule_operation_has_a_comparison_function()
+    {
+        $operations = SortRuleOperation::cases();
+
+        foreach ($operations as $operation) {
+            $comparisonFunc = $operation->getSortFunction();
+            $this->assertIsCallable($comparisonFunc);
         }
     }
 }

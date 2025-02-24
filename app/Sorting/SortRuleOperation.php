@@ -10,6 +10,7 @@ enum SortRuleOperation: string
     case NameAsc = 'name_asc';
     case NameDesc = 'name_desc';
     case NameNumericAsc = 'name_numeric_asc';
+    case NameNumericDesc = 'name_numeric_desc';
     case CreatedDateAsc = 'created_date_asc';
     case CreatedDateDesc = 'created_date_desc';
     case UpdateDateAsc = 'updated_date_asc';

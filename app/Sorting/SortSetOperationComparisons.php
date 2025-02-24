@@ -8,7 +8,6 @@ use BookStack\Entities\Models\Entity;
 /**
  * Sort comparison function for each of the possible SortSetOperation values.
  * Method names should be camelCase names for the SortSetOperation enum value.
- * TODO - Test to cover each SortSetOperation enum value is covered.
  */
 class SortSetOperationComparisons
 {
@@ -27,9 +26,12 @@ class SortSetOperationComparisons
         $numRegex = '/^\d+(\.\d+)?/';
         $aMatches = [];
         $bMatches = [];
-        preg_match($numRegex, $a, $aMatches);
-        preg_match($numRegex, $b, $bMatches);
-        return ($aMatches[0] ?? 0) <=> ($bMatches[0] ?? 0);
+        preg_match($numRegex, $a->name, $aMatches);
+        preg_match($numRegex, $b->name, $bMatches);
+        $aVal = floatval(($aMatches[0] ?? 0));
+        $bVal = floatval(($bMatches[0] ?? 0));
+
+        return $aVal <=> $bVal;
     }
 
     public static function nameNumericDesc(Entity $a, Entity $b): int
