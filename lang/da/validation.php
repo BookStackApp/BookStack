@@ -105,10 +105,10 @@ return [
     'url'                  => ':attribute-formatet er ugyldigt.',
     'uploaded'             => 'Filen kunne ikke oploades. Serveren accepterer muligvis ikke filer af denne størrelse.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'Attributten skal henvise til en fil i ZIP.',
+    'zip_file_mime' => 'Attributten skal henvise til en fil af typen: validTypes, fundet:foundType.',
+    'zip_model_expected' => 'Data objekt forventet men ":type" fundet.',
+    'zip_unique' => 'Attributten skal være unik for objekttypen i ZIP.',
 
     // Custom validation lines
     'custom' => [
