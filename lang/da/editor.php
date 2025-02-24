@@ -125,7 +125,7 @@ return [
     'paste_column_before' => 'Indsæt kolonne før',
     'paste_column_after' => 'Indsæt kolonne efter',
     'cell_padding' => 'Celle margen',
-    'cell_spacing' => 'Cell spacing',
+    'cell_spacing' => 'Celle afstand',
     'caption' => 'Citat',
     'show_caption' => 'Vis citat',
     'constrain' => 'Begræns proportioner',
@@ -143,7 +143,7 @@ return [
     // Images, links, details/summary & embed
     'source' => 'Kilde',
     'alt_desc' => 'Alternativ beskrivelse',
-    'embed' => 'Embed',
+    'embed' => 'Indlejre',
     'paste_embed' => 'Indsæt din indlejringskode nedenfor:',
     'url' => 'URL',
     'text_to_display' => 'Tekst til visning',
