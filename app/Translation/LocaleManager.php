@@ -47,6 +47,7 @@ class LocaleManager
         'ja'          => 'ja',
         'ka'          => 'ka_GE',
         'ko'          => 'ko_KR',
+        'ku'          => 'ku_TR',
         'lt'          => 'lt_LT',
         'lv'          => 'lv_LV',
         'nb'          => 'nb_NO',

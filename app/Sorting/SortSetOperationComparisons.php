@@ -13,12 +13,12 @@ class SortSetOperationComparisons
 {
     public static function nameAsc(Entity $a, Entity $b): int
     {
-        return $a->name <=> $b->name;
+        return strtolower($a->name) <=> strtolower($b->name);
     }
 
     public static function nameDesc(Entity $a, Entity $b): int
     {
-        return $b->name <=> $a->name;
+        return strtolower($b->name) <=> strtolower($a->name);
     }
 
     public static function nameNumericAsc(Entity $a, Entity $b): int

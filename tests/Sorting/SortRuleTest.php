@@ -187,6 +187,40 @@ class SortRuleTest extends TestCase
         $this->assertNotEquals($oldPriority, $chapter->priority);
     }
 
+    public function test_name_alphabetical_ordering()
+    {
+        $book = Book::factory()->create();
+        $rule = SortRule::factory()->create(['sequence' => 'name_asc']);
+        $book->sort_rule_id = $rule->id;
+        $book->save();
+        $this->permissions->regenerateForEntity($book);
+
+        $namesToAdd = [
+            "Beans",
+            "bread",
+            "Milk",
+            "pizza",
+            "Tomato",
+        ];
+
+        $reverseNamesToAdd = array_reverse($namesToAdd);
+        foreach ($reverseNamesToAdd as $name) {
+            $this->actingAsApiEditor()->post("/api/pages", [
+                'book_id' => $book->id,
+                'name' => $name,
+                'markdown' => 'Hello'
+            ]);
+        }
+
+        foreach ($namesToAdd as $index => $name) {
+            $this->assertDatabaseHas('pages', [
+                'book_id' => $book->id,
+                'name' => $name,
+                'priority' => $index + 1,
+            ]);
+        }
+    }
+
     public function test_name_numeric_ordering()
     {
         $book = Book::factory()->create();
