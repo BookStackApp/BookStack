@@ -128,6 +128,14 @@ return [
     'comment_update'              => 'oppdatert kommentar',
     'comment_delete'              => 'slettet kommentar',
 
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+
     // Other
     'permissions_update'          => 'oppdaterte tilganger',
 ];

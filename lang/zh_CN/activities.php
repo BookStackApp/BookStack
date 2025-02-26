@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook 删除成功',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => '创建导入',
+    'import_create_notification' => '导入上传成功',
+    'import_run' => '更新导入',
+    'import_run_notification' => '内容成功导入',
+    'import_delete' => '删除导入',
+    'import_delete_notification' => '导入删除成功',
 
     // Users
     'user_create' => '用户已创建',
@@ -126,6 +126,14 @@ return [
     'comment_create'              => '评论已添加',
     'comment_update'              => '评论已更新',
     'comment_delete'              => '评论已删除',
+
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
 
     // Other
     'permissions_update'          => '权限已更新',

@@ -42,7 +42,7 @@ return [
     'profile_email_no_permission' => 'Infelizmente você não tem permissão para alterar seu endereço de e-mail. Se quiser alterar isso, você precisará pedir a um administrador para alterar isso para você.',
     'profile_avatar_desc' => 'Selecione uma imagem que será usada para representar você mesmo para outras pessoas no sistema. Idealmente, esta imagem deve ser quadrada e ter cerca de 256px de largura e altura.',
     'profile_admin_options' => 'Opções do administrador',
-    'profile_admin_options_desc' => 'Opções adicionais do nível administrador, como as que visam gerenciar as atribuições de papéis, podem ser encontradas para sua conta de usuário na área "Configurações > Usuários" do aplicativo.',
+    'profile_admin_options_desc' => 'Opções adicionais do nível administrador, como as que visam gerenciar as atribuições de perfis, podem ser encontradas para sua conta de usuário na área "Configurações > Usuários" do aplicativo.',
 
     'delete_account' => 'Deletar conta',
     'delete_my_account' => 'Deletar minha conta',

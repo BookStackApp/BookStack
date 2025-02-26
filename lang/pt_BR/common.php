@@ -21,7 +21,7 @@ return [
 ',
     'description' => 'Descrição
 ',
-    'role' => 'Função',
+    'role' => 'Perfil',
     'cover_image' => 'Imagem da capa',
     'cover_image_description' => 'Esta imagem deve ter cerca de 440x250px, embora seja dimensionada e cortada de forma flexível para se ajustar à "interface" do usuário em diferentes cenários, conforme necessário, portanto, as dimensões reais para exibição serão diferentes.',
 

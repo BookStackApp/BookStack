@@ -18,10 +18,10 @@ return [
     'backup_codes'         => '您输入的认证码无效或已被使用。',
     'before'               => ':attribute 必须是在 :date 前的日期。',
     'between'              => [
-        'numeric' => ':attribute 必须在:min到:max之间。',
-        'file'    => ':attribute 必须为:min到:max KB。',
-        'string'  => ':attribute 必须在:min到:max个字符之间。',
-        'array'   => ':attribute 必须在:min到:max项之间.',
+        'numeric' => ':attribute 必须在 :min 到 :max 之间。',
+        'file'    => ':attribute 必须为 :min 到 :max 之间。',
+        'string'  => ':attribute 必须在 :min 到 :max 个字符之间。',
+        'array'   => ':attribute 必须在 :min 到 :max 项之间.',
     ],
     'boolean'              => ':attribute 字段必须为真或假。',
     'confirmed'            => ':attribute 确认不符。',
@@ -31,7 +31,7 @@ return [
     'digits'               => ':attribute 必须为:digits位数。',
     'digits_between'       => ':attribute 必须为:min到:max位数。',
     'email'                => ':attribute 必须是有效的电子邮件地址。',
-    'ends_with' => ' :attribute 必须以 :values 后缀结尾',
+    'ends_with' => ':attribute 必须以: :values 后缀结尾。',
     'file'                 => ':attribute 必须是一个有效的文件。',
     'filled'               => ':attribute 字段是必需的。',
     'gt'                   => [
@@ -105,10 +105,10 @@ return [
     'url'                  => ':attribute 格式无效。',
     'uploaded'             => '无法上传文件。 服务器可能不接受此大小的文件。',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute 需要引用 ZIP 内的文件。',
+    'zip_file_mime' => ':attribute 需要引用类型为 :validTypes 的文件，找到 :foundType 。',
+    'zip_model_expected' => '预期的数据对象，但找到了 ":type" 。',
+    'zip_unique' => '对于 ZIP 中的对象类型来说，:attribute 必须是唯一的。',
 
     // Custom validation lines
     'custom' => [

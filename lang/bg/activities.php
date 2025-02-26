@@ -15,7 +15,7 @@ return [
     'page_restore'                => 'възстановена страница',
     'page_restore_notification'   => 'Страницата е възстановена успешно',
     'page_move'                   => 'преместена страница',
-    'page_move_notification'      => 'Page successfully moved',
+    'page_move_notification'      => 'Страницата беше успешно преместена',
 
     // Chapters
     'chapter_create'              => 'създадена глава',
@@ -25,13 +25,13 @@ return [
     'chapter_delete'              => 'изтрита глава',
     'chapter_delete_notification' => 'Успешно изтрита глава',
     'chapter_move'                => 'преместена глава',
-    'chapter_move_notification' => 'Chapter successfully moved',
+    'chapter_move_notification' => 'Главата е успешно преместена',
 
     // Books
     'book_create'                 => 'създадена книга',
     'book_create_notification'    => 'Книгата е създадена успешно',
     'book_create_from_chapter'              => 'превърната глава в книга',
-    'book_create_from_chapter_notification' => 'Chapter successfully converted to a book',
+    'book_create_from_chapter_notification' => 'Главата е успешно преобразувана в книга',
     'book_update'                 => 'обновена книга',
     'book_update_notification'    => 'Книгата е обновена успешно',
     'book_delete'                 => 'изтрита книга',
@@ -126,6 +126,14 @@ return [
     'comment_create'              => 'added comment',
     'comment_update'              => 'updated comment',
     'comment_delete'              => 'deleted comment',
+
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
 
     // Other
     'permissions_update'          => 'обновени права',

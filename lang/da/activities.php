@@ -59,12 +59,12 @@ return [
     'favourite_remove_notification' => '":name" er blevet fjernet fra dine favoritter',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Opdatering af urets præferencer lykkedes',
 
     // Auth
     'auth_login' => 'loggede ind',
     'auth_register' => 'registreret som ny bruger',
-    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_request' => 'anmodet om nulstilling af brugeradgangskode',
     'auth_password_reset_update' => 'nulstil adgangskode',
     'mfa_setup_method' => 'konfigureret MFA metode',
     'mfa_setup_method_notification' => 'Multi-faktor metode konfigureret',
@@ -74,7 +74,7 @@ return [
     // Settings
     'settings_update' => 'opdaterede indstillinger',
     'settings_update_notification' => 'Indstillinger opdateret',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'kørte vedligeholdelsesaktion',
 
     // Webhooks
     'webhook_create' => 'oprettede webhook',
@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhooken blev slettet',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'oprettet import',
+    'import_create_notification' => 'Importen er uploadet med succes',
+    'import_run' => 'opdateret import',
+    'import_run_notification' => 'Indhold importeret med succes',
+    'import_delete' => 'slettet import',
+    'import_delete_notification' => 'Import slettet med succes',
 
     // Users
     'user_create' => 'opret bruger',
@@ -102,11 +102,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'oprettet API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create_notification' => 'API-token oprettet med succes',
+    'api_token_update' => 'opdateret API-token',
+    'api_token_update_notification' => 'API-token opdateret med succes',
+    'api_token_delete' => 'slettet API-token',
+    'api_token_delete_notification' => 'API-token slettet med succes',
 
     // Roles
     'role_create' => 'oprettet rolle',
@@ -117,16 +117,24 @@ return [
     'role_delete_notification' => 'Rollen blev slettet',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'tømt papirkurven',
+    'recycle_bin_restore' => 'gendannet fra papirkurven',
+    'recycle_bin_destroy' => 'fjernet fra papirkurven',
 
     // Comments
     'commented_on'                => 'kommenterede til',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'tilføjet kommentar',
+    'comment_update'              => 'opdateret kommentar',
+    'comment_delete'              => 'slettet kommentar',
+
+    // Sort Rules
+    'sort_rule_create' => 'oprettet sorteringsregel',
+    'sort_rule_create_notification' => 'Sorteringsregel oprettet med succes',
+    'sort_rule_update' => 'opdateret sorteringsregel',
+    'sort_rule_update_notification' => 'Sorteringsregel opdateret med succes',
+    'sort_rule_delete' => 'slettet sorteringsregel',
+    'sort_rule_delete_notification' => 'Sorteringsregel slettet med succes',
 
     // Other
-    'permissions_update'          => 'Tilladelser opdateret',
+    'permissions_update'          => 'opdaterede tilladelser',
 ];

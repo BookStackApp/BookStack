@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook wedi\'i dileu\'n llwyddiannus',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'creodd fewnforyn',
+    'import_create_notification' => 'Mewnforyn wedi\'i lwytho i fyny\'n llwyddiannus',
+    'import_run' => 'diweddarodd fewnforyn',
+    'import_run_notification' => 'Cynnwys wedi\'i fewnforio\'n llwyddiannus',
+    'import_delete' => 'dileodd fewnforyn',
+    'import_delete_notification' => 'Mewnforyn wedi\'i ddileu\'n llwyddiannus',
 
     // Users
     'user_create' => 'creodd ddefnyddiwr',
@@ -126,6 +126,14 @@ return [
     'comment_create'              => 'ychwanegodd sylw',
     'comment_update'              => 'diweddarodd sylw',
     'comment_delete'              => 'dileodd sylw',
+
+    // Sort Rules
+    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create_notification' => 'Sort rule successfully created',
+    'sort_rule_update' => 'updated sort rule',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => 'deleted sort rule',
+    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
 
     // Other
     'permissions_update'          => 'caniatadau wedi\'u diweddaru',

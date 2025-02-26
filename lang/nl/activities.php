@@ -127,6 +127,14 @@ return [
     'comment_update'              => 'paste opmerking aan',
     'comment_delete'              => 'verwijderde opmerking',
 
+    // Sort Rules
+    'sort_rule_create' => 'maakte soorteerregel',
+    'sort_rule_create_notification' => 'Sorteerregel succesvol aangemaakt',
+    'sort_rule_update' => 'wijzigde sorteerregel',
+    'sort_rule_update_notification' => 'Sorteerregel succesvol bijgewerkt',
+    'sort_rule_delete' => 'verwijderde sorteerregel',
+    'sort_rule_delete_notification' => 'Sorteerregel succesvol verwijderd',
+
     // Other
     'permissions_update'          => 'wijzigde machtigingen',
 ];

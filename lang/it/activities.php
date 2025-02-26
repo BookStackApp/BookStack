@@ -127,6 +127,14 @@ return [
     'comment_update'              => 'ha aggiornato un commento',
     'comment_delete'              => 'ha rimosso un commento',
 
+    // Sort Rules
+    'sort_rule_create' => 'regola di ordinamento creata',
+    'sort_rule_create_notification' => 'Ordina regola creata con successo',
+    'sort_rule_update' => 'regola di ordinamento aggiornata',
+    'sort_rule_update_notification' => 'Regola di ordinamento aggiornata con successo',
+    'sort_rule_delete' => 'regola di ordinamento eliminata',
+    'sort_rule_delete_notification' => 'Regola di ordinamento eliminata con successo',
+
     // Other
     'permissions_update'          => 'ha aggiornate le autorizzazioni',
 ];

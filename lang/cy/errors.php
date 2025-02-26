@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Bydd yn ôl i fyny yn fuan.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'Wedi methu darllen ffeil ZIP.',
+    'import_zip_cant_decode_data' => 'Wedi methu ffeindio a dadgodio cynnwys ZIP data.json.',
+    'import_zip_no_data' => 'Nid oes cynnwys llyfr, pennod neu dudalen disgwyliedig yn nata ffeil ZIP.',
+    'import_validation_failed' => 'ZIP mewnforyn wedi\'i methu dilysu gyda gwallau:',
+    'import_zip_failed_notification' => 'Wedi methu mewnforio ffeil ZIP.',
+    'import_perms_books' => 'Dych chi\'n methu\'r caniatâd gofynnol i greu llyfrau.',
+    'import_perms_chapters' => 'Dych chi\'n methu\'r caniatâd gofynnol i greu pennodau.',
+    'import_perms_pages' => 'Dych chi\'n methu\'r caniatâd gofynnol i greu tudalennau.',
+    'import_perms_images' => 'Dych chi\'n methu\'r caniatâd gofynnol i greu delwau.',
+    'import_perms_attachments' => 'Dych chi\'n methu\'r caniatâd gofynnol i greu atodiadau.',
 
     // API errors
     'api_no_authorization_found' => 'Ni chanfuwyd tocyn awdurdodi ar y cais',

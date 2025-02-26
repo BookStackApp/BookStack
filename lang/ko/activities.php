@@ -7,15 +7,15 @@ return [
 
     // Pages
     'page_create'                 => '페이지 생성',
-    'page_create_notification'    => '페이지가 성공적으로 생성되었습니다.',
+    'page_create_notification'    => '페이지가 성공적으로 생성되었습니다',
     'page_update'                 => '페이지 업데이트',
-    'page_update_notification'    => '페이지가 성공적으로 업데이트되었습니다.',
+    'page_update_notification'    => '페이지가 성공적으로 업데이트 되었습니다',
     'page_delete'                 => '페이지 삭제',
-    'page_delete_notification'    => '페이지가 성공적으로 삭제되었습니다.',
+    'page_delete_notification'    => '페이지가 성공적으로 삭제되었습니다',
     'page_restore'                => '페이지 복원',
-    'page_restore_notification'   => '페이지가 성공적으로 복원되었습니다.',
+    'page_restore_notification'   => '페이지가 성공적으로 복원되었습니다',
     'page_move'                   => '페이지 이동',
-    'page_move_notification'      => '페이지가 성공적으로 이동되었습니다.',
+    'page_move_notification'      => '페이지가 성공적으로 이동되었습니다',
 
     // Chapters
     'chapter_create'              => '챕터 생성',
@@ -28,7 +28,7 @@ return [
     'chapter_move_notification' => '페이지가 성공적으로 이동되었습니다.',
 
     // Books
-    'book_create'                 => '생성된 책',
+    'book_create'                 => '책 생성',
     'book_create_notification'    => '책이 성공적으로 생성되었습니다.',
     'book_create_from_chapter'              => '챕터를 책으로 변환',
     'book_create_from_chapter_notification' => '챕터가 책으로 성공적으로 변환되었습니다.',
@@ -44,13 +44,13 @@ return [
     'bookshelf_create_notification'    => '책장을 성공적으로 생성했습니다.',
     'bookshelf_create_from_book'    => '책을 책장으로 변환함',
     'bookshelf_create_from_book_notification'    => '책을 성공적으로 책장으로 변환하였습니다.',
-    'bookshelf_update'                 => '책장 업데이트됨',
+    'bookshelf_update'                 => '책장 업데이트',
     'bookshelf_update_notification'    => '책장이 성공적으로 업데이트 되었습니다.',
-    'bookshelf_delete'                 => '삭제된 책장',
+    'bookshelf_delete'                 => '책장 삭제',
     'bookshelf_delete_notification'    => '책장이 성공적으로 삭제되었습니다.',
 
     // Revisions
-    'revision_restore' => '복구된 버전',
+    'revision_restore' => '버전 복구',
     'revision_delete' => '버전 삭제',
     'revision_delete_notification' => '버전 삭제 성공',
 
@@ -79,7 +79,7 @@ return [
     // Webhooks
     'webhook_create' => '웹 훅 생성',
     'webhook_create_notification' => '웹 훅 생성함',
-    'webhook_update' => '웹 훅 수정하기',
+    'webhook_update' => '웹 훅 수정',
     'webhook_update_notification' => '웹 훅 설정이 수정되었습니다.',
     'webhook_delete' => '웹 훅 지우기',
     'webhook_delete_notification' => '웹 훅 삭제함',
@@ -126,6 +126,14 @@ return [
     'comment_create'              => '댓글 생성',
     'comment_update'              => '댓글 변경',
     'comment_delete'              => '댓글 삭제',
+
+    // Sort Rules
+    'sort_rule_create' => '정렬 규칙 생성',
+    'sort_rule_create_notification' => '정렬 규칙이 성공적으로 생성되었습니다',
+    'sort_rule_update' => '정렬 규칙 업데이트',
+    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_delete' => '정렬 규칙 삭제',
+    'sort_rule_delete_notification' => '정렬 규칙이 성공적으로 삭제되었습니다',
 
     // Other
     'permissions_update'          => '권한 수정함',

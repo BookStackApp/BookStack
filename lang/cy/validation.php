@@ -105,10 +105,10 @@ return [
     'url'                  => 'Mae’r fformat :attribute yn annilys.',
     'uploaded'             => 'Nid oedd modd uwchlwytho’r ffeil. Efallai na fydd y gweinydd yn derbyn ffeiliau o\'r maint hwn.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'Mae\'r :attribute angen cyfeirio at ffeil yn y ZIP.',
+    'zip_file_mime' => 'Mae\'r :attribute angen cyfeirio at ffeil o fath :valid Types, sydd wedi\'i ffeindio :foundType.',
+    'zip_model_expected' => 'Dyswgyl am wrthrych data ond wedi ffeindio ":type".',
+    'zip_unique' => 'Mae rhaid y :attribute fod yn unigol i\'r fath o wrthrych yn y ZIP.',
 
     // Custom validation lines
     'custom' => [

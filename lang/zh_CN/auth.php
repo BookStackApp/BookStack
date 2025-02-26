@@ -36,7 +36,7 @@ return [
     'register_confirm' => '请点击查收您的Email，并点击确认。',
     'registrations_disabled' => '注册目前被禁用',
     'registration_email_domain_invalid' => '该Email域名无权访问此应用程序',
-    'register_success' => '感谢您注册:appName，您现在已经登录。',
+    'register_success' => '感谢您注册！您现在已注册并登录。',
 
     // Login auto-initiation
     'auto_init_starting' => '尝试登录中',
