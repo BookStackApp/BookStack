@@ -93,7 +93,7 @@ return [
     'import_delete_notification' => 'Import successfully deleted',
 
     // Users
-    'user_create' => 'created user',
+    'user_create' => 'oluşturan kullanıcı',
     'user_create_notification' => 'Kullanıcı başarıyla oluşturuldu',
     'user_update' => 'updated user',
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
