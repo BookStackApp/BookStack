@@ -47,34 +47,6 @@ Copyright: Copyright (c) 2012 Dragonfly Development Inc.
 Source: https://github.com/dflydev/dflydev-dot-access-data.git
 Link: https://github.com/dflydev/dflydev-dot-access-data
 -----------
-doctrine/cache
-License: MIT
-License File: vendor/doctrine/cache/LICENSE
-Copyright: Copyright (c) 2006-2015 Doctrine Project
-Source: https://github.com/doctrine/cache.git
-Link: https://www.doctrine-project.org/projects/cache.html
------------
-doctrine/dbal
-License: MIT
-License File: vendor/doctrine/dbal/LICENSE
-Copyright: Copyright (c) 2006-2018 Doctrine Project
-Source: https://github.com/doctrine/dbal.git
-Link: https://www.doctrine-project.org/projects/dbal.html
------------
-doctrine/deprecations
-License: MIT
-License File: vendor/doctrine/deprecations/LICENSE
-Copyright: Copyright (c) 2020-2021 Doctrine Project
-Source: https://github.com/doctrine/deprecations.git
-Link: https://www.doctrine-project.org/
------------
-doctrine/event-manager
-License: MIT
-License File: vendor/doctrine/event-manager/LICENSE
-Copyright: Copyright (c) 2006-2015 Doctrine Project
-Source: https://github.com/doctrine/event-manager.git
-Link: https://www.doctrine-project.org/projects/event-manager.html
------------
 doctrine/inflector
 License: MIT
 License File: vendor/doctrine/inflector/LICENSE
@@ -195,7 +167,7 @@ Link: https://github.com/guzzle/uri-template.git
 intervention/gif
 License: MIT
 License File: vendor/intervention/gif/LICENSE
-Copyright: Copyright (c) 2020-2024 Oliver Vogel
+Copyright: Copyright (c) 2020-present Oliver Vogel
 Source: https://github.com/Intervention/gif.git
 Link: https://github.com/intervention/gif
 -----------
@@ -311,6 +283,20 @@ Copyright: Copyright (c) 2013-2023 Alex Bilbie <*****@**********.***>
 Source: https://github.com/thephpleague/oauth2-client.git
 Link: https://github.com/thephpleague/oauth2-client.git
 -----------
+league/uri
+License: MIT
+License File: vendor/league/uri/LICENSE
+Copyright: Copyright (c) 2015 ignace nyamagana butera
+Source: https://github.com/thephpleague/uri.git
+Link: https://uri.thephpleague.com
+-----------
+league/uri-interfaces
+License: MIT
+License File: vendor/league/uri-interfaces/LICENSE
+Copyright: Copyright (c) 2015 ignace nyamagana butera
+Source: https://github.com/thephpleague/uri-interfaces.git
+Link: https://uri.thephpleague.com
+-----------
 masterminds/html5
 License: MIT
 License File: vendor/masterminds/html5/LICENSE.txt
@@ -336,7 +322,7 @@ nesbot/carbon
 License: MIT
 License File: vendor/nesbot/carbon/LICENSE
 Copyright: Copyright (C) Brian Nesbitt
-Source: https://github.com/briannesbitt/Carbon.git
+Source: https://github.com/CarbonPHP/carbon.git
 Link: https://carbon.nesbot.com
 -----------
 nette/schema
@@ -418,13 +404,6 @@ Copyright: Copyright (c) 2009-2020 Daniele Alessandri (original work)
 Copyright (c) 2021-2024 Till Krüss (modified work)
 Source: https://github.com/predis/predis.git
 Link: http://github.com/predis/predis
------------
-psr/cache
-License: MIT
-License File: vendor/psr/cache/LICENSE.txt
-Copyright: Copyright (c) 2015 PHP Framework Interoperability Group
-Source: https://github.com/php-fig/cache.git
-Link: https://github.com/php-fig/cache.git
 -----------
 psr/clock
 License: MIT
@@ -569,6 +548,13 @@ License: MIT
 License File: vendor/ssddanbrown/symfony-mailer/LICENSE
 Copyright: Copyright (c) 2019-present Fabien Potencier
 Source: https://github.com/ssddanbrown/symfony-mailer.git
+Link: https://symfony.com
+-----------
+symfony/clock
+License: MIT
+License File: vendor/symfony/clock/LICENSE
+Copyright: Copyright (c) 2022-present Fabien Potencier
+Source: https://github.com/symfony/clock.git
 Link: https://symfony.com
 -----------
 symfony/console
