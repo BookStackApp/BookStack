@@ -16,6 +16,7 @@ use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class BookshelfController extends Controller
 {
@@ -27,7 +28,6 @@ class BookshelfController extends Controller
         protected ReferenceFetcher $referenceFetcher,
     ) {
     }
-
     /**
      * Display a listing of bookshelves.
      */
@@ -68,6 +68,12 @@ class BookshelfController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $this->checkPermission('bookshelf-create-all');
         $books = $this->bookQueries->visibleForList()->orderBy('name')->get(['name', 'id', 'slug', 'created_at', 'updated_at']);
         $this->setPageTitle(trans('entities.shelves_create'));
@@ -83,6 +89,11 @@ class BookshelfController extends Controller
      */
     public function store(Request $request)
     {
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $this->checkPermission('bookshelf-create-all');
         $validated = $this->validate($request, [
             'name'             => ['required', 'string', 'max:255'],
@@ -142,6 +153,11 @@ class BookshelfController extends Controller
      */
     public function edit(string $slug)
     {
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
 
@@ -168,6 +184,11 @@ class BookshelfController extends Controller
      */
     public function update(Request $request, string $slug)
     {
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-update', $shelf);
         $validated = $this->validate($request, [
@@ -194,6 +215,11 @@ class BookshelfController extends Controller
      */
     public function showDelete(string $slug)
     {
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
@@ -209,6 +235,11 @@ class BookshelfController extends Controller
      */
     public function destroy(string $slug)
     {
+        $roles = $user->roles;
+        // Check if the user has the "Admin" role
+        if (!$roles->contains('display_name', 'Admin')) {
+            return redirect()->back()->with('error', 'You do not have permission to create  bookshelf.');
+        }
         $shelf = $this->queries->findVisibleBySlugOrFail($slug);
         $this->checkOwnablePermission('bookshelf-delete', $shelf);
 
