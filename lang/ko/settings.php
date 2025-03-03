@@ -77,7 +77,7 @@ return [
     // Sorting Settings
     'sorting' => '정렬',
     'sorting_book_default' => '기본 책 정렬',
-    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
+    'sorting_book_default_desc' => '새로운 책에 적용할 기본 정렬 규칙을 선택하세요. 이 선택은 기존 책에는 영향을 주지 않고, 기존 책의 설정은 책마다 변경할 수 있습니다.',
     'sorting_rules' => '정렬 규칙',
     'sorting_rules_desc' => '현재 시스템에 미리 정의된 정렬 규칙의 목록입니다.',
     'sort_rule_assigned_to_x_books' => ':count 책에 정렬 규칙 적용',
@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => '정렬 규칙 세부사항',
     'sort_rule_details_desc' => '이 정렬 규칙의 이름을 지어주세요. 이 이름은 사용자가 정렬할 때 나타납니다.',
     'sort_rule_operations' => '정렬 규칙',
-    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
+    'sort_rule_operations_desc' => '사용 가능한 작업 목록에서 이동하여 수행할 정렬 작업을 구성합니다. 사용 시 위에서 아래로 순서대로 작업이 적용됩니다. 여기에서 변경한 내용은 저장 시 할당된 모든 책에 적용됩니다.',
     'sort_rule_available_operations' => '사용 가능한 정렬 규칙',
     'sort_rule_available_operations_empty' => '사용 가능한 정렬 규칙 없음',
     'sort_rule_configured_operations' => '정렬 규칙 설정',
