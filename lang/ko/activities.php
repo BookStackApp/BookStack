@@ -131,7 +131,7 @@ return [
     'sort_rule_create' => '정렬 규칙 생성',
     'sort_rule_create_notification' => '정렬 규칙이 성공적으로 생성되었습니다',
     'sort_rule_update' => '정렬 규칙 업데이트',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
+    'sort_rule_update_notification' => '정렬 규칙이 성공적으로 업데이트 되었습니다',
     'sort_rule_delete' => '정렬 규칙 삭제',
     'sort_rule_delete_notification' => '정렬 규칙이 성공적으로 삭제되었습니다',
 
