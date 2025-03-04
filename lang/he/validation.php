@@ -15,7 +15,7 @@ return [
     'alpha_dash'           => 'שדה :attribute יכול להכיל אותיות, מספרים ומקפים בלבד.',
     'alpha_num'            => 'שדה :attribute יכול להכיל אותיות ומספרים בלבד.',
     'array'                => 'שדה :attribute חייב להיות מערך.',
-    'backup_codes'         => 'The provided code is not valid or has already been used.',
+    'backup_codes'         => 'קוד שהוזן לא תקין או שכבר השתמשו בו.',
     'before'               => 'שדה :attribute חייב להיות תאריך לפני :date.',
     'between'              => [
         'numeric' => 'שדה :attribute חייב להיות בין :min ל-:max.',
