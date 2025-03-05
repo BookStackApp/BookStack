@@ -7,14 +7,14 @@
 return [
     'my_account' => 'Fiókom',
 
-    'shortcuts' => 'Gyorsbillentyűk',
-    'shortcuts_interface' => 'UI parancsikon beállításai',
+    'shortcuts' => 'Billentyűparancsok',
+    'shortcuts_interface' => 'UI billentyűparancsok beállításai',
     'shortcuts_toggle_desc' => 'Itt engedélyezheti vagy letilthatja a navigációhoz és műveletekhez használt billentyűparancsokat.',
-    'shortcuts_customize_desc' => 'Csak nyomja meg a kívánt billentyűkombinációt, miután kiválasztotta a parancsikon bevitelét.',
+    'shortcuts_customize_desc' => 'Az alábbi billentyűparancsok testre szabhatók. Csak nyomja meg a kívánt billentyűkombinációt, miután kiválasztotta a billentyűparancshoz tartozó mezőt.',
     'shortcuts_toggle_label' => 'A billentyűparancsok engedélyezve',
     'shortcuts_section_navigation' => 'Navigáció',
     'shortcuts_section_actions' => 'Gyakori műveletek',
-    'shortcuts_save' => 'Gyorsbillentyűk mentése',
+    'shortcuts_save' => 'Billentyűparancsok mentése',
     'shortcuts_overlay_desc' => 'Megjegyzés: Amikor a gyorsbillentyűk engedélyezve vannak, egy segítő átfedés érhető el azzal, hogy a "?" billentyűt megnyomva kiemeli az aktuálisan látható képernyőn elérhető gyorsbillentyűket a műveletekhez.',
     'shortcuts_update_success' => 'A gyorsbillentyű-beállítások frissítve lettek!',
     'shortcuts_overview_desc' => 'Kezelheted a billentyűparancsokat, amelyeket használhatsz a rendszerfelhasználói felület navigálásához.',
