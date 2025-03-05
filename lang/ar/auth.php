@@ -87,7 +87,7 @@ return [
     'mfa_setup_reconfigure' => 'إعادة التكوين',
     'mfa_setup_remove_confirmation' => 'هل أنت متأكد من أنك تريد إزالة طريقة المصادقة متعددة العناصر هذه؟',
     'mfa_setup_action' => 'إعداد (تنصيب)',
-    'mfa_backup_codes_usage_limit_warning' => 'You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.',
+    'mfa_backup_codes_usage_limit_warning' => 'لديك أقل من 5 رموز احتياطية متبقية، الرجاء إنشاء وتخزين مجموعة جديدة قبل نفاد الرموز لتجنب إغلاق حسابك.',
     'mfa_option_totp_title' => 'تطبيق الجوال',
     'mfa_option_totp_desc' => 'لاستخدام المصادقة المتعددة العوامل، ستحتاج إلى تطبيق محمول يدعم TOTP مثل Google Authenticator أو Authy أو Microsoft Authenticer.',
     'mfa_option_backup_codes_title' => 'رموز النسخ الاحتياطي',
