@@ -101,7 +101,7 @@ return [
     'image_not_found_subtitle' => 'Sajnáljuk, a keresett kép nem található.',
     'image_not_found_details' => 'Ha arra számított, hogy ez a kép létezik, akkor előfordulhat, hogy törölték.',
     'return_home' => 'Vissza a kezdőlapra',
-    'error_occurred' => 'Hiba örtént',
+    'error_occurred' => 'Hiba történt',
     'app_down' => ':appName jelenleg nem üzemel',
     'back_soon' => 'Hamarosan újra elérhető lesz.',
 
