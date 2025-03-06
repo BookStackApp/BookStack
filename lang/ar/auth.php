@@ -102,7 +102,7 @@ return [
     'mfa_gen_totp_scan' => 'Scan the QR code below using your preferred authentication app to get started.',
     'mfa_gen_totp_verify_setup' => 'Verify Setup',
     'mfa_gen_totp_verify_setup_desc' => 'Verify that all is working by entering a code, generated within your authentication app, in the input box below:',
-    'mfa_gen_totp_provide_code_here' => 'Provide your app generated code here',
+    'mfa_gen_totp_provide_code_here' => 'أدخل الرمز الذي تم إنشاؤه للتطبيق الخاص بك هنا',
     'mfa_verify_access' => 'Verify Access',
     'mfa_verify_access_desc' => 'Your user account requires you to confirm your identity via an additional level of verification before you\'re granted access. Verify using one of your configured methods to continue.',
     'mfa_verify_no_methods' => 'No Methods Configured',
