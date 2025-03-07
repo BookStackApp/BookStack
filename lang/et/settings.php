@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Sorteerimisreegli andmed',
     'sort_rule_details_desc' => 'Määra sorteerimisreegli nimi, mida kasutatakse reegli valimise loendites.',
     'sort_rule_operations' => 'Sorteerimistoimingud',
-    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
+    'sort_rule_operations_desc' => 'Seadista sorteerimistoimingud, liigutades neid saadaval toimingute loendist. Toimingud rakendatakse järjest, ülevalt alla. Siin tehtud muudatused rakenduvad salvestamisel kõigile määratud raamatutele.',
     'sort_rule_available_operations' => 'Saadaval toimingud',
     'sort_rule_available_operations_empty' => 'Rohkem toiminguid pole',
     'sort_rule_configured_operations' => 'Seadistatud toimingud',
