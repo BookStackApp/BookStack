@@ -160,6 +160,27 @@ class ConfigTest extends TestCase
         $this->assertTrue($isMailTlsRequired());
     }
 
+    public function test_mysql_host_parsed_as_expected()
+    {
+        $cases = [
+            '127.0.0.1' => ['127.0.0.1', 3306],
+            '127.0.0.1:3307' => ['127.0.0.1', 3307],
+            'a.example.com' => ['a.example.com', 3306],
+            'a.example.com:3307' => ['a.example.com', 3307],
+            '[::1]' => ['[::1]', 3306],
+            '[::1]:123' => ['[::1]', 123],
+            '[2001:db8:3c4d:0015:0000:0000:1a2f]' => ['[2001:db8:3c4d:0015:0000:0000:1a2f]', 3306],
+            '[2001:db8:3c4d:0015:0000:0000:1a2f]:4567' => ['[2001:db8:3c4d:0015:0000:0000:1a2f]', 4567],
+        ];
+
+        foreach ($cases as $host => [$expectedHost, $expectedPort]) {
+            $this->runWithEnv("DB_HOST", $host, function () use ($expectedHost, $expectedPort) {
+                $this->assertEquals($expectedHost, config("database.connections.mysql.host"));
+                $this->assertEquals($expectedPort, config("database.connections.mysql.port"));
+            }, false);
+        }
+    }
+
     /**
      * Set an environment variable of the given name and value
      * then check the given config key to see if it matches the given result.

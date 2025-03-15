@@ -40,12 +40,16 @@ if (env('REDIS_SERVERS', false)) {
 
 // MYSQL
 // Split out port from host if set
-$mysql_host = env('DB_HOST', 'localhost');
-$mysql_host_exploded = explode(':', $mysql_host);
-$mysql_port = env('DB_PORT', 3306);
-if (count($mysql_host_exploded) > 1) {
-    $mysql_host = $mysql_host_exploded[0];
-    $mysql_port = intval($mysql_host_exploded[1]);
+$mysqlHost = env('DB_HOST', 'localhost');
+$mysqlHostExploded = explode(':', $mysqlHost);
+$mysqlPort = env('DB_PORT', 3306);
+$mysqlHostIpv6 = str_starts_with($mysqlHost, '[');
+if ($mysqlHostIpv6 && str_contains($mysqlHost, ']:')) {
+    $mysqlHost = implode(':', array_slice($mysqlHostExploded, 0, -1));
+    $mysqlPort = intval(end($mysqlHostExploded));
+} else if (!$mysqlHostIpv6 && count($mysqlHostExploded) > 1) {
+    $mysqlHost = $mysqlHostExploded[0];
+    $mysqlPort = intval($mysqlHostExploded[1]);
 }
 
 return [
@@ -61,12 +65,12 @@ return [
         'mysql' => [
             'driver'         => 'mysql',
             'url'            => env('DATABASE_URL'),
-            'host'           => $mysql_host,
+            'host'           => $mysqlHost,
             'database'       => env('DB_DATABASE', 'forge'),
             'username'       => env('DB_USERNAME', 'forge'),
             'password'       => env('DB_PASSWORD', ''),
             'unix_socket'    => env('DB_SOCKET', ''),
-            'port'           => $mysql_port,
+            'port'           => $mysqlPort,
             'charset'        => 'utf8mb4',
             'collation'      => 'utf8mb4_unicode_ci',
             // Prefixes are only semi-supported and may be unstable
@@ -88,7 +92,7 @@ return [
             'database'       => 'bookstack-test',
             'username'       => env('MYSQL_USER', 'bookstack-test'),
             'password'       => env('MYSQL_PASSWORD', 'bookstack-test'),
-            'port'           => $mysql_port,
+            'port'           => $mysqlPort,
             'charset'        => 'utf8mb4',
             'collation'      => 'utf8mb4_unicode_ci',
             'prefix'         => '',
