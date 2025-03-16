@@ -5,7 +5,7 @@
 return [
 
     // Permissions
-    'permission' => 'Du har ikke tilgang til å se denne siden.',
+    'permission' => 'Du har ikkje tilgang til å sjå denne sida.',
     'permissionJson' => 'Du har ikke tilgang til å utføre denne handlingen.',
 
     // Auth

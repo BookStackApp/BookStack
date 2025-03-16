@@ -61,7 +61,7 @@ return [
     'attachment_upload_error' => 'Hiba történt a melléklet feltöltésekor',
 
     // Pages
-    'page_draft_autosave_fail' => 'Nem sikerült a vázlat mentése. Mentés előtt meg kell róla győződni, hogy van internetkapcsolat',
+    'page_draft_autosave_fail' => 'Nem sikerült a vázlat mentése. Mentés előtt állítsd helyre az internetkapcsolatot',
     'page_draft_delete_fail' => 'Nem sikerült törölni az oldalvázlatot és lekérni az aktuális oldal mentett tartalmat',
     'page_custom_home_deletion' => 'Nem lehet oldalt törölni ha kezdőlapnak van beállítva',
 
@@ -101,7 +101,7 @@ return [
     'image_not_found_subtitle' => 'Sajnáljuk, a keresett kép nem található.',
     'image_not_found_details' => 'Ha arra számított, hogy ez a kép létezik, akkor előfordulhat, hogy törölték.',
     'return_home' => 'Vissza a kezdőlapra',
-    'error_occurred' => 'Hiba örtént',
+    'error_occurred' => 'Hiba történt',
     'app_down' => ':appName jelenleg nem üzemel',
     'back_soon' => 'Hamarosan újra elérhető lesz.',
 

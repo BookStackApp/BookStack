@@ -85,7 +85,7 @@ return [
     'webhook_delete_notification' => 'Webhook usunięty pomyślnie',
 
     // Imports
-    'import_create' => 'created import',
+    'import_create' => 'utworzono import',
     'import_create_notification' => 'Import successfully uploaded',
     'import_run' => 'updated import',
     'import_run_notification' => 'Content successfully imported',

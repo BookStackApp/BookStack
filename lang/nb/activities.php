@@ -129,12 +129,12 @@ return [
     'comment_delete'              => 'slettet kommentar',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'opprettet sorteringsregel',
+    'sort_rule_create_notification' => 'Sorteringsregel opprettet med suksess',
+    'sort_rule_update' => 'oppdatert sorteringsregel',
+    'sort_rule_update_notification' => 'Sorteringsregel oppdatert med suksess',
+    'sort_rule_delete' => 'slettet sorteringsregel',
+    'sort_rule_delete_notification' => 'Sorteringsregel slettet med suksess',
 
     // Other
     'permissions_update'          => 'oppdaterte tilganger',

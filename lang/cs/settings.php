@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Podrobnosti pravidla pro řazení',
     'sort_rule_details_desc' => 'Nastavte název pro toto pravidlo, který se zobrazí v seznamu při výběru řazení.',
     'sort_rule_operations' => 'Možnosti řazení',
-    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
+    'sort_rule_operations_desc' => 'Přesunem ze seznamu dostupných operací nastavte akce řazení, které mají být provedeny. Operace se použijí v pořadí od shora dolů. Veškeré změny zde provedené budou při uložení aplikovány na všechny přiřazené knihy.',
     'sort_rule_available_operations' => 'Dostupné operace',
     'sort_rule_available_operations_empty' => 'Žádné zbývající operace',
     'sort_rule_configured_operations' => 'Konfigurované operace',
