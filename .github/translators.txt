@@ -469,3 +469,12 @@ Raphael Moreno (RaphaelMoreno) :: Portuguese, Brazilian
 yn (user99) :: Arabic
 Pavel Zlatarov (pzlatarov) :: Bulgarian
 ingelres :: French
+mabdullah :: Arabic
+Skrabák Csaba (kekcsi) :: Hungarian
+Evert Meulie (Evert) :: Norwegian Bokmal
+Jasper Backer (jasperb) :: Dutch
+Alexandar Cavdarovski (ace.200112) :: Swedish
+구닥다리TV (yjj8353) :: Korean
+Onur Oskay (o.oskay) :: Turkish
+Sébastien Merveille (SebastienMerv) :: French
+Maxim Kouznetsov (masya.work) :: Hebrew
