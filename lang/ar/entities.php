@@ -455,7 +455,7 @@ return [
     'watch_detail_new' => 'ترقب الصفحات الجديدة',
     'watch_detail_updates' => 'مشاهدة الصفحات الجديدة والتحديثات',
     'watch_detail_comments' => 'مشاهدة الصفحات الجديدة والتحديثات والتعليقات',
-    'watch_detail_parent_book' => 'Watching via parent book',
+    'watch_detail_parent_book' => 'مشاهدة عن طريق الكتاب الأصلي',
     'watch_detail_parent_book_ignore' => 'Ignoring via parent book',
     'watch_detail_parent_chapter' => 'Watching via parent chapter',
     'watch_detail_parent_chapter_ignore' => 'Ignoring via parent chapter',
