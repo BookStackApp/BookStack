@@ -50,8 +50,8 @@ return [
     'bookshelf_delete_notification'    => 'Kitaplık başarıyla silindi',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
+    'revision_restore' => 'geri yüklenen revizyon',
+    'revision_delete' => 'silinmiş revizyon',
     'revision_delete_notification' => 'Değişiklik başarıyla silindi',
 
     // Favourites
@@ -64,17 +64,17 @@ return [
     // Auth
     'auth_login' => 'oturum açıldı',
     'auth_register' => 'yeni kullanıcı olarak kayıt yapıldı',
-    'auth_password_reset_request' => 'requested user password reset',
+    'auth_password_reset_request' => 'talep edilmiş kullanıcı parola sıfırlamaları',
     'auth_password_reset_update' => 'Kullanıcı parolasını sıfırla',
-    'mfa_setup_method' => 'configured MFA method',
+    'mfa_setup_method' => 'uygulanan MFA yöntemi',
     'mfa_setup_method_notification' => 'Çok aşamalı kimlik doğrulama yöntemi başarıyla yapılandırıldı',
-    'mfa_remove_method' => 'removed MFA method',
+    'mfa_remove_method' => 'kaldırılan MFA yöntemi',
     'mfa_remove_method_notification' => 'Çok aşamalı kimlik doğrulama yöntemi başarıyla kaldırıldı',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'güncellenmiş ayarlar',
     'settings_update_notification' => 'Ayarlar başarıyla güncellendi',
-    'maintenance_action_run' => 'ran maintenance action',
+    'maintenance_action_run' => 'bakım işlemine başla',
 
     // Webhooks
     'webhook_create' => 'web kancası oluşturuldu',
@@ -93,7 +93,7 @@ return [
     'import_delete_notification' => 'Import successfully deleted',
 
     // Users
-    'user_create' => 'created user',
+    'user_create' => 'oluşturan kullanıcı',
     'user_create_notification' => 'Kullanıcı başarıyla oluşturuldu',
     'user_update' => 'updated user',
     'user_update_notification' => 'Kullanıcı başarıyla güncellendi',
@@ -118,14 +118,14 @@ return [
 
     // Recycle Bin
     'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_restore' => 'çöp kutusundan geri getirilen',
+    'recycle_bin_destroy' => 'çöp kutusundan kaldırılan',
 
     // Comments
     'commented_on'                => 'yorum yaptı',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'eklenen yorum',
+    'comment_update'              => 'güncellenen yorum',
+    'comment_delete'              => 'silinen yorum',
 
     // Sort Rules
     'sort_rule_create' => 'created sort rule',

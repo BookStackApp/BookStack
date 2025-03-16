@@ -30,7 +30,7 @@ return [
     // Books
     'book_create'                 => 'létrehozott egy könyvet',
     'book_create_notification'    => 'Könyv sikeresen létrehozva',
-    'book_create_from_chapter'              => 'fejezet könyvvé alakítva',
+    'book_create_from_chapter'              => 'könyvvé alakította a fejezetet',
     'book_create_from_chapter_notification' => 'Fejezet sikeresen könyvvé lett alakítva',
     'book_update'                 => 'frissítette a könyvet',
     'book_update_notification'    => 'Könyv sikeresen frissítve',
@@ -93,31 +93,31 @@ return [
     'import_delete_notification' => 'Import successfully deleted',
 
     // Users
-    'user_create' => 'felhasználó létrehozása',
+    'user_create' => 'létrehozta a felhasználót',
     'user_create_notification' => 'Felhasználó sikeresen létrehozva',
-    'user_update' => 'felhasználó módosítása',
+    'user_update' => 'frissítette a felhasználót',
     'user_update_notification' => 'Felhasználó sikeresen frissítve',
     'user_delete' => 'felhasználót törölt',
     'user_delete_notification' => 'Felhasználó sikeresen eltávolítva',
 
     // API Tokens
-    'api_token_create' => 'létrehozott API token',
+    'api_token_create' => 'létrehozta az API tokent',
     'api_token_create_notification' => 'API token sikeresen létrehozva',
-    'api_token_update' => 'frissített API token',
+    'api_token_update' => 'frissítette az API tokent',
     'api_token_update_notification' => 'API token sikeresen frissítve',
-    'api_token_delete' => 'törölt API token',
+    'api_token_delete' => 'törölte az API tokent',
     'api_token_delete_notification' => 'API token sikeresen törölve',
 
     // Roles
     'role_create' => 'szerepkört hozott létre',
     'role_create_notification' => 'Szerepkör sikeresen létrehozva',
-    'role_update' => 'frissített szerepkör',
+    'role_update' => 'frissítette a szerepkört',
     'role_update_notification' => 'Szerepkör sikeresen frissítve',
-    'role_delete' => 'törölt szerepkör',
+    'role_delete' => 'törölte a szerepkört',
     'role_delete_notification' => 'Szerepkör sikeresen törölve',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'lomtár kiürítve',
+    'recycle_bin_empty' => 'kiürítette a lomtárat',
     'recycle_bin_restore' => 'lomtárból visszaállítva',
     'recycle_bin_destroy' => 'lomtárból törölve',
 
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'megjegyzés törlése',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'létrehozta a rendezési szabályt',
+    'sort_rule_create_notification' => 'Rendezési szabály sikeresen létrehozva',
+    'sort_rule_update' => 'frissítette a rendezési szabályt',
+    'sort_rule_update_notification' => 'Rendezési szabály sikeresen frissítve',
+    'sort_rule_delete' => 'törölte a rendezési szabályt',
+    'sort_rule_delete_notification' => 'Rendezési szabály sikeresen törölve',
 
     // Other
     'permissions_update'          => 'engedélyek frissítve',

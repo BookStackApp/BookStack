@@ -13,7 +13,7 @@ return [
     'image_intro_upload' => 'Húzz ide egy új képfájlt az új kép feltöltéséhez, vagy használd a fenti "Kép feltöltése" gombot.',
     'image_all' => 'Összes',
     'image_all_title' => 'Összes kép megtekintése',
-    'image_book_title' => 'A könyv feltöltött képek megtekintése',
+    'image_book_title' => 'A könyvhöz feltöltött képek megtekintése',
     'image_page_title' => 'Az oldalra feltöltött képek megtekintése',
     'image_search_hint' => 'Keresés kép neve alapján',
     'image_uploaded' => 'Feltöltve ekkor: :uploadedDate',

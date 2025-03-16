@@ -90,7 +90,7 @@ return [
     'sort_rule_details' => 'Dettagli della regola di ordinamento',
     'sort_rule_details_desc' => 'Imposta un nome per questa regola di ordinamento, apparirà nelle liste quando gli utenti selezionano un ordinamento.',
     'sort_rule_operations' => 'Operazioni di ordinamento',
-    'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
+    'sort_rule_operations_desc' => 'Configurare le azioni di ordinamento da eseguire spostandole dall\'elenco delle operazioni disponibili. Al momento dell\'utilizzo, le operazioni saranno applicate in ordine, dall\'alto verso il basso. Le modifiche apportate qui saranno applicate a tutti i libri assegnati al momento del salvataggio.',
     'sort_rule_available_operations' => 'Operazioni Disponibili',
     'sort_rule_available_operations_empty' => 'Nessuna operazione rimanente',
     'sort_rule_configured_operations' => 'Operazioni Configurate',
