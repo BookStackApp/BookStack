@@ -168,7 +168,7 @@ return [
     'books_sort' => 'Trier les contenus du livre',
     'books_sort_desc' => 'Déplacer les pages et chapitres au sein d’un livre pour en réorganiser le contenu. D’autres livres peuvent être ajoutés pour faciliter le déplacement des pages et chapitres entre les livres. Facultativement, une règle de tri automatique peut être mise en place afin de trier le livre lorsqu’il est édité.',
     'books_sort_auto_sort' => 'Option de tri automatique',
-    'books_sort_auto_sort_active' => 'Auto Sort Active: :sortName',
+    'books_sort_auto_sort_active' => 'Tri automatique actif : :sortName',
     'books_sort_named' => 'Trier le livre :bookName',
     'books_sort_name' => 'Trier par le nom',
     'books_sort_created' => 'Trier par la date de création',
