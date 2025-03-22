@@ -299,7 +299,7 @@ return [
     'webhook_events_table_header' => 'الأحداث',
     'webhooks_delete' => 'حذف خطاف الويب',
     'webhooks_delete_warning' => 'سيؤدي هذا إلى حذف خطاف الويب بالكامل، الذي يحمل اسم \':webhookName\'، من النظام.',
-    'webhooks_delete_confirm' => 'هل أنت متأكد أنك تريد حذف هذا الخطاف؟',
+    'webhooks_delete_confirm' => 'هل أنت متيقِّن أنك تريد حذف هذا الخطاف؟',
     'webhooks_format_example' => 'مثال على تنسيق خطاف الويب',
     'webhooks_format_example_desc' => 'يتم إرسال بيانات خطاف الويب كطلب بوست -POST- إلى نقطة النهاية المكونة كجيسون -JSON- باتباع التنسيق أدناه. خصائص "ذات صلة" و "روابط" اختيارية و ستعتمد على نوع الحدث الذي تم تشغيله.',
     'webhooks_status' => 'حالة خطاف الويب',
