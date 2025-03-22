@@ -75,9 +75,9 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Без ограничений',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
-    'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
+    'sorting' => 'Сортировка',
+    'sorting_book_default' => 'Сортировка книг по умолчанию',
+    'sorting_book_default_desc' => 'Выберите правило сортировки по умолчанию для новых книг. Это не повлияет на существующие книги, и может быть изменено для каждой книги отдельно.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
     'sort_rule_assigned_to_x_books' => 'Assigned to :count Book|Assigned to :count Books',
