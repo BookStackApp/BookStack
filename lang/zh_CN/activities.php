@@ -128,12 +128,12 @@ return [
     'comment_delete'              => '评论已删除',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => '创建排序规则',
+    'sort_rule_create_notification' => '排序规则创建成功',
+    'sort_rule_update' => '更新排序规则',
+    'sort_rule_update_notification' => '排序规则更新成功',
+    'sort_rule_delete' => '删除排序规则',
+    'sort_rule_delete_notification' => '排序规则删除成功',
 
     // Other
     'permissions_update'          => '权限已更新',
