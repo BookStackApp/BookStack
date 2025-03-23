@@ -64,7 +64,7 @@ return [
     'reg_settings' => 'registracija',
     'reg_enable' => 'onemogočena registracija',
     'reg_enable_toggle' => 'omogočena registracija',
-    'reg_enable_desc' => 'Ko je registracija omogočena, se  bo uporabnik lahko prijavil sam kot uporabnik aplikacije. Po registraciji je uporabniku dodeljena ena prevzeta vloga.',
+    'reg_enable_desc' => 'Ko je registracija omogočena, se bo uporabnik lahko prijavil sam kot uporabnik aplikacije. Po registraciji je uporabniku dodeljena privzeta vloga.',
     'reg_default_role' => 'prevzeta uporabniška vloga po registraciji',
     'reg_enable_external_warning' => 'Ta možnosti je ignorirana ko zunanja LDAP ali SAML avtentikacija je akitivna. Uporabniški računi za ne obstoječe uporabnike bodo avtomatsko izdelani, če avtentikacija zunanjih uporabljenih sistemov je uspešna.',
     'reg_email_confirmation' => 'potrditev e-pošte',
