@@ -91,7 +91,7 @@ return [
     'edit_profile' => 'Uredi profil',
     'dark_mode' => 'Način temnega zaslona',
     'light_mode' => 'Način svetlega zaslona',
-    'global_search' => 'Global Search',
+    'global_search' => 'Globalno iskanje',
 
     // Layout tabs
     'tab_info' => 'Informacije',
