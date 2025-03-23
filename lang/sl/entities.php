@@ -101,7 +101,7 @@ return [
     'search_created_before' => 'Ustvarjeno pred',
     'search_created_after' => 'Ustvarjeno po',
     'search_set_date' => 'Nastavi datum',
-    'search_update' => 'Posodobi iskanje',
+    'search_update' => 'Išči ponovno',
 
     // Shelves
     'shelf' => 'Polica',
@@ -141,7 +141,7 @@ return [
     'books' => 'Knjige',
     'x_books' => ':count Knjiga|:count Knjig',
     'books_empty' => 'Ustvarjena ni bila nobena knjiga',
-    'books_popular' => 'Priljubjene knjige',
+    'books_popular' => 'Priljubljene knjige',
     'books_recent' => 'Zadnje knjige',
     'books_new' => 'Nove knjige',
     'books_new_action' => 'Nova knjiga',
@@ -220,7 +220,7 @@ return [
     'page' => 'Stran',
     'pages' => 'Strani',
     'x_pages' => ':count Stran|:count Strani',
-    'pages_popular' => 'Priljubjene strani',
+    'pages_popular' => 'Priljubljene knjige',
     'pages_new' => 'Nova stran',
     'pages_attachments' => 'Priponke',
     'pages_navigation' => 'Navigacija po strani',
