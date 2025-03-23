@@ -33,7 +33,7 @@ return [
     'social_account_existing' => 'Ta :socialAccount je že dodan vašemu profilu.',
     'social_account_already_used_existing' => 'Ta :socialAccount je v uporabi s strani drugega uporabnika.',
     'social_account_not_used' => 'Ta :socialAccount ni povezan z nobenim uporabnikom. Prosimo povežite ga v vaših nastavitvah profila. ',
-    'social_account_register_instructions' => 'Če še nimate računa, se lahko registrirate z uporabo :socialAccount.',
+    'social_account_register_instructions' => 'Če še nimaš računa, se lahko registriraš z uporabo :socialAccount.',
     'social_driver_not_found' => 'Socialni vtičnik ni najden',
     'social_driver_not_configured' => 'Vaše nastavitve :socialAccount niso pravilo nastavljene.',
     'invite_token_expired' => 'Ta povezava je potekla. Namesto tega lahko ponastavite vaše geslo računa.',
