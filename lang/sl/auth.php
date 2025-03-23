@@ -27,10 +27,10 @@ return [
     'ldap_email_hint' => 'Prosimo vpišite e-poštni naslov za ta račun.',
     'create_account' => 'Ustvari račun',
     'already_have_account' => 'Že imate račun?',
-    'dont_have_account' => 'Nimate računa?',
+    'dont_have_account' => 'Nimaš računa?',
     'social_login' => 'Prijava z računi družbenih omrežij',
     'social_registration' => 'Registracija z družbenim omrežjem',
-    'social_registration_text' => 'Registrirajte in prijavite se za uporabo drugih možnosti.',
+    'social_registration_text' => 'Registriraj in prijavi se z uporabo drugih možnosti.',
 
     'register_thanks' => 'Hvala za registracijo!',
     'register_confirm' => 'Prosimo preverite vaš e-poštni predal in kliknite na potrditveni gumb za dostop :appName.',
