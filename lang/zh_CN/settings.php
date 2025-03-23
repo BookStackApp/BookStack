@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未设置限制',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
+    'sorting' => '排序',
     'sorting_book_default' => 'Default Book Sort',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
