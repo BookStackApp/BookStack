@@ -33,7 +33,7 @@ return [
     'social_account_existing' => 'Ta :socialAccount je že dodan vašemu profilu.',
     'social_account_already_used_existing' => 'Ta :socialAccount je v uporabi s strani drugega uporabnika.',
     'social_account_not_used' => 'Ta :socialAccount ni povezan z nobenim uporabnikom. Prosimo povežite ga v vaših nastavitvah profila. ',
-    'social_account_register_instructions' => 'Če še nimaš računa, se lahko registriraš z uporabo :socialAccount.',
+    'social_account_register_instructions' => 'Če še nimate računa, se lahko registrirate z uporabo :socialAccount.',
     'social_driver_not_found' => 'Socialni vtičnik ni najden',
     'social_driver_not_configured' => 'Vaše nastavitve :socialAccount niso pravilo nastavljene.',
     'invite_token_expired' => 'Ta povezava je potekla. Namesto tega lahko ponastavite vaše geslo računa.',
@@ -96,7 +96,7 @@ return [
     // Error pages
     '404_page_not_found' => 'Strani ni mogoče najti',
     'sorry_page_not_found' => 'Oprostite, strani ki jo iščete, ni mogoče najti.',
-    'sorry_page_not_found_permission_warning' => 'Če pričakujete, da ta stran obstaja, mogoče nimate pravic ogleda zanjo.',
+    'sorry_page_not_found_permission_warning' => 'Stran ne obstaja ali pa za ogled nimaš ustreznih pravic.',
     'image_not_found' => 'Image Not Found',
     'image_not_found_subtitle' => 'Sorry, The image file you were looking for could not be found.',
     'image_not_found_details' => 'If you expected this image to exist it might have been deleted.',
