@@ -40,7 +40,7 @@ return [
 
     // Login auto-initiation
     'auto_init_starting' => 'Attempting Login',
-    'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
+    'auto_init_starting_desc' => 'Kontaktiram tvoj sistem za preverjanje pristnosti za pričetek procesa prijave. V primeru, da se nič ne zgodi v naslednjih 5 sekundah, klikni spodnjo povezavo.',
     'auto_init_start_link' => 'Proceed with authentication',
 
     // Password Reset
