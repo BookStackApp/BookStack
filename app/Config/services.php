@@ -22,6 +22,16 @@ return [
     // Callback URL for social authentication methods
     'callback_url' => env('APP_URL', false),
 
+    // LLM Service
+    // Options: openai
+    'llm' => env('LLM_SERVICE', ''),
+
+    // OpenAI API-compatible service details
+    'openai' => [
+        'endpoint' => env('OPENAI_ENDPOINT', 'https://api.openai.com'),
+        'key' => env('OPENAI_KEY', ''),
+    ],
+
     'github'   => [
         'client_id'     => env('GITHUB_APP_ID', false),
         'client_secret' => env('GITHUB_APP_SECRET', false),

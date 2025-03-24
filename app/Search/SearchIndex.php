@@ -6,6 +6,8 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Search\Vectors\StoreEntityVectorsJob;
+use BookStack\Search\Vectors\VectorQueryServiceProvider;
 use BookStack\Util\HtmlDocument;
 use DOMNode;
 use Illuminate\Database\Eloquent\Builder;
@@ -25,7 +27,7 @@ class SearchIndex
     public static string $softDelimiters = ".-";
 
     public function __construct(
-        protected EntityProvider $entityProvider
+        protected EntityProvider $entityProvider,
     ) {
     }
 
@@ -37,6 +39,10 @@ class SearchIndex
         $this->deleteEntityTerms($entity);
         $terms = $this->entityToTermDataArray($entity);
         $this->insertTerms($terms);
+
+        if (VectorQueryServiceProvider::isEnabled()) {
+            dispatch(new StoreEntityVectorsJob($entity));
+        }
     }
 
     /**
@@ -47,9 +53,15 @@ class SearchIndex
     public function indexEntities(array $entities): void
     {
         $terms = [];
+        $vectorQueryEnabled = VectorQueryServiceProvider::isEnabled();
+
         foreach ($entities as $entity) {
             $entityTerms = $this->entityToTermDataArray($entity);
             array_push($terms, ...$entityTerms);
+
+            if ($vectorQueryEnabled) {
+                dispatch(new StoreEntityVectorsJob($entity));
+            }
         }
 
         $this->insertTerms($terms);
