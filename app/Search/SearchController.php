@@ -6,6 +6,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\QueryPopular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
+use BookStack\Search\Vectors\VectorSearchRunner;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -138,5 +139,20 @@ class SearchController extends Controller
         $entities = $siblingFetcher->fetch($type, $id);
 
         return view('entities.list-basic', ['entities' => $entities, 'style' => 'compact']);
+    }
+
+    public function searchQuery(Request $request, VectorSearchRunner $runner)
+    {
+        $query = $request->get('query', '');
+
+        if ($query) {
+            $results = $runner->run($query);
+        } else {
+            $results = null;
+        }
+
+        return view('search.query', [
+            'results' => $results,
+        ]);
     }
 }

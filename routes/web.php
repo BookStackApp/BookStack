@@ -189,6 +189,7 @@ Route::middleware('auth')->group(function () {
 
     // Search
     Route::get('/search', [SearchController::class, 'search']);
+    Route::get('/search/query', [SearchController::class, 'searchQuery']);
     Route::get('/search/book/{bookId}', [SearchController::class, 'searchBook']);
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);

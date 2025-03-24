@@ -42,7 +42,7 @@ class EntityVectorGenerator
             $toInsert[] = [
                 'entity_id' => $entity->id,
                 'entity_type' => $entity->getMorphClass(),
-                'embedding' => DB::raw('STRING_TO_VECTOR("[' . implode(',', $embedding) . ']")'),
+                'embedding' => DB::raw('VEC_FROMTEXT("[' . implode(',', $embedding) . ']")'),
                 'text' => $text,
             ];
         }

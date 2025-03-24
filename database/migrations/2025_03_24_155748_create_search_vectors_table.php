@@ -16,10 +16,13 @@ return new class extends Migration
             $table->string('entity_type', 100);
             $table->integer('entity_id');
             $table->text('text');
-            $table->vector('embedding');
 
             $table->index(['entity_type', 'entity_id']);
         });
+
+        $table = DB::getTablePrefix() . 'search_vectors';
+        DB::statement("ALTER TABLE {$table} ADD COLUMN (embedding VECTOR(1536) NOT NULL)");
+        DB::statement("ALTER TABLE {$table} ADD VECTOR INDEX (embedding) DISTANCE=cosine");
     }
 
     /**

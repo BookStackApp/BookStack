@@ -33,4 +33,25 @@ class OpenAiVectorQueryService implements VectorQueryService
 
         return $response['data'][0]['embedding'];
     }
+
+    public function query(string $input, array $context): string
+    {
+        $formattedContext = implode("\n", $context);
+
+        $response = $this->jsonRequest('POST', 'v1/chat/completions', [
+            'model' => 'gpt-4o',
+            'messages' => [
+                [
+                    'role' => 'developer',
+                    'content' => 'You are a helpful assistant providing search query responses. Be specific, factual and to-the-point in response.'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => "Provide a response to the below given QUERY using the below given CONTEXT\nQUERY: {$input}\n\nCONTEXT: {$formattedContext}",
+                ]
+            ],
+        ]);
+
+        return $response['choices'][0]['message']['content'] ?? '';
+    }
 }
