@@ -66,9 +66,9 @@ return [
     'auth_register' => 'سجل كمستخدم جديد',
     'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة المرور',
     'auth_password_reset_update' => 'إعادة تعيين كلمة مرور المستخدم',
-    'mfa_setup_method' => 'طريقة MFA المكونة',
-    'mfa_setup_method_notification' => 'تم تكوين طريقة متعددة العوامل بنجاح',
-    'mfa_remove_method' => 'إزالة طريقة MFA',
+    'mfa_setup_method' => 'طريقة المصادقة متعددة العوامل المُهيأة',
+    'mfa_setup_method_notification' => 'تم إعداد المصادقة متعددة العوامل بنجاح',
+    'mfa_remove_method' => 'إزالة طريقة المصادقة متعددة العوامل',
     'mfa_remove_method_notification' => 'تمت إزالة المصادقة متعددة العوامل بنجاح',
 
     // Settings
