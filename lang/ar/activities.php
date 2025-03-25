@@ -69,7 +69,7 @@ return [
     'mfa_setup_method' => 'طريقة MFA المكونة',
     'mfa_setup_method_notification' => 'تم تكوين طريقة متعددة العوامل بنجاح',
     'mfa_remove_method' => 'إزالة طريقة MFA',
-    'mfa_remove_method_notification' => 'تمت إزالة طريقة متعددة العوامل بنجاح',
+    'mfa_remove_method_notification' => 'تمت إزالة المصادقة متعددة العوامل بنجاح',
 
     // Settings
     'settings_update' => 'تحديث الإعدادات',
