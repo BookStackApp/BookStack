@@ -19,6 +19,7 @@ class VectorSearchRunner
         $topMatches = SearchVector::query()->select('text', 'entity_type', 'entity_id')
             ->selectRaw('VEC_DISTANCE_COSINE(VEC_FROMTEXT("[' . implode(',', $queryVector) . ']"), embedding) as distance')
             ->orderBy('distance', 'asc')
+            ->having('distance', '<', 0.6)
             ->limit(10)
             ->get();
 

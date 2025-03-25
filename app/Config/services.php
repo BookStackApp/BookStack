@@ -30,6 +30,8 @@ return [
     'openai' => [
         'endpoint' => env('OPENAI_ENDPOINT', 'https://api.openai.com'),
         'key' => env('OPENAI_KEY', ''),
+        'embedding_model' => env('OPENAI_EMBEDDING_MODEL', 'text-embedding-3-small'),
+        'query_model' => env('OPENAI_QUERY_MODEL', 'gpt-4o'),
     ],
 
     'github'   => [

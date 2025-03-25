@@ -21,6 +21,8 @@ return new class extends Migration
         });
 
         $table = DB::getTablePrefix() . 'search_vectors';
+
+        // TODO - Vector size might need to be dynamic
         DB::statement("ALTER TABLE {$table} ADD COLUMN (embedding VECTOR(1536) NOT NULL)");
         DB::statement("ALTER TABLE {$table} ADD VECTOR INDEX (embedding) DISTANCE=cosine");
     }

@@ -18,9 +18,7 @@ class VectorQueryServiceProvider
         $service = $this->getServiceName();
 
         if ($service === 'openai') {
-            $key = config('services.openai.key');
-            $endpoint = config('services.openai.endpoint');
-            return new OpenAiVectorQueryService($endpoint, $key, $this->http);
+            return new OpenAiVectorQueryService(config('services.openai'), $this->http);
         }
 
         throw new \Exception("No '{$service}' LLM service found");
