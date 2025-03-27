@@ -112,7 +112,7 @@ export class PageEditor extends Component {
     }
 
     savePage() {
-        this.container.closest('form').submit();
+        this.container.closest('form').requestSubmit();
     }
 
     async saveDraft() {
