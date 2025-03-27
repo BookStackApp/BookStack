@@ -1,6 +1,6 @@
 import {$createTextNode, $getSelection, BaseSelection, LexicalEditor, TextNode} from "lexical";
 import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection} from "./selection";
-import {nodeHasInset} from "./nodes";
+import {$sortNodes, nodeHasInset} from "./nodes";
 import {$createListItemNode, $createListNode, $isListItemNode, $isListNode, ListItemNode} from "@lexical/list";
 
 
@@ -49,14 +49,9 @@ export function $unnestListItem(node: ListItemNode): ListItemNode {
     }
 
     const laterSiblings = node.getNextSiblings();
-
     parentListItem.insertAfter(node);
     if (list.getChildren().length === 0) {
         list.remove();
-    }
-
-    if (parentListItem.getChildren().length === 0) {
-        parentListItem.remove();
     }
 
     if (laterSiblings.length > 0) {
@@ -69,23 +64,54 @@ export function $unnestListItem(node: ListItemNode): ListItemNode {
         list.remove();
     }
 
+    if (parentListItem.getChildren().length === 0) {
+        parentListItem.remove();
+    }
+
     return node;
 }
 
 function getListItemsForSelection(selection: BaseSelection|null): (ListItemNode|null)[] {
     const nodes = selection?.getNodes() || [];
-    const listItemNodes = [];
+    let [start, end] = selection?.getStartEndPoints() || [null, null];
 
+    // Ensure we ignore parent list items of the top-most list item since,
+    // although technically part of the selection, from a user point of
+    // view the selection does not spread to encompass this outer element.
+    const itemsToIgnore: Set<string> = new Set();
+    if (selection && start) {
+        if (selection.isBackward() && end) {
+            [end, start] = [start, end];
+        }
+
+        const startParents = start.getNode().getParents();
+        let foundList = false;
+        for (const parent of startParents) {
+            if ($isListItemNode(parent)) {
+                if (foundList) {
+                    itemsToIgnore.add(parent.getKey());
+                } else {
+                    foundList = true;
+                }
+            }
+        }
+    }
+
+    const listItemNodes = [];
     outer: for (const node of nodes) {
         if ($isListItemNode(node)) {
-            listItemNodes.push(node);
+            if (!itemsToIgnore.has(node.getKey())) {
+                listItemNodes.push(node);
+            }
             continue;
         }
 
         const parents = node.getParents();
         for (const parent of parents) {
             if ($isListItemNode(parent)) {
-                listItemNodes.push(parent);
+                if (!itemsToIgnore.has(parent.getKey())) {
+                    listItemNodes.push(parent);
+                }
                 continue outer;
             }
         }
@@ -110,7 +136,8 @@ function $reduceDedupeListItems(listItems: (ListItemNode|null)[]): ListItemNode[
         }
     }
 
-    return Object.values(listItemMap);
+    const items = Object.values(listItemMap);
+    return $sortNodes(items) as ListItemNode[];
 }
 
 export function $setInsetForSelection(editor: LexicalEditor, change: number): void {

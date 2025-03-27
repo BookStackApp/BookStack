@@ -94,6 +94,30 @@ export function $getNearestNodeBlockParent(node: LexicalNode): LexicalNode|null 
     return $findMatchingParent(node, isBlockNode);
 }
 
+export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
+    const idChain: string[] = [];
+    const addIds = (n: ElementNode) => {
+        for (const child of n.getChildren()) {
+            idChain.push(child.getKey())
+            if ($isElementNode(child)) {
+                addIds(child)
+            }
+        }
+    };
+
+    const root = $getRoot();
+    addIds(root);
+
+    const sorted = Array.from(nodes);
+    sorted.sort((a, b) => {
+        const aIndex = idChain.indexOf(a.getKey());
+        const bIndex = idChain.indexOf(b.getKey());
+        return aIndex - bIndex;
+    });
+
+    return sorted;
+}
+
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {
     return '__alignment' in node;
 }
