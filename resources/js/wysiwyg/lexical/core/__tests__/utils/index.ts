@@ -37,6 +37,7 @@ import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 import {DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {EditorUiContext} from "../../../../ui/framework/core";
 import {EditorUIManager} from "../../../../ui/framework/manager";
+import {ImageNode} from "@lexical/rich-text/LexicalImageNode";
 
 type TestEnv = {
   readonly container: HTMLDivElement;
@@ -484,6 +485,9 @@ export function createTestContext(): EditorUiContext {
   const editor = createTestEditor({
     namespace: 'testing',
     theme: {},
+    nodes: [
+        ImageNode,
+    ]
   });
 
   editor.setRootElement(editorDOM);

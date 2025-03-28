@@ -79,21 +79,18 @@ function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: 
     const nearestBlock = $getNearestNodeBlockParent(node) || node;
     let target = after ? nearestBlock.getNextSibling() : nearestBlock.getPreviousSibling();
 
-    requestAnimationFrame(() => {
-        editor.update(() => {
-            if (!target) {
-                target = $createParagraphNode();
-                if (after) {
-                    nearestBlock.insertAfter(target)
-                } else {
-                    nearestBlock.insertBefore(target);
-                }
+    editor.update(() => {
+        if (!target) {
+            target = $createParagraphNode();
+            if (after) {
+                nearestBlock.insertAfter(target)
+            } else {
+                nearestBlock.insertBefore(target);
             }
+        }
 
-            target.selectStart();
-        });
+        target.selectStart();
     });
-
 
     return true;
 }
