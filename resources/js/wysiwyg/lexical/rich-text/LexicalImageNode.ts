@@ -133,7 +133,7 @@ export class ImageNode extends ElementNode {
 
         element.addEventListener('click', e => {
             _editor.update(() => {
-                $selectSingleNode(this);
+                this.select();
             });
         });
 

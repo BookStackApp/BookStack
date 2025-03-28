@@ -3,7 +3,7 @@ import {
     $createParagraphNode,
     $getSelection,
     $isDecoratorNode,
-    COMMAND_PRIORITY_LOW, KEY_ARROW_DOWN_COMMAND,
+    COMMAND_PRIORITY_LOW, KEY_ARROW_DOWN_COMMAND, KEY_ARROW_UP_COMMAND,
     KEY_BACKSPACE_COMMAND,
     KEY_DELETE_COMMAND,
     KEY_ENTER_COMMAND, KEY_TAB_COMMAND,
@@ -43,7 +43,7 @@ function deleteSingleSelectedNode(editor: LexicalEditor) {
 }
 
 /**
- * Insert a new empty node after the selection if the selection contains a single
+ * Insert a new empty node before/after the selection if the selection contains a single
  * selected node (like image, media etc...).
  */
 function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
@@ -65,6 +65,37 @@ function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEve
     }
 
     return false;
+}
+
+function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: KeyboardEvent|null, after: boolean = true): boolean {
+    const selectionNodes = getLastSelection(editor)?.getNodes() || [];
+    if (!isSingleSelectedNode(selectionNodes)) {
+        return false;
+    }
+
+    event?.preventDefault();
+
+    const node = selectionNodes[0];
+    const nearestBlock = $getNearestNodeBlockParent(node) || node;
+    let target = after ? nearestBlock.getNextSibling() : nearestBlock.getPreviousSibling();
+
+    requestAnimationFrame(() => {
+        editor.update(() => {
+            if (!target) {
+                target = $createParagraphNode();
+                if (after) {
+                    nearestBlock.insertAfter(target)
+                } else {
+                    nearestBlock.insertBefore(target);
+                }
+            }
+
+            target.selectStart();
+        });
+    });
+
+
+    return true;
 }
 
 /**
@@ -199,8 +230,13 @@ export function registerKeyboardHandling(context: EditorUiContext): () => void {
         return handleInsetOnTab(context.editor, event);
     }, COMMAND_PRIORITY_LOW);
 
+    const unregisterUp = context.editor.registerCommand(KEY_ARROW_UP_COMMAND, (event): boolean => {
+        return focusAdjacentOrInsertForSingleSelectNode(context.editor, event, false);
+    }, COMMAND_PRIORITY_LOW);
+
     const unregisterDown = context.editor.registerCommand(KEY_ARROW_DOWN_COMMAND, (event): boolean => {
-        return insertAfterDetails(context.editor, event);
+        return insertAfterDetails(context.editor, event)
+            || focusAdjacentOrInsertForSingleSelectNode(context.editor, event, true)
     }, COMMAND_PRIORITY_LOW);
 
     return () => {
@@ -208,6 +244,7 @@ export function registerKeyboardHandling(context: EditorUiContext): () => void {
         unregisterDelete();
         unregisterEnter();
         unregisterTab();
+        unregisterUp();
         unregisterDown();
     };
 }

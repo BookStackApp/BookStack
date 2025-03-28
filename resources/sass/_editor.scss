@@ -370,8 +370,10 @@ body.editor-is-fullscreen {
   display: inline-block;
   outline: 2px dashed var(--editor-color-primary);
   direction: ltr;
+  pointer-events: none;
 }
 .editor-node-resizer-handle {
+  pointer-events: auto;
   position: absolute;
   display: block;
   width: 10px;
