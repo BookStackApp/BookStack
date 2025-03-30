@@ -214,4 +214,21 @@ class CommentTest extends TestCase
         $resp->assertSee('window.editor_translations', false);
         $resp->assertSee('component="entity-selector"', false);
     }
+
+    public function test_comment_displays_relative_times()
+    {
+        $page = $this->entities->page();
+        $comment = Comment::factory()->create(['entity_id' => $page->id, 'entity_type' => $page->getMorphClass()]);
+        $comment->created_at = now()->subWeek();
+        $comment->updated_at = now()->subDay();
+        $comment->save();
+
+        $pageResp = $this->asAdmin()->get($page->getUrl());
+        $html = $this->withHtml($pageResp);
+
+        // Create date shows relative time as text to user
+        $html->assertElementContains('.comment-box', 'commented 1 week ago');
+        // Updated indicator has full time as title
+        $html->assertElementContains('.comment-box span[title^="Updated ' . $comment->updated_at->format('Y-m-d') .  '"]', 'Updated');
+    }
 }

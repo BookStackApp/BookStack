@@ -24,7 +24,7 @@
                 @else
                     {{ trans('common.deleted_user') }}
                 @endif
-                <span title="{{ $comment->created_at }}">&nbsp;{{ trans('entities.comment_created', ['createDiff' => $comment->created]) }}</span>
+                <span title="{{ $comment->created_at }}">&nbsp;{{ trans('entities.comment_created', ['createDiff' => $comment->created_at->diffForHumans() ]) }}</span>
                 @if($comment->isUpdated())
                     <span class="mx-xs">&bull;</span>
                     <span title="{{ trans('entities.comment_updated', ['updateDiff' => $comment->updated_at, 'username' => $comment->updatedBy->name ?? trans('common.deleted_user')]) }}">
