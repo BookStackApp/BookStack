@@ -84,7 +84,7 @@ return [
     'sort_rule_create' => 'Создать правило сортировки',
     'sort_rule_edit' => 'Edit Sort Rule',
     'sort_rule_delete' => 'Удалить правило сортировки',
-    'sort_rule_delete_desc' => 'Remove this sort rule from the system. Books using this sort will revert to manual sorting.',
+    'sort_rule_delete_desc' => 'Удалить это правило сортировки из системы. Книги, использующие эту сортировку, вернутся к ручной сортировке.',
     'sort_rule_delete_warn_books' => 'This sort rule is currently used on :count book(s). Are you sure you want to delete this?',
     'sort_rule_delete_warn_default' => 'Это правило сортировки используется по умолчанию для книг. Вы уверены, что хотите удалить его?',
     'sort_rule_details' => 'Детали правила сортировки',
