@@ -89,8 +89,8 @@ return [
     'import_create_notification' => 'יבוא עודכן בהצלחה',
     'import_run' => 'יבוא עודכן',
     'import_run_notification' => 'תוכן יובא בהצלחה',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_delete' => 'יבוא נמחק',
+    'import_delete_notification' => 'יבוא נמחק בהצלחה',
 
     // Users
     'user_create' => 'משתמש חדש נוצר',
