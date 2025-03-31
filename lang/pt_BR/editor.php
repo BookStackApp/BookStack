@@ -91,7 +91,7 @@ return [
     'insert_column_before' => 'Inserir coluna antes',
     'insert_column_after' => 'Inserir coluna depois',
     'delete_column' => 'Excluir coluna',
-    'table_cell' => 'Celular',
+    'table_cell' => 'Célula',
     'table_row' => 'Linha',
     'table_column' => 'Coluna',
     'cell_properties' => 'Propriedades da célula',
