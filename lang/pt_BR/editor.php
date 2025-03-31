@@ -60,7 +60,7 @@ return [
     'list_task' => 'Lista de tarefas',
     'indent_increase' => 'Aumentar recuo',
     'indent_decrease' => 'Diminuir recuo',
-    'table' => 'Mesa',
+    'table' => 'Tabela',
     'insert_image' => 'Inserir Imagem',
     'insert_image_title' => 'Inserir/Editar imagem',
     'insert_link' => 'Inserir/editar link',
