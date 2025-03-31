@@ -85,10 +85,10 @@ return [
     'webhook_delete_notification' => 'Webook נמחק בהצלחה',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
+    'import_create' => 'יבוא נוצר',
+    'import_create_notification' => 'יבוא עודכן בהצלחה',
+    'import_run' => 'יבוא עודכן',
+    'import_run_notification' => 'תוכן יובא בהצלחה',
     'import_delete' => 'deleted import',
     'import_delete_notification' => 'Import successfully deleted',
 
