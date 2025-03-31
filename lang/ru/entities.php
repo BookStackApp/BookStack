@@ -45,7 +45,7 @@ return [
     'default_template_select' => 'Выберите страницу шаблона',
     'import' => 'Импорт',
     'import_validate' => 'Validate Import',
-    'import_desc' => 'Import books, chapters & pages using a portable zip export from the same, or a different, instance. Select a ZIP file to proceed. After the file has been uploaded and validated you\'ll be able to configure & confirm the import in the next view.',
+    'import_desc' => 'Импортировать книги, главы и страницы с помощью ZIP-файла, экспортированного из этого или другого источника. Выберите ZIP-файл, чтобы продолжить. После загрузки и проверки файла вы сможете настроить и подтвердить импорт в следующем окне.',
     'import_zip_select' => 'Select ZIP file to upload',
     'import_zip_validation_errors' => 'Errors were detected while validating the provided ZIP file:',
     'import_pending' => 'Pending Imports',
