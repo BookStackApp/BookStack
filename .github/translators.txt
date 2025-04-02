@@ -478,3 +478,9 @@ Alexandar Cavdarovski (ace.200112) :: Swedish
 Onur Oskay (o.oskay) :: Turkish
 Sébastien Merveille (SebastienMerv) :: French
 Maxim Kouznetsov (masya.work) :: Hebrew
+neodvisnost :: Slovenian
+Soubi Agatsuma (bisouya) :: Hebrew
+Ilya Shaulov (ishaulov) :: Russian
+Konstantin Bobkov (b.konstantv) :: Russian
+Ruben Sutter (rubensutter) :: German
+jellium :: French
