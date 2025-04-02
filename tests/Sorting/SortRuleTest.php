@@ -200,6 +200,8 @@ class SortRuleTest extends TestCase
             "bread",
             "Éclaire",
             "egg",
+            "É😀ire",
+            "É🫠ire",
             "Milk",
             "pizza",
             "Tomato",

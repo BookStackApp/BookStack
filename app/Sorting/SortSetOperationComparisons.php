@@ -14,12 +14,12 @@ class SortSetOperationComparisons
 {
     public static function nameAsc(Entity $a, Entity $b): int
     {
-        return strtolower(ASCII::to_transliterate($a->name)) <=>  strtolower(ASCII::to_transliterate($b->name));
+        return strtolower(ASCII::to_transliterate($a->name, null)) <=> strtolower(ASCII::to_transliterate($b->name, null));
     }
 
     public static function nameDesc(Entity $a, Entity $b): int
     {
-        return strtolower(ASCII::to_transliterate($b->name)) <=>  strtolower(ASCII::to_transliterate($a->name));
+        return strtolower(ASCII::to_transliterate($b->name, null)) <=> strtolower(ASCII::to_transliterate($a->name, null));
     }
 
     public static function nameNumericAsc(Entity $a, Entity $b): int
