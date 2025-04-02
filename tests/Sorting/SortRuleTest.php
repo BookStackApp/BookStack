@@ -198,6 +198,10 @@ class SortRuleTest extends TestCase
         $namesToAdd = [
             "Beans",
             "bread",
+            "Éclaire",
+            "egg",
+            "É😀ire",
+            "É🫠ire",
             "Milk",
             "pizza",
             "Tomato",

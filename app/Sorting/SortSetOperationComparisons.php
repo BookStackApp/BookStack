@@ -2,6 +2,7 @@
 
 namespace BookStack\Sorting;
 
+use voku\helper\ASCII;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 
@@ -13,12 +14,12 @@ class SortSetOperationComparisons
 {
     public static function nameAsc(Entity $a, Entity $b): int
     {
-        return strtolower($a->name) <=> strtolower($b->name);
+        return strtolower(ASCII::to_transliterate($a->name, null)) <=> strtolower(ASCII::to_transliterate($b->name, null));
     }
 
     public static function nameDesc(Entity $a, Entity $b): int
     {
-        return strtolower($b->name) <=> strtolower($a->name);
+        return strtolower(ASCII::to_transliterate($b->name, null)) <=> strtolower(ASCII::to_transliterate($a->name, null));
     }
 
     public static function nameNumericAsc(Entity $a, Entity $b): int
