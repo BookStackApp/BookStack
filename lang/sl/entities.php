@@ -29,8 +29,8 @@ return [
     'images' => 'Slike',
     'my_recent_drafts' => 'Moji nedavni osnutki',
     'my_recently_viewed' => 'Nedavno prikazano',
-    'my_most_viewed_favourites' => 'My Most Viewed Favourites',
-    'my_favourites' => 'My Favourites',
+    'my_most_viewed_favourites' => 'Največkrat gledane priljubljene strani',
+    'my_favourites' => 'Priljubljene',
     'no_pages_viewed' => 'Niste si ogledali še nobene strani',
     'no_pages_recently_created' => 'Nedavno ni bila ustvarjena nobena stran',
     'no_pages_recently_updated' => 'Nedavno ni bila posodobljena nobena stran',
@@ -66,7 +66,7 @@ return [
 
     // Permissions and restrictions
     'permissions' => 'Dovoljenja',
-    'permissions_desc' => 'Set permissions here to override the default permissions provided by user roles.',
+    'permissions_desc' => 'Nastavi dovoljenja bolj podrobno, kot to določajo uporabniške vloge.',
     'permissions_book_cascade' => 'Permissions set on books will automatically cascade to child chapters and pages, unless they have their own permissions defined.',
     'permissions_chapter_cascade' => 'Permissions set on chapters will automatically cascade to child pages, unless they have their own permissions defined.',
     'permissions_save' => 'Shrani dovoljenja',
@@ -78,7 +78,7 @@ return [
 
     // Search
     'search_results' => 'Rezultati iskanja',
-    'search_total_results_found' => ':count najdenih rezultatov|:count skupaj najdenih rezultatov',
+    'search_total_results_found' => ':count najdenih rezultatov|:count skupno najdenih rezultatov',
     'search_clear' => 'Počisti iskanje',
     'search_no_pages' => 'Nobena stran se ne ujema z vašim iskanjem',
     'search_for_term' => 'Išči :term',
@@ -101,7 +101,7 @@ return [
     'search_created_before' => 'Ustvarjeno pred',
     'search_created_after' => 'Ustvarjeno po',
     'search_set_date' => 'Nastavi datum',
-    'search_update' => 'Posodobi iskanje',
+    'search_update' => 'Išči ponovno',
 
     // Shelves
     'shelf' => 'Polica',
@@ -141,7 +141,7 @@ return [
     'books' => 'Knjige',
     'x_books' => ':count Knjiga|:count Knjig',
     'books_empty' => 'Ustvarjena ni bila nobena knjiga',
-    'books_popular' => 'Priljubjene knjige',
+    'books_popular' => 'Priljubljene knjige',
     'books_recent' => 'Zadnje knjige',
     'books_new' => 'Nove knjige',
     'books_new_action' => 'Nova knjiga',
@@ -220,7 +220,7 @@ return [
     'page' => 'Stran',
     'pages' => 'Strani',
     'x_pages' => ':count Stran|:count Strani',
-    'pages_popular' => 'Priljubjene strani',
+    'pages_popular' => 'Priljubljene knjige',
     'pages_new' => 'Nova stran',
     'pages_attachments' => 'Priponke',
     'pages_navigation' => 'Navigacija po strani',
@@ -442,7 +442,7 @@ return [
     'watch_desc_default' => 'Revert watching to just your default notification preferences.',
     'watch_title_ignore' => 'Ignore',
     'watch_desc_ignore' => 'Ignore all notifications, including those from user-level preferences.',
-    'watch_title_new' => 'New Pages',
+    'watch_title_new' => 'Nove strani',
     'watch_desc_new' => 'Notify when any new page is created within this item.',
     'watch_title_updates' => 'All Page Updates',
     'watch_desc_updates' => 'Notify upon all new pages and page changes.',

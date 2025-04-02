@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" odstranjen iz priljubljenih',
 
     // Watching
-    'watch_update_level_notification' => 'Nastavitve opazovanja uspešno posodobljene',
+    'watch_update_level_notification' => 'Nastavitve spremljanja uspešno posodobljene',
 
     // Auth
     'auth_login' => 'prijavljen',

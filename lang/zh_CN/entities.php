@@ -167,7 +167,7 @@ return [
     'books_navigation' => '图书导航',
     'books_sort' => '排序图书内容',
     'books_sort_desc' => 'Move chapters and pages within a book to reorganise its contents. Other books can be added which allows easy moving of chapters and pages between books. Optionally an auto sort rule can be set to automatically sort this book\'s contents upon changes.',
-    'books_sort_auto_sort' => 'Auto Sort Option',
+    'books_sort_auto_sort' => '自动排序选项',
     'books_sort_auto_sort_active' => 'Auto Sort Active: :sortName',
     'books_sort_named' => '排序图书「:bookName」',
     'books_sort_name' => '按名称排序',

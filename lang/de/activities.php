@@ -128,7 +128,7 @@ return [
     'comment_delete'              => 'Kommentar gelöscht',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
+    'sort_rule_create' => 'Sortierregel erstellt',
     'sort_rule_create_notification' => 'Sort rule successfully created',
     'sort_rule_update' => 'updated sort rule',
     'sort_rule_update_notification' => 'Sort rule successfully updated',

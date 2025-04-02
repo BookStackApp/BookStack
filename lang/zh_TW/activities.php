@@ -128,12 +128,12 @@ return [
     'comment_delete'              => '已刪除之評論',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => '已建立的排序規則',
+    'sort_rule_create_notification' => '排序規則已成功建立',
+    'sort_rule_update' => '已更新排序規則',
+    'sort_rule_update_notification' => '排序規則已成功更新',
+    'sort_rule_delete' => '已刪除排序規則',
+    'sort_rule_delete_notification' => '排序規則已成功刪除',
 
     // Other
     'permissions_update'          => '更新權限',

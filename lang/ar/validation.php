@@ -105,10 +105,10 @@ return [
     'url'                  => 'صيغة :attribute غير صالحة.',
     'uploaded'             => 'تعذر تحميل الملف. قد لا يقبل الخادم ملفات بهذا الحجم.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute بحاجة إلى الرجوع إلى مِلَفّ داخل المِلَفّ المضغوط.',
+    'zip_file_mime' => ':attribute بحاجة إلى الإشارة إلى مِلَفّ من نوع :validTypes، وجدت :foundType.',
+    'zip_model_expected' => 'عنصر البيانات المتوقع ولكن ":type" تم العثور عليه.',
+    'zip_unique' => 'يجب أن يكون :attribute فريداً لنوع الكائن داخل المِلَفّ المضغوط.',
 
     // Custom validation lines
     'custom' => [

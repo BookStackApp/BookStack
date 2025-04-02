@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'удалил комментарий',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'создал правило сортировки',
+    'sort_rule_create_notification' => 'Правило сортировки успешно создано',
+    'sort_rule_update' => 'обновил правило сортировки',
+    'sort_rule_update_notification' => 'Правило сортировки успешно обновлено',
+    'sort_rule_delete' => 'удалил правило сортировки',
+    'sort_rule_delete_notification' => 'Правило сортировки успешно удалено',
 
     // Other
     'permissions_update'          => 'обновил разрешения',

@@ -4,24 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'تعليق جديد على الصفحة: :pageName',
+    'new_comment_intro' => 'قام أحد المستخدمين بالتعليق على صفحة في :appName:',
+    'new_page_subject' => 'صفحة جديدة: :pageName',
+    'new_page_intro' => 'تم إنشاء صفحة جديدة في :appName:',
+    'updated_page_subject' => 'تم تحديث الصفحة: :pageName',
+    'updated_page_intro' => 'تم تحديث الصفحة في :appName:',
+    'updated_page_debounce' => 'لمنع تلقي عدد كبير من الإشعارات، لن يتم إرسال إشعارات إليك لفترة من الوقت لإجراء المزيد من التعديلات على هذه الصفحة بواسطة نفس المحرر.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_page_path' => 'Page Path:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'اسم الصفحة:',
+    'detail_page_path' => 'مسار الصفحة:',
+    'detail_commenter' => 'المُعَلِق:',
+    'detail_comment' => 'التعليق:',
+    'detail_created_by' => 'أنشئ من طرف:',
+    'detail_updated_by' => 'تم التحديث بواسطة:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'عرض التعليق',
+    'action_view_page' => 'عرض الصفحة',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'لقد تم إرسال هذا الإشعار إليك لأن :link يغطي هذا النوع من النشاط لهذا العنصر.',
+    'footer_reason_link' => 'إعدادات الإشعارات الخاصة بك',
 ];

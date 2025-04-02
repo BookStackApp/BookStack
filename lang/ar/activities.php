@@ -66,10 +66,10 @@ return [
     'auth_register' => 'سجل كمستخدم جديد',
     'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة المرور',
     'auth_password_reset_update' => 'إعادة تعيين كلمة مرور المستخدم',
-    'mfa_setup_method' => 'طريقة MFA المكونة',
-    'mfa_setup_method_notification' => 'تم تكوين طريقة متعددة العوامل بنجاح',
-    'mfa_remove_method' => 'إزالة طريقة MFA',
-    'mfa_remove_method_notification' => 'تمت إزالة طريقة متعددة العوامل بنجاح',
+    'mfa_setup_method' => 'طريقة المصادقة متعددة العوامل المُهيأة',
+    'mfa_setup_method_notification' => 'تم إعداد المصادقة متعددة العوامل بنجاح',
+    'mfa_remove_method' => 'إزالة طريقة المصادقة متعددة العوامل',
+    'mfa_remove_method_notification' => 'تمت إزالة المصادقة متعددة العوامل بنجاح',
 
     // Settings
     'settings_update' => 'تحديث الإعدادات',
@@ -77,12 +77,12 @@ return [
     'maintenance_action_run' => 'إجراء الصيانة',
 
     // Webhooks
-    'webhook_create' => 'تم إنشاء webhook',
-    'webhook_create_notification' => 'تم إنشاء Webhook بنجاح',
-    'webhook_update' => 'تم تحديث webhook',
-    'webhook_update_notification' => 'تم تحديث Webhook بنجاح',
-    'webhook_delete' => 'حذف webhook',
-    'webhook_delete_notification' => 'تم حذف Webhook بنجاح',
+    'webhook_create' => 'تم إنشاء خطاف ويب',
+    'webhook_create_notification' => 'تم إنشاء خطاف ويب بنجاح',
+    'webhook_update' => 'تم تحديث خطاف الويب',
+    'webhook_update_notification' => 'تم تحديث خطاف الويب بنجاح',
+    'webhook_delete' => 'حذف خطاف ويب',
+    'webhook_delete_notification' => 'تم حذف خطاف الويب بنجاح',
 
     // Imports
     'import_create' => 'تم إنشاء الاستيراد',
@@ -94,7 +94,7 @@ return [
 
     // Users
     'user_create' => 'إنشاء مستخدم',
-    'user_create_notification' => 'تم انشاء الحساب',
+    'user_create_notification' => 'تم إنشاء الحساب',
     'user_update' => 'المستخدم المحدث',
     'user_update_notification' => 'تم تحديث المستخدم بنجاح',
     'user_delete' => 'المستخدم المحذوف',
@@ -102,11 +102,11 @@ return [
 
     // API Tokens
     'api_token_create' => 'تم إنشاء رمز واجهة برمجة التطبيقات -API-',
-    'api_token_create_notification' => 'تم إنشاء رمز الـ API بنجاح',
+    'api_token_create_notification' => 'تم إنشاء  واجهة برمجة التطبيقات -API- بنجاح',
     'api_token_update' => 'رمز واجهة برمجة التطبيقات المحدث',
-    'api_token_update_notification' => 'تم تحديث رمز الـ API بنجاح',
+    'api_token_update_notification' => 'تم تحديث رمز واجهة برمجة التطبيقات -API- بنجاح',
     'api_token_delete' => 'رمز واجهة برمجة التطبيقات المحذوف',
-    'api_token_delete_notification' => 'تم حذف رمز الـ API بنجاح',
+    'api_token_delete_notification' => 'تم حذف رمز  واجهة برمجة التطبيقات -API- بنجاح',
 
     // Roles
     'role_create' => 'إنشاء صَلاحِيَة',
@@ -136,5 +136,5 @@ return [
     'sort_rule_delete_notification' => 'تم حذف قاعدة الفرز بنجاح',
 
     // Other
-    'permissions_update'          => 'تحديث الأذونات',
+    'permissions_update'          => 'تحديث الصلاحيات',
 ];
