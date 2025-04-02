@@ -25,6 +25,7 @@ export class WysiwygEditor extends Component {
                 textDirection: this.$opts.textDirection,
                 translations,
             });
+            window.wysiwyg = this.editor;
         });
 
         let handlingFormSubmit = false;
@@ -38,7 +39,9 @@ export class WysiwygEditor extends Component {
                 handlingFormSubmit = true;
                 this.editor.getContentAsHtml().then(html => {
                     this.input.value = html;
-                    this.input.form.submit();
+                    setTimeout(() => {
+                        this.input.form.requestSubmit();
+                    }, 5);
                 });
             } else {
                 handlingFormSubmit = false;

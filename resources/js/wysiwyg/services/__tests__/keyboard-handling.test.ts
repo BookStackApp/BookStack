@@ -1,7 +1,7 @@
 import {
     createTestContext, destroyFromContext,
     dispatchKeydownEventForNode,
-    dispatchKeydownEventForSelectedNode,
+    dispatchKeydownEventForSelectedNode, expectNodeShapeToMatch,
 } from "lexical/__tests__/utils";
 import {
     $createParagraphNode, $createTextNode,
@@ -13,6 +13,7 @@ import {registerKeyboardHandling} from "../keyboard-handling";
 import {registerRichText} from "@lexical/rich-text";
 import {EditorUiContext} from "../../ui/framework/core";
 import {$createListItemNode, $createListNode, ListItemNode, ListNode} from "@lexical/list";
+import {$createImageNode, ImageNode} from "@lexical/rich-text/LexicalImageNode";
 
 describe('Keyboard-handling service tests', () => {
 
@@ -126,5 +127,35 @@ describe('Keyboard-handling service tests', () => {
             expect(selectedNode).toBeInstanceOf(ListItemNode);
             expect(selectedNode?.getKey()).toBe(innerList.getChildren()[0].getKey());
         });
+    });
+
+    test('Images: up on selected image creates new paragraph if none above', () => {
+        let image!: ImageNode;
+        editor.updateAndCommit(() => {
+            const root = $getRoot();
+            const imageWrap = $createParagraphNode();
+            image = $createImageNode('https://example.com/cat.png');
+            imageWrap.append(image);
+            root.append(imageWrap);
+            image.select();
+        });
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'paragraph',
+            children: [
+                {type: 'image'}
+            ],
+        }]);
+
+        dispatchKeydownEventForNode(image, editor, 'ArrowUp');
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'paragraph',
+        }, {
+            type: 'paragraph',
+            children: [
+                {type: 'image'}
+            ],
+        }]);
     });
 });
