@@ -91,7 +91,7 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'sort_rule_details' => 'Sortierregel-Details',
     'sort_rule_details_desc' => 'Legen Sie einen Namen für diese Sortierregel fest, der in Listen erscheint, wenn Benutzer eine Sortierung auswählen.',
     'sort_rule_operations' => 'Sortierungs-Aktionen',
-    'sort_rule_operations_desc' => 'Konfigurieren Sie die zu durchführenden Sortieraktionen durch Verschieben von der Liste der verfügbaren Aktionen. Bei der Verwendung werden die Aktionen von oben nach unten angewendet. Alle hier vorgenommenen Änderungen werden beim Speichern auf alle zugewiesenen Bücher angewendet.',
+    'sort_rule_operations_desc' => 'Konfigurieren Sie die durchzuführenden Sortieraktionen durch Verschieben von der Liste der verfügbaren Aktionen. Bei der Verwendung werden die Aktionen von oben nach unten angewendet. Alle hier vorgenommenen Änderungen werden beim Speichern auf alle zugewiesenen Bücher angewendet.',
     'sort_rule_available_operations' => 'Verfügbare Aktionen',
     'sort_rule_available_operations_empty' => 'Keine verbleibenden Aktionen',
     'sort_rule_configured_operations' => 'Konfigurierte Aktionen',
