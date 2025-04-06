@@ -82,7 +82,7 @@ return [
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',
-    'mfa_setup_desc' => 'Richte eine Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
+    'mfa_setup_desc' => 'Richte Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
     'mfa_setup_configured' => 'Bereits konfiguriert',
     'mfa_setup_reconfigure' => 'Umkonfigurieren',
     'mfa_setup_remove_confirmation' => 'Bist du sicher, dass du diese Multi-Faktor-Authentifizierungsmethode entfernen möchtest?',
