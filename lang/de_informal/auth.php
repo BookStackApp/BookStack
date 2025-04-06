@@ -33,7 +33,7 @@ return [
     'social_registration_text' => 'Mit einem dieser Dienste registrieren oder anmelden',
 
     'register_thanks' => 'Vielen Dank für deine Registrierung!',
-    'register_confirm' => 'Bitte prüfe deinen Posteingang und bestätige die Registrierung.',
+    'register_confirm' => 'Bitte prüfe deinen Posteingang und bestätige die Registrierung, um :appName nutzen zu können.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
