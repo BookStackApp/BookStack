@@ -25,7 +25,7 @@ return [
     'app_public_viewing' => 'Öffentliche Ansicht erlauben?',
     'app_secure_images' => 'Erhöhte Sicherheit für hochgeladene Bilder aktivieren?',
     'app_secure_images_toggle' => 'Aktiviere Bild-Upload mit höherer Sicherheit',
-    'app_secure_images_desc' => 'Aus Leistungsgründen sind alle Bilder öffentlich sichtbar. Diese Option fügt zufällige, schwer zu erratene, Zeichenketten zu Bild-URLs hinzu. Stelle sicher, dass Verzeichnisindizes deaktiviert sind, um einen einfachen Zugriff zu verhindern.',
+    'app_secure_images_desc' => 'Aus Leistungsgründen sind alle Bilder öffentlich sichtbar. Diese Option fügt zufällige, schwer zu erratende, Zeichenketten zu Bild-URLs hinzu. Stelle sicher, dass Verzeichnisindizes deaktiviert sind, um einen einfachen Zugriff zu verhindern.',
     'app_default_editor' => 'Standard Seiteneditor',
     'app_default_editor_desc' => 'Wähle aus, welcher Editor bei der Bearbeitung neuer Seiten standardmäßig verwendet werden soll. Dies kann auf Seitenebene außer Kraft gesetzt werden, sofern die Berechtigungen dies zulassen.',
     'app_custom_html' => 'Benutzerdefinierter HTML <head> Inhalt',
@@ -257,7 +257,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_api_tokens_expires' => 'Endet',
     'users_api_tokens_docs' => 'API Dokumentation',
     'users_mfa' => 'Multi-Faktor-Authentifizierung',
-    'users_mfa_desc' => 'Richte die Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
+    'users_mfa_desc' => 'Richte Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
     'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
     'users_mfa_configure' => 'Methoden konfigurieren',
 
