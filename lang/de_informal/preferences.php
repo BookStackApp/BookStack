@@ -35,12 +35,12 @@ return [
     'auth_change_password_success' => 'Das Passwort wurde aktualisiert!',
 
     'profile' => 'Profildetails',
-    'profile_desc' => 'Verwalte die Details für dein Konto, welche dich gegenüber anderen Benutzern repräsentieren, zusätzlich zu den Details, die für die Kommunikation und die Personalisierung des Systems verwendet werden.',
+    'profile_desc' => 'Verwalte die Details deines Kontos, welches dich gegenüber anderen Benutzern repräsentiert, zusätzlich zu den Details, die für die Kommunikation und die Personalisierung des Systems genutzt werden.',
     'profile_view_public' => 'Öffentliches Profil anzeigen',
-    'profile_name_desc' => 'Konfiguriere deinen Anzeigenamen, der durch die Aktivität, die du durchführst, für andere Benutzer und deine eigenen Inhalte im System sichtbar ist.',
+    'profile_name_desc' => 'Konfiguriere deinen Anzeigenamen, der durch die Aktivität, die du ausführst, und die dir gehörenden Inhalte für andere Benutzer sichtbar ist.',
     'profile_email_desc' => 'Diese E-Mail wird für Benachrichtigungen und, je nach aktiver Systemauthentifizierung, den Systemzugriff verwendet.',
     'profile_email_no_permission' => 'Leider hast du nicht die Berechtigung, deine E-Mail-Adresse zu ändern. Wenn du diese ändern möchtest, wende dich bitte an deinen Administrator.',
-    'profile_avatar_desc' => 'Wähle ein Bild aus, dass anderen im System angezeigt wird, um dich zu repräsentieren. Idealerweise sollte dieses Bild quadratisch und etwa 256px breit und hoch sein.',
+    'profile_avatar_desc' => 'Wähle ein Bild aus, das anderen im System angezeigt wird, um dich zu repräsentieren. Idealerweise sollte dieses Bild quadratisch und etwa 256px breit und hoch sein.',
     'profile_admin_options' => 'Administratoroptionen',
     'profile_admin_options_desc' => 'Weitere Administrator-Optionen, wie zum Beispiel die Verwaltung von Rollenzuweisungen, findest du in deinem Benutzerkonto im Bereich "Einstellungen > Benutzer" der Anwendung.',
 
