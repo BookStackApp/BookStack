@@ -163,7 +163,7 @@ return [
 
     // About view
     'about' => 'Über den Editor',
-    'about_title' => 'Über den WYSIWYG Editor',
+    'about_title' => 'Über den WYSIWYG-Editor',
     'editor_license' => 'Editorlizenz & Copyright',
     'editor_lexical_license' => 'Dieser Editor wurde mithilfe von :lexicalLink erstellt, der unter der MIT-Lizenz bereitgestellt wird.',
     'editor_lexical_license_link' => 'Vollständige Lizenzdetails findest du hier.',
