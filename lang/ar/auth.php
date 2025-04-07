@@ -45,7 +45,7 @@ return [
 
     // Password Reset
     'reset_password' => 'استعادة كلمة السر',
-    'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة المرور.',
+    'reset_password_send_instructions' => 'أدخل بريدك الإلكتروني بالأسفل وسيتم إرسال رسالة برابط لاستعادة كلمة السر.',
     'reset_password_send_button' => 'أرسل رابط الاستعادة',
     'reset_password_sent' => 'سيتم إرسال رابط إعادة تعيين كلمة السر إلى عنوان البريد الإلكتروني هذا إذا كان موجودًا في النظام.',
     'reset_password_success' => 'تمت استعادة كلمة السر بنجاح.',
@@ -78,7 +78,7 @@ return [
     'user_invite_page_welcome' => 'مرحبا بكم في :appName!',
     'user_invite_page_text' => 'لإكمال حسابك والحصول على حق الوصول تحتاج إلى تعيين كلمة السر سيتم استخدامها لتسجيل الدخول إلى :appName في الزيارات المستقبلية.',
     'user_invite_page_confirm_button' => 'تأكيد كلمة السر',
-    'user_invite_success_login' => 'تم تأكيد كلمة السر. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور المحددة للوصول إلى :appName!',
+    'user_invite_success_login' => 'تم تأكيد كلمة السر. يمكنك الآن تسجيل الدخول باستخدام كلمة السر المحددة للوصول إلى :appName!',
 
     // Multi-factor Authentication
     'mfa_setup' => 'إعداد المصادقة متعددة العوامل',
@@ -89,7 +89,7 @@ return [
     'mfa_setup_action' => 'إعداد (تنصيب)',
     'mfa_backup_codes_usage_limit_warning' => 'لديك أقل من 5 رموز احتياطية متبقية، الرجاء إنشاء وتخزين مجموعة جديدة قبل نفاد الرموز لتجنب إغلاق حسابك.',
     'mfa_option_totp_title' => 'تطبيق الجوال',
-    'mfa_option_totp_desc' => 'لاستخدام المصادقة المتعددة العوامل، ستحتاج إلى تطبيق جوال يدعم كلمة المرور المؤقته -TOTP- مثل جوجل أوثنتيكاتور -Google Authenticator- أو أوثي -Authy- أو مايكروسوفت أوثنتيكاتور -Microsoft Authenticator-.',
+    'mfa_option_totp_desc' => 'لاستخدام المصادقة المتعددة العوامل، ستحتاج إلى تطبيق جوال يدعم كلمة السر المؤقته -TOTP- مثل جوجل أوثنتيكاتور -Google Authenticator- أو أوثي -Authy- أو مايكروسوفت أوثنتيكاتور -Microsoft Authenticator-.',
     'mfa_option_backup_codes_title' => 'رموز النسخ الاحتياطي',
     'mfa_option_backup_codes_desc' => 'إنشاء مجموعة من رموز النسخ الاحتياطية للاستخدام مرة واحدة و التي سَتُدِخلها عند تسجيل الدخول للتحقق من هويتك. احرص أن تخزينها في مكان آمن.',
     'mfa_gen_confirm_and_enable' => 'تأكيد وتمكين',
@@ -98,7 +98,7 @@ return [
     'mfa_gen_backup_codes_download' => 'تنزيل الرموز',
     'mfa_gen_backup_codes_usage_warning' => 'يمكن استخدام كل رمز مرة واحدة فقط',
     'mfa_gen_totp_title' => 'إعداد تطبيق الجوال',
-    'mfa_gen_totp_desc' => 'لاستخدام المصادقة المتعددة ، ستحتاج إلى تطبيق جوال كلمة المرور المؤقته -TOTP- مثل جوجل أوثنتيكاتور -Google Authenticator- أو أوثي -Authy- أو مايكروسوفت أوثنتيكاتور -Microsoft Authenticator-.',
+    'mfa_gen_totp_desc' => 'لاستخدام المصادقة المتعددة ، ستحتاج إلى تطبيق جوال كلمة السر المؤقته -TOTP- مثل جوجل أوثنتيكاتور -Google Authenticator- أو أوثي -Authy- أو مايكروسوفت أوثنتيكاتور -Microsoft Authenticator-.',
     'mfa_gen_totp_scan' => 'امسح رمز الاستجابة السريعة -QR- أدناه باستخدام تطبيق المصادقة المفضل لديك للبدء.',
     'mfa_gen_totp_verify_setup' => 'التحقق من الإعداد',
     'mfa_gen_totp_verify_setup_desc' => 'تحقق أن كل شيء يعمل عن طريق إدخال رمز تم إنشاؤه داخل تطبيق المصادقة الخاص بك في مربع الإدخال أدناه:',
