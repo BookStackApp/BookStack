@@ -88,9 +88,9 @@ return [
     'import_create' => 'created import',
     'import_create_notification' => 'Import successfully uploaded',
     'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
+    'import_run_notification' => 'Innehållet har importerats',
     'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_delete_notification' => 'Importen har tagits bort',
 
     // Users
     'user_create' => 'skapade användare',
