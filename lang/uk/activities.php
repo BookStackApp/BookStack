@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Вебхуки успішно видалено',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'створений імпорт',
+    'import_create_notification' => 'Імпорт успішно завантажений',
+    'import_run' => 'оновлений імпорт',
+    'import_run_notification' => 'Контент успішно імпортовано',
+    'import_delete' => 'видалений імпорт',
+    'import_delete_notification' => 'Імпорт успішно видалено',
 
     // Users
     'user_create' => 'створений користувач',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'видалений коментар',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'створене правило сортування',
+    'sort_rule_create_notification' => 'Правило сортування успішно створено',
+    'sort_rule_update' => 'оновлено правило сортування',
+    'sort_rule_update_notification' => 'Правило сортування успішно оновлено',
+    'sort_rule_delete' => 'видалено правило сортування',
+    'sort_rule_delete_notification' => 'Правило сортування успішно видалено',
 
     // Other
     'permissions_update'          => 'оновив дозволи',
