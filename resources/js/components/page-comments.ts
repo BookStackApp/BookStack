@@ -2,7 +2,37 @@ import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
 
+export interface CommentReplyEvent extends Event {
+    detail: {
+        id: string; // ID of comment being replied to
+        element: HTMLElement; // Container for comment replied to
+    }
+}
+
 export class PageComments extends Component {
+
+    private elem: HTMLElement;
+    private pageId: number;
+    private container: HTMLElement;
+    private commentCountBar: HTMLElement;
+    private commentsTitle: HTMLElement;
+    private addButtonContainer: HTMLElement;
+    private replyToRow: HTMLElement;
+    private formContainer: HTMLElement;
+    private form: HTMLFormElement;
+    private formInput: HTMLInputElement;
+    private formReplyLink: HTMLAnchorElement;
+    private addCommentButton: HTMLElement;
+    private hideFormButton: HTMLElement;
+    private removeReplyToButton: HTMLElement;
+    private wysiwygLanguage: string;
+    private wysiwygTextDirection: string;
+    private wysiwygEditor: any = null;
+    private createdText: string;
+    private countText: string;
+    private parentId: number | null = null;
+    private contentReference: string = '';
+    private formReplyText: string = '';
 
     setup() {
         this.elem = this.$el;
@@ -15,9 +45,9 @@ export class PageComments extends Component {
         this.addButtonContainer = this.$refs.addButtonContainer;
         this.replyToRow = this.$refs.replyToRow;
         this.formContainer = this.$refs.formContainer;
-        this.form = this.$refs.form;
-        this.formInput = this.$refs.formInput;
-        this.formReplyLink = this.$refs.formReplyLink;
+        this.form = this.$refs.form as HTMLFormElement;
+        this.formInput = this.$refs.formInput as HTMLInputElement;
+        this.formReplyLink = this.$refs.formReplyLink as HTMLAnchorElement;
         this.addCommentButton = this.$refs.addCommentButton;
         this.hideFormButton = this.$refs.hideFormButton;
         this.removeReplyToButton = this.$refs.removeReplyToButton;
@@ -25,26 +55,23 @@ export class PageComments extends Component {
         // WYSIWYG options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
         this.wysiwygTextDirection = this.$opts.wysiwygTextDirection;
-        this.wysiwygEditor = null;
 
         // Translations
         this.createdText = this.$opts.createdText;
         this.countText = this.$opts.countText;
 
-        // Internal State
-        this.parentId = null;
         this.formReplyText = this.formReplyLink?.textContent || '';
 
         this.setupListeners();
     }
 
-    setupListeners() {
+    protected setupListeners(): void {
         this.elem.addEventListener('page-comment-delete', () => {
             setTimeout(() => this.updateCount(), 1);
             this.hideForm();
         });
 
-        this.elem.addEventListener('page-comment-reply', event => {
+        this.elem.addEventListener('page-comment-reply', (event: CommentReplyEvent) => {
             this.setReply(event.detail.id, event.detail.element);
         });
 
@@ -56,7 +83,7 @@ export class PageComments extends Component {
         }
     }
 
-    saveComment(event) {
+    protected saveComment(event): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -68,10 +95,11 @@ export class PageComments extends Component {
         const reqData = {
             html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
+            content_reference: this.contentReference || '',
         };
 
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
-            const newElem = htmlToDom(resp.data);
+            const newElem = htmlToDom(resp.data as string);
 
             if (reqData.parent_id) {
                 this.formContainer.after(newElem);
@@ -91,20 +119,21 @@ export class PageComments extends Component {
         loading.remove();
     }
 
-    updateCount() {
+    protected updateCount(): void {
         const count = this.getCommentCount();
-        this.commentsTitle.textContent = window.$trans.choice(this.countText, count, {count});
+        this.commentsTitle.textContent = window.$trans.choice(this.countText, count);
     }
 
-    resetForm() {
+    protected resetForm(): void {
         this.removeEditor();
         this.formInput.value = '';
         this.parentId = null;
+        this.contentReference = '';
         this.replyToRow.toggleAttribute('hidden', true);
         this.container.append(this.formContainer);
     }
 
-    showForm() {
+    protected showForm(): void {
         this.removeEditor();
         this.formContainer.toggleAttribute('hidden', false);
         this.addButtonContainer.toggleAttribute('hidden', true);
@@ -112,7 +141,7 @@ export class PageComments extends Component {
         this.loadEditor();
     }
 
-    hideForm() {
+    protected hideForm(): void {
         this.resetForm();
         this.formContainer.toggleAttribute('hidden', true);
         if (this.getCommentCount() > 0) {
@@ -123,7 +152,7 @@ export class PageComments extends Component {
         this.addButtonContainer.toggleAttribute('hidden', false);
     }
 
-    loadEditor() {
+    protected loadEditor(): void {
         if (this.wysiwygEditor) {
             this.wysiwygEditor.focus();
             return;
@@ -134,42 +163,49 @@ export class PageComments extends Component {
             containerElement: this.formInput,
             darkMode: document.documentElement.classList.contains('dark-mode'),
             textDirection: this.wysiwygTextDirection,
+            drawioUrl: '',
+            pageId: 0,
             translations: {},
-            translationMap: window.editor_translations,
+            translationMap: (window as Record<string, Object>).editor_translations,
         });
 
-        window.tinymce.init(config).then(editors => {
+        (window as {tinymce: {init: (Object) => Promise<any>}}).tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
             setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
     }
 
-    removeEditor() {
+    protected removeEditor(): void {
         if (this.wysiwygEditor) {
             this.wysiwygEditor.remove();
             this.wysiwygEditor = null;
         }
     }
 
-    getCommentCount() {
+    protected getCommentCount(): number {
         return this.container.querySelectorAll('[component="page-comment"]').length;
     }
 
-    setReply(commentLocalId, commentElement) {
+    protected setReply(commentLocalId, commentElement): void {
         const targetFormLocation = commentElement.closest('.comment-branch').querySelector('.comment-branch-children');
         targetFormLocation.append(this.formContainer);
         this.showForm();
         this.parentId = commentLocalId;
         this.replyToRow.toggleAttribute('hidden', false);
-        this.formReplyLink.textContent = this.formReplyText.replace('1234', this.parentId);
+        this.formReplyLink.textContent = this.formReplyText.replace('1234', String(this.parentId));
         this.formReplyLink.href = `#comment${this.parentId}`;
     }
 
-    removeReplyTo() {
+    protected removeReplyTo(): void {
         this.parentId = null;
         this.replyToRow.toggleAttribute('hidden', true);
         this.container.append(this.formContainer);
         this.showForm();
+    }
+
+    public startNewComment(contentReference: string): void {
+        this.removeReplyTo();
+        this.contentReference = contentReference;
     }
 
 }

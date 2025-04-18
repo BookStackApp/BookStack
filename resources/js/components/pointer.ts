@@ -1,30 +1,39 @@
 import * as DOM from '../services/dom.ts';
 import {Component} from './component';
 import {copyTextToClipboard} from '../services/clipboard.ts';
-import {el} from "../wysiwyg/utils/dom";
 import {cyrb53} from "../services/util";
 import {normalizeNodeTextOffsetToParent} from "../services/dom.ts";
+import {PageComments} from "./page-comments";
 
 export class Pointer extends Component {
 
+    protected showing: boolean = false;
+    protected isMakingSelection: boolean = false;
+    protected targetElement: HTMLElement|null = null;
+    protected targetSelectionRange: Range|null = null;
+
+    protected pointer: HTMLElement;
+    protected linkInput: HTMLInputElement;
+    protected linkButton: HTMLElement;
+    protected includeInput: HTMLInputElement;
+    protected includeButton: HTMLElement;
+    protected sectionModeButton: HTMLElement;
+    protected commentButton: HTMLElement;
+    protected modeToggles: HTMLElement[];
+    protected modeSections: HTMLElement[];
+    protected pageId: string;
+
     setup() {
-        this.container = this.$el;
         this.pointer = this.$refs.pointer;
-        this.linkInput = this.$refs.linkInput;
+        this.linkInput = this.$refs.linkInput as HTMLInputElement;
         this.linkButton = this.$refs.linkButton;
-        this.includeInput = this.$refs.includeInput;
+        this.includeInput = this.$refs.includeInput as HTMLInputElement;
         this.includeButton = this.$refs.includeButton;
         this.sectionModeButton = this.$refs.sectionModeButton;
         this.commentButton = this.$refs.commentButton;
         this.modeToggles = this.$manyRefs.modeToggle;
         this.modeSections = this.$manyRefs.modeSection;
         this.pageId = this.$opts.pageId;
-
-        // Instance variables
-        this.showing = false;
-        this.isMakingSelection = false;
-        this.targetElement = null;
-        this.targetSelectionRange = null;
 
         this.setupListeners();
     }
@@ -36,7 +45,7 @@ export class Pointer extends Component {
 
         // Select all contents on input click
         DOM.onSelect([this.includeInput, this.linkInput], event => {
-            event.target.select();
+            (event.target as HTMLInputElement).select();
             event.stopPropagation();
         });
 
@@ -58,9 +67,10 @@ export class Pointer extends Component {
         const pageContent = document.querySelector('.page-content');
         DOM.onEvents(pageContent, ['mouseup', 'keyup'], event => {
             event.stopPropagation();
-            const targetEl = event.target.closest('[id^="bkmrk"]');
+            const targetEl = (event.target as HTMLElement).closest('[id^="bkmrk"]');
             if (targetEl && window.getSelection().toString().length > 0) {
-                this.showPointerAtTarget(targetEl, event.pageX, false);
+                const xPos = (event instanceof MouseEvent) ? event.pageX : 0;
+                this.showPointerAtTarget(targetEl, xPos, false);
             }
         });
 
@@ -69,12 +79,14 @@ export class Pointer extends Component {
 
         // Toggle between pointer modes
         DOM.onSelect(this.modeToggles, event => {
+            const targetToggle = (event.target as HTMLElement);
             for (const section of this.modeSections) {
-                const show = !section.contains(event.target);
+                const show = !section.contains(targetToggle);
                 section.toggleAttribute('hidden', !show);
             }
 
-            this.modeToggles.find(b => b !== event.target).focus();
+            const otherToggle = this.modeToggles.find(b => b !== targetToggle);
+            otherToggle && otherToggle.focus();
         });
 
         if (this.commentButton) {
@@ -83,7 +95,7 @@ export class Pointer extends Component {
     }
 
     hidePointer() {
-        this.pointer.style.display = null;
+        this.pointer.style.removeProperty('display');
         this.showing = false;
         this.targetElement = null;
         this.targetSelectionRange = null;
@@ -97,7 +109,7 @@ export class Pointer extends Component {
      */
     showPointerAtTarget(element, xPosition, keyboardMode) {
         this.targetElement = element;
-        this.targetSelectionRange = window.getSelection()?.getRangeAt(0);
+        this.targetSelectionRange = window.getSelection()?.getRangeAt(0) || null;
         this.updateDomForTarget(element);
 
         this.pointer.style.display = 'block';
@@ -120,7 +132,7 @@ export class Pointer extends Component {
 
         const scrollListener = () => {
             this.hidePointer();
-            window.removeEventListener('scroll', scrollListener, {passive: true});
+            window.removeEventListener('scroll', scrollListener);
         };
 
         element.parentElement.insertBefore(this.pointer, element);
@@ -142,7 +154,7 @@ export class Pointer extends Component {
 
         // Update anchor if present
         const editAnchor = this.pointer.querySelector('#pointer-edit');
-        if (editAnchor && element) {
+        if (editAnchor instanceof HTMLAnchorElement && element) {
             const {editHref} = editAnchor.dataset;
             const elementId = element.id;
 
@@ -193,7 +205,8 @@ export class Pointer extends Component {
         }
 
         const reference = `${refId}:${hash}:${range}`;
-        console.log(reference);
+        const pageComments = window.$components.first('page-comments') as PageComments;
+        pageComments.startNewComment(reference);
     }
 
 }

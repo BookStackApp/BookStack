@@ -44,9 +44,11 @@ export function forEach(selector: string, callback: (el: Element) => any) {
 /**
  * Helper to listen to multiple DOM events
  */
-export function onEvents(listenerElement: Element, events: string[], callback: (e: Event) => any): void {
-    for (const eventName of events) {
-        listenerElement.addEventListener(eventName, callback);
+export function onEvents(listenerElement: Element|null, events: string[], callback: (e: Event) => any): void {
+    if (listenerElement) {
+        for (const eventName of events) {
+            listenerElement.addEventListener(eventName, callback);
+        }
     }
 }
 
