@@ -95,7 +95,7 @@ export class PageComments extends Component {
         const reqData = {
             html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
-            content_reference: this.contentReference || '',
+            content_ref: this.contentReference || '',
         };
 
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {

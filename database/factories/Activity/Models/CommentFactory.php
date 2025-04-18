@@ -27,6 +27,8 @@ class CommentFactory extends Factory
             'html'      => $html,
             'parent_id' => null,
             'local_id'  => 1,
+            'content_ref' => '',
+            'archived' => false,
         ];
     }
 }

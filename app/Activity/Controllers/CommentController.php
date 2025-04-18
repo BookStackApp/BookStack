@@ -26,6 +26,7 @@ class CommentController extends Controller
         $input = $this->validate($request, [
             'html'      => ['required', 'string'],
             'parent_id' => ['nullable', 'integer'],
+            'content_ref' => ['string'],
         ]);
 
         $page = $this->pageQueries->findVisibleById($pageId);
@@ -40,7 +41,7 @@ class CommentController extends Controller
 
         // Create a new comment.
         $this->checkPermission('comment-create-all');
-        $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null);
+        $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null, $input['content_ref']);
 
         return view('comments.comment-branch', [
             'readOnly' => false,

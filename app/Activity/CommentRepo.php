@@ -20,7 +20,7 @@ class CommentRepo
     /**
      * Create a new comment on an entity.
      */
-    public function create(Entity $entity, string $html, ?int $parent_id): Comment
+    public function create(Entity $entity, string $html, ?int $parent_id, string $content_ref): Comment
     {
         $userId = user()->id;
         $comment = new Comment();
@@ -30,6 +30,7 @@ class CommentRepo
         $comment->updated_by = $userId;
         $comment->local_id = $this->getNextLocalId($entity);
         $comment->parent_id = $parent_id;
+        $comment->content_ref = preg_match('/^bkmrk-(.*?):\d+:(\d*-\d*)?$/', $content_ref) === 1 ? $content_ref : '';
 
         $entity->comments()->save($comment);
         ActivityService::add(ActivityType::COMMENT_CREATE, $comment);

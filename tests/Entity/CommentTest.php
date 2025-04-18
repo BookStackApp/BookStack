@@ -33,6 +33,32 @@ class CommentTest extends TestCase
 
         $this->assertActivityExists(ActivityType::COMMENT_CREATE);
     }
+    public function test_add_comment_stores_content_reference_only_if_format_valid()
+    {
+        $validityByRefs = [
+            'bkmrk-my-title:4589284922:4-3' => true,
+            'bkmrk-my-title:4589284922:' => true,
+            'bkmrk-my-title:4589284922:abc' => false,
+            'my-title:4589284922:' => false,
+            'bkmrk-my-title-4589284922:' => false,
+        ];
+
+        $page = $this->entities->page();
+
+        foreach ($validityByRefs as $ref => $valid) {
+            $this->asAdmin()->postJson("/comment/$page->id", [
+                'html' => '<p>My comment</p>',
+                'parent_id' => null,
+                'content_ref' => $ref,
+            ]);
+
+            if ($valid) {
+                $this->assertDatabaseHas('comments', ['entity_id' => $page->id, 'content_ref' => $ref]);
+            } else {
+                $this->assertDatabaseMissing('comments', ['entity_id' => $page->id, 'content_ref' => $ref]);
+            }
+        }
+    }
 
     public function test_comment_edit()
     {
