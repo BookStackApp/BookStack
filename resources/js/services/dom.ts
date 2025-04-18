@@ -178,3 +178,24 @@ export function htmlToDom(html: string): HTMLElement {
 
     return firstChild;
 }
+
+export function normalizeNodeTextOffsetToParent(node: Node, offset: number, parentElement: HTMLElement): number {
+    if (!parentElement.contains(node)) {
+        throw new Error('ParentElement must be a prent of element');
+    }
+
+    let normalizedOffset = offset;
+    let currentNode: Node|null = node.nodeType === Node.TEXT_NODE ?
+        node : node.childNodes[offset];
+
+    while (currentNode !== parentElement && currentNode) {
+        if (currentNode.previousSibling) {
+            currentNode = currentNode.previousSibling;
+            normalizedOffset += (currentNode.textContent?.length || 0);
+        } else {
+            currentNode = currentNode.parentNode;
+        }
+    }
+
+    return normalizedOffset;
+}

@@ -1,6 +1,9 @@
 import * as DOM from '../services/dom.ts';
 import {Component} from './component';
 import {copyTextToClipboard} from '../services/clipboard.ts';
+import {el} from "../wysiwyg/utils/dom";
+import {cyrb53} from "../services/util";
+import {normalizeNodeTextOffsetToParent} from "../services/dom.ts";
 
 export class Pointer extends Component {
 
@@ -12,13 +15,16 @@ export class Pointer extends Component {
         this.includeInput = this.$refs.includeInput;
         this.includeButton = this.$refs.includeButton;
         this.sectionModeButton = this.$refs.sectionModeButton;
+        this.commentButton = this.$refs.commentButton;
         this.modeToggles = this.$manyRefs.modeToggle;
         this.modeSections = this.$manyRefs.modeSection;
         this.pageId = this.$opts.pageId;
 
         // Instance variables
         this.showing = false;
-        this.isSelection = false;
+        this.isMakingSelection = false;
+        this.targetElement = null;
+        this.targetSelectionRange = null;
 
         this.setupListeners();
     }
@@ -41,7 +47,7 @@ export class Pointer extends Component {
 
         // Hide pointer when clicking away
         DOM.onEvents(document.body, ['click', 'focus'], () => {
-            if (!this.showing || this.isSelection) return;
+            if (!this.showing || this.isMakingSelection) return;
             this.hidePointer();
         });
 
@@ -70,11 +76,17 @@ export class Pointer extends Component {
 
             this.modeToggles.find(b => b !== event.target).focus();
         });
+
+        if (this.commentButton) {
+            DOM.onSelect(this.commentButton, this.createCommentAtPointer.bind(this));
+        }
     }
 
     hidePointer() {
         this.pointer.style.display = null;
         this.showing = false;
+        this.targetElement = null;
+        this.targetSelectionRange = null;
     }
 
     /**
@@ -84,7 +96,9 @@ export class Pointer extends Component {
      * @param {Boolean} keyboardMode
      */
     showPointerAtTarget(element, xPosition, keyboardMode) {
-        this.updateForTarget(element);
+        this.targetElement = element;
+        this.targetSelectionRange = window.getSelection()?.getRangeAt(0);
+        this.updateDomForTarget(element);
 
         this.pointer.style.display = 'block';
         const targetBounds = element.getBoundingClientRect();
@@ -98,10 +112,10 @@ export class Pointer extends Component {
         this.pointer.style.top = `${yOffset}px`;
 
         this.showing = true;
-        this.isSelection = true;
+        this.isMakingSelection = true;
 
         setTimeout(() => {
-            this.isSelection = false;
+            this.isMakingSelection = false;
         }, 100);
 
         const scrollListener = () => {
@@ -119,7 +133,7 @@ export class Pointer extends Component {
      * Update the pointer inputs/content for the given target element.
      * @param {?Element} element
      */
-    updateForTarget(element) {
+    updateDomForTarget(element) {
         const permaLink = window.baseUrl(`/link/${this.pageId}#${element.id}`);
         const includeTag = `{{@${this.pageId}#${element.id}}}`;
 
@@ -150,6 +164,36 @@ export class Pointer extends Component {
             this.showPointerAtTarget(event.target, 0, true);
             this.pointer.focus();
         });
+    }
+
+    createCommentAtPointer(event) {
+        if (!this.targetElement) {
+            return;
+        }
+
+        const normalisedElemHtml = this.targetElement.outerHTML.replace(/\s{2,}/g, '');
+        const refId = this.targetElement.id;
+        const hash = cyrb53(normalisedElemHtml);
+        let range = '';
+        if (this.targetSelectionRange) {
+            const commonContainer = this.targetSelectionRange.commonAncestorContainer;
+            if (this.targetElement.contains(commonContainer)) {
+                const start = normalizeNodeTextOffsetToParent(
+                    this.targetSelectionRange.startContainer,
+                    this.targetSelectionRange.startOffset,
+                    this.targetElement
+                );
+                const end = normalizeNodeTextOffsetToParent(
+                    this.targetSelectionRange.endContainer,
+                    this.targetSelectionRange.endOffset,
+                    this.targetElement
+                );
+                range = `${start}-${end}`;
+            }
+        }
+
+        const reference = `${refId}:${hash}:${range}`;
+        console.log(reference);
     }
 
 }

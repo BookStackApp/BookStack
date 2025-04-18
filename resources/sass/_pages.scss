@@ -183,7 +183,6 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   input, button, a {
     position: relative;
-    border-radius: 0;
     height: 28px;
     font-size: 12px;
     vertical-align: top;
@@ -194,17 +193,19 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border: 1px solid #DDD;
     @include mixins.lightDark(border-color, #ddd, #000);
     color: #666;
-    width: 160px;
-    z-index: 40;
-    padding: 5px 10px;
+    width: 180px;
+    z-index: 58;
+    padding: 5px;
+    border-radius: 0;
   }
   .text-button {
     @include mixins.lightDark(color, #444, #AAA);
   }
   .input-group .button {
     line-height: 1;
-    margin: 0 0 0 -4px;
+    margin: 0 0 0 -5px;
     box-shadow: none;
+    border-radius: 0;
   }
   a.button {
     margin: 0;
