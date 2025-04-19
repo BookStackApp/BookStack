@@ -1,6 +1,7 @@
 import {Component} from './component';
-import {getLoading, htmlToDom} from '../services/dom.ts';
+import {findTargetNodeAndOffset, getLoading, hashElement, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
+import {el} from "../wysiwyg/utils/dom";
 
 export class PageComment extends Component {
 
@@ -46,6 +47,7 @@ export class PageComment extends Component {
         this.input = this.$refs.input as HTMLInputElement;
 
         this.setupListeners();
+        this.positionForReference();
     }
 
     protected setupListeners(): void {
@@ -135,4 +137,47 @@ export class PageComment extends Component {
         return loading;
     }
 
+    protected positionForReference() {
+        if (!this.commentContentRef) {
+            return;
+        }
+
+        const [refId, refHash, refRange] = this.commentContentRef.split(':');
+        const refEl = document.getElementById(refId);
+        if (!refEl) {
+            // TODO - Show outdated marker for comment
+            return;
+        }
+
+        const actualHash = hashElement(refEl);
+        if (actualHash !== refHash) {
+            // TODO - Show outdated marker for comment
+            return;
+        }
+
+        const refElBounds = refEl.getBoundingClientRect();
+        let bounds = refElBounds;
+        const [rangeStart, rangeEnd] = refRange.split('-');
+        if (rangeStart && rangeEnd) {
+            const range = new Range();
+            const relStart = findTargetNodeAndOffset(refEl, Number(rangeStart));
+            const relEnd = findTargetNodeAndOffset(refEl, Number(rangeEnd));
+            if (relStart && relEnd) {
+                range.setStart(relStart.node, relStart.offset);
+                range.setEnd(relEnd.node, relEnd.offset);
+                bounds = range.getBoundingClientRect();
+            }
+        }
+
+        const relLeft = bounds.left - refElBounds.left;
+        const relTop = bounds.top - refElBounds.top;
+        // TODO - Extract to class, Use theme color
+        const marker = el('div', {
+            class: 'content-comment-highlight',
+            style: `left: ${relLeft}px; top: ${relTop}px; width: ${bounds.width}px; height: ${bounds.height}px;`
+        }, ['']);
+
+        refEl.style.position = 'relative';
+        refEl.append(marker);
+    }
 }

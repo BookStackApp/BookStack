@@ -1,3 +1,5 @@
+import {cyrb53} from "./util";
+
 /**
  * Check if the given param is a HTMLElement
  */
@@ -181,6 +183,9 @@ export function htmlToDom(html: string): HTMLElement {
     return firstChild;
 }
 
+/**
+ * For the given node and offset, return an adjusted offset that's relative to the given parent element.
+ */
 export function normalizeNodeTextOffsetToParent(node: Node, offset: number, parentElement: HTMLElement): number {
     if (!parentElement.contains(node)) {
         throw new Error('ParentElement must be a prent of element');
@@ -200,4 +205,55 @@ export function normalizeNodeTextOffsetToParent(node: Node, offset: number, pare
     }
 
     return normalizedOffset;
+}
+
+/**
+ * Find the target child node and adjusted offset based on a parent node and text offset.
+ * Returns null if offset not found within the given parent node.
+ */
+export function findTargetNodeAndOffset(parentNode: HTMLElement, offset: number): ({node: Node, offset: number}|null) {
+    if (offset === 0) {
+        return { node: parentNode, offset: 0 };
+    }
+
+    let currentOffset = 0;
+    let currentNode = null;
+
+    for (let i = 0; i < parentNode.childNodes.length; i++) {
+        currentNode = parentNode.childNodes[i];
+
+        if (currentNode.nodeType === Node.TEXT_NODE) {
+            // For text nodes, count the length of their content
+            // Returns if within range
+            const textLength = currentNode.textContent.length;
+            if (currentOffset + textLength >= offset) {
+                return {
+                    node: currentNode,
+                    offset: offset - currentOffset
+                };
+            }
+
+            currentOffset += textLength;
+        } else if (currentNode.nodeType === Node.ELEMENT_NODE) {
+            // Otherwise, if an element, track the text length and search within
+            // if in range for the target offset
+            const elementTextLength = currentNode.textContent.length;
+            if (currentOffset + elementTextLength >= offset) {
+                return findTargetNodeAndOffset(currentNode, offset - currentOffset);
+            }
+
+            currentOffset += elementTextLength;
+        }
+    }
+
+    // Return null if not found within range
+    return null;
+}
+
+/**
+ * Create a hash for the given HTML element.
+ */
+export function hashElement(element: HTMLElement): string {
+    const normalisedElemHtml = element.outerHTML.replace(/\s{2,}/g, '');
+    return cyrb53(normalisedElemHtml);
 }

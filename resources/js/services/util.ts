@@ -164,5 +164,5 @@ export function cyrb53(str: string, seed: number = 0): string {
     h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
     h2  = Math.imul(h2 ^ (h2 >>> 16), 2246822507);
     h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
-    return (4294967296 * (2097151 & h2) + (h1 >>> 0)) as string;
+    return String((4294967296 * (2097151 & h2) + (h1 >>> 0)));
 }

@@ -1,8 +1,7 @@
 import * as DOM from '../services/dom.ts';
 import {Component} from './component';
 import {copyTextToClipboard} from '../services/clipboard.ts';
-import {cyrb53} from "../services/util";
-import {normalizeNodeTextOffsetToParent} from "../services/dom.ts";
+import {hashElement, normalizeNodeTextOffsetToParent} from "../services/dom.ts";
 import {PageComments} from "./page-comments";
 
 export class Pointer extends Component {
@@ -183,9 +182,8 @@ export class Pointer extends Component {
             return;
         }
 
-        const normalisedElemHtml = this.targetElement.outerHTML.replace(/\s{2,}/g, '');
         const refId = this.targetElement.id;
-        const hash = cyrb53(normalisedElemHtml);
+        const hash = hashElement(this.targetElement);
         let range = '';
         if (this.targetSelectionRange) {
             const commonContainer = this.targetSelectionRange.commonAncestorContainer;
