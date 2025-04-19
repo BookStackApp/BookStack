@@ -4,7 +4,7 @@
 <div component="{{ $readOnly ? '' : 'page-comment' }}"
      option:page-comment:comment-id="{{ $comment->id }}"
      option:page-comment:comment-local-id="{{ $comment->local_id }}"
-     option:page-comment:comment-parent-id="{{ $comment->parent_id }}"
+     option:page-comment:comment-content-ref="{{ $comment->content_ref }}"
      option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
      option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
      option:page-comment:wysiwyg-language="{{ $locale->htmlLang() }}"

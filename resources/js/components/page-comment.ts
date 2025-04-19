@@ -4,33 +4,51 @@ import {buildForInput} from '../wysiwyg-tinymce/config';
 
 export class PageComment extends Component {
 
+    protected commentId: string;
+    protected commentLocalId: string;
+    protected commentContentRef: string;
+    protected deletedText: string;
+    protected updatedText: string;
+
+    protected wysiwygEditor: any = null;
+    protected wysiwygLanguage: string;
+    protected wysiwygTextDirection: string;
+
+    protected container: HTMLElement;
+    protected contentContainer: HTMLElement;
+    protected form: HTMLFormElement;
+    protected formCancel: HTMLElement;
+    protected editButton: HTMLElement;
+    protected deleteButton: HTMLElement;
+    protected replyButton: HTMLElement;
+    protected input: HTMLInputElement;
+
     setup() {
         // Options
         this.commentId = this.$opts.commentId;
         this.commentLocalId = this.$opts.commentLocalId;
-        this.commentParentId = this.$opts.commentParentId;
+        this.commentContentRef = this.$opts.commentContentRef;
         this.deletedText = this.$opts.deletedText;
         this.updatedText = this.$opts.updatedText;
 
         // Editor reference and text options
-        this.wysiwygEditor = null;
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
         this.wysiwygTextDirection = this.$opts.wysiwygTextDirection;
 
         // Element references
         this.container = this.$el;
         this.contentContainer = this.$refs.contentContainer;
-        this.form = this.$refs.form;
+        this.form = this.$refs.form as HTMLFormElement;
         this.formCancel = this.$refs.formCancel;
         this.editButton = this.$refs.editButton;
         this.deleteButton = this.$refs.deleteButton;
         this.replyButton = this.$refs.replyButton;
-        this.input = this.$refs.input;
+        this.input = this.$refs.input as HTMLInputElement;
 
         this.setupListeners();
     }
 
-    setupListeners() {
+    protected setupListeners(): void {
         if (this.replyButton) {
             this.replyButton.addEventListener('click', () => this.$emit('reply', {
                 id: this.commentLocalId,
@@ -49,12 +67,12 @@ export class PageComment extends Component {
         }
     }
 
-    toggleEditMode(show) {
+    protected toggleEditMode(show: boolean) : void {
         this.contentContainer.toggleAttribute('hidden', show);
         this.form.toggleAttribute('hidden', !show);
     }
 
-    startEdit() {
+    protected startEdit() : void {
         this.toggleEditMode(true);
 
         if (this.wysiwygEditor) {
@@ -67,29 +85,30 @@ export class PageComment extends Component {
             containerElement: this.input,
             darkMode: document.documentElement.classList.contains('dark-mode'),
             textDirection: this.wysiwygTextDirection,
+            drawioUrl: '',
+            pageId: 0,
             translations: {},
-            translationMap: window.editor_translations,
+            translationMap: (window as Record<string, Object>).editor_translations,
         });
 
-        window.tinymce.init(config).then(editors => {
+        (window as {tinymce: {init: (Object) => Promise<any>}}).tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
             setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
     }
 
-    async update(event) {
+    protected async update(event: Event): Promise<void> {
         event.preventDefault();
         const loading = this.showLoading();
         this.form.toggleAttribute('hidden', true);
 
         const reqData = {
             html: this.wysiwygEditor.getContent(),
-            parent_id: this.parentId || null,
         };
 
         try {
             const resp = await window.$http.put(`/comment/${this.commentId}`, reqData);
-            const newComment = htmlToDom(resp.data);
+            const newComment = htmlToDom(resp.data as string);
             this.container.replaceWith(newComment);
             window.$events.success(this.updatedText);
         } catch (err) {
@@ -100,7 +119,7 @@ export class PageComment extends Component {
         }
     }
 
-    async delete() {
+    protected async delete(): Promise<void> {
         this.showLoading();
 
         await window.$http.delete(`/comment/${this.commentId}`);
@@ -109,7 +128,7 @@ export class PageComment extends Component {
         window.$events.success(this.deletedText);
     }
 
-    showLoading() {
+    protected showLoading(): HTMLElement {
         const loading = getLoading();
         loading.classList.add('px-l');
         this.container.append(loading);
