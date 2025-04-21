@@ -7,6 +7,7 @@
      option:page-comment:comment-content-ref="{{ $comment->content_ref }}"
      option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
      option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
+     option:page-comment:view-comment-text="{{ trans('entities.comment_view') }}"
      option:page-comment:wysiwyg-language="{{ $locale->htmlLang() }}"
      option:page-comment:wysiwyg-text-direction="{{ $locale->htmlDirection() }}"
      id="comment{{$comment->local_id}}"

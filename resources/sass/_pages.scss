@@ -239,6 +239,52 @@ body.tox-fullscreen, body.markdown-fullscreen {
     opacity: 0.25;
   }
 }
+.content-comment-window {
+  font-size: vars.$fs-m;
+  line-height: 1.4;
+  position: relative;
+  z-index: 90;
+  pointer-events: all;
+  min-width: min(340px, 80vw);
+  background-color: #FFF;
+  //border: 1px solid var(--color-primary);
+  box-shadow: vars.$bs-hover;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.content-comment-window-actions {
+  background-color: var(--color-primary);
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.content-comment-window-content {
+  padding: vars.$xs;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+.content-comment-marker {
+  position: absolute;
+  right: -16px;
+  top: -16px;
+  pointer-events: all;
+  width: min(1.5em, 32px);
+  height: min(1.5em, 32px);
+  border-radius: min(calc(1.5em / 2), 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary);
+  box-shadow: vars.$bs-hover;
+  color: #FFF;
+  cursor: pointer;
+  z-index: 90;
+  svg {
+    fill: #FFF;
+    width: 80%;
+  }
+}
 
 // Page editor sidebar toolbox
 .floating-toolbox {

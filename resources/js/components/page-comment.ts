@@ -3,6 +3,8 @@ import {findTargetNodeAndOffset, getLoading, hashElement, htmlToDom} from '../se
 import {buildForInput} from '../wysiwyg-tinymce/config';
 import {el} from "../wysiwyg/utils/dom";
 
+import commentIcon from "@icons/comment.svg"
+
 export class PageComment extends Component {
 
     protected commentId: string;
@@ -10,6 +12,7 @@ export class PageComment extends Component {
     protected commentContentRef: string;
     protected deletedText: string;
     protected updatedText: string;
+    protected viewCommentText: string;
 
     protected wysiwygEditor: any = null;
     protected wysiwygLanguage: string;
@@ -31,6 +34,7 @@ export class PageComment extends Component {
         this.commentContentRef = this.$opts.commentContentRef;
         this.deletedText = this.$opts.deletedText;
         this.updatedText = this.$opts.updatedText;
+        this.viewCommentText = this.$opts.viewCommentText;
 
         // Editor reference and text options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
@@ -171,13 +175,67 @@ export class PageComment extends Component {
 
         const relLeft = bounds.left - refElBounds.left;
         const relTop = bounds.top - refElBounds.top;
-        // TODO - Extract to class, Use theme color
-        const marker = el('div', {
+
+        const marker = el('button', {
+            type: 'button',
+            class: 'content-comment-marker',
+            title: this.viewCommentText,
+        });
+        marker.innerHTML = <string>commentIcon;
+        marker.addEventListener('click', event => {
+            this.showCommentAtMarker(marker);
+        });
+
+        const markerWrap = el('div', {
             class: 'content-comment-highlight',
             style: `left: ${relLeft}px; top: ${relTop}px; width: ${bounds.width}px; height: ${bounds.height}px;`
-        }, ['']);
+        }, [marker]);
 
         refEl.style.position = 'relative';
-        refEl.append(marker);
+        refEl.append(markerWrap);
+    }
+
+    protected showCommentAtMarker(marker: HTMLElement): void {
+
+        marker.hidden = true;
+        const readClone = this.container.closest('.comment-branch').cloneNode(true) as HTMLElement;
+        const toRemove = readClone.querySelectorAll('.actions, form');
+        for (const el of toRemove) {
+            el.remove();
+        }
+
+        const close = el('button', {type: 'button'}, ['x']);
+        const jump = el('button', {type: 'button'}, ['Jump to thread']);
+
+        const commentWindow = el('div', {
+            class: 'content-comment-window'
+        }, [
+            el('div', {
+                class: 'content-comment-window-actions',
+            }, [jump, close]),
+            el('div', {
+                class: 'content-comment-window-content',
+            }, [readClone]),
+        ]);
+
+        marker.parentElement.append(commentWindow);
+
+        const closeAction = () => {
+            commentWindow.remove();
+            marker.hidden = false;
+        };
+
+        close.addEventListener('click', closeAction.bind(this));
+
+        jump.addEventListener('click', () => {
+            closeAction();
+            this.container.scrollIntoView({behavior: 'smooth'});
+            const highlightTarget = this.container.querySelector('.header') as HTMLElement;
+            highlightTarget.classList.add('anim-highlight');
+            highlightTarget.addEventListener('animationend', () => highlightTarget.classList.remove('anim-highlight'))
+        });
+
+        // TODO - Position wrapper sensibly
+        // TODO - Movement control?
     }
 }
