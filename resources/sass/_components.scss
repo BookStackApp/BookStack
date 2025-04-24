@@ -746,6 +746,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   height: calc(100% - vars.$m);
 }
 
+.comment-branch .comment-box {
+  margin-bottom: vars.$m;
+}
+
 .comment-branch .comment-branch .comment-branch .comment-branch .comment-thread-indicator {
   display: none;
 }
@@ -761,6 +765,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 
 .comment-container-compact .comment-box {
+  margin-bottom: vars.$xs;
   .meta {
     font-size: 0.8rem;
   }
@@ -776,6 +781,28 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
 }
 .comment-container-compact .comment-thread-indicator {
   width: vars.$m;
+}
+
+.comment-container-super-compact .comment-box {
+  .meta {
+    font-size: 12px;
+  }
+  .avatar {
+    width: 18px;
+    margin-inline-end: 2px !important;
+  }
+  .content {
+    padding: vars.$xxs vars.$s;
+    line-height: 1.2;
+  }
+  .content p {
+    font-size: 12px;
+  }
+}
+
+.comment-container-super-compact .comment-thread-indicator {
+  width: (vars.$xs + 3px);
+  margin-inline-start: 3px;
 }
 
 #tag-manager .drag-card {

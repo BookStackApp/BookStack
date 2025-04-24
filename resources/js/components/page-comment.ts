@@ -4,6 +4,13 @@ import {buildForInput} from '../wysiwyg-tinymce/config';
 import {el} from "../wysiwyg/utils/dom";
 
 import commentIcon from "@icons/comment.svg"
+import closeIcon from "@icons/close.svg"
+
+/**
+ * Track the close function for the current open marker so it can be closed
+ * when another is opened so we only show one marker comment thread at one time.
+ */
+let openMarkerClose: Function|null = null;
 
 export class PageComment extends Component {
 
@@ -13,6 +20,8 @@ export class PageComment extends Component {
     protected deletedText: string;
     protected updatedText: string;
     protected viewCommentText: string;
+    protected jumpToThreadText: string;
+    protected closeText: string;
 
     protected wysiwygEditor: any = null;
     protected wysiwygLanguage: string;
@@ -35,6 +44,8 @@ export class PageComment extends Component {
         this.deletedText = this.$opts.deletedText;
         this.updatedText = this.$opts.updatedText;
         this.viewCommentText = this.$opts.viewCommentText;
+        this.jumpToThreadText = this.$opts.jumpToThreadText;
+        this.closeText = this.$opts.closeText;
 
         // Editor reference and text options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
@@ -130,7 +141,7 @@ export class PageComment extends Component {
 
         await window.$http.delete(`/comment/${this.commentId}`);
         this.$emit('delete');
-        this.container.closest('.comment-branch').remove();
+        this.container.closest('.comment-branch')?.remove();
         window.$events.success(this.deletedText);
     }
 
@@ -196,16 +207,22 @@ export class PageComment extends Component {
     }
 
     protected showCommentAtMarker(marker: HTMLElement): void {
-
+        // Hide marker and close existing marker windows
+        if (openMarkerClose) {
+            openMarkerClose();
+        }
         marker.hidden = true;
-        const readClone = this.container.closest('.comment-branch').cloneNode(true) as HTMLElement;
+
+        // Build comment window
+        const readClone = (this.container.closest('.comment-branch') as HTMLElement).cloneNode(true) as HTMLElement;
         const toRemove = readClone.querySelectorAll('.actions, form');
         for (const el of toRemove) {
             el.remove();
         }
 
-        const close = el('button', {type: 'button'}, ['x']);
-        const jump = el('button', {type: 'button'}, ['Jump to thread']);
+        const close = el('button', {type: 'button', title: this.closeText});
+        close.innerHTML = (closeIcon as string);
+        const jump = el('button', {type: 'button', 'data-action': 'jump'}, [this.jumpToThreadText]);
 
         const commentWindow = el('div', {
             class: 'content-comment-window'
@@ -214,19 +231,29 @@ export class PageComment extends Component {
                 class: 'content-comment-window-actions',
             }, [jump, close]),
             el('div', {
-                class: 'content-comment-window-content',
+                class: 'content-comment-window-content comment-container-compact comment-container-super-compact',
             }, [readClone]),
         ]);
 
-        marker.parentElement.append(commentWindow);
+        marker.parentElement?.append(commentWindow);
 
+        // Handle interaction within window
         const closeAction = () => {
             commentWindow.remove();
             marker.hidden = false;
+            window.removeEventListener('click', windowCloseAction);
+            openMarkerClose = null;
         };
 
-        close.addEventListener('click', closeAction.bind(this));
+        const windowCloseAction = (event: MouseEvent) => {
+            if (!(marker.parentElement as HTMLElement).contains(event.target as HTMLElement)) {
+                closeAction();
+            }
+        };
+        window.addEventListener('click', windowCloseAction);
 
+        openMarkerClose = closeAction;
+        close.addEventListener('click', closeAction.bind(this));
         jump.addEventListener('click', () => {
             closeAction();
             this.container.scrollIntoView({behavior: 'smooth'});
@@ -235,7 +262,12 @@ export class PageComment extends Component {
             highlightTarget.addEventListener('animationend', () => highlightTarget.classList.remove('anim-highlight'))
         });
 
-        // TODO - Position wrapper sensibly
-        // TODO - Movement control?
+        // Position window within bounds
+        const commentWindowBounds = commentWindow.getBoundingClientRect();
+        const contentBounds = document.querySelector('.page-content')?.getBoundingClientRect();
+        if (contentBounds && commentWindowBounds.right > contentBounds.right) {
+            const diff = commentWindowBounds.right - contentBounds.right;
+            commentWindow.style.left = `-${diff}px`;
+        }
     }
 }

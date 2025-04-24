@@ -1,5 +1,5 @@
 <div class="comment-branch">
-    <div class="mb-m">
+    <div>
         @include('comments.comment', ['comment' => $branch['comment']])
     </div>
     <div class="flex-container-row">
