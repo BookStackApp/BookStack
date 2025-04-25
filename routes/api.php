@@ -92,3 +92,9 @@ Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionAp
 Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'update']);
 
 Route::get('audit-log', [AuditLogApiController::class, 'list']);
+
+Route::get('import', [ExportControllers\ImportApiController::class, 'list']);
+Route::post('import', [ExportControllers\ImportApiController::class, 'upload']);
+Route::get('import/{id}', [ExportControllers\ImportApiController::class, 'read']);
+Route::post('import/{id}/create', [ExportControllers\ImportApiController::class, 'create']);
+Route::delete('import/{id}', [ExportControllers\ImportApiController::class, 'destroy']);
