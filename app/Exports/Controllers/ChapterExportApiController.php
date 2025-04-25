@@ -4,6 +4,7 @@ namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Exports\ExportFormatter;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\ApiController;
 use Throwable;
 
@@ -62,5 +63,14 @@ class ChapterExportApiController extends ApiController
         $markdown = $this->exportFormatter->chapterToMarkdown($chapter);
 
         return $this->download()->directly($markdown, $chapter->slug . '.md');
+    }
+
+    public function exportZip(int $id, ZipExportBuilder $builder)
+    {
+        $chapter = $this->queries->findVisibleByIdOrFail($id);
+        $chapterName= $chapter->getShortName();
+        $zip = $builder->buildForChapter($chapter);
+
+        return $this->download()->streamedFileDirectly($zip, $chapterName . '.zip', filesize($zip), true);
     }
 }
