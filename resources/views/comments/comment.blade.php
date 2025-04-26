@@ -77,6 +77,11 @@
                 <a class="text-muted text-small" href="#comment{{ $comment->parent_id }}">@icon('reply'){{ trans('entities.comment_in_reply_to', ['commentId' => '#' . $comment->parent_id]) }}</a>
             </p>
         @endif
+        @if($comment->content_ref)
+            <div class="comment-reference-indicator-wrap">
+                <a href="#" refs="page-comment@content-ref">@icon('bookmark')Reference <span>- Outdated</span></a>
+            </div>
+        @endif
         {!! $commentHtml  !!}
     </div>
 

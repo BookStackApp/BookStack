@@ -57,6 +57,9 @@ export class PageDisplay extends Component {
         }
     }
 
+    /**
+     * @public
+     */
     goToText(text) {
         const idElem = document.getElementById(text);
 

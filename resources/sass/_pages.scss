@@ -280,6 +280,9 @@ body.tox-fullscreen, body.markdown-fullscreen {
   max-height: 200px;
   overflow-y: scroll;
 }
+.content-comment-window-content .comment-reference-indicator-wrap {
+  display: none;
+}
 .content-comment-marker {
   position: absolute;
   right: -16px;

@@ -5,6 +5,7 @@ import {el} from "../wysiwyg/utils/dom";
 
 import commentIcon from "@icons/comment.svg"
 import closeIcon from "@icons/close.svg"
+import {PageDisplay} from "./page-display";
 
 /**
  * Track the close function for the current open marker so it can be closed
@@ -35,6 +36,7 @@ export class PageComment extends Component {
     protected deleteButton: HTMLElement;
     protected replyButton: HTMLElement;
     protected input: HTMLInputElement;
+    protected contentRefLink: HTMLLinkElement|null;
 
     setup() {
         // Options
@@ -60,6 +62,7 @@ export class PageComment extends Component {
         this.deleteButton = this.$refs.deleteButton;
         this.replyButton = this.$refs.replyButton;
         this.input = this.$refs.input as HTMLInputElement;
+        this.contentRefLink = (this.$refs.contentRef || null) as HTMLLinkElement|null;
 
         this.setupListeners();
         this.positionForReference();
@@ -153,21 +156,20 @@ export class PageComment extends Component {
     }
 
     protected positionForReference() {
-        if (!this.commentContentRef) {
+        if (!this.commentContentRef || !this.contentRefLink) {
             return;
         }
 
         const [refId, refHash, refRange] = this.commentContentRef.split(':');
         const refEl = document.getElementById(refId);
         if (!refEl) {
-            // TODO - Show outdated marker for comment
+            this.contentRefLink.classList.add('outdated', 'missing');
             return;
         }
 
         const actualHash = hashElement(refEl);
         if (actualHash !== refHash) {
-            // TODO - Show outdated marker for comment
-            return;
+            this.contentRefLink.classList.add('outdated');
         }
 
         const refElBounds = refEl.getBoundingClientRect();
@@ -204,6 +206,13 @@ export class PageComment extends Component {
 
         refEl.style.position = 'relative';
         refEl.append(markerWrap);
+
+        this.contentRefLink.href = `#${refEl.id}`;
+        this.contentRefLink.addEventListener('click', (event: MouseEvent) => {
+            const pageDisplayComponent = window.$components.get('page-display')[0] as PageDisplay;
+            event.preventDefault();
+            pageDisplayComponent.goToText(refId);
+        });
     }
 
     protected showCommentAtMarker(marker: HTMLElement): void {
