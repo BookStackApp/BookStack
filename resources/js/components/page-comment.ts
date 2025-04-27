@@ -1,28 +1,13 @@
 import {Component} from './component';
-import {findTargetNodeAndOffset, getLoading, hashElement, htmlToDom} from '../services/dom.ts';
+import {getLoading, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
-import {el} from "../wysiwyg/utils/dom";
-
-import commentIcon from "@icons/comment.svg"
-import closeIcon from "@icons/close.svg"
-import {PageDisplay} from "./page-display";
-
-/**
- * Track the close function for the current open marker so it can be closed
- * when another is opened so we only show one marker comment thread at one time.
- */
-let openMarkerClose: Function|null = null;
 
 export class PageComment extends Component {
 
     protected commentId: string;
     protected commentLocalId: string;
-    protected commentContentRef: string;
     protected deletedText: string;
     protected updatedText: string;
-    protected viewCommentText: string;
-    protected jumpToThreadText: string;
-    protected closeText: string;
 
     protected wysiwygEditor: any = null;
     protected wysiwygLanguage: string;
@@ -36,18 +21,13 @@ export class PageComment extends Component {
     protected deleteButton: HTMLElement;
     protected replyButton: HTMLElement;
     protected input: HTMLInputElement;
-    protected contentRefLink: HTMLLinkElement|null;
 
     setup() {
         // Options
         this.commentId = this.$opts.commentId;
         this.commentLocalId = this.$opts.commentLocalId;
-        this.commentContentRef = this.$opts.commentContentRef;
         this.deletedText = this.$opts.deletedText;
         this.updatedText = this.$opts.updatedText;
-        this.viewCommentText = this.$opts.viewCommentText;
-        this.jumpToThreadText = this.$opts.jumpToThreadText;
-        this.closeText = this.$opts.closeText;
 
         // Editor reference and text options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
@@ -62,10 +42,8 @@ export class PageComment extends Component {
         this.deleteButton = this.$refs.deleteButton;
         this.replyButton = this.$refs.replyButton;
         this.input = this.$refs.input as HTMLInputElement;
-        this.contentRefLink = (this.$refs.contentRef || null) as HTMLLinkElement|null;
 
         this.setupListeners();
-        this.positionForReference();
     }
 
     protected setupListeners(): void {
@@ -153,130 +131,5 @@ export class PageComment extends Component {
         loading.classList.add('px-l');
         this.container.append(loading);
         return loading;
-    }
-
-    protected positionForReference() {
-        if (!this.commentContentRef || !this.contentRefLink) {
-            return;
-        }
-
-        const [refId, refHash, refRange] = this.commentContentRef.split(':');
-        const refEl = document.getElementById(refId);
-        if (!refEl) {
-            this.contentRefLink.classList.add('outdated', 'missing');
-            return;
-        }
-
-        const actualHash = hashElement(refEl);
-        if (actualHash !== refHash) {
-            this.contentRefLink.classList.add('outdated');
-        }
-
-        const refElBounds = refEl.getBoundingClientRect();
-        let bounds = refElBounds;
-        const [rangeStart, rangeEnd] = refRange.split('-');
-        if (rangeStart && rangeEnd) {
-            const range = new Range();
-            const relStart = findTargetNodeAndOffset(refEl, Number(rangeStart));
-            const relEnd = findTargetNodeAndOffset(refEl, Number(rangeEnd));
-            if (relStart && relEnd) {
-                range.setStart(relStart.node, relStart.offset);
-                range.setEnd(relEnd.node, relEnd.offset);
-                bounds = range.getBoundingClientRect();
-            }
-        }
-
-        const relLeft = bounds.left - refElBounds.left;
-        const relTop = bounds.top - refElBounds.top;
-
-        const marker = el('button', {
-            type: 'button',
-            class: 'content-comment-marker',
-            title: this.viewCommentText,
-        });
-        marker.innerHTML = <string>commentIcon;
-        marker.addEventListener('click', event => {
-            this.showCommentAtMarker(marker);
-        });
-
-        const markerWrap = el('div', {
-            class: 'content-comment-highlight',
-            style: `left: ${relLeft}px; top: ${relTop}px; width: ${bounds.width}px; height: ${bounds.height}px;`
-        }, [marker]);
-
-        refEl.style.position = 'relative';
-        refEl.append(markerWrap);
-
-        this.contentRefLink.href = `#${refEl.id}`;
-        this.contentRefLink.addEventListener('click', (event: MouseEvent) => {
-            const pageDisplayComponent = window.$components.get('page-display')[0] as PageDisplay;
-            event.preventDefault();
-            pageDisplayComponent.goToText(refId);
-        });
-    }
-
-    protected showCommentAtMarker(marker: HTMLElement): void {
-        // Hide marker and close existing marker windows
-        if (openMarkerClose) {
-            openMarkerClose();
-        }
-        marker.hidden = true;
-
-        // Build comment window
-        const readClone = (this.container.closest('.comment-branch') as HTMLElement).cloneNode(true) as HTMLElement;
-        const toRemove = readClone.querySelectorAll('.actions, form');
-        for (const el of toRemove) {
-            el.remove();
-        }
-
-        const close = el('button', {type: 'button', title: this.closeText});
-        close.innerHTML = (closeIcon as string);
-        const jump = el('button', {type: 'button', 'data-action': 'jump'}, [this.jumpToThreadText]);
-
-        const commentWindow = el('div', {
-            class: 'content-comment-window'
-        }, [
-            el('div', {
-                class: 'content-comment-window-actions',
-            }, [jump, close]),
-            el('div', {
-                class: 'content-comment-window-content comment-container-compact comment-container-super-compact',
-            }, [readClone]),
-        ]);
-
-        marker.parentElement?.append(commentWindow);
-
-        // Handle interaction within window
-        const closeAction = () => {
-            commentWindow.remove();
-            marker.hidden = false;
-            window.removeEventListener('click', windowCloseAction);
-            openMarkerClose = null;
-        };
-
-        const windowCloseAction = (event: MouseEvent) => {
-            if (!(marker.parentElement as HTMLElement).contains(event.target as HTMLElement)) {
-                closeAction();
-            }
-        };
-        window.addEventListener('click', windowCloseAction);
-
-        openMarkerClose = closeAction;
-        close.addEventListener('click', closeAction.bind(this));
-        jump.addEventListener('click', () => {
-            closeAction();
-            this.container.scrollIntoView({behavior: 'smooth'});
-            const highlightTarget = this.container.querySelector('.header') as HTMLElement;
-            highlightTarget.classList.add('anim-highlight');
-            highlightTarget.addEventListener('animationend', () => highlightTarget.classList.remove('anim-highlight'))
-        });
-
-        // Position window within bounds
-        const commentWindowBounds = commentWindow.getBoundingClientRect();
-        const contentBounds = document.querySelector('.page-content')?.getBoundingClientRect();
-        if (contentBounds && commentWindowBounds.right > contentBounds.right) {
-            const diff = commentWindowBounds.right - contentBounds.right;
-            commentWindow.style.left = `-${diff}px`;
-        }
     }
 }

@@ -36,6 +36,7 @@ export {NewUserPassword} from './new-user-password';
 export {Notification} from './notification';
 export {OptionalInput} from './optional-input';
 export {PageComment} from './page-comment';
+export {PageCommentReference} from './page-comment-reference';
 export {PageComments} from './page-comments';
 export {PageDisplay} from './page-display';
 export {PageEditor} from './page-editor';

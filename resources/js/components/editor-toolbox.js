@@ -10,6 +10,10 @@ export class EditorToolbox extends Component {
         this.toggleButton = this.$refs.toggle;
         this.editorWrapEl = this.container.closest('.page-editor');
 
+        // State
+        this.open = false;
+        this.tab = '';
+
         this.setupListeners();
 
         // Set the first tab as active on load
@@ -34,6 +38,8 @@ export class EditorToolbox extends Component {
         const isOpen = this.container.classList.contains('open');
         this.toggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         this.editorWrapEl.classList.toggle('toolbox-open', isOpen);
+        this.open = isOpen;
+        this.emitState();
     }
 
     setActiveTab(tabName, openToolbox = false) {
@@ -54,6 +60,13 @@ export class EditorToolbox extends Component {
         if (openToolbox && !this.container.classList.contains('open')) {
             this.toggle();
         }
+
+        this.tab = tabName;
+        this.emitState();
+    }
+
+    emitState() {
+        this.$emit('change', {tab: this.tab, open: this.open});
     }
 
 }

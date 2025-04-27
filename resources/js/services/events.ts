@@ -25,6 +25,17 @@ export class EventManager {
     }
 
     /**
+     * Remove an event listener which is using the given callback for the given event name.
+     */
+    remove(eventName: string, callback: Function): void {
+        const listeners = this.listeners[eventName] || [];
+        const index = listeners.indexOf(callback);
+        if (index !== -1) {
+            listeners.splice(index, 1);
+        }
+    }
+
+    /**
      * Emit an event for public use.
      * Sends the event via the native DOM event handling system.
      */

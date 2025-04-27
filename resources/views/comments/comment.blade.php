@@ -4,12 +4,8 @@
 <div component="{{ $readOnly ? '' : 'page-comment' }}"
      option:page-comment:comment-id="{{ $comment->id }}"
      option:page-comment:comment-local-id="{{ $comment->local_id }}"
-     option:page-comment:comment-content-ref="{{ $comment->content_ref }}"
      option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
      option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
-     option:page-comment:view-comment-text="{{ trans('entities.comment_view') }}"
-     option:page-comment:jump-to-thread-text="{{ trans('entities.comment_jump_to_thread') }}"
-     option:page-comment:close-text="{{ trans('common.close') }}"
      option:page-comment:wysiwyg-language="{{ $locale->htmlLang() }}"
      option:page-comment:wysiwyg-text-direction="{{ $locale->htmlDirection() }}"
      id="comment{{$comment->local_id}}"
@@ -79,7 +75,12 @@
         @endif
         @if($comment->content_ref)
             <div class="comment-reference-indicator-wrap">
-                <a href="#" refs="page-comment@content-ref">@icon('bookmark')Reference <span>- Outdated</span></a>
+                <a component="page-comment-reference"
+                   option:page-comment-reference:reference="{{ $comment->content_ref }}"
+                   option:page-comment-reference:view-comment-text="{{ trans('entities.comment_view') }}"
+                   option:page-comment-reference:jump-to-thread-text="{{ trans('entities.comment_jump_to_thread') }}"
+                   option:page-comment-reference:close-text="{{ trans('common.close') }}"
+                   href="#">@icon('bookmark')Reference <span>- Outdated</span></a>
             </div>
         @endif
         {!! $commentHtml  !!}
