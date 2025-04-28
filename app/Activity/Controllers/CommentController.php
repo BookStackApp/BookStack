@@ -76,6 +76,42 @@ class CommentController extends Controller
     }
 
     /**
+     * Mark a comment as archived.
+     */
+    public function archive(int $id)
+    {
+        $comment = $this->commentRepo->getById($id);
+        if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
+            $this->showPermissionError();
+        }
+
+        $this->commentRepo->archive($comment);
+
+        return view('comments.comment', [
+            'comment' => $comment,
+            'readOnly' => false,
+        ]);
+    }
+
+    /**
+     * Unmark a comment as archived.
+     */
+    public function unarchive(int $id)
+    {
+        $comment = $this->commentRepo->getById($id);
+        if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
+            $this->showPermissionError();
+        }
+
+        $this->commentRepo->unarchive($comment);
+
+        return view('comments.comment', [
+            'comment' => $comment,
+            'readOnly' => false,
+        ]);
+    }
+
+    /**
      * Delete a comment from the system.
      */
     public function destroy(int $id)

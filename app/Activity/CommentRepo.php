@@ -53,6 +53,33 @@ class CommentRepo
         return $comment;
     }
 
+
+    /**
+     * Archive an existing comment.
+     */
+    public function archive(Comment $comment): Comment
+    {
+        $comment->archived = true;
+        $comment->save();
+
+        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+
+        return $comment;
+    }
+
+    /**
+     * Un-archive an existing comment.
+     */
+    public function unarchive(Comment $comment): Comment
+    {
+        $comment->archived = false;
+        $comment->save();
+
+        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+
+        return $comment;
+    }
+
     /**
      * Delete a comment from the system.
      */

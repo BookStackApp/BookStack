@@ -6,6 +6,7 @@
      option:page-comment:comment-local-id="{{ $comment->local_id }}"
      option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
      option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
+     option:page-comment:archive-text="{{ $comment->archived ? trans('entities.comment_unarchive_success') : trans('entities.comment_archive_success') }}"
      option:page-comment:wysiwyg-language="{{ $locale->htmlLang() }}"
      option:page-comment:wysiwyg-text-direction="{{ $locale->htmlDirection() }}"
      id="comment{{$comment->local_id}}"
@@ -36,6 +37,12 @@
                 <div class="actions mr-s">
                     @if(userCan('comment-create-all'))
                         <button refs="page-comment@reply-button" type="button" class="text-button text-muted hover-underline text-small p-xs">@icon('reply') {{ trans('common.reply') }}</button>
+                    @endif
+                    @if(userCan('comment-update', $comment) || userCan('comment-delete', $comment))
+                        <button refs="page-comment@archive-button"
+                                type="button"
+                                data-is-archived="{{ $comment->archived ? 'true' : 'false' }}"
+                                class="text-button text-muted hover-underline text-small p-xs">@icon('archive') {{ trans('common.' . ($comment->archived ? 'unarchive' : 'archive')) }}</button>
                     @endif
                     @if(userCan('comment-update', $comment))
                         <button refs="page-comment@edit-button" type="button" class="text-button text-muted hover-underline text-small p-xs">@icon('edit') {{ trans('common.edit') }}</button>

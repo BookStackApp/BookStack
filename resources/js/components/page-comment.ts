@@ -8,6 +8,7 @@ export class PageComment extends Component {
     protected commentLocalId: string;
     protected deletedText: string;
     protected updatedText: string;
+    protected archiveText: string;
 
     protected wysiwygEditor: any = null;
     protected wysiwygLanguage: string;
@@ -20,6 +21,7 @@ export class PageComment extends Component {
     protected editButton: HTMLElement;
     protected deleteButton: HTMLElement;
     protected replyButton: HTMLElement;
+    protected archiveButton: HTMLElement;
     protected input: HTMLInputElement;
 
     setup() {
@@ -27,7 +29,8 @@ export class PageComment extends Component {
         this.commentId = this.$opts.commentId;
         this.commentLocalId = this.$opts.commentLocalId;
         this.deletedText = this.$opts.deletedText;
-        this.updatedText = this.$opts.updatedText;
+        this.deletedText = this.$opts.deletedText;
+        this.archiveText = this.$opts.archiveText;
 
         // Editor reference and text options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
@@ -41,6 +44,7 @@ export class PageComment extends Component {
         this.editButton = this.$refs.editButton;
         this.deleteButton = this.$refs.deleteButton;
         this.replyButton = this.$refs.replyButton;
+        this.archiveButton = this.$refs.archiveButton;
         this.input = this.$refs.input as HTMLInputElement;
 
         this.setupListeners();
@@ -62,6 +66,10 @@ export class PageComment extends Component {
 
         if (this.deleteButton) {
             this.deleteButton.addEventListener('click', this.delete.bind(this));
+        }
+
+        if (this.archiveButton) {
+            this.archiveButton.addEventListener('click', this.archive.bind(this));
         }
     }
 
@@ -124,6 +132,15 @@ export class PageComment extends Component {
         this.$emit('delete');
         this.container.closest('.comment-branch')?.remove();
         window.$events.success(this.deletedText);
+    }
+
+    protected async archive(): Promise<void> {
+        this.showLoading();
+        const isArchived = this.archiveButton.dataset.isArchived === 'true';
+
+        await window.$http.put(`/comment/${this.commentId}/${isArchived ? 'unarchive' : 'archive'}`);
+        this.$emit('archive');
+        window.$events.success(this.archiveText);
     }
 
     protected showLoading(): HTMLElement {

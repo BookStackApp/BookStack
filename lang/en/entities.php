@@ -402,6 +402,8 @@ return [
     'comment_deleted_success' => 'Comment deleted',
     'comment_created_success' => 'Comment added',
     'comment_updated_success' => 'Comment updated',
+    'comment_archive_success' => 'Comment archived',
+    'comment_unarchive_success' => 'Comment un-archived',
     'comment_view' => 'View comment',
     'comment_jump_to_thread' => 'Jump to thread',
     'comment_delete_confirm' => 'Are you sure you want to delete this comment?',

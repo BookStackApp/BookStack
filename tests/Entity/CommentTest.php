@@ -106,6 +106,66 @@ class CommentTest extends TestCase
         $this->assertActivityExists(ActivityType::COMMENT_DELETE);
     }
 
+    public function test_comment_archive_and_unarchive()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+
+        $comment = Comment::factory()->make();
+        $page->comments()->save($comment);
+        $comment->refresh();
+
+        $this->put("/comment/$comment->id/archive");
+
+        $this->assertDatabaseHas('comments', [
+            'id' => $comment->id,
+            'archived' => true,
+        ]);
+
+        $this->assertActivityExists(ActivityType::COMMENT_UPDATE);
+
+        $this->put("/comment/$comment->id/unarchive");
+
+        $this->assertDatabaseHas('comments', [
+            'id' => $comment->id,
+            'archived' => false,
+        ]);
+
+        $this->assertActivityExists(ActivityType::COMMENT_UPDATE);
+    }
+
+    public function test_archive_endpoints_require_delete_or_edit_permissions()
+    {
+        $viewer = $this->users->viewer();
+        $page = $this->entities->page();
+
+        $comment = Comment::factory()->make();
+        $page->comments()->save($comment);
+        $comment->refresh();
+
+        $endpoints = ["/comment/$comment->id/archive", "/comment/$comment->id/unarchive"];
+
+        foreach ($endpoints as $endpoint) {
+            $resp = $this->actingAs($viewer)->put($endpoint);
+            $this->assertPermissionError($resp);
+        }
+
+        $this->permissions->grantUserRolePermissions($viewer, ['comment-delete-all']);
+
+        foreach ($endpoints as $endpoint) {
+            $resp = $this->actingAs($viewer)->put($endpoint);
+            $resp->assertOk();
+        }
+
+        $this->permissions->removeUserRolePermissions($viewer, ['comment-delete-all']);
+        $this->permissions->grantUserRolePermissions($viewer, ['comment-update-all']);
+
+        foreach ($endpoints as $endpoint) {
+            $resp = $this->actingAs($viewer)->put($endpoint);
+            $resp->assertOk();
+        }
+    }
+
     public function test_scripts_cannot_be_injected_via_comment_html()
     {
         $page = $this->entities->page();
