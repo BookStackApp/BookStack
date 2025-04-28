@@ -9,6 +9,12 @@ export interface CommentReplyEvent extends Event {
     }
 }
 
+export interface ArchiveEvent extends Event {
+    detail: {
+        new_thread_dom: HTMLElement;
+    }
+}
+
 export class PageComments extends Component {
 
     private elem: HTMLElement;
@@ -17,6 +23,7 @@ export class PageComments extends Component {
     private commentCountBar: HTMLElement;
     private commentsTitle: HTMLElement;
     private addButtonContainer: HTMLElement;
+    private archiveContainer: HTMLElement;
     private replyToRow: HTMLElement;
     private formContainer: HTMLElement;
     private form: HTMLFormElement;
@@ -43,6 +50,7 @@ export class PageComments extends Component {
         this.commentCountBar = this.$refs.commentCountBar;
         this.commentsTitle = this.$refs.commentsTitle;
         this.addButtonContainer = this.$refs.addButtonContainer;
+        this.archiveContainer = this.$refs.archiveContainer;
         this.replyToRow = this.$refs.replyToRow;
         this.formContainer = this.$refs.formContainer;
         this.form = this.$refs.form as HTMLFormElement;
@@ -73,6 +81,14 @@ export class PageComments extends Component {
 
         this.elem.addEventListener('page-comment-reply', (event: CommentReplyEvent) => {
             this.setReply(event.detail.id, event.detail.element);
+        });
+
+        this.elem.addEventListener('page-comment-archive', (event: ArchiveEvent) => {
+            this.archiveContainer.append(event.detail.new_thread_dom);
+        });
+
+        this.elem.addEventListener('page-comment-unarchive', (event: ArchiveEvent) => {
+            this.container.append(event.detail.new_thread_dom)
         });
 
         if (this.form) {

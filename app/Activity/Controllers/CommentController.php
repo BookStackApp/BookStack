@@ -3,6 +3,8 @@
 namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\CommentRepo;
+use BookStack\Activity\Tools\CommentTree;
+use BookStack\Activity\Tools\CommentTreeNode;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
@@ -45,10 +47,7 @@ class CommentController extends Controller
 
         return view('comments.comment-branch', [
             'readOnly' => false,
-            'branch' => [
-                'comment' => $comment,
-                'children' => [],
-            ]
+            'branch' => new CommentTreeNode($comment, 0, []),
         ]);
     }
 
@@ -81,15 +80,17 @@ class CommentController extends Controller
     public function archive(int $id)
     {
         $comment = $this->commentRepo->getById($id);
+        $this->checkOwnablePermission('page-view', $comment->entity);
         if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
             $this->showPermissionError();
         }
 
         $this->commentRepo->archive($comment);
 
-        return view('comments.comment', [
-            'comment' => $comment,
+        $tree = new CommentTree($comment->entity);
+        return view('comments.comment-branch', [
             'readOnly' => false,
+            'branch' => $tree->getCommentNodeForId($id),
         ]);
     }
 
@@ -99,15 +100,17 @@ class CommentController extends Controller
     public function unarchive(int $id)
     {
         $comment = $this->commentRepo->getById($id);
+        $this->checkOwnablePermission('page-view', $comment->entity);
         if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
             $this->showPermissionError();
         }
 
         $this->commentRepo->unarchive($comment);
 
-        return view('comments.comment', [
-            'comment' => $comment,
+        $tree = new CommentTree($comment->entity);
+        return view('comments.comment-branch', [
             'readOnly' => false,
+            'branch' => $tree->getCommentNodeForId($id),
         ]);
     }
 

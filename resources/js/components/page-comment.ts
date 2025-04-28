@@ -137,10 +137,12 @@ export class PageComment extends Component {
     protected async archive(): Promise<void> {
         this.showLoading();
         const isArchived = this.archiveButton.dataset.isArchived === 'true';
+        const action = isArchived ? 'unarchive' : 'archive';
 
-        await window.$http.put(`/comment/${this.commentId}/${isArchived ? 'unarchive' : 'archive'}`);
-        this.$emit('archive');
+        const response = await window.$http.put(`/comment/${this.commentId}/${action}`);
+        this.$emit(action, {new_thread_dom: htmlToDom(response.data as string)});
         window.$events.success(this.archiveText);
+        this.container.closest('.comment-branch')?.remove();
     }
 
     protected showLoading(): HTMLElement {

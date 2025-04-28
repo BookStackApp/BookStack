@@ -38,7 +38,7 @@
                     @if(userCan('comment-create-all'))
                         <button refs="page-comment@reply-button" type="button" class="text-button text-muted hover-underline text-small p-xs">@icon('reply') {{ trans('common.reply') }}</button>
                     @endif
-                    @if(userCan('comment-update', $comment) || userCan('comment-delete', $comment))
+                    @if(!$comment->parent_id && (userCan('comment-update', $comment) || userCan('comment-delete', $comment)))
                         <button refs="page-comment@archive-button"
                                 type="button"
                                 data-is-archived="{{ $comment->archived ? 'true' : 'false' }}"

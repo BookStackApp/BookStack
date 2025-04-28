@@ -4,6 +4,8 @@ namespace BookStack\Activity;
 
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Entity;
+use BookStack\Exceptions\NotifyException;
+use BookStack\Exceptions\PrettyException;
 use BookStack\Facades\Activity as ActivityService;
 use BookStack\Util\HtmlDescriptionFilter;
 
@@ -59,6 +61,10 @@ class CommentRepo
      */
     public function archive(Comment $comment): Comment
     {
+        if ($comment->parent_id) {
+            throw new NotifyException('Only top-level comments can be archived.');
+        }
+
         $comment->archived = true;
         $comment->save();
 
@@ -72,6 +78,10 @@ class CommentRepo
      */
     public function unarchive(Comment $comment): Comment
     {
+        if ($comment->parent_id) {
+            throw new NotifyException('Only top-level comments can be un-archived.');
+        }
+
         $comment->archived = false;
         $comment->save();
 

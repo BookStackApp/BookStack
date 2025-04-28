@@ -18,8 +18,8 @@
         @endif
     </div>
 
-    <div refs="page-comments@commentContainer" class="comment-container">
-        @foreach($commentTree->get() as $branch)
+    <div refs="page-comments@comment-container" class="comment-container">
+        @foreach($commentTree->getActive() as $branch)
             @include('comments.comment-branch', ['branch' => $branch, 'readOnly' => false])
         @endforeach
     </div>
@@ -27,13 +27,24 @@
     @if(userCan('comment-create-all'))
         @include('comments.create')
         @if (!$commentTree->empty())
-            <div refs="page-comments@addButtonContainer" class="text-right">
+            <div refs="page-comments@addButtonContainer" class="flex-container-row">
+
+                <button type="button"
+                        refs="page-comments@show-archived-button"
+                        class="text-button hover-underline">{{ trans_choice('entities.comment_archived', count($commentTree->getArchived())) }}</button>
+
                 <button type="button"
                         refs="page-comments@add-comment-button"
-                        class="button outline">{{ trans('entities.comment_add') }}</button>
+                        class="button outline ml-auto">{{ trans('entities.comment_add') }}</button>
             </div>
         @endif
     @endif
+
+    <div refs="page-comments@archive-container" class="comment-container">
+        @foreach($commentTree->getArchived() as $branch)
+            @include('comments.comment-branch', ['branch' => $branch, 'readOnly' => false])
+        @endforeach
+    </div>
 
     @if(userCan('comment-create-all') || $commentTree->canUpdateAny())
         @push('body-end')
