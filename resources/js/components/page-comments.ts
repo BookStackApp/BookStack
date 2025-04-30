@@ -1,6 +1,7 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
+import {Tabs} from "./tabs";
 
 export interface CommentReplyEvent extends Event {
     detail: {
@@ -21,7 +22,8 @@ export class PageComments extends Component {
     private pageId: number;
     private container: HTMLElement;
     private commentCountBar: HTMLElement;
-    private commentsTitle: HTMLElement;
+    private activeTab: HTMLElement;
+    private archivedTab: HTMLElement;
     private addButtonContainer: HTMLElement;
     private archiveContainer: HTMLElement;
     private replyToRow: HTMLElement;
@@ -37,6 +39,7 @@ export class PageComments extends Component {
     private wysiwygEditor: any = null;
     private createdText: string;
     private countText: string;
+    private archivedCountText: string;
     private parentId: number | null = null;
     private contentReference: string = '';
     private formReplyText: string = '';
@@ -48,7 +51,8 @@ export class PageComments extends Component {
         // Element references
         this.container = this.$refs.commentContainer;
         this.commentCountBar = this.$refs.commentCountBar;
-        this.commentsTitle = this.$refs.commentsTitle;
+        this.activeTab = this.$refs.activeTab;
+        this.archivedTab = this.$refs.archivedTab;
         this.addButtonContainer = this.$refs.addButtonContainer;
         this.archiveContainer = this.$refs.archiveContainer;
         this.replyToRow = this.$refs.replyToRow;
@@ -67,6 +71,7 @@ export class PageComments extends Component {
         // Translations
         this.createdText = this.$opts.createdText;
         this.countText = this.$opts.countText;
+        this.archivedCountText = this.$opts.archivedCountText;
 
         this.formReplyText = this.formReplyLink?.textContent || '';
 
@@ -85,10 +90,12 @@ export class PageComments extends Component {
 
         this.elem.addEventListener('page-comment-archive', (event: ArchiveEvent) => {
             this.archiveContainer.append(event.detail.new_thread_dom);
+            setTimeout(() => this.updateCount(), 1);
         });
 
         this.elem.addEventListener('page-comment-unarchive', (event: ArchiveEvent) => {
-            this.container.append(event.detail.new_thread_dom)
+            this.container.append(event.detail.new_thread_dom);
+            setTimeout(() => this.updateCount(), 1);
         });
 
         if (this.form) {
@@ -136,8 +143,10 @@ export class PageComments extends Component {
     }
 
     protected updateCount(): void {
-        const count = this.getCommentCount();
-        this.commentsTitle.textContent = window.$trans.choice(this.countText, count);
+        const activeCount = this.getActiveThreadCount();
+        this.activeTab.textContent = window.$trans.choice(this.countText, activeCount);
+        const archivedCount = this.getArchivedThreadCount();
+        this.archivedTab.textContent = window.$trans.choice(this.archivedCountText, archivedCount);
     }
 
     protected resetForm(): void {
@@ -155,12 +164,18 @@ export class PageComments extends Component {
         this.addButtonContainer.toggleAttribute('hidden', true);
         this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
         this.loadEditor();
+
+        // Ensure the active comments tab is displaying
+        const tabs = window.$components.firstOnElement(this.elem, 'tabs');
+        if (tabs instanceof Tabs) {
+            tabs.show('comment-tab-panel-active');
+        }
     }
 
     protected hideForm(): void {
         this.resetForm();
         this.formContainer.toggleAttribute('hidden', true);
-        if (this.getCommentCount() > 0) {
+        if (this.getActiveThreadCount() > 0) {
             this.elem.append(this.addButtonContainer);
         } else {
             this.commentCountBar.append(this.addButtonContainer);
@@ -198,8 +213,12 @@ export class PageComments extends Component {
         }
     }
 
-    protected getCommentCount(): number {
-        return this.container.querySelectorAll('[component="page-comment"]').length;
+    protected getActiveThreadCount(): number {
+        return this.container.querySelectorAll(':scope > .comment-branch:not([hidden])').length;
+    }
+
+    protected getArchivedThreadCount(): number {
+        return this.archiveContainer.querySelectorAll(':scope > .comment-branch').length;
     }
 
     protected setReply(commentLocalId, commentElement): void {

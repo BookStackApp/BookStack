@@ -140,8 +140,8 @@ export class PageComment extends Component {
         const action = isArchived ? 'unarchive' : 'archive';
 
         const response = await window.$http.put(`/comment/${this.commentId}/${action}`);
-        this.$emit(action, {new_thread_dom: htmlToDom(response.data as string)});
         window.$events.success(this.archiveText);
+        this.$emit(action, {new_thread_dom: htmlToDom(response.data as string)});
         this.container.closest('.comment-branch')?.remove();
     }
 

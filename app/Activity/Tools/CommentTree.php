@@ -28,7 +28,7 @@ class CommentTree
 
     public function empty(): bool
     {
-        return count($this->tree) === 0;
+        return count($this->getActive()) === 0;
     }
 
     public function count(): int
@@ -41,9 +41,19 @@ class CommentTree
         return array_filter($this->tree, fn (CommentTreeNode $node) => !$node->comment->archived);
     }
 
+    public function activeThreadCount(): int
+    {
+        return count($this->getActive());
+    }
+
     public function getArchived(): array
     {
         return array_filter($this->tree, fn (CommentTreeNode $node) => $node->comment->archived);
+    }
+
+    public function archivedThreadCount(): int
+    {
+        return count($this->getArchived());
     }
 
     public function getCommentNodeForId(int $commentId): ?CommentTreeNode

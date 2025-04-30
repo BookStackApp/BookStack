@@ -802,6 +802,13 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   display: block;
 }
 
+.comment-container .empty-state {
+  display: none;
+}
+.comment-container:not(:has([component="page-comment"])) .empty-state {
+  display: block;
+}
+
 .comment-container-compact .comment-box {
   margin-bottom: vars.$xs;
   .meta {
