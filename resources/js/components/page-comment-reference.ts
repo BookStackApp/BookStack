@@ -3,7 +3,7 @@ import {findTargetNodeAndOffset, hashElement} from "../services/dom";
 import {el} from "../wysiwyg/utils/dom";
 import commentIcon from "@icons/comment.svg";
 import closeIcon from "@icons/close.svg";
-import {scrollAndHighlightElement} from "../services/util";
+import {debounce, scrollAndHighlightElement} from "../services/util";
 
 /**
  * Track the close function for the current open marker so it can be closed
@@ -29,7 +29,7 @@ export class PageCommentReference extends Component {
 
         // Show within page display area if seen
         const pageContentArea = document.querySelector('.page-content');
-        if (pageContentArea instanceof HTMLElement) {
+        if (pageContentArea instanceof HTMLElement && this.link.checkVisibility()) {
             this.updateMarker(pageContentArea);
         }
 
@@ -42,6 +42,21 @@ export class PageCommentReference extends Component {
              } else {
                  this.hideMarker();
              }
+        });
+
+        // Handle comments tab changes to hide/show markers & indicators
+        window.addEventListener('tabs-change', event => {
+            const sectionId = (event as {detail: {showing: string}}).detail.showing;
+            if (!sectionId.startsWith('comment-tab-panel') || !(pageContentArea instanceof HTMLElement)) {
+                return;
+            }
+
+            const panel = document.getElementById(sectionId);
+            if (panel?.contains(this.link)) {
+                this.updateMarker(pageContentArea);
+            } else {
+                this.hideMarker();
+            }
         });
     }
 
@@ -111,9 +126,10 @@ export class PageCommentReference extends Component {
             scrollAndHighlightElement(refEl);
         });
 
-        window.addEventListener('resize', () => {
+        const debouncedReposition = debounce(() => {
             this.positionMarker(refEl, refRange);
-        });
+        }, 50, false).bind(this);
+        window.addEventListener('resize', debouncedReposition);
     }
 
     protected positionMarker(targetEl: HTMLElement, range: string) {
@@ -145,12 +161,13 @@ export class PageCommentReference extends Component {
         this.markerWrap.style.height = `${targetBounds.height}px`;
     }
 
-    protected hideMarker() {
+    public hideMarker() {
         // Hide marker and close existing marker windows
         if (openMarkerClose) {
             openMarkerClose();
         }
         this.markerWrap?.remove();
+        this.markerWrap = null;
     }
 
     protected showCommentAtMarker(marker: HTMLElement): void {

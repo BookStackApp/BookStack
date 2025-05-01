@@ -1,6 +1,7 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
+import {PageCommentReference} from "./page-comment-reference";
 
 export class PageComment extends Component {
 
@@ -142,7 +143,13 @@ export class PageComment extends Component {
         const response = await window.$http.put(`/comment/${this.commentId}/${action}`);
         window.$events.success(this.archiveText);
         this.$emit(action, {new_thread_dom: htmlToDom(response.data as string)});
-        this.container.closest('.comment-branch')?.remove();
+
+        const branch = this.container.closest('.comment-branch') as HTMLElement;
+        const references = window.$components.allWithinElement<PageCommentReference>(branch, 'page-comment-reference');
+        for (const reference of references) {
+            reference.hideMarker();
+        }
+        branch.remove();
     }
 
     protected showLoading(): HTMLElement {
