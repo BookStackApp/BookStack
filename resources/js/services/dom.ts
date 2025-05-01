@@ -251,9 +251,9 @@ export function findTargetNodeAndOffset(parentNode: HTMLElement, offset: number)
 }
 
 /**
- * Create a hash for the given HTML element.
+ * Create a hash for the given HTML element content.
  */
 export function hashElement(element: HTMLElement): string {
-    const normalisedElemHtml = element.outerHTML.replace(/\s{2,}/g, '');
-    return cyrb53(normalisedElemHtml);
+    const normalisedElemText = (element.textContent || '').replace(/\s{2,}/g, '');
+    return cyrb53(normalisedElemText);
 }

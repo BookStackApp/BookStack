@@ -2,6 +2,8 @@ import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom.ts';
 import {buildForInput} from '../wysiwyg-tinymce/config';
 import {Tabs} from "./tabs";
+import {PageCommentReference} from "./page-comment-reference";
+import {scrollAndHighlightElement} from "../services/util";
 
 export interface CommentReplyEvent extends Event {
     detail: {
@@ -27,13 +29,16 @@ export class PageComments extends Component {
     private addButtonContainer: HTMLElement;
     private archiveContainer: HTMLElement;
     private replyToRow: HTMLElement;
+    private referenceRow: HTMLElement;
     private formContainer: HTMLElement;
     private form: HTMLFormElement;
     private formInput: HTMLInputElement;
     private formReplyLink: HTMLAnchorElement;
+    private formReferenceLink: HTMLAnchorElement;
     private addCommentButton: HTMLElement;
     private hideFormButton: HTMLElement;
     private removeReplyToButton: HTMLElement;
+    private removeReferenceButton: HTMLElement;
     private wysiwygLanguage: string;
     private wysiwygTextDirection: string;
     private wysiwygEditor: any = null;
@@ -56,13 +61,16 @@ export class PageComments extends Component {
         this.addButtonContainer = this.$refs.addButtonContainer;
         this.archiveContainer = this.$refs.archiveContainer;
         this.replyToRow = this.$refs.replyToRow;
+        this.referenceRow = this.$refs.referenceRow;
         this.formContainer = this.$refs.formContainer;
         this.form = this.$refs.form as HTMLFormElement;
         this.formInput = this.$refs.formInput as HTMLInputElement;
         this.formReplyLink = this.$refs.formReplyLink as HTMLAnchorElement;
+        this.formReferenceLink = this.$refs.formReferenceLink as HTMLAnchorElement;
         this.addCommentButton = this.$refs.addCommentButton;
         this.hideFormButton = this.$refs.hideFormButton;
         this.removeReplyToButton = this.$refs.removeReplyToButton;
+        this.removeReferenceButton = this.$refs.removeReferenceButton;
 
         // WYSIWYG options
         this.wysiwygLanguage = this.$opts.wysiwygLanguage;
@@ -100,6 +108,7 @@ export class PageComments extends Component {
 
         if (this.form) {
             this.removeReplyToButton.addEventListener('click', this.removeReplyTo.bind(this));
+            this.removeReferenceButton.addEventListener('click', () => this.setContentReference(''));
             this.hideFormButton.addEventListener('click', this.hideForm.bind(this));
             this.addCommentButton.addEventListener('click', this.showForm.bind(this));
             this.form.addEventListener('submit', this.saveComment.bind(this));
@@ -118,7 +127,7 @@ export class PageComments extends Component {
         const reqData = {
             html: this.wysiwygEditor.getContent(),
             parent_id: this.parentId || null,
-            content_ref: this.contentReference || '',
+            content_ref: this.contentReference,
         };
 
         window.$http.post(`/comment/${this.pageId}`, reqData).then(resp => {
@@ -128,6 +137,11 @@ export class PageComments extends Component {
                 this.formContainer.after(newElem);
             } else {
                 this.container.append(newElem);
+            }
+
+            const refs = window.$components.allWithinElement<PageCommentReference>(newElem, 'page-comment-reference');
+            for (const ref of refs) {
+                ref.showForDisplay();
             }
 
             window.$events.success(this.createdText);
@@ -152,10 +166,8 @@ export class PageComments extends Component {
     protected resetForm(): void {
         this.removeEditor();
         this.formInput.value = '';
-        this.parentId = null;
-        this.contentReference = '';
-        this.replyToRow.toggleAttribute('hidden', true);
-        this.container.append(this.formContainer);
+        this.setContentReference('');
+        this.removeReplyTo();
     }
 
     protected showForm(): void {
@@ -240,7 +252,21 @@ export class PageComments extends Component {
 
     public startNewComment(contentReference: string): void {
         this.removeReplyTo();
-        this.contentReference = contentReference;
+        this.setContentReference(contentReference);
+    }
+
+    protected setContentReference(reference: string): void {
+        this.contentReference = reference;
+        this.referenceRow.toggleAttribute('hidden', !Boolean(reference));
+        const [id] = reference.split(':');
+        this.formReferenceLink.href = `#${id}`;
+        this.formReferenceLink.onclick = function(event) {
+            event.preventDefault();
+            const el = document.getElementById(id);
+            if (el) {
+                scrollAndHighlightElement(el);
+            }
+        };
     }
 
 }

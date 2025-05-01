@@ -36,7 +36,7 @@
          tabindex="0"
          role="tabpanel"
          aria-labelledby="comment-tab-active"
-         class="comment-container">
+         class="comment-container no-outline">
         <div refs="page-comments@comment-container">
             @foreach($commentTree->getActive() as $branch)
                 @include('comments.comment-branch', ['branch' => $branch, 'readOnly' => false])
@@ -63,7 +63,7 @@
          role="tabpanel"
          aria-labelledby="comment-tab-archived"
          hidden="hidden"
-         class="comment-container">
+         class="comment-container no-outline">
         @foreach($commentTree->getArchived() as $branch)
             @include('comments.comment-branch', ['branch' => $branch, 'readOnly' => false])
         @endforeach

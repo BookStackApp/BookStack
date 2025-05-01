@@ -131,7 +131,16 @@ export class PageComment extends Component {
 
         await window.$http.delete(`/comment/${this.commentId}`);
         this.$emit('delete');
-        this.container.closest('.comment-branch')?.remove();
+
+        const branch = this.container.closest('.comment-branch');
+        if (branch instanceof HTMLElement) {
+            const refs = window.$components.allWithinElement<PageCommentReference>(branch, 'page-comment-reference');
+            for (const ref of refs) {
+                ref.hideMarker();
+            }
+            branch.remove();
+        }
+
         window.$events.success(this.deletedText);
     }
 

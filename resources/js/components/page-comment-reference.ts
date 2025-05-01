@@ -28,10 +28,7 @@ export class PageCommentReference extends Component {
         this.closeText = this.$opts.closeText;
 
         // Show within page display area if seen
-        const pageContentArea = document.querySelector('.page-content');
-        if (pageContentArea instanceof HTMLElement && this.link.checkVisibility()) {
-            this.updateMarker(pageContentArea);
-        }
+        this.showForDisplay();
 
         // Handle editor view to show on comments toolbox view
         window.addEventListener('editor-toolbox-change', (event) => {
@@ -47,17 +44,24 @@ export class PageCommentReference extends Component {
         // Handle comments tab changes to hide/show markers & indicators
         window.addEventListener('tabs-change', event => {
             const sectionId = (event as {detail: {showing: string}}).detail.showing;
-            if (!sectionId.startsWith('comment-tab-panel') || !(pageContentArea instanceof HTMLElement)) {
+            if (!sectionId.startsWith('comment-tab-panel')) {
                 return;
             }
 
             const panel = document.getElementById(sectionId);
             if (panel?.contains(this.link)) {
-                this.updateMarker(pageContentArea);
+                this.showForDisplay();
             } else {
                 this.hideMarker();
             }
         });
+    }
+
+    public showForDisplay() {
+        const pageContentArea = document.querySelector('.page-content');
+        if (pageContentArea instanceof HTMLElement && this.link.checkVisibility()) {
+            this.updateMarker(pageContentArea);
+        }
     }
 
     protected showForEditor() {
@@ -90,15 +94,7 @@ export class PageCommentReference extends Component {
             return;
         }
 
-        const refCloneToAssess = refEl.cloneNode(true) as HTMLElement;
-        const toRemove = refCloneToAssess.querySelectorAll('[data-lexical-text]');
-        refCloneToAssess.removeAttribute('style');
-        for (const el of toRemove) {
-            el.after(...el.childNodes);
-            el.remove();
-        }
-
-        const actualHash = hashElement(refCloneToAssess);
+        const actualHash = hashElement(refEl);
         if (actualHash !== refHash) {
             this.link.classList.add('outdated');
         }

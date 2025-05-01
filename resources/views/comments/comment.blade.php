@@ -87,7 +87,7 @@
                    option:page-comment-reference:view-comment-text="{{ trans('entities.comment_view') }}"
                    option:page-comment-reference:jump-to-thread-text="{{ trans('entities.comment_jump_to_thread') }}"
                    option:page-comment-reference:close-text="{{ trans('common.close') }}"
-                   href="#">@icon('bookmark')Reference <span>- Outdated</span></a>
+                   href="#">@icon('bookmark'){{ trans('entities.comment_reference') }} <span>{{ trans('entities.comment_reference_outdated') }}</span></a>
             </div>
         @endif
         {!! $commentHtml  !!}

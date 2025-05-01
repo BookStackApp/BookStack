@@ -569,6 +569,9 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-bottom: 0;
   padding: 0 vars.$xs;
 }
+.tab-container [role="tabpanel"].no-outline:focus {
+  outline: none;
+}
 
 .image-picker .none {
   display: none;
