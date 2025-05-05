@@ -3656,6 +3656,13 @@ Copyright: Copyright (c) 2017-present Devon Govett
 Source: https://github.com/parcel-bundler/watcher.git
 Link: https://github.com/parcel-bundler/watcher.git
 -----------
+@parcel/watcher-linux-x64-musl
+License: MIT
+License File: node_modules/@parcel/watcher-linux-x64-musl/LICENSE
+Copyright: Copyright (c) 2017-present Devon Govett
+Source: https://github.com/parcel-bundler/watcher.git
+Link: https://github.com/parcel-bundler/watcher.git
+-----------
 @parcel/watcher
 License: MIT
 License File: node_modules/@parcel/watcher/LICENSE
