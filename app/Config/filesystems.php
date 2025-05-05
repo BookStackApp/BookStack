@@ -32,7 +32,6 @@ return [
         'local' => [
             'driver'     => 'local',
             'root'       => public_path(),
-            'visibility' => 'public',
             'serve'      => false,
             'throw'      => true,
         ],
@@ -47,7 +46,6 @@ return [
         'local_secure_images' => [
             'driver'     => 'local',
             'root'       => storage_path('uploads/images/'),
-            'visibility' => 'public',
             'serve'      => false,
             'throw'      => true,
         ],
