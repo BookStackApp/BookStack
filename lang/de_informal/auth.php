@@ -33,7 +33,7 @@ return [
     'social_registration_text' => 'Mit einem dieser Dienste registrieren oder anmelden',
 
     'register_thanks' => 'Vielen Dank für deine Registrierung!',
-    'register_confirm' => 'Bitte prüfe deinen Posteingang und bestätige die Registrierung.',
+    'register_confirm' => 'Bitte prüfe deinen Posteingang und bestätige die Registrierung, um :appName nutzen zu können.',
     'registrations_disabled' => 'Eine Registrierung ist momentan nicht möglich',
     'registration_email_domain_invalid' => 'Du kannst dich mit dieser E-Mail nicht registrieren.',
     'register_success' => 'Vielen Dank für deine Registrierung! Du bist jetzt registriert und eingeloggt.',
@@ -82,7 +82,7 @@ return [
 
     // Multi-factor Authentication
     'mfa_setup' => 'Multi-Faktor-Authentifizierung einrichten',
-    'mfa_setup_desc' => 'Richte eine Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
+    'mfa_setup_desc' => 'Richte Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für dein Benutzerkonto ein.',
     'mfa_setup_configured' => 'Bereits konfiguriert',
     'mfa_setup_reconfigure' => 'Umkonfigurieren',
     'mfa_setup_remove_confirmation' => 'Bist du sicher, dass du diese Multi-Faktor-Authentifizierungsmethode entfernen möchtest?',

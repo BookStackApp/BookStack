@@ -113,7 +113,7 @@ return [
     // Custom validation lines
     'custom' => [
         'password-confirm' => [
-            'required_with' => 'يجب تأكيد كلمة المرور',
+            'required_with' => 'يجب تأكيد كلمة السر',
         ],
     ],
 

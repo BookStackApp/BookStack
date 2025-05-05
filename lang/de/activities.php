@@ -50,7 +50,7 @@ return [
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Revisions
-    'revision_restore' => 'widerherstellte Revision',
+    'revision_restore' => 'stellte Revision wieder her:',
     'revision_delete' => 'löschte Revision',
     'revision_delete_notification' => 'Revision erfolgreich gelöscht',
 
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'Kommentar gelöscht',
 
     // Sort Rules
-    'sort_rule_create' => 'Sortierregel erstellt',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'hat eine Sortierregel erstellt',
+    'sort_rule_create_notification' => 'Sortierregel erfolgreich angelegt',
+    'sort_rule_update' => 'hat eine Sortierregel aktualisiert',
+    'sort_rule_update_notification' => 'Sortierregel erfolgreich aktualisiert',
+    'sort_rule_delete' => 'hat eine Sortierregel gelöscht',
+    'sort_rule_delete_notification' => 'Sortierregel erfolgreich gelöscht',
 
     // Other
     'permissions_update'          => 'hat die Berechtigungen aktualisiert',
