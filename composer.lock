@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.343.3",
+            "version": "3.343.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d7ad5f6bdee792a16d2c9d5a3d9b56acfaaaf979"
+                "reference": "3746aca8cbed5f46beba850e0a480ef58e71b197"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d7ad5f6bdee792a16d2c9d5a3d9b56acfaaaf979",
-                "reference": "d7ad5f6bdee792a16d2c9d5a3d9b56acfaaaf979",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3746aca8cbed5f46beba850e0a480ef58e71b197",
+                "reference": "3746aca8cbed5f46beba850e0a480ef58e71b197",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.343.3"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.343.6"
             },
-            "time": "2025-05-02T18:04:58+00:00"
+            "time": "2025-05-07T18:10:08+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -3597,31 +3597,31 @@
         },
         {
             "name": "nunomaduro/termwind",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/termwind.git",
-                "reference": "52915afe6a1044e8b9cee1bcff836fb63acf9cda"
+                "reference": "dfa08f390e509967a15c22493dc0bac5733d9123"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/52915afe6a1044e8b9cee1bcff836fb63acf9cda",
-                "reference": "52915afe6a1044e8b9cee1bcff836fb63acf9cda",
+                "url": "https://api.github.com/repos/nunomaduro/termwind/zipball/dfa08f390e509967a15c22493dc0bac5733d9123",
+                "reference": "dfa08f390e509967a15c22493dc0bac5733d9123",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "php": "^8.2",
-                "symfony/console": "^7.1.8"
+                "symfony/console": "^7.2.6"
             },
             "require-dev": {
-                "illuminate/console": "^11.33.2",
-                "laravel/pint": "^1.18.2",
+                "illuminate/console": "^11.44.7",
+                "laravel/pint": "^1.22.0",
                 "mockery/mockery": "^1.6.12",
-                "pestphp/pest": "^2.36.0",
-                "phpstan/phpstan": "^1.12.11",
-                "phpstan/phpstan-strict-rules": "^1.6.1",
-                "symfony/var-dumper": "^7.1.8",
+                "pestphp/pest": "^2.36.0 || ^3.8.2",
+                "phpstan/phpstan": "^1.12.25",
+                "phpstan/phpstan-strict-rules": "^1.6.2",
+                "symfony/var-dumper": "^7.2.6",
                 "thecodingmachine/phpstan-strict-rules": "^1.0.0"
             },
             "type": "library",
@@ -3664,7 +3664,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/termwind/issues",
-                "source": "https://github.com/nunomaduro/termwind/tree/v2.3.0"
+                "source": "https://github.com/nunomaduro/termwind/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -3680,7 +3680,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-21T10:39:51+00:00"
+            "time": "2025-05-08T08:14:37+00:00"
         },
         {
             "name": "onelogin/php-saml",
