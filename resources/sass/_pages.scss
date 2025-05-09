@@ -248,7 +248,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   z-index: 92;
   pointer-events: all;
   min-width: min(340px, 80vw);
-  background-color: #FFF;
+  @include mixins.lightDark(background-color, #FFF, #222);
   box-shadow: vars.$bs-hover;
   border-radius: 4px;
   overflow: hidden;

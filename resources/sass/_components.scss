@@ -785,6 +785,10 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     top: 0;
     opacity: 0.15;
   }
+  &[href="#"] {
+    color: #444;
+    pointer-events: none;
+  }
 }
 
 .comment-branch .comment-box {
@@ -836,7 +840,8 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     font-size: 12px;
   }
   .avatar {
-    width: 18px;
+    width: 22px;
+    height: 22px;
     margin-inline-end: 2px !important;
   }
   .content {
@@ -1206,6 +1211,7 @@ input.scroll-box-search, .scroll-box-header-item {
 
 details.section-expander summary {
   border-top: 1px solid #DDD;
+  @include mixins.lightDark(border-color, #DDD, #000);
   font-weight: bold;
   font-size: 12px;
   color: #888;
@@ -1217,4 +1223,5 @@ details.section-expander:open summary {
 }
 details.section-expander {
   border-bottom: 1px solid #DDD;
+  @include mixins.lightDark(border-color, #DDD, #000);
 }
