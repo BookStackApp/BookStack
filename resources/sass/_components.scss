@@ -1203,3 +1203,18 @@ input.scroll-box-search, .scroll-box-header-item {
 .scroll-box > li.empty-state:last-child {
   display: list-item;
 }
+
+details.section-expander summary {
+  border-top: 1px solid #DDD;
+  font-weight: bold;
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+  padding-block: vars.$xs;
+}
+details.section-expander:open summary {
+  margin-bottom: vars.$s;
+}
+details.section-expander {
+  border-bottom: 1px solid #DDD;
+}

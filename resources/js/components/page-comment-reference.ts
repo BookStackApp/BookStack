@@ -34,12 +34,25 @@ export class PageCommentReference extends Component {
         window.addEventListener('editor-toolbox-change', (event) => {
              const tabName: string = (event as {detail: {tab: string, open: boolean}}).detail.tab;
              const isOpen = (event as {detail: {tab: string, open: boolean}}).detail.open;
-             if (tabName === 'comments' && isOpen) {
+             if (tabName === 'comments' && isOpen && this.link.checkVisibility()) {
                  this.showForEditor();
              } else {
                  this.hideMarker();
              }
         });
+
+        // Handle visibility changes within editor toolbox archived details dropdown
+        window.addEventListener('toggle', event => {
+            if (event.target instanceof HTMLElement && event.target.contains(this.link)) {
+                window.requestAnimationFrame(() => {
+                    if (this.link.checkVisibility()) {
+                        this.showForEditor();
+                    } else {
+                        this.hideMarker();
+                    }
+                });
+            }
+        }, {capture: true});
 
         // Handle comments tab changes to hide/show markers & indicators
         window.addEventListener('tabs-change', event => {

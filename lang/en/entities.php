@@ -396,6 +396,7 @@ return [
     'comment_placeholder' => 'Leave a comment here',
     'comment_thread_count' => ':count Comment Thread|:count Comment Threads',
     'comment_archived_count' => ':count Archived',
+    'comment_archived_threads' => 'Archived Threads',
     'comment_save' => 'Save Comment',
     'comment_new' => 'New Comment',
     'comment_created' => 'commented :createDiff',
