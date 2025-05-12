@@ -1,5 +1,9 @@
 import {Component} from './component';
 
+export interface TabsChangeEvent {
+    showing: string;
+}
+
 /**
  * Tabs
  * Uses accessible attributes to drive its functionality.
@@ -19,12 +23,12 @@ import {Component} from './component';
  */
 export class Tabs extends Component {
 
-    protected container: HTMLElement;
-    protected tabList: HTMLElement;
-    protected tabs: HTMLElement[];
-    protected panels: HTMLElement[];
+    protected container!: HTMLElement;
+    protected tabList!: HTMLElement;
+    protected tabs!: HTMLElement[];
+    protected panels!: HTMLElement[];
 
-    protected activeUnder: number;
+    protected activeUnder!: number;
     protected active: null|boolean = null;
 
     setup() {
@@ -58,7 +62,8 @@ export class Tabs extends Component {
             tab.setAttribute('aria-selected', selected ? 'true' : 'false');
         }
 
-        this.$emit('change', {showing: sectionId});
+        const data: TabsChangeEvent = {showing: sectionId};
+        this.$emit('change', data);
     }
 
     protected updateActiveState(): void {

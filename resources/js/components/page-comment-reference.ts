@@ -4,6 +4,8 @@ import {el} from "../wysiwyg/utils/dom";
 import commentIcon from "@icons/comment.svg";
 import closeIcon from "@icons/close.svg";
 import {debounce, scrollAndHighlightElement} from "../services/util";
+import {EditorToolboxChangeEventData} from "./editor-toolbox";
+import {TabsChangeEvent} from "./tabs";
 
 /**
  * Track the close function for the current open marker so it can be closed
@@ -12,13 +14,13 @@ import {debounce, scrollAndHighlightElement} from "../services/util";
 let openMarkerClose: Function|null = null;
 
 export class PageCommentReference extends Component {
-    protected link: HTMLLinkElement;
-    protected reference: string;
+    protected link!: HTMLLinkElement;
+    protected reference!: string;
     protected markerWrap: HTMLElement|null = null;
 
-    protected viewCommentText: string;
-    protected jumpToThreadText: string;
-    protected closeText: string;
+    protected viewCommentText!: string;
+    protected jumpToThreadText!: string;
+    protected closeText!: string;
 
     setup() {
         this.link = this.$el as HTMLLinkElement;
@@ -31,15 +33,15 @@ export class PageCommentReference extends Component {
         this.showForDisplay();
 
         // Handle editor view to show on comments toolbox view
-        window.addEventListener('editor-toolbox-change', (event) => {
-             const tabName: string = (event as {detail: {tab: string, open: boolean}}).detail.tab;
-             const isOpen = (event as {detail: {tab: string, open: boolean}}).detail.open;
-             if (tabName === 'comments' && isOpen && this.link.checkVisibility()) {
-                 this.showForEditor();
-             } else {
-                 this.hideMarker();
-             }
-        });
+        window.addEventListener('editor-toolbox-change', ((event: CustomEvent<EditorToolboxChangeEventData>) => {
+            const tabName: string = event.detail.tab;
+            const isOpen = event.detail.open;
+            if (tabName === 'comments' && isOpen && this.link.checkVisibility()) {
+                this.showForEditor();
+            } else {
+                this.hideMarker();
+            }
+        }) as EventListener);
 
         // Handle visibility changes within editor toolbox archived details dropdown
         window.addEventListener('toggle', event => {
@@ -55,8 +57,8 @@ export class PageCommentReference extends Component {
         }, {capture: true});
 
         // Handle comments tab changes to hide/show markers & indicators
-        window.addEventListener('tabs-change', event => {
-            const sectionId = (event as {detail: {showing: string}}).detail.showing;
+        window.addEventListener('tabs-change', ((event: CustomEvent<TabsChangeEvent>) => {
+            const sectionId = event.detail.showing;
             if (!sectionId.startsWith('comment-tab-panel')) {
                 return;
             }
@@ -67,7 +69,7 @@ export class PageCommentReference extends Component {
             } else {
                 this.hideMarker();
             }
-        });
+        }) as EventListener);
     }
 
     public showForDisplay() {

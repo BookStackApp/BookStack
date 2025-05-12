@@ -43,7 +43,8 @@ class CommentController extends Controller
 
         // Create a new comment.
         $this->checkPermission('comment-create-all');
-        $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null, $input['content_ref']);
+        $contentRef = $input['content_ref'] ?? '';
+        $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null, $contentRef);
 
         return view('comments.comment-branch', [
             'readOnly' => false,

@@ -1,29 +1,39 @@
 import {Component} from './component';
-import {getLoading, htmlToDom} from '../services/dom.ts';
+import {getLoading, htmlToDom} from '../services/dom';
 import {buildForInput} from '../wysiwyg-tinymce/config';
 import {PageCommentReference} from "./page-comment-reference";
+import {HttpError} from "../services/http";
+
+export interface PageCommentReplyEventData {
+    id: string; // ID of comment being replied to
+    element: HTMLElement; // Container for comment replied to
+}
+
+export interface PageCommentArchiveEventData {
+    new_thread_dom: HTMLElement;
+}
 
 export class PageComment extends Component {
 
-    protected commentId: string;
-    protected commentLocalId: string;
-    protected deletedText: string;
-    protected updatedText: string;
-    protected archiveText: string;
+    protected commentId!: string;
+    protected commentLocalId!: string;
+    protected deletedText!: string;
+    protected updatedText!: string;
+    protected archiveText!: string;
 
     protected wysiwygEditor: any = null;
-    protected wysiwygLanguage: string;
-    protected wysiwygTextDirection: string;
+    protected wysiwygLanguage!: string;
+    protected wysiwygTextDirection!: string;
 
-    protected container: HTMLElement;
-    protected contentContainer: HTMLElement;
-    protected form: HTMLFormElement;
-    protected formCancel: HTMLElement;
-    protected editButton: HTMLElement;
-    protected deleteButton: HTMLElement;
-    protected replyButton: HTMLElement;
-    protected archiveButton: HTMLElement;
-    protected input: HTMLInputElement;
+    protected container!: HTMLElement;
+    protected contentContainer!: HTMLElement;
+    protected form!: HTMLFormElement;
+    protected formCancel!: HTMLElement;
+    protected editButton!: HTMLElement;
+    protected deleteButton!: HTMLElement;
+    protected replyButton!: HTMLElement;
+    protected archiveButton!: HTMLElement;
+    protected input!: HTMLInputElement;
 
     setup() {
         // Options
@@ -53,10 +63,11 @@ export class PageComment extends Component {
 
     protected setupListeners(): void {
         if (this.replyButton) {
-            this.replyButton.addEventListener('click', () => this.$emit('reply', {
+            const data: PageCommentReplyEventData = {
                 id: this.commentLocalId,
                 element: this.container,
-            }));
+            };
+            this.replyButton.addEventListener('click', () => this.$emit('reply', data));
         }
 
         if (this.editButton) {
@@ -95,10 +106,10 @@ export class PageComment extends Component {
             drawioUrl: '',
             pageId: 0,
             translations: {},
-            translationMap: (window as Record<string, Object>).editor_translations,
+            translationMap: (window as unknown as Record<string, Object>).editor_translations,
         });
 
-        (window as {tinymce: {init: (Object) => Promise<any>}}).tinymce.init(config).then(editors => {
+        (window as unknown as {tinymce: {init: (arg0: Object) => Promise<any>}}).tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
             setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
@@ -120,7 +131,9 @@ export class PageComment extends Component {
             window.$events.success(this.updatedText);
         } catch (err) {
             console.error(err);
-            window.$events.showValidationErrors(err);
+            if (err instanceof HttpError) {
+                window.$events.showValidationErrors(err);
+            }
             this.form.toggleAttribute('hidden', false);
             loading.remove();
         }
@@ -151,7 +164,8 @@ export class PageComment extends Component {
 
         const response = await window.$http.put(`/comment/${this.commentId}/${action}`);
         window.$events.success(this.archiveText);
-        this.$emit(action, {new_thread_dom: htmlToDom(response.data as string)});
+        const eventData: PageCommentArchiveEventData = {new_thread_dom: htmlToDom(response.data as string)};
+        this.$emit(action, eventData);
 
         const branch = this.container.closest('.comment-branch') as HTMLElement;
         const references = window.$components.allWithinElement<PageCommentReference>(branch, 'page-comment-reference');

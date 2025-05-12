@@ -1,7 +1,7 @@
-import * as DOM from '../services/dom.ts';
+import * as DOM from '../services/dom';
 import {Component} from './component';
-import {copyTextToClipboard} from '../services/clipboard.ts';
-import {hashElement, normalizeNodeTextOffsetToParent} from "../services/dom.ts";
+import {copyTextToClipboard} from '../services/clipboard';
+import {hashElement, normalizeNodeTextOffsetToParent} from "../services/dom";
 import {PageComments} from "./page-comments";
 
 export class Pointer extends Component {
@@ -11,16 +11,16 @@ export class Pointer extends Component {
     protected targetElement: HTMLElement|null = null;
     protected targetSelectionRange: Range|null = null;
 
-    protected pointer: HTMLElement;
-    protected linkInput: HTMLInputElement;
-    protected linkButton: HTMLElement;
-    protected includeInput: HTMLInputElement;
-    protected includeButton: HTMLElement;
-    protected sectionModeButton: HTMLElement;
-    protected commentButton: HTMLElement;
-    protected modeToggles: HTMLElement[];
-    protected modeSections: HTMLElement[];
-    protected pageId: string;
+    protected pointer!: HTMLElement;
+    protected linkInput!: HTMLInputElement;
+    protected linkButton!: HTMLElement;
+    protected includeInput!: HTMLInputElement;
+    protected includeButton!: HTMLElement;
+    protected sectionModeButton!: HTMLElement;
+    protected commentButton!: HTMLElement;
+    protected modeToggles!: HTMLElement[];
+    protected modeSections!: HTMLElement[];
+    protected pageId!: string;
 
     setup() {
         this.pointer = this.$refs.pointer;
@@ -67,7 +67,7 @@ export class Pointer extends Component {
         DOM.onEvents(pageContent, ['mouseup', 'keyup'], event => {
             event.stopPropagation();
             const targetEl = (event.target as HTMLElement).closest('[id^="bkmrk"]');
-            if (targetEl && window.getSelection().toString().length > 0) {
+            if (targetEl instanceof HTMLElement && (window.getSelection() || '').toString().length > 0) {
                 const xPos = (event instanceof MouseEvent) ? event.pageX : 0;
                 this.showPointerAtTarget(targetEl, xPos, false);
             }
@@ -102,11 +102,8 @@ export class Pointer extends Component {
 
     /**
      * Move and display the pointer at the given element, targeting the given screen x-position if possible.
-     * @param {Element} element
-     * @param {Number} xPosition
-     * @param {Boolean} keyboardMode
      */
-    showPointerAtTarget(element, xPosition, keyboardMode) {
+    showPointerAtTarget(element: HTMLElement, xPosition: number, keyboardMode: boolean) {
         this.targetElement = element;
         this.targetSelectionRange = window.getSelection()?.getRangeAt(0) || null;
         this.updateDomForTarget(element);
@@ -134,7 +131,7 @@ export class Pointer extends Component {
             window.removeEventListener('scroll', scrollListener);
         };
 
-        element.parentElement.insertBefore(this.pointer, element);
+        element.parentElement?.insertBefore(this.pointer, element);
         if (!keyboardMode) {
             window.addEventListener('scroll', scrollListener, {passive: true});
         }
@@ -142,9 +139,8 @@ export class Pointer extends Component {
 
     /**
      * Update the pointer inputs/content for the given target element.
-     * @param {?Element} element
      */
-    updateDomForTarget(element) {
+    updateDomForTarget(element: HTMLElement) {
         const permaLink = window.baseUrl(`/link/${this.pageId}#${element.id}`);
         const includeTag = `{{@${this.pageId}#${element.id}}}`;
 
@@ -158,13 +154,13 @@ export class Pointer extends Component {
             const elementId = element.id;
 
             // Get the first 50 characters.
-            const queryContent = element.textContent && element.textContent.substring(0, 50);
+            const queryContent = (element.textContent || '').substring(0, 50);
             editAnchor.href = `${editHref}?content-id=${elementId}&content-text=${encodeURIComponent(queryContent)}`;
         }
     }
 
     enterSectionSelectMode() {
-        const sections = Array.from(document.querySelectorAll('.page-content [id^="bkmrk"]'));
+        const sections = Array.from(document.querySelectorAll('.page-content [id^="bkmrk"]')) as HTMLElement[];
         for (const section of sections) {
             section.setAttribute('tabindex', '0');
         }
@@ -172,12 +168,12 @@ export class Pointer extends Component {
         sections[0].focus();
 
         DOM.onEnterPress(sections, event => {
-            this.showPointerAtTarget(event.target, 0, true);
+            this.showPointerAtTarget(event.target as HTMLElement, 0, true);
             this.pointer.focus();
         });
     }
 
-    createCommentAtPointer(event) {
+    createCommentAtPointer() {
         if (!this.targetElement) {
             return;
         }

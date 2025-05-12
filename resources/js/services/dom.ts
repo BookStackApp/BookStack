@@ -225,7 +225,7 @@ export function findTargetNodeAndOffset(parentNode: HTMLElement, offset: number)
         if (currentNode.nodeType === Node.TEXT_NODE) {
             // For text nodes, count the length of their content
             // Returns if within range
-            const textLength = currentNode.textContent.length;
+            const textLength = (currentNode.textContent || '').length;
             if (currentOffset + textLength >= offset) {
                 return {
                     node: currentNode,
@@ -237,9 +237,9 @@ export function findTargetNodeAndOffset(parentNode: HTMLElement, offset: number)
         } else if (currentNode.nodeType === Node.ELEMENT_NODE) {
             // Otherwise, if an element, track the text length and search within
             // if in range for the target offset
-            const elementTextLength = currentNode.textContent.length;
+            const elementTextLength = (currentNode.textContent || '').length;
             if (currentOffset + elementTextLength >= offset) {
-                return findTargetNodeAndOffset(currentNode, offset - currentOffset);
+                return findTargetNodeAndOffset(currentNode as HTMLElement, offset - currentOffset);
             }
 
             currentOffset += elementTextLength;

@@ -1,50 +1,38 @@
 import {Component} from './component';
-import {getLoading, htmlToDom} from '../services/dom.ts';
+import {getLoading, htmlToDom} from '../services/dom';
 import {buildForInput} from '../wysiwyg-tinymce/config';
 import {Tabs} from "./tabs";
 import {PageCommentReference} from "./page-comment-reference";
 import {scrollAndHighlightElement} from "../services/util";
-
-export interface CommentReplyEvent extends Event {
-    detail: {
-        id: string; // ID of comment being replied to
-        element: HTMLElement; // Container for comment replied to
-    }
-}
-
-export interface ArchiveEvent extends Event {
-    detail: {
-        new_thread_dom: HTMLElement;
-    }
-}
+import {PageCommentArchiveEventData, PageCommentReplyEventData} from "./page-comment";
 
 export class PageComments extends Component {
 
-    private elem: HTMLElement;
-    private pageId: number;
-    private container: HTMLElement;
-    private commentCountBar: HTMLElement;
-    private activeTab: HTMLElement;
-    private archivedTab: HTMLElement;
-    private addButtonContainer: HTMLElement;
-    private archiveContainer: HTMLElement;
-    private replyToRow: HTMLElement;
-    private referenceRow: HTMLElement;
-    private formContainer: HTMLElement;
-    private form: HTMLFormElement;
-    private formInput: HTMLInputElement;
-    private formReplyLink: HTMLAnchorElement;
-    private formReferenceLink: HTMLAnchorElement;
-    private addCommentButton: HTMLElement;
-    private hideFormButton: HTMLElement;
-    private removeReplyToButton: HTMLElement;
-    private removeReferenceButton: HTMLElement;
-    private wysiwygLanguage: string;
-    private wysiwygTextDirection: string;
+    private elem!: HTMLElement;
+    private pageId!: number;
+    private container!: HTMLElement;
+    private commentCountBar!: HTMLElement;
+    private activeTab!: HTMLElement;
+    private archivedTab!: HTMLElement;
+    private addButtonContainer!: HTMLElement;
+    private archiveContainer!: HTMLElement;
+    private replyToRow!: HTMLElement;
+    private referenceRow!: HTMLElement;
+    private formContainer!: HTMLElement;
+    private form!: HTMLFormElement;
+    private formInput!: HTMLInputElement;
+    private formReplyLink!: HTMLAnchorElement;
+    private formReferenceLink!: HTMLAnchorElement;
+    private addCommentButton!: HTMLElement;
+    private hideFormButton!: HTMLElement;
+    private removeReplyToButton!: HTMLElement;
+    private removeReferenceButton!: HTMLElement;
+    private wysiwygLanguage!: string;
+    private wysiwygTextDirection!: string;
     private wysiwygEditor: any = null;
-    private createdText: string;
-    private countText: string;
-    private archivedCountText: string;
+    private createdText!: string;
+    private countText!: string;
+    private archivedCountText!: string;
     private parentId: number | null = null;
     private contentReference: string = '';
     private formReplyText: string = '';
@@ -92,19 +80,19 @@ export class PageComments extends Component {
             this.hideForm();
         });
 
-        this.elem.addEventListener('page-comment-reply', (event: CommentReplyEvent) => {
+        this.elem.addEventListener('page-comment-reply', ((event: CustomEvent<PageCommentReplyEventData>) => {
             this.setReply(event.detail.id, event.detail.element);
-        });
+        }) as EventListener);
 
-        this.elem.addEventListener('page-comment-archive', (event: ArchiveEvent) => {
+        this.elem.addEventListener('page-comment-archive', ((event: CustomEvent<PageCommentArchiveEventData>) => {
             this.archiveContainer.append(event.detail.new_thread_dom);
             setTimeout(() => this.updateCount(), 1);
-        });
+        }) as EventListener);
 
-        this.elem.addEventListener('page-comment-unarchive', (event: ArchiveEvent) => {
+        this.elem.addEventListener('page-comment-unarchive', ((event: CustomEvent<PageCommentArchiveEventData>) => {
             this.container.append(event.detail.new_thread_dom);
             setTimeout(() => this.updateCount(), 1);
-        });
+        }) as EventListener);
 
         if (this.form) {
             this.removeReplyToButton.addEventListener('click', this.removeReplyTo.bind(this));
@@ -115,7 +103,7 @@ export class PageComments extends Component {
         }
     }
 
-    protected saveComment(event): void {
+    protected saveComment(event: SubmitEvent): void {
         event.preventDefault();
         event.stopPropagation();
 
@@ -209,10 +197,10 @@ export class PageComments extends Component {
             drawioUrl: '',
             pageId: 0,
             translations: {},
-            translationMap: (window as Record<string, Object>).editor_translations,
+            translationMap: (window as unknown as Record<string, Object>).editor_translations,
         });
 
-        (window as {tinymce: {init: (Object) => Promise<any>}}).tinymce.init(config).then(editors => {
+        (window as unknown as {tinymce: {init: (arg0: Object) => Promise<any>}}).tinymce.init(config).then(editors => {
             this.wysiwygEditor = editors[0];
             setTimeout(() => this.wysiwygEditor.focus(), 50);
         });
@@ -233,11 +221,11 @@ export class PageComments extends Component {
         return this.archiveContainer.querySelectorAll(':scope > .comment-branch').length;
     }
 
-    protected setReply(commentLocalId, commentElement): void {
-        const targetFormLocation = commentElement.closest('.comment-branch').querySelector('.comment-branch-children');
+    protected setReply(commentLocalId: string, commentElement: HTMLElement): void {
+        const targetFormLocation = (commentElement.closest('.comment-branch') as HTMLElement).querySelector('.comment-branch-children') as HTMLElement;
         targetFormLocation.append(this.formContainer);
         this.showForm();
-        this.parentId = commentLocalId;
+        this.parentId = Number(commentLocalId);
         this.replyToRow.toggleAttribute('hidden', false);
         this.formReplyLink.textContent = this.formReplyText.replace('1234', String(this.parentId));
         this.formReplyLink.href = `#comment${this.parentId}`;
