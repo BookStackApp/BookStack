@@ -7,7 +7,7 @@ use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
-class CommentTest extends TestCase
+class CommentStoreTest extends TestCase
 {
     public function test_add_comment()
     {
@@ -166,6 +166,29 @@ class CommentTest extends TestCase
         }
     }
 
+    public function test_non_top_level_comments_cant_be_archived_or_unarchived()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+
+        $comment = Comment::factory()->make();
+        $page->comments()->save($comment);
+        $subComment = Comment::factory()->make(['parent_id' => $comment->id]);
+        $page->comments()->save($subComment);
+        $subComment->refresh();
+
+        $resp = $this->putJson("/comment/$subComment->id/archive");
+        $resp->assertStatus(400);
+
+        $this->assertDatabaseHas('comments', [
+            'id' => $subComment->id,
+            'archived' => false,
+        ]);
+
+        $resp = $this->putJson("/comment/$subComment->id/unarchive");
+        $resp->assertStatus(400);
+    }
+
     public function test_scripts_cannot_be_injected_via_comment_html()
     {
         $page = $this->entities->page();
@@ -224,97 +247,5 @@ class CommentTest extends TestCase
             'id'   => $comment->id,
             'html' => $expected,
         ]);
-    }
-
-    public function test_reply_comments_are_nested()
-    {
-        $this->asAdmin();
-        $page = $this->entities->page();
-
-        $this->postJson("/comment/$page->id", ['html' => '<p>My new comment</p>']);
-        $this->postJson("/comment/$page->id", ['html' => '<p>My new comment</p>']);
-
-        $respHtml = $this->withHtml($this->get($page->getUrl()));
-        $respHtml->assertElementCount('.comment-branch', 3);
-        $respHtml->assertElementNotExists('.comment-branch .comment-branch');
-
-        $comment = $page->comments()->first();
-        $resp = $this->postJson("/comment/$page->id", [
-            'html' => '<p>My nested comment</p>', 'parent_id' => $comment->local_id
-        ]);
-        $resp->assertStatus(200);
-
-        $respHtml = $this->withHtml($this->get($page->getUrl()));
-        $respHtml->assertElementCount('.comment-branch', 4);
-        $respHtml->assertElementContains('.comment-branch .comment-branch', 'My nested comment');
-    }
-
-    public function test_comments_are_visible_in_the_page_editor()
-    {
-        $page = $this->entities->page();
-
-        $this->asAdmin()->postJson("/comment/$page->id", ['html' => '<p>My great comment to see in the editor</p>']);
-
-        $respHtml = $this->withHtml($this->get($page->getUrl('/edit')));
-        $respHtml->assertElementContains('.comment-box .content', 'My great comment to see in the editor');
-    }
-
-    public function test_comment_creator_name_truncated()
-    {
-        [$longNamedUser] = $this->users->newUserWithRole(['name' => 'Wolfeschlegelsteinhausenbergerdorff'], ['comment-create-all', 'page-view-all']);
-        $page = $this->entities->page();
-
-        $comment = Comment::factory()->make();
-        $this->actingAs($longNamedUser)->postJson("/comment/$page->id", $comment->getAttributes());
-
-        $pageResp = $this->asAdmin()->get($page->getUrl());
-        $pageResp->assertSee('Wolfeschlegels…');
-    }
-
-    public function test_comment_editor_js_loaded_with_create_or_edit_permissions()
-    {
-        $editor = $this->users->editor();
-        $page = $this->entities->page();
-
-        $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertSee('tinymce.min.js?', false);
-        $resp->assertSee('window.editor_translations', false);
-        $resp->assertSee('component="entity-selector"', false);
-
-        $this->permissions->removeUserRolePermissions($editor, ['comment-create-all']);
-        $this->permissions->grantUserRolePermissions($editor, ['comment-update-own']);
-
-        $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertDontSee('tinymce.min.js?', false);
-        $resp->assertDontSee('window.editor_translations', false);
-        $resp->assertDontSee('component="entity-selector"', false);
-
-        Comment::factory()->create([
-            'created_by'  => $editor->id,
-            'entity_type' => 'page',
-            'entity_id'   => $page->id,
-        ]);
-
-        $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertSee('tinymce.min.js?', false);
-        $resp->assertSee('window.editor_translations', false);
-        $resp->assertSee('component="entity-selector"', false);
-    }
-
-    public function test_comment_displays_relative_times()
-    {
-        $page = $this->entities->page();
-        $comment = Comment::factory()->create(['entity_id' => $page->id, 'entity_type' => $page->getMorphClass()]);
-        $comment->created_at = now()->subWeek();
-        $comment->updated_at = now()->subDay();
-        $comment->save();
-
-        $pageResp = $this->asAdmin()->get($page->getUrl());
-        $html = $this->withHtml($pageResp);
-
-        // Create date shows relative time as text to user
-        $html->assertElementContains('.comment-box', 'commented 1 week ago');
-        // Updated indicator has full time as title
-        $html->assertElementContains('.comment-box span[title^="Updated ' . $comment->updated_at->format('Y-m-d') .  '"]', 'Updated');
     }
 }

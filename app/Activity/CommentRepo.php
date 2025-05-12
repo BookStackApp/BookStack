@@ -62,7 +62,7 @@ class CommentRepo
     public function archive(Comment $comment): Comment
     {
         if ($comment->parent_id) {
-            throw new NotifyException('Only top-level comments can be archived.');
+            throw new NotifyException('Only top-level comments can be archived.', '/', 400);
         }
 
         $comment->archived = true;
@@ -79,7 +79,7 @@ class CommentRepo
     public function unarchive(Comment $comment): Comment
     {
         if ($comment->parent_id) {
-            throw new NotifyException('Only top-level comments can be un-archived.');
+            throw new NotifyException('Only top-level comments can be un-archived.', '/', 400);
         }
 
         $comment->archived = false;
