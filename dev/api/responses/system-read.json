@@ -1,0 +1,7 @@
+{
+  "version": "v25.02.4",
+  "instance_id": "1234abcd-cc12-7808-af0a-264cb0cbd611",
+  "app_name": "My BookStack Instance",
+  "app_logo": "https://docs.example.com/uploads/images/system/2025-05/cat-icon.png",
+  "base_url": "https://docs.example.com"
+}
