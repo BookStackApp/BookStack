@@ -83,7 +83,7 @@ class HomeController extends Controller
         if ($homepageOption === 'bookshelves') {
             $shelves = $this->queries->shelves->visibleForListWithCover()
                 ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
-                ->paginate(18);
+                ->paginate(intval(setting('sorting-shelves-per-page', '18')));
             $data = array_merge($commonData, ['shelves' => $shelves]);
 
             return view('home.shelves', $data);
@@ -92,7 +92,7 @@ class HomeController extends Controller
         if ($homepageOption === 'books') {
             $books = $this->queries->books->visibleForListWithCover()
                 ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
-                ->paginate(18);
+                ->paginate(intval(setting('sorting-books-per-page', '18')));
             $data = array_merge($commonData, ['books' => $books]);
 
             return view('home.books', $data);

@@ -10,6 +10,40 @@
         {{ csrf_field() }}
         <input type="hidden" name="section" value="sorting">
 
+        <div class="grid half gap-xl items-center">
+            <div>
+                <label for="setting-sorting-shelves-per-page"
+                    class="setting-list-label">{{ trans('settings.sorting_shelves_per_page') }}</label>
+                <p class="small">{{ trans('settings.sorting_shelves_per_page_desc') }}</p>
+            </div>
+            <div>
+                <input type="number"
+                    id="setting-sorting-shelves-per-page"
+                    name="setting-sorting-shelves-per-page"
+                    value="{{ intval(setting('sorting-shelves-per-page', 18)) }}"
+                    min="1"
+                    step="1"
+                    class="@if($errors->has('setting-sorting-shelves-per-page')) neg @endif">
+            </div>
+        </div>
+
+        <div class="grid half gap-xl items-center">
+            <div>
+                <label for="setting-sorting-books-per-page"
+                    class="setting-list-label">{{ trans('settings.sorting_books_per_page') }}</label>
+                <p class="small">{{ trans('settings.sorting_books_per_page_desc') }}</p>
+            </div>
+            <div>
+                <input type="number"
+                    id="setting-sorting-books-per-page"
+                    name="setting-sorting-books-per-page"
+                    value="{{ intval(setting('sorting-books-per-page', 18)) }}"
+                    min="1"
+                    step="1"
+                    class="@if($errors->has('setting-sorting-books-per-page')) neg @endif">
+            </div>
+        </div>
+
         <div class="setting-list">
             <div class="grid half gap-xl items-center">
                 <div>
