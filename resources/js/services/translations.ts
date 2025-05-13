@@ -10,7 +10,7 @@ export class Translator {
      * to use. Similar format at Laravel's 'trans_choice' helper.
      */
     choice(translation: string, count: number, replacements: Record<string, string> = {}): string {
-        replacements = Object.assign({}, replacements, {count: String(count)});
+        replacements = Object.assign({}, {count: String(count)}, replacements);
         const splitText = translation.split('|');
         const exactCountRegex = /^{([0-9]+)}/;
         const rangeRegex = /^\[([0-9]+),([0-9*]+)]/;

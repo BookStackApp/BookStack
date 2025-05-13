@@ -6,21 +6,21 @@
          tabindex="-1"
          aria-label="{{ trans('entities.pages_pointer_label') }}"
          class="pointer-container">
-        <div class="pointer flex-container-row items-center justify-space-between gap-xs p-xs anim {{ userCan('page-update', $page) ? 'is-page-editable' : ''}}" >
-            <div refs="pointer@mode-section" class="flex-container-row items-center gap-xs">
+        <div class="pointer flex-container-row items-center justify-space-between gap-xs p-xs anim" >
+            <div refs="pointer@mode-section" class="flex flex-container-row items-center gap-xs">
                 <button refs="pointer@mode-toggle"
                         title="{{ trans('entities.pages_pointer_toggle_link') }}"
                         class="text-button icon px-xs">@icon('link')</button>
-                <div class="input-group">
+                <div class="input-group flex flex-container-row items-center">
                     <input refs="pointer@link-input" aria-label="{{ trans('entities.pages_pointer_permalink') }}" readonly="readonly" type="text" id="pointer-url" placeholder="url">
                     <button refs="pointer@link-button" class="button outline icon px-xs" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
                 </div>
             </div>
-            <div refs="pointer@mode-section" hidden class="flex-container-row items-center gap-s">
+            <div refs="pointer@mode-section" hidden class="flex flex-container-row items-center gap-xs">
                 <button refs="pointer@mode-toggle"
                         title="{{ trans('entities.pages_pointer_toggle_include') }}"
                         class="text-button icon px-xs">@icon('include')</button>
-                <div class="input-group">
+                <div class="input-group flex flex-container-row items-center">
                     <input refs="pointer@include-input" aria-label="{{ trans('entities.pages_pointer_include_tag') }}" readonly="readonly" type="text" id="pointer-include" placeholder="include">
                     <button refs="pointer@include-button" class="button outline icon px-xs" type="button" title="{{ trans('entities.pages_copy_link') }}">@icon('copy')</button>
                 </div>

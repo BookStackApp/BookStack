@@ -158,11 +158,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   @include mixins.lightDark(background-color, #fff, #333);
-  width: 275px;
-
-  &.is-page-editable {
-    width: 328px;
-  }
+  width: 328px;
 
   &:before {
     position: absolute;
@@ -193,7 +189,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
     border: 1px solid #DDD;
     @include mixins.lightDark(border-color, #ddd, #000);
     color: #666;
-    width: 180px;
+    width: auto;
+    flex: 1;
     z-index: 58;
     padding: 5px;
     border-radius: 0;
@@ -203,7 +200,8 @@ body.tox-fullscreen, body.markdown-fullscreen {
   }
   .input-group .button {
     line-height: 1;
-    margin: 0 0 0 -5px;
+    margin-inline-start: -1px;
+    margin-block: 0;
     box-shadow: none;
     border-radius: 0;
   }
