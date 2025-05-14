@@ -86,6 +86,11 @@ Big thanks to these companies for supporting the project.
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
 </a></td>
 </tr>
+<tr>
+<td colspan="2" align="center"><a href="https://phamos.eu" target="_blank">
+    <img width="136" src="https://www.bookstackapp.com/images/sponsors/phamos.png" alt="phamos">
+</a></td>
+</tr>
 </tbody></table>
 
 ## 🛠️ Development & Testing
