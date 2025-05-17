@@ -34,6 +34,7 @@ return [
             'root'       => public_path(),
             'serve'      => false,
             'throw'      => true,
+            'directory_visibility' => 'public',
         ],
 
         'local_secure_attachments' => [
