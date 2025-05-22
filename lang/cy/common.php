@@ -30,6 +30,8 @@ return [
     'create' => 'Creu',
     'update' => 'Diweddaru',
     'edit' => 'Golygu',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Trefnu',
     'move' => 'Symud',
     'copy' => 'Copïo',
