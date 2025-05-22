@@ -30,6 +30,8 @@ return [
     'create' => 'צור',
     'update' => 'עדכן',
     'edit' => 'ערוך',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'מיין',
     'move' => 'הזז',
     'copy' => 'העתק',
