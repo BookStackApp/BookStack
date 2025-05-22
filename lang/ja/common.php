@@ -30,6 +30,8 @@ return [
     'create' => '作成',
     'update' => '更新',
     'edit' => '編集',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => '並び順',
     'move' => '移動',
     'copy' => 'コピー',
