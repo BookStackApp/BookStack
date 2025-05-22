@@ -30,6 +30,8 @@ return [
     'create' => '만들기',
     'update' => '바꾸기',
     'edit' => '수정',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => '정렬',
     'move' => '이동',
     'copy' => '복사',
