@@ -30,6 +30,8 @@ return [
     'create' => 'Создание',
     'update' => 'Обновление',
     'edit' => 'Редактировать',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Сортировать',
     'move' => 'Переместить',
     'copy' => 'Скопировать',
