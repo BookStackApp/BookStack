@@ -30,6 +30,8 @@ return [
     'create' => 'Lisa',
     'update' => 'Uuenda',
     'edit' => 'Muuda',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Sorteeri',
     'move' => 'Liiguta',
     'copy' => 'Kopeeri',
