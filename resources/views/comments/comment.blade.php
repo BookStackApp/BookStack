@@ -4,9 +4,9 @@
 <div component="{{ $readOnly ? '' : 'page-comment' }}"
      option:page-comment:comment-id="{{ $comment->id }}"
      option:page-comment:comment-local-id="{{ $comment->local_id }}"
-     option:page-comment:comment-parent-id="{{ $comment->parent_id }}"
      option:page-comment:updated-text="{{ trans('entities.comment_updated_success') }}"
      option:page-comment:deleted-text="{{ trans('entities.comment_deleted_success') }}"
+     option:page-comment:archive-text="{{ $comment->archived ? trans('entities.comment_unarchive_success') : trans('entities.comment_archive_success') }}"
      option:page-comment:wysiwyg-language="{{ $locale->htmlLang() }}"
      option:page-comment:wysiwyg-text-direction="{{ $locale->htmlDirection() }}"
      id="comment{{$comment->local_id}}"
@@ -37,6 +37,12 @@
                 <div class="actions mr-s">
                     @if(userCan('comment-create-all'))
                         <button refs="page-comment@reply-button" type="button" class="text-button text-muted hover-underline text-small p-xs">@icon('reply') {{ trans('common.reply') }}</button>
+                    @endif
+                    @if(!$comment->parent_id && (userCan('comment-update', $comment) || userCan('comment-delete', $comment)))
+                        <button refs="page-comment@archive-button"
+                                type="button"
+                                data-is-archived="{{ $comment->archived ? 'true' : 'false' }}"
+                                class="text-button text-muted hover-underline text-small p-xs">@icon('archive') {{ trans('common.' . ($comment->archived ? 'unarchive' : 'archive')) }}</button>
                     @endif
                     @if(userCan('comment-update', $comment))
                         <button refs="page-comment@edit-button" type="button" class="text-button text-muted hover-underline text-small p-xs">@icon('edit') {{ trans('common.edit') }}</button>
@@ -73,6 +79,16 @@
             <p class="comment-reply">
                 <a class="text-muted text-small" href="#comment{{ $comment->parent_id }}">@icon('reply'){{ trans('entities.comment_in_reply_to', ['commentId' => '#' . $comment->parent_id]) }}</a>
             </p>
+        @endif
+        @if($comment->content_ref)
+            <div class="comment-reference-indicator-wrap">
+                <a component="page-comment-reference"
+                   option:page-comment-reference:reference="{{ $comment->content_ref }}"
+                   option:page-comment-reference:view-comment-text="{{ trans('entities.comment_view') }}"
+                   option:page-comment-reference:jump-to-thread-text="{{ trans('entities.comment_jump_to_thread') }}"
+                   option:page-comment-reference:close-text="{{ trans('common.close') }}"
+                   href="#">@icon('bookmark'){{ trans('entities.comment_reference') }} <span>{{ trans('entities.comment_reference_outdated') }}</span></a>
+            </div>
         @endif
         {!! $commentHtml  !!}
     </div>
