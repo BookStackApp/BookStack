@@ -30,6 +30,8 @@ return [
     'create' => 'Izveidot',
     'update' => 'Atjaunināt',
     'edit' => 'Rediģēt',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Kārtot',
     'move' => 'Pārvietot',
     'copy' => 'Kopēt',
