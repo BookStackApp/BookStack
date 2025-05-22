@@ -30,6 +30,8 @@ return [
     'create' => 'Skapa',
     'update' => 'Uppdatera',
     'edit' => 'Redigera',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Sortera',
     'move' => 'Flytta',
     'copy' => 'Kopiera',
