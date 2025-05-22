@@ -30,6 +30,8 @@ return [
     'create' => 'إنشاء',
     'update' => 'تحديث',
     'edit' => 'تعديل',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'سرد',
     'move' => 'نقل',
     'copy' => 'نسخ',
