@@ -30,6 +30,8 @@ return [
     'create' => 'دروستکردن',
     'update' => 'نوێکردنەوە',
     'edit' => 'دەسکاریکردن',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'ڕیزکردن',
     'move' => 'جوڵاندن',
     'copy' => 'لەبەرگرتنەوە',
