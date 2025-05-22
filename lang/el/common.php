@@ -30,6 +30,8 @@ return [
     'create' => 'Δημιουργία',
     'update' => 'Ενημέρωση',
     'edit' => 'Επεξεργασία',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Ταξινόμηση',
     'move' => 'Μετακίνηση',
     'copy' => 'Αντιγραφή',
