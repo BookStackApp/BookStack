@@ -68,7 +68,20 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($imgDetails['path']);
 
         $this->assertStringContainsString('thumbs-', $imgDetails['response']->thumbs->gallery);
-        $this->assertStringNotContainsString('thumbs-', $imgDetails['response']->thumbs->display);
+        $this->assertStringNotContainsString('scaled-', $imgDetails['response']->thumbs->display);
+    }
+
+    public function test_image_display_thumbnail_generation_for_animated_avif_images_uses_original_file()
+    {
+        $page = $this->entities->page();
+        $admin = $this->users->admin();
+        $this->actingAs($admin);
+
+        $imgDetails = $this->files->uploadGalleryImageToPage($this, $page, 'animated.avif');
+        $this->files->deleteAtRelativePath($imgDetails['path']);
+
+        $this->assertStringContainsString('thumbs-', $imgDetails['response']->thumbs->gallery);
+        $this->assertStringNotContainsString('scaled-', $imgDetails['response']->thumbs->display);
     }
 
     public function test_image_edit()
