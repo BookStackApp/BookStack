@@ -163,7 +163,7 @@ abstract class Controller extends BaseController
      */
     protected function getImageValidationRules(): array
     {
-        return ['image_extension', 'mimes:jpeg,png,gif,webp', 'max:' . (config('app.upload_limit') * 1000)];
+        return ['image_extension', 'mimes:jpeg,png,gif,webp,avif', 'max:' . (config('app.upload_limit') * 1000)];
     }
 
     /**
