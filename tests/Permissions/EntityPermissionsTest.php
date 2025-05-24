@@ -184,7 +184,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->get($bookUrl . '/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookPage->getUrl() . '/edit')->assertRedirect($bookPage->getUrl());
         $this->get('/')->assertSee('You do not have permission');
         $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
@@ -282,7 +282,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->get($chapterUrl . '/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($chapterPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($chapterPage->getUrl() . '/edit')->assertRedirect($chapterPage->getUrl());
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($chapter, ['view', 'update']);
@@ -341,7 +341,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->setRestrictionsForTestRoles($page, ['view', 'delete']);
 
-        $this->get($pageUrl . '/edit')->assertRedirect('/');
+        $this->get($pageUrl . '/edit')->assertRedirect($pageUrl);
         $this->get('/')->assertSee('You do not have permission');
 
         $this->setRestrictionsForTestRoles($page, ['view', 'update']);
@@ -565,7 +565,7 @@ class EntityPermissionsTest extends TestCase
 
         $this->get($bookUrl . '/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
-        $this->get($bookPage->getUrl() . '/edit')->assertRedirect('/');
+        $this->get($bookPage->getUrl() . '/edit')->assertRedirect($bookPage->getUrl());
         $this->get('/')->assertSee('You do not have permission');
         $this->get($bookChapter->getUrl() . '/edit')->assertRedirect('/');
         $this->get('/')->assertSee('You do not have permission');
