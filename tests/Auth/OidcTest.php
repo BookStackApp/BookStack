@@ -41,6 +41,7 @@ class OidcTest extends TestCase
             'oidc.discover'               => false,
             'oidc.dump_user_details'      => false,
             'oidc.additional_scopes'      => '',
+            'odic.fetch_avatar'           => false,
             'oidc.user_to_groups'         => false,
             'oidc.groups_claim'           => 'group',
             'oidc.remove_from_groups'     => false,
@@ -455,6 +456,57 @@ class OidcTest extends TestCase
             'name' => 'Benny Jenkins',
             'email' => 'benny@example.com',
         ]);
+    }
+
+    public function test_user_avatar_fetched_from_picture_on_first_login_if_enabled()
+    {
+        config()->set(['oidc.fetch_avatar' => true]);
+
+        $this->runLogin([
+            'email' => 'avatar@example.com',
+            'picture' => 'https://example.com/my-avatar.jpg',
+        ], [
+            new Response(200, ['Content-Type' => 'image/jpeg'], $this->files->jpegImageData())
+        ]);
+
+        $user = User::query()->where('email', '=', 'avatar@example.com')->first();
+        $this->assertNotNull($user);
+
+        $this->assertTrue($user->avatar()->exists());
+    }
+
+    public function test_user_avatar_not_fetched_if_image_data_format_unknown()
+    {
+        config()->set(['oidc.fetch_avatar' => true]);
+
+        $this->runLogin([
+            'email' => 'avatar-format@example.com',
+            'picture' => 'https://example.com/my-avatar.jpg',
+        ], [
+            new Response(200, ['Content-Type' => 'image/jpeg'], str_repeat('abc123', 5))
+        ]);
+
+        $user = User::query()->where('email', '=', 'avatar-format@example.com')->first();
+        $this->assertNotNull($user);
+
+        $this->assertFalse($user->avatar()->exists());
+    }
+
+    public function test_user_avatar_not_fetched_when_user_already_exists()
+    {
+        config()->set(['oidc.fetch_avatar' => true]);
+        $editor = $this->users->editor();
+        $editor->external_auth_id = 'benny509';
+
+        $this->runLogin([
+            'picture' => 'https://example.com/my-avatar.jpg',
+            'sub' => 'benny509',
+        ], [
+            new Response(200, ['Content-Type' => 'image/jpeg'], $this->files->jpegImageData())
+        ]);
+
+        $editor->refresh();
+        $this->assertFalse($editor->avatar()->exists());
     }
 
     public function test_login_group_sync()

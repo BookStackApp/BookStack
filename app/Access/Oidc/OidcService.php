@@ -222,6 +222,8 @@ class OidcService
             throw new OidcException($exception->getMessage());
         }
 
+        // TODO - Update this (and tests and config option comments) to actually align with LDAP system
+        //  which syncs whenever on login or registration, where there's no existing avatar.
         if ($this->config()['fetch_avatar'] && $user->wasRecentlyCreated && $userDetails->picture) {
             $this->userAvatars->assignToUserFromUrl($user, $userDetails->picture);
         }

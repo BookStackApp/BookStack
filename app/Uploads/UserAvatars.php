@@ -65,7 +65,7 @@ class UserAvatars
 
             $mime = (new WebSafeMimeSniffer())->sniff($imageData);
             [$format, $type] = explode('/', $mime, 2);
-            if ($format !== 'image' || ImageService::isExtensionSupported($type)) {
+            if ($format !== 'image' || !ImageService::isExtensionSupported($type)) {
                 return;
             }
 
