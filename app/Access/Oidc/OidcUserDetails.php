@@ -11,6 +11,7 @@ class OidcUserDetails
         public ?string $email = null,
         public ?string $name = null,
         public ?array $groups = null,
+        public ?string $picture = null,
     ) {
     }
 
@@ -40,6 +41,7 @@ class OidcUserDetails
         $this->email = $claims->getClaim('email') ?? $this->email;
         $this->name = static::getUserDisplayName($displayNameClaims, $claims) ?? $this->name;
         $this->groups = static::getUserGroups($groupsClaim, $claims) ?? $this->groups;
+        $this->picture    = $claims->getClaim('picture') ?: $this->picture;
     }
 
     protected static function getUserDisplayName(string $displayNameClaims, ProvidesClaims $token): string
