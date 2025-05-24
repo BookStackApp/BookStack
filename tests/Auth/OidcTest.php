@@ -5,6 +5,7 @@ namespace Tests\Auth;
 use BookStack\Activity\ActivityType;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
+use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use GuzzleHttp\Psr7\Response;
@@ -475,6 +476,26 @@ class OidcTest extends TestCase
         $this->assertTrue($user->avatar()->exists());
     }
 
+    public function test_user_avatar_fetched_for_existing_user_when_no_avatar_already_assigned()
+    {
+        config()->set(['oidc.fetch_avatar' => true]);
+        $editor = $this->users->editor();
+        $editor->external_auth_id = 'benny509';
+        $editor->save();
+
+        $this->assertFalse($editor->avatar()->exists());
+
+        $this->runLogin([
+            'picture' => 'https://example.com/my-avatar.jpg',
+            'sub' => 'benny509',
+        ], [
+            new Response(200, ['Content-Type' => 'image/jpeg'], $this->files->jpegImageData())
+        ]);
+
+        $editor->refresh();
+        $this->assertTrue($editor->avatar()->exists());
+    }
+
     public function test_user_avatar_not_fetched_if_image_data_format_unknown()
     {
         config()->set(['oidc.fetch_avatar' => true]);
@@ -492,11 +513,16 @@ class OidcTest extends TestCase
         $this->assertFalse($user->avatar()->exists());
     }
 
-    public function test_user_avatar_not_fetched_when_user_already_exists()
+    public function test_user_avatar_not_fetched_when_avatar_already_assigned()
     {
         config()->set(['oidc.fetch_avatar' => true]);
         $editor = $this->users->editor();
         $editor->external_auth_id = 'benny509';
+        $editor->save();
+
+        $avatars = $this->app->make(UserAvatars::class);
+        $originalImageData = $this->files->pngImageData();
+        $avatars->assignToUserFromExistingData($editor, $originalImageData, 'png');
 
         $this->runLogin([
             'picture' => 'https://example.com/my-avatar.jpg',
@@ -506,7 +532,8 @@ class OidcTest extends TestCase
         ]);
 
         $editor->refresh();
-        $this->assertFalse($editor->avatar()->exists());
+        $newAvatarData = file_get_contents($this->files->relativeToFullPath($editor->avatar->path));
+        $this->assertEquals($originalImageData, $newAvatarData);
     }
 
     public function test_login_group_sync()
