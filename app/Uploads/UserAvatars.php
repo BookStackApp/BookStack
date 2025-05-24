@@ -74,7 +74,7 @@ class UserAvatars
             $user->save();
         } catch (Exception $e) {
             Log::error('Failed to save user avatar image from URL', [
-                'exception' => $e,
+                'exception' => $e->getMessage(),
                 'url'       => $avatarUrl,
                 'user_id'   => $user->id,
             ]);
@@ -141,7 +141,18 @@ class UserAvatars
     {
         try {
             $client = $this->http->buildClient(5);
-            $response = $client->sendRequest(new Request('GET', $url));
+            $responseCount = 0;
+
+            do {
+                $response = $client->sendRequest(new Request('GET', $url));
+                $responseCount++;
+                $isRedirect = ($response->getStatusCode() === 301 || $response->getStatusCode() === 302);
+                $url = $response->getHeader('Location')[0] ?? '';
+            } while ($responseCount < 3 && $isRedirect && is_string($url) && str_starts_with($url, 'http'));
+
+            if ($responseCount === 3) {
+                throw new HttpFetchException("Failed to fetch image, max redirect limit of 3 tries reached. Last fetched URL: {$url}");
+            }
 
             if ($response->getStatusCode() !== 200) {
                 throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));

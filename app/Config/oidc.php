@@ -49,8 +49,8 @@ return [
 
     // Enable fetching of the user's avatar from the 'picture' claim on login.
     // Will only be fetched if the user doesn't already have an avatar image assigned.
-    // This can be a security risk due to performing server-side fetching of data from external URLs.
-    // Only enable if you trust the OIDC auth provider to provide safe URLs for user images.
+    // This can be a security risk due to performing server-side fetching (with up to 3 redirects) of
+    // data from external URLs. Only enable if you trust the OIDC auth provider to provide safe URLs for user images.
     'fetch_avatar' => env('OIDC_FETCH_AVATAR', false),
 
     // Group sync options

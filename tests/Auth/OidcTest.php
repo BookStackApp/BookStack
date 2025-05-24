@@ -536,6 +536,28 @@ class OidcTest extends TestCase
         $this->assertEquals($originalImageData, $newAvatarData);
     }
 
+    public function test_user_avatar_fetch_follows_up_to_three_redirects()
+    {
+        config()->set(['oidc.fetch_avatar' => true]);
+
+        $logger = $this->withTestLogger();
+
+        $this->runLogin([
+            'email' => 'avatar@example.com',
+            'picture' => 'https://example.com/my-avatar.jpg',
+        ], [
+            new Response(302, ['Location' => 'https://example.com/a']),
+            new Response(302, ['Location' => 'https://example.com/b']),
+            new Response(302, ['Location' => 'https://example.com/c']),
+            new Response(302, ['Location' => 'https://example.com/d']),
+        ]);
+
+        $user = User::query()->where('email', '=', 'avatar@example.com')->first();
+        $this->assertFalse($user->avatar()->exists());
+
+        $this->assertStringContainsString('"Failed to fetch image, max redirect limit of 3 tries reached. Last fetched URL: https://example.com/c"', $logger->getRecords()[0]->formatted);
+    }
+
     public function test_login_group_sync()
     {
         config()->set([
