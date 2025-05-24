@@ -49,13 +49,13 @@ abstract class Controller extends BaseController
      * On a permission error redirect to home and display.
      * the error as a notification.
      *
-     * @return never
+     * @throws NotifyException
      */
-    protected function showPermissionError()
+    protected function showPermissionError(string $redirectLocation = '/'): never
     {
         $message = request()->wantsJson() ? trans('errors.permissionJson') : trans('errors.permission');
 
-        throw new NotifyException($message, '/', 403);
+        throw new NotifyException($message, $redirectLocation, 403);
     }
 
     /**
@@ -81,10 +81,10 @@ abstract class Controller extends BaseController
     /**
      * Check the current user's permissions against an ownable item otherwise throw an exception.
      */
-    protected function checkOwnablePermission(string $permission, Model $ownable): void
+    protected function checkOwnablePermission(string $permission, Model $ownable, string $redirectLocation = '/'): void
     {
         if (!userCan($permission, $ownable)) {
-            $this->showPermissionError();
+            $this->showPermissionError($redirectLocation);
         }
     }
 
