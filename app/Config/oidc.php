@@ -47,6 +47,11 @@ return [
     // Multiple values can be provided comma seperated.
     'additional_scopes' => env('OIDC_ADDITIONAL_SCOPES', null),
 
+    // Enable fetching of the user's avatar from the 'picture' claim on initial login.
+    // This can be a security risk due to performing server-side fetching of data from external URLs.
+    // Only enable if you trust the OIDC auth provider to provide safe URLs for user images.
+    'fetch_avatar' => env('OIDC_FETCH_AVATAR', false),
+
     // Group sync options
     // Enable syncing, upon login, of OIDC groups to BookStack roles
     'user_to_groups' => env('OIDC_USER_TO_GROUPS', false),
@@ -54,7 +59,4 @@ return [
     'groups_claim' => env('OIDC_GROUPS_CLAIM', 'groups'),
     // When syncing groups, remove any groups that no longer match. Otherwise, sync only adds new groups.
     'remove_from_groups' => env('OIDC_REMOVE_FROM_GROUPS', false),
-
-    // When enabled, BookStack will fetch the user’s avatar from the 'picture' claim (SSRF risk if URLs are untrusted).
-    'fetch_avatars' => env('OIDC_FETCH_AVATARS', false),
 ];

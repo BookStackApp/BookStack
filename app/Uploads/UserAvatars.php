@@ -5,6 +5,7 @@ namespace BookStack\Uploads;
 use BookStack\Exceptions\HttpFetchException;
 use BookStack\Http\HttpRequestService;
 use BookStack\Users\Models\User;
+use BookStack\Util\WebSafeMimeSniffer;
 use Exception;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
@@ -56,17 +57,19 @@ class UserAvatars
     /**
      * Assign a new avatar image to the given user by fetching from a remote URL.
      */
-    public function assignToUserFromUrl(User $user, string $avatarUrl, ?string $accessToken = null): void
+    public function assignToUserFromUrl(User $user, string $avatarUrl): void
     {
-        // Quickly skip invalid or non-HTTP URLs
-        if (!$avatarUrl || !str_starts_with($avatarUrl, 'http')) {
-            return;
-        }
-
         try {
             $this->destroyAllForUser($user);
-            $imageData = $this->getAvatarImageData($avatarUrl, $accessToken);
-            $avatar = $this->createAvatarImageFromData($user, $imageData, 'png');
+            $imageData = $this->getAvatarImageData($avatarUrl);
+
+            $mime = (new WebSafeMimeSniffer())->sniff($imageData);
+            [$format, $type] = explode('/', $mime, 2);
+            if ($format !== 'image' || ImageService::isExtensionSupported($type)) {
+                return;
+            }
+
+            $avatar = $this->createAvatarImageFromData($user, $imageData, $type);
             $user->avatar()->associate($avatar);
             $user->save();
         } catch (Exception $e) {
@@ -130,20 +133,15 @@ class UserAvatars
     }
 
     /**
-     * Gets an image from a URL (public or private) and returns it as a string of image data.
+     * Get an image from a URL and return it as a string of image data.
      *
      * @throws HttpFetchException
      */
-    protected function getAvatarImageData(string $url, ?string $accessToken = null): string
+    protected function getAvatarImageData(string $url): string
     {
         try {
-            $headers = [];
-            if (!empty($accessToken)) {
-                $headers['Authorization'] = 'Bearer ' . $accessToken;
-            }
-
             $client = $this->http->buildClient(5);
-            $response = $client->sendRequest(new Request('GET', $url, $headers));
+            $response = $client->sendRequest(new Request('GET', $url));
 
             if ($response->getStatusCode() !== 200) {
                 throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));

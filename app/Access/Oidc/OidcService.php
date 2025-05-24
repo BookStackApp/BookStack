@@ -222,16 +222,16 @@ class OidcService
             throw new OidcException($exception->getMessage());
         }
 
+        if ($this->config()['fetch_avatar'] && $user->wasRecentlyCreated && $userDetails->picture) {
+            $this->userAvatars->assignToUserFromUrl($user, $userDetails->picture);
+        }
+
         if ($this->shouldSyncGroups()) {
             $detachExisting = $this->config()['remove_from_groups'];
             $this->groupService->syncUserWithFoundGroups($user, $userDetails->groups ?? [], $detachExisting);
         }
 
         $this->loginService->login($user, 'oidc');
-
-        if ($this->config()['fetch_avatars'] && $userDetails->picture) {
-            $this->userAvatars->assignToUserFromUrl($user, $userDetails->picture, $accessToken->getToken());
-        }
 
         return $user;
     }
