@@ -67,6 +67,21 @@ export abstract class EditorUiElement {
     updateState(state: EditorUiStateUpdate): void {
         return;
     }
+
+    emitEvent(name: string, data: object = {}): void {
+        if (this.dom) {
+            this.dom.dispatchEvent(new CustomEvent('editor::' + name, {detail: data, bubbles: true}));
+        }
+    }
+
+    onEvent(name: string, callback: (data: object) => any, listenTarget: HTMLElement|null = null): void {
+        const target = listenTarget || this.dom;
+        if (target) {
+            target.addEventListener('editor::' + name, ((event: CustomEvent) => {
+                callback(event.detail);
+            }) as EventListener);
+        }
+    }
 }
 
 export class EditorContainerUiElement extends EditorUiElement {

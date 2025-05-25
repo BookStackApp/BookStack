@@ -1,6 +1,5 @@
 import {EditorUiStateUpdate, EditorContainerUiElement} from "../core";
 import {EditorButton} from "../buttons";
-import {handleDropdown} from "../helpers/dropdowns";
 import {el} from "../../../utils/dom";
 
 export class EditorFormatMenu extends EditorContainerUiElement {
@@ -20,7 +19,11 @@ export class EditorFormatMenu extends EditorContainerUiElement {
             class: 'editor-format-menu editor-dropdown-menu-container',
         }, [toggle, menu]);
 
-        handleDropdown({toggle : toggle, menu : menu});
+        this.getContext().manager.dropdowns.handle({toggle : toggle, menu : menu});
+
+        this.onEvent('button-action', () => {
+            this.getContext().manager.dropdowns.closeAll();
+        }, wrapper);
 
         return wrapper;
     }

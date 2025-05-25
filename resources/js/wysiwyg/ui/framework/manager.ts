@@ -6,6 +6,7 @@ import {DecoratorListener} from "lexical/LexicalEditor";
 import type {NodeKey} from "lexical/LexicalNode";
 import {EditorContextToolbar, EditorContextToolbarDefinition} from "./toolbars";
 import {getLastSelection, setLastSelection} from "../../utils/selection";
+import {DropDownManager} from "./helpers/dropdowns";
 
 export type SelectionChangeHandler = (selection: BaseSelection|null) => void;
 
@@ -20,6 +21,8 @@ export class EditorUIManager {
     protected contextToolbarDefinitionsByKey: Record<string, EditorContextToolbarDefinition> = {};
     protected activeContextToolbars: EditorContextToolbar[] = [];
     protected selectionChangeHandlers: Set<SelectionChangeHandler> = new Set();
+
+    public dropdowns: DropDownManager = new DropDownManager();
 
     setContext(context: EditorUiContext) {
         this.context = context;
