@@ -17,11 +17,12 @@ import {$getNearestNodeBlockParent, $getParentOfType} from "../utils/nodes";
 import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
+import {$isDiagramNode} from "../utils/diagrams";
 
 function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
         const node = nodes[0];
-        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node)) {
+        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
             return true;
         }
     }
