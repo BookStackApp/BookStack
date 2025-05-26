@@ -54,7 +54,7 @@ export class TableNode extends CommonBlockNode {
   static clone(node: TableNode): TableNode {
     const newNode = new TableNode(node.__key);
     copyCommonBlockProperties(node, newNode);
-    newNode.__colWidths = node.__colWidths;
+    newNode.__colWidths = [...node.__colWidths];
     newNode.__styles = new Map(node.__styles);
     return newNode;
   }
@@ -169,7 +169,7 @@ export class TableNode extends CommonBlockNode {
 
   getColWidths(): string[] {
     const self = this.getLatest();
-    return self.__colWidths;
+    return [...self.__colWidths];
   }
 
   getStyles(): StyleMap {
