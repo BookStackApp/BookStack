@@ -917,6 +917,11 @@ export function getTable(tableElement: HTMLElement): TableDOMTable {
   while (currentNode != null) {
     const nodeMame = currentNode.nodeName;
 
+    if (nodeMame === 'COLGROUP') {
+      currentNode = currentNode.nextSibling;
+      continue;
+    }
+
     if (nodeMame === 'TD' || nodeMame === 'TH') {
       const elem = currentNode as HTMLElement;
       const cell = {

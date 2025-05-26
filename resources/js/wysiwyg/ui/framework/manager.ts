@@ -244,6 +244,7 @@ export class EditorUIManager {
             if (selectionChange) {
                 editor.update(() => {
                     const selection = $getSelection();
+                    // console.log('manager::selection', selection);
                     this.triggerStateUpdate({
                         editor, selection,
                     });
