@@ -15,7 +15,7 @@ export interface EditorButtonDefinition extends EditorBasicButtonDefinition {
      * This can return false to indicate that the completion of the action should
      * NOT be communicated to parent UI elements, which is what occurs by default.
      */
-    action: (context: EditorUiContext, button: EditorButton) => void|false;
+    action: (context: EditorUiContext, button: EditorButton) => void|false|Promise<void|boolean>;
     isActive: (selection: BaseSelection|null, context: EditorUiContext) => boolean;
     isDisabled?: (selection: BaseSelection|null, context: EditorUiContext) => boolean;
     setup?: (context: EditorUiContext, button: EditorButton) => void;
@@ -84,7 +84,13 @@ export class EditorButton extends EditorUiElement {
 
     protected onClick() {
         const result = this.definition.action(this.getContext(), this);
-        if (result !== false) {
+        if (result instanceof Promise) {
+            result.then(result => {
+                if (result === false) {
+                    this.emitEvent('button-action');
+                }
+            });
+        } else if (result !== false) {
             this.emitEvent('button-action');
         }
     }

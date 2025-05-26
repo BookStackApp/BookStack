@@ -125,9 +125,9 @@ export function $selectOrCreateAdjacent(node: LexicalNode, after: boolean): Rang
     if (!target) {
         target = $createParagraphNode();
         if (after) {
-            node.insertAfter(target)
+            nearestBlock.insertAfter(target)
         } else {
-            node.insertBefore(target);
+            nearestBlock.insertBefore(target);
         }
     }
 
