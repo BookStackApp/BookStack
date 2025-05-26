@@ -71,6 +71,7 @@ import {TableDOMTable, TableObserver} from './LexicalTableObserver';
 import {$isTableRowNode} from './LexicalTableRowNode';
 import {$isTableSelection} from './LexicalTableSelection';
 import {$computeTableMap, $getNodeTriplet} from './LexicalTableUtils';
+import {$selectOrCreateAdjacent} from "../../utils/nodes";
 
 const LEXICAL_ELEMENT_KEY = '__lexicalTableSelection';
 
@@ -1113,7 +1114,7 @@ const selectTableNodeInDirection = (
           false,
         );
       } else {
-        tableNode.selectPrevious();
+        $selectOrCreateAdjacent(tableNode, false);
       }
 
       return true;
@@ -1125,7 +1126,7 @@ const selectTableNodeInDirection = (
           true,
         );
       } else {
-        tableNode.selectNext();
+        $selectOrCreateAdjacent(tableNode, true);
       }
 
       return true;

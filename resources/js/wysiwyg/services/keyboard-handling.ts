@@ -13,7 +13,7 @@ import {
 import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {getLastSelection} from "../utils/selection";
-import {$getNearestNodeBlockParent, $getParentOfType} from "../utils/nodes";
+import {$getNearestNodeBlockParent, $getParentOfType, $selectOrCreateAdjacent} from "../utils/nodes";
 import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
@@ -81,13 +81,8 @@ function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: 
 
     event?.preventDefault();
     const node = selectionNodes[0];
-
     editor.update(() => {
-        if (after) {
-            node.selectNext();
-        } else {
-            node.selectPrevious();
-        }
+        $selectOrCreateAdjacent(node, after);
     });
 
     return true;

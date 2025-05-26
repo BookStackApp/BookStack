@@ -118,15 +118,20 @@ export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
     return sorted;
 }
 
-export function $insertAndSelectNewEmptyAdjacentNode(node: LexicalNode, after: boolean): RangeSelection {
-    const target = $createParagraphNode();
-    if (after) {
-        node.insertAfter(target)
-    } else {
-        node.insertBefore(target);
+export function $selectOrCreateAdjacent(node: LexicalNode, after: boolean): RangeSelection {
+    const nearestBlock = $getNearestNodeBlockParent(node) || node;
+    let target = after ? nearestBlock.getNextSibling() : nearestBlock.getPreviousSibling()
+
+    if (!target) {
+        target = $createParagraphNode();
+        if (after) {
+            node.insertAfter(target)
+        } else {
+            node.insertBefore(target);
+        }
     }
 
-    return target.select();
+    return after ? target.selectStart() : target.selectEnd();
 }
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {

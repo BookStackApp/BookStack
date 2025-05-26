@@ -48,7 +48,6 @@ import {
   internalMarkNodeAsDirty,
   removeFromParent,
 } from './LexicalUtils';
-import {$insertAndSelectNewEmptyAdjacentNode} from "../../utils/nodes";
 
 export type NodeMap = Map<NodeKey, LexicalNode>;
 
@@ -1131,7 +1130,7 @@ export class LexicalNode {
     const prevSibling = this.getPreviousSibling();
     const parent = this.getParentOrThrow();
     if (prevSibling === null) {
-      return $insertAndSelectNewEmptyAdjacentNode(this, false);
+      return parent.select(0, 0);
     }
     if ($isElementNode(prevSibling)) {
       return prevSibling.select();
@@ -1153,7 +1152,7 @@ export class LexicalNode {
     const nextSibling = this.getNextSibling();
     const parent = this.getParentOrThrow();
     if (nextSibling === null) {
-      return $insertAndSelectNewEmptyAdjacentNode(this, true);
+      return parent.select();
     }
     if ($isElementNode(nextSibling)) {
       return nextSibling.select(0, 0);
