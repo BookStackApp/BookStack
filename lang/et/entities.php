@@ -392,7 +392,7 @@ return [
     'comment' => 'Kommentaar',
     'comments' => 'Kommentaarid',
     'comment_add' => 'Lisa kommentaar',
-    'comment_none' => 'No comments to display',
+    'comment_none' => 'Pole kommentaare, mida kuvada',
     'comment_placeholder' => 'Jäta siia kommentaar',
     'comment_thread_count' => ':count Comment Thread|:count Comment Threads',
     'comment_archived_count' => ':count Archived',
