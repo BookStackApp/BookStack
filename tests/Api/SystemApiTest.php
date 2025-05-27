@@ -1,10 +1,7 @@
 <?php
 
-namespace Api;
+namespace Tests\Api;
 
-use BookStack\Activity\ActivityType;
-use BookStack\Facades\Activity;
-use Tests\Api\TestsApi;
 use Tests\TestCase;
 
 class SystemApiTest extends TestCase
