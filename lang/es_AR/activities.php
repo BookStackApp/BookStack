@@ -10,7 +10,7 @@ return [
     'page_create_notification'    => 'Página creada correctamente',
     'page_update'                 => 'página actualizada',
     'page_update_notification'    => 'Página actualizada correctamente',
-    'page_delete'                 => 'página borrada',
+    'page_delete'                 => 'borró la página',
     'page_delete_notification'    => 'Página eliminada correctamente',
     'page_restore'                => 'página restaurada',
     'page_restore_notification'   => 'Página restaurada correctamente',
@@ -96,7 +96,7 @@ return [
     'user_create' => 'usuario creado',
     'user_create_notification' => 'Usuario creado correctamente',
     'user_update' => 'usuario actualizado',
-    'user_update_notification' => 'Usuario actualizado correctamente',
+    'user_update_notification' => 'Usuario actualizado con éxito',
     'user_delete' => 'usuario eliminado',
     'user_delete_notification' => 'El usuario fue eliminado correctamente',
 
@@ -129,11 +129,11 @@ return [
 
     // Sort Rules
     'sort_rule_create' => 'regla de ordenación creada',
-    'sort_rule_create_notification' => 'Rol de ordenación creada con éxito',
+    'sort_rule_create_notification' => 'Regla de ordenación creada correctamente',
     'sort_rule_update' => 'regla de ordenación actualizada',
     'sort_rule_update_notification' => 'Regla de ordenación actualizada correctamente',
     'sort_rule_delete' => 'regla de ordenación eliminada',
-    'sort_rule_delete_notification' => 'Rol de ordenación borrada con éxito',
+    'sort_rule_delete_notification' => 'Regla de ordenación eliminada correctamente',
 
     // Other
     'permissions_update'          => 'permisos actualizados',
