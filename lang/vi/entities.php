@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'Chuyển sang trình soạn thảo WYSIWYG',
     'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Đặt Changelog',
     'pages_edit_enter_changelog_desc' => 'Viết mô tả ngắn gọn cho các thay đổi mà bạn tạo',
     'pages_edit_enter_changelog' => 'Viết Changelog',
