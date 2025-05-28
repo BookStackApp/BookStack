@@ -148,7 +148,7 @@ return [
     'url' => 'URL',
     'text_to_display' => 'Texto a mostrar',
     'title' => 'Título',
-    'browse_links' => 'Ver enlaces',
+    'browse_links' => 'Explorar enlaces',
     'open_link' => 'Abrir enlace',
     'open_link_in' => 'Abrir enlace en...',
     'open_link_current' => 'Ventana actual',
