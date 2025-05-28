@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stabilt innehåll)',
     'pages_edit_switch_to_wysiwyg' => 'Växla till WYSIWYG-redigerare',
     'pages_edit_switch_to_new_wysiwyg' => 'Växla till ny WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(Under alfatestning)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Beskriv dina ändringar',
     'pages_edit_enter_changelog_desc' => 'Ange en kort beskrivning av de ändringar du har gjort',
     'pages_edit_enter_changelog' => 'Ändringslogg',
