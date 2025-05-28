@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'Skipta yfir í WYSIWYG ritil',
     'pages_edit_switch_to_new_wysiwyg' => 'Skipta yfir í nýja WYSIWYG ritilinn',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(Í alfa prófun)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Stilla breytingarskrá',
     'pages_edit_enter_changelog_desc' => 'Skrifaðu stutta lýsingu á breytingunum sem þú gerðir',
     'pages_edit_enter_changelog' => 'Færa í breytingaskrá',
