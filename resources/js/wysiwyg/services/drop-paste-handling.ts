@@ -95,6 +95,21 @@ function handleMediaInsert(data: DataTransfer, context: EditorUiContext): boolea
     return handled;
 }
 
+function handleImageLinkInsert(data: DataTransfer, context: EditorUiContext): boolean {
+    const regex = /https?:\/\/([^?#]*?)\.(png|jpeg|jpg|gif|webp|bmp|avif)/i
+    const text = data.getData('text/plain');
+    if (text && regex.test(text)) {
+        context.editor.update(() => {
+            const image = $createImageNode(text);
+            $insertNodes([image]);
+            image.select();
+        });
+        return true;
+    }
+
+    return false;
+}
+
 function createDropListener(context: EditorUiContext): (event: DragEvent) => boolean {
     const editor = context.editor;
     return (event: DragEvent): boolean => {
@@ -138,7 +153,10 @@ function createPasteListener(context: EditorUiContext): (event: ClipboardEvent) 
             return false;
         }
 
-        const handled = handleMediaInsert(event.clipboardData, context);
+        const handled =
+            handleImageLinkInsert(event.clipboardData, context) ||
+            handleMediaInsert(event.clipboardData, context);
+
         if (handled) {
             event.preventDefault();
         }

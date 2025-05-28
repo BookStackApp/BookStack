@@ -1,6 +1,6 @@
 import {EditorDecorator} from "../framework/decorator";
 import {EditorUiContext} from "../framework/core";
-import {BaseSelection} from "lexical";
+import {BaseSelection, CLICK_COMMAND, COMMAND_PRIORITY_NORMAL} from "lexical";
 import {DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";
 import {$openDrawingEditorForNode} from "../../utils/diagrams";
@@ -12,11 +12,17 @@ export class DiagramDecorator extends EditorDecorator {
     setup(context: EditorUiContext, element: HTMLElement) {
         const diagramNode = this.getNode();
         element.classList.add('editor-diagram');
-        element.addEventListener('click', event => {
+
+        context.editor.registerCommand(CLICK_COMMAND, (event: MouseEvent): boolean => {
+            if (!element.contains(event.target as HTMLElement)) {
+                return false;
+            }
+
             context.editor.update(() => {
                 $selectSingleNode(this.getNode());
-            })
-        });
+            });
+            return true;
+        }, COMMAND_PRIORITY_NORMAL);
 
         element.addEventListener('dblclick', event => {
             context.editor.getEditorState().read(() => {
