@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stabilan Sadržaj)',
     'pages_edit_switch_to_wysiwyg' => 'Prebaci se na WYSIWYG uređivač',
     'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Postavi dnevnik promjena',
     'pages_edit_enter_changelog_desc' => 'Ukratko opišite promjene koje ste napravili',
     'pages_edit_enter_changelog' => 'Unesi dnevnik promjena',
