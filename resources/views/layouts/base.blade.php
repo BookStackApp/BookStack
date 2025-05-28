@@ -43,6 +43,9 @@
 
     <!-- Translations for JS -->
     @stack('translations')
+
+    <!-- Mermaid JS -->
+    @include('layouts.parts.mermaid-js')
 </head>
 <body
     @if(setting()->getForCurrentUser('ui-shortcuts-enabled', false))

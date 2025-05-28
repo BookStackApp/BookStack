@@ -10,6 +10,8 @@
 
     @include('exports.parts.styles', ['format' => $format, 'engine' => $engine ?? ''])
     @include('exports.parts.custom-head')
+
+    @include('layouts.parts.mermaid-js')
 </head>
 <body class="export export-format-{{ $format }} export-engine-{{ $engine ?? 'none' }}">
 @include('layouts.parts.export-body-start')

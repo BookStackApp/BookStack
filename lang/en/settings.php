@@ -46,6 +46,8 @@ return [
     'app_disable_comments' => 'Disable Comments',
     'app_disable_comments_toggle' => 'Disable comments',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
+    'enable_mermaid' => 'Mermaid.js Version',
+    'enable_mermaid_desc' => 'Select the version of Mermaid.js to use when rendering diagrams. This allows compatibility with different diagram syntax versions and helps ensure consistent behavior across pages. Updating to a newer version may enable new features or fix rendering issues, but could also affect existing diagrams.',
 
     // Color settings
     'color_scheme' => 'Application Color Scheme',

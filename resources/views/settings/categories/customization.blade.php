@@ -1,5 +1,27 @@
 @extends('settings.layout')
 
+@inject('mermaidProvider', 'BookStack\Plugins\MermaidProvider')
+
+<style>
+    .spinner-border {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+        vertical-align: middle;
+    }
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+    .hide {
+        display: none !important;
+    }
+</style>
+
+
 @section('card')
     <h1 id="customization" class="list-heading">{{ trans('settings.app_customization') }}</h1>
     <form action="{{ url("/settings/customization") }}" method="POST" enctype="multipart/form-data">
@@ -165,12 +187,72 @@
             </div>
 
 
+            <div class="grid half gap-xl items-center">
+                <div>
+                    <label for="setting-enable-mermaid" class="setting-list-label">{{ trans('settings.enable_mermaid') }}</label>
+                    <p class="small">{{ trans('settings.enable_mermaid_desc') }}</p>
+                </div>
+                <div class="mt-m">
+                    <select name="setting-enable-mermaid" id="setting-enable-mermaid">
+                        @foreach($mermaidProvider->getMermaidVersions() as $version)
+                            <option value="{{ $version }}" @if(setting('enable-mermaid') === $version) selected @endif>
+                                {{ $version }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+
         </div>
 
         <div class="form-group text-right">
-            <button type="submit" class="button">{{ trans('settings.settings_save') }}</button>
+            <button type="submit" class="button" id="save-button">
+                <span class="spinner-border spinner-border-sm mr-xs hide" role="status" aria-hidden="true" id="save-spinner"></span>
+                {{ trans('settings.settings_save') }}
+            </button>
         </div>
     </form>
+
+    <script nonce="{{ $cspNonce }}">
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('setting-enable-mermaid');
+            const saveButton = document.getElementById('save-button');
+            const spinner = document.getElementById('save-spinner');
+            select.addEventListener('change', function () {
+
+                const selectedVersion = this.value;
+                
+                if (selectedVersion === 'disabled')
+                    return
+
+                saveButton.disabled = true;
+                spinner.classList.remove('hide');
+
+                fetch(`{{ route("settings.plugins.mermaid.download") }}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({ version: selectedVersion })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error(data);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    spinner.classList.add('hide');
+                    saveButton.disabled = false;
+                });
+            });
+        });
+    </script>
 @endsection
 
 @section('after-content')

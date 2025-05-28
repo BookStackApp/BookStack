@@ -1,25 +1,26 @@
 <?php
 
-use BookStack\Access\Controllers as AccessControllers;
-use BookStack\Activity\Controllers as ActivityControllers;
-use BookStack\Api\ApiDocsController;
-use BookStack\Api\UserApiTokenController;
 use BookStack\App\HomeController;
 use BookStack\App\MetaController;
-use BookStack\Entities\Controllers as EntityControllers;
-use BookStack\Exports\Controllers as ExportControllers;
-use BookStack\Http\Middleware\VerifyCsrfToken;
-use BookStack\Permissions\PermissionsController;
-use BookStack\References\ReferenceController;
-use BookStack\Search\SearchController;
-use BookStack\Settings as SettingControllers;
-use BookStack\Sorting as SortingControllers;
-use BookStack\Theming\ThemeController;
-use BookStack\Uploads\Controllers as UploadControllers;
-use BookStack\Users\Controllers as UserControllers;
-use Illuminate\Session\Middleware\StartSession;
+use BookStack\Api\ApiDocsController;
 use Illuminate\Support\Facades\Route;
+use BookStack\Search\SearchController;
+use BookStack\Theming\ThemeController;
+use BookStack\Api\UserApiTokenController;
+use BookStack\Sorting as SortingControllers;
+use BookStack\References\ReferenceController;
+use BookStack\Settings as SettingControllers;
+use BookStack\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
+use BookStack\Permissions\PermissionsController;
+use SettingControllers\Plugins\MermaidController;
+use BookStack\Users\Controllers as UserControllers;
+use BookStack\Access\Controllers as AccessControllers;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use BookStack\Exports\Controllers as ExportControllers;
+use BookStack\Uploads\Controllers as UploadControllers;
+use BookStack\Entities\Controllers as EntityControllers;
+use BookStack\Activity\Controllers as ActivityControllers;
 
 // Status & Meta routes
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
@@ -308,6 +309,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', [SettingControllers\SettingController::class, 'index'])->name('settings');
     Route::get('/settings/{category}', [SettingControllers\SettingController::class, 'category'])->name('settings.category');
     Route::post('/settings/{category}', [SettingControllers\SettingController::class, 'update']);
+    Route::post('/settings/plugins/mermaid/download', [SettingControllers\Plugins\MermaidController::class, 'store'])->name('settings.plugins.mermaid.download');
 });
 
 // MFA routes

@@ -15,6 +15,9 @@
     <!-- Custom Styles & Head Content -->
     @include('layouts.parts.custom-styles')
     @include('layouts.parts.custom-head')
+
+    <!-- Mermaid JS -->
+    @include('layouts.parts.mermaid-js')
 </head>
 <body>
     @yield('content')
