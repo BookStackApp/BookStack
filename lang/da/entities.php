@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stabilt indhold)',
     'pages_edit_switch_to_wysiwyg' => 'Skift til WYSIWYG redigering',
     'pages_edit_switch_to_new_wysiwyg' => 'Skift til ny WYSIWYG (Hvad man ser, er hvad man får)',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(I alfa-testning)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Sæt ændringsoversigt',
     'pages_edit_enter_changelog_desc' => 'Indtast en kort beskrivelse af ændringer du har lavet',
     'pages_edit_enter_changelog' => 'Indtast ændringsoversigt',
