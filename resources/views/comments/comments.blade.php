@@ -24,15 +24,16 @@
                     aria-selected="false">{{ trans_choice('entities.comment_archived_count', count($commentTree->getArchived())) }}</button>
         </div>
         @if ($commentTree->empty() && userCan('comment-create-all'))
-            <div class="ml-m" refs="page-comments@add-button-container">
+            <div refs="page-comments@add-button-container" class="ml-m flex-container-row" >
                 <button type="button"
                         refs="page-comments@add-comment-button"
-                        class="button outline mb-m">{{ trans('entities.comment_add') }}</button>
+                        class="button outline mb-m ml-auto">{{ trans('entities.comment_add') }}</button>
             </div>
         @endif
     </div>
 
     <div id="comment-tab-panel-active"
+         refs="page-comments@active-container"
          tabindex="0"
          role="tabpanel"
          aria-labelledby="comment-tab-active"
@@ -48,10 +49,10 @@
         @if(userCan('comment-create-all'))
             @include('comments.create')
             @if (!$commentTree->empty())
-                <div refs="page-comments@addButtonContainer" class="flex-container-row">
+                <div refs="page-comments@addButtonContainer" class="ml-m flex-container-row">
                     <button type="button"
                             refs="page-comments@add-comment-button"
-                            class="button outline ml-auto">{{ trans('entities.comment_add') }}</button>
+                            class="button outline mb-m ml-auto">{{ trans('entities.comment_add') }}</button>
                 </div>
             @endif
         @endif

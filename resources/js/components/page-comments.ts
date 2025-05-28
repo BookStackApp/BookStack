@@ -16,6 +16,7 @@ export class PageComments extends Component {
     private archivedTab!: HTMLElement;
     private addButtonContainer!: HTMLElement;
     private archiveContainer!: HTMLElement;
+    private activeContainer!: HTMLElement;
     private replyToRow!: HTMLElement;
     private referenceRow!: HTMLElement;
     private formContainer!: HTMLElement;
@@ -48,6 +49,7 @@ export class PageComments extends Component {
         this.archivedTab = this.$refs.archivedTab;
         this.addButtonContainer = this.$refs.addButtonContainer;
         this.archiveContainer = this.$refs.archiveContainer;
+        this.activeContainer = this.$refs.activeContainer;
         this.replyToRow = this.$refs.replyToRow;
         this.referenceRow = this.$refs.referenceRow;
         this.formContainer = this.$refs.formContainer;
@@ -76,8 +78,10 @@ export class PageComments extends Component {
 
     protected setupListeners(): void {
         this.elem.addEventListener('page-comment-delete', () => {
-            setTimeout(() => this.updateCount(), 1);
-            this.hideForm();
+            setTimeout(() => {
+                this.updateCount();
+                this.hideForm();
+            }, 1);
         });
 
         this.elem.addEventListener('page-comment-reply', ((event: CustomEvent<PageCommentReplyEventData>) => {
@@ -154,8 +158,10 @@ export class PageComments extends Component {
     protected resetForm(): void {
         this.removeEditor();
         this.formInput.value = '';
+        this.parentId = null;
+        this.replyToRow.toggleAttribute('hidden', true);
+        this.container.append(this.formContainer);
         this.setContentReference('');
-        this.removeReplyTo();
     }
 
     protected showForm(): void {
@@ -165,9 +171,9 @@ export class PageComments extends Component {
         this.formContainer.scrollIntoView({behavior: 'smooth', block: 'nearest'});
         this.loadEditor();
 
-        // Ensure the active comments tab is displaying
+        // Ensure the active comments tab is displaying if that's where we're showing the form
         const tabs = window.$components.firstOnElement(this.elem, 'tabs');
-        if (tabs instanceof Tabs) {
+        if (tabs instanceof Tabs && this.formContainer.closest('#comment-tab-panel-active')) {
             tabs.show('comment-tab-panel-active');
         }
     }
@@ -176,7 +182,7 @@ export class PageComments extends Component {
         this.resetForm();
         this.formContainer.toggleAttribute('hidden', true);
         if (this.getActiveThreadCount() > 0) {
-            this.elem.append(this.addButtonContainer);
+            this.activeContainer.append(this.addButtonContainer);
         } else {
             this.commentCountBar.append(this.addButtonContainer);
         }
@@ -239,7 +245,8 @@ export class PageComments extends Component {
     }
 
     public startNewComment(contentReference: string): void {
-        this.removeReplyTo();
+        this.resetForm();
+        this.showForm();
         this.setContentReference(contentReference);
     }
 
