@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stabilais saturs)',
     'pages_edit_switch_to_wysiwyg' => 'Pārslēgties uz WYSIWYG redaktoru',
     'pages_edit_switch_to_new_wysiwyg' => 'Pārslēgties uz jauno WYSIWYG redaktoru',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(Alfa testēšanā)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Pievienot izmaiņu aprakstu',
     'pages_edit_enter_changelog_desc' => 'Ievadi nelielu aprakstu par vaiktajām izmaiņām',
     'pages_edit_enter_changelog' => 'Izmaiņu apraksts',
