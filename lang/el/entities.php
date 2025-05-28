@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Σταθερό Περιεχόμενο)',
     'pages_edit_switch_to_wysiwyg' => 'Εναλλαγή στον επεξεργαστή WYSIWYG',
     'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'Ορισμός καταγραφής αλλαγών',
     'pages_edit_enter_changelog_desc' => 'Εισάγετε μια σύντομη περιγραφή των αλλαγών που κάνατε',
     'pages_edit_enter_changelog' => 'Εισαγωγή Αρχείου Καταγραφής Αλλαγών',
