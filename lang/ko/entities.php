@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stable Content)',
     'pages_edit_switch_to_wysiwyg' => 'WYSIWYG 편집기로 전환',
     'pages_edit_switch_to_new_wysiwyg' => '새 위지윅 편집기로 변경',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '알파 테스트 중',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => '수정본 설명',
     'pages_edit_enter_changelog_desc' => '수정본 설명',
     'pages_edit_enter_changelog' => '변경 로그 입력란',
