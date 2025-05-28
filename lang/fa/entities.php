@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(محتوای پایدار)',
     'pages_edit_switch_to_wysiwyg' => 'به ویرایشگر WYSIWYG بروید',
     'pages_edit_switch_to_new_wysiwyg' => 'Switch to new WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Alpha Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
     'pages_edit_set_changelog' => 'تنظیم تغییرات',
     'pages_edit_enter_changelog_desc' => 'توضیح مختصری از تغییراتی که ایجاد کرده اید وارد کنید',
     'pages_edit_enter_changelog' => 'وارد کردن تغییرات',
