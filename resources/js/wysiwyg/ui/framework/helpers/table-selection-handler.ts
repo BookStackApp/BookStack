@@ -56,7 +56,7 @@ class TableSelectionHandler {
                 tableNode,
                 tableElement,
                 this.editor,
-                false,
+                true,
             );
             this.tableSelections.set(nodeKey, tableSelection);
         }

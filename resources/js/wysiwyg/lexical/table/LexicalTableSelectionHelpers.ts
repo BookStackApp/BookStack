@@ -916,14 +916,14 @@ export function getTable(tableElement: HTMLElement): TableDOMTable {
   domRows.length = 0;
 
   while (currentNode != null) {
-    const nodeMame = currentNode.nodeName;
+    const nodeName = currentNode.nodeName;
 
-    if (nodeMame === 'COLGROUP') {
+    if (nodeName === 'COLGROUP' || nodeName === 'CAPTION') {
       currentNode = currentNode.nextSibling;
       continue;
     }
 
-    if (nodeMame === 'TD' || nodeMame === 'TH') {
+    if (nodeName === 'TD' || nodeName === 'TH') {
       const elem = currentNode as HTMLElement;
       const cell = {
         elem,
