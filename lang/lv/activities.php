@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook veiksmīgi izdzēsts',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'izveidoja importu',
+    'import_create_notification' => 'Imports veiksmīgi augšupielādēts',
+    'import_run' => 'atjaunoja importu',
+    'import_run_notification' => 'Saturs veiksmīgi importēts',
+    'import_delete' => 'izdzēsa importu',
+    'import_delete_notification' => 'Imports veiksmīgi dzēsts',
 
     // Users
     'user_create' => 'izveidoja lietotāju',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'dzēsa komentāru',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'izveidoja kārtošanas nosacījumu',
+    'sort_rule_create_notification' => 'Kārtošanas nosacījums veiksmīgi izveidots',
+    'sort_rule_update' => 'atjaunoja kārtošanas nosacījumu',
+    'sort_rule_update_notification' => 'Kārtošanas nosacījums veiksmīgi atjaunots',
+    'sort_rule_delete' => 'izdzēsa kārtošanas nosacījumu',
+    'sort_rule_delete_notification' => 'Kārtošanas nosacījums veiksmīgi dzēsts',
 
     // Other
     'permissions_update'          => 'atjaunoja atļaujas',

@@ -105,10 +105,10 @@ return [
     'url'                  => ':attribute formāts nav derīgs.',
     'uploaded'             => 'Fails netika ielādēts. Serveris nevar pieņemt šāda izmēra failus.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute ir jāatsaucas uz failu ZIP arhīvā.',
+    'zip_file_mime' => ':attribute ir jāatsaucas uz failu ar tipu :validTypes, bet atrasts :foundType.',
+    'zip_model_expected' => 'Sagaidīts datu objekts, bet atrasts ":type".',
+    'zip_unique' => ':attribute jābūt unikālam šim objekta tipam ZIP arhīvā.',
 
     // Custom validation lines
     'custom' => [

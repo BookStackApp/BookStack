@@ -6,12 +6,12 @@
 [![Build Status](https://github.com/BookStackApp/BookStack/workflows/test-php/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
 [![Lint Status](https://github.com/BookStackApp/BookStack/workflows/lint-php/badge.svg)](https://github.com/BookStackApp/BookStack/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/5551731994dd22fa1f4f/maintainability)](https://codeclimate.com/github/BookStackApp/BookStack/maintainability)
-
+<br>
 [![Alternate Source](https://img.shields.io/static/v1?label=Alt+Source&message=Git&color=ef391a&logo=git)](https://source.bookstackapp.com/)
 [![Repo Stats](https://img.shields.io/static/v1?label=GitHub+project&message=stats&color=f27e3f)](https://gh-stats.bookstackapp.com/)
-[![Discord](https://img.shields.io/static/v1?label=Discord&message=chat&color=738adb&logo=discord)](https://discord.gg/ztkBqR2)
-[![Mastodon](https://img.shields.io/static/v1?label=Mastodon&message=@bookstack&color=595aff&logo=mastodon)](https://fosstodon.org/@bookstack)
-
+[![Discord](https://img.shields.io/static/v1?label=Discord&message=chat&color=738adb&logo=discord)](https://www.bookstackapp.com/links/discord)
+[![Mastodon](https://img.shields.io/static/v1?label=Mastodon&message=@bookstack&color=595aff&logo=mastodon)](https://www.bookstackapp.com/links/mastodon)
+<br>
 [![PeerTube](https://img.shields.io/static/v1?label=PeerTube&message=bookstack@foss.video&color=f2690d&logo=peertube)](https://foss.video/c/bookstack)
 [![YouTube](https://img.shields.io/static/v1?label=YouTube&message=bookstackapp&color=ff0000&logo=youtube)](https://www.youtube.com/bookstackapp)
 
@@ -24,7 +24,7 @@ A platform for storing and organising information and documentation. Details for
 * [Screenshots](https://www.bookstackapp.com/#screenshots) 
 * [BookStack Blog](https://www.bookstackapp.com/blog)
 * [Issue List](https://github.com/BookStackApp/BookStack/issues)
-* [Discord Chat](https://discord.gg/ztkBqR2)
+* [Discord Chat](https://www.bookstackapp.com/links/discord)
 * [Support Options](https://www.bookstackapp.com/support/)
 
 ## 📚 Project Definition
@@ -84,6 +84,11 @@ Big thanks to these companies for supporting the project.
 </a></td>
 <td align="center"><a href="https://route4me.com/" target="_blank">
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
+</a></td>
+</tr>
+<tr>
+<td colspan="2" align="center"><a href="https://phamos.eu" target="_blank">
+    <img width="136" src="https://www.bookstackapp.com/images/sponsors/phamos.png" alt="phamos">
 </a></td>
 </tr>
 </tbody></table>
