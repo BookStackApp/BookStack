@@ -30,6 +30,8 @@ return [
     'create' => '建立',
     'update' => '更新',
     'edit' => '編輯',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => '排序',
     'move' => '移動',
     'copy' => '複製',
