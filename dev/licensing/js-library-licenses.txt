@@ -1751,13 +1751,6 @@ Copyright: Copyright (c) Isaac Z. Schlueter and Contributors
 Source: git://github.com/isaacs/node-lru-cache.git
 Link: git://github.com/isaacs/node-lru-cache.git
 -----------
-magic-string
-License: MIT
-License File: node_modules/magic-string/LICENSE
-Copyright: Copyright 2018 Rich Harris
-Source: https://github.com/rich-harris/magic-string
-Link: https://github.com/rich-harris/magic-string
------------
 make-dir
 License: MIT
 License File: node_modules/make-dir/license
@@ -1935,9 +1928,9 @@ Link: sindresorhus/npm-run-path
 nwsapi
 License: MIT
 License File: node_modules/nwsapi/LICENSE
-Copyright: Copyright (c) 2007-2024 Diego Perini (http://www.iport.it/)
+Copyright: Copyright (c) 2007-2025 Diego Perini (http://www.iport.it/)
 Source: git://github.com/dperini/nwsapi.git
-Link: http://javascript.nwbox.com/nwsapi/
+Link: https://javascript.nwbox.com/nwsapi/
 -----------
 object-inspect
 License: MIT
@@ -2280,18 +2273,6 @@ License File: node_modules/resolve/LICENSE
 Copyright: Copyright (c) 2012 James Halliday
 Source: git://github.com/browserify/resolve.git
 Link: git://github.com/browserify/resolve.git
------------
-rollup-plugin-dts
-License: LGPL-3.0
-Source: git+https://github.com/Swatinem/rollup-plugin-dts.git
-Link: https://github.com/Swatinem/rollup-plugin-dts#readme
------------
-rollup
-License: MIT
-License File: node_modules/rollup/LICENSE.md
-Copyright: Copyright (c) 2017 [these people](https://github.com/rollup/rollup/graphs/contributors)
-Source: rollup/rollup
-Link: https://rollupjs.org/
 -----------
 safe-array-concat
 License: MIT
@@ -3057,6 +3038,7 @@ Link: https://github.com/babel/babel.git
 License: MIT
 License File: node_modules/@babel/helpers/LICENSE
 Copyright: Copyright (c) 2014-present Sebastian McKenzie and other contributors
+Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regeneratorRuntime.js)
 Source: https://github.com/babel/babel.git
 Link: https://babel.dev/docs/en/next/babel-helpers
 -----------
@@ -3357,6 +3339,12 @@ License File: node_modules/@eslint/config-array/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
 Link: https://github.com/eslint/rewrite#readme
 -----------
+@eslint/config-helpers
+License: Apache-2.0
+License File: node_modules/@eslint/config-helpers/LICENSE
+Source: git+https://github.com/eslint/rewrite.git
+Link: https://github.com/eslint/rewrite/tree/main/packages/config-helpers#readme
+-----------
 @eslint/core
 License: Apache-2.0
 License File: node_modules/@eslint/core/LICENSE
@@ -3635,13 +3623,6 @@ Copyright: Copyright (C) 2018 by Marijn Haverbeke <******@*********.******> and 
 Source: https://github.com/lezer-parser/xml.git
 Link: https://github.com/lezer-parser/xml.git
 -----------
-@marijn/buildtool
-License: MIT
-License File: node_modules/@marijn/buildtool/LICENSE
-Copyright: Copyright (C) 2022 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/marijnh/buildtool.git
-Link: https://github.com/marijnh/buildtool.git
------------
 @marijn/find-cluster-break
 License: MIT
 License File: node_modules/@marijn/find-cluster-break/LICENSE
@@ -3831,13 +3812,6 @@ Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/json-
 License: MIT
 Source: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
 Link: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
------------
-@types/mocha
-License: MIT
-License File: node_modules/@types/mocha/LICENSE
-Copyright: Copyright (c) Microsoft Corporation.
-Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
-Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/mocha
 -----------
 @types/node
 License: MIT
