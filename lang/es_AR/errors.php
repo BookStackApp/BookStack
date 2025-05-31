@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'No se puede borrar el único administrador',
     'users_cannot_delete_guest' => 'No se puede borrar el usuario invitado',
-    'users_could_not_send_invite' => 'No se pudo crear el usuario porque no se pudo enviar el correo de invitación',
+    'users_could_not_send_invite' => 'No se creó el usuario porque no se pudo enviar el correo de invitación',
 
     // Roles
     'role_cannot_be_edited' => 'Este rol no puede ser editado',
@@ -107,9 +107,9 @@ return [
 
     // Import
     'import_zip_cant_read' => 'No se pudo leer el archivo ZIP.',
-    'import_zip_cant_decode_data' => 'No se pudo encontrar y decodificar el archivo data.json. en el archivo ZIP.',
-    'import_zip_no_data' => 'Los datos del archivo ZIP no contienen ningún libro, capítulo o contenido de página.',
-    'import_validation_failed' => 'Error al validar la importación del ZIP con errores:',
+    'import_zip_cant_decode_data' => 'No se pudo encontrar ni decodificar el contenido del archivo ZIP data.json.',
+    'import_zip_no_data' => 'Los datos del archivo ZIP no tienen un libro, un capítulo o contenido de página en su contenido.',
+    'import_validation_failed' => 'Error al validar la importación del ZIP con los errores:',
     'import_zip_failed_notification' => 'Error al importar archivo ZIP.',
     'import_perms_books' => 'Le faltan los permisos necesarios para crear libros.',
     'import_perms_chapters' => 'Le faltan los permisos necesarios para crear capítulos.',
@@ -129,5 +129,5 @@ return [
     'maintenance_test_email_failure' => 'Error al enviar un email de prueba:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'La URL no coincide con los hosts SSR permitidos',
+    'http_ssr_url_no_match' => 'La URL no coincide con los hosts SSR configurados como permitidos',
 ];
