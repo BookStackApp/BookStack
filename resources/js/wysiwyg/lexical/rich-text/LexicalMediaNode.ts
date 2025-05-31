@@ -16,7 +16,6 @@ import {
 } from "lexical/nodes/common";
 import {$selectSingleNode} from "../../utils/selection";
 import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
-import * as url from "node:url";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
 export type MediaNodeSource = {

@@ -1,6 +1,5 @@
 import {sizeToPixels} from "../../../utils/dom";
 import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
-import {elem} from "../../../../services/dom";
 
 export type CommonBlockAlignment = 'left' | 'right' | 'center' | 'justify' | '';
 const validAlignments: CommonBlockAlignment[] = ['left', 'right', 'center', 'justify'];

@@ -1,0 +1,9 @@
+name: Blank Request (Maintainers Only)
+description: For maintainers only - Start a blank request
+body:
+  - type: markdown
+    attributes:
+      value: "**This blank request option is only for existing official maintainers of the project!** Please instead use a different request option. If you use this your issue will be closed off."
+  - type: textarea
+    attributes:
+      label: Description
