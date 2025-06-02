@@ -40,14 +40,14 @@ return [
     'book_sort_notification'      => '書本已重新排序成功',
 
     // Bookshelves
-    'bookshelf_create'            => '已建立書棧',
-    'bookshelf_create_notification'    => '書棧已創建',
-    'bookshelf_create_from_book'    => '將書籍轉爲書棧',
+    'bookshelf_create'            => '已建立書架',
+    'bookshelf_create_notification'    => '書架已創建',
+    'bookshelf_create_from_book'    => '將書籍轉爲書架',
     'bookshelf_create_from_book_notification'    => '章節已轉爲書籍',
-    'bookshelf_update'                 => '更新書棧',
-    'bookshelf_update_notification'    => '書棧已更新',
-    'bookshelf_delete'                 => '刪除書棧',
-    'bookshelf_delete_notification'    => '書棧已刪除',
+    'bookshelf_update'                 => '更新書架',
+    'bookshelf_update_notification'    => '書架已更新',
+    'bookshelf_delete'                 => '刪除書架',
+    'bookshelf_delete_notification'    => '書架已刪除',
 
     // Revisions
     'revision_restore' => '還原的版本',
