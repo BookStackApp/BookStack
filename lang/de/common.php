@@ -31,7 +31,7 @@ return [
     'update' => 'Aktualisieren',
     'edit' => 'Bearbeiten',
     'archive' => 'Archivieren',
-    'unarchive' => 'Nicht archivieren',
+    'unarchive' => 'Nicht mehr archivieren',
     'sort' => 'Sortieren',
     'move' => 'Verschieben',
     'copy' => 'Kopieren',
