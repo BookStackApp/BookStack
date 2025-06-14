@@ -620,6 +620,7 @@ export class TextNode extends LexicalNode {
   // HTML content and not have the ability to use CSS classes.
   exportDOM(editor: LexicalEditor): DOMExportOutput {
     let {element} = super.exportDOM(editor);
+    const originalElementName = (element?.nodeName || '').toLowerCase()
     invariant(
       element !== null && isHTMLElement(element),
       'Expected TextNode createDOM to always return a HTMLElement',
@@ -649,8 +650,8 @@ export class TextNode extends LexicalNode {
     // This is the only way to properly add support for most clients,
     // even if it's semantically incorrect to have to resort to using
     // <b>, <u>, <s>, <i> elements.
-    if (this.hasFormat('bold')) {
-      element = wrapElementWith(element, 'b');
+    if (this.hasFormat('bold') && originalElementName !== 'strong') {
+      element = wrapElementWith(element, 'strong');
     }
     if (this.hasFormat('italic')) {
       element = wrapElementWith(element, 'em');
