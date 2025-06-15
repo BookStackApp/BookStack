@@ -14,7 +14,6 @@ import {
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
 } from "lexical/nodes/common";
-import {$selectSingleNode} from "../../utils/selection";
 import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
@@ -141,16 +140,26 @@ export class MediaNode extends ElementNode {
 
     getSources(): MediaNodeSource[] {
         const self = this.getLatest();
-        return self.__sources;
+        return self.__sources.map(s => Object.assign({}, s))
     }
 
     setSrc(src: string): void {
         const attrs = this.getAttributes();
+        const sources = this.getSources();
+
         if (this.__tag ==='object') {
             attrs.data = src;
+        } if (this.__tag === 'video' && sources.length > 0) {
+            sources[0].src = src;
+            delete attrs.src;
+            if (sources.length > 1) {
+                sources.splice(1, sources.length - 1);
+            }
+            this.setSources(sources);
         } else {
             attrs.src = src;
         }
+
         this.setAttributes(attrs);
     }
 

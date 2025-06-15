@@ -28,4 +28,19 @@ describe('LexicalMediaNode', () => {
         });
     });
 
+    test('setSrc on video uses sources if existing', () => {
+        const {editor} = createTestContext();
+        editor.updateAndCommit(() => {
+            const mediaMode = $createMediaNode('video');
+            mediaMode.setAttributes({src: 'z'});
+            mediaMode.setSources([{src: 'a', type: 'video'}, {src: 'b', type: 'video'}]);
+
+            mediaMode.setSrc('c');
+
+            expect(mediaMode.getAttributes().src).toBeUndefined();
+            expect(mediaMode.getSources()).toHaveLength(1);
+            expect(mediaMode.getSources()[0].src).toBe('c');
+        });
+    });
+
 });
