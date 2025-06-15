@@ -454,7 +454,7 @@ body.editor-is-fullscreen {
 .editor-media-wrap {
   display: inline-block;
   cursor: not-allowed;
-  iframe {
+  iframe, video {
     pointer-events: none;
   }
   &.align-left {

@@ -13,7 +13,7 @@ function isNodeWithSize(node: LexicalNode): node is NodeHasSize&LexicalNode {
 class NodeResizer {
     protected context: EditorUiContext;
     protected resizerDOM: HTMLElement|null = null;
-    protected targetDOM: HTMLElement|null = null;
+    protected targetNode: LexicalNode|null = null;
     protected scrollContainer: HTMLElement;
 
     protected mouseTracker: MouseDragTracker|null = null;
@@ -38,12 +38,7 @@ class NodeResizer {
 
         if (nodes.length === 1 && isNodeWithSize(nodes[0])) {
             const node = nodes[0];
-            const nodeKey = node.getKey();
-            let nodeDOM = this.context.editor.getElementByKey(nodeKey);
-
-            if (nodeDOM && nodeDOM.nodeName === 'SPAN') {
-                nodeDOM = nodeDOM.firstElementChild as HTMLElement;
-            }
+            let nodeDOM = this.getTargetDOM(node)
 
             if (nodeDOM) {
                 this.showForNode(node, nodeDOM);
@@ -51,7 +46,19 @@ class NodeResizer {
         }
     }
 
-    onTargetDOMLoad(): void {
+    protected getTargetDOM(targetNode: LexicalNode|null): HTMLElement|null {
+        if (targetNode == null) {
+            return null;
+        }
+
+        let nodeDOM =  this.context.editor.getElementByKey(targetNode.__key)
+        if (nodeDOM && nodeDOM.nodeName === 'SPAN') {
+            nodeDOM = nodeDOM.firstElementChild as HTMLElement;
+        }
+        return nodeDOM;
+    }
+
+    protected onTargetDOMLoad(): void {
         this.updateResizerPosition();
     }
 
@@ -62,7 +69,7 @@ class NodeResizer {
 
     protected showForNode(node: NodeHasSize&LexicalNode, targetDOM: HTMLElement) {
         this.resizerDOM = this.buildDOM();
-        this.targetDOM = targetDOM;
+        this.targetNode = node;
 
         let ghost = el('span', {class: 'editor-node-resizer-ghost'});
         if ($isImageNode(node)) {
@@ -83,12 +90,13 @@ class NodeResizer {
     }
 
     protected updateResizerPosition() {
-        if (!this.resizerDOM || !this.targetDOM) {
+        const targetDOM = this.getTargetDOM(this.targetNode);
+        if (!this.resizerDOM || !targetDOM) {
             return;
         }
 
         const scrollAreaRect = this.scrollContainer.getBoundingClientRect();
-        const nodeRect = this.targetDOM.getBoundingClientRect();
+        const nodeRect = targetDOM.getBoundingClientRect();
         const top = nodeRect.top - (scrollAreaRect.top - this.scrollContainer.scrollTop);
         const left = nodeRect.left - scrollAreaRect.left;
 
@@ -110,7 +118,7 @@ class NodeResizer {
     protected hide() {
         this.mouseTracker?.teardown();
         this.resizerDOM?.remove();
-        this.targetDOM = null;
+        this.targetNode = null;
         this.activeSelection = '';
         this.loadAbortController.abort();
     }
@@ -126,7 +134,7 @@ class NodeResizer {
         }, handleElems);
     }
 
-    setupTracker(container: HTMLElement, node: NodeHasSize, nodeDOM: HTMLElement): MouseDragTracker {
+    setupTracker(container: HTMLElement, node: NodeHasSize&LexicalNode, nodeDOM: HTMLElement): MouseDragTracker {
         let startingWidth: number = 0;
         let startingHeight: number = 0;
         let startingRatio: number = 0;
@@ -179,10 +187,13 @@ class NodeResizer {
                 _this.context.editor.update(() => {
                     node.setWidth(size.width);
                     node.setHeight(hasHeight ? size.height : 0);
-                    _this.context.manager.triggerLayoutUpdate();
-                    requestAnimationFrame(() => {
-                        _this.updateResizerPosition();
-                    })
+                }, {
+                    onUpdate: () => {
+                        requestAnimationFrame(() => {
+                            _this.context.manager.triggerLayoutUpdate();
+                            _this.updateResizerPosition();
+                        });
+                    }
                 });
                 _this.resizerDOM?.classList.remove('active');
             }
