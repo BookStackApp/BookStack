@@ -3,7 +3,7 @@ import {
     getCodeToolbarContent, getDetailsToolbarContent,
     getImageToolbarContent,
     getLinkToolbarContent,
-    getMainEditorFullToolbar, getTableToolbarContent
+    getMainEditorFullToolbar, getMediaToolbarContent, getTableToolbarContent
 } from "./defaults/toolbars";
 import {EditorUIManager} from "./framework/manager";
 import {EditorUiContext} from "./framework/core";
@@ -43,6 +43,10 @@ export function buildEditorUI(container: HTMLElement, element: HTMLElement, scro
     manager.registerContextToolbar('image', {
         selector: 'img:not([drawio-diagram] img)',
         content: getImageToolbarContent(),
+    });
+    manager.registerContextToolbar('media', {
+        selector: '.editor-media-wrap',
+        content: getMediaToolbarContent(),
     });
     manager.registerContextToolbar('link', {
         selector: 'a',

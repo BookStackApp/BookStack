@@ -238,15 +238,9 @@ export class MediaNode extends ElementNode {
 
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const media = this.createInnerDOM();
-        const wrap = el('span', {
+        return el('span', {
             class: media.className + ' editor-media-wrap',
         }, [media]);
-
-        wrap.addEventListener('click', e => {
-            _editor.update(() => $selectSingleNode(this));
-        });
-
-        return wrap;
     }
 
     updateDOM(prevNode: MediaNode, dom: HTMLElement): boolean {
