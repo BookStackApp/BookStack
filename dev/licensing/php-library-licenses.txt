@@ -486,7 +486,7 @@ Link: https://github.com/ramsey/collection.git
 ramsey/uuid
 License: MIT
 License File: vendor/ramsey/uuid/LICENSE
-Copyright: Copyright (c) 2012-2023 Ben Ramsey <***@*********.***>
+Copyright: Copyright (c) 2012-2025 Ben Ramsey <***@*********.***>
 Source: https://github.com/ramsey/uuid.git
 Link: https://github.com/ramsey/uuid.git
 -----------
