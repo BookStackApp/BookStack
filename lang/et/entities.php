@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Stabiilne sisu)',
     'pages_edit_switch_to_wysiwyg' => 'Kasuta WYSIWYG redaktorit',
     'pages_edit_switch_to_new_wysiwyg' => 'Kasuta uut tekstiredaktorit',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(beetatestimisel)',
     'pages_edit_set_changelog' => 'Muudatuste logi',
     'pages_edit_enter_changelog_desc' => 'Sisesta tehtud muudatuste lühikirjeldus',
     'pages_edit_enter_changelog' => 'Salvesta muudatuste logi',

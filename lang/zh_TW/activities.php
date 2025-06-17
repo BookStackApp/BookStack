@@ -47,7 +47,7 @@ return [
     'bookshelf_update'                 => '更新書棧',
     'bookshelf_update_notification'    => '書棧已更新',
     'bookshelf_delete'                 => '刪除書棧',
-    'bookshelf_delete_notification'    => '書棧已刪除',
+    'bookshelf_delete_notification'    => '書架已刪除',
 
     // Revisions
     'revision_restore' => '還原的版本',
