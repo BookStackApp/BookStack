@@ -839,7 +839,7 @@ describe('LexicalTextNode tests', () => {
         paragraph.append(textNode);
 
         const html = $generateHtmlFromNodes($getEditor(), null);
-        expect(html).toBe('<p><u><em><b><code spellcheck="false"><strong>hello</strong></code></b></em></u></p>');
+        expect(html).toBe('<p><u><em><strong><code spellcheck="false"><strong>hello</strong></code></strong></em></u></p>');
       });
     });
 

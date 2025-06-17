@@ -19,7 +19,7 @@ import type {
   LexicalNode,
   NodeKey,
 } from '../LexicalNode';
-import type {RangeSelection} from 'lexical';
+import {RangeSelection, TEXT_TYPE_TO_FORMAT, TextFormatType} from 'lexical';
 
 import {
   $applyNodeReplacement,
@@ -36,6 +36,7 @@ import {CommonBlockNode, copyCommonBlockProperties, SerializedCommonBlockNode} f
 
 export type SerializedParagraphNode = Spread<
   {
+    textFormat: number;
     textStyle: string;
   },
   SerializedCommonBlockNode
@@ -45,15 +46,33 @@ export type SerializedParagraphNode = Spread<
 export class ParagraphNode extends CommonBlockNode {
   ['constructor']!: KlassConstructor<typeof ParagraphNode>;
   /** @internal */
+  __textFormat: number;
   __textStyle: string;
 
   constructor(key?: NodeKey) {
     super(key);
+    this.__textFormat = 0;
     this.__textStyle = '';
   }
 
   static getType(): string {
     return 'paragraph';
+  }
+
+  getTextFormat(): number {
+    const self = this.getLatest();
+    return self.__textFormat;
+  }
+
+  setTextFormat(type: number): this {
+    const self = this.getWritable();
+    self.__textFormat = type;
+    return self;
+  }
+
+  hasTextFormat(type: TextFormatType): boolean {
+    const formatFlag = TEXT_TYPE_TO_FORMAT[type];
+    return (this.getTextFormat() & formatFlag) !== 0;
   }
 
   getTextStyle(): string {
@@ -73,6 +92,7 @@ export class ParagraphNode extends CommonBlockNode {
 
   afterCloneFrom(prevNode: this) {
     super.afterCloneFrom(prevNode);
+    this.__textFormat = prevNode.__textFormat;
     this.__textStyle = prevNode.__textStyle;
     copyCommonBlockProperties(prevNode, this);
   }
@@ -125,12 +145,14 @@ export class ParagraphNode extends CommonBlockNode {
   static importJSON(serializedNode: SerializedParagraphNode): ParagraphNode {
     const node = $createParagraphNode();
     deserializeCommonBlockNode(serializedNode, node);
+    node.setTextFormat(serializedNode.textFormat);
     return node;
   }
 
   exportJSON(): SerializedParagraphNode {
     return {
       ...super.exportJSON(),
+      textFormat: this.getTextFormat(),
       textStyle: this.getTextStyle(),
       type: 'paragraph',
       version: 1,
@@ -144,6 +166,7 @@ export class ParagraphNode extends CommonBlockNode {
     restoreSelection: boolean,
   ): ParagraphNode {
     const newElement = $createParagraphNode();
+    newElement.setTextFormat(rangeSelection.format);
     newElement.setTextStyle(rangeSelection.style);
     const direction = this.getDirection();
     newElement.setDirection(direction);

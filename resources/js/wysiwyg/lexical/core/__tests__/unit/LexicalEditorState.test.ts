@@ -76,6 +76,7 @@ describe('LexicalEditorState tests', () => {
         __prev: null,
         __size: 1,
         __style: '',
+        __textFormat: 0,
         __textStyle: '',
         __type: 'paragraph',
       });
@@ -111,7 +112,7 @@ describe('LexicalEditorState tests', () => {
       });
 
       expect(JSON.stringify(editor.getEditorState().toJSON())).toEqual(
-        `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hello world","type":"text","version":1}],"direction":null,"type":"paragraph","version":1,"id":"","alignment":"","inset":0,"textStyle":""}],"direction":null,"type":"root","version":1}}`,
+        `{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Hello world","type":"text","version":1}],"direction":null,"type":"paragraph","version":1,"id":"","alignment":"","inset":0,"textFormat":0,"textStyle":""}],"direction":null,"type":"root","version":1}}`,
       );
     });
 

@@ -12,17 +12,21 @@ function isNodeWithSize(node: LexicalNode): node is NodeHasSize&LexicalNode {
 
 class NodeResizer {
     protected context: EditorUiContext;
-    protected dom: HTMLElement|null = null;
+    protected resizerDOM: HTMLElement|null = null;
+    protected targetNode: LexicalNode|null = null;
     protected scrollContainer: HTMLElement;
 
     protected mouseTracker: MouseDragTracker|null = null;
     protected activeSelection: string = '';
+    protected loadAbortController = new AbortController();
 
     constructor(context: EditorUiContext) {
         this.context = context;
         this.scrollContainer = context.scrollDOM;
 
         this.onSelectionChange = this.onSelectionChange.bind(this);
+        this.onTargetDOMLoad = this.onTargetDOMLoad.bind(this);
+
         context.manager.onSelectionChange(this.onSelectionChange);
     }
 
@@ -34,12 +38,7 @@ class NodeResizer {
 
         if (nodes.length === 1 && isNodeWithSize(nodes[0])) {
             const node = nodes[0];
-            const nodeKey = node.getKey();
-            let nodeDOM = this.context.editor.getElementByKey(nodeKey);
-
-            if (nodeDOM && nodeDOM.nodeName === 'SPAN') {
-                nodeDOM = nodeDOM.firstElementChild as HTMLElement;
-            }
+            let nodeDOM = this.getTargetDOM(node)
 
             if (nodeDOM) {
                 this.showForNode(node, nodeDOM);
@@ -47,56 +46,81 @@ class NodeResizer {
         }
     }
 
+    protected getTargetDOM(targetNode: LexicalNode|null): HTMLElement|null {
+        if (targetNode == null) {
+            return null;
+        }
+
+        let nodeDOM =  this.context.editor.getElementByKey(targetNode.__key)
+        if (nodeDOM && nodeDOM.nodeName === 'SPAN') {
+            nodeDOM = nodeDOM.firstElementChild as HTMLElement;
+        }
+        return nodeDOM;
+    }
+
+    protected onTargetDOMLoad(): void {
+        this.updateResizerPosition();
+    }
+
     teardown() {
         this.context.manager.offSelectionChange(this.onSelectionChange);
         this.hide();
     }
 
-    protected showForNode(node: NodeHasSize&LexicalNode, dom: HTMLElement) {
-        this.dom = this.buildDOM();
+    protected showForNode(node: NodeHasSize&LexicalNode, targetDOM: HTMLElement) {
+        this.resizerDOM = this.buildDOM();
+        this.targetNode = node;
 
         let ghost = el('span', {class: 'editor-node-resizer-ghost'});
         if ($isImageNode(node)) {
-            ghost = el('img', {src: dom.getAttribute('src'), class: 'editor-node-resizer-ghost'});
+            ghost = el('img', {src: targetDOM.getAttribute('src'), class: 'editor-node-resizer-ghost'});
         }
-        this.dom.append(ghost);
+        this.resizerDOM.append(ghost);
 
-        this.context.scrollDOM.append(this.dom);
-        this.updateDOMPosition(dom);
+        this.context.scrollDOM.append(this.resizerDOM);
+        this.updateResizerPosition();
 
-        this.mouseTracker = this.setupTracker(this.dom, node, dom);
+        this.mouseTracker = this.setupTracker(this.resizerDOM, node, targetDOM);
         this.activeSelection = node.getKey();
+
+        if (targetDOM.matches('img, embed, iframe, object')) {
+            this.loadAbortController = new AbortController();
+            targetDOM.addEventListener('load', this.onTargetDOMLoad, { signal: this.loadAbortController.signal });
+        }
     }
 
-    protected updateDOMPosition(nodeDOM: HTMLElement) {
-        if (!this.dom) {
+    protected updateResizerPosition() {
+        const targetDOM = this.getTargetDOM(this.targetNode);
+        if (!this.resizerDOM || !targetDOM) {
             return;
         }
 
         const scrollAreaRect = this.scrollContainer.getBoundingClientRect();
-        const nodeRect = nodeDOM.getBoundingClientRect();
+        const nodeRect = targetDOM.getBoundingClientRect();
         const top = nodeRect.top - (scrollAreaRect.top - this.scrollContainer.scrollTop);
         const left = nodeRect.left - scrollAreaRect.left;
 
-        this.dom.style.top = `${top}px`;
-        this.dom.style.left = `${left}px`;
-        this.dom.style.width = nodeRect.width + 'px';
-        this.dom.style.height = nodeRect.height + 'px';
+        this.resizerDOM.style.top = `${top}px`;
+        this.resizerDOM.style.left = `${left}px`;
+        this.resizerDOM.style.width = nodeRect.width + 'px';
+        this.resizerDOM.style.height = nodeRect.height + 'px';
     }
 
     protected updateDOMSize(width: number, height: number): void {
-        if (!this.dom) {
+        if (!this.resizerDOM) {
             return;
         }
 
-        this.dom.style.width = width + 'px';
-        this.dom.style.height = height + 'px';
+        this.resizerDOM.style.width = width + 'px';
+        this.resizerDOM.style.height = height + 'px';
     }
 
     protected hide() {
         this.mouseTracker?.teardown();
-        this.dom?.remove();
+        this.resizerDOM?.remove();
+        this.targetNode = null;
         this.activeSelection = '';
+        this.loadAbortController.abort();
     }
 
     protected buildDOM() {
@@ -110,7 +134,7 @@ class NodeResizer {
         }, handleElems);
     }
 
-    setupTracker(container: HTMLElement, node: NodeHasSize, nodeDOM: HTMLElement): MouseDragTracker {
+    setupTracker(container: HTMLElement, node: NodeHasSize&LexicalNode, nodeDOM: HTMLElement): MouseDragTracker {
         let startingWidth: number = 0;
         let startingHeight: number = 0;
         let startingRatio: number = 0;
@@ -140,7 +164,7 @@ class NodeResizer {
 
         return new MouseDragTracker(container, '.editor-node-resizer-handle', {
             down(event: MouseEvent, handle: HTMLElement) {
-                _this.dom?.classList.add('active');
+                _this.resizerDOM?.classList.add('active');
                 _this.context.editor.getEditorState().read(() => {
                     const domRect = nodeDOM.getBoundingClientRect();
                     startingWidth = node.getWidth() || domRect.width;
@@ -163,12 +187,15 @@ class NodeResizer {
                 _this.context.editor.update(() => {
                     node.setWidth(size.width);
                     node.setHeight(hasHeight ? size.height : 0);
-                    _this.context.manager.triggerLayoutUpdate();
-                    requestAnimationFrame(() => {
-                        _this.updateDOMPosition(nodeDOM);
-                    })
+                }, {
+                    onUpdate: () => {
+                        requestAnimationFrame(() => {
+                            _this.context.manager.triggerLayoutUpdate();
+                            _this.updateResizerPosition();
+                        });
+                    }
                 });
-                _this.dom?.classList.remove('active');
+                _this.resizerDOM?.classList.remove('active');
             }
         });
     }

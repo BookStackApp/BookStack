@@ -15,6 +15,7 @@ class TableResizer {
     protected targetCell: HTMLElement|null = null;
     protected xMarkerAtStart : boolean = false;
     protected yMarkerAtStart : boolean = false;
+    protected activeInTable: boolean = false;
 
     constructor(editor: LexicalEditor, editScrollContainer: HTMLElement) {
         this.editor = editor;
@@ -33,9 +34,10 @@ class TableResizer {
     }
 
     protected setupListeners() {
+        this.onTableMouseOver = this.onTableMouseOver.bind(this);
         this.onCellMouseMove = this.onCellMouseMove.bind(this);
         this.onScrollOrResize = this.onScrollOrResize.bind(this);
-        this.editScrollContainer.addEventListener('mousemove', this.onCellMouseMove);
+        this.editScrollContainer.addEventListener('mouseover', this.onTableMouseOver, { passive: true });
         window.addEventListener('scroll', this.onScrollOrResize, {capture: true, passive: true});
         window.addEventListener('resize', this.onScrollOrResize, {passive: true});
     }
@@ -44,8 +46,26 @@ class TableResizer {
         this.updateCurrentMarkerTargetPosition();
     }
 
+    protected onTableMouseOver(event: MouseEvent): void {
+        if (this.dragging) {
+            return;
+        }
+
+        const table = (event.target as HTMLElement).closest('table') as HTMLElement|null;
+
+        if (table && !this.activeInTable) {
+            this.editScrollContainer.addEventListener('mousemove', this.onCellMouseMove, { passive: true });
+            this.onCellMouseMove(event);
+            this.activeInTable = true;
+        } else if (!table && this.activeInTable) {
+            this.editScrollContainer.removeEventListener('mousemove', this.onCellMouseMove);
+            this.hideMarkers();
+            this.activeInTable = false;
+        }
+    }
+
     protected onCellMouseMove(event: MouseEvent) {
-        const cell = (event.target as HTMLElement).closest('td,th') as HTMLElement;
+        const cell = (event.target as HTMLElement).closest('td,th') as HTMLElement|null;
         if (!cell || this.dragging) {
             return;
         }
@@ -66,10 +86,16 @@ class TableResizer {
     protected updateMarkersTo(cell: HTMLElement, xPos: number, yPos: number) {
         const markers: MarkerDomRecord = this.getMarkers();
         const table = cell.closest('table') as HTMLElement;
+        const caption: HTMLTableCaptionElement|null = table.querySelector('caption');
         const tableRect = table.getBoundingClientRect();
         const editBounds = this.editScrollContainer.getBoundingClientRect();
 
-        const maxTop = Math.max(tableRect.top, editBounds.top);
+        let tableTop = tableRect.top;
+        if (caption) {
+            tableTop = caption.getBoundingClientRect().bottom;
+        }
+
+        const maxTop = Math.max(tableTop, editBounds.top);
         const maxBottom = Math.min(tableRect.bottom, editBounds.bottom);
         const maxHeight = maxBottom - maxTop;
         markers.x.style.left = xPos + 'px';
@@ -83,6 +109,13 @@ class TableResizer {
         // Hide markers when out of bounds
         markers.y.hidden = yPos < editBounds.top || yPos > editBounds.bottom;
         markers.x.hidden = tableRect.top > editBounds.bottom || tableRect.bottom < editBounds.top;
+    }
+
+    protected hideMarkers(): void {
+        if (this.markerDom) {
+            this.markerDom.x.hidden = true;
+            this.markerDom.y.hidden = true;
+        }
     }
 
     protected updateCurrentMarkerTargetPosition(): void {

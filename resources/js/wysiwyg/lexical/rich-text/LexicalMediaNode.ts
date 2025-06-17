@@ -8,13 +8,12 @@ import {
 } from 'lexical';
 import type {EditorConfig} from "lexical/LexicalEditor";
 
-import {el, setOrRemoveAttribute, sizeToPixels} from "../../utils/dom";
+import {el, setOrRemoveAttribute, sizeToPixels, styleMapToStyleString, styleStringToStyleMap} from "../../utils/dom";
 import {
     CommonBlockAlignment, deserializeCommonBlockNode,
     setCommonBlockPropsFromElement,
     updateElementWithCommonBlockProps
 } from "lexical/nodes/common";
-import {$selectSingleNode} from "../../utils/selection";
 import {SerializedCommonBlockNode} from "lexical/nodes/CommonBlockNode";
 
 export type MediaNodeTag = 'iframe' | 'embed' | 'object' | 'video' | 'audio';
@@ -44,6 +43,19 @@ function filterAttributes(attributes: Record<string, string>): Record<string, st
         }
     }
     return filtered;
+}
+
+function removeStyleFromAttributes(attributes: Record<string, string>, styleName: string): Record<string, string> {
+    const attrCopy = Object.assign({}, attributes);
+    if (!attributes.style) {
+        return attrCopy;
+    }
+
+    const map = styleStringToStyleMap(attributes.style);
+    map.delete(styleName);
+
+    attrCopy.style = styleMapToStyleString(map);
+    return attrCopy;
 }
 
 function domElementToNode(tag: MediaNodeTag, element: HTMLElement): MediaNode {
@@ -118,7 +130,7 @@ export class MediaNode extends ElementNode {
 
     getAttributes(): Record<string, string> {
         const self = this.getLatest();
-        return self.__attributes;
+        return Object.assign({}, self.__attributes);
     }
 
     setSources(sources: MediaNodeSource[]) {
@@ -128,25 +140,37 @@ export class MediaNode extends ElementNode {
 
     getSources(): MediaNodeSource[] {
         const self = this.getLatest();
-        return self.__sources;
+        return self.__sources.map(s => Object.assign({}, s))
     }
 
     setSrc(src: string): void {
-        const attrs = Object.assign({}, this.getAttributes());
+        const attrs = this.getAttributes();
+        const sources = this.getSources();
+
         if (this.__tag ==='object') {
             attrs.data = src;
+        } if (this.__tag === 'video' && sources.length > 0) {
+            sources[0].src = src;
+            delete attrs.src;
+            if (sources.length > 1) {
+                sources.splice(1, sources.length - 1);
+            }
+            this.setSources(sources);
         } else {
             attrs.src = src;
         }
+
         this.setAttributes(attrs);
     }
 
     setWidthAndHeight(width: string, height: string): void {
-        const attrs = Object.assign(
-            {},
+        let attrs: Record<string, string> = Object.assign(
             this.getAttributes(),
             {width, height},
         );
+
+        attrs = removeStyleFromAttributes(attrs, 'width');
+        attrs = removeStyleFromAttributes(attrs, 'height');
         this.setAttributes(attrs);
     }
 
@@ -185,8 +209,8 @@ export class MediaNode extends ElementNode {
             return;
         }
 
-        const attrs = Object.assign({}, this.getAttributes(), {height});
-        this.setAttributes(attrs);
+        const attrs = Object.assign(this.getAttributes(), {height});
+        this.setAttributes(removeStyleFromAttributes(attrs, 'height'));
     }
 
     getHeight(): number {
@@ -195,8 +219,9 @@ export class MediaNode extends ElementNode {
     }
 
     setWidth(width: number): void {
-        const attrs = Object.assign({}, this.getAttributes(), {width});
-        this.setAttributes(attrs);
+        const existingAttrs = this.getAttributes();
+        const attrs: Record<string, string> = Object.assign(existingAttrs, {width});
+        this.setAttributes(removeStyleFromAttributes(attrs, 'width'));
     }
 
     getWidth(): number {
@@ -222,15 +247,9 @@ export class MediaNode extends ElementNode {
 
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const media = this.createInnerDOM();
-        const wrap = el('span', {
+        return el('span', {
             class: media.className + ' editor-media-wrap',
         }, [media]);
-
-        wrap.addEventListener('click', e => {
-            _editor.update(() => $selectSingleNode(this));
-        });
-
-        return wrap;
     }
 
     updateDOM(prevNode: MediaNode, dom: HTMLElement): boolean {

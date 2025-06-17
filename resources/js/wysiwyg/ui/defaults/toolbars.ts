@@ -224,6 +224,10 @@ export function getImageToolbarContent(): EditorUiElement[] {
     return [new EditorButton(image)];
 }
 
+export function getMediaToolbarContent(): EditorUiElement[] {
+    return [new EditorButton(media)];
+}
+
 export function getLinkToolbarContent(): EditorUiElement[] {
     return [
         new EditorButton(link),
