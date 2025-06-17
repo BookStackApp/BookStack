@@ -160,7 +160,9 @@ class SearchIndex
         /** @var DOMNode $child */
         foreach ($doc->getBodyChildren() as $child) {
             $nodeName = $child->nodeName;
-            $termCounts = $this->textToTermCountMap(trim($child->textContent));
+            $text = trim($child->textContent);
+            $text = str_replace("\u{00A0}", ' ', $text);
+            $termCounts = $this->textToTermCountMap($text);
             foreach ($termCounts as $term => $count) {
                 $scoreChange = $count * ($elementScoreAdjustmentMap[$nodeName] ?? 1);
                 $scoresByTerm[$term] = ($scoresByTerm[$term] ?? 0) + $scoreChange;
