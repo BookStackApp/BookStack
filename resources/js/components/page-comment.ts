@@ -40,7 +40,7 @@ export class PageComment extends Component {
         this.commentId = this.$opts.commentId;
         this.commentLocalId = this.$opts.commentLocalId;
         this.deletedText = this.$opts.deletedText;
-        this.deletedText = this.$opts.deletedText;
+        this.updatedText = this.$opts.updatedText;
         this.archiveText = this.$opts.archiveText;
 
         // Editor reference and text options
