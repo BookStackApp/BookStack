@@ -394,7 +394,7 @@ return [
     'comment_add' => 'Přidat komentář',
     'comment_none' => 'Žádné komentáře k zobrazení',
     'comment_placeholder' => 'Zde zadejte komentář',
-    'comment_thread_count' => ':count vlákno komentáře|:count vláken komentářů',
+    'comment_thread_count' => '{0}:count vláken komentářů|{1}:count vlákno komentářů|[2,4]:count vlákna komentářů|[5,*]:count vláken komentářů',
     'comment_archived_count' => ':count archivováno',
     'comment_archived_threads' => 'Archivovaná vlákna',
     'comment_save' => 'Uložit komentář',
