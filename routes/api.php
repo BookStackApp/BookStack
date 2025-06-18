@@ -8,6 +8,7 @@
 
 use BookStack\Activity\Controllers\AuditLogApiController;
 use BookStack\Api\ApiDocsController;
+use BookStack\Api\MetricsApiController;
 use BookStack\App\SystemApiController;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Exports\Controllers as ExportControllers;
@@ -20,6 +21,8 @@ use BookStack\Users\Controllers\UserApiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('docs.json', [ApiDocsController::class, 'json']);
+
+Route::get('status', [MetricsApiController::class, 'getStatus']);
 
 Route::get('attachments', [AttachmentApiController::class, 'list']);
 Route::post('attachments', [AttachmentApiController::class, 'create']);
