@@ -106,11 +106,15 @@
             <ul refs="dropdown@menu" class="wide dropdown-menu">
                 <li class="px-l py-m">
                     <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
-                    <input refs="page-editor@changelogInput"
-                           name="summary"
-                           id="summary-input"
-                           type="text"
-                           placeholder="{{ trans('entities.pages_edit_enter_changelog') }}" />
+                    <textarea
+                        refs="page-editor@changelogInput"
+                        name="summary"
+                        id="summary-input"
+                        rows="2"
+                        maxlength="250"
+                        placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
+                    ></textarea>
+                    <small class="text-muted mt-xs" id="changelog-count">0 / 250</small>
                 </li>
             </ul>
             <span>{{-- Prevents button jumping on menu show --}}</span>

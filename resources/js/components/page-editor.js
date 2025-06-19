@@ -75,7 +75,12 @@ export class PageEditor extends Component {
 
         // Changelog controls
         const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
-        this.changelogInput.addEventListener('input', updateChangelogDebounced);
+        this.changelogInput.addEventListener('input', () => {
+            const count = this.changelogInput.value.length;
+            const counterEl = document.getElementById('changelog-count');
+            if (counterEl) counterEl.innerText = `${count} / 250`;
+            updateChangelogDebounced();
+        });
 
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));
