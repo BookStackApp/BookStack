@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity;
+namespace Tests\Entity;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Comment;
