@@ -20,7 +20,7 @@ return [
     'description' => 'Mô tả',
     'role' => 'Vai trò',
     'cover_image' => 'Ảnh bìa',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Hình ảnh này phải có kích thước khoảng 440x250px mặc dù nó sẽ được thu nhỏ và cắt xén linh hoạt để phù hợp với giao diện người dùng trong các trường hợp khác nhau theo yêu cầu, do đó kích thước thực tế để hiển thị sẽ khác nhau.',
 
     // Actions
     'actions' => 'Hành động',
@@ -44,7 +44,7 @@ return [
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
     'configure' => 'Cấu hình',
-    'manage' => 'Manage',
+    'manage' => 'Quản lý',
     'fullscreen' => 'Toàn màn hình',
     'favourite' => 'Yêu thích',
     'unfavourite' => 'Bỏ yêu thích',
@@ -54,7 +54,7 @@ return [
     'filter_clear' => 'Xóa bộ lọc',
     'download' => 'Tải về',
     'open_in_tab' => 'Mở trong thẻ mới',
-    'open' => 'Open',
+    'open' => 'Mở',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
@@ -111,5 +111,5 @@ return [
     'terms_of_service' => 'Điều khoản Dịch vụ',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Tìm kiếm :appName',
 ];
