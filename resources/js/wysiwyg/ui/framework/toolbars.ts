@@ -4,7 +4,7 @@ import {el} from "../../utils/dom";
 
 export type EditorContextToolbarDefinition = {
     selector: string;
-    content: EditorUiElement[],
+    content: () => EditorUiElement[],
     displayTargetLocator?: (originalTarget: HTMLElement) => HTMLElement;
 };
 

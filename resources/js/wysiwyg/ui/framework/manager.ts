@@ -198,7 +198,7 @@ export class EditorUIManager {
                     contentByTarget.set(targetEl, [])
                 }
                 // @ts-ignore
-                contentByTarget.get(targetEl).push(...definition.content);
+                contentByTarget.get(targetEl).push(...definition.content());
             }
         }
 
