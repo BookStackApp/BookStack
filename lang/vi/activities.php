@@ -130,10 +130,10 @@ return [
     // Sort Rules
     'sort_rule_create' => '',
     'sort_rule_create_notification' => '',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_update' => 'xóa quy tắc sắp xếp',
+    'sort_rule_update_notification' => 'Đã cập nhật quy tắc sắp xếp thành công',
+    'sort_rule_delete' => 'xóa quy tắc sắp xếp',
+    'sort_rule_delete_notification' => 'Đã xóa quy tắc sắp xếp thành công',
 
     // Other
     'permissions_update'          => 'các quyền đã được cập nhật',
