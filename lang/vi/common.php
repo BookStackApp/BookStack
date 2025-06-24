@@ -20,7 +20,7 @@ return [
     'description' => 'Mô tả',
     'role' => 'Vai trò',
     'cover_image' => 'Ảnh bìa',
-    'cover_image_description' => 'Hình ảnh này phải có kích thước khoảng 440x250px mặc dù nó sẽ được thu nhỏ và cắt xén linh hoạt để phù hợp với giao diện người dùng trong các trường hợp khác nhau theo yêu cầu, do đó kích thước thực tế để hiển thị sẽ khác nhau.',
+    'cover_image_description' => 'Hình ảnh này phải có kích thước khoảng 440x250px mặc dù nó sẽ được thu nhỏ & cắt xén linh hoạt để phù hợp với giao diện người dùng trong các trường hợp khác nhau theo yêu cầu, do đó kích thước thực tế để hiển thị sẽ khác nhau.',
 
     // Actions
     'actions' => 'Hành động',
@@ -30,8 +30,8 @@ return [
     'create' => 'Tạo',
     'update' => 'Cập nhật',
     'edit' => 'Sửa',
-    'archive' => 'Archive',
-    'unarchive' => 'Un-Archive',
+    'archive' => 'Lưu trữ',
+    'unarchive' => 'Bỏ lưu trữ',
     'sort' => 'Sắp xếp',
     'move' => 'Di chuyển',
     'copy' => 'Sao chép',
@@ -102,7 +102,8 @@ return [
     'tab_content_label' => 'Tab: Hiển thị nội dung chính',
 
     // Email Content
-    'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',
+    'email_action_help' => 'Nếu bạn gặp sự cố khi nhấp vào nút ": actionText", hãy sao chép và dán URL bên dưới
+vào trình duyệt web của bạn:',
     'email_rights' => 'Bản quyền đã được bảo hộ',
 
     // Footer Link Options
