@@ -48,7 +48,7 @@ export abstract class EditorDecorator {
      * Destroy this decorator. Used for tear-down operations upon destruction
      * of the underlying node this decorator is attached to.
      */
-    destroy(context: EditorUiContext): void {
+    teardown(): void {
         for (const callback of this.onDestroyCallbacks) {
             callback();
         }

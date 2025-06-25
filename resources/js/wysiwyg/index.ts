@@ -2,9 +2,9 @@ import {createEditor, LexicalEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
-import {getNodesForPageEditor, registerCommonNodeMutationListeners} from './nodes';
+import {getNodesForBasicEditor, getNodesForPageEditor, registerCommonNodeMutationListeners} from './nodes';
 import {buildEditorUI} from "./ui";
-import {getEditorContentAsHtml, setEditorContentFromHtml} from "./utils/actions";
+import {focusEditor, getEditorContentAsHtml, setEditorContentFromHtml} from "./utils/actions";
 import {registerTableResizer} from "./ui/framework/helpers/table-resizer";
 import {EditorUiContext} from "./ui/framework/core";
 import {listen as listenToCommonEvents} from "./services/common-events";
@@ -15,7 +15,7 @@ import {registerShortcuts} from "./services/shortcuts";
 import {registerNodeResizer} from "./ui/framework/helpers/node-resizer";
 import {registerKeyboardHandling} from "./services/keyboard-handling";
 import {registerAutoLinks} from "./services/auto-links";
-import {contextToolbars, getMainEditorFullToolbar} from "./ui/defaults/toolbars";
+import {contextToolbars, getBasicEditorToolbar, getMainEditorFullToolbar} from "./ui/defaults/toolbars";
 import {modals} from "./ui/defaults/modals";
 import {CodeBlockDecorator} from "./ui/decorators/code-block";
 import {DiagramDecorator} from "./ui/decorators/diagram";
@@ -90,20 +90,20 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     registerCommonNodeMutationListeners(context);
 
-    return new SimpleWysiwygEditorInterface(editor);
+    return new SimpleWysiwygEditorInterface(context);
 }
 
-export function createCommentEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
+export function createBasicEditorInstance(container: HTMLElement, htmlContent: string, options: Record<string, any> = {}): SimpleWysiwygEditorInterface {
     const editor = createEditor({
-        namespace: 'BookStackCommentEditor',
-        nodes: getNodesForPageEditor(),
+        namespace: 'BookStackBasicEditor',
+        nodes: getNodesForBasicEditor(),
         onError: console.error,
         theme: theme,
     });
     const context: EditorUiContext = buildEditorUI(container, editor, options);
     editor.setRootElement(context.editorDOM);
 
-    mergeRegister(
+    const editorTeardown = mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerShortcuts(context),
@@ -111,23 +111,33 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
     );
 
     // Register toolbars, modals & decorators
-    context.manager.setToolbar(getMainEditorFullToolbar(context)); // TODO - Create comment toolbar
+    context.manager.setToolbar(getBasicEditorToolbar(context));
     context.manager.registerContextToolbar('link', contextToolbars.link);
     context.manager.registerModal('link', modals.link);
+    context.manager.onTeardown(editorTeardown);
 
     setEditorContentFromHtml(editor, htmlContent);
 
-    return new SimpleWysiwygEditorInterface(editor);
+    return new SimpleWysiwygEditorInterface(context);
 }
 
 export class SimpleWysiwygEditorInterface {
-    protected editor: LexicalEditor;
+    protected context: EditorUiContext;
 
-    constructor(editor: LexicalEditor) {
-        this.editor = editor;
+    constructor(context: EditorUiContext) {
+        this.context = context;
     }
 
     async getContentAsHtml(): Promise<string> {
-        return await getEditorContentAsHtml(this.editor);
+        return await getEditorContentAsHtml(this.context.editor);
+    }
+
+    focus(): void {
+        focusEditor(this.context.editor);
+    }
+
+    remove() {
+        this.context.editorDOM.remove();
+        this.context.manager.teardown();
     }
 }

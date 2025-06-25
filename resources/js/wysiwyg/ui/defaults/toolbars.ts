@@ -221,6 +221,16 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
     ]);
 }
 
+export function getBasicEditorToolbar(context: EditorUiContext): EditorContainerUiElement {
+    return new EditorSimpleClassContainer('editor-toolbar-main', [
+        new EditorButton(bold),
+        new EditorButton(italic),
+        new EditorButton(link),
+        new EditorButton(bulletList),
+        new EditorButton(numberList),
+    ]);
+}
+
 export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
     image: {
         selector: 'img:not([drawio-diagram] img)',

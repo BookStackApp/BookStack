@@ -1,10 +1,11 @@
 import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
-import {buildForInput} from '../wysiwyg-tinymce/config';
 import {Tabs} from "./tabs";
 import {PageCommentReference} from "./page-comment-reference";
 import {scrollAndHighlightElement} from "../services/util";
 import {PageCommentArchiveEventData, PageCommentReplyEventData} from "./page-comment";
+import {el} from "../wysiwyg/utils/dom";
+import {SimpleWysiwygEditorInterface} from "../wysiwyg";
 
 export class PageComments extends Component {
 
@@ -28,9 +29,8 @@ export class PageComments extends Component {
     private hideFormButton!: HTMLElement;
     private removeReplyToButton!: HTMLElement;
     private removeReferenceButton!: HTMLElement;
-    private wysiwygLanguage!: string;
     private wysiwygTextDirection!: string;
-    private wysiwygEditor: any = null;
+    private wysiwygEditor: SimpleWysiwygEditorInterface|null = null;
     private createdText!: string;
     private countText!: string;
     private archivedCountText!: string;
@@ -63,7 +63,6 @@ export class PageComments extends Component {
         this.removeReferenceButton = this.$refs.removeReferenceButton;
 
         // WYSIWYG options
-        this.wysiwygLanguage = this.$opts.wysiwygLanguage;
         this.wysiwygTextDirection = this.$opts.wysiwygTextDirection;
 
         // Translations
@@ -107,7 +106,7 @@ export class PageComments extends Component {
         }
     }
 
-    protected saveComment(event: SubmitEvent): void {
+    protected async saveComment(event: SubmitEvent): Promise<void> {
         event.preventDefault();
         event.stopPropagation();
 
@@ -117,7 +116,7 @@ export class PageComments extends Component {
         this.form.toggleAttribute('hidden', true);
 
         const reqData = {
-            html: this.wysiwygEditor.getContent(),
+            html: (await this.wysiwygEditor?.getContentAsHtml()) || '',
             parent_id: this.parentId || null,
             content_ref: this.contentReference,
         };
@@ -189,27 +188,25 @@ export class PageComments extends Component {
         this.addButtonContainer.toggleAttribute('hidden', false);
     }
 
-    protected loadEditor(): void {
+    protected async loadEditor(): Promise<void> {
         if (this.wysiwygEditor) {
             this.wysiwygEditor.focus();
             return;
         }
 
-        const config = buildForInput({
-            language: this.wysiwygLanguage,
-            containerElement: this.formInput,
+        type WysiwygModule = typeof import('../wysiwyg');
+        const wysiwygModule = (await window.importVersioned('wysiwyg')) as WysiwygModule;
+        const container = el('div', {class: 'comment-editor-container'});
+        this.formInput.parentElement?.appendChild(container);
+        this.formInput.hidden = true;
+
+        this.wysiwygEditor = wysiwygModule.createBasicEditorInstance(container as HTMLElement, '', {
             darkMode: document.documentElement.classList.contains('dark-mode'),
             textDirection: this.wysiwygTextDirection,
-            drawioUrl: '',
-            pageId: 0,
-            translations: {},
-            translationMap: (window as unknown as Record<string, Object>).editor_translations,
+            translations: (window as unknown as Record<string, Object>).editor_translations,
         });
 
-        (window as unknown as {tinymce: {init: (arg0: Object) => Promise<any>}}).tinymce.init(config).then(editors => {
-            this.wysiwygEditor = editors[0];
-            setTimeout(() => this.wysiwygEditor.focus(), 50);
-        });
+        this.wysiwygEditor.focus();
     }
 
     protected removeEditor(): void {
