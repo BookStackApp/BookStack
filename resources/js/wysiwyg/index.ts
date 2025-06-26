@@ -123,6 +123,8 @@ export function createBasicEditorInstance(container: HTMLElement, htmlContent: s
 
 export class SimpleWysiwygEditorInterface {
     protected context: EditorUiContext;
+    protected onChangeListeners: (() => void)[] = [];
+    protected editorListenerTeardown: (() => void)|null = null;
 
     constructor(context: EditorUiContext) {
         this.context = context;
@@ -132,6 +134,11 @@ export class SimpleWysiwygEditorInterface {
         return await getEditorContentAsHtml(this.context.editor);
     }
 
+    onChange(listener: () => void) {
+        this.onChangeListeners.push(listener);
+        this.startListeningToChanges();
+    }
+
     focus(): void {
         focusEditor(this.context.editor);
     }
@@ -139,5 +146,20 @@ export class SimpleWysiwygEditorInterface {
     remove() {
         this.context.editorDOM.remove();
         this.context.manager.teardown();
+        if (this.editorListenerTeardown) {
+            this.editorListenerTeardown();
+        }
+    }
+
+    protected startListeningToChanges(): void {
+        if (this.editorListenerTeardown) {
+            return;
+        }
+
+        this.editorListenerTeardown = this.context.editor.registerUpdateListener(() => {
+             for (const listener of this.onChangeListeners) {
+                 listener();
+             }
+        });
     }
 }
