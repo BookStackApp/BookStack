@@ -36,61 +36,61 @@ return [
     'book_update_notification'    => 'पुस्तक सफलतापूर्वक अद्यावधिक गरियो',
     'book_delete'                 => 'पुस्तक हटाइयो',
     'book_delete_notification'    => 'पुस्तक सफलतापूर्वक हटाइयो',
-    'book_sort'                   => 'sorted book',
-    'book_sort_notification'      => 'Book successfully re-sorted',
+    'book_sort'                   => 'पुस्तक क्रमबद्ध गरियो',
+    'book_sort_notification'      => 'पुस्तक सफलतापूर्वक क्रमबद्ध गरियो',
 
     // Bookshelves
-    'bookshelf_create'            => 'created shelf',
-    'bookshelf_create_notification'    => 'Shelf successfully created',
-    'bookshelf_create_from_book'    => 'converted book to shelf',
-    'bookshelf_create_from_book_notification'    => 'Book successfully converted to a shelf',
-    'bookshelf_update'                 => 'updated shelf',
-    'bookshelf_update_notification'    => 'Shelf successfully updated',
-    'bookshelf_delete'                 => 'deleted shelf',
-    'bookshelf_delete_notification'    => 'Shelf successfully deleted',
+    'bookshelf_create'            => 'दराज बनाइयो',
+    'bookshelf_create_notification'    => 'दराज सफलतापूर्वक बनाइयो',
+    'bookshelf_create_from_book'    => 'पुस्तकलाई दराजमा परिणत गरियो',
+    'bookshelf_create_from_book_notification'    => 'पुस्तकलाई दराजमा सफलतापूर्वक परिणत गरियो',
+    'bookshelf_update'                 => 'दराज अद्यावधिक गरियो',
+    'bookshelf_update_notification'    => 'दराज सफलतापूर्वक अद्यावधिक गरियो',
+    'bookshelf_delete'                 => 'दराज हटाइयो',
+    'bookshelf_delete_notification'    => 'दराज सफलतापूर्वक हटाइयो',
 
     // Revisions
-    'revision_restore' => 'restored revision',
-    'revision_delete' => 'deleted revision',
-    'revision_delete_notification' => 'Revision successfully deleted',
+    'revision_restore' => 'संशोधन पुनर्स्थापित गरियो',
+    'revision_delete' => 'संशोधन हटाइयो',
+    'revision_delete_notification' => 'संशोधन सफलतापूर्वक हटाइयो',
 
     // Favourites
-    'favourite_add_notification' => '":name" has been added to your favourites',
-    'favourite_remove_notification' => '":name" has been removed from your favourites',
+    'favourite_add_notification' => '":name" तपाईंको मनपर्नेमा थपिएको छ',
+    'favourite_remove_notification' => '":name" तपाईंको मनपर्नेबाट हटाइएको छ',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'हेर्ने अभिरुचि सफलतापूर्वक अद्यावधिक गरियो',
 
     // Auth
-    'auth_login' => 'logged in',
-    'auth_register' => 'registered as new user',
-    'auth_password_reset_request' => 'requested user password reset',
-    'auth_password_reset_update' => 'reset user password',
-    'mfa_setup_method' => 'configured MFA method',
-    'mfa_setup_method_notification' => 'Multi-factor method successfully configured',
-    'mfa_remove_method' => 'removed MFA method',
-    'mfa_remove_method_notification' => 'Multi-factor method successfully removed',
+    'auth_login' => 'लग इन भयो',
+    'auth_register' => 'नयाँ प्रयोगकर्ता रूपमा दर्ता गरियो',
+    'auth_password_reset_request' => 'प्रयोगकर्ताको पासवर्ड रिसेटको अनुरोध गरियो',
+    'auth_password_reset_update' => 'प्रयोगकर्ता पासवर्ड रिसेट गर्नुहोस्',
+    'mfa_setup_method' => 'MFA विधि सेटअप गरियो',
+    'mfa_setup_method_notification' => 'बहु-कारक प्रमाणीकरण विधि सफलतापूर्वक सेटअप गरियो',
+    'mfa_remove_method' => 'MFA हटाइयो',
+    'mfa_remove_method_notification' => 'बहु-कारक प्रमाणीकरण विधि सफलतापूर्वक हटाइयो',
 
     // Settings
-    'settings_update' => 'updated settings',
-    'settings_update_notification' => 'Settings successfully updated',
-    'maintenance_action_run' => 'ran maintenance action',
+    'settings_update' => 'सेटिङहरू अद्यावधिक गरियो',
+    'settings_update_notification' => 'सेटिङहरू सफलतापूर्वक अद्यावधिक गरियो',
+    'maintenance_action_run' => 'मर्मत कार्य सञ्चालन गरियो',
 
     // Webhooks
-    'webhook_create' => 'created webhook',
-    'webhook_create_notification' => 'Webhook successfully created',
-    'webhook_update' => 'updated webhook',
-    'webhook_update_notification' => 'Webhook successfully updated',
-    'webhook_delete' => 'deleted webhook',
-    'webhook_delete_notification' => 'Webhook successfully deleted',
+    'webhook_create' => 'वेबहुक सिर्जना गरियो',
+    'webhook_create_notification' => 'वेबहुक सफलतापूर्वक सिर्जना गरियो',
+    'webhook_update' => 'वेबहुकअद्यावधिक गरियो',
+    'webhook_update_notification' => 'वेबहुक सफलतापूर्वक अद्यावधिक गरियो',
+    'webhook_delete' => 'वेबहुक हटाइयो',
+    'webhook_delete_notification' => 'वेबहुक सफलतापूर्वक हटाइयो',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'आयात सिर्जना गरियो',
+    'import_create_notification' => 'आयात सफलतापूर्वक अपलोड गरियो',
+    'import_run' => 'आयात अद्यावधिक गरियो',
+    'import_run_notification' => 'सामग्री सफलतापूर्वक आयात गरियो',
+    'import_delete' => 'आयात हटाइयो',
+    'import_delete_notification' => 'आयात सफलतापूर्वक हटाइयो',
 
     // Users
     'user_create' => 'created user',
@@ -125,7 +125,7 @@ return [
     'commented_on'                => 'commented on',
     'comment_create'              => 'added comment',
     'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_delete'              => 'मेटिएको टिप्पणी',
 
     // Sort Rules
     'sort_rule_create' => 'created sort rule',
