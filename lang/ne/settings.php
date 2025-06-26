@@ -7,10 +7,10 @@
 return [
 
     // Common Messages
-    'settings' => 'Settings',
+    'settings' => 'सेटिङ्ग',
     'settings_save' => 'Save Settings',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'सिस्टम संस्करण',
+    'categories' => 'क्याटोगोरीहरु',
 
     // App Settings
     'app_customization' => 'Customization',
@@ -43,8 +43,8 @@ return [
     'app_footer_links_label' => 'Link Label',
     'app_footer_links_url' => 'Link URL',
     'app_footer_links_add' => 'Add Footer Link',
-    'app_disable_comments' => 'Disable Comments',
-    'app_disable_comments_toggle' => 'Disable comments',
+    'app_disable_comments' => 'टिप्पणीहरू असक्षम पार्नुहोस्',
+    'app_disable_comments_toggle' => 'टिप्पणीहरू असक्षम पार्नुहोस्',
     'app_disable_comments_desc' => 'Disables comments across all pages in the application. <br> Existing comments are not shown.',
 
     // Color settings
@@ -91,7 +91,7 @@ return [
     'sort_rule_details_desc' => 'Set a name for this sort rule, which will appear in lists when users are selecting a sort.',
     'sort_rule_operations' => 'Sort Operations',
     'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
-    'sort_rule_available_operations' => 'Available Operations',
+    'sort_rule_available_operations' => 'उपलब्ध सञ्चालनहरू',
     'sort_rule_available_operations_empty' => 'No operations remaining',
     'sort_rule_configured_operations' => 'Configured Operations',
     'sort_rule_configured_operations_empty' => 'Drag/add operations from the "Available Operations" list',
@@ -128,14 +128,14 @@ return [
     'maint_timeout_command_note' => 'Note: This action can take time to run, which can lead to timeout issues in some web environments. As an alternative, this action be performed using a terminal command.',
 
     // Recycle Bin
-    'recycle_bin' => 'Recycle Bin',
+    'recycle_bin' => 'रीसायकल बिन',
     'recycle_bin_desc' => 'Here you can restore items that have been deleted or choose to permanently remove them from the system. This list is unfiltered unlike similar activity lists in the system where permission filters are applied.',
     'recycle_bin_deleted_item' => 'Deleted Item',
     'recycle_bin_deleted_parent' => 'Parent',
     'recycle_bin_deleted_by' => 'Deleted By',
     'recycle_bin_deleted_at' => 'Deletion Time',
     'recycle_bin_permanently_delete' => 'Permanently Delete',
-    'recycle_bin_restore' => 'Restore',
+    'recycle_bin_restore' => 'पुन: भण्डारण गर्नुहोस्',
     'recycle_bin_contents_empty' => 'The recycle bin is currently empty',
     'recycle_bin_empty' => 'Empty Recycle Bin',
     'recycle_bin_empty_confirm' => 'This will permanently destroy all items in the recycle bin including content contained within each item. Are you sure you want to empty the recycle bin?',
@@ -155,8 +155,8 @@ return [
     'audit_event_filter_no_filter' => 'No Filter',
     'audit_deleted_item' => 'Deleted Item',
     'audit_deleted_item_name' => 'Name: :name',
-    'audit_table_user' => 'User',
-    'audit_table_event' => 'Event',
+    'audit_table_user' => 'प्रयोगकर्ता',
+    'audit_table_event' => 'घटना',
     'audit_table_related' => 'Related Item or Detail',
     'audit_table_ip' => 'IP Address',
     'audit_table_date' => 'Activity Date',
