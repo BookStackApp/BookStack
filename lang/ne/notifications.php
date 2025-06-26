@@ -7,7 +7,7 @@ return [
     'new_comment_subject' => 'नयाँ टिप्पणी: :pageName पानामा',
     'new_comment_intro' => 'एक प्रयोगकर्ताले :appName मा रहेको पानामा टिप्पणी गरेका छन्:',
     'new_page_subject' => 'नयाँ पाना: :pageName',
-    'new_page_intro' => ':appName मा नयाँ पाना बनाइएको छ:',
+    'new_page_intro' => ':appName मा नयाँ पाना बनाइएको छ',
     'updated_page_subject' => 'पाना अपडेट भयो: :pageName',
     'updated_page_intro' => ':appName मा पाना अपडेट गरिएको छ:',
     'updated_page_debounce' => 'धेरै सूचना नपरोस् भनेर, केही समयको लागि एउटै सम्पादकबाट हुने थप सम्पादनहरूका सूचना तपाईंलाई पठाइने छैन।',
