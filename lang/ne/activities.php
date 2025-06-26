@@ -93,48 +93,48 @@ return [
     'import_delete_notification' => 'आयात सफलतापूर्वक हटाइयो',
 
     // Users
-    'user_create' => 'created user',
-    'user_create_notification' => 'User successfully created',
-    'user_update' => 'updated user',
-    'user_update_notification' => 'User successfully updated',
-    'user_delete' => 'deleted user',
-    'user_delete_notification' => 'User successfully removed',
+    'user_create' => 'प्रयोगकर्ता सिर्जना गरियो',
+    'user_create_notification' => 'प्रयोगकर्ता सफलतापूर्वक सिर्जना गरियो',
+    'user_update' => 'प्रयोगकर्ता अद्यावधिक गरियो',
+    'user_update_notification' => 'प्रयोगकर्ता सफलतापूर्वक अद्यावधिक गरियो',
+    'user_delete' => 'प्रयोगकर्ता हटाइयो',
+    'user_delete_notification' => 'प्रयोगकर्ता सफलतापूर्वक हटाइयो',
 
     // API Tokens
-    'api_token_create' => 'created API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'API टोकन सिर्जना गरियो',
+    'api_token_create_notification' => 'API टोकन सफलतापूर्वक सिर्जना गरियो',
+    'api_token_update' => 'API टोकन अद्यावधिक गरियो',
+    'api_token_update_notification' => 'API टोकन सफलतापूर्वक अद्यावधिक गरियो',
+    'api_token_delete' => 'API टोकन हटाइयो',
+    'api_token_delete_notification' => 'API टोकन सफलतापूर्वक हटाइयो',
 
     // Roles
-    'role_create' => 'created role',
-    'role_create_notification' => 'Role successfully created',
-    'role_update' => 'updated role',
-    'role_update_notification' => 'Role successfully updated',
-    'role_delete' => 'deleted role',
-    'role_delete_notification' => 'Role successfully deleted',
+    'role_create' => 'भूमिका सिर्जना गरियो',
+    'role_create_notification' => 'भूमिका सफलतापूर्वक सिर्जना गरियो',
+    'role_update' => 'भूमिका अद्यावधिक गरियो',
+    'role_update_notification' => 'भूमिका सफलतापूर्वक अद्यावधिक गरियो',
+    'role_delete' => 'भूमिका हटाइयो',
+    'role_delete_notification' => 'भूमिका सफलतापूर्वक हटाइयो',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'पुनः प्रयोगको डब्बा खाली गरियो',
+    'recycle_bin_restore' => 'पुनः प्रयोगको डब्बाबाट पुनर्स्थापित गरियो',
+    'recycle_bin_destroy' => 'पुनः प्रयोगको डब्बाबाट हटाइयो',
 
     // Comments
-    'commented_on'                => 'commented on',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'मेटिएको टिप्पणी',
+    'commented_on'                => 'मा टिप्पणी गरियो',
+    'comment_create'              => 'टिप्पणी थपियो',
+    'comment_update'              => 'टिप्पणी अद्यावधिक गरियो',
+    'comment_delete'              => 'टिप्पणी मेटाइयो',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'क्रम नियम सिर्जना गरियो',
+    'sort_rule_create_notification' => 'क्रम नियम सफलतापूर्वक सिर्जना गरियो',
+    'sort_rule_update' => 'क्रम नियम अद्यावधिक गरियो',
+    'sort_rule_update_notification' => 'क्रम नियम सफलतापूर्वक अद्यावधिक गरियो',
+    'sort_rule_delete' => 'क्रम नियम हटाइयो',
+    'sort_rule_delete_notification' => 'क्रम नियम सफलतापूर्वक हटाइयो',
 
     // Other
-    'permissions_update'          => 'updated permissions',
+    'permissions_update'          => 'अनुमतिहरू अद्यावधिक गरियो',
 ];
