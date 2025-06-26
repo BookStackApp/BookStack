@@ -5,14 +5,14 @@
  */
 
 return [
-    'my_account' => 'My Account',
+    'my_account' => 'मेरो खाता',
 
-    'shortcuts' => 'Shortcuts',
+    'shortcuts' => 'सर्टकटहरू',
     'shortcuts_interface' => 'UI Shortcut Preferences',
     'shortcuts_toggle_desc' => 'Here you can enable or disable keyboard system interface shortcuts, used for navigation and actions.',
     'shortcuts_customize_desc' => 'You can customize each of the shortcuts below. Just press your desired key combination after selecting the input for a shortcut.',
     'shortcuts_toggle_label' => 'Keyboard shortcuts enabled',
-    'shortcuts_section_navigation' => 'Navigation',
+    'shortcuts_section_navigation' => 'नेभिगेशन',
     'shortcuts_section_actions' => 'Common Actions',
     'shortcuts_save' => 'Save Shortcuts',
     'shortcuts_overlay_desc' => 'Note: When shortcuts are enabled a helper overlay is available via pressing "?" which will highlight the available shortcuts for actions currently visible on the screen.',
@@ -44,8 +44,8 @@ return [
     'profile_admin_options' => 'Administrator Options',
     'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
 
-    'delete_account' => 'Delete Account',
-    'delete_my_account' => 'Delete My Account',
+    'delete_account' => 'खाता मेटाउनुहोस्',
+    'delete_my_account' => 'मेरो खाता मेटाउनुहोस्',
     'delete_my_account_desc' => 'This will fully delete your user account from the system. You will not be able to recover this account or revert this action. Content you\'ve created, such as created pages and uploaded images, will remain.',
-    'delete_my_account_warning' => 'Are you sure you want to delete your account?',
+    'delete_my_account_warning' => 'के तपाईं यो खाता मेटाउन निश्चित हुनुहुन्छ?',
 ];
