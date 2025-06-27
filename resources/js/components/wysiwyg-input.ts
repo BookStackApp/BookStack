@@ -13,7 +13,7 @@ export class WysiwygInput extends Component {
 
         type WysiwygModule = typeof import('../wysiwyg');
         const wysiwygModule = (await window.importVersioned('wysiwyg')) as WysiwygModule;
-        const container = el('div', {class: 'comment-editor-container'});
+        const container = el('div', {class: 'basic-editor-container'});
         this.elem.parentElement?.appendChild(container);
         this.elem.hidden = true;
 

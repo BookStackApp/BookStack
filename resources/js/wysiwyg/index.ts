@@ -144,8 +144,8 @@ export class SimpleWysiwygEditorInterface {
     }
 
     remove() {
-        this.context.editorDOM.remove();
         this.context.manager.teardown();
+        this.context.containerDOM.remove();
         if (this.editorListenerTeardown) {
             this.editorListenerTeardown();
         }
