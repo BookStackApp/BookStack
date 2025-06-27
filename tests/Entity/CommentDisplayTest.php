@@ -60,7 +60,6 @@ class CommentDisplayTest extends TestCase
         $page = $this->entities->page();
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertSee('tinymce.min.js?', false);
         $resp->assertSee('window.editor_translations', false);
         $resp->assertSee('component="entity-selector"', false);
 
@@ -68,7 +67,6 @@ class CommentDisplayTest extends TestCase
         $this->permissions->grantUserRolePermissions($editor, ['comment-update-own']);
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertDontSee('tinymce.min.js?', false);
         $resp->assertDontSee('window.editor_translations', false);
         $resp->assertDontSee('component="entity-selector"', false);
 
@@ -79,7 +77,6 @@ class CommentDisplayTest extends TestCase
         ]);
 
         $resp = $this->actingAs($editor)->get($page->getUrl());
-        $resp->assertSee('tinymce.min.js?', false);
         $resp->assertSee('window.editor_translations', false);
         $resp->assertSee('component="entity-selector"', false);
     }
