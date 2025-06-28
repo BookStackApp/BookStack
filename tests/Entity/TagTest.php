@@ -230,4 +230,39 @@ class TagTest extends TestCase
         $resp->assertDontSee('tag-name-<>', false);
         $resp->assertSee('tag-name-&lt;&gt;', false);
     }
+
+    public function test_parent_tag_classes_visible()
+    {
+        $page = $this->entities->pageWithinChapter();
+        $page->chapter->tags()->create(['name' => 'My Chapter Tag', 'value' => 'abc123']);
+        $page->book->tags()->create(['name' => 'My Book Tag', 'value' => 'def456']);
+        $this->asEditor();
+
+        $html = $this->withHtml($this->get($page->getUrl()));
+        $html->assertElementExists('body.chapter-tag-pair-mychaptertag-abc123');
+        $html->assertElementExists('body.book-tag-pair-mybooktag-def456');
+
+        $html = $this->withHtml($this->get($page->chapter->getUrl()));
+        $html->assertElementExists('body.book-tag-pair-mybooktag-def456');
+    }
+
+    public function test_parent_tag_classes_not_visible_if_cannot_see_parent()
+    {
+        $page = $this->entities->pageWithinChapter();
+        $page->chapter->tags()->create(['name' => 'My Chapter Tag', 'value' => 'abc123']);
+        $page->book->tags()->create(['name' => 'My Book Tag', 'value' => 'def456']);
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $this->permissions->setEntityPermissions($page, ['view'], [$editor->roles()->first()]);
+        $this->permissions->disableEntityInheritedPermissions($page->chapter);
+
+        $html = $this->withHtml($this->get($page->getUrl()));
+        $html->assertElementNotExists('body.chapter-tag-pair-mychaptertag-abc123');
+        $html->assertElementExists('body.book-tag-pair-mybooktag-def456');
+
+        $this->permissions->disableEntityInheritedPermissions($page->book);
+        $html = $this->withHtml($this->get($page->getUrl()));
+        $html->assertElementNotExists('body.book-tag-pair-mybooktag-def456');
+    }
 }
