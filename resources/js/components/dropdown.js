@@ -1,4 +1,4 @@
-import {onSelect} from '../services/dom.ts';
+import {findClosestScrollContainer, onSelect} from '../services/dom.ts';
 import {KeyboardNavigationHandler} from '../services/keyboard-navigation.ts';
 import {Component} from './component';
 
@@ -33,7 +33,8 @@ export class Dropdown extends Component {
         const menuOriginalRect = this.menu.getBoundingClientRect();
         let heightOffset = 0;
         const toggleHeight = this.toggle.getBoundingClientRect().height;
-        const dropUpwards = menuOriginalRect.bottom > window.innerHeight;
+        const containerBounds = findClosestScrollContainer(this.menu).getBoundingClientRect();
+        const dropUpwards = menuOriginalRect.bottom > containerBounds.bottom;
         const containerRect = this.container.getBoundingClientRect();
 
         // If enabled, Move to body to prevent being trapped within scrollable sections

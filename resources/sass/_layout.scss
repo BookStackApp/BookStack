@@ -431,7 +431,8 @@ body.flexbox {
     grid-template-areas:  "a b b";
     grid-template-columns: 1fr 3fr;
     grid-template-rows: min-content min-content 1fr;
-    padding-inline-end: vars.$l;
+    margin-inline-start: (vars.$m + vars.$xxs);
+    margin-inline-end: (vars.$m + vars.$xxs);
   }
   .tri-layout-sides {
     grid-column-start: a;
@@ -452,6 +453,8 @@ body.flexbox {
     height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-inline: vars.$m;
+    margin-inline: -(vars.$m);
     &::-webkit-scrollbar {
       display: none;
     }
