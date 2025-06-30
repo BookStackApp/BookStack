@@ -5,6 +5,7 @@ export class TriLayout extends Component {
     setup() {
         this.container = this.$refs.container;
         this.tabs = this.$manyRefs.tab;
+        this.sidebarScrollContainers = this.$manyRefs.sidebarScrollContainer;
 
         this.lastLayoutType = 'none';
         this.onDestroy = null;
@@ -22,6 +23,8 @@ export class TriLayout extends Component {
         window.addEventListener('resize', () => {
             this.updateLayout();
         }, {passive: true});
+
+        this.setupSidebarScrollHandlers();
     }
 
     updateLayout() {
@@ -106,6 +109,30 @@ export class TriLayout extends Component {
         }
 
         this.lastTabShown = tabName;
+    }
+
+    setupSidebarScrollHandlers() {
+        for (const sidebar of this.sidebarScrollContainers) {
+            sidebar.addEventListener('scroll', () => this.handleSidebarScroll(sidebar), {
+                passive: true,
+            });
+            this.handleSidebarScroll(sidebar);
+        }
+
+        window.addEventListener('resize', () => {
+            for (const sidebar of this.sidebarScrollContainers) {
+                this.handleSidebarScroll(sidebar);
+            }
+        });
+    }
+
+    handleSidebarScroll(sidebar) {
+        const scrollable = sidebar.clientHeight !== sidebar.scrollHeight;
+        const atTop = sidebar.scrollTop === 0;
+        const atBottom = (sidebar.scrollTop + sidebar.clientHeight) === sidebar.scrollHeight;
+
+        sidebar.parentElement.classList.toggle('scroll-away-from-top', !atTop && scrollable);
+        sidebar.parentElement.classList.toggle('scroll-away-from-bottom', !atBottom && scrollable);
     }
 
 }
