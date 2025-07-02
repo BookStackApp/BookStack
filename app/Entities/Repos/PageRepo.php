@@ -77,6 +77,7 @@ class PageRepo
         $draft->priority = $this->getNewPriority($draft);
         $this->updateTemplateStatusAndContentFromInput($draft, $input);
         $this->baseRepo->update($draft, $input);
+        $draft->rebuildPermissions();
 
         $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
         $this->revisionRepo->storeNewForPage($draft, $summary);
@@ -91,7 +92,7 @@ class PageRepo
     /**
      * Directly update the content for the given page from the provided input.
      * Used for direct content access in a way that performs required changes
-     * (Search index & reference regen) without performing an official update.
+     * (Search index and reference regen) without performing an official update.
      */
     public function setContentFromInput(Page $page, array $input): void
     {

@@ -2,7 +2,6 @@
 
 namespace BookStack\Sorting;
 
-use BookStack\App\Model;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
