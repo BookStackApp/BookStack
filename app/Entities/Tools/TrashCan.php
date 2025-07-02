@@ -15,6 +15,7 @@ use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\ImageService;
+use BookStack\Util\DatabaseTransaction;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
@@ -357,25 +358,26 @@ class TrashCan
 
     /**
      * Destroy the given entity.
+     * Returns the number of total entities destroyed in the operation.
      *
      * @throws Exception
      */
     public function destroyEntity(Entity $entity): int
     {
-        if ($entity instanceof Page) {
-            return $this->destroyPage($entity);
-        }
-        if ($entity instanceof Chapter) {
-            return $this->destroyChapter($entity);
-        }
-        if ($entity instanceof Book) {
-            return $this->destroyBook($entity);
-        }
-        if ($entity instanceof Bookshelf) {
-            return $this->destroyShelf($entity);
-        }
+        $result = (new DatabaseTransaction(function () use ($entity) {
+            if ($entity instanceof Page) {
+                return $this->destroyPage($entity);
+            } else if ($entity instanceof Chapter) {
+                return $this->destroyChapter($entity);
+            } else if ($entity instanceof Book) {
+                return $this->destroyBook($entity);
+            } else if ($entity instanceof Bookshelf) {
+                return $this->destroyShelf($entity);
+            }
+            return null;
+        }))->run();
 
-        return 0;
+        return $result ?? 0;
     }
 
     /**

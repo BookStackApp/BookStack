@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\Util\DatabaseTransaction;
 use Exception;
 
 class ChapterRepo
@@ -27,16 +28,16 @@ class ChapterRepo
      */
     public function create(array $input, Book $parentBook): Chapter
     {
-        $chapter = new Chapter();
-        $chapter->book_id = $parentBook->id;
-        $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
-        $this->baseRepo->create($chapter, $input);
-        $this->baseRepo->updateDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
-        Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
+        return (new DatabaseTransaction(function () use ($input, $parentBook) {
+            $chapter = new Chapter();
+            $chapter->book_id = $parentBook->id;
+            $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
+            $this->baseRepo->create($chapter, $input);
+            $this->baseRepo->updateDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
+            Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
-        $this->baseRepo->sortParent($chapter);
-
-        return $chapter;
+            $this->baseRepo->sortParent($chapter);
+        }))->run();
     }
 
     /**
@@ -88,12 +89,14 @@ class ChapterRepo
             throw new PermissionsException('User does not have permission to create a chapter within the chosen book');
         }
 
-        $chapter->changeBook($parent->id);
-        $chapter->rebuildPermissions();
-        Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
+        return (new DatabaseTransaction(function () use ($chapter, $parent) {
+            $chapter->changeBook($parent->id);
+            $chapter->rebuildPermissions();
+            Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 
-        $this->baseRepo->sortParent($chapter);
+            $this->baseRepo->sortParent($chapter);
 
-        return $parent;
+            return $parent;
+        }))->run();
     }
 }

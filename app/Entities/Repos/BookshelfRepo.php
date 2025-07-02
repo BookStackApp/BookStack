@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Facades\Activity;
+use BookStack\Util\DatabaseTransaction;
 use Exception;
 
 class BookshelfRepo
@@ -23,13 +24,13 @@ class BookshelfRepo
      */
     public function create(array $input, array $bookIds): Bookshelf
     {
-        $shelf = new Bookshelf();
-        $this->baseRepo->create($shelf, $input);
-        $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
-        $this->updateBooks($shelf, $bookIds);
-        Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
-
-        return $shelf;
+        return (new DatabaseTransaction(function () use ($input, $bookIds) {
+            $shelf = new Bookshelf();
+            $this->baseRepo->create($shelf, $input);
+            $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
+            $this->updateBooks($shelf, $bookIds);
+            Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
+        }))->run();
     }
 
     /**
