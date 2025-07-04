@@ -53,6 +53,10 @@ class MixedEntityListLoader
     {
         $modelMap = [];
 
+        // TODO:: set for record and remove unset
+        unset($idsByType['record']);
+        unset($idsByType['recordchapter']);
+        
         foreach ($idsByType as $type => $ids) {
             $models = $this->queries->visibleForList($type)
                 ->whereIn('id', $ids)

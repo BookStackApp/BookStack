@@ -1,10 +1,10 @@
 <div class="toolbar page-edit-toolbar py-xs">
 
     <div>
-        <div class="inline block">
+        {{-- <div class="inline block">
             <a href="{{ $isDraft ? $page->getParent()->getUrl() : $page->getUrl() }}"
                class="icon-list-item text-link"><span>@icon('back')</span><span class="hide-under-l">{{ trans('common.back') }}</span></a>
-        </div>
+        </div> --}}
     </div>
 
     <div class="text-center">

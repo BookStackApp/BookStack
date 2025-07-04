@@ -26,6 +26,18 @@ class ActivityType
     const BOOKSHELF_UPDATE = 'bookshelf_update';
     const BOOKSHELF_DELETE = 'bookshelf_delete';
 
+    const RECORD_CREATE = 'record_create';
+    const RECORD_CREATE_FROM_CHAPTER = 'record_create_from_chapter';
+    const RECORD_UPDATE = 'record_update';
+    const RECORD_DELETE = 'record_delete';
+    const RECORD_SORT = 'record_sort';
+
+    const RECORDSHELF_CREATE = 'recordshelf_create';
+    const RECORDSHELF_CREATE_FROM_BOOK = 'recordshelf_create_from_book';
+    const RECORDSHELF_UPDATE = 'recordshelf_update';
+    const RECORDSHELF_DELETE = 'recordshelf_delete';
+
+
     const COMMENTED_ON = 'commented_on';
     const COMMENT_CREATE = 'comment_create';
     const COMMENT_UPDATE = 'comment_update';

@@ -7,15 +7,19 @@ use BookStack\Activity\Tools\CommentTree;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\RecordChapter;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\PageQueries;
+use BookStack\Entities\Queries\RecordPageQueries;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Entities\Repos\RecordPageRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Tools\PageEditorData;
+use BookStack\Entities\Tools\RecordPageEditorData;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
@@ -31,7 +35,9 @@ class PageController extends Controller
 {
     public function __construct(
         protected PageRepo $pageRepo,
+        protected RecordPageRepo $recordPageRepo,
         protected PageQueries $queries,
+        protected RecordPageQueries $recordQueries,
         protected EntityQueries $entityQueries,
         protected ReferenceFetcher $referenceFetcher
     ) {
@@ -55,6 +61,33 @@ class PageController extends Controller
         // Redirect to draft edit screen if signed in
         if ($this->isSignedIn()) {
             $draft = $this->pageRepo->getNewDraftPage($parent);
+            // dd($draft->toArray(), $draft->getUrl());
+
+            return redirect($draft->getUrl());
+        }
+
+        // Otherwise show the edit view if they're a guest
+        $this->setPageTitle(trans('entities.pages_new'));
+
+        return view('pages.guest-create', ['parent' => $parent]);
+    }
+
+    public function recordCreate(string $bookSlug, ?string $chapterSlug = null)
+    {
+        if ($chapterSlug) {
+            $parent = $this->entityQueries->recordChapters->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+            // dd('in create');
+        } else {
+            $parent = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
+        }
+        
+        $this->checkOwnablePermission('page-create', $parent);
+        
+        // Redirect to draft edit screen if signed in
+        if ($this->isSignedIn()) {
+            // dd('innnn');
+            $draft = $this->recordPageRepo->getNewDraftPage($parent);
+            // dd($draft->toArray(), $draft->getUrl());
 
             return redirect($draft->getUrl());
         }
@@ -99,13 +132,43 @@ class PageController extends Controller
      */
     public function editDraft(Request $request, string $bookSlug, int $pageId)
     {
+        // dd('in edit Draft');
         $draft = $this->queries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission('page-create', $draft->getParent());
+        // dd($draft->toArray(), $draft->getParent()->toArray());
 
         $editorData = new PageEditorData($draft, $this->entityQueries, $request->query('editor', ''));
+        // dd($editorData);
         $this->setPageTitle(trans('entities.pages_edit_draft'));
 
+        // dd($editorData->getViewData(), $editorData->getViewData()['page']->getParent()->getUrl(), $editorData->getViewData()['page']->getUrl());
         return view('pages.edit', $editorData->getViewData());
+    }
+
+    /**
+     * Show form to continue editing a draft page.
+     *
+     * @throws NotFoundException
+     */
+    public function recordEditDraft(Request $request, string $bookSlug, int $pageId)
+    {
+        // dd($pageId);
+        $draft = $this->recordQueries->findVisibleByIdOrFail($pageId);
+        // dd($draft->toArray(), $draft->getParent());
+        
+        $recordChapter = RecordChapter::find($draft['record_chapter_id']);
+        
+        $this->checkOwnablePermission('page-create', $recordChapter);
+        // dd($draft->toArray());
+        $editorData = new RecordPageEditorData($draft, $this->entityQueries, $request->query('editor', ''));
+        // dd($editorData);
+
+        $this->setPageTitle(trans('entities.pages_edit_draft'));
+
+        $aa = RecordChapter::find($editorData->getViewData()['page']->record_chapter_id);
+
+        // dd($editorData->getViewData(), $editorData->getViewData()['page']->toArray(), $editorData->getViewData()['page']->getUrl(), $aa->getUrl());
+        return view('record-pages.edit', $editorData->getViewData());
     }
 
     /**
@@ -120,9 +183,36 @@ class PageController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
+
+        dd($draftPage->toArray(), $draftPage->getParent()->toArray());
+
         $this->checkOwnablePermission('page-create', $draftPage->getParent());
 
         $page = $this->pageRepo->publishDraft($draftPage, $request->all());
+
+        return redirect($page->getUrl());
+    }
+
+    /**
+     * Store a new page by changing a draft into a page.
+     *
+     * @throws NotFoundException
+     * @throws ValidationException
+     */
+    public function recordPageStore(Request $request, string $bookSlug, int $pageId)
+    {
+        // dd('in record store', $request->toArray());
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+        $draftPage = $this->recordQueries->findVisibleByIdOrFail($pageId);
+
+        // dd($draftPage->toArray(), $draftPage->getParent());
+        $recordChapter = RecordChapter::find($draftPage->record_chapter_id);
+
+        $this->checkOwnablePermission('page-create', $recordChapter);
+
+        $page = $this->recordPageRepo->publishDraft($draftPage, $request->all());
 
         return redirect($page->getUrl());
     }

@@ -12,6 +12,8 @@ use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
 use BookStack\Entities\Tools\HierarchyTransformer;
 use BookStack\Entities\Tools\NextPreviousContentLocator;
+use BookStack\Entities\Tools\RecordContents;
+use BookStack\Entities\Tools\RecordNextPreviousContentLocator;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
@@ -21,6 +23,8 @@ use BookStack\References\ReferenceFetcher;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+
+// Ensure no other 'Collection' class is imported in this file
 
 class ChapterController extends Controller
 {
@@ -38,6 +42,22 @@ class ChapterController extends Controller
     public function create(string $bookSlug)
     {
         $book = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
+        // dd($book->toArray());
+        $this->checkOwnablePermission('chapter-create', $book);
+        
+        $this->setPageTitle(trans('entities.chapters_create'));
+
+        return view('chapters.create', [
+            'book' => $book,
+            'current' => $book,
+        ]);
+    }
+
+    // record chapter
+    public function recordCreate(string $recordSlug)
+    {
+        $book = $this->entityQueries->records->findVisibleBySlugOrFail($recordSlug);
+        // dd($book->toArray());
         $this->checkOwnablePermission('chapter-create', $book);
 
         $this->setPageTitle(trans('entities.chapters_create'));
@@ -65,7 +85,28 @@ class ChapterController extends Controller
         $book = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission('chapter-create', $book);
 
+        // dd($validated, $book->toArray());
         $chapter = $this->chapterRepo->create($validated, $book);
+
+        // dd('Chapter Controller', $chapter->toArray(), $chapter->getUrl());
+        return redirect($chapter->getUrl());
+    }
+    
+    public function recordStore(Request $request, string $recordSlug)
+    {
+        $validated = $this->validate($request, [
+            'name'                => ['required', 'string', 'max:255'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
+        ]);
+
+        $book = $this->entityQueries->records->findVisibleBySlugOrFail($recordSlug);
+        $this->checkOwnablePermission('chapter-create', $book);
+        // dd($validated, $book->toArray());
+        $chapter = $this->chapterRepo->recordCreate($validated, $book);
+
+        // dd('Chapter Controller', $chapter->toArray(), $chapter->getUrl());
 
         return redirect($chapter->getUrl());
     }
@@ -81,6 +122,7 @@ class ChapterController extends Controller
         $sidebarTree = (new BookContents($chapter->book))->getTree();
         $pages = $this->entityQueries->pages->visibleForChapterList($chapter->id)->get();
 
+        // dd($chapter, $sidebarTree);
         $nextPreviousLocator = new NextPreviousContentLocator($chapter, $sidebarTree);
         View::incrementFor($chapter);
 
@@ -88,6 +130,33 @@ class ChapterController extends Controller
 
         return view('chapters.show', [
             'book'           => $chapter->book,
+            'chapter'        => $chapter,
+            'current'        => $chapter,
+            'sidebarTree'    => $sidebarTree,
+            'watchOptions'   => new UserEntityWatchOptions(user(), $chapter),
+            'pages'          => $pages,
+            'next'           => $nextPreviousLocator->getNext(),
+            'previous'       => $nextPreviousLocator->getPrevious(),
+            'referenceCount' => $this->referenceFetcher->getReferenceCountToEntity($chapter),
+        ]);
+    }
+
+    public function recordShow(string $recordSlug, string $chapterSlug)
+    {
+        $chapter = $this->queries->findRecordVisibleBySlugsOrFail($recordSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-view', $chapter);
+        
+        $sidebarTree = (new RecordContents($chapter->record))->getTree();
+        $pages = $this->entityQueries->pages->visibleForChapterList($chapter->id)->get();
+        $nextPreviousLocator = new RecordNextPreviousContentLocator($chapter, $sidebarTree);
+        // dd('hj', $chapter->toArray());
+        View::incrementFor($chapter);
+        View::incrementFor($chapter);
+
+        $this->setPageTitle($chapter->getShortName());
+
+        return view('chapters.show', [
+            'book'           => $chapter->record,
             'chapter'        => $chapter,
             'current'        => $chapter,
             'sidebarTree'    => $sidebarTree,

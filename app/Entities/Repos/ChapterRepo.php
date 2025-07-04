@@ -5,8 +5,11 @@ namespace BookStack\Entities\Repos;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Record;
+use BookStack\Entities\Models\RecordChapter;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\RecordContents;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
@@ -36,6 +39,24 @@ class ChapterRepo
 
         $this->baseRepo->sortParent($chapter);
 
+        // dd($chapter->toArray());
+        return $chapter;
+    }
+
+    public function recordCreate(array $input, Record $parentBook): RecordChapter
+    {
+        $chapter = new RecordChapter();
+        $chapter->record_id = $parentBook->id;
+        // dd("in record");
+        $chapter->priority = (new RecordContents($parentBook))->getLastPriority() + 1;
+        $this->baseRepo->create($chapter, $input);
+        $this->baseRepo->updateRecordDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
+        Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
+        
+        // dd('line');
+        $this->baseRepo->sortParent($chapter);
+
+        // dd($chapter->toArray());
         return $chapter;
     }
 

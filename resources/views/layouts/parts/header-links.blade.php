@@ -7,6 +7,7 @@
            data-shortcut="shelves_view">@icon('bookshelf'){{ trans('entities.shelves') }}</a>
     @endif
     <a href="{{ url('/books') }}" data-shortcut="books_view">@icon('books'){{ trans('entities.books') }}</a>
+    <a href="{{ url('/records') }}" data-shortcut="records_view">@icon('books'){{ trans('entities.records') }}</a>
     @if(!user()->isGuest() && userCan('settings-manage'))
         <a href="{{ url('/settings') }}"
            data-shortcut="settings_view">@icon('settings'){{ trans('settings.settings') }}</a>

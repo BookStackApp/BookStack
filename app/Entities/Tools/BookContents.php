@@ -32,6 +32,8 @@ class BookContents
             ->where('chapter_id', '=', 0)
             ->max('priority');
 
+            // dd($maxPage);
+
         $maxChapter = $this->book->chapters()
             ->max('priority');
 

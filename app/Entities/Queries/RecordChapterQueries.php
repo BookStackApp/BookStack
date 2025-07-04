@@ -1,0 +1,97 @@
+<?php
+
+namespace BookStack\Entities\Queries;
+
+use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\RecordChapter;
+use BookStack\Exceptions\NotFoundException;
+use Illuminate\Database\Eloquent\Builder;
+
+class RecordChapterQueries implements ProvidesEntityQueries
+{
+    protected static array $listAttributes = [
+        'id', 'slug', 'name', 'description', 'priority',
+        'book_id', 'created_at', 'updated_at', 'owned_by',
+    ];
+
+    public function start(): Builder
+    {
+        return RecordChapter::query();
+    }
+    public function recordStart(): Builder
+    {
+        return RecordChapter::query();
+    }
+
+    public function findVisibleById(int $id): ?RecordChapter
+    {
+        return $this->start()->scopes('visible')->find($id);
+    }
+
+    public function findVisibleByIdOrFail(int $id): RecordChapter
+    {
+        return $this->start()->scopes('visible')->findOrFail($id);
+    }
+
+    public function findVisibleBySlugsOrFail(string $bookSlug, string $chapterSlug): RecordChapter
+    {
+        /** @var ?RecordChapter $chapter */
+        $chapter = $this->start()
+            ->scopes('visible')
+            ->with('record')
+            ->whereHas('record', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            })
+            ->where('slug', '=', $chapterSlug)
+            ->first();
+
+        if (is_null($chapter)) {
+            throw new NotFoundException(trans('errors.chapter_not_found'));
+        }
+
+        return $chapter;
+    }
+
+    /**
+     * @return RecordChapter
+     * @throws NotFoundException
+     */
+    public function findRecordVisibleBySlugsOrFail(string $bookSlug, string $chapterSlug): RecordChapter
+    {
+        /** @var ?RecordChapter $recordChapter */
+        $recordChapter = $this->recordStart()
+            ->scopes('visible')
+            ->with('record')
+            ->whereHas('record', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            })
+            ->where('slug', '=', $chapterSlug)
+            ->first();
+
+        if (is_null($recordChapter)) {
+            throw new NotFoundException(trans('errors.chapter_not_found'));
+        }
+
+        return $recordChapter;
+    }
+
+    public function usingSlugs(string $bookSlug, string $chapterSlug): Builder
+    {
+        return $this->start()
+            ->where('slug', '=', $chapterSlug)
+            ->whereHas('book', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            });
+    }
+
+    public function visibleForList(): Builder
+    {
+        return $this->start()
+            ->scopes('visible')
+            ->select(array_merge(static::$listAttributes, ['book_slug' => function ($builder) {
+                $builder->select('slug')
+                    ->from('books')
+                    ->whereColumn('books.id', '=', 'chapters.book_id');
+            }]));
+    }
+}

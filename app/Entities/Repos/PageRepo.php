@@ -54,12 +54,14 @@ class PageRepo
         }
 
         $defaultTemplate = $page->chapter->defaultTemplate ?? $page->book->defaultTemplate;
+        // dd($page->toArray());
         if ($defaultTemplate && userCan('view', $defaultTemplate)) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
             ]);
         }
+        // dd($page->toArray());
 
         $page->save();
         $page->refresh()->rebuildPermissions();

@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\Record;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
@@ -64,6 +65,41 @@ class Cloner
      * Clones all child chapters & pages.
      */
     public function cloneBook(Book $original, string $newName): Book
+    {
+        $bookDetails = $this->entityToInputData($original);
+        $bookDetails['name'] = $newName;
+
+        // Clone book
+        $copyBook = $this->bookRepo->create($bookDetails);
+
+        // Clone contents
+        $directChildren = $original->getDirectVisibleChildren();
+        foreach ($directChildren as $child) {
+            if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
+                $this->cloneChapter($child, $copyBook, $child->name);
+            }
+
+            if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
+                $this->clonePage($child, $copyBook, $child->name);
+            }
+        }
+
+        // Clone bookshelf relationships
+        /** @var Bookshelf $shelf */
+        foreach ($original->shelves as $shelf) {
+            if (userCan('bookshelf-update', $shelf)) {
+                $shelf->appendBook($copyBook);
+            }
+        }
+
+        return $copyBook;
+    }
+
+    /**
+     * Clone the given book.
+     * Clones all child chapters & pages.
+     */
+    public function cloneRecord(Record $original, string $newName): Book
     {
         $bookDetails = $this->entityToInputData($original);
         $bookDetails['name'] = $newName;

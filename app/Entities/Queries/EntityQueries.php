@@ -11,7 +11,9 @@ class EntityQueries
     public function __construct(
         public BookshelfQueries $shelves,
         public BookQueries $books,
+        public RecordQueries $records,
         public ChapterQueries $chapters,
+        public RecordChapterQueries $recordChapters,
         public PageQueries $pages,
         public PageRevisionQueries $revisions,
     ) {
@@ -24,6 +26,7 @@ class EntityQueries
      */
     public function findVisibleByStringIdentifier(string $identifier): ?Entity
     {
+        dd(1);
         $explodedId = explode(':', $identifier);
         $entityType = $explodedId[0];
         $entityId = intval($explodedId[1]);
@@ -49,6 +52,7 @@ class EntityQueries
             'page' => $this->pages,
             'chapter' => $this->chapters,
             'book' => $this->books,
+            'record' => $this->records,
             'bookshelf' => $this->shelves,
             default => null,
         };

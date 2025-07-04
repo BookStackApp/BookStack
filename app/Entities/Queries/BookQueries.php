@@ -30,6 +30,7 @@ class BookQueries implements ProvidesEntityQueries
 
     public function findVisibleBySlugOrFail(string $slug): Book
     {
+        // dd('gh');
         /** @var ?Book $book */
         $book = $this->start()
             ->scopes('visible')

@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Queries;
 
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\RecordChapter;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -16,6 +17,10 @@ class ChapterQueries implements ProvidesEntityQueries
     public function start(): Builder
     {
         return Chapter::query();
+    }
+    public function recordStart(): Builder
+    {
+        return RecordChapter::query();
     }
 
     public function findVisibleById(int $id): ?Chapter
@@ -45,6 +50,29 @@ class ChapterQueries implements ProvidesEntityQueries
         }
 
         return $chapter;
+    }
+
+    /**
+     * @return RecordChapter
+     * @throws NotFoundException
+     */
+    public function findRecordVisibleBySlugsOrFail(string $bookSlug, string $chapterSlug): RecordChapter
+    {
+        /** @var ?RecordChapter $recordChapter */
+        $recordChapter = $this->recordStart()
+            ->scopes('visible')
+            ->with('record')
+            ->whereHas('record', function (Builder $query) use ($bookSlug) {
+                $query->where('slug', '=', $bookSlug);
+            })
+            ->where('slug', '=', $chapterSlug)
+            ->first();
+
+        if (is_null($recordChapter)) {
+            throw new NotFoundException(trans('errors.chapter_not_found'));
+        }
+
+        return $recordChapter;
     }
 
     public function usingSlugs(string $bookSlug, string $chapterSlug): Builder

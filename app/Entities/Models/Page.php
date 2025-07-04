@@ -120,6 +120,7 @@ class Page extends BookChild
      */
     public function getUrl(string $path = ''): string
     {
+        // dd($this->draft);
         $parts = [
             'books',
             urlencode($this->book_slug ?? $this->book->slug),

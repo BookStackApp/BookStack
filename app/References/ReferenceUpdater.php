@@ -47,6 +47,7 @@ class ReferenceUpdater
                 array_push($references, ...$childRefs);
             }
         }
+        // dd('sss');
 
         $deduped = [];
         foreach ($references as $reference) {

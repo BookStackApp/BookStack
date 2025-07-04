@@ -9,11 +9,15 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\HasHtmlDescription;
+use BookStack\Entities\Models\Record;
+use BookStack\Entities\Models\RecordChapter;
+use BookStack\Entities\Models\RecordChild;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
 use BookStack\Sorting\BookSorter;
+use BookStack\Sorting\RecordSorter;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Util\HtmlDescriptionFilter;
 use Illuminate\Http\UploadedFile;
@@ -27,6 +31,7 @@ class BaseRepo
         protected ReferenceStore $referenceStore,
         protected PageQueries $pageQueries,
         protected BookSorter $bookSorter,
+        protected RecordSorter $recordSorter,
     ) {
     }
 
@@ -44,6 +49,7 @@ class BaseRepo
         ]);
         $entity->refreshSlug();
         $entity->save();
+        // dd('iss', $entity->toArray());
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
@@ -116,6 +122,27 @@ class BaseRepo
      * Checks that, if changing, the provided value is a valid template and the user
      * has visibility of the provided page template id.
      */
+    public function updateRecordDefaultTemplate(Record|RecordChapter $entity, int $templateId): void
+    {
+        $changing = $templateId !== intval($entity->default_template_id);
+        if (!$changing) {
+            return;
+        }
+
+        if ($templateId === 0) {
+            $entity->default_template_id = null;
+            $entity->save();
+            return;
+        }
+
+        $templateExists = $this->pageQueries->visibleTemplates()
+            ->where('id', '=', $templateId)
+            ->exists();
+
+        $entity->default_template_id = $templateExists ? $templateId : null;
+        $entity->save();
+    }
+
     public function updateDefaultTemplate(Book|Chapter $entity, int $templateId): void
     {
         $changing = $templateId !== intval($entity->default_template_id);
@@ -143,10 +170,23 @@ class BaseRepo
      */
     public function sortParent(Entity $entity): void
     {
-        if ($entity instanceof BookChild) {
-            $book = $entity->book;
-            $this->bookSorter->runBookAutoSort($book);
+        // dd($entity instanceof RecordChild, $entity instanceof BookChild, $entity->record, $entity->book);
+        if (isset($entity->record_id)) {
+            // handle array case if needed
+            if ($entity instanceof RecordChild) {
+                $book = $entity->record;
+                $this->recordSorter->runBookAutoSort($book);
+            }
+        }else{
+
+            if ($entity instanceof BookChild) {
+                // dd($entity->book->toArray());
+                $book = $entity->book;
+                $this->bookSorter->runBookAutoSort($book);
+                // dd($entity->toArray());
+            }
         }
+        // dd($entity->toArray());
     }
 
     protected function updateDescription(Entity $entity, array $input): void

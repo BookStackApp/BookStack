@@ -6,6 +6,7 @@ use BookStack\Activity\Models\Watch;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\RecordChild;
 use Illuminate\Database\Eloquent\Builder;
 
 class EntityWatchers
@@ -67,6 +68,7 @@ class EntityWatchers
         $entitiesInvolved = array_filter([
             $this->entity,
             $this->entity instanceof BookChild ? $this->entity->book : null,
+            $this->entity instanceof RecordChild ? $this->entity->record : null,
             $this->entity instanceof Page ? $this->entity->chapter : null,
         ]);
 

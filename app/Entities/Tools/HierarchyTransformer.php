@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\Record;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Facades\Activity;
@@ -54,6 +55,42 @@ class HierarchyTransformer
      * Does not check permissions, check before calling.
      */
     public function transformBookToShelf(Book $book): Bookshelf
+    {
+        $inputData = $this->cloner->entityToInputData($book);
+        $shelf = $this->shelfRepo->create($inputData, []);
+        $this->cloner->copyEntityPermissions($book, $shelf);
+
+        $shelfBookSyncData = [];
+
+        /** @var Chapter $chapter */
+        foreach ($book->chapters as $index => $chapter) {
+            $newBook = $this->transformChapterToBook($chapter);
+            $shelfBookSyncData[$newBook->id] = ['order' => $index];
+            if (!$newBook->hasPermissions()) {
+                $this->cloner->copyEntityPermissions($shelf, $newBook);
+            }
+        }
+
+        if ($book->directPages->count() > 0) {
+            $book->name .= ' ' . trans('entities.pages');
+            $shelfBookSyncData[$book->id] = ['order' => count($shelfBookSyncData) + 1];
+            $book->save();
+        } else {
+            $this->trashCan->destroyEntity($book);
+        }
+
+        $shelf->books()->sync($shelfBookSyncData);
+
+        Activity::add(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $shelf);
+
+        return $shelf;
+    }
+
+    /**
+     * Transform a book into a shelf.
+     * Does not check permissions, check before calling.
+     */
+    public function transformRecordToShelf(Record $book): Bookshelf
     {
         $inputData = $this->cloner->entityToInputData($book);
         $shelf = $this->shelfRepo->create($inputData, []);

@@ -84,6 +84,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/export/zip', [ExportControllers\BookExportController::class, 'zip']);
     Route::get('/books/{bookSlug}/export/plaintext', [ExportControllers\BookExportController::class, 'plainText']);
 
+    // Record Creation
+    Route::get('/create-record', [EntityControllers\RecordController::class, 'create']);
+
+    // Records
+    Route::get('/records/', [EntityControllers\RecordController::class, 'index']);
+    Route::post('/records/', [EntityControllers\RecordController::class, 'store']);
+    Route::get('/records/{slug}/edit', [EntityControllers\RecordController::class, 'edit']);
+    Route::put('/records/{slug}', [EntityControllers\RecordController::class, 'update']);
+    Route::delete('/records/{id}', [EntityControllers\RecordController::class, 'destroy']);
+    Route::get('/records/{slug}', [EntityControllers\RecordController::class, 'show']);
+    Route::get('/records/{slug}/delete', [EntityControllers\RecordController::class, 'showDelete']);
+    Route::get('/records/{recordSlug}/copy', [EntityControllers\RecordController::class, 'showCopy']);
+    Route::post('/records/{recordSlug}/copy', [EntityControllers\RecordController::class, 'copy']);
+    // Add more routes for records as needed, mirroring book routes
+
     // Pages
     Route::get('/books/{bookSlug}/create-page', [EntityControllers\PageController::class, 'create']);
     Route::post('/books/{bookSlug}/create-guest-page', [EntityControllers\PageController::class, 'createAsGuest']);
@@ -108,6 +123,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'update']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'destroy']);
     Route::delete('/books/{bookSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'destroyDraft']);
+
+    // record pages
+    Route::get('/records/{recordSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'recordEditDraft']);
+    Route::post('/records/{recordSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'recordPageStore']);
 
     // Revisions
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [EntityControllers\PageRevisionController::class, 'index']);
@@ -140,6 +159,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/references', [ReferenceController::class, 'chapter']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [EntityControllers\ChapterController::class, 'showDelete']);
     Route::delete('/books/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'destroy']);
+
+    // Record Chapters
+    Route::get('/records/{recordSlug}/chapter/{chapterSlug}/create-page', [EntityControllers\PageController::class, 'recordCreate']);
+    Route::get('/records/{recordSlug}/create-chapter', [EntityControllers\ChapterController::class, 'recordCreate']);
+    Route::post('/records/{recordSlug}/create-chapter', [EntityControllers\ChapterController::class, 'recordStore']);
+    Route::get('/records/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'recordShow']);
+    Route::put('/records/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'update']);
+    
 
     // User Profile routes
     Route::get('/user/{slug}', [UserControllers\UserProfileController::class, 'show']);
