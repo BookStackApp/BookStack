@@ -30,6 +30,7 @@ class BookshelfRepo
             $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
             $this->updateBooks($shelf, $bookIds);
             Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
+            return $shelf;
         }))->run();
     }
 

@@ -37,6 +37,8 @@ class ChapterRepo
             Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
             $this->baseRepo->sortParent($chapter);
+
+            return $chapter;
         }))->run();
     }
 
