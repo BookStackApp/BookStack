@@ -348,6 +348,7 @@ return [
         'lt' => 'Lituano',
         'lv' => 'Lettone',
         'nb' => 'Norvegese (Bokmål)',
+        'ne' => 'नेपाली',
         'nn' => 'Nynorsk',
         'nl' => 'Olandese',
         'pl' => 'Polacco',
