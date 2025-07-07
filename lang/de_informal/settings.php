@@ -349,6 +349,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'lt' => 'Litauisch',
         'lv' => 'Lettisch',
         'nb' => 'Norwegisch (Bokmål)',
+        'ne' => 'नेपाली',
         'nn' => 'Nynorsk',
         'nl' => 'Niederländisch',
         'pl' => 'Polnisch',
