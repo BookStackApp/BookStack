@@ -349,6 +349,7 @@ return [
         'lt' => 'Lietuvių Kalba',
         'lv' => 'Latviešu Valoda',
         'nb' => 'Norsk (Bokmål)',
+        'ne' => 'नेपाली',
         'nn' => 'Nynorsk',
         'nl' => 'Nederlands',
         'pl' => 'Polski',

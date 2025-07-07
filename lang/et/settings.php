@@ -348,6 +348,7 @@ return [
         'lt' => 'Lietuvių Kalba (leedu keel)',
         'lv' => 'Latviešu Valoda (läti keel)',
         'nb' => 'Norsk (Bokmål) (norra keel)',
+        'ne' => 'नेपाली',
         'nn' => 'Nynorsk',
         'nl' => 'Nederlands (hollandi keel)',
         'pl' => 'Polski (poola keel)',
