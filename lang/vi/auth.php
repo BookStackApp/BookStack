@@ -66,9 +66,9 @@ return [
 
     'email_not_confirmed' => 'Địa chỉ email chưa được xác nhận',
     'email_not_confirmed_text' => 'Địa chỉ email của bạn hiện vẫn chưa được xác nhận.',
-    'email_not_confirmed_click_link' => 'Vui lòng bấm vào liên kết trong mail được gửi trong thời gian ngắn ngay sau khi bạn đăng kí.',
-    'email_not_confirmed_resend' => 'Nếu bạn không tìm thấy email bạn có thể yêu cầu gửi lại email xác nhận bằng cách gửi mẫu dưới đây.',
-    'email_not_confirmed_resend_button' => 'Gửi lại email xác nhận',
+    'email_not_confirmed_click_link' => 'Vui lòng bấm vào liên kết trong email được gửi trong thời gian ngắn ngay sau khi bạn đăng kí.',
+    'email_not_confirmed_resend' => 'Nếu bạn không tìm thấy e-mail bạn có thể yêu cầu gửi lại e-mail xác nhận bằng cách gửi mẫu dưới đây.',
+    'email_not_confirmed_resend_button' => 'Gửi lại e-mail xác nhận',
 
     // User Invite
     'user_invite_email_subject' => 'Bạn được mời tham gia :appName!',
@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Ứng dụng di động',
     'mfa_option_totp_desc' => 'Để sử dụng xác thực đa lớp bạn cần ưng dụng trên điện thoại có hỗ trợ TOTP như Google Authenticator, Authy hoặc Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Mã dự phòng',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Tạo một bộ mã dự phòng sử dụng một lần mà bạn sẽ nhập khi đăng nhập để xác minh danh tính của mình. Hãy đảm bảo cất giữ những thứ này ở nơi an toàn và bảo mật.',
     'mfa_gen_confirm_and_enable' => 'Xác nhận và Mở',
     'mfa_gen_backup_codes_title' => 'Cài đặt Mã dự phòng',
     'mfa_gen_backup_codes_desc' => 'Lưu trữ các mã dưới đây ở một nơi an toàn. Khi truy cập vào hệ thống bạn sẽ có thể sử dụng được một trong các đoạn mã đó như là một phương thức xác thực dự phòng.',

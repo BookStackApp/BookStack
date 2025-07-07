@@ -134,7 +134,7 @@ return [
     'shelves_copy_permissions_to_books' => 'Kopírovat oprávnění na knihy',
     'shelves_copy_permissions' => 'Kopírovat oprávnění',
     'shelves_copy_permissions_explain' => 'Tímto se použije aktuální nastavení oprávnění police na všechny knihy v ní obsažené. Před aktivací se ujistěte, že byly uloženy všechny změny oprávnění této police.',
-    'shelves_copy_permission_success' => 'Oprávnění police byla zkopírována na :count knih',
+    'shelves_copy_permission_success' => '{1}Oprávnění police byla zkopírována na :count knihu|[2,4]Oprávnění police byla zkopírována na :count knihy|[5,*]Oprávnění police byla zkopírována na :count knih',
 
     // Books
     'book' => 'Kniha',
@@ -194,7 +194,7 @@ return [
     // Chapters
     'chapter' => 'Kapitola',
     'chapters' => 'Kapitoly',
-    'x_chapters' => '{0}:count Kapitol|{1}:count Kapitola|[2,4]:count Kapitoly|[5,*]:count Kapitol',
+    'x_chapters' => '{0}:count kapitol|{1}:count kapitola|[2,4]:count kapitoly|[5,*]:count kapitol',
     'chapters_popular' => 'Populární kapitoly',
     'chapters_new' => 'Nová kapitola',
     'chapters_create' => 'Vytvořit novou kapitolu',
@@ -219,7 +219,7 @@ return [
     // Pages
     'page' => 'Stránka',
     'pages' => 'Stránky',
-    'x_pages' => '{0}:count Stran|{1}:count Strana|[2,4]:count Strany|[5,*]:count Stran',
+    'x_pages' => '{0}:count stran|{1}:count strana|[2,4]:count strany|[5,*]:count stran',
     'pages_popular' => 'Populární stránky',
     'pages_new' => 'Nová stránka',
     'pages_attachments' => 'Přílohy',
@@ -312,7 +312,7 @@ return [
     'pages_draft_edited_notification' => 'Tato stránka se od té doby změnila. Je doporučeno aktuální koncept zahodit.',
     'pages_draft_page_changed_since_creation' => 'Tato stránka byla aktualizována od vytvoření tohoto konceptu. Doporučuje se zrušit tento koncept nebo se postarat o to, abyste si nepřepsali žádné již zadané změny.',
     'pages_draft_edit_active' => [
-        'start_a' => 'Uživatelé začali upravovat tuto stránku (celkem :count)',
+        'start_a' => '{1}:count uživatel začal upravovat tuto stránku|[2,4]:count uživatelé začali upravovat tuto stránku|[5,*]:count uživatelů začalo upravovat tuto stránku',
         'start_b' => ':userName začal/a upravovat tuto stránku',
         'time_a' => 'od doby, kdy byla tato stránky naposledy aktualizována',
         'time_b' => 'v posledních minutách (:minCount min.)',
@@ -342,7 +342,7 @@ return [
     'tags_assigned_chapters' => 'Přiřazeno ke kapitolám',
     'tags_assigned_books' => 'Přiřazeno ke knihám',
     'tags_assigned_shelves' => 'Přiřazeno k policím',
-    'tags_x_unique_values' => ':count jedinečných hodnot',
+    'tags_x_unique_values' => '{1}:count jedinečná hodnota|[2,4]:count jedinečné hodnoty|[5,*]:count jedinečných hodnot',
     'tags_all_values' => 'Všechny hodnoty',
     'tags_view_tags' => 'Zobrazit štítky',
     'tags_view_existing_tags' => 'Zobrazit existující štítky',
@@ -394,7 +394,7 @@ return [
     'comment_add' => 'Přidat komentář',
     'comment_none' => 'Žádné komentáře k zobrazení',
     'comment_placeholder' => 'Zde zadejte komentář',
-    'comment_thread_count' => ':count vlákno komentáře|:count vláken komentářů',
+    'comment_thread_count' => '{0}:count vláken komentářů|{1}:count vlákno komentářů|[2,4]:count vlákna komentářů|[5,*]:count vláken komentářů',
     'comment_archived_count' => ':count archivováno',
     'comment_archived_threads' => 'Archivovaná vlákna',
     'comment_save' => 'Uložit komentář',

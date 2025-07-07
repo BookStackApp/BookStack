@@ -394,7 +394,7 @@ return [
     'comment_add' => 'Aggiungi commento',
     'comment_none' => 'Nessun commento da visualizzare',
     'comment_placeholder' => 'Scrivi un commento',
-    'comment_thread_count' => ':count Comment Thread|:count Comment Threads',
+    'comment_thread_count' => ':count Commento Thread| :count Commenti Threads',
     'comment_archived_count' => ':count Archiviato',
     'comment_archived_threads' => 'Discussioni Archiviate',
     'comment_save' => 'Salva commento',
