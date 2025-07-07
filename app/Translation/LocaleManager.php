@@ -50,6 +50,7 @@ class LocaleManager
         'ku'          => 'ku_TR',
         'lt'          => 'lt_LT',
         'lv'          => 'lv_LV',
+        'ne'          => 'ne_NP',
         'nb'          => 'nb_NO',
         'nl'          => 'nl_NL',
         'nn'          => 'nn_NO',
