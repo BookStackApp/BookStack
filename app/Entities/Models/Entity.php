@@ -129,6 +129,10 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
             return $entity->chapter_id === $this->id;
         }
 
+        if ($entity instanceof RecordPage && $this instanceof RecordChapter) {
+            return $entity->record_chapter_id === $this->id;
+        }
+
         return false;
     }
 

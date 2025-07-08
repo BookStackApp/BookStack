@@ -37,7 +37,7 @@
         <h2></h2>
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-link">
-            @if(userCan('book-create-all'))
+            @if(userCan('record-create-all'))
                 <a href="{{ url("/create-record") }}" data-shortcut="new" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.records_create') }}</span>

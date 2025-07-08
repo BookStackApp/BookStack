@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Models\Record;
 use BookStack\Entities\Models\RecordChapter;
 use BookStack\Entities\Models\RecordPage;
 use BookStack\Entities\Queries\EntityQueries;
@@ -15,6 +16,8 @@ use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Entities\Tools\RecordContents;
+use BookStack\Entities\Tools\RecordPageContent;
+use BookStack\Entities\Tools\RecordPageEditorType;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
@@ -27,7 +30,7 @@ class RecordPageRepo
 {
     public function __construct(
         protected BaseRepo $baseRepo,
-        protected RevisionRepo $revisionRepo,
+        protected RecordRevisionRepo $revisionRepo,
         protected EntityQueries $entityQueries,
         protected ReferenceStore $referenceStore,
         protected ReferenceUpdater $referenceUpdater,
@@ -64,9 +67,11 @@ class RecordPageRepo
                 'markdown' => $defaultTemplate->markdown,
             ]);
         }
+        if($page['chapter_id']){
+            $page['record_chapter_id'] = $page['chapter_id'];
+            unset($page['chapter_id']);
+        }
         // dd($page->toArray());
-        $page['record_chapter_id'] = $page['chapter_id'];
-        unset($page['chapter_id']);
         
         $page->save();
         // dd($page->toArray());
@@ -91,7 +96,9 @@ class RecordPageRepo
         $this->revisionRepo->storeNewForPage($draft, $summary);
         $draft->refresh();
 
-        Activity::add(ActivityType::PAGE_CREATE, $draft);
+        // dd($draft->toArray());
+        // Activity::add(ActivityType::PAGE_CREATE, $draft);
+        // dd($draft);
         $this->baseRepo->sortParent($draft);
 
         return $draft;
@@ -102,7 +109,7 @@ class RecordPageRepo
      * Used for direct content access in a way that performs required changes
      * (Search index & reference regen) without performing an official update.
      */
-    public function setContentFromInput(Page $page, array $input): void
+    public function setContentFromInput(RecordPage $page, array $input): void
     {
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, []);
@@ -111,22 +118,23 @@ class RecordPageRepo
     /**
      * Update a page in the system.
      */
-    public function update(Page $page, array $input): Page
+    public function update(RecordPage $page, array $input): RecordPage
     {
         // Hold the old details to compare later
         $oldHtml = $page->html;
         $oldName = $page->name;
         $oldMarkdown = $page->markdown;
-
+        
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
-
+        
         // Update with new details
         $page->revision_count++;
         $page->save();
-
+        
         // Remove all update drafts for this user & page.
         $this->revisionRepo->deleteDraftsForCurrentUser($page);
+        // dd($oldHtml, $oldName, $oldMarkdown);
 
         // Save a revision after updating
         $summary = trim($input['summary'] ?? '');
@@ -137,22 +145,22 @@ class RecordPageRepo
             $this->revisionRepo->storeNewForPage($page, $summary);
         }
 
-        Activity::add(ActivityType::PAGE_UPDATE, $page);
+        // Activity::add(ActivityType::PAGE_UPDATE, $page);
         $this->baseRepo->sortParent($page);
 
         return $page;
     }
 
-    protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
+    protected function updateTemplateStatusAndContentFromInput(RecordPage $page, array $input): void
     {
         if (isset($input['template']) && userCan('templates-manage')) {
             $page->template = ($input['template'] === 'true');
         }
 
-        $pageContent = new PageContent($page);
-        $defaultEditor = PageEditorType::getSystemDefault();
-        $currentEditor = PageEditorType::forPage($page) ?: $defaultEditor;
-        $inputEditor = PageEditorType::fromRequestValue($input['editor'] ?? '') ?? $currentEditor;
+        $pageContent = new RecordPageContent($page);
+        $defaultEditor = RecordPageEditorType::getSystemDefault();
+        $currentEditor = RecordPageEditorType::forPage($page) ?: $defaultEditor;
+        $inputEditor = RecordPageEditorType::fromRequestValue($input['editor'] ?? '') ?? $currentEditor;
         $newEditor = $currentEditor;
 
         $haveInput = isset($input['markdown']) || isset($input['html']);
@@ -161,7 +169,7 @@ class RecordPageRepo
         if ($haveInput && $inputEmpty) {
             $pageContent->setNewHTML('', user());
         } elseif (!empty($input['markdown']) && is_string($input['markdown'])) {
-            $newEditor = PageEditorType::Markdown;
+            $newEditor = RecordPageEditorType::Markdown;
             $pageContent->setNewMarkdown($input['markdown'], user());
         } elseif (isset($input['html'])) {
             $newEditor = ($inputEditor->isHtmlBased() ? $inputEditor : null) ?? ($defaultEditor->isHtmlBased() ? $defaultEditor : null) ?? PageEditorType::WysiwygTinymce;
@@ -178,7 +186,7 @@ class RecordPageRepo
     /**
      * Save a page update draft.
      */
-    public function updatePageDraft(Page $page, array $input)
+    public function updatePageDraft(RecordPage $page, array $input)
     {
         // If the page itself is a draft simply update that
         if ($page->draft) {
@@ -211,9 +219,9 @@ class RecordPageRepo
      *
      * @throws Exception
      */
-    public function destroy(Page $page)
+    public function destroy(RecordPage $page)
     {
-        $this->trashCan->softDestroyPage($page);
+        $this->trashCan->softDestroyRecordPage($page);
         Activity::add(ActivityType::PAGE_DELETE, $page);
         $this->trashCan->autoClearOld();
     }
@@ -221,16 +229,16 @@ class RecordPageRepo
     /**
      * Restores a revision's content back into a page.
      */
-    public function restoreRevision(Page $page, int $revisionId): Page
+    public function restoreRevision(RecordPage $page, int $revisionId): RecordPage
     {
         $oldUrl = $page->getUrl();
         $page->revision_count++;
 
-        /** @var PageRevision $revision */
+        /** @var RecordPageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
 
         $page->fill($revision->toArray());
-        $content = new PageContent($page);
+        $content = new RecordPageContent($page);
 
         if (!empty($revision->markdown)) {
             $content->setNewMarkdown($revision->markdown, user());
@@ -267,19 +275,19 @@ class RecordPageRepo
      * @throws MoveOperationException
      * @throws PermissionsException
      */
-    public function move(Page $page, string $parentIdentifier): Entity
+    public function move(RecordPage $page, string $parentIdentifier): Entity
     {
         $parent = $this->entityQueries->findVisibleByStringIdentifier($parentIdentifier);
-        if (!$parent instanceof Chapter && !$parent instanceof Book) {
-            throw new MoveOperationException('Book or chapter to move page into not found');
+        if (!$parent instanceof RecordChapter && !$parent instanceof Record) {
+            throw new MoveOperationException('Record or chapter to move page into not found');
         }
 
         if (!userCan('page-create', $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
-        $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
-        $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
+        $page->chapter_id = ($parent instanceof RecordChapter) ? $parent->id : null;
+        $newBookId = ($parent instanceof RecordChapter) ? $parent->book->id : $parent->id;
         $page->changeBook($newBookId);
         $page->rebuildPermissions();
 
@@ -295,15 +303,16 @@ class RecordPageRepo
      */
     protected function getNewPriority(RecordPage $page): int
     {
-        $parent = $page->getParen();
+        // dd($page->toArray());
+        $parent = RecordChapter::find($page->record_chapter_id);
+        // dd($parent);
         if ($parent instanceof RecordChapter) {
             /** @var ?RecordPage $lastPage */
             $lastPage = $parent->pages('desc')->first();
 
             return $lastPage ? $lastPage->priority + 1 : 0;
         }
-        // dd($parent);
 
-        return (new RecordContents($page->book))->getLastPriority() + 1;
+        return (new RecordContents($page->record))->getLastPriority() + 1;
     }
 }

@@ -7,6 +7,7 @@ use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Entities\Queries\RecordChapterQueries;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -31,6 +32,7 @@ class ChapterController extends Controller
     public function __construct(
         protected ChapterRepo $chapterRepo,
         protected ChapterQueries $queries,
+        protected RecordChapterQueries $recordQueries,
         protected EntityQueries $entityQueries,
         protected ReferenceFetcher $referenceFetcher,
     ) {
@@ -147,9 +149,8 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-view', $chapter);
         
         $sidebarTree = (new RecordContents($chapter->record))->getTree();
-        $pages = $this->entityQueries->pages->visibleForChapterList($chapter->id)->get();
+        $pages = $this->entityQueries->recordPages->visibleForChapterList($chapter->id)->get();
         $nextPreviousLocator = new RecordNextPreviousContentLocator($chapter, $sidebarTree);
-        // dd('hj', $chapter->toArray());
         View::incrementFor($chapter);
         View::incrementFor($chapter);
 
@@ -182,6 +183,19 @@ class ChapterController extends Controller
     }
 
     /**
+     * Show the form for editing the specified chapter.
+     */
+    public function recordEdit(string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->recordQueries->FindVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-update', $chapter);
+
+        $this->setPageTitle(trans('entities.chapters_edit_named', ['chapterName' => $chapter->getShortName()]));
+
+        return view('chapters.edit', ['book' => $chapter->book, 'chapter' => $chapter, 'current' => $chapter]);
+    }
+
+    /**
      * Update the specified chapter in storage.
      *
      * @throws NotFoundException
@@ -204,6 +218,29 @@ class ChapterController extends Controller
     }
 
     /**
+     * Update the specified chapter in storage.
+     *
+     * @throws NotFoundException
+     */
+    public function recordUpdate(Request $request, string $bookSlug, string $chapterSlug)
+    {
+        $validated = $this->validate($request, [
+            'name'                => ['required', 'string', 'max:255'],
+            'description_html'    => ['string', 'max:2000'],
+            'tags'                => ['array'],
+            'default_template_id' => ['nullable', 'integer'],
+        ]);
+
+        // dd('qq');
+        $chapter = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-update', $chapter);
+
+        $this->chapterRepo->recordUpdate($chapter, $validated);
+
+        return redirect($chapter->getUrl());
+    }
+
+    /**
      * Shows the page to confirm deletion of this chapter.
      *
      * @throws NotFoundException
@@ -211,6 +248,22 @@ class ChapterController extends Controller
     public function showDelete(string $bookSlug, string $chapterSlug)
     {
         $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
+
+        $this->setPageTitle(trans('entities.chapters_delete_named', ['chapterName' => $chapter->getShortName()]));
+
+        return view('chapters.delete', ['book' => $chapter->book, 'chapter' => $chapter, 'current' => $chapter]);
+    }
+
+    /**
+     * Shows the page to confirm deletion of this chapter.
+     *
+     * @throws NotFoundException
+     */
+    public function recordShowDelete(string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        // dd('dd', $chapter->to);
         $this->checkOwnablePermission('chapter-delete', $chapter);
 
         $this->setPageTitle(trans('entities.chapters_delete_named', ['chapterName' => $chapter->getShortName()]));
@@ -232,6 +285,21 @@ class ChapterController extends Controller
         $this->chapterRepo->destroy($chapter);
 
         return redirect($chapter->book->getUrl());
+    }
+
+    /**
+     * Remove the specified chapter from storage.
+     *
+     * @throws NotFoundException
+     * @throws Throwable
+     */
+    public function recordDestroy(string $bookSlug, string $chapterSlug)
+    {
+        $chapter = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+        $this->checkOwnablePermission('chapter-delete', $chapter);
+
+        $this->chapterRepo->recordDestroy($chapter);
+        return redirect($chapter->record->getUrl());
     }
 
     /**

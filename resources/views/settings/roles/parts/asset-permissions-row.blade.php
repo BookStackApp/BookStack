@@ -5,7 +5,7 @@
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.create') }}<br></small>
-        @if($permissionPrefix === 'page' || $permissionPrefix === 'chapter')
+        @if($permissionPrefix === 'page' || $permissionPrefix === 'chapter' || $permissionPrefix === 'record')
             @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-create-own', 'label' => trans('settings.role_own')])
             <br>
         @endif

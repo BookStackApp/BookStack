@@ -10,6 +10,9 @@ use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\Record;
+use BookStack\Entities\Models\RecordChapter;
+use BookStack\Entities\Models\RecordPage;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
@@ -60,6 +63,27 @@ class TrashCan
     }
 
     /**
+     * Send a book to the recycle bin.
+     *
+     * @throws Exception
+     */
+    public function softDestroyRecord(Record $book)
+    {
+        $this->ensureDeletable($book);
+        Deletion::createForEntity($book);
+
+        foreach ($book->pages as $page) {
+            $this->softDestroyRecordPage($page, false);
+        }
+
+        foreach ($book->chapters as $chapter) {
+            $this->softDestroyRecordChapter($chapter, false);
+        }
+
+        $book->delete();
+    }
+
+    /**
      * Send a chapter to the recycle bin.
      *
      * @throws Exception
@@ -81,11 +105,47 @@ class TrashCan
     }
 
     /**
+     * Send a chapter to the recycle bin.
+     *
+     * @throws Exception
+     */
+    public function softDestroyRecordChapter(RecordChapter $chapter, bool $recordDelete = true)
+    {
+        if ($recordDelete) {
+            $this->ensureDeletable($chapter);
+            Deletion::createForEntity($chapter);
+        }
+
+        if (count($chapter->pages) > 0) {
+            foreach ($chapter->pages as $page) {
+                $this->softDestroyRecordPage($page, false);
+            }
+        }
+
+        $chapter->delete();
+    }
+
+    /**
      * Send a page to the recycle bin.
      *
      * @throws Exception
      */
     public function softDestroyPage(Page $page, bool $recordDelete = true)
+    {
+        if ($recordDelete) {
+            $this->ensureDeletable($page);
+            Deletion::createForEntity($page);
+        }
+
+        $page->delete();
+    }
+
+    /**
+     * Send a page to the recycle bin.
+     *
+     * @throws Exception
+     */
+    public function softDestroyRecordPage(RecordPage $page, bool $recordDelete = true)
     {
         if ($recordDelete) {
             $this->ensureDeletable($page);

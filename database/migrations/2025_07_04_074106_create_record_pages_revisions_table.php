@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('record_pages_revisions', function (Blueprint $table) {
-            $table->id();
+        Schema::create('record_page_revisions', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('record_page_id');
             $table->string('name');
-            $table->text('html');
-            $table->text('text');
+            $table->longText('html')->nullable();
+            $table->longText('text')->nullable();
             $table->integer('created_by');
-            $table->string('slug');
-            $table->string('record_slug');
-            $table->string('type');
-            $table->text('markdown');
-            $table->string('summary');
-            $table->integer('revision_number');
-            $table->timestamps();
+            $table->string('slug')->nullable();
+            $table->string('record_slug')->nullable();
+            $table->string('type')->nullable();
+            $table->longText('markdown')->nullable();
+            $table->string('summary')->nullable();
+            $table->integer('revision_number')->nullable();
+            $table->nullableTimestamps();
         });
     }
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('record_pages_revisions');
+        Schema::dropIfExists('record_page_revisions');
     }
 };

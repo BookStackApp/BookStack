@@ -32,7 +32,6 @@ class PermissionApplicator
         $explodedPermission = explode('-', $permission);
         $action = $explodedPermission[1] ?? $explodedPermission[0];
         $fullPermission = count($explodedPermission) > 1 ? $permission : $ownable->getMorphClass() . '-' . $permission;
-
         $user = $this->currentUser();
         $userRoleIds = $this->getCurrentUserRoleIds();
 

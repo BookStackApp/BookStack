@@ -8,12 +8,26 @@
 
 @section('body')
 
+    @php
+        $crumbs = [];
+
+        if ($page->book) {
+            $crumbs[] = $page->book;
+            if ($page->hasChapter()) {
+                $crumbs[] = $page->chapter;
+            }
+            $crumbs[] = $page;
+        } else {
+            $crumbs[] = $page->record;
+            if ($page->record_chapter_id > 0) {
+                $crumbs[] = \BookStack\Entities\Models\RecordChapter::find($page->record_chapter_id);
+            }
+            $crumbs[] = $page;
+        }
+    @endphp
+
     <div class="mb-m print-hidden">
-        @include('entities.breadcrumbs', ['crumbs' => [
-            $page->book,
-            $page->hasChapter() ? $page->chapter : null,
-            $page,
-        ]])
+        @include('entities.breadcrumbs', ['crumbs' => $crumbs])
     </div>
 
     <main class="content-wrap card">

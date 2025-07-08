@@ -49,7 +49,6 @@ class RecordContents
      */
     public function getTree(bool $showDrafts = false, bool $renderPages = false): Collection
     {
-        // dd('hh');
         $pages = $this->getPages($showDrafts, $renderPages);
         $chapters = $this->record->chapters()->scopes('visible')->get();
         // $chapters = $this->record->chapters();
@@ -58,7 +57,7 @@ class RecordContents
         $chapterMap = $chapters->keyBy('id');
         $lonePages = collect();
 
-        $pages->groupBy('chapter_id')->each(function ($pages, $chapter_id) use ($chapterMap, &$lonePages) {
+        $pages->groupBy('record_chapter_id')->each(function ($pages, $chapter_id) use ($chapterMap, &$lonePages) {
             $chapter = $chapterMap->get($chapter_id);
             if ($chapter) {
                 $chapter->setAttribute('visible_pages', collect($pages)->sortBy($this->bookChildSortFunc()));
@@ -104,15 +103,15 @@ class RecordContents
     protected function getPages(bool $showDrafts = false, bool $getPageContent = false): Collection
     {
         if ($getPageContent) {
-            $query = $this->queries->pages->visibleWithContents();
+            $query = $this->queries->recordPages->visibleWithContents();
         } else {
-            $query = $this->queries->pages->visibleForList();
+            $query = $this->queries->recordPages->visibleForList();
         }
 
         if (!$showDrafts) {
             $query->where('draft', '=', false);
         }
 
-        return $query->where('book_id', '=', $this->record->id)->get();
+        return $query->where('record_id', '=', $this->record->id)->get();
     }
 }

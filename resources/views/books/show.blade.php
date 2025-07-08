@@ -30,7 +30,7 @@
             @if(count($bookChildren) > 0)
                 <div class="entity-list book-contents">
                     @foreach($bookChildren as $childElement)
-                        @if($childElement->isA('chapter'))
+                        @if($childElement->isA('chapter') || $childElement->isA('recordchapter'))
                             @include('chapters.parts.list-item', ['chapter' => $childElement])
                         @else
                             @include('pages.parts.list-item', ['page' => $childElement])

@@ -13,6 +13,7 @@ use BookStack\Entities\Models\Record;
 use BookStack\Entities\Models\RecordChapter;
 use BookStack\Entities\Models\RecordChild;
 use BookStack\Entities\Queries\PageQueries;
+use BookStack\Entities\Queries\RecordPageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
@@ -30,6 +31,7 @@ class BaseRepo
         protected ReferenceUpdater $referenceUpdater,
         protected ReferenceStore $referenceStore,
         protected PageQueries $pageQueries,
+        protected RecordPageQueries $recordPageQueries,
         protected BookSorter $bookSorter,
         protected RecordSorter $recordSorter,
     ) {
@@ -67,29 +69,30 @@ class BaseRepo
     public function update(Entity $entity, array $input)
     {
         $oldUrl = $entity->getUrl();
-
+        
         $entity->fill($input);
         $this->updateDescription($entity, $input);
         $entity->updated_by = user()->id;
-
+        
         if ($entity->isDirty('name') || empty($entity->slug)) {
             $entity->refreshSlug();
         }
-
+        
         $entity->save();
-
+        
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
             $entity->touch();
         }
-
+        
         $entity->rebuildPermissions();
         $entity->indexForSearch();
         $this->referenceStore->updateForEntity($entity);
-
+        
         if ($oldUrl !== $entity->getUrl()) {
             $this->referenceUpdater->updateEntityReferences($entity, $oldUrl);
         }
+        // dd($entity->toArray(), $oldUrl);
     }
 
     /**

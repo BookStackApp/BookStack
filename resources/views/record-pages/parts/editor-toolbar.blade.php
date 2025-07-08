@@ -7,7 +7,7 @@
         $recordChapter = RecordChapter::find($page->record_chapter_id);
     }
 
-    $backUrl = $recordChapter ? $recordChapter->getUrl() : ($isDraft ? $page->getParent()->getUrl() : $page->getUrl());
+    $backUrl = $recordChapter ? $recordChapter->getUrl() : ($isDraft && $recordChapter && ($page->record_chapter_id > 0) ? $page->getParent()->getUrl() : $page->getUrl());
 @endphp
 
 <div class="toolbar page-edit-toolbar py-xs">

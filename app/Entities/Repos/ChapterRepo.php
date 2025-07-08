@@ -79,6 +79,24 @@ class ChapterRepo
     }
 
     /**
+     * Update the given chapter.
+     */
+    public function recordUpdate(RecordChapter $chapter, array $input): RecordChapter
+    {
+        $this->baseRepo->update($chapter, $input);
+
+        if (array_key_exists('default_template_id', $input)) {
+            $this->baseRepo->updateRecordDefaultTemplate($chapter, intval($input['default_template_id']));
+        }
+
+        Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
+
+        $this->baseRepo->sortParent($chapter);
+
+        return $chapter;
+    }
+
+    /**
      * Remove a chapter from the system.
      *
      * @throws Exception
@@ -86,6 +104,18 @@ class ChapterRepo
     public function destroy(Chapter $chapter)
     {
         $this->trashCan->softDestroyChapter($chapter);
+        Activity::add(ActivityType::CHAPTER_DELETE, $chapter);
+        $this->trashCan->autoClearOld();
+    }
+
+    /**
+     * Remove a chapter from the system.
+     *
+     * @throws Exception
+     */
+    public function recordDestroy(RecordChapter $chapter)
+    {
+        $this->trashCan->softDestroyRecordChapter($chapter);
         Activity::add(ActivityType::CHAPTER_DELETE, $chapter);
         $this->trashCan->autoClearOld();
     }

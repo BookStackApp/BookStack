@@ -65,7 +65,7 @@ class HomeController extends Controller
         ];
 
         // Add required list ordering & sorting for books & shelves views.
-        if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
+        if ($homepageOption === 'bookshelves' || $homepageOption === 'books' || $homepageOption === 'records') {
             $key = $homepageOption;
             $view = setting()->getForCurrentUser($key . '_view_type');
             $listOptions = SimpleListOptions::fromRequest($request, $key)->withSortOptions([

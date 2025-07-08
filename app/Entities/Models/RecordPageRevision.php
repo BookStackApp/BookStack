@@ -12,10 +12,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Class PageRevision.
  *
  * @property mixed  $id
- * @property int    $page_id
+ * @property int    $record_page_id
  * @property string $name
  * @property string $slug
- * @property string $book_slug
+ * @property string $record_slug
  * @property int    $created_by
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $html
  * @property string $text
  * @property int    $revision_number
- * @property Page   $page
+ * @property RecordPage   $recordPage
  * @property-read ?User $createdBy
  */
 class RecordPageRevision extends Model implements Loggable
@@ -54,7 +54,7 @@ class RecordPageRevision extends Model implements Loggable
      */
     public function getUrl(string $path = ''): string
     {
-        return $this->page->getUrl('/revisions/' . $this->id . '/' . ltrim($path, '/'));
+        return $this->page->getUrl('/records-revisions/' . $this->id . '/' . ltrim($path, '/'));
     }
 
     /**
@@ -87,6 +87,6 @@ class RecordPageRevision extends Model implements Loggable
 
     public function logDescriptor(): string
     {
-        return "Revision #{$this->revision_number} (ID: {$this->id}) for page ID {$this->record_page_id}";
+        return "Revision #{$this->revision_number} (ID: {$this->id}) for revision page ID {$this->record_page_id}";
     }
 }

@@ -24,7 +24,7 @@
         </div>
     @else
         <p class="text-muted">{{ trans('entities.records_empty') }}</p>
-        @if(userCan('book-create-all'))
+        @if(userCan('record-create-all'))
             <div class="icon-list block inline">
                 <a href="{{ url("/create-record") }}"
                    class="icon-list-item text-record">

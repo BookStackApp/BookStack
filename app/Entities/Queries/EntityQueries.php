@@ -15,6 +15,7 @@ class EntityQueries
         public ChapterQueries $chapters,
         public RecordChapterQueries $recordChapters,
         public PageQueries $pages,
+        public RecordPageQueries $recordPages,
         public PageRevisionQueries $revisions,
     ) {
     }

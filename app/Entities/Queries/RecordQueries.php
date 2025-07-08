@@ -45,7 +45,8 @@ class RecordQueries implements ProvidesEntityQueries
 
     public function visibleForList(): Builder
     {
-        return $this->start()->scopes('visible')
+        return $this->start()
+            ->scopes('visible')
             ->select(static::$listAttributes);
     }
 

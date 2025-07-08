@@ -15,10 +15,10 @@
 @section('body')
 
     <div class="mb-m print-hidden">
-        @include('entities.breadcrumbs', ['crumbs' => [
-            $chapter->book,
+        @include('entities.breadcrumbs', ['crumbs' => array_filter([
+            $chapter->book ?? $chapter->record ?? null,
             $chapter,
-        ]])
+        ])])
     </div>
 
     <main class="content-wrap card">

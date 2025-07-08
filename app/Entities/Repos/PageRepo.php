@@ -45,7 +45,7 @@ class PageRepo
             'draft'      => true,
             'editor'     => PageEditorType::getSystemDefault()->value,
         ]);
-
+        
         if ($parent instanceof Chapter) {
             $page->chapter_id = $parent->id;
             $page->book_id = $parent->book_id;
@@ -61,11 +61,10 @@ class PageRepo
                 'markdown' => $defaultTemplate->markdown,
             ]);
         }
-        // dd($page->toArray());
-
+        
         $page->save();
         $page->refresh()->rebuildPermissions();
-
+        
         return $page;
     }
 

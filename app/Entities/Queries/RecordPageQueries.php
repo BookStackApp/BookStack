@@ -108,7 +108,7 @@ class RecordPageQueries implements ProvidesEntityQueries
         return array_merge($columns, ['record_slug' => function ($builder) {
             $builder->select('slug')
                 ->from('records')
-                ->whereColumn('records.id', '=', 'pages.record_id');
+                ->whereColumn('records.id', '=', 'record_pages.record_id');
         }]);
     }
 }

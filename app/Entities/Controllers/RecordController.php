@@ -139,7 +139,6 @@ class RecordController extends Controller
         }
 
         $this->setPageTitle($book->getShortName());
-// dd($book->getUrl());
         return view('books.show', [
             'book'              => $book,
             'current'           => $book,
@@ -218,7 +217,7 @@ class RecordController extends Controller
 
         $this->recordRepo->destroy($book);
 
-        return redirect('/books');
+        return redirect('/records');
     }
 
     /**

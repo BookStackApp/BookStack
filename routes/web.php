@@ -125,8 +125,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/books/{bookSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'destroyDraft']);
 
     // record pages
+    Route::get('/records/{recordSlug}/create-page', [EntityControllers\PageController::class, 'recordCreate']);
     Route::get('/records/{recordSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'recordEditDraft']);
     Route::post('/records/{recordSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'recordPageStore']);
+    Route::get('/records/{recordSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'recordShow']);
+    Route::get('/records/{recordSlug}/page/{pageSlug}/delete', [EntityControllers\PageController::class, 'recordShowDelete']);
+    Route::delete('/records/{recordSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'recordDestroy']);
+    Route::delete('/records/{recordSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'destroyDraft']);
+
+    Route::get('/records/{recordSlug}/page/{pageSlug}/edit', [EntityControllers\PageController::class, 'recordEdit']);
+    Route::put('/records/{recordSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'recordUpdate']);
 
     // Revisions
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [EntityControllers\PageRevisionController::class, 'index']);
@@ -165,7 +173,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/records/{recordSlug}/create-chapter', [EntityControllers\ChapterController::class, 'recordCreate']);
     Route::post('/records/{recordSlug}/create-chapter', [EntityControllers\ChapterController::class, 'recordStore']);
     Route::get('/records/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'recordShow']);
-    Route::put('/records/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'update']);
+    Route::put('/records/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'recordUpdate']);
+    Route::get('/records/{recordSlug}/chapter/{chapterSlug}/edit', [EntityControllers\ChapterController::class, 'recordEdit']);
+
+    Route::get('/records/{recordSlug}/chapter/{chapterSlug}/delete', [EntityControllers\ChapterController::class, 'recordShowDelete']);
+    Route::delete('/records/{recordSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'recordDestroy']);
     
 
     // User Profile routes

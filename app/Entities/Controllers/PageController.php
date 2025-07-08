@@ -4,6 +4,7 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
+use BookStack\Activity\Tools\RecordCommentTree;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
@@ -19,6 +20,9 @@ use BookStack\Entities\Tools\NextPreviousContentLocator;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Tools\PageEditorData;
+use BookStack\Entities\Tools\RecordContents;
+use BookStack\Entities\Tools\RecordNextPreviousContentLocator;
+use BookStack\Entities\Tools\RecordPageContent;
 use BookStack\Entities\Tools\RecordPageEditorData;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
@@ -76,9 +80,8 @@ class PageController extends Controller
     {
         if ($chapterSlug) {
             $parent = $this->entityQueries->recordChapters->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
-            // dd('in create');
         } else {
-            $parent = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
+            $parent = $this->entityQueries->records->findVisibleBySlugOrFail($bookSlug);
         }
         
         $this->checkOwnablePermission('page-create', $parent);
@@ -157,17 +160,19 @@ class PageController extends Controller
         // dd($draft->toArray(), $draft->getParent());
         
         $recordChapter = RecordChapter::find($draft['record_chapter_id']);
-        
-        $this->checkOwnablePermission('page-create', $recordChapter);
-        // dd($draft->toArray());
+        if ($recordChapter) {
+            $this->checkOwnablePermission('page-create', $recordChapter);
+        }
+        else{
+            $this->checkOwnablePermission('page-create', $draft->record);
+        }
         $editorData = new RecordPageEditorData($draft, $this->entityQueries, $request->query('editor', ''));
         // dd($editorData);
-
+        
         $this->setPageTitle(trans('entities.pages_edit_draft'));
-
+        
         $aa = RecordChapter::find($editorData->getViewData()['page']->record_chapter_id);
 
-        // dd($editorData->getViewData(), $editorData->getViewData()['page']->toArray(), $editorData->getViewData()['page']->getUrl(), $aa->getUrl());
         return view('record-pages.edit', $editorData->getViewData());
     }
 
@@ -184,7 +189,6 @@ class PageController extends Controller
         ]);
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
 
-        dd($draftPage->toArray(), $draftPage->getParent()->toArray());
 
         $this->checkOwnablePermission('page-create', $draftPage->getParent());
 
@@ -210,7 +214,12 @@ class PageController extends Controller
         // dd($draftPage->toArray(), $draftPage->getParent());
         $recordChapter = RecordChapter::find($draftPage->record_chapter_id);
 
-        $this->checkOwnablePermission('page-create', $recordChapter);
+         if ($recordChapter) {
+            $this->checkOwnablePermission('page-create', $recordChapter);
+        }
+        else{
+            $this->checkOwnablePermission('page-create', $draftPage->record);
+        }
 
         $page = $this->recordPageRepo->publishDraft($draftPage, $request->all());
 
@@ -265,6 +274,58 @@ class PageController extends Controller
         ]);
     }
 
+
+    /**
+     * Display the specified page.
+     * If the page is not found via the slug the revisions are searched for a match.
+     *
+     * @throws NotFoundException
+     */
+    public function recordShow(string $bookSlug, string $pageSlug)
+    {
+        // dd('ss');
+        try {
+            $page = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+            // dd($page->toArray());
+        } catch (NotFoundException $e) {
+            $revision = $this->entityQueries->revisions->findLatestVersionBySlugs($bookSlug, $pageSlug);
+            $page = $revision->page ?? null;
+
+            if (is_null($page)) {
+                // throw $e;
+            }
+
+            return redirect($page->getUrl());
+        }
+
+        $this->checkOwnablePermission('page-view', $page);
+        
+        // dd($page->toArray());
+        $pageContent = (new RecordPageContent($page));
+        $page->html = $pageContent->render();
+        $pageNav = $pageContent->getNavigation($page->html);
+
+        $sidebarTree = (new RecordContents($page->record))->getTree();
+        $commentTree = (new RecordCommentTree($page));
+        $nextPreviousLocator = new RecordNextPreviousContentLocator($page, $sidebarTree);
+
+        View::incrementFor($page);
+        $this->setPageTitle($page->getShortName());
+
+        return view('pages.show', [
+            'page'            => $page,
+            'book'            => $page->record,
+            'current'         => $page,
+            'sidebarTree'     => $sidebarTree,
+            'commentTree'     => $commentTree,
+            'pageNav'         => $pageNav,
+            'watchOptions'    => new UserEntityWatchOptions(user(), $page),
+            'next'            => $nextPreviousLocator->getNext(),
+            'previous'        => $nextPreviousLocator->getPrevious(),
+            'referenceCount'  => $this->referenceFetcher->getReferenceCountToEntity($page),
+        ]);
+    }
+
     /**
      * Get page from an ajax request.
      *
@@ -300,6 +361,26 @@ class PageController extends Controller
     }
 
     /**
+     * Show the form for editing the specified page.
+     *
+     * @throws NotFoundException
+     */
+    public function recordEdit(Request $request, string $bookSlug, string $pageSlug)
+    {
+        $page = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $this->checkOwnablePermission('page-update', $page, $page->getUrl());
+
+        $editorData = new RecordPageEditorData($page, $this->entityQueries, $request->query('editor', ''));
+        if ($editorData->getWarnings()) {
+            $this->showWarningNotification(implode("\n", $editorData->getWarnings()));
+        }
+
+        $this->setPageTitle(trans('entities.pages_editing_named', ['pageName' => $page->getShortName()]));
+
+        return view('record-pages.edit', $editorData->getViewData());
+    }
+
+    /**
      * Update the specified page in storage.
      *
      * @throws ValidationException
@@ -315,6 +396,26 @@ class PageController extends Controller
 
         $this->pageRepo->update($page, $request->all());
 
+        return redirect($page->getUrl());
+    }
+
+    /**
+     * Update the specified page in storage.
+     *
+     * @throws ValidationException
+     * @throws NotFoundException
+     */
+    public function recordUpdate(Request $request, string $bookSlug, string $pageSlug)
+    {
+        $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+        $page = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $this->checkOwnablePermission('page-update', $page);
+        
+        $this->recordPageRepo->update($page, $request->all());
+        // dd($page->toArray());
+        
         return redirect($page->getUrl());
     }
 
@@ -382,6 +483,29 @@ class PageController extends Controller
      *
      * @throws NotFoundException
      */
+    public function recordShowDelete(string $bookSlug, string $pageSlug)
+    {
+        // dd('ll');
+        $page = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $this->checkOwnablePermission('page-delete', $page);
+        $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
+        $usedAsTemplate =
+            $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
+            $this->entityQueries->chapters->start()->where('default_template_id', '=', $page->id)->count() > 0;
+
+        return view('pages.delete', [
+            'book'    => $page->record,
+            'page'    => $page,
+            'current' => $page,
+            'usedAsTemplate' => $usedAsTemplate,
+        ]);
+    }
+
+    /**
+     * Show the deletion page for the specified page.
+     *
+     * @throws NotFoundException
+     */
     public function showDeleteDraft(string $bookSlug, int $pageId)
     {
         $page = $this->queries->findVisibleByIdOrFail($pageId);
@@ -412,6 +536,22 @@ class PageController extends Controller
         $parent = $page->getParent();
 
         $this->pageRepo->destroy($page);
+
+        return redirect($parent->getUrl());
+    }
+
+    /**
+     * Remove the specified page from storage.
+     *
+     * @throws NotFoundException
+     * @throws Throwable
+     */
+    public function recordDestroy(string $bookSlug, string $pageSlug)
+    {
+        $page = $this->recordQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $this->checkOwnablePermission('page-delete', $page);
+        $parent = RecordChapter::find($page->record_chapter_id);
+        $this->recordPageRepo->destroy($page);
 
         return redirect($parent->getUrl());
     }

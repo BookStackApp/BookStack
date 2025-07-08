@@ -75,6 +75,7 @@
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.books'), 'permissionPrefix' => 'book'])
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.chapters'), 'permissionPrefix' => 'chapter'])
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.pages'), 'permissionPrefix' => 'page'])
+            @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.records'), 'permissionPrefix' => 'record'])
             @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.images'), 'permissionPrefix' => 'image', 'refMark' => '1'])
             @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.attachments'), 'permissionPrefix' => 'attachment'])
             @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.comments'), 'permissionPrefix' => 'comment'])

@@ -19,6 +19,15 @@
         <?php $breadcrumbCount++; ?>
     @endif
 
+    {{-- Show top level records item --}}
+    @if (count($crumbs) > 0 && ($crumbs[0] ?? null) instanceof  \BookStack\Entities\Models\Record)
+        <a href="{{  url('/records')  }}" class="text-bookshelf icon-list-item outline-hover">
+            <span>@icon('books')</span>
+            <span>{{ trans('entities.records') }}</span>
+        </a>
+        <?php $breadcrumbCount++; ?>
+    @endif
+
     @foreach($crumbs as $key => $crumb)
         <?php $isEntity = ($crumb instanceof \BookStack\Entities\Models\Entity); ?>
 
