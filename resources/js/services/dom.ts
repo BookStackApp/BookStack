@@ -257,3 +257,21 @@ export function hashElement(element: HTMLElement): string {
     const normalisedElemText = (element.textContent || '').replace(/\s{2,}/g, '');
     return cyrb53(normalisedElemText);
 }
+
+/**
+ * Find the closest scroll container parent for the given element
+ * otherwise will default to the body element.
+ */
+export function findClosestScrollContainer(start: HTMLElement): HTMLElement {
+    let el: HTMLElement|null = start;
+    do {
+        const computed = window.getComputedStyle(el);
+        if (computed.overflowY === 'scroll') {
+            return el;
+        }
+
+        el = el.parentElement;
+    } while (el);
+
+    return document.body;
+}

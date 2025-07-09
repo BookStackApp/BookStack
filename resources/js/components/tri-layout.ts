@@ -1,18 +1,22 @@
 import {Component} from './component';
 
 export class TriLayout extends Component {
+    private container!: HTMLElement;
+    private tabs!: HTMLElement[];
+    private sidebarScrollContainers!: HTMLElement[];
 
-    setup() {
+    private lastLayoutType = 'none';
+    private onDestroy: (()=>void)|null = null;
+    private scrollCache: Record<string, number> = {
+        content: 0,
+        info: 0,
+    };
+    private lastTabShown = 'content';
+
+    setup(): void {
         this.container = this.$refs.container;
         this.tabs = this.$manyRefs.tab;
-
-        this.lastLayoutType = 'none';
-        this.onDestroy = null;
-        this.scrollCache = {
-            content: 0,
-            info: 0,
-        };
-        this.lastTabShown = 'content';
+        this.sidebarScrollContainers = this.$manyRefs.sidebarScrollContainer;
 
         // Bind any listeners
         this.mobileTabClick = this.mobileTabClick.bind(this);
@@ -22,9 +26,11 @@ export class TriLayout extends Component {
         window.addEventListener('resize', () => {
             this.updateLayout();
         }, {passive: true});
+
+        this.setupSidebarScrollHandlers();
     }
 
-    updateLayout() {
+    updateLayout(): void {
         let newLayout = 'tablet';
         if (window.innerWidth <= 1000) newLayout = 'mobile';
         if (window.innerWidth > 1400) newLayout = 'desktop';
@@ -56,16 +62,15 @@ export class TriLayout extends Component {
         };
     }
 
-    setupDesktop() {
+    setupDesktop(): void {
         //
     }
 
     /**
      * Action to run when the mobile info toggle bar is clicked/tapped
-     * @param event
      */
-    mobileTabClick(event) {
-        const {tab} = event.target.dataset;
+    mobileTabClick(event: MouseEvent): void {
+        const tab = (event.target as HTMLElement).dataset.tab || '';
         this.showTab(tab);
     }
 
@@ -73,16 +78,14 @@ export class TriLayout extends Component {
      * Show the content tab.
      * Used by the page-display component.
      */
-    showContent() {
+    showContent(): void {
         this.showTab('content', false);
     }
 
     /**
      * Show the given tab
-     * @param {String} tabName
-     * @param {Boolean }scroll
      */
-    showTab(tabName, scroll = true) {
+    showTab(tabName: string, scroll: boolean = true): void {
         this.scrollCache[this.lastTabShown] = document.documentElement.scrollTop;
 
         // Set tab status
@@ -97,7 +100,7 @@ export class TriLayout extends Component {
 
         // Set the scroll position from cache
         if (scroll) {
-            const pageHeader = document.querySelector('header');
+            const pageHeader = document.querySelector('header') as HTMLElement;
             const defaultScrollTop = pageHeader.getBoundingClientRect().bottom;
             document.documentElement.scrollTop = this.scrollCache[tabName] || defaultScrollTop;
             setTimeout(() => {
@@ -106,6 +109,32 @@ export class TriLayout extends Component {
         }
 
         this.lastTabShown = tabName;
+    }
+
+    setupSidebarScrollHandlers(): void {
+        for (const sidebar of this.sidebarScrollContainers) {
+            sidebar.addEventListener('scroll', () => this.handleSidebarScroll(sidebar), {
+                passive: true,
+            });
+            this.handleSidebarScroll(sidebar);
+        }
+
+        window.addEventListener('resize', () => {
+            for (const sidebar of this.sidebarScrollContainers) {
+                this.handleSidebarScroll(sidebar);
+            }
+        });
+    }
+
+    handleSidebarScroll(sidebar: HTMLElement): void {
+        const scrollable = sidebar.clientHeight !== sidebar.scrollHeight;
+        const atTop = sidebar.scrollTop === 0;
+        const atBottom = (sidebar.scrollTop + sidebar.clientHeight) === sidebar.scrollHeight;
+
+        if (sidebar.parentElement) {
+            sidebar.parentElement.classList.toggle('scroll-away-from-top', !atTop && scrollable);
+            sidebar.parentElement.classList.toggle('scroll-away-from-bottom', !atBottom && scrollable);
+        }
     }
 
 }

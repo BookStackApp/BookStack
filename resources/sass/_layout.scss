@@ -389,10 +389,12 @@ body.flexbox {
 .tri-layout-right {
   grid-area: c;
   min-width: 0;
+  position: relative;
 }
 .tri-layout-left {
   grid-area: a;
   min-width: 0;
+  position: relative;
 }
 
 @include mixins.larger-than(vars.$bp-xxl) {
@@ -431,7 +433,8 @@ body.flexbox {
     grid-template-areas:  "a b b";
     grid-template-columns: 1fr 3fr;
     grid-template-rows: min-content min-content 1fr;
-    padding-inline-end: vars.$l;
+    margin-inline-start: (vars.$m + vars.$xxs);
+    margin-inline-end: (vars.$m + vars.$xxs);
   }
   .tri-layout-sides {
     grid-column-start: a;
@@ -452,6 +455,8 @@ body.flexbox {
     height: 100%;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-inline: vars.$m;
+    margin-inline: -(vars.$m);
     &::-webkit-scrollbar {
       display: none;
     }
@@ -520,4 +525,26 @@ body.flexbox {
     margin-inline-start: 0;
     margin-inline-end: 0;
   }
+}
+
+/**
+ * Scroll Indicators
+ */
+.scroll-away-from-top:before,
+.scroll-away-from-bottom:after {
+  content: '';
+  display: block;
+  position: absolute;
+  @include mixins.lightDark(color, #F2F2F2, #111);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background: linear-gradient(to bottom, currentColor, transparent);
+  z-index: 2;
+}
+.scroll-away-from-bottom:after {
+  top: auto;
+  bottom: 0;
+  background: linear-gradient(to top, currentColor, transparent);
 }
