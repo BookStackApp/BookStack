@@ -79,6 +79,7 @@ import {
 import {el} from "../../utils/dom";
 import {EditorButtonWithMenu} from "../framework/blocks/button-with-menu";
 import {EditorSeparator} from "../framework/blocks/separator";
+import {EditorContextToolbarDefinition} from "../framework/toolbars";
 
 export function getMainEditorFullToolbar(context: EditorUiContext): EditorContainerUiElement {
 
@@ -220,50 +221,74 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
     ]);
 }
 
-export function getImageToolbarContent(): EditorUiElement[] {
-    return [new EditorButton(image)];
-}
-
-export function getMediaToolbarContent(): EditorUiElement[] {
-    return [new EditorButton(media)];
-}
-
-export function getLinkToolbarContent(): EditorUiElement[] {
-    return [
+export function getBasicEditorToolbar(context: EditorUiContext): EditorContainerUiElement {
+    return new EditorSimpleClassContainer('editor-toolbar-main', [
+        new EditorButton(bold),
+        new EditorButton(italic),
         new EditorButton(link),
-        new EditorButton(unlink),
-    ];
+        new EditorButton(bulletList),
+        new EditorButton(numberList),
+    ]);
 }
 
-export function getCodeToolbarContent(): EditorUiElement[] {
-    return [
-        new EditorButton(editCodeBlock),
-    ];
-}
-
-export function getTableToolbarContent(): EditorUiElement[] {
-    return [
-        new EditorOverflowContainer(2, [
-            new EditorButton(tableProperties),
-            new EditorButton(deleteTable),
-        ]),
-        new EditorOverflowContainer(3, [
-            new EditorButton(insertRowAbove),
-            new EditorButton(insertRowBelow),
-            new EditorButton(deleteRow),
-        ]),
-        new EditorOverflowContainer(3, [
-            new EditorButton(insertColumnBefore),
-            new EditorButton(insertColumnAfter),
-            new EditorButton(deleteColumn),
-        ]),
-    ];
-}
-
-export function getDetailsToolbarContent(): EditorUiElement[] {
-    return [
-        new EditorButton(detailsEditLabel),
-        new EditorButton(detailsToggle),
-        new EditorButton(detailsUnwrap),
-    ];
-}
+export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
+    image: {
+        selector: 'img:not([drawio-diagram] img)',
+        content: () => [new EditorButton(image)],
+    },
+    media: {
+        selector: '.editor-media-wrap',
+        content: () => [new EditorButton(media)],
+    },
+    link: {
+        selector: 'a',
+        content() {
+            return [
+                new EditorButton(link),
+                new EditorButton(unlink),
+            ]
+        },
+        displayTargetLocator(originalTarget: HTMLElement): HTMLElement {
+            const image = originalTarget.querySelector('img');
+            return image || originalTarget;
+        }
+    },
+    code: {
+        selector: '.editor-code-block-wrap',
+        content: () => [new EditorButton(editCodeBlock)],
+    },
+    table: {
+        selector: 'td,th',
+        content() {
+            return [
+                new EditorOverflowContainer(2, [
+                    new EditorButton(tableProperties),
+                    new EditorButton(deleteTable),
+                ]),
+                new EditorOverflowContainer(3, [
+                    new EditorButton(insertRowAbove),
+                    new EditorButton(insertRowBelow),
+                    new EditorButton(deleteRow),
+                ]),
+                new EditorOverflowContainer(3, [
+                    new EditorButton(insertColumnBefore),
+                    new EditorButton(insertColumnAfter),
+                    new EditorButton(deleteColumn),
+                ]),
+            ];
+        },
+        displayTargetLocator(originalTarget: HTMLElement): HTMLElement {
+            return originalTarget.closest('table') as HTMLTableElement;
+        }
+    },
+    details: {
+        selector: 'details',
+        content() {
+            return [
+                new EditorButton(detailsEditLabel),
+                new EditorButton(detailsToggle),
+                new EditorButton(detailsUnwrap),
+            ]
+        },
+    },
+};

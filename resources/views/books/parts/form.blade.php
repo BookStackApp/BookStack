@@ -1,7 +1,3 @@
-@push('head')
-    <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}"></script>
-@endpush
-
 {{ csrf_field() }}
 <div class="form-group title-input">
     <label for="name">{{ trans('common.name') }}</label>

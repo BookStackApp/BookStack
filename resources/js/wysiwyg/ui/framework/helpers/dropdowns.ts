@@ -41,11 +41,18 @@ export class DropDownManager {
 
     constructor() {
         this.onMenuMouseOver = this.onMenuMouseOver.bind(this);
+        this.onWindowClick = this.onWindowClick.bind(this);
 
-        window.addEventListener('click', (event: MouseEvent) => {
-            const target = event.target as HTMLElement;
-            this.closeAllNotContainingElement(target);
-        });
+        window.addEventListener('click', this.onWindowClick);
+    }
+
+    teardown(): void {
+        window.removeEventListener('click', this.onWindowClick);
+    }
+
+    protected onWindowClick(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        this.closeAllNotContainingElement(target);
     }
 
     protected closeAllNotContainingElement(element: HTMLElement): void {

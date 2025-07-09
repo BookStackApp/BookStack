@@ -311,54 +311,6 @@ export function buildForEditor(options) {
 }
 
 /**
- * @param {WysiwygConfigOptions} options
- * @return {RawEditorOptions}
- */
-export function buildForInput(options) {
-    // Set language
-    window.tinymce.addI18n(options.language, options.translationMap);
-
-    // BookStack Version
-    const version = document.querySelector('script[src*="/dist/app.js"]').getAttribute('src').split('?version=')[1];
-
-    // Return config object
-    return {
-        width: '100%',
-        height: '185px',
-        target: options.containerElement,
-        cache_suffix: `?version=${version}`,
-        content_css: [
-            window.baseUrl('/dist/styles.css'),
-        ],
-        branding: false,
-        skin: options.darkMode ? 'tinymce-5-dark' : 'tinymce-5',
-        body_class: 'wysiwyg-input',
-        browser_spellcheck: true,
-        relative_urls: false,
-        language: options.language,
-        directionality: options.textDirection,
-        remove_script_host: false,
-        document_base_url: window.baseUrl('/'),
-        end_container_on_empty_block: true,
-        remove_trailing_brs: false,
-        statusbar: false,
-        menubar: false,
-        plugins: 'link autolink lists',
-        contextmenu: false,
-        toolbar: 'bold italic link bullist numlist',
-        content_style: getContentStyle(options),
-        file_picker_types: 'file',
-        valid_elements: 'p,a[href|title|target],ol,ul,li,strong,em,br',
-        file_picker_callback: filePickerCallback,
-        init_instance_callback(editor) {
-            addCustomHeadContent(editor.getDoc());
-
-            editor.contentDocument.documentElement.classList.toggle('dark-mode', options.darkMode);
-        },
-    };
-}
-
-/**
  * @typedef {Object} WysiwygConfigOptions
  * @property {Element} containerElement
  * @property {string} language

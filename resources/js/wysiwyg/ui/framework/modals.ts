@@ -34,8 +34,8 @@ export class EditorFormModal extends EditorContainerUiElement {
     }
 
     hide() {
-        this.getDOMElement().remove();
         this.getContext().manager.setModalInactive(this.key);
+        this.teardown();
     }
 
     getForm(): EditorForm {
