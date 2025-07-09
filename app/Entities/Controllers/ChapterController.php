@@ -18,6 +18,7 @@ use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
+use BookStack\Util\DatabaseTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -269,7 +270,9 @@ class ChapterController extends Controller
         $this->checkOwnablePermission('chapter-delete', $chapter);
         $this->checkPermission('book-create-all');
 
-        $book = $transformer->transformChapterToBook($chapter);
+        $book = (new DatabaseTransaction(function () use ($chapter, $transformer) {
+            return $transformer->transformChapterToBook($chapter);
+        }))->run();
 
         return redirect($book->getUrl());
     }

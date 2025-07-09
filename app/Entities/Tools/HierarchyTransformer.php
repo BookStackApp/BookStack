@@ -13,17 +13,12 @@ use BookStack\Facades\Activity;
 
 class HierarchyTransformer
 {
-    protected BookRepo $bookRepo;
-    protected BookshelfRepo $shelfRepo;
-    protected Cloner $cloner;
-    protected TrashCan $trashCan;
-
-    public function __construct(BookRepo $bookRepo, BookshelfRepo $shelfRepo, Cloner $cloner, TrashCan $trashCan)
-    {
-        $this->bookRepo = $bookRepo;
-        $this->shelfRepo = $shelfRepo;
-        $this->cloner = $cloner;
-        $this->trashCan = $trashCan;
+    public function __construct(
+        protected BookRepo $bookRepo,
+        protected BookshelfRepo $shelfRepo,
+        protected Cloner $cloner,
+        protected TrashCan $trashCan
+    ) {
     }
 
     /**
