@@ -84,8 +84,8 @@ class BaseRepo
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
             $entity->touch();
         }
-        
-        $entity->rebuildPermissions();
+      
+      $entity->rebuildPermissions();
         $entity->indexForSearch();
         $this->referenceStore->updateForEntity($entity);
         
@@ -169,7 +169,7 @@ class BaseRepo
 
     /**
      * Sort the parent of the given entity, if any auto sort actions are set for it.
-     * Typical ran during create/update/insert events.
+     * Typically ran during create/update/insert events.
      */
     public function sortParent(Entity $entity): void
     {

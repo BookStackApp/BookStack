@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int    $id
  * @property string $name
  * @property string $value
+ * @property int    $entity_id
+ * @property string $entity_type
  * @property int    $order
  */
 class Tag extends Model

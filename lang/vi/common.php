@@ -20,7 +20,7 @@ return [
     'description' => 'Mô tả',
     'role' => 'Vai trò',
     'cover_image' => 'Ảnh bìa',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Hình ảnh này phải có kích thước khoảng 440x250px mặc dù nó sẽ được thu nhỏ & cắt xén linh hoạt để phù hợp với giao diện người dùng trong các trường hợp khác nhau theo yêu cầu, do đó kích thước thực tế để hiển thị sẽ khác nhau.',
 
     // Actions
     'actions' => 'Hành động',
@@ -30,8 +30,8 @@ return [
     'create' => 'Tạo',
     'update' => 'Cập nhật',
     'edit' => 'Sửa',
-    'archive' => 'Archive',
-    'unarchive' => 'Un-Archive',
+    'archive' => 'Lưu trữ',
+    'unarchive' => 'Bỏ lưu trữ',
     'sort' => 'Sắp xếp',
     'move' => 'Di chuyển',
     'copy' => 'Sao chép',
@@ -44,7 +44,7 @@ return [
     'remove' => 'Xóa bỏ',
     'add' => 'Thêm',
     'configure' => 'Cấu hình',
-    'manage' => 'Manage',
+    'manage' => 'Quản lý',
     'fullscreen' => 'Toàn màn hình',
     'favourite' => 'Yêu thích',
     'unfavourite' => 'Bỏ yêu thích',
@@ -54,7 +54,7 @@ return [
     'filter_clear' => 'Xóa bộ lọc',
     'download' => 'Tải về',
     'open_in_tab' => 'Mở trong thẻ mới',
-    'open' => 'Open',
+    'open' => 'Mở',
 
     // Sort Options
     'sort_options' => 'Tùy Chọn Sắp Xếp',
@@ -102,7 +102,8 @@ return [
     'tab_content_label' => 'Tab: Hiển thị nội dung chính',
 
     // Email Content
-    'email_action_help' => 'Nếu bạn đang có vấn đề trong việc bấm nút ":actionText", sao chép và dán địa chỉ URL dưới đây vào trình duyệt web:',
+    'email_action_help' => 'Nếu bạn gặp sự cố khi nhấp vào nút ": actionText", hãy sao chép và dán URL bên dưới
+vào trình duyệt web của bạn:',
     'email_rights' => 'Bản quyền đã được bảo hộ',
 
     // Footer Link Options
@@ -111,5 +112,5 @@ return [
     'terms_of_service' => 'Điều khoản Dịch vụ',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Tìm kiếm :appName',
 ];

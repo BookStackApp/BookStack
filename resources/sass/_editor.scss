@@ -52,6 +52,25 @@ body.editor-is-fullscreen {
   flex: 1;
 }
 
+// Variation specific styles
+.comment-editor-container,
+.basic-editor-container {
+  border-left: 1px solid #DDD;
+  border-right: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  border-radius: 3px;
+  @include mixins.lightDark(border-color, #DDD, #000);
+
+  .editor-toolbar-main {
+    border-radius: 3px 3px 0 0;
+    justify-content: end;
+  }
+}
+
+.basic-editor-container .editor-content-area {
+  padding-bottom: 0;
+}
+
 // Buttons
 .editor-button {
   font-size: 12px;
