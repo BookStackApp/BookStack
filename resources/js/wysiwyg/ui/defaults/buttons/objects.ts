@@ -92,6 +92,7 @@ export const image: EditorButtonDefinition = {
                 context.editor.update(() => {
                     const link = $createLinkedImageNodeFromImageData(image);
                     $insertNodes([link]);
+                    link.select();
                 });
             })
         });

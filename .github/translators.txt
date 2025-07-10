@@ -487,3 +487,5 @@ jellium :: French
 Qxlkdr :: Swedish
 Hari (muhhari) :: Indonesian
 仙君御 (xjy) :: Chinese Simplified
+TapioM :: Finnish
+lingb58 :: Chinese Traditional

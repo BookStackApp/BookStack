@@ -84,7 +84,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     // @ts-ignore
     window.debugEditorState = () => {
-        console.log(editor.getEditorState().toJSON());
+        return editor.getEditorState().toJSON();
     };
 
     registerCommonNodeMutationListeners(context);

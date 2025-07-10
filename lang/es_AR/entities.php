@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(Contenido Estable)',
     'pages_edit_switch_to_wysiwyg' => 'Cambiar a Editor WYSIWYG',
     'pages_edit_switch_to_new_wysiwyg' => 'Cambiar a nuevo editor WYSIWYG',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(En prueba beta)',
     'pages_edit_set_changelog' => 'Establecer cambios de registro',
     'pages_edit_enter_changelog_desc' => 'Introduzca una breve descripción de los cambios que ha realizado',
     'pages_edit_enter_changelog' => 'Entrar en cambio de registro',

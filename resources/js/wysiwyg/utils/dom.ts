@@ -52,12 +52,19 @@ export type StyleMap = Map<string, string>;
 /**
  * Creates a map from an element's styles.
  * Uses direct attribute value string handling since attempting to iterate
- * over .style will expand out any shorthand properties (like 'padding') making
+ * over .style will expand out any shorthand properties (like 'padding')
  * rather than being representative of the actual properties set.
  */
 export function extractStyleMapFromElement(element: HTMLElement): StyleMap {
-    const map: StyleMap = new Map();
     const styleText= element.getAttribute('style') || '';
+    return styleStringToStyleMap(styleText);
+}
+
+/**
+ * Convert string-formatted styles into a StyleMap.
+ */
+export function styleStringToStyleMap(styleText: string): StyleMap {
+    const map: StyleMap = new Map();
 
     const rules = styleText.split(';');
     for (const rule of rules) {
@@ -70,6 +77,17 @@ export function extractStyleMapFromElement(element: HTMLElement): StyleMap {
     }
 
     return map;
+}
+
+/**
+ * Convert a StyleMap into inline string style text.
+ */
+export function styleMapToStyleString(map: StyleMap): string {
+    const parts = [];
+    for (const [style, value] of map.entries()) {
+        parts.push(`${style}:${value}`);
+    }
+    return parts.join(';');
 }
 
 export function setOrRemoveAttribute(element: HTMLElement, name: string, value: string|null|undefined) {

@@ -3,7 +3,7 @@ import {
     $createParagraphNode, $createRangeSelection,
     $getRoot,
     $getSelection, $isBlockElementNode, $isDecoratorNode,
-    $isElementNode,
+    $isElementNode, $isParagraphNode,
     $isTextNode,
     $setSelection,
     BaseSelection, DecoratorNode,
@@ -60,10 +60,17 @@ export function $selectionContainsTextFormat(selection: BaseSelection | null, fo
         return false;
     }
 
-    for (const node of selection.getNodes()) {
+    // Check text nodes
+    const nodes = selection.getNodes();
+    for (const node of nodes) {
         if ($isTextNode(node) && node.hasFormat(format)) {
             return true;
         }
+    }
+
+    // If we're in an empty paragraph, check the paragraph format
+    if (nodes.length === 1 && $isParagraphNode(nodes[0]) && nodes[0].hasTextFormat(format)) {
+        return true;
     }
 
     return false;

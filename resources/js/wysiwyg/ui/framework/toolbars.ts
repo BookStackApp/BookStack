@@ -34,7 +34,11 @@ export class EditorContextToolbar extends EditorContainerUiElement {
 
         dom.hidden = !showing;
 
-        if (!showing) {
+        if (!this.target.isConnected) {
+            // If our target is no longer in the DOM, tell the manager an update is needed.
+            this.getContext().manager.triggerFutureStateRefresh();
+            return;
+        } else if (!showing) {
             return;
         }
 

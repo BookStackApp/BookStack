@@ -106,4 +106,14 @@ class SearchIndexingTest extends TestCase
             $this->assertNull($scoreByTerm->get($term), "Failed asserting that \"$term\" is not indexed");
         }
     }
+
+    public function test_non_breaking_spaces_handled_as_spaces()
+    {
+        $page = $this->entities->newPage(['html' => '<p>a&nbsp;tigerbadger is a dangerous&nbsp;animal</p>']);
+
+        $scoreByTerm = $page->searchTerms()->pluck('score', 'term');
+        $this->assertNotNull($scoreByTerm->get('tigerbadger'));
+        $this->assertNotNull($scoreByTerm->get('dangerous'));
+        $this->assertNotNull($scoreByTerm->get('animal'));
+    }
 }
