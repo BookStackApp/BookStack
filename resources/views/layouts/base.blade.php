@@ -3,6 +3,7 @@
       dir="{{ isset($locale) ? $locale->htmlDirection() : 'auto' }}"
       class="{{ setting()->getForCurrentUser('dark-mode-enabled') ? 'dark-mode ' : '' }}">
 <head>
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <title>{{ isset($pageTitle) ? $pageTitle . ' | ' : '' }}{{ setting('app-name') }}</title>
 
     <!-- Meta -->
