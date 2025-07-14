@@ -3,7 +3,6 @@
          option:page-comments:created-text="{{ trans('entities.comment_created_success') }}"
          option:page-comments:count-text="{{ trans('entities.comment_thread_count') }}"
          option:page-comments:archived-count-text="{{ trans('entities.comment_archived_count') }}"
-         option:page-comments:wysiwyg-language="{{ $locale->htmlLang() }}"
          option:page-comments:wysiwyg-text-direction="{{ $locale->htmlDirection() }}"
          class="comments-list tab-container"
          aria-label="{{ trans('entities.comments') }}">
@@ -73,7 +72,6 @@
 
     @if(userCan('comment-create-all') || $commentTree->canUpdateAny())
         @push('body-end')
-            <script src="{{ versioned_asset('libs/tinymce/tinymce.min.js') }}" nonce="{{ $cspNonce }}" defer></script>
             @include('form.editor-translations')
             @include('entities.selector-popup')
         @endpush

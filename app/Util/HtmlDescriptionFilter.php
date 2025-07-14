@@ -4,7 +4,6 @@ namespace BookStack\Util;
 
 use DOMAttr;
 use DOMElement;
-use DOMNamedNodeMap;
 use DOMNode;
 
 /**
@@ -25,6 +24,7 @@ class HtmlDescriptionFilter
         'ul' => [],
         'li' => [],
         'strong' => [],
+        'span' => [],
         'em' => [],
         'br' => [],
     ];
@@ -59,7 +59,6 @@ class HtmlDescriptionFilter
             return;
         }
 
-        /** @var DOMNamedNodeMap $attrs */
         $attrs = $element->attributes;
         for ($i = $attrs->length - 1; $i >= 0; $i--) {
             /** @var DOMAttr $attr */
@@ -70,7 +69,8 @@ class HtmlDescriptionFilter
             }
         }
 
-        foreach ($element->childNodes as $child) {
+        $childNodes = [...$element->childNodes];
+        foreach ($childNodes as $child) {
             if ($child instanceof DOMElement) {
                 static::filterElement($child);
             }

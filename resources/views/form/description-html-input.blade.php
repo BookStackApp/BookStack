@@ -1,5 +1,4 @@
 <textarea component="wysiwyg-input"
-          option:wysiwyg-input:language="{{ $locale->htmlLang() }}"
           option:wysiwyg-input:text-direction="{{ $locale->htmlDirection() }}"
           id="description_html" name="description_html" rows="5"
           @if($errors->has('description_html')) class="text-neg" @endif>@if(isset($model) || old('description_html')){{ old('description_html') ?? $model->descriptionHtml()}}@endif</textarea>

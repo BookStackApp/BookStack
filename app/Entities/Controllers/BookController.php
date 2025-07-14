@@ -18,6 +18,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use BookStack\References\ReferenceFetcher;
+use BookStack\Util\DatabaseTransaction;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -263,7 +264,9 @@ class BookController extends Controller
         $this->checkPermission('bookshelf-create-all');
         $this->checkPermission('book-create-all');
 
-        $shelf = $transformer->transformBookToShelf($book);
+        $shelf = (new DatabaseTransaction(function () use ($book, $transformer) {
+            return $transformer->transformBookToShelf($book);
+        }))->run();
 
         return redirect($shelf->getUrl());
     }

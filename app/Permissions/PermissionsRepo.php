@@ -7,6 +7,7 @@ use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use BookStack\Permissions\Models\RolePermission;
 use BookStack\Users\Models\Role;
+use BookStack\Util\DatabaseTransaction;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -48,38 +49,42 @@ class PermissionsRepo
      */
     public function saveNewRole(array $roleData): Role
     {
-        $role = new Role($roleData);
-        $role->mfa_enforced = boolval($roleData['mfa_enforced'] ?? false);
-        $role->save();
+        return (new DatabaseTransaction(function () use ($roleData) {
+            $role = new Role($roleData);
+            $role->mfa_enforced = boolval($roleData['mfa_enforced'] ?? false);
+            $role->save();
 
-        $permissions = $roleData['permissions'] ?? [];
-        $this->assignRolePermissions($role, $permissions);
-        $this->permissionBuilder->rebuildForRole($role);
+            $permissions = $roleData['permissions'] ?? [];
+            $this->assignRolePermissions($role, $permissions);
+            $this->permissionBuilder->rebuildForRole($role);
 
-        Activity::add(ActivityType::ROLE_CREATE, $role);
+            Activity::add(ActivityType::ROLE_CREATE, $role);
 
-        return $role;
+            return $role;
+        }))->run();
     }
 
     /**
      * Updates an existing role.
-     * Ensures Admin system role always have core permissions.
+     * Ensures the Admin system role always has core permissions.
      */
     public function updateRole($roleId, array $roleData): Role
     {
         $role = $this->getRoleById($roleId);
 
-        if (isset($roleData['permissions'])) {
-            $this->assignRolePermissions($role, $roleData['permissions']);
-        }
+        return (new DatabaseTransaction(function () use ($role, $roleData) {
+            if (isset($roleData['permissions'])) {
+                $this->assignRolePermissions($role, $roleData['permissions']);
+            }
 
-        $role->fill($roleData);
-        $role->save();
-        $this->permissionBuilder->rebuildForRole($role);
+            $role->fill($roleData);
+            $role->save();
+            $this->permissionBuilder->rebuildForRole($role);
 
-        Activity::add(ActivityType::ROLE_UPDATE, $role);
+            Activity::add(ActivityType::ROLE_UPDATE, $role);
 
-        return $role;
+            return $role;
+        }))->run();
     }
 
     /**
@@ -114,7 +119,7 @@ class PermissionsRepo
     /**
      * Delete a role from the system.
      * Check it's not an admin role or set as default before deleting.
-     * If a migration Role ID is specified the users assign to the current role
+     * If a migration Role ID is specified, the users assigned to the current role
      * will be added to the role of the specified id.
      *
      * @throws PermissionsException
@@ -131,17 +136,19 @@ class PermissionsRepo
             throw new PermissionsException(trans('errors.role_registration_default_cannot_delete'));
         }
 
-        if ($migrateRoleId !== 0) {
-            $newRole = Role::query()->find($migrateRoleId);
-            if ($newRole) {
-                $users = $role->users()->pluck('id')->toArray();
-                $newRole->users()->sync($users);
+        (new DatabaseTransaction(function () use ($migrateRoleId, $role) {
+            if ($migrateRoleId !== 0) {
+                $newRole = Role::query()->find($migrateRoleId);
+                if ($newRole) {
+                    $users = $role->users()->pluck('id')->toArray();
+                    $newRole->users()->sync($users);
+                }
             }
-        }
 
-        $role->entityPermissions()->delete();
-        $role->jointPermissions()->delete();
-        Activity::add(ActivityType::ROLE_DELETE, $role);
-        $role->delete();
+            $role->entityPermissions()->delete();
+            $role->jointPermissions()->delete();
+            Activity::add(ActivityType::ROLE_DELETE, $role);
+            $role->delete();
+        }))->run();
     }
 }

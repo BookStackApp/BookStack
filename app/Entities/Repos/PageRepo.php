@@ -18,6 +18,7 @@ use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
+use BookStack\Util\DatabaseTransaction;
 use Exception;
 
 class PageRepo
@@ -61,8 +62,10 @@ class PageRepo
             ]);
         }
 
-        $page->save();
-        $page->refresh()->rebuildPermissions();
+        (new DatabaseTransaction(function () use ($page) {
+            $page->save();
+            $page->refresh()->rebuildPermissions();
+        }))->run();
 
         return $page;
     }
@@ -72,26 +75,29 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
-        $draft->draft = false;
-        $draft->revision_count = 1;
-        $draft->priority = $this->getNewPriority($draft);
-        $this->updateTemplateStatusAndContentFromInput($draft, $input);
-        $this->baseRepo->update($draft, $input);
+        return (new DatabaseTransaction(function () use ($draft, $input) {
+            $draft->draft = false;
+            $draft->revision_count = 1;
+            $draft->priority = $this->getNewPriority($draft);
+            $this->updateTemplateStatusAndContentFromInput($draft, $input);
+            $this->baseRepo->update($draft, $input);
+            $draft->rebuildPermissions();
 
-        $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
-        $this->revisionRepo->storeNewForPage($draft, $summary);
-        $draft->refresh();
+            $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
+            $this->revisionRepo->storeNewForPage($draft, $summary);
+            $draft->refresh();
 
-        Activity::add(ActivityType::PAGE_CREATE, $draft);
-        $this->baseRepo->sortParent($draft);
+            Activity::add(ActivityType::PAGE_CREATE, $draft);
+            $this->baseRepo->sortParent($draft);
 
-        return $draft;
+            return $draft;
+        }))->run();
     }
 
     /**
      * Directly update the content for the given page from the provided input.
      * Used for direct content access in a way that performs required changes
-     * (Search index & reference regen) without performing an official update.
+     * (Search index and reference regen) without performing an official update.
      */
     public function setContentFromInput(Page $page, array $input): void
     {
@@ -116,7 +122,7 @@ class PageRepo
         $page->revision_count++;
         $page->save();
 
-        // Remove all update drafts for this user & page.
+        // Remove all update drafts for this user and page.
         $this->revisionRepo->deleteDraftsForCurrentUser($page);
 
         // Save a revision after updating
@@ -269,16 +275,18 @@ class PageRepo
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 
-        $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
-        $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
-        $page->changeBook($newBookId);
-        $page->rebuildPermissions();
+        return (new DatabaseTransaction(function () use ($page, $parent) {
+            $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
+            $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
+            $page->changeBook($newBookId);
+            $page->rebuildPermissions();
 
-        Activity::add(ActivityType::PAGE_MOVE, $page);
+            Activity::add(ActivityType::PAGE_MOVE, $page);
 
-        $this->baseRepo->sortParent($page);
+            $this->baseRepo->sortParent($page);
 
-        return $parent;
+            return $parent;
+        }))->run();
     }
 
     /**

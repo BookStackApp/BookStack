@@ -64,6 +64,6 @@ export function getEditorContentAsHtml(editor: LexicalEditor): Promise<string> {
     });
 }
 
-export function focusEditor(editor: LexicalEditor) {
+export function focusEditor(editor: LexicalEditor): void {
     editor.focus(() => {}, {defaultSelection: "rootStart"});
 }
