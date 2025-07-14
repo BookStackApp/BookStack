@@ -87,8 +87,11 @@ Big thanks to these companies for supporting the project.
 </a></td>
 </tr>
 <tr>
-<td colspan="2" align="center"><a href="https://phamos.eu" target="_blank">
+<td align="center"><a href="https://phamos.eu" target="_blank">
     <img width="136" src="https://www.bookstackapp.com/images/sponsors/phamos.png" alt="phamos">
+</a></td>
+<td align="center"><a href="https://sitespeak.ai/bookstack" target="_blank">
+    <img width="240" src="https://www.bookstackapp.com/images/sponsors/sitespeak.png" alt="SiteSpeakAI">
 </a></td>
 </tr>
 </tbody></table>
@@ -103,7 +106,7 @@ Details about BookStack's versioning scheme and the general release process [can
 
 ## 🌎 Translations
 
-Translations for text within BookStack is managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+Translations for text within BookStack are managed through the [BookStack project on Crowdin](https://crowdin.com/project/bookstack). Some strings have colon-prefixed variables such as `:userName`. Leave these values as they are as they will be replaced at run-time.
 
 Please use [Crowdin](https://crowdin.com/project/bookstack) to contribute translations instead of opening a pull request. The translations within the working codebase can be out-of-date, and merging via code can cause conflicts & sync issues. If for some reason you can't use Crowdin feel free to open an issue to discuss alternative options. 
 
