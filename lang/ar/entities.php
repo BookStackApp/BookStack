@@ -248,7 +248,7 @@ return [
     'pages_edit_switch_to_markdown_stable' => '(محتوى مستقر)',
     'pages_edit_switch_to_wysiwyg' => 'التبديل إلى محرر ما تراه هو ما تحصل عليه -WYSIWYG-',
     'pages_edit_switch_to_new_wysiwyg' => 'التبديل إلى محرر ما تراه هو ما تحصل عليه الجديد -new WYSIWYG-',
-    'pages_edit_switch_to_new_wysiwyg_desc' => '(In Beta Testing)',
+    'pages_edit_switch_to_new_wysiwyg_desc' => '(في الاختبار التجريبي)',
     'pages_edit_set_changelog' => 'تثبيت سجل التعديل',
     'pages_edit_enter_changelog_desc' => 'ضع وصف مختصر للتعديلات التي تمت',
     'pages_edit_enter_changelog' => 'أدخل سجل التعديل',
