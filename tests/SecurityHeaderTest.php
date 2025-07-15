@@ -17,7 +17,7 @@ class SecurityHeaderTest extends TestCase
 
     public function test_cookies_samesite_none_when_iframe_hosts_set()
     {
-        $this->runWithEnv('ALLOWED_IFRAME_HOSTS', 'http://example.com', function () {
+        $this->runWithEnv(['ALLOWED_IFRAME_HOSTS' => 'http://example.com'], function () {
             $resp = $this->get('/');
             foreach ($resp->headers->getCookies() as $cookie) {
                 $this->assertEquals('none', $cookie->getSameSite());
@@ -27,14 +27,14 @@ class SecurityHeaderTest extends TestCase
 
     public function test_secure_cookies_controlled_by_app_url()
     {
-        $this->runWithEnv('APP_URL', 'http://example.com', function () {
+        $this->runWithEnv(['APP_URL' => 'http://example.com'], function () {
             $resp = $this->get('/');
             foreach ($resp->headers->getCookies() as $cookie) {
                 $this->assertFalse($cookie->isSecure());
             }
         });
 
-        $this->runWithEnv('APP_URL', 'https://example.com', function () {
+        $this->runWithEnv(['APP_URL' => 'https://example.com'], function () {
             $resp = $this->get('/');
             foreach ($resp->headers->getCookies() as $cookie) {
                 $this->assertTrue($cookie->isSecure());
@@ -52,7 +52,7 @@ class SecurityHeaderTest extends TestCase
 
     public function test_iframe_csp_includes_extra_hosts_if_configured()
     {
-        $this->runWithEnv('ALLOWED_IFRAME_HOSTS', 'https://a.example.com https://b.example.com', function () {
+        $this->runWithEnv(['ALLOWED_IFRAME_HOSTS' => 'https://a.example.com https://b.example.com'], function () {
             $resp = $this->get('/');
             $frameHeader = $this->getCspHeader($resp, 'frame-ancestors');
 

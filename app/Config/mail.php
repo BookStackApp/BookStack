@@ -11,6 +11,7 @@
 // Configured mail encryption method.
 // STARTTLS should still be attempted, but tls/ssl forces TLS usage.
 $mailEncryption = env('MAIL_ENCRYPTION', null);
+$mailPort = intval(env('MAIL_PORT', 587));
 
 return [
 
@@ -33,13 +34,13 @@ return [
             'transport' => 'smtp',
             'scheme' => null,
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
+            'port' => $mailPort,
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
             'verify_peer' => env('MAIL_VERIFY_SSL', true),
             'timeout' => null,
             'local_domain' => null,
-            'tls_required' => ($mailEncryption === 'tls' || $mailEncryption === 'ssl'),
+            'require_tls' => ($mailEncryption === 'tls' || $mailEncryption === 'ssl' || $mailPort === 465),
         ],
 
         'sendmail' => [

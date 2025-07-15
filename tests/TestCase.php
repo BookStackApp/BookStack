@@ -118,15 +118,18 @@ abstract class TestCase extends BaseTestCase
      * Database config is juggled so the value can be restored when
      * parallel testing are used, where multiple databases exist.
      */
-    protected function runWithEnv(string $name, $value, callable $callback, bool $handleDatabase = true)
+    protected function runWithEnv(array $valuesByKey, callable $callback, bool $handleDatabase = true): void
     {
         Env::disablePutenv();
-        $originalVal = $_SERVER[$name] ?? null;
+        $originals = [];
+        foreach ($valuesByKey as $key => $value) {
+            $originals[$key] = $_SERVER[$key] ?? null;
 
-        if (is_null($value)) {
-            unset($_SERVER[$name]);
-        } else {
-            $_SERVER[$name] = $value;
+            if (is_null($value)) {
+                unset($_SERVER[$key]);
+            } else {
+                $_SERVER[$key] = $value;
+            }
         }
 
         $database = config('database.connections.mysql_testing.database');
@@ -144,10 +147,12 @@ abstract class TestCase extends BaseTestCase
             DB::rollBack();
         }
 
-        if (is_null($originalVal)) {
-            unset($_SERVER[$name]);
-        } else {
-            $_SERVER[$name] = $originalVal;
+        foreach ($originals as $key => $value) {
+            if (is_null($value)) {
+                unset($_SERVER[$key]);
+            } else {
+                $_SERVER[$key] = $value;
+            }
         }
     }
 

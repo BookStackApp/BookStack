@@ -46,7 +46,7 @@ class ThemeTest extends TestCase
             $functionsFile = theme_path('functions.php');
             app()->alias('cat', 'dog');
             file_put_contents($functionsFile, "<?php\nTheme::listen(\BookStack\Theming\ThemeEvents::APP_BOOT, function(\$app) { \$app->alias('cat', 'dog');});");
-            $this->runWithEnv('APP_THEME', $themeFolder, function () {
+            $this->runWithEnv(['APP_THEME' => $themeFolder], function () {
                 $this->assertEquals('cat', $this->app->getAlias('dog'));
             });
         });
@@ -61,7 +61,7 @@ class ThemeTest extends TestCase
             $this->expectException(ThemeException::class);
             $this->expectExceptionMessageMatches('/Failed loading theme functions file at ".*?" with error: Class "BookStack\\\\Biscuits" not found/');
 
-            $this->runWithEnv('APP_THEME', $themeFolder, fn() => null);
+            $this->runWithEnv(['APP_THEME' => $themeFolder], fn() => null);
         });
     }
 
@@ -504,7 +504,7 @@ END;
         $this->beforeApplicationDestroyed(fn() => File::deleteDirectory($themeFolderPath));
 
         // Run provided callback with theme env option set
-        $this->runWithEnv('APP_THEME', $themeFolderName, function () use ($callback, $themeFolderName) {
+        $this->runWithEnv(['APP_THEME' => $themeFolderName], function () use ($callback, $themeFolderName) {
             call_user_func($callback, $themeFolderName);
         });
     }
