@@ -86,7 +86,7 @@ return [
 
     // Imports
     'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
+    'import_create_notification' => 'فایل با موفقیت آپلود شد',
     'import_run' => 'updated import',
     'import_run_notification' => 'Content successfully imported',
     'import_delete' => 'deleted import',
