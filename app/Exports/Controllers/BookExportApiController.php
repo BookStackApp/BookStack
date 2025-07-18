@@ -65,18 +65,14 @@ class BookExportApiController extends ApiController
         return $this->download()->directly($markdown, $book->slug . '.md');
     }
 
-    
     /**
      * Export a book to a contained ZIP export file.
-     * @throws NotFoundException
      */
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
         $book = $this->queries->findVisibleByIdOrFail($id);
-        $bookName= $book->getShortName();
-     
         $zip = $builder->buildForBook($book);
 
-        return $this->download()->streamedFileDirectly($zip, $bookName . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $book->slug . '.zip', true);
     }
 }

@@ -65,14 +65,11 @@ class PageExportApiController extends ApiController
         return $this->download()->directly($markdown, $page->slug . '.md');
     }
 
-
-
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
         $page = $this->queries->findVisibleByIdOrFail($id);
-        $pageSlug = $page->slug;
         $zip = $builder->buildForPage($page);
 
-        return $this->download()->streamedFileDirectly($zip, $pageSlug . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $page->slug . '.zip', true);
     }
 }

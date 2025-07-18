@@ -68,9 +68,8 @@ class ChapterExportApiController extends ApiController
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
         $chapter = $this->queries->findVisibleByIdOrFail($id);
-        $chapterName= $chapter->getShortName();
         $zip = $builder->buildForChapter($chapter);
 
-        return $this->download()->streamedFileDirectly($zip, $chapterName . '.zip', filesize($zip), true);
+        return $this->download()->streamedFileDirectly($zip, $chapter->slug . '.zip', true);
     }
 }
