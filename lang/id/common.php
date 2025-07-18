@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Batal',
-    'close' => 'Close',
+    'close' => 'Tutup',
     'confirm' => 'Konfirmasi',
     'back' => 'Kembali',
     'save' => 'Simpan',
@@ -20,18 +20,18 @@ return [
     'description' => 'Deskripsi',
     'role' => 'Peran',
     'cover_image' => 'Sampul gambar',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Gambar ini harus berukuran sekitar 440x250px walaupun nanti akan disesuaikan & terpotong secara fleksibel agar sesuai dengan tampilan pengguna, sehingga dimensi sebenarnya untuk tampilan akan berbeda.',
 
     // Actions
     'actions' => 'Tindakan',
     'view' => 'Lihat',
     'view_all' => 'Lihat Semua',
-    'new' => 'New',
+    'new' => 'Buat Baru',
     'create' => 'Buat',
     'update' => 'Perbarui',
     'edit' => 'Sunting',
-    'archive' => 'Archive',
-    'unarchive' => 'Un-Archive',
+    'archive' => 'Buat Arsip',
+    'unarchive' => 'Batalkan Arsip',
     'sort' => 'Sortir',
     'move' => 'Pindahkan',
     'copy' => 'Salin',
@@ -43,18 +43,18 @@ return [
     'reset' => 'Atur ulang',
     'remove' => 'Hapus',
     'add' => 'Tambah',
-    'configure' => 'Configure',
-    'manage' => 'Manage',
+    'configure' => 'Atur',
+    'manage' => 'Kelola',
     'fullscreen' => 'Layar Penuh',
     'favourite' => 'Favorit',
     'unfavourite' => 'Batal favorit',
     'next' => 'Selanjutnya',
     'previous' => 'Sebelumnya',
-    'filter_active' => 'Active Filter:',
-    'filter_clear' => 'Clear Filter',
-    'download' => 'Download',
-    'open_in_tab' => 'Open in Tab',
-    'open' => 'Open',
+    'filter_active' => 'Filter Aktif:',
+    'filter_clear' => 'Hapus Filter',
+    'download' => 'Unduh',
+    'open_in_tab' => 'Buka di tab baru',
+    'open' => 'Buka',
 
     // Sort Options
     'sort_options' => 'Opsi Sortir',
@@ -80,20 +80,20 @@ return [
     'default' => 'Bawaan',
     'breadcrumb' => 'Breadcrumb',
     'status' => 'Status',
-    'status_active' => 'Active',
-    'status_inactive' => 'Inactive',
-    'never' => 'Never',
-    'none' => 'None',
+    'status_active' => 'Aktif',
+    'status_inactive' => 'Tidak Aktif',
+    'never' => 'Jangan Pernah',
+    'none' => 'Tidak Satupun',
 
     // Header
-    'homepage' => 'Homepage',
+    'homepage' => 'Beranda',
     'header_menu_expand' => 'Perluas Menu Tajuk',
     'profile_menu' => 'Menu Profil',
     'view_profile' => 'Tampilkan Profil',
     'edit_profile' => 'Sunting Profil',
     'dark_mode' => 'Mode Gelap',
     'light_mode' => 'Mode Terang',
-    'global_search' => 'Global Search',
+    'global_search' => 'Pencarian Global',
 
     // Layout tabs
     'tab_info' => 'Informasi',
@@ -111,5 +111,5 @@ return [
     'terms_of_service' => 'Ketentuan Layanan',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Cari :appName',
 ];
