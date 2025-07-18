@@ -26,9 +26,11 @@ class ImportApiController extends ApiController
      */
     public function list(): JsonResponse
     {
-        $imports = $this->imports->getVisibleImports()->all();
+        $query = $this->imports->queryVisible();
 
-        return response()->json($imports);
+        return $this->apiListingResponse($query, [
+            'id', 'name', 'size', 'type', 'created_by', 'created_at', 'updated_at'
+        ]);
     }
 
     /**
@@ -44,7 +46,7 @@ class ImportApiController extends ApiController
         try {
             $import = $this->imports->storeFromUpload($file);
         } catch (ZipValidationException $exception) {
-            $message = "ZIP upload failed with the following validation errors: \n" . implode("\n", $exception->errors);
+            $message = "ZIP upload failed with the following validation errors: \n" . $this->formatErrors($exception->errors);
             return $this->jsonError($message, 422);
         }
 
@@ -53,10 +55,14 @@ class ImportApiController extends ApiController
 
     /**
      * Read details of a pending ZIP import.
+     * The "details" property contains high-level metadata regarding the ZIP import content,
+     * and the structure of this will change depending on import "type".
      */
     public function read(int $id): JsonResponse
     {
         $import = $this->imports->findVisible($id);
+
+        $import->setAttribute('details', $import->decodeMetadata());
 
         return response()->json($import);
     }
@@ -82,7 +88,7 @@ class ImportApiController extends ApiController
         try {
             $entity = $this->imports->runImport($import, $parent);
         } catch (ZipImportException $exception) {
-            $message = "ZIP import failed with the following errors: \n" . implode("\n", $exception->errors);
+            $message = "ZIP import failed with the following errors: \n" . $this->formatErrors($exception->errors);
             return $this->jsonError($message);
         }
 
@@ -111,5 +117,18 @@ class ImportApiController extends ApiController
                 'parent_id' => ['int'],
             ],
         ];
+    }
+
+    protected function formatErrors(array $errors): string
+    {
+        $parts = [];
+        foreach ($errors as $key => $error) {
+            if (is_string($key)) {
+                $parts[] = "[{$key}] {$error}";
+            } else {
+                $parts[] = $error;
+            }
+        }
+        return implode("\n", $parts);
     }
 }

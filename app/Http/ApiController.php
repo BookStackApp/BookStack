@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 abstract class ApiController extends Controller
 {
-    protected $rules = [];
+    protected array $rules = [];
 
     /**
      * Provide a paginated listing JSON response in a standard format

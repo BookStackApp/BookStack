@@ -28,6 +28,8 @@ class Import extends Model implements Loggable
 {
     use HasFactory;
 
+    protected $hidden = ['metadata'];
+
     public function getSizeString(): string
     {
         $mb = round($this->size / 1000000, 2);

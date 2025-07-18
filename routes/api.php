@@ -88,11 +88,11 @@ Route::get('roles/{id}', [RoleApiController::class, 'read']);
 Route::put('roles/{id}', [RoleApiController::class, 'update']);
 Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 
-Route::get('import', [ExportControllers\ImportApiController::class, 'list']);
-Route::post('import', [ExportControllers\ImportApiController::class, 'upload']);
-Route::get('import/{id}', [ExportControllers\ImportApiController::class, 'read']);
-Route::post('import/{id}', [ExportControllers\ImportApiController::class, 'run']);
-Route::delete('import/{id}', [ExportControllers\ImportApiController::class, 'delete']);
+Route::get('imports', [ExportControllers\ImportApiController::class, 'list']);
+Route::post('imports', [ExportControllers\ImportApiController::class, 'upload']);
+Route::get('imports/{id}', [ExportControllers\ImportApiController::class, 'read']);
+Route::post('imports/{id}', [ExportControllers\ImportApiController::class, 'run']);
+Route::delete('imports/{id}', [ExportControllers\ImportApiController::class, 'delete']);
 
 Route::get('recycle-bin', [EntityControllers\RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiController::class, 'restore']);
