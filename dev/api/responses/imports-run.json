@@ -1,0 +1,14 @@
+{
+  "id": 1067,
+  "book_id": 28,
+  "slug": "pension-providers",
+  "name": "Pension Providers",
+  "description": "Details on the various pension providers that are available",
+  "priority": 7,
+  "created_at": "2025-07-18T14:53:35.000000Z",
+  "updated_at": "2025-07-18T14:53:36.000000Z",
+  "created_by": 1,
+  "updated_by": 1,
+  "owned_by": 1,
+  "default_template_id": null
+}

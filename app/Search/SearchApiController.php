@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
 {
-    protected $rules = [
+    protected array $rules = [
         'all' => [
             'query' => ['required'],
             'page'  => ['integer', 'min:1'],

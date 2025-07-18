@@ -89,7 +89,7 @@ Route::put('roles/{id}', [RoleApiController::class, 'update']);
 Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 
 Route::get('imports', [ExportControllers\ImportApiController::class, 'list']);
-Route::post('imports', [ExportControllers\ImportApiController::class, 'upload']);
+Route::post('imports', [ExportControllers\ImportApiController::class, 'create']);
 Route::get('imports/{id}', [ExportControllers\ImportApiController::class, 'read']);
 Route::post('imports/{id}', [ExportControllers\ImportApiController::class, 'run']);
 Route::delete('imports/{id}', [ExportControllers\ImportApiController::class, 'delete']);

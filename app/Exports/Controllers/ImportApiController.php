@@ -23,6 +23,7 @@ class ImportApiController extends ApiController
 
     /**
      * List existing ZIP imports visible to the user.
+     * Requires permission to import content.
      */
     public function list(): JsonResponse
     {
@@ -34,12 +35,18 @@ class ImportApiController extends ApiController
     }
 
     /**
-     * Upload, validate and store a ZIP import file.
-     * This does not run the import. That is performed via a separate endpoint.
+     * Start a new import from a ZIP file.
+     * This does not actually run the import since that is performed via the "run" endpoint.
+     * This uploads, validates and stores the ZIP file so it's ready to be imported.
+     *
+     * This "file" parameter must be a BookStack-compatible ZIP file, and this must be
+     * sent via a 'multipart/form-data' type request.
+     *
+     * Requires permission to import content.
      */
-    public function upload(Request $request): JsonResponse
+    public function create(Request $request): JsonResponse
     {
-        $this->validate($request, $this->rules()['upload']);
+        $this->validate($request, $this->rules()['create']);
 
         $file = $request->file('file');
 
@@ -57,6 +64,7 @@ class ImportApiController extends ApiController
      * Read details of a pending ZIP import.
      * The "details" property contains high-level metadata regarding the ZIP import content,
      * and the structure of this will change depending on import "type".
+     * Requires permission to import content.
      */
     public function read(int $id): JsonResponse
     {
@@ -69,8 +77,9 @@ class ImportApiController extends ApiController
 
     /**
      * Run the import process for an uploaded ZIP import.
-     * The parent_id and parent_type parameters are required when the import type is 'chapter' or 'page'.
-     * On success, returns the imported item.
+     * The "parent_id" and "parent_type" parameters are required when the import type is "chapter" or "page".
+     * On success, this endpoint returns the imported item.
+     * Requires permission to import content.
      */
     public function run(int $id, Request $request): JsonResponse
     {
@@ -92,11 +101,12 @@ class ImportApiController extends ApiController
             return $this->jsonError($message);
         }
 
-        return response()->json($entity);
+        return response()->json($entity->withoutRelations());
     }
 
     /**
-     * Delete a pending ZIP import.
+     * Delete a pending ZIP import from the system.
+     * Requires permission to import content.
      */
     public function delete(int $id): Response
     {
@@ -109,7 +119,7 @@ class ImportApiController extends ApiController
     protected function rules(): array
     {
         return [
-            'upload' => [
+            'create' => [
                 'file' => ['required', ...AttachmentService::getFileValidationRules()],
             ],
             'run' => [

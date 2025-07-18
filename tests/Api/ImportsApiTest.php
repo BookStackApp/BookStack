@@ -14,7 +14,7 @@ class ImportsApiTest extends TestCase
 
     protected string $baseEndpoint = '/api/imports';
 
-    public function test_upload_and_run(): void
+    public function test_create_and_run(): void
     {
         $book = $this->entities->book();
         $zip = ZipTestHelper::zipUploadFromData([
@@ -44,12 +44,13 @@ class ImportsApiTest extends TestCase
             'name' => 'My API import page',
             'book_id' => $book->id,
         ]);
+        $resp->assertJsonMissingPath('book');
 
         $page = Page::query()->where('name', '=', 'My API import page')->first();
         $this->assertEquals('My api tag', $page->tags()->first()->name);
     }
 
-    public function test_upload_validation_error(): void
+    public function test_create_validation_error(): void
     {
         $zip = ZipTestHelper::zipUploadFromData([
             'page' => [
