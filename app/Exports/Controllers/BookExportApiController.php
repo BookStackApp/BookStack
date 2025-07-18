@@ -4,6 +4,7 @@ namespace BookStack\Exports\Controllers;
 
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Exports\ExportFormatter;
+use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\ApiController;
 use Throwable;
 
@@ -62,5 +63,16 @@ class BookExportApiController extends ApiController
         $markdown = $this->exportFormatter->bookToMarkdown($book);
 
         return $this->download()->directly($markdown, $book->slug . '.md');
+    }
+
+    /**
+     * Export a book to a contained ZIP export file.
+     */
+    public function exportZip(int $id, ZipExportBuilder $builder)
+    {
+        $book = $this->queries->findVisibleByIdOrFail($id);
+        $zip = $builder->buildForBook($book);
+
+        return $this->download()->streamedFileDirectly($zip, $book->slug . '.zip', true);
     }
 }

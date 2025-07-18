@@ -1,0 +1,51 @@
+{
+  "id": 25,
+  "name": "IT Department",
+  "path": "uploads\/files\/imports\/7YOpZ6sGIEbYdRFL.zip",
+  "size": 618462,
+  "type": "book",
+  "created_by": 1,
+  "created_at": "2024-12-20T18:40:38.000000Z",
+  "updated_at": "2024-12-20T18:40:38.000000Z",
+  "details": {
+    "id": 4,
+    "name": "IT Department",
+    "chapters": [
+      {
+        "id": 3,
+        "name": "Server Systems",
+        "priority": 1,
+        "pages": [
+          {
+            "id": 22,
+            "name": "prod-aws-stonehawk",
+            "priority": 0,
+            "attachments": [],
+            "images": [],
+            "tags": []
+          }
+        ],
+        "tags": []
+      }
+    ],
+    "pages": [
+      {
+        "id": 23,
+        "name": "Member Onboarding Guide",
+        "priority": 0,
+        "attachments": [],
+        "images": [],
+        "tags": []
+      },
+      {
+        "id": 25,
+        "name": "IT Holiday Party Event",
+        "priority": 2,
+        "attachments": [],
+        "images": [],
+        "tags": []
+      }
+    ],
+    "tags": []
+  }
+}

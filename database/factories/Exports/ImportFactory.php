@@ -24,6 +24,7 @@ class ImportFactory extends Factory
             'path' => 'uploads/files/imports/' . Str::random(10) . '.zip',
             'name' => $this->faker->words(3, true),
             'type' => 'book',
+            'size' => rand(1, 1001),
             'metadata' => '{"name": "My book"}',
             'created_at' => User::factory(),
         ];

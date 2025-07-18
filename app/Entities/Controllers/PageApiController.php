@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class PageApiController extends ApiController
 {
-    protected $rules = [
+    protected array $rules = [
         'create' => [
             'book_id'    => ['required_without:chapter_id', 'integer'],
             'chapter_id' => ['required_without:book_id', 'integer'],

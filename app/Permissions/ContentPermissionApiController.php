@@ -16,7 +16,7 @@ class ContentPermissionApiController extends ApiController
     ) {
     }
 
-    protected $rules = [
+    protected array $rules = [
         'update' => [
             'owner_id'  => ['int'],
 

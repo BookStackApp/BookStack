@@ -37,6 +37,7 @@ Route::get('books/{id}/export/html', [ExportControllers\BookExportApiController:
 Route::get('books/{id}/export/pdf', [ExportControllers\BookExportApiController::class, 'exportPdf']);
 Route::get('books/{id}/export/plaintext', [ExportControllers\BookExportApiController::class, 'exportPlainText']);
 Route::get('books/{id}/export/markdown', [ExportControllers\BookExportApiController::class, 'exportMarkdown']);
+Route::get('books/{id}/export/zip', [ExportControllers\BookExportApiController::class, 'exportZip']);
 
 Route::get('chapters', [EntityControllers\ChapterApiController::class, 'list']);
 Route::post('chapters', [EntityControllers\ChapterApiController::class, 'create']);
@@ -47,6 +48,7 @@ Route::get('chapters/{id}/export/html', [ExportControllers\ChapterExportApiContr
 Route::get('chapters/{id}/export/pdf', [ExportControllers\ChapterExportApiController::class, 'exportPdf']);
 Route::get('chapters/{id}/export/plaintext', [ExportControllers\ChapterExportApiController::class, 'exportPlainText']);
 Route::get('chapters/{id}/export/markdown', [ExportControllers\ChapterExportApiController::class, 'exportMarkdown']);
+Route::get('chapters/{id}/export/zip', [ExportControllers\ChapterExportApiController::class, 'exportZip']);
 
 Route::get('pages', [EntityControllers\PageApiController::class, 'list']);
 Route::post('pages', [EntityControllers\PageApiController::class, 'create']);
@@ -58,6 +60,7 @@ Route::get('pages/{id}/export/html', [ExportControllers\PageExportApiController:
 Route::get('pages/{id}/export/pdf', [ExportControllers\PageExportApiController::class, 'exportPdf']);
 Route::get('pages/{id}/export/plaintext', [ExportControllers\PageExportApiController::class, 'exportPlainText']);
 Route::get('pages/{id}/export/markdown', [ExportControllers\PageExportApiController::class, 'exportMarkdown']);
+Route::get('pages/{id}/export/zip', [ExportControllers\PageExportApiController::class, 'exportZip']);
 
 Route::get('image-gallery', [ImageGalleryApiController::class, 'list']);
 Route::post('image-gallery', [ImageGalleryApiController::class, 'create']);
@@ -84,6 +87,12 @@ Route::post('roles', [RoleApiController::class, 'create']);
 Route::get('roles/{id}', [RoleApiController::class, 'read']);
 Route::put('roles/{id}', [RoleApiController::class, 'update']);
 Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
+
+Route::get('imports', [ExportControllers\ImportApiController::class, 'list']);
+Route::post('imports', [ExportControllers\ImportApiController::class, 'create']);
+Route::get('imports/{id}', [ExportControllers\ImportApiController::class, 'read']);
+Route::post('imports/{id}', [ExportControllers\ImportApiController::class, 'run']);
+Route::delete('imports/{id}', [ExportControllers\ImportApiController::class, 'delete']);
 
 Route::get('recycle-bin', [EntityControllers\RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiController::class, 'restore']);

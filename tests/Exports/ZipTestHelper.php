@@ -4,6 +4,7 @@ namespace Tests\Exports;
 
 use BookStack\Exports\Import;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Testing\TestResponse;
 use ZipArchive;
 
 class ZipTestHelper
@@ -55,5 +56,31 @@ class ZipTestHelper
         $zip->close();
 
         return new UploadedFile($zipFile, 'upload.zip', 'application/zip', null, true);
+    }
+
+    public static function extractFromZipResponse(TestResponse $response): ZipResultData
+    {
+        $zipData = $response->streamedContent();
+        $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
+
+        file_put_contents($zipFile, $zipData);
+        $extractDir = tempnam(sys_get_temp_dir(), 'bstestextracted-');
+        if (file_exists($extractDir)) {
+            unlink($extractDir);
+        }
+        mkdir($extractDir);
+
+        $zip = new ZipArchive();
+        $zip->open($zipFile, ZipArchive::RDONLY);
+        $zip->extractTo($extractDir);
+
+        $dataJson = file_get_contents($extractDir . DIRECTORY_SEPARATOR . "data.json");
+        $data = json_decode($dataJson, true);
+
+        return new ZipResultData(
+            $zipFile,
+            $extractDir,
+            $data,
+        );
     }
 }

@@ -41,7 +41,7 @@ class ZipExportTest extends TestCase
     {
         $page = $this->entities->page();
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $this->assertEquals($page->id, $zip->data['page']['id'] ?? null);
         $this->assertArrayNotHasKey('book', $zip->data);
@@ -83,7 +83,7 @@ class ZipExportTest extends TestCase
     {
         $page = $this->entities->page();
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $pageData = $zip->data['page'];
         $this->assertEquals([
@@ -105,7 +105,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $pageData = $zip->data['page'];
         $this->assertEquals($markdown, $pageData['markdown']);
@@ -121,7 +121,7 @@ class ZipExportTest extends TestCase
         ]);
 
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $pageData = $zip->data['page'];
         $this->assertEquals([
@@ -147,7 +147,7 @@ class ZipExportTest extends TestCase
         $image = Image::findOrFail($result['response']->id);
 
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $pageData = $zip->data['page'];
 
         $this->assertCount(1, $pageData['images']);
@@ -173,7 +173,7 @@ class ZipExportTest extends TestCase
         $attachment = $this->files->uploadAttachmentDataToPage($this, $page, 'PageAttachmentExport.txt', $contents, 'text/plain');
 
         $zipResp = $this->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $pageData = $zip->data['page'];
         $this->assertCount(1, $pageData['attachments']);
@@ -203,7 +203,7 @@ class ZipExportTest extends TestCase
         ]);
 
         $zipResp = $this->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $pageData = $zip->data['page'];
         $this->assertCount(1, $pageData['attachments']);
@@ -221,7 +221,7 @@ class ZipExportTest extends TestCase
         $book->tags()->saveMany(Tag::factory()->count(2)->make());
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $this->assertArrayHasKey('book', $zip->data);
 
         $bookData = $zip->data['book'];
@@ -243,7 +243,7 @@ class ZipExportTest extends TestCase
         $coverImage = $book->cover()->first();
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
 
         $this->assertArrayHasKey('cover', $zip->data['book']);
         $coverRef = $zip->data['book']['cover'];
@@ -258,7 +258,7 @@ class ZipExportTest extends TestCase
         $chapter->tags()->saveMany(Tag::factory()->count(2)->make());
 
         $zipResp = $this->asEditor()->get($chapter->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $this->assertArrayHasKey('chapter', $zip->data);
 
         $chapterData = $zip->data['chapter'];
@@ -284,18 +284,18 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->actingAs($editor)->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $this->assertCount(0, $zip->data['book']['chapters'][0]['pages'] ?? ['cat']);
 
         $zipResp = $this->actingAs($editor)->get($chapter->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $this->assertCount(0, $zip->data['chapter']['pages'] ?? ['cat']);
 
         $page->chapter_id = 0;
         $page->save();
 
         $zipResp = $this->actingAs($editor)->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $this->assertCount(0, $zip->data['book']['pages'] ?? ['cat']);
     }
 
@@ -314,7 +314,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $bookData = $zip->data['book'];
         $chapterData = $bookData['chapters'][0];
         $pageData = $chapterData['pages'][0];
@@ -342,7 +342,7 @@ class ZipExportTest extends TestCase
         $chapter->save();
 
         $zipResp = $this->get($book->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $bookData = $zip->data['book'];
         $chapterData = $bookData['chapters'][0];
 
@@ -367,7 +367,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $pageData = $zip->data['page'];
 
         $ref = '[[bsexport:image:' . $image->id . ']]';
@@ -381,7 +381,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $pageData = $zip->data['page'];
 
         $this->assertStringContainsString('href="' . $page->book->getUrl() . '"', $pageData['html']);
@@ -402,7 +402,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $pageData = $zip->data['page'];
 
         $this->assertStringContainsString('href="[[bsexport:attachment:' . $attachment->id . ']]?open=true"', $pageData['html']);
@@ -417,7 +417,7 @@ class ZipExportTest extends TestCase
         $page->save();
 
         $zipResp = $this->asEditor()->get($chapter->getUrl("/export/zip"));
-        $zip = $this->extractZipResponse($zipResp);
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
         $pageData = $zip->data['chapter']['pages'][0];
 
         $this->assertStringContainsString("[Link to chapter]([[bsexport:chapter:{$chapter->id}]])", $pageData['markdown']);
@@ -443,31 +443,5 @@ class ZipExportTest extends TestCase
             $this->get($page->getUrl("/export/zip"))->assertOk();
         }
         $this->get($page->getUrl("/export/zip"))->assertStatus(429);
-    }
-
-    protected function extractZipResponse(TestResponse $response): ZipResultData
-    {
-        $zipData = $response->streamedContent();
-        $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
-
-        file_put_contents($zipFile, $zipData);
-        $extractDir = tempnam(sys_get_temp_dir(), 'bstestextracted-');
-        if (file_exists($extractDir)) {
-            unlink($extractDir);
-        }
-        mkdir($extractDir);
-
-        $zip = new ZipArchive();
-        $zip->open($zipFile, ZipArchive::RDONLY);
-        $zip->extractTo($extractDir);
-
-        $dataJson = file_get_contents($extractDir . DIRECTORY_SEPARATOR . "data.json");
-        $data = json_decode($dataJson, true);
-
-        return new ZipResultData(
-            $zipFile,
-            $extractDir,
-            $data,
-        );
     }
 }

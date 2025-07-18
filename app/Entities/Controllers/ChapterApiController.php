@@ -9,12 +9,11 @@ use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
 use Exception;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 
 class ChapterApiController extends ApiController
 {
-    protected $rules = [
+    protected array $rules = [
         'create' => [
             'book_id'             => ['required', 'integer'],
             'name'                => ['required', 'string', 'max:255'],

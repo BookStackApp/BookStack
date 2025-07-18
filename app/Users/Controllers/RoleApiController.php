@@ -16,7 +16,7 @@ class RoleApiController extends ApiController
         'display_name', 'description', 'mfa_enforced', 'external_auth_id', 'created_at', 'updated_at',
     ];
 
-    protected $rules = [
+    protected array $rules = [
         'create' => [
             'display_name'  => ['required', 'string', 'min:3', 'max:180'],
             'description'   => ['string', 'max:180'],
