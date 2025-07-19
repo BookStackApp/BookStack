@@ -25,6 +25,7 @@ export class PageEditor extends Component {
         this.draftDisplayIcon = this.$refs.draftDisplayIcon;
         this.changelogInput = this.$refs.changelogInput;
         this.changelogDisplay = this.$refs.changelogDisplay;
+        this.changelogCounter = this.$refs.changelogCounter;
         this.changeEditorButtons = this.$manyRefs.changeEditor || [];
         this.switchDialogContainer = this.$refs.switchDialog;
         this.deleteDraftDialogContainer = this.$refs.deleteDraftDialog;
@@ -77,8 +78,7 @@ export class PageEditor extends Component {
         const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
         this.changelogInput.addEventListener('input', () => {
             const count = this.changelogInput.value.length;
-            const counterEl = document.getElementById('changelog-count');
-            if (counterEl) counterEl.innerText = `${count} / 250`;
+            this.changelogCounter.innerText = `${count} / 180`;
             updateChangelogDebounced();
         });
 

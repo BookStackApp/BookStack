@@ -104,17 +104,17 @@
                 <span refs="page-editor@changelogDisplay">{{ trans('entities.pages_edit_set_changelog') }}</span>
             </button>
             <ul refs="dropdown@menu" class="wide dropdown-menu">
-                <li class="px-l py-m">
+                <li class="px-m py-s">
                     <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
                     <textarea
                         refs="page-editor@changelogInput"
                         name="summary"
                         id="summary-input"
                         rows="2"
-                        maxlength="250"
+                        maxlength="180"
                         placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
                     ></textarea>
-                    <small class="text-muted mt-xs" id="changelog-count">0 / 250</small>
+                    <small refs="page-editor@changelogCounter" class="text-muted mt-xs">0 / 180</small>
                 </li>
             </ul>
             <span>{{-- Prevents button jumping on menu show --}}</span>
