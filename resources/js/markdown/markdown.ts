@@ -1,7 +1,9 @@
 import MarkdownIt from 'markdown-it';
+// @ts-ignore
 import mdTasksLists from 'markdown-it-task-lists';
 
 export class Markdown {
+    protected renderer: MarkdownIt;
 
     constructor() {
         this.renderer = new MarkdownIt({html: true});
@@ -9,19 +11,16 @@ export class Markdown {
     }
 
     /**
-     * Get the front-end render used to convert markdown to HTML.
-     * @returns {MarkdownIt}
+     * Get the front-end render used to convert Markdown to HTML.
      */
-    getRenderer() {
+    getRenderer(): MarkdownIt {
         return this.renderer;
     }
 
     /**
      * Convert the given Markdown to HTML.
-     * @param {String} markdown
-     * @returns {String}
      */
-    render(markdown) {
+    render(markdown: string): string {
         return this.renderer.render(markdown);
     }
 

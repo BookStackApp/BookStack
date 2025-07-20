@@ -9,7 +9,7 @@ import {EditorView} from "@codemirror/view";
 export interface MarkdownEditorConfig {
     pageId: string;
     container: Element;
-    displayEl: Element;
+    displayEl: HTMLIFrameElement;
     inputEl: HTMLTextAreaElement;
     drawioUrl: string;
     settingInputs: HTMLInputElement[];
@@ -27,18 +27,13 @@ export interface MarkdownEditor {
 
 /**
  * Initiate a new Markdown editor instance.
- * @param {MarkdownEditorConfig} config
- * @returns {Promise<MarkdownEditor>}
  */
-export async function init(config) {
-    /**
-     * @type {MarkdownEditor}
-     */
+export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor> {
     const editor: MarkdownEditor = {
         config,
         markdown: new Markdown(),
         settings: new Settings(config.settingInputs),
-    };
+    } as MarkdownEditor;
 
     editor.actions = new Actions(editor);
     editor.display = new Display(editor);

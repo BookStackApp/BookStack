@@ -21,6 +21,7 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@lezer/generator": "^1.7.2",
+    "@types/markdown-it": "^14.1.2",
     "@types/sortablejs": "^1.15.8",
     "chokidar-cli": "^3.0",
     "esbuild": "^0.25.0",

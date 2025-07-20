@@ -1,19 +1,16 @@
 import {provideKeyBindings} from './shortcuts';
-import {debounce} from '../services/util.ts';
-import {Clipboard} from '../services/clipboard.ts';
+import {debounce} from '../services/util';
+import {Clipboard} from '../services/clipboard';
+import {EditorView, ViewUpdate} from "@codemirror/view";
+import {MarkdownEditor} from "./index.mjs";
 
 /**
  * Initiate the codemirror instance for the markdown editor.
- * @param {MarkdownEditor} editor
- * @returns {Promise<EditorView>}
  */
-export async function init(editor) {
-    const Code = await window.importVersioned('code');
+export async function init(editor: MarkdownEditor): Promise<EditorView> {
+    const Code = await window.importVersioned('code') as (typeof import('../code/index.mjs'));
 
-    /**
-     * @param {ViewUpdate} v
-     */
-    function onViewUpdate(v) {
+    function onViewUpdate(v: ViewUpdate) {
         if (v.docChanged) {
             editor.actions.updateAndRender();
         }
@@ -27,9 +24,13 @@ export async function init(editor) {
 
     const domEventHandlers = {
         // Handle scroll to sync display view
-        scroll: event => syncActive && onScrollDebounced(event),
+        scroll: (event: Event) => syncActive && onScrollDebounced(event),
         // Handle image & content drag n drop
-        drop: event => {
+        drop: (event: DragEvent) => {
+            if (!event.dataTransfer) {
+                return;
+            }
+
             const templateId = event.dataTransfer.getData('bookstack/template');
             if (templateId) {
                 event.preventDefault();
@@ -45,12 +46,16 @@ export async function init(editor) {
             }
         },
         // Handle dragover event to allow as drop-target in chrome
-        dragover: event => {
+        dragover: (event: DragEvent) => {
             event.preventDefault();
         },
         // Handle image paste
-        paste: event => {
-            const clipboard = new Clipboard(event.clipboardData || event.dataTransfer);
+        paste: (event: ClipboardEvent) => {
+            if (!event.clipboardData) {
+                return;
+            }
+
+            const clipboard = new Clipboard(event.clipboardData);
 
             // Don't handle the event ourselves if no items exist of contains table-looking data
             if (!clipboard.hasItems() || clipboard.containsTabularData()) {
@@ -71,8 +76,9 @@ export async function init(editor) {
         provideKeyBindings(editor),
     );
 
-    // Add editor view to window for easy access/debugging.
+    // Add editor view to the window for easy access/debugging.
     // Not part of official API/Docs
+    // @ts-ignore
     window.mdEditorView = cm;
 
     return cm;
