@@ -1,24 +1,36 @@
-import {onChildEvent} from '../services/dom.ts';
+import {onChildEvent} from '../services/dom';
 import {Component} from './component';
 
-/**
- * @typedef EntitySelectorSearchOptions
- * @property entityTypes string
- * @property entityPermission string
- * @property searchEndpoint string
- * @property initialValue string
- */
+export interface EntitySelectorSearchOptions {
+    entityTypes: string;
+    entityPermission: string;
+    searchEndpoint: string;
+    initialValue: string;
+}
 
-/**
- * Entity Selector
- */
+export type EntitySelectorEntity = {
+    id: number,
+    name: string,
+    link: string,
+};
+
 export class EntitySelector extends Component {
+    protected elem!: HTMLElement;
+    protected input!: HTMLInputElement;
+    protected searchInput!: HTMLInputElement;
+    protected loading!: HTMLElement;
+    protected resultsContainer!: HTMLElement;
+
+    protected searchOptions!: EntitySelectorSearchOptions;
+
+    protected search = '';
+    protected lastClick = 0;
 
     setup() {
         this.elem = this.$el;
 
-        this.input = this.$refs.input;
-        this.searchInput = this.$refs.search;
+        this.input = this.$refs.input as HTMLInputElement;
+        this.searchInput = this.$refs.search as HTMLInputElement;
         this.loading = this.$refs.loading;
         this.resultsContainer = this.$refs.results;
 
@@ -29,9 +41,6 @@ export class EntitySelector extends Component {
             initialValue: this.searchInput.value || '',
         };
 
-        this.search = '';
-        this.lastClick = 0;
-
         this.setupListeners();
         this.showLoading();
 
@@ -40,16 +49,13 @@ export class EntitySelector extends Component {
         }
     }
 
-    /**
-     * @param {EntitySelectorSearchOptions} options
-     */
-    configureSearchOptions(options) {
+    configureSearchOptions(options: Partial<EntitySelectorSearchOptions>): void {
         Object.assign(this.searchOptions, options);
         this.reset();
         this.searchInput.value = this.searchOptions.initialValue;
     }
 
-    setupListeners() {
+    setupListeners(): void {
         this.elem.addEventListener('click', this.onClick.bind(this));
 
         let lastSearch = 0;
@@ -67,7 +73,7 @@ export class EntitySelector extends Component {
         });
 
         // Keyboard navigation
-        onChildEvent(this.$el, '[data-entity-type]', 'keydown', event => {
+        onChildEvent(this.$el, '[data-entity-type]', 'keydown', ((event: KeyboardEvent) => {
             if (event.ctrlKey && event.code === 'Enter') {
                 const form = this.$el.closest('form');
                 if (form) {
@@ -83,7 +89,7 @@ export class EntitySelector extends Component {
             if (event.code === 'ArrowUp') {
                 this.focusAdjacent(false);
             }
-        });
+        }) as (event: Event) => void);
 
         this.searchInput.addEventListener('keydown', event => {
             if (event.code === 'ArrowDown') {
@@ -93,10 +99,10 @@ export class EntitySelector extends Component {
     }
 
     focusAdjacent(forward = true) {
-        const items = Array.from(this.resultsContainer.querySelectorAll('[data-entity-type]'));
+        const items: (Element|null)[] = Array.from(this.resultsContainer.querySelectorAll('[data-entity-type]'));
         const selectedIndex = items.indexOf(document.activeElement);
         const newItem = items[selectedIndex + (forward ? 1 : -1)] || items[0];
-        if (newItem) {
+        if (newItem instanceof HTMLElement) {
             newItem.focus();
         }
     }
@@ -132,7 +138,7 @@ export class EntitySelector extends Component {
         }
 
         window.$http.get(this.searchUrl()).then(resp => {
-            this.resultsContainer.innerHTML = resp.data;
+            this.resultsContainer.innerHTML = resp.data as string;
             this.hideLoading();
         });
     }
@@ -142,7 +148,7 @@ export class EntitySelector extends Component {
         return `${this.searchOptions.searchEndpoint}?${query}`;
     }
 
-    searchEntities(searchTerm) {
+    searchEntities(searchTerm: string) {
         if (!this.searchOptions.searchEndpoint) {
             throw new Error('Search endpoint not set for entity-selector load');
         }
@@ -150,7 +156,7 @@ export class EntitySelector extends Component {
         this.input.value = '';
         const url = `${this.searchUrl()}&term=${encodeURIComponent(searchTerm)}`;
         window.$http.get(url).then(resp => {
-            this.resultsContainer.innerHTML = resp.data;
+            this.resultsContainer.innerHTML = resp.data as string;
             this.hideLoading();
         });
     }
@@ -162,16 +168,16 @@ export class EntitySelector extends Component {
         return answer;
     }
 
-    onClick(event) {
-        const listItem = event.target.closest('[data-entity-type]');
-        if (listItem) {
+    onClick(event: MouseEvent) {
+        const listItem = (event.target as HTMLElement).closest('[data-entity-type]');
+        if (listItem instanceof HTMLElement) {
             event.preventDefault();
             event.stopPropagation();
             this.selectItem(listItem);
         }
     }
 
-    selectItem(item) {
+    selectItem(item: HTMLElement): void {
         const isDblClick = this.isDoubleClick();
         const type = item.getAttribute('data-entity-type');
         const id = item.getAttribute('data-entity-id');
@@ -180,14 +186,14 @@ export class EntitySelector extends Component {
         this.unselectAll();
         this.input.value = isSelected ? `${type}:${id}` : '';
 
-        const link = item.getAttribute('href');
-        const name = item.querySelector('.entity-list-item-name').textContent;
-        const data = {id: Number(id), name, link};
+        const link = item.getAttribute('href') || '';
+        const name = item.querySelector('.entity-list-item-name')?.textContent || '';
+        const data: EntitySelectorEntity = {id: Number(id), name, link};
 
         if (isSelected) {
             item.classList.add('selected');
         } else {
-            window.$events.emit('entity-select-change', null);
+            window.$events.emit('entity-select-change');
         }
 
         if (!isDblClick && !isSelected) return;
@@ -200,7 +206,7 @@ export class EntitySelector extends Component {
         }
     }
 
-    confirmSelection(data) {
+    confirmSelection(data: EntitySelectorEntity) {
         window.$events.emit('entity-select-confirm', data);
     }
 

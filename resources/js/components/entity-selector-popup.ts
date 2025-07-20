@@ -1,14 +1,22 @@
 import {Component} from './component';
+import {EntitySelector, EntitySelectorEntity, EntitySelectorSearchOptions} from "./entity-selector";
+import {Popup} from "./popup";
+
+export type EntitySelectorPopupCallback = (entity: EntitySelectorEntity) => void;
 
 export class EntitySelectorPopup extends Component {
+
+    protected container!: HTMLElement;
+    protected selectButton!: HTMLElement;
+    protected selectorEl!: HTMLElement;
+
+    protected callback: EntitySelectorPopupCallback|null = null;
+    protected selection: EntitySelectorEntity|null = null;
 
     setup() {
         this.container = this.$el;
         this.selectButton = this.$refs.select;
         this.selectorEl = this.$refs.selector;
-
-        this.callback = null;
-        this.selection = null;
 
         this.selectButton.addEventListener('click', this.onSelectButtonClick.bind(this));
         window.$events.listen('entity-select-change', this.onSelectionChange.bind(this));
@@ -17,10 +25,8 @@ export class EntitySelectorPopup extends Component {
 
     /**
      * Show the selector popup.
-     * @param {Function} callback
-     * @param {EntitySelectorSearchOptions} searchOptions
      */
-    show(callback, searchOptions = {}) {
+    show(callback: EntitySelectorPopupCallback, searchOptions: Partial<EntitySelectorSearchOptions> = {}) {
         this.callback = callback;
         this.getSelector().configureSearchOptions(searchOptions);
         this.getPopup().show();
@@ -32,34 +38,28 @@ export class EntitySelectorPopup extends Component {
         this.getPopup().hide();
     }
 
-    /**
-     * @returns {Popup}
-     */
-    getPopup() {
-        return window.$components.firstOnElement(this.container, 'popup');
+    getPopup(): Popup {
+        return window.$components.firstOnElement(this.container, 'popup') as Popup;
     }
 
-    /**
-     * @returns {EntitySelector}
-     */
-    getSelector() {
-        return window.$components.firstOnElement(this.selectorEl, 'entity-selector');
+    getSelector(): EntitySelector {
+        return window.$components.firstOnElement(this.selectorEl, 'entity-selector') as EntitySelector;
     }
 
     onSelectButtonClick() {
         this.handleConfirmedSelection(this.selection);
     }
 
-    onSelectionChange(entity) {
-        this.selection = entity;
-        if (entity === null) {
+    onSelectionChange(entity: EntitySelectorEntity|{}) {
+        this.selection = (entity.hasOwnProperty('id') ? entity : null) as EntitySelectorEntity|null;
+        if (!this.selection) {
             this.selectButton.setAttribute('disabled', 'true');
         } else {
             this.selectButton.removeAttribute('disabled');
         }
     }
 
-    handleConfirmedSelection(entity) {
+    handleConfirmedSelection(entity: EntitySelectorEntity|null): void {
         this.hide();
         this.getSelector().reset();
         if (this.callback && entity) this.callback(entity);

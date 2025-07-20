@@ -5,6 +5,7 @@ export class Settings {
             scrollSync: true,
             showPreview: true,
             editorWidth: 50,
+            plainEditor: false,
         };
         this.changeListeners = {};
         this.loadFromLocalStorage();

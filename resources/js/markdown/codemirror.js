@@ -5,7 +5,7 @@ import {Clipboard} from '../services/clipboard.ts';
 /**
  * Initiate the codemirror instance for the markdown editor.
  * @param {MarkdownEditor} editor
- * @returns {Promise<void>}
+ * @returns {Promise<EditorView>}
  */
 export async function init(editor) {
     const Code = await window.importVersioned('code');
