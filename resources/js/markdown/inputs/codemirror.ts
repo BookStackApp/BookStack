@@ -1,12 +1,9 @@
 import {MarkdownEditorInput, MarkdownEditorInputSelection} from "./interface";
-import {MarkdownEditor} from "../index.mjs";
 import {EditorView} from "@codemirror/view";
-import {ChangeSpec, SelectionRange, TransactionSpec} from "@codemirror/state";
+import {ChangeSpec, TransactionSpec} from "@codemirror/state";
 
 
 export class CodemirrorInput implements MarkdownEditorInput {
-
-    protected editor: MarkdownEditor;
     protected cm: EditorView;
 
     constructor(cm: EditorView) {
@@ -14,84 +11,91 @@ export class CodemirrorInput implements MarkdownEditorInput {
     }
 
     focus(): void {
-        if (!this.editor.cm.hasFocus) {
-            this.editor.cm.focus();
+        if (!this.cm.hasFocus) {
+            this.cm.focus();
         }
     }
 
     getSelection(): MarkdownEditorInputSelection {
-        return this.editor.cm.state.selection.main;
+        return this.cm.state.selection.main;
     }
 
-    getSelectionText(selection: MarkdownEditorInputSelection|null = null): string {
+    getSelectionText(selection?: MarkdownEditorInputSelection): string {
         selection = selection || this.getSelection();
-        return this.editor.cm.state.sliceDoc(selection.from, selection.to);
+        return this.cm.state.sliceDoc(selection.from, selection.to);
     }
 
     setSelection(selection: MarkdownEditorInputSelection, scrollIntoView: boolean = false) {
-        this.editor.cm.dispatch({
+        this.cm.dispatch({
             selection: {anchor: selection.from, head: selection.to},
             scrollIntoView,
         });
     }
 
     getText(): string {
-        return this.editor.cm.state.doc.toString();
+        return this.cm.state.doc.toString();
     }
 
     getTextAboveView(): string {
-        const blockInfo = this.editor.cm.lineBlockAtHeight(scrollEl.scrollTop);
-        return this.editor.cm.state.sliceDoc(0, blockInfo.from);
+        const blockInfo = this.cm.lineBlockAtHeight(this.cm.scrollDOM.scrollTop);
+        return this.cm.state.sliceDoc(0, blockInfo.from);
     }
 
-    setText(text: string, selection: MarkdownEditorInputSelection | null = null) {
+    setText(text: string, selection?: MarkdownEditorInputSelection) {
         selection = selection || this.getSelection();
-        const newDoc = this.editor.cm.state.toText(text);
+        const newDoc = this.cm.state.toText(text);
         const newSelectFrom = Math.min(selection.from, newDoc.length);
-        const scrollTop = this.editor.cm.scrollDOM.scrollTop;
-        this.dispatchChange(0, this.editor.cm.state.doc.length, text, newSelectFrom);
+        const scrollTop = this.cm.scrollDOM.scrollTop;
+        this.dispatchChange(0, this.cm.state.doc.length, text, newSelectFrom);
         this.focus();
         window.requestAnimationFrame(() => {
-            this.editor.cm.scrollDOM.scrollTop = scrollTop;
+            this.cm.scrollDOM.scrollTop = scrollTop;
         });
     }
 
-    spliceText(from: number, to: number, newText: string, selection: MarkdownEditorInputSelection | null = null) {
+    spliceText(from: number, to: number, newText: string, selection: Partial<MarkdownEditorInputSelection> | null = null) {
         const end = (selection?.from === selection?.to) ? null : selection?.to;
         this.dispatchChange(from, to, newText, selection?.from, end)
     }
 
     appendText(text: string) {
-        const end = this.editor.cm.state.doc.length;
+        const end = this.cm.state.doc.length;
         this.dispatchChange(end, end, `\n${text}`);
     }
 
     getLineText(lineIndex: number = -1): string {
         const index = lineIndex > -1 ? lineIndex : this.getSelection().from;
-        return this.editor.cm.state.doc.lineAt(index).text;
-    }
-
-    wrapLine(start: string, end: string) {
-        const selectionRange = this.getSelection();
-        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
-        const lineContent = line.text;
-        let newLineContent;
-        let lineOffset = 0;
-
-        if (lineContent.startsWith(start) && lineContent.endsWith(end)) {
-            newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
-            lineOffset = -(start.length);
-        } else {
-            newLineContent = `${start}${lineContent}${end}`;
-            lineOffset = start.length;
-        }
-
-        this.dispatchChange(line.from, line.to, newLineContent, selectionRange.from + lineOffset);
+        return this.cm.state.doc.lineAt(index).text;
     }
 
     coordsToSelection(x: number, y: number): MarkdownEditorInputSelection {
-        const cursorPos = this.editor.cm.posAtCoords({x, y}, false);
+        const cursorPos = this.cm.posAtCoords({x, y}, false);
         return {from: cursorPos, to: cursorPos};
+    }
+
+    getLineRangeFromPosition(position: number): MarkdownEditorInputSelection {
+        const line = this.cm.state.doc.lineAt(position);
+        return {from: line.from, to: line.to};
+    }
+
+    searchForLineContaining(text: string): MarkdownEditorInputSelection | null {
+        const docText = this.cm.state.doc;
+        let lineCount = 1;
+        let scrollToLine = -1;
+        for (const line of docText.iterLines()) {
+            if (line.includes(text)) {
+                scrollToLine = lineCount;
+                break;
+            }
+            lineCount += 1;
+        }
+
+        if (scrollToLine === -1) {
+            return null;
+        }
+
+        const line = docText.line(scrollToLine);
+        return {from: line.from, to: line.to};
     }
 
     /**

@@ -18,12 +18,12 @@ export interface MarkdownEditorInput {
     /**
      * Get the text of the given (or current) selection range.
      */
-    getSelectionText(selection: MarkdownEditorInputSelection|null = null): string;
+    getSelectionText(selection?: MarkdownEditorInputSelection): string;
 
     /**
      * Set the selection range of the editor.
      */
-    setSelection(selection: MarkdownEditorInputSelection, scrollIntoView: boolean = false): void;
+    setSelection(selection: MarkdownEditorInputSelection, scrollIntoView: boolean): void;
 
     /**
      * Get the full text of the input.
@@ -40,13 +40,13 @@ export interface MarkdownEditorInput {
      * Set the full text of the input.
      * Optionally can provide a selection to restore after setting text.
      */
-    setText(text: string, selection: MarkdownEditorInputSelection|null = null): void;
+    setText(text: string, selection?: MarkdownEditorInputSelection): void;
 
     /**
      * Splice in/out text within the input.
      * Optionally can provide a selection to restore after setting text.
      */
-    spliceText(from: number, to: number, newText: string, selection: MarkdownEditorInputSelection|null = null): void;
+    spliceText(from: number, to: number, newText: string, selection: Partial<MarkdownEditorInputSelection>|null): void;
 
     /**
      * Append text to the end of the editor.
@@ -57,15 +57,20 @@ export interface MarkdownEditorInput {
      * Get the text of the given line number otherwise the text
      * of the current selected line.
      */
-    getLineText(lineIndex:number = -1): string;
+    getLineText(lineIndex:number): string;
 
     /**
-     * Wrap the current line in the given start/end contents.
+     * Get a selection representing the line range from the given position.
      */
-    wrapLine(start: string, end: string): void;
+    getLineRangeFromPosition(position: number): MarkdownEditorInputSelection;
 
     /**
      * Convert the given screen coords to a selection position within the input.
      */
     coordsToSelection(x: number, y: number): MarkdownEditorInputSelection;
+
+    /**
+     * Search and return a line range which includes the provided text.
+     */
+    searchForLineContaining(text: string): MarkdownEditorInputSelection|null;
 }

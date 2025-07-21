@@ -4,9 +4,9 @@ import {Actions} from './actions';
 import {Settings} from './settings';
 import {listenToCommonEvents} from './common-events';
 import {init as initCodemirror} from './codemirror';
-import {EditorView} from "@codemirror/view";
-import {importVersioned} from "../services/util";
 import {CodeModule} from "../global";
+import {MarkdownEditorInput} from "./inputs/interface";
+import {CodemirrorInput} from "./inputs/codemirror";
 
 export interface MarkdownEditorConfig {
     pageId: string;
@@ -23,7 +23,7 @@ export interface MarkdownEditor {
     display: Display;
     markdown: Markdown;
     actions: Actions;
-    cm: EditorView;
+    input: MarkdownEditorInput;
     settings: Settings;
 }
 
@@ -41,7 +41,9 @@ export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor
 
     editor.actions = new Actions(editor);
     editor.display = new Display(editor);
-    editor.cm = initCodemirror(editor, Code);
+
+    const codeMirror = initCodemirror(editor, Code);
+    editor.input = new CodemirrorInput(codeMirror);
 
     listenToCommonEvents(editor);
 
