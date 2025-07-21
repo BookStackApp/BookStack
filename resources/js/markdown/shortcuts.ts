@@ -1,11 +1,13 @@
 import {MarkdownEditor} from "./index.mjs";
 import {KeyBinding} from "@codemirror/view";
 
+export type MarkdownEditorShortcutMap = Record<string, () => void>;
+
 /**
  * Provide shortcuts for the editor instance.
  */
-function provide(editor: MarkdownEditor): Record<string, () => void> {
-    const shortcuts: Record<string, () => void> = {};
+export function provideShortcutMap(editor: MarkdownEditor): MarkdownEditorShortcutMap {
+    const shortcuts: MarkdownEditorShortcutMap = {};
 
     // Insert Image shortcut
     shortcuts['Shift-Mod-i'] = () => editor.actions.insertImage();
@@ -45,7 +47,7 @@ function provide(editor: MarkdownEditor): Record<string, () => void> {
  * Get the editor shortcuts in CodeMirror keybinding format.
  */
 export function provideKeyBindings(editor: MarkdownEditor): KeyBinding[] {
-    const shortcuts = provide(editor);
+    const shortcuts = provideShortcutMap(editor);
     const keyBindings = [];
 
     const wrapAction = (action: ()=>void) => () => {
