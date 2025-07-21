@@ -5,6 +5,8 @@ import {Settings} from './settings';
 import {listenToCommonEvents} from './common-events';
 import {init as initCodemirror} from './codemirror';
 import {EditorView} from "@codemirror/view";
+import {importVersioned} from "../services/util";
+import {CodeModule} from "../global";
 
 export interface MarkdownEditorConfig {
     pageId: string;
@@ -29,6 +31,8 @@ export interface MarkdownEditor {
  * Initiate a new Markdown editor instance.
  */
 export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor> {
+    const Code = await window.importVersioned('code') as CodeModule;
+
     const editor: MarkdownEditor = {
         config,
         markdown: new Markdown(),
@@ -37,7 +41,7 @@ export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor
 
     editor.actions = new Actions(editor);
     editor.display = new Display(editor);
-    editor.cm = await initCodemirror(editor);
+    editor.cm = initCodemirror(editor, Code);
 
     listenToCommonEvents(editor);
 

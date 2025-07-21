@@ -3,13 +3,12 @@ import {debounce} from '../services/util';
 import {Clipboard} from '../services/clipboard';
 import {EditorView, ViewUpdate} from "@codemirror/view";
 import {MarkdownEditor} from "./index.mjs";
+import {CodeModule} from "../global";
 
 /**
- * Initiate the codemirror instance for the markdown editor.
+ * Initiate the codemirror instance for the MarkDown editor.
  */
-export async function init(editor: MarkdownEditor): Promise<EditorView> {
-    const Code = await window.importVersioned('code') as (typeof import('../code/index.mjs'));
-
+export function init(editor: MarkdownEditor, Code: CodeModule): EditorView {
     function onViewUpdate(v: ViewUpdate) {
         if (v.docChanged) {
             editor.actions.updateAndRender();
