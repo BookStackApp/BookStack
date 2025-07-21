@@ -22,6 +22,6 @@ return [
     'action_view_comment' => 'مشاهده نظر',
     'action_view_page' => 'مشاهده صفحه',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
+    'footer_reason' => 'این اعلان برای شما ارسال شده است، زیرا پیوند (:link) فعالیتی از این نوع را برای این مورد پوشش می‌دهد.',
     'footer_reason_link' => 'تنظیمات اطلاع‌رسانی شما',
 ];
