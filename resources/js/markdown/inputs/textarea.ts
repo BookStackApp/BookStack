@@ -11,6 +11,8 @@ export class TextareaInput implements MarkdownEditorInput {
     protected onChange: () => void;
     protected eventController = new AbortController();
 
+    protected textSizeCache: {x: number; y: number}|null = null;
+
     constructor(
         input: HTMLTextAreaElement,
         shortcuts: MarkdownEditorShortcutMap,
@@ -24,6 +26,8 @@ export class TextareaInput implements MarkdownEditorInput {
 
         this.onKeyDown = this.onKeyDown.bind(this);
         this.configureListeners();
+
+        // TODO - Undo/Redo
 
         this.input.style.removeProperty("display");
     }
@@ -45,15 +49,24 @@ export class TextareaInput implements MarkdownEditorInput {
         this.input.addEventListener('input', () => {
             this.onChange();
         }, {signal: this.eventController.signal});
+
+        this.input.addEventListener('click', (event: MouseEvent) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            const range = this.eventToPosition(event);
+            const text = this.getText().split('');
+            console.log(range, text.slice(0, 20));
+        });
     }
 
     onKeyDown(e: KeyboardEvent) {
         const isApple = navigator.platform.startsWith("Mac") || navigator.platform === "iPhone";
+        const key = e.key.length > 1 ? e.key : e.key.toLowerCase();
         const keyParts = [
             e.shiftKey ? 'Shift' : null,
             isApple && e.metaKey ? 'Mod' : null,
             !isApple && e.ctrlKey ? 'Mod' : null,
-            e.key,
+            key,
         ];
 
         const keyString = keyParts.filter(Boolean).join('-');
@@ -65,10 +78,37 @@ export class TextareaInput implements MarkdownEditorInput {
 
     appendText(text: string): void {
         this.input.value += `\n${text}`;
+        this.input.dispatchEvent(new Event('input'));
     }
 
-    coordsToSelection(x: number, y: number): MarkdownEditorInputSelection {
-        // TODO
+    eventToPosition(event: MouseEvent): MarkdownEditorInputSelection {
+        const eventCoords = this.mouseEventToTextRelativeCoords(event);
+        const textSize = this.measureTextSize();
+        const lineWidth = this.measureLineCharCount(textSize.x);
+
+        const lines = this.getText().split('\n');
+
+        // TODO - Check this
+
+        let currY = 0;
+        let currPos = 0;
+        for (const line of lines) {
+            let linePos = 0;
+            const wrapCount = Math.max(Math.ceil(line.length / lineWidth), 1);
+            for (let i = 0; i < wrapCount; i++) {
+                currY += textSize.y;
+                if (currY > eventCoords.y) {
+                    const targetX = Math.floor(eventCoords.x / textSize.x);
+                    const maxPos = Math.min(currPos + linePos + targetX, currPos + line.length);
+                    return {from: maxPos, to: maxPos};
+                }
+
+                linePos += lineWidth;
+            }
+
+            currPos += line.length + 1;
+        }
+
         return this.getSelection();
     }
 
@@ -81,11 +121,11 @@ export class TextareaInput implements MarkdownEditorInput {
         let lineStart = 0;
         for (let i = 0; i < lines.length; i++) {
             const line = lines[i];
-            const newEnd = lineStart + line.length + 1;
-            if (position < newEnd) {
-                return {from: lineStart, to: newEnd};
+            const lineEnd = lineStart + line.length;
+            if (position <= lineEnd) {
+                return {from: lineStart, to: lineEnd};
             }
-            lineStart = newEnd;
+            lineStart = lineEnd + 1;
         }
 
         return {from: 0, to: 0};
@@ -140,6 +180,7 @@ export class TextareaInput implements MarkdownEditorInput {
 
     setText(text: string, selection?: MarkdownEditorInputSelection): void {
         this.input.value = text;
+        this.input.dispatchEvent(new Event('input'));
         if (selection) {
             this.setSelection(selection, false);
         }
@@ -153,5 +194,53 @@ export class TextareaInput implements MarkdownEditorInput {
             const newSelection = {from: selection.from, to: selection.to || selection.from};
             this.setSelection(newSelection, false);
         }
+    }
+
+    protected measureTextSize(): {x: number; y: number} {
+        if (this.textSizeCache) {
+            return this.textSizeCache;
+        }
+
+        const el = document.createElement("div");
+        el.textContent = `a\nb`;
+        const inputStyles = window.getComputedStyle(this.input)
+        el.style.font = inputStyles.font;
+        el.style.lineHeight = inputStyles.lineHeight;
+        el.style.padding = '0px';
+        el.style.display = 'inline-block';
+        el.style.visibility = 'hidden';
+        el.style.position = 'absolute';
+        el.style.whiteSpace = 'pre';
+        this.input.after(el);
+
+        const bounds = el.getBoundingClientRect();
+        el.remove();
+        this.textSizeCache = {
+            x: bounds.width,
+            y: bounds.height / 2,
+        };
+        return this.textSizeCache;
+    }
+
+    protected measureLineCharCount(textWidth: number): number {
+        const inputStyles = window.getComputedStyle(this.input);
+        const paddingLeft = Number(inputStyles.paddingLeft.replace('px', ''));
+        const paddingRight = Number(inputStyles.paddingRight.replace('px', ''));
+        const width = Number(inputStyles.width.replace('px', ''));
+        const textSpace = width - (paddingLeft + paddingRight);
+
+        return Math.floor(textSpace / textWidth);
+    }
+
+    protected mouseEventToTextRelativeCoords(event: MouseEvent): {x: number; y: number} {
+        const inputBounds = this.input.getBoundingClientRect();
+        const inputStyles = window.getComputedStyle(this.input);
+        const paddingTop = Number(inputStyles.paddingTop.replace('px', ''));
+        const paddingLeft = Number(inputStyles.paddingLeft.replace('px', ''));
+
+        const xPos = Math.max(event.clientX - (inputBounds.left + paddingLeft), 0);
+        const yPos = Math.max((event.clientY - (inputBounds.top + paddingTop)) + this.input.scrollTop, 0);
+
+        return {x: xPos, y: yPos};
     }
 }

@@ -236,7 +236,7 @@ export class Actions {
         if (lineStart === newStart) {
             const newLineContent = lineContent.replace(`${newStart} `, '');
             const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
-            this.editor.input.spliceText(selectionRange.from, selectionRange.to, newLineContent, {from: selectFrom});
+            this.editor.input.spliceText(lineRange.from, lineRange.to, newLineContent, {from: selectFrom});
             return;
         }
 
@@ -353,8 +353,8 @@ export class Actions {
      * Fetch and insert the template of the given ID.
      * The page-relative position provided can be used to determine insert location if possible.
      */
-    async insertTemplate(templateId: string, posX: number, posY: number): Promise<void> {
-        const cursorPos = this.editor.input.coordsToSelection(posX, posY).from;
+    async insertTemplate(templateId: string, event: MouseEvent): Promise<void> {
+        const cursorPos = this.editor.input.eventToPosition(event).from;
         const responseData = (await window.$http.get(`/templates/${templateId}`)).data as {markdown: string, html: string};
         const content = responseData.markdown || responseData.html;
         this.editor.input.spliceText(cursorPos, cursorPos, content, {from: cursorPos});
@@ -364,8 +364,8 @@ export class Actions {
      * Insert multiple images from the clipboard from an event at the provided
      * screen coordinates (Typically form a paste event).
      */
-    insertClipboardImages(images: File[], posX: number, posY: number): void {
-        const cursorPos = this.editor.input.coordsToSelection(posX, posY).from;
+    insertClipboardImages(images: File[], event: MouseEvent): void {
+        const cursorPos = this.editor.input.eventToPosition(event).from;
         for (const image of images) {
             this.uploadImage(image, cursorPos);
         }

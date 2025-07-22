@@ -72,8 +72,8 @@ export class CodemirrorInput implements MarkdownEditorInput {
         return this.cm.state.doc.lineAt(index).text;
     }
 
-    coordsToSelection(x: number, y: number): MarkdownEditorInputSelection {
-        const cursorPos = this.cm.posAtCoords({x, y}, false);
+    eventToPosition(event: MouseEvent): MarkdownEditorInputSelection {
+        const cursorPos = this.cm.posAtCoords({x: event.screenX, y: event.screenY}, false);
         return {from: cursorPos, to: cursorPos};
     }
 

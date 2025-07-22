@@ -25,7 +25,7 @@ export function getMarkdownDomEventHandlers(editor: MarkdownEditor): MarkdownEdi
             const templateId = event.dataTransfer.getData('bookstack/template');
             if (templateId) {
                 event.preventDefault();
-                editor.actions.insertTemplate(templateId, event.pageX, event.pageY);
+                editor.actions.insertTemplate(templateId, event);
             }
 
             const clipboard = new Clipboard(event.dataTransfer);
@@ -33,7 +33,7 @@ export function getMarkdownDomEventHandlers(editor: MarkdownEditor): MarkdownEdi
             if (clipboardImages.length > 0) {
                 event.stopPropagation();
                 event.preventDefault();
-                editor.actions.insertClipboardImages(clipboardImages, event.pageX, event.pageY);
+                editor.actions.insertClipboardImages(clipboardImages, event);
             }
         },
         // Handle dragover event to allow as drop-target in chrome

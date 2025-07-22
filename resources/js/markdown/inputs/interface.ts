@@ -65,9 +65,9 @@ export interface MarkdownEditorInput {
     getLineRangeFromPosition(position: number): MarkdownEditorInputSelection;
 
     /**
-     * Convert the given screen coords to a selection position within the input.
+     * Convert the given event position to a selection position within the input.
      */
-    coordsToSelection(x: number, y: number): MarkdownEditorInputSelection;
+    eventToPosition(event: MouseEvent): MarkdownEditorInputSelection;
 
     /**
      * Search and return a line range which includes the provided text.
