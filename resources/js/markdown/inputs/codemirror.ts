@@ -10,6 +10,10 @@ export class CodemirrorInput implements MarkdownEditorInput {
         this.cm = cm;
     }
 
+    teardown(): void {
+        this.cm.destroy();
+    }
+
     focus(): void {
         if (!this.cm.hasFocus) {
             this.cm.focus();

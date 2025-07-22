@@ -4,7 +4,6 @@ import {Actions} from './actions';
 import {Settings} from './settings';
 import {listenToCommonEvents} from './common-events';
 import {init as initCodemirror} from './codemirror';
-import {CodeModule} from "../global";
 import {MarkdownEditorInput} from "./inputs/interface";
 import {CodemirrorInput} from "./inputs/codemirror";
 import {TextareaInput} from "./inputs/textarea";
@@ -34,8 +33,6 @@ export interface MarkdownEditor {
  * Initiate a new Markdown editor instance.
  */
 export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor> {
-    // const Code = await window.importVersioned('code') as CodeModule;
-
     const editor: MarkdownEditor = {
         config,
         markdown: new Markdown(),
@@ -46,15 +43,25 @@ export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor
     editor.display = new Display(editor);
 
     const eventHandlers = getMarkdownDomEventHandlers(editor);
-    // TODO - Switching
-    // const codeMirror = initCodemirror(editor, Code);
-    // editor.input = new CodemirrorInput(codeMirror);
-    editor.input = new TextareaInput(
-        config.inputEl,
-        provideShortcutMap(editor),
-        eventHandlers
-    );
+    const shortcuts = provideShortcutMap(editor);
+    const onInputChange = () => editor.actions.updateAndRender();
 
+    const initCodemirrorInput: () => Promise<MarkdownEditorInput> = async () => {
+        const codeMirror = await initCodemirror(config.inputEl, shortcuts, eventHandlers, onInputChange);
+        return new CodemirrorInput(codeMirror);
+    };
+    const initTextAreaInput: () => Promise<MarkdownEditorInput> = async () => {
+        return new TextareaInput(config.inputEl, shortcuts, eventHandlers, onInputChange);
+    };
+
+    const isPlainEditor = Boolean(editor.settings.get('plainEditor'));
+    editor.input = await (isPlainEditor ? initTextAreaInput() : initCodemirrorInput());
+    editor.settings.onChange('plainEditor', async (value) => {
+        const isPlain = Boolean(value);
+        const newInput = await (isPlain ? initTextAreaInput() : initCodemirrorInput());
+        editor.input.teardown();
+        editor.input = newInput;
+    });
     // window.devinput = editor.input;
 
     listenToCommonEvents(editor);

@@ -73,4 +73,9 @@ export interface MarkdownEditorInput {
      * Search and return a line range which includes the provided text.
      */
     searchForLineContaining(text: string): MarkdownEditorInputSelection|null;
+
+    /**
+     * Tear down the input.
+     */
+    teardown(): void;
 }

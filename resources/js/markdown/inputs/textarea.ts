@@ -8,23 +8,43 @@ export class TextareaInput implements MarkdownEditorInput {
     protected input: HTMLTextAreaElement;
     protected shortcuts: MarkdownEditorShortcutMap;
     protected events: MarkdownEditorEventMap;
+    protected onChange: () => void;
+    protected eventController = new AbortController();
 
-    constructor(input: HTMLTextAreaElement, shortcuts: MarkdownEditorShortcutMap, events: MarkdownEditorEventMap) {
+    constructor(
+        input: HTMLTextAreaElement,
+        shortcuts: MarkdownEditorShortcutMap,
+        events: MarkdownEditorEventMap,
+        onChange: () => void
+    ) {
         this.input = input;
         this.shortcuts = shortcuts;
         this.events = events;
+        this.onChange = onChange;
 
         this.onKeyDown = this.onKeyDown.bind(this);
         this.configureListeners();
+
+        this.input.style.removeProperty("display");
+    }
+
+    teardown() {
+        this.eventController.abort('teardown');
     }
 
     configureListeners(): void {
-        // TODO - Teardown handling
-        this.input.addEventListener('keydown', this.onKeyDown);
+        // Keyboard shortcuts
+        this.input.addEventListener('keydown', this.onKeyDown, {signal: this.eventController.signal});
 
+        // Shared event listeners
         for (const [name, listener] of Object.entries(this.events)) {
-            this.input.addEventListener(name, listener);
+            this.input.addEventListener(name, listener, {signal: this.eventController.signal});
         }
+
+        // Input change handling
+        this.input.addEventListener('input', () => {
+            this.onChange();
+        }, {signal: this.eventController.signal});
     }
 
     onKeyDown(e: KeyboardEvent) {

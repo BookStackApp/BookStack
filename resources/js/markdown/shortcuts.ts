@@ -1,5 +1,4 @@
 import {MarkdownEditor} from "./index.mjs";
-import {KeyBinding} from "@codemirror/view";
 
 export type MarkdownEditorShortcutMap = Record<string, () => void>;
 
@@ -41,23 +40,4 @@ export function provideShortcutMap(editor: MarkdownEditor): MarkdownEditorShortc
     shortcuts['Mod-o'] = () => editor.actions.replaceLineStartForOrderedList();
 
     return shortcuts;
-}
-
-/**
- * Get the editor shortcuts in CodeMirror keybinding format.
- */
-export function provideKeyBindings(editor: MarkdownEditor): KeyBinding[] {
-    const shortcuts = provideShortcutMap(editor);
-    const keyBindings = [];
-
-    const wrapAction = (action: ()=>void) => () => {
-        action();
-        return true;
-    };
-
-    for (const [shortcut, action] of Object.entries(shortcuts)) {
-        keyBindings.push({key: shortcut, run: wrapAction(action), preventDefault: true});
-    }
-
-    return keyBindings;
 }
