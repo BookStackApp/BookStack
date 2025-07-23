@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => '插入图表',
     'pages_md_show_preview' => '显示预览',
     'pages_md_sync_scroll' => '同步预览滚动',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => '找到未保存的绘图',
     'pages_drawing_unsaved_confirm' => '从之前保存失败的绘图中发现了可恢复的数据。您想恢复并继续编辑这个未保存的绘图吗？',
     'pages_not_in_chapter' => '本页面不在某章节中',
