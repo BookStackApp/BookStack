@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Insertar Dibujo',
     'pages_md_show_preview' => 'Mostrar vista previa',
     'pages_md_sync_scroll' => 'Sincronizar desplazamiento de vista previa',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Encontrado dibujo sin guardar',
     'pages_drawing_unsaved_confirm' => 'Se encontraron datos no guardados del dibujo de un intento de guardado fallido. ¿Desea restaurar y continuar editando el dibujo no guardado?',
     'pages_not_in_chapter' => 'La página no está en un capítulo',
