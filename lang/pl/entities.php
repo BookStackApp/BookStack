@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Wstaw rysunek',
     'pages_md_show_preview' => 'Pokaż podgląd',
     'pages_md_sync_scroll' => 'Synchronizuj przewijanie podglądu',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Znaleziono niezapisany rysunek',
     'pages_drawing_unsaved_confirm' => 'Znaleziono niezapisane dane rysowania z poprzedniej nieudanej próby zapisu. Czy chcesz przywrócić i kontynuować edycję tego niezapisanego rysunku?',
     'pages_not_in_chapter' => 'Strona nie została umieszczona w rozdziale',
