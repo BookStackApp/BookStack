@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Вставити малюнок',
     'pages_md_show_preview' => 'Показати попередній перегляд',
     'pages_md_sync_scroll' => 'Синхронізація прокручування попереднього перегляду',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Знайдено незбережену чернетку',
     'pages_drawing_unsaved_confirm' => 'Незбережені чернетки були знайдені з попередньої спроби зберегти звіт. Хочете відновити і продовжити редагування цієї чернетки?',
     'pages_not_in_chapter' => 'Сторінка не знаходиться в розділі',
