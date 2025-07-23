@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Insérer un dessin',
     'pages_md_show_preview' => 'Prévisualisation',
     'pages_md_sync_scroll' => 'Défilement prévisualisation',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Dessin non enregistré trouvé',
     'pages_drawing_unsaved_confirm' => 'Des données de dessin non enregistrées ont été trouvées à partir d\'une tentative de sauvegarde de dessin échouée. Voulez-vous restaurer et continuer à modifier ce dessin non sauvegardé ?',
     'pages_not_in_chapter' => 'La page n\'est pas dans un chapitre',
