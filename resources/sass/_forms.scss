@@ -55,7 +55,8 @@
     font-style: normal;
     font-weight: 400;
     padding: vars.$xs vars.$m;
-    color: #444;
+    @include mixins.lightDark(color, #444, #aaa);
+    @include mixins.lightDark(background-color, #fff, #222);
     border-radius: 0;
     height: 100%;
     font-size: 14px;
