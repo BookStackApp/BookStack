@@ -5,7 +5,7 @@
  * leading edge, instead of the trailing.
  * @attribution https://davidwalsh.name/javascript-debounce-function
  */
-export function debounce(func: Function, waitMs: number, immediate: boolean): Function {
+export function debounce<T extends (...args: any[]) => any>(func: T, waitMs: number, immediate: boolean): T {
     let timeout: number|null = null;
     return function debouncedWrapper(this: any, ...args: any[]) {
         const context: any = this;
@@ -19,7 +19,7 @@ export function debounce(func: Function, waitMs: number, immediate: boolean): Fu
         }
         timeout = window.setTimeout(later, waitMs);
         if (callNow) func.apply(context, args);
-    };
+    } as T;
 }
 
 function isDetailsElement(element: HTMLElement): element is HTMLDetailsElement {

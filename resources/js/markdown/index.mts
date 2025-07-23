@@ -62,7 +62,6 @@ export async function init(config: MarkdownEditorConfig): Promise<MarkdownEditor
         editor.input.teardown();
         editor.input = newInput;
     });
-    window.devinput = editor.input;
 
     listenToCommonEvents(editor);
 
