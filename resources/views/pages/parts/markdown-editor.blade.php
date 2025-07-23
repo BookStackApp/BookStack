@@ -26,6 +26,10 @@
                     <div class="px-m">
                         @include('form.custom-checkbox', ['name' => 'md-scrollSync', 'label' => trans('entities.pages_md_sync_scroll'), 'value' => true, 'checked' => true])
                     </div>
+                    <hr class="m-none">
+                    <div class="px-m">
+                        @include('form.custom-checkbox', ['name' => 'md-plainEditor', 'label' => trans('entities.pages_md_plain_editor'), 'value' => true, 'checked' => false])
+                    </div>
                 </div>
             </div>
         </div>

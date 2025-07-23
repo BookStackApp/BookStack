@@ -44,7 +44,7 @@ export type SerializedParagraphNode = Spread<
 
 /** @noInheritDoc */
 export class ParagraphNode extends CommonBlockNode {
-  ['constructor']!: KlassConstructor<typeof ParagraphNode>;
+  declare ['constructor']: KlassConstructor<typeof ParagraphNode>;
   /** @internal */
   __textFormat: number;
   __textStyle: string;

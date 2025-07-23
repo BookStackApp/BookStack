@@ -1,20 +1,29 @@
-import * as DrawIO from '../services/drawio.ts';
+import * as DrawIO from '../services/drawio';
+import {MarkdownEditor} from "./index.mjs";
+import {EntitySelectorPopup, ImageManager} from "../components";
+import {MarkdownEditorInputSelection} from "./inputs/interface";
+
+interface ImageManagerImage {
+    id: number;
+    name: string;
+    thumbs: { display: string; };
+    url: string;
+}
 
 export class Actions {
 
-    /**
-     * @param {MarkdownEditor} editor
-     */
-    constructor(editor) {
+    protected readonly editor: MarkdownEditor;
+    protected lastContent: { html: string; markdown: string } = {
+        html: '',
+        markdown: '',
+    };
+
+    constructor(editor: MarkdownEditor) {
         this.editor = editor;
-        this.lastContent = {
-            html: '',
-            markdown: '',
-        };
     }
 
     updateAndRender() {
-        const content = this.#getText();
+        const content = this.editor.input.getText();
         this.editor.config.inputEl.value = content;
 
         const html = this.editor.markdown.render(content);
@@ -30,45 +39,42 @@ export class Actions {
     }
 
     showImageInsert() {
-        /** @type {ImageManager} * */
-        const imageManager = window.$components.first('image-manager');
+        const imageManager = window.$components.first('image-manager') as ImageManager;
 
-        imageManager.show(image => {
+        imageManager.show((image: ImageManagerImage) => {
             const imageUrl = image.thumbs?.display || image.url;
-            const selectedText = this.#getSelectionText();
+            const selectedText = this.editor.input.getSelectionText();
             const newText = `[![${selectedText || image.name}](${imageUrl})](${image.url})`;
             this.#replaceSelection(newText, newText.length);
         }, 'gallery');
     }
 
     insertImage() {
-        const newText = `![${this.#getSelectionText()}](http://)`;
+        const newText = `![${this.editor.input.getSelectionText()}](http://)`;
         this.#replaceSelection(newText, newText.length - 1);
     }
 
     insertLink() {
-        const selectedText = this.#getSelectionText();
+        const selectedText = this.editor.input.getSelectionText();
         const newText = `[${selectedText}]()`;
         const cursorPosDiff = (selectedText === '') ? -3 : -1;
         this.#replaceSelection(newText, newText.length + cursorPosDiff);
     }
 
     showImageManager() {
-        const selectionRange = this.#getSelectionRange();
-        /** @type {ImageManager} * */
-        const imageManager = window.$components.first('image-manager');
-        imageManager.show(image => {
+        const selectionRange = this.editor.input.getSelection();
+        const imageManager = window.$components.first('image-manager') as ImageManager;
+        imageManager.show((image: ImageManagerImage) => {
             this.#insertDrawing(image, selectionRange);
         }, 'drawio');
     }
 
     // Show the popup link selector and insert a link when finished
     showLinkSelector() {
-        const selectionRange = this.#getSelectionRange();
+        const selectionRange = this.editor.input.getSelection();
 
-        /** @type {EntitySelectorPopup} * */
-        const selector = window.$components.first('entity-selector-popup');
-        const selectionText = this.#getSelectionText(selectionRange);
+        const selector = window.$components.first('entity-selector-popup') as EntitySelectorPopup;
+        const selectionText = this.editor.input.getSelectionText(selectionRange);
         selector.show(entity => {
             const selectedText = selectionText || entity.name;
             const newText = `[${selectedText}](${entity.link})`;
@@ -86,7 +92,7 @@ export class Actions {
         const url = this.editor.config.drawioUrl;
         if (!url) return;
 
-        const selectionRange = this.#getSelectionRange();
+        const selectionRange = this.editor.input.getSelection();
 
         DrawIO.show(url, () => Promise.resolve(''), async pngData => {
             const data = {
@@ -96,7 +102,7 @@ export class Actions {
 
             try {
                 const resp = await window.$http.post('/images/drawio', data);
-                this.#insertDrawing(resp.data, selectionRange);
+                this.#insertDrawing(resp.data as ImageManagerImage, selectionRange);
                 DrawIO.close();
             } catch (err) {
                 this.handleDrawingUploadError(err);
@@ -105,20 +111,23 @@ export class Actions {
         });
     }
 
-    #insertDrawing(image, originalSelectionRange) {
+    #insertDrawing(image: ImageManagerImage, originalSelectionRange: MarkdownEditorInputSelection) {
         const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
         this.#replaceSelection(newText, newText.length, originalSelectionRange);
     }
 
     // Show draw.io if enabled and handle save.
-    editDrawing(imgContainer) {
+    editDrawing(imgContainer: HTMLElement) {
         const {drawioUrl} = this.editor.config;
         if (!drawioUrl) {
             return;
         }
 
-        const selectionRange = this.#getSelectionRange();
-        const drawingId = imgContainer.getAttribute('drawio-diagram');
+        const selectionRange = this.editor.input.getSelection();
+        const drawingId = imgContainer.getAttribute('drawio-diagram') || '';
+        if (!drawingId) {
+            return;
+        }
 
         DrawIO.show(drawioUrl, () => DrawIO.load(drawingId), async pngData => {
             const data = {
@@ -128,14 +137,15 @@ export class Actions {
 
             try {
                 const resp = await window.$http.post('/images/drawio', data);
-                const newText = `<div drawio-diagram="${resp.data.id}"><img src="${resp.data.url}"></div>`;
-                const newContent = this.#getText().split('\n').map(line => {
+                const image = resp.data as ImageManagerImage;
+                const newText = `<div drawio-diagram="${image.id}"><img src="${image.url}"></div>`;
+                const newContent = this.editor.input.getText().split('\n').map(line => {
                     if (line.indexOf(`drawio-diagram="${drawingId}"`) !== -1) {
                         return newText;
                     }
                     return line;
                 }).join('\n');
-                this.#setText(newContent, selectionRange);
+                this.editor.input.setText(newContent, selectionRange);
                 DrawIO.close();
             } catch (err) {
                 this.handleDrawingUploadError(err);
@@ -144,7 +154,7 @@ export class Actions {
         });
     }
 
-    handleDrawingUploadError(error) {
+    handleDrawingUploadError(error: any): void {
         if (error.status === 413) {
             window.$events.emit('error', this.editor.config.text.serverUploadLimit);
         } else {
@@ -162,91 +172,71 @@ export class Actions {
     }
 
     // Scroll to a specified text
-    scrollToText(searchText) {
+    scrollToText(searchText: string): void {
         if (!searchText) {
             return;
         }
 
-        const text = this.editor.cm.state.doc;
-        let lineCount = 1;
-        let scrollToLine = -1;
-        for (const line of text.iterLines()) {
-            if (line.includes(searchText)) {
-                scrollToLine = lineCount;
-                break;
-            }
-            lineCount += 1;
+        const lineRange = this.editor.input.searchForLineContaining(searchText);
+        if (lineRange) {
+            this.editor.input.setSelection(lineRange, true);
+            this.editor.input.focus();
         }
-
-        if (scrollToLine === -1) {
-            return;
-        }
-
-        const line = text.line(scrollToLine);
-        this.#setSelection(line.from, line.to, true);
-        this.focus();
     }
 
     focus() {
-        if (!this.editor.cm.hasFocus) {
-            this.editor.cm.focus();
-        }
+        this.editor.input.focus();
     }
 
     /**
      * Insert content into the editor.
-     * @param {String} content
      */
-    insertContent(content) {
+    insertContent(content: string) {
         this.#replaceSelection(content, content.length);
     }
 
     /**
      * Prepend content to the editor.
-     * @param {String} content
      */
-    prependContent(content) {
+    prependContent(content: string): void {
         content = this.#cleanTextForEditor(content);
-        const selectionRange = this.#getSelectionRange();
+        const selectionRange = this.editor.input.getSelection();
         const selectFrom = selectionRange.from + content.length + 1;
-        this.#dispatchChange(0, 0, `${content}\n`, selectFrom);
-        this.focus();
+        this.editor.input.spliceText(0, 0, `${content}\n`, {from: selectFrom});
+        this.editor.input.focus();
     }
 
     /**
      * Append content to the editor.
-     * @param {String} content
      */
-    appendContent(content) {
+    appendContent(content: string): void {
         content = this.#cleanTextForEditor(content);
-        this.#dispatchChange(this.editor.cm.state.doc.length, `\n${content}`);
-        this.focus();
+        this.editor.input.appendText(content);
+        this.editor.input.focus();
     }
 
     /**
      * Replace the editor's contents
-     * @param {String} content
      */
-    replaceContent(content) {
-        this.#setText(content);
+    replaceContent(content: string): void {
+        this.editor.input.setText(content);
     }
 
     /**
      * Replace the start of the line
      * @param {String} newStart
      */
-    replaceLineStart(newStart) {
-        const selectionRange = this.#getSelectionRange();
-        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
-
-        const lineContent = line.text;
+    replaceLineStart(newStart: string): void {
+        const selectionRange = this.editor.input.getSelection();
+        const lineRange = this.editor.input.getLineRangeFromPosition(selectionRange.from);
+        const lineContent = this.editor.input.getSelectionText(lineRange);
         const lineStart = lineContent.split(' ')[0];
 
         // Remove symbol if already set
         if (lineStart === newStart) {
             const newLineContent = lineContent.replace(`${newStart} `, '');
             const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
-            this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
+            this.editor.input.spliceText(lineRange.from, lineRange.to, newLineContent, {from: selectFrom});
             return;
         }
 
@@ -259,48 +249,46 @@ export class Actions {
         }
 
         const selectFrom = selectionRange.from + (newLineContent.length - lineContent.length);
-        this.#dispatchChange(line.from, line.to, newLineContent, selectFrom);
+        this.editor.input.spliceText(lineRange.from, lineRange.to, newLineContent, {from: selectFrom});
     }
 
     /**
      * Wrap the selection in the given contents start and end contents.
-     * @param {String} start
-     * @param {String} end
      */
-    wrapSelection(start, end) {
-        const selectRange = this.#getSelectionRange();
-        const selectionText = this.#getSelectionText(selectRange);
+    wrapSelection(start: string, end: string): void {
+        const selectRange = this.editor.input.getSelection();
+        const selectionText = this.editor.input.getSelectionText(selectRange);
         if (!selectionText) {
             this.#wrapLine(start, end);
             return;
         }
 
-        let newSelectionText = selectionText;
-        let newRange;
+        let newSelectionText: string;
+        let newRange = {from: selectRange.from, to: selectRange.to};
 
         if (selectionText.startsWith(start) && selectionText.endsWith(end)) {
             newSelectionText = selectionText.slice(start.length, selectionText.length - end.length);
-            newRange = selectRange.extend(selectRange.from, selectRange.to - (start.length + end.length));
+            newRange.to = selectRange.to - (start.length + end.length);
         } else {
             newSelectionText = `${start}${selectionText}${end}`;
-            newRange = selectRange.extend(selectRange.from, selectRange.to + (start.length + end.length));
+            newRange.to = selectRange.to + (start.length + end.length);
         }
 
-        this.#dispatchChange(
+        this.editor.input.spliceText(
             selectRange.from,
             selectRange.to,
             newSelectionText,
-            newRange.anchor,
-            newRange.head,
+            newRange,
         );
     }
 
     replaceLineStartForOrderedList() {
-        const selectionRange = this.#getSelectionRange();
-        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
-        const prevLine = this.editor.cm.state.doc.line(line.number - 1);
+        const selectionRange = this.editor.input.getSelection();
+        const lineRange = this.editor.input.getLineRangeFromPosition(selectionRange.from);
+        const prevLineRange = this.editor.input.getLineRangeFromPosition(lineRange.from - 1);
+        const prevLineText = this.editor.input.getSelectionText(prevLineRange);
 
-        const listMatch = prevLine.text.match(/^(\s*)(\d)([).])\s/) || [];
+        const listMatch = prevLineText.match(/^(\s*)(\d)([).])\s/) || [];
 
         const number = (Number(listMatch[2]) || 0) + 1;
         const whiteSpace = listMatch[1] || '';
@@ -315,45 +303,46 @@ export class Actions {
      * Creates a callout block if none existing, and removes it if cycling past the danger type.
      */
     cycleCalloutTypeAtSelection() {
-        const selectionRange = this.#getSelectionRange();
-        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
+        const selectionRange = this.editor.input.getSelection();
+        const lineRange = this.editor.input.getLineRangeFromPosition(selectionRange.from);
+        const lineText = this.editor.input.getSelectionText(lineRange);
 
         const formats = ['info', 'success', 'warning', 'danger'];
         const joint = formats.join('|');
         const regex = new RegExp(`class="((${joint})\\s+callout|callout\\s+(${joint}))"`, 'i');
-        const matches = regex.exec(line.text);
+        const matches = regex.exec(lineText);
         const format = (matches ? (matches[2] || matches[3]) : '').toLowerCase();
 
         if (format === formats[formats.length - 1]) {
             this.#wrapLine(`<p class="callout ${formats[formats.length - 1]}">`, '</p>');
         } else if (format === '') {
             this.#wrapLine('<p class="callout info">', '</p>');
-        } else {
+        } else if (matches) {
             const newFormatIndex = formats.indexOf(format) + 1;
             const newFormat = formats[newFormatIndex];
-            const newContent = line.text.replace(matches[0], matches[0].replace(format, newFormat));
-            const lineDiff = newContent.length - line.text.length;
-            this.#dispatchChange(
-                line.from,
-                line.to,
+            const newContent = lineText.replace(matches[0], matches[0].replace(format, newFormat));
+            const lineDiff = newContent.length - lineText.length;
+            const anchor = Math.min(selectionRange.from, selectionRange.to);
+            const head = Math.max(selectionRange.from, selectionRange.to);
+            this.editor.input.spliceText(
+                lineRange.from,
+                lineRange.to,
                 newContent,
-                selectionRange.anchor + lineDiff,
-                selectionRange.head + lineDiff,
+                {from: anchor + lineDiff, to: head + lineDiff}
             );
         }
     }
 
-    syncDisplayPosition(event) {
+    syncDisplayPosition(event: Event): void {
         // Thanks to http://liuhao.im/english/2015/11/10/the-sync-scroll-of-markdown-editor-in-javascript.html
-        const scrollEl = event.target;
+        const scrollEl = event.target as HTMLElement;
         const atEnd = Math.abs(scrollEl.scrollHeight - scrollEl.clientHeight - scrollEl.scrollTop) < 1;
         if (atEnd) {
             this.editor.display.scrollToIndex(-1);
             return;
         }
 
-        const blockInfo = this.editor.cm.lineBlockAtHeight(scrollEl.scrollTop);
-        const range = this.editor.cm.state.sliceDoc(0, blockInfo.from);
+        const range = this.editor.input.getTextAboveView();
         const parser = new DOMParser();
         const doc = parser.parseFromString(this.editor.markdown.render(range), 'text/html');
         const totalLines = doc.documentElement.querySelectorAll('body > *');
@@ -363,54 +352,48 @@ export class Actions {
     /**
      * Fetch and insert the template of the given ID.
      * The page-relative position provided can be used to determine insert location if possible.
-     * @param {String} templateId
-     * @param {Number} posX
-     * @param {Number} posY
      */
-    async insertTemplate(templateId, posX, posY) {
-        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
-        const {data} = await window.$http.get(`/templates/${templateId}`);
-        const content = data.markdown || data.html;
-        this.#dispatchChange(cursorPos, cursorPos, content, cursorPos);
+    async insertTemplate(templateId: string, event: MouseEvent): Promise<void> {
+        const cursorPos = this.editor.input.eventToPosition(event).from;
+        const responseData = (await window.$http.get(`/templates/${templateId}`)).data as {markdown: string, html: string};
+        const content = responseData.markdown || responseData.html;
+        this.editor.input.spliceText(cursorPos, cursorPos, content, {from: cursorPos});
     }
 
     /**
      * Insert multiple images from the clipboard from an event at the provided
      * screen coordinates (Typically form a paste event).
-     * @param {File[]} images
-     * @param {Number} posX
-     * @param {Number} posY
      */
-    insertClipboardImages(images, posX, posY) {
-        const cursorPos = this.editor.cm.posAtCoords({x: posX, y: posY}, false);
+    insertClipboardImages(images: File[], event: MouseEvent): void {
+        const cursorPos = this.editor.input.eventToPosition(event).from;
         for (const image of images) {
             this.uploadImage(image, cursorPos);
         }
     }
 
     /**
-     * Handle image upload and add image into markdown content
-     * @param {File} file
-     * @param {?Number} position
+     * Handle image upload and add image into Markdown content
      */
-    async uploadImage(file, position = null) {
+    async uploadImage(file: File, position: number|null = null): Promise<void> {
         if (file === null || file.type.indexOf('image') !== 0) return;
         let ext = 'png';
 
         if (position === null) {
-            position = this.#getSelectionRange().from;
+            position = this.editor.input.getSelection().from;
         }
 
         if (file.name) {
             const fileNameMatches = file.name.match(/\.(.+)$/);
-            if (fileNameMatches.length > 1) ext = fileNameMatches[1];
+            if (fileNameMatches && fileNameMatches.length > 1) {
+                ext = fileNameMatches[1];
+            }
         }
 
         // Insert image into markdown
         const id = `image-${Math.random().toString(16).slice(2)}`;
         const placeholderImage = window.baseUrl(`/loading.gif#upload${id}`);
         const placeHolderText = `![](${placeholderImage})`;
-        this.#dispatchChange(position, position, placeHolderText, position);
+        this.editor.input.spliceText(position, position, placeHolderText, {from: position});
 
         const remoteFilename = `image-${Date.now()}.${ext}`;
         const formData = new FormData();
@@ -418,10 +401,10 @@ export class Actions {
         formData.append('uploaded_to', this.editor.config.pageId);
 
         try {
-            const {data} = await window.$http.post('/images/gallery', formData);
-            const newContent = `[![](${data.thumbs.display})](${data.url})`;
+            const image = (await window.$http.post('/images/gallery', formData)).data as ImageManagerImage;
+            const newContent = `[![](${image.thumbs.display})](${image.url})`;
             this.#findAndReplaceContent(placeHolderText, newContent);
-        } catch (err) {
+        } catch (err: any) {
             window.$events.error(err?.data?.message || this.editor.config.text.imageUploadError);
             this.#findAndReplaceContent(placeHolderText, '');
             console.error(err);
@@ -429,94 +412,42 @@ export class Actions {
     }
 
     /**
-     * Get the current text of the editor instance.
-     * @return {string}
-     */
-    #getText() {
-        return this.editor.cm.state.doc.toString();
-    }
-
-    /**
-     * Set the text of the current editor instance.
-     * @param {String} text
-     * @param {?SelectionRange} selectionRange
-     */
-    #setText(text, selectionRange = null) {
-        selectionRange = selectionRange || this.#getSelectionRange();
-        const newDoc = this.editor.cm.state.toText(text);
-        const newSelectFrom = Math.min(selectionRange.from, newDoc.length);
-        const scrollTop = this.editor.cm.scrollDOM.scrollTop;
-        this.#dispatchChange(0, this.editor.cm.state.doc.length, text, newSelectFrom);
-        this.focus();
-        window.requestAnimationFrame(() => {
-            this.editor.cm.scrollDOM.scrollTop = scrollTop;
-        });
-    }
-
-    /**
      * Replace the current selection and focus the editor.
      * Takes an offset for the cursor, after the change, relative to the start of the provided string.
      * Can be provided a selection range to use instead of the current selection range.
-     * @param {String} newContent
-     * @param {Number} cursorOffset
-     * @param {?SelectionRange} selectionRange
      */
-    #replaceSelection(newContent, cursorOffset = 0, selectionRange = null) {
-        selectionRange = selectionRange || this.editor.cm.state.selection.main;
-        const selectFrom = selectionRange.from + cursorOffset;
-        this.#dispatchChange(selectionRange.from, selectionRange.to, newContent, selectFrom);
-        this.focus();
-    }
-
-    /**
-     * Get the text content of the main current selection.
-     * @param {SelectionRange} selectionRange
-     * @return {string}
-     */
-    #getSelectionText(selectionRange = null) {
-        selectionRange = selectionRange || this.#getSelectionRange();
-        return this.editor.cm.state.sliceDoc(selectionRange.from, selectionRange.to);
-    }
-
-    /**
-     * Get the range of the current main selection.
-     * @return {SelectionRange}
-     */
-    #getSelectionRange() {
-        return this.editor.cm.state.selection.main;
+    #replaceSelection(newContent: string, offset: number = 0, selection: MarkdownEditorInputSelection|null = null) {
+        selection = selection || this.editor.input.getSelection();
+        const selectFrom = selection.from + offset;
+        this.editor.input.spliceText(selection.from, selection.to, newContent, {from: selectFrom, to: selectFrom});
+        this.editor.input.focus();
     }
 
     /**
      * Cleans the given text to work with the editor.
      * Standardises line endings to what's expected.
-     * @param {String} text
-     * @return {String}
      */
-    #cleanTextForEditor(text) {
+    #cleanTextForEditor(text: string): string {
         return text.replace(/\r\n|\r/g, '\n');
     }
 
     /**
      * Find and replace the first occurrence of [search] with [replace]
-     * @param {String} search
-     * @param {String} replace
      */
-    #findAndReplaceContent(search, replace) {
-        const newText = this.#getText().replace(search, replace);
-        this.#setText(newText);
+    #findAndReplaceContent(search: string, replace: string): void {
+        const newText = this.editor.input.getText().replace(search, replace);
+        this.editor.input.setText(newText);
     }
 
     /**
      * Wrap the line in the given start and end contents.
-     * @param {String} start
-     * @param {String} end
      */
-    #wrapLine(start, end) {
-        const selectionRange = this.#getSelectionRange();
-        const line = this.editor.cm.state.doc.lineAt(selectionRange.from);
-        const lineContent = line.text;
-        let newLineContent;
-        let lineOffset = 0;
+    #wrapLine(start: string, end: string): void {
+        const selectionRange = this.editor.input.getSelection();
+        const lineRange = this.editor.input.getLineRangeFromPosition(selectionRange.from);
+        const lineContent = this.editor.input.getSelectionText(lineRange);
+        let newLineContent: string;
+        let lineOffset: number;
 
         if (lineContent.startsWith(start) && lineContent.endsWith(end)) {
             newLineContent = lineContent.slice(start.length, lineContent.length - end.length);
@@ -526,42 +457,7 @@ export class Actions {
             lineOffset = start.length;
         }
 
-        this.#dispatchChange(line.from, line.to, newLineContent, selectionRange.from + lineOffset);
-    }
-
-    /**
-     * Dispatch changes to the editor.
-     * @param {Number} from
-     * @param {?Number} to
-     * @param {?String} text
-     * @param {?Number} selectFrom
-     * @param {?Number} selectTo
-     */
-    #dispatchChange(from, to = null, text = null, selectFrom = null, selectTo = null) {
-        const tr = {changes: {from, to, insert: text}};
-
-        if (selectFrom) {
-            tr.selection = {anchor: selectFrom};
-            if (selectTo) {
-                tr.selection.head = selectTo;
-            }
-        }
-
-        this.editor.cm.dispatch(tr);
-    }
-
-    /**
-     * Set the current selection range.
-     * Optionally will scroll the new range into view.
-     * @param {Number} from
-     * @param {Number} to
-     * @param {Boolean} scrollIntoView
-     */
-    #setSelection(from, to, scrollIntoView = false) {
-        this.editor.cm.dispatch({
-            selection: {anchor: from, head: to},
-            scrollIntoView,
-        });
+        this.editor.input.spliceText(lineRange.from, lineRange.to, newLineContent, {from: selectionRange.from + lineOffset});
     }
 
 }

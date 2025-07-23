@@ -1,10 +1,12 @@
+import {MarkdownEditor} from "./index.mjs";
+
+export type MarkdownEditorShortcutMap = Record<string, () => void>;
+
 /**
  * Provide shortcuts for the editor instance.
- * @param {MarkdownEditor} editor
- * @returns {Object<String, Function>}
  */
-function provide(editor) {
-    const shortcuts = {};
+export function provideShortcutMap(editor: MarkdownEditor): MarkdownEditorShortcutMap {
+    const shortcuts: MarkdownEditorShortcutMap = {};
 
     // Insert Image shortcut
     shortcuts['Shift-Mod-i'] = () => editor.actions.insertImage();
@@ -38,25 +40,4 @@ function provide(editor) {
     shortcuts['Mod-o'] = () => editor.actions.replaceLineStartForOrderedList();
 
     return shortcuts;
-}
-
-/**
- * Get the editor shortcuts in CodeMirror keybinding format.
- * @param {MarkdownEditor} editor
- * @return {{key: String, run: function, preventDefault: boolean}[]}
- */
-export function provideKeyBindings(editor) {
-    const shortcuts = provide(editor);
-    const keyBindings = [];
-
-    const wrapAction = action => () => {
-        action();
-        return true;
-    };
-
-    for (const [shortcut, action] of Object.entries(shortcuts)) {
-        keyBindings.push({key: shortcut, run: wrapAction(action), preventDefault: true});
-    }
-
-    return keyBindings;
 }

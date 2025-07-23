@@ -16,3 +16,5 @@ declare global {
         importVersioned: (module: string) => Promise<object>;
     }
 }
+
+export type CodeModule = (typeof import('./code/index.mjs'));

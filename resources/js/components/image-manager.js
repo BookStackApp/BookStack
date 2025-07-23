@@ -127,6 +127,10 @@ export class ImageManager extends Component {
         });
     }
 
+    /**
+     * @param {({ thumbs: { display: string; }; url: string; name: string; }) => void} callback
+     * @param {String} type
+     */
     show(callback, type = 'gallery') {
         this.resetAll();
 

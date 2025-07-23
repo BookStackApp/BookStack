@@ -1,34 +1,35 @@
-import {patchDomFromHtmlString} from '../services/vdom.ts';
+import { patchDomFromHtmlString } from '../services/vdom';
+import {MarkdownEditor} from "./index.mjs";
 
 export class Display {
+    protected editor: MarkdownEditor;
+    protected container: HTMLIFrameElement;
+    protected doc: Document | null = null;
+    protected lastDisplayClick: number = 0;
 
-    /**
-     * @param {MarkdownEditor} editor
-     */
-    constructor(editor) {
+    constructor(editor: MarkdownEditor) {
         this.editor = editor;
         this.container = editor.config.displayEl;
 
-        this.doc = null;
-        this.lastDisplayClick = 0;
-
-        if (this.container.contentDocument.readyState === 'complete') {
+        if (this.container.contentDocument?.readyState === 'complete') {
             this.onLoad();
         } else {
             this.container.addEventListener('load', this.onLoad.bind(this));
         }
 
-        this.updateVisibility(editor.settings.get('showPreview'));
-        editor.settings.onChange('showPreview', show => this.updateVisibility(show));
+        this.updateVisibility(Boolean(editor.settings.get('showPreview')));
+        editor.settings.onChange('showPreview', (show) => this.updateVisibility(Boolean(show)));
     }
 
-    updateVisibility(show) {
-        const wrap = this.container.closest('.markdown-editor-wrap');
-        wrap.style.display = show ? null : 'none';
+    protected updateVisibility(show: boolean): void {
+        const wrap = this.container.closest('.markdown-editor-wrap') as HTMLElement;
+        wrap.style.display = show ? '' : 'none';
     }
 
-    onLoad() {
+    protected onLoad(): void {
         this.doc = this.container.contentDocument;
+
+        if (!this.doc) return;
 
         this.loadStylesIntoDisplay();
         this.doc.body.className = 'page-content';
@@ -37,20 +38,20 @@ export class Display {
         this.doc.addEventListener('click', this.onDisplayClick.bind(this));
     }
 
-    /**
-     * @param {MouseEvent} event
-     */
-    onDisplayClick(event) {
+    protected onDisplayClick(event: MouseEvent): void {
         const isDblClick = Date.now() - this.lastDisplayClick < 300;
 
-        const link = event.target.closest('a');
+        const link = (event.target as Element).closest('a');
         if (link !== null) {
             event.preventDefault();
-            window.open(link.getAttribute('href'));
+            const href = link.getAttribute('href');
+            if (href) {
+                window.open(href);
+            }
             return;
         }
 
-        const drawing = event.target.closest('[drawio-diagram]');
+        const drawing = (event.target as Element).closest('[drawio-diagram]') as HTMLElement;
         if (drawing !== null && isDblClick) {
             this.editor.actions.editDrawing(drawing);
             return;
@@ -59,10 +60,12 @@ export class Display {
         this.lastDisplayClick = Date.now();
     }
 
-    loadStylesIntoDisplay() {
+    protected loadStylesIntoDisplay(): void {
+        if (!this.doc) return;
+
         this.doc.documentElement.classList.add('markdown-editor-display');
 
-        // Set display to be dark mode if parent is
+        // Set display to be dark mode if the parent is
         if (document.documentElement.classList.contains('dark-mode')) {
             this.doc.documentElement.style.backgroundColor = '#222';
             this.doc.documentElement.classList.add('dark-mode');
@@ -71,24 +74,25 @@ export class Display {
         this.doc.head.innerHTML = '';
         const styles = document.head.querySelectorAll('style,link[rel=stylesheet]');
         for (const style of styles) {
-            const copy = style.cloneNode(true);
+            const copy = style.cloneNode(true) as HTMLElement;
             this.doc.head.appendChild(copy);
         }
     }
 
     /**
      * Patch the display DOM with the given HTML content.
-     * @param {String} html
      */
-    patchWithHtml(html) {
-        const {body} = this.doc;
+    public patchWithHtml(html: string): void {
+        if (!this.doc) return;
+
+        const { body } = this.doc;
 
         if (body.children.length === 0) {
             const wrap = document.createElement('div');
             this.doc.body.append(wrap);
         }
 
-        const target = body.children[0];
+        const target = body.children[0] as HTMLElement;
 
         patchDomFromHtmlString(target, html);
     }
@@ -96,14 +100,16 @@ export class Display {
     /**
      * Scroll to the given block index within the display content.
      * Will scroll to the end if the index is -1.
-     * @param {Number} index
      */
-    scrollToIndex(index) {
-        const elems = this.doc.body?.children[0]?.children;
-        if (elems && elems.length <= index) return;
+    public scrollToIndex(index: number): void {
+        const elems = this.doc?.body?.children[0]?.children;
+        if (!elems || elems.length <= index) return;
 
         const topElem = (index === -1) ? elems[elems.length - 1] : elems[index];
-        topElem.scrollIntoView({block: 'start', inline: 'nearest', behavior: 'smooth'});
+        (topElem as Element).scrollIntoView({
+            block: 'start',
+            inline: 'nearest',
+            behavior: 'smooth'
+        });
     }
-
 }
