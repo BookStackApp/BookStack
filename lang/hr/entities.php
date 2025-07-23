@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Umetni crtež',
     'pages_md_show_preview' => 'Prikaži pregled',
     'pages_md_sync_scroll' => 'Sinkroniziraj pomicanje pregleda',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Pronađen je Nespremljen Crtež',
     'pages_drawing_unsaved_confirm' => 'Pronađeni su nespremljeni podaci crteža iz prethodnog neuspjelog pokušaja spremanja crteža. Želite li obnoviti i nastaviti uređivati ovaj nespremljeni crtež?',
     'pages_not_in_chapter' => 'Stranica nije u poglavlju',
