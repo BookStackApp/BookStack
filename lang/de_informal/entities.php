@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Zeichnung einfügen',
     'pages_md_show_preview' => 'Vorschau anzeigen',
     'pages_md_sync_scroll' => 'Vorschau synchronisieren',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Ungespeicherte Zeichnung gefunden',
     'pages_drawing_unsaved_confirm' => 'Es wurden ungespeicherte Zeichnungsdaten von einem früheren, fehlgeschlagenen Versuch, die Zeichnung zu speichern, gefunden. Möchtest du diese ungespeicherte Zeichnung wiederherstellen und weiter bearbeiten?',
     'pages_not_in_chapter' => 'Seite ist in keinem Kapitel',
