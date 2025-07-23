@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Vložit kresbu',
     'pages_md_show_preview' => 'Zobrazit náhled',
     'pages_md_sync_scroll' => 'Synchronizovat náhled',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Nalezen neuložený výkres',
     'pages_drawing_unsaved_confirm' => 'Byly nalezeny neuložené kresby z předchozí neúspěšné pokusu o uložení kresby. Chcete je obnovit a pokračovat v úpravě této neuložené kresby?',
     'pages_not_in_chapter' => 'Stránka není v kapitole',
