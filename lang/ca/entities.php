@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Insereix un dibuix',
     'pages_md_show_preview' => 'Mostra la visualització prèvia',
     'pages_md_sync_scroll' => 'Sincronitza el desplaçament de la visualització prèvia',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'S’ha trobat un dibuix sense desar',
     'pages_drawing_unsaved_confirm' => 'S’han trobat dades d’un dibuix d’un intent anterior de desar un dibuix. Voleu restaurar aquest dibuix no desat per a reprendre’n l’edició?',
     'pages_not_in_chapter' => 'La pàgina no és un capítol',
