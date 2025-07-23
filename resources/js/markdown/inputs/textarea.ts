@@ -1,7 +1,70 @@
 import {MarkdownEditorInput, MarkdownEditorInputSelection} from "./interface";
 import {MarkdownEditorShortcutMap} from "../shortcuts";
 import {MarkdownEditorEventMap} from "../dom-handlers";
+import {debounce} from "../../services/util";
 
+type UndoStackEntry = {
+    content: string;
+    selection: MarkdownEditorInputSelection;
+}
+
+class UndoStack {
+    protected onChangeDebounced: (callback: () => UndoStackEntry) => void;
+
+    protected stack: UndoStackEntry[] = [];
+    protected pointer: number = -1;
+    protected lastActionTime: number = 0;
+
+    constructor() {
+        this.onChangeDebounced = debounce(this.onChange, 1000, false);
+    }
+
+    undo(): UndoStackEntry|null {
+        if (this.pointer < 1) {
+            return null;
+        }
+
+        this.lastActionTime = Date.now();
+        this.pointer -= 1;
+        return this.stack[this.pointer];
+    }
+
+    redo(): UndoStackEntry|null {
+        const atEnd = this.pointer === this.stack.length - 1;
+        if (atEnd) {
+            return null;
+        }
+
+        this.lastActionTime = Date.now();
+        this.pointer++;
+        return this.stack[this.pointer];
+    }
+
+    push(getValueCallback: () => UndoStackEntry): void {
+        // Ignore changes made via undo/redo actions
+        if (Date.now() - this.lastActionTime < 100) {
+            return;
+        }
+
+        this.onChangeDebounced(getValueCallback);
+    }
+
+    protected onChange(getValueCallback: () => UndoStackEntry) {
+        // Trim the end of the stack from the pointer since we're branching away
+        if (this.pointer !== this.stack.length - 1) {
+            this.stack = this.stack.slice(0, this.pointer)
+        }
+
+        this.stack.push(getValueCallback());
+
+        // Limit stack size
+        if (this.stack.length > 50) {
+            this.stack = this.stack.slice(this.stack.length - 50);
+        }
+
+        this.pointer = this.stack.length - 1;
+    }
+}
 
 export class TextareaInput implements MarkdownEditorInput {
 
@@ -10,6 +73,7 @@ export class TextareaInput implements MarkdownEditorInput {
     protected events: MarkdownEditorEventMap;
     protected onChange: () => void;
     protected eventController = new AbortController();
+    protected undoStack = new UndoStack();
 
     protected textSizeCache: {x: number; y: number}|null = null;
 
@@ -25,15 +89,32 @@ export class TextareaInput implements MarkdownEditorInput {
         this.onChange = onChange;
 
         this.onKeyDown = this.onKeyDown.bind(this);
+        this.configureLocalShortcuts();
         this.configureListeners();
 
-        // TODO - Undo/Redo
-
         this.input.style.removeProperty("display");
+        this.undoStack.push(() => ({content: this.getText(), selection: this.getSelection()}));
     }
 
     teardown() {
         this.eventController.abort('teardown');
+    }
+
+    configureLocalShortcuts(): void {
+        this.shortcuts['Mod-z'] = () => {
+            const undoEntry = this.undoStack.undo();
+            if (undoEntry) {
+                this.setText(undoEntry.content);
+                this.setSelection(undoEntry.selection, false);
+            }
+        };
+        this.shortcuts['Mod-y'] = () => {
+            const redoContent = this.undoStack.redo();
+            if (redoContent) {
+                this.setText(redoContent.content);
+                this.setSelection(redoContent.selection, false);
+            }
+        }
     }
 
     configureListeners(): void {
@@ -48,15 +129,8 @@ export class TextareaInput implements MarkdownEditorInput {
         // Input change handling
         this.input.addEventListener('input', () => {
             this.onChange();
+            this.undoStack.push(() => ({content: this.input.value, selection: this.getSelection()}));
         }, {signal: this.eventController.signal});
-
-        this.input.addEventListener('click', (event: MouseEvent) => {
-            const x = event.clientX;
-            const y = event.clientY;
-            const range = this.eventToPosition(event);
-            const text = this.getText().split('');
-            console.log(range, text.slice(0, 20));
-        });
     }
 
     onKeyDown(e: KeyboardEvent) {
@@ -83,33 +157,7 @@ export class TextareaInput implements MarkdownEditorInput {
 
     eventToPosition(event: MouseEvent): MarkdownEditorInputSelection {
         const eventCoords = this.mouseEventToTextRelativeCoords(event);
-        const textSize = this.measureTextSize();
-        const lineWidth = this.measureLineCharCount(textSize.x);
-
-        const lines = this.getText().split('\n');
-
-        // TODO - Check this
-
-        let currY = 0;
-        let currPos = 0;
-        for (const line of lines) {
-            let linePos = 0;
-            const wrapCount = Math.max(Math.ceil(line.length / lineWidth), 1);
-            for (let i = 0; i < wrapCount; i++) {
-                currY += textSize.y;
-                if (currY > eventCoords.y) {
-                    const targetX = Math.floor(eventCoords.x / textSize.x);
-                    const maxPos = Math.min(currPos + linePos + targetX, currPos + line.length);
-                    return {from: maxPos, to: maxPos};
-                }
-
-                linePos += lineWidth;
-            }
-
-            currPos += line.length + 1;
-        }
-
-        return this.getSelection();
+        return this.inputPositionToSelection(eventCoords.x, eventCoords.y);
     }
 
     focus(): void {
@@ -153,15 +201,8 @@ export class TextareaInput implements MarkdownEditorInput {
 
     getTextAboveView(): string {
         const scrollTop = this.input.scrollTop;
-        const computedStyles = window.getComputedStyle(this.input);
-        const lines = this.getText().split('\n');
-        const paddingTop = Number(computedStyles.paddingTop.replace('px', ''));
-        const paddingBottom = Number(computedStyles.paddingBottom.replace('px', ''));
-
-        const avgLineHeight = (this.input.scrollHeight - paddingBottom - paddingTop) / lines.length;
-        const roughLinePos = Math.max(Math.floor((scrollTop - paddingTop) / avgLineHeight), 0);
-        const linesAbove = this.getText().split('\n').slice(0, roughLinePos);
-        return linesAbove.join('\n');
+        const selection = this.inputPositionToSelection(0, scrollTop);
+        return this.getSelectionText({from: 0, to: selection.to});
     }
 
     searchForLineContaining(text: string): MarkdownEditorInputSelection | null {
@@ -242,5 +283,33 @@ export class TextareaInput implements MarkdownEditorInput {
         const yPos = Math.max((event.clientY - (inputBounds.top + paddingTop)) + this.input.scrollTop, 0);
 
         return {x: xPos, y: yPos};
+    }
+
+    protected inputPositionToSelection(x: number, y: number): MarkdownEditorInputSelection {
+        const textSize = this.measureTextSize();
+        const lineWidth = this.measureLineCharCount(textSize.x);
+
+        const lines = this.getText().split('\n');
+
+        let currY = 0;
+        let currPos = 0;
+        for (const line of lines) {
+            let linePos = 0;
+            const wrapCount = Math.max(Math.ceil(line.length / lineWidth), 1);
+            for (let i = 0; i < wrapCount; i++) {
+                currY += textSize.y;
+                if (currY > y) {
+                    const targetX = Math.floor(x / textSize.x);
+                    const maxPos = Math.min(currPos + linePos + targetX, currPos + line.length);
+                    return {from: maxPos, to: maxPos};
+                }
+
+                linePos += lineWidth;
+            }
+
+            currPos += line.length + 1;
+        }
+
+        return this.getSelection();
     }
 }
