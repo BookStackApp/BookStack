@@ -2,7 +2,7 @@
   "include": ["resources/js/**/*"],
   "exclude": ["resources/js/wysiwyg/lexical/yjs/*"],
   "compilerOptions": {
-    "target": "es2019",
+    "target": "es2022",
     "module": "commonjs",
     "rootDir": "./resources/js/",
     "baseUrl": "./",
