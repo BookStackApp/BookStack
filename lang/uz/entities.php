@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Chizma kiritish',
     'pages_md_show_preview' => 'Ko‘rish',
     'pages_md_sync_scroll' => 'Sinxronizatsiyani oldindan ko\'rish aylantirish',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Saqlanmagan chizma topildi',
     'pages_drawing_unsaved_confirm' => 'Saqlanmagan chizma maʼlumotlari avvalgi muvaffaqiyatsiz chizmani saqlash urinishidan topildi. Ushbu saqlanmagan chizmani qayta tiklash va tahrirlashni davom ettirmoqchimisiz?',
     'pages_not_in_chapter' => 'Sahifa bir bobda emas',
