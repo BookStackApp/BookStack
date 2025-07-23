@@ -271,6 +271,7 @@ return [
     'pages_md_insert_drawing' => 'درج طرح',
     'pages_md_show_preview' => 'دیدن پیش نمایش',
     'pages_md_sync_scroll' => 'هماهنگ سازی اسکرول پیش نمایش',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'نقاشی ذخیره نشده پیدا شد',
     'pages_drawing_unsaved_confirm' => 'نسخه‌ای ذخیره‌نشده از طراحی‌های قبلی پیدا شد. آیا می‌خواهید این طراحی ذخیره‌نشده را بازیابی کنید و به ویرایش آن ادامه دهید؟',
     'pages_not_in_chapter' => 'صفحه در یک فصل نیست',
