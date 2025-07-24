@@ -85,7 +85,18 @@ export function $generateHtmlFromNodes(
     $appendNodesToHTML(editor, topLevelNode, container, selection);
   }
 
-  return container.innerHTML;
+  const nodeCode = [];
+  for (const node of container.childNodes) {
+    if ("outerHTML" in node) {
+      nodeCode.push(node.outerHTML)
+    } else {
+      const wrap = document.createElement('div');
+      wrap.appendChild(node.cloneNode(true));
+      nodeCode.push(wrap.innerHTML);
+    }
+  }
+
+  return nodeCode.join('\n');
 }
 
 function $appendNodesToHTML(

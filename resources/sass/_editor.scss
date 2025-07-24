@@ -681,6 +681,14 @@ textarea.editor-form-field-input {
   }
 }
 
+// Specific field styles
+textarea.editor-form-field-input[name="source"] {
+  width: 1000px;
+  height: 600px;
+  max-height: 60vh;
+  max-width: 80vw;
+}
+
 // Editor theme styles
 .editor-theme-bold {
   font-weight: bold;
