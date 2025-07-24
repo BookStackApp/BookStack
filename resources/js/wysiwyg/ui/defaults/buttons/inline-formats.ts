@@ -13,7 +13,6 @@ import codeIcon from "@icons/editor/code.svg";
 import formatClearIcon from "@icons/editor/format-clear.svg";
 import {$selectionContainsTextFormat} from "../../../utils/selection";
 import {$patchStyleText} from "@lexical/selection";
-import {context} from "esbuild";
 
 function buildFormatButton(label: string, format: TextFormatType, icon: string): EditorButtonDefinition {
     return {

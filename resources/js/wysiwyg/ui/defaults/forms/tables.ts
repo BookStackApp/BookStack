@@ -75,7 +75,7 @@ export function $showCellPropertiesForm(cell: TableCellNode, context: EditorUiCo
         border_width: styles.get('border-width') || '',
         border_style: styles.get('border-style') || '',
         border_color: styles.get('border-color') || '',
-        background_color: styles.get('background-color') || '',
+        background_color: cell.getBackgroundColor() || styles.get('background-color') || '',
     });
     return modalForm;
 }
@@ -91,6 +91,7 @@ export const cellProperties: EditorFormDefinition = {
                 $setTableCellColumnWidth(cell, width);
                 cell.updateTag(formData.get('type')?.toString() || '');
                 cell.setAlignment((formData.get('h_align')?.toString() || '') as CommonBlockAlignment);
+                cell.setBackgroundColor(formData.get('background_color')?.toString() || '');
 
                 const styles = cell.getStyles();
                 styles.set('height', formatSizeValue(formData.get('height')?.toString() || ''));
@@ -98,7 +99,6 @@ export const cellProperties: EditorFormDefinition = {
                 styles.set('border-width', formatSizeValue(formData.get('border_width')?.toString() || ''));
                 styles.set('border-style', formData.get('border_style')?.toString() || '');
                 styles.set('border-color', formData.get('border_color')?.toString() || '');
-                styles.set('background-color', formData.get('background_color')?.toString() || '');
 
                 cell.setStyles(styles);
             }
