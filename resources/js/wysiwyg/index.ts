@@ -19,6 +19,7 @@ import {contextToolbars, getBasicEditorToolbar, getMainEditorFullToolbar} from "
 import {modals} from "./ui/defaults/modals";
 import {CodeBlockDecorator} from "./ui/decorators/code-block";
 import {DiagramDecorator} from "./ui/decorators/diagram";
+import {registerMouseHandling} from "./services/mouse-handling";
 
 const theme = {
     text: {
@@ -51,6 +52,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerShortcuts(context),
         registerKeyboardHandling(context),
+        registerMouseHandling(context),
         registerTableResizer(editor, context.scrollDOM),
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, context.editorDOM),

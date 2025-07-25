@@ -849,3 +849,19 @@ export function dispatchKeydownEventForSelectedNode(editor: LexicalEditor, key: 
     }
   });
 }
+
+export function dispatchEditorMouseClick(editor: LexicalEditor, clientX: number, clientY: number) {
+  const dom = editor.getRootElement();
+  if (!dom) {
+    return;
+  }
+
+  const event = new MouseEvent('click', {
+    clientX: clientX,
+    clientY: clientY,
+    bubbles: true,
+    cancelable: true,
+  });
+  dom?.dispatchEvent(event);
+  editor.commitUpdates();
+}
