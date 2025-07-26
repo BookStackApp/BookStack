@@ -48,6 +48,7 @@ return [
     'superscript' => 'Nadpisano',
     'subscript' => 'Podpisano',
     'text_color' => 'Barva besedila',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Barva po meri',
     'remove_color' => 'Odstrani barvo',
     'background_color' => 'Barva ozadja',
