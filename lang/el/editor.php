@@ -48,6 +48,7 @@ return [
     'superscript' => 'Εκθέτης',
     'subscript' => 'Δείκτης',
     'text_color' => 'Χρώμα κειμένου',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Προσαρμογή χρώματος',
     'remove_color' => 'Αφαίρεση χρώματος',
     'background_color' => 'Χρώμα φόντου',
