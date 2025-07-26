@@ -48,6 +48,7 @@ return [
     'superscript' => 'Háletur',
     'subscript' => 'Lágletur',
     'text_color' => 'Litur texta',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Sérsniðinn litur',
     'remove_color' => 'Fjarlægja lit',
     'background_color' => 'Bakgrunnslitur',
