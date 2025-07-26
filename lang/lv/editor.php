@@ -48,6 +48,7 @@ return [
     'superscript' => 'Augšraksts',
     'subscript' => 'Apakšraksts',
     'text_color' => 'Teksta krāsa',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Pielāgot krāsu',
     'remove_color' => 'Noņemt krāsu',
     'background_color' => 'Fona krāsa',
