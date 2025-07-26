@@ -48,6 +48,7 @@ return [
     'superscript' => 'Надскрипт',
     'subscript' => 'Субкрипт',
     'text_color' => 'Боја текста',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Боја текста',
     'remove_color' => 'Уклоните боју',
     'background_color' => 'Боја позадине',
