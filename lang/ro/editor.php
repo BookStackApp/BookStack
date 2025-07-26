@@ -48,6 +48,7 @@ return [
     'superscript' => 'Scris sus',
     'subscript' => 'Scris jos',
     'text_color' => 'Culoare text',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Culoare personalizată',
     'remove_color' => 'Elimină culoarea',
     'background_color' => 'Culoare fundal',
