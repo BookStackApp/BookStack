@@ -48,6 +48,7 @@ return [
     'superscript' => 'Superskrip',
     'subscript' => 'Berlangganan',
     'text_color' => 'Warna teks',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Warna khusus',
     'remove_color' => 'Hapus Warna',
     'background_color' => 'Warna latar',
