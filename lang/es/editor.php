@@ -48,6 +48,7 @@ return [
     'superscript' => 'Superíndice',
     'subscript' => 'Subíndice',
     'text_color' => 'Color de texto',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Color personalizado',
     'remove_color' => 'Eliminar color',
     'background_color' => 'Color de fondo',
