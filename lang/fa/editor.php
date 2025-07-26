@@ -48,6 +48,7 @@ return [
     'superscript' => 'بالانویسی',
     'subscript' => 'پایین نویسی',
     'text_color' => 'رنگ متن',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'رنگ دلخواه',
     'remove_color' => 'حذف رنگ',
     'background_color' => 'رنگ زمینه',
