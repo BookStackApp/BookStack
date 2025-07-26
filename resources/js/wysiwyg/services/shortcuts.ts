@@ -13,14 +13,16 @@ import {$showLinkForm} from "../ui/defaults/forms/objects";
 import {showLinkSelector} from "../utils/links";
 import {HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
 
-function headerHandler(editor: LexicalEditor, tag: HeadingTagType): boolean {
-    toggleSelectionAsHeading(editor, tag);
+function headerHandler(context: EditorUiContext, tag: HeadingTagType): boolean {
+    toggleSelectionAsHeading(context.editor, tag);
+    context.manager.triggerFutureStateRefresh();
     return true;
 }
 
 function wrapFormatAction(formatAction: (editor: LexicalEditor) => any): ShortcutAction {
-    return (editor: LexicalEditor) => {
+    return (editor: LexicalEditor, context: EditorUiContext) => {
         formatAction(editor);
+        context.manager.triggerFutureStateRefresh();
         return true;
     };
 }
@@ -45,10 +47,10 @@ const actionsByKeys: Record<string, ShortcutAction> = {
         window.$events.emit('editor-save-page');
         return true;
     },
-    'meta+1': (editor) => headerHandler(editor, 'h1'),
-    'meta+2': (editor) => headerHandler(editor, 'h2'),
-    'meta+3': (editor) => headerHandler(editor, 'h3'),
-    'meta+4': (editor) => headerHandler(editor, 'h4'),
+    'meta+1': (editor, context) => headerHandler(context, 'h2'),
+    'meta+2': (editor, context) => headerHandler(context, 'h3'),
+    'meta+3': (editor, context) => headerHandler(context, 'h4'),
+    'meta+4': (editor, context) => headerHandler(context, 'h5'),
     'meta+5': wrapFormatAction(toggleSelectionAsParagraph),
     'meta+d': wrapFormatAction(toggleSelectionAsParagraph),
     'meta+6': wrapFormatAction(toggleSelectionAsBlockquote),

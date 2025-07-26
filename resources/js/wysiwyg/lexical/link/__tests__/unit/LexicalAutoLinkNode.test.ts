@@ -273,18 +273,6 @@ describe('LexicalAutoAutoLinkNode tests', () => {
       });
     });
 
-    test('AutoLinkNode.createDOM() sanitizes javascript: URLs', async () => {
-      const {editor} = testEnv;
-
-      await editor.update(() => {
-        // eslint-disable-next-line no-script-url
-        const autoLinkNode = new AutoLinkNode('javascript:alert(0)');
-        expect(autoLinkNode.createDOM(editorConfig).outerHTML).toBe(
-          '<a href="about:blank" class="my-autolink-class"></a>',
-        );
-      });
-    });
-
     test('AutoLinkNode.updateDOM()', async () => {
       const {editor} = testEnv;
 

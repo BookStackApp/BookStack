@@ -282,6 +282,7 @@ export function $clearTableFormatting(table: TableNode): void {
         const cells = row.getChildren().filter(c => $isTableCellNode(c));
         for (const cell of cells) {
             cell.setStyles(new Map);
+            cell.setBackgroundColor(null);
             cell.clearWidth();
         }
     }

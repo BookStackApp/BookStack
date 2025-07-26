@@ -146,7 +146,7 @@ describe('HTML', () => {
     });
 
     expect(html).toBe(
-      '<p>Hello</p><p>World</p>',
+      '<p>Hello</p>\n<p>World</p>',
     );
   });
 

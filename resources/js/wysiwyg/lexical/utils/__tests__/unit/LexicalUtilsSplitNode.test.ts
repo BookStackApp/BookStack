@@ -38,7 +38,7 @@ describe('LexicalUtils#splitNode', () => {
     {
       _: 'split paragraph in between two text nodes',
       expectedHtml:
-        '<p>Hello</p><p>world</p>',
+        '<p>Hello</p>\n<p>world</p>',
       initialHtml: '<p><span>Hello</span><span>world</span></p>',
       splitOffset: 1,
       splitPath: [0],
@@ -46,7 +46,7 @@ describe('LexicalUtils#splitNode', () => {
     {
       _: 'split paragraph before the first text node',
       expectedHtml:
-        '<p><br></p><p>Helloworld</p>',
+        '<p><br></p>\n<p>Helloworld</p>',
       initialHtml: '<p><span>Hello</span><span>world</span></p>',
       splitOffset: 0,
       splitPath: [0],
@@ -54,7 +54,7 @@ describe('LexicalUtils#splitNode', () => {
     {
       _: 'split paragraph after the last text node',
       expectedHtml:
-        '<p>Helloworld</p><p><br></p>',
+        '<p>Helloworld</p>\n<p><br></p>',
       initialHtml: '<p><span>Hello</span><span>world</span></p>',
       splitOffset: 2, // Any offset that is higher than children size
       splitPath: [0],
@@ -62,7 +62,7 @@ describe('LexicalUtils#splitNode', () => {
     {
       _: 'split list items between two text nodes',
       expectedHtml:
-        '<ul><li>Hello</li></ul>' +
+        '<ul><li>Hello</li></ul>\n' +
         '<ul><li>world</li></ul>',
       initialHtml: '<ul><li><span>Hello</span><span>world</span></li></ul>',
       splitOffset: 1, // Any offset that is higher than children size
@@ -71,7 +71,7 @@ describe('LexicalUtils#splitNode', () => {
     {
       _: 'split list items before the first text node',
       expectedHtml:
-        '<ul><li></li></ul>' +
+        '<ul><li></li></ul>\n' +
         '<ul><li>Helloworld</li></ul>',
       initialHtml: '<ul><li><span>Hello</span><span>world</span></li></ul>',
       splitOffset: 0, // Any offset that is higher than children size
@@ -83,7 +83,7 @@ describe('LexicalUtils#splitNode', () => {
         '<ul>' +
         '<li>Before</li>' +
         '<li style="list-style: none;"><ul><li>Hello</li></ul></li>' +
-        '</ul>' +
+        '</ul>\n' +
         '<ul>' +
         '<li style="list-style: none;"><ul><li>world</li></ul></li>' +
         '<li>After</li>' +

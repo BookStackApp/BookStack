@@ -353,8 +353,15 @@ export function $convertTableCellNodeElement(
   const hasUnderlineTextDecoration = textDecoration.includes('underline');
 
   if (domNode instanceof HTMLElement) {
-    tableCellNode.setStyles(extractStyleMapFromElement(domNode));
+    const styleMap = extractStyleMapFromElement(domNode);
+    styleMap.delete('background-color');
+    tableCellNode.setStyles(styleMap);
     tableCellNode.setAlignment(extractAlignmentFromElement(domNode));
+  }
+
+  const background = style.backgroundColor || null;
+  if (background) {
+    tableCellNode.setBackgroundColor(background);
   }
 
   return {
