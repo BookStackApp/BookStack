@@ -48,6 +48,7 @@ return [
     'superscript' => 'Heva skrift',
     'subscript' => 'Senka skrift',
     'text_color' => 'Tekstfarge',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Eigenvalgt farge',
     'remove_color' => 'Fjern farge',
     'background_color' => 'Bakgrunnsfarge',
