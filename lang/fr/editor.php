@@ -48,6 +48,7 @@ return [
     'superscript' => 'Exposant',
     'subscript' => 'Indice',
     'text_color' => 'Couleur Texte',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Couleur personnalisée',
     'remove_color' => 'Supprimer la couleur',
     'background_color' => 'Couleur d\'arrière-plan',
