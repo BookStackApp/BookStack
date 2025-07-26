@@ -48,6 +48,7 @@ return [
     'superscript' => 'Sobrescrito',
     'subscript' => 'Subscrito',
     'text_color' => 'Cor do texto',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Cor personalizada',
     'remove_color' => 'Remover cor',
     'background_color' => 'Cor de fundo',
