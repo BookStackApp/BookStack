@@ -48,6 +48,7 @@ return [
     'superscript' => 'Верхній індекс',
     'subscript' => 'Нижній індекс',
     'text_color' => 'Колір тексту',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Власний колір',
     'remove_color' => 'Видалити колір',
     'background_color' => 'Колір фону',
