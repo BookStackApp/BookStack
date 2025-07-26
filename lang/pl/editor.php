@@ -48,6 +48,7 @@ return [
     'superscript' => 'Indeks górny',
     'subscript' => 'Indeks dolny',
     'text_color' => 'Kolor tekstu',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Kolor niestandardowy',
     'remove_color' => 'Usuń kolor',
     'background_color' => 'Kolor tła',
