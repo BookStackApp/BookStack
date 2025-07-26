@@ -48,6 +48,7 @@ return [
     'superscript' => 'Uwchysgrif',
     'subscript' => 'Isysgrif',
     'text_color' => 'Lliw testun',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Lliw addasu',
     'remove_color' => 'Dileu lliw',
     'background_color' => 'Lliw cefnder',
