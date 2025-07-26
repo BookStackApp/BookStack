@@ -48,6 +48,7 @@ return [
     'superscript' => '윗첨자',
     'subscript' => '아랫첨자',
     'text_color' => '글자 색상',
+    'highlight_color' => 'Highlight color',
     'custom_color' => '사용자 지정 색상',
     'remove_color' => '색상 제거',
     'background_color' => '배경 색상',
