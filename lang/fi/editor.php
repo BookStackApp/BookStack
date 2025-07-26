@@ -48,6 +48,7 @@ return [
     'superscript' => 'Yläindeksi',
     'subscript' => 'Alaindeksi',
     'text_color' => 'Tekstin väri',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Mukautettu väri',
     'remove_color' => 'Poista väri',
     'background_color' => 'Taustaväri',
