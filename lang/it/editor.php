@@ -48,6 +48,7 @@ return [
     'superscript' => 'Apice',
     'subscript' => 'Pedice',
     'text_color' => 'Colore del testo',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Colore personalizzato',
     'remove_color' => 'Rimuovi colore',
     'background_color' => 'Colore di sfondo',
