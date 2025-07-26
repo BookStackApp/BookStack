@@ -48,6 +48,7 @@ return [
     'superscript' => 'Üst simge',
     'subscript' => 'Alt simge',
     'text_color' => 'Metin rengi',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Özel renk',
     'remove_color' => 'Rengi kaldır',
     'background_color' => 'Arka plan rengi',
