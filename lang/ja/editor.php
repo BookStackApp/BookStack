@@ -48,6 +48,7 @@ return [
     'superscript' => '上付き',
     'subscript' => '下付き',
     'text_color' => 'テキストの色',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'カスタムカラー',
     'remove_color' => '色設定を解除',
     'background_color' => '背景色',
