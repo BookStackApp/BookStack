@@ -48,6 +48,7 @@ return [
     'superscript' => 'Hevet skrift',
     'subscript' => 'Senket skrift',
     'text_color' => 'Tekstfarge',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Egenvalgt farge',
     'remove_color' => 'Fjern farge',
     'background_color' => 'Bakgrunnsfarge',
