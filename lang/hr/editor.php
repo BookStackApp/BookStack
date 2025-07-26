@@ -48,6 +48,7 @@ return [
     'superscript' => 'Gornji indeks',
     'subscript' => 'Donji indeks',
     'text_color' => 'Boja teksta',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Prilagođena boja',
     'remove_color' => 'Ukloni boju',
     'background_color' => 'Boja pozadine',
