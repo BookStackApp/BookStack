@@ -48,6 +48,7 @@ return [
     'superscript' => 'horní index',
     'subscript' => 'Dolní index',
     'text_color' => 'Barva textu:',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Vlastní barva',
     'remove_color' => 'Odstranit barvu',
     'background_color' => 'Barva pozadí',
