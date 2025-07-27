@@ -1,10 +1,9 @@
 <?php
 
-namespace Api;
+namespace Tests\Api;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Exports\Import;
-use Tests\Api\TestsApi;
 use Tests\Exports\ZipTestHelper;
 use Tests\TestCase;
 
