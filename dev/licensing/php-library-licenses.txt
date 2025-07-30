@@ -543,13 +543,6 @@ Copyright: Copyright (c) 2024 Nathan Herald, Rohland de Charmoy, Dan Brown
 Source: https://codeberg.org/danb/HtmlDiff
 Link: https://codeberg.org/danb/HtmlDiff
 -----------
-ssddanbrown/symfony-mailer
-License: MIT
-License File: vendor/ssddanbrown/symfony-mailer/LICENSE
-Copyright: Copyright (c) 2019-present Fabien Potencier
-Source: https://github.com/ssddanbrown/symfony-mailer.git
-Link: https://symfony.com
------------
 symfony/clock
 License: MIT
 License File: vendor/symfony/clock/LICENSE
@@ -618,6 +611,13 @@ License: MIT
 License File: vendor/symfony/http-kernel/LICENSE
 Copyright: Copyright (c) 2004-present Fabien Potencier
 Source: https://github.com/symfony/http-kernel.git
+Link: https://symfony.com
+-----------
+symfony/mailer
+License: MIT
+License File: vendor/symfony/mailer/LICENSE
+Copyright: Copyright (c) 2019-present Fabien Potencier
+Source: https://github.com/symfony/mailer.git
 Link: https://symfony.com
 -----------
 symfony/mime

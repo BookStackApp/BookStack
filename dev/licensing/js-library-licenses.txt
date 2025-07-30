@@ -345,7 +345,7 @@ Link: tj/co
 codemirror
 License: MIT
 License File: node_modules/codemirror/LICENSE
-Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <*******@*****.***> and others
+Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
 Source: https://github.com/codemirror/basic-setup.git
 Link: https://github.com/codemirror/basic-setup.git
 -----------
@@ -711,13 +711,13 @@ eslint-scope
 License: BSD-2-Clause
 License File: node_modules/eslint-scope/LICENSE
 Copyright: Copyright (C) 2012-2013 Yusuke Suzuki (twitter: @Constellation) and other contributors.
-Source: eslint/js
+Source: https://github.com/eslint/js.git
 Link: https://github.com/eslint/js/blob/main/packages/eslint-scope/README.md
 -----------
 eslint-visitor-keys
 License: Apache-2.0
 License File: node_modules/eslint-visitor-keys/LICENSE
-Source: eslint/js
+Source: https://github.com/eslint/js.git
 Link: https://github.com/eslint/js/blob/main/packages/eslint-visitor-keys/README.md
 -----------
 eslint
@@ -731,7 +731,7 @@ License: BSD-2-Clause
 License File: node_modules/espree/LICENSE
 Copyright: Copyright (c) Open JS Foundation
 All rights reserved.
-Source: eslint/js
+Source: https://github.com/eslint/js.git
 Link: https://github.com/eslint/js/blob/main/packages/espree/README.md
 -----------
 esprima
@@ -1251,6 +1251,13 @@ License File: node_modules/is-map/LICENSE
 Copyright: Copyright (c) 2019 Inspect JS
 Source: git+https://github.com/inspect-js/is-map.git
 Link: https://github.com/inspect-js/is-map#readme
+-----------
+is-negative-zero
+License: MIT
+License File: node_modules/is-negative-zero/LICENSE
+Copyright: Copyright (c) 2014 Jordan Harband
+Source: git://github.com/inspect-js/is-negative-zero.git
+Link: https://github.com/inspect-js/is-negative-zero
 -----------
 is-number-object
 License: MIT
@@ -2493,6 +2500,13 @@ Copyright: Copyright (c) 2016-2022 Isaac Z. Schlueter <*@***.**>, James Talmage 
 Source: tapjs/stack-utils
 Link: tapjs/stack-utils
 -----------
+stop-iteration-iterator
+License: MIT
+License File: node_modules/stop-iteration-iterator/LICENSE
+Copyright: Copyright (c) 2023 Jordan Harband
+Source: git+https://github.com/ljharb/stop-iteration-iterator.git
+Link: https://github.com/ljharb/stop-iteration-iterator#readme
+-----------
 string-length
 License: MIT
 License File: node_modules/string-length/license
@@ -2992,6 +3006,13 @@ Copyright: Copyright (c) 2014-present Sebastian McKenzie and other contributors
 Source: https://github.com/babel/babel.git
 Link: https://github.com/babel/babel.git
 -----------
+@babel/helper-globals
+License: MIT
+License File: node_modules/@babel/helper-globals/LICENSE
+Copyright: Copyright (c) 2014-present Sebastian McKenzie and other contributors
+Source: https://github.com/babel/babel.git
+Link: https://github.com/babel/babel.git
+-----------
 @babel/helper-module-imports
 License: MIT
 License File: node_modules/@babel/helper-module-imports/LICENSE
@@ -3038,7 +3059,7 @@ Link: https://github.com/babel/babel.git
 License: MIT
 License File: node_modules/@babel/helpers/LICENSE
 Copyright: Copyright (c) 2014-present Sebastian McKenzie and other contributors
-Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regeneratorRuntime.js)
+Copyright (c) 2014-present, Facebook, Inc. (ONLY ./src/helpers/regenerator* files)
 Source: https://github.com/babel/babel.git
 Link: https://babel.dev/docs/en/next/babel-helpers
 -----------
@@ -3233,7 +3254,7 @@ Link: https://github.com/codemirror/lang-javascript.git
 @codemirror/lang-json
 License: MIT
 License File: node_modules/@codemirror/lang-json/LICENSE
-Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <*******@*****.***> and others
+Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
 Source: https://github.com/codemirror/lang-json.git
 Link: https://github.com/codemirror/lang-json.git
 -----------
@@ -3247,7 +3268,7 @@ Link: https://github.com/codemirror/lang-markdown.git
 @codemirror/lang-php
 License: MIT
 License File: node_modules/@codemirror/lang-php/LICENSE
-Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <*******@*****.***> and others
+Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
 Source: https://github.com/codemirror/lang-php.git
 Link: https://github.com/codemirror/lang-php.git
 -----------
@@ -3337,7 +3358,7 @@ Link: https://github.com/eslint-community/regexpp#readme
 License: Apache-2.0
 License File: node_modules/@eslint/config-array/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
-Link: https://github.com/eslint/rewrite#readme
+Link: https://github.com/eslint/rewrite/tree/main/packages/config-array#readme
 -----------
 @eslint/config-helpers
 License: Apache-2.0
@@ -3349,7 +3370,7 @@ Link: https://github.com/eslint/rewrite/tree/main/packages/config-helpers#readme
 License: Apache-2.0
 License File: node_modules/@eslint/core/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
-Link: https://github.com/eslint/rewrite#readme
+Link: https://github.com/eslint/rewrite/tree/main/packages/core#readme
 -----------
 @eslint/eslintrc
 License: MIT
@@ -3373,7 +3394,7 @@ Link: https://github.com/eslint/rewrite#readme
 License: Apache-2.0
 License File: node_modules/@eslint/plugin-kit/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
-Link: https://github.com/eslint/rewrite#readme
+Link: https://github.com/eslint/rewrite/tree/main/packages/plugin-kit#readme
 -----------
 @humanfs/core
 License: Apache-2.0
@@ -3514,9 +3535,9 @@ Link: https://github.com/jestjs/jest.git
 @jridgewell/gen-mapping
 License: MIT
 License File: node_modules/@jridgewell/gen-mapping/LICENSE
-Copyright: Copyright 2022 Justin Ridgewell <**********@******.***>
-Source: https://github.com/jridgewell/gen-mapping
-Link: https://github.com/jridgewell/gen-mapping
+Copyright: Copyright 2024 Justin Ridgewell <******@*********.****>
+Source: git+https://github.com/jridgewell/sourcemaps.git
+Link: https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping
 -----------
 @jridgewell/resolve-uri
 License: MIT
@@ -3525,26 +3546,19 @@ Copyright: Copyright 2019 Justin Ridgewell <**********@******.***>
 Source: https://github.com/jridgewell/resolve-uri
 Link: https://github.com/jridgewell/resolve-uri
 -----------
-@jridgewell/set-array
-License: MIT
-License File: node_modules/@jridgewell/set-array/LICENSE
-Copyright: Copyright 2022 Justin Ridgewell <**********@******.***>
-Source: https://github.com/jridgewell/set-array
-Link: https://github.com/jridgewell/set-array
------------
 @jridgewell/sourcemap-codec
 License: MIT
 License File: node_modules/@jridgewell/sourcemap-codec/LICENSE
-Copyright: Copyright (c) 2015 Rich Harris
-Source: git+https://github.com/jridgewell/sourcemap-codec.git
-Link: git+https://github.com/jridgewell/sourcemap-codec.git
+Copyright: Copyright 2024 Justin Ridgewell <******@*********.****>
+Source: git+https://github.com/jridgewell/sourcemaps.git
+Link: https://github.com/jridgewell/sourcemaps/tree/main/packages/sourcemap-codec
 -----------
 @jridgewell/trace-mapping
 License: MIT
 License File: node_modules/@jridgewell/trace-mapping/LICENSE
-Copyright: Copyright 2022 Justin Ridgewell <******@*********.****>
-Source: git+https://github.com/jridgewell/trace-mapping.git
-Link: git+https://github.com/jridgewell/trace-mapping.git
+Copyright: Copyright 2024 Justin Ridgewell <******@*********.****>
+Source: git+https://github.com/jridgewell/sourcemaps.git
+Link: https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping
 -----------
 @lezer/common
 License: MIT
@@ -3812,6 +3826,27 @@ Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/json-
 License: MIT
 Source: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
 Link: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
+-----------
+@types/linkify-it
+License: MIT
+License File: node_modules/@types/linkify-it/LICENSE
+Copyright: Copyright (c) Microsoft Corporation.
+Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/linkify-it
+-----------
+@types/markdown-it
+License: MIT
+License File: node_modules/@types/markdown-it/LICENSE
+Copyright: Copyright (c) Microsoft Corporation.
+Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/markdown-it
+-----------
+@types/mdurl
+License: MIT
+License File: node_modules/@types/mdurl/LICENSE
+Copyright: Copyright (c) Microsoft Corporation.
+Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/mdurl
 -----------
 @types/node
 License: MIT
