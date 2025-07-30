@@ -268,7 +268,7 @@ return [
     'pages_md_insert_drawing' => 'إدخال رسمة',
     'pages_md_show_preview' => 'عرض المعاينة',
     'pages_md_sync_scroll' => 'مزامنة معاينة التمرير',
-    'pages_md_plain_editor' => 'Plaintext editor',
+    'pages_md_plain_editor' => 'محرر النصوص العادي',
     'pages_drawing_unsaved' => 'تم العثور على رسم غير محفوظ',
     'pages_drawing_unsaved_confirm' => 'تم العثور على بيانات رسم غير محفوظة من محاولة حفظ رسم سابقة فاشلة. هل ترغب في استعادة هذا الرسم غير المحفوظ ومواصلة تحريره؟',
     'pages_not_in_chapter' => 'صفحة ليست في فصل',
