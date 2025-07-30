@@ -18,10 +18,10 @@ return [
     'ldap_fail_anonymous' => 'دسترسی LDAP با استفاده از صحافی ناشناس انجام نشد',
     'ldap_fail_authed' => 'دسترسی به LDAP با استفاده از جزئیات داده شده و رمز عبور انجام نشد',
     'ldap_extension_not_installed' => 'افزونه PHP LDAP نصب نشده است',
-    'ldap_cannot_connect' => 'اتصال به سرور LDAP امکان پذیر نیست، اتصال اولیه برقرار نشد',
+    'ldap_cannot_connect' => 'اتصال به سرور LDAP امکان‌پذیر نیست، اتصال اولیه برقرار نشد',
     'saml_already_logged_in' => 'قبلا وارد سیستم شده اید',
     'saml_no_email_address' => 'آدرس داده ای برای این کاربر در داده های ارائه شده توسط سیستم احراز هویت خارجی یافت نشد',
-    'saml_invalid_response_id' => 'درخواست از سیستم احراز هویت خارجی توسط فرایندی که توسط این نرم افزار آغاز شده است شناخته نمی شود. بازگشت به سیستم پس از ورود به سیستم می تواند باعث این مسئله شود.',
+    'saml_invalid_response_id' => 'درخواست ارسال‌شده از سامانه احراز هویت خارجی، توسط فرآیند آغازشده از سوی این نرم‌افزار شناسایی نشد. ممکن است بازگشت به صفحه قبل پس از ورود، موجب ایجاد این مشکل شده باشد.',
     'saml_fail_authed' => 'ورود به سیستم :system انجام نشد، سیستم مجوز موفقیت آمیز ارائه نکرد',
     'oidc_already_logged_in' => 'قبلا وارد شده اید',
     'oidc_no_email_address' => 'آدرس ایمیلی برای این کاربر در داده های ارائه شده توسط سیستم احراز هویت خارجی یافت نشد',
@@ -43,7 +43,7 @@ return [
     'path_not_writable' => 'مسیر فایل :filePath را نمی توان در آن آپلود کرد. مطمئن شوید که روی سرور قابل نوشتن است.',
     'cannot_get_image_from_url' => 'نمی توان تصویر را از :url دریافت کرد',
     'cannot_create_thumbs' => 'سرور نمی تواند تصاویر کوچک ایجاد کند. لطفاً بررسی کنید که پسوند GD PHP را نصب کرده اید.',
-    'server_upload_limit' => 'سرور اجازه آپلود در این اندازه را نمی دهد. لطفا اندازه فایل کوچکتر را امتحان کنید.',
+    'server_upload_limit' => 'سرور اجازه آپلود با این حجم را نمی دهد. لطفا فایلی با حجم کم‌تر را امتحان کنید.',
     'server_post_limit' => 'سرور نمی‌تواند داده مقادیر ارائه شده داده را دریافت کند. با مقدار کمتر و فایل کوچکتر دوباره امتحان کنید.',
     'uploaded'  => 'سرور اجازه آپلود در این اندازه را نمی دهد. لطفا اندازه فایل کوچکتر را امتحان کنید.',
 
@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'شما نمی توانید تنها ادمین را حذف کنید',
     'users_cannot_delete_guest' => 'شما نمی توانید کاربر مهمان را حذف کنید',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'امکان ایجاد کاربر وجود ندارد؛ زیرا ارسال ایمیل دعوت با خطا مواجه شد.',
 
     // Roles
     'role_cannot_be_edited' => 'این نقش قابل ویرایش نیست',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'به زودی پشتیبان خواهد شد.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'امکان ایجاد کاربر وجود ندارد؛ زیرا ارسال ایمیل دعوت با خطا مواجه شد.',
+    'import_zip_cant_decode_data' => 'محتوای data.json در فایل ZIP پیدا یا رمزگشایی نشد.',
+    'import_zip_no_data' => 'داده‌های فایل ZIP فاقد محتوای کتاب، فصل یا صفحه مورد انتظار است.',
+    'import_validation_failed' => 'اعتبارسنجی فایل ZIP واردشده با خطا مواجه شد:',
+    'import_zip_failed_notification' => ' فایل ZIP وارد نشد.',
+    'import_perms_books' => 'شما مجوز لازم برای ایجاد کتاب را ندارید.',
+    'import_perms_chapters' => 'شما مجوز لازم برای ایجاد فصل را ندارید.',
+    'import_perms_pages' => 'شما مجوز لازم برای ایجاد صفحه را ندارید.',
+    'import_perms_images' => 'شما مجوز لازم برای ایجاد تصویر را ندارید.',
+    'import_perms_attachments' => 'شما مجوز لازم برای ایجاد پیوست را ندارید.',
 
     // API errors
     'api_no_authorization_found' => 'هیچ نشانه مجوزی در درخواست یافت نشد',

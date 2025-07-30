@@ -48,6 +48,7 @@ return [
     'superscript' => 'Superíndex',
     'subscript' => 'Subíndex',
     'text_color' => 'Color del text',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Color personalitzat',
     'remove_color' => 'Elimina el color',
     'background_color' => 'Color de fons',

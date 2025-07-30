@@ -30,8 +30,8 @@ return [
     'create' => 'ایجاد',
     'update' => 'به‌روز رسانی',
     'edit' => 'ويرايش',
-    'archive' => 'Archive',
-    'unarchive' => 'Un-Archive',
+    'archive' => 'انتقال به بایگانی',
+    'unarchive' => 'فعّال‌سازی دوباره (خروج از بایگانی)',
     'sort' => 'مرتب سازی',
     'move' => 'جابجایی',
     'copy' => 'کپی',
@@ -111,5 +111,5 @@ return [
     'terms_of_service' => 'شرایط خدمات',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'جست‌وجو در :appName',
 ];

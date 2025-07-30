@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'चित्र समावेश गर्नुहोस्',
     'pages_md_show_preview' => 'पूर्वावलोकन देखाउनुहोस्',
     'pages_md_sync_scroll' => 'पूर्वावलोकन स्क्रोल सिंक गर्नुहोस्',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'असुरक्षित चित्र भेटियो',
     'pages_drawing_unsaved_confirm' => 'अघिल्लो असफल चित्र बचत प्रयासबाट असुरक्षित चित्र डेटा भेटिएको छ। के तपाईं यस असुरक्षित चित्रलाई पुनर्स्थापना गरेर सम्पादन गर्न चाहनुहुन्छ?',
     'pages_not_in_chapter' => 'पाना कुनै अध्यायमा छैन',

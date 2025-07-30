@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Вставить рисунок',
     'pages_md_show_preview' => 'Предпросмотр',
     'pages_md_sync_scroll' => 'Синхронизировать прокрутку',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Найден несохраненный чертеж',
     'pages_drawing_unsaved_confirm' => 'Несохраненные данные были найдены из предыдущей неудачной попытки сохранения рисунка. Вы хотите восстановить и продолжить редактирование несохраненного рисунка?',
     'pages_not_in_chapter' => 'Страница не находится в главе',

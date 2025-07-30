@@ -48,6 +48,7 @@ return [
     'superscript' => 'Hochgestellt',
     'subscript' => 'Tiefgestellt',
     'text_color' => 'Textfarbe',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Benutzerdefinierte Farbe',
     'remove_color' => 'Farbe entfernen',
     'background_color' => 'Hintergrundfarbe',

@@ -48,6 +48,7 @@ return [
     'superscript' => 'نص مرتفع',
     'subscript' => 'نص منخفض',
     'text_color' => 'لون النص',
+    'highlight_color' => 'لون التمييز',
     'custom_color' => 'لون مخصص',
     'remove_color' => 'إزالة اللون',
     'background_color' => 'لون الخلفية',

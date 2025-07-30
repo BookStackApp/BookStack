@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Indsæt tegning',
     'pages_md_show_preview' => 'Vis forhåndsvisning',
     'pages_md_sync_scroll' => 'Rulning af forhåndsvisning af synkronisering',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Ikke gemt tegning fundet',
     'pages_drawing_unsaved_confirm' => 'Der blev fundet ikke-gemte tegningsdata fra et tidligere mislykket forsøg på at gemme en tegning. Vil du gendanne og fortsætte med at redigere denne ikke-gemte tegning?',
     'pages_not_in_chapter' => 'Side er ikke i et kapitel',

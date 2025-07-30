@@ -48,6 +48,7 @@ return [
     'superscript' => 'כתב עילי',
     'subscript' => 'כתב תחתי',
     'text_color' => 'צבע טקסט',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'צבע מותאם',
     'remove_color' => 'הסר צבע',
     'background_color' => 'צבע רקע',

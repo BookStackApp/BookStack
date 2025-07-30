@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Uebhook-u u fshi me sukses',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'importi i krijuar',
+    'import_create_notification' => 'Importi u ngarkua me sukses',
+    'import_run' => 'Importi i përditësuar',
+    'import_run_notification' => 'Përmbajtja u importua me sukses',
+    'import_delete' => 'Importi i fshirë',
+    'import_delete_notification' => 'Importi u fshi me sukses',
 
     // Users
     'user_create' => 'krijoi përdorues',
@@ -101,11 +101,11 @@ return [
     'user_delete_notification' => 'Përdoruesi u fshi me sukses',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'Krijoi token API',
     'api_token_create_notification' => 'Token API u krijua me sukses',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'Token i përditësuar i API-t',
     'api_token_update_notification' => 'Token API u përditësua me sukses',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'Fshiu tokenin API',
     'api_token_delete_notification' => 'Token API u fshi me sukses',
 
     // Roles
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'fshiu koment',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'Rregull i krijuar renditjeje',
+    'sort_rule_create_notification' => 'Rregulli i renditjes u krijua me sukses',
+    'sort_rule_update' => 'rregulli i renditjes i përditësuar',
+    'sort_rule_update_notification' => 'Rregulli i renditjes u përditësua me sukses',
+    'sort_rule_delete' => 'rregulli i renditjes është fshirë',
+    'sort_rule_delete_notification' => 'Rregulli i renditjes u fshi me sukses',
 
     // Other
     'permissions_update'          => 'përditësoi lejet',

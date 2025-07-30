@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Lisää piirustus',
     'pages_md_show_preview' => 'Näytä esikatselu',
     'pages_md_sync_scroll' => 'Vieritä esikatselua koodin vierityksen mukaan',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Tallentamaton piirustus löytyi',
     'pages_drawing_unsaved_confirm' => 'Järjestelmä löysi tallentamattoman piirustuksen. Haluatko palauttaa piirustuksen ja jatkaa sen muokkaamista?',
     'pages_not_in_chapter' => 'Sivu ei kuulu mihinkään lukuun',

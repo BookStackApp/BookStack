@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Inserisci disegno',
     'pages_md_show_preview' => 'Visualizza anteprima',
     'pages_md_sync_scroll' => 'Sincronizza scorrimento anteprima',
+    'pages_md_plain_editor' => 'Editor di testo semplice',
     'pages_drawing_unsaved' => 'Trovato disegno non salvato',
     'pages_drawing_unsaved_confirm' => 'Sono stati trovati i dati di un disegno non salvato da un precedente tentativo di salvataggio di disegno non riuscito. Ripristinare e continuare a modificare questo disegno non salvato?',
     'pages_not_in_chapter' => 'La pagina non è in un capitolo',

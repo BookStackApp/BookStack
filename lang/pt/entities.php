@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Inserir Desenho',
     'pages_md_show_preview' => 'Mostrar pré-visualização',
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Encontrado um rascunho não guardado',
     'pages_drawing_unsaved_confirm' => 'Dados de um rascunho não guardado foi encontrado de um tentativa anteriormente falhada. Deseja restaurar e continuar a edição desse rascunho?',
     'pages_not_in_chapter' => 'A página não está dentro de um capítulo',

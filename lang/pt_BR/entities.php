@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Inserir Diagrama',
     'pages_md_show_preview' => 'Mostrar pré-visualização',
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Diagrama não-salvo encontrado',
     'pages_drawing_unsaved_confirm' => 'Foram encontrados dados não-salvos de uma tentativa anterior de salvar o diagrama. Você gostaria de restaurá-los e continuar editando este diagrama?',
     'pages_not_in_chapter' => 'Página não está dentro de um capítulo',

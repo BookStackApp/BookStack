@@ -48,6 +48,7 @@ return [
     'superscript' => 'Yuqori yozuv',
     'subscript' => 'Subscript',
     'text_color' => 'Matn rangi',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Maxsus rang',
     'remove_color' => 'Rangni olib tashlash',
     'background_color' => 'Fon rangi',

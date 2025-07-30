@@ -4,24 +4,24 @@
  */
 return [
 
-    'new_comment_subject' => 'New comment on page: :pageName',
-    'new_comment_intro' => 'A user has commented on a page in :appName:',
-    'new_page_subject' => 'New page: :pageName',
-    'new_page_intro' => 'A new page has been created in :appName:',
-    'updated_page_subject' => 'Updated page: :pageName',
-    'updated_page_intro' => 'A page has been updated in :appName:',
-    'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'new_comment_subject' => 'Komentar baru di halaman: :pageName',
+    'new_comment_intro' => 'Seorang pengguna telah mengomentari halaman di :appName:',
+    'new_page_subject' => 'Halaman baru: :pageName',
+    'new_page_intro' => 'Halaman baru telah dibuat di :appName:',
+    'updated_page_subject' => 'Halaman yang diperbarui: :pageName',
+    'updated_page_intro' => 'Halaman telah diperbarui di :appName:',
+    'updated_page_debounce' => 'Untuk mencegah banyaknya pemberitahuan, untuk sementara Anda tidak akan dikirimi pemberitahuan untuk pengeditan lebih lanjut pada halaman ini oleh editor yang sama.',
 
-    'detail_page_name' => 'Page Name:',
-    'detail_page_path' => 'Page Path:',
-    'detail_commenter' => 'Commenter:',
-    'detail_comment' => 'Comment:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_page_name' => 'Nama Halaman:',
+    'detail_page_path' => 'Jalur Halaman:',
+    'detail_commenter' => 'Komentator:',
+    'detail_comment' => 'Komentar:',
+    'detail_created_by' => 'Dibuat Oleh:',
+    'detail_updated_by' => 'Diperbarui Oleh:',
 
-    'action_view_comment' => 'View Comment',
-    'action_view_page' => 'View Page',
+    'action_view_comment' => 'Lihat Komentar',
+    'action_view_page' => 'Lihat Halaman',
 
-    'footer_reason' => 'This notification was sent to you because :link cover this type of activity for this item.',
-    'footer_reason_link' => 'your notification preferences',
+    'footer_reason' => 'Pemberitahuan ini dikirimkan kepada Anda karena :link mencakup jenis aktivitas untuk item ini.',
+    'footer_reason_link' => 'preferensi notifikasi Anda',
 ];

@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Rajz beillesztése',
     'pages_md_show_preview' => 'Előnézet megjelenítése',
     'pages_md_sync_scroll' => 'Előnézet pozíció szinkronizálása',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Nem mentett rajz található',
     'pages_drawing_unsaved_confirm' => 'A rendszer nem mentett rajzadatokat talált egy korábbi sikertelen rajzmentési kísérletből. Szeretné visszaállítani és folytatni a nem mentett rajz szerkesztését?',
     'pages_not_in_chapter' => 'Az oldal nincs fejezetben',

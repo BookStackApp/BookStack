@@ -105,10 +105,10 @@ return [
     'url'                  => ':attribute معتبر نمی‌باشد.',
     'uploaded'             => 'بارگذاری فایل :attribute موفقیت آمیز نبود.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'ویژگی :attribute باید به یک فایل درون پرونده فشرده شده اشاره کند.',
+    'zip_file_mime' => 'ویژگی :attribute باید به فایلی با نوع :validTypes اشاره کند، اما نوع یافت‌شده :foundType است.',
+    'zip_model_expected' => 'سیستم در این بخش انتظار دریافت یک شیء داده‌ای را داشت، اما «:type» دریافت گردید',
+    'zip_unique' => 'برای هر نوع شیء در فایل ZIP، مقدار ویژگی :attribute باید یکتا و بدون تکرار باشد.',
 
     // Custom validation lines
     'custom' => [

@@ -48,6 +48,7 @@ return [
     'superscript' => 'Горен индекс',
     'subscript' => 'Долен индекс',
     'text_color' => 'Цвят на текста',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Цвят по избор',
     'remove_color' => 'Премахване на цвят',
     'background_color' => 'Фонов цвят',

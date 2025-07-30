@@ -87,7 +87,7 @@ return [
     // Imports
     'import_create' => 'created import',
     'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
+    'import_run' => 'обновлен импорт',
     'import_run_notification' => 'Content successfully imported',
     'import_delete' => 'deleted import',
     'import_delete_notification' => 'Import successfully deleted',

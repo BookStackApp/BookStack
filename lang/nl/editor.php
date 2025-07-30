@@ -48,6 +48,7 @@ return [
     'superscript' => 'Superscript',
     'subscript' => 'Subscript',
     'text_color' => 'Tekstkleur',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Aangepaste kleur',
     'remove_color' => 'Verwijder kleur',
     'background_color' => 'Tekstmarkeringskleur',

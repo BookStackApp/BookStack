@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Chèn bản vẽ',
     'pages_md_show_preview' => 'Hiển thị bản xem trước',
     'pages_md_sync_scroll' => 'Đồng bộ hóa cuộn xem trước',
+    'pages_md_plain_editor' => 'Trình soạn thảo văn bản thuần túy',
     'pages_drawing_unsaved' => 'Tìm thấy bản vẽ chưa lưu',
     'pages_drawing_unsaved_confirm' => 'Dữ liệu bản vẽ chưa lưu được tìm thấy từ lần lưu bản vẽ không thành công trước đó. Bạn có muốn khôi phục và tiếp tục chỉnh sửa bản vẽ chưa lưu này không?',
     'pages_not_in_chapter' => 'Trang không nằm trong một chương',

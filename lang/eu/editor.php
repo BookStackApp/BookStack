@@ -48,6 +48,7 @@ return [
     'superscript' => 'Gain-eskripta',
     'subscript' => 'Azpi-script',
     'text_color' => 'Testuaren kolorea',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Kolore pertsonalizatua',
     'remove_color' => 'Kolorea ezabatu',
     'background_color' => 'Atzeko planoaren kolorea',

@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => '図を追加',
     'pages_md_show_preview' => 'プレビューを表示',
     'pages_md_sync_scroll' => 'プレビューとスクロールを同期',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => '未保存の図が見つかりました',
     'pages_drawing_unsaved_confirm' => '以前に保存操作が失敗した、未保存の図が見つかりました。
 未保存の図面を復元して編集を続けますか？',

@@ -72,7 +72,7 @@ return [
     'mfa_remove_method_notification' => 'Metode multi-faktor sukses dihapus',
 
     // Settings
-    'settings_update' => 'updated settings',
+    'settings_update' => 'memperbarui setelan',
     'settings_update_notification' => 'Pengaturan berhasil diperbarui',
     'maintenance_action_run' => 'menjalankan tindakan pemeliharaan',
 
@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook berhasil dihapus',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'telat membuat impor',
+    'import_create_notification' => 'Impor berhasil diunggah',
+    'import_run' => 'telah memperbarui impor',
+    'import_run_notification' => 'Konten berhasil diimpor',
+    'import_delete' => 'telah menghapus impor',
+    'import_delete_notification' => 'Impor berhasil dihapus',
 
     // Users
     'user_create' => 'pengguna yang dibuat',
@@ -109,31 +109,31 @@ return [
     'api_token_delete_notification' => 'token API berhasil dihapus ',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'telah membuat peran',
     'role_create_notification' => 'Peran berhasil dibuat',
-    'role_update' => 'updated role',
+    'role_update' => 'telah memperbarui peran',
     'role_update_notification' => 'Peran berhasil diperbarui',
-    'role_delete' => 'deleted role',
+    'role_delete' => 'telah menghapus peran',
     'role_delete_notification' => 'Peran berhasil dihapus',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'emptied recycle bin',
-    'recycle_bin_restore' => 'restored from recycle bin',
-    'recycle_bin_destroy' => 'removed from recycle bin',
+    'recycle_bin_empty' => 'telah mengosongkan tempat sampah',
+    'recycle_bin_restore' => 'telah mengembalikan dari tempat sampah',
+    'recycle_bin_destroy' => 'telah menghapus dari tempat sampah',
 
     // Comments
     'commented_on'                => 'berkomentar pada',
-    'comment_create'              => 'added comment',
-    'comment_update'              => 'updated comment',
-    'comment_delete'              => 'deleted comment',
+    'comment_create'              => 'telah menambah komentar',
+    'comment_update'              => 'telah memperbarui komentar',
+    'comment_delete'              => 'telah menghapus komentar',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'telah membuat aturan penyortiran',
+    'sort_rule_create_notification' => 'Aturan penyortiran berhasil dibuat',
+    'sort_rule_update' => 'telah mengubah aturan penyortiran',
+    'sort_rule_update_notification' => 'Aturan penyortiran berhasil diubah',
+    'sort_rule_delete' => 'telah menghapus aturan penyortiran',
+    'sort_rule_delete_notification' => 'Aturan penyortiran berhasil dihapus',
 
     // Other
     'permissions_update'          => 'izin diperbarui',

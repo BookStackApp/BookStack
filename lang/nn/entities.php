@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Sett inn tegning',
     'pages_md_show_preview' => 'Førhandsvisning',
     'pages_md_sync_scroll' => 'Synkroniser førehandsvisingsrulle',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Ulagra teikning funne',
     'pages_drawing_unsaved_confirm' => 'Ulagra teikninga vart funne frå ei tidligare mislykka lagring. Vil du gjenopprette og fortsette å redigere denne ulagra teikninga?',
     'pages_not_in_chapter' => 'Sida tilhøyrer ingen kapittel',

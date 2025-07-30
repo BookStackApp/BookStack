@@ -48,6 +48,7 @@ return [
     'superscript' => 'Superscript',
     'subscript' => 'Subscript',
     'text_color' => 'Text color',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Custom color',
     'remove_color' => 'Remove color',
     'background_color' => 'Background color',

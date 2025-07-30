@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => 'Tekening invoegen',
     'pages_md_show_preview' => 'Toon voorbeeld',
     'pages_md_sync_scroll' => 'Synchroniseer scrollen van voorbeeld',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => 'Niet-opgeslagen Tekening Gevonden',
     'pages_drawing_unsaved_confirm' => 'Er zijn niet-opgeslagen tekeninggegevens gevonden van een eerdere mislukte poging om de tekening op te slaan. Wil je deze niet-opgeslagen tekening herstellen en verder bewerken?',
     'pages_not_in_chapter' => 'Pagina is niet in een hoofdstuk',

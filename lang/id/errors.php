@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Pengguna dengan email :email sudah ada tetapi dengan kredensial berbeda.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Akun pengguna tidak dapat didaftarkan untuk rincian yang diberikan',
     'email_already_confirmed' => 'Email telah dikonfirmasi, Coba masuk.',
     'email_confirmation_invalid' => 'Token konfirmasi ini tidak valid atau telah digunakan, Silakan coba mendaftar lagi.',
     'email_confirmation_expired' => 'Token konfirmasi telah kedaluwarsa, Email konfirmasi baru telah dikirim.',
@@ -23,9 +23,9 @@ return [
     'saml_no_email_address' => 'Tidak dapat menemukan sebuah alamat email untuk pengguna ini, dalam data yang diberikan oleh sistem autentikasi eksternal',
     'saml_invalid_response_id' => 'Permintaan dari sistem otentikasi eksternal tidak dikenali oleh sebuah proses yang dimulai oleh aplikasi ini. Menavigasi kembali setelah masuk dapat menyebabkan masalah ini.',
     'saml_fail_authed' => 'Masuk menggunakan :system gagal, sistem tidak memberikan otorisasi yang berhasil',
-    'oidc_already_logged_in' => 'Already logged in',
-    'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
-    'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
+    'oidc_already_logged_in' => 'Sudah masuk',
+    'oidc_no_email_address' => 'Tidak dapat menemukan alamat email untuk pengguna ini dalam data yang diberikan oleh sistem autentikasi eksternal',
+    'oidc_fail_authed' => 'Masuk menggunakan :system gagal, sistem tidak memberikan otorisasi yang berhasil',
     'social_no_action_defined' => 'Tidak ada tindakan yang ditentukan',
     'social_login_bad_response' => "Kesalahan yang diterima selama masuk menggunakan :socialAccount : \n:error",
     'social_account_in_use' => 'Akun :socialAccount ini sudah digunakan, Coba masuk melalui opsi :socialAccount.',
@@ -37,37 +37,37 @@ return [
     'social_driver_not_found' => 'Pengemudi sosial tidak ditemukan',
     'social_driver_not_configured' => 'Pengaturan sosial :socialAccount Anda tidak dikonfigurasi dengan benar.',
     'invite_token_expired' => 'Tautan undangan ini telah kedaluwarsa. Sebagai gantinya, Anda dapat mencoba mengatur ulang kata sandi akun Anda.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Pengguna untuk tindakan ini tidak dapat ditemukan.',
 
     // System
     'path_not_writable' => 'Jalur berkas :filePath tidak dapat diunggah. Pastikan berkas tersebut dapat ditulis ke server.',
     'cannot_get_image_from_url' => 'Tidak dapat mengambil gambar dari :url',
     'cannot_create_thumbs' => 'Server tidak dapat membuat thumbnail. Harap periksa apakah Anda telah memasang ekstensi GD PHP.',
     'server_upload_limit' => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Server tidak dapat menerima jumlah data yang diberikan. Coba lagi dengan data yang lebih sedikit atau berkas yang lebih kecil.',
     'uploaded'  => 'Server tidak mengizinkan unggahan dengan ukuran ini. Harap coba ukuran berkas yang lebih kecil.',
 
     // Drawing & Images
     'image_upload_error' => 'Terjadi kesalahan saat mengunggah gambar',
     'image_upload_type_error' => 'Jenis gambar yang diunggah tidak valid',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'image_upload_replace_type' => 'Penggantian file gambar harus berjenis sama',
+    'image_upload_memory_limit' => 'Gagal menangani pengunggahan gambar dan/atau membuat thumbnail karena keterbatasan sumber daya sistem.',
+    'image_thumbnail_memory_limit' => 'Gagal membuat variasi ukuran gambar karena keterbatasan sumber daya sistem.',
+    'image_gallery_thumbnail_memory_limit' => 'Gagal membuat thumbnail galeri karena keterbatasan sumber daya sistem.',
+    'drawing_data_not_found' => 'Data gambar tidak dapat dimuat. Berkas gambar mungkin sudah tidak ada atau Anda mungkin tidak memiliki izin untuk mengaksesnya.',
 
     // Attachments
     'attachment_not_found' => 'Lampiran tidak ditemukan',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Terjadi kesalahan saat mengunggah berkas',
 
     // Pages
     'page_draft_autosave_fail' => 'Gagal menyimpan draf. Pastikan Anda memiliki koneksi internet sebelum menyimpan halaman ini',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Gagal menghapus draf halaman dan mengambil konten tersimpan halaman saat ini',
     'page_custom_home_deletion' => 'Tidak dapat menghapus sebuah halaman saat diatur sebagai sebuah halaman beranda',
 
     // Entities
     'entity_not_found' => 'Entitas tidak ditemukan',
-    'bookshelf_not_found' => 'Shelf not found',
+    'bookshelf_not_found' => 'Rak tidak ditemukan',
     'book_not_found' => 'Buku tidak ditemukan',
     'page_not_found' => 'Halaman tidak ditemukan',
     'chapter_not_found' => 'Bab tidak ditemukan',
@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Anda tidak dapat menghapus satu-satunya admin',
     'users_cannot_delete_guest' => 'Anda tidak dapat menghapus pengguna tamu',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Tidak dapat membuat pengguna karena email undangan gagal dikirim',
 
     // Roles
     'role_cannot_be_edited' => 'Peran ini tidak dapat disunting',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Ini akan segera kembali.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'Tidak dapat membaca berkas ZIP.',
+    'import_zip_cant_decode_data' => 'Tidak dapat menemukan dan mendekode konten ZIP data.json.',
+    'import_zip_no_data' => 'Data berkas ZIP tidak berisi konten buku, bab, atau halaman yang diharapkan.',
+    'import_validation_failed' => 'Impor ZIP gagal divalidasi dengan kesalahan:',
+    'import_zip_failed_notification' => 'Gagal mengimpor berkas ZIP.',
+    'import_perms_books' => 'Anda tidak memiliki izin yang diperlukan untuk membuat buku.',
+    'import_perms_chapters' => 'Anda tidak memiliki izin yang diperlukan untuk membuat bab.',
+    'import_perms_pages' => 'Anda tidak memiliki izin yang diperlukan untuk membuat halaman.',
+    'import_perms_images' => 'Anda tidak memiliki izin yang diperlukan untuk membuat gambar.',
+    'import_perms_attachments' => 'Anda tidak memiliki izin yang diperlukan untuk membuat lampiran.',
 
     // API errors
     'api_no_authorization_found' => 'Tidak ada token otorisasi yang ditemukan pada permintaan tersebut',
@@ -129,5 +129,5 @@ return [
     'maintenance_test_email_failure' => 'Kesalahan dilempar saat mengirim email uji:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL tidak cocok dengan host SSR yang diizinkan yang dikonfigurasi',
 ];

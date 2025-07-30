@@ -48,6 +48,7 @@ return [
     'superscript' => 'Felső index',
     'subscript' => 'Alsó index',
     'text_color' => 'Szöveg szín',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Egyéni szín',
     'remove_color' => 'Szín eltávolítása',
     'background_color' => 'Háttérszín',

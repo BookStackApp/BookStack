@@ -48,6 +48,7 @@ return [
     'superscript' => 'Надстрочный',
     'subscript' => 'Подстрочный',
     'text_color' => 'Цвет текста',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'Пользовательский цвет',
     'remove_color' => 'Удалить цвет',
     'background_color' => 'Цвет фона',

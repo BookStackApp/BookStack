@@ -268,6 +268,7 @@ return [
     'pages_md_insert_drawing' => '插入繪圖',
     'pages_md_show_preview' => '顯示預覽',
     'pages_md_sync_scroll' => '預覽頁面同步捲動',
+    'pages_md_plain_editor' => 'Plaintext editor',
     'pages_drawing_unsaved' => '偵測到未儲存的繪圖',
     'pages_drawing_unsaved_confirm' => '從之前保存失敗的繪圖中發現了可恢復的數據。您想恢復並繼續編輯這個未保存的繪圖嗎？',
     'pages_not_in_chapter' => '頁面不在章節中',

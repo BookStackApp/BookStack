@@ -48,6 +48,7 @@ return [
     'superscript' => 'सुपरस्क्रिप्ट',
     'subscript' => 'सबस्क्रिप्ट',
     'text_color' => 'पाठको रंग',
+    'highlight_color' => 'Highlight color',
     'custom_color' => 'अनुकूलित रंग',
     'remove_color' => 'रंग हटाउनुहोस्',
     'background_color' => 'पृष्ठभूमि रंग',
