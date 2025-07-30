@@ -65,6 +65,9 @@ class PageExportApiController extends ApiController
         return $this->download()->directly($markdown, $page->slug . '.md');
     }
 
+    /**
+     * Export a page as a contained ZIP file.
+     */
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
         $page = $this->queries->findVisibleByIdOrFail($id);

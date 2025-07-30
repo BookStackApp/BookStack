@@ -65,6 +65,9 @@ class ChapterExportApiController extends ApiController
         return $this->download()->directly($markdown, $chapter->slug . '.md');
     }
 
+    /**
+     * Export a chapter as a contained ZIP file.
+     */
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
         $chapter = $this->queries->findVisibleByIdOrFail($id);

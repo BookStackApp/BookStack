@@ -66,7 +66,7 @@ class BookExportApiController extends ApiController
     }
 
     /**
-     * Export a book to a contained ZIP export file.
+     * Export a book as a contained ZIP export file.
      */
     public function exportZip(int $id, ZipExportBuilder $builder)
     {
