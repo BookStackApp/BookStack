@@ -48,7 +48,7 @@ return [
     'superscript' => 'Ülaindeks',
     'subscript' => 'Alaindeks',
     'text_color' => 'Teksti värv',
-    'highlight_color' => 'Highlight color',
+    'highlight_color' => 'Esiletõstuvärv',
     'custom_color' => 'Kohandatud värv',
     'remove_color' => 'Eemalda värv',
     'background_color' => 'Taustavärv',
