@@ -37,7 +37,7 @@ function drawEventExport(message: DrawioExportEventResponse) {
 
 function drawEventSave(message: DrawioSaveEventResponse) {
     drawPostMessage({
-        action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing',
+        action: 'export', format: 'xmlpng', xml: message.xml, spin: 'Updating drawing', keepTheme: true,
     });
 }
 
