@@ -46,12 +46,12 @@ return [
     'bookshelf_create_from_book_notification'    => 'Livro convertido em prateleira com sucesso',
     'bookshelf_update'                 => 'estante atualizada',
     'bookshelf_update_notification'    => 'Estante atualizada com sucesso',
-    'bookshelf_delete'                 => 'prateleira excluída',
+    'bookshelf_delete'                 => 'excluiu a estante',
     'bookshelf_delete_notification'    => 'Estante eliminada com sucesso',
 
     // Revisions
-    'revision_restore' => 'revisão restaurada',
-    'revision_delete' => 'revisão eliminada',
+    'revision_restore' => 'restaurou a revisão',
+    'revision_delete' => 'eliminou a revisão',
     'revision_delete_notification' => 'Revisão eliminada com sucesso',
 
     // Favourites
@@ -62,7 +62,7 @@ return [
     'watch_update_level_notification' => 'Ver preferências atualizadas com sucesso',
 
     // Auth
-    'auth_login' => 'sessão iniciada',
+    'auth_login' => 'iniciou sessão',
     'auth_register' => 'registado como novo utilizador',
     'auth_password_reset_request' => 'pedido a redefinição da palavra-passe',
     'auth_password_reset_update' => 'redifinir palavra-passe do utilizador',
