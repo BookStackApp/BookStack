@@ -30,7 +30,7 @@ return [
     // Books
     'book_create'                 => 'livro criado',
     'book_create_notification'    => 'Livro criado com sucesso',
-    'book_create_from_chapter'              => 'capítulo convertido para lívro',
+    'book_create_from_chapter'              => 'capítulo convertido para livro',
     'book_create_from_chapter_notification' => 'Capítulo convertido em livro com sucesso',
     'book_update'                 => 'livro atualizado',
     'book_update_notification'    => 'Livro atualizado com sucesso',
@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook criado com sucesso',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'importação criada',
+    'import_create_notification' => 'Importação carregada com sucesso',
+    'import_run' => 'importação atualizada',
+    'import_run_notification' => 'Conteúdo importado com sucesso',
+    'import_delete' => 'importação apagada',
+    'import_delete_notification' => 'Importação eliminada com sucesso',
 
     // Users
     'user_create' => 'utilizador criado',
@@ -101,11 +101,11 @@ return [
     'user_delete_notification' => 'Utilizador removido com sucesso',
 
     // API Tokens
-    'api_token_create' => 'created API token',
+    'api_token_create' => 'token API criado',
     'api_token_create_notification' => 'API token criado com sucesso',
-    'api_token_update' => 'updated API token',
+    'api_token_update' => 'token API atualizado',
     'api_token_update_notification' => 'API token atualizado com sucesso',
-    'api_token_delete' => 'deleted API token',
+    'api_token_delete' => 'token API apagado',
     'api_token_delete_notification' => 'API token atualizado com sucesso',
 
     // Roles
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'comentário eliminado',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'regra de ordenação criada',
+    'sort_rule_create_notification' => 'Regra de ordenação criada com sucesso',
+    'sort_rule_update' => 'regra de ordenação atualizada',
+    'sort_rule_update_notification' => 'Regra de ordenação atualizada com sucesso',
+    'sort_rule_delete' => 'regra de ordenação apagada',
+    'sort_rule_delete_notification' => 'Regra de ordenação apagada com sucesso',
 
     // Other
     'permissions_update'          => 'permissões atualizadas',
