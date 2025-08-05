@@ -8,7 +8,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\Rules\Unique;
 
 class CreateAdminCommand extends Command
 {
@@ -23,7 +22,7 @@ class CreateAdminCommand extends Command
                             {--password= : The password to assign to the new admin user}
                             {--external-auth-id= : The external authentication system id for the new admin user (SAML2/LDAP/OIDC)}
                             {--generate-password : Generate a random password for the new admin user}
-                            {--first-admin : Indicate if this should set/update the details of the initial admin user}';
+                            {--initial : Indicate if this should set/update the details of the initial admin user}';
 
     /**
      * The console command description.
@@ -37,12 +36,12 @@ class CreateAdminCommand extends Command
      */
     public function handle(UserRepo $userRepo): int
     {
-        $firstAdminOnly = $this->option('first-admin');
+        $initialAdminOnly = $this->option('initial');
         $shouldGeneratePassword = $this->option('generate-password');
-        $details = $this->gatherDetails($shouldGeneratePassword);
+        $details = $this->gatherDetails($shouldGeneratePassword, $initialAdminOnly);
 
         $validator = Validator::make($details, [
-            'email'            => ['required', 'email', 'min:5', new Unique('users', 'email')],
+            'email'            => ['required', 'email', 'min:5'],
             'name'             => ['required', 'min:2'],
             'password'         => ['required_without:external_auth_id', Password::default()],
             'external_auth_id' => ['required_without:password'],
@@ -58,11 +57,18 @@ class CreateAdminCommand extends Command
 
         $adminRole = Role::getSystemRole('admin');
 
-        if ($firstAdminOnly) {
-            $handled = $this->handleFirstAdminIfExists($userRepo, $details, $shouldGeneratePassword, $adminRole);
-            if ($handled) {
-                return 0;
+        if ($initialAdminOnly) {
+            $handled = $this->handleInitialAdminIfExists($userRepo, $details, $shouldGeneratePassword, $adminRole);
+            if ($handled !== null) {
+                return $handled ? 0 : 1;
             }
+        }
+
+        $emailUsed = $userRepo->getByEmail($details['email']) !== null;
+        if ($emailUsed) {
+            $this->error("Could not create admin account.");
+            $this->error("An account with the email address \"{$details['email']}\" already exists.");
+            return 1;
         }
 
         $user = $userRepo->createWithoutActivity($validator->validated());
@@ -80,14 +86,19 @@ class CreateAdminCommand extends Command
     }
 
     /**
-     * Handle updates to the first admin if exists.
-     * Returns true if the action has been handled (user updated or already a non-default admin user) otherwise
-     * returns false if no action has been taken, and we therefore need to proceed with a normal account creation.
+     * Handle updates to the original admin account if it exists.
+     * Returns true if it's been successfully handled, false if unsuccessful, or null if not handled.
      */
-    protected function handleFirstAdminIfExists(UserRepo $userRepo, array $data, bool $generatePassword, Role $adminRole): bool
+    protected function handleInitialAdminIfExists(UserRepo $userRepo, array $data, bool $generatePassword, Role $adminRole): bool|null
     {
         $defaultAdmin = $userRepo->getByEmail('admin@admin.com');
         if ($defaultAdmin && $defaultAdmin->hasSystemRole('admin')) {
+            if ($defaultAdmin->email !== $data['email'] && $userRepo->getByEmail($data['email']) !== null) {
+                $this->error("Could not create admin account.");
+                $this->error("An account with the email address \"{$data['email']}\" already exists.");
+                return false;
+            }
+
             $userRepo->updateWithoutActivity($defaultAdmin, $data, true);
             if ($generatePassword) {
                 $this->line($data['password']);
@@ -101,19 +112,27 @@ class CreateAdminCommand extends Command
             return true;
         }
 
-        return false;
+        return null;
     }
 
-    protected function gatherDetails(bool $generatePassword): array
+    protected function gatherDetails(bool $generatePassword, bool $initialAdmin): array
     {
         $details = $this->snakeCaseOptions();
 
         if (empty($details['email'])) {
-            $details['email'] = $this->ask('Please specify an email address for the new admin user');
+            if ($initialAdmin) {
+                $details['email'] = 'admin@example.com';
+            } else {
+                $details['email'] = $this->ask('Please specify an email address for the new admin user');
+            }
         }
 
         if (empty($details['name'])) {
-            $details['name'] = $this->ask('Please specify a name for the new admin user');
+            if ($initialAdmin) {
+                $details['name'] = 'Admin';
+            } else {
+                $details['name'] = $this->ask('Please specify a name for the new admin user');
+            }
         }
 
         if (empty($details['password'])) {
