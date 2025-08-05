@@ -21,7 +21,9 @@ class CreateAdminCommand extends Command
                             {--email= : The email address for the new admin user}
                             {--name= : The name of the new admin user}
                             {--password= : The password to assign to the new admin user}
-                            {--external-auth-id= : The external authentication system id for the new admin user (SAML2/LDAP/OIDC)}';
+                            {--external-auth-id= : The external authentication system id for the new admin user (SAML2/LDAP/OIDC)}
+                            {--generate-password : Generate a random password for the new admin user}
+                            {--first-admin : Indicate if this should set/update the details of the initial admin user}';
 
     /**
      * The console command description.
@@ -35,23 +37,9 @@ class CreateAdminCommand extends Command
      */
     public function handle(UserRepo $userRepo): int
     {
-        $details = $this->snakeCaseOptions();
-
-        if (empty($details['email'])) {
-            $details['email'] = $this->ask('Please specify an email address for the new admin user');
-        }
-
-        if (empty($details['name'])) {
-            $details['name'] = $this->ask('Please specify a name for the new admin user');
-        }
-
-        if (empty($details['password'])) {
-            if (empty($details['external_auth_id'])) {
-                $details['password'] = $this->ask('Please specify a password for the new admin user (8 characters min)');
-            } else {
-                $details['password'] = Str::random(32);
-            }
-        }
+        $firstAdminOnly = $this->option('first-admin');
+        $shouldGeneratePassword = $this->option('generate-password');
+        $details = $this->gatherDetails($shouldGeneratePassword);
 
         $validator = Validator::make($details, [
             'email'            => ['required', 'email', 'min:5', new Unique('users', 'email')],
@@ -68,14 +56,79 @@ class CreateAdminCommand extends Command
             return 1;
         }
 
+        $adminRole = Role::getSystemRole('admin');
+
+        if ($firstAdminOnly) {
+            $handled = $this->handleFirstAdminIfExists($userRepo, $details, $shouldGeneratePassword, $adminRole);
+            if ($handled) {
+                return 0;
+            }
+        }
+
         $user = $userRepo->createWithoutActivity($validator->validated());
-        $user->attachRole(Role::getSystemRole('admin'));
+        $user->attachRole($adminRole);
         $user->email_confirmed = true;
         $user->save();
 
-        $this->info("Admin account with email \"{$user->email}\" successfully created!");
+        if ($shouldGeneratePassword) {
+            $this->line($details['password']);
+        } else {
+            $this->info("Admin account with email \"{$user->email}\" successfully created!");
+        }
 
         return 0;
+    }
+
+    /**
+     * Handle updates to the first admin if exists.
+     * Returns true if the action has been handled (user updated or already a non-default admin user) otherwise
+     * returns false if no action has been taken, and we therefore need to proceed with a normal account creation.
+     */
+    protected function handleFirstAdminIfExists(UserRepo $userRepo, array $data, bool $generatePassword, Role $adminRole): bool
+    {
+        $defaultAdmin = $userRepo->getByEmail('admin@admin.com');
+        if ($defaultAdmin && $defaultAdmin->hasSystemRole('admin')) {
+            $userRepo->updateWithoutActivity($defaultAdmin, $data, true);
+            if ($generatePassword) {
+                $this->line($data['password']);
+            } else {
+                $this->info("The default admin user has been updated with the provided details!");
+            }
+
+            return true;
+        } else if ($adminRole->users()->count() > 0) {
+            $this->warn('Non-default admin user already exists. Skipping creation of new admin user.');
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function gatherDetails(bool $generatePassword): array
+    {
+        $details = $this->snakeCaseOptions();
+
+        if (empty($details['email'])) {
+            $details['email'] = $this->ask('Please specify an email address for the new admin user');
+        }
+
+        if (empty($details['name'])) {
+            $details['name'] = $this->ask('Please specify a name for the new admin user');
+        }
+
+        if (empty($details['password'])) {
+            if (empty($details['external_auth_id'])) {
+                if ($generatePassword) {
+                    $details['password'] = Str::random(32);
+                } else {
+                    $details['password'] = $this->ask('Please specify a password for the new admin user (8 characters min)');
+                }
+            } else {
+                $details['password'] = Str::random(32);
+            }
+        }
+
+        return $details;
     }
 
     protected function snakeCaseOptions(): array
