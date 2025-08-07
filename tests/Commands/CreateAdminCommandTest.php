@@ -109,7 +109,7 @@ class CreateAdminCommandTest extends TestCase
             '--password' => 'testing-7',
             '--initial' => true,
         ])->expectsOutput('Non-default admin user already exists. Skipping creation of new admin user.')
-            ->assertExitCode(0);
+            ->assertExitCode(2);
 
         $defaultAdmin->refresh();
 
@@ -156,7 +156,7 @@ class CreateAdminCommandTest extends TestCase
             '--password' => 'testing-7',
             '--initial' => true,
         ])->expectsOutput("Non-default admin user already exists. Skipping creation of new admin user.")
-            ->assertExitCode(0);
+            ->assertExitCode(2);
     }
 
     public function test_initial_option_creation_errors_if_email_already_exists()

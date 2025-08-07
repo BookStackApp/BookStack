@@ -60,7 +60,7 @@ class CreateAdminCommand extends Command
         if ($initialAdminOnly) {
             $handled = $this->handleInitialAdminIfExists($userRepo, $details, $shouldGeneratePassword, $adminRole);
             if ($handled !== null) {
-                return $handled ? 0 : 1;
+                return $handled;
             }
         }
 
@@ -87,16 +87,16 @@ class CreateAdminCommand extends Command
 
     /**
      * Handle updates to the original admin account if it exists.
-     * Returns true if it's been successfully handled, false if unsuccessful, or null if not handled.
+     * Returns an int return status if handled, otherwise returns null if not handled (new user to be created).
      */
-    protected function handleInitialAdminIfExists(UserRepo $userRepo, array $data, bool $generatePassword, Role $adminRole): bool|null
+    protected function handleInitialAdminIfExists(UserRepo $userRepo, array $data, bool $generatePassword, Role $adminRole): int|null
     {
         $defaultAdmin = $userRepo->getByEmail('admin@admin.com');
         if ($defaultAdmin && $defaultAdmin->hasSystemRole('admin')) {
             if ($defaultAdmin->email !== $data['email'] && $userRepo->getByEmail($data['email']) !== null) {
                 $this->error("Could not create admin account.");
                 $this->error("An account with the email address \"{$data['email']}\" already exists.");
-                return false;
+                return 1;
             }
 
             $userRepo->updateWithoutActivity($defaultAdmin, $data, true);
@@ -106,10 +106,10 @@ class CreateAdminCommand extends Command
                 $this->info("The default admin user has been updated with the provided details!");
             }
 
-            return true;
+            return 0;
         } else if ($adminRole->users()->count() > 0) {
             $this->warn('Non-default admin user already exists. Skipping creation of new admin user.');
-            return true;
+            return 2;
         }
 
         return null;
