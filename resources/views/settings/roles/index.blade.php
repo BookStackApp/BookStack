@@ -24,6 +24,7 @@
                         <form method="get" action="{{ url("/settings/roles") }}">
                             <input type="text"
                                    name="search"
+                                   title="{{ trans('common.search') }}"
                                    placeholder="{{ trans('common.search') }}"
                                    value="{{ $listOptions->getSearch() }}">
                         </form>

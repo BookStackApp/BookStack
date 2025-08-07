@@ -38,10 +38,14 @@
     <div class="flex px-m py-xs min-width-s"><strong class="hide-over-l">{{ trans('settings.recycle_bin_deleted_at') }}:<br></strong>{{ $deletion->created_at }}</div>
     <div class="flex px-m py-xs text-m-right min-width-s">
         <div component="dropdown" class="dropdown-container">
-            <button type="button" refs="dropdown@toggle" class="button outline">{{ trans('common.actions') }}</button>
-            <ul refs="dropdown@menu" class="dropdown-menu">
-                <li><a class="text-item" href="{{ $deletion->getUrl('/restore') }}">{{ trans('settings.recycle_bin_restore') }}</a></li>
-                <li><a class="text-item" href="{{ $deletion->getUrl('/destroy') }}">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
+            <button type="button"
+                    refs="dropdown@toggle"
+                    aria-haspopup="menu"
+                    aria-expanded="false"
+                    class="button outline">{{ trans('common.actions') }}</button>
+            <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
+                <li><a class="text-item" href="{{ $deletion->getUrl('/restore') }}" role="menuitem">{{ trans('settings.recycle_bin_restore') }}</a></li>
+                <li><a class="text-item" href="{{ $deletion->getUrl('/destroy') }}" role="menuitem">{{ trans('settings.recycle_bin_permanently_delete') }}</a></li>
             </ul>
         </div>
     </div>

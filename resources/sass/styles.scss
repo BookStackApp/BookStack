@@ -232,13 +232,15 @@ $loadingSize: 10px;
   .list-sort-label {
     font-weight: bold;
     display: inline-block;
+  }
+  .list-sort-label, .list-sort-toggle {
     @include mixins.lightDark(color, #555, #888);
   }
   .list-sort-type {
     text-align: start;
   }
-  .list-sort-type, .list-sort-dir {
-    padding: vars.$xs vars.$s;
+  .list-sort-toggle, .list-sort-dir {
+    padding: (vars.$xs + 2) vars.$s;
     cursor: pointer;
   }
   .list-sort-dir {
@@ -251,6 +253,11 @@ $loadingSize: 10px;
     &:hover .svg-icon {
       transform: rotate(180deg);
     }
+  }
+  .list-sort-toggle {
+    display: block;
+    width: 100%;
+    text-align: start;
   }
 }
 

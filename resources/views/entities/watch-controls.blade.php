@@ -1,6 +1,11 @@
 <div component="dropdown"
      class="dropdown-container block my-xxs">
-    <a refs="dropdown@toggle" href="#" class="entity-meta-item my-none">
+    <a refs="dropdown@toggle"
+       aria-haspopup="menu"
+       aria-expanded="false"
+       role="button"
+       href="#"
+       class="entity-meta-item my-none">
         @icon(($ignoring ? 'watch-ignore' : 'watch'))
         <span>{{ $label }}</span>
     </a>
@@ -10,10 +15,10 @@
         <input type="hidden" name="type" value="{{ $entity->getMorphClass() }}">
         <input type="hidden" name="id" value="{{ $entity->id }}">
 
-        <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none">
+        <ul refs="dropdown@menu" class="dropdown-menu xl-limited anchor-left pb-none" role="menu">
             @foreach(\BookStack\Activity\WatchLevels::allSuitedFor($entity) as $option => $value)
                 <li>
-                    <button name="level" value="{{ $option }}" class="icon-item">
+                    <button name="level" value="{{ $option }}" class="icon-item" role="menuitem">
                         @if($watchLevel === $option)
                             <span class="text-pos pt-m"
                                   title="{{ trans('common.status_active') }}">@icon('check-circle')</span>
@@ -32,12 +37,13 @@
                         </div>
                     </button>
                 </li>
-                <li>
+                <li role="presentation">
                     <hr class="my-none">
                 </li>
             @endforeach
             <li>
                 <a href="{{ url('/my-account/notifications') }}"
+                   role="menuitem"
                    target="_blank"
                    class="text-item text-muted text-small break-text">{{ trans('entities.watch_change_default') }}</a>
             </li>
