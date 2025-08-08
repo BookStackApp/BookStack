@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => '업로드된 ZIP 파일이 삭제되며, 실행 취소할 수 없습니다.',
     'import_errors' => '가져오기 오류',
     'import_errors_desc' => '가져오기 중 에러가 발생했습니다.',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => '권한',
