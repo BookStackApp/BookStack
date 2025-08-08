@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Questa operazione cancella il file ZIP di importazione caricato e non può essere annullata.',
     'import_errors' => 'Errori di importazione',
     'import_errors_desc' => 'Gli seguenti errori si sono verificati durante il tentativo di importazione:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Permessi',
