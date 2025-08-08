@@ -904,8 +904,11 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
   border-radius: 4px;
   line-height: normal;
   padding: vars.$xs;
+  opacity: 0.6;
+  cursor: pointer;
   &:hover {
-    border-color: #DDD;
+    opacity: 1;
+    @include mixins.lightDark(border-color, #DDD, #444);
   }
   .svg-icon {
     margin-inline-end: 0;
