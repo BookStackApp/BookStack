@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Dit zal het Zip-bestand van de import permanent verwijderen.',
     'import_errors' => 'Importeerfouten',
     'import_errors_desc' => 'De volgende fouten deden zich voor tijdens het importeren:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Machtigingen',
