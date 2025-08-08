@@ -29,10 +29,14 @@
 
         <div class="list-sort">
             <div component="dropdown" class="list-sort-type dropdown-container">
-                <div refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false" aria-label="{{ trans('common.sort_options') }}" tabindex="0">{{ $options[$selectedSort] }}</div>
-                <ul refs="dropdown@menu list-sort-control@menu" class="dropdown-menu">
+                <button refs="dropdown@toggle"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-label="{{ trans('common.sort_options') }}"
+                        class="list-sort-toggle">{{ $options[$selectedSort] }}</button>
+                <ul refs="dropdown@menu list-sort-control@menu" class="dropdown-menu" role="menu">
                     @foreach($options as $key => $label)
-                        <li @if($key === $selectedSort) class="active" @endif><a href="#" data-sort-value="{{$key}}" class="text-item">{{ $label }}</a></li>
+                        <li @if($key === $selectedSort) class="active" @endif><a href="#" data-sort-value="{{$key}}" role="menuitem" class="text-item">{{ $label }}</a></li>
                     @endforeach
                 </ul>
             </div>

@@ -22,6 +22,7 @@
                         <form method="get" action="{{ url("/settings/users") }}">
                             <input type="text"
                                    name="search"
+                                   title="{{ trans('settings.users_search') }}"
                                    placeholder="{{ trans('settings.users_search') }}"
                                    value="{{ $listOptions->getSearch() }}">
                         </form>

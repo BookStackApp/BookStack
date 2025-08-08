@@ -14,7 +14,7 @@
             <div class="flex-container-row items-center justify-center">
                 <button type="button"
                         refs="dropdown@toggle"
-                        aria-haspopup="true"
+                        aria-haspopup="menu"
                         aria-expanded="false"
                         title="{{ trans('entities.pages_edit_draft_options') }}"
                         class="text-link icon-list-item">
@@ -25,38 +25,38 @@
             </div>
             <ul refs="dropdown@menu" class="dropdown-menu" role="menu">
                 <li>
-                    <button refs="page-editor@saveDraft" type="button" class="text-pos icon-item">
+                    <button refs="page-editor@saveDraft" type="button" role="menuitem" class="text-pos icon-item">
                         @icon('save')
                         <div>{{ trans('entities.pages_edit_save_draft') }}</div>
                     </button>
                 </li>
                 @if($isDraft)
                     <li>
-                        <a href="{{ $model->getUrl('/delete') }}" class="text-neg icon-item">
+                        <a href="{{ $model->getUrl('/delete') }}" role="menuitem" class="text-neg icon-item">
                             @icon('delete')
                             {{ trans('entities.pages_edit_delete_draft') }}
                         </a>
                     </li>
                 @endif
                 <li refs="page-editor@discard-draft-wrap" {{ $isDraftRevision ? '' : 'hidden' }}>
-                    <button refs="page-editor@discard-draft" type="button" class="text-warn icon-item">
+                    <button refs="page-editor@discard-draft" type="button" role="menuitem" class="text-warn icon-item">
                         @icon('cancel')
                         <div>{{ trans('entities.pages_edit_discard_draft') }}</div>
                     </button>
                 </li>
                 <li refs="page-editor@delete-draft-wrap" {{ $isDraftRevision ? '' : 'hidden' }}>
-                    <button refs="page-editor@delete-draft" type="button" class="text-neg icon-item">
+                    <button refs="page-editor@delete-draft" type="button" role="menuitem" class="text-neg icon-item">
                         @icon('delete')
                         <div>{{ trans('entities.pages_edit_delete_draft') }}</div>
                     </button>
                 </li>
                 @if(userCan('editor-change'))
-                    <li>
+                    <li role="presentation">
                         <hr>
                     </li>
                     <li>
                         @if($editor !== \BookStack\Entities\Tools\PageEditorType::Markdown)
-                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" refs="page-editor@changeEditor" class="icon-item">
+                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-clean" refs="page-editor@changeEditor" role="menuitem" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>
                                     {{ trans('entities.pages_edit_switch_to_markdown') }}
@@ -64,7 +64,7 @@
                                     <small>{{ trans('entities.pages_edit_switch_to_markdown_clean') }}</small>
                                 </div>
                             </a>
-                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-stable" refs="page-editor@changeEditor" class="icon-item">
+                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=markdown-stable" refs="page-editor@changeEditor" role="menuitem" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>
                                     {{ trans('entities.pages_edit_switch_to_markdown') }}
@@ -74,13 +74,13 @@
                             </a>
                         @endif
                         @if($editor !== \BookStack\Entities\Tools\PageEditorType::WysiwygTinymce)
-                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg" refs="page-editor@changeEditor" class="icon-item">
+                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg" refs="page-editor@changeEditor" role="menuitem" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>{{ trans('entities.pages_edit_switch_to_wysiwyg') }}</div>
                             </a>
                         @endif
                         @if($editor !== \BookStack\Entities\Tools\PageEditorType::WysiwygLexical)
-                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg2024" refs="page-editor@changeEditor" class="icon-item">
+                            <a href="{{ $model->getUrl($isDraft ? '' : '/edit') }}?editor=wysiwyg2024" refs="page-editor@changeEditor" role="menuitem" class="icon-item">
                                 @icon('swap-horizontal')
                                 <div>
                                     {{ trans('entities.pages_edit_switch_to_new_wysiwyg') }}
@@ -112,6 +112,7 @@
                         id="summary-input"
                         rows="2"
                         maxlength="180"
+                        title="{{ trans('entities.pages_edit_enter_changelog') }}"
                         placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
                     ></textarea>
                     <small refs="page-editor@changelogCounter" class="text-muted mt-xs">0 / 180</small>
