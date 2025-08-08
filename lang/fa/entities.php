@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'با انجام این کار، فایل ZIP واردشده حذف می‌شود و این عمل بازگشت‌ناپذیر است.',
     'import_errors' => 'خطای انتقال ورودی',
     'import_errors_desc' => 'در جریان تلاش برای انتقال ورودی، خطاهای زیر رخ داد:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'مجوزها',
