@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => '这将删除上传的ZIP文件，不能撤消。',
     'import_errors' => '导入错误',
     'import_errors_desc' => '在尝试导入过程中出现了以下错误:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => '权限',
