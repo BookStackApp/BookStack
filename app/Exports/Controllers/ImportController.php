@@ -89,7 +89,7 @@ class ImportController extends Controller
         try {
             $entity = $this->imports->runImport($import, $parent);
         } catch (ZipImportException $exception) {
-            session()->flush();
+            session()->forget(['success', 'warning']);
             $this->showErrorNotification(trans('errors.import_zip_failed_notification'));
             return redirect($import->getUrl())->with('import_errors', $exception->errors);
         }
