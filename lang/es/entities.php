@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Esto eliminará el archivo ZIP de importación subido y no se puede deshacer.',
     'import_errors' => 'Errores de Importación',
     'import_errors_desc' => 'Se han producido los siguientes errores durante el intento de importación:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
