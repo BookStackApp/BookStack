@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Dette vil slette den opplastede importen av ZIP-filen og kan ikke angres.',
     'import_errors' => 'Import feil',
     'import_errors_desc' => 'Feil oppstod under importforsøket:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Tilganger',
