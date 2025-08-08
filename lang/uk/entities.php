@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Це видалить завантажений імпорт файлу ZIP, і його не можна буде скасувати.',
     'import_errors' => 'Помилки імпорту',
     'import_errors_desc' => 'Під час спроби імпорту відбулися наступні помилки:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Дозволи',
