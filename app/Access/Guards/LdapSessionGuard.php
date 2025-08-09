@@ -57,16 +57,13 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param array $credentials
      * @param bool  $remember
      *
-     * @throws LdapException*@throws \BookStack\Exceptions\JsonDebugException
+     * @throws LdapException
      * @throws LoginAttemptException
      * @throws JsonDebugException
-     *
-     * @return bool
      */
-    public function attempt(array $credentials = [], $remember = false)
+    public function attempt(array $credentials = [], $remember = false): bool
     {
         $username = $credentials['username'];
         $userDetails = $this->ldapService->getUserDetails($username);

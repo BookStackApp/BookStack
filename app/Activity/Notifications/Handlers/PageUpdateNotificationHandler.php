@@ -20,7 +20,8 @@ class PageUpdateNotificationHandler extends BaseNotificationHandler
             throw new \InvalidArgumentException("Detail for page update notifications must be a page");
         }
 
-        // Get last update from activity
+        // Get the last update from activity
+        /** @var ?Activity $lastUpdate */
         $lastUpdate = $detail->activity()
             ->where('type', '=', ActivityType::PAGE_UPDATE)
             ->where('id', '!=', $activity->id)

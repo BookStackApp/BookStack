@@ -26,6 +26,7 @@ use BookStack\Users\Models\HasOwner;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -283,10 +284,14 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function getParent(): ?self
     {
         if ($this instanceof Page) {
-            return $this->chapter_id ? $this->chapter()->withTrashed()->first() : $this->book()->withTrashed()->first();
+            /** @var BelongsTo<Chapter|Book, Page>  $builder */
+            $builder = $this->chapter_id ? $this->chapter() : $this->book();
+            return $builder->withTrashed()->first();
         }
         if ($this instanceof Chapter) {
-            return $this->book()->withTrashed()->first();
+            /** @var BelongsTo<Book, Page>  $builder */
+            $builder = $this->book();
+            return $builder->withTrashed()->first();
         }
 
         return null;
@@ -295,7 +300,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Rebuild the permissions for this entity.
      */
-    public function rebuildPermissions()
+    public function rebuildPermissions(): void
     {
         app()->make(JointPermissionBuilder::class)->rebuildForEntity(clone $this);
     }
@@ -303,7 +308,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Index the current entity for search.
      */
-    public function indexForSearch()
+    public function indexForSearch(): void
     {
         app()->make(SearchIndex::class)->indexEntity(clone $this);
     }

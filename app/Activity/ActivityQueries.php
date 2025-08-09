@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ActivityQueries
@@ -67,6 +68,7 @@ class ActivityQueries
 
         $activity = $query->orderBy('created_at', 'desc')
             ->with(['loggable' => function (Relation $query) {
+                /** @var MorphTo<Entity, Activity> $query */
                 $query->withTrashed();
             }, 'user.avatar'])
             ->skip($count * ($page - 1))

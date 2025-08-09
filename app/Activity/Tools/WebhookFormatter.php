@@ -50,7 +50,7 @@ class WebhookFormatter
         }
 
         if ($this->detail instanceof Model) {
-            $data['related_item'] = $this->formatModel();
+            $data['related_item'] = $this->formatModel($this->detail);
         }
 
         return $data;
@@ -83,10 +83,8 @@ class WebhookFormatter
         );
     }
 
-    protected function formatModel(): array
+    protected function formatModel(Model $model): array
     {
-        /** @var Model $model */
-        $model = $this->detail;
         $model->unsetRelations();
 
         foreach ($this->modelFormatters as $formatter) {

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @property int $created_by
  * @property int $updated_by
+ * @property ?User $createdBy
+ * @property ?User $updatedBy
  */
 trait HasCreatorAndUpdater
 {
