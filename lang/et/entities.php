@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'See kustutab üleslaaditud ZIP-faili, ja seda ei saa tagasi võtta.',
     'import_errors' => 'Importimise vead',
     'import_errors_desc' => 'Importimisel esinesid järgmised vead:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'Sirvi teisi lehti',
+    'breadcrumb_siblings_for_chapter' => 'Sirvi teisi peatükke',
+    'breadcrumb_siblings_for_book' => 'Sirvi teisi raamatuid',
+    'breadcrumb_siblings_for_bookshelf' => 'Sirvi teisi riiuleid',
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
