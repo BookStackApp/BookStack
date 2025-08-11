@@ -467,7 +467,7 @@ License: MIT
 License File: vendor/psy/psysh/LICENSE
 Copyright: Copyright (c) 2012-2023 Justin Hileman
 Source: https://github.com/bobthecow/psysh.git
-Link: http://psysh.org
+Link: https://psysh.org
 -----------
 ralouphie/getallheaders
 License: MIT

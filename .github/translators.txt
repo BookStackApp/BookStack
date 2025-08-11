@@ -438,7 +438,7 @@ javadataherian :: Persian
 Ludo-code :: French
 hollsten :: Swedish
 Ngoc Lan Phung (lanpncz) :: Vietnamese
-Worive :: Catalan
+Worive :: Catalan; French
 Илья Скаба (skabailya) :: Russian
 Irjan Olsen (Irch) :: Norwegian Bokmal
 Aleksandar Jovanovic (jovanoviczaleksandar) :: Serbian (Cyrillic)
@@ -500,3 +500,6 @@ LiZerui (iamzrli) :: Chinese Traditional
 Ticker (ticker.com) :: Hebrew
 CrazyComputer :: Chinese Simplified
 Firr (FirrV) :: Russian
+João Faro (FaroJoaoFaro) :: Portuguese
+Danilo dos Santos Barbosa (bozochegou) :: Portuguese, Brazilian
+Chris (furesoft) :: German
