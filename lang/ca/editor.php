@@ -13,7 +13,7 @@ return [
     'cancel' => 'Cancel·la',
     'save' => 'Desa',
     'close' => 'Tanca',
-    'apply' => 'Apply',
+    'apply' => 'Aplicar',
     'undo' => 'Desfés',
     'redo' => 'Refés',
     'left' => 'Esquerra',

@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Bydd hwn yn dileu\'r mewnforyn ffeil ZIP sy wedi\'i lwytho i fyny, a fydd e ddim gallu cael ei ddadwneud.',
     'import_errors' => 'Gwallau Mewnforyn',
     'import_errors_desc' => 'Digwyddodd y gwallau canlynol yn ystod cynnig y mewnforyn:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Caniatâd',

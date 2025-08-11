@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Þetta mun eyða innsendri ZIP skrá, þessa aðgerð er ekki hægt að afturkalla.',
     'import_errors' => 'Villur í innflutningi',
     'import_errors_desc' => 'Eftirfarandi villur komu upp við innflutning:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Réttindi',

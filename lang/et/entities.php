@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'See kustutab üleslaaditud ZIP-faili, ja seda ei saa tagasi võtta.',
     'import_errors' => 'Importimise vead',
     'import_errors_desc' => 'Importimisel esinesid järgmised vead:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Õigused',
@@ -268,7 +272,7 @@ return [
     'pages_md_insert_drawing' => 'Lisa joonis',
     'pages_md_show_preview' => 'Näita eelvaadet',
     'pages_md_sync_scroll' => 'Sünkrooni eelvaate kerimine',
-    'pages_md_plain_editor' => 'Plaintext editor',
+    'pages_md_plain_editor' => 'Lihttekstiredaktor',
     'pages_drawing_unsaved' => 'Leiti salvestamata joonis',
     'pages_drawing_unsaved_confirm' => 'Varasemast ebaõnnestunud salvestuskatsest leiti salvestamata joonis. Kas soovid salvestamata joonise taastada ja selle muutmist jätkata?',
     'pages_not_in_chapter' => 'Leht ei kuulu peatüki alla',

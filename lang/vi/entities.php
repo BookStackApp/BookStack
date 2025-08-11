@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Thao tác này sẽ xóa tệp ZIP nhập đã tải lên và không thể hoàn tác.',
     'import_errors' => 'Lỗi nhập',
     'import_errors_desc' => 'Các lỗi sau đã xảy ra trong quá trình nhập:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Quyền',

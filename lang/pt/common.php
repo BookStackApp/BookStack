@@ -111,5 +111,5 @@ return [
     'terms_of_service' => 'Termos de Utilização',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Procurar :appName',
 ];

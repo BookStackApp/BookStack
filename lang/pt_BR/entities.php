@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Isto irá excluir o arquivo ZIP de importação carregado e não poderá ser desfeito.',
     'import_errors' => 'Erros de importação',
     'import_errors_desc' => 'Os seguintes erros ocorreram durante a tentativa de importação:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
@@ -268,7 +272,7 @@ return [
     'pages_md_insert_drawing' => 'Inserir Diagrama',
     'pages_md_show_preview' => 'Mostrar pré-visualização',
     'pages_md_sync_scroll' => 'Sincronizar pré-visualização',
-    'pages_md_plain_editor' => 'Plaintext editor',
+    'pages_md_plain_editor' => 'Editor de texto simples',
     'pages_drawing_unsaved' => 'Diagrama não-salvo encontrado',
     'pages_drawing_unsaved_confirm' => 'Foram encontrados dados não-salvos de uma tentativa anterior de salvar o diagrama. Você gostaria de restaurá-los e continuar editando este diagrama?',
     'pages_not_in_chapter' => 'Página não está dentro de um capítulo',

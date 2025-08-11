@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'यो अपलोड गरिएको आयात ZIP फाइल मेट्नेछ, र यो कार्य नकारात्मक हुन सक्दैन।',
     'import_errors' => 'आयात त्रुटिहरू',
     'import_errors_desc' => 'आयात प्रयासको क्रममा निम्न त्रुटिहरू उत्पन्न भएका छन्:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'अनुमतिहरू',

@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Esto eliminará el archivo ZIP de importación subido y no se puede deshacer.',
     'import_errors' => 'Errores de Importación',
     'import_errors_desc' => 'Se han producido los siguientes errores durante el intento de importación:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
@@ -268,7 +272,7 @@ return [
     'pages_md_insert_drawing' => 'Insertar Dibujo',
     'pages_md_show_preview' => 'Mostrar vista previa',
     'pages_md_sync_scroll' => 'Sincronizar desplazamiento de vista previa',
-    'pages_md_plain_editor' => 'Plaintext editor',
+    'pages_md_plain_editor' => 'Editor de texto plano',
     'pages_drawing_unsaved' => 'Encontrado dibujo sin guardar',
     'pages_drawing_unsaved_confirm' => 'Se encontraron datos no guardados del dibujo de un intento de guardado fallido. ¿Desea restaurar y continuar editando el dibujo no guardado?',
     'pages_not_in_chapter' => 'La página no está en un capítulo',

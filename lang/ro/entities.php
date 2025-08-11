@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'This will delete the uploaded import ZIP file, and cannot be undone.',
     'import_errors' => 'Import Errors',
     'import_errors_desc' => 'The follow errors occurred during the import attempt:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Permisiuni',

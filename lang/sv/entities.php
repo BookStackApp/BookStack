@@ -63,6 +63,10 @@ return [
     'import_delete_desc' => 'Detta kommer att ta bort den uppladdade ZIP-baserade importfilen och kan inte ångras.',
     'import_errors' => 'Importfel',
     'import_errors_desc' => 'Följande fel inträffade under importförsöket:',
+    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
+    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
     'permissions' => 'Rättigheter',
