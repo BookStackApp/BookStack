@@ -48,7 +48,7 @@ Big thanks to these companies for supporting the project.
 #### Gold Sponsor
 
 <table><tbody><tr>
-<td align="center"><a href="https://www.federated.computer/bookstack-wiki" target="_blank">
+<td align="center"><a href="https://www.federated.computer/bookstack" target="_blank">
     <img width="480" src="https://www.bookstackapp.com/images/sponsors/federated-computer.png" alt="Federated.computer">
 </a></td>
 </tr></tbody></table>
