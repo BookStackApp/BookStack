@@ -46,7 +46,7 @@ class ZipTestHelper
         $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
 
         $zip = new ZipArchive();
-        $zip->open($zipFile, ZipArchive::CREATE);
+        $zip->open($zipFile, ZipArchive::OVERWRITE);
         $zip->addFromString('data.json', json_encode($data));
 
         foreach ($files as $name => $file) {

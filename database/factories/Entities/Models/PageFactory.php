@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Entities\Models;
 
+use BookStack\Entities\Tools\PageEditorType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -29,6 +30,7 @@ class PageFactory extends Factory
             'html'           => $html,
             'text'           => strip_tags($html),
             'revision_count' => 1,
+            'editor'         => 'wysiwyg',
         ];
     }
 }

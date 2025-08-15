@@ -76,7 +76,7 @@ class ZipExportBuilder
 
         $zipFile = tempnam(sys_get_temp_dir(), 'bszip-');
         $zip = new ZipArchive();
-        $opened = $zip->open($zipFile, ZipArchive::CREATE);
+        $opened = $zip->open($zipFile, ZipArchive::OVERWRITE);
         if ($opened !== true) {
             throw new ZipExportException('Failed to create zip file for export.');
         }

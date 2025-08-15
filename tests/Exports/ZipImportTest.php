@@ -76,7 +76,7 @@ class ZipImportTest extends TestCase
     {
         $zipFile = tempnam(sys_get_temp_dir(), 'bstest-');
         $zip = new ZipArchive();
-        $zip->open($zipFile, ZipArchive::CREATE);
+        $zip->open($zipFile, ZipArchive::OVERWRITE);
         $zip->addFromString('beans', 'cat');
         $zip->close();
 
