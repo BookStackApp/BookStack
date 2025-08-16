@@ -12,6 +12,7 @@ return [
     'save' => 'Save',
     'continue' => 'Continue',
     'select' => 'Select',
+    'preview' => 'Preview',
     'toggle_all' => 'Toggle All',
     'more' => 'More',
 

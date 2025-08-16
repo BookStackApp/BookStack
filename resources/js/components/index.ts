@@ -59,6 +59,7 @@ export {TemplateManager} from './template-manager';
 export {ToggleSwitch} from './toggle-switch';
 export {TriLayout} from './tri-layout';
 export {UserSelect} from './user-select';
+export {VideoPreview} from './video-preview';
 export {WebhookEvents} from './webhook-events';
 export {WysiwygEditor} from './wysiwyg-editor';
 export {WysiwygEditorTinymce} from './wysiwyg-editor-tinymce';

@@ -1,0 +1,222 @@
+// Video Preview Modal Styles
+.video-preview-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.video-preview-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.video-preview-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90vh;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    animation: scaleIn 0.3s ease;
+}
+
+.video-preview-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    
+    h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 500;
+        color: #333;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 40px);
+    }
+}
+
+.video-preview-close {
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+        color: #000;
+    }
+    
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.video-preview-player {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    
+    video {
+        width: 100%;
+        height: 100%;
+        max-height: calc(90vh - 60px);
+        object-fit: contain;
+    }
+}
+
+// Attachment list improvements for videos
+.attachment.icon-list {
+    .icon {
+        svg[data-icon="play-circle"] {
+            color: #4CAF50;
+        }
+    }
+    
+    .video-preview-btn,
+    .video-embed-btn {
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: inherit;
+        transition: background-color 0.2s ease;
+        
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        
+        div {
+            flex: 1;
+        }
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+// Dark mode support
+html.dark-mode {
+    .video-preview-content {
+        background: #1e1e1e;
+        
+        .video-preview-header {
+            border-bottom-color: #333;
+            
+            h3 {
+                color: #ddd;
+            }
+        }
+        
+        .video-preview-close {
+            color: #aaa;
+            
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+    
+    .attachment.icon-list {
+        .video-preview-btn,
+        .video-embed-btn {
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+    }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+    .video-preview-content {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+    }
+    
+    .video-preview-player video {
+        max-height: calc(100vh - 60px);
+    }
+}

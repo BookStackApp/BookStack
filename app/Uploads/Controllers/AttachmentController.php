@@ -227,14 +227,76 @@ class AttachmentController extends Controller
         }
 
         $fileName = $attachment->getFileName();
-        $attachmentStream = $this->attachmentService->streamAttachmentFromStorage($attachment);
         $attachmentSize = $this->attachmentService->getAttachmentFileSize($attachment);
+
+        // Handle Range Requests for video streaming
+        if ($attachment->isVideo() && $request->hasHeader('Range')) {
+            return $this->streamVideoWithRange($request, $attachment, $fileName, $attachmentSize);
+        }
+
+        $attachmentStream = $this->attachmentService->streamAttachmentFromStorage($attachment);
 
         if ($request->get('open') === 'true') {
             return $this->download()->streamedInline($attachmentStream, $fileName, $attachmentSize);
         }
 
         return $this->download()->streamedDirectly($attachmentStream, $fileName, $attachmentSize);
+    }
+
+    /**
+     * Stream video with Range Request support.
+     */
+    protected function streamVideoWithRange(Request $request, Attachment $attachment, string $fileName, int $fileSize)
+    {
+        $range = $request->header('Range');
+        $mimeType = $attachment->getVideoMimeType();
+        
+        // Parse Range header
+        if (!preg_match('/bytes=(\d+)-(\d+)?/', $range, $matches)) {
+            return response('Invalid Range', 416);
+        }
+
+        $start = intval($matches[1]);
+        $end = isset($matches[2]) && $matches[2] !== '' ? intval($matches[2]) : $fileSize - 1;
+        
+        if ($start > $end || $end >= $fileSize) {
+            return response('Range Not Satisfiable', 416)
+                ->header('Content-Range', "bytes */$fileSize");
+        }
+
+        $length = $end - $start + 1;
+        
+        // Get partial content stream
+        $stream = $this->attachmentService->streamAttachmentFromStorage($attachment);
+        
+        if ($start > 0) {
+            fseek($stream, $start);
+        }
+
+        return response()->stream(
+            function () use ($stream, $length) {
+                $remaining = $length;
+                $chunkSize = 1024 * 1024; // 1MB chunks
+                
+                while ($remaining > 0 && !feof($stream)) {
+                    $toRead = min($chunkSize, $remaining);
+                    echo fread($stream, $toRead);
+                    $remaining -= $toRead;
+                    flush();
+                }
+                
+                fclose($stream);
+            },
+            206, // Partial Content
+            [
+                'Content-Type' => $mimeType,
+                'Content-Length' => $length,
+                'Accept-Ranges' => 'bytes',
+                'Content-Range' => "bytes $start-$end/$fileSize",
+                'Cache-Control' => 'no-cache',
+                'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            ]
+        );
     }
 
     /**

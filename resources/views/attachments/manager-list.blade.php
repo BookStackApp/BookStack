@@ -1,5 +1,8 @@
 <div component="sortable-list"
      option:sortable-list:handle-selector=".handle, a">
+    <!-- Video Preview Component (always present for initialization) -->
+    <div component="video-preview" style="display: none;" data-debug="video-preview-manager"></div>
+    
     @foreach($attachments as $attachment)
         <div component="ajax-delete-row"
              option:ajax-delete-row:url="{{ url('/attachments/' . $attachment->id) }}"
@@ -11,11 +14,24 @@
                 <a href="{{ $attachment->getUrl() }}" target="_blank" rel="noopener">{{ $attachment->name }}</a>
             </div>
             <div class="flex-fill justify-flex-end">
-                <button component="event-emit-select"
-                        option:event-emit-select:name="insert"
-                        type="button"
-                        title="{{ trans('entities.attachments_insert_link') }}"
-                        class="drag-card-action text-center text-link">@icon('link')</button>
+                @if($attachment->isVideo())
+                    <button type="button" 
+                            class="drag-card-action text-center text-link video-preview-btn" 
+                            data-video-url="{{ $attachment->getUrl(true) }}"
+                            data-video-name="{{ $attachment->name }}"
+                            title="{{ trans('common.preview') }}">@icon('editor/media')</button>
+                    <button component="event-emit-select"
+                            option:event-emit-select:name="insert"
+                            type="button"
+                            title="{{ trans('entities.attachments_embed_video') }}"
+                            class="drag-card-action text-center text-link">@icon('add')</button>
+                @else
+                    <button component="event-emit-select"
+                            option:event-emit-select:name="insert"
+                            type="button"
+                            title="{{ trans('entities.attachments_insert_link') }}"
+                            class="drag-card-action text-center text-link">@icon('link')</button>
+                @endif
                 @if(userCan('attachment-update', $attachment))
                     <button component="event-emit-select"
                             option:event-emit-select:name="edit"

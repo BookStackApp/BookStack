@@ -23,6 +23,7 @@
 @use "lists";
 @use "pages";
 @use "content";
+@use "components/video-preview";
 
 @media print {
   @include meta.load-css("print");

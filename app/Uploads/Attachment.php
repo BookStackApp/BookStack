@@ -36,6 +36,7 @@ class Attachment extends Model
     protected $hidden = ['path', 'page'];
     protected $casts = [
         'external' => 'bool',
+        'metadata' => 'array',
     ];
 
     /**
@@ -82,9 +83,11 @@ class Attachment extends Model
      */
     public function editorContent(): array
     {
-        $videoExtensions = ['mp4', 'webm', 'mkv', 'ogg', 'avi'];
-        if (in_array(strtolower($this->extension), $videoExtensions)) {
-            $html = '<video src="' . e($this->getUrl(true)) . '" controls width="480" height="270"></video>';
+        if ($this->isVideo()) {
+            $html = '<video controls width="100%" style="max-width: 720px; height: auto;" preload="metadata">'
+                  . '<source src="' . e($this->getUrl(true)) . '" type="' . e($this->getVideoMimeType()) . '">'
+                  . 'Your browser does not support the video tag.'
+                  . '</video>';
             return ['text/html' => $html, 'text/plain' => $html];
         }
 
@@ -105,6 +108,37 @@ class Attachment extends Model
     public function markdownLink(): string
     {
         return '[' . $this->name . '](' . $this->getUrl() . ')';
+    }
+
+    /**
+     * Check if this attachment is a video file.
+     */
+    public function isVideo(): bool
+    {
+        if ($this->external) {
+            return false;
+        }
+
+        $videoExtensions = ['mp4', 'webm', 'mkv', 'ogg', 'avi', 'mov', 'm4v'];
+        return in_array(strtolower($this->extension), $videoExtensions);
+    }
+
+    /**
+     * Get the mime type for video streaming.
+     */
+    public function getVideoMimeType(): string
+    {
+        $mimeTypes = [
+            'mp4' => 'video/mp4',
+            'webm' => 'video/webm',
+            'ogg' => 'video/ogg',
+            'avi' => 'video/x-msvideo',
+            'mov' => 'video/quicktime',
+            'm4v' => 'video/x-m4v',
+            'mkv' => 'video/x-matroska',
+        ];
+
+        return $mimeTypes[strtolower($this->extension)] ?? 'video/mp4';
     }
 
     /**
