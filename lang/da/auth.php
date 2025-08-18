@@ -6,7 +6,7 @@
  */
 return [
 
-    'failed' => 'Dee indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
+    'failed' => 'De indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
     'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
 
     // Login & Register
@@ -45,7 +45,7 @@ return [
 
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
-    'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
+    'reset_password_send_instructions' => 'Indtast din e-mail herunder og du vil blive sendt en e-mail med et link til at nulstille din adgangskode.',
     'reset_password_send_button' => 'Send link til nulstilling',
     'reset_password_sent' => 'Et link til nulstilling af adgangskode sendes til :email, hvis den e-mail-adresse findes i systemet.',
     'reset_password_success' => 'Din adgangskode er blevet nulstillet.',
@@ -64,9 +64,9 @@ return [
     'email_confirm_thanks' => 'Tak for bekræftelsen!',
     'email_confirm_thanks_desc' => 'Vent venligst et øjeblik, mens din bekræftelse behandles. Hvis du ikke bliver omdirigeret efter 3 sekunder, skal du trykke på linket "Fortsæt" nedenfor for at fortsætte.',
 
-    'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
-    'email_not_confirmed_text' => 'Din E-Mail adresse er endnu ikke blevet bekræftet.',
-    'email_not_confirmed_click_link' => 'Klik venligst på linket i E-Mailen der blev sendt kort efter du registrerede dig.',
+    'email_not_confirmed' => 'E-mailadresse ikke bekræftet',
+    'email_not_confirmed_text' => 'Din e-mailadresse er endnu ikke blevet bekræftet.',
+    'email_not_confirmed_click_link' => 'Klik venligst på linket i e-mailen der blev sendt kort efter du registrerede dig.',
     'email_not_confirmed_resend' => 'Hvis du ikke kan finde E-Mailen, kan du du få gensendt bekræftelsesemailen ved at trykke herunder.',
     'email_not_confirmed_resend_button' => 'Gensend bekræftelsesemail',
 
