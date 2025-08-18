@@ -1,3 +1,9460 @@
 // See the "/licenses" URI for full package license details
-function Ye(e,n,t,r,i,o){this.indented=e,this.column=n,this.type=t,this.info=r,this.align=i,this.prev=o}function Ie(e,n,t,r){var i=e.indented;return e.context&&e.context.type=="statement"&&t!="statement"&&(i=e.context.indented),e.context=new Ye(i,n,t,r,null,e.context)}function ve(e){var n=e.context.type;return(n==")"||n=="]"||n=="}")&&(e.indented=e.context.indented),e.context=e.context.prev}function Pn(e,n,t){if(n.prevToken=="variable"||n.prevToken=="type"||/\S(?:[^- ]>|[*\]])\s*$|\*$/.test(e.string.slice(0,t))||n.typeAtEndOfLine&&e.column()==e.indentation())return!0}function Xe(e){for(;;){if(!e||e.type=="top")return!0;if(e.type=="}"&&e.prev.info!="namespace")return!1;e=e.prev}}function H(e){var n=e.statementIndentUnit,t=e.dontAlignCalls,r=e.keywords||{},i=e.types||{},o=e.builtin||{},a=e.blockKeywords||{},p=e.defKeywords||{},S=e.atoms||{},E=e.hooks||{},x=e.multiLineStrings,c=e.indentStatements!==!1,d=e.indentSwitch!==!1,y=e.namespaceSeparator,O=e.isPunctuationChar||/[\[\]{}\(\),;\:\.]/,K=e.numberStart||/[\d\.]/,M=e.number||/^(?:0x[a-f\d]+|0b[01]+|(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)(u|ll?|l|f)?/i,u=e.isOperatorChar||/[+\-*&%=<>!?|\/]/,T=e.isIdentifierChar||/[\w\$_\xa1-\uffff]/,w=e.isReservedIdentifier||!1,C,l;function s(m,f){var z=m.next();if(E[z]){var v=E[z](m,f);if(v!==!1)return v}if(z=='"'||z=="'")return f.tokenize=I(z),f.tokenize(m,f);if(K.test(z)){if(m.backUp(1),m.match(M))return"number";m.next()}if(O.test(z))return C=z,null;if(z=="/"){if(m.eat("*"))return f.tokenize=k,k(m,f);if(m.eat("/"))return m.skipToEnd(),"comment"}if(u.test(z)){for(;!m.match(/^\/[\/*]/,!1)&&m.eat(u););return"operator"}if(m.eatWhile(T),y)for(;m.match(y);)m.eatWhile(T);var D=m.current();return ee(r,D)?(ee(a,D)&&(C="newstatement"),ee(p,D)&&(l=!0),"keyword"):ee(i,D)?"type":ee(o,D)||w&&w(D)?(ee(a,D)&&(C="newstatement"),"builtin"):ee(S,D)?"atom":"variable"}function I(m){return function(f,z){for(var v=!1,D,J=!1;(D=f.next())!=null;){if(D==m&&!v){J=!0;break}v=!v&&D=="\\"}return(J||!(v||x))&&(z.tokenize=null),"string"}}function k(m,f){for(var z=!1,v;v=m.next();){if(v=="/"&&z){f.tokenize=null;break}z=v=="*"}return"comment"}function L(m,f){e.typeFirstDefinitions&&m.eol()&&Xe(f.context)&&(f.typeAtEndOfLine=Pn(m,f,m.pos))}return{name:e.name,startState:function(m){return{tokenize:null,context:new Ye(-m,0,"top",null,!1),indented:0,startOfLine:!0,prevToken:null}},token:function(m,f){var z=f.context;if(m.sol()&&(z.align==null&&(z.align=!1),f.indented=m.indentation(),f.startOfLine=!0),m.eatSpace())return L(m,f),null;C=l=null;var v=(f.tokenize||s)(m,f);if(v=="comment"||v=="meta")return v;if(z.align==null&&(z.align=!0),C==";"||C==":"||C==","&&m.match(/^\s*(?:\/\/.*)?$/,!1))for(;f.context.type=="statement";)ve(f);else if(C=="{")Ie(f,m.column(),"}");else if(C=="[")Ie(f,m.column(),"]");else if(C=="(")Ie(f,m.column(),")");else if(C=="}"){for(;z.type=="statement";)z=ve(f);for(z.type=="}"&&(z=ve(f));z.type=="statement";)z=ve(f)}else C==z.type?ve(f):c&&((z.type=="}"||z.type=="top")&&C!=";"||z.type=="statement"&&C=="newstatement")&&Ie(f,m.column(),"statement",m.current());if(v=="variable"&&(f.prevToken=="def"||e.typeFirstDefinitions&&Pn(m,f,m.start)&&Xe(f.context)&&m.match(/^\s*\(/,!1))&&(v="def"),E.token){var D=E.token(m,f,v);D!==void 0&&(v=D)}return v=="def"&&e.styleDefs===!1&&(v="variable"),f.startOfLine=!1,f.prevToken=l?"def":v||C,L(m,f),v},indent:function(m,f,z){if(m.tokenize!=s&&m.tokenize!=null||m.typeAtEndOfLine&&Xe(m.context))return null;var v=m.context,D=f&&f.charAt(0),J=D==v.type;if(v.type=="statement"&&D=="}"&&(v=v.prev),e.dontIndentStatements)for(;v.type=="statement"&&e.dontIndentStatements.test(v.info);)v=v.prev;if(E.indent){var ye=E.indent(m,v,f,z.unit);if(typeof ye=="number")return ye}var Ze=v.prev&&v.prev.info=="switch";if(e.allmanIndentation&&/[{(]/.test(D)){for(;v.type!="top"&&v.type!="}";)v=v.prev;return v.indented}return v.type=="statement"?v.indented+(D=="{"?0:n||z.unit):v.align&&(!t||v.type!=")")?v.column+(J?0:1):v.type==")"&&!J?v.indented+(n||z.unit):v.indented+(J?0:z.unit)+(!J&&Ze&&!/^(?:case|default)\b/.test(f)?z.unit:0)},languageData:{indentOnInput:d?/^\s*(?:case .*?:|default:|\{\}?|\})$/:/^\s*[{}]$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}},autocomplete:Object.keys(r).concat(Object.keys(i)).concat(Object.keys(o)).concat(Object.keys(S)),...e.languageData}}}function b(e){for(var n={},t=e.split(" "),r=0;r<t.length;++r)n[t[r]]=!0;return n}function ee(e,n){return typeof e=="function"?e(n):e.propertyIsEnumerable(n)}var _e="auto if break case register continue return default do sizeof static else struct switch extern typedef union for goto while enum const volatile inline restrict asm fortran",$n="alignas alignof and and_eq audit axiom bitand bitor catch class compl concept constexpr const_cast decltype delete dynamic_cast explicit export final friend import module mutable namespace new noexcept not not_eq operator or or_eq override private protected public reinterpret_cast requires static_assert static_cast template this thread_local throw try typeid typename using virtual xor xor_eq",Nn="bycopy byref in inout oneway out self super atomic nonatomic retain copy readwrite readonly strong weak assign typeof nullable nonnull null_resettable _cmd @interface @implementation @end @protocol @encode @property @synthesize @dynamic @class @public @package @private @protected @required @optional @try @catch @finally @import @selector @encode @defs @synchronized @autoreleasepool @compatibility_alias @available",qn="FOUNDATION_EXPORT FOUNDATION_EXTERN NS_INLINE NS_FORMAT_FUNCTION  NS_RETURNS_RETAINEDNS_ERROR_ENUM NS_RETURNS_NOT_RETAINED NS_RETURNS_INNER_POINTER NS_DESIGNATED_INITIALIZER NS_ENUM NS_OPTIONS NS_REQUIRES_NIL_TERMINATION NS_ASSUME_NONNULL_BEGIN NS_ASSUME_NONNULL_END NS_SWIFT_NAME NS_REFINED_FOR_SWIFT",mr=b("int long char short double float unsigned signed void bool"),hr=b("SEL instancetype id Class Protocol BOOL");function xe(e){return ee(mr,e)||/.+_t$/.test(e)}function Fn(e){return xe(e)||ee(hr,e)}var we="case do else for if switch while struct enum union",Oe="struct enum union";function oe(e,n){if(!n.startOfLine)return!1;for(var t,r=null;t=e.peek();){if(t=="\\"&&e.match(/^.$/)){r=oe;break}else if(t=="/"&&e.match(/^\/[\/\*]/,!1))break;e.next()}return n.tokenize=r,"meta"}function Ae(e,n){return n.prevToken=="type"?"type":!1}function Pe(e){return!e||e.length<2||e[0]!="_"?!1:e[1]=="_"||e[1]!==e[1].toLowerCase()}function F(e){return e.eatWhile(/[\w\.']/),"number"}function ie(e,n){if(e.backUp(1),e.match(/^(?:R|u8R|uR|UR|LR)/)){var t=e.match(/^"([^\s\\()]{0,16})\(/);return t?(n.cpp11RawStringDelim=t[1],n.tokenize=Dn,Dn(e,n)):!1}return e.match(/^(?:u8|u|U|L)/)?e.match(/^["']/,!1)?"string":!1:(e.next(),!1)}function Mn(e){var n=/(\w+)::~?(\w+)$/.exec(e);return n&&n[1]==n[2]}function Ln(e,n){for(var t;(t=e.next())!=null;)if(t=='"'&&!e.eat('"')){n.tokenize=null;break}return"string"}function Dn(e,n){var t=n.cpp11RawStringDelim.replace(/[^\w\s]/g,"\\$&"),r=e.match(new RegExp(".*?\\)"+t+'"'));return r?n.tokenize=null:e.skipToEnd(),"string"}var gr=H({name:"c",keywords:b(_e),types:xe,blockKeywords:b(we),defKeywords:b(Oe),typeFirstDefinitions:!0,atoms:b("NULL true false"),isReservedIdentifier:Pe,hooks:{"#":oe,"*":Ae}}),br=H({name:"cpp",keywords:b(_e+" "+$n),types:xe,blockKeywords:b(we+" class try catch"),defKeywords:b(Oe+" class namespace"),typeFirstDefinitions:!0,atoms:b("true false NULL nullptr"),dontIndentStatements:/^template$/,isIdentifierChar:/[\w\$_~\xa1-\uffff]/,isReservedIdentifier:Pe,hooks:{"#":oe,"*":Ae,u:ie,U:ie,L:ie,R:ie,0:F,1:F,2:F,3:F,4:F,5:F,6:F,7:F,8:F,9:F,token:function(e,n,t){if(t=="variable"&&e.peek()=="("&&(n.prevToken==";"||n.prevToken==null||n.prevToken=="}")&&Mn(e.current()))return"def"}},namespaceSeparator:"::"}),yr=H({name:"java",keywords:b("abstract assert break case catch class const continue default do else enum extends final finally for goto if implements import instanceof interface native new package private protected public return static strictfp super switch synchronized this throw throws transient try volatile while @interface"),types:b("var byte short int long float double boolean char void Boolean Byte Character Double Float Integer Long Number Object Short String StringBuffer StringBuilder Void"),blockKeywords:b("catch class do else finally for if switch try while"),defKeywords:b("class interface enum @interface"),typeFirstDefinitions:!0,atoms:b("true false null"),number:/^(?:0x[a-f\d_]+|0b[01_]+|(?:[\d_]+\.?\d*|\.\d+)(?:e[-+]?[\d_]+)?)(u|ll?|l|f)?/i,hooks:{"@":function(e){return e.match("interface",!1)?!1:(e.eatWhile(/[\w\$_]/),"meta")},'"':function(e,n){return e.match(/""$/)?(n.tokenize=Bn,n.tokenize(e,n)):!1}}}),vr=H({name:"csharp",keywords:b("abstract as async await base break case catch checked class const continue default delegate do else enum event explicit extern finally fixed for foreach goto if implicit in init interface internal is lock namespace new operator out override params private protected public readonly record ref required return sealed sizeof stackalloc static struct switch this throw try typeof unchecked unsafe using virtual void volatile while add alias ascending descending dynamic from get global group into join let orderby partial remove select set value var yield"),types:b("Action Boolean Byte Char DateTime DateTimeOffset Decimal Double Func Guid Int16 Int32 Int64 Object SByte Single String Task TimeSpan UInt16 UInt32 UInt64 bool byte char decimal double short int long object sbyte float string ushort uint ulong"),blockKeywords:b("catch class do else finally for foreach if struct switch try while"),defKeywords:b("class interface namespace record struct var"),typeFirstDefinitions:!0,atoms:b("true false null"),hooks:{"@":function(e,n){return e.eat('"')?(n.tokenize=Ln,Ln(e,n)):(e.eatWhile(/[\w\$_]/),"meta")}}});function Bn(e,n){for(var t=!1;!e.eol();){if(!t&&e.match('"""')){n.tokenize=null;break}t=e.next()=="\\"&&!t}return"string"}function ke(e){return function(n,t){for(var r;r=n.next();)if(r=="*"&&n.eat("/"))if(e==1){t.tokenize=null;break}else return t.tokenize=ke(e-1),t.tokenize(n,t);else if(r=="/"&&n.eat("*"))return t.tokenize=ke(e+1),t.tokenize(n,t);return"comment"}}var kr=H({name:"scala",keywords:b("abstract case catch class def do else extends final finally for forSome if implicit import lazy match new null object override package private protected return sealed super this throw trait try type val var while with yield _ assert assume require print println printf readLine readBoolean readByte readShort readChar readInt readLong readFloat readDouble"),types:b("AnyVal App Application Array BufferedIterator BigDecimal BigInt Char Console Either Enumeration Equiv Error Exception Fractional Function IndexedSeq Int Integral Iterable Iterator List Map Numeric Nil NotNull Option Ordered Ordering PartialFunction PartialOrdering Product Proxy Range Responder Seq Serializable Set Specializable Stream StringBuilder StringContext Symbol Throwable Traversable TraversableOnce Tuple Unit Vector Boolean Byte Character CharSequence Class ClassLoader Cloneable Comparable Compiler Double Exception Float Integer Long Math Number Object Package Pair Process Runtime Runnable SecurityManager Short StackTraceElement StrictMath String StringBuffer System Thread ThreadGroup ThreadLocal Throwable Triple Void"),multiLineStrings:!0,blockKeywords:b("catch class enum do else finally for forSome if match switch try while"),defKeywords:b("class enum def object package trait type val var"),atoms:b("true false null"),indentStatements:!1,indentSwitch:!1,isOperatorChar:/[+\-*&%=<>!?|\/#:@]/,hooks:{"@":function(e){return e.eatWhile(/[\w\$_]/),"meta"},'"':function(e,n){return e.match('""')?(n.tokenize=Bn,n.tokenize(e,n)):!1},"'":function(e){return e.match(/^(\\[^'\s]+|[^\\'])'/)?"character":(e.eatWhile(/[\w\$_\xa1-\uffff]/),"atom")},"=":function(e,n){var t=n.context;return t.type=="}"&&t.align&&e.eat(">")?(n.context=new Ye(t.indented,t.column,t.type,t.info,null,t.prev),"operator"):!1},"/":function(e,n){return e.eat("*")?(n.tokenize=ke(1),n.tokenize(e,n)):!1}},languageData:{closeBrackets:{brackets:["(","[","{","'",'"','"""']}}});function _r(e){return function(n,t){for(var r=!1,i,o=!1;!n.eol();){if(!e&&!r&&n.match('"')){o=!0;break}if(e&&n.match('"""')){o=!0;break}i=n.next(),!r&&i=="$"&&n.match("{")&&n.skipTo("}"),r=!r&&i=="\\"&&!e}return(o||!e)&&(t.tokenize=null),"string"}}var xr=H({name:"kotlin",keywords:b("package as typealias class interface this super val operator var fun for is in This throw return annotation break continue object if else while do try when !in !is as? file import where by get set abstract enum open inner override private public internal protected catch finally out final vararg reified dynamic companion constructor init sealed field property receiver param sparam lateinit data inline noinline tailrec external annotation crossinline const operator infix suspend actual expect setparam"),types:b("Boolean Byte Character CharSequence Class ClassLoader Cloneable Comparable Compiler Double Exception Float Integer Long Math Number Object Package Pair Process Runtime Runnable SecurityManager Short StackTraceElement StrictMath String StringBuffer System Thread ThreadGroup ThreadLocal Throwable Triple Void Annotation Any BooleanArray ByteArray Char CharArray DeprecationLevel DoubleArray Enum FloatArray Function Int IntArray Lazy LazyThreadSafetyMode LongArray Nothing ShortArray Unit"),intendSwitch:!1,indentStatements:!1,multiLineStrings:!0,number:/^(?:0x[a-f\d_]+|0b[01_]+|(?:[\d_]+(\.\d+)?|\.\d+)(?:e[-+]?[\d_]+)?)(u|ll?|l|f)?/i,blockKeywords:b("catch class do else finally for if where try while enum"),defKeywords:b("class val var object interface fun"),atoms:b("true false null this"),hooks:{"@":function(e){return e.eatWhile(/[\w\$_]/),"meta"},"*":function(e,n){return n.prevToken=="."?"variable":"operator"},'"':function(e,n){return n.tokenize=_r(e.match('""')),n.tokenize(e,n)},"/":function(e,n){return e.eat("*")?(n.tokenize=ke(1),n.tokenize(e,n)):!1},indent:function(e,n,t,r){var i=t&&t.charAt(0);if((e.prevToken=="}"||e.prevToken==")")&&t=="")return e.indented;if(e.prevToken=="operator"&&t!="}"&&e.context.type!="}"||e.prevToken=="variable"&&i=="."||(e.prevToken=="}"||e.prevToken==")")&&i==".")return r*2+n.indented;if(n.align&&n.type=="}")return n.indented+(e.context.type==(t||"").charAt(0)?0:r)}},languageData:{closeBrackets:{brackets:["(","[","{","'",'"','"""']}}}),_l=H({name:"shader",keywords:b("sampler1D sampler2D sampler3D samplerCube sampler1DShadow sampler2DShadow const attribute uniform varying break continue discard return for while do if else struct in out inout"),types:b("float int bool void vec2 vec3 vec4 ivec2 ivec3 ivec4 bvec2 bvec3 bvec4 mat2 mat3 mat4"),blockKeywords:b("for while do if else struct"),builtin:b("radians degrees sin cos tan asin acos atan pow exp log exp2 sqrt inversesqrt abs sign floor ceil fract mod min max clamp mix step smoothstep length distance dot cross normalize ftransform faceforward reflect refract matrixCompMult lessThan lessThanEqual greaterThan greaterThanEqual equal notEqual any all not texture1D texture1DProj texture1DLod texture1DProjLod texture2D texture2DProj texture2DLod texture2DProjLod texture3D texture3DProj texture3DLod texture3DProjLod textureCube textureCubeLod shadow1D shadow2D shadow1DProj shadow2DProj shadow1DLod shadow2DLod shadow1DProjLod shadow2DProjLod dFdx dFdy fwidth noise1 noise2 noise3 noise4"),atoms:b("true false gl_FragColor gl_SecondaryColor gl_Normal gl_Vertex gl_MultiTexCoord0 gl_MultiTexCoord1 gl_MultiTexCoord2 gl_MultiTexCoord3 gl_MultiTexCoord4 gl_MultiTexCoord5 gl_MultiTexCoord6 gl_MultiTexCoord7 gl_FogCoord gl_PointCoord gl_Position gl_PointSize gl_ClipVertex gl_FrontColor gl_BackColor gl_FrontSecondaryColor gl_BackSecondaryColor gl_TexCoord gl_FogFragCoord gl_FragCoord gl_FrontFacing gl_FragData gl_FragDepth gl_ModelViewMatrix gl_ProjectionMatrix gl_ModelViewProjectionMatrix gl_TextureMatrix gl_NormalMatrix gl_ModelViewMatrixInverse gl_ProjectionMatrixInverse gl_ModelViewProjectionMatrixInverse gl_TextureMatrixTranspose gl_ModelViewMatrixInverseTranspose gl_ProjectionMatrixInverseTranspose gl_ModelViewProjectionMatrixInverseTranspose gl_TextureMatrixInverseTranspose gl_NormalScale gl_DepthRange gl_ClipPlane gl_Point gl_FrontMaterial gl_BackMaterial gl_LightSource gl_LightModel gl_FrontLightModelProduct gl_BackLightModelProduct gl_TextureColor gl_EyePlaneS gl_EyePlaneT gl_EyePlaneR gl_EyePlaneQ gl_FogParameters gl_MaxLights gl_MaxClipPlanes gl_MaxTextureUnits gl_MaxTextureCoords gl_MaxVertexAttribs gl_MaxVertexUniformComponents gl_MaxVaryingFloats gl_MaxVertexTextureImageUnits gl_MaxTextureImageUnits gl_MaxFragmentUniformComponents gl_MaxCombineTextureImageUnits gl_MaxDrawBuffers"),indentSwitch:!1,hooks:{"#":oe}}),xl=H({name:"nesc",keywords:b(_e+" as atomic async call command component components configuration event generic implementation includes interface module new norace nx_struct nx_union post provides signal task uses abstract extends"),types:xe,blockKeywords:b(we),atoms:b("null true false"),hooks:{"#":oe}}),wl=H({name:"objectivec",keywords:b(_e+" "+Nn),types:Fn,builtin:b(qn),blockKeywords:b(we+" @synthesize @try @catch @finally @autoreleasepool @synchronized"),defKeywords:b(Oe+" @interface @implementation @protocol @class"),dontIndentStatements:/^@.*$/,typeFirstDefinitions:!0,atoms:b("YES NO NULL Nil nil true false nullptr"),isReservedIdentifier:Pe,hooks:{"#":oe,"*":Ae}}),Sl=H({name:"objectivecpp",keywords:b(_e+" "+Nn+" "+$n),types:Fn,builtin:b(qn),blockKeywords:b(we+" @synthesize @try @catch @finally @autoreleasepool @synchronized class try catch"),defKeywords:b(Oe+" @interface @implementation @protocol @class class namespace"),dontIndentStatements:/^@.*$|^template$/,typeFirstDefinitions:!0,atoms:b("YES NO NULL Nil nil true false nullptr"),isReservedIdentifier:Pe,hooks:{"#":oe,"*":Ae,u:ie,U:ie,L:ie,R:ie,0:F,1:F,2:F,3:F,4:F,5:F,6:F,7:F,8:F,9:F,token:function(e,n,t){if(t=="variable"&&e.peek()=="("&&(n.prevToken==";"||n.prevToken==null||n.prevToken=="}")&&Mn(e.current()))return"def"}},namespaceSeparator:"::"}),zl=H({name:"squirrel",keywords:b("base break clone continue const default delete enum extends function in class foreach local resume return this throw typeof yield constructor instanceof static"),types:xe,blockKeywords:b("case catch class else for foreach if switch try while"),defKeywords:b("function local class"),typeFirstDefinitions:!0,atoms:b("true false null"),hooks:{"#":oe}}),Re=null;function jn(e){return function(n,t){for(var r=!1,i,o=!1;!n.eol();){if(!r&&n.match('"')&&(e=="single"||n.match('""'))){o=!0;break}if(!r&&n.match("``")){Re=jn(e),o=!0;break}i=n.next(),r=e=="single"&&!r&&i=="\\"}return o&&(t.tokenize=null),"string"}}var El=H({name:"ceylon",keywords:b("abstracts alias assembly assert assign break case catch class continue dynamic else exists extends finally for function given if import in interface is let module new nonempty object of out outer package return satisfies super switch then this throw try value void while"),types:function(e){var n=e.charAt(0);return n===n.toUpperCase()&&n!==n.toLowerCase()},blockKeywords:b("case catch class dynamic else finally for function if interface module new object switch try while"),defKeywords:b("class dynamic function interface module object package value"),builtin:b("abstract actual aliased annotation by default deprecated doc final formal late license native optional sealed see serializable shared suppressWarnings tagged throws variable"),isPunctuationChar:/[\[\]{}\(\),;\:\.`]/,isOperatorChar:/[+\-*&%=<>!?|^~:\/]/,numberStart:/[\d#$]/,number:/^(?:#[\da-fA-F_]+|\$[01_]+|[\d_]+[kMGTPmunpf]?|[\d_]+\.[\d_]+(?:[eE][-+]?\d+|[kMGTPmunpf]|)|)/i,multiLineStrings:!0,typeFirstDefinitions:!0,atoms:b("true false null larger smaller equal empty finished"),indentSwitch:!1,styleDefs:!1,hooks:{"@":function(e){return e.eatWhile(/[\w\$_]/),"meta"},'"':function(e,n){return n.tokenize=jn(e.match('""')?"triple":"single"),n.tokenize(e,n)},"`":function(e,n){return!Re||!e.match("`")?!1:(n.tokenize=Re,Re=null,n.tokenize(e,n))},"'":function(e){return e.match(/^(\\[^'\s]+|[^\\'])'/)?"string.special":(e.eatWhile(/[\w\$_\xa1-\uffff]/),"atom")},token:function(e,n,t){if((t=="variable"||t=="type")&&n.prevToken==".")return"variableName.special"}},languageData:{closeBrackets:{brackets:["(","[","{","'",'"','"""']}}});function wr(e){(e.interpolationStack||(e.interpolationStack=[])).push(e.tokenize)}function Wn(e){return(e.interpolationStack||(e.interpolationStack=[])).pop()}function Sr(e){return e.interpolationStack?e.interpolationStack.length:0}function Je(e,n,t,r){var i=!1;if(n.eat(e))if(n.eat(e))i=!0;else return"string";function o(a,p){for(var S=!1;!a.eol();){if(!r&&!S&&a.peek()=="$")return wr(p),p.tokenize=zr,"string";var E=a.next();if(E==e&&!S&&(!i||a.match(e+e))){p.tokenize=null;break}S=!r&&!S&&E=="\\"}return"string"}return t.tokenize=o,o(n,t)}function zr(e,n){return e.eat("$"),e.eat("{")?n.tokenize=null:n.tokenize=Er,null}function Er(e,n){return e.eatWhile(/[\w_]/),n.tokenize=Wn(n),"variable"}var Tr=H({name:"dart",keywords:b("this super static final const abstract class extends external factory implements mixin get native set typedef with enum throw rethrow assert break case continue default in return new deferred async await covariant try catch finally do else for if switch while import library export part of show hide is as extension on yield late required sealed base interface when inline"),blockKeywords:b("try catch finally do else for if switch while"),builtin:b("void bool num int double dynamic var String Null Never"),atoms:b("true false null"),number:/^(?:0x[a-f\d_]+|(?:[\d_]+\.?[\d_]*|\.[\d_]+)(?:e[-+]?[\d_]+)?)/i,hooks:{"@":function(e){return e.eatWhile(/[\w\$_\.]/),"meta"},"'":function(e,n){return Je("'",e,n,!1)},'"':function(e,n){return Je('"',e,n,!1)},r:function(e,n){var t=e.peek();return t=="'"||t=='"'?Je(e.next(),e,n,!0):!1},"}":function(e,n){return Sr(n)>0?(n.tokenize=Wn(n),null):!1},"/":function(e,n){return e.eat("*")?(n.tokenize=ke(1),n.tokenize(e,n)):!1},token:function(e,n,t){if(t=="variable"){var r=RegExp("^[_$]*[A-Z][a-zA-Z0-9_$]*$","g");if(r.test(e.current()))return"type"}}}});var Un=["false","nil","true"],Kn=[".","catch","def","do","if","monitor-enter","monitor-exit","new","quote","recur","set!","throw","try","var"],Hn=["*","*'","*1","*2","*3","*agent*","*allow-unresolved-vars*","*assert*","*clojure-version*","*command-line-args*","*compile-files*","*compile-path*","*compiler-options*","*data-readers*","*default-data-reader-fn*","*e","*err*","*file*","*flush-on-newline*","*fn-loader*","*in*","*math-context*","*ns*","*out*","*print-dup*","*print-length*","*print-level*","*print-meta*","*print-namespace-maps*","*print-readably*","*read-eval*","*reader-resolver*","*source-path*","*suppress-read*","*unchecked-math*","*use-context-classloader*","*verbose-defrecords*","*warn-on-reflection*","+","+'","-","-'","->","->>","->ArrayChunk","->Eduction","->Vec","->VecNode","->VecSeq","-cache-protocol-fn","-reset-methods","..","/","<","<=","=","==",">",">=","EMPTY-NODE","Inst","StackTraceElement->vec","Throwable->map","accessor","aclone","add-classpath","add-watch","agent","agent-error","agent-errors","aget","alength","alias","all-ns","alter","alter-meta!","alter-var-root","amap","ancestors","and","any?","apply","areduce","array-map","as->","aset","aset-boolean","aset-byte","aset-char","aset-double","aset-float","aset-int","aset-long","aset-short","assert","assoc","assoc!","assoc-in","associative?","atom","await","await-for","await1","bases","bean","bigdec","bigint","biginteger","binding","bit-and","bit-and-not","bit-clear","bit-flip","bit-not","bit-or","bit-set","bit-shift-left","bit-shift-right","bit-test","bit-xor","boolean","boolean-array","boolean?","booleans","bound-fn","bound-fn*","bound?","bounded-count","butlast","byte","byte-array","bytes","bytes?","case","cast","cat","char","char-array","char-escape-string","char-name-string","char?","chars","chunk","chunk-append","chunk-buffer","chunk-cons","chunk-first","chunk-next","chunk-rest","chunked-seq?","class","class?","clear-agent-errors","clojure-version","coll?","comment","commute","comp","comparator","compare","compare-and-set!","compile","complement","completing","concat","cond","cond->","cond->>","condp","conj","conj!","cons","constantly","construct-proxy","contains?","count","counted?","create-ns","create-struct","cycle","dec","dec'","decimal?","declare","dedupe","default-data-readers","definline","definterface","defmacro","defmethod","defmulti","defn","defn-","defonce","defprotocol","defrecord","defstruct","deftype","delay","delay?","deliver","denominator","deref","derive","descendants","destructure","disj","disj!","dissoc","dissoc!","distinct","distinct?","doall","dorun","doseq","dosync","dotimes","doto","double","double-array","double?","doubles","drop","drop-last","drop-while","eduction","empty","empty?","ensure","ensure-reduced","enumeration-seq","error-handler","error-mode","eval","even?","every-pred","every?","ex-data","ex-info","extend","extend-protocol","extend-type","extenders","extends?","false?","ffirst","file-seq","filter","filterv","find","find-keyword","find-ns","find-protocol-impl","find-protocol-method","find-var","first","flatten","float","float-array","float?","floats","flush","fn","fn?","fnext","fnil","for","force","format","frequencies","future","future-call","future-cancel","future-cancelled?","future-done?","future?","gen-class","gen-interface","gensym","get","get-in","get-method","get-proxy-class","get-thread-bindings","get-validator","group-by","halt-when","hash","hash-combine","hash-map","hash-ordered-coll","hash-set","hash-unordered-coll","ident?","identical?","identity","if-let","if-not","if-some","ifn?","import","in-ns","inc","inc'","indexed?","init-proxy","inst-ms","inst-ms*","inst?","instance?","int","int-array","int?","integer?","interleave","intern","interpose","into","into-array","ints","io!","isa?","iterate","iterator-seq","juxt","keep","keep-indexed","key","keys","keyword","keyword?","last","lazy-cat","lazy-seq","let","letfn","line-seq","list","list*","list?","load","load-file","load-reader","load-string","loaded-libs","locking","long","long-array","longs","loop","macroexpand","macroexpand-1","make-array","make-hierarchy","map","map-entry?","map-indexed","map?","mapcat","mapv","max","max-key","memfn","memoize","merge","merge-with","meta","method-sig","methods","min","min-key","mix-collection-hash","mod","munge","name","namespace","namespace-munge","nat-int?","neg-int?","neg?","newline","next","nfirst","nil?","nnext","not","not-any?","not-empty","not-every?","not=","ns","ns-aliases","ns-imports","ns-interns","ns-map","ns-name","ns-publics","ns-refers","ns-resolve","ns-unalias","ns-unmap","nth","nthnext","nthrest","num","number?","numerator","object-array","odd?","or","parents","partial","partition","partition-all","partition-by","pcalls","peek","persistent!","pmap","pop","pop!","pop-thread-bindings","pos-int?","pos?","pr","pr-str","prefer-method","prefers","primitives-classnames","print","print-ctor","print-dup","print-method","print-simple","print-str","printf","println","println-str","prn","prn-str","promise","proxy","proxy-call-with-super","proxy-mappings","proxy-name","proxy-super","push-thread-bindings","pvalues","qualified-ident?","qualified-keyword?","qualified-symbol?","quot","rand","rand-int","rand-nth","random-sample","range","ratio?","rational?","rationalize","re-find","re-groups","re-matcher","re-matches","re-pattern","re-seq","read","read-line","read-string","reader-conditional","reader-conditional?","realized?","record?","reduce","reduce-kv","reduced","reduced?","reductions","ref","ref-history-count","ref-max-history","ref-min-history","ref-set","refer","refer-clojure","reify","release-pending-sends","rem","remove","remove-all-methods","remove-method","remove-ns","remove-watch","repeat","repeatedly","replace","replicate","require","reset!","reset-meta!","reset-vals!","resolve","rest","restart-agent","resultset-seq","reverse","reversible?","rseq","rsubseq","run!","satisfies?","second","select-keys","send","send-off","send-via","seq","seq?","seqable?","seque","sequence","sequential?","set","set-agent-send-executor!","set-agent-send-off-executor!","set-error-handler!","set-error-mode!","set-validator!","set?","short","short-array","shorts","shuffle","shutdown-agents","simple-ident?","simple-keyword?","simple-symbol?","slurp","some","some->","some->>","some-fn","some?","sort","sort-by","sorted-map","sorted-map-by","sorted-set","sorted-set-by","sorted?","special-symbol?","spit","split-at","split-with","str","string?","struct","struct-map","subs","subseq","subvec","supers","swap!","swap-vals!","symbol","symbol?","sync","tagged-literal","tagged-literal?","take","take-last","take-nth","take-while","test","the-ns","thread-bound?","time","to-array","to-array-2d","trampoline","transduce","transient","tree-seq","true?","type","unchecked-add","unchecked-add-int","unchecked-byte","unchecked-char","unchecked-dec","unchecked-dec-int","unchecked-divide-int","unchecked-double","unchecked-float","unchecked-inc","unchecked-inc-int","unchecked-int","unchecked-long","unchecked-multiply","unchecked-multiply-int","unchecked-negate","unchecked-negate-int","unchecked-remainder-int","unchecked-short","unchecked-subtract","unchecked-subtract-int","underive","unquote","unquote-splicing","unreduced","unsigned-bit-shift-right","update","update-in","update-proxy","uri?","use","uuid?","val","vals","var-get","var-set","var?","vary-meta","vec","vector","vector-of","vector?","volatile!","volatile?","vreset!","vswap!","when","when-first","when-let","when-not","when-some","while","with-bindings","with-bindings*","with-in-str","with-loading-context","with-local-vars","with-meta","with-open","with-out-str","with-precision","with-redefs","with-redefs-fn","xml-seq","zero?","zipmap"],Cr=["->","->>","as->","binding","bound-fn","case","catch","comment","cond","cond->","cond->>","condp","def","definterface","defmethod","defn","defmacro","defprotocol","defrecord","defstruct","deftype","do","doseq","dotimes","doto","extend","extend-protocol","extend-type","fn","for","future","if","if-let","if-not","if-some","let","letfn","locking","loop","ns","proxy","reify","struct-map","some->","some->>","try","when","when-first","when-let","when-not","when-some","while","with-bindings","with-bindings*","with-in-str","with-loading-context","with-local-vars","with-meta","with-open","with-out-str","with-precision","with-redefs","with-redefs-fn"],Ir=Le(Un),Rr=Le(Kn),Or=Le(Hn),Ar=Le(Cr),Pr=/^(?:[\\\[\]\s"(),;@^`{}~]|$)/,Lr=/^(?:[+\-]?\d+(?:(?:N|(?:[eE][+\-]?\d+))|(?:\.?\d*(?:M|(?:[eE][+\-]?\d+))?)|\/\d+|[xX][0-9a-fA-F]+|r[0-9a-zA-Z]+)?(?=[\\\[\]\s"#'(),;@^`{}~]|$))/,Dr=/^(?:\\(?:backspace|formfeed|newline|return|space|tab|o[0-7]{3}|u[0-9A-Fa-f]{4}|x[0-9A-Fa-f]{4}|.)?(?=[\\\[\]\s"(),;@^`{}~]|$))/,$r=/^(?:(?:[^\\\/\[\]\d\s"#'(),;@^`{}~.][^\\\[\]\s"(),;@^`{}~.\/]*(?:\.[^\\\/\[\]\d\s"#'(),;@^`{}~.][^\\\[\]\s"(),;@^`{}~.\/]*)*\/)?(?:\/|[^\\\/\[\]\d\s"#'(),;@^`{}~][^\\\[\]\s"(),;@^`{}~]*)*(?=[\\\[\]\s"(),;@^`{}~]|$))/;function en(e,n){if(e.eatSpace()||e.eat(","))return["space",null];if(e.match(Lr))return[null,"number"];if(e.match(Dr))return[null,"string.special"];if(e.eat(/^"/))return(n.tokenize=Nr)(e,n);if(e.eat(/^[(\[{]/))return["open","bracket"];if(e.eat(/^[)\]}]/))return["close","bracket"];if(e.eat(/^;/))return e.skipToEnd(),["space","comment"];if(e.eat(/^[#'@^`~]/))return[null,"meta"];var t=e.match($r),r=t&&t[0];return r?r==="comment"&&n.lastToken==="("?(n.tokenize=qr)(e,n):Se(r,Ir)||r.charAt(0)===":"?["symbol","atom"]:Se(r,Rr)||Se(r,Or)?["symbol","keyword"]:n.lastToken==="("?["symbol","builtin"]:["symbol","variable"]:(e.next(),e.eatWhile(function(i){return!Se(i,Pr)}),[null,"error"])}function Nr(e,n){for(var t=!1,r;r=e.next();){if(r==='"'&&!t){n.tokenize=en;break}t=!t&&r==="\\"}return[null,"string"]}function qr(e,n){for(var t=1,r;r=e.next();)if(r===")"&&t--,r==="("&&t++,t===0){e.backUp(1),n.tokenize=en;break}return["space","comment"]}function Le(e){for(var n={},t=0;t<e.length;++t)n[e[t]]=!0;return n}function Se(e,n){if(n instanceof RegExp)return n.test(e);if(n instanceof Object)return n.propertyIsEnumerable(e)}var Fr={name:"clojure",startState:function(){return{ctx:{prev:null,start:0,indentTo:0},lastToken:null,tokenize:en}},token:function(e,n){e.sol()&&typeof n.ctx.indentTo!="number"&&(n.ctx.indentTo=n.ctx.start+1);var t=n.tokenize(e,n),r=t[0],i=t[1],o=e.current();return r!=="space"&&(n.lastToken==="("&&n.ctx.indentTo===null?r==="symbol"&&Se(o,Ar)?n.ctx.indentTo=n.ctx.start+e.indentUnit:n.ctx.indentTo="next":n.ctx.indentTo==="next"&&(n.ctx.indentTo=e.column()),n.lastToken=o),r==="open"?n.ctx={prev:n.ctx,start:e.column(),indentTo:null}:r==="close"&&(n.ctx=n.ctx.prev||n.ctx),i},indent:function(e){var n=e.ctx.indentTo;return typeof n=="number"?n:e.ctx.start+1},languageData:{closeBrackets:{brackets:["(","[","{",'"']},commentTokens:{line:";;"},autocomplete:[].concat(Un,Kn,Hn)}};var Gn={"+":"inserted","-":"deleted","@":"meta"},Mr={name:"diff",token:function(e){var n=e.string.search(/[\t ]+?$/);if(!e.sol()||n===0)return e.skipToEnd(),("error "+(Gn[e.string.charAt(0)]||"")).replace(/ $/,"");var t=Gn[e.peek()]||e.skipToEnd();return n===-1?e.skipToEnd():e.pos=n,t}};function nn(e){for(var n={},t=0;t<e.length;++t)n[e[t]]=!0;return n}var Br=nn(["abstract","accept","allocatable","allocate","array","assign","asynchronous","backspace","bind","block","byte","call","case","class","close","common","contains","continue","cycle","data","deallocate","decode","deferred","dimension","do","elemental","else","encode","end","endif","entry","enumerator","equivalence","exit","external","extrinsic","final","forall","format","function","generic","go","goto","if","implicit","import","include","inquire","intent","interface","intrinsic","module","namelist","non_intrinsic","non_overridable","none","nopass","nullify","open","optional","options","parameter","pass","pause","pointer","print","private","program","protected","public","pure","read","recursive","result","return","rewind","save","select","sequence","stop","subroutine","target","then","to","type","use","value","volatile","where","while","write"]),jr=nn(["abort","abs","access","achar","acos","adjustl","adjustr","aimag","aint","alarm","all","allocated","alog","amax","amin","amod","and","anint","any","asin","associated","atan","besj","besjn","besy","besyn","bit_size","btest","cabs","ccos","ceiling","cexp","char","chdir","chmod","clog","cmplx","command_argument_count","complex","conjg","cos","cosh","count","cpu_time","cshift","csin","csqrt","ctime","c_funloc","c_loc","c_associated","c_null_ptr","c_null_funptr","c_f_pointer","c_null_char","c_alert","c_backspace","c_form_feed","c_new_line","c_carriage_return","c_horizontal_tab","c_vertical_tab","dabs","dacos","dasin","datan","date_and_time","dbesj","dbesj","dbesjn","dbesy","dbesy","dbesyn","dble","dcos","dcosh","ddim","derf","derfc","dexp","digits","dim","dint","dlog","dlog","dmax","dmin","dmod","dnint","dot_product","dprod","dsign","dsinh","dsin","dsqrt","dtanh","dtan","dtime","eoshift","epsilon","erf","erfc","etime","exit","exp","exponent","extends_type_of","fdate","fget","fgetc","float","floor","flush","fnum","fputc","fput","fraction","fseek","fstat","ftell","gerror","getarg","get_command","get_command_argument","get_environment_variable","getcwd","getenv","getgid","getlog","getpid","getuid","gmtime","hostnm","huge","iabs","iachar","iand","iargc","ibclr","ibits","ibset","ichar","idate","idim","idint","idnint","ieor","ierrno","ifix","imag","imagpart","index","int","ior","irand","isatty","ishft","ishftc","isign","iso_c_binding","is_iostat_end","is_iostat_eor","itime","kill","kind","lbound","len","len_trim","lge","lgt","link","lle","llt","lnblnk","loc","log","logical","long","lshift","lstat","ltime","matmul","max","maxexponent","maxloc","maxval","mclock","merge","move_alloc","min","minexponent","minloc","minval","mod","modulo","mvbits","nearest","new_line","nint","not","or","pack","perror","precision","present","product","radix","rand","random_number","random_seed","range","real","realpart","rename","repeat","reshape","rrspacing","rshift","same_type_as","scale","scan","second","selected_int_kind","selected_real_kind","set_exponent","shape","short","sign","signal","sinh","sin","sleep","sngl","spacing","spread","sqrt","srand","stat","sum","symlnk","system","system_clock","tan","tanh","time","tiny","transfer","transpose","trim","ttynam","ubound","umask","unlink","unpack","verify","xor","zabs","zcos","zexp","zlog","zsin","zsqrt"]),Wr=nn(["c_bool","c_char","c_double","c_double_complex","c_float","c_float_complex","c_funptr","c_int","c_int16_t","c_int32_t","c_int64_t","c_int8_t","c_int_fast16_t","c_int_fast32_t","c_int_fast64_t","c_int_fast8_t","c_int_least16_t","c_int_least32_t","c_int_least64_t","c_int_least8_t","c_intmax_t","c_intptr_t","c_long","c_long_double","c_long_double_complex","c_long_long","c_ptr","c_short","c_signed_char","c_size_t","character","complex","double","integer","logical","real"]),Zn=/[+\-*&=<>\/\:]/,Ur=/^\.(and|or|eq|lt|le|gt|ge|ne|not|eqv|neqv)\./i;function Kr(e,n){if(e.match(Ur))return"operator";var t=e.next();if(t=="!")return e.skipToEnd(),"comment";if(t=='"'||t=="'")return n.tokenize=Hr(t),n.tokenize(e,n);if(/[\[\]\(\),]/.test(t))return null;if(/\d/.test(t))return e.eatWhile(/[\w\.]/),"number";if(Zn.test(t))return e.eatWhile(Zn),"operator";e.eatWhile(/[\w\$_]/);var r=e.current().toLowerCase();return Br.hasOwnProperty(r)?"keyword":jr.hasOwnProperty(r)||Wr.hasOwnProperty(r)?"builtin":"variable"}function Hr(e){return function(n,t){for(var r=!1,i,o=!1;(i=n.next())!=null;){if(i==e&&!r){o=!0;break}r=!r&&i=="\\"}return(o||!r)&&(t.tokenize=null),"string"}}var Gr={name:"fortran",startState:function(){return{tokenize:null}},token:function(e,n){if(e.eatSpace())return null;var t=(n.tokenize||Kr)(e,n);return t=="comment"||t=="meta",t}};var Zr={break:!0,case:!0,chan:!0,const:!0,continue:!0,default:!0,defer:!0,else:!0,fallthrough:!0,for:!0,func:!0,go:!0,goto:!0,if:!0,import:!0,interface:!0,map:!0,package:!0,range:!0,return:!0,select:!0,struct:!0,switch:!0,type:!0,var:!0,bool:!0,byte:!0,complex64:!0,complex128:!0,float32:!0,float64:!0,int8:!0,int16:!0,int32:!0,int64:!0,string:!0,uint8:!0,uint16:!0,uint32:!0,uint64:!0,int:!0,uint:!0,uintptr:!0,error:!0,rune:!0,any:!0,comparable:!0},Qr={true:!0,false:!0,iota:!0,nil:!0,append:!0,cap:!0,close:!0,complex:!0,copy:!0,delete:!0,imag:!0,len:!0,make:!0,new:!0,panic:!0,print:!0,println:!0,real:!0,recover:!0},Qn=/[+\-*&^%:=<>!|\/]/,ne;function De(e,n){var t=e.next();if(t=='"'||t=="'"||t=="`")return n.tokenize=Vr(t),n.tokenize(e,n);if(/[\d\.]/.test(t))return t=="."?e.match(/^[0-9]+([eE][\-+]?[0-9]+)?/):t=="0"?e.match(/^[xX][0-9a-fA-F]+/)||e.match(/^0[0-7]+/):e.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/),"number";if(/[\[\]{}\(\),;\:\.]/.test(t))return ne=t,null;if(t=="/"){if(e.eat("*"))return n.tokenize=Vn,Vn(e,n);if(e.eat("/"))return e.skipToEnd(),"comment"}if(Qn.test(t))return e.eatWhile(Qn),"operator";e.eatWhile(/[\w\$_\xa1-\uffff]/);var r=e.current();return Zr.propertyIsEnumerable(r)?((r=="case"||r=="default")&&(ne="case"),"keyword"):Qr.propertyIsEnumerable(r)?"atom":"variable"}function Vr(e){return function(n,t){for(var r=!1,i,o=!1;(i=n.next())!=null;){if(i==e&&!r){o=!0;break}r=!r&&e!="`"&&i=="\\"}return(o||!(r||e=="`"))&&(t.tokenize=De),"string"}}function Vn(e,n){for(var t=!1,r;r=e.next();){if(r=="/"&&t){n.tokenize=De;break}t=r=="*"}return"comment"}function Jn(e,n,t,r,i){this.indented=e,this.column=n,this.type=t,this.align=r,this.prev=i}function tn(e,n,t){return e.context=new Jn(e.indented,n,t,null,e.context)}function Xn(e){if(e.context.prev){var n=e.context.type;return(n==")"||n=="]"||n=="}")&&(e.indented=e.context.indented),e.context=e.context.prev}}var Xr={name:"go",startState:function(e){return{tokenize:null,context:new Jn(-e,0,"top",!1),indented:0,startOfLine:!0}},token:function(e,n){var t=n.context;if(e.sol()&&(t.align==null&&(t.align=!1),n.indented=e.indentation(),n.startOfLine=!0,t.type=="case"&&(t.type="}")),e.eatSpace())return null;ne=null;var r=(n.tokenize||De)(e,n);return r=="comment"||(t.align==null&&(t.align=!0),ne=="{"?tn(n,e.column(),"}"):ne=="["?tn(n,e.column(),"]"):ne=="("?tn(n,e.column(),")"):ne=="case"?t.type="case":(ne=="}"&&t.type=="}"||ne==t.type)&&Xn(n),n.startOfLine=!1),r},indent:function(e,n,t){if(e.tokenize!=De&&e.tokenize!=null)return null;var r=e.context,i=n&&n.charAt(0);if(r.type=="case"&&/^(?:case|default)\b/.test(n))return r.indented;var o=i==r.type;return r.align?r.column+(o?0:1):r.indented+(o?0:t.unit)},languageData:{indentOnInput:/^\s([{}]|case |default\s*:)$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}}}};function an(e,n,t){return n(t),t(e,n)}var Jr=/[a-z_]/,Yr=/[A-Z]/,rn=/\d/,ei=/[0-9A-Fa-f]/,ni=/[0-7]/,Yn=/[a-z_A-Z0-9'\xa1-\uffff]/,on=/[-!#$%&*+.\/<=>?@\\^|~:]/,ti=/[(),;[\]`{}]/,nt=/[ \t\v\f]/;function fe(e,n){if(e.eatWhile(nt))return null;var t=e.next();if(ti.test(t)){if(t=="{"&&e.eat("-")){var r="comment";return e.eat("#")&&(r="meta"),an(e,n,tt(r,1))}return null}if(t=="'")return e.eat("\\"),e.next(),e.eat("'")?"string":"error";if(t=='"')return an(e,n,rt);if(Yr.test(t))return e.eatWhile(Yn),e.eat(".")?"qualifier":"type";if(Jr.test(t))return e.eatWhile(Yn),"variable";if(rn.test(t)){if(t=="0"){if(e.eat(/[xX]/))return e.eatWhile(ei),"integer";if(e.eat(/[oO]/))return e.eatWhile(ni),"number"}e.eatWhile(rn);var r="number";return e.match(/^\.\d+/)&&(r="number"),e.eat(/[eE]/)&&(r="number",e.eat(/[-+]/),e.eatWhile(rn)),r}return t=="."&&e.eat(".")?"keyword":on.test(t)?t=="-"&&e.eat(/-/)&&(e.eatWhile(/-/),!e.eat(on))?(e.skipToEnd(),"comment"):(e.eatWhile(on),"variable"):"error"}function tt(e,n){return n==0?fe:function(t,r){for(var i=n;!t.eol();){var o=t.next();if(o=="{"&&t.eat("-"))++i;else if(o=="-"&&t.eat("}")&&(--i,i==0))return r(fe),e}return r(tt(e,i)),e}}function rt(e,n){for(;!e.eol();){var t=e.next();if(t=='"')return n(fe),"string";if(t=="\\"){if(e.eol()||e.eat(nt))return n(ri),"string";e.eat("&")||e.next()}}return n(fe),"error"}function ri(e,n){return e.eat("\\")?an(e,n,rt):(e.next(),n(fe),"error")}var et=function(){var e={};function n(t){return function(){for(var r=0;r<arguments.length;r++)e[arguments[r]]=t}}return n("keyword")("case","class","data","default","deriving","do","else","foreign","if","import","in","infix","infixl","infixr","instance","let","module","newtype","of","then","type","where","_"),n("keyword")("..",":","::","=","\\","<-","->","@","~","=>"),n("builtin")("!!","$!","$","&&","+","++","-",".","/","/=","<","<*","<=","<$>","<*>","=<<","==",">",">=",">>",">>=","^","^^","||","*","*>","**"),n("builtin")("Applicative","Bool","Bounded","Char","Double","EQ","Either","Enum","Eq","False","FilePath","Float","Floating","Fractional","Functor","GT","IO","IOError","Int","Integer","Integral","Just","LT","Left","Maybe","Monad","Nothing","Num","Ord","Ordering","Rational","Read","ReadS","Real","RealFloat","RealFrac","Right","Show","ShowS","String","True"),n("builtin")("abs","acos","acosh","all","and","any","appendFile","asTypeOf","asin","asinh","atan","atan2","atanh","break","catch","ceiling","compare","concat","concatMap","const","cos","cosh","curry","cycle","decodeFloat","div","divMod","drop","dropWhile","either","elem","encodeFloat","enumFrom","enumFromThen","enumFromThenTo","enumFromTo","error","even","exp","exponent","fail","filter","flip","floatDigits","floatRadix","floatRange","floor","fmap","foldl","foldl1","foldr","foldr1","fromEnum","fromInteger","fromIntegral","fromRational","fst","gcd","getChar","getContents","getLine","head","id","init","interact","ioError","isDenormalized","isIEEE","isInfinite","isNaN","isNegativeZero","iterate","last","lcm","length","lex","lines","log","logBase","lookup","map","mapM","mapM_","max","maxBound","maximum","maybe","min","minBound","minimum","mod","negate","not","notElem","null","odd","or","otherwise","pi","pred","print","product","properFraction","pure","putChar","putStr","putStrLn","quot","quotRem","read","readFile","readIO","readList","readLn","readParen","reads","readsPrec","realToFrac","recip","rem","repeat","replicate","return","reverse","round","scaleFloat","scanl","scanl1","scanr","scanr1","seq","sequence","sequence_","show","showChar","showList","showParen","showString","shows","showsPrec","significand","signum","sin","sinh","snd","span","splitAt","sqrt","subtract","succ","sum","tail","take","takeWhile","tan","tanh","toEnum","toInteger","toRational","truncate","uncurry","undefined","unlines","until","unwords","unzip","unzip3","userError","words","writeFile","zip","zip3","zipWith","zipWith3"),e}(),ii={name:"haskell",startState:function(){return{f:fe}},copyState:function(e){return{f:e.f}},token:function(e,n){var t=n.f(e,function(i){n.f=i}),r=e.current();return et.hasOwnProperty(r)?et[r]:t},languageData:{commentTokens:{line:"--",block:{open:"{-",close:"-}"}}}};function ae(e,n,t){return typeof t>"u"&&(t=""),typeof n>"u"&&(n="\\b"),new RegExp("^"+t+"(("+e.join(")|(")+"))"+n)}var oi="\\\\[0-7]{1,3}",ai="\\\\x[A-Fa-f0-9]{1,2}",li=`\\\\[abefnrtv0%?'"\\\\]`,ci="([^\\u0027\\u005C\\uD800-\\uDFFF]|[\\uD800-\\uDFFF][\\uDC00-\\uDFFF])",at=["[<>]:","[<>=]=","<<=?",">>>?=?","=>","--?>","<--[->]?","\\/\\/","\\.{2,3}","[\\.\\\\%*+\\-<>!\\/^|&]=?","\\?","\\$","~",":"],si=ae(["[<>]:","[<>=]=","[!=]==","<<=?",">>>?=?","=>?","--?>","<--[->]?","\\/\\/","[\\\\%*+\\-<>!\\/^|&\\u00F7\\u22BB]=?","\\?","\\$","~",":","\\u00D7","\\u2208","\\u2209","\\u220B","\\u220C","\\u2218","\\u221A","\\u221B","\\u2229","\\u222A","\\u2260","\\u2264","\\u2265","\\u2286","\\u2288","\\u228A","\\u22C5","\\b(in|isa)\\b(?!.?\\()"],""),ui=/^[;,()[\]{}]/,di=/^[_A-Za-z\u00A1-\u2217\u2219-\uFFFF][\w\u00A1-\u2217\u2219-\uFFFF]*!*/,fi=ae([oi,ai,li,ci],"'"),pi=["begin","function","type","struct","immutable","let","macro","for","while","quote","if","else","elseif","try","finally","catch","do"],mi=["end","else","elseif","catch","finally"],lt=["if","else","elseif","while","for","begin","let","end","do","try","catch","finally","return","break","continue","global","local","const","export","import","importall","using","function","where","macro","module","baremodule","struct","type","mutable","immutable","quote","typealias","abstract","primitive","bitstype"],ct=["true","false","nothing","NaN","Inf"],hi=ae(pi),gi=ae(mi),bi=ae(lt),yi=ae(ct),vi=/^@[_A-Za-z\u00A1-\uFFFF][\w\u00A1-\uFFFF]*!*/,ki=/^:[_A-Za-z\u00A1-\uFFFF][\w\u00A1-\uFFFF]*!*/,_i=/^(`|([_A-Za-z\u00A1-\uFFFF]*"("")?))/,xi=ae(at,"","@"),wi=ae(at,"",":");function it(e){return e.nestedArrays>0}function Si(e){return e.nestedGenerators>0}function ot(e,n){return typeof n>"u"&&(n=0),e.scopes.length<=n?null:e.scopes[e.scopes.length-(n+1)]}function pe(e,n){if(e.match("#=",!1))return n.tokenize=Ei,n.tokenize(e,n);var t=n.leavingExpr;if(e.sol()&&(t=!1),n.leavingExpr=!1,t&&e.match(/^'+/))return"operator";if(e.match(/\.{4,}/))return"error";if(e.match(/\.{1,3}/))return"operator";if(e.eatSpace())return null;var r=e.peek();if(r==="#")return e.skipToEnd(),"comment";if(r==="["&&(n.scopes.push("["),n.nestedArrays++),r==="("&&(n.scopes.push("("),n.nestedGenerators++),it(n)&&r==="]"){for(;n.scopes.length&&ot(n)!=="[";)n.scopes.pop();n.scopes.pop(),n.nestedArrays--,n.leavingExpr=!0}if(Si(n)&&r===")"){for(;n.scopes.length&&ot(n)!=="(";)n.scopes.pop();n.scopes.pop(),n.nestedGenerators--,n.leavingExpr=!0}if(it(n)){if(n.lastToken=="end"&&e.match(":"))return"operator";if(e.match("end"))return"number"}var i;if((i=e.match(hi,!1))&&n.scopes.push(i[0]),e.match(gi,!1)&&n.scopes.pop(),e.match(/^::(?![:\$])/))return n.tokenize=zi,n.tokenize(e,n);if(!t&&(e.match(ki)||e.match(wi)))return"builtin";if(e.match(si))return"operator";if(e.match(/^\.?\d/,!1)){var o=RegExp(/^im\b/),a=!1;if(e.match(/^0x\.[0-9a-f_]+p[\+\-]?[_\d]+/i)&&(a=!0),e.match(/^0x[0-9a-f_]+/i)&&(a=!0),e.match(/^0b[01_]+/i)&&(a=!0),e.match(/^0o[0-7_]+/i)&&(a=!0),e.match(/^(?:(?:\d[_\d]*)?\.(?!\.)(?:\d[_\d]*)?|\d[_\d]*\.(?!\.)(?:\d[_\d]*))?([Eef][\+\-]?[_\d]+)?/i)&&(a=!0),e.match(/^\d[_\d]*(e[\+\-]?\d+)?/i)&&(a=!0),a)return e.match(o),n.leavingExpr=!0,"number"}if(e.match("'"))return n.tokenize=Ti,n.tokenize(e,n);if(e.match(_i))return n.tokenize=Ci(e.current()),n.tokenize(e,n);if(e.match(vi)||e.match(xi))return"meta";if(e.match(ui))return null;if(e.match(bi))return"keyword";if(e.match(yi))return"builtin";var p=n.isDefinition||n.lastToken=="function"||n.lastToken=="macro"||n.lastToken=="type"||n.lastToken=="struct"||n.lastToken=="immutable";return e.match(di)?p?e.peek()==="."?(n.isDefinition=!0,"variable"):(n.isDefinition=!1,"def"):(n.leavingExpr=!0,"variable"):(e.next(),"error")}function zi(e,n){return e.match(/.*?(?=[,;{}()=\s]|$)/),e.match("{")?n.nestedParameters++:e.match("}")&&n.nestedParameters>0&&n.nestedParameters--,n.nestedParameters>0?e.match(/.*?(?={|})/)||e.next():n.nestedParameters==0&&(n.tokenize=pe),"builtin"}function Ei(e,n){return e.match("#=")&&n.nestedComments++,e.match(/.*?(?=(#=|=#))/)||e.skipToEnd(),e.match("=#")&&(n.nestedComments--,n.nestedComments==0&&(n.tokenize=pe)),"comment"}function Ti(e,n){var t=!1,r;if(e.match(fi))t=!0;else if(r=e.match(/\\u([a-f0-9]{1,4})(?=')/i)){var i=parseInt(r[1],16);(i<=55295||i>=57344)&&(t=!0,e.next())}else if(r=e.match(/\\U([A-Fa-f0-9]{5,8})(?=')/)){var i=parseInt(r[1],16);i<=1114111&&(t=!0,e.next())}return t?(n.leavingExpr=!0,n.tokenize=pe,"string"):(e.match(/^[^']+(?=')/)||e.skipToEnd(),e.match("'")&&(n.tokenize=pe),"error")}function Ci(e){e.substr(-3)==='"""'?e='"""':e.substr(-1)==='"'&&(e='"');function n(t,r){if(t.eat("\\"))t.next();else{if(t.match(e))return r.tokenize=pe,r.leavingExpr=!0,"string";t.eat(/[`"]/)}return t.eatWhile(/[^\\`"]/),"string"}return n}var Ii={name:"julia",startState:function(){return{tokenize:pe,scopes:[],lastToken:null,leavingExpr:!1,isDefinition:!1,nestedArrays:0,nestedComments:0,nestedGenerators:0,nestedParameters:0,firstParenPos:-1}},token:function(e,n){var t=n.tokenize(e,n),r=e.current();return r&&t&&(n.lastToken=r),t},indent:function(e,n,t){var r=0;return(n==="]"||n===")"||/^end\b/.test(n)||/^else/.test(n)||/^catch\b/.test(n)||/^elseif\b/.test(n)||/^finally/.test(n))&&(r=-1),(e.scopes.length+r)*t.unit},languageData:{indentOnInput:/^\s*(end|else|catch|finally)\b$/,commentTokens:{line:"#",block:{open:"#=",close:"=#"}},closeBrackets:{brackets:["(","[","{",'"']},autocomplete:lt.concat(ct)}};function Ri(e){return new RegExp("^(?:"+e.join("|")+")","i")}function $e(e){return new RegExp("^(?:"+e.join("|")+")$","i")}var Oi=$e(["_G","_VERSION","assert","collectgarbage","dofile","error","getfenv","getmetatable","ipairs","load","loadfile","loadstring","module","next","pairs","pcall","print","rawequal","rawget","rawset","require","select","setfenv","setmetatable","tonumber","tostring","type","unpack","xpcall","coroutine.create","coroutine.resume","coroutine.running","coroutine.status","coroutine.wrap","coroutine.yield","debug.debug","debug.getfenv","debug.gethook","debug.getinfo","debug.getlocal","debug.getmetatable","debug.getregistry","debug.getupvalue","debug.setfenv","debug.sethook","debug.setlocal","debug.setmetatable","debug.setupvalue","debug.traceback","close","flush","lines","read","seek","setvbuf","write","io.close","io.flush","io.input","io.lines","io.open","io.output","io.popen","io.read","io.stderr","io.stdin","io.stdout","io.tmpfile","io.type","io.write","math.abs","math.acos","math.asin","math.atan","math.atan2","math.ceil","math.cos","math.cosh","math.deg","math.exp","math.floor","math.fmod","math.frexp","math.huge","math.ldexp","math.log","math.log10","math.max","math.min","math.modf","math.pi","math.pow","math.rad","math.random","math.randomseed","math.sin","math.sinh","math.sqrt","math.tan","math.tanh","os.clock","os.date","os.difftime","os.execute","os.exit","os.getenv","os.remove","os.rename","os.setlocale","os.time","os.tmpname","package.cpath","package.loaded","package.loaders","package.loadlib","package.path","package.preload","package.seeall","string.byte","string.char","string.dump","string.find","string.format","string.gmatch","string.gsub","string.len","string.lower","string.match","string.rep","string.reverse","string.sub","string.upper","table.concat","table.insert","table.maxn","table.remove","table.sort"]),Ai=$e(["and","break","elseif","false","nil","not","or","return","true","function","end","if","then","else","do","while","repeat","until","for","in","local"]),Pi=$e(["function","if","repeat","do","\\(","{"]),Li=$e(["end","until","\\)","}"]),Di=Ri(["end","until","\\)","}","else","elseif"]);function st(e){for(var n=0;e.eat("=");)++n;return e.eat("["),n}function ln(e,n){var t=e.next();return t=="-"&&e.eat("-")?e.eat("[")&&e.eat("[")?(n.cur=ut(st(e),"comment"))(e,n):(e.skipToEnd(),"comment"):t=='"'||t=="'"?(n.cur=$i(t))(e,n):t=="["&&/[\[=]/.test(e.peek())?(n.cur=ut(st(e),"string"))(e,n):/\d/.test(t)?(e.eatWhile(/[\w.%]/),"number"):/[\w_]/.test(t)?(e.eatWhile(/[\w\\\-_.]/),"variable"):null}function ut(e,n){return function(t,r){for(var i=null,o;(o=t.next())!=null;)if(i==null)o=="]"&&(i=0);else if(o=="=")++i;else if(o=="]"&&i==e){r.cur=ln;break}else i=null;return n}}function $i(e){return function(n,t){for(var r=!1,i;(i=n.next())!=null&&!(i==e&&!r);)r=!r&&i=="\\";return r||(t.cur=ln),"string"}}var Ni={name:"lua",startState:function(){return{basecol:0,indentDepth:0,cur:ln}},token:function(e,n){if(e.eatSpace())return null;var t=n.cur(e,n),r=e.current();return t=="variable"&&(Ai.test(r)?t="keyword":Oi.test(r)&&(t="builtin")),t!="comment"&&t!="string"&&(Pi.test(r)?++n.indentDepth:Li.test(r)&&--n.indentDepth),t},indent:function(e,n,t){var r=Di.test(n);return e.basecol+t.unit*(e.indentDepth-(r?1:0))},languageData:{indentOnInput:/^\s*(?:end|until|else|\)|\})$/,commentTokens:{line:"--",block:{open:"--[[",close:"]]--"}}}};function cn(e){var n={as:"keyword",do:"keyword",else:"keyword",end:"keyword",exception:"keyword",fun:"keyword",functor:"keyword",if:"keyword",in:"keyword",include:"keyword",let:"keyword",of:"keyword",open:"keyword",rec:"keyword",struct:"keyword",then:"keyword",type:"keyword",val:"keyword",while:"keyword",with:"keyword"},t=e.extraWords||{};for(var r in t)t.hasOwnProperty(r)&&(n[r]=e.extraWords[r]);var i=[];for(var o in n)i.push(o);function a(x,c){var d=x.next();if(d==='"')return c.tokenize=p,c.tokenize(x,c);if(d==="{"&&x.eat("|"))return c.longString=!0,c.tokenize=E,c.tokenize(x,c);if(d==="("&&x.match(/^\*(?!\))/))return c.commentLevel++,c.tokenize=S,c.tokenize(x,c);if(d==="~"||d==="?")return x.eatWhile(/\w/),"variableName.special";if(d==="`")return x.eatWhile(/\w/),"quote";if(d==="/"&&e.slashComments&&x.eat("/"))return x.skipToEnd(),"comment";if(/\d/.test(d))return d==="0"&&x.eat(/[bB]/)&&x.eatWhile(/[01]/),d==="0"&&x.eat(/[xX]/)&&x.eatWhile(/[0-9a-fA-F]/),d==="0"&&x.eat(/[oO]/)?x.eatWhile(/[0-7]/):(x.eatWhile(/[\d_]/),x.eat(".")&&x.eatWhile(/[\d]/),x.eat(/[eE]/)&&x.eatWhile(/[\d\-+]/)),"number";if(/[+\-*&%=<>!?|@\.~:]/.test(d))return"operator";if(/[\w\xa1-\uffff]/.test(d)){x.eatWhile(/[\w\xa1-\uffff]/);var y=x.current();return n.hasOwnProperty(y)?n[y]:"variable"}return null}function p(x,c){for(var d,y=!1,O=!1;(d=x.next())!=null;){if(d==='"'&&!O){y=!0;break}O=!O&&d==="\\"}return y&&!O&&(c.tokenize=a),"string"}function S(x,c){for(var d,y;c.commentLevel>0&&(y=x.next())!=null;)d==="("&&y==="*"&&c.commentLevel++,d==="*"&&y===")"&&c.commentLevel--,d=y;return c.commentLevel<=0&&(c.tokenize=a),"comment"}function E(x,c){for(var d,y;c.longString&&(y=x.next())!=null;)d==="|"&&y==="}"&&(c.longString=!1),d=y;return c.longString||(c.tokenize=a),"string"}return{startState:function(){return{tokenize:a,commentLevel:0,longString:!1}},token:function(x,c){return x.eatSpace()?null:c.tokenize(x,c)},languageData:{autocomplete:i,commentTokens:{line:e.slashComments?"//":void 0,block:{open:"(*",close:"*)"}}}}}var qi=cn({name:"ocaml",extraWords:{and:"keyword",assert:"keyword",begin:"keyword",class:"keyword",constraint:"keyword",done:"keyword",downto:"keyword",external:"keyword",function:"keyword",initializer:"keyword",lazy:"keyword",match:"keyword",method:"keyword",module:"keyword",mutable:"keyword",new:"keyword",nonrec:"keyword",object:"keyword",private:"keyword",sig:"keyword",to:"keyword",try:"keyword",value:"keyword",virtual:"keyword",when:"keyword",raise:"builtin",failwith:"builtin",true:"builtin",false:"builtin",asr:"builtin",land:"builtin",lor:"builtin",lsl:"builtin",lsr:"builtin",lxor:"builtin",mod:"builtin",or:"builtin",raise_notrace:"builtin",trace:"builtin",exit:"builtin",print_string:"builtin",print_endline:"builtin",int:"type",float:"type",bool:"type",char:"type",string:"type",unit:"type",List:"builtin"}}),Fi=cn({name:"fsharp",extraWords:{abstract:"keyword",assert:"keyword",base:"keyword",begin:"keyword",class:"keyword",default:"keyword",delegate:"keyword","do!":"keyword",done:"keyword",downcast:"keyword",downto:"keyword",elif:"keyword",extern:"keyword",finally:"keyword",for:"keyword",function:"keyword",global:"keyword",inherit:"keyword",inline:"keyword",interface:"keyword",internal:"keyword",lazy:"keyword","let!":"keyword",match:"keyword",member:"keyword",module:"keyword",mutable:"keyword",namespace:"keyword",new:"keyword",null:"keyword",override:"keyword",private:"keyword",public:"keyword","return!":"keyword",return:"keyword",select:"keyword",static:"keyword",to:"keyword",try:"keyword",upcast:"keyword","use!":"keyword",use:"keyword",void:"keyword",when:"keyword","yield!":"keyword",yield:"keyword",atomic:"keyword",break:"keyword",checked:"keyword",component:"keyword",const:"keyword",constraint:"keyword",constructor:"keyword",continue:"keyword",eager:"keyword",event:"keyword",external:"keyword",fixed:"keyword",method:"keyword",mixin:"keyword",object:"keyword",parallel:"keyword",process:"keyword",protected:"keyword",pure:"keyword",sealed:"keyword",tailcall:"keyword",trait:"keyword",virtual:"keyword",volatile:"keyword",List:"builtin",Seq:"builtin",Map:"builtin",Set:"builtin",Option:"builtin",int:"builtin",string:"builtin",not:"builtin",true:"builtin",false:"builtin",raise:"builtin",failwith:"builtin"},slashComments:!0}),Mi=cn({name:"sml",extraWords:{abstype:"keyword",and:"keyword",andalso:"keyword",case:"keyword",datatype:"keyword",fn:"keyword",handle:"keyword",infix:"keyword",infixr:"keyword",local:"keyword",nonfix:"keyword",op:"keyword",orelse:"keyword",raise:"keyword",withtype:"keyword",eqtype:"keyword",sharing:"keyword",sig:"keyword",signature:"keyword",structure:"keyword",where:"keyword",true:"keyword",false:"keyword",int:"builtin",real:"builtin",string:"builtin",char:"builtin",bool:"builtin"},slashComments:!0});function sn(e){for(var n={},t=e.split(" "),r=0;r<t.length;++r)n[t[r]]=!0;return n}var Bi=sn("break return rewrite set accept_mutex accept_mutex_delay access_log add_after_body add_before_body add_header addition_types aio alias allow ancient_browser ancient_browser_value auth_basic auth_basic_user_file auth_http auth_http_header auth_http_timeout autoindex autoindex_exact_size autoindex_localtime charset charset_types client_body_buffer_size client_body_in_file_only client_body_in_single_buffer client_body_temp_path client_body_timeout client_header_buffer_size client_header_timeout client_max_body_size connection_pool_size create_full_put_path daemon dav_access dav_methods debug_connection debug_points default_type degradation degrade deny devpoll_changes devpoll_events directio directio_alignment empty_gif env epoll_events error_log eventport_events expires fastcgi_bind fastcgi_buffer_size fastcgi_buffers fastcgi_busy_buffers_size fastcgi_cache fastcgi_cache_key fastcgi_cache_methods fastcgi_cache_min_uses fastcgi_cache_path fastcgi_cache_use_stale fastcgi_cache_valid fastcgi_catch_stderr fastcgi_connect_timeout fastcgi_hide_header fastcgi_ignore_client_abort fastcgi_ignore_headers fastcgi_index fastcgi_intercept_errors fastcgi_max_temp_file_size fastcgi_next_upstream fastcgi_param fastcgi_pass_header fastcgi_pass_request_body fastcgi_pass_request_headers fastcgi_read_timeout fastcgi_send_lowat fastcgi_send_timeout fastcgi_split_path_info fastcgi_store fastcgi_store_access fastcgi_temp_file_write_size fastcgi_temp_path fastcgi_upstream_fail_timeout fastcgi_upstream_max_fails flv geoip_city geoip_country google_perftools_profiles gzip gzip_buffers gzip_comp_level gzip_disable gzip_hash gzip_http_version gzip_min_length gzip_no_buffer gzip_proxied gzip_static gzip_types gzip_vary gzip_window if_modified_since ignore_invalid_headers image_filter image_filter_buffer image_filter_jpeg_quality image_filter_transparency imap_auth imap_capabilities imap_client_buffer index ip_hash keepalive_requests keepalive_timeout kqueue_changes kqueue_events large_client_header_buffers limit_conn limit_conn_log_level limit_rate limit_rate_after limit_req limit_req_log_level limit_req_zone limit_zone lingering_time lingering_timeout lock_file log_format log_not_found log_subrequest map_hash_bucket_size map_hash_max_size master_process memcached_bind memcached_buffer_size memcached_connect_timeout memcached_next_upstream memcached_read_timeout memcached_send_timeout memcached_upstream_fail_timeout memcached_upstream_max_fails merge_slashes min_delete_depth modern_browser modern_browser_value msie_padding msie_refresh multi_accept open_file_cache open_file_cache_errors open_file_cache_events open_file_cache_min_uses open_file_cache_valid open_log_file_cache output_buffers override_charset perl perl_modules perl_require perl_set pid pop3_auth pop3_capabilities port_in_redirect postpone_gzipping postpone_output protocol proxy proxy_bind proxy_buffer proxy_buffer_size proxy_buffering proxy_buffers proxy_busy_buffers_size proxy_cache proxy_cache_key proxy_cache_methods proxy_cache_min_uses proxy_cache_path proxy_cache_use_stale proxy_cache_valid proxy_connect_timeout proxy_headers_hash_bucket_size proxy_headers_hash_max_size proxy_hide_header proxy_ignore_client_abort proxy_ignore_headers proxy_intercept_errors proxy_max_temp_file_size proxy_method proxy_next_upstream proxy_pass_error_message proxy_pass_header proxy_pass_request_body proxy_pass_request_headers proxy_read_timeout proxy_redirect proxy_send_lowat proxy_send_timeout proxy_set_body proxy_set_header proxy_ssl_session_reuse proxy_store proxy_store_access proxy_temp_file_write_size proxy_temp_path proxy_timeout proxy_upstream_fail_timeout proxy_upstream_max_fails random_index read_ahead real_ip_header recursive_error_pages request_pool_size reset_timedout_connection resolver resolver_timeout rewrite_log rtsig_overflow_events rtsig_overflow_test rtsig_overflow_threshold rtsig_signo satisfy secure_link_secret send_lowat send_timeout sendfile sendfile_max_chunk server_name_in_redirect server_names_hash_bucket_size server_names_hash_max_size server_tokens set_real_ip_from smtp_auth smtp_capabilities smtp_client_buffer smtp_greeting_delay so_keepalive source_charset ssi ssi_ignore_recycled_buffers ssi_min_file_chunk ssi_silent_errors ssi_types ssi_value_length ssl ssl_certificate ssl_certificate_key ssl_ciphers ssl_client_certificate ssl_crl ssl_dhparam ssl_engine ssl_prefer_server_ciphers ssl_protocols ssl_session_cache ssl_session_timeout ssl_verify_client ssl_verify_depth starttls stub_status sub_filter sub_filter_once sub_filter_types tcp_nodelay tcp_nopush thread_stack_size timeout timer_resolution types_hash_bucket_size types_hash_max_size underscores_in_headers uninitialized_variable_warn use user userid userid_domain userid_expires userid_mark userid_name userid_p3p userid_path userid_service valid_referers variables_hash_bucket_size variables_hash_max_size worker_connections worker_cpu_affinity worker_priority worker_processes worker_rlimit_core worker_rlimit_nofile worker_rlimit_sigpending worker_threads working_directory xclient xml_entities xslt_stylesheet xslt_typesdrew@li229-23"),ji=sn("http mail events server types location upstream charset_map limit_except if geo map"),Wi=sn("include root server server_name listen internal proxy_pass memcached_pass fastcgi_pass try_files"),le;function Z(e,n){return le=n,e}function Ne(e,n){e.eatWhile(/[\w\$_]/);var t=e.current();if(Bi.propertyIsEnumerable(t))return"keyword";if(ji.propertyIsEnumerable(t))return"controlKeyword";if(Wi.propertyIsEnumerable(t))return"controlKeyword";var r=e.next();if(r=="@")return e.eatWhile(/[\w\\\-]/),Z("meta",e.current());if(r=="/"&&e.eat("*"))return n.tokenize=dt,dt(e,n);if(r=="<"&&e.eat("!"))return n.tokenize=ft,ft(e,n);if(r=="=")Z(null,"compare");else return(r=="~"||r=="|")&&e.eat("=")?Z(null,"compare"):r=='"'||r=="'"?(n.tokenize=Ui(r),n.tokenize(e,n)):r=="#"?(e.skipToEnd(),Z("comment","comment")):r=="!"?(e.match(/^\s*\w*/),Z("keyword","important")):/\d/.test(r)?(e.eatWhile(/[\w.%]/),Z("number","unit")):/[,.+>*\/]/.test(r)?Z(null,"select-op"):/[;{}:\[\]]/.test(r)?Z(null,r):(e.eatWhile(/[\w\\\-]/),Z("variable","variable"))}function dt(e,n){for(var t=!1,r;(r=e.next())!=null;){if(t&&r=="/"){n.tokenize=Ne;break}t=r=="*"}return Z("comment","comment")}function ft(e,n){for(var t=0,r;(r=e.next())!=null;){if(t>=2&&r==">"){n.tokenize=Ne;break}t=r=="-"?t+1:0}return Z("comment","comment")}function Ui(e){return function(n,t){for(var r=!1,i;(i=n.next())!=null&&!(i==e&&!r);)r=!r&&i=="\\";return r||(t.tokenize=Ne),Z("string","string")}}var Ki={name:"nginx",startState:function(){return{tokenize:Ne,baseIndent:0,stack:[]}},token:function(e,n){if(e.eatSpace())return null;le=null;var t=n.tokenize(e,n),r=n.stack[n.stack.length-1];return le=="hash"&&r=="rule"?t="atom":t=="variable"&&(r=="rule"?t="number":(!r||r=="@media{")&&(t="tag")),r=="rule"&&/^[\{\};]$/.test(le)&&n.stack.pop(),le=="{"?r=="@media"?n.stack[n.stack.length-1]="@media{":n.stack.push("{"):le=="}"?n.stack.pop():le=="@media"?n.stack.push("@media"):r=="{"&&le!="comment"&&n.stack.push("rule"),t},indent:function(e,n,t){var r=e.stack.length;return/^\}/.test(n)&&(r-=e.stack[e.stack.length-1]=="rule"?2:1),e.baseIndent+r*t.unit},languageData:{indentOnInput:/^\s*\}$/}};function un(e){return new RegExp("^(("+e.join(")|(")+"))\\b")}var Hi=new RegExp("^[\\+\\-\\*/&|\\^~<>!@'\\\\]"),Gi=new RegExp("^[\\(\\[\\{\\},:=;\\.]"),Zi=new RegExp("^((==)|(~=)|(<=)|(>=)|(<<)|(>>)|(\\.[\\+\\-\\*/\\^\\\\]))"),Qi=new RegExp("^((!=)|(\\+=)|(\\-=)|(\\*=)|(/=)|(&=)|(\\|=)|(\\^=))"),Vi=new RegExp("^((>>=)|(<<=))"),Xi=new RegExp("^[\\]\\)]"),Ji=new RegExp("^[_A-Za-z\xA1-\uFFFF][_A-Za-z0-9\xA1-\uFFFF]*"),Yi=un(["error","eval","function","abs","acos","atan","asin","cos","cosh","exp","log","prod","sum","log10","max","min","sign","sin","sinh","sqrt","tan","reshape","break","zeros","default","margin","round","ones","rand","syn","ceil","floor","size","clear","zeros","eye","mean","std","cov","det","eig","inv","norm","rank","trace","expm","logm","sqrtm","linspace","plot","title","xlabel","ylabel","legend","text","grid","meshgrid","mesh","num2str","fft","ifft","arrayfun","cellfun","input","fliplr","flipud","ismember"]),eo=un(["return","case","switch","else","elseif","end","endif","endfunction","if","otherwise","do","for","while","try","catch","classdef","properties","events","methods","global","persistent","endfor","endwhile","printf","sprintf","disp","until","continue","pkg"]);function pt(e,n){return!e.sol()&&e.peek()==="'"?(e.next(),n.tokenize=me,"operator"):(n.tokenize=me,me(e,n))}function no(e,n){return e.match(/^.*%}/)?(n.tokenize=me,"comment"):(e.skipToEnd(),"comment")}function me(e,n){if(e.eatSpace())return null;if(e.match("%{"))return n.tokenize=no,e.skipToEnd(),"comment";if(e.match(/^[%#]/))return e.skipToEnd(),"comment";if(e.match(/^[0-9\.+-]/,!1)){if(e.match(/^[+-]?0x[0-9a-fA-F]+[ij]?/))return e.tokenize=me,"number";if(e.match(/^[+-]?\d*\.\d+([EeDd][+-]?\d+)?[ij]?/)||e.match(/^[+-]?\d+([EeDd][+-]?\d+)?[ij]?/))return"number"}if(e.match(un(["nan","NaN","inf","Inf"])))return"number";var t=e.match(/^"(?:[^"]|"")*("|$)/)||e.match(/^'(?:[^']|'')*('|$)/);return t?t[1]?"string":"error":e.match(eo)?"keyword":e.match(Yi)?"builtin":e.match(Ji)?"variable":e.match(Hi)||e.match(Zi)?"operator":e.match(Gi)||e.match(Qi)||e.match(Vi)?null:e.match(Xi)?(n.tokenize=pt,null):(e.next(),"error")}var to={name:"octave",startState:function(){return{tokenize:me}},token:function(e,n){var t=n.tokenize(e,n);return(t==="number"||t==="variable")&&(n.tokenize=pt),t},languageData:{commentTokens:{line:"%"}}};function B(e,n){return e.string.charAt(e.pos+(n||0))}function mt(e,n){if(n){var t=e.pos-n;return e.string.substr(t>=0?t:0,n)}else return e.string.substr(0,e.pos-1)}function dn(e,n){var t=e.string.length,r=t-e.pos+1;return e.string.substr(e.pos,n&&n<t?n:r)}function N(e,n){var t=e.pos+n,r;t<=0?e.pos=0:t>=(r=e.string.length-1)?e.pos=r:e.pos=t}var ze={"->":4,"++":4,"--":4,"**":4,"=~":4,"!~":4,"*":4,"/":4,"%":4,x:4,"+":4,"-":4,".":4,"<<":4,">>":4,"<":4,">":4,"<=":4,">=":4,lt:4,gt:4,le:4,ge:4,"==":4,"!=":4,"<=>":4,eq:4,ne:4,cmp:4,"~~":4,"&":4,"|":4,"^":4,"&&":4,"||":4,"//":4,"..":4,"...":4,"?":4,":":4,"=":4,"+=":4,"-=":4,"*=":4,",":4,"=>":4,"::":4,not:4,and:4,or:4,xor:4,BEGIN:[5,1],END:[5,1],PRINT:[5,1],PRINTF:[5,1],GETC:[5,1],READ:[5,1],READLINE:[5,1],DESTROY:[5,1],TIE:[5,1],TIEHANDLE:[5,1],UNTIE:[5,1],STDIN:5,STDIN_TOP:5,STDOUT:5,STDOUT_TOP:5,STDERR:5,STDERR_TOP:5,$ARG:5,$_:5,"@ARG":5,"@_":5,$LIST_SEPARATOR:5,'$"':5,$PROCESS_ID:5,$PID:5,$$:5,$REAL_GROUP_ID:5,$GID:5,"$(":5,$EFFECTIVE_GROUP_ID:5,$EGID:5,"$)":5,$PROGRAM_NAME:5,$0:5,$SUBSCRIPT_SEPARATOR:5,$SUBSEP:5,"$;":5,$REAL_USER_ID:5,$UID:5,"$<":5,$EFFECTIVE_USER_ID:5,$EUID:5,"$>":5,$a:5,$b:5,$COMPILING:5,"$^C":5,$DEBUGGING:5,"$^D":5,"${^ENCODING}":5,$ENV:5,"%ENV":5,$SYSTEM_FD_MAX:5,"$^F":5,"@F":5,"${^GLOBAL_PHASE}":5,"$^H":5,"%^H":5,"@INC":5,"%INC":5,$INPLACE_EDIT:5,"$^I":5,"$^M":5,$OSNAME:5,"$^O":5,"${^OPEN}":5,$PERLDB:5,"$^P":5,$SIG:5,"%SIG":5,$BASETIME:5,"$^T":5,"${^TAINT}":5,"${^UNICODE}":5,"${^UTF8CACHE}":5,"${^UTF8LOCALE}":5,$PERL_VERSION:5,"$^V":5,"${^WIN32_SLOPPY_STAT}":5,$EXECUTABLE_NAME:5,"$^X":5,$1:5,$MATCH:5,"$&":5,"${^MATCH}":5,$PREMATCH:5,"$`":5,"${^PREMATCH}":5,$POSTMATCH:5,"$'":5,"${^POSTMATCH}":5,$LAST_PAREN_MATCH:5,"$+":5,$LAST_SUBMATCH_RESULT:5,"$^N":5,"@LAST_MATCH_END":5,"@+":5,"%LAST_PAREN_MATCH":5,"%+":5,"@LAST_MATCH_START":5,"@-":5,"%LAST_MATCH_START":5,"%-":5,$LAST_REGEXP_CODE_RESULT:5,"$^R":5,"${^RE_DEBUG_FLAGS}":5,"${^RE_TRIE_MAXBUF}":5,$ARGV:5,"@ARGV":5,ARGV:5,ARGVOUT:5,$OUTPUT_FIELD_SEPARATOR:5,$OFS:5,"$,":5,$INPUT_LINE_NUMBER:5,$NR:5,"$.":5,$INPUT_RECORD_SEPARATOR:5,$RS:5,"$/":5,$OUTPUT_RECORD_SEPARATOR:5,$ORS:5,"$\\":5,$OUTPUT_AUTOFLUSH:5,"$|":5,$ACCUMULATOR:5,"$^A":5,$FORMAT_FORMFEED:5,"$^L":5,$FORMAT_PAGE_NUMBER:5,"$%":5,$FORMAT_LINES_LEFT:5,"$-":5,$FORMAT_LINE_BREAK_CHARACTERS:5,"$:":5,$FORMAT_LINES_PER_PAGE:5,"$=":5,$FORMAT_TOP_NAME:5,"$^":5,$FORMAT_NAME:5,"$~":5,"${^CHILD_ERROR_NATIVE}":5,$EXTENDED_OS_ERROR:5,"$^E":5,$EXCEPTIONS_BEING_CAUGHT:5,"$^S":5,$WARNING:5,"$^W":5,"${^WARNING_BITS}":5,$OS_ERROR:5,$ERRNO:5,"$!":5,"%OS_ERROR":5,"%ERRNO":5,"%!":5,$CHILD_ERROR:5,"$?":5,$EVAL_ERROR:5,"$@":5,$OFMT:5,"$#":5,"$*":5,$ARRAY_BASE:5,"$[":5,$OLD_PERL_VERSION:5,"$]":5,if:[1,1],elsif:[1,1],else:[1,1],while:[1,1],unless:[1,1],for:[1,1],foreach:[1,1],abs:1,accept:1,alarm:1,atan2:1,bind:1,binmode:1,bless:1,bootstrap:1,break:1,caller:1,chdir:1,chmod:1,chomp:1,chop:1,chown:1,chr:1,chroot:1,close:1,closedir:1,connect:1,continue:[1,1],cos:1,crypt:1,dbmclose:1,dbmopen:1,default:1,defined:1,delete:1,die:1,do:1,dump:1,each:1,endgrent:1,endhostent:1,endnetent:1,endprotoent:1,endpwent:1,endservent:1,eof:1,eval:1,exec:1,exists:1,exit:1,exp:1,fcntl:1,fileno:1,flock:1,fork:1,format:1,formline:1,getc:1,getgrent:1,getgrgid:1,getgrnam:1,gethostbyaddr:1,gethostbyname:1,gethostent:1,getlogin:1,getnetbyaddr:1,getnetbyname:1,getnetent:1,getpeername:1,getpgrp:1,getppid:1,getpriority:1,getprotobyname:1,getprotobynumber:1,getprotoent:1,getpwent:1,getpwnam:1,getpwuid:1,getservbyname:1,getservbyport:1,getservent:1,getsockname:1,getsockopt:1,given:1,glob:1,gmtime:1,goto:1,grep:1,hex:1,import:1,index:1,int:1,ioctl:1,join:1,keys:1,kill:1,last:1,lc:1,lcfirst:1,length:1,link:1,listen:1,local:2,localtime:1,lock:1,log:1,lstat:1,m:null,map:1,mkdir:1,msgctl:1,msgget:1,msgrcv:1,msgsnd:1,my:2,new:1,next:1,no:1,oct:1,open:1,opendir:1,ord:1,our:2,pack:1,package:1,pipe:1,pop:1,pos:1,print:1,printf:1,prototype:1,push:1,q:null,qq:null,qr:null,quotemeta:null,qw:null,qx:null,rand:1,read:1,readdir:1,readline:1,readlink:1,readpipe:1,recv:1,redo:1,ref:1,rename:1,require:1,reset:1,return:1,reverse:1,rewinddir:1,rindex:1,rmdir:1,s:null,say:1,scalar:1,seek:1,seekdir:1,select:1,semctl:1,semget:1,semop:1,send:1,setgrent:1,sethostent:1,setnetent:1,setpgrp:1,setpriority:1,setprotoent:1,setpwent:1,setservent:1,setsockopt:1,shift:1,shmctl:1,shmget:1,shmread:1,shmwrite:1,shutdown:1,sin:1,sleep:1,socket:1,socketpair:1,sort:1,splice:1,split:1,sprintf:1,sqrt:1,srand:1,stat:1,state:1,study:1,sub:1,substr:1,symlink:1,syscall:1,sysopen:1,sysread:1,sysseek:1,system:1,syswrite:1,tell:1,telldir:1,tie:1,tied:1,time:1,times:1,tr:null,truncate:1,uc:1,ucfirst:1,umask:1,undef:1,unlink:1,unpack:1,unshift:1,untie:1,use:1,utime:1,values:1,vec:1,wait:1,waitpid:1,wantarray:1,warn:1,when:1,write:1,y:null},A="string.special",P=/[goseximacplud]/;function _(e,n,t,r,i){return n.chain=null,n.style=null,n.tail=null,n.tokenize=function(o,a){for(var p=!1,S,E=0;S=o.next();){if(S===t[E]&&!p)return t[++E]!==void 0?(a.chain=t[E],a.style=r,a.tail=i):i&&o.eatWhile(i),a.tokenize=qe,r;p=!p&&S=="\\"}return r},n.tokenize(e,n)}function fn(e,n,t){return n.tokenize=function(r,i){return r.string==t&&(i.tokenize=qe),r.skipToEnd(),"string"},n.tokenize(e,n)}function qe(e,n){if(e.eatSpace())return null;if(n.chain)return _(e,n,n.chain,n.style,n.tail);if(e.match(/^(\-?((\d[\d_]*)?\.\d+(e[+-]?\d+)?|\d+\.\d*)|0x[\da-fA-F_]+|0b[01_]+|\d[\d_]*(e[+-]?\d+)?)/))return"number";if(e.match(/^<<(?=[_a-zA-Z])/))return e.eatWhile(/\w/),fn(e,n,e.current().substr(2));if(e.sol()&&e.match(/^\=item(?!\w)/))return fn(e,n,"=cut");var t=e.next();if(t=='"'||t=="'"){if(mt(e,3)=="<<"+t){var r=e.pos;e.eatWhile(/\w/);var i=e.current().substr(1);if(i&&e.eat(t))return fn(e,n,i);e.pos=r}return _(e,n,[t],"string")}if(t=="q"){var o=B(e,-2);if(!(o&&/\w/.test(o))){if(o=B(e,0),o=="x"){if(o=B(e,1),o=="(")return N(e,2),_(e,n,[")"],A,P);if(o=="[")return N(e,2),_(e,n,["]"],A,P);if(o=="{")return N(e,2),_(e,n,["}"],A,P);if(o=="<")return N(e,2),_(e,n,[">"],A,P);if(/[\^'"!~\/]/.test(o))return N(e,1),_(e,n,[e.eat(o)],A,P)}else if(o=="q"){if(o=B(e,1),o=="(")return N(e,2),_(e,n,[")"],"string");if(o=="[")return N(e,2),_(e,n,["]"],"string");if(o=="{")return N(e,2),_(e,n,["}"],"string");if(o=="<")return N(e,2),_(e,n,[">"],"string");if(/[\^'"!~\/]/.test(o))return N(e,1),_(e,n,[e.eat(o)],"string")}else if(o=="w"){if(o=B(e,1),o=="(")return N(e,2),_(e,n,[")"],"bracket");if(o=="[")return N(e,2),_(e,n,["]"],"bracket");if(o=="{")return N(e,2),_(e,n,["}"],"bracket");if(o=="<")return N(e,2),_(e,n,[">"],"bracket");if(/[\^'"!~\/]/.test(o))return N(e,1),_(e,n,[e.eat(o)],"bracket")}else if(o=="r"){if(o=B(e,1),o=="(")return N(e,2),_(e,n,[")"],A,P);if(o=="[")return N(e,2),_(e,n,["]"],A,P);if(o=="{")return N(e,2),_(e,n,["}"],A,P);if(o=="<")return N(e,2),_(e,n,[">"],A,P);if(/[\^'"!~\/]/.test(o))return N(e,1),_(e,n,[e.eat(o)],A,P)}else if(/[\^'"!~\/(\[{<]/.test(o)){if(o=="(")return N(e,1),_(e,n,[")"],"string");if(o=="[")return N(e,1),_(e,n,["]"],"string");if(o=="{")return N(e,1),_(e,n,["}"],"string");if(o=="<")return N(e,1),_(e,n,[">"],"string");if(/[\^'"!~\/]/.test(o))return _(e,n,[e.eat(o)],"string")}}}if(t=="m"){var o=B(e,-2);if(!(o&&/\w/.test(o))&&(o=e.eat(/[(\[{<\^'"!~\/]/),o)){if(/[\^'"!~\/]/.test(o))return _(e,n,[o],A,P);if(o=="(")return _(e,n,[")"],A,P);if(o=="[")return _(e,n,["]"],A,P);if(o=="{")return _(e,n,["}"],A,P);if(o=="<")return _(e,n,[">"],A,P)}}if(t=="s"){var o=/[\/>\]})\w]/.test(B(e,-2));if(!o&&(o=e.eat(/[(\[{<\^'"!~\/]/),o))return o=="["?_(e,n,["]","]"],A,P):o=="{"?_(e,n,["}","}"],A,P):o=="<"?_(e,n,[">",">"],A,P):o=="("?_(e,n,[")",")"],A,P):_(e,n,[o,o],A,P)}if(t=="y"){var o=/[\/>\]})\w]/.test(B(e,-2));if(!o&&(o=e.eat(/[(\[{<\^'"!~\/]/),o))return o=="["?_(e,n,["]","]"],A,P):o=="{"?_(e,n,["}","}"],A,P):o=="<"?_(e,n,[">",">"],A,P):o=="("?_(e,n,[")",")"],A,P):_(e,n,[o,o],A,P)}if(t=="t"){var o=/[\/>\]})\w]/.test(B(e,-2));if(!o&&(o=e.eat("r"),o&&(o=e.eat(/[(\[{<\^'"!~\/]/),o)))return o=="["?_(e,n,["]","]"],A,P):o=="{"?_(e,n,["}","}"],A,P):o=="<"?_(e,n,[">",">"],A,P):o=="("?_(e,n,[")",")"],A,P):_(e,n,[o,o],A,P)}if(t=="`")return _(e,n,[t],"builtin");if(t=="/")return/~\s*$/.test(mt(e))?_(e,n,[t],A,P):"operator";if(t=="$"){var r=e.pos;if(e.eatWhile(/\d/)||e.eat("{")&&e.eatWhile(/\d/)&&e.eat("}"))return"builtin";e.pos=r}if(/[$@%]/.test(t)){var r=e.pos;if(e.eat("^")&&e.eat(/[A-Z]/)||!/[@$%&]/.test(B(e,-2))&&e.eat(/[=|\\\-#?@;:&`~\^!\[\]*'"$+.,\/<>()]/)){var o=e.current();if(ze[o])return"builtin"}e.pos=r}if(/[$@%&]/.test(t)&&(e.eatWhile(/[\w$]/)||e.eat("{")&&e.eatWhile(/[\w$]/)&&e.eat("}"))){var o=e.current();return ze[o]?"builtin":"variable"}if(t=="#"&&B(e,-2)!="$")return e.skipToEnd(),"comment";if(/[:+\-\^*$&%@=<>!?|\/~\.]/.test(t)){var r=e.pos;if(e.eatWhile(/[:+\-\^*$&%@=<>!?|\/~\.]/),ze[e.current()])return"operator";e.pos=r}if(t=="_"&&e.pos==1){if(dn(e,6)=="_END__")return _(e,n,["\0"],"comment");if(dn(e,7)=="_DATA__")return _(e,n,["\0"],"builtin");if(dn(e,7)=="_C__")return _(e,n,["\0"],"string")}if(/\w/.test(t)){var r=e.pos;if(B(e,-2)=="{"&&(B(e,0)=="}"||e.eatWhile(/\w/)&&B(e,0)=="}"))return"string";e.pos=r}if(/[A-Z]/.test(t)){var a=B(e,-2),r=e.pos;if(e.eatWhile(/[A-Z_]/),/[\da-z]/.test(B(e,0)))e.pos=r;else{var o=ze[e.current()];return o?(o[1]&&(o=o[0]),a!=":"?o==1?"keyword":o==2?"def":o==3?"atom":o==4?"operator":o==5?"builtin":"meta":"meta"):"meta"}}if(/[a-zA-Z_]/.test(t)){var a=B(e,-2);e.eatWhile(/\w/);var o=ze[e.current()];return o?(o[1]&&(o=o[0]),a!=":"?o==1?"keyword":o==2?"def":o==3?"atom":o==4?"operator":o==5?"builtin":"meta":"meta"):"meta"}return null}var ro={name:"perl",startState:function(){return{tokenize:qe,chain:null,style:null,tail:null}},token:function(e,n){return(n.tokenize||qe)(e,n)},languageData:{commentTokens:{line:"#"},wordChars:"$"}};function io(e){for(var n={},t=e.split(" "),r=0;r<t.length;++r)n[t[r]]=!0;return n}var oo=io("absolute and array asm begin case const constructor destructor div do downto else end file for function goto if implementation in inherited inline interface label mod nil not object of operator or packed procedure program record reintroduce repeat self set shl shr string then to type unit until uses var while with xor as class dispinterface except exports finalization finally initialization inline is library on out packed property raise resourcestring threadvar try absolute abstract alias assembler bitpacked break cdecl continue cppdecl cvar default deprecated dynamic enumerator experimental export external far far16 forward generic helper implements index interrupt iocheck local message name near nodefault noreturn nostackframe oldfpccall otherwise overload override pascal platform private protected public published read register reintroduce result safecall saveregisters softfloat specialize static stdcall stored strict unaligned unimplemented varargs virtual write"),ao={null:!0},ht=/[+\-*&%=<>!?|\/]/;function lo(e,n){var t=e.next();if(t=="#"&&n.startOfLine)return e.skipToEnd(),"meta";if(t=='"'||t=="'")return n.tokenize=co(t),n.tokenize(e,n);if(t=="("&&e.eat("*"))return n.tokenize=gt,gt(e,n);if(t=="{")return n.tokenize=bt,bt(e,n);if(/[\[\]\(\),;\:\.]/.test(t))return null;if(/\d/.test(t))return e.eatWhile(/[\w\.]/),"number";if(t=="/"&&e.eat("/"))return e.skipToEnd(),"comment";if(ht.test(t))return e.eatWhile(ht),"operator";e.eatWhile(/[\w\$_]/);var r=e.current().toLowerCase();return oo.propertyIsEnumerable(r)?"keyword":ao.propertyIsEnumerable(r)?"atom":"variable"}function co(e){return function(n,t){for(var r=!1,i,o=!1;(i=n.next())!=null;){if(i==e&&!r){o=!0;break}r=!r&&i=="\\"}return(o||!r)&&(t.tokenize=null),"string"}}function gt(e,n){for(var t=!1,r;r=e.next();){if(r==")"&&t){n.tokenize=null;break}t=r=="*"}return"comment"}function bt(e,n){for(var t;t=e.next();)if(t=="}"){n.tokenize=null;break}return"comment"}var so={name:"pascal",startState:function(){return{tokenize:null}},token:function(e,n){if(e.eatSpace())return null;var t=(n.tokenize||lo)(e,n);return t=="comment"||t=="meta",t},languageData:{indentOnInput:/^\s*[{}]$/,commentTokens:{block:{open:"(*",close:"*)"}}}};function he(e,n){n=n||{};for(var t=n.prefix!==void 0?n.prefix:"^",r=n.suffix!==void 0?n.suffix:"\\b",i=0;i<e.length;i++)e[i]instanceof RegExp?e[i]=e[i].source:e[i]=e[i].replace(/[-\/\\^$*+?.()|[\]{}]/g,"\\$&");return new RegExp(t+"("+e.join("|")+")"+r,"i")}var _t="(?=[^A-Za-z\\d\\-_]|$)",pn=/[\w\-:]/,uo=he([/begin|break|catch|continue|data|default|do|dynamicparam/,/else|elseif|end|exit|filter|finally|for|foreach|from|function|if|in/,/param|process|return|switch|throw|trap|try|until|where|while/],{suffix:_t}),fo=/[\[\]{},;`\\\.]|@[({]/,po=he(["f",/b?not/,/[ic]?split/,"join",/is(not)?/,"as",/[ic]?(eq|ne|[gl][te])/,/[ic]?(not)?(like|match|contains)/,/[ic]?replace/,/b?(and|or|xor)/],{prefix:"-"}),mo=/[+\-*\/%]=|\+\+|--|\.\.|[+\-*&^%:=!|\/]|<(?!#)|(?!#)>/,ho=he([po,mo],{suffix:""}),go=/^((0x[\da-f]+)|((\d+\.\d+|\d\.|\.\d+|\d+)(e[\+\-]?\d+)?))[ld]?([kmgtp]b)?/i,bo=/^[A-Za-z\_][A-Za-z\-\_\d]*\b/,yo=/[A-Z]:|%|\?/i,vo=he([/Add-(Computer|Content|History|Member|PSSnapin|Type)/,/Checkpoint-Computer/,/Clear-(Content|EventLog|History|Host|Item(Property)?|Variable)/,/Compare-Object/,/Complete-Transaction/,/Connect-PSSession/,/ConvertFrom-(Csv|Json|SecureString|StringData)/,/Convert-Path/,/ConvertTo-(Csv|Html|Json|SecureString|Xml)/,/Copy-Item(Property)?/,/Debug-Process/,/Disable-(ComputerRestore|PSBreakpoint|PSRemoting|PSSessionConfiguration)/,/Disconnect-PSSession/,/Enable-(ComputerRestore|PSBreakpoint|PSRemoting|PSSessionConfiguration)/,/(Enter|Exit)-PSSession/,/Export-(Alias|Clixml|Console|Counter|Csv|FormatData|ModuleMember|PSSession)/,/ForEach-Object/,/Format-(Custom|List|Table|Wide)/,new RegExp("Get-(Acl|Alias|AuthenticodeSignature|ChildItem|Command|ComputerRestorePoint|Content|ControlPanelItem|Counter|Credential|Culture|Date|Event|EventLog|EventSubscriber|ExecutionPolicy|FormatData|Help|History|Host|HotFix|Item|ItemProperty|Job|Location|Member|Module|PfxCertificate|Process|PSBreakpoint|PSCallStack|PSDrive|PSProvider|PSSession|PSSessionConfiguration|PSSnapin|Random|Service|TraceSource|Transaction|TypeData|UICulture|Unique|Variable|Verb|WinEvent|WmiObject)"),/Group-Object/,/Import-(Alias|Clixml|Counter|Csv|LocalizedData|Module|PSSession)/,/ImportSystemModules/,/Invoke-(Command|Expression|History|Item|RestMethod|WebRequest|WmiMethod)/,/Join-Path/,/Limit-EventLog/,/Measure-(Command|Object)/,/Move-Item(Property)?/,new RegExp("New-(Alias|Event|EventLog|Item(Property)?|Module|ModuleManifest|Object|PSDrive|PSSession|PSSessionConfigurationFile|PSSessionOption|PSTransportOption|Service|TimeSpan|Variable|WebServiceProxy|WinEvent)"),/Out-(Default|File|GridView|Host|Null|Printer|String)/,/Pause/,/(Pop|Push)-Location/,/Read-Host/,/Receive-(Job|PSSession)/,/Register-(EngineEvent|ObjectEvent|PSSessionConfiguration|WmiEvent)/,/Remove-(Computer|Event|EventLog|Item(Property)?|Job|Module|PSBreakpoint|PSDrive|PSSession|PSSnapin|TypeData|Variable|WmiObject)/,/Rename-(Computer|Item(Property)?)/,/Reset-ComputerMachinePassword/,/Resolve-Path/,/Restart-(Computer|Service)/,/Restore-Computer/,/Resume-(Job|Service)/,/Save-Help/,/Select-(Object|String|Xml)/,/Send-MailMessage/,new RegExp("Set-(Acl|Alias|AuthenticodeSignature|Content|Date|ExecutionPolicy|Item(Property)?|Location|PSBreakpoint|PSDebug|PSSessionConfiguration|Service|StrictMode|TraceSource|Variable|WmiInstance)"),/Show-(Command|ControlPanelItem|EventLog)/,/Sort-Object/,/Split-Path/,/Start-(Job|Process|Service|Sleep|Transaction|Transcript)/,/Stop-(Computer|Job|Process|Service|Transcript)/,/Suspend-(Job|Service)/,/TabExpansion2/,/Tee-Object/,/Test-(ComputerSecureChannel|Connection|ModuleManifest|Path|PSSessionConfigurationFile)/,/Trace-Command/,/Unblock-File/,/Undo-Transaction/,/Unregister-(Event|PSSessionConfiguration)/,/Update-(FormatData|Help|List|TypeData)/,/Use-Transaction/,/Wait-(Event|Job|Process)/,/Where-Object/,/Write-(Debug|Error|EventLog|Host|Output|Progress|Verbose|Warning)/,/cd|help|mkdir|more|oss|prompt/,/ac|asnp|cat|cd|chdir|clc|clear|clhy|cli|clp|cls|clv|cnsn|compare|copy|cp|cpi|cpp|cvpa|dbp|del|diff|dir|dnsn|ebp/,/echo|epal|epcsv|epsn|erase|etsn|exsn|fc|fl|foreach|ft|fw|gal|gbp|gc|gci|gcm|gcs|gdr|ghy|gi|gjb|gl|gm|gmo|gp|gps/,/group|gsn|gsnp|gsv|gu|gv|gwmi|h|history|icm|iex|ihy|ii|ipal|ipcsv|ipmo|ipsn|irm|ise|iwmi|iwr|kill|lp|ls|man|md/,/measure|mi|mount|move|mp|mv|nal|ndr|ni|nmo|npssc|nsn|nv|ogv|oh|popd|ps|pushd|pwd|r|rbp|rcjb|rcsn|rd|rdr|ren|ri/,/rjb|rm|rmdir|rmo|rni|rnp|rp|rsn|rsnp|rujb|rv|rvpa|rwmi|sajb|sal|saps|sasv|sbp|sc|select|set|shcm|si|sl|sleep|sls/,/sort|sp|spjb|spps|spsv|start|sujb|sv|swmi|tee|trcm|type|where|wjb|write/],{prefix:"",suffix:""}),ko=he([/[$?^_]|Args|ConfirmPreference|ConsoleFileName|DebugPreference|Error|ErrorActionPreference|ErrorView|ExecutionContext/,/FormatEnumerationLimit|Home|Host|Input|MaximumAliasCount|MaximumDriveCount|MaximumErrorCount|MaximumFunctionCount/,/MaximumHistoryCount|MaximumVariableCount|MyInvocation|NestedPromptLevel|OutputEncoding|Pid|Profile|ProgressPreference/,/PSBoundParameters|PSCommandPath|PSCulture|PSDefaultParameterValues|PSEmailServer|PSHome|PSScriptRoot|PSSessionApplicationName/,/PSSessionConfigurationName|PSSessionOption|PSUICulture|PSVersionTable|Pwd|ShellId|StackTrace|VerbosePreference/,/WarningPreference|WhatIfPreference/,/Event|EventArgs|EventSubscriber|Sender/,/Matches|Ofs|ForEach|LastExitCode|PSCmdlet|PSItem|PSSenderInfo|This/,/true|false|null/],{prefix:"\\$",suffix:""}),_o=he([yo,vo,ko],{suffix:_t}),yt={keyword:uo,number:go,operator:ho,builtin:_o,punctuation:fo,variable:bo};function te(e,n){var t=n.returnStack[n.returnStack.length-1];if(t&&t.shouldReturnFrom(n))return n.tokenize=t.tokenize,n.returnStack.pop(),n.tokenize(e,n);if(e.eatSpace())return null;if(e.eat("("))return n.bracketNesting+=1,"punctuation";if(e.eat(")"))return n.bracketNesting-=1,"punctuation";for(var r in yt)if(e.match(yt[r]))return r;var i=e.next();if(i==="'")return xo(e,n);if(i==="$")return mn(e,n);if(i==='"')return xt(e,n);if(i==="<"&&e.eat("#"))return n.tokenize=vt,vt(e,n);if(i==="#")return e.skipToEnd(),"comment";if(i==="@"){var o=e.eat(/["']/);if(o&&e.eol())return n.tokenize=Fe,n.startQuote=o[0],Fe(e,n);if(e.eol())return"error";if(e.peek().match(/[({]/))return"punctuation";if(e.peek().match(pn))return mn(e,n)}return"error"}function xo(e,n){for(var t;(t=e.peek())!=null;)if(e.next(),t==="'"&&!e.eat("'"))return n.tokenize=te,"string";return"error"}function xt(e,n){for(var t;(t=e.peek())!=null;){if(t==="$")return n.tokenize=wo,"string";if(e.next(),t==="`"){e.next();continue}if(t==='"'&&!e.eat('"'))return n.tokenize=te,"string"}return"error"}function wo(e,n){return wt(e,n,xt)}function So(e,n){return n.tokenize=Fe,n.startQuote='"',Fe(e,n)}function zo(e,n){return wt(e,n,So)}function wt(e,n,t){if(e.match("$(")){var r=n.bracketNesting;return n.returnStack.push({shouldReturnFrom:function(i){return i.bracketNesting===r},tokenize:t}),n.tokenize=te,n.bracketNesting+=1,"punctuation"}else return e.next(),n.returnStack.push({shouldReturnFrom:function(){return!0},tokenize:t}),n.tokenize=mn,n.tokenize(e,n)}function vt(e,n){for(var t=!1,r;(r=e.next())!=null;){if(t&&r==">"){n.tokenize=te;break}t=r==="#"}return"comment"}function mn(e,n){var t=e.peek();return e.eat("{")?(n.tokenize=kt,kt(e,n)):t!=null&&t.match(pn)?(e.eatWhile(pn),n.tokenize=te,"variable"):(n.tokenize=te,"error")}function kt(e,n){for(var t;(t=e.next())!=null;)if(t==="}"){n.tokenize=te;break}return"variable"}function Fe(e,n){var t=n.startQuote;if(e.sol()&&e.match(new RegExp(t+"@")))n.tokenize=te;else if(t==='"')for(;!e.eol();){var r=e.peek();if(r==="$")return n.tokenize=zo,"string";e.next(),r==="`"&&e.next()}else e.skipToEnd();return"string"}var Eo={name:"powershell",startState:function(){return{returnStack:[],bracketNesting:0,tokenize:te}},token:function(e,n){return n.tokenize(e,n)},languageData:{commentTokens:{line:"#",block:{open:"<#",close:"#>"}}}};var To={name:"properties",token:function(e,n){var t=e.sol()||n.afterSection,r=e.eol();if(n.afterSection=!1,t&&(n.nextMultiline?(n.inMultiline=!0,n.nextMultiline=!1):n.position="def"),r&&!n.nextMultiline&&(n.inMultiline=!1,n.position="def"),t)for(;e.eatSpace(););var i=e.next();return t&&(i==="#"||i==="!"||i===";")?(n.position="comment",e.skipToEnd(),"comment"):t&&i==="["?(n.afterSection=!0,e.skipTo("]"),e.eat("]"),"header"):i==="="||i===":"?(n.position="quote",null):(i==="\\"&&n.position==="quote"&&e.eol()&&(n.nextMultiline=!0),n.position)},startState:function(){return{position:"def",nextMultiline:!1,inMultiline:!1,afterSection:!1}}};function hn(e){return new RegExp("^(("+e.join(")|(")+"))\\b")}var Co=hn(["and","or","not","is"]),St=["as","assert","break","class","continue","def","del","elif","else","except","finally","for","from","global","if","import","lambda","pass","raise","return","try","while","with","yield","in","False","True"],zt=["abs","all","any","bin","bool","bytearray","callable","chr","classmethod","compile","complex","delattr","dict","dir","divmod","enumerate","eval","filter","float","format","frozenset","getattr","globals","hasattr","hash","help","hex","id","input","int","isinstance","issubclass","iter","len","list","locals","map","max","memoryview","min","next","object","oct","open","ord","pow","property","range","repr","reversed","round","set","setattr","slice","sorted","staticmethod","str","sum","super","tuple","type","vars","zip","__import__","NotImplemented","Ellipsis","__debug__"];function Q(e){return e.scopes[e.scopes.length-1]}function Et(e){for(var n="error",t=e.delimiters||e.singleDelimiters||/^[\(\)\[\]\{\}@,:`=;\.\\]/,r=[e.singleOperators,e.doubleOperators,e.doubleDelimiters,e.tripleDelimiters,e.operators||/^([-+*/%\/&|^]=?|[<>=]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/],i=0;i<r.length;i++)r[i]||r.splice(i--,1);var o=e.hangingIndent,a=St,p=zt;e.extra_keywords!=null&&(a=a.concat(e.extra_keywords)),e.extra_builtins!=null&&(p=p.concat(e.extra_builtins));var S=!(e.version&&Number(e.version)<3);if(S){var E=e.identifiers||/^[_A-Za-z\u00A1-\uFFFF][_A-Za-z0-9\u00A1-\uFFFF]*/;a=a.concat(["nonlocal","None","aiter","anext","async","await","breakpoint","match","case"]),p=p.concat(["ascii","bytes","exec","print"]);var x=new RegExp(`^(([rbuf]|(br)|(rb)|(fr)|(rf))?('{3}|"{3}|['"]))`,"i")}else{var E=e.identifiers||/^[_A-Za-z][_A-Za-z0-9]*/;a=a.concat(["exec","print"]),p=p.concat(["apply","basestring","buffer","cmp","coerce","execfile","file","intern","long","raw_input","reduce","reload","unichr","unicode","xrange","None"]);var x=new RegExp(`^(([rubf]|(ur)|(br))?('{3}|"{3}|['"]))`,"i")}var c=hn(a),d=hn(p);function y(l,s){var I=l.sol()&&s.lastToken!="\\";if(I&&(s.indent=l.indentation()),I&&Q(s).type=="py"){var k=Q(s).offset;if(l.eatSpace()){var L=l.indentation();return L>k?u(l,s):L<k&&w(l,s)&&l.peek()!="#"&&(s.errorToken=!0),null}else{var m=O(l,s);return k>0&&w(l,s)&&(m+=" "+n),m}}return O(l,s)}function O(l,s,I){if(l.eatSpace())return null;if(!I&&l.match(/^#.*/))return"comment";if(l.match(/^[0-9\.]/,!1)){var k=!1;if(l.match(/^[\d_]*\.\d+(e[\+\-]?\d+)?/i)&&(k=!0),l.match(/^[\d_]+\.\d*/)&&(k=!0),l.match(/^\.\d+/)&&(k=!0),k)return l.eat(/J/i),"number";var L=!1;if(l.match(/^0x[0-9a-f_]+/i)&&(L=!0),l.match(/^0b[01_]+/i)&&(L=!0),l.match(/^0o[0-7_]+/i)&&(L=!0),l.match(/^[1-9][\d_]*(e[\+\-]?[\d_]+)?/)&&(l.eat(/J/i),L=!0),l.match(/^0(?![\dx])/i)&&(L=!0),L)return l.eat(/L/i),"number"}if(l.match(x)){var m=l.current().toLowerCase().indexOf("f")!==-1;return m?(s.tokenize=K(l.current(),s.tokenize),s.tokenize(l,s)):(s.tokenize=M(l.current(),s.tokenize),s.tokenize(l,s))}for(var f=0;f<r.length;f++)if(l.match(r[f]))return"operator";return l.match(t)?"punctuation":s.lastToken=="."&&l.match(E)?"property":l.match(c)||l.match(Co)?"keyword":l.match(d)?"builtin":l.match(/^(self|cls)\b/)?"self":l.match(E)?s.lastToken=="def"||s.lastToken=="class"?"def":"variable":(l.next(),I?null:n)}function K(l,s){for(;"rubf".indexOf(l.charAt(0).toLowerCase())>=0;)l=l.substr(1);var I=l.length==1,k="string";function L(f){return function(z,v){var D=O(z,v,!0);return D=="punctuation"&&(z.current()=="{"?v.tokenize=L(f+1):z.current()=="}"&&(f>1?v.tokenize=L(f-1):v.tokenize=m)),D}}function m(f,z){for(;!f.eol();)if(f.eatWhile(/[^'"\{\}\\]/),f.eat("\\")){if(f.next(),I&&f.eol())return k}else{if(f.match(l))return z.tokenize=s,k;if(f.match("{{"))return k;if(f.match("{",!1))return z.tokenize=L(0),f.current()?k:z.tokenize(f,z);if(f.match("}}"))return k;if(f.match("}"))return n;f.eat(/['"]/)}if(I){if(e.singleLineStringErrors)return n;z.tokenize=s}return k}return m.isString=!0,m}function M(l,s){for(;"rubf".indexOf(l.charAt(0).toLowerCase())>=0;)l=l.substr(1);var I=l.length==1,k="string";function L(m,f){for(;!m.eol();)if(m.eatWhile(/[^'"\\]/),m.eat("\\")){if(m.next(),I&&m.eol())return k}else{if(m.match(l))return f.tokenize=s,k;m.eat(/['"]/)}if(I){if(e.singleLineStringErrors)return n;f.tokenize=s}return k}return L.isString=!0,L}function u(l,s){for(;Q(s).type!="py";)s.scopes.pop();s.scopes.push({offset:Q(s).offset+l.indentUnit,type:"py",align:null})}function T(l,s,I){var k=l.match(/^[\s\[\{\(]*(?:#|$)/,!1)?null:l.column()+1;s.scopes.push({offset:s.indent+(o||l.indentUnit),type:I,align:k})}function w(l,s){for(var I=l.indentation();s.scopes.length>1&&Q(s).offset>I;){if(Q(s).type!="py")return!0;s.scopes.pop()}return Q(s).offset!=I}function C(l,s){l.sol()&&(s.beginningOfLine=!0,s.dedent=!1);var I=s.tokenize(l,s),k=l.current();if(s.beginningOfLine&&k=="@")return l.match(E,!1)?"meta":S?"operator":n;if(/\S/.test(k)&&(s.beginningOfLine=!1),(I=="variable"||I=="builtin")&&s.lastToken=="meta"&&(I="meta"),(k=="pass"||k=="return")&&(s.dedent=!0),k=="lambda"&&(s.lambda=!0),k==":"&&!s.lambda&&Q(s).type=="py"&&l.match(/^\s*(?:#|$)/,!1)&&u(l,s),k.length==1&&!/string|comment/.test(I)){var L="[({".indexOf(k);if(L!=-1&&T(l,s,"])}".slice(L,L+1)),L="])}".indexOf(k),L!=-1)if(Q(s).type==k)s.indent=s.scopes.pop().offset-(o||l.indentUnit);else return n}return s.dedent&&l.eol()&&Q(s).type=="py"&&s.scopes.length>1&&s.scopes.pop(),I}return{name:"python",startState:function(){return{tokenize:y,scopes:[{offset:0,type:"py",align:null}],indent:0,lastToken:null,lambda:!1,dedent:0}},token:function(l,s){var I=s.errorToken;I&&(s.errorToken=!1);var k=C(l,s);return k&&k!="comment"&&(s.lastToken=k=="keyword"||k=="punctuation"?l.current():k),k=="punctuation"&&(k=null),l.eol()&&s.lambda&&(s.lambda=!1),I?n:k},indent:function(l,s,I){if(l.tokenize!=y)return l.tokenize.isString?null:0;var k=Q(l),L=k.type==s.charAt(0)||k.type=="py"&&!l.dedent&&/^(else:|elif |except |finally:)/.test(s);return k.align!=null?k.align-(L?1:0):k.offset-(L?o||I.unit:0)},languageData:{autocomplete:St.concat(zt).concat(["exec","print"]),indentOnInput:/^\s*([\}\]\)]|else:|elif |except |finally:)$/,commentTokens:{line:"#"},closeBrackets:{brackets:["(","[","{","'",'"',"'''",'"""']}}}}var Io=function(e){return e.split(" ")},Ro=Et({}),jl=Et({extra_keywords:Io("by cdef cimport cpdef ctypedef enum except extern gil include nogil property public readonly struct union DEF IF ELIF ELSE")});function Be(e){for(var n={},t=0;t<e.length;++t)n[e[t]]=!0;return n}var Rt=["NULL","NA","Inf","NaN","NA_integer_","NA_real_","NA_complex_","NA_character_","TRUE","FALSE"],Ot=["list","quote","bquote","eval","return","call","parse","deparse"],At=["if","else","repeat","while","function","for","in","next","break"],Oo=["if","else","repeat","while","function","for"],Ao=Be(Rt),Po=Be(Ot),Lo=Be(At),Do=Be(Oo),Tt=/[+\-*\/^<>=!&|~$:]/,V;function vn(e,n){V=null;var t=e.next();if(t=="#")return e.skipToEnd(),"comment";if(t=="0"&&e.eat("x"))return e.eatWhile(/[\da-f]/i),"number";if(t=="."&&e.eat(/\d/))return e.match(/\d*(?:e[+\-]?\d+)?/),"number";if(/\d/.test(t))return e.match(/\d*(?:\.\d+)?(?:e[+\-]\d+)?L?/),"number";if(t=="'"||t=='"')return n.tokenize=$o(t),"string";if(t=="`")return e.match(/[^`]+`/),"string.special";if(t=="."&&e.match(/.(?:[.]|\d+)/))return"keyword";if(/[a-zA-Z\.]/.test(t)){e.eatWhile(/[\w\.]/);var r=e.current();return Ao.propertyIsEnumerable(r)?"atom":Lo.propertyIsEnumerable(r)?(Do.propertyIsEnumerable(r)&&!e.match(/\s*if(\s+|$)/,!1)&&(V="block"),"keyword"):Po.propertyIsEnumerable(r)?"builtin":"variable"}else return t=="%"?(e.skipTo("%")&&e.next(),"variableName.special"):t=="<"&&e.eat("-")||t=="<"&&e.match("<-")||t=="-"&&e.match(/>>?/)||t=="="&&n.ctx.argList?"operator":Tt.test(t)?(t=="$"||e.eatWhile(Tt),"operator"):/[\(\){}\[\];]/.test(t)?(V=t,t==";"?"punctuation":null):null}function $o(e){return function(n,t){if(n.eat("\\")){var r=n.next();return r=="x"?n.match(/^[a-f0-9]{2}/i):(r=="u"||r=="U")&&n.eat("{")&&n.skipTo("}")?n.next():r=="u"?n.match(/^[a-f0-9]{4}/i):r=="U"?n.match(/^[a-f0-9]{8}/i):/[0-7]/.test(r)&&n.match(/^[0-7]{1,2}/),"string.special"}else{for(var i;(i=n.next())!=null;){if(i==e){t.tokenize=vn;break}if(i=="\\"){n.backUp(1);break}}return"string"}}}var Ct=1,gn=2,bn=4;function Me(e,n,t){e.ctx={type:n,indent:e.indent,flags:0,column:t.column(),prev:e.ctx}}function It(e,n){var t=e.ctx;e.ctx={type:t.type,indent:t.indent,flags:t.flags|n,column:t.column,prev:t.prev}}function yn(e){e.indent=e.ctx.indent,e.ctx=e.ctx.prev}var No={name:"r",startState:function(e){return{tokenize:vn,ctx:{type:"top",indent:-e,flags:gn},indent:0,afterIdent:!1}},token:function(e,n){if(e.sol()&&((n.ctx.flags&3)==0&&(n.ctx.flags|=gn),n.ctx.flags&bn&&yn(n),n.indent=e.indentation()),e.eatSpace())return null;var t=n.tokenize(e,n);return t!="comment"&&(n.ctx.flags&gn)==0&&It(n,Ct),(V==";"||V=="{"||V=="}")&&n.ctx.type=="block"&&yn(n),V=="{"?Me(n,"}",e):V=="("?(Me(n,")",e),n.afterIdent&&(n.ctx.argList=!0)):V=="["?Me(n,"]",e):V=="block"?Me(n,"block",e):V==n.ctx.type?yn(n):n.ctx.type=="block"&&t!="comment"&&It(n,bn),n.afterIdent=t=="variable"||t=="keyword",t},indent:function(e,n,t){if(e.tokenize!=vn)return 0;var r=n&&n.charAt(0),i=e.ctx,o=r==i.type;return i.flags&bn&&(i=i.prev),i.type=="block"?i.indent+(r=="{"?0:t.unit):i.flags&Ct?i.column+(o?0:1):i.indent+(o?0:t.unit)},languageData:{wordChars:".",commentTokens:{line:"#"},autocomplete:Rt.concat(Ot,At)}};function _n(e){for(var n={},t=0,r=e.length;t<r;++t)n[e[t]]=!0;return n}var Lt=["alias","and","BEGIN","begin","break","case","class","def","defined?","do","else","elsif","END","end","ensure","false","for","if","in","module","next","not","or","redo","rescue","retry","return","self","super","then","true","undef","unless","until","when","while","yield","nil","raise","throw","catch","fail","loop","callcc","caller","lambda","proc","public","protected","private","require","load","require_relative","extend","autoload","__END__","__FILE__","__LINE__","__dir__"],qo=_n(Lt),Fo=_n(["def","class","case","for","while","until","module","catch","loop","proc","begin"]),Mo=_n(["end","until"]),Pt={"[":"]","{":"}","(":")"},Bo={"]":"[","}":"{",")":"("},X;function ge(e,n,t){return t.tokenize.push(e),e(n,t)}function je(e,n){if(e.sol()&&e.match("=begin")&&e.eol())return n.tokenize.push(Ko),"comment";if(e.eatSpace())return null;var t=e.next(),r;if(t=="`"||t=="'"||t=='"')return ge(Ee(t,"string",t=='"'||t=="`"),e,n);if(t=="/")return jo(e)?ge(Ee(t,"string.special",!0),e,n):"operator";if(t=="%"){var i="string",o=!0;e.eat("s")?i="atom":e.eat(/[WQ]/)?i="string":e.eat(/[r]/)?i="string.special":e.eat(/[wxq]/)&&(i="string",o=!1);var a=e.eat(/[^\w\s=]/);return a?(Pt.propertyIsEnumerable(a)&&(a=Pt[a]),ge(Ee(a,i,o,!0),e,n)):"operator"}else{if(t=="#")return e.skipToEnd(),"comment";if(t=="<"&&(r=e.match(/^<([-~])[\`\"\']?([a-zA-Z_?]\w*)[\`\"\']?(?:;|$)/)))return ge(Uo(r[2],r[1]),e,n);if(t=="0")return e.eat("x")?e.eatWhile(/[\da-fA-F]/):e.eat("b")?e.eatWhile(/[01]/):e.eatWhile(/[0-7]/),"number";if(/\d/.test(t))return e.match(/^[\d_]*(?:\.[\d_]+)?(?:[eE][+\-]?[\d_]+)?/),"number";if(t=="?"){for(;e.match(/^\\[CM]-/););return e.eat("\\")?e.eatWhile(/\w/):e.next(),"string"}else{if(t==":")return e.eat("'")?ge(Ee("'","atom",!1),e,n):e.eat('"')?ge(Ee('"',"atom",!0),e,n):e.eat(/[\<\>]/)?(e.eat(/[\<\>]/),"atom"):e.eat(/[\+\-\*\/\&\|\:\!]/)?"atom":e.eat(/[a-zA-Z$@_\xa1-\uffff]/)?(e.eatWhile(/[\w$\xa1-\uffff]/),e.eat(/[\?\!\=]/),"atom"):"operator";if(t=="@"&&e.match(/^@?[a-zA-Z_\xa1-\uffff]/))return e.eat("@"),e.eatWhile(/[\w\xa1-\uffff]/),"propertyName";if(t=="$")return e.eat(/[a-zA-Z_]/)?e.eatWhile(/[\w]/):e.eat(/\d/)?e.eat(/\d/):e.next(),"variableName.special";if(/[a-zA-Z_\xa1-\uffff]/.test(t))return e.eatWhile(/[\w\xa1-\uffff]/),e.eat(/[\?\!]/),e.eat(":")?"atom":"variable";if(t=="|"&&(n.varList||n.lastTok=="{"||n.lastTok=="do"))return X="|",null;if(/[\(\)\[\]{}\\;]/.test(t))return X=t,null;if(t=="-"&&e.eat(">"))return"operator";if(/[=+\-\/*:\.^%<>~|]/.test(t)){var p=e.eatWhile(/[=+\-\/*:\.^%<>~|]/);return t=="."&&!p&&(X="."),"operator"}else return null}}}function jo(e){for(var n=e.pos,t=0,r,i=!1,o=!1;(r=e.next())!=null;)if(o)o=!1;else{if("[{(".indexOf(r)>-1)t++;else if("]})".indexOf(r)>-1){if(t--,t<0)break}else if(r=="/"&&t==0){i=!0;break}o=r=="\\"}return e.backUp(e.pos-n),i}function kn(e){return e||(e=1),function(n,t){if(n.peek()=="}"){if(e==1)return t.tokenize.pop(),t.tokenize[t.tokenize.length-1](n,t);t.tokenize[t.tokenize.length-1]=kn(e-1)}else n.peek()=="{"&&(t.tokenize[t.tokenize.length-1]=kn(e+1));return je(n,t)}}function Wo(){var e=!1;return function(n,t){return e?(t.tokenize.pop(),t.tokenize[t.tokenize.length-1](n,t)):(e=!0,je(n,t))}}function Ee(e,n,t,r){return function(i,o){var a=!1,p;for(o.context.type==="read-quoted-paused"&&(o.context=o.context.prev,i.eat("}"));(p=i.next())!=null;){if(p==e&&(r||!a)){o.tokenize.pop();break}if(t&&p=="#"&&!a){if(i.eat("{")){e=="}"&&(o.context={prev:o.context,type:"read-quoted-paused"}),o.tokenize.push(kn());break}else if(/[@\$]/.test(i.peek())){o.tokenize.push(Wo());break}}a=!a&&p=="\\"}return n}}function Uo(e,n){return function(t,r){return n&&t.eatSpace(),t.match(e)?r.tokenize.pop():t.skipToEnd(),"string"}}function Ko(e,n){return e.sol()&&e.match("=end")&&e.eol()&&n.tokenize.pop(),e.skipToEnd(),"comment"}var Ho={name:"ruby",startState:function(e){return{tokenize:[je],indented:0,context:{type:"top",indented:-e},continuedLine:!1,lastTok:null,varList:!1}},token:function(e,n){X=null,e.sol()&&(n.indented=e.indentation());var t=n.tokenize[n.tokenize.length-1](e,n),r,i=X;if(t=="variable"){var o=e.current();t=n.lastTok=="."?"property":qo.propertyIsEnumerable(e.current())?"keyword":/^[A-Z]/.test(o)?"tag":n.lastTok=="def"||n.lastTok=="class"||n.varList?"def":"variable",t=="keyword"&&(i=o,Fo.propertyIsEnumerable(o)?r="indent":Mo.propertyIsEnumerable(o)?r="dedent":((o=="if"||o=="unless")&&e.column()==e.indentation()||o=="do"&&n.context.indented<n.indented)&&(r="indent"))}return(X||t&&t!="comment")&&(n.lastTok=i),X=="|"&&(n.varList=!n.varList),r=="indent"||/[\(\[\{]/.test(X)?n.context={prev:n.context,type:X||t,indented:n.indented}:(r=="dedent"||/[\)\]\}]/.test(X))&&n.context.prev&&(n.context=n.context.prev),e.eol()&&(n.continuedLine=X=="\\"||t=="operator"),t},indent:function(e,n,t){if(e.tokenize[e.tokenize.length-1]!=je)return null;var r=n&&n.charAt(0),i=e.context,o=i.type==Bo[r]||i.type=="keyword"&&/^(?:end|until|else|elsif|when|rescue)\b/.test(n);return i.indented+(o?0:t.unit)+(e.continuedLine?t.unit:0)},languageData:{indentOnInput:/^\s*(?:end|rescue|elsif|else|\})$/,commentTokens:{line:"#"},autocomplete:Lt}};function Dt(e){$t(e,"start");var n={},t=e.languageData||{},r=!1;for(var i in e)if(i!=t&&e.hasOwnProperty(i))for(var o=n[i]=[],a=e[i],p=0;p<a.length;p++){var S=a[p];o.push(new Qo(S,e)),(S.indent||S.dedent)&&(r=!0)}return{name:t.name,startState:function(){return{state:"start",pending:null,indent:r?[]:null}},copyState:function(E){var x={state:E.state,pending:E.pending,indent:E.indent&&E.indent.slice(0)};return E.stack&&(x.stack=E.stack.slice(0)),x},token:Vo(n),indent:Xo(n,t),mergeTokens:t.mergeTokens,languageData:t}}function $t(e,n){if(!e.hasOwnProperty(n))throw new Error("Undefined state "+n+" in simple mode")}function Go(e,n){if(!e)return/(?:)/;var t="";return e instanceof RegExp?(e.ignoreCase&&(t="i"),e=e.source):e=String(e),new RegExp((n===!1?"":"^")+"(?:"+e+")",t)}function Zo(e){if(!e)return null;if(e.apply)return e;if(typeof e=="string")return e.replace(/\./g," ");for(var n=[],t=0;t<e.length;t++)n.push(e[t]&&e[t].replace(/\./g," "));return n}function Qo(e,n){(e.next||e.push)&&$t(n,e.next||e.push),this.regex=Go(e.regex),this.token=Zo(e.token),this.data=e}function Vo(e){return function(n,t){if(t.pending){var r=t.pending.shift();return t.pending.length==0&&(t.pending=null),n.pos+=r.text.length,r.token}for(var i=e[t.state],o=0;o<i.length;o++){var a=i[o],p=(!a.data.sol||n.sol())&&n.match(a.regex);if(p){a.data.next?t.state=a.data.next:a.data.push?((t.stack||(t.stack=[])).push(t.state),t.state=a.data.push):a.data.pop&&t.stack&&t.stack.length&&(t.state=t.stack.pop()),a.data.indent&&t.indent.push(n.indentation()+n.indentUnit),a.data.dedent&&t.indent.pop();var S=a.token;if(S&&S.apply&&(S=S(p)),p.length>2&&a.token&&typeof a.token!="string"){t.pending=[];for(var E=2;E<p.length;E++)p[E]&&t.pending.push({text:p[E],token:a.token[E-1]});return n.backUp(p[0].length-(p[1]?p[1].length:0)),S[0]}else return S&&S.join?S[0]:S}}return n.next(),null}}function Xo(e,n){return function(t,r){if(t.indent==null||n.dontIndentStates&&n.dontIndentStates.indexOf(t.state)>-1)return null;var i=t.indent.length-1,o=e[t.state];e:for(;;){for(var a=0;a<o.length;a++){var p=o[a];if(p.data.dedent&&p.data.dedentIfLineStart!==!1){var S=p.regex.exec(r);if(S&&S[0]){i--,(p.next||p.push)&&(o=e[p.next||p.push]),r=r.slice(S[0].length);continue e}}}break}return i<0?0:t.indent[i]}}var Jo=Dt({start:[{regex:/b?"/,token:"string",next:"string"},{regex:/b?r"/,token:"string",next:"string_raw"},{regex:/b?r#+"/,token:"string",next:"string_raw_hash"},{regex:/'(?:[^'\\]|\\(?:[nrt0'"]|x[\da-fA-F]{2}|u\{[\da-fA-F]{6}\}))'/,token:"string.special"},{regex:/b'(?:[^']|\\(?:['\\nrt0]|x[\da-fA-F]{2}))'/,token:"string.special"},{regex:/(?:(?:[0-9][0-9_]*)(?:(?:[Ee][+-]?[0-9_]+)|\.[0-9_]+(?:[Ee][+-]?[0-9_]+)?)(?:f32|f64)?)|(?:0(?:b[01_]+|(?:o[0-7_]+)|(?:x[0-9a-fA-F_]+))|(?:[0-9][0-9_]*))(?:u8|u16|u32|u64|i8|i16|i32|i64|isize|usize)?/,token:"number"},{regex:/(let(?:\s+mut)?|fn|enum|mod|struct|type|union)(\s+)([a-zA-Z_][a-zA-Z0-9_]*)/,token:["keyword",null,"def"]},{regex:/(?:abstract|alignof|as|async|await|box|break|continue|const|crate|do|dyn|else|enum|extern|fn|for|final|if|impl|in|loop|macro|match|mod|move|offsetof|override|priv|proc|pub|pure|ref|return|self|sizeof|static|struct|super|trait|type|typeof|union|unsafe|unsized|use|virtual|where|while|yield)\b/,token:"keyword"},{regex:/\b(?:Self|isize|usize|char|bool|u8|u16|u32|u64|f16|f32|f64|i8|i16|i32|i64|str|Option)\b/,token:"atom"},{regex:/\b(?:true|false|Some|None|Ok|Err)\b/,token:"builtin"},{regex:/\b(fn)(\s+)([a-zA-Z_][a-zA-Z0-9_]*)/,token:["keyword",null,"def"]},{regex:/#!?\[.*\]/,token:"meta"},{regex:/\/\/.*/,token:"comment"},{regex:/\/\*/,token:"comment",next:"comment"},{regex:/[-+\/*=<>!]+/,token:"operator"},{regex:/[a-zA-Z_]\w*!/,token:"macroName"},{regex:/[a-zA-Z_]\w*/,token:"variable"},{regex:/[\{\[\(]/,indent:!0},{regex:/[\}\]\)]/,dedent:!0}],string:[{regex:/"/,token:"string",next:"start"},{regex:/(?:[^\\"]|\\(?:.|$))*/,token:"string"}],string_raw:[{regex:/"/,token:"string",next:"start"},{regex:/[^"]*/,token:"string"}],string_raw_hash:[{regex:/"#+/,token:"string",next:"start"},{regex:/(?:[^"]|"(?!#))*/,token:"string"}],comment:[{regex:/.*?\*\//,token:"comment",next:"start"},{regex:/.*/,token:"comment"}],languageData:{name:"rust",dontIndentStates:["comment"],indentOnInput:/^\s*\}$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}}}});var q={},Nt={eq:"operator",lt:"operator",le:"operator",gt:"operator",ge:"operator",in:"operator",ne:"operator",or:"operator"},Yo=/(<=|>=|!=|<>)/,ea=/[=\(:\),{}.*<>+\-\/^\[\]]/;function j(e,n,t){if(t)for(var r=n.split(" "),i=0;i<r.length;i++)q[r[i]]={style:e,state:t}}j("def","stack pgm view source debug nesting nolist",["inDataStep"]);j("def","if while until for do do; end end; then else cancel",["inDataStep"]);j("def","label format _n_ _error_",["inDataStep"]);j("def","ALTER BUFNO BUFSIZE CNTLLEV COMPRESS DLDMGACTION ENCRYPT ENCRYPTKEY EXTENDOBSCOUNTER GENMAX GENNUM INDEX LABEL OBSBUF OUTREP PW PWREQ READ REPEMPTY REPLACE REUSE ROLE SORTEDBY SPILL TOBSNO TYPE WRITE FILECLOSE FIRSTOBS IN OBS POINTOBS WHERE WHEREUP IDXNAME IDXWHERE DROP KEEP RENAME",["inDataStep"]);j("def","filevar finfo finv fipname fipnamel fipstate first firstobs floor",["inDataStep"]);j("def","varfmt varinfmt varlabel varlen varname varnum varray varrayx vartype verify vformat vformatd vformatdx vformatn vformatnx vformatw vformatwx vformatx vinarray vinarrayx vinformat vinformatd vinformatdx vinformatn vinformatnx vinformatw vinformatwx vinformatx vlabel vlabelx vlength vlengthx vname vnamex vnferr vtype vtypex weekday",["inDataStep"]);j("def","zipfips zipname zipnamel zipstate",["inDataStep"]);j("def","put putc putn",["inDataStep"]);j("builtin","data run",["inDataStep"]);j("def","data",["inProc"]);j("def","%if %end %end; %else %else; %do %do; %then",["inMacro"]);j("builtin","proc run; quit; libname filename %macro %mend option options",["ALL"]);j("def","footnote title libname ods",["ALL"]);j("def","%let %put %global %sysfunc %eval ",["ALL"]);j("variable","&sysbuffr &syscc &syscharwidth &syscmd &sysdate &sysdate9 &sysday &sysdevic &sysdmg &sysdsn &sysencoding &sysenv &syserr &syserrortext &sysfilrc &syshostname &sysindex &sysinfo &sysjobid &syslast &syslckrc &syslibrc &syslogapplname &sysmacroname &sysmenv &sysmsg &sysncpu &sysodspath &sysparm &syspbuff &sysprocessid &sysprocessname &sysprocname &sysrc &sysscp &sysscpl &sysscpl &syssite &sysstartid &sysstartname &systcpiphostname &systime &sysuserid &sysver &sysvlong &sysvlong4 &syswarningtext",["ALL"]);j("def","source2 nosource2 page pageno pagesize",["ALL"]);j("def","_all_ _character_ _cmd_ _freq_ _i_ _infile_ _last_ _msg_ _null_ _numeric_ _temporary_ _type_ abort abs addr adjrsq airy alpha alter altlog altprint and arcos array arsin as atan attrc attrib attrn authserver autoexec awscontrol awsdef awsmenu awsmenumerge awstitle backward band base betainv between blocksize blshift bnot bor brshift bufno bufsize bxor by byerr byline byte calculated call cards cards4 catcache cbufno cdf ceil center cexist change chisq cinv class cleanup close cnonct cntllev coalesce codegen col collate collin column comamid comaux1 comaux2 comdef compbl compound compress config continue convert cos cosh cpuid create cross crosstab css curobs cv daccdb daccdbsl daccsl daccsyd dacctab dairy datalines datalines4 datejul datepart datetime day dbcslang dbcstype dclose ddfm ddm delete delimiter depdb depdbsl depsl depsyd deptab dequote descending descript design= device dflang dhms dif digamma dim dinfo display distinct dkricond dkrocond dlm dnum do dopen doptname doptnum dread drop dropnote dsname dsnferr echo else emaildlg emailid emailpw emailserver emailsys encrypt end endsas engine eof eov erf erfc error errorcheck errors exist exp fappend fclose fcol fdelete feedback fetch fetchobs fexist fget file fileclose fileexist filefmt filename fileref  fmterr fmtsearch fnonct fnote font fontalias  fopen foptname foptnum force formatted formchar formdelim formdlim forward fpoint fpos fput fread frewind frlen from fsep fuzz fwrite gaminv gamma getoption getvarc getvarn go goto group gwindow hbar hbound helpenv helploc hms honorappearance hosthelp hostprint hour hpct html hvar ibessel ibr id if index indexc indexw initcmd initstmt inner input inputc inputn inr insert int intck intnx into intrr invaliddata irr is jbessel join juldate keep kentb kurtosis label lag last lbound leave left length levels lgamma lib  library libref line linesize link list log log10 log2 logpdf logpmf logsdf lostcard lowcase lrecl ls macro macrogen maps mautosource max maxdec maxr mdy mean measures median memtype merge merror min minute missing missover mlogic mod mode model modify month mopen mort mprint mrecall msglevel msymtabmax mvarsize myy n nest netpv new news nmiss no nobatch nobs nocaps nocardimage nocenter nocharcode nocmdmac nocol nocum nodate nodbcs nodetails nodmr nodms nodmsbatch nodup nodupkey noduplicates noechoauto noequals noerrorabend noexitwindows nofullstimer noicon noimplmac noint nolist noloadlist nomiss nomlogic nomprint nomrecall nomsgcase nomstored nomultenvappl nonotes nonumber noobs noovp nopad nopercent noprint noprintinit normal norow norsasuser nosetinit  nosplash nosymbolgen note notes notitle notitles notsorted noverbose noxsync noxwait npv null number numkeys nummousekeys nway obs  on open     order ordinal otherwise out outer outp= output over ovp p(1 5 10 25 50 75 90 95 99) pad pad2  paired parm parmcards path pathdll pathname pdf peek peekc pfkey pmf point poisson poke position printer probbeta probbnml probchi probf probgam probhypr probit probnegb probnorm probsig probt procleave prt ps  pw pwreq qtr quote r ranbin rancau random ranexp rangam range ranks rannor ranpoi rantbl rantri ranuni rcorr read recfm register regr remote remove rename repeat repeated replace resolve retain return reuse reverse rewind right round rsquare rtf rtrace rtraceloc s s2 samploc sasautos sascontrol sasfrscr sasmsg sasmstore sasscript sasuser saving scan sdf second select selection separated seq serror set setcomm setot sign simple sin sinh siteinfo skewness skip sle sls sortedby sortpgm sortseq sortsize soundex  spedis splashlocation split spool sqrt start std stderr stdin stfips stimer stname stnamel stop stopover sub subgroup subpopn substr sum sumwgt symbol symbolgen symget symput sysget sysin sysleave sysmsg sysparm sysprint sysprintfont sysprod sysrc system t table tables tan tanh tapeclose tbufsize terminal test then timepart tinv  tnonct to today tol tooldef totper transformout translate trantab tranwrd trigamma trim trimn trunc truncover type unformatted uniform union until upcase update user usericon uss validate value var  weight when where while wincharset window work workinit workterm write wsum xsync xwait yearcutoff yes yyq  min max",["inDataStep","inProc"]);j("operator","and not ",["inDataStep","inProc"]);function na(e,n){var t=e.next();if(t==="/"&&e.eat("*"))return n.continueComment=!0,"comment";if(n.continueComment===!0)return t==="*"&&e.peek()==="/"?(e.next(),n.continueComment=!1):e.skipTo("*")?(e.skipTo("*"),e.next(),e.eat("/")&&(n.continueComment=!1)):e.skipToEnd(),"comment";if(t=="*"&&e.column()==e.indentation())return e.skipToEnd(),"comment";var r=t+e.peek();if((t==='"'||t==="'")&&!n.continueString)return n.continueString=t,"string";if(n.continueString)return n.continueString==t?n.continueString=null:e.skipTo(n.continueString)?(e.next(),n.continueString=null):e.skipToEnd(),"string";if(n.continueString!==null&&e.eol())return e.skipTo(n.continueString)||e.skipToEnd(),"string";if(/[\d\.]/.test(t))return t==="."?e.match(/^[0-9]+([eE][\-+]?[0-9]+)?/):t==="0"?e.match(/^[xX][0-9a-fA-F]+/)||e.match(/^0[0-7]+/):e.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/),"number";if(Yo.test(t+e.peek()))return e.next(),"operator";if(Nt.hasOwnProperty(r)){if(e.next(),e.peek()===" ")return Nt[r.toLowerCase()]}else if(ea.test(t))return"operator";var i;if(e.match(/[%&;\w]+/,!1)!=null){if(i=t+e.match(/[%&;\w]+/,!0),/&/.test(i))return"variable"}else i=t;if(n.nextword)return e.match(/[\w]+/),e.peek()==="."&&e.skipTo(" "),n.nextword=!1,"variableName.special";if(i=i.toLowerCase(),n.inDataStep){if(i==="run;"||e.match(/run\s;/))return n.inDataStep=!1,"builtin";if(i&&e.next()===".")return/\w/.test(e.peek())?"variableName.special":"variable";if(i&&q.hasOwnProperty(i)&&(q[i].state.indexOf("inDataStep")!==-1||q[i].state.indexOf("ALL")!==-1)){e.start<e.pos&&e.backUp(e.pos-e.start);for(var o=0;o<i.length;++o)e.next();return q[i].style}}if(n.inProc){if(i==="run;"||i==="quit;")return n.inProc=!1,"builtin";if(i&&q.hasOwnProperty(i)&&(q[i].state.indexOf("inProc")!==-1||q[i].state.indexOf("ALL")!==-1))return e.match(/[\w]+/),q[i].style}return n.inMacro?i==="%mend"?(e.peek()===";"&&e.next(),n.inMacro=!1,"builtin"):i&&q.hasOwnProperty(i)&&(q[i].state.indexOf("inMacro")!==-1||q[i].state.indexOf("ALL")!==-1)?(e.match(/[\w]+/),q[i].style):"atom":i&&q.hasOwnProperty(i)?(e.backUp(1),e.match(/[\w]+/),i==="data"&&/=/.test(e.peek())===!1?(n.inDataStep=!0,n.nextword=!0,"builtin"):i==="proc"?(n.inProc=!0,n.nextword=!0,"builtin"):i==="%macro"?(n.inMacro=!0,n.nextword=!0,"builtin"):/title[1-9]/.test(i)?"def":i==="footnote"?(e.eat(/[1-9]/),"def"):n.inDataStep===!0&&q[i].state.indexOf("inDataStep")!==-1||n.inProc===!0&&q[i].state.indexOf("inProc")!==-1||n.inMacro===!0&&q[i].state.indexOf("inMacro")!==-1||q[i].state.indexOf("ALL")!==-1?q[i].style:null):null}var ta={name:"sas",startState:function(){return{inDataStep:!1,inProc:!1,inMacro:!1,nextword:!1,continueString:null,continueComment:!1}},token:function(e,n){return e.eatSpace()?null:na(e,n)},languageData:{commentTokens:{block:{open:"/*",close:"*/"}}}};var ra="builtin",se="comment",qt="string",Ft="symbol",Te="atom",Mt="number",Bt="bracket",ia=2;function Ut(e){for(var n={},t=e.split(" "),r=0;r<t.length;++r)n[t[r]]=!0;return n}var jt=Ut("\u03BB case-lambda call/cc class cond-expand define-class define-values exit-handler field import inherit init-field interface let*-values let-values let/ec mixin opt-lambda override protect provide public rename require require-for-syntax syntax syntax-case syntax-error unit/sig unless when with-syntax and begin call-with-current-continuation call-with-input-file call-with-output-file case cond define define-syntax define-macro defmacro delay do dynamic-wind else for-each if lambda let let* let-syntax letrec letrec-syntax map or syntax-rules abs acos angle append apply asin assoc assq assv atan boolean? caar cadr call-with-input-file call-with-output-file call-with-values car cdddar cddddr cdr ceiling char->integer char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>? char-downcase char-lower-case? char-numeric? char-ready? char-upcase char-upper-case? char-whitespace? char<=? char<? char=? char>=? char>? char? close-input-port close-output-port complex? cons cos current-input-port current-output-port denominator display eof-object? eq? equal? eqv? eval even? exact->inexact exact? exp expt #f floor force gcd imag-part inexact->exact inexact? input-port? integer->char integer? interaction-environment lcm length list list->string list->vector list-ref list-tail list? load log magnitude make-polar make-rectangular make-string make-vector max member memq memv min modulo negative? newline not null-environment null? number->string number? numerator odd? open-input-file open-output-file output-port? pair? peek-char port? positive? procedure? quasiquote quote quotient rational? rationalize read read-char real-part real? remainder reverse round scheme-report-environment set! set-car! set-cdr! sin sqrt string string->list string->number string->symbol string-append string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>? string-copy string-fill! string-length string-ref string-set! string<=? string<? string=? string>=? string>? string? substring symbol->string symbol? #t tan transcript-off transcript-on truncate values vector vector->list vector-fill! vector-length vector-ref vector-set! with-input-from-file with-output-to-file write write-char zero?"),oa=Ut("define let letrec let* lambda define-macro defmacro let-syntax letrec-syntax let-values let*-values define-syntax syntax-rules define-values when unless");function aa(e,n,t){this.indent=e,this.type=n,this.prev=t}function xn(e,n,t){e.indentStack=new aa(n,t,e.indentStack)}function la(e){e.indentStack=e.indentStack.prev}var ca=new RegExp(/^(?:[-+]i|[-+][01]+#*(?:\/[01]+#*)?i|[-+]?[01]+#*(?:\/[01]+#*)?@[-+]?[01]+#*(?:\/[01]+#*)?|[-+]?[01]+#*(?:\/[01]+#*)?[-+](?:[01]+#*(?:\/[01]+#*)?)?i|[-+]?[01]+#*(?:\/[01]+#*)?)(?=[()\s;"]|$)/i),sa=new RegExp(/^(?:[-+]i|[-+][0-7]+#*(?:\/[0-7]+#*)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?@[-+]?[0-7]+#*(?:\/[0-7]+#*)?|[-+]?[0-7]+#*(?:\/[0-7]+#*)?[-+](?:[0-7]+#*(?:\/[0-7]+#*)?)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?)(?=[()\s;"]|$)/i),ua=new RegExp(/^(?:[-+]i|[-+][\da-f]+#*(?:\/[\da-f]+#*)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?@[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?[-+](?:[\da-f]+#*(?:\/[\da-f]+#*)?)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?)(?=[()\s;"]|$)/i),da=new RegExp(/^(?:[-+]i|[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)i|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)@[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)?i|(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*))(?=[()\s;"]|$)/i);function fa(e){return e.match(ca)}function pa(e){return e.match(sa)}function wn(e,n){return n===!0&&e.backUp(1),e.match(da)}function ma(e){return e.match(ua)}function Wt(e,n){for(var t,r=!1;(t=e.next())!=null;){if(t==n.token&&!r){n.state.mode=!1;break}r=!r&&t=="\\"}}var ha={name:"scheme",startState:function(){return{indentStack:null,indentation:0,mode:!1,sExprComment:!1,sExprQuote:!1}},token:function(e,n){if(n.indentStack==null&&e.sol()&&(n.indentation=e.indentation()),e.eatSpace())return null;var t=null;switch(n.mode){case"string":Wt(e,{token:'"',state:n}),t=qt;break;case"symbol":Wt(e,{token:"|",state:n}),t=Ft;break;case"comment":for(var r,i=!1;(r=e.next())!=null;){if(r=="#"&&i){n.mode=!1;break}i=r=="|"}t=se;break;case"s-expr-comment":if(n.mode=!1,e.peek()=="("||e.peek()=="[")n.sExprComment=0;else{e.eatWhile(/[^\s\(\)\[\]]/),t=se;break}default:var o=e.next();if(o=='"')n.mode="string",t=qt;else if(o=="'")e.peek()=="("||e.peek()=="["?(typeof n.sExprQuote!="number"&&(n.sExprQuote=0),t=Te):(e.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/),t=Te);else if(o=="|")n.mode="symbol",t=Ft;else if(o=="#")if(e.eat("|"))n.mode="comment",t=se;else if(e.eat(/[tf]/i))t=Te;else if(e.eat(";"))n.mode="s-expr-comment",t=se;else{var a=null,p=!1,S=!0;e.eat(/[ei]/i)?p=!0:e.backUp(1),e.match(/^#b/i)?a=fa:e.match(/^#o/i)?a=pa:e.match(/^#x/i)?a=ma:e.match(/^#d/i)?a=wn:e.match(/^[-+0-9.]/,!1)?(S=!1,a=wn):p||e.eat("#"),a!=null&&(S&&!p&&e.match(/^#[ei]/i),a(e)&&(t=Mt))}else if(/^[-+0-9.]/.test(o)&&wn(e,!0))t=Mt;else if(o==";")e.skipToEnd(),t=se;else if(o=="("||o=="["){for(var E="",x=e.column(),c;(c=e.eat(/[^\s\(\[\;\)\]]/))!=null;)E+=c;E.length>0&&oa.propertyIsEnumerable(E)?xn(n,x+ia,o):(e.eatSpace(),e.eol()||e.peek()==";"?xn(n,x+1,o):xn(n,x+e.current().length,o)),e.backUp(e.current().length-1),typeof n.sExprComment=="number"&&n.sExprComment++,typeof n.sExprQuote=="number"&&n.sExprQuote++,t=Bt}else o==")"||o=="]"?(t=Bt,n.indentStack!=null&&n.indentStack.type==(o==")"?"(":"[")&&(la(n),typeof n.sExprComment=="number"&&--n.sExprComment==0&&(t=se,n.sExprComment=!1),typeof n.sExprQuote=="number"&&--n.sExprQuote==0&&(t=Te,n.sExprQuote=!1))):(e.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/),jt&&jt.propertyIsEnumerable(e.current())?t=ra:t="variable")}return typeof n.sExprComment=="number"?se:typeof n.sExprQuote=="number"?Te:t},indent:function(e){return e.indentStack==null?e.indentation:e.indentStack.indent},languageData:{closeBrackets:{brackets:["(","[","{",'"']},commentTokens:{line:";;"}}};var Sn={};function zn(e,n){for(var t=0;t<n.length;t++)Sn[n[t]]=e}var Kt=["true","false"],Ht=["if","then","do","else","elif","while","until","for","in","esac","fi","fin","fil","done","exit","set","unset","export","function"],Gt=["ab","awk","bash","beep","cat","cc","cd","chown","chmod","chroot","clear","cp","curl","cut","diff","echo","find","gawk","gcc","get","git","grep","hg","kill","killall","ln","ls","make","mkdir","openssl","mv","nc","nl","node","npm","ping","ps","restart","rm","rmdir","sed","service","sh","shopt","shred","source","sort","sleep","ssh","start","stop","su","sudo","svn","tee","telnet","top","touch","vi","vim","wall","wc","wget","who","write","yes","zsh"];zn("atom",Kt);zn("keyword",Ht);zn("builtin",Gt);function ga(e,n){if(e.eatSpace())return null;var t=e.sol(),r=e.next();if(r==="\\")return e.next(),null;if(r==="'"||r==='"'||r==="`")return n.tokens.unshift(We(r,r==="`"?"quote":"string")),be(e,n);if(r==="#")return t&&e.eat("!")?(e.skipToEnd(),"meta"):(e.skipToEnd(),"comment");if(r==="$")return n.tokens.unshift(Zt),be(e,n);if(r==="+"||r==="=")return"operator";if(r==="-")return e.eat("-"),e.eatWhile(/\w/),"attribute";if(r=="<"){if(e.match("<<"))return"operator";var i=e.match(/^<-?\s*(?:['"]([^'"]*)['"]|([^'"\s]*))/);if(i)return n.tokens.unshift(ya(i[1]||i[2])),"string.special"}if(/\d/.test(r)&&(e.eatWhile(/\d/),e.eol()||!/\w/.test(e.peek())))return"number";e.eatWhile(/[\w-]/);var o=e.current();return e.peek()==="="&&/\w+/.test(o)?"def":Sn.hasOwnProperty(o)?Sn[o]:null}function We(e,n){var t=e=="("?")":e=="{"?"}":e;return function(r,i){for(var o,a=!1;(o=r.next())!=null;){if(o===t&&!a){i.tokens.shift();break}else if(o==="$"&&!a&&e!=="'"&&r.peek()!=t){a=!0,r.backUp(1),i.tokens.unshift(Zt);break}else{if(!a&&e!==t&&o===e)return i.tokens.unshift(We(e,n)),be(r,i);if(!a&&/['"]/.test(o)&&!/['"]/.test(e)){i.tokens.unshift(ba(o,"string")),r.backUp(1);break}}a=!a&&o==="\\"}return n}}function ba(e,n){return function(t,r){return r.tokens[0]=We(e,n),t.next(),be(t,r)}}var Zt=function(e,n){n.tokens.length>1&&e.eat("$");var t=e.next();return/['"({]/.test(t)?(n.tokens[0]=We(t,t=="("?"quote":t=="{"?"def":"string"),be(e,n)):(/\d/.test(t)||e.eatWhile(/\w/),n.tokens.shift(),"def")};function ya(e){return function(n,t){return n.sol()&&n.string==e&&t.tokens.shift(),n.skipToEnd(),"string.special"}}function be(e,n){return(n.tokens[0]||ga)(e,n)}var va={name:"shell",startState:function(){return{tokens:[]}},token:function(e,n){return be(e,n)},languageData:{autocomplete:Kt.concat(Ht,Gt),closeBrackets:{brackets:["(","[","{","'",'"',"`"]},commentTokens:{line:"#"}}};function G(e){var n=e.client||{},t=e.atoms||{false:!0,true:!0,null:!0},r=e.builtin||h(Vt),i=e.keywords||h(de),o=e.operatorChars||/^[*+\-%<>!=&|~^\/]/,a=e.support||{},p=e.hooks||{},S=e.dateSQL||{date:!0,time:!0,timestamp:!0},E=e.backslashStringEscapes!==!1,x=e.brackets||/^[\{}\(\)\[\]]/,c=e.punctuation||/^[;.,:]/;function d(u,T){var w=u.next();if(p[w]){var C=p[w](u,T);if(C!==!1)return C}if(a.hexNumber&&(w=="0"&&u.match(/^[xX][0-9a-fA-F]+/)||(w=="x"||w=="X")&&u.match(/^'[0-9a-fA-F]*'/)))return"number";if(a.binaryNumber&&((w=="b"||w=="B")&&u.match(/^'[01]+'/)||w=="0"&&u.match(/^b[01]*/)))return"number";if(w.charCodeAt(0)>47&&w.charCodeAt(0)<58)return u.match(/^[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?/),a.decimallessFloat&&u.match(/^\.(?!\.)/),"number";if(w=="?"&&(u.eatSpace()||u.eol()||u.eat(";")))return"macroName";if(w=="'"||w=='"'&&a.doubleQuote)return T.tokenize=y(w),T.tokenize(u,T);if((a.nCharCast&&(w=="n"||w=="N")||a.charsetCast&&w=="_"&&u.match(/[a-z][a-z0-9]*/i))&&(u.peek()=="'"||u.peek()=='"'))return"keyword";if(a.escapeConstant&&(w=="e"||w=="E")&&(u.peek()=="'"||u.peek()=='"'&&a.doubleQuote))return T.tokenize=function(s,I){return(I.tokenize=y(s.next(),!0))(s,I)},"keyword";if(a.commentSlashSlash&&w=="/"&&u.eat("/"))return u.skipToEnd(),"comment";if(a.commentHash&&w=="#"||w=="-"&&u.eat("-")&&(!a.commentSpaceRequired||u.eat(" ")))return u.skipToEnd(),"comment";if(w=="/"&&u.eat("*"))return T.tokenize=O(1),T.tokenize(u,T);if(w=="."){if(a.zerolessFloat&&u.match(/^(?:\d+(?:e[+-]?\d+)?)/i))return"number";if(u.match(/^\.+/))return null;if(a.ODBCdotTable&&u.match(/^[\w\d_$#]+/))return"type"}else{if(o.test(w))return u.eatWhile(o),"operator";if(x.test(w))return"bracket";if(c.test(w))return u.eatWhile(c),"punctuation";if(w=="{"&&(u.match(/^( )*(d|D|t|T|ts|TS)( )*'[^']*'( )*}/)||u.match(/^( )*(d|D|t|T|ts|TS)( )*"[^"]*"( )*}/)))return"number";u.eatWhile(/^[_\w\d]/);var l=u.current().toLowerCase();return S.hasOwnProperty(l)&&(u.match(/^( )+'[^']*'/)||u.match(/^( )+"[^"]*"/))?"number":t.hasOwnProperty(l)?"atom":r.hasOwnProperty(l)?"type":i.hasOwnProperty(l)?"keyword":n.hasOwnProperty(l)?"builtin":null}}function y(u,T){return function(w,C){for(var l=!1,s;(s=w.next())!=null;){if(s==u&&!l){C.tokenize=d;break}l=(E||T)&&!l&&s=="\\"}return"string"}}function O(u){return function(T,w){var C=T.match(/^.*?(\/\*|\*\/)/);return C?C[1]=="/*"?w.tokenize=O(u+1):u>1?w.tokenize=O(u-1):w.tokenize=d:T.skipToEnd(),"comment"}}function K(u,T,w){T.context={prev:T.context,indent:u.indentation(),col:u.column(),type:w}}function M(u){u.indent=u.context.indent,u.context=u.context.prev}return{name:"sql",startState:function(){return{tokenize:d,context:null}},token:function(u,T){if(u.sol()&&T.context&&T.context.align==null&&(T.context.align=!1),T.tokenize==d&&u.eatSpace())return null;var w=T.tokenize(u,T);if(w=="comment")return w;T.context&&T.context.align==null&&(T.context.align=!0);var C=u.current();return C=="("?K(u,T,")"):C=="["?K(u,T,"]"):T.context&&T.context.type==C&&M(T),w},indent:function(u,T,w){var C=u.context;if(!C)return null;var l=T.charAt(0)==C.type;return C.align?C.col+(l?0:1):C.indent+(l?0:w.unit)},languageData:{commentTokens:{line:a.commentSlashSlash?"//":a.commentHash?"#":"--",block:{open:"/*",close:"*/"}},closeBrackets:{brackets:["(","[","{","'",'"',"`"]}}}}function En(e){for(var n;(n=e.next())!=null;)if(n=="`"&&!e.eat("`"))return"string.special";return e.backUp(e.current().length-1),e.eatWhile(/\w/)?"string.special":null}function ka(e){for(var n;(n=e.next())!=null;)if(n=='"'&&!e.eat('"'))return"string.special";return e.backUp(e.current().length-1),e.eatWhile(/\w/)?"string.special":null}function ue(e){return e.eat("@")&&(e.match("session."),e.match("local."),e.match("global.")),e.eat("'")?(e.match(/^.*'/),"string.special"):e.eat('"')?(e.match(/^.*"/),"string.special"):e.eat("`")?(e.match(/^.*`/),"string.special"):e.match(/^[0-9a-zA-Z$\.\_]+/)?"string.special":null}function Qt(e){return e.eat("N")?"atom":e.match(/^[a-zA-Z.#!?]/)?"string.special":null}var de="alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";function h(e){for(var n={},t=e.split(" "),r=0;r<t.length;++r)n[t[r]]=!0;return n}var Vt="bool boolean bit blob enum long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision real date datetime year unsigned signed decimal numeric",_a=G({keywords:h(de+"begin"),builtin:h(Vt),atoms:h("false true null unknown"),dateSQL:h("date time timestamp"),support:h("ODBCdotTable doubleQuote binaryNumber hexNumber")}),xa=G({client:h("$partition binary_checksum checksum connectionproperty context_info current_request_id error_line error_message error_number error_procedure error_severity error_state formatmessage get_filestream_transaction_context getansinull host_id host_name isnull isnumeric min_active_rowversion newid newsequentialid rowcount_big xact_state object_id"),keywords:h(de+"begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec go if use index holdlock nolock nowait paglock readcommitted readcommittedlock readpast readuncommitted repeatableread rowlock serializable snapshot tablock tablockx updlock with"),builtin:h("bigint numeric bit smallint decimal smallmoney int tinyint money float real char varchar text nchar nvarchar ntext binary varbinary image cursor timestamp hierarchyid uniqueidentifier sql_variant xml table "),atoms:h("is not null like and or in left right between inner outer join all any some cross unpivot pivot exists"),operatorChars:/^[*+\-%<>!=^\&|\/]/,brackets:/^[\{}\(\)]/,punctuation:/^[;.,:/]/,backslashStringEscapes:!1,dateSQL:h("date datetimeoffset datetime2 smalldatetime datetime time"),hooks:{"@":ue}}),wa=G({client:h("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),keywords:h(de+"accessible action add after algorithm all analyze asensitive at authors auto_increment autocommit avg avg_row_length before binary binlog both btree cache call cascade cascaded case catalog_name chain change changed character check checkpoint checksum class_origin client_statistics close coalesce code collate collation collations column columns comment commit committed completion concurrent condition connection consistent constraint contains continue contributors convert cross current current_date current_time current_timestamp current_user cursor data database databases day_hour day_microsecond day_minute day_second deallocate dec declare default delay_key_write delayed delimiter des_key_file describe deterministic dev_pop dev_samp deviance diagnostics directory disable discard distinctrow div dual dumpfile each elseif enable enclosed end ends engine engines enum errors escape escaped even event events every execute exists exit explain extended fast fetch field fields first flush for force foreign found_rows full fulltext function general get global grant grants group group_concat handler hash help high_priority hosts hour_microsecond hour_minute hour_second if ignore ignore_server_ids import index index_statistics infile inner innodb inout insensitive insert_method install interval invoker isolation iterate key keys kill language last leading leave left level limit linear lines list load local localtime localtimestamp lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters match max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modifies modify mutex mysql_errno natural next no no_write_to_binlog offline offset one online open optimize option optionally out outer outfile pack_keys parser partition partitions password phase plugin plugins prepare preserve prev primary privileges procedure processlist profile profiles purge query quick range read read_write reads real rebuild recover references regexp relaylog release remove rename reorganize repair repeatable replace require resignal restrict resume return returns revoke right rlike rollback rollup row row_format rtree savepoint schedule schema schema_name schemas second_microsecond security sensitive separator serializable server session share show signal slave slow smallint snapshot soname spatial specific sql sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result sqlexception sqlstate sqlwarning ssl start starting starts status std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace temporary terminated to trailing transaction trigger triggers truncate uncommitted undo uninstall unique unlock upgrade usage use use_frm user user_resources user_statistics using utc_date utc_time utc_timestamp value variables varying view views warnings when while with work write xa xor year_month zerofill begin do then else loop repeat"),builtin:h("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision date datetime year unsigned signed numeric"),atoms:h("false true null unknown"),operatorChars:/^[*+\-%<>!=&|^]/,dateSQL:h("date time timestamp"),support:h("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber doubleQuote nCharCast charsetCast commentHash commentSpaceRequired"),hooks:{"@":ue,"`":En,"\\":Qt}}),Jl=G({client:h("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),keywords:h(de+"accessible action add after algorithm all always analyze asensitive at authors auto_increment autocommit avg avg_row_length before binary binlog both btree cache call cascade cascaded case catalog_name chain change changed character check checkpoint checksum class_origin client_statistics close coalesce code collate collation collations column columns comment commit committed completion concurrent condition connection consistent constraint contains continue contributors convert cross current current_date current_time current_timestamp current_user cursor data database databases day_hour day_microsecond day_minute day_second deallocate dec declare default delay_key_write delayed delimiter des_key_file describe deterministic dev_pop dev_samp deviance diagnostics directory disable discard distinctrow div dual dumpfile each elseif enable enclosed end ends engine engines enum errors escape escaped even event events every execute exists exit explain extended fast fetch field fields first flush for force foreign found_rows full fulltext function general generated get global grant grants group group_concat handler hard hash help high_priority hosts hour_microsecond hour_minute hour_second if ignore ignore_server_ids import index index_statistics infile inner innodb inout insensitive insert_method install interval invoker isolation iterate key keys kill language last leading leave left level limit linear lines list load local localtime localtimestamp lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters match max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modifies modify mutex mysql_errno natural next no no_write_to_binlog offline offset one online open optimize option optionally out outer outfile pack_keys parser partition partitions password persistent phase plugin plugins prepare preserve prev primary privileges procedure processlist profile profiles purge query quick range read read_write reads real rebuild recover references regexp relaylog release remove rename reorganize repair repeatable replace require resignal restrict resume return returns revoke right rlike rollback rollup row row_format rtree savepoint schedule schema schema_name schemas second_microsecond security sensitive separator serializable server session share show shutdown signal slave slow smallint snapshot soft soname spatial specific sql sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result sqlexception sqlstate sqlwarning ssl start starting starts status std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace temporary terminated to trailing transaction trigger triggers truncate uncommitted undo uninstall unique unlock upgrade usage use use_frm user user_resources user_statistics using utc_date utc_time utc_timestamp value variables varying view views virtual warnings when while with work write xa xor year_month zerofill begin do then else loop repeat"),builtin:h("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision date datetime year unsigned signed numeric"),atoms:h("false true null unknown"),operatorChars:/^[*+\-%<>!=&|^]/,dateSQL:h("date time timestamp"),support:h("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber doubleQuote nCharCast charsetCast commentHash commentSpaceRequired"),hooks:{"@":ue,"`":En,"\\":Qt}}),Sa=G({client:h("auth backup bail binary changes check clone databases dbinfo dump echo eqp exit explain fullschema headers help import imposter indexes iotrace limit lint load log mode nullvalue once open output print prompt quit read restore save scanstats schema separator session shell show stats system tables testcase timeout timer trace vfsinfo vfslist vfsname width"),keywords:h(de+"abort action add after all analyze attach autoincrement before begin cascade case cast check collate column commit conflict constraint cross current_date current_time current_timestamp database default deferrable deferred detach each else end escape except exclusive exists explain fail for foreign full glob if ignore immediate index indexed initially inner instead intersect isnull key left limit match natural no notnull null of offset outer plan pragma primary query raise recursive references regexp reindex release rename replace restrict right rollback row savepoint temp temporary then to transaction trigger unique using vacuum view virtual when with without"),builtin:h("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text clob bigint int int2 int8 integer float double char varchar date datetime year unsigned signed numeric real"),atoms:h("null current_date current_time current_timestamp"),operatorChars:/^[*+\-%<>!=&|/~]/,dateSQL:h("date time timestamp datetime"),support:h("decimallessFloat zerolessFloat"),identifierQuote:'"',hooks:{"@":ue,":":ue,"?":ue,$:ue,'"':ka,"`":En}}),Yl=G({client:{},keywords:h("add all allow alter and any apply as asc authorize batch begin by clustering columnfamily compact consistency count create custom delete desc distinct drop each_quorum exists filtering from grant if in index insert into key keyspace keyspaces level limit local_one local_quorum modify nan norecursive nosuperuser not of on one order password permission permissions primary quorum rename revoke schema select set storage superuser table three to token truncate ttl two type unlogged update use user users using values where with writetime"),builtin:h("ascii bigint blob boolean counter decimal double float frozen inet int list map static text timestamp timeuuid tuple uuid varchar varint"),atoms:h("false true infinity NaN"),operatorChars:/^[<>=]/,dateSQL:{},support:h("commentSlashSlash decimallessFloat"),hooks:{}}),za=G({client:h("appinfo arraysize autocommit autoprint autorecovery autotrace blockterminator break btitle cmdsep colsep compatibility compute concat copycommit copytypecheck define describe echo editfile embedded escape exec execute feedback flagger flush heading headsep instance linesize lno loboffset logsource long longchunksize markup native newpage numformat numwidth pagesize pause pno recsep recsepchar release repfooter repheader serveroutput shiftinout show showmode size spool sqlblanklines sqlcase sqlcode sqlcontinue sqlnumber sqlpluscompatibility sqlprefix sqlprompt sqlterminator suffix tab term termout time timing trimout trimspool ttitle underline verify version wrap"),keywords:h("abort accept access add all alter and any array arraylen as asc assert assign at attributes audit authorization avg base_table begin between binary_integer body boolean by case cast char char_base check close cluster clusters colauth column comment commit compress connect connected constant constraint crash create current currval cursor data_base database date dba deallocate debugoff debugon decimal declare default definition delay delete desc digits dispose distinct do drop else elseif elsif enable end entry escape exception exception_init exchange exclusive exists exit external fast fetch file for force form from function generic goto grant group having identified if immediate in increment index indexes indicator initial initrans insert interface intersect into is key level library like limited local lock log logging long loop master maxextents maxtrans member minextents minus mislabel mode modify multiset new next no noaudit nocompress nologging noparallel not nowait number_base object of off offline on online only open option or order out package parallel partition pctfree pctincrease pctused pls_integer positive positiven pragma primary prior private privileges procedure public raise range raw read rebuild record ref references refresh release rename replace resource restrict return returning returns reverse revoke rollback row rowid rowlabel rownum rows run savepoint schema segment select separate session set share snapshot some space split sql start statement storage subtype successful synonym tabauth table tables tablespace task terminate then to trigger truncate type union unique unlimited unrecoverable unusable update use using validate value values variable view views when whenever where while with work"),builtin:h("abs acos add_months ascii asin atan atan2 average bfile bfilename bigserial bit blob ceil character chartorowid chr clob concat convert cos cosh count dec decode deref dual dump dup_val_on_index empty error exp false float floor found glb greatest hextoraw initcap instr instrb int integer isopen last_day least length lengthb ln lower lpad ltrim lub make_ref max min mlslabel mod months_between natural naturaln nchar nclob new_time next_day nextval nls_charset_decl_len nls_charset_id nls_charset_name nls_initcap nls_lower nls_sort nls_upper nlssort no_data_found notfound null number numeric nvarchar2 nvl others power rawtohex real reftohex round rowcount rowidtochar rowtype rpad rtrim serial sign signtype sin sinh smallint soundex sqlcode sqlerrm sqrt stddev string substr substrb sum sysdate tan tanh to_char text to_date to_label to_multi_byte to_number to_single_byte translate true trunc uid unlogged upper user userenv varchar varchar2 variance varying vsize xml"),operatorChars:/^[*\/+\-%<>!=~]/,dateSQL:h("date time timestamp"),support:h("doubleQuote nCharCast zerolessFloat binaryNumber hexNumber")}),ec=G({keywords:h("select alter $elem$ $key$ $value$ add after all analyze and archive as asc before between binary both bucket buckets by cascade case cast change cluster clustered clusterstatus collection column columns comment compute concatenate continue create cross cursor data database databases dbproperties deferred delete delimited desc describe directory disable distinct distribute drop else enable end escaped exclusive exists explain export extended external fetch fields fileformat first format formatted from full function functions grant group having hold_ddltime idxproperties if import in index indexes inpath inputdriver inputformat insert intersect into is items join keys lateral left like limit lines load local location lock locks mapjoin materialized minus msck no_drop nocompress not of offline on option or order out outer outputdriver outputformat overwrite partition partitioned partitions percent plus preserve procedure purge range rcfile read readonly reads rebuild recordreader recordwriter recover reduce regexp rename repair replace restrict revoke right rlike row schema schemas semi sequencefile serde serdeproperties set shared show show_database sort sorted ssl statistics stored streamtable table tables tablesample tblproperties temporary terminated textfile then tmp to touch transform trigger unarchive undo union uniquejoin unlock update use using utc utc_tmestamp view when where while with admin authorization char compact compactions conf cube current current_date current_timestamp day decimal defined dependency directories elem_type exchange file following for grouping hour ignore inner interval jar less logical macro minute month more none noscan over owner partialscan preceding pretty principals protection reload rewrite role roles rollup rows second server sets skewed transactions truncate unbounded unset uri user values window year"),builtin:h("bool boolean long timestamp tinyint smallint bigint int float double date datetime unsigned string array struct map uniontype key_type utctimestamp value_type varchar"),atoms:h("false true null unknown"),operatorChars:/^[*+\-%<>!=]/,dateSQL:h("date timestamp"),support:h("ODBCdotTable doubleQuote binaryNumber hexNumber")}),Ea=G({client:h("source"),keywords:h(de+"a abort abs absent absolute access according action ada add admin after aggregate alias all allocate also alter always analyse analyze and any are array array_agg array_max_cardinality as asc asensitive assert assertion assignment asymmetric at atomic attach attribute attributes authorization avg backward base64 before begin begin_frame begin_partition bernoulli between bigint binary bit bit_length blob blocked bom boolean both breadth by c cache call called cardinality cascade cascaded case cast catalog catalog_name ceil ceiling chain char char_length character character_length character_set_catalog character_set_name character_set_schema characteristics characters check checkpoint class class_origin clob close cluster coalesce cobol collate collation collation_catalog collation_name collation_schema collect column column_name columns command_function command_function_code comment comments commit committed concurrently condition condition_number configuration conflict connect connection connection_name constant constraint constraint_catalog constraint_name constraint_schema constraints constructor contains content continue control conversion convert copy corr corresponding cost count covar_pop covar_samp create cross csv cube cume_dist current current_catalog current_date current_default_transform_group current_path current_role current_row current_schema current_time current_timestamp current_transform_group_for_type current_user cursor cursor_name cycle data database datalink datatype date datetime_interval_code datetime_interval_precision day db deallocate debug dec decimal declare default defaults deferrable deferred defined definer degree delete delimiter delimiters dense_rank depends depth deref derived desc describe descriptor detach detail deterministic diagnostics dictionary disable discard disconnect dispatch distinct dlnewcopy dlpreviouscopy dlurlcomplete dlurlcompleteonly dlurlcompletewrite dlurlpath dlurlpathonly dlurlpathwrite dlurlscheme dlurlserver dlvalue do document domain double drop dump dynamic dynamic_function dynamic_function_code each element else elseif elsif empty enable encoding encrypted end end_frame end_partition endexec enforced enum equals errcode error escape event every except exception exclude excluding exclusive exec execute exists exit exp explain expression extension external extract false family fetch file filter final first first_value flag float floor following for force foreach foreign fortran forward found frame_row free freeze from fs full function functions fusion g general generated get global go goto grant granted greatest group grouping groups handler having header hex hierarchy hint hold hour id identity if ignore ilike immediate immediately immutable implementation implicit import in include including increment indent index indexes indicator info inherit inherits initially inline inner inout input insensitive insert instance instantiable instead int integer integrity intersect intersection interval into invoker is isnull isolation join k key key_member key_type label lag language large last last_value lateral lead leading leakproof least left length level library like like_regex limit link listen ln load local localtime localtimestamp location locator lock locked log logged loop lower m map mapping match matched materialized max max_cardinality maxvalue member merge message message_length message_octet_length message_text method min minute minvalue mod mode modifies module month more move multiset mumps name names namespace national natural nchar nclob nesting new next nfc nfd nfkc nfkd nil no none normalize normalized not nothing notice notify notnull nowait nth_value ntile null nullable nullif nulls number numeric object occurrences_regex octet_length octets of off offset oids old on only open operator option options or order ordering ordinality others out outer output over overlaps overlay overriding owned owner p pad parallel parameter parameter_mode parameter_name parameter_ordinal_position parameter_specific_catalog parameter_specific_name parameter_specific_schema parser partial partition pascal passing passthrough password path percent percent_rank percentile_cont percentile_disc perform period permission pg_context pg_datatype_name pg_exception_context pg_exception_detail pg_exception_hint placing plans pli policy portion position position_regex power precedes preceding precision prepare prepared preserve primary print_strict_params prior privileges procedural procedure procedures program public publication query quote raise range rank read reads real reassign recheck recovery recursive ref references referencing refresh regr_avgx regr_avgy regr_count regr_intercept regr_r2 regr_slope regr_sxx regr_sxy regr_syy reindex relative release rename repeatable replace replica requiring reset respect restart restore restrict result result_oid return returned_cardinality returned_length returned_octet_length returned_sqlstate returning returns reverse revoke right role rollback rollup routine routine_catalog routine_name routine_schema routines row row_count row_number rows rowtype rule savepoint scale schema schema_name schemas scope scope_catalog scope_name scope_schema scroll search second section security select selective self sensitive sequence sequences serializable server server_name session session_user set setof sets share show similar simple size skip slice smallint snapshot some source space specific specific_name specifictype sql sqlcode sqlerror sqlexception sqlstate sqlwarning sqrt stable stacked standalone start state statement static statistics stddev_pop stddev_samp stdin stdout storage strict strip structure style subclass_origin submultiset subscription substring substring_regex succeeds sum symmetric sysid system system_time system_user t table table_name tables tablesample tablespace temp template temporary text then ties time timestamp timezone_hour timezone_minute to token top_level_count trailing transaction transaction_active transactions_committed transactions_rolled_back transform transforms translate translate_regex translation treat trigger trigger_catalog trigger_name trigger_schema trim trim_array true truncate trusted type types uescape unbounded uncommitted under unencrypted union unique unknown unlink unlisten unlogged unnamed unnest until untyped update upper uri usage use_column use_variable user user_defined_type_catalog user_defined_type_code user_defined_type_name user_defined_type_schema using vacuum valid validate validator value value_of values var_pop var_samp varbinary varchar variable_conflict variadic varying verbose version versioning view views volatile warning when whenever where while whitespace width_bucket window with within without work wrapper write xml xmlagg xmlattributes xmlbinary xmlcast xmlcomment xmlconcat xmldeclaration xmldocument xmlelement xmlexists xmlforest xmliterate xmlnamespaces xmlparse xmlpi xmlquery xmlroot xmlschema xmlserialize xmltable xmltext xmlvalidate year yes zone"),builtin:h("bigint int8 bigserial serial8 bit varying varbit boolean bool box bytea character char varchar cidr circle date double precision float8 inet integer int int4 interval json jsonb line lseg macaddr macaddr8 money numeric decimal path pg_lsn point polygon real float4 smallint int2 smallserial serial2 serial serial4 text time without zone with timetz timestamp timestamptz tsquery tsvector txid_snapshot uuid xml"),atoms:h("false true null unknown"),operatorChars:/^[*\/+\-%<>!=&|^\/#@?~]/,backslashStringEscapes:!1,dateSQL:h("date time timestamp"),support:h("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber nCharCast charsetCast escapeConstant")}),nc=G({keywords:h("ancestor and asc by contains desc descendant distinct from group has in is limit offset on order select superset where"),atoms:h("false true"),builtin:h("blob datetime first key __key__ string integer double boolean null"),operatorChars:/^[*+\-%<>!=]/}),tc=G({client:h("source"),keywords:h("abort absolute access action active add admin after aggregate all also alter always analyse analyze and any array as asc assertion assignment asymmetric at authorization backward before begin between bigint binary bit boolean both by cache called cascade cascaded case cast chain char character characteristics check checkpoint class close cluster coalesce codegen collate column comment commit committed concurrency concurrently configuration connection constraint constraints contains content continue conversion copy cost cpu_rate_limit create createdb createexttable createrole createuser cross csv cube current current_catalog current_date current_role current_schema current_time current_timestamp current_user cursor cycle data database day deallocate dec decimal declare decode default defaults deferrable deferred definer delete delimiter delimiters deny desc dictionary disable discard distinct distributed do document domain double drop dxl each else enable encoding encrypted end enum errors escape every except exchange exclude excluding exclusive execute exists explain extension external extract false family fetch fields filespace fill filter first float following for force foreign format forward freeze from full function global grant granted greatest group group_id grouping handler hash having header hold host hour identity if ignore ilike immediate immutable implicit in including inclusive increment index indexes inherit inherits initially inline inner inout input insensitive insert instead int integer intersect interval into invoker is isnull isolation join key language large last leading least left level like limit list listen load local localtime localtimestamp location lock log login mapping master match maxvalue median merge minute minvalue missing mode modifies modify month move name names national natural nchar new newline next no nocreatedb nocreateexttable nocreaterole nocreateuser noinherit nologin none noovercommit nosuperuser not nothing notify notnull nowait null nullif nulls numeric object of off offset oids old on only operator option options or order ordered others out outer over overcommit overlaps overlay owned owner parser partial partition partitions passing password percent percentile_cont percentile_disc placing plans position preceding precision prepare prepared preserve primary prior privileges procedural procedure protocol queue quote randomly range read readable reads real reassign recheck recursive ref references reindex reject relative release rename repeatable replace replica reset resource restart restrict returning returns revoke right role rollback rollup rootpartition row rows rule savepoint scatter schema scroll search second security segment select sequence serializable session session_user set setof sets share show similar simple smallint some split sql stable standalone start statement statistics stdin stdout storage strict strip subpartition subpartitions substring superuser symmetric sysid system table tablespace temp template temporary text then threshold ties time timestamp to trailing transaction treat trigger trim true truncate trusted type unbounded uncommitted unencrypted union unique unknown unlisten until update user using vacuum valid validation validator value values varchar variadic varying verbose version view volatile web when where whitespace window with within without work writable write xml xmlattributes xmlconcat xmlelement xmlexists xmlforest xmlparse xmlpi xmlroot xmlserialize year yes zone"),builtin:h("bigint int8 bigserial serial8 bit varying varbit boolean bool box bytea character char varchar cidr circle date double precision float float8 inet integer int int4 interval json jsonb line lseg macaddr macaddr8 money numeric decimal path pg_lsn point polygon real float4 smallint int2 smallserial serial2 serial serial4 text time without zone with timetz timestamp timestamptz tsquery tsvector txid_snapshot uuid xml"),atoms:h("false true null unknown"),operatorChars:/^[*+\-%<>!=&|^\/#@?~]/,dateSQL:h("date time timestamp"),support:h("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber nCharCast charsetCast")}),rc=G({keywords:h("add after all alter analyze and anti archive array as asc at between bucket buckets by cache cascade case cast change clear cluster clustered codegen collection column columns comment commit compact compactions compute concatenate cost create cross cube current current_date current_timestamp database databases data dbproperties defined delete delimited deny desc describe dfs directories distinct distribute drop else end escaped except exchange exists explain export extended external false fields fileformat first following for format formatted from full function functions global grant group grouping having if ignore import in index indexes inner inpath inputformat insert intersect interval into is items join keys last lateral lazy left like limit lines list load local location lock locks logical macro map minus msck natural no not null nulls of on optimize option options or order out outer outputformat over overwrite partition partitioned partitions percent preceding principals purge range recordreader recordwriter recover reduce refresh regexp rename repair replace reset restrict revoke right rlike role roles rollback rollup row rows schema schemas select semi separated serde serdeproperties set sets show skewed sort sorted start statistics stored stratify struct table tables tablesample tblproperties temp temporary terminated then to touch transaction transactions transform true truncate unarchive unbounded uncache union unlock unset use using values view when where window with"),builtin:h("tinyint smallint int bigint boolean float double string binary timestamp decimal array map struct uniontype delimited serde sequencefile textfile rcfile inputformat outputformat"),atoms:h("false true null"),operatorChars:/^[*\/+\-%<>!=~&|^]/,dateSQL:h("date time timestamp"),support:h("ODBCdotTable doubleQuote zerolessFloat")}),ic=G({client:h("source"),keywords:h("alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit after all and as at asc avedev avg between by case cast coalesce count create current_timestamp day days delete define desc distinct else end escape events every exists false first from full group having hour hours in inner insert instanceof into irstream is istream join last lastweekday left limit like max match_recognize matches median measures metadatasql min minute minutes msec millisecond milliseconds not null offset on or order outer output partition pattern prev prior regexp retain-union retain-intersection right rstream sec second seconds select set some snapshot sql stddev sum then true unidirectional until update variable weekday when where window"),builtin:{},atoms:h("false true null"),operatorChars:/^[*+\-%<>!=&|^\/#@?~]/,dateSQL:h("time"),support:h("decimallessFloat zerolessFloat binaryNumber hexNumber")});function Xt(e){function n(c,d){c.cmdState.push(d)}function t(c){return c.cmdState.length>0?c.cmdState[c.cmdState.length-1]:null}function r(c){var d=c.cmdState.pop();d&&d.closeBracket()}function i(c){for(var d=c.cmdState,y=d.length-1;y>=0;y--){var O=d[y];if(O.name!="DEFAULT")return O}return{styleIdentifier:function(){return null}}}function o(c,d,y){return function(){this.name=c,this.bracketNo=0,this.style=d,this.styles=y,this.argument=null,this.styleIdentifier=function(){return this.styles[this.bracketNo-1]||null},this.openBracket=function(){return this.bracketNo++,"bracket"},this.closeBracket=function(){}}}var a={};a.importmodule=o("importmodule","tag",["string","builtin"]),a.documentclass=o("documentclass","tag",["","atom"]),a.usepackage=o("usepackage","tag",["atom"]),a.begin=o("begin","tag",["atom"]),a.end=o("end","tag",["atom"]),a.label=o("label","tag",["atom"]),a.ref=o("ref","tag",["atom"]),a.eqref=o("eqref","tag",["atom"]),a.cite=o("cite","tag",["atom"]),a.bibitem=o("bibitem","tag",["atom"]),a.Bibitem=o("Bibitem","tag",["atom"]),a.RBibitem=o("RBibitem","tag",["atom"]),a.DEFAULT=function(){this.name="DEFAULT",this.style="tag",this.styleIdentifier=this.openBracket=this.closeBracket=function(){}};function p(c,d){c.f=d}function S(c,d){var y;if(c.match(/^\\[a-zA-Z@\xc0-\u1fff\u2060-\uffff]+/)){var O=c.current().slice(1);return y=a.hasOwnProperty(O)?a[O]:a.DEFAULT,y=new y,n(d,y),p(d,x),y.style}if(c.match(/^\\[$&%#{}_]/)||c.match(/^\\[,;!\/\\]/))return"tag";if(c.match("\\["))return p(d,function(M,u){return E(M,u,"\\]")}),"keyword";if(c.match("\\("))return p(d,function(M,u){return E(M,u,"\\)")}),"keyword";if(c.match("$$"))return p(d,function(M,u){return E(M,u,"$$")}),"keyword";if(c.match("$"))return p(d,function(M,u){return E(M,u,"$")}),"keyword";var K=c.next();if(K=="%")return c.skipToEnd(),"comment";if(K=="}"||K=="]"){if(y=t(d),y)y.closeBracket(K),p(d,x);else return"error";return"bracket"}else return K=="{"||K=="["?(y=a.DEFAULT,y=new y,n(d,y),"bracket"):/\d/.test(K)?(c.eatWhile(/[\w.%]/),"atom"):(c.eatWhile(/[\w\-_]/),y=i(d),y.name=="begin"&&(y.argument=c.current()),y.styleIdentifier())}function E(c,d,y){if(c.eatSpace())return null;if(y&&c.match(y))return p(d,S),"keyword";if(c.match(/^\\[a-zA-Z@]+/))return"tag";if(c.match(/^[a-zA-Z]+/))return"variableName.special";if(c.match(/^\\[$&%#{}_]/)||c.match(/^\\[,;!\/]/)||c.match(/^[\^_&]/))return"tag";if(c.match(/^[+\-<>|=,\/@!*:;'"`~#?]/))return null;if(c.match(/^(\d+\.\d*|\d*\.\d+|\d+)/))return"number";var O=c.next();return O=="{"||O=="}"||O=="["||O=="]"||O=="("||O==")"?"bracket":O=="%"?(c.skipToEnd(),"comment"):"error"}function x(c,d){var y=c.peek(),O;return y=="{"||y=="["?(O=t(d),O.openBracket(y),c.eat(y),p(d,S),"bracket"):/[ \t\r]/.test(y)?(c.eat(y),null):(p(d,S),r(d),S(c,d))}return{name:"stex",startState:function(){var c=e?function(d,y){return E(d,y)}:S;return{cmdState:[],f:c}},copyState:function(c){return{cmdState:c.cmdState.slice(),f:c.f}},token:function(c,d){return d.f(c,d)},blankLine:function(c){c.f=S,c.cmdState.length=0},languageData:{commentTokens:{line:"%"}}}}var Ta=Xt(!1),ac=Xt(!0);function Ue(e){for(var n={},t=0;t<e.length;t++)n[e[t]]=!0;return n}var Ca=Ue(["_","var","let","actor","class","enum","extension","import","protocol","struct","func","typealias","associatedtype","open","public","internal","fileprivate","private","deinit","init","new","override","self","subscript","super","convenience","dynamic","final","indirect","lazy","required","static","unowned","unowned(safe)","unowned(unsafe)","weak","as","is","break","case","continue","default","else","fallthrough","for","guard","if","in","repeat","switch","where","while","defer","return","inout","mutating","nonmutating","isolated","nonisolated","catch","do","rethrows","throw","throws","async","await","try","didSet","get","set","willSet","assignment","associativity","infix","left","none","operator","postfix","precedence","precedencegroup","prefix","right","Any","AnyObject","Type","dynamicType","Self","Protocol","__COLUMN__","__FILE__","__FUNCTION__","__LINE__"]),Ia=Ue(["var","let","actor","class","enum","extension","import","protocol","struct","func","typealias","associatedtype","for"]),Ra=Ue(["true","false","nil","self","super","_"]),Oa=Ue(["Array","Bool","Character","Dictionary","Double","Float","Int","Int8","Int16","Int32","Int64","Never","Optional","Set","String","UInt8","UInt16","UInt32","UInt64","Void"]),Aa="+-/*%=|&<>~^?!",Pa=":;,.(){}[]",La=/^\-?0b[01][01_]*/,Da=/^\-?0o[0-7][0-7_]*/,$a=/^\-?0x[\dA-Fa-f][\dA-Fa-f_]*(?:(?:\.[\dA-Fa-f][\dA-Fa-f_]*)?[Pp]\-?\d[\d_]*)?/,Na=/^\-?\d[\d_]*(?:\.\d[\d_]*)?(?:[Ee]\-?\d[\d_]*)?/,qa=/^\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1/,Fa=/^\.(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/,Ma=/^\#[A-Za-z]+/,Ba=/^@(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;function Jt(e,n,t){if(e.sol()&&(n.indented=e.indentation()),e.eatSpace())return null;var r=e.peek();if(r=="/"){if(e.match("//"))return e.skipToEnd(),"comment";if(e.match("/*"))return n.tokenize.push(Tn),Tn(e,n)}if(e.match(Ma))return"builtin";if(e.match(Ba))return"attribute";if(e.match(La)||e.match(Da)||e.match($a)||e.match(Na))return"number";if(e.match(Fa))return"property";if(Aa.indexOf(r)>-1)return e.next(),"operator";if(Pa.indexOf(r)>-1)return e.next(),e.match(".."),"punctuation";var i;if(i=e.match(/("""|"|')/)){var o=Wa.bind(null,i[0]);return n.tokenize.push(o),o(e,n)}if(e.match(qa)){var a=e.current();return Oa.hasOwnProperty(a)?"type":Ra.hasOwnProperty(a)?"atom":Ca.hasOwnProperty(a)?(Ia.hasOwnProperty(a)&&(n.prev="define"),"keyword"):t=="define"?"def":"variable"}return e.next(),null}function ja(){var e=0;return function(n,t,r){var i=Jt(n,t,r);if(i=="punctuation"){if(n.current()=="(")++e;else if(n.current()==")"){if(e==0)return n.backUp(1),t.tokenize.pop(),t.tokenize[t.tokenize.length-1](n,t);--e}}return i}}function Wa(e,n,t){for(var r=e.length==1,i,o=!1;i=n.peek();)if(o){if(n.next(),i=="(")return t.tokenize.push(ja()),"string";o=!1}else{if(n.match(e))return t.tokenize.pop(),"string";n.next(),o=i=="\\"}return r&&t.tokenize.pop(),"string"}function Tn(e,n){for(var t;t=e.next();)if(t==="/"&&e.eat("*"))n.tokenize.push(Tn);else if(t==="*"&&e.eat("/")){n.tokenize.pop();break}return"comment"}function Ua(e,n,t){this.prev=e,this.align=n,this.indented=t}function Ka(e,n){var t=n.match(/^\s*($|\/[\/\*]|[)}\]])/,!1)?null:n.column()+1;e.context=new Ua(e.context,t,e.indented)}function Ha(e){e.context&&(e.indented=e.context.indented,e.context=e.context.prev)}var Ga={name:"swift",startState:function(){return{prev:null,context:null,indented:0,tokenize:[]}},token:function(e,n){var t=n.prev;n.prev=null;var r=n.tokenize[n.tokenize.length-1]||Jt,i=r(e,n,t);if(!i||i=="comment"?n.prev=t:n.prev||(n.prev=i),i=="punctuation"){var o=/[\(\[\{]|([\]\)\}])/.exec(e.current());o&&(o[1]?Ha:Ka)(n,e)}return i},indent:function(e,n,t){var r=e.context;if(!r)return 0;var i=/^[\]\}\)]/.test(n);return r.align!=null?r.align-(i?1:0):r.indented+(i?0:t.unit)},languageData:{indentOnInput:/^\s*[\)\}\]]$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}},closeBrackets:{brackets:["(","[","{","'",'"',"`"]}}};var Za={name:"toml",startState:function(){return{inString:!1,stringType:"",lhs:!0,inArray:0}},token:function(e,n){if(!n.inString&&(e.peek()=='"'||e.peek()=="'")&&(n.stringType=e.peek(),e.next(),n.inString=!0),e.sol()&&n.inArray===0&&(n.lhs=!0),n.inString){for(;n.inString&&!e.eol();)e.peek()===n.stringType?(e.next(),n.inString=!1):e.peek()==="\\"?(e.next(),e.next()):e.match(/^.[^\\\"\']*/);return n.lhs?"property":"string"}else{if(n.inArray&&e.peek()==="]")return e.next(),n.inArray--,"bracket";if(n.lhs&&e.peek()==="["&&e.skipTo("]"))return e.next(),e.peek()==="]"&&e.next(),"atom";if(e.peek()==="#")return e.skipToEnd(),"comment";if(e.eatSpace())return null;if(n.lhs&&e.eatWhile(function(t){return t!="="&&t!=" "}))return"property";if(n.lhs&&e.peek()==="=")return e.next(),n.lhs=!1,null;if(!n.lhs&&e.match(/^\d\d\d\d[\d\-\:\.T]*Z/))return"atom";if(!n.lhs&&(e.match("true")||e.match("false")))return"atom";if(!n.lhs&&e.peek()==="[")return n.inArray++,e.next(),"bracket";if(!n.lhs&&e.match(/^\-?\d+(?:\.\d+)?/))return"number";e.eatSpace()||e.next()}return null},languageData:{commentTokens:{line:"#"}}};var Ke="error";function ce(e){return new RegExp("^(("+e.join(")|(")+"))\\b","i")}var Qa=new RegExp("^[\\+\\-\\*/%&\\\\|\\^~<>!]"),Va=new RegExp("^[\\(\\)\\[\\]\\{\\}@,:`=;\\.]"),Xa=new RegExp("^((==)|(<>)|(<=)|(>=)|(<>)|(<<)|(>>)|(//)|(\\*\\*))"),Ja=new RegExp("^((\\+=)|(\\-=)|(\\*=)|(%=)|(/=)|(&=)|(\\|=)|(\\^=))"),Ya=new RegExp("^((//=)|(>>=)|(<<=)|(\\*\\*=))"),el=new RegExp("^[_A-Za-z][_A-Za-z0-9]*"),Yt=["class","module","sub","enum","select","while","if","function","get","set","property","try","structure","synclock","using","with"],er=["else","elseif","case","catch","finally"],nr=["next","loop"],tr=["and","andalso","or","orelse","xor","in","not","is","isnot","like"],nl=ce(tr),rr=["#const","#else","#elseif","#end","#if","#region","addhandler","addressof","alias","as","byref","byval","cbool","cbyte","cchar","cdate","cdbl","cdec","cint","clng","cobj","compare","const","continue","csbyte","cshort","csng","cstr","cuint","culng","cushort","declare","default","delegate","dim","directcast","each","erase","error","event","exit","explicit","false","for","friend","gettype","goto","handles","implements","imports","infer","inherits","interface","isfalse","istrue","lib","me","mod","mustinherit","mustoverride","my","mybase","myclass","namespace","narrowing","new","nothing","notinheritable","notoverridable","of","off","on","operator","option","optional","out","overloads","overridable","overrides","paramarray","partial","private","protected","public","raiseevent","readonly","redim","removehandler","resume","return","shadows","shared","static","step","stop","strict","then","throw","to","true","trycast","typeof","until","until","when","widening","withevents","writeonly"],ir=["object","boolean","char","string","byte","sbyte","short","ushort","int16","uint16","integer","uinteger","int32","uint32","long","ulong","int64","uint64","decimal","single","double","float","date","datetime","intptr","uintptr"],tl=ce(rr),rl=ce(ir),il='"',ol=ce(Yt),or=ce(er),ar=ce(nr),lr=ce(["end"]),al=ce(["do"]),ll=null;function Cn(e,n){n.currentIndent++}function Ce(e,n){n.currentIndent--}function In(e,n){if(e.eatSpace())return null;var t=e.peek();if(t==="'")return e.skipToEnd(),"comment";if(e.match(/^((&H)|(&O))?[0-9\.a-f]/i,!1)){var r=!1;if((e.match(/^\d*\.\d+F?/i)||e.match(/^\d+\.\d*F?/)||e.match(/^\.\d+F?/))&&(r=!0),r)return e.eat(/J/i),"number";var i=!1;if(e.match(/^&H[0-9a-f]+/i)||e.match(/^&O[0-7]+/i)?i=!0:e.match(/^[1-9]\d*F?/)?(e.eat(/J/i),i=!0):e.match(/^0(?![\dx])/i)&&(i=!0),i)return e.eat(/L/i),"number"}return e.match(il)?(n.tokenize=cl(e.current()),n.tokenize(e,n)):e.match(Ya)||e.match(Ja)?null:e.match(Xa)||e.match(Qa)||e.match(nl)?"operator":e.match(Va)?null:e.match(al)?(Cn(e,n),n.doInCurrentLine=!0,"keyword"):e.match(ol)?(n.doInCurrentLine?n.doInCurrentLine=!1:Cn(e,n),"keyword"):e.match(or)?"keyword":e.match(lr)?(Ce(e,n),Ce(e,n),"keyword"):e.match(ar)?(Ce(e,n),"keyword"):e.match(rl)||e.match(tl)?"keyword":e.match(el)?"variable":(e.next(),Ke)}function cl(e){var n=e.length==1,t="string";return function(r,i){for(;!r.eol();){if(r.eatWhile(/[^'"]/),r.match(e))return i.tokenize=In,t;r.eat(/['"]/)}return n&&(i.tokenize=In),t}}function sl(e,n){var t=n.tokenize(e,n),r=e.current();if(r===".")return t=n.tokenize(e,n),t==="variable"?"variable":Ke;var i="[({".indexOf(r);return i!==-1&&Cn(e,n),ll==="dedent"&&Ce(e,n)||(i="])}".indexOf(r),i!==-1&&Ce(e,n))?Ke:t}var ul={name:"vb",startState:function(){return{tokenize:In,lastToken:null,currentIndent:0,nextLineIndent:0,doInCurrentLine:!1}},token:function(e,n){e.sol()&&(n.currentIndent+=n.nextLineIndent,n.nextLineIndent=0,n.doInCurrentLine=0);var t=sl(e,n);return n.lastToken={style:t,content:e.current()},t},indent:function(e,n,t){var r=n.replace(/^\s+|\s+$/g,"");return r.match(ar)||r.match(lr)||r.match(or)?t.unit*(e.currentIndent-1):e.currentIndent<0?0:e.currentIndent*t.unit},languageData:{closeBrackets:{brackets:["(","[","{",'"']},commentTokens:{line:"'"},autocomplete:Yt.concat(er).concat(nr).concat(tr).concat(rr).concat(ir)}};function cr(e){var n="error";function t(g){return new RegExp("^(("+g.join(")|(")+"))\\b","i")}var r=new RegExp("^[\\+\\-\\*/&\\\\\\^<>=]"),i=new RegExp("^((<>)|(<=)|(>=))"),o=new RegExp("^[\\.,]"),a=new RegExp("^[\\(\\)]"),p=new RegExp("^[A-Za-z][_A-Za-z0-9]*"),S=["class","sub","select","while","if","function","property","with","for"],E=["else","elseif","case"],x=["next","loop","wend"],c=t(["and","or","not","xor","is","mod","eqv","imp"]),d=["dim","redim","then","until","randomize","byval","byref","new","property","exit","in","const","private","public","get","set","let","stop","on error resume next","on error goto 0","option explicit","call","me"],y=["true","false","nothing","empty","null"],O=["abs","array","asc","atn","cbool","cbyte","ccur","cdate","cdbl","chr","cint","clng","cos","csng","cstr","date","dateadd","datediff","datepart","dateserial","datevalue","day","escape","eval","execute","exp","filter","formatcurrency","formatdatetime","formatnumber","formatpercent","getlocale","getobject","getref","hex","hour","inputbox","instr","instrrev","int","fix","isarray","isdate","isempty","isnull","isnumeric","isobject","join","lbound","lcase","left","len","loadpicture","log","ltrim","rtrim","trim","maths","mid","minute","month","monthname","msgbox","now","oct","replace","rgb","right","rnd","round","scriptengine","scriptenginebuildversion","scriptenginemajorversion","scriptengineminorversion","second","setlocale","sgn","sin","space","split","sqr","strcomp","string","strreverse","tan","time","timer","timeserial","timevalue","typename","ubound","ucase","unescape","vartype","weekday","weekdayname","year"],K=["vbBlack","vbRed","vbGreen","vbYellow","vbBlue","vbMagenta","vbCyan","vbWhite","vbBinaryCompare","vbTextCompare","vbSunday","vbMonday","vbTuesday","vbWednesday","vbThursday","vbFriday","vbSaturday","vbUseSystemDayOfWeek","vbFirstJan1","vbFirstFourDays","vbFirstFullWeek","vbGeneralDate","vbLongDate","vbShortDate","vbLongTime","vbShortTime","vbObjectError","vbOKOnly","vbOKCancel","vbAbortRetryIgnore","vbYesNoCancel","vbYesNo","vbRetryCancel","vbCritical","vbQuestion","vbExclamation","vbInformation","vbDefaultButton1","vbDefaultButton2","vbDefaultButton3","vbDefaultButton4","vbApplicationModal","vbSystemModal","vbOK","vbCancel","vbAbort","vbRetry","vbIgnore","vbYes","vbNo","vbCr","VbCrLf","vbFormFeed","vbLf","vbNewLine","vbNullChar","vbNullString","vbTab","vbVerticalTab","vbUseDefault","vbTrue","vbFalse","vbEmpty","vbNull","vbInteger","vbLong","vbSingle","vbDouble","vbCurrency","vbDate","vbString","vbObject","vbError","vbBoolean","vbVariant","vbDataObject","vbDecimal","vbByte","vbArray"],M=["WScript","err","debug","RegExp"],u=["description","firstindex","global","helpcontext","helpfile","ignorecase","length","number","pattern","source","value","count"],T=["clear","execute","raise","replace","test","write","writeline","close","open","state","eof","update","addnew","end","createobject","quit"],w=["server","response","request","session","application"],C=["buffer","cachecontrol","charset","contenttype","expires","expiresabsolute","isclientconnected","pics","status","clientcertificate","cookies","form","querystring","servervariables","totalbytes","contents","staticobjects","codepage","lcid","sessionid","timeout","scripttimeout"],l=["addheader","appendtolog","binarywrite","end","flush","redirect","binaryread","remove","removeall","lock","unlock","abandon","getlasterror","htmlencode","mappath","transfer","urlencode"],s=T.concat(u);M=M.concat(K),e.isASP&&(M=M.concat(w),s=s.concat(l,C));var I=t(d),k=t(y),L=t(O),m=t(M),f=t(s),z='"',v=t(S),D=t(E),J=t(x),ye=t(["end"]),Ze=t(["do"]),ur=t(["on error resume next","exit"]),dr=t(["rem"]);function An(g,R){R.currentIndent++}function Qe(g,R){R.currentIndent--}function Ve(g,R){if(g.eatSpace())return null;var $=g.peek();if($==="'"||g.match(dr))return g.skipToEnd(),"comment";if(g.match(/^((&H)|(&O))?[0-9\.]/i,!1)&&!g.match(/^((&H)|(&O))?[0-9\.]+[a-z_]/i,!1)){var W=!1;if((g.match(/^\d*\.\d+/i)||g.match(/^\d+\.\d*/)||g.match(/^\.\d+/))&&(W=!0),W)return g.eat(/J/i),"number";var re=!1;if(g.match(/^&H[0-9a-f]+/i)||g.match(/^&O[0-7]+/i)?re=!0:g.match(/^[1-9]\d*F?/)?(g.eat(/J/i),re=!0):g.match(/^0(?![\dx])/i)&&(re=!0),re)return g.eat(/L/i),"number"}return g.match(z)?(R.tokenize=fr(g.current()),R.tokenize(g,R)):g.match(i)||g.match(r)||g.match(c)?"operator":g.match(o)?null:g.match(a)?"bracket":g.match(ur)?(R.doInCurrentLine=!0,"keyword"):g.match(Ze)?(An(g,R),R.doInCurrentLine=!0,"keyword"):g.match(v)?(R.doInCurrentLine?R.doInCurrentLine=!1:An(g,R),"keyword"):g.match(D)?"keyword":g.match(ye)?(Qe(g,R),Qe(g,R),"keyword"):g.match(J)?(R.doInCurrentLine?R.doInCurrentLine=!1:Qe(g,R),"keyword"):g.match(I)?"keyword":g.match(k)?"atom":g.match(f)?"variableName.special":g.match(L)||g.match(m)?"builtin":g.match(p)?"variable":(g.next(),n)}function fr(g){var R=g.length==1,$="string";return function(W,re){for(;!W.eol();){if(W.eatWhile(/[^'"]/),W.match(g))return re.tokenize=Ve,$;W.eat(/['"]/)}return R&&(re.tokenize=Ve),$}}function pr(g,R){var $=R.tokenize(g,R),W=g.current();return W==="."?($=R.tokenize(g,R),W=g.current(),$&&($.substr(0,8)==="variable"||$==="builtin"||$==="keyword")?(($==="builtin"||$==="keyword")&&($="variable"),s.indexOf(W.substr(1))>-1&&($="keyword"),$):n):$}return{name:"vbscript",startState:function(){return{tokenize:Ve,lastToken:null,currentIndent:0,nextLineIndent:0,doInCurrentLine:!1,ignoreKeyword:!1}},token:function(g,R){g.sol()&&(R.currentIndent+=R.nextLineIndent,R.nextLineIndent=0,R.doInCurrentLine=0);var $=pr(g,R);return R.lastToken={style:$,content:g.current()},$===null&&($=null),$},indent:function(g,R,$){var W=R.replace(/^\s+|\s+$/g,"");return W.match(J)||W.match(ye)||W.match(D)?$.unit*(g.currentIndent-1):g.currentIndent<0?0:g.currentIndent*$.unit}}}var dl=cr({}),dc=cr({isASP:!0});var fl=["true","false","on","off","yes","no"],pl=new RegExp("\\b(("+fl.join(")|(")+"))$","i"),ml={name:"yaml",token:function(e,n){var t=e.peek(),r=n.escaped;if(n.escaped=!1,t=="#"&&(e.pos==0||/\s/.test(e.string.charAt(e.pos-1))))return e.skipToEnd(),"comment";if(e.match(/^('([^']|\\.)*'?|"([^"]|\\.)*"?)/))return"string";if(n.literal&&e.indentation()>n.keyCol)return e.skipToEnd(),"string";if(n.literal&&(n.literal=!1),e.sol()){if(n.keyCol=0,n.pair=!1,n.pairStart=!1,e.match("---")||e.match("..."))return"def";if(e.match(/^\s*-\s+/))return"meta"}if(e.match(/^(\{|\}|\[|\])/))return t=="{"?n.inlinePairs++:t=="}"?n.inlinePairs--:t=="["?n.inlineList++:n.inlineList--,"meta";if(n.inlineList>0&&!r&&t==",")return e.next(),"meta";if(n.inlinePairs>0&&!r&&t==",")return n.keyCol=0,n.pair=!1,n.pairStart=!1,e.next(),"meta";if(n.pairStart){if(e.match(/^\s*(\||\>)\s*/))return n.literal=!0,"meta";if(e.match(/^\s*(\&|\*)[a-z0-9\._-]+\b/i))return"variable";if(n.inlinePairs==0&&e.match(/^\s*-?[0-9\.\,]+\s?$/)||n.inlinePairs>0&&e.match(/^\s*-?[0-9\.\,]+\s?(?=(,|}))/))return"number";if(e.match(pl))return"keyword"}return!n.pair&&e.match(/^\s*(?:[,\[\]{}&*!|>'"%@`][^\s'":]|[^,\[\]{}#&*!|>'"%@`])[^#]*?(?=\s*:($|\s))/)?(n.pair=!0,n.keyCol=e.indentation(),"atom"):n.pair&&e.match(/^:\s*/)?(n.pairStart=!0,"meta"):(n.pairStart=!1,n.escaped=t=="\\",e.next(),null)},startState:function(){return{pair:!1,pairStart:!1,keyCol:0,inlinePairs:0,inlineList:0,literal:!1,escaped:!1}},languageData:{commentTokens:{line:"#"}}};var Rn={token:e=>e.skipToEnd()},On=["debug","extends","function","include","literal"],Y={operatorChars:/[+\-*&%=<>!?]/,validIdentifier:/[a-zA-Z0-9_]/,stringChar:/['"]/},Ge;function U(e,n){return Ge=n,e}function hl(e,n,t){return n.tokenize=t,t(e,n)}function gl(e,n){return!1}function He(e,n){let t=e.string,r;for(let o=e.pos;r=t.indexOf("{",o),o=r+1,!(r===-1||!gl()););if(r===e.pos)return e.match("{"),e.eat("*")?hl(e,n,yl("comment","*}")):(n.depth++,n.tokenize=sr,Ge="startTag","tag");r>-1&&(e.string=t.slice(0,r));let i=Rn.token(e,n.base);return r>-1&&(e.string=t),i}function sr(e,n){if(e.match("}",!0))return n.tokenize=He,U("tag",null);if(e.match("{",!0))return n.depth++,U("tag","startTag");let t=e.next();if(t==="$")return e.eatWhile(Y.validIdentifier),U("variable-2","variable");if(t==="|")return U("operator","pipe");if(t===".")return U("operator","property");if(Y.stringChar.test(t))return n.tokenize=bl(t),U("string","string");if(Y.operatorChars.test(t))return e.eatWhile(Y.operatorChars),U("operator","operator");if(t==="["||t==="]")return U("bracket","bracket");if(t==="("||t===")")return U("bracket","operator");if(/\d/.test(t))return e.eatWhile(/\d/),U("number","number");{if(n.last==="variable"){if(t==="@")return e.eatWhile(Y.validIdentifier),U("property","property");if(t==="|")return e.eatWhile(Y.validIdentifier),U("qualifier","modifier")}else{if(n.last==="pipe")return e.eatWhile(Y.validIdentifier),U("qualifier","modifier");if(n.last==="whitespace")return e.eatWhile(Y.validIdentifier),U("attribute","modifier")}if(n.last==="property")return e.eatWhile(Y.validIdentifier),U("property",null);if(/\s/.test(t))return Ge="whitespace",null;let r="";t!=="/"&&(r+=t);let i=null;for(;i=e.eat(Y.validIdentifier);)r+=i;for(let o=0,a=On.length;o<a;o++)if(On[o]===r)return U("keyword","keyword");return/\s/.test(t)?null:U("tag","tag")}}function bl(e){return function(n,t){let r=null,i=null;for(;!n.eol();){if(i=n.peek(),n.next()===e&&r!=="\\"){t.tokenize=sr;break}r=i}return"string"}}function yl(e,n){return function(t,r){for(;!t.eol();){if(t.match(n)){r.tokenize=He;break}t.next()}return e}}function vl(e,n){if(n===!0)return n;if(e.copyState)return e.copyState(n);let t={};for(let r in n){let i=n[r];i instanceof Array&&(i=i.concat([])),t[r]=i}return t}var kl={startState:function(){return{base:!0,tokenize:He,last:null,depth:0}},copyState:function(e){return{base:vl(Rn,e.base),tokenize:e.tokenize,last:e.last,depth:e.depth}},innerMode:function(e){if(e.tokenize===He)return{mode:Rn,state:e.base}},token:function(e,n){let t=n.tokenize(e,n);return n.last=Ge,t},indent:function(e,n,t){return null},languageData:{commentTokens:{block:{open:"{*",close:"*}"}},autocomplete:On}};export{gr as c,Fr as clojure,br as cpp,vr as csharp,Tr as dart,Mr as diff,Fi as fSharp,Gr as fortran,Xr as go,ii as haskell,yr as java,Ii as julia,xr as kotlin,Ni as lua,xa as msSQL,wa as mySQL,Ki as nginx,qi as oCaml,to as octave,so as pascal,ro as perl,Ea as pgSQL,za as plSQL,Eo as powerShell,To as properties,Ro as python,No as r,Ho as ruby,Jo as rust,ta as sas,kr as scala,ha as scheme,va as shell,kl as smarty,Mi as sml,Sa as sqlite,_a as standardSQL,Ta as stex,Ga as swift,Za as toml,ul as vb,dl as vbScript,ml as yaml};
+
+// node_modules/@codemirror/legacy-modes/mode/clike.js
+function Context(indented, column, type2, info, align, prev) {
+  this.indented = indented;
+  this.column = column;
+  this.type = type2;
+  this.info = info;
+  this.align = align;
+  this.prev = prev;
+}
+function pushContext(state, col, type2, info) {
+  var indent2 = state.indented;
+  if (state.context && state.context.type == "statement" && type2 != "statement")
+    indent2 = state.context.indented;
+  return state.context = new Context(indent2, col, type2, info, null, state.context);
+}
+function popContext(state) {
+  var t = state.context.type;
+  if (t == ")" || t == "]" || t == "}")
+    state.indented = state.context.indented;
+  return state.context = state.context.prev;
+}
+function typeBefore(stream, state, pos) {
+  if (state.prevToken == "variable" || state.prevToken == "type") return true;
+  if (/\S(?:[^- ]>|[*\]])\s*$|\*$/.test(stream.string.slice(0, pos))) return true;
+  if (state.typeAtEndOfLine && stream.column() == stream.indentation()) return true;
+}
+function isTopScope(context) {
+  for (; ; ) {
+    if (!context || context.type == "top") return true;
+    if (context.type == "}" && context.prev.info != "namespace") return false;
+    context = context.prev;
+  }
+}
+function clike(parserConfig) {
+  var statementIndentUnit = parserConfig.statementIndentUnit, dontAlignCalls = parserConfig.dontAlignCalls, keywords14 = parserConfig.keywords || {}, types3 = parserConfig.types || {}, builtin = parserConfig.builtin || {}, blockKeywords = parserConfig.blockKeywords || {}, defKeywords = parserConfig.defKeywords || {}, atoms6 = parserConfig.atoms || {}, hooks = parserConfig.hooks || {}, multiLineStrings = parserConfig.multiLineStrings, indentStatements = parserConfig.indentStatements !== false, indentSwitch = parserConfig.indentSwitch !== false, namespaceSeparator = parserConfig.namespaceSeparator, isPunctuationChar = parserConfig.isPunctuationChar || /[\[\]{}\(\),;\:\.]/, numberStart = parserConfig.numberStart || /[\d\.]/, number = parserConfig.number || /^(?:0x[a-f\d]+|0b[01]+|(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?)(u|ll?|l|f)?/i, isOperatorChar4 = parserConfig.isOperatorChar || /[+\-*&%=<>!?|\/]/, isIdentifierChar = parserConfig.isIdentifierChar || /[\w\$_\xa1-\uffff]/, isReservedIdentifier = parserConfig.isReservedIdentifier || false;
+  var curPunc4, isDefKeyword;
+  function tokenBase13(stream, state) {
+    var ch = stream.next();
+    if (hooks[ch]) {
+      var result = hooks[ch](stream, state);
+      if (result !== false) return result;
+    }
+    if (ch == '"' || ch == "'") {
+      state.tokenize = tokenString8(ch);
+      return state.tokenize(stream, state);
+    }
+    if (numberStart.test(ch)) {
+      stream.backUp(1);
+      if (stream.match(number)) return "number";
+      stream.next();
+    }
+    if (isPunctuationChar.test(ch)) {
+      curPunc4 = ch;
+      return null;
+    }
+    if (ch == "/") {
+      if (stream.eat("*")) {
+        state.tokenize = tokenComment7;
+        return tokenComment7(stream, state);
+      }
+      if (stream.eat("/")) {
+        stream.skipToEnd();
+        return "comment";
+      }
+    }
+    if (isOperatorChar4.test(ch)) {
+      while (!stream.match(/^\/[\/*]/, false) && stream.eat(isOperatorChar4)) {
+      }
+      return "operator";
+    }
+    stream.eatWhile(isIdentifierChar);
+    if (namespaceSeparator) while (stream.match(namespaceSeparator))
+      stream.eatWhile(isIdentifierChar);
+    var cur = stream.current();
+    if (contains(keywords14, cur)) {
+      if (contains(blockKeywords, cur)) curPunc4 = "newstatement";
+      if (contains(defKeywords, cur)) isDefKeyword = true;
+      return "keyword";
+    }
+    if (contains(types3, cur)) return "type";
+    if (contains(builtin, cur) || isReservedIdentifier && isReservedIdentifier(cur)) {
+      if (contains(blockKeywords, cur)) curPunc4 = "newstatement";
+      return "builtin";
+    }
+    if (contains(atoms6, cur)) return "atom";
+    return "variable";
+  }
+  function tokenString8(quote) {
+    return function(stream, state) {
+      var escaped = false, next, end = false;
+      while ((next = stream.next()) != null) {
+        if (next == quote && !escaped) {
+          end = true;
+          break;
+        }
+        escaped = !escaped && next == "\\";
+      }
+      if (end || !(escaped || multiLineStrings))
+        state.tokenize = null;
+      return "string";
+    };
+  }
+  function tokenComment7(stream, state) {
+    var maybeEnd = false, ch;
+    while (ch = stream.next()) {
+      if (ch == "/" && maybeEnd) {
+        state.tokenize = null;
+        break;
+      }
+      maybeEnd = ch == "*";
+    }
+    return "comment";
+  }
+  function maybeEOL(stream, state) {
+    if (parserConfig.typeFirstDefinitions && stream.eol() && isTopScope(state.context))
+      state.typeAtEndOfLine = typeBefore(stream, state, stream.pos);
+  }
+  return {
+    name: parserConfig.name,
+    startState: function(indentUnit) {
+      return {
+        tokenize: null,
+        context: new Context(-indentUnit, 0, "top", null, false),
+        indented: 0,
+        startOfLine: true,
+        prevToken: null
+      };
+    },
+    token: function(stream, state) {
+      var ctx = state.context;
+      if (stream.sol()) {
+        if (ctx.align == null) ctx.align = false;
+        state.indented = stream.indentation();
+        state.startOfLine = true;
+      }
+      if (stream.eatSpace()) {
+        maybeEOL(stream, state);
+        return null;
+      }
+      curPunc4 = isDefKeyword = null;
+      var style = (state.tokenize || tokenBase13)(stream, state);
+      if (style == "comment" || style == "meta") return style;
+      if (ctx.align == null) ctx.align = true;
+      if (curPunc4 == ";" || curPunc4 == ":" || curPunc4 == "," && stream.match(/^\s*(?:\/\/.*)?$/, false))
+        while (state.context.type == "statement") popContext(state);
+      else if (curPunc4 == "{") pushContext(state, stream.column(), "}");
+      else if (curPunc4 == "[") pushContext(state, stream.column(), "]");
+      else if (curPunc4 == "(") pushContext(state, stream.column(), ")");
+      else if (curPunc4 == "}") {
+        while (ctx.type == "statement") ctx = popContext(state);
+        if (ctx.type == "}") ctx = popContext(state);
+        while (ctx.type == "statement") ctx = popContext(state);
+      } else if (curPunc4 == ctx.type) popContext(state);
+      else if (indentStatements && ((ctx.type == "}" || ctx.type == "top") && curPunc4 != ";" || ctx.type == "statement" && curPunc4 == "newstatement")) {
+        pushContext(state, stream.column(), "statement", stream.current());
+      }
+      if (style == "variable" && (state.prevToken == "def" || parserConfig.typeFirstDefinitions && typeBefore(stream, state, stream.start) && isTopScope(state.context) && stream.match(/^\s*\(/, false)))
+        style = "def";
+      if (hooks.token) {
+        var result = hooks.token(stream, state, style);
+        if (result !== void 0) style = result;
+      }
+      if (style == "def" && parserConfig.styleDefs === false) style = "variable";
+      state.startOfLine = false;
+      state.prevToken = isDefKeyword ? "def" : style || curPunc4;
+      maybeEOL(stream, state);
+      return style;
+    },
+    indent: function(state, textAfter, context) {
+      if (state.tokenize != tokenBase13 && state.tokenize != null || state.typeAtEndOfLine && isTopScope(state.context))
+        return null;
+      var ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
+      var closing3 = firstChar == ctx.type;
+      if (ctx.type == "statement" && firstChar == "}") ctx = ctx.prev;
+      if (parserConfig.dontIndentStatements)
+        while (ctx.type == "statement" && parserConfig.dontIndentStatements.test(ctx.info))
+          ctx = ctx.prev;
+      if (hooks.indent) {
+        var hook = hooks.indent(state, ctx, textAfter, context.unit);
+        if (typeof hook == "number") return hook;
+      }
+      var switchBlock = ctx.prev && ctx.prev.info == "switch";
+      if (parserConfig.allmanIndentation && /[{(]/.test(firstChar)) {
+        while (ctx.type != "top" && ctx.type != "}") ctx = ctx.prev;
+        return ctx.indented;
+      }
+      if (ctx.type == "statement")
+        return ctx.indented + (firstChar == "{" ? 0 : statementIndentUnit || context.unit);
+      if (ctx.align && (!dontAlignCalls || ctx.type != ")"))
+        return ctx.column + (closing3 ? 0 : 1);
+      if (ctx.type == ")" && !closing3)
+        return ctx.indented + (statementIndentUnit || context.unit);
+      return ctx.indented + (closing3 ? 0 : context.unit) + (!closing3 && switchBlock && !/^(?:case|default)\b/.test(textAfter) ? context.unit : 0);
+    },
+    languageData: {
+      indentOnInput: indentSwitch ? /^\s*(?:case .*?:|default:|\{\}?|\})$/ : /^\s*[{}]$/,
+      commentTokens: { line: "//", block: { open: "/*", close: "*/" } },
+      autocomplete: Object.keys(keywords14).concat(Object.keys(types3)).concat(Object.keys(builtin)).concat(Object.keys(atoms6)),
+      ...parserConfig.languageData
+    }
+  };
+}
+function words(str) {
+  var obj = {}, words8 = str.split(" ");
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+function contains(words8, word) {
+  if (typeof words8 === "function") {
+    return words8(word);
+  } else {
+    return words8.propertyIsEnumerable(word);
+  }
+}
+var cKeywords = "auto if break case register continue return default do sizeof static else struct switch extern typedef union for goto while enum const volatile inline restrict asm fortran";
+var cppKeywords = "alignas alignof and and_eq audit axiom bitand bitor catch class compl concept constexpr const_cast decltype delete dynamic_cast explicit export final friend import module mutable namespace new noexcept not not_eq operator or or_eq override private protected public reinterpret_cast requires static_assert static_cast template this thread_local throw try typeid typename using virtual xor xor_eq";
+var objCKeywords = "bycopy byref in inout oneway out self super atomic nonatomic retain copy readwrite readonly strong weak assign typeof nullable nonnull null_resettable _cmd @interface @implementation @end @protocol @encode @property @synthesize @dynamic @class @public @package @private @protected @required @optional @try @catch @finally @import @selector @encode @defs @synchronized @autoreleasepool @compatibility_alias @available";
+var objCBuiltins = "FOUNDATION_EXPORT FOUNDATION_EXTERN NS_INLINE NS_FORMAT_FUNCTION  NS_RETURNS_RETAINEDNS_ERROR_ENUM NS_RETURNS_NOT_RETAINED NS_RETURNS_INNER_POINTER NS_DESIGNATED_INITIALIZER NS_ENUM NS_OPTIONS NS_REQUIRES_NIL_TERMINATION NS_ASSUME_NONNULL_BEGIN NS_ASSUME_NONNULL_END NS_SWIFT_NAME NS_REFINED_FOR_SWIFT";
+var basicCTypes = words("int long char short double float unsigned signed void bool");
+var basicObjCTypes = words("SEL instancetype id Class Protocol BOOL");
+function cTypes(identifier2) {
+  return contains(basicCTypes, identifier2) || /.+_t$/.test(identifier2);
+}
+function objCTypes(identifier2) {
+  return cTypes(identifier2) || contains(basicObjCTypes, identifier2);
+}
+var cBlockKeywords = "case do else for if switch while struct enum union";
+var cDefKeywords = "struct enum union";
+function cppHook(stream, state) {
+  if (!state.startOfLine) return false;
+  for (var ch, next = null; ch = stream.peek(); ) {
+    if (ch == "\\" && stream.match(/^.$/)) {
+      next = cppHook;
+      break;
+    } else if (ch == "/" && stream.match(/^\/[\/\*]/, false)) {
+      break;
+    }
+    stream.next();
+  }
+  state.tokenize = next;
+  return "meta";
+}
+function pointerHook(_stream, state) {
+  if (state.prevToken == "type") return "type";
+  return false;
+}
+function cIsReservedIdentifier(token) {
+  if (!token || token.length < 2) return false;
+  if (token[0] != "_") return false;
+  return token[1] == "_" || token[1] !== token[1].toLowerCase();
+}
+function cpp14Literal(stream) {
+  stream.eatWhile(/[\w\.']/);
+  return "number";
+}
+function cpp11StringHook(stream, state) {
+  stream.backUp(1);
+  if (stream.match(/^(?:R|u8R|uR|UR|LR)/)) {
+    var match = stream.match(/^"([^\s\\()]{0,16})\(/);
+    if (!match) {
+      return false;
+    }
+    state.cpp11RawStringDelim = match[1];
+    state.tokenize = tokenRawString;
+    return tokenRawString(stream, state);
+  }
+  if (stream.match(/^(?:u8|u|U|L)/)) {
+    if (stream.match(
+      /^["']/,
+      /* eat */
+      false
+    )) {
+      return "string";
+    }
+    return false;
+  }
+  stream.next();
+  return false;
+}
+function cppLooksLikeConstructor(word) {
+  var lastTwo = /(\w+)::~?(\w+)$/.exec(word);
+  return lastTwo && lastTwo[1] == lastTwo[2];
+}
+function tokenAtString(stream, state) {
+  var next;
+  while ((next = stream.next()) != null) {
+    if (next == '"' && !stream.eat('"')) {
+      state.tokenize = null;
+      break;
+    }
+  }
+  return "string";
+}
+function tokenRawString(stream, state) {
+  var delim = state.cpp11RawStringDelim.replace(/[^\w\s]/g, "\\$&");
+  var match = stream.match(new RegExp(".*?\\)" + delim + '"'));
+  if (match)
+    state.tokenize = null;
+  else
+    stream.skipToEnd();
+  return "string";
+}
+var c = clike({
+  name: "c",
+  keywords: words(cKeywords),
+  types: cTypes,
+  blockKeywords: words(cBlockKeywords),
+  defKeywords: words(cDefKeywords),
+  typeFirstDefinitions: true,
+  atoms: words("NULL true false"),
+  isReservedIdentifier: cIsReservedIdentifier,
+  hooks: {
+    "#": cppHook,
+    "*": pointerHook
+  }
+});
+var cpp = clike({
+  name: "cpp",
+  keywords: words(cKeywords + " " + cppKeywords),
+  types: cTypes,
+  blockKeywords: words(cBlockKeywords + " class try catch"),
+  defKeywords: words(cDefKeywords + " class namespace"),
+  typeFirstDefinitions: true,
+  atoms: words("true false NULL nullptr"),
+  dontIndentStatements: /^template$/,
+  isIdentifierChar: /[\w\$_~\xa1-\uffff]/,
+  isReservedIdentifier: cIsReservedIdentifier,
+  hooks: {
+    "#": cppHook,
+    "*": pointerHook,
+    "u": cpp11StringHook,
+    "U": cpp11StringHook,
+    "L": cpp11StringHook,
+    "R": cpp11StringHook,
+    "0": cpp14Literal,
+    "1": cpp14Literal,
+    "2": cpp14Literal,
+    "3": cpp14Literal,
+    "4": cpp14Literal,
+    "5": cpp14Literal,
+    "6": cpp14Literal,
+    "7": cpp14Literal,
+    "8": cpp14Literal,
+    "9": cpp14Literal,
+    token: function(stream, state, style) {
+      if (style == "variable" && stream.peek() == "(" && (state.prevToken == ";" || state.prevToken == null || state.prevToken == "}") && cppLooksLikeConstructor(stream.current()))
+        return "def";
+    }
+  },
+  namespaceSeparator: "::"
+});
+var java = clike({
+  name: "java",
+  keywords: words("abstract assert break case catch class const continue default do else enum extends final finally for goto if implements import instanceof interface native new package private protected public return static strictfp super switch synchronized this throw throws transient try volatile while @interface"),
+  types: words("var byte short int long float double boolean char void Boolean Byte Character Double Float Integer Long Number Object Short String StringBuffer StringBuilder Void"),
+  blockKeywords: words("catch class do else finally for if switch try while"),
+  defKeywords: words("class interface enum @interface"),
+  typeFirstDefinitions: true,
+  atoms: words("true false null"),
+  number: /^(?:0x[a-f\d_]+|0b[01_]+|(?:[\d_]+\.?\d*|\.\d+)(?:e[-+]?[\d_]+)?)(u|ll?|l|f)?/i,
+  hooks: {
+    "@": function(stream) {
+      if (stream.match("interface", false)) return false;
+      stream.eatWhile(/[\w\$_]/);
+      return "meta";
+    },
+    '"': function(stream, state) {
+      if (!stream.match(/""$/)) return false;
+      state.tokenize = tokenTripleString;
+      return state.tokenize(stream, state);
+    }
+  }
+});
+var csharp = clike({
+  name: "csharp",
+  keywords: words("abstract as async await base break case catch checked class const continue default delegate do else enum event explicit extern finally fixed for foreach goto if implicit in init interface internal is lock namespace new operator out override params private protected public readonly record ref required return sealed sizeof stackalloc static struct switch this throw try typeof unchecked unsafe using virtual void volatile while add alias ascending descending dynamic from get global group into join let orderby partial remove select set value var yield"),
+  types: words("Action Boolean Byte Char DateTime DateTimeOffset Decimal Double Func Guid Int16 Int32 Int64 Object SByte Single String Task TimeSpan UInt16 UInt32 UInt64 bool byte char decimal double short int long object sbyte float string ushort uint ulong"),
+  blockKeywords: words("catch class do else finally for foreach if struct switch try while"),
+  defKeywords: words("class interface namespace record struct var"),
+  typeFirstDefinitions: true,
+  atoms: words("true false null"),
+  hooks: {
+    "@": function(stream, state) {
+      if (stream.eat('"')) {
+        state.tokenize = tokenAtString;
+        return tokenAtString(stream, state);
+      }
+      stream.eatWhile(/[\w\$_]/);
+      return "meta";
+    }
+  }
+});
+function tokenTripleString(stream, state) {
+  var escaped = false;
+  while (!stream.eol()) {
+    if (!escaped && stream.match('"""')) {
+      state.tokenize = null;
+      break;
+    }
+    escaped = stream.next() == "\\" && !escaped;
+  }
+  return "string";
+}
+function tokenNestedComment(depth) {
+  return function(stream, state) {
+    var ch;
+    while (ch = stream.next()) {
+      if (ch == "*" && stream.eat("/")) {
+        if (depth == 1) {
+          state.tokenize = null;
+          break;
+        } else {
+          state.tokenize = tokenNestedComment(depth - 1);
+          return state.tokenize(stream, state);
+        }
+      } else if (ch == "/" && stream.eat("*")) {
+        state.tokenize = tokenNestedComment(depth + 1);
+        return state.tokenize(stream, state);
+      }
+    }
+    return "comment";
+  };
+}
+var scala = clike({
+  name: "scala",
+  keywords: words(
+    /* scala */
+    "abstract case catch class def do else extends final finally for forSome if implicit import lazy match new null object override package private protected return sealed super this throw trait try type val var while with yield _ assert assume require print println printf readLine readBoolean readByte readShort readChar readInt readLong readFloat readDouble"
+  ),
+  types: words(
+    "AnyVal App Application Array BufferedIterator BigDecimal BigInt Char Console Either Enumeration Equiv Error Exception Fractional Function IndexedSeq Int Integral Iterable Iterator List Map Numeric Nil NotNull Option Ordered Ordering PartialFunction PartialOrdering Product Proxy Range Responder Seq Serializable Set Specializable Stream StringBuilder StringContext Symbol Throwable Traversable TraversableOnce Tuple Unit Vector Boolean Byte Character CharSequence Class ClassLoader Cloneable Comparable Compiler Double Exception Float Integer Long Math Number Object Package Pair Process Runtime Runnable SecurityManager Short StackTraceElement StrictMath String StringBuffer System Thread ThreadGroup ThreadLocal Throwable Triple Void"
+  ),
+  multiLineStrings: true,
+  blockKeywords: words("catch class enum do else finally for forSome if match switch try while"),
+  defKeywords: words("class enum def object package trait type val var"),
+  atoms: words("true false null"),
+  indentStatements: false,
+  indentSwitch: false,
+  isOperatorChar: /[+\-*&%=<>!?|\/#:@]/,
+  hooks: {
+    "@": function(stream) {
+      stream.eatWhile(/[\w\$_]/);
+      return "meta";
+    },
+    '"': function(stream, state) {
+      if (!stream.match('""')) return false;
+      state.tokenize = tokenTripleString;
+      return state.tokenize(stream, state);
+    },
+    "'": function(stream) {
+      if (stream.match(/^(\\[^'\s]+|[^\\'])'/)) return "character";
+      stream.eatWhile(/[\w\$_\xa1-\uffff]/);
+      return "atom";
+    },
+    "=": function(stream, state) {
+      var cx = state.context;
+      if (cx.type == "}" && cx.align && stream.eat(">")) {
+        state.context = new Context(cx.indented, cx.column, cx.type, cx.info, null, cx.prev);
+        return "operator";
+      } else {
+        return false;
+      }
+    },
+    "/": function(stream, state) {
+      if (!stream.eat("*")) return false;
+      state.tokenize = tokenNestedComment(1);
+      return state.tokenize(stream, state);
+    }
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", "'", '"', '"""'] }
+  }
+});
+function tokenKotlinString(tripleString) {
+  return function(stream, state) {
+    var escaped = false, next, end = false;
+    while (!stream.eol()) {
+      if (!tripleString && !escaped && stream.match('"')) {
+        end = true;
+        break;
+      }
+      if (tripleString && stream.match('"""')) {
+        end = true;
+        break;
+      }
+      next = stream.next();
+      if (!escaped && next == "$" && stream.match("{"))
+        stream.skipTo("}");
+      escaped = !escaped && next == "\\" && !tripleString;
+    }
+    if (end || !tripleString)
+      state.tokenize = null;
+    return "string";
+  };
+}
+var kotlin = clike({
+  name: "kotlin",
+  keywords: words(
+    /*keywords*/
+    "package as typealias class interface this super val operator var fun for is in This throw return annotation break continue object if else while do try when !in !is as? file import where by get set abstract enum open inner override private public internal protected catch finally out final vararg reified dynamic companion constructor init sealed field property receiver param sparam lateinit data inline noinline tailrec external annotation crossinline const operator infix suspend actual expect setparam"
+  ),
+  types: words(
+    /* package java.lang */
+    "Boolean Byte Character CharSequence Class ClassLoader Cloneable Comparable Compiler Double Exception Float Integer Long Math Number Object Package Pair Process Runtime Runnable SecurityManager Short StackTraceElement StrictMath String StringBuffer System Thread ThreadGroup ThreadLocal Throwable Triple Void Annotation Any BooleanArray ByteArray Char CharArray DeprecationLevel DoubleArray Enum FloatArray Function Int IntArray Lazy LazyThreadSafetyMode LongArray Nothing ShortArray Unit"
+  ),
+  intendSwitch: false,
+  indentStatements: false,
+  multiLineStrings: true,
+  number: /^(?:0x[a-f\d_]+|0b[01_]+|(?:[\d_]+(\.\d+)?|\.\d+)(?:e[-+]?[\d_]+)?)(u|ll?|l|f)?/i,
+  blockKeywords: words("catch class do else finally for if where try while enum"),
+  defKeywords: words("class val var object interface fun"),
+  atoms: words("true false null this"),
+  hooks: {
+    "@": function(stream) {
+      stream.eatWhile(/[\w\$_]/);
+      return "meta";
+    },
+    "*": function(_stream, state) {
+      return state.prevToken == "." ? "variable" : "operator";
+    },
+    '"': function(stream, state) {
+      state.tokenize = tokenKotlinString(stream.match('""'));
+      return state.tokenize(stream, state);
+    },
+    "/": function(stream, state) {
+      if (!stream.eat("*")) return false;
+      state.tokenize = tokenNestedComment(1);
+      return state.tokenize(stream, state);
+    },
+    indent: function(state, ctx, textAfter, indentUnit) {
+      var firstChar = textAfter && textAfter.charAt(0);
+      if ((state.prevToken == "}" || state.prevToken == ")") && textAfter == "")
+        return state.indented;
+      if (state.prevToken == "operator" && textAfter != "}" && state.context.type != "}" || state.prevToken == "variable" && firstChar == "." || (state.prevToken == "}" || state.prevToken == ")") && firstChar == ".")
+        return indentUnit * 2 + ctx.indented;
+      if (ctx.align && ctx.type == "}")
+        return ctx.indented + (state.context.type == (textAfter || "").charAt(0) ? 0 : indentUnit);
+    }
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", "'", '"', '"""'] }
+  }
+});
+var shader = clike({
+  name: "shader",
+  keywords: words("sampler1D sampler2D sampler3D samplerCube sampler1DShadow sampler2DShadow const attribute uniform varying break continue discard return for while do if else struct in out inout"),
+  types: words("float int bool void vec2 vec3 vec4 ivec2 ivec3 ivec4 bvec2 bvec3 bvec4 mat2 mat3 mat4"),
+  blockKeywords: words("for while do if else struct"),
+  builtin: words("radians degrees sin cos tan asin acos atan pow exp log exp2 sqrt inversesqrt abs sign floor ceil fract mod min max clamp mix step smoothstep length distance dot cross normalize ftransform faceforward reflect refract matrixCompMult lessThan lessThanEqual greaterThan greaterThanEqual equal notEqual any all not texture1D texture1DProj texture1DLod texture1DProjLod texture2D texture2DProj texture2DLod texture2DProjLod texture3D texture3DProj texture3DLod texture3DProjLod textureCube textureCubeLod shadow1D shadow2D shadow1DProj shadow2DProj shadow1DLod shadow2DLod shadow1DProjLod shadow2DProjLod dFdx dFdy fwidth noise1 noise2 noise3 noise4"),
+  atoms: words("true false gl_FragColor gl_SecondaryColor gl_Normal gl_Vertex gl_MultiTexCoord0 gl_MultiTexCoord1 gl_MultiTexCoord2 gl_MultiTexCoord3 gl_MultiTexCoord4 gl_MultiTexCoord5 gl_MultiTexCoord6 gl_MultiTexCoord7 gl_FogCoord gl_PointCoord gl_Position gl_PointSize gl_ClipVertex gl_FrontColor gl_BackColor gl_FrontSecondaryColor gl_BackSecondaryColor gl_TexCoord gl_FogFragCoord gl_FragCoord gl_FrontFacing gl_FragData gl_FragDepth gl_ModelViewMatrix gl_ProjectionMatrix gl_ModelViewProjectionMatrix gl_TextureMatrix gl_NormalMatrix gl_ModelViewMatrixInverse gl_ProjectionMatrixInverse gl_ModelViewProjectionMatrixInverse gl_TextureMatrixTranspose gl_ModelViewMatrixInverseTranspose gl_ProjectionMatrixInverseTranspose gl_ModelViewProjectionMatrixInverseTranspose gl_TextureMatrixInverseTranspose gl_NormalScale gl_DepthRange gl_ClipPlane gl_Point gl_FrontMaterial gl_BackMaterial gl_LightSource gl_LightModel gl_FrontLightModelProduct gl_BackLightModelProduct gl_TextureColor gl_EyePlaneS gl_EyePlaneT gl_EyePlaneR gl_EyePlaneQ gl_FogParameters gl_MaxLights gl_MaxClipPlanes gl_MaxTextureUnits gl_MaxTextureCoords gl_MaxVertexAttribs gl_MaxVertexUniformComponents gl_MaxVaryingFloats gl_MaxVertexTextureImageUnits gl_MaxTextureImageUnits gl_MaxFragmentUniformComponents gl_MaxCombineTextureImageUnits gl_MaxDrawBuffers"),
+  indentSwitch: false,
+  hooks: { "#": cppHook }
+});
+var nesC = clike({
+  name: "nesc",
+  keywords: words(cKeywords + " as atomic async call command component components configuration event generic implementation includes interface module new norace nx_struct nx_union post provides signal task uses abstract extends"),
+  types: cTypes,
+  blockKeywords: words(cBlockKeywords),
+  atoms: words("null true false"),
+  hooks: { "#": cppHook }
+});
+var objectiveC = clike({
+  name: "objectivec",
+  keywords: words(cKeywords + " " + objCKeywords),
+  types: objCTypes,
+  builtin: words(objCBuiltins),
+  blockKeywords: words(cBlockKeywords + " @synthesize @try @catch @finally @autoreleasepool @synchronized"),
+  defKeywords: words(cDefKeywords + " @interface @implementation @protocol @class"),
+  dontIndentStatements: /^@.*$/,
+  typeFirstDefinitions: true,
+  atoms: words("YES NO NULL Nil nil true false nullptr"),
+  isReservedIdentifier: cIsReservedIdentifier,
+  hooks: {
+    "#": cppHook,
+    "*": pointerHook
+  }
+});
+var objectiveCpp = clike({
+  name: "objectivecpp",
+  keywords: words(cKeywords + " " + objCKeywords + " " + cppKeywords),
+  types: objCTypes,
+  builtin: words(objCBuiltins),
+  blockKeywords: words(cBlockKeywords + " @synthesize @try @catch @finally @autoreleasepool @synchronized class try catch"),
+  defKeywords: words(cDefKeywords + " @interface @implementation @protocol @class class namespace"),
+  dontIndentStatements: /^@.*$|^template$/,
+  typeFirstDefinitions: true,
+  atoms: words("YES NO NULL Nil nil true false nullptr"),
+  isReservedIdentifier: cIsReservedIdentifier,
+  hooks: {
+    "#": cppHook,
+    "*": pointerHook,
+    "u": cpp11StringHook,
+    "U": cpp11StringHook,
+    "L": cpp11StringHook,
+    "R": cpp11StringHook,
+    "0": cpp14Literal,
+    "1": cpp14Literal,
+    "2": cpp14Literal,
+    "3": cpp14Literal,
+    "4": cpp14Literal,
+    "5": cpp14Literal,
+    "6": cpp14Literal,
+    "7": cpp14Literal,
+    "8": cpp14Literal,
+    "9": cpp14Literal,
+    token: function(stream, state, style) {
+      if (style == "variable" && stream.peek() == "(" && (state.prevToken == ";" || state.prevToken == null || state.prevToken == "}") && cppLooksLikeConstructor(stream.current()))
+        return "def";
+    }
+  },
+  namespaceSeparator: "::"
+});
+var squirrel = clike({
+  name: "squirrel",
+  keywords: words("base break clone continue const default delete enum extends function in class foreach local resume return this throw typeof yield constructor instanceof static"),
+  types: cTypes,
+  blockKeywords: words("case catch class else for foreach if switch try while"),
+  defKeywords: words("function local class"),
+  typeFirstDefinitions: true,
+  atoms: words("true false null"),
+  hooks: { "#": cppHook }
+});
+var stringTokenizer = null;
+function tokenCeylonString(type2) {
+  return function(stream, state) {
+    var escaped = false, next, end = false;
+    while (!stream.eol()) {
+      if (!escaped && stream.match('"') && (type2 == "single" || stream.match('""'))) {
+        end = true;
+        break;
+      }
+      if (!escaped && stream.match("``")) {
+        stringTokenizer = tokenCeylonString(type2);
+        end = true;
+        break;
+      }
+      next = stream.next();
+      escaped = type2 == "single" && !escaped && next == "\\";
+    }
+    if (end)
+      state.tokenize = null;
+    return "string";
+  };
+}
+var ceylon = clike({
+  name: "ceylon",
+  keywords: words("abstracts alias assembly assert assign break case catch class continue dynamic else exists extends finally for function given if import in interface is let module new nonempty object of out outer package return satisfies super switch then this throw try value void while"),
+  types: function(word) {
+    var first = word.charAt(0);
+    return first === first.toUpperCase() && first !== first.toLowerCase();
+  },
+  blockKeywords: words("case catch class dynamic else finally for function if interface module new object switch try while"),
+  defKeywords: words("class dynamic function interface module object package value"),
+  builtin: words("abstract actual aliased annotation by default deprecated doc final formal late license native optional sealed see serializable shared suppressWarnings tagged throws variable"),
+  isPunctuationChar: /[\[\]{}\(\),;\:\.`]/,
+  isOperatorChar: /[+\-*&%=<>!?|^~:\/]/,
+  numberStart: /[\d#$]/,
+  number: /^(?:#[\da-fA-F_]+|\$[01_]+|[\d_]+[kMGTPmunpf]?|[\d_]+\.[\d_]+(?:[eE][-+]?\d+|[kMGTPmunpf]|)|)/i,
+  multiLineStrings: true,
+  typeFirstDefinitions: true,
+  atoms: words("true false null larger smaller equal empty finished"),
+  indentSwitch: false,
+  styleDefs: false,
+  hooks: {
+    "@": function(stream) {
+      stream.eatWhile(/[\w\$_]/);
+      return "meta";
+    },
+    '"': function(stream, state) {
+      state.tokenize = tokenCeylonString(stream.match('""') ? "triple" : "single");
+      return state.tokenize(stream, state);
+    },
+    "`": function(stream, state) {
+      if (!stringTokenizer || !stream.match("`")) return false;
+      state.tokenize = stringTokenizer;
+      stringTokenizer = null;
+      return state.tokenize(stream, state);
+    },
+    "'": function(stream) {
+      if (stream.match(/^(\\[^'\s]+|[^\\'])'/)) return "string.special";
+      stream.eatWhile(/[\w\$_\xa1-\uffff]/);
+      return "atom";
+    },
+    token: function(_stream, state, style) {
+      if ((style == "variable" || style == "type") && state.prevToken == ".") {
+        return "variableName.special";
+      }
+    }
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", "'", '"', '"""'] }
+  }
+});
+function pushInterpolationStack(state) {
+  (state.interpolationStack || (state.interpolationStack = [])).push(state.tokenize);
+}
+function popInterpolationStack(state) {
+  return (state.interpolationStack || (state.interpolationStack = [])).pop();
+}
+function sizeInterpolationStack(state) {
+  return state.interpolationStack ? state.interpolationStack.length : 0;
+}
+function tokenDartString(quote, stream, state, raw) {
+  var tripleQuoted = false;
+  if (stream.eat(quote)) {
+    if (stream.eat(quote)) tripleQuoted = true;
+    else return "string";
+  }
+  function tokenStringHelper(stream2, state2) {
+    var escaped = false;
+    while (!stream2.eol()) {
+      if (!raw && !escaped && stream2.peek() == "$") {
+        pushInterpolationStack(state2);
+        state2.tokenize = tokenInterpolation;
+        return "string";
+      }
+      var next = stream2.next();
+      if (next == quote && !escaped && (!tripleQuoted || stream2.match(quote + quote))) {
+        state2.tokenize = null;
+        break;
+      }
+      escaped = !raw && !escaped && next == "\\";
+    }
+    return "string";
+  }
+  state.tokenize = tokenStringHelper;
+  return tokenStringHelper(stream, state);
+}
+function tokenInterpolation(stream, state) {
+  stream.eat("$");
+  if (stream.eat("{")) {
+    state.tokenize = null;
+  } else {
+    state.tokenize = tokenInterpolationIdentifier;
+  }
+  return null;
+}
+function tokenInterpolationIdentifier(stream, state) {
+  stream.eatWhile(/[\w_]/);
+  state.tokenize = popInterpolationStack(state);
+  return "variable";
+}
+var dart = clike({
+  name: "dart",
+  keywords: words("this super static final const abstract class extends external factory implements mixin get native set typedef with enum throw rethrow assert break case continue default in return new deferred async await covariant try catch finally do else for if switch while import library export part of show hide is as extension on yield late required sealed base interface when inline"),
+  blockKeywords: words("try catch finally do else for if switch while"),
+  builtin: words("void bool num int double dynamic var String Null Never"),
+  atoms: words("true false null"),
+  // clike numbers without the suffixes, and with '_' separators.
+  number: /^(?:0x[a-f\d_]+|(?:[\d_]+\.?[\d_]*|\.[\d_]+)(?:e[-+]?[\d_]+)?)/i,
+  hooks: {
+    "@": function(stream) {
+      stream.eatWhile(/[\w\$_\.]/);
+      return "meta";
+    },
+    // custom string handling to deal with triple-quoted strings and string interpolation
+    "'": function(stream, state) {
+      return tokenDartString("'", stream, state, false);
+    },
+    '"': function(stream, state) {
+      return tokenDartString('"', stream, state, false);
+    },
+    "r": function(stream, state) {
+      var peek = stream.peek();
+      if (peek == "'" || peek == '"') {
+        return tokenDartString(stream.next(), stream, state, true);
+      }
+      return false;
+    },
+    "}": function(_stream, state) {
+      if (sizeInterpolationStack(state) > 0) {
+        state.tokenize = popInterpolationStack(state);
+        return null;
+      }
+      return false;
+    },
+    "/": function(stream, state) {
+      if (!stream.eat("*")) return false;
+      state.tokenize = tokenNestedComment(1);
+      return state.tokenize(stream, state);
+    },
+    token: function(stream, _, style) {
+      if (style == "variable") {
+        var isUpper = RegExp("^[_$]*[A-Z][a-zA-Z0-9_$]*$", "g");
+        if (isUpper.test(stream.current())) {
+          return "type";
+        }
+      }
+    }
+  }
+});
+
+// node_modules/@codemirror/legacy-modes/mode/clojure.js
+var atoms = ["false", "nil", "true"];
+var specialForms = [
+  ".",
+  "catch",
+  "def",
+  "do",
+  "if",
+  "monitor-enter",
+  "monitor-exit",
+  "new",
+  "quote",
+  "recur",
+  "set!",
+  "throw",
+  "try",
+  "var"
+];
+var coreSymbols = [
+  "*",
+  "*'",
+  "*1",
+  "*2",
+  "*3",
+  "*agent*",
+  "*allow-unresolved-vars*",
+  "*assert*",
+  "*clojure-version*",
+  "*command-line-args*",
+  "*compile-files*",
+  "*compile-path*",
+  "*compiler-options*",
+  "*data-readers*",
+  "*default-data-reader-fn*",
+  "*e",
+  "*err*",
+  "*file*",
+  "*flush-on-newline*",
+  "*fn-loader*",
+  "*in*",
+  "*math-context*",
+  "*ns*",
+  "*out*",
+  "*print-dup*",
+  "*print-length*",
+  "*print-level*",
+  "*print-meta*",
+  "*print-namespace-maps*",
+  "*print-readably*",
+  "*read-eval*",
+  "*reader-resolver*",
+  "*source-path*",
+  "*suppress-read*",
+  "*unchecked-math*",
+  "*use-context-classloader*",
+  "*verbose-defrecords*",
+  "*warn-on-reflection*",
+  "+",
+  "+'",
+  "-",
+  "-'",
+  "->",
+  "->>",
+  "->ArrayChunk",
+  "->Eduction",
+  "->Vec",
+  "->VecNode",
+  "->VecSeq",
+  "-cache-protocol-fn",
+  "-reset-methods",
+  "..",
+  "/",
+  "<",
+  "<=",
+  "=",
+  "==",
+  ">",
+  ">=",
+  "EMPTY-NODE",
+  "Inst",
+  "StackTraceElement->vec",
+  "Throwable->map",
+  "accessor",
+  "aclone",
+  "add-classpath",
+  "add-watch",
+  "agent",
+  "agent-error",
+  "agent-errors",
+  "aget",
+  "alength",
+  "alias",
+  "all-ns",
+  "alter",
+  "alter-meta!",
+  "alter-var-root",
+  "amap",
+  "ancestors",
+  "and",
+  "any?",
+  "apply",
+  "areduce",
+  "array-map",
+  "as->",
+  "aset",
+  "aset-boolean",
+  "aset-byte",
+  "aset-char",
+  "aset-double",
+  "aset-float",
+  "aset-int",
+  "aset-long",
+  "aset-short",
+  "assert",
+  "assoc",
+  "assoc!",
+  "assoc-in",
+  "associative?",
+  "atom",
+  "await",
+  "await-for",
+  "await1",
+  "bases",
+  "bean",
+  "bigdec",
+  "bigint",
+  "biginteger",
+  "binding",
+  "bit-and",
+  "bit-and-not",
+  "bit-clear",
+  "bit-flip",
+  "bit-not",
+  "bit-or",
+  "bit-set",
+  "bit-shift-left",
+  "bit-shift-right",
+  "bit-test",
+  "bit-xor",
+  "boolean",
+  "boolean-array",
+  "boolean?",
+  "booleans",
+  "bound-fn",
+  "bound-fn*",
+  "bound?",
+  "bounded-count",
+  "butlast",
+  "byte",
+  "byte-array",
+  "bytes",
+  "bytes?",
+  "case",
+  "cast",
+  "cat",
+  "char",
+  "char-array",
+  "char-escape-string",
+  "char-name-string",
+  "char?",
+  "chars",
+  "chunk",
+  "chunk-append",
+  "chunk-buffer",
+  "chunk-cons",
+  "chunk-first",
+  "chunk-next",
+  "chunk-rest",
+  "chunked-seq?",
+  "class",
+  "class?",
+  "clear-agent-errors",
+  "clojure-version",
+  "coll?",
+  "comment",
+  "commute",
+  "comp",
+  "comparator",
+  "compare",
+  "compare-and-set!",
+  "compile",
+  "complement",
+  "completing",
+  "concat",
+  "cond",
+  "cond->",
+  "cond->>",
+  "condp",
+  "conj",
+  "conj!",
+  "cons",
+  "constantly",
+  "construct-proxy",
+  "contains?",
+  "count",
+  "counted?",
+  "create-ns",
+  "create-struct",
+  "cycle",
+  "dec",
+  "dec'",
+  "decimal?",
+  "declare",
+  "dedupe",
+  "default-data-readers",
+  "definline",
+  "definterface",
+  "defmacro",
+  "defmethod",
+  "defmulti",
+  "defn",
+  "defn-",
+  "defonce",
+  "defprotocol",
+  "defrecord",
+  "defstruct",
+  "deftype",
+  "delay",
+  "delay?",
+  "deliver",
+  "denominator",
+  "deref",
+  "derive",
+  "descendants",
+  "destructure",
+  "disj",
+  "disj!",
+  "dissoc",
+  "dissoc!",
+  "distinct",
+  "distinct?",
+  "doall",
+  "dorun",
+  "doseq",
+  "dosync",
+  "dotimes",
+  "doto",
+  "double",
+  "double-array",
+  "double?",
+  "doubles",
+  "drop",
+  "drop-last",
+  "drop-while",
+  "eduction",
+  "empty",
+  "empty?",
+  "ensure",
+  "ensure-reduced",
+  "enumeration-seq",
+  "error-handler",
+  "error-mode",
+  "eval",
+  "even?",
+  "every-pred",
+  "every?",
+  "ex-data",
+  "ex-info",
+  "extend",
+  "extend-protocol",
+  "extend-type",
+  "extenders",
+  "extends?",
+  "false?",
+  "ffirst",
+  "file-seq",
+  "filter",
+  "filterv",
+  "find",
+  "find-keyword",
+  "find-ns",
+  "find-protocol-impl",
+  "find-protocol-method",
+  "find-var",
+  "first",
+  "flatten",
+  "float",
+  "float-array",
+  "float?",
+  "floats",
+  "flush",
+  "fn",
+  "fn?",
+  "fnext",
+  "fnil",
+  "for",
+  "force",
+  "format",
+  "frequencies",
+  "future",
+  "future-call",
+  "future-cancel",
+  "future-cancelled?",
+  "future-done?",
+  "future?",
+  "gen-class",
+  "gen-interface",
+  "gensym",
+  "get",
+  "get-in",
+  "get-method",
+  "get-proxy-class",
+  "get-thread-bindings",
+  "get-validator",
+  "group-by",
+  "halt-when",
+  "hash",
+  "hash-combine",
+  "hash-map",
+  "hash-ordered-coll",
+  "hash-set",
+  "hash-unordered-coll",
+  "ident?",
+  "identical?",
+  "identity",
+  "if-let",
+  "if-not",
+  "if-some",
+  "ifn?",
+  "import",
+  "in-ns",
+  "inc",
+  "inc'",
+  "indexed?",
+  "init-proxy",
+  "inst-ms",
+  "inst-ms*",
+  "inst?",
+  "instance?",
+  "int",
+  "int-array",
+  "int?",
+  "integer?",
+  "interleave",
+  "intern",
+  "interpose",
+  "into",
+  "into-array",
+  "ints",
+  "io!",
+  "isa?",
+  "iterate",
+  "iterator-seq",
+  "juxt",
+  "keep",
+  "keep-indexed",
+  "key",
+  "keys",
+  "keyword",
+  "keyword?",
+  "last",
+  "lazy-cat",
+  "lazy-seq",
+  "let",
+  "letfn",
+  "line-seq",
+  "list",
+  "list*",
+  "list?",
+  "load",
+  "load-file",
+  "load-reader",
+  "load-string",
+  "loaded-libs",
+  "locking",
+  "long",
+  "long-array",
+  "longs",
+  "loop",
+  "macroexpand",
+  "macroexpand-1",
+  "make-array",
+  "make-hierarchy",
+  "map",
+  "map-entry?",
+  "map-indexed",
+  "map?",
+  "mapcat",
+  "mapv",
+  "max",
+  "max-key",
+  "memfn",
+  "memoize",
+  "merge",
+  "merge-with",
+  "meta",
+  "method-sig",
+  "methods",
+  "min",
+  "min-key",
+  "mix-collection-hash",
+  "mod",
+  "munge",
+  "name",
+  "namespace",
+  "namespace-munge",
+  "nat-int?",
+  "neg-int?",
+  "neg?",
+  "newline",
+  "next",
+  "nfirst",
+  "nil?",
+  "nnext",
+  "not",
+  "not-any?",
+  "not-empty",
+  "not-every?",
+  "not=",
+  "ns",
+  "ns-aliases",
+  "ns-imports",
+  "ns-interns",
+  "ns-map",
+  "ns-name",
+  "ns-publics",
+  "ns-refers",
+  "ns-resolve",
+  "ns-unalias",
+  "ns-unmap",
+  "nth",
+  "nthnext",
+  "nthrest",
+  "num",
+  "number?",
+  "numerator",
+  "object-array",
+  "odd?",
+  "or",
+  "parents",
+  "partial",
+  "partition",
+  "partition-all",
+  "partition-by",
+  "pcalls",
+  "peek",
+  "persistent!",
+  "pmap",
+  "pop",
+  "pop!",
+  "pop-thread-bindings",
+  "pos-int?",
+  "pos?",
+  "pr",
+  "pr-str",
+  "prefer-method",
+  "prefers",
+  "primitives-classnames",
+  "print",
+  "print-ctor",
+  "print-dup",
+  "print-method",
+  "print-simple",
+  "print-str",
+  "printf",
+  "println",
+  "println-str",
+  "prn",
+  "prn-str",
+  "promise",
+  "proxy",
+  "proxy-call-with-super",
+  "proxy-mappings",
+  "proxy-name",
+  "proxy-super",
+  "push-thread-bindings",
+  "pvalues",
+  "qualified-ident?",
+  "qualified-keyword?",
+  "qualified-symbol?",
+  "quot",
+  "rand",
+  "rand-int",
+  "rand-nth",
+  "random-sample",
+  "range",
+  "ratio?",
+  "rational?",
+  "rationalize",
+  "re-find",
+  "re-groups",
+  "re-matcher",
+  "re-matches",
+  "re-pattern",
+  "re-seq",
+  "read",
+  "read-line",
+  "read-string",
+  "reader-conditional",
+  "reader-conditional?",
+  "realized?",
+  "record?",
+  "reduce",
+  "reduce-kv",
+  "reduced",
+  "reduced?",
+  "reductions",
+  "ref",
+  "ref-history-count",
+  "ref-max-history",
+  "ref-min-history",
+  "ref-set",
+  "refer",
+  "refer-clojure",
+  "reify",
+  "release-pending-sends",
+  "rem",
+  "remove",
+  "remove-all-methods",
+  "remove-method",
+  "remove-ns",
+  "remove-watch",
+  "repeat",
+  "repeatedly",
+  "replace",
+  "replicate",
+  "require",
+  "reset!",
+  "reset-meta!",
+  "reset-vals!",
+  "resolve",
+  "rest",
+  "restart-agent",
+  "resultset-seq",
+  "reverse",
+  "reversible?",
+  "rseq",
+  "rsubseq",
+  "run!",
+  "satisfies?",
+  "second",
+  "select-keys",
+  "send",
+  "send-off",
+  "send-via",
+  "seq",
+  "seq?",
+  "seqable?",
+  "seque",
+  "sequence",
+  "sequential?",
+  "set",
+  "set-agent-send-executor!",
+  "set-agent-send-off-executor!",
+  "set-error-handler!",
+  "set-error-mode!",
+  "set-validator!",
+  "set?",
+  "short",
+  "short-array",
+  "shorts",
+  "shuffle",
+  "shutdown-agents",
+  "simple-ident?",
+  "simple-keyword?",
+  "simple-symbol?",
+  "slurp",
+  "some",
+  "some->",
+  "some->>",
+  "some-fn",
+  "some?",
+  "sort",
+  "sort-by",
+  "sorted-map",
+  "sorted-map-by",
+  "sorted-set",
+  "sorted-set-by",
+  "sorted?",
+  "special-symbol?",
+  "spit",
+  "split-at",
+  "split-with",
+  "str",
+  "string?",
+  "struct",
+  "struct-map",
+  "subs",
+  "subseq",
+  "subvec",
+  "supers",
+  "swap!",
+  "swap-vals!",
+  "symbol",
+  "symbol?",
+  "sync",
+  "tagged-literal",
+  "tagged-literal?",
+  "take",
+  "take-last",
+  "take-nth",
+  "take-while",
+  "test",
+  "the-ns",
+  "thread-bound?",
+  "time",
+  "to-array",
+  "to-array-2d",
+  "trampoline",
+  "transduce",
+  "transient",
+  "tree-seq",
+  "true?",
+  "type",
+  "unchecked-add",
+  "unchecked-add-int",
+  "unchecked-byte",
+  "unchecked-char",
+  "unchecked-dec",
+  "unchecked-dec-int",
+  "unchecked-divide-int",
+  "unchecked-double",
+  "unchecked-float",
+  "unchecked-inc",
+  "unchecked-inc-int",
+  "unchecked-int",
+  "unchecked-long",
+  "unchecked-multiply",
+  "unchecked-multiply-int",
+  "unchecked-negate",
+  "unchecked-negate-int",
+  "unchecked-remainder-int",
+  "unchecked-short",
+  "unchecked-subtract",
+  "unchecked-subtract-int",
+  "underive",
+  "unquote",
+  "unquote-splicing",
+  "unreduced",
+  "unsigned-bit-shift-right",
+  "update",
+  "update-in",
+  "update-proxy",
+  "uri?",
+  "use",
+  "uuid?",
+  "val",
+  "vals",
+  "var-get",
+  "var-set",
+  "var?",
+  "vary-meta",
+  "vec",
+  "vector",
+  "vector-of",
+  "vector?",
+  "volatile!",
+  "volatile?",
+  "vreset!",
+  "vswap!",
+  "when",
+  "when-first",
+  "when-let",
+  "when-not",
+  "when-some",
+  "while",
+  "with-bindings",
+  "with-bindings*",
+  "with-in-str",
+  "with-loading-context",
+  "with-local-vars",
+  "with-meta",
+  "with-open",
+  "with-out-str",
+  "with-precision",
+  "with-redefs",
+  "with-redefs-fn",
+  "xml-seq",
+  "zero?",
+  "zipmap"
+];
+var haveBodyParameter = [
+  "->",
+  "->>",
+  "as->",
+  "binding",
+  "bound-fn",
+  "case",
+  "catch",
+  "comment",
+  "cond",
+  "cond->",
+  "cond->>",
+  "condp",
+  "def",
+  "definterface",
+  "defmethod",
+  "defn",
+  "defmacro",
+  "defprotocol",
+  "defrecord",
+  "defstruct",
+  "deftype",
+  "do",
+  "doseq",
+  "dotimes",
+  "doto",
+  "extend",
+  "extend-protocol",
+  "extend-type",
+  "fn",
+  "for",
+  "future",
+  "if",
+  "if-let",
+  "if-not",
+  "if-some",
+  "let",
+  "letfn",
+  "locking",
+  "loop",
+  "ns",
+  "proxy",
+  "reify",
+  "struct-map",
+  "some->",
+  "some->>",
+  "try",
+  "when",
+  "when-first",
+  "when-let",
+  "when-not",
+  "when-some",
+  "while",
+  "with-bindings",
+  "with-bindings*",
+  "with-in-str",
+  "with-loading-context",
+  "with-local-vars",
+  "with-meta",
+  "with-open",
+  "with-out-str",
+  "with-precision",
+  "with-redefs",
+  "with-redefs-fn"
+];
+var atom = createLookupMap(atoms);
+var specialForm = createLookupMap(specialForms);
+var coreSymbol = createLookupMap(coreSymbols);
+var hasBodyParameter = createLookupMap(haveBodyParameter);
+var delimiter = /^(?:[\\\[\]\s"(),;@^`{}~]|$)/;
+var numberLiteral = /^(?:[+\-]?\d+(?:(?:N|(?:[eE][+\-]?\d+))|(?:\.?\d*(?:M|(?:[eE][+\-]?\d+))?)|\/\d+|[xX][0-9a-fA-F]+|r[0-9a-zA-Z]+)?(?=[\\\[\]\s"#'(),;@^`{}~]|$))/;
+var characterLiteral = /^(?:\\(?:backspace|formfeed|newline|return|space|tab|o[0-7]{3}|u[0-9A-Fa-f]{4}|x[0-9A-Fa-f]{4}|.)?(?=[\\\[\]\s"(),;@^`{}~]|$))/;
+var qualifiedSymbol = /^(?:(?:[^\\\/\[\]\d\s"#'(),;@^`{}~.][^\\\[\]\s"(),;@^`{}~.\/]*(?:\.[^\\\/\[\]\d\s"#'(),;@^`{}~.][^\\\[\]\s"(),;@^`{}~.\/]*)*\/)?(?:\/|[^\\\/\[\]\d\s"#'(),;@^`{}~][^\\\[\]\s"(),;@^`{}~]*)*(?=[\\\[\]\s"(),;@^`{}~]|$))/;
+function base(stream, state) {
+  if (stream.eatSpace() || stream.eat(",")) return ["space", null];
+  if (stream.match(numberLiteral)) return [null, "number"];
+  if (stream.match(characterLiteral)) return [null, "string.special"];
+  if (stream.eat(/^"/)) return (state.tokenize = inString)(stream, state);
+  if (stream.eat(/^[(\[{]/)) return ["open", "bracket"];
+  if (stream.eat(/^[)\]}]/)) return ["close", "bracket"];
+  if (stream.eat(/^;/)) {
+    stream.skipToEnd();
+    return ["space", "comment"];
+  }
+  if (stream.eat(/^[#'@^`~]/)) return [null, "meta"];
+  var matches = stream.match(qualifiedSymbol);
+  var symbol2 = matches && matches[0];
+  if (!symbol2) {
+    stream.next();
+    stream.eatWhile(function(c2) {
+      return !is(c2, delimiter);
+    });
+    return [null, "error"];
+  }
+  if (symbol2 === "comment" && state.lastToken === "(")
+    return (state.tokenize = inComment)(stream, state);
+  if (is(symbol2, atom) || symbol2.charAt(0) === ":") return ["symbol", "atom"];
+  if (is(symbol2, specialForm) || is(symbol2, coreSymbol)) return ["symbol", "keyword"];
+  if (state.lastToken === "(") return ["symbol", "builtin"];
+  return ["symbol", "variable"];
+}
+function inString(stream, state) {
+  var escaped = false, next;
+  while (next = stream.next()) {
+    if (next === '"' && !escaped) {
+      state.tokenize = base;
+      break;
+    }
+    escaped = !escaped && next === "\\";
+  }
+  return [null, "string"];
+}
+function inComment(stream, state) {
+  var parenthesisCount = 1;
+  var next;
+  while (next = stream.next()) {
+    if (next === ")") parenthesisCount--;
+    if (next === "(") parenthesisCount++;
+    if (parenthesisCount === 0) {
+      stream.backUp(1);
+      state.tokenize = base;
+      break;
+    }
+  }
+  return ["space", "comment"];
+}
+function createLookupMap(words8) {
+  var obj = {};
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+function is(value, test) {
+  if (test instanceof RegExp) return test.test(value);
+  if (test instanceof Object) return test.propertyIsEnumerable(value);
+}
+var clojure = {
+  name: "clojure",
+  startState: function() {
+    return {
+      ctx: { prev: null, start: 0, indentTo: 0 },
+      lastToken: null,
+      tokenize: base
+    };
+  },
+  token: function(stream, state) {
+    if (stream.sol() && typeof state.ctx.indentTo !== "number")
+      state.ctx.indentTo = state.ctx.start + 1;
+    var typeStylePair = state.tokenize(stream, state);
+    var type2 = typeStylePair[0];
+    var style = typeStylePair[1];
+    var current = stream.current();
+    if (type2 !== "space") {
+      if (state.lastToken === "(" && state.ctx.indentTo === null) {
+        if (type2 === "symbol" && is(current, hasBodyParameter))
+          state.ctx.indentTo = state.ctx.start + stream.indentUnit;
+        else state.ctx.indentTo = "next";
+      } else if (state.ctx.indentTo === "next") {
+        state.ctx.indentTo = stream.column();
+      }
+      state.lastToken = current;
+    }
+    if (type2 === "open")
+      state.ctx = { prev: state.ctx, start: stream.column(), indentTo: null };
+    else if (type2 === "close") state.ctx = state.ctx.prev || state.ctx;
+    return style;
+  },
+  indent: function(state) {
+    var i = state.ctx.indentTo;
+    return typeof i === "number" ? i : state.ctx.start + 1;
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", '"'] },
+    commentTokens: { line: ";;" },
+    autocomplete: [].concat(atoms, specialForms, coreSymbols)
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/diff.js
+var TOKEN_NAMES = {
+  "+": "inserted",
+  "-": "deleted",
+  "@": "meta"
+};
+var diff = {
+  name: "diff",
+  token: function(stream) {
+    var tw_pos = stream.string.search(/[\t ]+?$/);
+    if (!stream.sol() || tw_pos === 0) {
+      stream.skipToEnd();
+      return ("error " + (TOKEN_NAMES[stream.string.charAt(0)] || "")).replace(/ $/, "");
+    }
+    var token_name = TOKEN_NAMES[stream.peek()] || stream.skipToEnd();
+    if (tw_pos === -1) {
+      stream.skipToEnd();
+    } else {
+      stream.pos = tw_pos;
+    }
+    return token_name;
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/fortran.js
+function words2(array) {
+  var keys = {};
+  for (var i = 0; i < array.length; ++i) {
+    keys[array[i]] = true;
+  }
+  return keys;
+}
+var keywords = words2([
+  "abstract",
+  "accept",
+  "allocatable",
+  "allocate",
+  "array",
+  "assign",
+  "asynchronous",
+  "backspace",
+  "bind",
+  "block",
+  "byte",
+  "call",
+  "case",
+  "class",
+  "close",
+  "common",
+  "contains",
+  "continue",
+  "cycle",
+  "data",
+  "deallocate",
+  "decode",
+  "deferred",
+  "dimension",
+  "do",
+  "elemental",
+  "else",
+  "encode",
+  "end",
+  "endif",
+  "entry",
+  "enumerator",
+  "equivalence",
+  "exit",
+  "external",
+  "extrinsic",
+  "final",
+  "forall",
+  "format",
+  "function",
+  "generic",
+  "go",
+  "goto",
+  "if",
+  "implicit",
+  "import",
+  "include",
+  "inquire",
+  "intent",
+  "interface",
+  "intrinsic",
+  "module",
+  "namelist",
+  "non_intrinsic",
+  "non_overridable",
+  "none",
+  "nopass",
+  "nullify",
+  "open",
+  "optional",
+  "options",
+  "parameter",
+  "pass",
+  "pause",
+  "pointer",
+  "print",
+  "private",
+  "program",
+  "protected",
+  "public",
+  "pure",
+  "read",
+  "recursive",
+  "result",
+  "return",
+  "rewind",
+  "save",
+  "select",
+  "sequence",
+  "stop",
+  "subroutine",
+  "target",
+  "then",
+  "to",
+  "type",
+  "use",
+  "value",
+  "volatile",
+  "where",
+  "while",
+  "write"
+]);
+var builtins = words2([
+  "abort",
+  "abs",
+  "access",
+  "achar",
+  "acos",
+  "adjustl",
+  "adjustr",
+  "aimag",
+  "aint",
+  "alarm",
+  "all",
+  "allocated",
+  "alog",
+  "amax",
+  "amin",
+  "amod",
+  "and",
+  "anint",
+  "any",
+  "asin",
+  "associated",
+  "atan",
+  "besj",
+  "besjn",
+  "besy",
+  "besyn",
+  "bit_size",
+  "btest",
+  "cabs",
+  "ccos",
+  "ceiling",
+  "cexp",
+  "char",
+  "chdir",
+  "chmod",
+  "clog",
+  "cmplx",
+  "command_argument_count",
+  "complex",
+  "conjg",
+  "cos",
+  "cosh",
+  "count",
+  "cpu_time",
+  "cshift",
+  "csin",
+  "csqrt",
+  "ctime",
+  "c_funloc",
+  "c_loc",
+  "c_associated",
+  "c_null_ptr",
+  "c_null_funptr",
+  "c_f_pointer",
+  "c_null_char",
+  "c_alert",
+  "c_backspace",
+  "c_form_feed",
+  "c_new_line",
+  "c_carriage_return",
+  "c_horizontal_tab",
+  "c_vertical_tab",
+  "dabs",
+  "dacos",
+  "dasin",
+  "datan",
+  "date_and_time",
+  "dbesj",
+  "dbesj",
+  "dbesjn",
+  "dbesy",
+  "dbesy",
+  "dbesyn",
+  "dble",
+  "dcos",
+  "dcosh",
+  "ddim",
+  "derf",
+  "derfc",
+  "dexp",
+  "digits",
+  "dim",
+  "dint",
+  "dlog",
+  "dlog",
+  "dmax",
+  "dmin",
+  "dmod",
+  "dnint",
+  "dot_product",
+  "dprod",
+  "dsign",
+  "dsinh",
+  "dsin",
+  "dsqrt",
+  "dtanh",
+  "dtan",
+  "dtime",
+  "eoshift",
+  "epsilon",
+  "erf",
+  "erfc",
+  "etime",
+  "exit",
+  "exp",
+  "exponent",
+  "extends_type_of",
+  "fdate",
+  "fget",
+  "fgetc",
+  "float",
+  "floor",
+  "flush",
+  "fnum",
+  "fputc",
+  "fput",
+  "fraction",
+  "fseek",
+  "fstat",
+  "ftell",
+  "gerror",
+  "getarg",
+  "get_command",
+  "get_command_argument",
+  "get_environment_variable",
+  "getcwd",
+  "getenv",
+  "getgid",
+  "getlog",
+  "getpid",
+  "getuid",
+  "gmtime",
+  "hostnm",
+  "huge",
+  "iabs",
+  "iachar",
+  "iand",
+  "iargc",
+  "ibclr",
+  "ibits",
+  "ibset",
+  "ichar",
+  "idate",
+  "idim",
+  "idint",
+  "idnint",
+  "ieor",
+  "ierrno",
+  "ifix",
+  "imag",
+  "imagpart",
+  "index",
+  "int",
+  "ior",
+  "irand",
+  "isatty",
+  "ishft",
+  "ishftc",
+  "isign",
+  "iso_c_binding",
+  "is_iostat_end",
+  "is_iostat_eor",
+  "itime",
+  "kill",
+  "kind",
+  "lbound",
+  "len",
+  "len_trim",
+  "lge",
+  "lgt",
+  "link",
+  "lle",
+  "llt",
+  "lnblnk",
+  "loc",
+  "log",
+  "logical",
+  "long",
+  "lshift",
+  "lstat",
+  "ltime",
+  "matmul",
+  "max",
+  "maxexponent",
+  "maxloc",
+  "maxval",
+  "mclock",
+  "merge",
+  "move_alloc",
+  "min",
+  "minexponent",
+  "minloc",
+  "minval",
+  "mod",
+  "modulo",
+  "mvbits",
+  "nearest",
+  "new_line",
+  "nint",
+  "not",
+  "or",
+  "pack",
+  "perror",
+  "precision",
+  "present",
+  "product",
+  "radix",
+  "rand",
+  "random_number",
+  "random_seed",
+  "range",
+  "real",
+  "realpart",
+  "rename",
+  "repeat",
+  "reshape",
+  "rrspacing",
+  "rshift",
+  "same_type_as",
+  "scale",
+  "scan",
+  "second",
+  "selected_int_kind",
+  "selected_real_kind",
+  "set_exponent",
+  "shape",
+  "short",
+  "sign",
+  "signal",
+  "sinh",
+  "sin",
+  "sleep",
+  "sngl",
+  "spacing",
+  "spread",
+  "sqrt",
+  "srand",
+  "stat",
+  "sum",
+  "symlnk",
+  "system",
+  "system_clock",
+  "tan",
+  "tanh",
+  "time",
+  "tiny",
+  "transfer",
+  "transpose",
+  "trim",
+  "ttynam",
+  "ubound",
+  "umask",
+  "unlink",
+  "unpack",
+  "verify",
+  "xor",
+  "zabs",
+  "zcos",
+  "zexp",
+  "zlog",
+  "zsin",
+  "zsqrt"
+]);
+var dataTypes = words2([
+  "c_bool",
+  "c_char",
+  "c_double",
+  "c_double_complex",
+  "c_float",
+  "c_float_complex",
+  "c_funptr",
+  "c_int",
+  "c_int16_t",
+  "c_int32_t",
+  "c_int64_t",
+  "c_int8_t",
+  "c_int_fast16_t",
+  "c_int_fast32_t",
+  "c_int_fast64_t",
+  "c_int_fast8_t",
+  "c_int_least16_t",
+  "c_int_least32_t",
+  "c_int_least64_t",
+  "c_int_least8_t",
+  "c_intmax_t",
+  "c_intptr_t",
+  "c_long",
+  "c_long_double",
+  "c_long_double_complex",
+  "c_long_long",
+  "c_ptr",
+  "c_short",
+  "c_signed_char",
+  "c_size_t",
+  "character",
+  "complex",
+  "double",
+  "integer",
+  "logical",
+  "real"
+]);
+var isOperatorChar = /[+\-*&=<>\/\:]/;
+var litOperator = /^\.(and|or|eq|lt|le|gt|ge|ne|not|eqv|neqv)\./i;
+function tokenBase(stream, state) {
+  if (stream.match(litOperator)) {
+    return "operator";
+  }
+  var ch = stream.next();
+  if (ch == "!") {
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (ch == '"' || ch == "'") {
+    state.tokenize = tokenString(ch);
+    return state.tokenize(stream, state);
+  }
+  if (/[\[\]\(\),]/.test(ch)) {
+    return null;
+  }
+  if (/\d/.test(ch)) {
+    stream.eatWhile(/[\w\.]/);
+    return "number";
+  }
+  if (isOperatorChar.test(ch)) {
+    stream.eatWhile(isOperatorChar);
+    return "operator";
+  }
+  stream.eatWhile(/[\w\$_]/);
+  var word = stream.current().toLowerCase();
+  if (keywords.hasOwnProperty(word)) {
+    return "keyword";
+  }
+  if (builtins.hasOwnProperty(word) || dataTypes.hasOwnProperty(word)) {
+    return "builtin";
+  }
+  return "variable";
+}
+function tokenString(quote) {
+  return function(stream, state) {
+    var escaped = false, next, end = false;
+    while ((next = stream.next()) != null) {
+      if (next == quote && !escaped) {
+        end = true;
+        break;
+      }
+      escaped = !escaped && next == "\\";
+    }
+    if (end || !escaped) state.tokenize = null;
+    return "string";
+  };
+}
+var fortran = {
+  name: "fortran",
+  startState: function() {
+    return { tokenize: null };
+  },
+  token: function(stream, state) {
+    if (stream.eatSpace()) return null;
+    var style = (state.tokenize || tokenBase)(stream, state);
+    if (style == "comment" || style == "meta") return style;
+    return style;
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/go.js
+var keywords2 = {
+  "break": true,
+  "case": true,
+  "chan": true,
+  "const": true,
+  "continue": true,
+  "default": true,
+  "defer": true,
+  "else": true,
+  "fallthrough": true,
+  "for": true,
+  "func": true,
+  "go": true,
+  "goto": true,
+  "if": true,
+  "import": true,
+  "interface": true,
+  "map": true,
+  "package": true,
+  "range": true,
+  "return": true,
+  "select": true,
+  "struct": true,
+  "switch": true,
+  "type": true,
+  "var": true,
+  "bool": true,
+  "byte": true,
+  "complex64": true,
+  "complex128": true,
+  "float32": true,
+  "float64": true,
+  "int8": true,
+  "int16": true,
+  "int32": true,
+  "int64": true,
+  "string": true,
+  "uint8": true,
+  "uint16": true,
+  "uint32": true,
+  "uint64": true,
+  "int": true,
+  "uint": true,
+  "uintptr": true,
+  "error": true,
+  "rune": true,
+  "any": true,
+  "comparable": true
+};
+var atoms2 = {
+  "true": true,
+  "false": true,
+  "iota": true,
+  "nil": true,
+  "append": true,
+  "cap": true,
+  "close": true,
+  "complex": true,
+  "copy": true,
+  "delete": true,
+  "imag": true,
+  "len": true,
+  "make": true,
+  "new": true,
+  "panic": true,
+  "print": true,
+  "println": true,
+  "real": true,
+  "recover": true
+};
+var isOperatorChar2 = /[+\-*&^%:=<>!|\/]/;
+var curPunc;
+function tokenBase2(stream, state) {
+  var ch = stream.next();
+  if (ch == '"' || ch == "'" || ch == "`") {
+    state.tokenize = tokenString2(ch);
+    return state.tokenize(stream, state);
+  }
+  if (/[\d\.]/.test(ch)) {
+    if (ch == ".") {
+      stream.match(/^[0-9]+([eE][\-+]?[0-9]+)?/);
+    } else if (ch == "0") {
+      stream.match(/^[xX][0-9a-fA-F]+/) || stream.match(/^0[0-7]+/);
+    } else {
+      stream.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/);
+    }
+    return "number";
+  }
+  if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
+    curPunc = ch;
+    return null;
+  }
+  if (ch == "/") {
+    if (stream.eat("*")) {
+      state.tokenize = tokenComment;
+      return tokenComment(stream, state);
+    }
+    if (stream.eat("/")) {
+      stream.skipToEnd();
+      return "comment";
+    }
+  }
+  if (isOperatorChar2.test(ch)) {
+    stream.eatWhile(isOperatorChar2);
+    return "operator";
+  }
+  stream.eatWhile(/[\w\$_\xa1-\uffff]/);
+  var cur = stream.current();
+  if (keywords2.propertyIsEnumerable(cur)) {
+    if (cur == "case" || cur == "default") curPunc = "case";
+    return "keyword";
+  }
+  if (atoms2.propertyIsEnumerable(cur)) return "atom";
+  return "variable";
+}
+function tokenString2(quote) {
+  return function(stream, state) {
+    var escaped = false, next, end = false;
+    while ((next = stream.next()) != null) {
+      if (next == quote && !escaped) {
+        end = true;
+        break;
+      }
+      escaped = !escaped && quote != "`" && next == "\\";
+    }
+    if (end || !(escaped || quote == "`"))
+      state.tokenize = tokenBase2;
+    return "string";
+  };
+}
+function tokenComment(stream, state) {
+  var maybeEnd = false, ch;
+  while (ch = stream.next()) {
+    if (ch == "/" && maybeEnd) {
+      state.tokenize = tokenBase2;
+      break;
+    }
+    maybeEnd = ch == "*";
+  }
+  return "comment";
+}
+function Context2(indented, column, type2, align, prev) {
+  this.indented = indented;
+  this.column = column;
+  this.type = type2;
+  this.align = align;
+  this.prev = prev;
+}
+function pushContext2(state, col, type2) {
+  return state.context = new Context2(state.indented, col, type2, null, state.context);
+}
+function popContext2(state) {
+  if (!state.context.prev) return;
+  var t = state.context.type;
+  if (t == ")" || t == "]" || t == "}")
+    state.indented = state.context.indented;
+  return state.context = state.context.prev;
+}
+var go = {
+  name: "go",
+  startState: function(indentUnit) {
+    return {
+      tokenize: null,
+      context: new Context2(-indentUnit, 0, "top", false),
+      indented: 0,
+      startOfLine: true
+    };
+  },
+  token: function(stream, state) {
+    var ctx = state.context;
+    if (stream.sol()) {
+      if (ctx.align == null) ctx.align = false;
+      state.indented = stream.indentation();
+      state.startOfLine = true;
+      if (ctx.type == "case") ctx.type = "}";
+    }
+    if (stream.eatSpace()) return null;
+    curPunc = null;
+    var style = (state.tokenize || tokenBase2)(stream, state);
+    if (style == "comment") return style;
+    if (ctx.align == null) ctx.align = true;
+    if (curPunc == "{") pushContext2(state, stream.column(), "}");
+    else if (curPunc == "[") pushContext2(state, stream.column(), "]");
+    else if (curPunc == "(") pushContext2(state, stream.column(), ")");
+    else if (curPunc == "case") ctx.type = "case";
+    else if (curPunc == "}" && ctx.type == "}") popContext2(state);
+    else if (curPunc == ctx.type) popContext2(state);
+    state.startOfLine = false;
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    if (state.tokenize != tokenBase2 && state.tokenize != null) return null;
+    var ctx = state.context, firstChar = textAfter && textAfter.charAt(0);
+    if (ctx.type == "case" && /^(?:case|default)\b/.test(textAfter)) return ctx.indented;
+    var closing3 = firstChar == ctx.type;
+    if (ctx.align) return ctx.column + (closing3 ? 0 : 1);
+    else return ctx.indented + (closing3 ? 0 : cx.unit);
+  },
+  languageData: {
+    indentOnInput: /^\s([{}]|case |default\s*:)$/,
+    commentTokens: { line: "//", block: { open: "/*", close: "*/" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/haskell.js
+function switchState(source, setState, f) {
+  setState(f);
+  return f(source, setState);
+}
+var smallRE = /[a-z_]/;
+var largeRE = /[A-Z]/;
+var digitRE = /\d/;
+var hexitRE = /[0-9A-Fa-f]/;
+var octitRE = /[0-7]/;
+var idRE = /[a-z_A-Z0-9'\xa1-\uffff]/;
+var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
+var specialRE = /[(),;[\]`{}]/;
+var whiteCharRE = /[ \t\v\f]/;
+function normal(source, setState) {
+  if (source.eatWhile(whiteCharRE)) {
+    return null;
+  }
+  var ch = source.next();
+  if (specialRE.test(ch)) {
+    if (ch == "{" && source.eat("-")) {
+      var t = "comment";
+      if (source.eat("#")) {
+        t = "meta";
+      }
+      return switchState(source, setState, ncomment(t, 1));
+    }
+    return null;
+  }
+  if (ch == "'") {
+    if (source.eat("\\")) {
+      source.next();
+    } else {
+      source.next();
+    }
+    if (source.eat("'")) {
+      return "string";
+    }
+    return "error";
+  }
+  if (ch == '"') {
+    return switchState(source, setState, stringLiteral);
+  }
+  if (largeRE.test(ch)) {
+    source.eatWhile(idRE);
+    if (source.eat(".")) {
+      return "qualifier";
+    }
+    return "type";
+  }
+  if (smallRE.test(ch)) {
+    source.eatWhile(idRE);
+    return "variable";
+  }
+  if (digitRE.test(ch)) {
+    if (ch == "0") {
+      if (source.eat(/[xX]/)) {
+        source.eatWhile(hexitRE);
+        return "integer";
+      }
+      if (source.eat(/[oO]/)) {
+        source.eatWhile(octitRE);
+        return "number";
+      }
+    }
+    source.eatWhile(digitRE);
+    var t = "number";
+    if (source.match(/^\.\d+/)) {
+      t = "number";
+    }
+    if (source.eat(/[eE]/)) {
+      t = "number";
+      source.eat(/[-+]/);
+      source.eatWhile(digitRE);
+    }
+    return t;
+  }
+  if (ch == "." && source.eat("."))
+    return "keyword";
+  if (symbolRE.test(ch)) {
+    if (ch == "-" && source.eat(/-/)) {
+      source.eatWhile(/-/);
+      if (!source.eat(symbolRE)) {
+        source.skipToEnd();
+        return "comment";
+      }
+    }
+    source.eatWhile(symbolRE);
+    return "variable";
+  }
+  return "error";
+}
+function ncomment(type2, nest) {
+  if (nest == 0) {
+    return normal;
+  }
+  return function(source, setState) {
+    var currNest = nest;
+    while (!source.eol()) {
+      var ch = source.next();
+      if (ch == "{" && source.eat("-")) {
+        ++currNest;
+      } else if (ch == "-" && source.eat("}")) {
+        --currNest;
+        if (currNest == 0) {
+          setState(normal);
+          return type2;
+        }
+      }
+    }
+    setState(ncomment(type2, currNest));
+    return type2;
+  };
+}
+function stringLiteral(source, setState) {
+  while (!source.eol()) {
+    var ch = source.next();
+    if (ch == '"') {
+      setState(normal);
+      return "string";
+    }
+    if (ch == "\\") {
+      if (source.eol() || source.eat(whiteCharRE)) {
+        setState(stringGap);
+        return "string";
+      }
+      if (source.eat("&")) {
+      } else {
+        source.next();
+      }
+    }
+  }
+  setState(normal);
+  return "error";
+}
+function stringGap(source, setState) {
+  if (source.eat("\\")) {
+    return switchState(source, setState, stringLiteral);
+  }
+  source.next();
+  setState(normal);
+  return "error";
+}
+var wellKnownWords = function() {
+  var wkw = {};
+  function setType(t) {
+    return function() {
+      for (var i = 0; i < arguments.length; i++)
+        wkw[arguments[i]] = t;
+    };
+  }
+  setType("keyword")(
+    "case",
+    "class",
+    "data",
+    "default",
+    "deriving",
+    "do",
+    "else",
+    "foreign",
+    "if",
+    "import",
+    "in",
+    "infix",
+    "infixl",
+    "infixr",
+    "instance",
+    "let",
+    "module",
+    "newtype",
+    "of",
+    "then",
+    "type",
+    "where",
+    "_"
+  );
+  setType("keyword")(
+    "..",
+    ":",
+    "::",
+    "=",
+    "\\",
+    "<-",
+    "->",
+    "@",
+    "~",
+    "=>"
+  );
+  setType("builtin")(
+    "!!",
+    "$!",
+    "$",
+    "&&",
+    "+",
+    "++",
+    "-",
+    ".",
+    "/",
+    "/=",
+    "<",
+    "<*",
+    "<=",
+    "<$>",
+    "<*>",
+    "=<<",
+    "==",
+    ">",
+    ">=",
+    ">>",
+    ">>=",
+    "^",
+    "^^",
+    "||",
+    "*",
+    "*>",
+    "**"
+  );
+  setType("builtin")(
+    "Applicative",
+    "Bool",
+    "Bounded",
+    "Char",
+    "Double",
+    "EQ",
+    "Either",
+    "Enum",
+    "Eq",
+    "False",
+    "FilePath",
+    "Float",
+    "Floating",
+    "Fractional",
+    "Functor",
+    "GT",
+    "IO",
+    "IOError",
+    "Int",
+    "Integer",
+    "Integral",
+    "Just",
+    "LT",
+    "Left",
+    "Maybe",
+    "Monad",
+    "Nothing",
+    "Num",
+    "Ord",
+    "Ordering",
+    "Rational",
+    "Read",
+    "ReadS",
+    "Real",
+    "RealFloat",
+    "RealFrac",
+    "Right",
+    "Show",
+    "ShowS",
+    "String",
+    "True"
+  );
+  setType("builtin")(
+    "abs",
+    "acos",
+    "acosh",
+    "all",
+    "and",
+    "any",
+    "appendFile",
+    "asTypeOf",
+    "asin",
+    "asinh",
+    "atan",
+    "atan2",
+    "atanh",
+    "break",
+    "catch",
+    "ceiling",
+    "compare",
+    "concat",
+    "concatMap",
+    "const",
+    "cos",
+    "cosh",
+    "curry",
+    "cycle",
+    "decodeFloat",
+    "div",
+    "divMod",
+    "drop",
+    "dropWhile",
+    "either",
+    "elem",
+    "encodeFloat",
+    "enumFrom",
+    "enumFromThen",
+    "enumFromThenTo",
+    "enumFromTo",
+    "error",
+    "even",
+    "exp",
+    "exponent",
+    "fail",
+    "filter",
+    "flip",
+    "floatDigits",
+    "floatRadix",
+    "floatRange",
+    "floor",
+    "fmap",
+    "foldl",
+    "foldl1",
+    "foldr",
+    "foldr1",
+    "fromEnum",
+    "fromInteger",
+    "fromIntegral",
+    "fromRational",
+    "fst",
+    "gcd",
+    "getChar",
+    "getContents",
+    "getLine",
+    "head",
+    "id",
+    "init",
+    "interact",
+    "ioError",
+    "isDenormalized",
+    "isIEEE",
+    "isInfinite",
+    "isNaN",
+    "isNegativeZero",
+    "iterate",
+    "last",
+    "lcm",
+    "length",
+    "lex",
+    "lines",
+    "log",
+    "logBase",
+    "lookup",
+    "map",
+    "mapM",
+    "mapM_",
+    "max",
+    "maxBound",
+    "maximum",
+    "maybe",
+    "min",
+    "minBound",
+    "minimum",
+    "mod",
+    "negate",
+    "not",
+    "notElem",
+    "null",
+    "odd",
+    "or",
+    "otherwise",
+    "pi",
+    "pred",
+    "print",
+    "product",
+    "properFraction",
+    "pure",
+    "putChar",
+    "putStr",
+    "putStrLn",
+    "quot",
+    "quotRem",
+    "read",
+    "readFile",
+    "readIO",
+    "readList",
+    "readLn",
+    "readParen",
+    "reads",
+    "readsPrec",
+    "realToFrac",
+    "recip",
+    "rem",
+    "repeat",
+    "replicate",
+    "return",
+    "reverse",
+    "round",
+    "scaleFloat",
+    "scanl",
+    "scanl1",
+    "scanr",
+    "scanr1",
+    "seq",
+    "sequence",
+    "sequence_",
+    "show",
+    "showChar",
+    "showList",
+    "showParen",
+    "showString",
+    "shows",
+    "showsPrec",
+    "significand",
+    "signum",
+    "sin",
+    "sinh",
+    "snd",
+    "span",
+    "splitAt",
+    "sqrt",
+    "subtract",
+    "succ",
+    "sum",
+    "tail",
+    "take",
+    "takeWhile",
+    "tan",
+    "tanh",
+    "toEnum",
+    "toInteger",
+    "toRational",
+    "truncate",
+    "uncurry",
+    "undefined",
+    "unlines",
+    "until",
+    "unwords",
+    "unzip",
+    "unzip3",
+    "userError",
+    "words",
+    "writeFile",
+    "zip",
+    "zip3",
+    "zipWith",
+    "zipWith3"
+  );
+  return wkw;
+}();
+var haskell = {
+  name: "haskell",
+  startState: function() {
+    return { f: normal };
+  },
+  copyState: function(s) {
+    return { f: s.f };
+  },
+  token: function(stream, state) {
+    var t = state.f(stream, function(s) {
+      state.f = s;
+    });
+    var w = stream.current();
+    return wellKnownWords.hasOwnProperty(w) ? wellKnownWords[w] : t;
+  },
+  languageData: {
+    commentTokens: { line: "--", block: { open: "{-", close: "-}" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/julia.js
+function wordRegexp(words8, end, pre) {
+  if (typeof pre === "undefined") pre = "";
+  if (typeof end === "undefined") {
+    end = "\\b";
+  }
+  return new RegExp("^" + pre + "((" + words8.join(")|(") + "))" + end);
+}
+var octChar = "\\\\[0-7]{1,3}";
+var hexChar = "\\\\x[A-Fa-f0-9]{1,2}";
+var sChar = `\\\\[abefnrtv0%?'"\\\\]`;
+var uChar = "([^\\u0027\\u005C\\uD800-\\uDFFF]|[\\uD800-\\uDFFF][\\uDC00-\\uDFFF])";
+var asciiOperatorsList = [
+  "[<>]:",
+  "[<>=]=",
+  "<<=?",
+  ">>>?=?",
+  "=>",
+  "--?>",
+  "<--[->]?",
+  "\\/\\/",
+  "\\.{2,3}",
+  "[\\.\\\\%*+\\-<>!\\/^|&]=?",
+  "\\?",
+  "\\$",
+  "~",
+  ":"
+];
+var operators = wordRegexp([
+  "[<>]:",
+  "[<>=]=",
+  "[!=]==",
+  "<<=?",
+  ">>>?=?",
+  "=>?",
+  "--?>",
+  "<--[->]?",
+  "\\/\\/",
+  "[\\\\%*+\\-<>!\\/^|&\\u00F7\\u22BB]=?",
+  "\\?",
+  "\\$",
+  "~",
+  ":",
+  "\\u00D7",
+  "\\u2208",
+  "\\u2209",
+  "\\u220B",
+  "\\u220C",
+  "\\u2218",
+  "\\u221A",
+  "\\u221B",
+  "\\u2229",
+  "\\u222A",
+  "\\u2260",
+  "\\u2264",
+  "\\u2265",
+  "\\u2286",
+  "\\u2288",
+  "\\u228A",
+  "\\u22C5",
+  "\\b(in|isa)\\b(?!.?\\()"
+], "");
+var delimiters = /^[;,()[\]{}]/;
+var identifiers = /^[_A-Za-z\u00A1-\u2217\u2219-\uFFFF][\w\u00A1-\u2217\u2219-\uFFFF]*!*/;
+var chars = wordRegexp([octChar, hexChar, sChar, uChar], "'");
+var openersList = [
+  "begin",
+  "function",
+  "type",
+  "struct",
+  "immutable",
+  "let",
+  "macro",
+  "for",
+  "while",
+  "quote",
+  "if",
+  "else",
+  "elseif",
+  "try",
+  "finally",
+  "catch",
+  "do"
+];
+var closersList = ["end", "else", "elseif", "catch", "finally"];
+var keywordsList = [
+  "if",
+  "else",
+  "elseif",
+  "while",
+  "for",
+  "begin",
+  "let",
+  "end",
+  "do",
+  "try",
+  "catch",
+  "finally",
+  "return",
+  "break",
+  "continue",
+  "global",
+  "local",
+  "const",
+  "export",
+  "import",
+  "importall",
+  "using",
+  "function",
+  "where",
+  "macro",
+  "module",
+  "baremodule",
+  "struct",
+  "type",
+  "mutable",
+  "immutable",
+  "quote",
+  "typealias",
+  "abstract",
+  "primitive",
+  "bitstype"
+];
+var builtinsList = ["true", "false", "nothing", "NaN", "Inf"];
+var openers = wordRegexp(openersList);
+var closers = wordRegexp(closersList);
+var keywords3 = wordRegexp(keywordsList);
+var builtins2 = wordRegexp(builtinsList);
+var macro = /^@[_A-Za-z\u00A1-\uFFFF][\w\u00A1-\uFFFF]*!*/;
+var symbol = /^:[_A-Za-z\u00A1-\uFFFF][\w\u00A1-\uFFFF]*!*/;
+var stringPrefixes = /^(`|([_A-Za-z\u00A1-\uFFFF]*"("")?))/;
+var macroOperators = wordRegexp(asciiOperatorsList, "", "@");
+var symbolOperators = wordRegexp(asciiOperatorsList, "", ":");
+function inArray(state) {
+  return state.nestedArrays > 0;
+}
+function inGenerator(state) {
+  return state.nestedGenerators > 0;
+}
+function currentScope(state, n) {
+  if (typeof n === "undefined") {
+    n = 0;
+  }
+  if (state.scopes.length <= n) {
+    return null;
+  }
+  return state.scopes[state.scopes.length - (n + 1)];
+}
+function tokenBase3(stream, state) {
+  if (stream.match("#=", false)) {
+    state.tokenize = tokenComment2;
+    return state.tokenize(stream, state);
+  }
+  var leavingExpr = state.leavingExpr;
+  if (stream.sol()) {
+    leavingExpr = false;
+  }
+  state.leavingExpr = false;
+  if (leavingExpr) {
+    if (stream.match(/^'+/)) {
+      return "operator";
+    }
+  }
+  if (stream.match(/\.{4,}/)) {
+    return "error";
+  } else if (stream.match(/\.{1,3}/)) {
+    return "operator";
+  }
+  if (stream.eatSpace()) {
+    return null;
+  }
+  var ch = stream.peek();
+  if (ch === "#") {
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (ch === "[") {
+    state.scopes.push("[");
+    state.nestedArrays++;
+  }
+  if (ch === "(") {
+    state.scopes.push("(");
+    state.nestedGenerators++;
+  }
+  if (inArray(state) && ch === "]") {
+    while (state.scopes.length && currentScope(state) !== "[") {
+      state.scopes.pop();
+    }
+    state.scopes.pop();
+    state.nestedArrays--;
+    state.leavingExpr = true;
+  }
+  if (inGenerator(state) && ch === ")") {
+    while (state.scopes.length && currentScope(state) !== "(") {
+      state.scopes.pop();
+    }
+    state.scopes.pop();
+    state.nestedGenerators--;
+    state.leavingExpr = true;
+  }
+  if (inArray(state)) {
+    if (state.lastToken == "end" && stream.match(":")) {
+      return "operator";
+    }
+    if (stream.match("end")) {
+      return "number";
+    }
+  }
+  var match;
+  if (match = stream.match(openers, false)) {
+    state.scopes.push(match[0]);
+  }
+  if (stream.match(closers, false)) {
+    state.scopes.pop();
+  }
+  if (stream.match(/^::(?![:\$])/)) {
+    state.tokenize = tokenAnnotation;
+    return state.tokenize(stream, state);
+  }
+  if (!leavingExpr && (stream.match(symbol) || stream.match(symbolOperators))) {
+    return "builtin";
+  }
+  if (stream.match(operators)) {
+    return "operator";
+  }
+  if (stream.match(/^\.?\d/, false)) {
+    var imMatcher = RegExp(/^im\b/);
+    var numberLiteral2 = false;
+    if (stream.match(/^0x\.[0-9a-f_]+p[\+\-]?[_\d]+/i)) {
+      numberLiteral2 = true;
+    }
+    if (stream.match(/^0x[0-9a-f_]+/i)) {
+      numberLiteral2 = true;
+    }
+    if (stream.match(/^0b[01_]+/i)) {
+      numberLiteral2 = true;
+    }
+    if (stream.match(/^0o[0-7_]+/i)) {
+      numberLiteral2 = true;
+    }
+    if (stream.match(/^(?:(?:\d[_\d]*)?\.(?!\.)(?:\d[_\d]*)?|\d[_\d]*\.(?!\.)(?:\d[_\d]*))?([Eef][\+\-]?[_\d]+)?/i)) {
+      numberLiteral2 = true;
+    }
+    if (stream.match(/^\d[_\d]*(e[\+\-]?\d+)?/i)) {
+      numberLiteral2 = true;
+    }
+    if (numberLiteral2) {
+      stream.match(imMatcher);
+      state.leavingExpr = true;
+      return "number";
+    }
+  }
+  if (stream.match("'")) {
+    state.tokenize = tokenChar;
+    return state.tokenize(stream, state);
+  }
+  if (stream.match(stringPrefixes)) {
+    state.tokenize = tokenStringFactory(stream.current());
+    return state.tokenize(stream, state);
+  }
+  if (stream.match(macro) || stream.match(macroOperators)) {
+    return "meta";
+  }
+  if (stream.match(delimiters)) {
+    return null;
+  }
+  if (stream.match(keywords3)) {
+    return "keyword";
+  }
+  if (stream.match(builtins2)) {
+    return "builtin";
+  }
+  var isDefinition = state.isDefinition || state.lastToken == "function" || state.lastToken == "macro" || state.lastToken == "type" || state.lastToken == "struct" || state.lastToken == "immutable";
+  if (stream.match(identifiers)) {
+    if (isDefinition) {
+      if (stream.peek() === ".") {
+        state.isDefinition = true;
+        return "variable";
+      }
+      state.isDefinition = false;
+      return "def";
+    }
+    state.leavingExpr = true;
+    return "variable";
+  }
+  stream.next();
+  return "error";
+}
+function tokenAnnotation(stream, state) {
+  stream.match(/.*?(?=[,;{}()=\s]|$)/);
+  if (stream.match("{")) {
+    state.nestedParameters++;
+  } else if (stream.match("}") && state.nestedParameters > 0) {
+    state.nestedParameters--;
+  }
+  if (state.nestedParameters > 0) {
+    stream.match(/.*?(?={|})/) || stream.next();
+  } else if (state.nestedParameters == 0) {
+    state.tokenize = tokenBase3;
+  }
+  return "builtin";
+}
+function tokenComment2(stream, state) {
+  if (stream.match("#=")) {
+    state.nestedComments++;
+  }
+  if (!stream.match(/.*?(?=(#=|=#))/)) {
+    stream.skipToEnd();
+  }
+  if (stream.match("=#")) {
+    state.nestedComments--;
+    if (state.nestedComments == 0)
+      state.tokenize = tokenBase3;
+  }
+  return "comment";
+}
+function tokenChar(stream, state) {
+  var isChar = false, match;
+  if (stream.match(chars)) {
+    isChar = true;
+  } else if (match = stream.match(/\\u([a-f0-9]{1,4})(?=')/i)) {
+    var value = parseInt(match[1], 16);
+    if (value <= 55295 || value >= 57344) {
+      isChar = true;
+      stream.next();
+    }
+  } else if (match = stream.match(/\\U([A-Fa-f0-9]{5,8})(?=')/)) {
+    var value = parseInt(match[1], 16);
+    if (value <= 1114111) {
+      isChar = true;
+      stream.next();
+    }
+  }
+  if (isChar) {
+    state.leavingExpr = true;
+    state.tokenize = tokenBase3;
+    return "string";
+  }
+  if (!stream.match(/^[^']+(?=')/)) {
+    stream.skipToEnd();
+  }
+  if (stream.match("'")) {
+    state.tokenize = tokenBase3;
+  }
+  return "error";
+}
+function tokenStringFactory(delimiter2) {
+  if (delimiter2.substr(-3) === '"""') {
+    delimiter2 = '"""';
+  } else if (delimiter2.substr(-1) === '"') {
+    delimiter2 = '"';
+  }
+  function tokenString8(stream, state) {
+    if (stream.eat("\\")) {
+      stream.next();
+    } else if (stream.match(delimiter2)) {
+      state.tokenize = tokenBase3;
+      state.leavingExpr = true;
+      return "string";
+    } else {
+      stream.eat(/[`"]/);
+    }
+    stream.eatWhile(/[^\\`"]/);
+    return "string";
+  }
+  return tokenString8;
+}
+var julia = {
+  name: "julia",
+  startState: function() {
+    return {
+      tokenize: tokenBase3,
+      scopes: [],
+      lastToken: null,
+      leavingExpr: false,
+      isDefinition: false,
+      nestedArrays: 0,
+      nestedComments: 0,
+      nestedGenerators: 0,
+      nestedParameters: 0,
+      firstParenPos: -1
+    };
+  },
+  token: function(stream, state) {
+    var style = state.tokenize(stream, state);
+    var current = stream.current();
+    if (current && style) {
+      state.lastToken = current;
+    }
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    var delta = 0;
+    if (textAfter === "]" || textAfter === ")" || /^end\b/.test(textAfter) || /^else/.test(textAfter) || /^catch\b/.test(textAfter) || /^elseif\b/.test(textAfter) || /^finally/.test(textAfter)) {
+      delta = -1;
+    }
+    return (state.scopes.length + delta) * cx.unit;
+  },
+  languageData: {
+    indentOnInput: /^\s*(end|else|catch|finally)\b$/,
+    commentTokens: { line: "#", block: { open: "#=", close: "=#" } },
+    closeBrackets: { brackets: ["(", "[", "{", '"'] },
+    autocomplete: keywordsList.concat(builtinsList)
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/lua.js
+function prefixRE(words8) {
+  return new RegExp("^(?:" + words8.join("|") + ")", "i");
+}
+function wordRE(words8) {
+  return new RegExp("^(?:" + words8.join("|") + ")$", "i");
+}
+var builtins3 = wordRE([
+  "_G",
+  "_VERSION",
+  "assert",
+  "collectgarbage",
+  "dofile",
+  "error",
+  "getfenv",
+  "getmetatable",
+  "ipairs",
+  "load",
+  "loadfile",
+  "loadstring",
+  "module",
+  "next",
+  "pairs",
+  "pcall",
+  "print",
+  "rawequal",
+  "rawget",
+  "rawset",
+  "require",
+  "select",
+  "setfenv",
+  "setmetatable",
+  "tonumber",
+  "tostring",
+  "type",
+  "unpack",
+  "xpcall",
+  "coroutine.create",
+  "coroutine.resume",
+  "coroutine.running",
+  "coroutine.status",
+  "coroutine.wrap",
+  "coroutine.yield",
+  "debug.debug",
+  "debug.getfenv",
+  "debug.gethook",
+  "debug.getinfo",
+  "debug.getlocal",
+  "debug.getmetatable",
+  "debug.getregistry",
+  "debug.getupvalue",
+  "debug.setfenv",
+  "debug.sethook",
+  "debug.setlocal",
+  "debug.setmetatable",
+  "debug.setupvalue",
+  "debug.traceback",
+  "close",
+  "flush",
+  "lines",
+  "read",
+  "seek",
+  "setvbuf",
+  "write",
+  "io.close",
+  "io.flush",
+  "io.input",
+  "io.lines",
+  "io.open",
+  "io.output",
+  "io.popen",
+  "io.read",
+  "io.stderr",
+  "io.stdin",
+  "io.stdout",
+  "io.tmpfile",
+  "io.type",
+  "io.write",
+  "math.abs",
+  "math.acos",
+  "math.asin",
+  "math.atan",
+  "math.atan2",
+  "math.ceil",
+  "math.cos",
+  "math.cosh",
+  "math.deg",
+  "math.exp",
+  "math.floor",
+  "math.fmod",
+  "math.frexp",
+  "math.huge",
+  "math.ldexp",
+  "math.log",
+  "math.log10",
+  "math.max",
+  "math.min",
+  "math.modf",
+  "math.pi",
+  "math.pow",
+  "math.rad",
+  "math.random",
+  "math.randomseed",
+  "math.sin",
+  "math.sinh",
+  "math.sqrt",
+  "math.tan",
+  "math.tanh",
+  "os.clock",
+  "os.date",
+  "os.difftime",
+  "os.execute",
+  "os.exit",
+  "os.getenv",
+  "os.remove",
+  "os.rename",
+  "os.setlocale",
+  "os.time",
+  "os.tmpname",
+  "package.cpath",
+  "package.loaded",
+  "package.loaders",
+  "package.loadlib",
+  "package.path",
+  "package.preload",
+  "package.seeall",
+  "string.byte",
+  "string.char",
+  "string.dump",
+  "string.find",
+  "string.format",
+  "string.gmatch",
+  "string.gsub",
+  "string.len",
+  "string.lower",
+  "string.match",
+  "string.rep",
+  "string.reverse",
+  "string.sub",
+  "string.upper",
+  "table.concat",
+  "table.insert",
+  "table.maxn",
+  "table.remove",
+  "table.sort"
+]);
+var keywords4 = wordRE([
+  "and",
+  "break",
+  "elseif",
+  "false",
+  "nil",
+  "not",
+  "or",
+  "return",
+  "true",
+  "function",
+  "end",
+  "if",
+  "then",
+  "else",
+  "do",
+  "while",
+  "repeat",
+  "until",
+  "for",
+  "in",
+  "local"
+]);
+var indentTokens = wordRE(["function", "if", "repeat", "do", "\\(", "{"]);
+var dedentTokens = wordRE(["end", "until", "\\)", "}"]);
+var dedentPartial = prefixRE(["end", "until", "\\)", "}", "else", "elseif"]);
+function readBracket(stream) {
+  var level = 0;
+  while (stream.eat("=")) ++level;
+  stream.eat("[");
+  return level;
+}
+function normal2(stream, state) {
+  var ch = stream.next();
+  if (ch == "-" && stream.eat("-")) {
+    if (stream.eat("[") && stream.eat("["))
+      return (state.cur = bracketed(readBracket(stream), "comment"))(stream, state);
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (ch == '"' || ch == "'")
+    return (state.cur = string(ch))(stream, state);
+  if (ch == "[" && /[\[=]/.test(stream.peek()))
+    return (state.cur = bracketed(readBracket(stream), "string"))(stream, state);
+  if (/\d/.test(ch)) {
+    stream.eatWhile(/[\w.%]/);
+    return "number";
+  }
+  if (/[\w_]/.test(ch)) {
+    stream.eatWhile(/[\w\\\-_.]/);
+    return "variable";
+  }
+  return null;
+}
+function bracketed(level, style) {
+  return function(stream, state) {
+    var curlev = null, ch;
+    while ((ch = stream.next()) != null) {
+      if (curlev == null) {
+        if (ch == "]") curlev = 0;
+      } else if (ch == "=") ++curlev;
+      else if (ch == "]" && curlev == level) {
+        state.cur = normal2;
+        break;
+      } else curlev = null;
+    }
+    return style;
+  };
+}
+function string(quote) {
+  return function(stream, state) {
+    var escaped = false, ch;
+    while ((ch = stream.next()) != null) {
+      if (ch == quote && !escaped) break;
+      escaped = !escaped && ch == "\\";
+    }
+    if (!escaped) state.cur = normal2;
+    return "string";
+  };
+}
+var lua = {
+  name: "lua",
+  startState: function() {
+    return { basecol: 0, indentDepth: 0, cur: normal2 };
+  },
+  token: function(stream, state) {
+    if (stream.eatSpace()) return null;
+    var style = state.cur(stream, state);
+    var word = stream.current();
+    if (style == "variable") {
+      if (keywords4.test(word)) style = "keyword";
+      else if (builtins3.test(word)) style = "builtin";
+    }
+    if (style != "comment" && style != "string") {
+      if (indentTokens.test(word)) ++state.indentDepth;
+      else if (dedentTokens.test(word)) --state.indentDepth;
+    }
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    var closing3 = dedentPartial.test(textAfter);
+    return state.basecol + cx.unit * (state.indentDepth - (closing3 ? 1 : 0));
+  },
+  languageData: {
+    indentOnInput: /^\s*(?:end|until|else|\)|\})$/,
+    commentTokens: { line: "--", block: { open: "--[[", close: "]]--" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/mllike.js
+function mlLike(parserConfig) {
+  var words8 = {
+    "as": "keyword",
+    "do": "keyword",
+    "else": "keyword",
+    "end": "keyword",
+    "exception": "keyword",
+    "fun": "keyword",
+    "functor": "keyword",
+    "if": "keyword",
+    "in": "keyword",
+    "include": "keyword",
+    "let": "keyword",
+    "of": "keyword",
+    "open": "keyword",
+    "rec": "keyword",
+    "struct": "keyword",
+    "then": "keyword",
+    "type": "keyword",
+    "val": "keyword",
+    "while": "keyword",
+    "with": "keyword"
+  };
+  var extraWords = parserConfig.extraWords || {};
+  for (var prop in extraWords) {
+    if (extraWords.hasOwnProperty(prop)) {
+      words8[prop] = parserConfig.extraWords[prop];
+    }
+  }
+  var hintWords = [];
+  for (var k in words8) {
+    hintWords.push(k);
+  }
+  function tokenBase13(stream, state) {
+    var ch = stream.next();
+    if (ch === '"') {
+      state.tokenize = tokenString8;
+      return state.tokenize(stream, state);
+    }
+    if (ch === "{") {
+      if (stream.eat("|")) {
+        state.longString = true;
+        state.tokenize = tokenLongString;
+        return state.tokenize(stream, state);
+      }
+    }
+    if (ch === "(") {
+      if (stream.match(/^\*(?!\))/)) {
+        state.commentLevel++;
+        state.tokenize = tokenComment7;
+        return state.tokenize(stream, state);
+      }
+    }
+    if (ch === "~" || ch === "?") {
+      stream.eatWhile(/\w/);
+      return "variableName.special";
+    }
+    if (ch === "`") {
+      stream.eatWhile(/\w/);
+      return "quote";
+    }
+    if (ch === "/" && parserConfig.slashComments && stream.eat("/")) {
+      stream.skipToEnd();
+      return "comment";
+    }
+    if (/\d/.test(ch)) {
+      if (ch === "0" && stream.eat(/[bB]/)) {
+        stream.eatWhile(/[01]/);
+      }
+      if (ch === "0" && stream.eat(/[xX]/)) {
+        stream.eatWhile(/[0-9a-fA-F]/);
+      }
+      if (ch === "0" && stream.eat(/[oO]/)) {
+        stream.eatWhile(/[0-7]/);
+      } else {
+        stream.eatWhile(/[\d_]/);
+        if (stream.eat(".")) {
+          stream.eatWhile(/[\d]/);
+        }
+        if (stream.eat(/[eE]/)) {
+          stream.eatWhile(/[\d\-+]/);
+        }
+      }
+      return "number";
+    }
+    if (/[+\-*&%=<>!?|@\.~:]/.test(ch)) {
+      return "operator";
+    }
+    if (/[\w\xa1-\uffff]/.test(ch)) {
+      stream.eatWhile(/[\w\xa1-\uffff]/);
+      var cur = stream.current();
+      return words8.hasOwnProperty(cur) ? words8[cur] : "variable";
+    }
+    return null;
+  }
+  function tokenString8(stream, state) {
+    var next, end = false, escaped = false;
+    while ((next = stream.next()) != null) {
+      if (next === '"' && !escaped) {
+        end = true;
+        break;
+      }
+      escaped = !escaped && next === "\\";
+    }
+    if (end && !escaped) {
+      state.tokenize = tokenBase13;
+    }
+    return "string";
+  }
+  ;
+  function tokenComment7(stream, state) {
+    var prev, next;
+    while (state.commentLevel > 0 && (next = stream.next()) != null) {
+      if (prev === "(" && next === "*") state.commentLevel++;
+      if (prev === "*" && next === ")") state.commentLevel--;
+      prev = next;
+    }
+    if (state.commentLevel <= 0) {
+      state.tokenize = tokenBase13;
+    }
+    return "comment";
+  }
+  function tokenLongString(stream, state) {
+    var prev, next;
+    while (state.longString && (next = stream.next()) != null) {
+      if (prev === "|" && next === "}") state.longString = false;
+      prev = next;
+    }
+    if (!state.longString) {
+      state.tokenize = tokenBase13;
+    }
+    return "string";
+  }
+  return {
+    startState: function() {
+      return { tokenize: tokenBase13, commentLevel: 0, longString: false };
+    },
+    token: function(stream, state) {
+      if (stream.eatSpace()) return null;
+      return state.tokenize(stream, state);
+    },
+    languageData: {
+      autocomplete: hintWords,
+      commentTokens: {
+        line: parserConfig.slashComments ? "//" : void 0,
+        block: { open: "(*", close: "*)" }
+      }
+    }
+  };
+}
+var oCaml = mlLike({
+  name: "ocaml",
+  extraWords: {
+    "and": "keyword",
+    "assert": "keyword",
+    "begin": "keyword",
+    "class": "keyword",
+    "constraint": "keyword",
+    "done": "keyword",
+    "downto": "keyword",
+    "external": "keyword",
+    "function": "keyword",
+    "initializer": "keyword",
+    "lazy": "keyword",
+    "match": "keyword",
+    "method": "keyword",
+    "module": "keyword",
+    "mutable": "keyword",
+    "new": "keyword",
+    "nonrec": "keyword",
+    "object": "keyword",
+    "private": "keyword",
+    "sig": "keyword",
+    "to": "keyword",
+    "try": "keyword",
+    "value": "keyword",
+    "virtual": "keyword",
+    "when": "keyword",
+    // builtins
+    "raise": "builtin",
+    "failwith": "builtin",
+    "true": "builtin",
+    "false": "builtin",
+    // Pervasives builtins
+    "asr": "builtin",
+    "land": "builtin",
+    "lor": "builtin",
+    "lsl": "builtin",
+    "lsr": "builtin",
+    "lxor": "builtin",
+    "mod": "builtin",
+    "or": "builtin",
+    // More Pervasives
+    "raise_notrace": "builtin",
+    "trace": "builtin",
+    "exit": "builtin",
+    "print_string": "builtin",
+    "print_endline": "builtin",
+    "int": "type",
+    "float": "type",
+    "bool": "type",
+    "char": "type",
+    "string": "type",
+    "unit": "type",
+    // Modules
+    "List": "builtin"
+  }
+});
+var fSharp = mlLike({
+  name: "fsharp",
+  extraWords: {
+    "abstract": "keyword",
+    "assert": "keyword",
+    "base": "keyword",
+    "begin": "keyword",
+    "class": "keyword",
+    "default": "keyword",
+    "delegate": "keyword",
+    "do!": "keyword",
+    "done": "keyword",
+    "downcast": "keyword",
+    "downto": "keyword",
+    "elif": "keyword",
+    "extern": "keyword",
+    "finally": "keyword",
+    "for": "keyword",
+    "function": "keyword",
+    "global": "keyword",
+    "inherit": "keyword",
+    "inline": "keyword",
+    "interface": "keyword",
+    "internal": "keyword",
+    "lazy": "keyword",
+    "let!": "keyword",
+    "match": "keyword",
+    "member": "keyword",
+    "module": "keyword",
+    "mutable": "keyword",
+    "namespace": "keyword",
+    "new": "keyword",
+    "null": "keyword",
+    "override": "keyword",
+    "private": "keyword",
+    "public": "keyword",
+    "return!": "keyword",
+    "return": "keyword",
+    "select": "keyword",
+    "static": "keyword",
+    "to": "keyword",
+    "try": "keyword",
+    "upcast": "keyword",
+    "use!": "keyword",
+    "use": "keyword",
+    "void": "keyword",
+    "when": "keyword",
+    "yield!": "keyword",
+    "yield": "keyword",
+    // Reserved words
+    "atomic": "keyword",
+    "break": "keyword",
+    "checked": "keyword",
+    "component": "keyword",
+    "const": "keyword",
+    "constraint": "keyword",
+    "constructor": "keyword",
+    "continue": "keyword",
+    "eager": "keyword",
+    "event": "keyword",
+    "external": "keyword",
+    "fixed": "keyword",
+    "method": "keyword",
+    "mixin": "keyword",
+    "object": "keyword",
+    "parallel": "keyword",
+    "process": "keyword",
+    "protected": "keyword",
+    "pure": "keyword",
+    "sealed": "keyword",
+    "tailcall": "keyword",
+    "trait": "keyword",
+    "virtual": "keyword",
+    "volatile": "keyword",
+    // builtins
+    "List": "builtin",
+    "Seq": "builtin",
+    "Map": "builtin",
+    "Set": "builtin",
+    "Option": "builtin",
+    "int": "builtin",
+    "string": "builtin",
+    "not": "builtin",
+    "true": "builtin",
+    "false": "builtin",
+    "raise": "builtin",
+    "failwith": "builtin"
+  },
+  slashComments: true
+});
+var sml = mlLike({
+  name: "sml",
+  extraWords: {
+    "abstype": "keyword",
+    "and": "keyword",
+    "andalso": "keyword",
+    "case": "keyword",
+    "datatype": "keyword",
+    "fn": "keyword",
+    "handle": "keyword",
+    "infix": "keyword",
+    "infixr": "keyword",
+    "local": "keyword",
+    "nonfix": "keyword",
+    "op": "keyword",
+    "orelse": "keyword",
+    "raise": "keyword",
+    "withtype": "keyword",
+    "eqtype": "keyword",
+    "sharing": "keyword",
+    "sig": "keyword",
+    "signature": "keyword",
+    "structure": "keyword",
+    "where": "keyword",
+    "true": "keyword",
+    "false": "keyword",
+    // types
+    "int": "builtin",
+    "real": "builtin",
+    "string": "builtin",
+    "char": "builtin",
+    "bool": "builtin"
+  },
+  slashComments: true
+});
+
+// node_modules/@codemirror/legacy-modes/mode/nginx.js
+function words3(str) {
+  var obj = {}, words8 = str.split(" ");
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+var keywords5 = words3(
+  /* ngxDirectiveControl */
+  "break return rewrite set accept_mutex accept_mutex_delay access_log add_after_body add_before_body add_header addition_types aio alias allow ancient_browser ancient_browser_value auth_basic auth_basic_user_file auth_http auth_http_header auth_http_timeout autoindex autoindex_exact_size autoindex_localtime charset charset_types client_body_buffer_size client_body_in_file_only client_body_in_single_buffer client_body_temp_path client_body_timeout client_header_buffer_size client_header_timeout client_max_body_size connection_pool_size create_full_put_path daemon dav_access dav_methods debug_connection debug_points default_type degradation degrade deny devpoll_changes devpoll_events directio directio_alignment empty_gif env epoll_events error_log eventport_events expires fastcgi_bind fastcgi_buffer_size fastcgi_buffers fastcgi_busy_buffers_size fastcgi_cache fastcgi_cache_key fastcgi_cache_methods fastcgi_cache_min_uses fastcgi_cache_path fastcgi_cache_use_stale fastcgi_cache_valid fastcgi_catch_stderr fastcgi_connect_timeout fastcgi_hide_header fastcgi_ignore_client_abort fastcgi_ignore_headers fastcgi_index fastcgi_intercept_errors fastcgi_max_temp_file_size fastcgi_next_upstream fastcgi_param fastcgi_pass_header fastcgi_pass_request_body fastcgi_pass_request_headers fastcgi_read_timeout fastcgi_send_lowat fastcgi_send_timeout fastcgi_split_path_info fastcgi_store fastcgi_store_access fastcgi_temp_file_write_size fastcgi_temp_path fastcgi_upstream_fail_timeout fastcgi_upstream_max_fails flv geoip_city geoip_country google_perftools_profiles gzip gzip_buffers gzip_comp_level gzip_disable gzip_hash gzip_http_version gzip_min_length gzip_no_buffer gzip_proxied gzip_static gzip_types gzip_vary gzip_window if_modified_since ignore_invalid_headers image_filter image_filter_buffer image_filter_jpeg_quality image_filter_transparency imap_auth imap_capabilities imap_client_buffer index ip_hash keepalive_requests keepalive_timeout kqueue_changes kqueue_events large_client_header_buffers limit_conn limit_conn_log_level limit_rate limit_rate_after limit_req limit_req_log_level limit_req_zone limit_zone lingering_time lingering_timeout lock_file log_format log_not_found log_subrequest map_hash_bucket_size map_hash_max_size master_process memcached_bind memcached_buffer_size memcached_connect_timeout memcached_next_upstream memcached_read_timeout memcached_send_timeout memcached_upstream_fail_timeout memcached_upstream_max_fails merge_slashes min_delete_depth modern_browser modern_browser_value msie_padding msie_refresh multi_accept open_file_cache open_file_cache_errors open_file_cache_events open_file_cache_min_uses open_file_cache_valid open_log_file_cache output_buffers override_charset perl perl_modules perl_require perl_set pid pop3_auth pop3_capabilities port_in_redirect postpone_gzipping postpone_output protocol proxy proxy_bind proxy_buffer proxy_buffer_size proxy_buffering proxy_buffers proxy_busy_buffers_size proxy_cache proxy_cache_key proxy_cache_methods proxy_cache_min_uses proxy_cache_path proxy_cache_use_stale proxy_cache_valid proxy_connect_timeout proxy_headers_hash_bucket_size proxy_headers_hash_max_size proxy_hide_header proxy_ignore_client_abort proxy_ignore_headers proxy_intercept_errors proxy_max_temp_file_size proxy_method proxy_next_upstream proxy_pass_error_message proxy_pass_header proxy_pass_request_body proxy_pass_request_headers proxy_read_timeout proxy_redirect proxy_send_lowat proxy_send_timeout proxy_set_body proxy_set_header proxy_ssl_session_reuse proxy_store proxy_store_access proxy_temp_file_write_size proxy_temp_path proxy_timeout proxy_upstream_fail_timeout proxy_upstream_max_fails random_index read_ahead real_ip_header recursive_error_pages request_pool_size reset_timedout_connection resolver resolver_timeout rewrite_log rtsig_overflow_events rtsig_overflow_test rtsig_overflow_threshold rtsig_signo satisfy secure_link_secret send_lowat send_timeout sendfile sendfile_max_chunk server_name_in_redirect server_names_hash_bucket_size server_names_hash_max_size server_tokens set_real_ip_from smtp_auth smtp_capabilities smtp_client_buffer smtp_greeting_delay so_keepalive source_charset ssi ssi_ignore_recycled_buffers ssi_min_file_chunk ssi_silent_errors ssi_types ssi_value_length ssl ssl_certificate ssl_certificate_key ssl_ciphers ssl_client_certificate ssl_crl ssl_dhparam ssl_engine ssl_prefer_server_ciphers ssl_protocols ssl_session_cache ssl_session_timeout ssl_verify_client ssl_verify_depth starttls stub_status sub_filter sub_filter_once sub_filter_types tcp_nodelay tcp_nopush thread_stack_size timeout timer_resolution types_hash_bucket_size types_hash_max_size underscores_in_headers uninitialized_variable_warn use user userid userid_domain userid_expires userid_mark userid_name userid_p3p userid_path userid_service valid_referers variables_hash_bucket_size variables_hash_max_size worker_connections worker_cpu_affinity worker_priority worker_processes worker_rlimit_core worker_rlimit_nofile worker_rlimit_sigpending worker_threads working_directory xclient xml_entities xslt_stylesheet xslt_typesdrew@li229-23"
+);
+var keywords_block = words3(
+  /* ngxDirectiveBlock */
+  "http mail events server types location upstream charset_map limit_except if geo map"
+);
+var keywords_important = words3(
+  /* ngxDirectiveImportant */
+  "include root server server_name listen internal proxy_pass memcached_pass fastcgi_pass try_files"
+);
+var type;
+function ret(style, tp) {
+  type = tp;
+  return style;
+}
+function tokenBase4(stream, state) {
+  stream.eatWhile(/[\w\$_]/);
+  var cur = stream.current();
+  if (keywords5.propertyIsEnumerable(cur)) {
+    return "keyword";
+  } else if (keywords_block.propertyIsEnumerable(cur)) {
+    return "controlKeyword";
+  } else if (keywords_important.propertyIsEnumerable(cur)) {
+    return "controlKeyword";
+  }
+  var ch = stream.next();
+  if (ch == "@") {
+    stream.eatWhile(/[\w\\\-]/);
+    return ret("meta", stream.current());
+  } else if (ch == "/" && stream.eat("*")) {
+    state.tokenize = tokenCComment;
+    return tokenCComment(stream, state);
+  } else if (ch == "<" && stream.eat("!")) {
+    state.tokenize = tokenSGMLComment;
+    return tokenSGMLComment(stream, state);
+  } else if (ch == "=") ret(null, "compare");
+  else if ((ch == "~" || ch == "|") && stream.eat("=")) return ret(null, "compare");
+  else if (ch == '"' || ch == "'") {
+    state.tokenize = tokenString3(ch);
+    return state.tokenize(stream, state);
+  } else if (ch == "#") {
+    stream.skipToEnd();
+    return ret("comment", "comment");
+  } else if (ch == "!") {
+    stream.match(/^\s*\w*/);
+    return ret("keyword", "important");
+  } else if (/\d/.test(ch)) {
+    stream.eatWhile(/[\w.%]/);
+    return ret("number", "unit");
+  } else if (/[,.+>*\/]/.test(ch)) {
+    return ret(null, "select-op");
+  } else if (/[;{}:\[\]]/.test(ch)) {
+    return ret(null, ch);
+  } else {
+    stream.eatWhile(/[\w\\\-]/);
+    return ret("variable", "variable");
+  }
+}
+function tokenCComment(stream, state) {
+  var maybeEnd = false, ch;
+  while ((ch = stream.next()) != null) {
+    if (maybeEnd && ch == "/") {
+      state.tokenize = tokenBase4;
+      break;
+    }
+    maybeEnd = ch == "*";
+  }
+  return ret("comment", "comment");
+}
+function tokenSGMLComment(stream, state) {
+  var dashes = 0, ch;
+  while ((ch = stream.next()) != null) {
+    if (dashes >= 2 && ch == ">") {
+      state.tokenize = tokenBase4;
+      break;
+    }
+    dashes = ch == "-" ? dashes + 1 : 0;
+  }
+  return ret("comment", "comment");
+}
+function tokenString3(quote) {
+  return function(stream, state) {
+    var escaped = false, ch;
+    while ((ch = stream.next()) != null) {
+      if (ch == quote && !escaped)
+        break;
+      escaped = !escaped && ch == "\\";
+    }
+    if (!escaped) state.tokenize = tokenBase4;
+    return ret("string", "string");
+  };
+}
+var nginx = {
+  name: "nginx",
+  startState: function() {
+    return {
+      tokenize: tokenBase4,
+      baseIndent: 0,
+      stack: []
+    };
+  },
+  token: function(stream, state) {
+    if (stream.eatSpace()) return null;
+    type = null;
+    var style = state.tokenize(stream, state);
+    var context = state.stack[state.stack.length - 1];
+    if (type == "hash" && context == "rule") style = "atom";
+    else if (style == "variable") {
+      if (context == "rule") style = "number";
+      else if (!context || context == "@media{") style = "tag";
+    }
+    if (context == "rule" && /^[\{\};]$/.test(type))
+      state.stack.pop();
+    if (type == "{") {
+      if (context == "@media") state.stack[state.stack.length - 1] = "@media{";
+      else state.stack.push("{");
+    } else if (type == "}") state.stack.pop();
+    else if (type == "@media") state.stack.push("@media");
+    else if (context == "{" && type != "comment") state.stack.push("rule");
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    var n = state.stack.length;
+    if (/^\}/.test(textAfter))
+      n -= state.stack[state.stack.length - 1] == "rule" ? 2 : 1;
+    return state.baseIndent + n * cx.unit;
+  },
+  languageData: {
+    indentOnInput: /^\s*\}$/
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/octave.js
+function wordRegexp2(words8) {
+  return new RegExp("^((" + words8.join(")|(") + "))\\b");
+}
+var singleOperators = new RegExp("^[\\+\\-\\*/&|\\^~<>!@'\\\\]");
+var singleDelimiters = new RegExp("^[\\(\\[\\{\\},:=;\\.]");
+var doubleOperators = new RegExp("^((==)|(~=)|(<=)|(>=)|(<<)|(>>)|(\\.[\\+\\-\\*/\\^\\\\]))");
+var doubleDelimiters = new RegExp("^((!=)|(\\+=)|(\\-=)|(\\*=)|(/=)|(&=)|(\\|=)|(\\^=))");
+var tripleDelimiters = new RegExp("^((>>=)|(<<=))");
+var expressionEnd = new RegExp("^[\\]\\)]");
+var identifiers2 = new RegExp("^[_A-Za-z\xA1-\uFFFF][_A-Za-z0-9\xA1-\uFFFF]*");
+var builtins4 = wordRegexp2([
+  "error",
+  "eval",
+  "function",
+  "abs",
+  "acos",
+  "atan",
+  "asin",
+  "cos",
+  "cosh",
+  "exp",
+  "log",
+  "prod",
+  "sum",
+  "log10",
+  "max",
+  "min",
+  "sign",
+  "sin",
+  "sinh",
+  "sqrt",
+  "tan",
+  "reshape",
+  "break",
+  "zeros",
+  "default",
+  "margin",
+  "round",
+  "ones",
+  "rand",
+  "syn",
+  "ceil",
+  "floor",
+  "size",
+  "clear",
+  "zeros",
+  "eye",
+  "mean",
+  "std",
+  "cov",
+  "det",
+  "eig",
+  "inv",
+  "norm",
+  "rank",
+  "trace",
+  "expm",
+  "logm",
+  "sqrtm",
+  "linspace",
+  "plot",
+  "title",
+  "xlabel",
+  "ylabel",
+  "legend",
+  "text",
+  "grid",
+  "meshgrid",
+  "mesh",
+  "num2str",
+  "fft",
+  "ifft",
+  "arrayfun",
+  "cellfun",
+  "input",
+  "fliplr",
+  "flipud",
+  "ismember"
+]);
+var keywords6 = wordRegexp2([
+  "return",
+  "case",
+  "switch",
+  "else",
+  "elseif",
+  "end",
+  "endif",
+  "endfunction",
+  "if",
+  "otherwise",
+  "do",
+  "for",
+  "while",
+  "try",
+  "catch",
+  "classdef",
+  "properties",
+  "events",
+  "methods",
+  "global",
+  "persistent",
+  "endfor",
+  "endwhile",
+  "printf",
+  "sprintf",
+  "disp",
+  "until",
+  "continue",
+  "pkg"
+]);
+function tokenTranspose(stream, state) {
+  if (!stream.sol() && stream.peek() === "'") {
+    stream.next();
+    state.tokenize = tokenBase5;
+    return "operator";
+  }
+  state.tokenize = tokenBase5;
+  return tokenBase5(stream, state);
+}
+function tokenComment3(stream, state) {
+  if (stream.match(/^.*%}/)) {
+    state.tokenize = tokenBase5;
+    return "comment";
+  }
+  ;
+  stream.skipToEnd();
+  return "comment";
+}
+function tokenBase5(stream, state) {
+  if (stream.eatSpace()) return null;
+  if (stream.match("%{")) {
+    state.tokenize = tokenComment3;
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (stream.match(/^[%#]/)) {
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (stream.match(/^[0-9\.+-]/, false)) {
+    if (stream.match(/^[+-]?0x[0-9a-fA-F]+[ij]?/)) {
+      stream.tokenize = tokenBase5;
+      return "number";
+    }
+    ;
+    if (stream.match(/^[+-]?\d*\.\d+([EeDd][+-]?\d+)?[ij]?/)) {
+      return "number";
+    }
+    ;
+    if (stream.match(/^[+-]?\d+([EeDd][+-]?\d+)?[ij]?/)) {
+      return "number";
+    }
+    ;
+  }
+  if (stream.match(wordRegexp2(["nan", "NaN", "inf", "Inf"]))) {
+    return "number";
+  }
+  ;
+  var m = stream.match(/^"(?:[^"]|"")*("|$)/) || stream.match(/^'(?:[^']|'')*('|$)/);
+  if (m) {
+    return m[1] ? "string" : "error";
+  }
+  if (stream.match(keywords6)) {
+    return "keyword";
+  }
+  ;
+  if (stream.match(builtins4)) {
+    return "builtin";
+  }
+  ;
+  if (stream.match(identifiers2)) {
+    return "variable";
+  }
+  ;
+  if (stream.match(singleOperators) || stream.match(doubleOperators)) {
+    return "operator";
+  }
+  ;
+  if (stream.match(singleDelimiters) || stream.match(doubleDelimiters) || stream.match(tripleDelimiters)) {
+    return null;
+  }
+  ;
+  if (stream.match(expressionEnd)) {
+    state.tokenize = tokenTranspose;
+    return null;
+  }
+  ;
+  stream.next();
+  return "error";
+}
+var octave = {
+  name: "octave",
+  startState: function() {
+    return {
+      tokenize: tokenBase5
+    };
+  },
+  token: function(stream, state) {
+    var style = state.tokenize(stream, state);
+    if (style === "number" || style === "variable") {
+      state.tokenize = tokenTranspose;
+    }
+    return style;
+  },
+  languageData: {
+    commentTokens: { line: "%" }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/perl.js
+function look(stream, c2) {
+  return stream.string.charAt(stream.pos + (c2 || 0));
+}
+function prefix(stream, c2) {
+  if (c2) {
+    var x = stream.pos - c2;
+    return stream.string.substr(x >= 0 ? x : 0, c2);
+  } else {
+    return stream.string.substr(0, stream.pos - 1);
+  }
+}
+function suffix(stream, c2) {
+  var y = stream.string.length;
+  var x = y - stream.pos + 1;
+  return stream.string.substr(stream.pos, c2 && c2 < y ? c2 : x);
+}
+function eatSuffix(stream, c2) {
+  var x = stream.pos + c2;
+  var y;
+  if (x <= 0)
+    stream.pos = 0;
+  else if (x >= (y = stream.string.length - 1))
+    stream.pos = y;
+  else
+    stream.pos = x;
+}
+var PERL = {
+  //   null - magic touch
+  //   1 - keyword
+  //   2 - def
+  //   3 - atom
+  //   4 - operator
+  //   5 - builtin (predefined)
+  //   [x,y] - x=1,2,3; y=must be defined if x{...}
+  //      PERL operators
+  "->": 4,
+  "++": 4,
+  "--": 4,
+  "**": 4,
+  //   ! ~ \ and unary + and -
+  "=~": 4,
+  "!~": 4,
+  "*": 4,
+  "/": 4,
+  "%": 4,
+  "x": 4,
+  "+": 4,
+  "-": 4,
+  ".": 4,
+  "<<": 4,
+  ">>": 4,
+  //   named unary operators
+  "<": 4,
+  ">": 4,
+  "<=": 4,
+  ">=": 4,
+  "lt": 4,
+  "gt": 4,
+  "le": 4,
+  "ge": 4,
+  "==": 4,
+  "!=": 4,
+  "<=>": 4,
+  "eq": 4,
+  "ne": 4,
+  "cmp": 4,
+  "~~": 4,
+  "&": 4,
+  "|": 4,
+  "^": 4,
+  "&&": 4,
+  "||": 4,
+  "//": 4,
+  "..": 4,
+  "...": 4,
+  "?": 4,
+  ":": 4,
+  "=": 4,
+  "+=": 4,
+  "-=": 4,
+  "*=": 4,
+  //   etc. ???
+  ",": 4,
+  "=>": 4,
+  "::": 4,
+  //   list operators (rightward)
+  "not": 4,
+  "and": 4,
+  "or": 4,
+  "xor": 4,
+  //      PERL predefined variables (I know, what this is a paranoid idea, but may be needed for people, who learn PERL, and for me as well, ...and may be for you?;)
+  "BEGIN": [5, 1],
+  "END": [5, 1],
+  "PRINT": [5, 1],
+  "PRINTF": [5, 1],
+  "GETC": [5, 1],
+  "READ": [5, 1],
+  "READLINE": [5, 1],
+  "DESTROY": [5, 1],
+  "TIE": [5, 1],
+  "TIEHANDLE": [5, 1],
+  "UNTIE": [5, 1],
+  "STDIN": 5,
+  "STDIN_TOP": 5,
+  "STDOUT": 5,
+  "STDOUT_TOP": 5,
+  "STDERR": 5,
+  "STDERR_TOP": 5,
+  "$ARG": 5,
+  "$_": 5,
+  "@ARG": 5,
+  "@_": 5,
+  "$LIST_SEPARATOR": 5,
+  '$"': 5,
+  "$PROCESS_ID": 5,
+  "$PID": 5,
+  "$$": 5,
+  "$REAL_GROUP_ID": 5,
+  "$GID": 5,
+  "$(": 5,
+  "$EFFECTIVE_GROUP_ID": 5,
+  "$EGID": 5,
+  "$)": 5,
+  "$PROGRAM_NAME": 5,
+  "$0": 5,
+  "$SUBSCRIPT_SEPARATOR": 5,
+  "$SUBSEP": 5,
+  "$;": 5,
+  "$REAL_USER_ID": 5,
+  "$UID": 5,
+  "$<": 5,
+  "$EFFECTIVE_USER_ID": 5,
+  "$EUID": 5,
+  "$>": 5,
+  "$a": 5,
+  "$b": 5,
+  "$COMPILING": 5,
+  "$^C": 5,
+  "$DEBUGGING": 5,
+  "$^D": 5,
+  "${^ENCODING}": 5,
+  "$ENV": 5,
+  "%ENV": 5,
+  "$SYSTEM_FD_MAX": 5,
+  "$^F": 5,
+  "@F": 5,
+  "${^GLOBAL_PHASE}": 5,
+  "$^H": 5,
+  "%^H": 5,
+  "@INC": 5,
+  "%INC": 5,
+  "$INPLACE_EDIT": 5,
+  "$^I": 5,
+  "$^M": 5,
+  "$OSNAME": 5,
+  "$^O": 5,
+  "${^OPEN}": 5,
+  "$PERLDB": 5,
+  "$^P": 5,
+  "$SIG": 5,
+  "%SIG": 5,
+  "$BASETIME": 5,
+  "$^T": 5,
+  "${^TAINT}": 5,
+  "${^UNICODE}": 5,
+  "${^UTF8CACHE}": 5,
+  "${^UTF8LOCALE}": 5,
+  "$PERL_VERSION": 5,
+  "$^V": 5,
+  "${^WIN32_SLOPPY_STAT}": 5,
+  "$EXECUTABLE_NAME": 5,
+  "$^X": 5,
+  "$1": 5,
+  // - regexp $1, $2...
+  "$MATCH": 5,
+  "$&": 5,
+  "${^MATCH}": 5,
+  "$PREMATCH": 5,
+  "$`": 5,
+  "${^PREMATCH}": 5,
+  "$POSTMATCH": 5,
+  "$'": 5,
+  "${^POSTMATCH}": 5,
+  "$LAST_PAREN_MATCH": 5,
+  "$+": 5,
+  "$LAST_SUBMATCH_RESULT": 5,
+  "$^N": 5,
+  "@LAST_MATCH_END": 5,
+  "@+": 5,
+  "%LAST_PAREN_MATCH": 5,
+  "%+": 5,
+  "@LAST_MATCH_START": 5,
+  "@-": 5,
+  "%LAST_MATCH_START": 5,
+  "%-": 5,
+  "$LAST_REGEXP_CODE_RESULT": 5,
+  "$^R": 5,
+  "${^RE_DEBUG_FLAGS}": 5,
+  "${^RE_TRIE_MAXBUF}": 5,
+  "$ARGV": 5,
+  "@ARGV": 5,
+  "ARGV": 5,
+  "ARGVOUT": 5,
+  "$OUTPUT_FIELD_SEPARATOR": 5,
+  "$OFS": 5,
+  "$,": 5,
+  "$INPUT_LINE_NUMBER": 5,
+  "$NR": 5,
+  "$.": 5,
+  "$INPUT_RECORD_SEPARATOR": 5,
+  "$RS": 5,
+  "$/": 5,
+  "$OUTPUT_RECORD_SEPARATOR": 5,
+  "$ORS": 5,
+  "$\\": 5,
+  "$OUTPUT_AUTOFLUSH": 5,
+  "$|": 5,
+  "$ACCUMULATOR": 5,
+  "$^A": 5,
+  "$FORMAT_FORMFEED": 5,
+  "$^L": 5,
+  "$FORMAT_PAGE_NUMBER": 5,
+  "$%": 5,
+  "$FORMAT_LINES_LEFT": 5,
+  "$-": 5,
+  "$FORMAT_LINE_BREAK_CHARACTERS": 5,
+  "$:": 5,
+  "$FORMAT_LINES_PER_PAGE": 5,
+  "$=": 5,
+  "$FORMAT_TOP_NAME": 5,
+  "$^": 5,
+  "$FORMAT_NAME": 5,
+  "$~": 5,
+  "${^CHILD_ERROR_NATIVE}": 5,
+  "$EXTENDED_OS_ERROR": 5,
+  "$^E": 5,
+  "$EXCEPTIONS_BEING_CAUGHT": 5,
+  "$^S": 5,
+  "$WARNING": 5,
+  "$^W": 5,
+  "${^WARNING_BITS}": 5,
+  "$OS_ERROR": 5,
+  "$ERRNO": 5,
+  "$!": 5,
+  "%OS_ERROR": 5,
+  "%ERRNO": 5,
+  "%!": 5,
+  "$CHILD_ERROR": 5,
+  "$?": 5,
+  "$EVAL_ERROR": 5,
+  "$@": 5,
+  "$OFMT": 5,
+  "$#": 5,
+  "$*": 5,
+  "$ARRAY_BASE": 5,
+  "$[": 5,
+  "$OLD_PERL_VERSION": 5,
+  "$]": 5,
+  //      PERL blocks
+  "if": [1, 1],
+  elsif: [1, 1],
+  "else": [1, 1],
+  "while": [1, 1],
+  unless: [1, 1],
+  "for": [1, 1],
+  foreach: [1, 1],
+  //      PERL functions
+  "abs": 1,
+  // - absolute value function
+  accept: 1,
+  // - accept an incoming socket connect
+  alarm: 1,
+  // - schedule a SIGALRM
+  "atan2": 1,
+  // - arctangent of Y/X in the range -PI to PI
+  bind: 1,
+  // - binds an address to a socket
+  binmode: 1,
+  // - prepare binary files for I/O
+  bless: 1,
+  // - create an object
+  bootstrap: 1,
+  //
+  "break": 1,
+  // - break out of a "given" block
+  caller: 1,
+  // - get context of the current subroutine call
+  chdir: 1,
+  // - change your current working directory
+  chmod: 1,
+  // - changes the permissions on a list of files
+  chomp: 1,
+  // - remove a trailing record separator from a string
+  chop: 1,
+  // - remove the last character from a string
+  chown: 1,
+  // - change the ownership on a list of files
+  chr: 1,
+  // - get character this number represents
+  chroot: 1,
+  // - make directory new root for path lookups
+  close: 1,
+  // - close file (or pipe or socket) handle
+  closedir: 1,
+  // - close directory handle
+  connect: 1,
+  // - connect to a remote socket
+  "continue": [1, 1],
+  // - optional trailing block in a while or foreach
+  "cos": 1,
+  // - cosine function
+  crypt: 1,
+  // - one-way passwd-style encryption
+  dbmclose: 1,
+  // - breaks binding on a tied dbm file
+  dbmopen: 1,
+  // - create binding on a tied dbm file
+  "default": 1,
+  //
+  defined: 1,
+  // - test whether a value, variable, or function is defined
+  "delete": 1,
+  // - deletes a value from a hash
+  die: 1,
+  // - raise an exception or bail out
+  "do": 1,
+  // - turn a BLOCK into a TERM
+  dump: 1,
+  // - create an immediate core dump
+  each: 1,
+  // - retrieve the next key/value pair from a hash
+  endgrent: 1,
+  // - be done using group file
+  endhostent: 1,
+  // - be done using hosts file
+  endnetent: 1,
+  // - be done using networks file
+  endprotoent: 1,
+  // - be done using protocols file
+  endpwent: 1,
+  // - be done using passwd file
+  endservent: 1,
+  // - be done using services file
+  eof: 1,
+  // - test a filehandle for its end
+  "eval": 1,
+  // - catch exceptions or compile and run code
+  "exec": 1,
+  // - abandon this program to run another
+  exists: 1,
+  // - test whether a hash key is present
+  exit: 1,
+  // - terminate this program
+  "exp": 1,
+  // - raise I to a power
+  fcntl: 1,
+  // - file control system call
+  fileno: 1,
+  // - return file descriptor from filehandle
+  flock: 1,
+  // - lock an entire file with an advisory lock
+  fork: 1,
+  // - create a new process just like this one
+  format: 1,
+  // - declare a picture format with use by the write() function
+  formline: 1,
+  // - internal function used for formats
+  getc: 1,
+  // - get the next character from the filehandle
+  getgrent: 1,
+  // - get next group record
+  getgrgid: 1,
+  // - get group record given group user ID
+  getgrnam: 1,
+  // - get group record given group name
+  gethostbyaddr: 1,
+  // - get host record given its address
+  gethostbyname: 1,
+  // - get host record given name
+  gethostent: 1,
+  // - get next hosts record
+  getlogin: 1,
+  // - return who logged in at this tty
+  getnetbyaddr: 1,
+  // - get network record given its address
+  getnetbyname: 1,
+  // - get networks record given name
+  getnetent: 1,
+  // - get next networks record
+  getpeername: 1,
+  // - find the other end of a socket connection
+  getpgrp: 1,
+  // - get process group
+  getppid: 1,
+  // - get parent process ID
+  getpriority: 1,
+  // - get current nice value
+  getprotobyname: 1,
+  // - get protocol record given name
+  getprotobynumber: 1,
+  // - get protocol record numeric protocol
+  getprotoent: 1,
+  // - get next protocols record
+  getpwent: 1,
+  // - get next passwd record
+  getpwnam: 1,
+  // - get passwd record given user login name
+  getpwuid: 1,
+  // - get passwd record given user ID
+  getservbyname: 1,
+  // - get services record given its name
+  getservbyport: 1,
+  // - get services record given numeric port
+  getservent: 1,
+  // - get next services record
+  getsockname: 1,
+  // - retrieve the sockaddr for a given socket
+  getsockopt: 1,
+  // - get socket options on a given socket
+  given: 1,
+  //
+  glob: 1,
+  // - expand filenames using wildcards
+  gmtime: 1,
+  // - convert UNIX time into record or string using Greenwich time
+  "goto": 1,
+  // - create spaghetti code
+  grep: 1,
+  // - locate elements in a list test true against a given criterion
+  hex: 1,
+  // - convert a string to a hexadecimal number
+  "import": 1,
+  // - patch a module's namespace into your own
+  index: 1,
+  // - find a substring within a string
+  "int": 1,
+  // - get the integer portion of a number
+  ioctl: 1,
+  // - system-dependent device control system call
+  "join": 1,
+  // - join a list into a string using a separator
+  keys: 1,
+  // - retrieve list of indices from a hash
+  kill: 1,
+  // - send a signal to a process or process group
+  last: 1,
+  // - exit a block prematurely
+  lc: 1,
+  // - return lower-case version of a string
+  lcfirst: 1,
+  // - return a string with just the next letter in lower case
+  length: 1,
+  // - return the number of bytes in a string
+  "link": 1,
+  // - create a hard link in the filesystem
+  listen: 1,
+  // - register your socket as a server
+  local: 2,
+  // - create a temporary value for a global variable (dynamic scoping)
+  localtime: 1,
+  // - convert UNIX time into record or string using local time
+  lock: 1,
+  // - get a thread lock on a variable, subroutine, or method
+  "log": 1,
+  // - retrieve the natural logarithm for a number
+  lstat: 1,
+  // - stat a symbolic link
+  m: null,
+  // - match a string with a regular expression pattern
+  map: 1,
+  // - apply a change to a list to get back a new list with the changes
+  mkdir: 1,
+  // - create a directory
+  msgctl: 1,
+  // - SysV IPC message control operations
+  msgget: 1,
+  // - get SysV IPC message queue
+  msgrcv: 1,
+  // - receive a SysV IPC message from a message queue
+  msgsnd: 1,
+  // - send a SysV IPC message to a message queue
+  my: 2,
+  // - declare and assign a local variable (lexical scoping)
+  "new": 1,
+  //
+  next: 1,
+  // - iterate a block prematurely
+  no: 1,
+  // - unimport some module symbols or semantics at compile time
+  oct: 1,
+  // - convert a string to an octal number
+  open: 1,
+  // - open a file, pipe, or descriptor
+  opendir: 1,
+  // - open a directory
+  ord: 1,
+  // - find a character's numeric representation
+  our: 2,
+  // - declare and assign a package variable (lexical scoping)
+  pack: 1,
+  // - convert a list into a binary representation
+  "package": 1,
+  // - declare a separate global namespace
+  pipe: 1,
+  // - open a pair of connected filehandles
+  pop: 1,
+  // - remove the last element from an array and return it
+  pos: 1,
+  // - find or set the offset for the last/next m//g search
+  print: 1,
+  // - output a list to a filehandle
+  printf: 1,
+  // - output a formatted list to a filehandle
+  prototype: 1,
+  // - get the prototype (if any) of a subroutine
+  push: 1,
+  // - append one or more elements to an array
+  q: null,
+  // - singly quote a string
+  qq: null,
+  // - doubly quote a string
+  qr: null,
+  // - Compile pattern
+  quotemeta: null,
+  // - quote regular expression magic characters
+  qw: null,
+  // - quote a list of words
+  qx: null,
+  // - backquote quote a string
+  rand: 1,
+  // - retrieve the next pseudorandom number
+  read: 1,
+  // - fixed-length buffered input from a filehandle
+  readdir: 1,
+  // - get a directory from a directory handle
+  readline: 1,
+  // - fetch a record from a file
+  readlink: 1,
+  // - determine where a symbolic link is pointing
+  readpipe: 1,
+  // - execute a system command and collect standard output
+  recv: 1,
+  // - receive a message over a Socket
+  redo: 1,
+  // - start this loop iteration over again
+  ref: 1,
+  // - find out the type of thing being referenced
+  rename: 1,
+  // - change a filename
+  require: 1,
+  // - load in external functions from a library at runtime
+  reset: 1,
+  // - clear all variables of a given name
+  "return": 1,
+  // - get out of a function early
+  reverse: 1,
+  // - flip a string or a list
+  rewinddir: 1,
+  // - reset directory handle
+  rindex: 1,
+  // - right-to-left substring search
+  rmdir: 1,
+  // - remove a directory
+  s: null,
+  // - replace a pattern with a string
+  say: 1,
+  // - print with newline
+  scalar: 1,
+  // - force a scalar context
+  seek: 1,
+  // - reposition file pointer for random-access I/O
+  seekdir: 1,
+  // - reposition directory pointer
+  select: 1,
+  // - reset default output or do I/O multiplexing
+  semctl: 1,
+  // - SysV semaphore control operations
+  semget: 1,
+  // - get set of SysV semaphores
+  semop: 1,
+  // - SysV semaphore operations
+  send: 1,
+  // - send a message over a socket
+  setgrent: 1,
+  // - prepare group file for use
+  sethostent: 1,
+  // - prepare hosts file for use
+  setnetent: 1,
+  // - prepare networks file for use
+  setpgrp: 1,
+  // - set the process group of a process
+  setpriority: 1,
+  // - set a process's nice value
+  setprotoent: 1,
+  // - prepare protocols file for use
+  setpwent: 1,
+  // - prepare passwd file for use
+  setservent: 1,
+  // - prepare services file for use
+  setsockopt: 1,
+  // - set some socket options
+  shift: 1,
+  // - remove the first element of an array, and return it
+  shmctl: 1,
+  // - SysV shared memory operations
+  shmget: 1,
+  // - get SysV shared memory segment identifier
+  shmread: 1,
+  // - read SysV shared memory
+  shmwrite: 1,
+  // - write SysV shared memory
+  shutdown: 1,
+  // - close down just half of a socket connection
+  "sin": 1,
+  // - return the sine of a number
+  sleep: 1,
+  // - block for some number of seconds
+  socket: 1,
+  // - create a socket
+  socketpair: 1,
+  // - create a pair of sockets
+  "sort": 1,
+  // - sort a list of values
+  splice: 1,
+  // - add or remove elements anywhere in an array
+  "split": 1,
+  // - split up a string using a regexp delimiter
+  sprintf: 1,
+  // - formatted print into a string
+  "sqrt": 1,
+  // - square root function
+  srand: 1,
+  // - seed the random number generator
+  stat: 1,
+  // - get a file's status information
+  state: 1,
+  // - declare and assign a state variable (persistent lexical scoping)
+  study: 1,
+  // - optimize input data for repeated searches
+  "sub": 1,
+  // - declare a subroutine, possibly anonymously
+  "substr": 1,
+  // - get or alter a portion of a string
+  symlink: 1,
+  // - create a symbolic link to a file
+  syscall: 1,
+  // - execute an arbitrary system call
+  sysopen: 1,
+  // - open a file, pipe, or descriptor
+  sysread: 1,
+  // - fixed-length unbuffered input from a filehandle
+  sysseek: 1,
+  // - position I/O pointer on handle used with sysread and syswrite
+  system: 1,
+  // - run a separate program
+  syswrite: 1,
+  // - fixed-length unbuffered output to a filehandle
+  tell: 1,
+  // - get current seekpointer on a filehandle
+  telldir: 1,
+  // - get current seekpointer on a directory handle
+  tie: 1,
+  // - bind a variable to an object class
+  tied: 1,
+  // - get a reference to the object underlying a tied variable
+  time: 1,
+  // - return number of seconds since 1970
+  times: 1,
+  // - return elapsed time for self and child processes
+  tr: null,
+  // - transliterate a string
+  truncate: 1,
+  // - shorten a file
+  uc: 1,
+  // - return upper-case version of a string
+  ucfirst: 1,
+  // - return a string with just the next letter in upper case
+  umask: 1,
+  // - set file creation mode mask
+  undef: 1,
+  // - remove a variable or function definition
+  unlink: 1,
+  // - remove one link to a file
+  unpack: 1,
+  // - convert binary structure into normal perl variables
+  unshift: 1,
+  // - prepend more elements to the beginning of a list
+  untie: 1,
+  // - break a tie binding to a variable
+  use: 1,
+  // - load in a module at compile time
+  utime: 1,
+  // - set a file's last access and modify times
+  values: 1,
+  // - return a list of the values in a hash
+  vec: 1,
+  // - test or set particular bits in a string
+  wait: 1,
+  // - wait for any child process to die
+  waitpid: 1,
+  // - wait for a particular child process to die
+  wantarray: 1,
+  // - get void vs scalar vs list context of current subroutine call
+  warn: 1,
+  // - print debugging info
+  when: 1,
+  //
+  write: 1,
+  // - print a picture record
+  y: null
+};
+var RXstyle = "string.special";
+var RXmodifiers = /[goseximacplud]/;
+function tokenChain(stream, state, chain3, style, tail) {
+  state.chain = null;
+  state.style = null;
+  state.tail = null;
+  state.tokenize = function(stream2, state2) {
+    var e = false, c2, i = 0;
+    while (c2 = stream2.next()) {
+      if (c2 === chain3[i] && !e) {
+        if (chain3[++i] !== void 0) {
+          state2.chain = chain3[i];
+          state2.style = style;
+          state2.tail = tail;
+        } else if (tail)
+          stream2.eatWhile(tail);
+        state2.tokenize = tokenPerl;
+        return style;
+      }
+      e = !e && c2 == "\\";
+    }
+    return style;
+  };
+  return state.tokenize(stream, state);
+}
+function tokenSOMETHING(stream, state, string2) {
+  state.tokenize = function(stream2, state2) {
+    if (stream2.string == string2)
+      state2.tokenize = tokenPerl;
+    stream2.skipToEnd();
+    return "string";
+  };
+  return state.tokenize(stream, state);
+}
+function tokenPerl(stream, state) {
+  if (stream.eatSpace())
+    return null;
+  if (state.chain)
+    return tokenChain(stream, state, state.chain, state.style, state.tail);
+  if (stream.match(/^(\-?((\d[\d_]*)?\.\d+(e[+-]?\d+)?|\d+\.\d*)|0x[\da-fA-F_]+|0b[01_]+|\d[\d_]*(e[+-]?\d+)?)/))
+    return "number";
+  if (stream.match(/^<<(?=[_a-zA-Z])/)) {
+    stream.eatWhile(/\w/);
+    return tokenSOMETHING(stream, state, stream.current().substr(2));
+  }
+  if (stream.sol() && stream.match(/^\=item(?!\w)/)) {
+    return tokenSOMETHING(stream, state, "=cut");
+  }
+  var ch = stream.next();
+  if (ch == '"' || ch == "'") {
+    if (prefix(stream, 3) == "<<" + ch) {
+      var p = stream.pos;
+      stream.eatWhile(/\w/);
+      var n = stream.current().substr(1);
+      if (n && stream.eat(ch))
+        return tokenSOMETHING(stream, state, n);
+      stream.pos = p;
+    }
+    return tokenChain(stream, state, [ch], "string");
+  }
+  if (ch == "q") {
+    var c2 = look(stream, -2);
+    if (!(c2 && /\w/.test(c2))) {
+      c2 = look(stream, 0);
+      if (c2 == "x") {
+        c2 = look(stream, 1);
+        if (c2 == "(") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [")"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "[") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["]"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "{") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["}"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "<") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [">"], RXstyle, RXmodifiers);
+        }
+        if (/[\^'"!~\/]/.test(c2)) {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [stream.eat(c2)], RXstyle, RXmodifiers);
+        }
+      } else if (c2 == "q") {
+        c2 = look(stream, 1);
+        if (c2 == "(") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [")"], "string");
+        }
+        if (c2 == "[") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["]"], "string");
+        }
+        if (c2 == "{") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["}"], "string");
+        }
+        if (c2 == "<") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [">"], "string");
+        }
+        if (/[\^'"!~\/]/.test(c2)) {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [stream.eat(c2)], "string");
+        }
+      } else if (c2 == "w") {
+        c2 = look(stream, 1);
+        if (c2 == "(") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [")"], "bracket");
+        }
+        if (c2 == "[") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["]"], "bracket");
+        }
+        if (c2 == "{") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["}"], "bracket");
+        }
+        if (c2 == "<") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [">"], "bracket");
+        }
+        if (/[\^'"!~\/]/.test(c2)) {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [stream.eat(c2)], "bracket");
+        }
+      } else if (c2 == "r") {
+        c2 = look(stream, 1);
+        if (c2 == "(") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [")"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "[") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["]"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "{") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, ["}"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "<") {
+          eatSuffix(stream, 2);
+          return tokenChain(stream, state, [">"], RXstyle, RXmodifiers);
+        }
+        if (/[\^'"!~\/]/.test(c2)) {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [stream.eat(c2)], RXstyle, RXmodifiers);
+        }
+      } else if (/[\^'"!~\/(\[{<]/.test(c2)) {
+        if (c2 == "(") {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [")"], "string");
+        }
+        if (c2 == "[") {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, ["]"], "string");
+        }
+        if (c2 == "{") {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, ["}"], "string");
+        }
+        if (c2 == "<") {
+          eatSuffix(stream, 1);
+          return tokenChain(stream, state, [">"], "string");
+        }
+        if (/[\^'"!~\/]/.test(c2)) {
+          return tokenChain(stream, state, [stream.eat(c2)], "string");
+        }
+      }
+    }
+  }
+  if (ch == "m") {
+    var c2 = look(stream, -2);
+    if (!(c2 && /\w/.test(c2))) {
+      c2 = stream.eat(/[(\[{<\^'"!~\/]/);
+      if (c2) {
+        if (/[\^'"!~\/]/.test(c2)) {
+          return tokenChain(stream, state, [c2], RXstyle, RXmodifiers);
+        }
+        if (c2 == "(") {
+          return tokenChain(stream, state, [")"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "[") {
+          return tokenChain(stream, state, ["]"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "{") {
+          return tokenChain(stream, state, ["}"], RXstyle, RXmodifiers);
+        }
+        if (c2 == "<") {
+          return tokenChain(stream, state, [">"], RXstyle, RXmodifiers);
+        }
+      }
+    }
+  }
+  if (ch == "s") {
+    var c2 = /[\/>\]})\w]/.test(look(stream, -2));
+    if (!c2) {
+      c2 = stream.eat(/[(\[{<\^'"!~\/]/);
+      if (c2) {
+        if (c2 == "[")
+          return tokenChain(stream, state, ["]", "]"], RXstyle, RXmodifiers);
+        if (c2 == "{")
+          return tokenChain(stream, state, ["}", "}"], RXstyle, RXmodifiers);
+        if (c2 == "<")
+          return tokenChain(stream, state, [">", ">"], RXstyle, RXmodifiers);
+        if (c2 == "(")
+          return tokenChain(stream, state, [")", ")"], RXstyle, RXmodifiers);
+        return tokenChain(stream, state, [c2, c2], RXstyle, RXmodifiers);
+      }
+    }
+  }
+  if (ch == "y") {
+    var c2 = /[\/>\]})\w]/.test(look(stream, -2));
+    if (!c2) {
+      c2 = stream.eat(/[(\[{<\^'"!~\/]/);
+      if (c2) {
+        if (c2 == "[")
+          return tokenChain(stream, state, ["]", "]"], RXstyle, RXmodifiers);
+        if (c2 == "{")
+          return tokenChain(stream, state, ["}", "}"], RXstyle, RXmodifiers);
+        if (c2 == "<")
+          return tokenChain(stream, state, [">", ">"], RXstyle, RXmodifiers);
+        if (c2 == "(")
+          return tokenChain(stream, state, [")", ")"], RXstyle, RXmodifiers);
+        return tokenChain(stream, state, [c2, c2], RXstyle, RXmodifiers);
+      }
+    }
+  }
+  if (ch == "t") {
+    var c2 = /[\/>\]})\w]/.test(look(stream, -2));
+    if (!c2) {
+      c2 = stream.eat("r");
+      if (c2) {
+        c2 = stream.eat(/[(\[{<\^'"!~\/]/);
+        if (c2) {
+          if (c2 == "[")
+            return tokenChain(stream, state, ["]", "]"], RXstyle, RXmodifiers);
+          if (c2 == "{")
+            return tokenChain(stream, state, ["}", "}"], RXstyle, RXmodifiers);
+          if (c2 == "<")
+            return tokenChain(stream, state, [">", ">"], RXstyle, RXmodifiers);
+          if (c2 == "(")
+            return tokenChain(stream, state, [")", ")"], RXstyle, RXmodifiers);
+          return tokenChain(stream, state, [c2, c2], RXstyle, RXmodifiers);
+        }
+      }
+    }
+  }
+  if (ch == "`") {
+    return tokenChain(stream, state, [ch], "builtin");
+  }
+  if (ch == "/") {
+    if (!/~\s*$/.test(prefix(stream)))
+      return "operator";
+    else
+      return tokenChain(stream, state, [ch], RXstyle, RXmodifiers);
+  }
+  if (ch == "$") {
+    var p = stream.pos;
+    if (stream.eatWhile(/\d/) || stream.eat("{") && stream.eatWhile(/\d/) && stream.eat("}"))
+      return "builtin";
+    else
+      stream.pos = p;
+  }
+  if (/[$@%]/.test(ch)) {
+    var p = stream.pos;
+    if (stream.eat("^") && stream.eat(/[A-Z]/) || !/[@$%&]/.test(look(stream, -2)) && stream.eat(/[=|\\\-#?@;:&`~\^!\[\]*'"$+.,\/<>()]/)) {
+      var c2 = stream.current();
+      if (PERL[c2])
+        return "builtin";
+    }
+    stream.pos = p;
+  }
+  if (/[$@%&]/.test(ch)) {
+    if (stream.eatWhile(/[\w$]/) || stream.eat("{") && stream.eatWhile(/[\w$]/) && stream.eat("}")) {
+      var c2 = stream.current();
+      if (PERL[c2])
+        return "builtin";
+      else
+        return "variable";
+    }
+  }
+  if (ch == "#") {
+    if (look(stream, -2) != "$") {
+      stream.skipToEnd();
+      return "comment";
+    }
+  }
+  if (/[:+\-\^*$&%@=<>!?|\/~\.]/.test(ch)) {
+    var p = stream.pos;
+    stream.eatWhile(/[:+\-\^*$&%@=<>!?|\/~\.]/);
+    if (PERL[stream.current()])
+      return "operator";
+    else
+      stream.pos = p;
+  }
+  if (ch == "_") {
+    if (stream.pos == 1) {
+      if (suffix(stream, 6) == "_END__") {
+        return tokenChain(stream, state, ["\0"], "comment");
+      } else if (suffix(stream, 7) == "_DATA__") {
+        return tokenChain(stream, state, ["\0"], "builtin");
+      } else if (suffix(stream, 7) == "_C__") {
+        return tokenChain(stream, state, ["\0"], "string");
+      }
+    }
+  }
+  if (/\w/.test(ch)) {
+    var p = stream.pos;
+    if (look(stream, -2) == "{" && (look(stream, 0) == "}" || stream.eatWhile(/\w/) && look(stream, 0) == "}"))
+      return "string";
+    else
+      stream.pos = p;
+  }
+  if (/[A-Z]/.test(ch)) {
+    var l = look(stream, -2);
+    var p = stream.pos;
+    stream.eatWhile(/[A-Z_]/);
+    if (/[\da-z]/.test(look(stream, 0))) {
+      stream.pos = p;
+    } else {
+      var c2 = PERL[stream.current()];
+      if (!c2)
+        return "meta";
+      if (c2[1])
+        c2 = c2[0];
+      if (l != ":") {
+        if (c2 == 1)
+          return "keyword";
+        else if (c2 == 2)
+          return "def";
+        else if (c2 == 3)
+          return "atom";
+        else if (c2 == 4)
+          return "operator";
+        else if (c2 == 5)
+          return "builtin";
+        else
+          return "meta";
+      } else
+        return "meta";
+    }
+  }
+  if (/[a-zA-Z_]/.test(ch)) {
+    var l = look(stream, -2);
+    stream.eatWhile(/\w/);
+    var c2 = PERL[stream.current()];
+    if (!c2)
+      return "meta";
+    if (c2[1])
+      c2 = c2[0];
+    if (l != ":") {
+      if (c2 == 1)
+        return "keyword";
+      else if (c2 == 2)
+        return "def";
+      else if (c2 == 3)
+        return "atom";
+      else if (c2 == 4)
+        return "operator";
+      else if (c2 == 5)
+        return "builtin";
+      else
+        return "meta";
+    } else
+      return "meta";
+  }
+  return null;
+}
+var perl = {
+  name: "perl",
+  startState: function() {
+    return {
+      tokenize: tokenPerl,
+      chain: null,
+      style: null,
+      tail: null
+    };
+  },
+  token: function(stream, state) {
+    return (state.tokenize || tokenPerl)(stream, state);
+  },
+  languageData: {
+    commentTokens: { line: "#" },
+    wordChars: "$"
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/pascal.js
+function words4(str) {
+  var obj = {}, words8 = str.split(" ");
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+var keywords7 = words4(
+  "absolute and array asm begin case const constructor destructor div do downto else end file for function goto if implementation in inherited inline interface label mod nil not object of operator or packed procedure program record reintroduce repeat self set shl shr string then to type unit until uses var while with xor as class dispinterface except exports finalization finally initialization inline is library on out packed property raise resourcestring threadvar try absolute abstract alias assembler bitpacked break cdecl continue cppdecl cvar default deprecated dynamic enumerator experimental export external far far16 forward generic helper implements index interrupt iocheck local message name near nodefault noreturn nostackframe oldfpccall otherwise overload override pascal platform private protected public published read register reintroduce result safecall saveregisters softfloat specialize static stdcall stored strict unaligned unimplemented varargs virtual write"
+);
+var atoms3 = { "null": true };
+var isOperatorChar3 = /[+\-*&%=<>!?|\/]/;
+function tokenBase6(stream, state) {
+  var ch = stream.next();
+  if (ch == "#" && state.startOfLine) {
+    stream.skipToEnd();
+    return "meta";
+  }
+  if (ch == '"' || ch == "'") {
+    state.tokenize = tokenString4(ch);
+    return state.tokenize(stream, state);
+  }
+  if (ch == "(" && stream.eat("*")) {
+    state.tokenize = tokenComment4;
+    return tokenComment4(stream, state);
+  }
+  if (ch == "{") {
+    state.tokenize = tokenCommentBraces;
+    return tokenCommentBraces(stream, state);
+  }
+  if (/[\[\]\(\),;\:\.]/.test(ch)) {
+    return null;
+  }
+  if (/\d/.test(ch)) {
+    stream.eatWhile(/[\w\.]/);
+    return "number";
+  }
+  if (ch == "/") {
+    if (stream.eat("/")) {
+      stream.skipToEnd();
+      return "comment";
+    }
+  }
+  if (isOperatorChar3.test(ch)) {
+    stream.eatWhile(isOperatorChar3);
+    return "operator";
+  }
+  stream.eatWhile(/[\w\$_]/);
+  var cur = stream.current().toLowerCase();
+  if (keywords7.propertyIsEnumerable(cur)) return "keyword";
+  if (atoms3.propertyIsEnumerable(cur)) return "atom";
+  return "variable";
+}
+function tokenString4(quote) {
+  return function(stream, state) {
+    var escaped = false, next, end = false;
+    while ((next = stream.next()) != null) {
+      if (next == quote && !escaped) {
+        end = true;
+        break;
+      }
+      escaped = !escaped && next == "\\";
+    }
+    if (end || !escaped) state.tokenize = null;
+    return "string";
+  };
+}
+function tokenComment4(stream, state) {
+  var maybeEnd = false, ch;
+  while (ch = stream.next()) {
+    if (ch == ")" && maybeEnd) {
+      state.tokenize = null;
+      break;
+    }
+    maybeEnd = ch == "*";
+  }
+  return "comment";
+}
+function tokenCommentBraces(stream, state) {
+  var ch;
+  while (ch = stream.next()) {
+    if (ch == "}") {
+      state.tokenize = null;
+      break;
+    }
+  }
+  return "comment";
+}
+var pascal = {
+  name: "pascal",
+  startState: function() {
+    return { tokenize: null };
+  },
+  token: function(stream, state) {
+    if (stream.eatSpace()) return null;
+    var style = (state.tokenize || tokenBase6)(stream, state);
+    if (style == "comment" || style == "meta") return style;
+    return style;
+  },
+  languageData: {
+    indentOnInput: /^\s*[{}]$/,
+    commentTokens: { block: { open: "(*", close: "*)" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/powershell.js
+function buildRegexp(patterns, options) {
+  options = options || {};
+  var prefix2 = options.prefix !== void 0 ? options.prefix : "^";
+  var suffix2 = options.suffix !== void 0 ? options.suffix : "\\b";
+  for (var i = 0; i < patterns.length; i++) {
+    if (patterns[i] instanceof RegExp) {
+      patterns[i] = patterns[i].source;
+    } else {
+      patterns[i] = patterns[i].replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    }
+  }
+  return new RegExp(prefix2 + "(" + patterns.join("|") + ")" + suffix2, "i");
+}
+var notCharacterOrDash = "(?=[^A-Za-z\\d\\-_]|$)";
+var varNames = /[\w\-:]/;
+var keywords8 = buildRegexp([
+  /begin|break|catch|continue|data|default|do|dynamicparam/,
+  /else|elseif|end|exit|filter|finally|for|foreach|from|function|if|in/,
+  /param|process|return|switch|throw|trap|try|until|where|while/
+], { suffix: notCharacterOrDash });
+var punctuation = /[\[\]{},;`\\\.]|@[({]/;
+var wordOperators = buildRegexp([
+  "f",
+  /b?not/,
+  /[ic]?split/,
+  "join",
+  /is(not)?/,
+  "as",
+  /[ic]?(eq|ne|[gl][te])/,
+  /[ic]?(not)?(like|match|contains)/,
+  /[ic]?replace/,
+  /b?(and|or|xor)/
+], { prefix: "-" });
+var symbolOperators2 = /[+\-*\/%]=|\+\+|--|\.\.|[+\-*&^%:=!|\/]|<(?!#)|(?!#)>/;
+var operators2 = buildRegexp([wordOperators, symbolOperators2], { suffix: "" });
+var numbers = /^((0x[\da-f]+)|((\d+\.\d+|\d\.|\.\d+|\d+)(e[\+\-]?\d+)?))[ld]?([kmgtp]b)?/i;
+var identifiers3 = /^[A-Za-z\_][A-Za-z\-\_\d]*\b/;
+var symbolBuiltins = /[A-Z]:|%|\?/i;
+var namedBuiltins = buildRegexp([
+  /Add-(Computer|Content|History|Member|PSSnapin|Type)/,
+  /Checkpoint-Computer/,
+  /Clear-(Content|EventLog|History|Host|Item(Property)?|Variable)/,
+  /Compare-Object/,
+  /Complete-Transaction/,
+  /Connect-PSSession/,
+  /ConvertFrom-(Csv|Json|SecureString|StringData)/,
+  /Convert-Path/,
+  /ConvertTo-(Csv|Html|Json|SecureString|Xml)/,
+  /Copy-Item(Property)?/,
+  /Debug-Process/,
+  /Disable-(ComputerRestore|PSBreakpoint|PSRemoting|PSSessionConfiguration)/,
+  /Disconnect-PSSession/,
+  /Enable-(ComputerRestore|PSBreakpoint|PSRemoting|PSSessionConfiguration)/,
+  /(Enter|Exit)-PSSession/,
+  /Export-(Alias|Clixml|Console|Counter|Csv|FormatData|ModuleMember|PSSession)/,
+  /ForEach-Object/,
+  /Format-(Custom|List|Table|Wide)/,
+  new RegExp("Get-(Acl|Alias|AuthenticodeSignature|ChildItem|Command|ComputerRestorePoint|Content|ControlPanelItem|Counter|Credential|Culture|Date|Event|EventLog|EventSubscriber|ExecutionPolicy|FormatData|Help|History|Host|HotFix|Item|ItemProperty|Job|Location|Member|Module|PfxCertificate|Process|PSBreakpoint|PSCallStack|PSDrive|PSProvider|PSSession|PSSessionConfiguration|PSSnapin|Random|Service|TraceSource|Transaction|TypeData|UICulture|Unique|Variable|Verb|WinEvent|WmiObject)"),
+  /Group-Object/,
+  /Import-(Alias|Clixml|Counter|Csv|LocalizedData|Module|PSSession)/,
+  /ImportSystemModules/,
+  /Invoke-(Command|Expression|History|Item|RestMethod|WebRequest|WmiMethod)/,
+  /Join-Path/,
+  /Limit-EventLog/,
+  /Measure-(Command|Object)/,
+  /Move-Item(Property)?/,
+  new RegExp("New-(Alias|Event|EventLog|Item(Property)?|Module|ModuleManifest|Object|PSDrive|PSSession|PSSessionConfigurationFile|PSSessionOption|PSTransportOption|Service|TimeSpan|Variable|WebServiceProxy|WinEvent)"),
+  /Out-(Default|File|GridView|Host|Null|Printer|String)/,
+  /Pause/,
+  /(Pop|Push)-Location/,
+  /Read-Host/,
+  /Receive-(Job|PSSession)/,
+  /Register-(EngineEvent|ObjectEvent|PSSessionConfiguration|WmiEvent)/,
+  /Remove-(Computer|Event|EventLog|Item(Property)?|Job|Module|PSBreakpoint|PSDrive|PSSession|PSSnapin|TypeData|Variable|WmiObject)/,
+  /Rename-(Computer|Item(Property)?)/,
+  /Reset-ComputerMachinePassword/,
+  /Resolve-Path/,
+  /Restart-(Computer|Service)/,
+  /Restore-Computer/,
+  /Resume-(Job|Service)/,
+  /Save-Help/,
+  /Select-(Object|String|Xml)/,
+  /Send-MailMessage/,
+  new RegExp("Set-(Acl|Alias|AuthenticodeSignature|Content|Date|ExecutionPolicy|Item(Property)?|Location|PSBreakpoint|PSDebug|PSSessionConfiguration|Service|StrictMode|TraceSource|Variable|WmiInstance)"),
+  /Show-(Command|ControlPanelItem|EventLog)/,
+  /Sort-Object/,
+  /Split-Path/,
+  /Start-(Job|Process|Service|Sleep|Transaction|Transcript)/,
+  /Stop-(Computer|Job|Process|Service|Transcript)/,
+  /Suspend-(Job|Service)/,
+  /TabExpansion2/,
+  /Tee-Object/,
+  /Test-(ComputerSecureChannel|Connection|ModuleManifest|Path|PSSessionConfigurationFile)/,
+  /Trace-Command/,
+  /Unblock-File/,
+  /Undo-Transaction/,
+  /Unregister-(Event|PSSessionConfiguration)/,
+  /Update-(FormatData|Help|List|TypeData)/,
+  /Use-Transaction/,
+  /Wait-(Event|Job|Process)/,
+  /Where-Object/,
+  /Write-(Debug|Error|EventLog|Host|Output|Progress|Verbose|Warning)/,
+  /cd|help|mkdir|more|oss|prompt/,
+  /ac|asnp|cat|cd|chdir|clc|clear|clhy|cli|clp|cls|clv|cnsn|compare|copy|cp|cpi|cpp|cvpa|dbp|del|diff|dir|dnsn|ebp/,
+  /echo|epal|epcsv|epsn|erase|etsn|exsn|fc|fl|foreach|ft|fw|gal|gbp|gc|gci|gcm|gcs|gdr|ghy|gi|gjb|gl|gm|gmo|gp|gps/,
+  /group|gsn|gsnp|gsv|gu|gv|gwmi|h|history|icm|iex|ihy|ii|ipal|ipcsv|ipmo|ipsn|irm|ise|iwmi|iwr|kill|lp|ls|man|md/,
+  /measure|mi|mount|move|mp|mv|nal|ndr|ni|nmo|npssc|nsn|nv|ogv|oh|popd|ps|pushd|pwd|r|rbp|rcjb|rcsn|rd|rdr|ren|ri/,
+  /rjb|rm|rmdir|rmo|rni|rnp|rp|rsn|rsnp|rujb|rv|rvpa|rwmi|sajb|sal|saps|sasv|sbp|sc|select|set|shcm|si|sl|sleep|sls/,
+  /sort|sp|spjb|spps|spsv|start|sujb|sv|swmi|tee|trcm|type|where|wjb|write/
+], { prefix: "", suffix: "" });
+var variableBuiltins = buildRegexp([
+  /[$?^_]|Args|ConfirmPreference|ConsoleFileName|DebugPreference|Error|ErrorActionPreference|ErrorView|ExecutionContext/,
+  /FormatEnumerationLimit|Home|Host|Input|MaximumAliasCount|MaximumDriveCount|MaximumErrorCount|MaximumFunctionCount/,
+  /MaximumHistoryCount|MaximumVariableCount|MyInvocation|NestedPromptLevel|OutputEncoding|Pid|Profile|ProgressPreference/,
+  /PSBoundParameters|PSCommandPath|PSCulture|PSDefaultParameterValues|PSEmailServer|PSHome|PSScriptRoot|PSSessionApplicationName/,
+  /PSSessionConfigurationName|PSSessionOption|PSUICulture|PSVersionTable|Pwd|ShellId|StackTrace|VerbosePreference/,
+  /WarningPreference|WhatIfPreference/,
+  /Event|EventArgs|EventSubscriber|Sender/,
+  /Matches|Ofs|ForEach|LastExitCode|PSCmdlet|PSItem|PSSenderInfo|This/,
+  /true|false|null/
+], { prefix: "\\$", suffix: "" });
+var builtins5 = buildRegexp([symbolBuiltins, namedBuiltins, variableBuiltins], { suffix: notCharacterOrDash });
+var grammar = {
+  keyword: keywords8,
+  number: numbers,
+  operator: operators2,
+  builtin: builtins5,
+  punctuation,
+  variable: identifiers3
+};
+function tokenBase7(stream, state) {
+  var parent = state.returnStack[state.returnStack.length - 1];
+  if (parent && parent.shouldReturnFrom(state)) {
+    state.tokenize = parent.tokenize;
+    state.returnStack.pop();
+    return state.tokenize(stream, state);
+  }
+  if (stream.eatSpace()) {
+    return null;
+  }
+  if (stream.eat("(")) {
+    state.bracketNesting += 1;
+    return "punctuation";
+  }
+  if (stream.eat(")")) {
+    state.bracketNesting -= 1;
+    return "punctuation";
+  }
+  for (var key in grammar) {
+    if (stream.match(grammar[key])) {
+      return key;
+    }
+  }
+  var ch = stream.next();
+  if (ch === "'") {
+    return tokenSingleQuoteString(stream, state);
+  }
+  if (ch === "$") {
+    return tokenVariable(stream, state);
+  }
+  if (ch === '"') {
+    return tokenDoubleQuoteString(stream, state);
+  }
+  if (ch === "<" && stream.eat("#")) {
+    state.tokenize = tokenComment5;
+    return tokenComment5(stream, state);
+  }
+  if (ch === "#") {
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (ch === "@") {
+    var quoteMatch = stream.eat(/["']/);
+    if (quoteMatch && stream.eol()) {
+      state.tokenize = tokenMultiString;
+      state.startQuote = quoteMatch[0];
+      return tokenMultiString(stream, state);
+    } else if (stream.eol()) {
+      return "error";
+    } else if (stream.peek().match(/[({]/)) {
+      return "punctuation";
+    } else if (stream.peek().match(varNames)) {
+      return tokenVariable(stream, state);
+    }
+  }
+  return "error";
+}
+function tokenSingleQuoteString(stream, state) {
+  var ch;
+  while ((ch = stream.peek()) != null) {
+    stream.next();
+    if (ch === "'" && !stream.eat("'")) {
+      state.tokenize = tokenBase7;
+      return "string";
+    }
+  }
+  return "error";
+}
+function tokenDoubleQuoteString(stream, state) {
+  var ch;
+  while ((ch = stream.peek()) != null) {
+    if (ch === "$") {
+      state.tokenize = tokenStringInterpolation;
+      return "string";
+    }
+    stream.next();
+    if (ch === "`") {
+      stream.next();
+      continue;
+    }
+    if (ch === '"' && !stream.eat('"')) {
+      state.tokenize = tokenBase7;
+      return "string";
+    }
+  }
+  return "error";
+}
+function tokenStringInterpolation(stream, state) {
+  return tokenInterpolation2(stream, state, tokenDoubleQuoteString);
+}
+function tokenMultiStringReturn(stream, state) {
+  state.tokenize = tokenMultiString;
+  state.startQuote = '"';
+  return tokenMultiString(stream, state);
+}
+function tokenHereStringInterpolation(stream, state) {
+  return tokenInterpolation2(stream, state, tokenMultiStringReturn);
+}
+function tokenInterpolation2(stream, state, parentTokenize) {
+  if (stream.match("$(")) {
+    var savedBracketNesting = state.bracketNesting;
+    state.returnStack.push({
+      /*jshint loopfunc:true */
+      shouldReturnFrom: function(state2) {
+        return state2.bracketNesting === savedBracketNesting;
+      },
+      tokenize: parentTokenize
+    });
+    state.tokenize = tokenBase7;
+    state.bracketNesting += 1;
+    return "punctuation";
+  } else {
+    stream.next();
+    state.returnStack.push({
+      shouldReturnFrom: function() {
+        return true;
+      },
+      tokenize: parentTokenize
+    });
+    state.tokenize = tokenVariable;
+    return state.tokenize(stream, state);
+  }
+}
+function tokenComment5(stream, state) {
+  var maybeEnd = false, ch;
+  while ((ch = stream.next()) != null) {
+    if (maybeEnd && ch == ">") {
+      state.tokenize = tokenBase7;
+      break;
+    }
+    maybeEnd = ch === "#";
+  }
+  return "comment";
+}
+function tokenVariable(stream, state) {
+  var ch = stream.peek();
+  if (stream.eat("{")) {
+    state.tokenize = tokenVariableWithBraces;
+    return tokenVariableWithBraces(stream, state);
+  } else if (ch != void 0 && ch.match(varNames)) {
+    stream.eatWhile(varNames);
+    state.tokenize = tokenBase7;
+    return "variable";
+  } else {
+    state.tokenize = tokenBase7;
+    return "error";
+  }
+}
+function tokenVariableWithBraces(stream, state) {
+  var ch;
+  while ((ch = stream.next()) != null) {
+    if (ch === "}") {
+      state.tokenize = tokenBase7;
+      break;
+    }
+  }
+  return "variable";
+}
+function tokenMultiString(stream, state) {
+  var quote = state.startQuote;
+  if (stream.sol() && stream.match(new RegExp(quote + "@"))) {
+    state.tokenize = tokenBase7;
+  } else if (quote === '"') {
+    while (!stream.eol()) {
+      var ch = stream.peek();
+      if (ch === "$") {
+        state.tokenize = tokenHereStringInterpolation;
+        return "string";
+      }
+      stream.next();
+      if (ch === "`") {
+        stream.next();
+      }
+    }
+  } else {
+    stream.skipToEnd();
+  }
+  return "string";
+}
+var powerShell = {
+  name: "powershell",
+  startState: function() {
+    return {
+      returnStack: [],
+      bracketNesting: 0,
+      tokenize: tokenBase7
+    };
+  },
+  token: function(stream, state) {
+    return state.tokenize(stream, state);
+  },
+  languageData: {
+    commentTokens: { line: "#", block: { open: "<#", close: "#>" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/properties.js
+var properties = {
+  name: "properties",
+  token: function(stream, state) {
+    var sol = stream.sol() || state.afterSection;
+    var eol = stream.eol();
+    state.afterSection = false;
+    if (sol) {
+      if (state.nextMultiline) {
+        state.inMultiline = true;
+        state.nextMultiline = false;
+      } else {
+        state.position = "def";
+      }
+    }
+    if (eol && !state.nextMultiline) {
+      state.inMultiline = false;
+      state.position = "def";
+    }
+    if (sol) {
+      while (stream.eatSpace()) {
+      }
+    }
+    var ch = stream.next();
+    if (sol && (ch === "#" || ch === "!" || ch === ";")) {
+      state.position = "comment";
+      stream.skipToEnd();
+      return "comment";
+    } else if (sol && ch === "[") {
+      state.afterSection = true;
+      stream.skipTo("]");
+      stream.eat("]");
+      return "header";
+    } else if (ch === "=" || ch === ":") {
+      state.position = "quote";
+      return null;
+    } else if (ch === "\\" && state.position === "quote") {
+      if (stream.eol()) {
+        state.nextMultiline = true;
+      }
+    }
+    return state.position;
+  },
+  startState: function() {
+    return {
+      position: "def",
+      // Current position, "def", "quote" or "comment"
+      nextMultiline: false,
+      // Is the next line multiline value
+      inMultiline: false,
+      // Is the current line a multiline value
+      afterSection: false
+      // Did we just open a section
+    };
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/python.js
+function wordRegexp3(words8) {
+  return new RegExp("^((" + words8.join(")|(") + "))\\b");
+}
+var wordOperators2 = wordRegexp3(["and", "or", "not", "is"]);
+var commonKeywords = [
+  "as",
+  "assert",
+  "break",
+  "class",
+  "continue",
+  "def",
+  "del",
+  "elif",
+  "else",
+  "except",
+  "finally",
+  "for",
+  "from",
+  "global",
+  "if",
+  "import",
+  "lambda",
+  "pass",
+  "raise",
+  "return",
+  "try",
+  "while",
+  "with",
+  "yield",
+  "in",
+  "False",
+  "True"
+];
+var commonBuiltins = [
+  "abs",
+  "all",
+  "any",
+  "bin",
+  "bool",
+  "bytearray",
+  "callable",
+  "chr",
+  "classmethod",
+  "compile",
+  "complex",
+  "delattr",
+  "dict",
+  "dir",
+  "divmod",
+  "enumerate",
+  "eval",
+  "filter",
+  "float",
+  "format",
+  "frozenset",
+  "getattr",
+  "globals",
+  "hasattr",
+  "hash",
+  "help",
+  "hex",
+  "id",
+  "input",
+  "int",
+  "isinstance",
+  "issubclass",
+  "iter",
+  "len",
+  "list",
+  "locals",
+  "map",
+  "max",
+  "memoryview",
+  "min",
+  "next",
+  "object",
+  "oct",
+  "open",
+  "ord",
+  "pow",
+  "property",
+  "range",
+  "repr",
+  "reversed",
+  "round",
+  "set",
+  "setattr",
+  "slice",
+  "sorted",
+  "staticmethod",
+  "str",
+  "sum",
+  "super",
+  "tuple",
+  "type",
+  "vars",
+  "zip",
+  "__import__",
+  "NotImplemented",
+  "Ellipsis",
+  "__debug__"
+];
+function top(state) {
+  return state.scopes[state.scopes.length - 1];
+}
+function mkPython(parserConf) {
+  var ERRORCLASS2 = "error";
+  var delimiters2 = parserConf.delimiters || parserConf.singleDelimiters || /^[\(\)\[\]\{\}@,:`=;\.\\]/;
+  var operators4 = [
+    parserConf.singleOperators,
+    parserConf.doubleOperators,
+    parserConf.doubleDelimiters,
+    parserConf.tripleDelimiters,
+    parserConf.operators || /^([-+*/%\/&|^]=?|[<>=]+|\/\/=?|\*\*=?|!=|[~!@]|\.\.\.)/
+  ];
+  for (var i = 0; i < operators4.length; i++) if (!operators4[i]) operators4.splice(i--, 1);
+  var hangingIndent = parserConf.hangingIndent;
+  var myKeywords = commonKeywords, myBuiltins = commonBuiltins;
+  if (parserConf.extra_keywords != void 0)
+    myKeywords = myKeywords.concat(parserConf.extra_keywords);
+  if (parserConf.extra_builtins != void 0)
+    myBuiltins = myBuiltins.concat(parserConf.extra_builtins);
+  var py3 = !(parserConf.version && Number(parserConf.version) < 3);
+  if (py3) {
+    var identifiers5 = parserConf.identifiers || /^[_A-Za-z\u00A1-\uFFFF][_A-Za-z0-9\u00A1-\uFFFF]*/;
+    myKeywords = myKeywords.concat(["nonlocal", "None", "aiter", "anext", "async", "await", "breakpoint", "match", "case"]);
+    myBuiltins = myBuiltins.concat(["ascii", "bytes", "exec", "print"]);
+    var stringPrefixes3 = new RegExp(`^(([rbuf]|(br)|(rb)|(fr)|(rf))?('{3}|"{3}|['"]))`, "i");
+  } else {
+    var identifiers5 = parserConf.identifiers || /^[_A-Za-z][_A-Za-z0-9]*/;
+    myKeywords = myKeywords.concat(["exec", "print"]);
+    myBuiltins = myBuiltins.concat([
+      "apply",
+      "basestring",
+      "buffer",
+      "cmp",
+      "coerce",
+      "execfile",
+      "file",
+      "intern",
+      "long",
+      "raw_input",
+      "reduce",
+      "reload",
+      "unichr",
+      "unicode",
+      "xrange",
+      "None"
+    ]);
+    var stringPrefixes3 = new RegExp(`^(([rubf]|(ur)|(br))?('{3}|"{3}|['"]))`, "i");
+  }
+  var keywords14 = wordRegexp3(myKeywords);
+  var builtins7 = wordRegexp3(myBuiltins);
+  function tokenBase13(stream, state) {
+    var sol = stream.sol() && state.lastToken != "\\";
+    if (sol) state.indent = stream.indentation();
+    if (sol && top(state).type == "py") {
+      var scopeOffset = top(state).offset;
+      if (stream.eatSpace()) {
+        var lineOffset = stream.indentation();
+        if (lineOffset > scopeOffset)
+          pushPyScope(stream, state);
+        else if (lineOffset < scopeOffset && dedent2(stream, state) && stream.peek() != "#")
+          state.errorToken = true;
+        return null;
+      } else {
+        var style = tokenBaseInner(stream, state);
+        if (scopeOffset > 0 && dedent2(stream, state))
+          style += " " + ERRORCLASS2;
+        return style;
+      }
+    }
+    return tokenBaseInner(stream, state);
+  }
+  function tokenBaseInner(stream, state, inFormat) {
+    if (stream.eatSpace()) return null;
+    if (!inFormat && stream.match(/^#.*/)) return "comment";
+    if (stream.match(/^[0-9\.]/, false)) {
+      var floatLiteral = false;
+      if (stream.match(/^[\d_]*\.\d+(e[\+\-]?\d+)?/i)) {
+        floatLiteral = true;
+      }
+      if (stream.match(/^[\d_]+\.\d*/)) {
+        floatLiteral = true;
+      }
+      if (stream.match(/^\.\d+/)) {
+        floatLiteral = true;
+      }
+      if (floatLiteral) {
+        stream.eat(/J/i);
+        return "number";
+      }
+      var intLiteral = false;
+      if (stream.match(/^0x[0-9a-f_]+/i)) intLiteral = true;
+      if (stream.match(/^0b[01_]+/i)) intLiteral = true;
+      if (stream.match(/^0o[0-7_]+/i)) intLiteral = true;
+      if (stream.match(/^[1-9][\d_]*(e[\+\-]?[\d_]+)?/)) {
+        stream.eat(/J/i);
+        intLiteral = true;
+      }
+      if (stream.match(/^0(?![\dx])/i)) intLiteral = true;
+      if (intLiteral) {
+        stream.eat(/L/i);
+        return "number";
+      }
+    }
+    if (stream.match(stringPrefixes3)) {
+      var isFmtString = stream.current().toLowerCase().indexOf("f") !== -1;
+      if (!isFmtString) {
+        state.tokenize = tokenStringFactory3(stream.current(), state.tokenize);
+        return state.tokenize(stream, state);
+      } else {
+        state.tokenize = formatStringFactory(stream.current(), state.tokenize);
+        return state.tokenize(stream, state);
+      }
+    }
+    for (var i2 = 0; i2 < operators4.length; i2++)
+      if (stream.match(operators4[i2])) return "operator";
+    if (stream.match(delimiters2)) return "punctuation";
+    if (state.lastToken == "." && stream.match(identifiers5))
+      return "property";
+    if (stream.match(keywords14) || stream.match(wordOperators2))
+      return "keyword";
+    if (stream.match(builtins7))
+      return "builtin";
+    if (stream.match(/^(self|cls)\b/))
+      return "self";
+    if (stream.match(identifiers5)) {
+      if (state.lastToken == "def" || state.lastToken == "class")
+        return "def";
+      return "variable";
+    }
+    stream.next();
+    return inFormat ? null : ERRORCLASS2;
+  }
+  function formatStringFactory(delimiter2, tokenOuter) {
+    while ("rubf".indexOf(delimiter2.charAt(0).toLowerCase()) >= 0)
+      delimiter2 = delimiter2.substr(1);
+    var singleline = delimiter2.length == 1;
+    var OUTCLASS = "string";
+    function tokenNestedExpr(depth) {
+      return function(stream, state) {
+        var inner = tokenBaseInner(stream, state, true);
+        if (inner == "punctuation") {
+          if (stream.current() == "{") {
+            state.tokenize = tokenNestedExpr(depth + 1);
+          } else if (stream.current() == "}") {
+            if (depth > 1) state.tokenize = tokenNestedExpr(depth - 1);
+            else state.tokenize = tokenString8;
+          }
+        }
+        return inner;
+      };
+    }
+    function tokenString8(stream, state) {
+      while (!stream.eol()) {
+        stream.eatWhile(/[^'"\{\}\\]/);
+        if (stream.eat("\\")) {
+          stream.next();
+          if (singleline && stream.eol())
+            return OUTCLASS;
+        } else if (stream.match(delimiter2)) {
+          state.tokenize = tokenOuter;
+          return OUTCLASS;
+        } else if (stream.match("{{")) {
+          return OUTCLASS;
+        } else if (stream.match("{", false)) {
+          state.tokenize = tokenNestedExpr(0);
+          if (stream.current()) return OUTCLASS;
+          else return state.tokenize(stream, state);
+        } else if (stream.match("}}")) {
+          return OUTCLASS;
+        } else if (stream.match("}")) {
+          return ERRORCLASS2;
+        } else {
+          stream.eat(/['"]/);
+        }
+      }
+      if (singleline) {
+        if (parserConf.singleLineStringErrors)
+          return ERRORCLASS2;
+        else
+          state.tokenize = tokenOuter;
+      }
+      return OUTCLASS;
+    }
+    tokenString8.isString = true;
+    return tokenString8;
+  }
+  function tokenStringFactory3(delimiter2, tokenOuter) {
+    while ("rubf".indexOf(delimiter2.charAt(0).toLowerCase()) >= 0)
+      delimiter2 = delimiter2.substr(1);
+    var singleline = delimiter2.length == 1;
+    var OUTCLASS = "string";
+    function tokenString8(stream, state) {
+      while (!stream.eol()) {
+        stream.eatWhile(/[^'"\\]/);
+        if (stream.eat("\\")) {
+          stream.next();
+          if (singleline && stream.eol())
+            return OUTCLASS;
+        } else if (stream.match(delimiter2)) {
+          state.tokenize = tokenOuter;
+          return OUTCLASS;
+        } else {
+          stream.eat(/['"]/);
+        }
+      }
+      if (singleline) {
+        if (parserConf.singleLineStringErrors)
+          return ERRORCLASS2;
+        else
+          state.tokenize = tokenOuter;
+      }
+      return OUTCLASS;
+    }
+    tokenString8.isString = true;
+    return tokenString8;
+  }
+  function pushPyScope(stream, state) {
+    while (top(state).type != "py") state.scopes.pop();
+    state.scopes.push({
+      offset: top(state).offset + stream.indentUnit,
+      type: "py",
+      align: null
+    });
+  }
+  function pushBracketScope(stream, state, type2) {
+    var align = stream.match(/^[\s\[\{\(]*(?:#|$)/, false) ? null : stream.column() + 1;
+    state.scopes.push({
+      offset: state.indent + (hangingIndent || stream.indentUnit),
+      type: type2,
+      align
+    });
+  }
+  function dedent2(stream, state) {
+    var indented = stream.indentation();
+    while (state.scopes.length > 1 && top(state).offset > indented) {
+      if (top(state).type != "py") return true;
+      state.scopes.pop();
+    }
+    return top(state).offset != indented;
+  }
+  function tokenLexer2(stream, state) {
+    if (stream.sol()) {
+      state.beginningOfLine = true;
+      state.dedent = false;
+    }
+    var style = state.tokenize(stream, state);
+    var current = stream.current();
+    if (state.beginningOfLine && current == "@")
+      return stream.match(identifiers5, false) ? "meta" : py3 ? "operator" : ERRORCLASS2;
+    if (/\S/.test(current)) state.beginningOfLine = false;
+    if ((style == "variable" || style == "builtin") && state.lastToken == "meta")
+      style = "meta";
+    if (current == "pass" || current == "return")
+      state.dedent = true;
+    if (current == "lambda") state.lambda = true;
+    if (current == ":" && !state.lambda && top(state).type == "py" && stream.match(/^\s*(?:#|$)/, false))
+      pushPyScope(stream, state);
+    if (current.length == 1 && !/string|comment/.test(style)) {
+      var delimiter_index = "[({".indexOf(current);
+      if (delimiter_index != -1)
+        pushBracketScope(stream, state, "])}".slice(delimiter_index, delimiter_index + 1));
+      delimiter_index = "])}".indexOf(current);
+      if (delimiter_index != -1) {
+        if (top(state).type == current) state.indent = state.scopes.pop().offset - (hangingIndent || stream.indentUnit);
+        else return ERRORCLASS2;
+      }
+    }
+    if (state.dedent && stream.eol() && top(state).type == "py" && state.scopes.length > 1)
+      state.scopes.pop();
+    return style;
+  }
+  return {
+    name: "python",
+    startState: function() {
+      return {
+        tokenize: tokenBase13,
+        scopes: [{ offset: 0, type: "py", align: null }],
+        indent: 0,
+        lastToken: null,
+        lambda: false,
+        dedent: 0
+      };
+    },
+    token: function(stream, state) {
+      var addErr = state.errorToken;
+      if (addErr) state.errorToken = false;
+      var style = tokenLexer2(stream, state);
+      if (style && style != "comment")
+        state.lastToken = style == "keyword" || style == "punctuation" ? stream.current() : style;
+      if (style == "punctuation") style = null;
+      if (stream.eol() && state.lambda)
+        state.lambda = false;
+      return addErr ? ERRORCLASS2 : style;
+    },
+    indent: function(state, textAfter, cx) {
+      if (state.tokenize != tokenBase13)
+        return state.tokenize.isString ? null : 0;
+      var scope = top(state);
+      var closing3 = scope.type == textAfter.charAt(0) || scope.type == "py" && !state.dedent && /^(else:|elif |except |finally:)/.test(textAfter);
+      if (scope.align != null)
+        return scope.align - (closing3 ? 1 : 0);
+      else
+        return scope.offset - (closing3 ? hangingIndent || cx.unit : 0);
+    },
+    languageData: {
+      autocomplete: commonKeywords.concat(commonBuiltins).concat(["exec", "print"]),
+      indentOnInput: /^\s*([\}\]\)]|else:|elif |except |finally:)$/,
+      commentTokens: { line: "#" },
+      closeBrackets: { brackets: ["(", "[", "{", "'", '"', "'''", '"""'] }
+    }
+  };
+}
+var words5 = function(str) {
+  return str.split(" ");
+};
+var python = mkPython({});
+var cython = mkPython({
+  extra_keywords: words5("by cdef cimport cpdef ctypedef enum except extern gil include nogil property public readonly struct union DEF IF ELIF ELSE")
+});
+
+// node_modules/@codemirror/legacy-modes/mode/r.js
+function wordObj(words8) {
+  var res = {};
+  for (var i = 0; i < words8.length; ++i) res[words8[i]] = true;
+  return res;
+}
+var commonAtoms = ["NULL", "NA", "Inf", "NaN", "NA_integer_", "NA_real_", "NA_complex_", "NA_character_", "TRUE", "FALSE"];
+var commonBuiltins2 = ["list", "quote", "bquote", "eval", "return", "call", "parse", "deparse"];
+var commonKeywords2 = ["if", "else", "repeat", "while", "function", "for", "in", "next", "break"];
+var commonBlockKeywords = ["if", "else", "repeat", "while", "function", "for"];
+var atoms4 = wordObj(commonAtoms);
+var builtins6 = wordObj(commonBuiltins2);
+var keywords9 = wordObj(commonKeywords2);
+var blockkeywords = wordObj(commonBlockKeywords);
+var opChars = /[+\-*\/^<>=!&|~$:]/;
+var curPunc2;
+function tokenBase8(stream, state) {
+  curPunc2 = null;
+  var ch = stream.next();
+  if (ch == "#") {
+    stream.skipToEnd();
+    return "comment";
+  } else if (ch == "0" && stream.eat("x")) {
+    stream.eatWhile(/[\da-f]/i);
+    return "number";
+  } else if (ch == "." && stream.eat(/\d/)) {
+    stream.match(/\d*(?:e[+\-]?\d+)?/);
+    return "number";
+  } else if (/\d/.test(ch)) {
+    stream.match(/\d*(?:\.\d+)?(?:e[+\-]\d+)?L?/);
+    return "number";
+  } else if (ch == "'" || ch == '"') {
+    state.tokenize = tokenString5(ch);
+    return "string";
+  } else if (ch == "`") {
+    stream.match(/[^`]+`/);
+    return "string.special";
+  } else if (ch == "." && stream.match(/.(?:[.]|\d+)/)) {
+    return "keyword";
+  } else if (/[a-zA-Z\.]/.test(ch)) {
+    stream.eatWhile(/[\w\.]/);
+    var word = stream.current();
+    if (atoms4.propertyIsEnumerable(word)) return "atom";
+    if (keywords9.propertyIsEnumerable(word)) {
+      if (blockkeywords.propertyIsEnumerable(word) && !stream.match(/\s*if(\s+|$)/, false))
+        curPunc2 = "block";
+      return "keyword";
+    }
+    if (builtins6.propertyIsEnumerable(word)) return "builtin";
+    return "variable";
+  } else if (ch == "%") {
+    if (stream.skipTo("%")) stream.next();
+    return "variableName.special";
+  } else if (ch == "<" && stream.eat("-") || ch == "<" && stream.match("<-") || ch == "-" && stream.match(/>>?/)) {
+    return "operator";
+  } else if (ch == "=" && state.ctx.argList) {
+    return "operator";
+  } else if (opChars.test(ch)) {
+    if (ch == "$") return "operator";
+    stream.eatWhile(opChars);
+    return "operator";
+  } else if (/[\(\){}\[\];]/.test(ch)) {
+    curPunc2 = ch;
+    if (ch == ";") return "punctuation";
+    return null;
+  } else {
+    return null;
+  }
+}
+function tokenString5(quote) {
+  return function(stream, state) {
+    if (stream.eat("\\")) {
+      var ch = stream.next();
+      if (ch == "x") stream.match(/^[a-f0-9]{2}/i);
+      else if ((ch == "u" || ch == "U") && stream.eat("{") && stream.skipTo("}")) stream.next();
+      else if (ch == "u") stream.match(/^[a-f0-9]{4}/i);
+      else if (ch == "U") stream.match(/^[a-f0-9]{8}/i);
+      else if (/[0-7]/.test(ch)) stream.match(/^[0-7]{1,2}/);
+      return "string.special";
+    } else {
+      var next;
+      while ((next = stream.next()) != null) {
+        if (next == quote) {
+          state.tokenize = tokenBase8;
+          break;
+        }
+        if (next == "\\") {
+          stream.backUp(1);
+          break;
+        }
+      }
+      return "string";
+    }
+  };
+}
+var ALIGN_YES = 1;
+var ALIGN_NO = 2;
+var BRACELESS = 4;
+function push(state, type2, stream) {
+  state.ctx = {
+    type: type2,
+    indent: state.indent,
+    flags: 0,
+    column: stream.column(),
+    prev: state.ctx
+  };
+}
+function setFlag(state, flag) {
+  var ctx = state.ctx;
+  state.ctx = {
+    type: ctx.type,
+    indent: ctx.indent,
+    flags: ctx.flags | flag,
+    column: ctx.column,
+    prev: ctx.prev
+  };
+}
+function pop(state) {
+  state.indent = state.ctx.indent;
+  state.ctx = state.ctx.prev;
+}
+var r = {
+  name: "r",
+  startState: function(indentUnit) {
+    return {
+      tokenize: tokenBase8,
+      ctx: {
+        type: "top",
+        indent: -indentUnit,
+        flags: ALIGN_NO
+      },
+      indent: 0,
+      afterIdent: false
+    };
+  },
+  token: function(stream, state) {
+    if (stream.sol()) {
+      if ((state.ctx.flags & 3) == 0) state.ctx.flags |= ALIGN_NO;
+      if (state.ctx.flags & BRACELESS) pop(state);
+      state.indent = stream.indentation();
+    }
+    if (stream.eatSpace()) return null;
+    var style = state.tokenize(stream, state);
+    if (style != "comment" && (state.ctx.flags & ALIGN_NO) == 0) setFlag(state, ALIGN_YES);
+    if ((curPunc2 == ";" || curPunc2 == "{" || curPunc2 == "}") && state.ctx.type == "block") pop(state);
+    if (curPunc2 == "{") push(state, "}", stream);
+    else if (curPunc2 == "(") {
+      push(state, ")", stream);
+      if (state.afterIdent) state.ctx.argList = true;
+    } else if (curPunc2 == "[") push(state, "]", stream);
+    else if (curPunc2 == "block") push(state, "block", stream);
+    else if (curPunc2 == state.ctx.type) pop(state);
+    else if (state.ctx.type == "block" && style != "comment") setFlag(state, BRACELESS);
+    state.afterIdent = style == "variable" || style == "keyword";
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    if (state.tokenize != tokenBase8) return 0;
+    var firstChar = textAfter && textAfter.charAt(0), ctx = state.ctx, closing3 = firstChar == ctx.type;
+    if (ctx.flags & BRACELESS) ctx = ctx.prev;
+    if (ctx.type == "block") return ctx.indent + (firstChar == "{" ? 0 : cx.unit);
+    else if (ctx.flags & ALIGN_YES) return ctx.column + (closing3 ? 0 : 1);
+    else return ctx.indent + (closing3 ? 0 : cx.unit);
+  },
+  languageData: {
+    wordChars: ".",
+    commentTokens: { line: "#" },
+    autocomplete: commonAtoms.concat(commonBuiltins2, commonKeywords2)
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/ruby.js
+function wordObj2(words8) {
+  var o = {};
+  for (var i = 0, e = words8.length; i < e; ++i) o[words8[i]] = true;
+  return o;
+}
+var keywordList = [
+  "alias",
+  "and",
+  "BEGIN",
+  "begin",
+  "break",
+  "case",
+  "class",
+  "def",
+  "defined?",
+  "do",
+  "else",
+  "elsif",
+  "END",
+  "end",
+  "ensure",
+  "false",
+  "for",
+  "if",
+  "in",
+  "module",
+  "next",
+  "not",
+  "or",
+  "redo",
+  "rescue",
+  "retry",
+  "return",
+  "self",
+  "super",
+  "then",
+  "true",
+  "undef",
+  "unless",
+  "until",
+  "when",
+  "while",
+  "yield",
+  "nil",
+  "raise",
+  "throw",
+  "catch",
+  "fail",
+  "loop",
+  "callcc",
+  "caller",
+  "lambda",
+  "proc",
+  "public",
+  "protected",
+  "private",
+  "require",
+  "load",
+  "require_relative",
+  "extend",
+  "autoload",
+  "__END__",
+  "__FILE__",
+  "__LINE__",
+  "__dir__"
+];
+var keywords10 = wordObj2(keywordList);
+var indentWords = wordObj2([
+  "def",
+  "class",
+  "case",
+  "for",
+  "while",
+  "until",
+  "module",
+  "catch",
+  "loop",
+  "proc",
+  "begin"
+]);
+var dedentWords = wordObj2(["end", "until"]);
+var opening = { "[": "]", "{": "}", "(": ")" };
+var closing = { "]": "[", "}": "{", ")": "(" };
+var curPunc3;
+function chain(newtok, stream, state) {
+  state.tokenize.push(newtok);
+  return newtok(stream, state);
+}
+function tokenBase9(stream, state) {
+  if (stream.sol() && stream.match("=begin") && stream.eol()) {
+    state.tokenize.push(readBlockComment);
+    return "comment";
+  }
+  if (stream.eatSpace()) return null;
+  var ch = stream.next(), m;
+  if (ch == "`" || ch == "'" || ch == '"') {
+    return chain(readQuoted(ch, "string", ch == '"' || ch == "`"), stream, state);
+  } else if (ch == "/") {
+    if (regexpAhead(stream))
+      return chain(readQuoted(ch, "string.special", true), stream, state);
+    else
+      return "operator";
+  } else if (ch == "%") {
+    var style = "string", embed = true;
+    if (stream.eat("s")) style = "atom";
+    else if (stream.eat(/[WQ]/)) style = "string";
+    else if (stream.eat(/[r]/)) style = "string.special";
+    else if (stream.eat(/[wxq]/)) {
+      style = "string";
+      embed = false;
+    }
+    var delim = stream.eat(/[^\w\s=]/);
+    if (!delim) return "operator";
+    if (opening.propertyIsEnumerable(delim)) delim = opening[delim];
+    return chain(readQuoted(delim, style, embed, true), stream, state);
+  } else if (ch == "#") {
+    stream.skipToEnd();
+    return "comment";
+  } else if (ch == "<" && (m = stream.match(/^<([-~])[\`\"\']?([a-zA-Z_?]\w*)[\`\"\']?(?:;|$)/))) {
+    return chain(readHereDoc(m[2], m[1]), stream, state);
+  } else if (ch == "0") {
+    if (stream.eat("x")) stream.eatWhile(/[\da-fA-F]/);
+    else if (stream.eat("b")) stream.eatWhile(/[01]/);
+    else stream.eatWhile(/[0-7]/);
+    return "number";
+  } else if (/\d/.test(ch)) {
+    stream.match(/^[\d_]*(?:\.[\d_]+)?(?:[eE][+\-]?[\d_]+)?/);
+    return "number";
+  } else if (ch == "?") {
+    while (stream.match(/^\\[CM]-/)) {
+    }
+    if (stream.eat("\\")) stream.eatWhile(/\w/);
+    else stream.next();
+    return "string";
+  } else if (ch == ":") {
+    if (stream.eat("'")) return chain(readQuoted("'", "atom", false), stream, state);
+    if (stream.eat('"')) return chain(readQuoted('"', "atom", true), stream, state);
+    if (stream.eat(/[\<\>]/)) {
+      stream.eat(/[\<\>]/);
+      return "atom";
+    }
+    if (stream.eat(/[\+\-\*\/\&\|\:\!]/)) {
+      return "atom";
+    }
+    if (stream.eat(/[a-zA-Z$@_\xa1-\uffff]/)) {
+      stream.eatWhile(/[\w$\xa1-\uffff]/);
+      stream.eat(/[\?\!\=]/);
+      return "atom";
+    }
+    return "operator";
+  } else if (ch == "@" && stream.match(/^@?[a-zA-Z_\xa1-\uffff]/)) {
+    stream.eat("@");
+    stream.eatWhile(/[\w\xa1-\uffff]/);
+    return "propertyName";
+  } else if (ch == "$") {
+    if (stream.eat(/[a-zA-Z_]/)) {
+      stream.eatWhile(/[\w]/);
+    } else if (stream.eat(/\d/)) {
+      stream.eat(/\d/);
+    } else {
+      stream.next();
+    }
+    return "variableName.special";
+  } else if (/[a-zA-Z_\xa1-\uffff]/.test(ch)) {
+    stream.eatWhile(/[\w\xa1-\uffff]/);
+    stream.eat(/[\?\!]/);
+    if (stream.eat(":")) return "atom";
+    return "variable";
+  } else if (ch == "|" && (state.varList || state.lastTok == "{" || state.lastTok == "do")) {
+    curPunc3 = "|";
+    return null;
+  } else if (/[\(\)\[\]{}\\;]/.test(ch)) {
+    curPunc3 = ch;
+    return null;
+  } else if (ch == "-" && stream.eat(">")) {
+    return "operator";
+  } else if (/[=+\-\/*:\.^%<>~|]/.test(ch)) {
+    var more = stream.eatWhile(/[=+\-\/*:\.^%<>~|]/);
+    if (ch == "." && !more) curPunc3 = ".";
+    return "operator";
+  } else {
+    return null;
+  }
+}
+function regexpAhead(stream) {
+  var start = stream.pos, depth = 0, next, found = false, escaped = false;
+  while ((next = stream.next()) != null) {
+    if (!escaped) {
+      if ("[{(".indexOf(next) > -1) {
+        depth++;
+      } else if ("]})".indexOf(next) > -1) {
+        depth--;
+        if (depth < 0) break;
+      } else if (next == "/" && depth == 0) {
+        found = true;
+        break;
+      }
+      escaped = next == "\\";
+    } else {
+      escaped = false;
+    }
+  }
+  stream.backUp(stream.pos - start);
+  return found;
+}
+function tokenBaseUntilBrace(depth) {
+  if (!depth) depth = 1;
+  return function(stream, state) {
+    if (stream.peek() == "}") {
+      if (depth == 1) {
+        state.tokenize.pop();
+        return state.tokenize[state.tokenize.length - 1](stream, state);
+      } else {
+        state.tokenize[state.tokenize.length - 1] = tokenBaseUntilBrace(depth - 1);
+      }
+    } else if (stream.peek() == "{") {
+      state.tokenize[state.tokenize.length - 1] = tokenBaseUntilBrace(depth + 1);
+    }
+    return tokenBase9(stream, state);
+  };
+}
+function tokenBaseOnce() {
+  var alreadyCalled = false;
+  return function(stream, state) {
+    if (alreadyCalled) {
+      state.tokenize.pop();
+      return state.tokenize[state.tokenize.length - 1](stream, state);
+    }
+    alreadyCalled = true;
+    return tokenBase9(stream, state);
+  };
+}
+function readQuoted(quote, style, embed, unescaped) {
+  return function(stream, state) {
+    var escaped = false, ch;
+    if (state.context.type === "read-quoted-paused") {
+      state.context = state.context.prev;
+      stream.eat("}");
+    }
+    while ((ch = stream.next()) != null) {
+      if (ch == quote && (unescaped || !escaped)) {
+        state.tokenize.pop();
+        break;
+      }
+      if (embed && ch == "#" && !escaped) {
+        if (stream.eat("{")) {
+          if (quote == "}") {
+            state.context = { prev: state.context, type: "read-quoted-paused" };
+          }
+          state.tokenize.push(tokenBaseUntilBrace());
+          break;
+        } else if (/[@\$]/.test(stream.peek())) {
+          state.tokenize.push(tokenBaseOnce());
+          break;
+        }
+      }
+      escaped = !escaped && ch == "\\";
+    }
+    return style;
+  };
+}
+function readHereDoc(phrase, mayIndent) {
+  return function(stream, state) {
+    if (mayIndent) stream.eatSpace();
+    if (stream.match(phrase)) state.tokenize.pop();
+    else stream.skipToEnd();
+    return "string";
+  };
+}
+function readBlockComment(stream, state) {
+  if (stream.sol() && stream.match("=end") && stream.eol())
+    state.tokenize.pop();
+  stream.skipToEnd();
+  return "comment";
+}
+var ruby = {
+  name: "ruby",
+  startState: function(indentUnit) {
+    return {
+      tokenize: [tokenBase9],
+      indented: 0,
+      context: { type: "top", indented: -indentUnit },
+      continuedLine: false,
+      lastTok: null,
+      varList: false
+    };
+  },
+  token: function(stream, state) {
+    curPunc3 = null;
+    if (stream.sol()) state.indented = stream.indentation();
+    var style = state.tokenize[state.tokenize.length - 1](stream, state), kwtype;
+    var thisTok = curPunc3;
+    if (style == "variable") {
+      var word = stream.current();
+      style = state.lastTok == "." ? "property" : keywords10.propertyIsEnumerable(stream.current()) ? "keyword" : /^[A-Z]/.test(word) ? "tag" : state.lastTok == "def" || state.lastTok == "class" || state.varList ? "def" : "variable";
+      if (style == "keyword") {
+        thisTok = word;
+        if (indentWords.propertyIsEnumerable(word)) kwtype = "indent";
+        else if (dedentWords.propertyIsEnumerable(word)) kwtype = "dedent";
+        else if ((word == "if" || word == "unless") && stream.column() == stream.indentation())
+          kwtype = "indent";
+        else if (word == "do" && state.context.indented < state.indented)
+          kwtype = "indent";
+      }
+    }
+    if (curPunc3 || style && style != "comment") state.lastTok = thisTok;
+    if (curPunc3 == "|") state.varList = !state.varList;
+    if (kwtype == "indent" || /[\(\[\{]/.test(curPunc3))
+      state.context = { prev: state.context, type: curPunc3 || style, indented: state.indented };
+    else if ((kwtype == "dedent" || /[\)\]\}]/.test(curPunc3)) && state.context.prev)
+      state.context = state.context.prev;
+    if (stream.eol())
+      state.continuedLine = curPunc3 == "\\" || style == "operator";
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    if (state.tokenize[state.tokenize.length - 1] != tokenBase9) return null;
+    var firstChar = textAfter && textAfter.charAt(0);
+    var ct = state.context;
+    var closed = ct.type == closing[firstChar] || ct.type == "keyword" && /^(?:end|until|else|elsif|when|rescue)\b/.test(textAfter);
+    return ct.indented + (closed ? 0 : cx.unit) + (state.continuedLine ? cx.unit : 0);
+  },
+  languageData: {
+    indentOnInput: /^\s*(?:end|rescue|elsif|else|\})$/,
+    commentTokens: { line: "#" },
+    autocomplete: keywordList
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/simple-mode.js
+function simpleMode(states) {
+  ensureState(states, "start");
+  var states_ = {}, meta = states.languageData || {}, hasIndentation = false;
+  for (var state in states) if (state != meta && states.hasOwnProperty(state)) {
+    var list = states_[state] = [], orig = states[state];
+    for (var i = 0; i < orig.length; i++) {
+      var data = orig[i];
+      list.push(new Rule(data, states));
+      if (data.indent || data.dedent) hasIndentation = true;
+    }
+  }
+  return {
+    name: meta.name,
+    startState: function() {
+      return { state: "start", pending: null, indent: hasIndentation ? [] : null };
+    },
+    copyState: function(state2) {
+      var s = { state: state2.state, pending: state2.pending, indent: state2.indent && state2.indent.slice(0) };
+      if (state2.stack)
+        s.stack = state2.stack.slice(0);
+      return s;
+    },
+    token: tokenFunction(states_),
+    indent: indentFunction(states_, meta),
+    mergeTokens: meta.mergeTokens,
+    languageData: meta
+  };
+}
+function ensureState(states, name) {
+  if (!states.hasOwnProperty(name))
+    throw new Error("Undefined state " + name + " in simple mode");
+}
+function toRegex(val, caret) {
+  if (!val) return /(?:)/;
+  var flags = "";
+  if (val instanceof RegExp) {
+    if (val.ignoreCase) flags = "i";
+    val = val.source;
+  } else {
+    val = String(val);
+  }
+  return new RegExp((caret === false ? "" : "^") + "(?:" + val + ")", flags);
+}
+function asToken(val) {
+  if (!val) return null;
+  if (val.apply) return val;
+  if (typeof val == "string") return val.replace(/\./g, " ");
+  var result = [];
+  for (var i = 0; i < val.length; i++)
+    result.push(val[i] && val[i].replace(/\./g, " "));
+  return result;
+}
+function Rule(data, states) {
+  if (data.next || data.push) ensureState(states, data.next || data.push);
+  this.regex = toRegex(data.regex);
+  this.token = asToken(data.token);
+  this.data = data;
+}
+function tokenFunction(states) {
+  return function(stream, state) {
+    if (state.pending) {
+      var pend = state.pending.shift();
+      if (state.pending.length == 0) state.pending = null;
+      stream.pos += pend.text.length;
+      return pend.token;
+    }
+    var curState = states[state.state];
+    for (var i = 0; i < curState.length; i++) {
+      var rule = curState[i];
+      var matches = (!rule.data.sol || stream.sol()) && stream.match(rule.regex);
+      if (matches) {
+        if (rule.data.next) {
+          state.state = rule.data.next;
+        } else if (rule.data.push) {
+          (state.stack || (state.stack = [])).push(state.state);
+          state.state = rule.data.push;
+        } else if (rule.data.pop && state.stack && state.stack.length) {
+          state.state = state.stack.pop();
+        }
+        if (rule.data.indent)
+          state.indent.push(stream.indentation() + stream.indentUnit);
+        if (rule.data.dedent)
+          state.indent.pop();
+        var token = rule.token;
+        if (token && token.apply) token = token(matches);
+        if (matches.length > 2 && rule.token && typeof rule.token != "string") {
+          state.pending = [];
+          for (var j = 2; j < matches.length; j++)
+            if (matches[j])
+              state.pending.push({ text: matches[j], token: rule.token[j - 1] });
+          stream.backUp(matches[0].length - (matches[1] ? matches[1].length : 0));
+          return token[0];
+        } else if (token && token.join) {
+          return token[0];
+        } else {
+          return token;
+        }
+      }
+    }
+    stream.next();
+    return null;
+  };
+}
+function indentFunction(states, meta) {
+  return function(state, textAfter) {
+    if (state.indent == null || meta.dontIndentStates && meta.dontIndentStates.indexOf(state.state) > -1)
+      return null;
+    var pos = state.indent.length - 1, rules = states[state.state];
+    scan: for (; ; ) {
+      for (var i = 0; i < rules.length; i++) {
+        var rule = rules[i];
+        if (rule.data.dedent && rule.data.dedentIfLineStart !== false) {
+          var m = rule.regex.exec(textAfter);
+          if (m && m[0]) {
+            pos--;
+            if (rule.next || rule.push) rules = states[rule.next || rule.push];
+            textAfter = textAfter.slice(m[0].length);
+            continue scan;
+          }
+        }
+      }
+      break;
+    }
+    return pos < 0 ? 0 : state.indent[pos];
+  };
+}
+
+// node_modules/@codemirror/legacy-modes/mode/rust.js
+var rust = simpleMode({
+  start: [
+    // string and byte string
+    { regex: /b?"/, token: "string", next: "string" },
+    // raw string and raw byte string
+    { regex: /b?r"/, token: "string", next: "string_raw" },
+    { regex: /b?r#+"/, token: "string", next: "string_raw_hash" },
+    // character
+    { regex: /'(?:[^'\\]|\\(?:[nrt0'"]|x[\da-fA-F]{2}|u\{[\da-fA-F]{6}\}))'/, token: "string.special" },
+    // byte
+    { regex: /b'(?:[^']|\\(?:['\\nrt0]|x[\da-fA-F]{2}))'/, token: "string.special" },
+    {
+      regex: /(?:(?:[0-9][0-9_]*)(?:(?:[Ee][+-]?[0-9_]+)|\.[0-9_]+(?:[Ee][+-]?[0-9_]+)?)(?:f32|f64)?)|(?:0(?:b[01_]+|(?:o[0-7_]+)|(?:x[0-9a-fA-F_]+))|(?:[0-9][0-9_]*))(?:u8|u16|u32|u64|i8|i16|i32|i64|isize|usize)?/,
+      token: "number"
+    },
+    { regex: /(let(?:\s+mut)?|fn|enum|mod|struct|type|union)(\s+)([a-zA-Z_][a-zA-Z0-9_]*)/, token: ["keyword", null, "def"] },
+    { regex: /(?:abstract|alignof|as|async|await|box|break|continue|const|crate|do|dyn|else|enum|extern|fn|for|final|if|impl|in|loop|macro|match|mod|move|offsetof|override|priv|proc|pub|pure|ref|return|self|sizeof|static|struct|super|trait|type|typeof|union|unsafe|unsized|use|virtual|where|while|yield)\b/, token: "keyword" },
+    { regex: /\b(?:Self|isize|usize|char|bool|u8|u16|u32|u64|f16|f32|f64|i8|i16|i32|i64|str|Option)\b/, token: "atom" },
+    { regex: /\b(?:true|false|Some|None|Ok|Err)\b/, token: "builtin" },
+    {
+      regex: /\b(fn)(\s+)([a-zA-Z_][a-zA-Z0-9_]*)/,
+      token: ["keyword", null, "def"]
+    },
+    { regex: /#!?\[.*\]/, token: "meta" },
+    { regex: /\/\/.*/, token: "comment" },
+    { regex: /\/\*/, token: "comment", next: "comment" },
+    { regex: /[-+\/*=<>!]+/, token: "operator" },
+    { regex: /[a-zA-Z_]\w*!/, token: "macroName" },
+    { regex: /[a-zA-Z_]\w*/, token: "variable" },
+    { regex: /[\{\[\(]/, indent: true },
+    { regex: /[\}\]\)]/, dedent: true }
+  ],
+  string: [
+    { regex: /"/, token: "string", next: "start" },
+    { regex: /(?:[^\\"]|\\(?:.|$))*/, token: "string" }
+  ],
+  string_raw: [
+    { regex: /"/, token: "string", next: "start" },
+    { regex: /[^"]*/, token: "string" }
+  ],
+  string_raw_hash: [
+    { regex: /"#+/, token: "string", next: "start" },
+    { regex: /(?:[^"]|"(?!#))*/, token: "string" }
+  ],
+  comment: [
+    { regex: /.*?\*\//, token: "comment", next: "start" },
+    { regex: /.*/, token: "comment" }
+  ],
+  languageData: {
+    name: "rust",
+    dontIndentStates: ["comment"],
+    indentOnInput: /^\s*\}$/,
+    commentTokens: { line: "//", block: { open: "/*", close: "*/" } }
+  }
+});
+
+// node_modules/@codemirror/legacy-modes/mode/sas.js
+var words6 = {};
+var isDoubleOperatorSym = {
+  eq: "operator",
+  lt: "operator",
+  le: "operator",
+  gt: "operator",
+  ge: "operator",
+  "in": "operator",
+  ne: "operator",
+  or: "operator"
+};
+var isDoubleOperatorChar = /(<=|>=|!=|<>)/;
+var isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
+function define(style, string2, context) {
+  if (context) {
+    var split = string2.split(" ");
+    for (var i = 0; i < split.length; i++) {
+      words6[split[i]] = { style, state: context };
+    }
+  }
+}
+define("def", "stack pgm view source debug nesting nolist", ["inDataStep"]);
+define("def", "if while until for do do; end end; then else cancel", ["inDataStep"]);
+define("def", "label format _n_ _error_", ["inDataStep"]);
+define("def", "ALTER BUFNO BUFSIZE CNTLLEV COMPRESS DLDMGACTION ENCRYPT ENCRYPTKEY EXTENDOBSCOUNTER GENMAX GENNUM INDEX LABEL OBSBUF OUTREP PW PWREQ READ REPEMPTY REPLACE REUSE ROLE SORTEDBY SPILL TOBSNO TYPE WRITE FILECLOSE FIRSTOBS IN OBS POINTOBS WHERE WHEREUP IDXNAME IDXWHERE DROP KEEP RENAME", ["inDataStep"]);
+define("def", "filevar finfo finv fipname fipnamel fipstate first firstobs floor", ["inDataStep"]);
+define("def", "varfmt varinfmt varlabel varlen varname varnum varray varrayx vartype verify vformat vformatd vformatdx vformatn vformatnx vformatw vformatwx vformatx vinarray vinarrayx vinformat vinformatd vinformatdx vinformatn vinformatnx vinformatw vinformatwx vinformatx vlabel vlabelx vlength vlengthx vname vnamex vnferr vtype vtypex weekday", ["inDataStep"]);
+define("def", "zipfips zipname zipnamel zipstate", ["inDataStep"]);
+define("def", "put putc putn", ["inDataStep"]);
+define("builtin", "data run", ["inDataStep"]);
+define("def", "data", ["inProc"]);
+define("def", "%if %end %end; %else %else; %do %do; %then", ["inMacro"]);
+define("builtin", "proc run; quit; libname filename %macro %mend option options", ["ALL"]);
+define("def", "footnote title libname ods", ["ALL"]);
+define("def", "%let %put %global %sysfunc %eval ", ["ALL"]);
+define("variable", "&sysbuffr &syscc &syscharwidth &syscmd &sysdate &sysdate9 &sysday &sysdevic &sysdmg &sysdsn &sysencoding &sysenv &syserr &syserrortext &sysfilrc &syshostname &sysindex &sysinfo &sysjobid &syslast &syslckrc &syslibrc &syslogapplname &sysmacroname &sysmenv &sysmsg &sysncpu &sysodspath &sysparm &syspbuff &sysprocessid &sysprocessname &sysprocname &sysrc &sysscp &sysscpl &sysscpl &syssite &sysstartid &sysstartname &systcpiphostname &systime &sysuserid &sysver &sysvlong &sysvlong4 &syswarningtext", ["ALL"]);
+define("def", "source2 nosource2 page pageno pagesize", ["ALL"]);
+define("def", "_all_ _character_ _cmd_ _freq_ _i_ _infile_ _last_ _msg_ _null_ _numeric_ _temporary_ _type_ abort abs addr adjrsq airy alpha alter altlog altprint and arcos array arsin as atan attrc attrib attrn authserver autoexec awscontrol awsdef awsmenu awsmenumerge awstitle backward band base betainv between blocksize blshift bnot bor brshift bufno bufsize bxor by byerr byline byte calculated call cards cards4 catcache cbufno cdf ceil center cexist change chisq cinv class cleanup close cnonct cntllev coalesce codegen col collate collin column comamid comaux1 comaux2 comdef compbl compound compress config continue convert cos cosh cpuid create cross crosstab css curobs cv daccdb daccdbsl daccsl daccsyd dacctab dairy datalines datalines4 datejul datepart datetime day dbcslang dbcstype dclose ddfm ddm delete delimiter depdb depdbsl depsl depsyd deptab dequote descending descript design= device dflang dhms dif digamma dim dinfo display distinct dkricond dkrocond dlm dnum do dopen doptname doptnum dread drop dropnote dsname dsnferr echo else emaildlg emailid emailpw emailserver emailsys encrypt end endsas engine eof eov erf erfc error errorcheck errors exist exp fappend fclose fcol fdelete feedback fetch fetchobs fexist fget file fileclose fileexist filefmt filename fileref  fmterr fmtsearch fnonct fnote font fontalias  fopen foptname foptnum force formatted formchar formdelim formdlim forward fpoint fpos fput fread frewind frlen from fsep fuzz fwrite gaminv gamma getoption getvarc getvarn go goto group gwindow hbar hbound helpenv helploc hms honorappearance hosthelp hostprint hour hpct html hvar ibessel ibr id if index indexc indexw initcmd initstmt inner input inputc inputn inr insert int intck intnx into intrr invaliddata irr is jbessel join juldate keep kentb kurtosis label lag last lbound leave left length levels lgamma lib  library libref line linesize link list log log10 log2 logpdf logpmf logsdf lostcard lowcase lrecl ls macro macrogen maps mautosource max maxdec maxr mdy mean measures median memtype merge merror min minute missing missover mlogic mod mode model modify month mopen mort mprint mrecall msglevel msymtabmax mvarsize myy n nest netpv new news nmiss no nobatch nobs nocaps nocardimage nocenter nocharcode nocmdmac nocol nocum nodate nodbcs nodetails nodmr nodms nodmsbatch nodup nodupkey noduplicates noechoauto noequals noerrorabend noexitwindows nofullstimer noicon noimplmac noint nolist noloadlist nomiss nomlogic nomprint nomrecall nomsgcase nomstored nomultenvappl nonotes nonumber noobs noovp nopad nopercent noprint noprintinit normal norow norsasuser nosetinit  nosplash nosymbolgen note notes notitle notitles notsorted noverbose noxsync noxwait npv null number numkeys nummousekeys nway obs  on open     order ordinal otherwise out outer outp= output over ovp p(1 5 10 25 50 75 90 95 99) pad pad2  paired parm parmcards path pathdll pathname pdf peek peekc pfkey pmf point poisson poke position printer probbeta probbnml probchi probf probgam probhypr probit probnegb probnorm probsig probt procleave prt ps  pw pwreq qtr quote r ranbin rancau random ranexp rangam range ranks rannor ranpoi rantbl rantri ranuni rcorr read recfm register regr remote remove rename repeat repeated replace resolve retain return reuse reverse rewind right round rsquare rtf rtrace rtraceloc s s2 samploc sasautos sascontrol sasfrscr sasmsg sasmstore sasscript sasuser saving scan sdf second select selection separated seq serror set setcomm setot sign simple sin sinh siteinfo skewness skip sle sls sortedby sortpgm sortseq sortsize soundex  spedis splashlocation split spool sqrt start std stderr stdin stfips stimer stname stnamel stop stopover sub subgroup subpopn substr sum sumwgt symbol symbolgen symget symput sysget sysin sysleave sysmsg sysparm sysprint sysprintfont sysprod sysrc system t table tables tan tanh tapeclose tbufsize terminal test then timepart tinv  tnonct to today tol tooldef totper transformout translate trantab tranwrd trigamma trim trimn trunc truncover type unformatted uniform union until upcase update user usericon uss validate value var  weight when where while wincharset window work workinit workterm write wsum xsync xwait yearcutoff yes yyq  min max", ["inDataStep", "inProc"]);
+define("operator", "and not ", ["inDataStep", "inProc"]);
+function tokenize(stream, state) {
+  var ch = stream.next();
+  if (ch === "/" && stream.eat("*")) {
+    state.continueComment = true;
+    return "comment";
+  } else if (state.continueComment === true) {
+    if (ch === "*" && stream.peek() === "/") {
+      stream.next();
+      state.continueComment = false;
+    } else if (stream.skipTo("*")) {
+      stream.skipTo("*");
+      stream.next();
+      if (stream.eat("/"))
+        state.continueComment = false;
+    } else {
+      stream.skipToEnd();
+    }
+    return "comment";
+  }
+  if (ch == "*" && stream.column() == stream.indentation()) {
+    stream.skipToEnd();
+    return "comment";
+  }
+  var doubleOperator = ch + stream.peek();
+  if ((ch === '"' || ch === "'") && !state.continueString) {
+    state.continueString = ch;
+    return "string";
+  } else if (state.continueString) {
+    if (state.continueString == ch) {
+      state.continueString = null;
+    } else if (stream.skipTo(state.continueString)) {
+      stream.next();
+      state.continueString = null;
+    } else {
+      stream.skipToEnd();
+    }
+    return "string";
+  } else if (state.continueString !== null && stream.eol()) {
+    stream.skipTo(state.continueString) || stream.skipToEnd();
+    return "string";
+  } else if (/[\d\.]/.test(ch)) {
+    if (ch === ".")
+      stream.match(/^[0-9]+([eE][\-+]?[0-9]+)?/);
+    else if (ch === "0")
+      stream.match(/^[xX][0-9a-fA-F]+/) || stream.match(/^0[0-7]+/);
+    else
+      stream.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/);
+    return "number";
+  } else if (isDoubleOperatorChar.test(ch + stream.peek())) {
+    stream.next();
+    return "operator";
+  } else if (isDoubleOperatorSym.hasOwnProperty(doubleOperator)) {
+    stream.next();
+    if (stream.peek() === " ")
+      return isDoubleOperatorSym[doubleOperator.toLowerCase()];
+  } else if (isSingleOperatorChar.test(ch)) {
+    return "operator";
+  }
+  var word;
+  if (stream.match(/[%&;\w]+/, false) != null) {
+    word = ch + stream.match(/[%&;\w]+/, true);
+    if (/&/.test(word)) return "variable";
+  } else {
+    word = ch;
+  }
+  if (state.nextword) {
+    stream.match(/[\w]+/);
+    if (stream.peek() === ".") stream.skipTo(" ");
+    state.nextword = false;
+    return "variableName.special";
+  }
+  word = word.toLowerCase();
+  if (state.inDataStep) {
+    if (word === "run;" || stream.match(/run\s;/)) {
+      state.inDataStep = false;
+      return "builtin";
+    }
+    if (word && stream.next() === ".") {
+      if (/\w/.test(stream.peek())) return "variableName.special";
+      else return "variable";
+    }
+    if (word && words6.hasOwnProperty(word) && (words6[word].state.indexOf("inDataStep") !== -1 || words6[word].state.indexOf("ALL") !== -1)) {
+      if (stream.start < stream.pos)
+        stream.backUp(stream.pos - stream.start);
+      for (var i = 0; i < word.length; ++i) stream.next();
+      return words6[word].style;
+    }
+  }
+  if (state.inProc) {
+    if (word === "run;" || word === "quit;") {
+      state.inProc = false;
+      return "builtin";
+    }
+    if (word && words6.hasOwnProperty(word) && (words6[word].state.indexOf("inProc") !== -1 || words6[word].state.indexOf("ALL") !== -1)) {
+      stream.match(/[\w]+/);
+      return words6[word].style;
+    }
+  }
+  if (state.inMacro) {
+    if (word === "%mend") {
+      if (stream.peek() === ";") stream.next();
+      state.inMacro = false;
+      return "builtin";
+    }
+    if (word && words6.hasOwnProperty(word) && (words6[word].state.indexOf("inMacro") !== -1 || words6[word].state.indexOf("ALL") !== -1)) {
+      stream.match(/[\w]+/);
+      return words6[word].style;
+    }
+    return "atom";
+  }
+  if (word && words6.hasOwnProperty(word)) {
+    stream.backUp(1);
+    stream.match(/[\w]+/);
+    if (word === "data" && /=/.test(stream.peek()) === false) {
+      state.inDataStep = true;
+      state.nextword = true;
+      return "builtin";
+    }
+    if (word === "proc") {
+      state.inProc = true;
+      state.nextword = true;
+      return "builtin";
+    }
+    if (word === "%macro") {
+      state.inMacro = true;
+      state.nextword = true;
+      return "builtin";
+    }
+    if (/title[1-9]/.test(word)) return "def";
+    if (word === "footnote") {
+      stream.eat(/[1-9]/);
+      return "def";
+    }
+    if (state.inDataStep === true && words6[word].state.indexOf("inDataStep") !== -1)
+      return words6[word].style;
+    if (state.inProc === true && words6[word].state.indexOf("inProc") !== -1)
+      return words6[word].style;
+    if (state.inMacro === true && words6[word].state.indexOf("inMacro") !== -1)
+      return words6[word].style;
+    if (words6[word].state.indexOf("ALL") !== -1)
+      return words6[word].style;
+    return null;
+  }
+  return null;
+}
+var sas = {
+  name: "sas",
+  startState: function() {
+    return {
+      inDataStep: false,
+      inProc: false,
+      inMacro: false,
+      nextword: false,
+      continueString: null,
+      continueComment: false
+    };
+  },
+  token: function(stream, state) {
+    if (stream.eatSpace()) return null;
+    return tokenize(stream, state);
+  },
+  languageData: {
+    commentTokens: { block: { open: "/*", close: "*/" } }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/scheme.js
+var BUILTIN = "builtin";
+var COMMENT = "comment";
+var STRING = "string";
+var SYMBOL = "symbol";
+var ATOM = "atom";
+var NUMBER = "number";
+var BRACKET = "bracket";
+var INDENT_WORD_SKIP = 2;
+function makeKeywords(str) {
+  var obj = {}, words8 = str.split(" ");
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+var keywords11 = makeKeywords("\u03BB case-lambda call/cc class cond-expand define-class define-values exit-handler field import inherit init-field interface let*-values let-values let/ec mixin opt-lambda override protect provide public rename require require-for-syntax syntax syntax-case syntax-error unit/sig unless when with-syntax and begin call-with-current-continuation call-with-input-file call-with-output-file case cond define define-syntax define-macro defmacro delay do dynamic-wind else for-each if lambda let let* let-syntax letrec letrec-syntax map or syntax-rules abs acos angle append apply asin assoc assq assv atan boolean? caar cadr call-with-input-file call-with-output-file call-with-values car cdddar cddddr cdr ceiling char->integer char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>? char-downcase char-lower-case? char-numeric? char-ready? char-upcase char-upper-case? char-whitespace? char<=? char<? char=? char>=? char>? char? close-input-port close-output-port complex? cons cos current-input-port current-output-port denominator display eof-object? eq? equal? eqv? eval even? exact->inexact exact? exp expt #f floor force gcd imag-part inexact->exact inexact? input-port? integer->char integer? interaction-environment lcm length list list->string list->vector list-ref list-tail list? load log magnitude make-polar make-rectangular make-string make-vector max member memq memv min modulo negative? newline not null-environment null? number->string number? numerator odd? open-input-file open-output-file output-port? pair? peek-char port? positive? procedure? quasiquote quote quotient rational? rationalize read read-char real-part real? remainder reverse round scheme-report-environment set! set-car! set-cdr! sin sqrt string string->list string->number string->symbol string-append string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>? string-copy string-fill! string-length string-ref string-set! string<=? string<? string=? string>=? string>? string? substring symbol->string symbol? #t tan transcript-off transcript-on truncate values vector vector->list vector-fill! vector-length vector-ref vector-set! with-input-from-file with-output-to-file write write-char zero?");
+var indentKeys = makeKeywords("define let letrec let* lambda define-macro defmacro let-syntax letrec-syntax let-values let*-values define-syntax syntax-rules define-values when unless");
+function stateStack(indent2, type2, prev) {
+  this.indent = indent2;
+  this.type = type2;
+  this.prev = prev;
+}
+function pushStack(state, indent2, type2) {
+  state.indentStack = new stateStack(indent2, type2, state.indentStack);
+}
+function popStack(state) {
+  state.indentStack = state.indentStack.prev;
+}
+var binaryMatcher = new RegExp(/^(?:[-+]i|[-+][01]+#*(?:\/[01]+#*)?i|[-+]?[01]+#*(?:\/[01]+#*)?@[-+]?[01]+#*(?:\/[01]+#*)?|[-+]?[01]+#*(?:\/[01]+#*)?[-+](?:[01]+#*(?:\/[01]+#*)?)?i|[-+]?[01]+#*(?:\/[01]+#*)?)(?=[()\s;"]|$)/i);
+var octalMatcher = new RegExp(/^(?:[-+]i|[-+][0-7]+#*(?:\/[0-7]+#*)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?@[-+]?[0-7]+#*(?:\/[0-7]+#*)?|[-+]?[0-7]+#*(?:\/[0-7]+#*)?[-+](?:[0-7]+#*(?:\/[0-7]+#*)?)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?)(?=[()\s;"]|$)/i);
+var hexMatcher = new RegExp(/^(?:[-+]i|[-+][\da-f]+#*(?:\/[\da-f]+#*)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?@[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?[-+](?:[\da-f]+#*(?:\/[\da-f]+#*)?)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?)(?=[()\s;"]|$)/i);
+var decimalMatcher = new RegExp(/^(?:[-+]i|[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)i|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)@[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)?i|(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*))(?=[()\s;"]|$)/i);
+function isBinaryNumber(stream) {
+  return stream.match(binaryMatcher);
+}
+function isOctalNumber(stream) {
+  return stream.match(octalMatcher);
+}
+function isDecimalNumber(stream, backup) {
+  if (backup === true) {
+    stream.backUp(1);
+  }
+  return stream.match(decimalMatcher);
+}
+function isHexNumber(stream) {
+  return stream.match(hexMatcher);
+}
+function processEscapedSequence(stream, options) {
+  var next, escaped = false;
+  while ((next = stream.next()) != null) {
+    if (next == options.token && !escaped) {
+      options.state.mode = false;
+      break;
+    }
+    escaped = !escaped && next == "\\";
+  }
+}
+var scheme = {
+  name: "scheme",
+  startState: function() {
+    return {
+      indentStack: null,
+      indentation: 0,
+      mode: false,
+      sExprComment: false,
+      sExprQuote: false
+    };
+  },
+  token: function(stream, state) {
+    if (state.indentStack == null && stream.sol()) {
+      state.indentation = stream.indentation();
+    }
+    if (stream.eatSpace()) {
+      return null;
+    }
+    var returnType = null;
+    switch (state.mode) {
+      case "string":
+        processEscapedSequence(stream, {
+          token: '"',
+          state
+        });
+        returnType = STRING;
+        break;
+      case "symbol":
+        processEscapedSequence(stream, {
+          token: "|",
+          state
+        });
+        returnType = SYMBOL;
+        break;
+      case "comment":
+        var next, maybeEnd = false;
+        while ((next = stream.next()) != null) {
+          if (next == "#" && maybeEnd) {
+            state.mode = false;
+            break;
+          }
+          maybeEnd = next == "|";
+        }
+        returnType = COMMENT;
+        break;
+      case "s-expr-comment":
+        state.mode = false;
+        if (stream.peek() == "(" || stream.peek() == "[") {
+          state.sExprComment = 0;
+        } else {
+          stream.eatWhile(/[^\s\(\)\[\]]/);
+          returnType = COMMENT;
+          break;
+        }
+      default:
+        var ch = stream.next();
+        if (ch == '"') {
+          state.mode = "string";
+          returnType = STRING;
+        } else if (ch == "'") {
+          if (stream.peek() == "(" || stream.peek() == "[") {
+            if (typeof state.sExprQuote != "number") {
+              state.sExprQuote = 0;
+            }
+            returnType = ATOM;
+          } else {
+            stream.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/);
+            returnType = ATOM;
+          }
+        } else if (ch == "|") {
+          state.mode = "symbol";
+          returnType = SYMBOL;
+        } else if (ch == "#") {
+          if (stream.eat("|")) {
+            state.mode = "comment";
+            returnType = COMMENT;
+          } else if (stream.eat(/[tf]/i)) {
+            returnType = ATOM;
+          } else if (stream.eat(";")) {
+            state.mode = "s-expr-comment";
+            returnType = COMMENT;
+          } else {
+            var numTest = null, hasExactness = false, hasRadix = true;
+            if (stream.eat(/[ei]/i)) {
+              hasExactness = true;
+            } else {
+              stream.backUp(1);
+            }
+            if (stream.match(/^#b/i)) {
+              numTest = isBinaryNumber;
+            } else if (stream.match(/^#o/i)) {
+              numTest = isOctalNumber;
+            } else if (stream.match(/^#x/i)) {
+              numTest = isHexNumber;
+            } else if (stream.match(/^#d/i)) {
+              numTest = isDecimalNumber;
+            } else if (stream.match(/^[-+0-9.]/, false)) {
+              hasRadix = false;
+              numTest = isDecimalNumber;
+            } else if (!hasExactness) {
+              stream.eat("#");
+            }
+            if (numTest != null) {
+              if (hasRadix && !hasExactness) {
+                stream.match(/^#[ei]/i);
+              }
+              if (numTest(stream))
+                returnType = NUMBER;
+            }
+          }
+        } else if (/^[-+0-9.]/.test(ch) && isDecimalNumber(stream, true)) {
+          returnType = NUMBER;
+        } else if (ch == ";") {
+          stream.skipToEnd();
+          returnType = COMMENT;
+        } else if (ch == "(" || ch == "[") {
+          var keyWord = "";
+          var indentTemp = stream.column(), letter;
+          while ((letter = stream.eat(/[^\s\(\[\;\)\]]/)) != null) {
+            keyWord += letter;
+          }
+          if (keyWord.length > 0 && indentKeys.propertyIsEnumerable(keyWord)) {
+            pushStack(state, indentTemp + INDENT_WORD_SKIP, ch);
+          } else {
+            stream.eatSpace();
+            if (stream.eol() || stream.peek() == ";") {
+              pushStack(state, indentTemp + 1, ch);
+            } else {
+              pushStack(state, indentTemp + stream.current().length, ch);
+            }
+          }
+          stream.backUp(stream.current().length - 1);
+          if (typeof state.sExprComment == "number") state.sExprComment++;
+          if (typeof state.sExprQuote == "number") state.sExprQuote++;
+          returnType = BRACKET;
+        } else if (ch == ")" || ch == "]") {
+          returnType = BRACKET;
+          if (state.indentStack != null && state.indentStack.type == (ch == ")" ? "(" : "[")) {
+            popStack(state);
+            if (typeof state.sExprComment == "number") {
+              if (--state.sExprComment == 0) {
+                returnType = COMMENT;
+                state.sExprComment = false;
+              }
+            }
+            if (typeof state.sExprQuote == "number") {
+              if (--state.sExprQuote == 0) {
+                returnType = ATOM;
+                state.sExprQuote = false;
+              }
+            }
+          }
+        } else {
+          stream.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/);
+          if (keywords11 && keywords11.propertyIsEnumerable(stream.current())) {
+            returnType = BUILTIN;
+          } else returnType = "variable";
+        }
+    }
+    return typeof state.sExprComment == "number" ? COMMENT : typeof state.sExprQuote == "number" ? ATOM : returnType;
+  },
+  indent: function(state) {
+    if (state.indentStack == null) return state.indentation;
+    return state.indentStack.indent;
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", '"'] },
+    commentTokens: { line: ";;" }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/shell.js
+var words7 = {};
+function define2(style, dict) {
+  for (var i = 0; i < dict.length; i++) {
+    words7[dict[i]] = style;
+  }
+}
+var commonAtoms2 = ["true", "false"];
+var commonKeywords3 = [
+  "if",
+  "then",
+  "do",
+  "else",
+  "elif",
+  "while",
+  "until",
+  "for",
+  "in",
+  "esac",
+  "fi",
+  "fin",
+  "fil",
+  "done",
+  "exit",
+  "set",
+  "unset",
+  "export",
+  "function"
+];
+var commonCommands = [
+  "ab",
+  "awk",
+  "bash",
+  "beep",
+  "cat",
+  "cc",
+  "cd",
+  "chown",
+  "chmod",
+  "chroot",
+  "clear",
+  "cp",
+  "curl",
+  "cut",
+  "diff",
+  "echo",
+  "find",
+  "gawk",
+  "gcc",
+  "get",
+  "git",
+  "grep",
+  "hg",
+  "kill",
+  "killall",
+  "ln",
+  "ls",
+  "make",
+  "mkdir",
+  "openssl",
+  "mv",
+  "nc",
+  "nl",
+  "node",
+  "npm",
+  "ping",
+  "ps",
+  "restart",
+  "rm",
+  "rmdir",
+  "sed",
+  "service",
+  "sh",
+  "shopt",
+  "shred",
+  "source",
+  "sort",
+  "sleep",
+  "ssh",
+  "start",
+  "stop",
+  "su",
+  "sudo",
+  "svn",
+  "tee",
+  "telnet",
+  "top",
+  "touch",
+  "vi",
+  "vim",
+  "wall",
+  "wc",
+  "wget",
+  "who",
+  "write",
+  "yes",
+  "zsh"
+];
+define2("atom", commonAtoms2);
+define2("keyword", commonKeywords3);
+define2("builtin", commonCommands);
+function tokenBase10(stream, state) {
+  if (stream.eatSpace()) return null;
+  var sol = stream.sol();
+  var ch = stream.next();
+  if (ch === "\\") {
+    stream.next();
+    return null;
+  }
+  if (ch === "'" || ch === '"' || ch === "`") {
+    state.tokens.unshift(tokenString6(ch, ch === "`" ? "quote" : "string"));
+    return tokenize2(stream, state);
+  }
+  if (ch === "#") {
+    if (sol && stream.eat("!")) {
+      stream.skipToEnd();
+      return "meta";
+    }
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (ch === "$") {
+    state.tokens.unshift(tokenDollar);
+    return tokenize2(stream, state);
+  }
+  if (ch === "+" || ch === "=") {
+    return "operator";
+  }
+  if (ch === "-") {
+    stream.eat("-");
+    stream.eatWhile(/\w/);
+    return "attribute";
+  }
+  if (ch == "<") {
+    if (stream.match("<<")) return "operator";
+    var heredoc = stream.match(/^<-?\s*(?:['"]([^'"]*)['"]|([^'"\s]*))/);
+    if (heredoc) {
+      state.tokens.unshift(tokenHeredoc(heredoc[1] || heredoc[2]));
+      return "string.special";
+    }
+  }
+  if (/\d/.test(ch)) {
+    stream.eatWhile(/\d/);
+    if (stream.eol() || !/\w/.test(stream.peek())) {
+      return "number";
+    }
+  }
+  stream.eatWhile(/[\w-]/);
+  var cur = stream.current();
+  if (stream.peek() === "=" && /\w+/.test(cur)) return "def";
+  return words7.hasOwnProperty(cur) ? words7[cur] : null;
+}
+function tokenString6(quote, style) {
+  var close = quote == "(" ? ")" : quote == "{" ? "}" : quote;
+  return function(stream, state) {
+    var next, escaped = false;
+    while ((next = stream.next()) != null) {
+      if (next === close && !escaped) {
+        state.tokens.shift();
+        break;
+      } else if (next === "$" && !escaped && quote !== "'" && stream.peek() != close) {
+        escaped = true;
+        stream.backUp(1);
+        state.tokens.unshift(tokenDollar);
+        break;
+      } else if (!escaped && quote !== close && next === quote) {
+        state.tokens.unshift(tokenString6(quote, style));
+        return tokenize2(stream, state);
+      } else if (!escaped && /['"]/.test(next) && !/['"]/.test(quote)) {
+        state.tokens.unshift(tokenStringStart(next, "string"));
+        stream.backUp(1);
+        break;
+      }
+      escaped = !escaped && next === "\\";
+    }
+    return style;
+  };
+}
+function tokenStringStart(quote, style) {
+  return function(stream, state) {
+    state.tokens[0] = tokenString6(quote, style);
+    stream.next();
+    return tokenize2(stream, state);
+  };
+}
+var tokenDollar = function(stream, state) {
+  if (state.tokens.length > 1) stream.eat("$");
+  var ch = stream.next();
+  if (/['"({]/.test(ch)) {
+    state.tokens[0] = tokenString6(ch, ch == "(" ? "quote" : ch == "{" ? "def" : "string");
+    return tokenize2(stream, state);
+  }
+  if (!/\d/.test(ch)) stream.eatWhile(/\w/);
+  state.tokens.shift();
+  return "def";
+};
+function tokenHeredoc(delim) {
+  return function(stream, state) {
+    if (stream.sol() && stream.string == delim) state.tokens.shift();
+    stream.skipToEnd();
+    return "string.special";
+  };
+}
+function tokenize2(stream, state) {
+  return (state.tokens[0] || tokenBase10)(stream, state);
+}
+var shell = {
+  name: "shell",
+  startState: function() {
+    return { tokens: [] };
+  },
+  token: function(stream, state) {
+    return tokenize2(stream, state);
+  },
+  languageData: {
+    autocomplete: commonAtoms2.concat(commonKeywords3, commonCommands),
+    closeBrackets: { brackets: ["(", "[", "{", "'", '"', "`"] },
+    commentTokens: { line: "#" }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/sql.js
+function sql(parserConfig) {
+  var client = parserConfig.client || {}, atoms6 = parserConfig.atoms || { "false": true, "true": true, "null": true }, builtin = parserConfig.builtin || set(defaultBuiltin), keywords14 = parserConfig.keywords || set(sqlKeywords), operatorChars = parserConfig.operatorChars || /^[*+\-%<>!=&|~^\/]/, support = parserConfig.support || {}, hooks = parserConfig.hooks || {}, dateSQL = parserConfig.dateSQL || { "date": true, "time": true, "timestamp": true }, backslashStringEscapes = parserConfig.backslashStringEscapes !== false, brackets = parserConfig.brackets || /^[\{}\(\)\[\]]/, punctuation2 = parserConfig.punctuation || /^[;.,:]/;
+  function tokenBase13(stream, state) {
+    var ch = stream.next();
+    if (hooks[ch]) {
+      var result = hooks[ch](stream, state);
+      if (result !== false) return result;
+    }
+    if (support.hexNumber && (ch == "0" && stream.match(/^[xX][0-9a-fA-F]+/) || (ch == "x" || ch == "X") && stream.match(/^'[0-9a-fA-F]*'/))) {
+      return "number";
+    } else if (support.binaryNumber && ((ch == "b" || ch == "B") && stream.match(/^'[01]+'/) || ch == "0" && stream.match(/^b[01]*/))) {
+      return "number";
+    } else if (ch.charCodeAt(0) > 47 && ch.charCodeAt(0) < 58) {
+      stream.match(/^[0-9]*(\.[0-9]+)?([eE][-+]?[0-9]+)?/);
+      support.decimallessFloat && stream.match(/^\.(?!\.)/);
+      return "number";
+    } else if (ch == "?" && (stream.eatSpace() || stream.eol() || stream.eat(";"))) {
+      return "macroName";
+    } else if (ch == "'" || ch == '"' && support.doubleQuote) {
+      state.tokenize = tokenLiteral(ch);
+      return state.tokenize(stream, state);
+    } else if ((support.nCharCast && (ch == "n" || ch == "N") || support.charsetCast && ch == "_" && stream.match(/[a-z][a-z0-9]*/i)) && (stream.peek() == "'" || stream.peek() == '"')) {
+      return "keyword";
+    } else if (support.escapeConstant && (ch == "e" || ch == "E") && (stream.peek() == "'" || stream.peek() == '"' && support.doubleQuote)) {
+      state.tokenize = function(stream2, state2) {
+        return (state2.tokenize = tokenLiteral(stream2.next(), true))(stream2, state2);
+      };
+      return "keyword";
+    } else if (support.commentSlashSlash && ch == "/" && stream.eat("/")) {
+      stream.skipToEnd();
+      return "comment";
+    } else if (support.commentHash && ch == "#" || ch == "-" && stream.eat("-") && (!support.commentSpaceRequired || stream.eat(" "))) {
+      stream.skipToEnd();
+      return "comment";
+    } else if (ch == "/" && stream.eat("*")) {
+      state.tokenize = tokenComment7(1);
+      return state.tokenize(stream, state);
+    } else if (ch == ".") {
+      if (support.zerolessFloat && stream.match(/^(?:\d+(?:e[+-]?\d+)?)/i))
+        return "number";
+      if (stream.match(/^\.+/))
+        return null;
+      if (support.ODBCdotTable && stream.match(/^[\w\d_$#]+/))
+        return "type";
+    } else if (operatorChars.test(ch)) {
+      stream.eatWhile(operatorChars);
+      return "operator";
+    } else if (brackets.test(ch)) {
+      return "bracket";
+    } else if (punctuation2.test(ch)) {
+      stream.eatWhile(punctuation2);
+      return "punctuation";
+    } else if (ch == "{" && (stream.match(/^( )*(d|D|t|T|ts|TS)( )*'[^']*'( )*}/) || stream.match(/^( )*(d|D|t|T|ts|TS)( )*"[^"]*"( )*}/))) {
+      return "number";
+    } else {
+      stream.eatWhile(/^[_\w\d]/);
+      var word = stream.current().toLowerCase();
+      if (dateSQL.hasOwnProperty(word) && (stream.match(/^( )+'[^']*'/) || stream.match(/^( )+"[^"]*"/)))
+        return "number";
+      if (atoms6.hasOwnProperty(word)) return "atom";
+      if (builtin.hasOwnProperty(word)) return "type";
+      if (keywords14.hasOwnProperty(word)) return "keyword";
+      if (client.hasOwnProperty(word)) return "builtin";
+      return null;
+    }
+  }
+  function tokenLiteral(quote, backslashEscapes) {
+    return function(stream, state) {
+      var escaped = false, ch;
+      while ((ch = stream.next()) != null) {
+        if (ch == quote && !escaped) {
+          state.tokenize = tokenBase13;
+          break;
+        }
+        escaped = (backslashStringEscapes || backslashEscapes) && !escaped && ch == "\\";
+      }
+      return "string";
+    };
+  }
+  function tokenComment7(depth) {
+    return function(stream, state) {
+      var m = stream.match(/^.*?(\/\*|\*\/)/);
+      if (!m) stream.skipToEnd();
+      else if (m[1] == "/*") state.tokenize = tokenComment7(depth + 1);
+      else if (depth > 1) state.tokenize = tokenComment7(depth - 1);
+      else state.tokenize = tokenBase13;
+      return "comment";
+    };
+  }
+  function pushContext4(stream, state, type2) {
+    state.context = {
+      prev: state.context,
+      indent: stream.indentation(),
+      col: stream.column(),
+      type: type2
+    };
+  }
+  function popContext4(state) {
+    state.indent = state.context.indent;
+    state.context = state.context.prev;
+  }
+  return {
+    name: "sql",
+    startState: function() {
+      return { tokenize: tokenBase13, context: null };
+    },
+    token: function(stream, state) {
+      if (stream.sol()) {
+        if (state.context && state.context.align == null)
+          state.context.align = false;
+      }
+      if (state.tokenize == tokenBase13 && stream.eatSpace()) return null;
+      var style = state.tokenize(stream, state);
+      if (style == "comment") return style;
+      if (state.context && state.context.align == null)
+        state.context.align = true;
+      var tok = stream.current();
+      if (tok == "(")
+        pushContext4(stream, state, ")");
+      else if (tok == "[")
+        pushContext4(stream, state, "]");
+      else if (state.context && state.context.type == tok)
+        popContext4(state);
+      return style;
+    },
+    indent: function(state, textAfter, iCx) {
+      var cx = state.context;
+      if (!cx) return null;
+      var closing3 = textAfter.charAt(0) == cx.type;
+      if (cx.align) return cx.col + (closing3 ? 0 : 1);
+      else return cx.indent + (closing3 ? 0 : iCx.unit);
+    },
+    languageData: {
+      commentTokens: {
+        line: support.commentSlashSlash ? "//" : support.commentHash ? "#" : "--",
+        block: { open: "/*", close: "*/" }
+      },
+      closeBrackets: { brackets: ["(", "[", "{", "'", '"', "`"] }
+    }
+  };
+}
+function hookIdentifier(stream) {
+  var ch;
+  while ((ch = stream.next()) != null) {
+    if (ch == "`" && !stream.eat("`")) return "string.special";
+  }
+  stream.backUp(stream.current().length - 1);
+  return stream.eatWhile(/\w/) ? "string.special" : null;
+}
+function hookIdentifierDoublequote(stream) {
+  var ch;
+  while ((ch = stream.next()) != null) {
+    if (ch == '"' && !stream.eat('"')) return "string.special";
+  }
+  stream.backUp(stream.current().length - 1);
+  return stream.eatWhile(/\w/) ? "string.special" : null;
+}
+function hookVar(stream) {
+  if (stream.eat("@")) {
+    stream.match("session.");
+    stream.match("local.");
+    stream.match("global.");
+  }
+  if (stream.eat("'")) {
+    stream.match(/^.*'/);
+    return "string.special";
+  } else if (stream.eat('"')) {
+    stream.match(/^.*"/);
+    return "string.special";
+  } else if (stream.eat("`")) {
+    stream.match(/^.*`/);
+    return "string.special";
+  } else if (stream.match(/^[0-9a-zA-Z$\.\_]+/)) {
+    return "string.special";
+  }
+  return null;
+}
+function hookClient(stream) {
+  if (stream.eat("N")) {
+    return "atom";
+  }
+  return stream.match(/^[a-zA-Z.#!?]/) ? "string.special" : null;
+}
+var sqlKeywords = "alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit ";
+function set(str) {
+  var obj = {}, words8 = str.split(" ");
+  for (var i = 0; i < words8.length; ++i) obj[words8[i]] = true;
+  return obj;
+}
+var defaultBuiltin = "bool boolean bit blob enum long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision real date datetime year unsigned signed decimal numeric";
+var standardSQL = sql({
+  keywords: set(sqlKeywords + "begin"),
+  builtin: set(defaultBuiltin),
+  atoms: set("false true null unknown"),
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable doubleQuote binaryNumber hexNumber")
+});
+var msSQL = sql({
+  client: set("$partition binary_checksum checksum connectionproperty context_info current_request_id error_line error_message error_number error_procedure error_severity error_state formatmessage get_filestream_transaction_context getansinull host_id host_name isnull isnumeric min_active_rowversion newid newsequentialid rowcount_big xact_state object_id"),
+  keywords: set(sqlKeywords + "begin trigger proc view index for add constraint key primary foreign collate clustered nonclustered declare exec go if use index holdlock nolock nowait paglock readcommitted readcommittedlock readpast readuncommitted repeatableread rowlock serializable snapshot tablock tablockx updlock with"),
+  builtin: set("bigint numeric bit smallint decimal smallmoney int tinyint money float real char varchar text nchar nvarchar ntext binary varbinary image cursor timestamp hierarchyid uniqueidentifier sql_variant xml table "),
+  atoms: set("is not null like and or in left right between inner outer join all any some cross unpivot pivot exists"),
+  operatorChars: /^[*+\-%<>!=^\&|\/]/,
+  brackets: /^[\{}\(\)]/,
+  punctuation: /^[;.,:/]/,
+  backslashStringEscapes: false,
+  dateSQL: set("date datetimeoffset datetime2 smalldatetime datetime time"),
+  hooks: {
+    "@": hookVar
+  }
+});
+var mySQL = sql({
+  client: set("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
+  keywords: set(sqlKeywords + "accessible action add after algorithm all analyze asensitive at authors auto_increment autocommit avg avg_row_length before binary binlog both btree cache call cascade cascaded case catalog_name chain change changed character check checkpoint checksum class_origin client_statistics close coalesce code collate collation collations column columns comment commit committed completion concurrent condition connection consistent constraint contains continue contributors convert cross current current_date current_time current_timestamp current_user cursor data database databases day_hour day_microsecond day_minute day_second deallocate dec declare default delay_key_write delayed delimiter des_key_file describe deterministic dev_pop dev_samp deviance diagnostics directory disable discard distinctrow div dual dumpfile each elseif enable enclosed end ends engine engines enum errors escape escaped even event events every execute exists exit explain extended fast fetch field fields first flush for force foreign found_rows full fulltext function general get global grant grants group group_concat handler hash help high_priority hosts hour_microsecond hour_minute hour_second if ignore ignore_server_ids import index index_statistics infile inner innodb inout insensitive insert_method install interval invoker isolation iterate key keys kill language last leading leave left level limit linear lines list load local localtime localtimestamp lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters match max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modifies modify mutex mysql_errno natural next no no_write_to_binlog offline offset one online open optimize option optionally out outer outfile pack_keys parser partition partitions password phase plugin plugins prepare preserve prev primary privileges procedure processlist profile profiles purge query quick range read read_write reads real rebuild recover references regexp relaylog release remove rename reorganize repair repeatable replace require resignal restrict resume return returns revoke right rlike rollback rollup row row_format rtree savepoint schedule schema schema_name schemas second_microsecond security sensitive separator serializable server session share show signal slave slow smallint snapshot soname spatial specific sql sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result sqlexception sqlstate sqlwarning ssl start starting starts status std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace temporary terminated to trailing transaction trigger triggers truncate uncommitted undo uninstall unique unlock upgrade usage use use_frm user user_resources user_statistics using utc_date utc_time utc_timestamp value variables varying view views warnings when while with work write xa xor year_month zerofill begin do then else loop repeat"),
+  builtin: set("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision date datetime year unsigned signed numeric"),
+  atoms: set("false true null unknown"),
+  operatorChars: /^[*+\-%<>!=&|^]/,
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber doubleQuote nCharCast charsetCast commentHash commentSpaceRequired"),
+  hooks: {
+    "@": hookVar,
+    "`": hookIdentifier,
+    "\\": hookClient
+  }
+});
+var mariaDB = sql({
+  client: set("charset clear connect edit ego exit go help nopager notee nowarning pager print prompt quit rehash source status system tee"),
+  keywords: set(sqlKeywords + "accessible action add after algorithm all always analyze asensitive at authors auto_increment autocommit avg avg_row_length before binary binlog both btree cache call cascade cascaded case catalog_name chain change changed character check checkpoint checksum class_origin client_statistics close coalesce code collate collation collations column columns comment commit committed completion concurrent condition connection consistent constraint contains continue contributors convert cross current current_date current_time current_timestamp current_user cursor data database databases day_hour day_microsecond day_minute day_second deallocate dec declare default delay_key_write delayed delimiter des_key_file describe deterministic dev_pop dev_samp deviance diagnostics directory disable discard distinctrow div dual dumpfile each elseif enable enclosed end ends engine engines enum errors escape escaped even event events every execute exists exit explain extended fast fetch field fields first flush for force foreign found_rows full fulltext function general generated get global grant grants group group_concat handler hard hash help high_priority hosts hour_microsecond hour_minute hour_second if ignore ignore_server_ids import index index_statistics infile inner innodb inout insensitive insert_method install interval invoker isolation iterate key keys kill language last leading leave left level limit linear lines list load local localtime localtimestamp lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters match max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modifies modify mutex mysql_errno natural next no no_write_to_binlog offline offset one online open optimize option optionally out outer outfile pack_keys parser partition partitions password persistent phase plugin plugins prepare preserve prev primary privileges procedure processlist profile profiles purge query quick range read read_write reads real rebuild recover references regexp relaylog release remove rename reorganize repair repeatable replace require resignal restrict resume return returns revoke right rlike rollback rollup row row_format rtree savepoint schedule schema schema_name schemas second_microsecond security sensitive separator serializable server session share show shutdown signal slave slow smallint snapshot soft soname spatial specific sql sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result sqlexception sqlstate sqlwarning ssl start starting starts status std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace temporary terminated to trailing transaction trigger triggers truncate uncommitted undo uninstall unique unlock upgrade usage use use_frm user user_resources user_statistics using utc_date utc_time utc_timestamp value variables varying view views virtual warnings when while with work write xa xor year_month zerofill begin do then else loop repeat"),
+  builtin: set("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text bigint int int1 int2 int3 int4 int8 integer float float4 float8 double char varbinary varchar varcharacter precision date datetime year unsigned signed numeric"),
+  atoms: set("false true null unknown"),
+  operatorChars: /^[*+\-%<>!=&|^]/,
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber doubleQuote nCharCast charsetCast commentHash commentSpaceRequired"),
+  hooks: {
+    "@": hookVar,
+    "`": hookIdentifier,
+    "\\": hookClient
+  }
+});
+var sqlite = sql({
+  // commands of the official SQLite client, ref: https://www.sqlite.org/cli.html#dotcmd
+  client: set("auth backup bail binary changes check clone databases dbinfo dump echo eqp exit explain fullschema headers help import imposter indexes iotrace limit lint load log mode nullvalue once open output print prompt quit read restore save scanstats schema separator session shell show stats system tables testcase timeout timer trace vfsinfo vfslist vfsname width"),
+  // ref: http://sqlite.org/lang_keywords.html
+  keywords: set(sqlKeywords + "abort action add after all analyze attach autoincrement before begin cascade case cast check collate column commit conflict constraint cross current_date current_time current_timestamp database default deferrable deferred detach each else end escape except exclusive exists explain fail for foreign full glob if ignore immediate index indexed initially inner instead intersect isnull key left limit match natural no notnull null of offset outer plan pragma primary query raise recursive references regexp reindex release rename replace restrict right rollback row savepoint temp temporary then to transaction trigger unique using vacuum view virtual when with without"),
+  // SQLite is weakly typed, ref: http://sqlite.org/datatype3.html. This is just a list of some common types.
+  builtin: set("bool boolean bit blob decimal double float long longblob longtext medium mediumblob mediumint mediumtext time timestamp tinyblob tinyint tinytext text clob bigint int int2 int8 integer float double char varchar date datetime year unsigned signed numeric real"),
+  // ref: http://sqlite.org/syntax/literal-value.html
+  atoms: set("null current_date current_time current_timestamp"),
+  // ref: http://sqlite.org/lang_expr.html#binaryops
+  operatorChars: /^[*+\-%<>!=&|/~]/,
+  // SQLite is weakly typed, ref: http://sqlite.org/datatype3.html. This is just a list of some common types.
+  dateSQL: set("date time timestamp datetime"),
+  support: set("decimallessFloat zerolessFloat"),
+  identifierQuote: '"',
+  //ref: http://sqlite.org/lang_keywords.html
+  hooks: {
+    // bind-parameters ref:http://sqlite.org/lang_expr.html#varparam
+    "@": hookVar,
+    ":": hookVar,
+    "?": hookVar,
+    "$": hookVar,
+    // The preferred way to escape Identifiers is using double quotes, ref: http://sqlite.org/lang_keywords.html
+    '"': hookIdentifierDoublequote,
+    // there is also support for backticks, ref: http://sqlite.org/lang_keywords.html
+    "`": hookIdentifier
+  }
+});
+var cassandra = sql({
+  client: {},
+  keywords: set("add all allow alter and any apply as asc authorize batch begin by clustering columnfamily compact consistency count create custom delete desc distinct drop each_quorum exists filtering from grant if in index insert into key keyspace keyspaces level limit local_one local_quorum modify nan norecursive nosuperuser not of on one order password permission permissions primary quorum rename revoke schema select set storage superuser table three to token truncate ttl two type unlogged update use user users using values where with writetime"),
+  builtin: set("ascii bigint blob boolean counter decimal double float frozen inet int list map static text timestamp timeuuid tuple uuid varchar varint"),
+  atoms: set("false true infinity NaN"),
+  operatorChars: /^[<>=]/,
+  dateSQL: {},
+  support: set("commentSlashSlash decimallessFloat"),
+  hooks: {}
+});
+var plSQL = sql({
+  client: set("appinfo arraysize autocommit autoprint autorecovery autotrace blockterminator break btitle cmdsep colsep compatibility compute concat copycommit copytypecheck define describe echo editfile embedded escape exec execute feedback flagger flush heading headsep instance linesize lno loboffset logsource long longchunksize markup native newpage numformat numwidth pagesize pause pno recsep recsepchar release repfooter repheader serveroutput shiftinout show showmode size spool sqlblanklines sqlcase sqlcode sqlcontinue sqlnumber sqlpluscompatibility sqlprefix sqlprompt sqlterminator suffix tab term termout time timing trimout trimspool ttitle underline verify version wrap"),
+  keywords: set("abort accept access add all alter and any array arraylen as asc assert assign at attributes audit authorization avg base_table begin between binary_integer body boolean by case cast char char_base check close cluster clusters colauth column comment commit compress connect connected constant constraint crash create current currval cursor data_base database date dba deallocate debugoff debugon decimal declare default definition delay delete desc digits dispose distinct do drop else elseif elsif enable end entry escape exception exception_init exchange exclusive exists exit external fast fetch file for force form from function generic goto grant group having identified if immediate in increment index indexes indicator initial initrans insert interface intersect into is key level library like limited local lock log logging long loop master maxextents maxtrans member minextents minus mislabel mode modify multiset new next no noaudit nocompress nologging noparallel not nowait number_base object of off offline on online only open option or order out package parallel partition pctfree pctincrease pctused pls_integer positive positiven pragma primary prior private privileges procedure public raise range raw read rebuild record ref references refresh release rename replace resource restrict return returning returns reverse revoke rollback row rowid rowlabel rownum rows run savepoint schema segment select separate session set share snapshot some space split sql start statement storage subtype successful synonym tabauth table tables tablespace task terminate then to trigger truncate type union unique unlimited unrecoverable unusable update use using validate value values variable view views when whenever where while with work"),
+  builtin: set("abs acos add_months ascii asin atan atan2 average bfile bfilename bigserial bit blob ceil character chartorowid chr clob concat convert cos cosh count dec decode deref dual dump dup_val_on_index empty error exp false float floor found glb greatest hextoraw initcap instr instrb int integer isopen last_day least length lengthb ln lower lpad ltrim lub make_ref max min mlslabel mod months_between natural naturaln nchar nclob new_time next_day nextval nls_charset_decl_len nls_charset_id nls_charset_name nls_initcap nls_lower nls_sort nls_upper nlssort no_data_found notfound null number numeric nvarchar2 nvl others power rawtohex real reftohex round rowcount rowidtochar rowtype rpad rtrim serial sign signtype sin sinh smallint soundex sqlcode sqlerrm sqrt stddev string substr substrb sum sysdate tan tanh to_char text to_date to_label to_multi_byte to_number to_single_byte translate true trunc uid unlogged upper user userenv varchar varchar2 variance varying vsize xml"),
+  operatorChars: /^[*\/+\-%<>!=~]/,
+  dateSQL: set("date time timestamp"),
+  support: set("doubleQuote nCharCast zerolessFloat binaryNumber hexNumber")
+});
+var hive = sql({
+  keywords: set("select alter $elem$ $key$ $value$ add after all analyze and archive as asc before between binary both bucket buckets by cascade case cast change cluster clustered clusterstatus collection column columns comment compute concatenate continue create cross cursor data database databases dbproperties deferred delete delimited desc describe directory disable distinct distribute drop else enable end escaped exclusive exists explain export extended external fetch fields fileformat first format formatted from full function functions grant group having hold_ddltime idxproperties if import in index indexes inpath inputdriver inputformat insert intersect into is items join keys lateral left like limit lines load local location lock locks mapjoin materialized minus msck no_drop nocompress not of offline on option or order out outer outputdriver outputformat overwrite partition partitioned partitions percent plus preserve procedure purge range rcfile read readonly reads rebuild recordreader recordwriter recover reduce regexp rename repair replace restrict revoke right rlike row schema schemas semi sequencefile serde serdeproperties set shared show show_database sort sorted ssl statistics stored streamtable table tables tablesample tblproperties temporary terminated textfile then tmp to touch transform trigger unarchive undo union uniquejoin unlock update use using utc utc_tmestamp view when where while with admin authorization char compact compactions conf cube current current_date current_timestamp day decimal defined dependency directories elem_type exchange file following for grouping hour ignore inner interval jar less logical macro minute month more none noscan over owner partialscan preceding pretty principals protection reload rewrite role roles rollup rows second server sets skewed transactions truncate unbounded unset uri user values window year"),
+  builtin: set("bool boolean long timestamp tinyint smallint bigint int float double date datetime unsigned string array struct map uniontype key_type utctimestamp value_type varchar"),
+  atoms: set("false true null unknown"),
+  operatorChars: /^[*+\-%<>!=]/,
+  dateSQL: set("date timestamp"),
+  support: set("ODBCdotTable doubleQuote binaryNumber hexNumber")
+});
+var pgSQL = sql({
+  client: set("source"),
+  // For PostgreSQL - https://www.postgresql.org/docs/11/sql-keywords-appendix.html
+  // For pl/pgsql lang - https://github.com/postgres/postgres/blob/REL_11_2/src/pl/plpgsql/src/pl_scanner.c
+  keywords: set(sqlKeywords + "a abort abs absent absolute access according action ada add admin after aggregate alias all allocate also alter always analyse analyze and any are array array_agg array_max_cardinality as asc asensitive assert assertion assignment asymmetric at atomic attach attribute attributes authorization avg backward base64 before begin begin_frame begin_partition bernoulli between bigint binary bit bit_length blob blocked bom boolean both breadth by c cache call called cardinality cascade cascaded case cast catalog catalog_name ceil ceiling chain char char_length character character_length character_set_catalog character_set_name character_set_schema characteristics characters check checkpoint class class_origin clob close cluster coalesce cobol collate collation collation_catalog collation_name collation_schema collect column column_name columns command_function command_function_code comment comments commit committed concurrently condition condition_number configuration conflict connect connection connection_name constant constraint constraint_catalog constraint_name constraint_schema constraints constructor contains content continue control conversion convert copy corr corresponding cost count covar_pop covar_samp create cross csv cube cume_dist current current_catalog current_date current_default_transform_group current_path current_role current_row current_schema current_time current_timestamp current_transform_group_for_type current_user cursor cursor_name cycle data database datalink datatype date datetime_interval_code datetime_interval_precision day db deallocate debug dec decimal declare default defaults deferrable deferred defined definer degree delete delimiter delimiters dense_rank depends depth deref derived desc describe descriptor detach detail deterministic diagnostics dictionary disable discard disconnect dispatch distinct dlnewcopy dlpreviouscopy dlurlcomplete dlurlcompleteonly dlurlcompletewrite dlurlpath dlurlpathonly dlurlpathwrite dlurlscheme dlurlserver dlvalue do document domain double drop dump dynamic dynamic_function dynamic_function_code each element else elseif elsif empty enable encoding encrypted end end_frame end_partition endexec enforced enum equals errcode error escape event every except exception exclude excluding exclusive exec execute exists exit exp explain expression extension external extract false family fetch file filter final first first_value flag float floor following for force foreach foreign fortran forward found frame_row free freeze from fs full function functions fusion g general generated get global go goto grant granted greatest group grouping groups handler having header hex hierarchy hint hold hour id identity if ignore ilike immediate immediately immutable implementation implicit import in include including increment indent index indexes indicator info inherit inherits initially inline inner inout input insensitive insert instance instantiable instead int integer integrity intersect intersection interval into invoker is isnull isolation join k key key_member key_type label lag language large last last_value lateral lead leading leakproof least left length level library like like_regex limit link listen ln load local localtime localtimestamp location locator lock locked log logged loop lower m map mapping match matched materialized max max_cardinality maxvalue member merge message message_length message_octet_length message_text method min minute minvalue mod mode modifies module month more move multiset mumps name names namespace national natural nchar nclob nesting new next nfc nfd nfkc nfkd nil no none normalize normalized not nothing notice notify notnull nowait nth_value ntile null nullable nullif nulls number numeric object occurrences_regex octet_length octets of off offset oids old on only open operator option options or order ordering ordinality others out outer output over overlaps overlay overriding owned owner p pad parallel parameter parameter_mode parameter_name parameter_ordinal_position parameter_specific_catalog parameter_specific_name parameter_specific_schema parser partial partition pascal passing passthrough password path percent percent_rank percentile_cont percentile_disc perform period permission pg_context pg_datatype_name pg_exception_context pg_exception_detail pg_exception_hint placing plans pli policy portion position position_regex power precedes preceding precision prepare prepared preserve primary print_strict_params prior privileges procedural procedure procedures program public publication query quote raise range rank read reads real reassign recheck recovery recursive ref references referencing refresh regr_avgx regr_avgy regr_count regr_intercept regr_r2 regr_slope regr_sxx regr_sxy regr_syy reindex relative release rename repeatable replace replica requiring reset respect restart restore restrict result result_oid return returned_cardinality returned_length returned_octet_length returned_sqlstate returning returns reverse revoke right role rollback rollup routine routine_catalog routine_name routine_schema routines row row_count row_number rows rowtype rule savepoint scale schema schema_name schemas scope scope_catalog scope_name scope_schema scroll search second section security select selective self sensitive sequence sequences serializable server server_name session session_user set setof sets share show similar simple size skip slice smallint snapshot some source space specific specific_name specifictype sql sqlcode sqlerror sqlexception sqlstate sqlwarning sqrt stable stacked standalone start state statement static statistics stddev_pop stddev_samp stdin stdout storage strict strip structure style subclass_origin submultiset subscription substring substring_regex succeeds sum symmetric sysid system system_time system_user t table table_name tables tablesample tablespace temp template temporary text then ties time timestamp timezone_hour timezone_minute to token top_level_count trailing transaction transaction_active transactions_committed transactions_rolled_back transform transforms translate translate_regex translation treat trigger trigger_catalog trigger_name trigger_schema trim trim_array true truncate trusted type types uescape unbounded uncommitted under unencrypted union unique unknown unlink unlisten unlogged unnamed unnest until untyped update upper uri usage use_column use_variable user user_defined_type_catalog user_defined_type_code user_defined_type_name user_defined_type_schema using vacuum valid validate validator value value_of values var_pop var_samp varbinary varchar variable_conflict variadic varying verbose version versioning view views volatile warning when whenever where while whitespace width_bucket window with within without work wrapper write xml xmlagg xmlattributes xmlbinary xmlcast xmlcomment xmlconcat xmldeclaration xmldocument xmlelement xmlexists xmlforest xmliterate xmlnamespaces xmlparse xmlpi xmlquery xmlroot xmlschema xmlserialize xmltable xmltext xmlvalidate year yes zone"),
+  // https://www.postgresql.org/docs/11/datatype.html
+  builtin: set("bigint int8 bigserial serial8 bit varying varbit boolean bool box bytea character char varchar cidr circle date double precision float8 inet integer int int4 interval json jsonb line lseg macaddr macaddr8 money numeric decimal path pg_lsn point polygon real float4 smallint int2 smallserial serial2 serial serial4 text time without zone with timetz timestamp timestamptz tsquery tsvector txid_snapshot uuid xml"),
+  atoms: set("false true null unknown"),
+  operatorChars: /^[*\/+\-%<>!=&|^\/#@?~]/,
+  backslashStringEscapes: false,
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber nCharCast charsetCast escapeConstant")
+});
+var gql = sql({
+  keywords: set("ancestor and asc by contains desc descendant distinct from group has in is limit offset on order select superset where"),
+  atoms: set("false true"),
+  builtin: set("blob datetime first key __key__ string integer double boolean null"),
+  operatorChars: /^[*+\-%<>!=]/
+});
+var gpSQL = sql({
+  client: set("source"),
+  //https://github.com/greenplum-db/gpdb/blob/master/src/include/parser/kwlist.h
+  keywords: set("abort absolute access action active add admin after aggregate all also alter always analyse analyze and any array as asc assertion assignment asymmetric at authorization backward before begin between bigint binary bit boolean both by cache called cascade cascaded case cast chain char character characteristics check checkpoint class close cluster coalesce codegen collate column comment commit committed concurrency concurrently configuration connection constraint constraints contains content continue conversion copy cost cpu_rate_limit create createdb createexttable createrole createuser cross csv cube current current_catalog current_date current_role current_schema current_time current_timestamp current_user cursor cycle data database day deallocate dec decimal declare decode default defaults deferrable deferred definer delete delimiter delimiters deny desc dictionary disable discard distinct distributed do document domain double drop dxl each else enable encoding encrypted end enum errors escape every except exchange exclude excluding exclusive execute exists explain extension external extract false family fetch fields filespace fill filter first float following for force foreign format forward freeze from full function global grant granted greatest group group_id grouping handler hash having header hold host hour identity if ignore ilike immediate immutable implicit in including inclusive increment index indexes inherit inherits initially inline inner inout input insensitive insert instead int integer intersect interval into invoker is isnull isolation join key language large last leading least left level like limit list listen load local localtime localtimestamp location lock log login mapping master match maxvalue median merge minute minvalue missing mode modifies modify month move name names national natural nchar new newline next no nocreatedb nocreateexttable nocreaterole nocreateuser noinherit nologin none noovercommit nosuperuser not nothing notify notnull nowait null nullif nulls numeric object of off offset oids old on only operator option options or order ordered others out outer over overcommit overlaps overlay owned owner parser partial partition partitions passing password percent percentile_cont percentile_disc placing plans position preceding precision prepare prepared preserve primary prior privileges procedural procedure protocol queue quote randomly range read readable reads real reassign recheck recursive ref references reindex reject relative release rename repeatable replace replica reset resource restart restrict returning returns revoke right role rollback rollup rootpartition row rows rule savepoint scatter schema scroll search second security segment select sequence serializable session session_user set setof sets share show similar simple smallint some split sql stable standalone start statement statistics stdin stdout storage strict strip subpartition subpartitions substring superuser symmetric sysid system table tablespace temp template temporary text then threshold ties time timestamp to trailing transaction treat trigger trim true truncate trusted type unbounded uncommitted unencrypted union unique unknown unlisten until update user using vacuum valid validation validator value values varchar variadic varying verbose version view volatile web when where whitespace window with within without work writable write xml xmlattributes xmlconcat xmlelement xmlexists xmlforest xmlparse xmlpi xmlroot xmlserialize year yes zone"),
+  builtin: set("bigint int8 bigserial serial8 bit varying varbit boolean bool box bytea character char varchar cidr circle date double precision float float8 inet integer int int4 interval json jsonb line lseg macaddr macaddr8 money numeric decimal path pg_lsn point polygon real float4 smallint int2 smallserial serial2 serial serial4 text time without zone with timetz timestamp timestamptz tsquery tsvector txid_snapshot uuid xml"),
+  atoms: set("false true null unknown"),
+  operatorChars: /^[*+\-%<>!=&|^\/#@?~]/,
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable decimallessFloat zerolessFloat binaryNumber hexNumber nCharCast charsetCast")
+});
+var sparkSQL = sql({
+  keywords: set("add after all alter analyze and anti archive array as asc at between bucket buckets by cache cascade case cast change clear cluster clustered codegen collection column columns comment commit compact compactions compute concatenate cost create cross cube current current_date current_timestamp database databases data dbproperties defined delete delimited deny desc describe dfs directories distinct distribute drop else end escaped except exchange exists explain export extended external false fields fileformat first following for format formatted from full function functions global grant group grouping having if ignore import in index indexes inner inpath inputformat insert intersect interval into is items join keys last lateral lazy left like limit lines list load local location lock locks logical macro map minus msck natural no not null nulls of on optimize option options or order out outer outputformat over overwrite partition partitioned partitions percent preceding principals purge range recordreader recordwriter recover reduce refresh regexp rename repair replace reset restrict revoke right rlike role roles rollback rollup row rows schema schemas select semi separated serde serdeproperties set sets show skewed sort sorted start statistics stored stratify struct table tables tablesample tblproperties temp temporary terminated then to touch transaction transactions transform true truncate unarchive unbounded uncache union unlock unset use using values view when where window with"),
+  builtin: set("tinyint smallint int bigint boolean float double string binary timestamp decimal array map struct uniontype delimited serde sequencefile textfile rcfile inputformat outputformat"),
+  atoms: set("false true null"),
+  operatorChars: /^[*\/+\-%<>!=~&|^]/,
+  dateSQL: set("date time timestamp"),
+  support: set("ODBCdotTable doubleQuote zerolessFloat")
+});
+var esper = sql({
+  client: set("source"),
+  // http://www.espertech.com/esper/release-5.5.0/esper-reference/html/appendix_keywords.html
+  keywords: set("alter and as asc between by count create delete desc distinct drop from group having in insert into is join like not on or order select set table union update values where limit after all and as at asc avedev avg between by case cast coalesce count create current_timestamp day days delete define desc distinct else end escape events every exists false first from full group having hour hours in inner insert instanceof into irstream is istream join last lastweekday left limit like max match_recognize matches median measures metadatasql min minute minutes msec millisecond milliseconds not null offset on or order outer output partition pattern prev prior regexp retain-union retain-intersection right rstream sec second seconds select set some snapshot sql stddev sum then true unidirectional until update variable weekday when where window"),
+  builtin: {},
+  atoms: set("false true null"),
+  operatorChars: /^[*+\-%<>!=&|^\/#@?~]/,
+  dateSQL: set("time"),
+  support: set("decimallessFloat zerolessFloat binaryNumber hexNumber")
+});
+
+// node_modules/@codemirror/legacy-modes/mode/stex.js
+function mkStex(mathMode) {
+  function pushCommand(state, command) {
+    state.cmdState.push(command);
+  }
+  function peekCommand(state) {
+    if (state.cmdState.length > 0) {
+      return state.cmdState[state.cmdState.length - 1];
+    } else {
+      return null;
+    }
+  }
+  function popCommand(state) {
+    var plug = state.cmdState.pop();
+    if (plug) {
+      plug.closeBracket();
+    }
+  }
+  function getMostPowerful(state) {
+    var context = state.cmdState;
+    for (var i = context.length - 1; i >= 0; i--) {
+      var plug = context[i];
+      if (plug.name == "DEFAULT") {
+        continue;
+      }
+      return plug;
+    }
+    return { styleIdentifier: function() {
+      return null;
+    } };
+  }
+  function addPluginPattern(pluginName, cmdStyle, styles) {
+    return function() {
+      this.name = pluginName;
+      this.bracketNo = 0;
+      this.style = cmdStyle;
+      this.styles = styles;
+      this.argument = null;
+      this.styleIdentifier = function() {
+        return this.styles[this.bracketNo - 1] || null;
+      };
+      this.openBracket = function() {
+        this.bracketNo++;
+        return "bracket";
+      };
+      this.closeBracket = function() {
+      };
+    };
+  }
+  var plugins = {};
+  plugins["importmodule"] = addPluginPattern("importmodule", "tag", ["string", "builtin"]);
+  plugins["documentclass"] = addPluginPattern("documentclass", "tag", ["", "atom"]);
+  plugins["usepackage"] = addPluginPattern("usepackage", "tag", ["atom"]);
+  plugins["begin"] = addPluginPattern("begin", "tag", ["atom"]);
+  plugins["end"] = addPluginPattern("end", "tag", ["atom"]);
+  plugins["label"] = addPluginPattern("label", "tag", ["atom"]);
+  plugins["ref"] = addPluginPattern("ref", "tag", ["atom"]);
+  plugins["eqref"] = addPluginPattern("eqref", "tag", ["atom"]);
+  plugins["cite"] = addPluginPattern("cite", "tag", ["atom"]);
+  plugins["bibitem"] = addPluginPattern("bibitem", "tag", ["atom"]);
+  plugins["Bibitem"] = addPluginPattern("Bibitem", "tag", ["atom"]);
+  plugins["RBibitem"] = addPluginPattern("RBibitem", "tag", ["atom"]);
+  plugins["DEFAULT"] = function() {
+    this.name = "DEFAULT";
+    this.style = "tag";
+    this.styleIdentifier = this.openBracket = this.closeBracket = function() {
+    };
+  };
+  function setState(state, f) {
+    state.f = f;
+  }
+  function normal3(source, state) {
+    var plug;
+    if (source.match(/^\\[a-zA-Z@\xc0-\u1fff\u2060-\uffff]+/)) {
+      var cmdName = source.current().slice(1);
+      plug = plugins.hasOwnProperty(cmdName) ? plugins[cmdName] : plugins["DEFAULT"];
+      plug = new plug();
+      pushCommand(state, plug);
+      setState(state, beginParams);
+      return plug.style;
+    }
+    if (source.match(/^\\[$&%#{}_]/)) {
+      return "tag";
+    }
+    if (source.match(/^\\[,;!\/\\]/)) {
+      return "tag";
+    }
+    if (source.match("\\[")) {
+      setState(state, function(source2, state2) {
+        return inMathMode(source2, state2, "\\]");
+      });
+      return "keyword";
+    }
+    if (source.match("\\(")) {
+      setState(state, function(source2, state2) {
+        return inMathMode(source2, state2, "\\)");
+      });
+      return "keyword";
+    }
+    if (source.match("$$")) {
+      setState(state, function(source2, state2) {
+        return inMathMode(source2, state2, "$$");
+      });
+      return "keyword";
+    }
+    if (source.match("$")) {
+      setState(state, function(source2, state2) {
+        return inMathMode(source2, state2, "$");
+      });
+      return "keyword";
+    }
+    var ch = source.next();
+    if (ch == "%") {
+      source.skipToEnd();
+      return "comment";
+    } else if (ch == "}" || ch == "]") {
+      plug = peekCommand(state);
+      if (plug) {
+        plug.closeBracket(ch);
+        setState(state, beginParams);
+      } else {
+        return "error";
+      }
+      return "bracket";
+    } else if (ch == "{" || ch == "[") {
+      plug = plugins["DEFAULT"];
+      plug = new plug();
+      pushCommand(state, plug);
+      return "bracket";
+    } else if (/\d/.test(ch)) {
+      source.eatWhile(/[\w.%]/);
+      return "atom";
+    } else {
+      source.eatWhile(/[\w\-_]/);
+      plug = getMostPowerful(state);
+      if (plug.name == "begin") {
+        plug.argument = source.current();
+      }
+      return plug.styleIdentifier();
+    }
+  }
+  function inMathMode(source, state, endModeSeq) {
+    if (source.eatSpace()) {
+      return null;
+    }
+    if (endModeSeq && source.match(endModeSeq)) {
+      setState(state, normal3);
+      return "keyword";
+    }
+    if (source.match(/^\\[a-zA-Z@]+/)) {
+      return "tag";
+    }
+    if (source.match(/^[a-zA-Z]+/)) {
+      return "variableName.special";
+    }
+    if (source.match(/^\\[$&%#{}_]/)) {
+      return "tag";
+    }
+    if (source.match(/^\\[,;!\/]/)) {
+      return "tag";
+    }
+    if (source.match(/^[\^_&]/)) {
+      return "tag";
+    }
+    if (source.match(/^[+\-<>|=,\/@!*:;'"`~#?]/)) {
+      return null;
+    }
+    if (source.match(/^(\d+\.\d*|\d*\.\d+|\d+)/)) {
+      return "number";
+    }
+    var ch = source.next();
+    if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
+      return "bracket";
+    }
+    if (ch == "%") {
+      source.skipToEnd();
+      return "comment";
+    }
+    return "error";
+  }
+  function beginParams(source, state) {
+    var ch = source.peek(), lastPlug;
+    if (ch == "{" || ch == "[") {
+      lastPlug = peekCommand(state);
+      lastPlug.openBracket(ch);
+      source.eat(ch);
+      setState(state, normal3);
+      return "bracket";
+    }
+    if (/[ \t\r]/.test(ch)) {
+      source.eat(ch);
+      return null;
+    }
+    setState(state, normal3);
+    popCommand(state);
+    return normal3(source, state);
+  }
+  return {
+    name: "stex",
+    startState: function() {
+      var f = mathMode ? function(source, state) {
+        return inMathMode(source, state);
+      } : normal3;
+      return {
+        cmdState: [],
+        f
+      };
+    },
+    copyState: function(s) {
+      return {
+        cmdState: s.cmdState.slice(),
+        f: s.f
+      };
+    },
+    token: function(stream, state) {
+      return state.f(stream, state);
+    },
+    blankLine: function(state) {
+      state.f = normal3;
+      state.cmdState.length = 0;
+    },
+    languageData: {
+      commentTokens: { line: "%" }
+    }
+  };
+}
+var stex = mkStex(false);
+var stexMath = mkStex(true);
+
+// node_modules/@codemirror/legacy-modes/mode/swift.js
+function wordSet(words8) {
+  var set2 = {};
+  for (var i = 0; i < words8.length; i++) set2[words8[i]] = true;
+  return set2;
+}
+var keywords12 = wordSet([
+  "_",
+  "var",
+  "let",
+  "actor",
+  "class",
+  "enum",
+  "extension",
+  "import",
+  "protocol",
+  "struct",
+  "func",
+  "typealias",
+  "associatedtype",
+  "open",
+  "public",
+  "internal",
+  "fileprivate",
+  "private",
+  "deinit",
+  "init",
+  "new",
+  "override",
+  "self",
+  "subscript",
+  "super",
+  "convenience",
+  "dynamic",
+  "final",
+  "indirect",
+  "lazy",
+  "required",
+  "static",
+  "unowned",
+  "unowned(safe)",
+  "unowned(unsafe)",
+  "weak",
+  "as",
+  "is",
+  "break",
+  "case",
+  "continue",
+  "default",
+  "else",
+  "fallthrough",
+  "for",
+  "guard",
+  "if",
+  "in",
+  "repeat",
+  "switch",
+  "where",
+  "while",
+  "defer",
+  "return",
+  "inout",
+  "mutating",
+  "nonmutating",
+  "isolated",
+  "nonisolated",
+  "catch",
+  "do",
+  "rethrows",
+  "throw",
+  "throws",
+  "async",
+  "await",
+  "try",
+  "didSet",
+  "get",
+  "set",
+  "willSet",
+  "assignment",
+  "associativity",
+  "infix",
+  "left",
+  "none",
+  "operator",
+  "postfix",
+  "precedence",
+  "precedencegroup",
+  "prefix",
+  "right",
+  "Any",
+  "AnyObject",
+  "Type",
+  "dynamicType",
+  "Self",
+  "Protocol",
+  "__COLUMN__",
+  "__FILE__",
+  "__FUNCTION__",
+  "__LINE__"
+]);
+var definingKeywords = wordSet(["var", "let", "actor", "class", "enum", "extension", "import", "protocol", "struct", "func", "typealias", "associatedtype", "for"]);
+var atoms5 = wordSet(["true", "false", "nil", "self", "super", "_"]);
+var types = wordSet([
+  "Array",
+  "Bool",
+  "Character",
+  "Dictionary",
+  "Double",
+  "Float",
+  "Int",
+  "Int8",
+  "Int16",
+  "Int32",
+  "Int64",
+  "Never",
+  "Optional",
+  "Set",
+  "String",
+  "UInt8",
+  "UInt16",
+  "UInt32",
+  "UInt64",
+  "Void"
+]);
+var operators3 = "+-/*%=|&<>~^?!";
+var punc = ":;,.(){}[]";
+var binary = /^\-?0b[01][01_]*/;
+var octal = /^\-?0o[0-7][0-7_]*/;
+var hexadecimal = /^\-?0x[\dA-Fa-f][\dA-Fa-f_]*(?:(?:\.[\dA-Fa-f][\dA-Fa-f_]*)?[Pp]\-?\d[\d_]*)?/;
+var decimal = /^\-?\d[\d_]*(?:\.\d[\d_]*)?(?:[Ee]\-?\d[\d_]*)?/;
+var identifier = /^\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1/;
+var property = /^\.(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;
+var instruction = /^\#[A-Za-z]+/;
+var attribute = /^@(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;
+function tokenBase11(stream, state, prev) {
+  if (stream.sol()) state.indented = stream.indentation();
+  if (stream.eatSpace()) return null;
+  var ch = stream.peek();
+  if (ch == "/") {
+    if (stream.match("//")) {
+      stream.skipToEnd();
+      return "comment";
+    }
+    if (stream.match("/*")) {
+      state.tokenize.push(tokenComment6);
+      return tokenComment6(stream, state);
+    }
+  }
+  if (stream.match(instruction)) return "builtin";
+  if (stream.match(attribute)) return "attribute";
+  if (stream.match(binary)) return "number";
+  if (stream.match(octal)) return "number";
+  if (stream.match(hexadecimal)) return "number";
+  if (stream.match(decimal)) return "number";
+  if (stream.match(property)) return "property";
+  if (operators3.indexOf(ch) > -1) {
+    stream.next();
+    return "operator";
+  }
+  if (punc.indexOf(ch) > -1) {
+    stream.next();
+    stream.match("..");
+    return "punctuation";
+  }
+  var stringMatch;
+  if (stringMatch = stream.match(/("""|"|')/)) {
+    var tokenize3 = tokenString7.bind(null, stringMatch[0]);
+    state.tokenize.push(tokenize3);
+    return tokenize3(stream, state);
+  }
+  if (stream.match(identifier)) {
+    var ident = stream.current();
+    if (types.hasOwnProperty(ident)) return "type";
+    if (atoms5.hasOwnProperty(ident)) return "atom";
+    if (keywords12.hasOwnProperty(ident)) {
+      if (definingKeywords.hasOwnProperty(ident))
+        state.prev = "define";
+      return "keyword";
+    }
+    if (prev == "define") return "def";
+    return "variable";
+  }
+  stream.next();
+  return null;
+}
+function tokenUntilClosingParen() {
+  var depth = 0;
+  return function(stream, state, prev) {
+    var inner = tokenBase11(stream, state, prev);
+    if (inner == "punctuation") {
+      if (stream.current() == "(") ++depth;
+      else if (stream.current() == ")") {
+        if (depth == 0) {
+          stream.backUp(1);
+          state.tokenize.pop();
+          return state.tokenize[state.tokenize.length - 1](stream, state);
+        } else --depth;
+      }
+    }
+    return inner;
+  };
+}
+function tokenString7(openQuote, stream, state) {
+  var singleLine = openQuote.length == 1;
+  var ch, escaped = false;
+  while (ch = stream.peek()) {
+    if (escaped) {
+      stream.next();
+      if (ch == "(") {
+        state.tokenize.push(tokenUntilClosingParen());
+        return "string";
+      }
+      escaped = false;
+    } else if (stream.match(openQuote)) {
+      state.tokenize.pop();
+      return "string";
+    } else {
+      stream.next();
+      escaped = ch == "\\";
+    }
+  }
+  if (singleLine) {
+    state.tokenize.pop();
+  }
+  return "string";
+}
+function tokenComment6(stream, state) {
+  var ch;
+  while (ch = stream.next()) {
+    if (ch === "/" && stream.eat("*")) {
+      state.tokenize.push(tokenComment6);
+    } else if (ch === "*" && stream.eat("/")) {
+      state.tokenize.pop();
+      break;
+    }
+  }
+  return "comment";
+}
+function Context3(prev, align, indented) {
+  this.prev = prev;
+  this.align = align;
+  this.indented = indented;
+}
+function pushContext3(state, stream) {
+  var align = stream.match(/^\s*($|\/[\/\*]|[)}\]])/, false) ? null : stream.column() + 1;
+  state.context = new Context3(state.context, align, state.indented);
+}
+function popContext3(state) {
+  if (state.context) {
+    state.indented = state.context.indented;
+    state.context = state.context.prev;
+  }
+}
+var swift = {
+  name: "swift",
+  startState: function() {
+    return {
+      prev: null,
+      context: null,
+      indented: 0,
+      tokenize: []
+    };
+  },
+  token: function(stream, state) {
+    var prev = state.prev;
+    state.prev = null;
+    var tokenize3 = state.tokenize[state.tokenize.length - 1] || tokenBase11;
+    var style = tokenize3(stream, state, prev);
+    if (!style || style == "comment") state.prev = prev;
+    else if (!state.prev) state.prev = style;
+    if (style == "punctuation") {
+      var bracket = /[\(\[\{]|([\]\)\}])/.exec(stream.current());
+      if (bracket) (bracket[1] ? popContext3 : pushContext3)(state, stream);
+    }
+    return style;
+  },
+  indent: function(state, textAfter, iCx) {
+    var cx = state.context;
+    if (!cx) return 0;
+    var closing3 = /^[\]\}\)]/.test(textAfter);
+    if (cx.align != null) return cx.align - (closing3 ? 1 : 0);
+    return cx.indented + (closing3 ? 0 : iCx.unit);
+  },
+  languageData: {
+    indentOnInput: /^\s*[\)\}\]]$/,
+    commentTokens: { line: "//", block: { open: "/*", close: "*/" } },
+    closeBrackets: { brackets: ["(", "[", "{", "'", '"', "`"] }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/toml.js
+var toml = {
+  name: "toml",
+  startState: function() {
+    return {
+      inString: false,
+      stringType: "",
+      lhs: true,
+      inArray: 0
+    };
+  },
+  token: function(stream, state) {
+    if (!state.inString && (stream.peek() == '"' || stream.peek() == "'")) {
+      state.stringType = stream.peek();
+      stream.next();
+      state.inString = true;
+    }
+    if (stream.sol() && state.inArray === 0) {
+      state.lhs = true;
+    }
+    if (state.inString) {
+      while (state.inString && !stream.eol()) {
+        if (stream.peek() === state.stringType) {
+          stream.next();
+          state.inString = false;
+        } else if (stream.peek() === "\\") {
+          stream.next();
+          stream.next();
+        } else {
+          stream.match(/^.[^\\\"\']*/);
+        }
+      }
+      return state.lhs ? "property" : "string";
+    } else if (state.inArray && stream.peek() === "]") {
+      stream.next();
+      state.inArray--;
+      return "bracket";
+    } else if (state.lhs && stream.peek() === "[" && stream.skipTo("]")) {
+      stream.next();
+      if (stream.peek() === "]") stream.next();
+      return "atom";
+    } else if (stream.peek() === "#") {
+      stream.skipToEnd();
+      return "comment";
+    } else if (stream.eatSpace()) {
+      return null;
+    } else if (state.lhs && stream.eatWhile(function(c2) {
+      return c2 != "=" && c2 != " ";
+    })) {
+      return "property";
+    } else if (state.lhs && stream.peek() === "=") {
+      stream.next();
+      state.lhs = false;
+      return null;
+    } else if (!state.lhs && stream.match(/^\d\d\d\d[\d\-\:\.T]*Z/)) {
+      return "atom";
+    } else if (!state.lhs && (stream.match("true") || stream.match("false"))) {
+      return "atom";
+    } else if (!state.lhs && stream.peek() === "[") {
+      state.inArray++;
+      stream.next();
+      return "bracket";
+    } else if (!state.lhs && stream.match(/^\-?\d+(?:\.\d+)?/)) {
+      return "number";
+    } else if (!stream.eatSpace()) {
+      stream.next();
+    }
+    return null;
+  },
+  languageData: {
+    commentTokens: { line: "#" }
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/vb.js
+var ERRORCLASS = "error";
+function wordRegexp4(words8) {
+  return new RegExp("^((" + words8.join(")|(") + "))\\b", "i");
+}
+var singleOperators2 = new RegExp("^[\\+\\-\\*/%&\\\\|\\^~<>!]");
+var singleDelimiters2 = new RegExp("^[\\(\\)\\[\\]\\{\\}@,:`=;\\.]");
+var doubleOperators2 = new RegExp("^((==)|(<>)|(<=)|(>=)|(<>)|(<<)|(>>)|(//)|(\\*\\*))");
+var doubleDelimiters2 = new RegExp("^((\\+=)|(\\-=)|(\\*=)|(%=)|(/=)|(&=)|(\\|=)|(\\^=))");
+var tripleDelimiters2 = new RegExp("^((//=)|(>>=)|(<<=)|(\\*\\*=))");
+var identifiers4 = new RegExp("^[_A-Za-z][_A-Za-z0-9]*");
+var openingKeywords = ["class", "module", "sub", "enum", "select", "while", "if", "function", "get", "set", "property", "try", "structure", "synclock", "using", "with"];
+var middleKeywords = ["else", "elseif", "case", "catch", "finally"];
+var endKeywords = ["next", "loop"];
+var operatorKeywords = ["and", "andalso", "or", "orelse", "xor", "in", "not", "is", "isnot", "like"];
+var wordOperators3 = wordRegexp4(operatorKeywords);
+var commonKeywords4 = ["#const", "#else", "#elseif", "#end", "#if", "#region", "addhandler", "addressof", "alias", "as", "byref", "byval", "cbool", "cbyte", "cchar", "cdate", "cdbl", "cdec", "cint", "clng", "cobj", "compare", "const", "continue", "csbyte", "cshort", "csng", "cstr", "cuint", "culng", "cushort", "declare", "default", "delegate", "dim", "directcast", "each", "erase", "error", "event", "exit", "explicit", "false", "for", "friend", "gettype", "goto", "handles", "implements", "imports", "infer", "inherits", "interface", "isfalse", "istrue", "lib", "me", "mod", "mustinherit", "mustoverride", "my", "mybase", "myclass", "namespace", "narrowing", "new", "nothing", "notinheritable", "notoverridable", "of", "off", "on", "operator", "option", "optional", "out", "overloads", "overridable", "overrides", "paramarray", "partial", "private", "protected", "public", "raiseevent", "readonly", "redim", "removehandler", "resume", "return", "shadows", "shared", "static", "step", "stop", "strict", "then", "throw", "to", "true", "trycast", "typeof", "until", "until", "when", "widening", "withevents", "writeonly"];
+var commontypes = ["object", "boolean", "char", "string", "byte", "sbyte", "short", "ushort", "int16", "uint16", "integer", "uinteger", "int32", "uint32", "long", "ulong", "int64", "uint64", "decimal", "single", "double", "float", "date", "datetime", "intptr", "uintptr"];
+var keywords13 = wordRegexp4(commonKeywords4);
+var types2 = wordRegexp4(commontypes);
+var stringPrefixes2 = '"';
+var opening2 = wordRegexp4(openingKeywords);
+var middle = wordRegexp4(middleKeywords);
+var closing2 = wordRegexp4(endKeywords);
+var doubleClosing = wordRegexp4(["end"]);
+var doOpening = wordRegexp4(["do"]);
+var indentInfo = null;
+function indent(_stream, state) {
+  state.currentIndent++;
+}
+function dedent(_stream, state) {
+  state.currentIndent--;
+}
+function tokenBase12(stream, state) {
+  if (stream.eatSpace()) {
+    return null;
+  }
+  var ch = stream.peek();
+  if (ch === "'") {
+    stream.skipToEnd();
+    return "comment";
+  }
+  if (stream.match(/^((&H)|(&O))?[0-9\.a-f]/i, false)) {
+    var floatLiteral = false;
+    if (stream.match(/^\d*\.\d+F?/i)) {
+      floatLiteral = true;
+    } else if (stream.match(/^\d+\.\d*F?/)) {
+      floatLiteral = true;
+    } else if (stream.match(/^\.\d+F?/)) {
+      floatLiteral = true;
+    }
+    if (floatLiteral) {
+      stream.eat(/J/i);
+      return "number";
+    }
+    var intLiteral = false;
+    if (stream.match(/^&H[0-9a-f]+/i)) {
+      intLiteral = true;
+    } else if (stream.match(/^&O[0-7]+/i)) {
+      intLiteral = true;
+    } else if (stream.match(/^[1-9]\d*F?/)) {
+      stream.eat(/J/i);
+      intLiteral = true;
+    } else if (stream.match(/^0(?![\dx])/i)) {
+      intLiteral = true;
+    }
+    if (intLiteral) {
+      stream.eat(/L/i);
+      return "number";
+    }
+  }
+  if (stream.match(stringPrefixes2)) {
+    state.tokenize = tokenStringFactory2(stream.current());
+    return state.tokenize(stream, state);
+  }
+  if (stream.match(tripleDelimiters2) || stream.match(doubleDelimiters2)) {
+    return null;
+  }
+  if (stream.match(doubleOperators2) || stream.match(singleOperators2) || stream.match(wordOperators3)) {
+    return "operator";
+  }
+  if (stream.match(singleDelimiters2)) {
+    return null;
+  }
+  if (stream.match(doOpening)) {
+    indent(stream, state);
+    state.doInCurrentLine = true;
+    return "keyword";
+  }
+  if (stream.match(opening2)) {
+    if (!state.doInCurrentLine)
+      indent(stream, state);
+    else
+      state.doInCurrentLine = false;
+    return "keyword";
+  }
+  if (stream.match(middle)) {
+    return "keyword";
+  }
+  if (stream.match(doubleClosing)) {
+    dedent(stream, state);
+    dedent(stream, state);
+    return "keyword";
+  }
+  if (stream.match(closing2)) {
+    dedent(stream, state);
+    return "keyword";
+  }
+  if (stream.match(types2)) {
+    return "keyword";
+  }
+  if (stream.match(keywords13)) {
+    return "keyword";
+  }
+  if (stream.match(identifiers4)) {
+    return "variable";
+  }
+  stream.next();
+  return ERRORCLASS;
+}
+function tokenStringFactory2(delimiter2) {
+  var singleline = delimiter2.length == 1;
+  var OUTCLASS = "string";
+  return function(stream, state) {
+    while (!stream.eol()) {
+      stream.eatWhile(/[^'"]/);
+      if (stream.match(delimiter2)) {
+        state.tokenize = tokenBase12;
+        return OUTCLASS;
+      } else {
+        stream.eat(/['"]/);
+      }
+    }
+    if (singleline) {
+      state.tokenize = tokenBase12;
+    }
+    return OUTCLASS;
+  };
+}
+function tokenLexer(stream, state) {
+  var style = state.tokenize(stream, state);
+  var current = stream.current();
+  if (current === ".") {
+    style = state.tokenize(stream, state);
+    if (style === "variable") {
+      return "variable";
+    } else {
+      return ERRORCLASS;
+    }
+  }
+  var delimiter_index = "[({".indexOf(current);
+  if (delimiter_index !== -1) {
+    indent(stream, state);
+  }
+  if (indentInfo === "dedent") {
+    if (dedent(stream, state)) {
+      return ERRORCLASS;
+    }
+  }
+  delimiter_index = "])}".indexOf(current);
+  if (delimiter_index !== -1) {
+    if (dedent(stream, state)) {
+      return ERRORCLASS;
+    }
+  }
+  return style;
+}
+var vb = {
+  name: "vb",
+  startState: function() {
+    return {
+      tokenize: tokenBase12,
+      lastToken: null,
+      currentIndent: 0,
+      nextLineIndent: 0,
+      doInCurrentLine: false
+    };
+  },
+  token: function(stream, state) {
+    if (stream.sol()) {
+      state.currentIndent += state.nextLineIndent;
+      state.nextLineIndent = 0;
+      state.doInCurrentLine = 0;
+    }
+    var style = tokenLexer(stream, state);
+    state.lastToken = { style, content: stream.current() };
+    return style;
+  },
+  indent: function(state, textAfter, cx) {
+    var trueText = textAfter.replace(/^\s+|\s+$/g, "");
+    if (trueText.match(closing2) || trueText.match(doubleClosing) || trueText.match(middle)) return cx.unit * (state.currentIndent - 1);
+    if (state.currentIndent < 0) return 0;
+    return state.currentIndent * cx.unit;
+  },
+  languageData: {
+    closeBrackets: { brackets: ["(", "[", "{", '"'] },
+    commentTokens: { line: "'" },
+    autocomplete: openingKeywords.concat(middleKeywords).concat(endKeywords).concat(operatorKeywords).concat(commonKeywords4).concat(commontypes)
+  }
+};
+
+// node_modules/@codemirror/legacy-modes/mode/vbscript.js
+function mkVBScript(parserConf) {
+  var ERRORCLASS2 = "error";
+  function wordRegexp5(words8) {
+    return new RegExp("^((" + words8.join(")|(") + "))\\b", "i");
+  }
+  var singleOperators3 = new RegExp("^[\\+\\-\\*/&\\\\\\^<>=]");
+  var doubleOperators3 = new RegExp("^((<>)|(<=)|(>=))");
+  var singleDelimiters3 = new RegExp("^[\\.,]");
+  var brackets = new RegExp("^[\\(\\)]");
+  var identifiers5 = new RegExp("^[A-Za-z][_A-Za-z0-9]*");
+  var openingKeywords2 = ["class", "sub", "select", "while", "if", "function", "property", "with", "for"];
+  var middleKeywords2 = ["else", "elseif", "case"];
+  var endKeywords2 = ["next", "loop", "wend"];
+  var wordOperators4 = wordRegexp5(["and", "or", "not", "xor", "is", "mod", "eqv", "imp"]);
+  var commonkeywords = [
+    "dim",
+    "redim",
+    "then",
+    "until",
+    "randomize",
+    "byval",
+    "byref",
+    "new",
+    "property",
+    "exit",
+    "in",
+    "const",
+    "private",
+    "public",
+    "get",
+    "set",
+    "let",
+    "stop",
+    "on error resume next",
+    "on error goto 0",
+    "option explicit",
+    "call",
+    "me"
+  ];
+  var atomWords = ["true", "false", "nothing", "empty", "null"];
+  var builtinFuncsWords = [
+    "abs",
+    "array",
+    "asc",
+    "atn",
+    "cbool",
+    "cbyte",
+    "ccur",
+    "cdate",
+    "cdbl",
+    "chr",
+    "cint",
+    "clng",
+    "cos",
+    "csng",
+    "cstr",
+    "date",
+    "dateadd",
+    "datediff",
+    "datepart",
+    "dateserial",
+    "datevalue",
+    "day",
+    "escape",
+    "eval",
+    "execute",
+    "exp",
+    "filter",
+    "formatcurrency",
+    "formatdatetime",
+    "formatnumber",
+    "formatpercent",
+    "getlocale",
+    "getobject",
+    "getref",
+    "hex",
+    "hour",
+    "inputbox",
+    "instr",
+    "instrrev",
+    "int",
+    "fix",
+    "isarray",
+    "isdate",
+    "isempty",
+    "isnull",
+    "isnumeric",
+    "isobject",
+    "join",
+    "lbound",
+    "lcase",
+    "left",
+    "len",
+    "loadpicture",
+    "log",
+    "ltrim",
+    "rtrim",
+    "trim",
+    "maths",
+    "mid",
+    "minute",
+    "month",
+    "monthname",
+    "msgbox",
+    "now",
+    "oct",
+    "replace",
+    "rgb",
+    "right",
+    "rnd",
+    "round",
+    "scriptengine",
+    "scriptenginebuildversion",
+    "scriptenginemajorversion",
+    "scriptengineminorversion",
+    "second",
+    "setlocale",
+    "sgn",
+    "sin",
+    "space",
+    "split",
+    "sqr",
+    "strcomp",
+    "string",
+    "strreverse",
+    "tan",
+    "time",
+    "timer",
+    "timeserial",
+    "timevalue",
+    "typename",
+    "ubound",
+    "ucase",
+    "unescape",
+    "vartype",
+    "weekday",
+    "weekdayname",
+    "year"
+  ];
+  var builtinConsts = [
+    "vbBlack",
+    "vbRed",
+    "vbGreen",
+    "vbYellow",
+    "vbBlue",
+    "vbMagenta",
+    "vbCyan",
+    "vbWhite",
+    "vbBinaryCompare",
+    "vbTextCompare",
+    "vbSunday",
+    "vbMonday",
+    "vbTuesday",
+    "vbWednesday",
+    "vbThursday",
+    "vbFriday",
+    "vbSaturday",
+    "vbUseSystemDayOfWeek",
+    "vbFirstJan1",
+    "vbFirstFourDays",
+    "vbFirstFullWeek",
+    "vbGeneralDate",
+    "vbLongDate",
+    "vbShortDate",
+    "vbLongTime",
+    "vbShortTime",
+    "vbObjectError",
+    "vbOKOnly",
+    "vbOKCancel",
+    "vbAbortRetryIgnore",
+    "vbYesNoCancel",
+    "vbYesNo",
+    "vbRetryCancel",
+    "vbCritical",
+    "vbQuestion",
+    "vbExclamation",
+    "vbInformation",
+    "vbDefaultButton1",
+    "vbDefaultButton2",
+    "vbDefaultButton3",
+    "vbDefaultButton4",
+    "vbApplicationModal",
+    "vbSystemModal",
+    "vbOK",
+    "vbCancel",
+    "vbAbort",
+    "vbRetry",
+    "vbIgnore",
+    "vbYes",
+    "vbNo",
+    "vbCr",
+    "VbCrLf",
+    "vbFormFeed",
+    "vbLf",
+    "vbNewLine",
+    "vbNullChar",
+    "vbNullString",
+    "vbTab",
+    "vbVerticalTab",
+    "vbUseDefault",
+    "vbTrue",
+    "vbFalse",
+    "vbEmpty",
+    "vbNull",
+    "vbInteger",
+    "vbLong",
+    "vbSingle",
+    "vbDouble",
+    "vbCurrency",
+    "vbDate",
+    "vbString",
+    "vbObject",
+    "vbError",
+    "vbBoolean",
+    "vbVariant",
+    "vbDataObject",
+    "vbDecimal",
+    "vbByte",
+    "vbArray"
+  ];
+  var builtinObjsWords = ["WScript", "err", "debug", "RegExp"];
+  var knownProperties = ["description", "firstindex", "global", "helpcontext", "helpfile", "ignorecase", "length", "number", "pattern", "source", "value", "count"];
+  var knownMethods = ["clear", "execute", "raise", "replace", "test", "write", "writeline", "close", "open", "state", "eof", "update", "addnew", "end", "createobject", "quit"];
+  var aspBuiltinObjsWords = ["server", "response", "request", "session", "application"];
+  var aspKnownProperties = [
+    "buffer",
+    "cachecontrol",
+    "charset",
+    "contenttype",
+    "expires",
+    "expiresabsolute",
+    "isclientconnected",
+    "pics",
+    "status",
+    //response
+    "clientcertificate",
+    "cookies",
+    "form",
+    "querystring",
+    "servervariables",
+    "totalbytes",
+    //request
+    "contents",
+    "staticobjects",
+    //application
+    "codepage",
+    "lcid",
+    "sessionid",
+    "timeout",
+    //session
+    "scripttimeout"
+  ];
+  var aspKnownMethods = [
+    "addheader",
+    "appendtolog",
+    "binarywrite",
+    "end",
+    "flush",
+    "redirect",
+    //response
+    "binaryread",
+    //request
+    "remove",
+    "removeall",
+    "lock",
+    "unlock",
+    //application
+    "abandon",
+    //session
+    "getlasterror",
+    "htmlencode",
+    "mappath",
+    "transfer",
+    "urlencode"
+  ];
+  var knownWords = knownMethods.concat(knownProperties);
+  builtinObjsWords = builtinObjsWords.concat(builtinConsts);
+  if (parserConf.isASP) {
+    builtinObjsWords = builtinObjsWords.concat(aspBuiltinObjsWords);
+    knownWords = knownWords.concat(aspKnownMethods, aspKnownProperties);
+  }
+  ;
+  var keywords14 = wordRegexp5(commonkeywords);
+  var atoms6 = wordRegexp5(atomWords);
+  var builtinFuncs = wordRegexp5(builtinFuncsWords);
+  var builtinObjs = wordRegexp5(builtinObjsWords);
+  var known = wordRegexp5(knownWords);
+  var stringPrefixes3 = '"';
+  var opening3 = wordRegexp5(openingKeywords2);
+  var middle2 = wordRegexp5(middleKeywords2);
+  var closing3 = wordRegexp5(endKeywords2);
+  var doubleClosing2 = wordRegexp5(["end"]);
+  var doOpening2 = wordRegexp5(["do"]);
+  var noIndentWords = wordRegexp5(["on error resume next", "exit"]);
+  var comment = wordRegexp5(["rem"]);
+  function indent2(_stream, state) {
+    state.currentIndent++;
+  }
+  function dedent2(_stream, state) {
+    state.currentIndent--;
+  }
+  function tokenBase13(stream, state) {
+    if (stream.eatSpace()) {
+      return null;
+    }
+    var ch = stream.peek();
+    if (ch === "'") {
+      stream.skipToEnd();
+      return "comment";
+    }
+    if (stream.match(comment)) {
+      stream.skipToEnd();
+      return "comment";
+    }
+    if (stream.match(/^((&H)|(&O))?[0-9\.]/i, false) && !stream.match(/^((&H)|(&O))?[0-9\.]+[a-z_]/i, false)) {
+      var floatLiteral = false;
+      if (stream.match(/^\d*\.\d+/i)) {
+        floatLiteral = true;
+      } else if (stream.match(/^\d+\.\d*/)) {
+        floatLiteral = true;
+      } else if (stream.match(/^\.\d+/)) {
+        floatLiteral = true;
+      }
+      if (floatLiteral) {
+        stream.eat(/J/i);
+        return "number";
+      }
+      var intLiteral = false;
+      if (stream.match(/^&H[0-9a-f]+/i)) {
+        intLiteral = true;
+      } else if (stream.match(/^&O[0-7]+/i)) {
+        intLiteral = true;
+      } else if (stream.match(/^[1-9]\d*F?/)) {
+        stream.eat(/J/i);
+        intLiteral = true;
+      } else if (stream.match(/^0(?![\dx])/i)) {
+        intLiteral = true;
+      }
+      if (intLiteral) {
+        stream.eat(/L/i);
+        return "number";
+      }
+    }
+    if (stream.match(stringPrefixes3)) {
+      state.tokenize = tokenStringFactory3(stream.current());
+      return state.tokenize(stream, state);
+    }
+    if (stream.match(doubleOperators3) || stream.match(singleOperators3) || stream.match(wordOperators4)) {
+      return "operator";
+    }
+    if (stream.match(singleDelimiters3)) {
+      return null;
+    }
+    if (stream.match(brackets)) {
+      return "bracket";
+    }
+    if (stream.match(noIndentWords)) {
+      state.doInCurrentLine = true;
+      return "keyword";
+    }
+    if (stream.match(doOpening2)) {
+      indent2(stream, state);
+      state.doInCurrentLine = true;
+      return "keyword";
+    }
+    if (stream.match(opening3)) {
+      if (!state.doInCurrentLine)
+        indent2(stream, state);
+      else
+        state.doInCurrentLine = false;
+      return "keyword";
+    }
+    if (stream.match(middle2)) {
+      return "keyword";
+    }
+    if (stream.match(doubleClosing2)) {
+      dedent2(stream, state);
+      dedent2(stream, state);
+      return "keyword";
+    }
+    if (stream.match(closing3)) {
+      if (!state.doInCurrentLine)
+        dedent2(stream, state);
+      else
+        state.doInCurrentLine = false;
+      return "keyword";
+    }
+    if (stream.match(keywords14)) {
+      return "keyword";
+    }
+    if (stream.match(atoms6)) {
+      return "atom";
+    }
+    if (stream.match(known)) {
+      return "variableName.special";
+    }
+    if (stream.match(builtinFuncs)) {
+      return "builtin";
+    }
+    if (stream.match(builtinObjs)) {
+      return "builtin";
+    }
+    if (stream.match(identifiers5)) {
+      return "variable";
+    }
+    stream.next();
+    return ERRORCLASS2;
+  }
+  function tokenStringFactory3(delimiter2) {
+    var singleline = delimiter2.length == 1;
+    var OUTCLASS = "string";
+    return function(stream, state) {
+      while (!stream.eol()) {
+        stream.eatWhile(/[^'"]/);
+        if (stream.match(delimiter2)) {
+          state.tokenize = tokenBase13;
+          return OUTCLASS;
+        } else {
+          stream.eat(/['"]/);
+        }
+      }
+      if (singleline) {
+        state.tokenize = tokenBase13;
+      }
+      return OUTCLASS;
+    };
+  }
+  function tokenLexer2(stream, state) {
+    var style = state.tokenize(stream, state);
+    var current = stream.current();
+    if (current === ".") {
+      style = state.tokenize(stream, state);
+      current = stream.current();
+      if (style && (style.substr(0, 8) === "variable" || style === "builtin" || style === "keyword")) {
+        if (style === "builtin" || style === "keyword") style = "variable";
+        if (knownWords.indexOf(current.substr(1)) > -1) style = "keyword";
+        return style;
+      } else {
+        return ERRORCLASS2;
+      }
+    }
+    return style;
+  }
+  return {
+    name: "vbscript",
+    startState: function() {
+      return {
+        tokenize: tokenBase13,
+        lastToken: null,
+        currentIndent: 0,
+        nextLineIndent: 0,
+        doInCurrentLine: false,
+        ignoreKeyword: false
+      };
+    },
+    token: function(stream, state) {
+      if (stream.sol()) {
+        state.currentIndent += state.nextLineIndent;
+        state.nextLineIndent = 0;
+        state.doInCurrentLine = 0;
+      }
+      var style = tokenLexer2(stream, state);
+      state.lastToken = { style, content: stream.current() };
+      if (style === null) style = null;
+      return style;
+    },
+    indent: function(state, textAfter, cx) {
+      var trueText = textAfter.replace(/^\s+|\s+$/g, "");
+      if (trueText.match(closing3) || trueText.match(doubleClosing2) || trueText.match(middle2)) return cx.unit * (state.currentIndent - 1);
+      if (state.currentIndent < 0) return 0;
+      return state.currentIndent * cx.unit;
+    }
+  };
+}
+var vbScript = mkVBScript({});
+var vbScriptASP = mkVBScript({ isASP: true });
+
+// node_modules/@codemirror/legacy-modes/mode/yaml.js
+var cons = ["true", "false", "on", "off", "yes", "no"];
+var keywordRegex = new RegExp("\\b((" + cons.join(")|(") + "))$", "i");
+var yaml = {
+  name: "yaml",
+  token: function(stream, state) {
+    var ch = stream.peek();
+    var esc = state.escaped;
+    state.escaped = false;
+    if (ch == "#" && (stream.pos == 0 || /\s/.test(stream.string.charAt(stream.pos - 1)))) {
+      stream.skipToEnd();
+      return "comment";
+    }
+    if (stream.match(/^('([^']|\\.)*'?|"([^"]|\\.)*"?)/))
+      return "string";
+    if (state.literal && stream.indentation() > state.keyCol) {
+      stream.skipToEnd();
+      return "string";
+    } else if (state.literal) {
+      state.literal = false;
+    }
+    if (stream.sol()) {
+      state.keyCol = 0;
+      state.pair = false;
+      state.pairStart = false;
+      if (stream.match("---")) {
+        return "def";
+      }
+      if (stream.match("...")) {
+        return "def";
+      }
+      if (stream.match(/^\s*-\s+/)) {
+        return "meta";
+      }
+    }
+    if (stream.match(/^(\{|\}|\[|\])/)) {
+      if (ch == "{")
+        state.inlinePairs++;
+      else if (ch == "}")
+        state.inlinePairs--;
+      else if (ch == "[")
+        state.inlineList++;
+      else
+        state.inlineList--;
+      return "meta";
+    }
+    if (state.inlineList > 0 && !esc && ch == ",") {
+      stream.next();
+      return "meta";
+    }
+    if (state.inlinePairs > 0 && !esc && ch == ",") {
+      state.keyCol = 0;
+      state.pair = false;
+      state.pairStart = false;
+      stream.next();
+      return "meta";
+    }
+    if (state.pairStart) {
+      if (stream.match(/^\s*(\||\>)\s*/)) {
+        state.literal = true;
+        return "meta";
+      }
+      ;
+      if (stream.match(/^\s*(\&|\*)[a-z0-9\._-]+\b/i)) {
+        return "variable";
+      }
+      if (state.inlinePairs == 0 && stream.match(/^\s*-?[0-9\.\,]+\s?$/)) {
+        return "number";
+      }
+      if (state.inlinePairs > 0 && stream.match(/^\s*-?[0-9\.\,]+\s?(?=(,|}))/)) {
+        return "number";
+      }
+      if (stream.match(keywordRegex)) {
+        return "keyword";
+      }
+    }
+    if (!state.pair && stream.match(/^\s*(?:[,\[\]{}&*!|>'"%@`][^\s'":]|[^,\[\]{}#&*!|>'"%@`])[^#]*?(?=\s*:($|\s))/)) {
+      state.pair = true;
+      state.keyCol = stream.indentation();
+      return "atom";
+    }
+    if (state.pair && stream.match(/^:\s*/)) {
+      state.pairStart = true;
+      return "meta";
+    }
+    state.pairStart = false;
+    state.escaped = ch == "\\";
+    stream.next();
+    return null;
+  },
+  startState: function() {
+    return {
+      pair: false,
+      pairStart: false,
+      keyCol: 0,
+      inlinePairs: 0,
+      inlineList: 0,
+      literal: false,
+      escaped: false
+    };
+  },
+  languageData: {
+    commentTokens: { line: "#" }
+  }
+};
+
+// node_modules/@ssddanbrown/codemirror-lang-smarty/dist/index.js
+var rightDelimiter = "}";
+var leftDelimiter = "{";
+var baseMode = { token: (stream) => stream.skipToEnd() };
+var keyFunctions = ["debug", "extends", "function", "include", "literal"];
+var regs = {
+  operatorChars: /[+\-*&%=<>!?]/,
+  validIdentifier: /[a-zA-Z0-9_]/,
+  stringChar: /['"]/
+};
+var last;
+function cont(style, lastType) {
+  last = lastType;
+  return style;
+}
+function chain2(stream, state, parser) {
+  state.tokenize = parser;
+  return parser(stream, state);
+}
+function doesNotCount(stream, pos) {
+  return false;
+}
+function tokenTop(stream, state) {
+  const string2 = stream.string;
+  let nextMatch;
+  for (let scan = stream.pos; ; ) {
+    nextMatch = string2.indexOf(leftDelimiter, scan);
+    scan = nextMatch + leftDelimiter.length;
+    if (nextMatch === -1 || !doesNotCount()) break;
+  }
+  if (nextMatch === stream.pos) {
+    stream.match(leftDelimiter);
+    if (stream.eat("*")) {
+      return chain2(stream, state, tokenBlock("comment", "*" + rightDelimiter));
+    } else {
+      state.depth++;
+      state.tokenize = tokenSmarty;
+      last = "startTag";
+      return "tag";
+    }
+  }
+  if (nextMatch > -1) stream.string = string2.slice(0, nextMatch);
+  const token = baseMode.token(stream, state.base);
+  if (nextMatch > -1) stream.string = string2;
+  return token;
+}
+function tokenSmarty(stream, state) {
+  if (stream.match(rightDelimiter, true)) {
+    {
+      state.tokenize = tokenTop;
+    }
+    return cont("tag", null);
+  }
+  if (stream.match(leftDelimiter, true)) {
+    state.depth++;
+    return cont("tag", "startTag");
+  }
+  const ch = stream.next();
+  if (ch === "$") {
+    stream.eatWhile(regs.validIdentifier);
+    return cont("variable-2", "variable");
+  } else if (ch === "|") {
+    return cont("operator", "pipe");
+  } else if (ch === ".") {
+    return cont("operator", "property");
+  } else if (regs.stringChar.test(ch)) {
+    state.tokenize = tokenAttribute(ch);
+    return cont("string", "string");
+  } else if (regs.operatorChars.test(ch)) {
+    stream.eatWhile(regs.operatorChars);
+    return cont("operator", "operator");
+  } else if (ch === "[" || ch === "]") {
+    return cont("bracket", "bracket");
+  } else if (ch === "(" || ch === ")") {
+    return cont("bracket", "operator");
+  } else if (/\d/.test(ch)) {
+    stream.eatWhile(/\d/);
+    return cont("number", "number");
+  } else {
+    if (state.last === "variable") {
+      if (ch === "@") {
+        stream.eatWhile(regs.validIdentifier);
+        return cont("property", "property");
+      } else if (ch === "|") {
+        stream.eatWhile(regs.validIdentifier);
+        return cont("qualifier", "modifier");
+      }
+    } else if (state.last === "pipe") {
+      stream.eatWhile(regs.validIdentifier);
+      return cont("qualifier", "modifier");
+    } else if (state.last === "whitespace") {
+      stream.eatWhile(regs.validIdentifier);
+      return cont("attribute", "modifier");
+    }
+    if (state.last === "property") {
+      stream.eatWhile(regs.validIdentifier);
+      return cont("property", null);
+    } else if (/\s/.test(ch)) {
+      last = "whitespace";
+      return null;
+    }
+    let str = "";
+    if (ch !== "/") {
+      str += ch;
+    }
+    let c2 = null;
+    while (c2 = stream.eat(regs.validIdentifier)) {
+      str += c2;
+    }
+    for (let i = 0, j = keyFunctions.length; i < j; i++) {
+      if (keyFunctions[i] === str) {
+        return cont("keyword", "keyword");
+      }
+    }
+    if (/\s/.test(ch)) {
+      return null;
+    }
+    return cont("tag", "tag");
+  }
+}
+function tokenAttribute(quote) {
+  return function(stream, state) {
+    let prevChar = null;
+    let currChar = null;
+    while (!stream.eol()) {
+      currChar = stream.peek();
+      if (stream.next() === quote && prevChar !== "\\") {
+        state.tokenize = tokenSmarty;
+        break;
+      }
+      prevChar = currChar;
+    }
+    return "string";
+  };
+}
+function tokenBlock(style, terminator) {
+  return function(stream, state) {
+    while (!stream.eol()) {
+      if (stream.match(terminator)) {
+        state.tokenize = tokenTop;
+        break;
+      }
+      stream.next();
+    }
+    return style;
+  };
+}
+function cmCopyState(mode, state) {
+  if (state === true) return state;
+  if (mode.copyState) return mode.copyState(state);
+  let nstate = {};
+  for (let n in state) {
+    let val = state[n];
+    if (val instanceof Array) val = val.concat([]);
+    nstate[n] = val;
+  }
+  return nstate;
+}
+var smarty = {
+  startState: function() {
+    return {
+      base: true,
+      tokenize: tokenTop,
+      last: null,
+      depth: 0
+    };
+  },
+  copyState: function(state) {
+    return {
+      base: cmCopyState(baseMode, state.base),
+      tokenize: state.tokenize,
+      last: state.last,
+      depth: state.depth
+    };
+  },
+  innerMode: function(state) {
+    if (state.tokenize === tokenTop)
+      return { mode: baseMode, state: state.base };
+  },
+  token: function(stream, state) {
+    const style = state.tokenize(stream, state);
+    state.last = last;
+    return style;
+  },
+  indent: function(state, text, line) {
+    return null;
+  },
+  languageData: {
+    commentTokens: {
+      block: {
+        open: leftDelimiter + "*",
+        close: "*" + rightDelimiter
+      }
+    },
+    autocomplete: keyFunctions
+  }
+};
+export {
+  c,
+  clojure,
+  cpp,
+  csharp,
+  dart,
+  diff,
+  fSharp,
+  fortran,
+  go,
+  haskell,
+  java,
+  julia,
+  kotlin,
+  lua,
+  msSQL,
+  mySQL,
+  nginx,
+  oCaml,
+  octave,
+  pascal,
+  perl,
+  pgSQL,
+  plSQL,
+  powerShell,
+  properties,
+  python,
+  r,
+  ruby,
+  rust,
+  sas,
+  scala,
+  scheme,
+  shell,
+  smarty,
+  sml,
+  sqlite,
+  standardSQL,
+  stex,
+  swift,
+  toml,
+  vb,
+  vbScript,
+  yaml
+};
 //# sourceMappingURL=legacy-modes.js.map

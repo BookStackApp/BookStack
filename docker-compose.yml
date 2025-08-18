@@ -8,14 +8,14 @@ services:
   db:
     image: mysql:8.4
     environment:
-      MYSQL_DATABASE: bookstack-dev
-      MYSQL_USER: bookstack-test
-      MYSQL_PASSWORD: bookstack-test
+      MYSQL_DATABASE: bookstack-prod
+      MYSQL_USER: bookstack-mmbsoft
+      MYSQL_PASSWORD: bookstack-prod
       MYSQL_RANDOM_ROOT_PASSWORD: 'true'
     volumes:
       - ./dev/docker/init.db:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql
-  app:
+  app: 
     build:
       context: .
       dockerfile: ./dev/docker/Dockerfile
@@ -24,10 +24,10 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
-      DB_DATABASE: bookstack-dev
-      DB_USERNAME: bookstack-test
-      DB_PASSWORD: bookstack-test
-      TEST_DATABASE_URL: mysql://bookstack-test:bookstack-test@db/bookstack-test
+      DB_DATABASE: bookstack-prod
+      DB_USERNAME: bookstack-mmbsoft
+      DB_PASSWORD: bookstack-prod
+      TEST_DATABASE_URL: mysql://bookstack-mmbsoft:bookstack-prod@db/bookstack-prod
       MAIL_DRIVER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025

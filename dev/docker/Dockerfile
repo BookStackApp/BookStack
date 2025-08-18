@@ -25,7 +25,10 @@ RUN docker-php-ext-configure ldap --with-libdir="lib/$(gcc -dumpmachine)" && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Configure apache
+COPY ./dev/docker/apache/bookstack.conf /etc/apache2/sites-available/bookstack.conf
 RUN a2enmod rewrite && \
+    a2dissite 000-default && \
+    a2ensite bookstack && \
     sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf && \
     sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
