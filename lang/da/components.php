@@ -6,8 +6,8 @@ return [
 
     // Image Manager
     'image_select' => 'Billedselektion',
-    'image_list' => 'Billede Liste',
-    'image_details' => 'Billede Detaljer',
+    'image_list' => 'Billedliste',
+    'image_details' => 'Billeddetaljer',
     'image_upload' => 'Upload billede',
     'image_intro' => 'Her kan du vælge og administrere billeder, der tidligere er blevet uploadet til systemet.',
     'image_intro_upload' => 'Upload et nyt billede ved at trække en billedfil ind i dette vindue, eller ved at bruge knappen "Upload billede" ovenfor.',
