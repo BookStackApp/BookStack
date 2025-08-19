@@ -2,6 +2,7 @@
 
 namespace BookStack\Search\Vectors;
 
+use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
 use BookStack\Search\Vectors\Services\VectorQueryService;
 use Illuminate\Support\Facades\DB;
@@ -47,8 +48,10 @@ class EntityVectorGenerator
             ];
         }
 
-        // TODO - Chunk inserts
-        SearchVector::query()->insert($toInsert);
+        $chunks = array_chunk($toInsert, 500);
+        foreach ($chunks as $chunk) {
+            SearchVector::query()->insert($chunk);
+        }
     }
 
     /**
@@ -69,16 +72,16 @@ class EntityVectorGenerator
      */
     protected function chunkText(string $text): array
     {
-        // TODO - Join adjacent smaller chunks up
-        return array_filter(array_map(function (string $section): string {
-            return trim($section);
-        }, explode("\n", $text)));
+        return (new TextChunker(500, ["\n", '.', ' ', '']))->chunk($text);
     }
 
     protected function entityToPlainText(Entity $entity): string
     {
-        $text = $entity->name . "\n\n" . $entity->{$entity->textField};
-        // TODO - Add tags
-        return $text;
+        $tags = $entity->tags()->get();
+        $tagText = $tags->map(function (Tag $tag) {
+            return $tag->name . ': ' . $tag->value;
+        })->join('\n');
+
+        return $entity->name . "\n{$tagText}\n" . $entity->{$entity->textField};
     }
 }

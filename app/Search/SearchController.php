@@ -141,8 +141,12 @@ class SearchController extends Controller
         return view('entities.list-basic', ['entities' => $entities, 'style' => 'compact']);
     }
 
+    /**
+     * Perform a vector/LLM-based query search.
+     */
     public function searchQuery(Request $request, VectorSearchRunner $runner)
     {
+        // TODO - Validate if query system is active
         $query = $request->get('query', '');
 
         if ($query) {
