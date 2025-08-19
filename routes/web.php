@@ -11,6 +11,7 @@ use BookStack\Exports\Controllers as ExportControllers;
 use BookStack\Http\Middleware\VerifyCsrfToken;
 use BookStack\Permissions\PermissionsController;
 use BookStack\References\ReferenceController;
+use BookStack\Search\QueryController;
 use BookStack\Search\SearchController;
 use BookStack\Settings as SettingControllers;
 use BookStack\Sorting as SortingControllers;
@@ -189,13 +190,16 @@ Route::middleware('auth')->group(function () {
 
     // Search
     Route::get('/search', [SearchController::class, 'search']);
-    Route::get('/search/query', [SearchController::class, 'searchQuery']);
     Route::get('/search/book/{bookId}', [SearchController::class, 'searchBook']);
     Route::get('/search/chapter/{bookId}', [SearchController::class, 'searchChapter']);
     Route::get('/search/entity/siblings', [SearchController::class, 'searchSiblings']);
     Route::get('/search/entity-selector', [SearchController::class, 'searchForSelector']);
     Route::get('/search/entity-selector-templates', [SearchController::class, 'templatesForSelector']);
     Route::get('/search/suggest', [SearchController::class, 'searchSuggestions']);
+
+    // Queries
+    Route::get('/query', [QueryController::class, 'show']);
+    Route::post('/query', [QueryController::class, 'run']);
 
     // User Search
     Route::get('/search/users/select', [UserControllers\UserSearchController::class, 'forSelect']);

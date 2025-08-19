@@ -597,3 +597,21 @@ input.shortcut-input {
   max-width: 120px;
   height: auto;
 }
+
+.query-form {
+  display: flex;
+  flex-direction: row;
+  gap: vars.$m;
+  textarea {
+    font-size: 1.4rem;
+    height: 100px;
+    box-shadow: vars.$bs-card;
+    border-radius: 8px;
+    color: #444;
+  }
+  button {
+    align-self: start;
+    margin: 0;
+    font-size: 1.6rem;
+  }
+}

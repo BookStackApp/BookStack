@@ -44,6 +44,7 @@ export {PagePicker} from './page-picker';
 export {PermissionsTable} from './permissions-table';
 export {Pointer} from './pointer';
 export {Popup} from './popup';
+export {QueryManager} from './query-manager';
 export {SettingAppColorScheme} from './setting-app-color-scheme';
 export {SettingColorPicker} from './setting-color-picker';
 export {SettingHomepageControl} from './setting-homepage-control';

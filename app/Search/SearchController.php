@@ -129,7 +129,7 @@ class SearchController extends Controller
     }
 
     /**
-     * Search siblings items in the system.
+     * Search sibling items in the system.
      */
     public function searchSiblings(Request $request, SiblingFetcher $siblingFetcher)
     {
@@ -139,24 +139,5 @@ class SearchController extends Controller
         $entities = $siblingFetcher->fetch($type, $id);
 
         return view('entities.list-basic', ['entities' => $entities, 'style' => 'compact']);
-    }
-
-    /**
-     * Perform a vector/LLM-based query search.
-     */
-    public function searchQuery(Request $request, VectorSearchRunner $runner)
-    {
-        // TODO - Validate if query system is active
-        $query = $request->get('query', '');
-
-        if ($query) {
-            $results = $runner->run($query);
-        } else {
-            $results = null;
-        }
-
-        return view('search.query', [
-            'results' => $results,
-        ]);
     }
 }
