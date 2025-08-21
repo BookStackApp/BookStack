@@ -1,3 +1,5 @@
+import {createEventSource, EventSourceClient} from "eventsource-client";
+
 type ResponseData = Record<any, any>|string;
 
 type RequestOptions = {
@@ -59,7 +61,6 @@ export class HttpManager {
     }
 
     createXMLHttpRequest(method: string, url: string, events: Record<string, (e: Event) => void> = {}): XMLHttpRequest {
-        const csrfToken = document.querySelector('meta[name=token]')?.getAttribute('content');
         const req = new XMLHttpRequest();
 
         for (const [eventName, callback] of Object.entries(events)) {
@@ -68,7 +69,7 @@ export class HttpManager {
 
         req.open(method, url);
         req.withCredentials = true;
-        req.setRequestHeader('X-CSRF-TOKEN', csrfToken || '');
+        req.setRequestHeader('X-CSRF-TOKEN', this.getCSRFToken());
 
         return req;
     }
@@ -95,12 +96,11 @@ export class HttpManager {
             requestUrl = urlObj.toString();
         }
 
-        const csrfToken = document.querySelector('meta[name=token]')?.getAttribute('content') || '';
         const requestOptions: RequestInit = {...options, credentials: 'same-origin'};
         requestOptions.headers = {
             ...requestOptions.headers || {},
             baseURL: window.baseUrl(''),
-            'X-CSRF-TOKEN': csrfToken,
+            'X-CSRF-TOKEN': this.getCSRFToken(),
         };
 
         const response = await fetch(requestUrl, requestOptions);
@@ -189,6 +189,27 @@ export class HttpManager {
      */
     async delete(url: string, data: null|Record<string, any> = null): Promise<FormattedResponse> {
         return this.dataRequest('DELETE', url, data);
+    }
+
+    eventSource(url: string, method: string = 'GET', body: object = {}): EventSourceClient {
+        if (!url.startsWith('http')) {
+            url = window.baseUrl(url);
+        }
+
+        return createEventSource({
+            url,
+            method,
+            body: JSON.stringify(body),
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': this.getCSRFToken(),
+            }
+        });
+    }
+
+    protected getCSRFToken(): string {
+        return document.querySelector('meta[name=token]')?.getAttribute('content') || '';
     }
 
     /**

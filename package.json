@@ -55,6 +55,7 @@
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "@types/jest": "^29.5.14",
     "codemirror": "^6.0.1",
+    "eventsource-client": "^1.1.4",
     "idb-keyval": "^6.2.1",
     "markdown-it": "^14.1.0",
     "markdown-it-task-lists": "^2.1.1",

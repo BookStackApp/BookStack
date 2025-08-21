@@ -41,8 +41,13 @@ class QueryController extends Controller
         // TODO - Validate if query system is active
         $query = $request->get('query', '');
 
-        $results = $query ? $searchRunner->run($query) : [];
-        $llmResult = $llmRunner->run($query, $results);
-        dd($results, $llmResult);
+        return response()->eventStream(function () use ($query, $searchRunner, $llmRunner) {
+            $results = $query ? $searchRunner->run($query) : [];
+
+            $count = count($results);
+            yield "Found {$count} results for query: {$query}!";
+            $llmResult = $llmRunner->run($query, $results);
+            yield "LLM result: {$llmResult}";
+        });
     }
 }
