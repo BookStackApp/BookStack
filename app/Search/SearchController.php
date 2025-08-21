@@ -6,7 +6,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\QueryPopular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
-use BookStack\Search\Vectors\VectorSearchRunner;
+use BookStack\Search\Queries\VectorSearchRunner;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

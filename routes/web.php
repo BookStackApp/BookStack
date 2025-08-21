@@ -11,7 +11,7 @@ use BookStack\Exports\Controllers as ExportControllers;
 use BookStack\Http\Middleware\VerifyCsrfToken;
 use BookStack\Permissions\PermissionsController;
 use BookStack\References\ReferenceController;
-use BookStack\Search\QueryController;
+use BookStack\Search\Queries\QueryController;
 use BookStack\Search\SearchController;
 use BookStack\Settings as SettingControllers;
 use BookStack\Sorting as SortingControllers;
@@ -199,6 +199,7 @@ Route::middleware('auth')->group(function () {
 
     // Queries
     Route::get('/query', [QueryController::class, 'show']);
+    Route::get('/query/run', [QueryController::class, 'run']); // TODO - Development only, remove
     Route::post('/query', [QueryController::class, 'run']);
 
     // User Search

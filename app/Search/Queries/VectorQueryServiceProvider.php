@@ -1,10 +1,12 @@
 <?php
 
-namespace BookStack\Search\Vectors;
+declare(strict_types=1);
+
+namespace BookStack\Search\Queries;
 
 use BookStack\Http\HttpRequestService;
-use BookStack\Search\Vectors\Services\OpenAiVectorQueryService;
-use BookStack\Search\Vectors\Services\VectorQueryService;
+use BookStack\Search\Queries\Services\OpenAiVectorQueryService;
+use BookStack\Search\Queries\Services\VectorQueryService;
 
 class VectorQueryServiceProvider
 {

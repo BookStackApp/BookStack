@@ -1,6 +1,8 @@
 <?php
 
-namespace BookStack\Search\Vectors;
+declare(strict_types=1);
+
+namespace BookStack\Search\Queries;
 
 use InvalidArgumentException;
 

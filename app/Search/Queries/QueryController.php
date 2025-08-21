@@ -1,9 +1,10 @@
 <?php
 
-namespace BookStack\Search;
+namespace BookStack\Search\Queries;
 
 use BookStack\Http\Controller;
-use BookStack\Search\Vectors\VectorSearchRunner;
+use BookStack\Search\SearchOptions;
+use BookStack\Search\SearchRunner;
 use Illuminate\Http\Request;
 
 class QueryController extends Controller
@@ -35,19 +36,13 @@ class QueryController extends Controller
     /**
      * Perform a vector/LLM-based query search.
      */
-    public function run(Request $request, VectorSearchRunner $runner)
+    public function run(Request $request, VectorSearchRunner $searchRunner, LlmQueryRunner $llmRunner)
     {
         // TODO - Validate if query system is active
         $query = $request->get('query', '');
 
-        if ($query) {
-            $results = $runner->run($query);
-        } else {
-            $results = null;
-        }
-
-        return view('search.query', [
-            'results' => $results,
-        ]);
+        $results = $query ? $searchRunner->run($query) : [];
+        $llmResult = $llmRunner->run($query, $results);
+        dd($results, $llmResult);
     }
 }

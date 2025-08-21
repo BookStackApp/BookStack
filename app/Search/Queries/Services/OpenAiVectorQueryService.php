@@ -1,6 +1,6 @@
 <?php
 
-namespace BookStack\Search\Vectors\Services;
+namespace BookStack\Search\Queries\Services;
 
 use BookStack\Http\HttpRequestService;
 

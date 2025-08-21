@@ -2,7 +2,7 @@
 
 namespace Search;
 
-use BookStack\Search\Vectors\TextChunker;
+use BookStack\Search\Queries\TextChunker;
 use Tests\TestCase;
 
 class TextChunkerTest extends TestCase

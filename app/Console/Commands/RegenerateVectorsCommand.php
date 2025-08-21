@@ -4,8 +4,8 @@ namespace BookStack\Console\Commands;
 
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
-use BookStack\Search\Vectors\SearchVector;
-use BookStack\Search\Vectors\StoreEntityVectorsJob;
+use BookStack\Search\Queries\SearchVector;
+use BookStack\Search\Queries\StoreEntityVectorsJob;
 use Illuminate\Console\Command;
 
 class RegenerateVectorsCommand extends Command

@@ -1,10 +1,12 @@
 <?php
 
-namespace BookStack\Search\Vectors;
+declare(strict_types=1);
+
+namespace BookStack\Search\Queries;
 
 use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
-use BookStack\Search\Vectors\Services\VectorQueryService;
+use BookStack\Search\Queries\Services\VectorQueryService;
 use Illuminate\Support\Facades\DB;
 
 class EntityVectorGenerator
