@@ -43,9 +43,9 @@ return [
     'app_footer_links_label' => 'Link label',
     'app_footer_links_url' => 'Link URL',
     'app_footer_links_add' => 'Voettekst link toevoegen',
-    'app_disable_comments' => 'Reacties uitschakelen',
-    'app_disable_comments_toggle' => 'Reacties uitschakelen',
-    'app_disable_comments_desc' => 'Schakel reacties uit op alle pagina\'s in de applicatie. <br> Bestaande reacties worden niet getoond.',
+    'app_disable_comments' => 'Opmerkingen uitschakelen',
+    'app_disable_comments_toggle' => 'Opmerkingen uitschakelen',
+    'app_disable_comments_desc' => 'Schakel opmerkingen uit op alle pagina\'s in de applicatie. <br> Bestaande opmerkingen worden niet getoond.',
 
     // Color settings
     'color_scheme' => 'Kleurenschema van applicatie',
