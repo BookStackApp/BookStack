@@ -276,7 +276,7 @@ return [
     'pages_drawing_unsaved' => 'Niet-opgeslagen Tekening Gevonden',
     'pages_drawing_unsaved_confirm' => 'Er zijn niet-opgeslagen tekeninggegevens gevonden van een eerdere mislukte poging om de tekening op te slaan. Wil je deze niet-opgeslagen tekening herstellen en verder bewerken?',
     'pages_not_in_chapter' => 'Pagina is niet in een hoofdstuk',
-    'pages_move' => 'Pagina verplaatsten',
+    'pages_move' => 'Pagina Verplaatsen',
     'pages_copy' => 'Pagina kopiëren',
     'pages_copy_desination' => 'Kopieër bestemming',
     'pages_copy_success' => 'Pagina succesvol gekopieerd',
