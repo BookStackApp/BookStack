@@ -469,8 +469,8 @@ return [
     'watch_detail_new' => 'Nieuwe pagina\'s aan het volgen',
     'watch_detail_updates' => 'Nieuwe pagina\'s en aanpassingen aan het volgen',
     'watch_detail_comments' => 'Nieuwe pagina\'s, aanpassingen en opmerkingen aan het volgen',
-    'watch_detail_parent_book' => 'Op de uitkijk via hogerliggend boek',
-    'watch_detail_parent_book_ignore' => 'Aan het negeren via hogerliggend boek',
+    'watch_detail_parent_book' => 'Aan het volgen via bovenliggend boek',
+    'watch_detail_parent_book_ignore' => 'Aan het negeren via bovenliggend boek',
     'watch_detail_parent_chapter' => 'Aan het volgen via bovenliggend hoofdstuk',
     'watch_detail_parent_chapter_ignore' => 'Aan het negeren via bovenliggend hoofdstuk',
 ];
