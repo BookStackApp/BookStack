@@ -48,7 +48,7 @@ return [
     'superscript' => 'Chỉ số trên',
     'subscript' => 'Chỉ số dưới',
     'text_color' => 'Màu chữ',
-    'highlight_color' => 'Highlight color',
+    'highlight_color' => 'Màu đánh dấu',
     'custom_color' => 'Màu tùy chỉnh',
     'remove_color' => 'Xóa màu',
     'background_color' => 'Màu nền',
