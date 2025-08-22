@@ -3,7 +3,6 @@
 namespace BookStack\Search\Queries;
 
 use BookStack\Http\Controller;
-use BookStack\Search\SearchOptions;
 use BookStack\Search\SearchRunner;
 use Illuminate\Http\Request;
 
@@ -12,6 +11,13 @@ class QueryController extends Controller
     public function __construct(
         protected SearchRunner $searchRunner,
     ) {
+        // TODO - Check via testing
+        $this->middleware(function ($request, $next) {
+            if (!VectorQueryServiceProvider::isEnabled()) {
+                $this->showPermissionError('/');
+            }
+            return $next($request);
+        });
     }
 
     /**
@@ -19,17 +25,12 @@ class QueryController extends Controller
      */
     public function show(Request $request)
     {
-        // TODO - Validate if query system is active
         $query = $request->get('ask', '');
-
-        // TODO - Placeholder
-        $entities = $this->searchRunner->searchEntities(SearchOptions::fromString("cat"), 'all', 1, 20)['results'];
 
         // TODO - Set page title
 
         return view('search.query', [
             'query' => $query,
-            'entities' => $entities,
         ]);
     }
 
@@ -38,16 +39,23 @@ class QueryController extends Controller
      */
     public function run(Request $request, VectorSearchRunner $searchRunner, LlmQueryRunner $llmRunner)
     {
-        // TODO - Validate if query system is active
+        // TODO - Rate limiting
         $query = $request->get('query', '');
 
         return response()->eventStream(function () use ($query, $searchRunner, $llmRunner) {
             $results = $query ? $searchRunner->run($query) : [];
 
-            $count = count($results);
-            yield "Found {$count} results for query: {$query}!";
-            $llmResult = $llmRunner->run($query, $results);
-            yield "LLM result: {$llmResult}";
+            $entities = [];
+            foreach ($results as $result) {
+                $entityKey = $result->entity->getMorphClass() . ':' . $result->entity->id;
+                if (!isset($entities[$entityKey])) {
+                    $entities[$entityKey] = $result->entity;
+                }
+            }
+
+            yield ['view' => view('entities.list', ['entities' => $entities])->render()];
+
+            yield ['result' => $llmRunner->run($query, $results)];
         });
     }
 }

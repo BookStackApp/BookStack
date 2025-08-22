@@ -8,55 +8,45 @@
             <form action="{{ url('/query') }}"
                   refs="query-manager@form"
                   title="Run Query"
-                  method="post"
-                  class="query-form">
-                <textarea name="query"
-                          refs="query-manager@input"
-                          class="input-fill-width"
-                          rows="5"
-                          placeholder="Enter a query"
-                          autocomplete="off">{{ $query }}</textarea>
-                <button class="button icon">@icon('search')</button>
+                  method="post">
+                <fieldset class="query-form" refs="query-manager@fieldset">
+                    <textarea name="query"
+                              refs="query-manager@input"
+                              class="input-fill-width"
+                              rows="5"
+                              placeholder="Enter a query"
+                              autocomplete="off">{{ $query }}</textarea>
+                    <button class="button icon">@icon('search')</button>
+                </fieldset>
             </form>
         </div>
 
         <div class="card content-wrap auto-height pb-xl">
             <h2 class="list-heading">Generated Response</h2>
-            <div refs="query-manager@generated-loading">
+            <div refs="query-manager@generated-loading" hidden>
                 @include('common.loading-icon')
             </div>
-            <p refs="query-manager@generated-display">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad adipisci aliquid architecto cupiditate dolor doloribus eligendi et expedita facilis fugiat fugit illo, ipsa laboriosam maiores, molestias mollitia non obcaecati porro quasi quis quos reprehenderit rerum sunt tenetur ullam unde voluptate voluptates! Distinctio et eum id molestiae nisi quisquam sed ut.</p>
+            <p refs="query-manager@generated-display">
+                <span class="text-muted italic">
+                When you run a query, the relevant content found & shown below will be used to help generate a smart machine generated response.
+                </span>
+            </p>
         </div>
 
 
         <div class="card content-wrap auto-height pb-xl">
             <h2 class="list-heading">Relevant Content</h2>
-            <div refs="query-manager@content-loading">
+            <div refs="query-manager@content-loading" hidden>
                 @include('common.loading-icon')
             </div>
             <div class="book-contents">
                 <div refs="query-manager@content-display" class="entity-list">
-                    @include('entities.list', ['entities' => $entities, 'showPath' => true, 'showTags' => true])
+                    <p class="text-muted italic mx-m">
+                        Start a query to find relevant matching content.
+                        The items shown here reflect those used to help provide the above response.
+                    </p>
                 </div>
             </div>
         </div>
-
-{{--        @if($results)--}}
-{{--            <h2>Results</h2>--}}
-
-{{--            <h3>LLM Output</h3>--}}
-{{--            <p>{{ $results['llm_result'] }}</p>--}}
-
-{{--            <h3>Entity Matches</h3>--}}
-{{--            @foreach($results['entity_matches'] as $match)--}}
-{{--                <div>--}}
-{{--                    <div><strong>{{ $match['entity_type'] }}:{{ $match['entity_id'] }}; Distance: {{ $match['distance'] }}</strong></div>--}}
-{{--                    <details>--}}
-{{--                        <summary>match text</summary>--}}
-{{--                         <div>{{ $match['text'] }}</div>--}}
-{{--                    </details>--}}
-{{--                </div>--}}
-{{--            @endforeach--}}
-{{--        @endif--}}
     </div>
 @stop

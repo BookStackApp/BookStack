@@ -614,4 +614,12 @@ input.shortcut-input {
     margin: 0;
     font-size: 1.6rem;
   }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
