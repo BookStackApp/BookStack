@@ -393,4 +393,42 @@ class ZipImportRunnerTest extends TestCase
 
         ZipTestHelper::deleteZipForImport($import);
     }
+
+    public function test_drawing_references_are_updated_within_content()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<div drawio-diagram="1125"><img src="[[bsexport:image:1125]]"></div>',
+                'images' => [
+                    [
+                        'id' => 1125,
+                        'name' => 'Cat',
+                        'type' => 'drawio',
+                        'file' => 'my_drawing'
+                    ]
+                ],
+            ],
+        ], [
+            'my_drawing' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Page $page */
+        $page = $this->runner->run($import, $parent);
+
+        $pageImages = Image::where('uploaded_to', '=', $page->id)->whereIn('type', ['gallery', 'drawio'])->get();
+        $this->assertCount(1, $pageImages);
+        $this->assertEquals('drawio', $pageImages[0]->type);
+
+        $drawingId = $pageImages[0]->id;
+        $this->assertStringContainsString("drawio-diagram=\"{$drawingId}\"", $page->html);
+        $this->assertStringNotContainsString('[[bsexport:image:1125]]', $page->html);
+        $this->assertStringNotContainsString('drawio-diagram="1125"', $page->html);
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
 }
