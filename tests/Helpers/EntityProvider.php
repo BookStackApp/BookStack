@@ -6,7 +6,6 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\HasCoverImage;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
@@ -34,9 +33,9 @@ class EntityProvider
     ];
 
     /**
-     * Get an un-fetched page from the system.
+     * Get an unfetched page from the system.
      */
-    public function page(callable $queryFilter = null): Page
+    public function page(callable|null $queryFilter = null): Page
     {
         /** @var Page $page */
         $page = Page::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['page'])->first();
@@ -64,9 +63,9 @@ class EntityProvider
     }
 
     /**
-     * Get an un-fetched chapter from the system.
+     * Get an unfetched chapter from the system.
      */
-    public function chapter(callable $queryFilter = null): Chapter
+    public function chapter(callable|null $queryFilter = null): Chapter
     {
         /** @var Chapter $chapter */
         $chapter = Chapter::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['chapter'])->first();
@@ -80,9 +79,9 @@ class EntityProvider
     }
 
     /**
-     * Get an un-fetched book from the system.
+     * Get an unfetched book from the system.
      */
-    public function book(callable $queryFilter = null): Book
+    public function book(callable|null $queryFilter = null): Book
     {
         /** @var Book $book */
         $book = Book::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['book'])->first();
@@ -101,9 +100,9 @@ class EntityProvider
     }
 
     /**
-     * Get an un-fetched shelf from the system.
+     * Get an unfetched shelf from the system.
      */
-    public function shelf(callable $queryFilter = null): Bookshelf
+    public function shelf(callable|null $queryFilter = null): Bookshelf
     {
         /** @var Bookshelf $shelf */
         $shelf = Bookshelf::query()->when($queryFilter, $queryFilter)->whereNotIn('id', $this->fetchCache['bookshelf'])->first();
