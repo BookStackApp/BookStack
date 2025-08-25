@@ -18,35 +18,35 @@ return [
     'page_move_notification'      => 'S’ha mogut la pàgina',
 
     // Chapters
-    'chapter_create'              => 'ha creat el capítol',
+    'chapter_create'              => 'S\'ha creat el capítol',
     'chapter_create_notification' => 'S’ha creat el capítol',
     'chapter_update'              => 'ha actualitzat el capítol',
     'chapter_update_notification' => 'S’ha actualitzat el capítol',
     'chapter_delete'              => 'ha suprimit el capítol',
     'chapter_delete_notification' => 'S’ha suprimit el capítol',
-    'chapter_move'                => 'ha mogut el capítol',
+    'chapter_move'                => 's\'ha mogut el capítol',
     'chapter_move_notification' => 'S’ha mogut el capítol',
 
     // Books
-    'book_create'                 => 'ha creat el llibre',
+    'book_create'                 => 'llibre creat',
     'book_create_notification'    => 'S’ha creat el llibre',
     'book_create_from_chapter'              => 'ha convertit el capítol a llibre',
     'book_create_from_chapter_notification' => 'S’ha convertit el capítol a llibre',
-    'book_update'                 => 'ha actualitzat el llibre',
+    'book_update'                 => 'llibre actualitzat',
     'book_update_notification'    => 'S’ha actualitzat el llibre',
-    'book_delete'                 => 'ha suprimit el llibre',
+    'book_delete'                 => 'llibre suprimit',
     'book_delete_notification'    => 'S’ha suprimit el llibre',
-    'book_sort'                   => 'ha ordenat el llibre',
+    'book_sort'                   => 'llibre ordenat',
     'book_sort_notification'      => 'S’ha tornat a ordenar el llibre',
 
     // Bookshelves
     'bookshelf_create'            => 'ha creat el prestatge',
     'bookshelf_create_notification'    => 'S’ha creat el prestatge',
-    'bookshelf_create_from_book'    => 'ha convertit el llibre a prestatge',
+    'bookshelf_create_from_book'    => 'llibre convertit a prestatge',
     'bookshelf_create_from_book_notification'    => 'S’ha convertit el llibre a prestatge',
-    'bookshelf_update'                 => 'ha actualitzat el prestatge',
+    'bookshelf_update'                 => 'prestatge actualitzat',
     'bookshelf_update_notification'    => 'S’ha actualitzat el prestatge',
-    'bookshelf_delete'                 => 'ha suprimit el prestatge',
+    'bookshelf_delete'                 => 'prestatge suprimit',
     'bookshelf_delete_notification'    => 'S’ha suprimit el prestatge',
 
     // Revisions
@@ -85,8 +85,8 @@ return [
     'webhook_delete_notification' => 'S’ha suprimit el webhook',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
+    'import_create' => 'importació creada',
+    'import_create_notification' => 'L\'importació s\'ha carregat correctament',
     'import_run' => 'updated import',
     'import_run_notification' => 'Content successfully imported',
     'import_delete' => 'deleted import',
