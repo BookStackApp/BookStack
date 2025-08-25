@@ -259,6 +259,35 @@ class BookShelfTest extends TestCase
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[1]->id]);
     }
 
+    public function test_shelf_edit_does_not_alter_books_we_dont_have_access_to()
+    {
+        $shelf = $this->entities->shelf();
+        $shelf->books()->detach();
+        $this->entities->book();
+        $this->entities->book();
+
+        $newBooks = [$this->entities->book(), $this->entities->book()];
+        $originalBooks = [$this->entities->book(), $this->entities->book()];
+        foreach ($originalBooks as $book) {
+            $this->permissions->disableEntityInheritedPermissions($book);
+            $shelf->books()->attach($book->id);
+        }
+
+        $this->asEditor()->put($shelf->getUrl(), [
+            'name' => $shelf->name,
+            'books' => "{$newBooks[0]->id},{$newBooks[1]->id}",
+        ])->assertRedirect($shelf->getUrl());
+
+        $resultingBooksById = $shelf->books()->get()->keyBy('id')->toArray();
+        $this->assertCount(4, $resultingBooksById);
+        foreach ($newBooks as $book) {
+            $this->assertArrayHasKey($book->id, $resultingBooksById);
+        }
+        foreach ($originalBooks as $book) {
+            $this->assertArrayHasKey($book->id, $resultingBooksById);
+        }
+    }
+
     public function test_shelf_create_new_book()
     {
         $shelf = $this->entities->shelf();
