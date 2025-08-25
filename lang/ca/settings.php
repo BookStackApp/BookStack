@@ -8,7 +8,7 @@ return [
 
     // Common Messages
     'settings' => 'Configuració',
-    'settings_save' => 'Configuració de desat',
+    'settings_save' => 'Guardar configuració',
     'system_version' => 'Versió de sistema',
     'categories' => 'Categories',
 
@@ -19,8 +19,8 @@ return [
     'app_name_desc' => 'El nom es mostra a la capçalera i als correus electrònics enviats pel sistema.',
     'app_name_header' => 'Mostra el nom a la capçalera',
     'app_public_access' => 'Accés públic',
-    'app_public_access_desc' => 'Si activeu aquesta opció les visitants podran accedir a la vostra instància del BookStack sense iniciar sessió.',
-    'app_public_access_desc_guest' => 'L’accés per als visitants públics es pot gestionar amb l’usuari &laquo;Convidat&raquo;.',
+    'app_public_access_desc' => 'Si activeu aquesta opció permetrà als visitants, accedir a la vostra instància del BookStack sense iniciar sessió.',
+    'app_public_access_desc_guest' => 'L’accés per als visitants públics es pot gestionar amb l’usuari Convidat.',
     'app_public_access_toggle' => 'Permet l’accés públic',
     'app_public_viewing' => 'Esteu segur que voleu permetre l’accés públic?',
     'app_secure_images' => 'Pujada d’imatges amb més seguretat',
@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'No hi ha cap restricció',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Ordenar',
+    'sorting_book_default' => 'Ordre predeterminat del llibre',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -89,18 +89,18 @@ return [
     'sort_rule_delete_warn_default' => 'This sort rule is currently used as the default for books. Are you sure you want to delete this?',
     'sort_rule_details' => 'Sort Rule Details',
     'sort_rule_details_desc' => 'Set a name for this sort rule, which will appear in lists when users are selecting a sort.',
-    'sort_rule_operations' => 'Sort Operations',
+    'sort_rule_operations' => 'Operacions d\'ordenació',
     'sort_rule_operations_desc' => 'Configure the sort actions to be performed by moving them from the list of available operations. Upon use, the operations will be applied in order, from top to bottom. Any changes made here will be applied to all assigned books upon save.',
-    'sort_rule_available_operations' => 'Available Operations',
-    'sort_rule_available_operations_empty' => 'No operations remaining',
-    'sort_rule_configured_operations' => 'Configured Operations',
+    'sort_rule_available_operations' => 'Operacions disponibles',
+    'sort_rule_available_operations_empty' => 'No hi ha operacions pendents',
+    'sort_rule_configured_operations' => 'Operacions configurades',
     'sort_rule_configured_operations_empty' => 'Drag/add operations from the "Available Operations" list',
     'sort_rule_op_asc' => '(Asc)',
     'sort_rule_op_desc' => '(Desc)',
-    'sort_rule_op_name' => 'Name - Alphabetical',
-    'sort_rule_op_name_numeric' => 'Name - Numeric',
-    'sort_rule_op_created_date' => 'Created Date',
-    'sort_rule_op_updated_date' => 'Updated Date',
+    'sort_rule_op_name' => 'Nom - Alfabètic',
+    'sort_rule_op_name_numeric' => 'Nom - Numèric',
+    'sort_rule_op_created_date' => 'Data de creació',
+    'sort_rule_op_updated_date' => 'Data d\'actualització',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
 
@@ -192,7 +192,7 @@ return [
     'role_access_api' => 'Accés a l’API del sistema',
     'role_manage_settings' => 'Gestió de la configuració de l’aplicació',
     'role_export_content' => 'Exportació de contingut',
-    'role_import_content' => 'Import content',
+    'role_import_content' => 'Importar contingut',
     'role_editor_change' => 'Canvi de l’editor de pàgina',
     'role_notifications' => 'Recepció i gestió de notificacions',
     'role_asset' => 'Permisos de recursos',
@@ -308,13 +308,13 @@ return [
     'webhooks_last_error_message' => 'Darrer missatge d’error:',
 
     // Licensing
-    'licenses' => 'Licenses',
+    'licenses' => 'Llicències',
     'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
-    'licenses_bookstack' => 'BookStack License',
-    'licenses_php' => 'PHP Library Licenses',
-    'licenses_js' => 'JavaScript Library Licenses',
-    'licenses_other' => 'Other Licenses',
-    'license_details' => 'License Details',
+    'licenses_bookstack' => 'Llicència de BookStack',
+    'licenses_php' => 'Llicències de Biblioteques de PHP',
+    'licenses_js' => 'Llicències de Biblioteques de JavaScript',
+    'licenses_other' => 'Altres llicències',
+    'license_details' => 'Detalls de la llicència',
 
     //! If editing translations files directly please ignore this in all
     //! languages apart from en. Content will be auto-copied from en.
