@@ -6,17 +6,17 @@ return [
 
     // Permissions
     'permission' => 'No teniu permís per a accedir a la pàgina sol·licitada.',
-    'permissionJson' => 'No teniu permís per a fer l’acció sol·licitada.',
+    'permissionJson' => 'No teniu permís per a executar l’acció sol·licitada.',
 
     // Auth
     'error_user_exists_different_creds' => 'Ja existeix un usuari amb el correu electrònic :email però amb unes credencials diferents.',
     'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
-    'email_already_confirmed' => 'Ja s’ha confirmat el correu electrònic. Proveu d’iniciar sessió.',
+    'email_already_confirmed' => 'L’adreça electrònica ja està confirmada. Proveu d’iniciar la sessió.',
     'email_confirmation_invalid' => 'Aquest testimoni de confirmació no és vàlid o ja s’ha utilitzat. Proveu de tornar-vos a registrar.',
     'email_confirmation_expired' => 'Aquest testimoni de confirmació ha caducat. S’ha enviat un altre correu electrònic de confirmació.',
-    'email_confirmation_awaiting' => 'Cal confirmar l’adreça electrònica del compte que utilitzeu.',
+    'email_confirmation_awaiting' => 'Cal confirmar l’adreça electrònica del compte que utilitzeu',
     'ldap_fail_anonymous' => 'L’accés LDAP anònim ha fallat',
-    'ldap_fail_authed' => 'L’accés LDAP amb el nom distintiu i la contrasenya proporcionades',
+    'ldap_fail_authed' => 'L’accés LDAP amb el nom distintiu i la contrasenya proporcionats ha fallat',
     'ldap_extension_not_installed' => 'L’extensió PHP de l’LDAP no està instal·lada',
     'ldap_cannot_connect' => 'No s’ha pogut connectar amb el servidor LDAP perquè la connexió inicial ha fallat',
     'saml_already_logged_in' => 'Ja heu iniciat sessió',
@@ -29,14 +29,14 @@ return [
     'social_no_action_defined' => 'No s’ha definit cap acció',
     'social_login_bad_response' => "S’ha produït un error en l’inici de sessió amb :socialAccount: \n:error",
     'social_account_in_use' => 'Aquest compte de :socialAccount ja s’està utilitzant. Proveu d’iniciar sessió amb :socialAccount.',
-    'social_account_email_in_use' => 'L’adreça electrònica :email ja s’està utilitzant. Si ja teniu uns compte podeu connectar-hi el vostre compte de :socialAccount des de la configuració del vostre perfil.',
+    'social_account_email_in_use' => 'L’adreça electrònica :email ja està en ús. Si ja teniu un compte, podeu connectar-hi el vostre compte de :socialAccount a la configuració del vostre perfil.',
     'social_account_existing' => 'Aquest compte de :socialAccount ja està associat al vostre perfil.',
     'social_account_already_used_existing' => 'Aquest compte de :socialAccount ja està associat a un altre usuari.',
     'social_account_not_used' => 'Aquest compte de :socialAccount no està associat a cap usuari. Associeu-lo a la configuració del vostre perfil. ',
     'social_account_register_instructions' => 'Si encara no teniu un compte, podeu registrar-vos amb l’opció :socialAccount.',
     'social_driver_not_found' => 'No s’ha trobat el controlador social',
     'social_driver_not_configured' => 'La configuració de :socialAccount no és correcta.',
-    'invite_token_expired' => 'Aquest enllaç d’invitació ha caducat. Proveu de reinicialitzar la contrasenya.',
+    'invite_token_expired' => 'Aquest enllaç d’invitació ha caducat. Podeu provar de restablir la contrasenya del vostre compte.',
     'login_user_not_found' => 'A user for this action could not be found.',
 
     // System
