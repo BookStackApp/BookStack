@@ -1,4 +1,4 @@
-import {createEditor, LexicalEditor} from 'lexical';
+import {createEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
@@ -89,6 +89,9 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     window.debugEditorState = () => {
         return editor.getEditorState().toJSON();
     };
+    context.manager.onSelectionChange((selection) => {
+        console.log(selection, context.editor.getEditorState());
+    });
 
     registerCommonNodeMutationListeners(context);
 

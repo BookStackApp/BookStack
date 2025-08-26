@@ -437,6 +437,16 @@ body.editor-is-fullscreen {
 .editor-node-resizer.active .editor-node-resizer-ghost {
   display: block;
 }
+.editor-content-area details[contenteditable="false"],
+.editor-content-area summary[contenteditable="false"] {
+  user-select: none;
+}
+.editor-content-area details[contenteditable="false"] > details * {
+  pointer-events: none;
+}
+.editor-content-area details summary {
+  caret-color: transparent;
+}
 
 .editor-table-marker {
   position: fixed;

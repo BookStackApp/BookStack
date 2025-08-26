@@ -193,6 +193,8 @@ export const details: EditorButtonDefinition = {
                 .filter(n => n !== null) as ElementNode[];
             const uniqueTopLevels = [...new Set(topLevels)];
 
+            detailsNode.setOpen(true);
+
             if (uniqueTopLevels.length > 0) {
                 uniqueTopLevels[0].insertAfter(detailsNode);
             } else {

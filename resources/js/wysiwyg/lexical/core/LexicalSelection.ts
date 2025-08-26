@@ -476,12 +476,12 @@ export class RangeSelection implements BaseSelection {
     const startOffset = firstPoint.offset;
     const endOffset = lastPoint.offset;
 
-    if ($isElementNode(firstNode)) {
+    if ($isElementNode(firstNode) && !firstNode.shouldSelectDirectly()) {
       const firstNodeDescendant =
         firstNode.getDescendantByIndex<ElementNode>(startOffset);
       firstNode = firstNodeDescendant != null ? firstNodeDescendant : firstNode;
     }
-    if ($isElementNode(lastNode)) {
+    if ($isElementNode(lastNode) && !lastNode.shouldSelectDirectly()) {
       let lastNodeDescendant =
         lastNode.getDescendantByIndex<ElementNode>(endOffset);
       // We don't want to over-select, as node selection infers the child before
@@ -499,7 +499,7 @@ export class RangeSelection implements BaseSelection {
     let nodes: Array<LexicalNode>;
 
     if (firstNode.is(lastNode)) {
-      if ($isElementNode(firstNode) && firstNode.getChildrenSize() > 0) {
+      if ($isElementNode(firstNode) && firstNode.getChildrenSize() > 0 && !firstNode.shouldSelectDirectly()) {
         nodes = [];
       } else {
         nodes = [firstNode];
