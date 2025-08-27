@@ -307,7 +307,7 @@ export class ElementNode extends LexicalNode {
     let anchorOffset = _anchorOffset;
     let focusOffset = _focusOffset;
     const childrenCount = this.getChildrenSize();
-    if (!this.canBeEmpty()) {
+    if (!this.canBeEmpty() && !this.shouldSelectDirectly()) {
       if (_anchorOffset === 0 && _focusOffset === 0) {
         const firstChild = this.getFirstChild();
         if ($isTextNode(firstChild) || $isElementNode(firstChild)) {

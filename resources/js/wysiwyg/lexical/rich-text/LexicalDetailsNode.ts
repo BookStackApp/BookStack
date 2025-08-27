@@ -178,6 +178,10 @@ export class DetailsNode extends ElementNode {
         return true;
     }
 
+    canBeEmpty(): boolean {
+        return false;
+    }
+
 }
 
 export function $createDetailsNode() {

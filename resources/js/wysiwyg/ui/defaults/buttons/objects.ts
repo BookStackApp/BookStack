@@ -34,6 +34,7 @@ import {$isDiagramNode, $openDrawingEditorForNode, showDiagramManagerForInsert} 
 import {$createLinkedImageNodeFromImageData, showImageManager} from "../../../utils/images";
 import {$showDetailsForm, $showImageForm, $showLinkForm, $showMediaForm} from "../forms/objects";
 import {formatCodeBlock} from "../../../utils/formats";
+import {$unwrapDetailsNode} from "../../../utils/details";
 
 export const link: EditorButtonDefinition = {
     label: 'Insert/edit link',
@@ -251,11 +252,7 @@ export const detailsUnwrap: EditorButtonDefinition = {
         context.editor.update(() => {
             const details = $getNodeFromSelection($getSelection(), $isDetailsNode);
             if ($isDetailsNode(details)) {
-                const children = details.getChildren();
-                for (const child of children) {
-                    details.insertBefore(child);
-                }
-                details.remove();
+                $unwrapDetailsNode(details);
                 context.manager.triggerLayoutUpdate();
             }
         })
