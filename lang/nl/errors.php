@@ -90,8 +90,8 @@ return [
     'comment_list' => 'Er is een fout opgetreden tijdens het ophalen van de opmerkingen.',
     'cannot_add_comment_to_draft' => 'Je kunt geen opmerkingen toevoegen aan een concept.',
     'comment_add' => 'Er is een fout opgetreden tijdens het aanpassen / toevoegen van de opmerking.',
-    'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de reactie.',
-    'empty_comment' => 'Kan geen lege reactie toevoegen.',
+    'comment_delete' => 'Er is een fout opgetreden tijdens het verwijderen van de opmerking.',
+    'empty_comment' => 'Kan geen lege opmerking toevoegen.',
 
     // Error pages
     '404_page_not_found' => 'Pagina Niet Gevonden',
