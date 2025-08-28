@@ -45,7 +45,7 @@ return [
     'default_template_select' => 'Seleccioneu una plantilla de pàgina',
     'import' => 'Importar',
     'import_validate' => 'Validar importació',
-    'import_desc' => 'Import books, chapters & pages using a portable zip export from the same, or a different, instance. Select a ZIP file to proceed. After the file has been uploaded and validated you\'ll be able to configure & confirm the import in the next view.',
+    'import_desc' => 'Importar llibres, capítols i pàgines utilitzant una exportació ZIP portable de la mateixa o una altra instància. Selecciona un arxiu ZIP per continuar. Després que l\'arxiu s\'hagi penjat i validat, podrà configurar i confirmar l\'importació en la següent vista.',
     'import_zip_select' => 'Seleccioneu un fitxer ZIP per pujar',
     'import_zip_validation_errors' => 'S\'han detectat errors al validar l\'arxiu ZIP proporcionat:',
     'import_pending' => 'Importació pendent',
@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'Això eliminarà l\'arxiu ZIP d\'importació penjat i no es pot desfer.',
     'import_errors' => 'Importar errors',
     'import_errors_desc' => 'S\'han produït els següents errors durant l\'intent d\'importació:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'Navegar entre pàgines del mateix nivell',
+    'breadcrumb_siblings_for_chapter' => 'Navegar entre capítols del mateix nivell',
+    'breadcrumb_siblings_for_book' => 'Navegar entre llibres del mateix nivell',
+    'breadcrumb_siblings_for_bookshelf' => 'Navegar entre llibreries del mateix nivell',
 
     // Permissions and restrictions
     'permissions' => 'Permisos',
