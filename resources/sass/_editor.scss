@@ -437,6 +437,20 @@ body.editor-is-fullscreen {
 .editor-node-resizer.active .editor-node-resizer-ghost {
   display: block;
 }
+.editor-content-area details[contenteditable="false"],
+.editor-content-area summary[contenteditable="false"] {
+  user-select: none;
+}
+.editor-content-area details[contenteditable="false"] > details * {
+  pointer-events: none;
+}
+.editor-content-area details summary {
+  caret-color: transparent;
+}
+.editor-content-area details.selected {
+  outline: 1px dashed var(--editor-color-primary);
+  outline-offset: 1px;
+}
 
 .editor-table-marker {
   position: fixed;

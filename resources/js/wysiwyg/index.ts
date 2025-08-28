@@ -1,4 +1,4 @@
-import {createEditor, LexicalEditor} from 'lexical';
+import {createEditor} from 'lexical';
 import {createEmptyHistoryState, registerHistory} from '@lexical/history';
 import {registerRichText} from '@lexical/rich-text';
 import {mergeRegister} from '@lexical/utils';
@@ -20,6 +20,7 @@ import {modals} from "./ui/defaults/modals";
 import {CodeBlockDecorator} from "./ui/decorators/code-block";
 import {DiagramDecorator} from "./ui/decorators/diagram";
 import {registerMouseHandling} from "./services/mouse-handling";
+import {registerSelectionHandling} from "./services/selection-handling";
 
 const theme = {
     text: {
@@ -53,6 +54,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
         registerShortcuts(context),
         registerKeyboardHandling(context),
         registerMouseHandling(context),
+        registerSelectionHandling(context),
         registerTableResizer(editor, context.scrollDOM),
         registerTableSelectionHandler(editor),
         registerTaskListHandler(editor, context.editorDOM),

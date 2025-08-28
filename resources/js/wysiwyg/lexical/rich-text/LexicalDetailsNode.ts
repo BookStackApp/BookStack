@@ -75,6 +75,9 @@ export class DetailsNode extends ElementNode {
 
         if (this.__open) {
             el.setAttribute('open', 'true');
+            el.removeAttribute('contenteditable');
+        } else {
+            el.setAttribute('contenteditable', 'false');
         }
 
         const summary = document.createElement('summary');
@@ -84,7 +87,7 @@ export class DetailsNode extends ElementNode {
             event.preventDefault();
             _editor.update(() => {
                 this.select();
-            })
+            });
         });
 
         el.append(summary);
@@ -96,6 +99,11 @@ export class DetailsNode extends ElementNode {
 
         if (prevNode.__open !== this.__open) {
             dom.toggleAttribute('open', this.__open);
+            if (this.__open) {
+                dom.removeAttribute('contenteditable');
+            } else {
+                dom.setAttribute('contenteditable', 'false');
+            }
         }
 
         return prevNode.__id !== this.__id
@@ -144,6 +152,7 @@ export class DetailsNode extends ElementNode {
         }
 
         element.removeAttribute('open');
+        element.removeAttribute('contenteditable');
 
         return {element};
     }
@@ -163,6 +172,14 @@ export class DetailsNode extends ElementNode {
         node.setId(serializedNode.id);
         node.setDirection(serializedNode.direction);
         return node;
+    }
+
+    shouldSelectDirectly(): boolean {
+        return true;
+    }
+
+    canBeEmpty(): boolean {
+        return false;
     }
 
 }
