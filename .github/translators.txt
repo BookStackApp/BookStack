@@ -503,3 +503,5 @@ Firr (FirrV) :: Russian
 João Faro (FaroJoaoFaro) :: Portuguese
 Danilo dos Santos Barbosa (bozochegou) :: Portuguese, Brazilian
 Chris (furesoft) :: German
+Silvia Isern (eiendragon) :: Catalan
+Dennis Kron Pedersen (ahjdp) :: Danish
