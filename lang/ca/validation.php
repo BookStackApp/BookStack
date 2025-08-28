@@ -105,10 +105,10 @@ return [
     'url'                  => 'El format :attribute no és vàlid.',
     'uploaded'             => 'No s’ha pogut pujar el fitxer. És possible que el servidor no admeti fitxers d’aquesta mida.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'El :attribute necessita fer referència a un arxiu dins del ZIP.',
+    'zip_file_mime' => 'El :attribute necessita fer referència a un arxiu de tipus :validTyes, trobat :foundType.',
+    'zip_model_expected' => 'S\'esperava un objecte de dades, però s\'ha trobat ":type".',
+    'zip_unique' => 'El :attribute ha de ser únic pel tipus d\'objecte dins del ZIP.',
 
     // Custom validation lines
     'custom' => [
