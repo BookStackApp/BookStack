@@ -94,7 +94,7 @@ return [
     'sort_rule_available_operations' => 'Operacions disponibles',
     'sort_rule_available_operations_empty' => 'No hi ha operacions pendents',
     'sort_rule_configured_operations' => 'Operacions configurades',
-    'sort_rule_configured_operations_empty' => 'Drag/add operations from the "Available Operations" list',
+    'sort_rule_configured_operations_empty' => 'Arrossegar/afegir operacions des de la llista d\'Operacions Disponibles',
     'sort_rule_op_asc' => '(Asc)',
     'sort_rule_op_desc' => '(Desc)',
     'sort_rule_op_name' => 'Nom - Alfabètic',
@@ -139,7 +139,7 @@ return [
     'recycle_bin_contents_empty' => 'La paperera és buida',
     'recycle_bin_empty' => 'Buida la paperera',
     'recycle_bin_empty_confirm' => 'Se suprimiran permanentment tots els elements que hi ha a la paperera incloent-hi el contingut que hi hagi a cada element. Esteu segur que voleu buidar la paperera?',
-    'recycle_bin_destroy_confirm' => 'This action will permanently delete this item from the system, along with any child elements listed below, and you will not be able to restore this content. Are you sure you want to permanently delete this item?',
+    'recycle_bin_destroy_confirm' => 'Aquesta acció suprimirà del sistema de manera permanent aquest element, juntament amb tots els fills que es llisten a sota, i no podreu restaurar aquest contingut. Segur que voleu suprimir de manera permanent aquest element?',
     'recycle_bin_destroy_list' => 'Elements per destruir',
     'recycle_bin_restore_list' => 'Elements per restaurar',
     'recycle_bin_restore_confirm' => 'Aquesta acció restaurarà l’element suprimit, incloent-hi els elements fills, a la seva ubicació original. Si la ubicació original s’ha suprimit i és a la paperera, l’element pare també s’haurà de restaurar.',
@@ -309,7 +309,7 @@ return [
 
     // Licensing
     'licenses' => 'Llicències',
-    'licenses_desc' => 'This page details license information for BookStack in addition to the projects & libraries that are used within BookStack. Many projects listed may only be used in a development context.',
+    'licenses_desc' => 'Aquesta pàgina detalla informació sobre la llicència de BookStack a més dels projectes i biblioteques que s\'utilitzen en BookStack. Molts projectes enumerats aquí poden ser utilitzats només en un context de desenvolupament.',
     'licenses_bookstack' => 'Llicència de BookStack',
     'licenses_php' => 'Llicències de Biblioteques de PHP',
     'licenses_js' => 'Llicències de Biblioteques de JavaScript',
