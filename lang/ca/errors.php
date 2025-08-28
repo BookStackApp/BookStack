@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Ja existeix un usuari amb el correu electrònic :email però amb unes credencials diferents.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'El compte d\'usuari no s\'ha pogut registrar amb els detalls proporcionats',
     'email_already_confirmed' => 'L’adreça electrònica ja està confirmada. Proveu d’iniciar la sessió.',
     'email_confirmation_invalid' => 'Aquest testimoni de confirmació no és vàlid o ja s’ha utilitzat. Proveu de tornar-vos a registrar.',
     'email_confirmation_expired' => 'Aquest testimoni de confirmació ha caducat. S’ha enviat un altre correu electrònic de confirmació.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'No s’ha trobat el controlador social',
     'social_driver_not_configured' => 'La configuració de :socialAccount no és correcta.',
     'invite_token_expired' => 'Aquest enllaç d’invitació ha caducat. Podeu provar de restablir la contrasenya del vostre compte.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'No s\'ha pogut trobar un usuari per aquesta acció.',
 
     // System
     'path_not_writable' => 'No s’ha pogut pujar a :filePath. Assegureu-vos que teniu permisos d’escriptura al servidor.',
@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'No podeu suprimir l’administrador únic.',
     'users_cannot_delete_guest' => 'No podeu suprimir l’usuari convidat.',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'No s\'ha pogut crear l\'usuari, ja que no s\'ha pogut enviar el correu d\'invitació',
 
     // Roles
     'role_cannot_be_edited' => 'No es pot editar aquest rol.',
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Aviat ho arreglarem.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_read' => 'No es pot llegir el fitxer ZIP.',
+    'import_zip_cant_decode_data' => 'No s\'ha pogut trobar i descodificar el fitxer data.json en el fitxer ZIP.',
+    'import_zip_no_data' => 'Les dades del fitxer ZIP no contenen cap llibre, capítol o contingut de pàgina.',
+    'import_validation_failed' => 'Error en validar la importació del ZIP amb els errors:',
+    'import_zip_failed_notification' => 'Error en importar l\'arxiu ZIP.',
+    'import_perms_books' => 'Li falten els permisos necessaris per crear llibres.',
+    'import_perms_chapters' => 'Li falten els permisos necessaris per crear capítols.',
+    'import_perms_pages' => 'Li falten els permisos necessaris per crear pàgines.',
+    'import_perms_images' => 'Li falten els permisos necessaris per crear imatges.',
+    'import_perms_attachments' => 'Li falten els permisos necessaris per crear adjunts.',
 
     // API errors
     'api_no_authorization_found' => 'No s’ha trobat cap testimoni d’autorització en aquesta sol·licitud.',
