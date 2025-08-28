@@ -6,11 +6,11 @@
  */
 return [
 
-    'failed' => 'Dee indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
+    'failed' => 'De indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
     'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
 
     // Login & Register
-    'sign_up' => 'Registrér',
+    'sign_up' => 'Registrer',
     'log_in' => 'Log ind',
     'log_in_with' => 'Log ind med :socialDriver',
     'sign_up_with' => 'Registrér med :socialDriver',
@@ -45,28 +45,28 @@ return [
 
     // Password Reset
     'reset_password' => 'Nulstil adgangskode',
-    'reset_password_send_instructions' => 'Indtast din E-Mail herunder og du vil blive sendt en E-Mail med et link til at nulstille din adgangskode.',
+    'reset_password_send_instructions' => 'Indtast din e-mail herunder og du vil blive sendt en e-mail med et link til at nulstille din adgangskode.',
     'reset_password_send_button' => 'Send link til nulstilling',
     'reset_password_sent' => 'Et link til nulstilling af adgangskode sendes til :email, hvis den e-mail-adresse findes i systemet.',
     'reset_password_success' => 'Din adgangskode er blevet nulstillet.',
     'email_reset_subject' => 'Nulstil din :appName adgangskode',
-    'email_reset_text' => 'Du modtager denne E-Mail fordi vi har modtaget en anmodning om at nulstille din adgangskode.',
+    'email_reset_text' => 'Du modtager denne e-mail fordi vi har modtaget en anmodning om at nulstille din adgangskode.',
     'email_reset_not_requested' => 'Hvis du ikke har anmodet om at få din adgangskode nulstillet, behøver du ikke at foretage dig noget.',
 
     // Email Confirmation
     'email_confirm_subject' => 'Bekræft din E-Mail på :appName',
     'email_confirm_greeting' => 'Tak for at oprette dig på :appName!',
-    'email_confirm_text' => 'Bekræft venligst din E-Mail adresse ved at klikke på linket nedenfor:',
-    'email_confirm_action' => 'Bekræft E-Mail',
-    'email_confirm_send_error' => 'E-Mail-bekræftelse kræves, men systemet kunne ikke sende E-Mailen. Kontakt administratoren for at sikre, at E-Mail er konfigureret korrekt.',
-    'email_confirm_success' => 'Din email er blevet bekræftet! Du bør nu kune logge ind med denne emailadresse.',
+    'email_confirm_text' => 'Bekræft venligst din e-mail adresse ved at klikke på linket nedenfor:',
+    'email_confirm_action' => 'Bekræft e-mail',
+    'email_confirm_send_error' => 'E-mailbekræftelse kræves, men systemet kunne ikke sende e-mailen. Kontakt administratoren for at sikre, at e-mail er konfigureret korrekt.',
+    'email_confirm_success' => 'Din e-mail er blevet bekræftet! Du bør nu kunne logge ind med denne e-mailadresse.',
     'email_confirm_resent' => 'Bekræftelsesmail sendt, tjek venligst din indboks.',
     'email_confirm_thanks' => 'Tak for bekræftelsen!',
     'email_confirm_thanks_desc' => 'Vent venligst et øjeblik, mens din bekræftelse behandles. Hvis du ikke bliver omdirigeret efter 3 sekunder, skal du trykke på linket "Fortsæt" nedenfor for at fortsætte.',
 
-    'email_not_confirmed' => 'E-Mail adresse ikke bekræftet',
-    'email_not_confirmed_text' => 'Din E-Mail adresse er endnu ikke blevet bekræftet.',
-    'email_not_confirmed_click_link' => 'Klik venligst på linket i E-Mailen der blev sendt kort efter du registrerede dig.',
+    'email_not_confirmed' => 'E-mailadresse ikke bekræftet',
+    'email_not_confirmed_text' => 'Din e-mailadresse er endnu ikke blevet bekræftet.',
+    'email_not_confirmed_click_link' => 'Klik venligst på linket i e-mailen der blev sendt kort efter du registrerede dig.',
     'email_not_confirmed_resend' => 'Hvis du ikke kan finde E-Mailen, kan du du få gensendt bekræftelsesemailen ved at trykke herunder.',
     'email_not_confirmed_resend_button' => 'Gensend bekræftelsesemail',
 

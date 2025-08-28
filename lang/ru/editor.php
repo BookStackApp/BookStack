@@ -29,10 +29,10 @@ return [
 
     // Toolbar
     'formats' => 'Форматы',
-    'header_large' => 'Большой',
-    'header_medium' => 'Средний',
-    'header_small' => 'Маленький',
-    'header_tiny' => 'Крошечный',
+    'header_large' => 'Крупный заголовок',
+    'header_medium' => 'Средний заголовок',
+    'header_small' => 'Небольшой заголовок',
+    'header_tiny' => 'Маленький заголовок',
     'paragraph' => 'Обычный текст',
     'blockquote' => 'Цитата',
     'inline_code' => 'Встроенный код',

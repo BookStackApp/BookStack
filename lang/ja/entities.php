@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'アップロードされたインポートZIPファイルは削除され、元に戻すことはできません。',
     'import_errors' => 'インポートエラー',
     'import_errors_desc' => 'インポート中に次のエラーが発生しました：',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => '階層内のページ',
+    'breadcrumb_siblings_for_chapter' => '階層内のチャプタ',
+    'breadcrumb_siblings_for_book' => '階層内のブック',
+    'breadcrumb_siblings_for_bookshelf' => '階層内の棚',
 
     // Permissions and restrictions
     'permissions' => '権限',

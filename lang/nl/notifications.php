@@ -5,7 +5,7 @@
 return [
 
     'new_comment_subject' => 'Nieuwe opmerking op pagina: :pageName',
-    'new_comment_intro' => 'Een gebruiker heeft gereageerd op een pagina in :appName:',
+    'new_comment_intro' => 'Een gebruiker heeft een opmerking geplaatst op een pagina in :appName:',
     'new_page_subject' => 'Nieuwe pagina: :pageName',
     'new_page_intro' => 'Een nieuwe pagina is gemaakt in :appName:',
     'updated_page_subject' => 'Aangepaste pagina: :pageName',
@@ -14,7 +14,7 @@ return [
 
     'detail_page_name' => 'Pagina Naam:',
     'detail_page_path' => 'Paginapad:',
-    'detail_commenter' => 'Reageerder:',
+    'detail_commenter' => 'Commentator:',
     'detail_comment' => 'Opmerking:',
     'detail_created_by' => 'Gemaakt Door:',
     'detail_updated_by' => 'Aangepast Door:',

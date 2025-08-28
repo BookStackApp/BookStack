@@ -13,7 +13,7 @@ return [
     'updated_page_debounce' => 'Per a evitar que s’acumulin les notificacions, durant un temps no se us notificarà cap canvi fet en aquesta pàgina pel mateix usuari.',
 
     'detail_page_name' => 'Nom de la pàgina:',
-    'detail_page_path' => 'Camí de la pàgina:',
+    'detail_page_path' => 'Ruta de la pàgina:',
     'detail_commenter' => 'Autor del comentari:',
     'detail_comment' => 'Comentari:',
     'detail_created_by' => 'Creada per:',

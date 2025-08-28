@@ -122,7 +122,7 @@ return [
     'recycle_bin_destroy' => 'verwijderde van prullenbak',
 
     // Comments
-    'commented_on'                => 'reageerde op',
+    'commented_on'                => 'plaatste opmerking in',
     'comment_create'              => 'voegde opmerking toe',
     'comment_update'              => 'paste opmerking aan',
     'comment_delete'              => 'verwijderde opmerking',
