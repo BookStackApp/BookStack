@@ -87,10 +87,10 @@ return [
     // Imports
     'import_create' => 'importació creada',
     'import_create_notification' => 'L\'importació s\'ha carregat correctament',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_run' => 'importació actualitzada',
+    'import_run_notification' => 'Contingut importat correctament',
+    'import_delete' => 'importació eliminada',
+    'import_delete_notification' => 'Importació eliminada correctament',
 
     // Users
     'user_create' => 'ha creat l’usuari',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'ha suprimit un comentari',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'crear regla d\'ordenació',
+    'sort_rule_create_notification' => 'Regla d\'ordenació creada correctament',
+    'sort_rule_update' => 'regla d\'ordenació actualitzada',
+    'sort_rule_update_notification' => 'Regla d\'ordenació actualitzada correctament',
+    'sort_rule_delete' => 'regla d\'ordenació eliminada',
+    'sort_rule_delete_notification' => 'Regla d\'ordenació eliminada correctament',
 
     // Other
     'permissions_update'          => 'ha actualitzat els permisos',
