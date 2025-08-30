@@ -2708,6 +2708,8 @@ export function updateDOMSelection(
         const range = document.createRange();
         range.selectNode(selectionTarget);
         selectionRect = range.getBoundingClientRect();
+      } else if (selectionTarget instanceof Range) {
+          selectionRect = selectionTarget.getBoundingClientRect();
       } else {
         selectionRect = selectionTarget.getBoundingClientRect();
       }

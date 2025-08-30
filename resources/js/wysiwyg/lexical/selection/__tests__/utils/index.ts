@@ -422,9 +422,6 @@ export function setNativeSelection(
   range.setEnd(focusNode, focusOffset);
   domSelection.removeAllRanges();
   domSelection.addRange(range);
-  Promise.resolve().then(() => {
-    document.dispatchEvent(new Event('selectionchange'));
-  });
 }
 
 export function setNativeSelectionWithPaths(
@@ -647,6 +644,8 @@ export async function applySelectionInputs(
   editor: LexicalEditor,
 ) {
   const rootElement = editor.getRootElement()!;
+  // Set initial focus as if we're in the editor
+  rootElement.focus();
 
   for (let i = 0; i < inputs.length; i++) {
     const input = inputs[i];

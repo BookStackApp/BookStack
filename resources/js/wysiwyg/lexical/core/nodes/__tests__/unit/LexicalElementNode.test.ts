@@ -18,9 +18,11 @@ import {
 } from 'lexical';
 
 import {
-  $createTestElementNode,
-  createTestEditor,
+    $createTestElementNode,
+    createTestEditor, patchRange,
 } from '../../../__tests__/utils';
+
+patchRange();
 
 describe('LexicalElementNode tests', () => {
   let container: HTMLElement;
@@ -54,6 +56,7 @@ describe('LexicalElementNode tests', () => {
 
     editor = createTestEditor();
     editor.setRootElement(root);
+    root.focus();
 
     // Insert initial block
     await update(() => {
@@ -63,11 +66,11 @@ describe('LexicalElementNode tests', () => {
       // Prevent text nodes from combining.
       text2.setMode('segmented');
       const text3 = $createTextNode('Baz');
-      // Some operations require a selection to exist, hence
-      // we make a selection in the setup code.
-      text.select(0, 0);
       block.append(text, text2, text3);
       $getRoot().append(block);
+        // Some operations require a selection to exist, hence
+        // we make a selection in the setup code.
+        text.select(0, 0);
     });
   }
 
