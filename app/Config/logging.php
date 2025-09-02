@@ -61,6 +61,7 @@ return [
             'replace_placeholders' => true,
         ],
 
+
         'stderr' => [
             'driver'  => 'monolog',
             'level'   => 'debug',

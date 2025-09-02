@@ -25,6 +25,10 @@
             </a>
             @include('home.parts.expand-toggle', ['classes' => 'text-link', 'target' => '.entity-list.compact .entity-item-snippet', 'key' => 'home-details'])
             @include('common.dark-mode-toggle', ['classes' => 'icon-list-item text-link'])
+           <a href="https://airtable.com/appWnsFw5XIb0kyLl/pagYHHYrFpaauhLpd/form" target="_blank" class="icon-list-item">
+                <span>@icon('info')</span>
+                <span>BookStack Feedback</span>
+           </a>
         </div>
     </div>
 @stop

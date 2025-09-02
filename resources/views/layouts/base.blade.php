@@ -32,6 +32,42 @@
     <link rel="manifest" href="{{ url('/manifest.json') }}">
     <meta name="mobile-web-app-capable" content="yes">
 
+    <style>
+    .toggle-view-btn {
+      display: inline-flex;
+      margin-right: 20px;
+    }
+
+    .toggle-view-btn .min-ico {
+      display: none;
+    }
+
+    .toggle-view-btn.on .min-ico  {
+      display: block;
+    }
+
+    .toggle-view-btn.on .max-ico  {
+      display: none;
+    }
+
+    .tri-layout-container.max .tri-layout-sides{
+      display: none!important;
+    }
+
+    .tri-layout-container.max .tri-layout-middle {
+      grid-column-start: a;
+      grid-column-end: c;
+    }
+
+    .tri-layout-container.max .tri-layout-middle #main-content {
+      max-width: 100%!important;
+    }
+
+    .tri-layout-container.max .tri-layout-middle .page-content {
+      max-width: 100%;
+    }
+    </style>
+
     <!-- OpenSearch -->
     <link rel="search" type="application/opensearchdescription+xml" title="{{ setting('app-name') }}" href="{{ url('/opensearch.xml') }}">
 
@@ -59,7 +95,7 @@
     <div id="content" components="@yield('content-components')" class="block">
         @yield('content')
     </div>
-
+    <script src="{{ versioned_asset('dist/extras.js') }}" type="module" nonce="{{ $cspNonce }}"></script>
     @include('layouts.parts.footer')
 
     <div component="back-to-top" class="back-to-top print-hidden">
