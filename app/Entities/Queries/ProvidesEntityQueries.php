@@ -22,13 +22,14 @@ interface ProvidesEntityQueries
     public function start(): Builder;
 
     /**
-     * Find the entity of the given ID, or return null if not found.
+     * Find the entity of the given ID or return null if not found.
      */
     public function findVisibleById(int $id): ?Entity;
 
     /**
      * Start a query for items that are visible, with selection
      * configured for list display of this item.
+     * @return Builder<Entity>
      */
     public function visibleForList(): Builder;
 }

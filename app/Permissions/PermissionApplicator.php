@@ -7,8 +7,7 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\EntityPermission;
-use BookStack\Users\Models\HasCreatorAndUpdater;
-use BookStack\Users\Models\HasOwner;
+use BookStack\Users\Models\OwnableInterface;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -24,10 +23,8 @@ class PermissionApplicator
 
     /**
      * Checks if an entity has a restriction set upon it.
-     *
-     * @param Model&(HasCreatorAndUpdater|HasOwner) $ownable
      */
-    public function checkOwnableUserAccess(Model $ownable, string $permission): bool
+    public function checkOwnableUserAccess(Model&OwnableInterface $ownable, string $permission): bool
     {
         $explodedPermission = explode('-', $permission);
         $action = $explodedPermission[1] ?? $explodedPermission[0];
@@ -39,7 +36,7 @@ class PermissionApplicator
         $allRolePermission = $user->can($fullPermission . '-all');
         $ownRolePermission = $user->can($fullPermission . '-own');
         $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
-        $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
+        $ownerField = $ownable->getOwnerFieldName();
         $ownableFieldVal = $ownable->getAttribute($ownerField);
 
         if (is_null($ownableFieldVal)) {
@@ -49,9 +46,13 @@ class PermissionApplicator
         $isOwner = $user->id === $ownableFieldVal;
         $hasRolePermission = $allRolePermission || ($isOwner && $ownRolePermission);
 
-        // Handle non entity specific jointPermissions
+        // Handle non-entity-specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
             return $hasRolePermission;
+        }
+
+        if (!($ownable instanceof Entity)) {
+            return false;
         }
 
         $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);

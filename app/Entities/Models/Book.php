@@ -95,6 +95,7 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
 
     /**
      * Get all pages within this book.
+     * @return HasMany<Page, $this>
      */
     public function pages(): HasMany
     {
@@ -111,7 +112,7 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
 
     /**
      * Get all chapters within this book.
-     * @return HasMany<Chapter>
+     * @return HasMany<Chapter, $this>
      */
     public function chapters(): HasMany
     {

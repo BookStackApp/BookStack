@@ -13,6 +13,9 @@ class BookQueries implements ProvidesEntityQueries
         'created_at', 'updated_at', 'image_id', 'owned_by',
     ];
 
+    /**
+     * @return Builder<Book>
+     */
     public function start(): Builder
     {
         return Book::query();

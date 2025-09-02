@@ -4,6 +4,8 @@ namespace BookStack\Activity\Models;
 
 use BookStack\App\Model;
 use BookStack\Users\Models\HasCreatorAndUpdater;
+use BookStack\Users\Models\OwnableInterface;
+use BookStack\Users\Models\User;
 use BookStack\Util\HtmlContentFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,12 +19,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int      $local_id
  * @property string   $entity_type
  * @property int      $entity_id
- * @property int      $created_by
- * @property int      $updated_by
  * @property string   $content_ref
  * @property bool     $archived
  */
-class Comment extends Model implements Loggable
+class Comment extends Model implements Loggable, OwnableInterface
 {
     use HasFactory;
     use HasCreatorAndUpdater;
@@ -39,6 +39,7 @@ class Comment extends Model implements Loggable
 
     /**
      * Get the parent comment this is in reply to (if existing).
+     * @return BelongsTo<Comment, Comment>
      */
     public function parent(): BelongsTo
     {

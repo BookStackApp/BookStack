@@ -70,6 +70,7 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
 
     /**
      * Get the cover image of the shelf.
+     * @return BelongsTo<Image, $this>
      */
     public function cover(): BelongsTo
     {

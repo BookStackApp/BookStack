@@ -10,7 +10,7 @@ use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Models\Watch;
 use BookStack\Api\ApiToken;
 use BookStack\App\Model;
-use BookStack\App\Sluggable;
+use BookStack\App\SluggableInterface;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Translation\LocaleDefinition;
 use BookStack\Translation\LocaleManager;
@@ -47,7 +47,7 @@ use Illuminate\Support\Collection;
  * @property Collection $mfaValues
  * @property ?Image     $avatar
  */
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, Sluggable
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Loggable, SluggableInterface
 {
     use HasFactory;
     use Authenticatable;
@@ -372,7 +372,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function refreshSlug(): string
     {
-        $this->slug = app()->make(SlugGenerator::class)->generate($this);
+        $this->slug = app()->make(SlugGenerator::class)->generate($this, $this->name);
 
         return $this->slug;
     }

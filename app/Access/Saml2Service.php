@@ -51,7 +51,7 @@ class Saml2Service
      * Returns the SAML2 request ID, and the URL to redirect the user to.
      *
      * @throws Error
-     * @returns array{url: string, id: ?string}
+     * @return array{url: string, id: ?string}
      */
     public function logout(User $user): array
     {

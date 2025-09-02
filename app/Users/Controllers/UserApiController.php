@@ -81,7 +81,7 @@ class UserApiController extends ApiController
         return $this->apiListingResponse($users, [
             'id', 'name', 'slug', 'email', 'external_auth_id',
             'created_at', 'updated_at', 'last_activity_at',
-        ], [Closure::fromCallable([$this, 'listFormatter'])]);
+        ], [$this->listFormatter(...)]);
     }
 
     /**

@@ -36,7 +36,7 @@ class WatchLevels
 
     /**
      * Get all the possible values as an option_name => value array.
-     * @returns array<string, int>
+     * @return array<string, int>
      */
     public static function all(): array
     {
@@ -50,7 +50,7 @@ class WatchLevels
 
     /**
      * Get the watch options suited for the given entity.
-     * @returns array<string, int>
+     * @return array<string, int>
      */
     public static function allSuitedFor(Entity $entity): array
     {

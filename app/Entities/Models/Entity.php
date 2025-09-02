@@ -12,7 +12,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Activity\Models\Viewable;
 use BookStack\Activity\Models\Watch;
 use BookStack\App\Model;
-use BookStack\App\Sluggable;
+use BookStack\App\SluggableInterface;
 use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Permissions\JointPermissionBuilder;
 use BookStack\Permissions\Models\EntityPermission;
@@ -22,7 +22,8 @@ use BookStack\References\Reference;
 use BookStack\Search\SearchIndex;
 use BookStack\Search\SearchTerm;
 use BookStack\Users\Models\HasCreatorAndUpdater;
-use BookStack\Users\Models\HasOwner;
+use BookStack\Users\Models\OwnableInterface;
+use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -43,17 +44,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon     $deleted_at
  * @property int        $created_by
  * @property int        $updated_by
+ * @property int        $owned_by
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, DeletableInterface, Loggable
+abstract class Entity extends Model implements
+    SluggableInterface,
+    Favouritable,
+    Viewable,
+    DeletableInterface,
+    OwnableInterface,
+    Loggable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;
-    use HasOwner;
 
     /**
      * @var string - Name of property where the main text content is found
@@ -201,6 +208,20 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
+     * Get the user who owns this entity.
+     * @return BelongsTo<User, $this>
+     */
+    public function ownedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owned_by');
+    }
+
+    public function getOwnerFieldName(): string
+    {
+        return 'owned_by';
+    }
+
+    /**
      * Get the related delete records for this entity.
      */
     public function deletions(): MorphMany
@@ -318,7 +339,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function refreshSlug(): string
     {
-        $this->slug = app()->make(SlugGenerator::class)->generate($this);
+        $this->slug = app()->make(SlugGenerator::class)->generate($this, $this->name);
 
         return $this->slug;
     }

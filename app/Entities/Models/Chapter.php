@@ -27,7 +27,7 @@ class Chapter extends BookChild implements HtmlDescriptionInterface
     /**
      * Get the pages that this chapter contains.
      *
-     * @return HasMany<Page>
+     * @return HasMany<Page, $this>
      */
     public function pages(string $dir = 'ASC'): HasMany
     {
@@ -60,7 +60,7 @@ class Chapter extends BookChild implements HtmlDescriptionInterface
 
     /**
      * Get the visible pages in this chapter.
-     * @returns Collection<Page>
+     * @return Collection<Page>
      */
     public function getVisiblePages(): Collection
     {

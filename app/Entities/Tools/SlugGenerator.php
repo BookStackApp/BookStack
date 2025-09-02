@@ -3,7 +3,7 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\App\Model;
-use BookStack\App\Sluggable;
+use BookStack\App\SluggableInterface;
 use BookStack\Entities\Models\BookChild;
 use Illuminate\Support\Str;
 
@@ -13,9 +13,9 @@ class SlugGenerator
      * Generate a fresh slug for the given entity.
      * The slug will be generated so that it doesn't conflict within the same parent item.
      */
-    public function generate(Sluggable $model): string
+    public function generate(SluggableInterface&Model $model, string $slugSource): string
     {
-        $slug = $this->formatNameAsSlug($model->name);
+        $slug = $this->formatNameAsSlug($slugSource);
         while ($this->slugInUse($slug, $model)) {
             $slug .= '-' . Str::random(3);
         }
@@ -24,7 +24,7 @@ class SlugGenerator
     }
 
     /**
-     * Format a name as a url slug.
+     * Format a name as a URL slug.
      */
     protected function formatNameAsSlug(string $name): string
     {
@@ -39,10 +39,8 @@ class SlugGenerator
     /**
      * Check if a slug is already in-use for this
      * type of model within the same parent.
-     *
-     * @param Sluggable&Model $model
      */
-    protected function slugInUse(string $slug, Sluggable $model): bool
+    protected function slugInUse(string $slug, SluggableInterface&Model $model): bool
     {
         $query = $model->newQuery()->where('slug', '=', $slug);
 

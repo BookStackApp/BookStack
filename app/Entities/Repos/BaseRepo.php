@@ -89,12 +89,10 @@ class BaseRepo
     /**
      * Update the given items' cover image, or clear it.
      *
-     * @param Entity&CoverImageInterface $entity
-     *
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage($entity, ?UploadedFile $coverImage, bool $removeImage = false)
+    public function updateCoverImage(Entity&CoverImageInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         if ($coverImage) {
             $imageType = $entity->coverImageTypeKey();
@@ -106,7 +104,7 @@ class BaseRepo
 
         if ($removeImage) {
             $this->imageRepo->destroyImage($entity->cover()->first());
-            $entity->image_id = 0;
+            $entity->cover()->dissociate();
             $entity->save();
         }
     }
