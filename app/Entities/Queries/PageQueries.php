@@ -66,6 +66,9 @@ class PageQueries implements ProvidesEntityQueries
             });
     }
 
+    /**
+     * @return Builder<Page>
+     */
     public function visibleForList(): Builder
     {
         return $this->start()

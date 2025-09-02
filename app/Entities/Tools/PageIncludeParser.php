@@ -7,7 +7,6 @@ use Closure;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
-use DOMText;
 
 class PageIncludeParser
 {
@@ -159,7 +158,7 @@ class PageIncludeParser
 
     /**
      * Splits the given $parentNode at the location of the $domNode within it.
-     * Attempts replicate the original $parentNode, moving some of their parent
+     * Attempts to replicate the original $parentNode, moving some of their parent
      * children in where needed, before adding the $domNode between.
      */
     protected function splitNodeAtChildNode(DOMElement $parentNode, DOMNode $domNode): void
@@ -171,6 +170,10 @@ class PageIncludeParser
         }
 
         $parentClone = $parentNode->cloneNode();
+        if (!($parentClone instanceof DOMElement)) {
+            return;
+        }
+
         $parentNode->parentNode->insertBefore($parentClone, $parentNode);
         $parentClone->removeAttribute('id');
 

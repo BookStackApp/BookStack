@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, Deletable, Loggable
+abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, DeletableInterface, Loggable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;

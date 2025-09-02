@@ -29,7 +29,7 @@ class SortRuleController extends Controller
 
         $operations = SortRuleOperation::fromSequence($request->input('sequence'));
         if (count($operations) === 0) {
-            return redirect()->withInput()->withErrors(['sequence' => 'No operations set.']);
+            return redirect('/settings/sorting/rules/new')->withInput()->withErrors(['sequence' => 'No operations set.']);
         }
 
         $rule = new SortRule();

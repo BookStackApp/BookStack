@@ -146,10 +146,10 @@ class ImageGalleryApiController extends ApiController
             $data['content']['html'] = "<div drawio-diagram=\"{$image->id}\"><img src=\"{$escapedUrl}\"></div>";
             $data['content']['markdown'] = $data['content']['html'];
         } else {
-            $escapedDisplayThumb = htmlentities($image->thumbs['display']);
+            $escapedDisplayThumb = htmlentities($image->getAttribute('thumbs')['display']);
             $data['content']['html'] = "<a href=\"{$escapedUrl}\" target=\"_blank\"><img src=\"{$escapedDisplayThumb}\" alt=\"{$escapedName}\"></a>";
             $mdEscapedName = str_replace(']', '', str_replace('[', '', $image->name));
-            $mdEscapedThumb = str_replace(']', '', str_replace('[', '', $image->thumbs['display']));
+            $mdEscapedThumb = str_replace(']', '', str_replace('[', '', $image->getAttribute('thumbs')['display']));
             $data['content']['markdown'] = "![{$mdEscapedName}]({$mdEscapedThumb})";
         }
 

@@ -14,10 +14,10 @@ use Illuminate\Support\Collection;
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
  */
-class Chapter extends BookChild
+class Chapter extends BookChild implements HtmlDescriptionInterface
 {
     use HasFactory;
-    use HasHtmlDescription;
+    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
 
