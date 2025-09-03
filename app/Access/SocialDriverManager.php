@@ -55,7 +55,7 @@ class SocialDriverManager
 
     /**
      * Gets the names of the active social drivers, keyed by driver id.
-     * @returns array<string, string>
+     * @return array<string, string>
      */
     public function getActive(): array
     {

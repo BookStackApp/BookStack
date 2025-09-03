@@ -138,7 +138,7 @@ class ImageService
      * Get the raw data content from an image.
      *
      * @throws Exception
-     * @returns ?resource
+     * @return ?resource
      */
     public function getImageStream(Image $image): mixed
     {

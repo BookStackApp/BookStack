@@ -14,10 +14,10 @@ use Illuminate\Support\Collection;
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
  */
-class Chapter extends BookChild
+class Chapter extends BookChild implements HtmlDescriptionInterface
 {
     use HasFactory;
-    use HasHtmlDescription;
+    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
 
@@ -27,7 +27,7 @@ class Chapter extends BookChild
     /**
      * Get the pages that this chapter contains.
      *
-     * @return HasMany<Page>
+     * @return HasMany<Page, $this>
      */
     public function pages(string $dir = 'ASC'): HasMany
     {
@@ -60,7 +60,7 @@ class Chapter extends BookChild
 
     /**
      * Get the visible pages in this chapter.
-     * @returns Collection<Page>
+     * @return Collection<Page>
      */
     public function getVisiblePages(): Collection
     {

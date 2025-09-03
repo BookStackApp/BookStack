@@ -39,6 +39,9 @@ class ImportRepo
         return $this->queryVisible()->get();
     }
 
+    /**
+     * @return Builder<Import>
+     */
     public function queryVisible(): Builder
     {
         $query = Import::query();

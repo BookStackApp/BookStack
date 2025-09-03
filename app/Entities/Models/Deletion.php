@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int       $deleted_by
  * @property string    $deletable_type
  * @property int       $deletable_id
- * @property Deletable $deletable
+ * @property DeletableInterface $deletable
  */
 class Deletion extends Model implements Loggable
 {

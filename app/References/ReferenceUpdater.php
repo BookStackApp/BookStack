@@ -4,7 +4,8 @@ namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\HasHtmlDescription;
+use BookStack\Entities\Models\HtmlDescriptionInterface;
+use BookStack\Entities\Models\HtmlDescriptionTrait;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
@@ -61,20 +62,18 @@ class ReferenceUpdater
     {
         if ($entity instanceof Page) {
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
-            return;
         }
 
-        if (in_array(HasHtmlDescription::class, class_uses($entity))) {
+        if ($entity instanceof HtmlDescriptionInterface) {
             $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
         }
     }
 
-    protected function updateReferencesWithinDescription(Entity $entity, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(Entity&HtmlDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
-        /** @var HasHtmlDescription&Entity $entity */
         $entity = (clone $entity)->refresh();
-        $html = $this->updateLinksInHtml($entity->description_html ?: '', $oldLink, $newLink);
-        $entity->description_html = $html;
+        $html = $this->updateLinksInHtml($entity->descriptionHtml(true) ?: '', $oldLink, $newLink);
+        $entity->setDescriptionHtml($html);
         $entity->save();
     }
 

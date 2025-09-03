@@ -4,7 +4,7 @@ namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-interface HasCoverImage
+interface CoverImageInterface
 {
     /**
      * Get the cover image for this item.

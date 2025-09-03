@@ -26,10 +26,10 @@ use Illuminate\Support\Collection;
  * @property ?Page                                    $defaultTemplate
  * @property ?SortRule                                 $sortRule
  */
-class Book extends Entity implements HasCoverImage
+class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterface
 {
     use HasFactory;
-    use HasHtmlDescription;
+    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
 
@@ -95,6 +95,7 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get all pages within this book.
+     * @return HasMany<Page, $this>
      */
     public function pages(): HasMany
     {
@@ -111,6 +112,7 @@ class Book extends Entity implements HasCoverImage
 
     /**
      * Get all chapters within this book.
+     * @return HasMany<Chapter, $this>
      */
     public function chapters(): HasMany
     {

@@ -7,8 +7,9 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\HasCoverImage;
-use BookStack\Entities\Models\HasHtmlDescription;
+use BookStack\Entities\Models\CoverImageInterface;
+use BookStack\Entities\Models\HtmlDescriptionInterface;
+use BookStack\Entities\Models\HtmlDescriptionTrait;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
@@ -88,12 +89,10 @@ class BaseRepo
     /**
      * Update the given items' cover image, or clear it.
      *
-     * @param Entity&HasCoverImage $entity
-     *
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage($entity, ?UploadedFile $coverImage, bool $removeImage = false)
+    public function updateCoverImage(Entity&CoverImageInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false)
     {
         if ($coverImage) {
             $imageType = $entity->coverImageTypeKey();
@@ -105,7 +104,7 @@ class BaseRepo
 
         if ($removeImage) {
             $this->imageRepo->destroyImage($entity->cover()->first());
-            $entity->image_id = 0;
+            $entity->cover()->dissociate();
             $entity->save();
         }
     }
@@ -150,18 +149,17 @@ class BaseRepo
 
     protected function updateDescription(Entity $entity, array $input): void
     {
-        if (!in_array(HasHtmlDescription::class, class_uses($entity))) {
+        if (!($entity instanceof HtmlDescriptionInterface)) {
             return;
         }
 
-        /** @var HasHtmlDescription $entity */
         if (isset($input['description_html'])) {
-            $entity->description_html = HtmlDescriptionFilter::filterFromString($input['description_html']);
-            $entity->description = html_entity_decode(strip_tags($input['description_html']));
+            $entity->setDescriptionHtml(
+                HtmlDescriptionFilter::filterFromString($input['description_html']),
+                html_entity_decode(strip_tags($input['description_html']))
+            );
         } else if (isset($input['description'])) {
-            $entity->description = $input['description'];
-            $entity->description_html = '';
-            $entity->description_html = $entity->descriptionHtml();
+            $entity->setDescriptionHtml('', $input['description']);
         }
     }
 }

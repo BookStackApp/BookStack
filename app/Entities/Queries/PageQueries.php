@@ -6,6 +6,9 @@ use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @implements ProvidesEntityQueries<Page>
+ */
 class PageQueries implements ProvidesEntityQueries
 {
     protected static array $contentAttributes = [
@@ -18,6 +21,9 @@ class PageQueries implements ProvidesEntityQueries
         'template', 'text', 'created_at', 'updated_at', 'priority', 'owned_by',
     ];
 
+    /**
+     * @return Builder<Page>
+     */
     public function start(): Builder
     {
         return Page::query();
@@ -66,6 +72,9 @@ class PageQueries implements ProvidesEntityQueries
             });
     }
 
+    /**
+     * @return Builder<Page>
+     */
     public function visibleForList(): Builder
     {
         return $this->start()

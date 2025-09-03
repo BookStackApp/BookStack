@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\HasCreatorAndUpdater;
+use BookStack\Users\Models\OwnableInterface;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method static Entity|Builder visible()
  */
-class Attachment extends Model
+class Attachment extends Model implements OwnableInterface
 {
     use HasCreatorAndUpdater;
     use HasFactory;

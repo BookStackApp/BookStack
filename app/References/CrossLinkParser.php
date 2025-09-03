@@ -48,7 +48,7 @@ class CrossLinkParser
     /**
      * Get a list of href values from the given document.
      *
-     * @returns string[]
+     * @return string[]
      */
     protected function getLinksFromContent(string $html): array
     {

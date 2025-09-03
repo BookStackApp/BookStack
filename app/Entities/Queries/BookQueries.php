@@ -6,6 +6,9 @@ use BookStack\Entities\Models\Book;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @implements ProvidesEntityQueries<Book>
+ */
 class BookQueries implements ProvidesEntityQueries
 {
     protected static array $listAttributes = [
@@ -13,6 +16,9 @@ class BookQueries implements ProvidesEntityQueries
         'created_at', 'updated_at', 'image_id', 'owned_by',
     ];
 
+    /**
+     * @return Builder<Book>
+     */
     public function start(): Builder
     {
         return Book::query();

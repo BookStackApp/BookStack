@@ -98,7 +98,7 @@ class PageRevisionController extends Controller
             throw new NotFoundException();
         }
 
-        $prev = $revision->getPrevious();
+        $prev = $revision->getPreviousRevision();
         $prevContent = $prev->html ?? '';
         $diff = Diff::excecute($prevContent, $revision->html);
 

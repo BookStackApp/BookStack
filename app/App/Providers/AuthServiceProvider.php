@@ -59,8 +59,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        Auth::provider('external-users', function ($app, array $config) {
-            return new ExternalBaseUserProvider($config['model']);
+        Auth::provider('external-users', function () {
+            return new ExternalBaseUserProvider();
         });
 
         // Bind and provide the default system user as a singleton to the app instance when needed.

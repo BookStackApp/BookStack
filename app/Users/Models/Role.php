@@ -53,6 +53,7 @@ class Role extends Model implements Loggable
 
     /**
      * The RolePermissions that belong to the role.
+     * @return BelongsToMany<RolePermission, $this>
      */
     public function permissions(): BelongsToMany
     {

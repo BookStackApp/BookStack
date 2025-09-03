@@ -52,7 +52,7 @@ class UpdateUrlCommand extends Command
             'page_revisions' => ['html', 'text', 'markdown'],
             'images'      => ['url'],
             'settings'    => ['value'],
-            'comments'    => ['html', 'text'],
+            'comments'    => ['html'],
         ];
 
         foreach ($columnsToUpdateByTable as $table => $columns) {

@@ -7,15 +7,14 @@ use Closure;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
-use DOMText;
 
 class PageIncludeParser
 {
     protected static string $includeTagRegex = "/{{@\s?([0-9].*?)}}/";
 
     /**
-     * Elements to clean up and remove if left empty after a parsing operation.
-     * @var DOMElement[]
+     * Nodes to clean up and remove if left empty after a parsing operation.
+     * @var DOMNode[]
      */
     protected array $toCleanup = [];
 
@@ -159,7 +158,7 @@ class PageIncludeParser
 
     /**
      * Splits the given $parentNode at the location of the $domNode within it.
-     * Attempts replicate the original $parentNode, moving some of their parent
+     * Attempts to replicate the original $parentNode, moving some of their parent
      * children in where needed, before adding the $domNode between.
      */
     protected function splitNodeAtChildNode(DOMElement $parentNode, DOMNode $domNode): void
@@ -171,6 +170,10 @@ class PageIncludeParser
         }
 
         $parentClone = $parentNode->cloneNode();
+        if (!($parentClone instanceof DOMElement)) {
+            return;
+        }
+
         $parentNode->parentNode->insertBefore($parentClone, $parentNode);
         $parentClone->removeAttribute('id');
 
@@ -203,7 +206,7 @@ class PageIncludeParser
     }
 
     /**
-     * Cleanup after a parse operation.
+     * Clean up after a parse operation.
      * Removes stranded elements we may have left during the parse.
      */
     protected function cleanup(): void

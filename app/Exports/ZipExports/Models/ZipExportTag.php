@@ -5,7 +5,7 @@ namespace BookStack\Exports\ZipExports\Models;
 use BookStack\Activity\Models\Tag;
 use BookStack\Exports\ZipExports\ZipValidationHelper;
 
-class ZipExportTag extends ZipExportModel
+final class ZipExportTag extends ZipExportModel
 {
     public string $name;
     public ?string $value = null;
@@ -39,9 +39,9 @@ class ZipExportTag extends ZipExportModel
         return $context->validateData($data, $rules);
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
-        $model = new self();
+        $model = new static();
 
         $model->name = $data['name'];
         $model->value = $data['value'] ?? null;

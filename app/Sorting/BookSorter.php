@@ -78,7 +78,7 @@ class BookSorter
      * Sort the books content using the given sort map.
      * Returns a list of books that were involved in the operation.
      *
-     * @returns Book[]
+     * @return Book[]
      */
     public function sortUsingMap(BookSortMap $sortMap): array
     {
