@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Http\ApiController;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RecycleBinApiController extends ApiController
@@ -69,7 +70,7 @@ class RecycleBinApiController extends ApiController
     /**
      * Load some related details for the deletion listing.
      */
-    protected function listFormatter(Deletion $deletion)
+    protected function listFormatter(Deletion $deletion): void
     {
         $deletable = $deletion->deletable;
 
@@ -89,9 +90,9 @@ class RecycleBinApiController extends ApiController
     }
 
     /**
-     * @param HasMany<Chapter|Page, Book|Chapter> $query
+     * @param Builder<Chapter|Page> $query
      */
-    protected static function withTrashedQuery(HasMany $query): void
+    protected static function withTrashedQuery(Builder $query): void
     {
         $query->withTrashed();
     }

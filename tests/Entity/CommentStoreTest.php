@@ -27,7 +27,6 @@ class CommentStoreTest extends TestCase
             'local_id'    => 1,
             'entity_id'   => $page->id,
             'entity_type' => Page::newModelInstance()->getMorphClass(),
-            'text'        => null,
             'parent_id'   => 2,
         ]);
 
