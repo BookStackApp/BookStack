@@ -13,8 +13,8 @@ class PageIncludeParser
     protected static string $includeTagRegex = "/{{@\s?([0-9].*?)}}/";
 
     /**
-     * Elements to clean up and remove if left empty after a parsing operation.
-     * @var DOMElement[]
+     * Nodes to clean up and remove if left empty after a parsing operation.
+     * @var DOMNode[]
      */
     protected array $toCleanup = [];
 
@@ -206,7 +206,7 @@ class PageIncludeParser
     }
 
     /**
-     * Cleanup after a parse operation.
+     * Clean up after a parse operation.
      * Removes stranded elements we may have left during the parse.
      */
     protected function cleanup(): void

@@ -6,6 +6,9 @@ use BookStack\Entities\Models\Book;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @implements ProvidesEntityQueries<Book>
+ */
 class BookQueries implements ProvidesEntityQueries
 {
     protected static array $listAttributes = [

@@ -95,7 +95,7 @@ class LoginService
     {
         $value = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
         if (!$value) {
-            return ['user_id' => null, 'method' => null];
+            return ['user_id' => null, 'method' => null, 'remember' => false];
         }
 
         [$id, $method, $remember, $time] = explode(':', $value);
@@ -103,18 +103,18 @@ class LoginService
         if ($time < $hourAgo) {
             $this->clearLastLoginAttempted();
 
-            return ['user_id' => null, 'method' => null];
+            return ['user_id' => null, 'method' => null, 'remember' => false];
         }
 
         return ['user_id' => $id, 'method' => $method, 'remember' => boolval($remember)];
     }
 
     /**
-     * Set the last login attempted user.
+     * Set the last login-attempted user.
      * Must be only used when credentials are correct and a login could be
-     * achieved but a secondary factor has stopped the login.
+     * achieved, but a secondary factor has stopped the login.
      */
-    protected function setLastLoginAttemptedForUser(User $user, string $method, bool $remember)
+    protected function setLastLoginAttemptedForUser(User $user, string $method, bool $remember): void
     {
         session()->put(
             self::LAST_LOGIN_ATTEMPTED_SESSION_KEY,

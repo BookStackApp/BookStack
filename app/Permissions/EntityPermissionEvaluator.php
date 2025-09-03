@@ -30,7 +30,7 @@ class EntityPermissionEvaluator
     }
 
     /**
-     * @param array<string, array<string, int>> $permitsByType
+     * @param array<string, array<int, string>> $permitsByType
      */
     protected function evaluatePermitsByType(array $permitsByType): ?int
     {
@@ -50,7 +50,7 @@ class EntityPermissionEvaluator
     /**
      * @param string[] $typeIdChain
      * @param array<string, EntityPermission[]> $permissionMapByTypeId
-     * @return array<string, array<string, int>>
+     * @return array<string, array<int, string>>
      */
     protected function collapseAndCategorisePermissions(array $typeIdChain, array $permissionMapByTypeId): array
     {

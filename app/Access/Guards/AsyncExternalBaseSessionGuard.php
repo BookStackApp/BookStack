@@ -3,23 +3,18 @@
 namespace BookStack\Access\Guards;
 
 /**
- * Saml2 Session Guard.
+ * External Auth Session Guard.
  *
- * The saml2 login process is async in nature meaning it does not fit very well
- * into the default laravel 'Guard' auth flow. Instead most of the logic is done
- * via the Saml2 controller & Saml2Service. This class provides a safer, thin
- * version of SessionGuard.
+ * The login process for external auth (SAML2/OIDC) is async in nature, meaning it does not fit very well
+ * into the default laravel 'Guard' auth flow. Instead, most of the logic is done via the relevant
+ * controller and services. This class provides a safer, thin version of SessionGuard.
  */
 class AsyncExternalBaseSessionGuard extends ExternalBaseSessionGuard
 {
     /**
      * Validate a user's credentials.
-     *
-     * @param array $credentials
-     *
-     * @return bool
      */
-    public function validate(array $credentials = [])
+    public function validate(array $credentials = []): bool
     {
         return false;
     }
@@ -27,12 +22,9 @@ class AsyncExternalBaseSessionGuard extends ExternalBaseSessionGuard
     /**
      * Attempt to authenticate a user using the given credentials.
      *
-     * @param array $credentials
      * @param bool  $remember
-     *
-     * @return bool
      */
-    public function attempt(array $credentials = [], $remember = false)
+    public function attempt(array $credentials = [], $remember = false): bool
     {
         return false;
     }
