@@ -94,7 +94,7 @@ class Handler extends ExceptionHandler
      * If the callable returns a response, this response will be returned
      * to the request upon error.
      */
-    public function prepareForOutOfMemory(callable $onOutOfMemory)
+    public function prepareForOutOfMemory(callable $onOutOfMemory): void
     {
         $this->onOutOfMemory = $onOutOfMemory;
     }
@@ -102,7 +102,7 @@ class Handler extends ExceptionHandler
     /**
      * Forget the current out of memory handler, if existing.
      */
-    public function forgetOutOfMemoryHandler()
+    public function forgetOutOfMemoryHandler(): void
     {
         $this->onOutOfMemory = null;
     }

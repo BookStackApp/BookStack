@@ -7,7 +7,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Exports\ZipExports\ZipExportFiles;
 use BookStack\Exports\ZipExports\ZipValidationHelper;
 
-class ZipExportChapter extends ZipExportModel
+final class ZipExportChapter extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
@@ -79,9 +79,9 @@ class ZipExportChapter extends ZipExportModel
         return $errors;
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
-        $model = new self();
+        $model = new static();
 
         $model->id = $data['id'] ?? null;
         $model->name = $data['name'];

@@ -26,6 +26,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
@@ -64,7 +65,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var list<string>
      */
     protected $fillable = ['name', 'email'];
 
@@ -73,7 +74,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * The attributes excluded from the model's JSON form.
      *
-     * @var array
+     * @var list<string>
      */
     protected $hidden = [
         'password', 'remember_token', 'system_name', 'email_confirmed', 'external_auth_id', 'email',
@@ -118,14 +119,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * The roles that belong to the user.
      *
-     * @return BelongsToMany
+     * @return BelongsToMany<Role, $this>
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
-        if ($this->id === 0) {
-            return;
-        }
-
         return $this->belongsToMany(Role::class);
     }
 

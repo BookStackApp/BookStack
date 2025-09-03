@@ -4,7 +4,7 @@ namespace BookStack\Access\Guards;
 
 use BookStack\Access\RegistrationService;
 use Illuminate\Auth\GuardHelpers;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Contracts\Session\Session;
@@ -24,43 +24,31 @@ class ExternalBaseSessionGuard implements StatefulGuard
      * The name of the Guard. Typically "session".
      *
      * Corresponds to guard name in authentication configuration.
-     *
-     * @var string
      */
-    protected $name;
+    protected readonly string $name;
 
     /**
      * The user we last attempted to retrieve.
-     *
-     * @var \Illuminate\Contracts\Auth\Authenticatable
      */
-    protected $lastAttempted;
+    protected Authenticatable $lastAttempted;
 
     /**
      * The session used by the guard.
-     *
-     * @var \Illuminate\Contracts\Session\Session
      */
-    protected $session;
+    protected Session $session;
 
     /**
      * Indicates if the logout method has been called.
-     *
-     * @var bool
      */
-    protected $loggedOut = false;
+    protected bool $loggedOut = false;
 
     /**
      * Service to handle common registration actions.
-     *
-     * @var RegistrationService
      */
-    protected $registrationService;
+    protected RegistrationService $registrationService;
 
     /**
      * Create a new authentication guard.
-     *
-     * @return void
      */
     public function __construct(string $name, UserProvider $provider, Session $session, RegistrationService $registrationService)
     {
@@ -72,13 +60,11 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Get the currently authenticated user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function user()
+    public function user(): Authenticatable|null
     {
         if ($this->loggedOut) {
-            return;
+            return null;
         }
 
         // If we've already retrieved the user for the current request we can just
@@ -101,13 +87,11 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Get the ID for the currently authenticated user.
-     *
-     * @return int|null
      */
-    public function id()
+    public function id(): int|null
     {
         if ($this->loggedOut) {
-            return;
+            return null;
         }
 
         return $this->user()
@@ -117,12 +101,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Log a user into the application without sessions or cookies.
-     *
-     * @param array $credentials
-     *
-     * @return bool
      */
-    public function once(array $credentials = [])
+    public function once(array $credentials = []): bool
     {
         if ($this->validate($credentials)) {
             $this->setUser($this->lastAttempted);
@@ -135,12 +115,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Log the given user ID into the application without sessions or cookies.
-     *
-     * @param mixed $id
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|false
      */
-    public function onceUsingId($id)
+    public function onceUsingId($id): Authenticatable|false
     {
         if (!is_null($user = $this->provider->retrieveById($id))) {
             $this->setUser($user);
@@ -153,38 +129,26 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Validate a user's credentials.
-     *
-     * @param array $credentials
-     *
-     * @return bool
      */
-    public function validate(array $credentials = [])
+    public function validate(array $credentials = []): bool
     {
         return false;
     }
 
     /**
      * Attempt to authenticate a user using the given credentials.
-     *
-     * @param array $credentials
-     * @param bool  $remember
-     *
-     * @return bool
+     * @param bool $remember
      */
-    public function attempt(array $credentials = [], $remember = false)
+    public function attempt(array $credentials = [], $remember = false): bool
     {
         return false;
     }
 
     /**
      * Log the given user ID into the application.
-     *
-     * @param mixed $id
      * @param bool  $remember
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|false
      */
-    public function loginUsingId($id, $remember = false)
+    public function loginUsingId(mixed $id, $remember = false): Authenticatable|false
     {
         // Always return false as to disable this method,
         // Logins should route through LoginService.
@@ -194,12 +158,9 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Log a user into the application.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     * @param bool                                       $remember
-     *
-     * @return void
+     * @param bool $remember
      */
-    public function login(AuthenticatableContract $user, $remember = false)
+    public function login(Authenticatable $user, $remember = false): void
     {
         $this->updateSession($user->getAuthIdentifier());
 
@@ -208,12 +169,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Update the session with the given ID.
-     *
-     * @param string $id
-     *
-     * @return void
      */
-    protected function updateSession($id)
+    protected function updateSession(string|int $id): void
     {
         $this->session->put($this->getName(), $id);
 
@@ -222,10 +179,8 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Log the user out of the application.
-     *
-     * @return void
      */
-    public function logout()
+    public function logout(): void
     {
         $this->clearUserDataFromStorage();
 
@@ -239,62 +194,48 @@ class ExternalBaseSessionGuard implements StatefulGuard
 
     /**
      * Remove the user data from the session and cookies.
-     *
-     * @return void
      */
-    protected function clearUserDataFromStorage()
+    protected function clearUserDataFromStorage(): void
     {
         $this->session->remove($this->getName());
     }
 
     /**
      * Get the last user we attempted to authenticate.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable
      */
-    public function getLastAttempted()
+    public function getLastAttempted(): Authenticatable
     {
         return $this->lastAttempted;
     }
 
     /**
      * Get a unique identifier for the auth session value.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'login_' . $this->name . '_' . sha1(static::class);
     }
 
     /**
      * Determine if the user was authenticated via "remember me" cookie.
-     *
-     * @return bool
      */
-    public function viaRemember()
+    public function viaRemember(): bool
     {
         return false;
     }
 
     /**
      * Return the currently cached user.
-     *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
-    public function getUser()
+    public function getUser(): Authenticatable|null
     {
         return $this->user;
     }
 
     /**
      * Set the current user.
-     *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user
-     *
-     * @return $this
      */
-    public function setUser(AuthenticatableContract $user)
+    public function setUser(Authenticatable $user): self
     {
         $this->user = $user;
 

@@ -285,7 +285,7 @@ class SearchRunner
      *
      * @param array<string, int> $termCounts
      *
-     * @return array<string, int>
+     * @return array<string, float>
      */
     protected function rawTermCountsToAdjustments(array $termCounts): array
     {

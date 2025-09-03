@@ -7,7 +7,7 @@ use BookStack\Exports\ZipExports\ZipValidationHelper;
 use BookStack\Uploads\Image;
 use Illuminate\Validation\Rule;
 
-class ZipExportImage extends ZipExportModel
+final class ZipExportImage extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
@@ -43,9 +43,9 @@ class ZipExportImage extends ZipExportModel
         return $context->validateData($data, $rules);
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
-        $model = new self();
+        $model = new static();
 
         $model->id = $data['id'] ?? null;
         $model->name = $data['name'];

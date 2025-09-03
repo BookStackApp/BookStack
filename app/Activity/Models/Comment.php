@@ -39,7 +39,7 @@ class Comment extends Model implements Loggable, OwnableInterface
 
     /**
      * Get the parent comment this is in reply to (if existing).
-     * @return BelongsTo<Comment, Comment>
+     * @return BelongsTo<Comment, $this>
      */
     public function parent(): BelongsTo
     {

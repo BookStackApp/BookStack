@@ -14,6 +14,9 @@ class SearchOptionSet
      */
     protected array $options = [];
 
+    /**
+     * @param T[] $options
+     */
     public function __construct(array $options = [])
     {
         $this->options = $options;
