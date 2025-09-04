@@ -31,7 +31,7 @@
             @icon('star')
             <div>
                 {!! trans('entities.meta_created_name', [
-                    'timeLength' => '<span title="'.$entity->created_at->toDayDateTimeString().'">'.$entity->created_at->diffForHumans() . '</span>',
+                    'timeLength' => '<span title="'. $dates->isoWithTimezone($entity->created_at) .'">'. $dates->relative($entity->created_at) . '</span>',
                     'user' => "<a href='{$entity->createdBy->getProfileUrl()}'>".e($entity->createdBy->name). "</a>"
                 ]) !!}
             </div>
@@ -39,7 +39,7 @@
     @else
         <div class="entity-meta-item">
             @icon('star')
-            <span title="{{$entity->created_at->toDayDateTimeString()}}">{{ trans('entities.meta_created', ['timeLength' => $entity->created_at->diffForHumans()]) }}</span>
+            <span title="{{ $dates->isoWithTimezone($entity->created_at) }}">{{ trans('entities.meta_created', ['timeLength' => $dates->relative($entity->created_at)]) }}</span>
         </div>
     @endif
 
@@ -48,7 +48,7 @@
             @icon('edit')
             <div>
                 {!! trans('entities.meta_updated_name', [
-                    'timeLength' => '<span title="' . $entity->updated_at->toDayDateTimeString() .'">' . $entity->updated_at->diffForHumans() .'</span>',
+                    'timeLength' => '<span title="' . $dates->isoWithTimezone($entity->updated_at) .'">' . $dates->relative($entity->updated_at) .'</span>',
                     'user' => "<a href='{$entity->updatedBy->getProfileUrl()}'>".e($entity->updatedBy->name). "</a>"
                 ]) !!}
             </div>
@@ -56,7 +56,7 @@
     @elseif (!$entity->isA('revision'))
         <div class="entity-meta-item">
             @icon('edit')
-            <span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span>
+            <span title="{{ $dates->isoWithTimezone($entity->updated_at) }}">{{ trans('entities.meta_updated', ['timeLength' => $dates->relative($entity->updated_at)]) }}</span>
         </div>
     @endif
 
