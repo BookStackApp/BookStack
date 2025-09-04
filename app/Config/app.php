@@ -70,8 +70,8 @@ return [
     // A list of the sources/hostnames that can be reached by application SSR calls.
     // This is used wherever users can provide URLs/hosts in-platform, like for webhooks.
     // Host-specific functionality (usually controlled via other options) like auth
-    // or user avatars for example, won't use this list.
-    // Space seperated if multiple. Can use '*' as a wildcard.
+    // or user avatars, for example, won't use this list.
+    // Space separated if multiple. Can use '*' as a wildcard.
     // Values will be compared prefix-matched, case-insensitive, against called SSR urls.
     // Defaults to allow all hosts.
     'ssr_hosts' => env('ALLOWED_SSR_HOSTS', '*'),
@@ -80,8 +80,10 @@ return [
     // Integer value between 0 (IP hidden) to 4 (Full IP usage)
     'ip_address_precision' => env('IP_ADDRESS_PRECISION', 4),
 
-    // Application timezone for back-end date functions.
+    // Application timezone for stored date/time values.
     'timezone' => env('APP_TIMEZONE', 'UTC'),
+    // Application timezone for displayed date/time values in the UI.
+    'display_timezone' => env('APP_DISPLAY_TIMEZONE', env('APP_TIMEZONE', 'UTC')),
 
     // Default locale to use
     // A default variant is also stored since Laravel can overwrite

@@ -6,7 +6,7 @@
          draggable="true" template-id="{{ $template->id }}">
         <div class="template-item-content" title="{{ trans('entities.templates_replace_content') }}">
             <div>{{ $template->name }}</div>
-            <div class="text-muted">{{ trans('entities.meta_updated', ['timeLength' => $template->updated_at->diffForHumans()]) }}</div>
+            <div class="text-muted" title="{{ $dates->absolute($template->updated_at) }}">{{ trans('entities.meta_updated', ['timeLength' => $dates->relative($template->updated_at)]) }}</div>
         </div>
         <div class="template-item-actions">
             <button type="button"

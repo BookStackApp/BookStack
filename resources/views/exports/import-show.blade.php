@@ -26,7 +26,7 @@
                     </div>
                     <div class="text-right text-muted">
                         <div>{{ trans('entities.import_size', ['size' => $import->getSizeString()]) }}</div>
-                        <div><span title="{{ $import->created_at->toISOString() }}">{{ trans('entities.import_uploaded_at', ['relativeTime' => $import->created_at->diffForHumans()]) }}</span></div>
+                        <div><span title="{{ $dates->absolute($import->created_at) }}">{{ trans('entities.import_uploaded_at', ['relativeTime' => $dates->relative($import->created_at)]) }}</span></div>
                         @if($import->createdBy)
                             <div>
                                 {{ trans('entities.import_uploaded_by') }}

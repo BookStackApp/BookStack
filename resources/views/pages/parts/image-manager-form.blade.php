@@ -94,12 +94,12 @@
 
     <div class="text-muted text-small">
         <hr class="my-m">
-        <div title="{{ $image->created_at->format('Y-m-d H:i:s') }}">
-            @icon('star') {{ trans('components.image_uploaded', ['uploadedDate' => $image->created_at->diffForHumans()]) }}
+        <div title="{{ $dates->absolute($image->created_at) }}">
+            @icon('star') {{ trans('components.image_uploaded', ['uploadedDate' => $dates->relative($image->created_at)]) }}
         </div>
         @if($image->created_at->valueOf() !== $image->updated_at->valueOf())
-            <div title="{{ $image->updated_at->format('Y-m-d H:i:s') }}">
-                @icon('edit') {{ trans('components.image_updated', ['updateDate' => $image->updated_at->diffForHumans()]) }}
+            <div title="{{ $dates->absolute($image->updated_at) }}">
+                @icon('edit') {{ trans('components.image_updated', ['updateDate' => $dates->relative($image->updated_at)]) }}
             </div>
         @endif
         @if($image->createdBy)

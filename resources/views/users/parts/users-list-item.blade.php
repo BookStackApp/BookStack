@@ -20,7 +20,7 @@
             @if($user->last_activity_at)
                 <small>{{ trans('settings.users_latest_activity') }}</small>
                 <br>
-                <small title="{{ $user->last_activity_at->format('Y-m-d H:i:s') }}">{{ $user->last_activity_at->diffForHumans() }}</small>
+                <small title="{{ $dates->absolute($user->last_activity_at) }}">{{ $dates->relative($user->last_activity_at) }}</small>
             @endif
         </div>
     </div>

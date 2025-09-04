@@ -99,9 +99,9 @@ class HtmlExportTest extends TestCase
         $page = $this->entities->page();
 
         $resp = $this->asEditor()->get($page->getUrl('/export/html'));
-        $resp->assertSee($page->created_at->isoFormat('D MMMM Y HH:mm:ss'));
+        $resp->assertSee($page->created_at->format('Y-m-d H:i:s T'));
         $resp->assertDontSee($page->created_at->diffForHumans());
-        $resp->assertSee($page->updated_at->isoFormat('D MMMM Y HH:mm:ss'));
+        $resp->assertSee($page->updated_at->format('Y-m-d H:i:s T'));
         $resp->assertDontSee($page->updated_at->diffForHumans());
     }
 

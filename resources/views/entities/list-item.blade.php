@@ -27,9 +27,9 @@
 @endif
 
 @if(($showUpdatedBy ?? false) && $entity->relationLoaded('updatedBy') && $entity->updatedBy)
-    <small title="{{ $entity->updated_at->toDayDateTimeString() }}">
+    <small title="{{ $dates->absolute($entity->updated_at) }}">
         {!! trans('entities.meta_updated_name', [
-            'timeLength' => $entity->updated_at->diffForHumans(),
+            'timeLength' => $dates->relative($entity->updated_at),
             'user' => e($entity->updatedBy->name)
         ]) !!}
     </small>

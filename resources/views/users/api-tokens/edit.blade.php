@@ -42,12 +42,12 @@
                 <div class="grid half gap-xl v-center">
 
                     <div class="text-muted text-small">
-                        <span title="{{ $token->created_at }}">
-                            {{ trans('settings.user_api_token_created', ['timeAgo' => $token->created_at->diffForHumans()]) }}
+                        <span title="{{ $dates->absolute($token->created_at) }}">
+                            {{ trans('settings.user_api_token_created', ['timeAgo' => $dates->relative($token->created_at)]) }}
                         </span>
                         <br>
-                        <span title="{{ $token->updated_at }}">
-                            {{ trans('settings.user_api_token_updated', ['timeAgo' => $token->created_at->diffForHumans()]) }}
+                        <span title="{{ $dates->absolute($token->updated_at) }}">
+                            {{ trans('settings.user_api_token_updated', ['timeAgo' => $dates->relative($token->created_at)]) }}
                         </span>
                     </div>
 

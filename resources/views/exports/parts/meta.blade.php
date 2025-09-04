@@ -4,13 +4,13 @@
     @endif
 
     @icon('star'){!! trans('entities.meta_created' . ($entity->createdBy ? '_name' : ''), [
-        'timeLength' => $entity->created_at->isoFormat('D MMMM Y HH:mm:ss'),
+        'timeLength' => $dates->absolute($entity->created_at),
         'user' => e($entity->createdBy->name ?? ''),
         ]) !!}
     <br>
 
     @icon('edit'){!! trans('entities.meta_updated' . ($entity->updatedBy ? '_name' : ''), [
-            'timeLength' => $entity->updated_at->isoFormat('D MMMM Y HH:mm:ss'),
+            'timeLength' => $dates->absolute($entity->updated_at),
             'user' => e($entity->updatedBy->name ?? '')
         ]) !!}
 </div>
