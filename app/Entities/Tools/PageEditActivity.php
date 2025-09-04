@@ -4,19 +4,15 @@ namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Util\DateFormatter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
 class PageEditActivity
 {
-    protected Page $page;
-
-    /**
-     * PageEditActivity constructor.
-     */
-    public function __construct(Page $page)
-    {
-        $this->page = $page;
+    public function __construct(
+        protected Page $page
+    ) {
     }
 
     /**
@@ -50,11 +46,9 @@ class PageEditActivity
     /**
      * Get any editor clash warning messages to show for the given draft revision.
      *
-     * @param PageRevision|Page $draft
-     *
      * @return string[]
      */
-    public function getWarningMessagesForDraft($draft): array
+    public function getWarningMessagesForDraft(Page|PageRevision $draft): array
     {
         $warnings = [];
 
@@ -82,7 +76,8 @@ class PageEditActivity
      */
     public function getEditingActiveDraftMessage(PageRevision $draft): string
     {
-        $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $draft->updated_at->diffForHumans()]);
+        $formatter = resolve(DateFormatter::class);
+        $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $formatter->relative($draft->updated_at)]);
         if ($draft->page->updated_at->timestamp <= $draft->updated_at->timestamp) {
             return $message;
         }

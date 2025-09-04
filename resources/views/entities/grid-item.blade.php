@@ -10,7 +10,7 @@
         <p class="text-muted">{{ $entity->getExcerpt(130) }}</p>
     </div>
     <div class="grid-card-footer text-muted ">
-        <p>@icon('star')<span title="{{ $entity->created_at->toDayDateTimeString() }}">{{ trans('entities.meta_created', ['timeLength' => $entity->created_at->diffForHumans()]) }}</span></p>
-        <p>@icon('edit')<span title="{{ $entity->updated_at->toDayDateTimeString() }}">{{ trans('entities.meta_updated', ['timeLength' => $entity->updated_at->diffForHumans()]) }}</span></p>
+        <p>@icon('star')<span title="{{ $dates->absolute($entity->created_at) }}">{{ trans('entities.meta_created', ['timeLength' => $dates->relative($entity->created_at)]) }}</span></p>
+        <p>@icon('edit')<span title="{{ $dates->absolute($entity->updated_at) }}">{{ trans('entities.meta_updated', ['timeLength' => $dates->relative($entity->updated_at)]) }}</span></p>
     </div>
 </a>

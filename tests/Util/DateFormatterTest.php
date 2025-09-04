@@ -13,7 +13,7 @@ class DateFormatterTest extends TestCase
         $formatter = new DateFormatter('Europe/London');
         $dateTime = new Carbon('2020-06-01 12:00:00', 'UTC');
 
-        $result = $formatter->isoWithTimezone($dateTime);
+        $result = $formatter->absolute($dateTime);
         $this->assertEquals('2020-06-01 13:00:00 BST', $result);
     }
 
@@ -22,7 +22,7 @@ class DateFormatterTest extends TestCase
         $formatter = new DateFormatter('Asia/Shanghai');
         $dateTime = new Carbon('2025-06-10 15:25:00', 'America/New_York');
 
-        $result = $formatter->isoWithTimezone($dateTime);
+        $result = $formatter->absolute($dateTime);
         $this->assertEquals('2025-06-11 03:25:00 CST', $result);
     }
 

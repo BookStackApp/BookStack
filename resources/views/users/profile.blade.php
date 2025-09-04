@@ -23,7 +23,7 @@
                             <div>
                                 <h4 class="mt-md">{{ $user->name }}</h4>
                                 <p class="text-muted">
-                                    {{ trans('entities.profile_user_for_x', ['time' => $user->created_at->diffForHumans(null, true)]) }}
+                                    {{ trans('entities.profile_user_for_x', ['time' => $dates->relative($user->created_at, false)]) }}
                                 </p>
                             </div>
                         </div>

@@ -16,6 +16,8 @@
     <server name="APP_THEME" value="none"/>
     <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
     <server name="APP_URL" value="http://bookstack.dev"/>
+    <server name="APP_TIMEZONE" value="UTC"/>
+    <server name="APP_DISPLAY_TIMEZONE" value="UTC"/>
     <server name="ALLOWED_IFRAME_HOSTS" value=""/>
     <server name="ALLOWED_IFRAME_SOURCES" value="https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com"/>
     <server name="ALLOWED_SSR_HOSTS" value="*"/>
