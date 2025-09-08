@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
 use BookStack\Permissions\Models\EntityPermission;
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
@@ -93,8 +94,9 @@ class PermissionsUpdater
 
         foreach ($permissions as $roleId => $info) {
             $entityPermissionData = ['role_id' => $roleId];
-            foreach (EntityPermission::PERMISSIONS as $permission) {
-                $entityPermissionData[$permission] = (($info[$permission] ?? false) === "true");
+            foreach (Permission::genericForEntity() as $permission) {
+                $permName = $permission->value;
+                $entityPermissionData[$permName] = (($info[$permName] ?? false) === "true");
             }
             $formatted[] = $entityPermissionData;
         }
@@ -108,8 +110,9 @@ class PermissionsUpdater
 
         foreach ($permissions as $requestPermissionData) {
             $entityPermissionData = ['role_id' => $requestPermissionData['role_id']];
-            foreach (EntityPermission::PERMISSIONS as $permission) {
-                $entityPermissionData[$permission] = boolval($requestPermissionData[$permission] ?? false);
+            foreach (Permission::genericForEntity() as $permission) {
+                $permName = $permission->value;
+                $entityPermissionData[$permName] = boolval($requestPermissionData[$permName] ?? false);
             }
             $formatted[] = $entityPermissionData;
         }

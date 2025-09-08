@@ -12,6 +12,7 @@ use BookStack\Api\ApiToken;
 use BookStack\App\Model;
 use BookStack\App\SluggableInterface;
 use BookStack\Entities\Tools\SlugGenerator;
+use BookStack\Permissions\Permission;
 use BookStack\Translation\LocaleDefinition;
 use BookStack\Translation\LocaleManager;
 use BookStack\Uploads\Image;
@@ -26,7 +27,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
@@ -156,8 +156,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Check if the user has a particular permission.
      */
-    public function can(string $permissionName): bool
+    public function can(string|Permission $permission): bool
     {
+        $permissionName = is_string($permission) ? $permission : $permission->value;
         return $this->permissions()->contains($permissionName);
     }
 
@@ -181,9 +182,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * Clear any cached permissions on this instance.
+     * Clear any cached permissions in this instance.
      */
-    public function clearPermissionCache()
+    public function clearPermissionCache(): void
     {
         $this->permissions = null;
     }
@@ -191,7 +192,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * Attach a role to this user.
      */
-    public function attachRole(Role $role)
+    public function attachRole(Role $role): void
     {
         $this->roles()->attach($role->id);
         $this->unsetRelation('roles');
@@ -207,15 +208,11 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     /**
      * Check if the user has a social account,
-     * If a driver is passed it checks for that single account type.
-     *
-     * @param bool|string $socialDriver
-     *
-     * @return bool
+     * If a driver is passed, it checks for that single account type.
      */
-    public function hasSocialAccount($socialDriver = false)
+    public function hasSocialAccount(string $socialDriver = ''): bool
     {
-        if ($socialDriver === false) {
+        if (empty($socialDriver)) {
             return $this->socialAccounts()->count() > 0;
         }
 

@@ -5,6 +5,7 @@ namespace Tests\Helpers;
 use BookStack\Entities\Models\Entity;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\RolePermission;
+use BookStack\Permissions\Permission;
 use BookStack\Settings\SettingService;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
@@ -139,8 +140,8 @@ class PermissionsProvider
     protected function actionListToEntityPermissionData(array $actionList, int $roleId = 0): array
     {
         $permissionData = ['role_id' => $roleId];
-        foreach (EntityPermission::PERMISSIONS as $possibleAction) {
-            $permissionData[$possibleAction] = in_array($possibleAction, $actionList);
+        foreach (Permission::genericForEntity() as $permission) {
+            $permissionData[$permission->value] = in_array($permission->value, $actionList);
         }
 
         return $permissionData;

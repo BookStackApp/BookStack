@@ -24,11 +24,12 @@ class PermissionApplicator
     /**
      * Checks if an entity has a restriction set upon it.
      */
-    public function checkOwnableUserAccess(Model&OwnableInterface $ownable, string $permission): bool
+    public function checkOwnableUserAccess(Model&OwnableInterface $ownable, string|Permission $permission): bool
     {
-        $explodedPermission = explode('-', $permission);
+        $permissionName = is_string($permission) ? $permission : $permission->value;
+        $explodedPermission = explode('-', $permissionName);
         $action = $explodedPermission[1] ?? $explodedPermission[0];
-        $fullPermission = count($explodedPermission) > 1 ? $permission : $ownable->getMorphClass() . '-' . $permission;
+        $fullPermission = count($explodedPermission) > 1 ? $permissionName : $ownable->getMorphClass() . '-' . $permissionName;
 
         $user = $this->currentUser();
         $userRoleIds = $this->getCurrentUserRoleIds();
@@ -235,8 +236,13 @@ class PermissionApplicator
      */
     protected function ensureValidEntityAction(string $action): void
     {
-        if (!in_array($action, EntityPermission::PERMISSIONS)) {
-            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
+        $allowed = Permission::genericForEntity();
+        foreach ($allowed as $permission) {
+            if ($permission->value === $action) {
+                return;
+            }
         }
+
+        throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
     }
 }

@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::table('comments', function (Blueprint $table) {
             $table->dropColumn('text');
         });
+
+        Schema::table('role_permissions', function (Blueprint $table) {
+            $table->dropColumn('display_name');
+            $table->dropColumn('description');
+        });
     }
 
     /**
