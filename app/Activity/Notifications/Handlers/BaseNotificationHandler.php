@@ -5,6 +5,7 @@ namespace BookStack\Activity\Notifications\Handlers;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\Messages\BaseActivityNotification;
 use BookStack\Entities\Models\Entity;
+use BookStack\Permissions\Permission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +27,7 @@ abstract class BaseNotificationHandler implements NotificationHandler
             }
 
             // Prevent sending of the user does not have notification permissions
-            if (!$user->can('receive-notifications')) {
+            if (!$user->can(Permission::ReceiveNotifications)) {
                 continue;
             }
 

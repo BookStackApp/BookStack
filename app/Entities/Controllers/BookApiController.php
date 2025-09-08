@@ -11,6 +11,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -47,7 +48,7 @@ class BookApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('book-create-all');
+        $this->checkPermission(Permission::BookCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $book = $this->bookRepo->create($requestData);
@@ -92,7 +93,7 @@ class BookApiController extends ApiController
     public function update(Request $request, string $id)
     {
         $book = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('book-update', $book);
+        $this->checkOwnablePermission(Permission::BookUpdate, $book);
 
         $requestData = $this->validate($request, $this->rules()['update']);
         $book = $this->bookRepo->update($book, $requestData);
@@ -109,7 +110,7 @@ class BookApiController extends ApiController
     public function delete(string $id)
     {
         $book = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('book-delete', $book);
+        $this->checkOwnablePermission(Permission::BookDelete, $book);
 
         $this->bookRepo->destroy($book);
 

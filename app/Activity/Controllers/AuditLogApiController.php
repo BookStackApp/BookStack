@@ -4,6 +4,7 @@ namespace BookStack\Activity\Controllers;
 
 use BookStack\Activity\Models\Activity;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 
 class AuditLogApiController extends ApiController
 {
@@ -16,8 +17,8 @@ class AuditLogApiController extends ApiController
      */
     public function list()
     {
-        $this->checkPermission('settings-manage');
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::SettingsManage);
+        $this->checkPermission(Permission::UsersManage);
 
         $query = Activity::query()->with(['user']);
 

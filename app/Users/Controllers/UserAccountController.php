@@ -4,6 +4,7 @@ namespace BookStack\Users\Controllers;
 
 use BookStack\Access\SocialDriverManager;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\UserNotificationPreferences;
 use BookStack\Settings\UserShortcutMap;
@@ -122,7 +123,7 @@ class UserAccountController extends Controller
      */
     public function showNotifications(PermissionApplicator $permissions)
     {
-        $this->checkPermission('receive-notifications');
+        $this->checkPermission(Permission::ReceiveNotifications);
 
         $preferences = (new UserNotificationPreferences(user()));
 
@@ -145,7 +146,7 @@ class UserAccountController extends Controller
     public function updateNotifications(Request $request)
     {
         $this->preventAccessInDemoMode();
-        $this->checkPermission('receive-notifications');
+        $this->checkPermission(Permission::ReceiveNotifications);
         $data = $this->validate($request, [
            'preferences' => ['required', 'array'],
            'preferences.*' => ['required', 'string'],

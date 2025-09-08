@@ -7,6 +7,7 @@ use BookStack\Activity\WatchLevels;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -22,7 +23,7 @@ class UserEntityWatchOptions
 
     public function canWatch(): bool
     {
-        return $this->user->can('receive-notifications') && !$this->user->isGuest();
+        return $this->user->can(Permission::ReceiveNotifications) && !$this->user->isGuest();
     }
 
     public function getWatchLevel(): string

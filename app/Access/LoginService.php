@@ -9,6 +9,7 @@ use BookStack\Exceptions\LoginAttemptInvalidUserException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
+use BookStack\Permissions\Permission;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Exception;
@@ -50,7 +51,7 @@ class LoginService
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, $method, $user);
 
         // Authenticate on all session guards if a likely admin
-        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
+        if ($user->can(Permission::UsersManage) && $user->can(Permission::UserRolesManage)) {
             $guards = ['standard', 'ldap', 'saml2', 'oidc'];
             foreach ($guards as $guard) {
                 auth($guard)->login($user);

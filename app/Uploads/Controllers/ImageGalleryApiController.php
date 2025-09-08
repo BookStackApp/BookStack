@@ -4,6 +4,7 @@ namespace BookStack\Uploads\Controllers;
 
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageResizer;
@@ -65,7 +66,7 @@ class ImageGalleryApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('image-create-all');
+        $this->checkPermission(Permission::ImageCreateAll);
         $data = $this->validate($request, $this->rules()['create']);
         $page = $this->pageQueries->findVisibleByIdOrFail($data['uploaded_to']);
 
@@ -102,8 +103,8 @@ class ImageGalleryApiController extends ApiController
     {
         $data = $this->validate($request, $this->rules()['update']);
         $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('page-view', $image->getPage());
-        $this->checkOwnablePermission('image-update', $image);
+        $this->checkOwnablePermission(Permission::PageView, $image->getPage());
+        $this->checkOwnablePermission(Permission::ImageUpdate, $image);
 
         $this->imageRepo->updateImageDetails($image, $data);
         if (isset($data['image'])) {
@@ -121,8 +122,8 @@ class ImageGalleryApiController extends ApiController
     public function delete(string $id)
     {
         $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('page-view', $image->getPage());
-        $this->checkOwnablePermission('image-delete', $image);
+        $this->checkOwnablePermission(Permission::PageView, $image->getPage());
+        $this->checkOwnablePermission(Permission::ImageDelete, $image);
         $this->imageRepo->destroyImage($image);
 
         return response('', 204);

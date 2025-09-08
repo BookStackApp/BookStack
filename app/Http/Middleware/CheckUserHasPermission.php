@@ -2,6 +2,7 @@
 
 namespace BookStack\Http\Middleware;
 
+use BookStack\Permissions\Permission;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -10,13 +11,9 @@ class CheckUserHasPermission
     /**
      * Handle an incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     * @param string                   $permission
-     *
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission)
+    public function handle(Request $request, Closure $next, string|Permission $permission)
     {
         if (!user()->can($permission)) {
             return $this->errorResponse($request);

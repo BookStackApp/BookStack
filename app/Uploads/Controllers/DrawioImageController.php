@@ -4,6 +4,7 @@ namespace BookStack\Uploads\Controllers;
 
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageResizer;
 use BookStack\Util\OutOfMemoryHandler;
@@ -57,7 +58,7 @@ class DrawioImageController extends Controller
             'uploaded_to' => ['required', 'integer'],
         ]);
 
-        $this->checkPermission('image-create-all');
+        $this->checkPermission(Permission::ImageCreateAll);
         $imageBase64Data = $request->get('image');
 
         try {

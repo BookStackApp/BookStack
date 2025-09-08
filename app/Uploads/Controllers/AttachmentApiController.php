@@ -5,6 +5,7 @@ namespace BookStack\Uploads\Controllers;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Exception;
@@ -45,12 +46,12 @@ class AttachmentApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('attachment-create-all');
+        $this->checkPermission(Permission::AttachmentCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $pageId = $request->get('uploaded_to');
         $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -137,9 +138,9 @@ class AttachmentApiController extends ApiController
             $attachment->uploaded_to = $requestData['uploaded_to'];
         }
 
-        $this->checkOwnablePermission('page-view', $page);
-        $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('attachment-update', $attachment);
+        $this->checkOwnablePermission(Permission::PageView, $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -160,7 +161,7 @@ class AttachmentApiController extends ApiController
     {
         /** @var Attachment $attachment */
         $attachment = Attachment::visible()->findOrFail($id);
-        $this->checkOwnablePermission('attachment-delete', $attachment);
+        $this->checkOwnablePermission(Permission::AttachmentDelete, $attachment);
 
         $this->attachmentService->deleteFile($attachment);
 

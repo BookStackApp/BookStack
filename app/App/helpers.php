@@ -56,7 +56,7 @@ function userCan(string|Permission $permission, ?Model $ownable = null): bool
  * Check if the current user can perform the given action on any items in the system.
  * Can be provided the class name of an entity to filter ability to that specific entity type.
  */
-function userCanOnAny(string $action, string $entityClass = ''): bool
+function userCanOnAny(string|Permission $action, string $entityClass = ''): bool
 {
     $permissions = app()->make(PermissionApplicator::class);
 

@@ -6,6 +6,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class BookshelfApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('bookshelf-create-all');
+        $this->checkPermission(Permission::BookshelfCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $bookIds = $request->get('books', []);
@@ -84,7 +85,7 @@ class BookshelfApiController extends ApiController
     public function update(Request $request, string $id)
     {
         $shelf = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('bookshelf-update', $shelf);
+        $this->checkOwnablePermission(Permission::BookshelfUpdate, $shelf);
 
         $requestData = $this->validate($request, $this->rules()['update']);
         $bookIds = $request->get('books', null);
@@ -103,7 +104,7 @@ class BookshelfApiController extends ApiController
     public function delete(string $id)
     {
         $shelf = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('bookshelf-delete', $shelf);
+        $this->checkOwnablePermission(Permission::BookshelfDelete, $shelf);
 
         $this->bookshelfRepo->destroy($shelf);
 

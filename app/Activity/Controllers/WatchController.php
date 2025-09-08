@@ -5,13 +5,14 @@ namespace BookStack\Activity\Controllers;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Tools\MixedEntityRequestHelper;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
 
 class WatchController extends Controller
 {
     public function update(Request $request, MixedEntityRequestHelper $entityHelper)
     {
-        $this->checkPermission('receive-notifications');
+        $this->checkPermission(Permission::ReceiveNotifications);
         $this->preventGuestAccess();
 
         $requestData = $this->validate($request, array_merge([

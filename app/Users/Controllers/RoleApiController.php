@@ -3,6 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use BookStack\Permissions\PermissionsRepo;
 use BookStack\Users\Models\Role;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class RoleApiController extends ApiController
     ) {
         // Checks for all endpoints in this controller
         $this->middleware(function ($request, $next) {
-            $this->checkPermission('user-roles-manage');
+            $this->checkPermission(Permission::UserRolesManage);
 
             return $next($request);
         });

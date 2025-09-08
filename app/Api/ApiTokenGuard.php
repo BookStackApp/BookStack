@@ -4,6 +4,7 @@ namespace BookStack\Api;
 
 use BookStack\Access\LoginService;
 use BookStack\Exceptions\ApiAuthException;
+use BookStack\Permissions\Permission;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Guard;
@@ -146,7 +147,7 @@ class ApiTokenGuard implements Guard
             throw new ApiAuthException(trans('errors.api_user_token_expired'), 403);
         }
 
-        if (!$token->user->can('access-api')) {
+        if (!$token->user->can(Permission::AccessApi)) {
             throw new ApiAuthException(trans('errors.api_user_no_api_permission'), 403);
         }
     }

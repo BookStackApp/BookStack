@@ -7,6 +7,7 @@ use BookStack\Access\UserInviteException;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Queries\UsersAllPaginatedAndSorted;
@@ -32,7 +33,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $listOptions = SimpleListOptions::fromRequest($request, 'users')->withSortOptions([
             'name' => trans('common.sort_name'),
@@ -58,7 +59,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
         $authMethod = config('auth.method');
         $roles = Role::query()->orderBy('display_name', 'asc')->get();
         $this->setPageTitle(trans('settings.users_add_new'));
@@ -73,7 +74,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $authMethod = config('auth.method');
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
@@ -111,7 +112,7 @@ class UserController extends Controller
      */
     public function edit(int $id, SocialDriverManager $socialDriverManager)
     {
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $user = $this->userRepo->getById($id);
         $user->load(['apiTokens', 'mfaValues']);
@@ -141,7 +142,7 @@ class UserController extends Controller
     public function update(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $validated = $this->validate($request, [
             'name'             => ['min:1', 'max:100'],
@@ -182,7 +183,7 @@ class UserController extends Controller
      */
     public function delete(int $id)
     {
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $user = $this->userRepo->getById($id);
         $this->setPageTitle(trans('settings.users_delete_named', ['userName' => $user->name]));
@@ -198,7 +199,7 @@ class UserController extends Controller
     public function destroy(Request $request, int $id)
     {
         $this->preventAccessInDemoMode();
-        $this->checkPermission('users-manage');
+        $this->checkPermission(Permission::UsersManage);
 
         $user = $this->userRepo->getById($id);
         $newOwnerId = intval($request->get('new_owner_id')) ?: null;
