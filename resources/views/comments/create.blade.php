@@ -12,6 +12,16 @@
                 </div>
             </div>
         </div>
+        <div refs="page-comments@reference-row" hidden class="primary-background-light text-muted px-s py-xs">
+            <div class="grid left-focus v-center">
+                <div>
+                    <a refs="page-comments@formReferenceLink" href="#">{{ trans('entities.comment_reference') }}</a>
+                </div>
+                <div class="text-right">
+                    <button refs="page-comments@remove-reference-button" class="text-button">{{ trans('common.remove') }}</button>
+                </div>
+            </div>
+        </div>
 
         <div class="content px-s pt-s">
             <form refs="page-comments@form" novalidate>

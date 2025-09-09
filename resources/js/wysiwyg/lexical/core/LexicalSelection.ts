@@ -17,7 +17,7 @@ import invariant from 'lexical/shared/invariant';
 import {
   $createLineBreakNode,
   $createParagraphNode,
-  $createTextNode,
+  $createTextNode, $getNearestNodeFromDOMNode,
   $isDecoratorNode,
   $isElementNode,
   $isLineBreakNode,
@@ -63,6 +63,7 @@ import {
   toggleTextFormatType,
 } from './LexicalUtils';
 import {$createTabNode, $isTabNode} from './nodes/LexicalTabNode';
+import {$selectSingleNode} from "../../utils/selection";
 
 export type TextPointType = {
   _selection: BaseSelection;
@@ -2568,6 +2569,17 @@ export function updateDOMSelection(
   }
 
   if (!$isRangeSelection(nextSelection)) {
+
+    // If the DOM selection enters a decorator node update the selection to a single node selection
+    if (activeElement !== null && domSelection.isCollapsed && focusDOMNode instanceof Node) {
+      const node = $getNearestNodeFromDOMNode(focusDOMNode);
+      if ($isDecoratorNode(node)) {
+        domSelection.removeAllRanges();
+        $selectSingleNode(node);
+        return;
+      }
+    }
+
     // We don't remove selection if the prevSelection is null because
     // of editor.setRootElement(). If this occurs on init when the
     // editor is already focused, then this can cause the editor to

@@ -6,7 +6,7 @@ import {
     $isTextNode,
     ElementNode,
     LexicalEditor,
-    LexicalNode
+    LexicalNode, RangeSelection
 } from "lexical";
 import {LexicalNodeMatcher} from "../nodes";
 import {$generateNodesFromDOM} from "@lexical/html";
@@ -116,6 +116,22 @@ export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
     });
 
     return sorted;
+}
+
+export function $selectOrCreateAdjacent(node: LexicalNode, after: boolean): RangeSelection {
+    const nearestBlock = $getNearestNodeBlockParent(node) || node;
+    let target = after ? nearestBlock.getNextSibling() : nearestBlock.getPreviousSibling()
+
+    if (!target) {
+        target = $createParagraphNode();
+        if (after) {
+            nearestBlock.insertAfter(target)
+        } else {
+            nearestBlock.insertBefore(target);
+        }
+    }
+
+    return after ? target.selectStart() : target.selectEnd();
 }
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {

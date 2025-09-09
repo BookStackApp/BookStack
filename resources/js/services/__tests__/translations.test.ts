@@ -58,6 +58,11 @@ describe('Translations Service', () => {
             expect(caseB).toEqual('an orange angry big dinosaur');
         });
 
+        test('it provides count as a replacement by default', () => {
+            const caseA = $trans.choice(`:count cats|:count dogs`, 4);
+            expect(caseA).toEqual('4 dogs');
+        });
+
         test('not provided replacements are left as-is', () => {
             const caseA = $trans.choice(`An :a dog`, 5, {});
             expect(caseA).toEqual('An :a dog');

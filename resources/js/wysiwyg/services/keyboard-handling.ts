@@ -13,15 +13,16 @@ import {
 import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {getLastSelection} from "../utils/selection";
-import {$getNearestNodeBlockParent, $getParentOfType} from "../utils/nodes";
+import {$getNearestNodeBlockParent, $getParentOfType, $selectOrCreateAdjacent} from "../utils/nodes";
 import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
+import {$isDiagramNode} from "../utils/diagrams";
 
 function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
         const node = nodes[0];
-        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node)) {
+        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
             return true;
         }
     }
@@ -46,16 +47,21 @@ function deleteSingleSelectedNode(editor: LexicalEditor) {
  * Insert a new empty node before/after the selection if the selection contains a single
  * selected node (like image, media etc...).
  */
-function insertAfterSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
+function insertAdjacentToSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
     if (isSingleSelectedNode(selectionNodes)) {
         const node = selectionNodes[0];
         const nearestBlock = $getNearestNodeBlockParent(node) || node;
+        const insertBefore = event?.shiftKey === true;
         if (nearestBlock) {
             requestAnimationFrame(() => {
                 editor.update(() => {
                     const newParagraph = $createParagraphNode();
-                    nearestBlock.insertAfter(newParagraph);
+                    if (insertBefore) {
+                        nearestBlock.insertBefore(newParagraph);
+                    } else {
+                        nearestBlock.insertAfter(newParagraph);
+                    }
                     newParagraph.select();
                 });
             });
@@ -74,22 +80,9 @@ function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: 
     }
 
     event?.preventDefault();
-
     const node = selectionNodes[0];
-    const nearestBlock = $getNearestNodeBlockParent(node) || node;
-    let target = after ? nearestBlock.getNextSibling() : nearestBlock.getPreviousSibling();
-
     editor.update(() => {
-        if (!target) {
-            target = $createParagraphNode();
-            if (after) {
-                nearestBlock.insertAfter(target)
-            } else {
-                nearestBlock.insertBefore(target);
-            }
-        }
-
-        target.selectStart();
+        $selectOrCreateAdjacent(node, after);
     });
 
     return true;
@@ -219,7 +212,7 @@ export function registerKeyboardHandling(context: EditorUiContext): () => void {
     }, COMMAND_PRIORITY_LOW);
 
     const unregisterEnter = context.editor.registerCommand(KEY_ENTER_COMMAND, (event): boolean => {
-        return insertAfterSingleSelectedNode(context.editor, event)
+        return insertAdjacentToSingleSelectedNode(context.editor, event)
             || moveAfterDetailsOnEmptyLine(context.editor, event);
     }, COMMAND_PRIORITY_LOW);
 

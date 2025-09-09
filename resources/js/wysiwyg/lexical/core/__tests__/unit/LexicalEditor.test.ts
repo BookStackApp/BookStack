@@ -1069,6 +1069,7 @@ describe('LexicalEditor tests', () => {
           __prev: null,
           __size: 1,
           __style: '',
+          __textFormat: 0,
           __textStyle: '',
           __type: 'paragraph',
         });
@@ -1149,6 +1150,7 @@ describe('LexicalEditor tests', () => {
           __prev: null,
           __size: 1,
           __style: '',
+          __textFormat: 0,
           __textStyle: '',
           __type: 'paragraph',
         });

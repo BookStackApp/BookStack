@@ -193,7 +193,7 @@ class PageEditorTest extends TestCase
         $editLink = $this->page->getUrl('/edit') . '?editor=';
         $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-clean\"]", '(Clean Content)');
         $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-stable\"]", '(Stable Content)');
-        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg2024\"]", '(In Alpha Testing)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg2024\"]", '(In Beta Testing)');
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit?editor=markdown-stable'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';

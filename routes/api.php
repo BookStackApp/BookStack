@@ -8,6 +8,7 @@
 
 use BookStack\Activity\Controllers\AuditLogApiController;
 use BookStack\Api\ApiDocsController;
+use BookStack\App\SystemApiController;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Exports\Controllers as ExportControllers;
 use BookStack\Permissions\ContentPermissionApiController;
@@ -92,3 +93,5 @@ Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionAp
 Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'update']);
 
 Route::get('audit-log', [AuditLogApiController::class, 'list']);
+
+Route::get('system', [SystemApiController::class, 'read']);

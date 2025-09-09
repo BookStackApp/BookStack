@@ -54,7 +54,7 @@ return [
     'image_upload_memory_limit' => 'Falha ao processar o ‘upload’ de imagem e/ou criar miniaturas devido a limites de recursos do sistema.',
     'image_thumbnail_memory_limit' => 'Falha ao criar variações de tamanho de imagem devido a limites de recursos do sistema.',
     'image_gallery_thumbnail_memory_limit' => 'Falha ao criar miniaturas da galeria devido aos limites de recursos do sistema.',
-    'drawing_data_not_found' => 'Dados de desenho não puderam ser carregados. O arquivo de desenho pode não existir mais ou você não tenha permissão para acessá-lo.',
+    'drawing_data_not_found' => 'Dados de diagrama não puderam ser carregados. O arquivo do diagrama pode não existir mais ou você não tenha permissão para acessá-lo.',
 
     // Attachments
     'attachment_not_found' => 'Documento não encontrado',

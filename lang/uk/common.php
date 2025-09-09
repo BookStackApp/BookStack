@@ -30,6 +30,8 @@ return [
     'create' => 'Створити',
     'update' => 'Оновити',
     'edit' => 'Редагувати',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Сортувати',
     'move' => 'Перемістити',
     'copy' => 'Копіювати',

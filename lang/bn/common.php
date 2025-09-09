@@ -30,6 +30,8 @@ return [
     'create' => 'তৈরী করুন',
     'update' => 'হালনাগাদ করুন',
     'edit' => 'সম্পাদন করুন',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'ক্রমান্বয় করুন',
     'move' => 'স্থানান্তর করুন',
     'copy' => 'অনুলিপি করুন',

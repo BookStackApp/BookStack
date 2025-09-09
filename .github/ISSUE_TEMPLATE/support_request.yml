@@ -42,6 +42,7 @@ body:
       label: Log Content
       description: If the issue has produced an error, provide any [BookStack or server log](https://www.bookstackapp.com/docs/admin/debugging/) content below.
       placeholder: Be sure to remove any confidential details in your logs
+      render: text
     validations:
       required: false
   - type: textarea

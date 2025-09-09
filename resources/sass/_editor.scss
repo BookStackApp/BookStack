@@ -422,7 +422,7 @@ body.editor-is-fullscreen {
 .editor-table-marker {
   position: fixed;
   background-color: var(--editor-color-primary);
-  z-index: 99;
+  z-index: 3;
   user-select: none;
   opacity: 0;
   &:hover, &.active {
@@ -454,7 +454,7 @@ body.editor-is-fullscreen {
 .editor-media-wrap {
   display: inline-block;
   cursor: not-allowed;
-  iframe {
+  iframe, video {
     pointer-events: none;
   }
   &.align-left {

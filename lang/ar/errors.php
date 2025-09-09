@@ -16,7 +16,7 @@ return [
     'email_confirmation_expired' => 'صلاحية رابط التأكيد انتهت, تم إرسال رسالة تأكيد جديدة لعنوان البريد الإلكتروني.',
     'email_confirmation_awaiting' => 'عنوان البريد الإلكتروني للحساب قيد الاستخدام يحتاج إلى تأكيد',
     'ldap_fail_anonymous' => 'فشل الوصول إلى LDAP باستخدام الربط المجهول',
-    'ldap_fail_authed' => 'فشل الوصول إلى LDAP باستخدام dn و password المعطاة',
+    'ldap_fail_authed' => 'فشل الوصول إلى LDAP باستخدام dn و كلمة السر المعطاة',
     'ldap_extension_not_installed' => 'لم يتم تثبيت إضافة LDAP PHP',
     'ldap_cannot_connect' => 'لا يمكن الاتصال بخادم ldap, فشل الاتصال المبدئي',
     'saml_already_logged_in' => 'تم تسجيل الدخول بالفعل',

@@ -6,6 +6,7 @@ use BookStack\Exceptions\ImageUploadException;
 use Exception;
 use GuzzleHttp\Psr7\Utils;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Decoders\BinaryImageDecoder;
 use Intervention\Image\Drivers\Gd\Decoders\NativeObjectDecoder;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -93,8 +94,8 @@ class ImageResizer
 
         $imageData = $disk->get($imagePath);
 
-        // Do not resize apng images where we're not cropping
-        if ($keepRatio && $this->isApngData($image, $imageData)) {
+        // Do not resize animated images where we're not cropping
+        if ($keepRatio && $this->isAnimated($image, $imageData)) {
             Cache::put($thumbCacheKey, $image->path, static::THUMBNAIL_CACHE_TIME);
 
             return $this->storage->getPublicUrl($image->path);
@@ -240,15 +241,50 @@ class ImageResizer
     /**
      * Check if the given image and image data is apng.
      */
-    protected function isApngData(Image $image, string &$imageData): bool
+    protected function isApngData(string &$imageData): bool
     {
-        $isPng = strtolower(pathinfo($image->path, PATHINFO_EXTENSION)) === 'png';
-        if (!$isPng) {
-            return false;
-        }
-
         $initialHeader = substr($imageData, 0, strpos($imageData, 'IDAT'));
 
         return str_contains($initialHeader, 'acTL');
+    }
+
+    /**
+     * Check if the given avif image data represents an animated image.
+     * This is based up the answer here: https://stackoverflow.com/a/79457313
+     */
+    protected function isAnimatedAvifData(string &$imageData): bool
+    {
+        $stszPos = strpos($imageData, 'stsz');
+        if ($stszPos === false) {
+            return false;
+        }
+
+        // Look 12 bytes after the start of 'stsz'
+        $start = $stszPos + 12;
+        $end = $start + 4;
+        if ($end > strlen($imageData) - 1) {
+            return false;
+        }
+
+        $data = substr($imageData, $start, 4);
+        $count = unpack('Nvalue', $data)['value'];
+        return $count > 1;
+    }
+
+    /**
+     * Check if the given image is animated.
+     */
+    protected function isAnimated(Image $image, string &$imageData): bool
+    {
+        $extension = strtolower(pathinfo($image->path, PATHINFO_EXTENSION));
+        if ($extension === 'png') {
+            return $this->isApngData($imageData);
+        }
+
+        if ($extension === 'avif') {
+            return $this->isAnimatedAvifData($imageData);
+        }
+
+        return false;
     }
 }

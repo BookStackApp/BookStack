@@ -82,6 +82,38 @@ export function commonPropertiesDifferent(nodeA: CommonBlockInterface, nodeB: Co
         nodeA.__dir !== nodeB.__dir;
 }
 
+export function applyCommonPropertyChanges(prevNode: CommonBlockInterface, currentNode: CommonBlockInterface, element: HTMLElement): void {
+    if (prevNode.__id !== currentNode.__id) {
+        element.setAttribute('id', currentNode.__id);
+    }
+
+    if (prevNode.__alignment !== currentNode.__alignment) {
+        for (const alignment of validAlignments) {
+            element.classList.remove('align-' + alignment);
+        }
+
+        if (currentNode.__alignment) {
+            element.classList.add('align-' + currentNode.__alignment);
+        }
+    }
+
+    if (prevNode.__inset !== currentNode.__inset) {
+        if (currentNode.__inset) {
+            element.style.paddingLeft = `${currentNode.__inset}px`;
+        } else {
+            element.style.removeProperty('paddingLeft');
+        }
+    }
+
+    if (prevNode.__dir !== currentNode.__dir) {
+        if (currentNode.__dir) {
+            element.dir = currentNode.__dir;
+        } else {
+            element.removeAttribute('dir');
+        }
+    }
+}
+
 export function updateElementWithCommonBlockProps(element: HTMLElement, node: CommonBlockInterface): void {
     if (node.__id) {
         element.setAttribute('id', node.__id);

@@ -38,6 +38,7 @@ import {DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {EditorUiContext} from "../../../../ui/framework/core";
 import {EditorUIManager} from "../../../../ui/framework/manager";
 import {ImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 
 type TestEnv = {
   readonly container: HTMLDivElement;
@@ -487,6 +488,7 @@ export function createTestContext(): EditorUiContext {
     theme: {},
     nodes: [
         ImageNode,
+        MediaNode,
     ]
   });
 

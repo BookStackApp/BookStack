@@ -30,6 +30,8 @@ return [
     'create' => 'Izveidot',
     'update' => 'Atjaunināt',
     'edit' => 'Rediģēt',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Kārtot',
     'move' => 'Pārvietot',
     'copy' => 'Kopēt',
@@ -109,5 +111,5 @@ return [
     'terms_of_service' => 'Pakalpojuma noteikumi',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Meklēt :appName',
 ];

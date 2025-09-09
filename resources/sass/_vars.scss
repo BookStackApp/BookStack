@@ -1,5 +1,12 @@
 // Variables
-///////////////
+// A range of SASS and plain CSS variables used in BookStack
+////////////////////////////////////////////////////////////
+
+// This is simply placed here at the top to prevent parsing/rendering issues
+// where built CSS files may have a starting BOM mark which can break the first css rule
+// when used inline, so this is here as a sacrifice in such scenarios instead of an important rule.
+// Related: https://github.com/sass/dart-sass/issues/472
+.dummy-style {color: red;}
 
 // Screen breakpoints
 $bp-xxxl: 1700px;

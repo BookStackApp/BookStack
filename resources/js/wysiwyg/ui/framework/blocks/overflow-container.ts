@@ -19,6 +19,7 @@ export class EditorOverflowContainer extends EditorContainerUiElement {
                 label: 'More',
                 icon: moreHorizontal,
             },
+            hideOnAction: false,
         }, []);
         this.addChildren(this.overflowButton);
     }

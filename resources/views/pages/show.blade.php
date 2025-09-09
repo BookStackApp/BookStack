@@ -28,12 +28,6 @@
     @include('entities.sibling-navigation', ['next' => $next, 'previous' => $previous])
 
     @if ($commentTree->enabled())
-        @if(($previous || $next))
-            <div class="px-xl print-hidden">
-                <hr class="darker">
-            </div>
-        @endif
-
         <div class="comments-container mb-l print-hidden">
             @include('comments.comments', ['commentTree' => $commentTree, 'page' => $page])
             <div class="clearfix"></div>

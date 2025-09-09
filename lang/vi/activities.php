@@ -59,7 +59,7 @@ return [
     'favourite_remove_notification' => '":name" đã được gỡ khỏi danh sách yêu thích của bạn',
 
     // Watching
-    'watch_update_level_notification' => 'Watch preferences successfully updated',
+    'watch_update_level_notification' => 'Đã cập nhật tùy chọn xem thành công',
 
     // Auth
     'auth_login' => 'đăng nhập',
@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook đã được xóa thành công',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'đã tạo nhập',
+    'import_create_notification' => 'Tải lên nhập thành công',
+    'import_run' => 'đã nhập cập nhật',
+    'import_run_notification' => 'Nội dung đã được nhập thành công',
+    'import_delete' => 'Đã xóa nhập',
+    'import_delete_notification' => 'Nhập đã được xóa thành công',
 
     // Users
     'user_create' => 'đã tạo người dùng',
@@ -101,17 +101,17 @@ return [
     'user_delete_notification' => 'Người dùng đã được xóa thành công',
 
     // API Tokens
-    'api_token_create' => 'created API token',
-    'api_token_create_notification' => 'API token successfully created',
-    'api_token_update' => 'updated API token',
-    'api_token_update_notification' => 'API token successfully updated',
-    'api_token_delete' => 'deleted API token',
-    'api_token_delete_notification' => 'API token successfully deleted',
+    'api_token_create' => 'Đã tạo Token API ',
+    'api_token_create_notification' => 'Token API  đã tạo thành công',
+    'api_token_update' => 'Đã cập nhật token API ',
+    'api_token_update_notification' => 'Token API  đã cập nhật thành công',
+    'api_token_delete' => 'Đã xóa token API',
+    'api_token_delete_notification' => 'Đã xóa token API thành công',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'Đã tạo vai trò',
     'role_create_notification' => 'Vai trò mới đã được tạo thành công',
-    'role_update' => 'updated role',
+    'role_update' => 'Vai trò đã cập nhật',
     'role_update_notification' => 'Vai trò đã được cập nhật thành công',
     'role_delete' => 'đã xóa vai trò',
     'role_delete_notification' => 'Vai trò đã được xóa thành công',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'đã xóa bình luận',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => '',
+    'sort_rule_create_notification' => '',
+    'sort_rule_update' => 'xóa quy tắc sắp xếp',
+    'sort_rule_update_notification' => 'Đã cập nhật quy tắc sắp xếp thành công',
+    'sort_rule_delete' => 'xóa quy tắc sắp xếp',
+    'sort_rule_delete_notification' => 'Đã xóa quy tắc sắp xếp thành công',
 
     // Other
     'permissions_update'          => 'các quyền đã được cập nhật',

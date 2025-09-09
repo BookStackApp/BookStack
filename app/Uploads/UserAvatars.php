@@ -5,6 +5,7 @@ namespace BookStack\Uploads;
 use BookStack\Exceptions\HttpFetchException;
 use BookStack\Http\HttpRequestService;
 use BookStack\Users\Models\User;
+use BookStack\Util\WebSafeMimeSniffer;
 use Exception;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
@@ -50,6 +51,33 @@ class UserAvatars
             $user->save();
         } catch (Exception $e) {
             Log::error('Failed to save user avatar image', ['exception' => $e]);
+        }
+    }
+
+    /**
+     * Assign a new avatar image to the given user by fetching from a remote URL.
+     */
+    public function assignToUserFromUrl(User $user, string $avatarUrl): void
+    {
+        try {
+            $this->destroyAllForUser($user);
+            $imageData = $this->getAvatarImageData($avatarUrl);
+
+            $mime = (new WebSafeMimeSniffer())->sniff($imageData);
+            [$format, $type] = explode('/', $mime, 2);
+            if ($format !== 'image' || !ImageService::isExtensionSupported($type)) {
+                return;
+            }
+
+            $avatar = $this->createAvatarImageFromData($user, $imageData, $type);
+            $user->avatar()->associate($avatar);
+            $user->save();
+        } catch (Exception $e) {
+            Log::error('Failed to save user avatar image from URL', [
+                'exception' => $e->getMessage(),
+                'url'       => $avatarUrl,
+                'user_id'   => $user->id,
+            ]);
         }
     }
 
@@ -105,7 +133,7 @@ class UserAvatars
     }
 
     /**
-     * Gets an image from url and returns it as a string of image data.
+     * Get an image from a URL and return it as a string of image data.
      *
      * @throws HttpFetchException
      */
@@ -113,7 +141,19 @@ class UserAvatars
     {
         try {
             $client = $this->http->buildClient(5);
-            $response = $client->sendRequest(new Request('GET', $url));
+            $responseCount = 0;
+
+            do {
+                $response = $client->sendRequest(new Request('GET', $url));
+                $responseCount++;
+                $isRedirect = ($response->getStatusCode() === 301 || $response->getStatusCode() === 302);
+                $url = $response->getHeader('Location')[0] ?? '';
+            } while ($responseCount < 3 && $isRedirect && is_string($url) && str_starts_with($url, 'http'));
+
+            if ($responseCount === 3) {
+                throw new HttpFetchException("Failed to fetch image, max redirect limit of 3 tries reached. Last fetched URL: {$url}");
+            }
+
             if ($response->getStatusCode() !== 200) {
                 throw new HttpFetchException(trans('errors.cannot_get_image_from_url', ['url' => $url]));
             }

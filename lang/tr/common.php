@@ -30,6 +30,8 @@ return [
     'create' => 'Oluştur',
     'update' => 'Güncelle',
     'edit' => 'Düzenle',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Sırala',
     'move' => 'Taşı',
     'copy' => 'Kopyala',

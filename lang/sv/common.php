@@ -30,6 +30,8 @@ return [
     'create' => 'Skapa',
     'update' => 'Uppdatera',
     'edit' => 'Redigera',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Sortera',
     'move' => 'Flytta',
     'copy' => 'Kopiera',
@@ -109,5 +111,5 @@ return [
     'terms_of_service' => 'Användarvillkor',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Sök :appName',
 ];

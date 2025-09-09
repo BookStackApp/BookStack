@@ -11,6 +11,7 @@ use BookStack\Exceptions\UserRegistrationException;
 use BookStack\Facades\Theme;
 use BookStack\Http\HttpRequestService;
 use BookStack\Theming\ThemeEvents;
+use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Cache;
 use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
@@ -26,7 +27,8 @@ class OidcService
         protected RegistrationService $registrationService,
         protected LoginService $loginService,
         protected HttpRequestService $http,
-        protected GroupSyncService $groupService
+        protected GroupSyncService $groupService,
+        protected UserAvatars $userAvatars
     ) {
     }
 
@@ -218,6 +220,10 @@ class OidcService
             );
         } catch (UserRegistrationException $exception) {
             throw new OidcException($exception->getMessage());
+        }
+
+        if ($this->config()['fetch_avatar'] && !$user->avatar()->exists() && $userDetails->picture) {
+            $this->userAvatars->assignToUserFromUrl($user, $userDetails->picture);
         }
 
         if ($this->shouldSyncGroups()) {

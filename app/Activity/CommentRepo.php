@@ -4,6 +4,8 @@ namespace BookStack\Activity;
 
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Entity;
+use BookStack\Exceptions\NotifyException;
+use BookStack\Exceptions\PrettyException;
 use BookStack\Facades\Activity as ActivityService;
 use BookStack\Util\HtmlDescriptionFilter;
 
@@ -20,7 +22,7 @@ class CommentRepo
     /**
      * Create a new comment on an entity.
      */
-    public function create(Entity $entity, string $html, ?int $parent_id): Comment
+    public function create(Entity $entity, string $html, ?int $parentId, string $contentRef): Comment
     {
         $userId = user()->id;
         $comment = new Comment();
@@ -29,7 +31,8 @@ class CommentRepo
         $comment->created_by = $userId;
         $comment->updated_by = $userId;
         $comment->local_id = $this->getNextLocalId($entity);
-        $comment->parent_id = $parent_id;
+        $comment->parent_id = $parentId;
+        $comment->content_ref = preg_match('/^bkmrk-(.*?):\d+:(\d*-\d*)?$/', $contentRef) === 1 ? $contentRef : '';
 
         $entity->comments()->save($comment);
         ActivityService::add(ActivityType::COMMENT_CREATE, $comment);
@@ -45,6 +48,41 @@ class CommentRepo
     {
         $comment->updated_by = user()->id;
         $comment->html = HtmlDescriptionFilter::filterFromString($html);
+        $comment->save();
+
+        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+
+        return $comment;
+    }
+
+
+    /**
+     * Archive an existing comment.
+     */
+    public function archive(Comment $comment): Comment
+    {
+        if ($comment->parent_id) {
+            throw new NotifyException('Only top-level comments can be archived.', '/', 400);
+        }
+
+        $comment->archived = true;
+        $comment->save();
+
+        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+
+        return $comment;
+    }
+
+    /**
+     * Un-archive an existing comment.
+     */
+    public function unarchive(Comment $comment): Comment
+    {
+        if ($comment->parent_id) {
+            throw new NotifyException('Only top-level comments can be un-archived.', '/', 400);
+        }
+
+        $comment->archived = false;
         $comment->save();
 
         ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);

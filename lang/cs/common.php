@@ -30,6 +30,8 @@ return [
     'create' => 'Vytvořit',
     'update' => 'Aktualizovat',
     'edit' => 'Upravit',
+    'archive' => 'Archivovat',
+    'unarchive' => 'Od-Archivovat',
     'sort' => 'Seřadit',
     'move' => 'Přesunout',
     'copy' => 'Kopírovat',

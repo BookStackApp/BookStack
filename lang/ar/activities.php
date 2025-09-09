@@ -64,7 +64,7 @@ return [
     // Auth
     'auth_login' => 'تم تسجيل الدخول',
     'auth_register' => 'سجل كمستخدم جديد',
-    'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة المرور',
+    'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة السر',
     'auth_password_reset_update' => 'إعادة تعيين كلمة مرور المستخدم',
     'mfa_setup_method' => 'طريقة المصادقة متعددة العوامل المُهيأة',
     'mfa_setup_method_notification' => 'تم إعداد المصادقة متعددة العوامل بنجاح',

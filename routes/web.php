@@ -179,6 +179,8 @@ Route::middleware('auth')->group(function () {
 
     // Comments
     Route::post('/comment/{pageId}', [ActivityControllers\CommentController::class, 'savePageComment']);
+    Route::put('/comment/{id}/archive', [ActivityControllers\CommentController::class, 'archive']);
+    Route::put('/comment/{id}/unarchive', [ActivityControllers\CommentController::class, 'unarchive']);
     Route::put('/comment/{id}', [ActivityControllers\CommentController::class, 'update']);
     Route::delete('/comment/{id}', [ActivityControllers\CommentController::class, 'destroy']);
 

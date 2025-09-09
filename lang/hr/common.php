@@ -30,6 +30,8 @@ return [
     'create' => 'Stvori',
     'update' => 'Ažuriraj',
     'edit' => 'Uredi',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Razvrstaj',
     'move' => 'Makni',
     'copy' => 'Kopiraj',

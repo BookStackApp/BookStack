@@ -30,6 +30,8 @@ return [
     'create' => 'Buat',
     'update' => 'Perbarui',
     'edit' => 'Sunting',
+    'archive' => 'Archive',
+    'unarchive' => 'Un-Archive',
     'sort' => 'Sortir',
     'move' => 'Pindahkan',
     'copy' => 'Salin',

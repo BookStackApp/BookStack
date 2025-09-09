@@ -9,7 +9,7 @@ import {
 } from "@lexical/table";
 import {$getParentOfType} from "./nodes";
 import {$getNodeFromSelection} from "./selection";
-import {formatSizeValue} from "./dom";
+import {el, formatSizeValue} from "./dom";
 import {TableMap} from "./table-map";
 
 function $getTableFromCell(cell: TableCellNode): TableNode|null {
@@ -138,6 +138,23 @@ export function $getTableCellColumnWidth(editor: LexicalEditor, cell: TableCellN
 
     const widths = table.getColWidths();
     return (widths.length > index) ? widths[index] : '';
+}
+
+export function buildColgroupFromTableWidths(colWidths: string[]): HTMLElement|null {
+    if (colWidths.length === 0) {
+        return null
+    }
+
+    const colgroup = el('colgroup');
+    for (const width of colWidths) {
+        const col = el('col');
+        if (width) {
+            col.style.width = width;
+        }
+        colgroup.append(col);
+    }
+
+    return colgroup;
 }
 
 export function $getTableCellsFromSelection(selection: BaseSelection|null): TableCellNode[]  {

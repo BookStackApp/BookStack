@@ -53,7 +53,7 @@ return [
     'image_upload_replace_type' => 'Image file replacements must be of the same type',
     'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
     'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_gallery_thumbnail_memory_limit' => 'Misslyckades att skapa galleriminiatyrer på grund av otillräckliga systemresurser.',
     'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
 
     // Attachments
@@ -106,16 +106,16 @@ return [
     'back_soon' => 'Vi är snart tillbaka.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
+    'import_zip_cant_read' => 'Kunde inte läsa ZIP-filen.',
     'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_validation_failed' => 'ZIP-filen kunde inte valideras med fel:',
+    'import_zip_failed_notification' => 'Det gick inte att importera ZIP-fil.',
+    'import_perms_books' => 'Du saknar behörighet att skapa böcker.',
+    'import_perms_chapters' => 'Du saknar behörighet att skapa kapitel.',
+    'import_perms_pages' => 'Du saknar behörighet att skapa sidor.',
+    'import_perms_images' => 'Du saknar behörighet för att skapa bilder.',
+    'import_perms_attachments' => 'Du saknar behörighet att skapa bilagor.',
 
     // API errors
     'api_no_authorization_found' => 'Ingen auktoriseringstoken hittades på denna begäran',
@@ -129,5 +129,5 @@ return [
     'maintenance_test_email_failure' => 'Ett fel uppstod när ett test mail skulle skickas:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'URL matchar inte de konfigurerade tillåtna SSR-värdarna',
 ];

@@ -15,6 +15,7 @@ class OpensearchTest extends TestCase
 
         $resp = $this->get('/opensearch.xml');
         $resp->assertOk();
+        $resp->assertSee('<?xml version="1.0" encoding="UTF-8"?>' . "\n", false);
 
         $html = $this->withHtml($resp);
 

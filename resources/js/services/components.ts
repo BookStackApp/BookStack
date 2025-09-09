@@ -139,8 +139,8 @@ export class ComponentStore {
     /**
      * Get all the components of the given name.
      */
-    public get(name: string): Component[] {
-        return this.components[name] || [];
+    public get<T extends Component>(name: string): T[] {
+        return (this.components[name] || []) as T[];
     }
 
     /**
@@ -149,5 +149,10 @@ export class ComponentStore {
     public firstOnElement(element: HTMLElement, name: string): Component|null {
         const elComponents = this.elementComponentMap.get(element) || {};
         return elComponents[name] || null;
+    }
+
+    public allWithinElement<T extends Component>(element: HTMLElement, name: string): T[] {
+        const components = this.get<T>(name);
+        return components.filter(c => element.contains(c.$el));
     }
 }

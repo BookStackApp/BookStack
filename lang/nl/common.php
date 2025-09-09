@@ -30,6 +30,8 @@ return [
     'create' => 'Aanmaken',
     'update' => 'Bijwerken',
     'edit' => 'Bewerk',
+    'archive' => 'Archiveer',
+    'unarchive' => 'Terughalen',
     'sort' => 'Sorteer',
     'move' => 'Verplaats',
     'copy' => 'Kopieer',

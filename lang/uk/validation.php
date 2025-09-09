@@ -105,10 +105,10 @@ return [
     'url'                  => 'Формат поля :attribute неправильний.',
     'uploaded'             => 'Не вдалося завантажити файл. Сервер може не приймати файли такого розміру.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => 'Поле :attribute повинне вказувати файл в ZIP.',
+    'zip_file_mime' => 'Поле :attribute повинне посилатись на файл типу :validtypes, знайдений :foundType.',
+    'zip_model_expected' => 'Очікувався об’єкт даних, але знайдено ":type".',
+    'zip_unique' => 'Поле :attribute має бути унікальним для типу об\'єкта в ZIP.',
 
     // Custom validation lines
     'custom' => [

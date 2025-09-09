@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook har tagits bort',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'import skapades',
+    'import_create_notification' => 'Import har laddats upp',
+    'import_run' => 'import uppdaterad',
+    'import_run_notification' => 'Innehållet har importerats',
+    'import_delete' => 'import borttagen',
+    'import_delete_notification' => 'Importen har tagits bort',
 
     // Users
     'user_create' => 'skapade användare',
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'raderad kommentar',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'sorteringsregel skapad',
+    'sort_rule_create_notification' => 'Sorteringsregel har skapats',
+    'sort_rule_update' => 'sorteringsregel uppdaterad',
+    'sort_rule_update_notification' => 'Sorteringsregel har uppdaterats',
+    'sort_rule_delete' => 'sorteringsregel borttagen',
+    'sort_rule_delete_notification' => 'Sorteringsregel har tagits bort',
 
     // Other
     'permissions_update'          => 'uppdaterade behörigheter',

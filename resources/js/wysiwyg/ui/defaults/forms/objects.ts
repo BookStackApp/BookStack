@@ -192,11 +192,17 @@ export function $showMediaForm(media: MediaNode|null, context: EditorUiContext):
     let formDefaults = {};
     if (media) {
         const nodeAttrs = media.getAttributes();
+        const nodeDOM = media.exportDOM(context.editor).element;
+        const nodeHtml = (nodeDOM instanceof HTMLElement) ? nodeDOM.outerHTML : '';
+
         formDefaults = {
-            src: nodeAttrs.src || nodeAttrs.data || '',
+            src: nodeAttrs.src || nodeAttrs.data || media.getSources()[0]?.src || '',
             width: nodeAttrs.width,
             height: nodeAttrs.height,
-            embed: '',
+            embed: nodeHtml,
+
+            // This is used so we can check for edits against the embed field on submit
+            embed_check: nodeHtml,
         }
     }
 
@@ -214,7 +220,8 @@ export const media: EditorFormDefinition = {
         }));
 
         const embedCode = (formData.get('embed') || '').toString().trim();
-        if (embedCode) {
+        const embedCheck = (formData.get('embed_check') || '').toString().trim();
+        if (embedCode && embedCode !== embedCheck) {
             context.editor.update(() => {
                 const node = $createMediaNodeFromHtml(embedCode);
                 if (selectedNode && node) {
@@ -236,6 +243,7 @@ export const media: EditorFormDefinition = {
             if (selectedNode) {
                 selectedNode.setSrc(src);
                 selectedNode.setWidthAndHeight(width, height);
+                context.manager.triggerFutureStateRefresh();
                 return;
             }
 
@@ -280,6 +288,11 @@ export const media: EditorFormDefinition = {
                                 label: 'Paste your embed code below:',
                                 name: 'embed',
                                 type: 'textarea',
+                            },
+                            {
+                                label: '',
+                                name: 'embed_check',
+                                type: 'hidden',
                             },
                         ],
                     }

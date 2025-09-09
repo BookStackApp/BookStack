@@ -6,51 +6,51 @@
 return [
 
     // Pages
-    'page_create'                 => 'erstellt Seite',
+    'page_create'                 => 'erstellte Seite',
     'page_create_notification'    => 'Seite erfolgreich erstellt',
-    'page_update'                 => 'Seite aktualisiert',
+    'page_update'                 => 'aktualisierte Seite',
     'page_update_notification'    => 'Seite erfolgreich aktualisiert',
-    'page_delete'                 => 'Seite gelöscht',
+    'page_delete'                 => 'löschte Seite',
     'page_delete_notification'    => 'Seite erfolgreich gelöscht',
-    'page_restore'                => 'Seite wiederhergestellt',
+    'page_restore'                => 'stellte Seite wieder her',
     'page_restore_notification'   => 'Seite erfolgreich wiederhergestellt',
-    'page_move'                   => 'Seite verschoben',
+    'page_move'                   => 'verschob Seite',
     'page_move_notification'      => 'Seite erfolgreich verschoben',
 
     // Chapters
-    'chapter_create'              => 'Kapitel erstellt',
+    'chapter_create'              => 'erstellte Kapitel',
     'chapter_create_notification' => 'Kapitel erfolgreich erstellt',
-    'chapter_update'              => 'Kapitel aktualisiert',
+    'chapter_update'              => 'aktualisierte Kapitel',
     'chapter_update_notification' => 'Kapitel erfolgreich aktualisiert',
-    'chapter_delete'              => 'Kapitel gelöscht',
+    'chapter_delete'              => 'löschte Kapitel',
     'chapter_delete_notification' => 'Kapitel erfolgreich gelöscht',
-    'chapter_move'                => 'Kapitel verschoben',
+    'chapter_move'                => 'verschob Kapitel',
     'chapter_move_notification' => 'Kapitel erfolgreich verschoben',
 
     // Books
-    'book_create'                 => 'Buch erstellt',
+    'book_create'                 => 'erstellte Buch',
     'book_create_notification'    => 'Buch erfolgreich erstellt',
-    'book_create_from_chapter'              => 'Kapitel zu Buch umgewandelt',
+    'book_create_from_chapter'              => 'wandelte Kapitel zu Buch um',
     'book_create_from_chapter_notification' => 'Kapitel erfolgreich in ein Buch umgewandelt',
-    'book_update'                 => 'Buch aktualisiert',
+    'book_update'                 => 'aktualisierte Buch',
     'book_update_notification'    => 'Buch erfolgreich aktualisiert',
-    'book_delete'                 => 'Buch gelöscht',
+    'book_delete'                 => 'löschte Buch',
     'book_delete_notification'    => 'Buch erfolgreich gelöscht',
-    'book_sort'                   => 'Buch sortiert',
+    'book_sort'                   => 'sortierte Buch',
     'book_sort_notification'      => 'Buch erfolgreich umsortiert',
 
     // Bookshelves
-    'bookshelf_create'            => 'Regal erstellt',
+    'bookshelf_create'            => 'erstellte Regal',
     'bookshelf_create_notification'    => 'Regal erfolgreich erstellt',
-    'bookshelf_create_from_book'    => 'Buch zu Regal umgewandelt',
+    'bookshelf_create_from_book'    => 'wandelte Buch zu Regal um',
     'bookshelf_create_from_book_notification'    => 'Buch erfolgreich zu einem Regal umgewandelt',
-    'bookshelf_update'                 => 'Regal aktualisiert',
+    'bookshelf_update'                 => 'aktualisierte Regal',
     'bookshelf_update_notification'    => 'Regal erfolgreich aktualisiert',
-    'bookshelf_delete'                 => 'Regal gelöscht',
+    'bookshelf_delete'                 => 'löschte Regal',
     'bookshelf_delete_notification'    => 'Regal erfolgreich gelöscht',
 
     // Revisions
-    'revision_restore' => 'Revision wiederhergestellt',
+    'revision_restore' => 'stellte Revision wieder her',
     'revision_delete' => 'Revision gelöscht',
     'revision_delete_notification' => 'Revision erfolgreich gelöscht',
 
@@ -128,12 +128,12 @@ return [
     'comment_delete'              => 'Kommentar gelöscht',
 
     // Sort Rules
-    'sort_rule_create' => 'Sortierregel erstellt',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'hat eine Sortierregel erstellt',
+    'sort_rule_create_notification' => 'Sortierregel erfolgreich angelegt',
+    'sort_rule_update' => 'hat eine Sortierregel aktualisiert',
+    'sort_rule_update_notification' => 'Sortierregel erfolgreich aktualisiert',
+    'sort_rule_delete' => 'hat eine Sortierregel gelöscht',
+    'sort_rule_delete_notification' => 'Sortierregel erfolgreich gelöscht',
 
     // Other
     'permissions_update'          => 'aktualisierte Berechtigungen',
