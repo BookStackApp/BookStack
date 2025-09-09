@@ -148,6 +148,10 @@
                 @include('entities.favourite-action', ['entity' => $shelf])
             @endif
 
+            @if(userCan('content-export'))
+                @include('entities.export-menu', ['entity' => $shelf])
+            @endif
+
         </div>
     </div>
 @stop

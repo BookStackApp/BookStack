@@ -3,6 +3,7 @@
 namespace BookStack\Exports;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Tools\BookContents;
@@ -349,6 +350,79 @@ class ExportFormatter
             } else {
                 $text .= $this->pageToMarkdown($bookChild) . "\n\n";
             }
+        }
+
+        return trim($text);
+    }
+
+    /**
+     * Convert a shelf to a self-contained HTML file containing all books.
+     *
+     * @throws Throwable
+     */
+    public function shelfToContainedHtml(Bookshelf $shelf): string
+    {
+        $books = $shelf->visibleBooks()->get();
+        $html = view('exports.shelf', [
+            'shelf'       => $shelf,
+            'books'       => $books,
+            'format'      => 'html',
+            'cspContent'  => $this->cspService->getCspMetaTagValue(),
+            'locale'      => user()->getLocale(),
+        ])->render();
+
+        return $this->containHtml($html);
+    }
+
+    /**
+     * Convert a shelf to a PDF file containing all books.
+     *
+     * @throws Throwable
+     */
+    public function shelfToPdf(Bookshelf $shelf): string
+    {
+        $books = $shelf->visibleBooks()->get();
+        $html = view('exports.shelf', [
+            'shelf'  => $shelf,
+            'books'  => $books,
+            'format' => 'pdf',
+            'engine' => $this->pdfGenerator->getActiveEngine(),
+            'locale' => user()->getLocale(),
+        ])->render();
+
+        return $this->htmlToPdf($html);
+    }
+
+    /**
+     * Convert a shelf into a plain text string containing all books.
+     */
+    public function shelfToPlainText(Bookshelf $shelf): string
+    {
+        $text = $shelf->name . "\n" . $shelf->description;
+        $text = rtrim($text) . "\n\n";
+
+        $parts = [];
+        foreach ($shelf->visibleBooks() as $book) {
+            $parts[] = $this->bookToPlainText($book);
+        }
+
+        return $text . implode("\n\n", $parts);
+    }
+
+    /**
+     * Convert a shelf into a markdown string containing all books.
+     */
+    public function shelfToMarkdown(Bookshelf $shelf): string
+    {
+        $text = '# ' . $shelf->name . "\n\n";
+
+        $description = (new HtmlToMarkdown($shelf->descriptionHtml()))->convert();
+        if ($description) {
+            $text .= $description . "\n\n";
+        }
+
+        foreach ($shelf->visibleBooks() as $book) {
+            $text .= $this->bookToMarkdown($book) . "\n\n";
         }
 
         return trim($text);
