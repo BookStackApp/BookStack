@@ -132,4 +132,13 @@ enum Permission: string
             self::Delete,
         ];
     }
+
+    /**
+     * Return the application permission-check middleware-string for this permission.
+     * Uses registered CheckUserHasPermission middleware.
+     */
+    public function middleware(): string
+    {
+        return 'can:' . $this->value;
+    }
 }

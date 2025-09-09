@@ -15,9 +15,9 @@ class UserSearchController extends Controller
     public function forSelect(Request $request)
     {
         $hasPermission = !user()->isGuest() && (
-            userCan('users-manage')
-                || userCan('restrictions-manage-own')
-                || userCan('restrictions-manage-all')
+            userCan(\BookStack\Permissions\Permission::UsersManage)
+                || userCan(\BookStack\Permissions\Permission::RestrictionsManageOwn)
+                || userCan(\BookStack\Permissions\Permission::RestrictionsManageAll)
         );
 
         if (!$hasPermission) {

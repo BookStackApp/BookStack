@@ -46,7 +46,7 @@ class ImportRepo
     {
         $query = Import::query();
 
-        if (!userCan('settings-manage')) {
+        if (!userCan(\BookStack\Permissions\Permission::SettingsManage)) {
             $query->where('created_by', user()->id);
         }
 
@@ -57,7 +57,7 @@ class ImportRepo
     {
         $query = Import::query();
 
-        if (!userCan('settings-manage')) {
+        if (!userCan(\BookStack\Permissions\Permission::SettingsManage)) {
             $query->where('created_by', user()->id);
         }
 

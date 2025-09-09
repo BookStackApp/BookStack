@@ -49,7 +49,7 @@ class Cloner
 
         $copyChapter = $this->chapterRepo->create($chapterDetails, $parent);
 
-        if (userCan('page-create', $copyChapter)) {
+        if (userCan(\BookStack\Permissions\Permission::PageCreate, $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
                 $this->clonePage($page, $copyChapter, $page->name);
@@ -74,11 +74,11 @@ class Cloner
         // Clone contents
         $directChildren = $original->getDirectVisibleChildren();
         foreach ($directChildren as $child) {
-            if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
+            if ($child instanceof Chapter && userCan(\BookStack\Permissions\Permission::ChapterCreate, $copyBook)) {
                 $this->cloneChapter($child, $copyBook, $child->name);
             }
 
-            if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
+            if ($child instanceof Page && !$child->draft && userCan(\BookStack\Permissions\Permission::PageCreate, $copyBook)) {
                 $this->clonePage($child, $copyBook, $child->name);
             }
         }
@@ -86,7 +86,7 @@ class Cloner
         // Clone bookshelf relationships
         /** @var Bookshelf $shelf */
         foreach ($original->shelves as $shelf) {
-            if (userCan('bookshelf-update', $shelf)) {
+            if (userCan(\BookStack\Permissions\Permission::BookshelfUpdate, $shelf)) {
                 $shelf->appendBook($copyBook);
             }
         }

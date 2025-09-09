@@ -37,13 +37,13 @@
                     <p class="text-muted italic mb-m mt-xl">{{ trans('entities.chapters_empty') }}</p>
 
                     <div class="icon-list block inline">
-                        @if(userCan('page-create', $chapter))
+                        @if(userCan(\BookStack\Permissions\Permission::PageCreate, $chapter))
                             <a href="{{ $chapter->getUrl('/create-page') }}" class="icon-list-item text-page">
                                 <span class="icon">@icon('page')</span>
                                 <span>{{ trans('entities.books_empty_create_page') }}</span>
                             </a>
                         @endif
-                        @if(userCan('book-update', $book))
+                        @if(userCan(\BookStack\Permissions\Permission::BookUpdate, $book))
                             <a href="{{ $book->getUrl('/sort') }}" class="icon-list-item text-book">
                                 <span class="icon">@icon('book')</span>
                                 <span>{{ trans('entities.books_empty_sort_current_book') }}</span>
@@ -71,7 +71,7 @@
 
             @if($book->hasPermissions())
                 <div class="active-restriction">
-                    @if(userCan('restrictions-manage', $book))
+                    @if(userCan(\BookStack\Permissions\Permission::RestrictionsManage, $book))
                         <a href="{{ $book->getUrl('/permissions') }}" class="entity-meta-item">
                             @icon('lock')
                             <div>{{ trans('entities.books_permissions_active') }}</div>
@@ -87,7 +87,7 @@
 
             @if($chapter->hasPermissions())
                 <div class="active-restriction">
-                    @if(userCan('restrictions-manage', $chapter))
+                    @if(userCan(\BookStack\Permissions\Permission::RestrictionsManage, $chapter))
                         <a href="{{ $chapter->getUrl('/permissions') }}" class="entity-meta-item">
                             @icon('lock')
                             <div>{{ trans('entities.chapters_permissions_active') }}</div>
@@ -107,7 +107,7 @@
         <h5>{{ trans('common.actions') }}</h5>
         <div class="icon-list text-link">
 
-            @if(userCan('page-create', $chapter))
+            @if(userCan(\BookStack\Permissions\Permission::PageCreate, $chapter))
                 <a href="{{ $chapter->getUrl('/create-page') }}" data-shortcut="new" class="icon-list-item">
                     <span>@icon('add')</span>
                     <span>{{ trans('entities.pages_new') }}</span>
@@ -116,38 +116,38 @@
 
             <hr class="primary-background"/>
 
-            @if(userCan('chapter-update', $chapter))
+            @if(userCan(\BookStack\Permissions\Permission::ChapterUpdate, $chapter))
                 <a href="{{ $chapter->getUrl('/edit') }}" data-shortcut="edit" class="icon-list-item">
                     <span>@icon('edit')</span>
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
-            @if(userCanOnAny('create', \BookStack\Entities\Models\Book::class) || userCan('chapter-create-all') || userCan('chapter-create-own'))
+            @if(userCanOnAny(\BookStack\Permissions\Permission::Create, \BookStack\Entities\Models\Book::class) || userCan(\BookStack\Permissions\Permission::ChapterCreateAll) || userCan(\BookStack\Permissions\Permission::ChapterCreateOwn))
                 <a href="{{ $chapter->getUrl('/copy') }}" data-shortcut="copy" class="icon-list-item">
                     <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>
                 </a>
             @endif
-            @if(userCan('chapter-update', $chapter) && userCan('chapter-delete', $chapter))
+            @if(userCan(\BookStack\Permissions\Permission::ChapterUpdate, $chapter) && userCan(\BookStack\Permissions\Permission::ChapterDelete, $chapter))
                 <a href="{{ $chapter->getUrl('/move') }}" data-shortcut="move" class="icon-list-item">
                     <span>@icon('folder')</span>
                     <span>{{ trans('common.move') }}</span>
                 </a>
             @endif
-            @if(userCan('restrictions-manage', $chapter))
+            @if(userCan(\BookStack\Permissions\Permission::RestrictionsManage, $chapter))
                 <a href="{{ $chapter->getUrl('/permissions') }}" data-shortcut="permissions" class="icon-list-item">
                     <span>@icon('lock')</span>
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
-            @if(userCan('chapter-delete', $chapter))
+            @if(userCan(\BookStack\Permissions\Permission::ChapterDelete, $chapter))
                 <a href="{{ $chapter->getUrl('/delete') }}" data-shortcut="delete" class="icon-list-item">
                     <span>@icon('delete')</span>
                     <span>{{ trans('common.delete') }}</span>
                 </a>
             @endif
 
-            @if($chapter->book && userCan('book-update', $chapter->book))
+            @if($chapter->book && userCan(\BookStack\Permissions\Permission::BookUpdate, $chapter->book))
                 <hr class="primary-background"/>
                 <a href="{{ $chapter->book->getUrl('/sort') }}" data-shortcut="sort" class="icon-list-item">
                     <span>@icon('sort')</span>
@@ -163,7 +163,7 @@
             @if(!user()->isGuest())
                 @include('entities.favourite-action', ['entity' => $chapter])
             @endif
-            @if(userCan('content-export'))
+            @if(userCan(\BookStack\Permissions\Permission::ContentExport))
                 @include('entities.export-menu', ['entity' => $chapter])
             @endif
         </div>

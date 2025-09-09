@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Exception;
@@ -25,7 +26,7 @@ class EntityPermissionsTest extends TestCase
         $this->viewer = $this->users->viewer();
     }
 
-    protected function setRestrictionsForTestRoles(Entity $entity, array $actions = [])
+    protected function setRestrictionsForTestRoles(Entity $entity, array $actions = []): void
     {
         $roles = [
             $this->user->roles->first(),
@@ -676,7 +677,7 @@ class EntityPermissionsTest extends TestCase
         $this->permissions->setEntityPermissions($book, ['update'], [$viewerRole], false);
         $this->permissions->setEntityPermissions($chapter, [], [$viewerRole], true);
 
-        $this->assertFalse(userCan('chapter-update', $chapter));
+        $this->assertFalse(userCan(Permission::ChapterUpdate, $chapter));
     }
 
     public function test_access_to_item_allowed_if_inheritance_active_and_permission_prevented_via_role_but_allowed_via_parent()
@@ -692,7 +693,7 @@ class EntityPermissionsTest extends TestCase
         $this->permissions->setEntityPermissions($chapter, [], [$viewerRole], true);
 
         $this->actingAs($user);
-        $this->assertTrue(userCan('chapter-update', $chapter));
+        $this->assertTrue(userCan(Permission::ChapterUpdate, $chapter));
     }
 
     public function test_book_permissions_can_be_generated_without_error_if_child_chapter_is_in_recycle_bin()

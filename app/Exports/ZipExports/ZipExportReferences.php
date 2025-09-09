@@ -135,7 +135,7 @@ class ZipExportReferences
             // Find and include images if in visibility
             $page = $model->getPage();
             $pageExportModel = $this->pages[$page->id] ?? ($exportModel instanceof ZipExportPage ? $exportModel : null);
-            if (isset($this->images[$model->id]) || ($page && $pageExportModel && userCan('view', $page))) {
+            if (isset($this->images[$model->id]) || ($page && $pageExportModel && userCan(\BookStack\Permissions\Permission::View, $page))) {
                 if (!isset($this->images[$model->id])) {
                     $exportImage = ZipExportImage::fromModel($model, $files);
                     $this->images[$model->id] = $exportImage;

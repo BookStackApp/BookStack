@@ -8,6 +8,7 @@ use BookStack\Exceptions\ZipImportException;
 use BookStack\Exceptions\ZipValidationException;
 use BookStack\Exports\ImportRepo;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\AttachmentService;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class ImportController extends Controller
     public function __construct(
         protected ImportRepo $imports,
     ) {
-        $this->middleware('can:content-import');
+        $this->middleware(Permission::ContentImport->middleware());
     }
 
     /**

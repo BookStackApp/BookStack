@@ -100,7 +100,7 @@ class PageEditorData
 
         // Use requested editor if valid and if we have permission
         $requestedType = PageEditorType::fromRequestValue($this->requestedEditor);
-        if ($requestedType && userCan('editor-change')) {
+        if ($requestedType && userCan(\BookStack\Permissions\Permission::EditorChange)) {
             $editorType = $requestedType;
         }
 

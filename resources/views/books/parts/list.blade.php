@@ -24,7 +24,7 @@
         </div>
     @else
         <p class="text-muted">{{ trans('entities.books_empty') }}</p>
-        @if(userCan('book-create-all'))
+        @if(userCan(\BookStack\Permissions\Permission::BookCreateAll))
             <div class="icon-list block inline">
                 <a href="{{ url("/create-book") }}"
                    class="icon-list-item text-book">

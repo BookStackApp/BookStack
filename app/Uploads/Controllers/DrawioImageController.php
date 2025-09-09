@@ -82,7 +82,7 @@ class DrawioImageController extends Controller
             return $this->jsonError(trans('errors.drawing_data_not_found'), 404);
         }
 
-        if ($image->type !== 'drawio' || !userCan('page-view', $image->getPage())) {
+        if ($image->type !== 'drawio' || !userCan(\BookStack\Permissions\Permission::PageView, $image->getPage())) {
             return $this->jsonError(trans('errors.drawing_data_not_found'), 404);
         }
 

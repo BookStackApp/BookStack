@@ -38,17 +38,17 @@
             <input id="name" class="input-base" type="text" name="name" value="{{ $image->name }}">
         </div>
         <div class="flex-container-row justify-space-between gap-m">
-            @if(userCan('image-delete', $image) || userCan('image-update', $image))
+            @if(userCan(\BookStack\Permissions\Permission::ImageDelete, $image) || userCan(\BookStack\Permissions\Permission::ImageUpdate, $image))
                 <div component="dropdown"
                      class="dropdown-container">
                     <button refs="dropdown@toggle" type="button" class="button icon outline">@icon('more')</button>
                     <div refs="dropdown@menu" class="dropdown-menu anchor-left">
-                        @if(userCan('image-delete', $image))
+                        @if(userCan(\BookStack\Permissions\Permission::ImageDelete, $image))
                             <button type="button"
                                     id="image-manager-delete"
                                     class="text-item">{{ trans('common.delete') }}</button>
                         @endif
-                        @if(userCan('image-update', $image))
+                        @if(userCan(\BookStack\Permissions\Permission::ImageUpdate, $image))
                             <button type="button"
                                     id="image-manager-replace"
                                     refs="dropzone@select-button"
@@ -105,7 +105,7 @@
         @if($image->createdBy)
             <div>@icon('user') {{ trans('components.image_uploaded_by', ['userName' => $image->createdBy->name]) }}</div>
         @endif
-        @if(($page = $image->getPage()) && userCan('view', $page))
+        @if(($page = $image->getPage()) && userCan(\BookStack\Permissions\Permission::View, $page))
             <div>
                 @icon('page')
                 {!! trans('components.image_uploaded_to', [

@@ -288,7 +288,7 @@ class ZipImportRunner
         $attachments = [];
 
         if ($exportModel instanceof ZipExportBook) {
-            if (!userCan('book-create-all')) {
+            if (!userCan(\BookStack\Permissions\Permission::BookCreateAll)) {
                 $errors[] = trans('errors.import_perms_books');
             }
             array_push($pages, ...$exportModel->pages);
@@ -317,11 +317,11 @@ class ZipImportRunner
 
         if (count($pages) > 0) {
             if ($parent) {
-                if (!userCan('page-create', $parent)) {
+                if (!userCan(\BookStack\Permissions\Permission::PageCreate, $parent)) {
                     $errors[] = trans('errors.import_perms_pages');
                 }
             } else {
-                $hasPermission = userCan('page-create-all') || userCan('page-create-own');
+                $hasPermission = userCan(\BookStack\Permissions\Permission::PageCreateAll) || userCan(\BookStack\Permissions\Permission::PageCreateOwn);
                 if (!$hasPermission) {
                     $errors[] = trans('errors.import_perms_pages');
                 }
@@ -329,13 +329,13 @@ class ZipImportRunner
         }
 
         if (count($images) > 0) {
-            if (!userCan('image-create-all')) {
+            if (!userCan(\BookStack\Permissions\Permission::ImageCreateAll)) {
                 $errors[] = trans('errors.import_perms_images');
             }
         }
 
         if (count($attachments) > 0) {
-            if (!userCan('attachment-create-all')) {
+            if (!userCan(\BookStack\Permissions\Permission::AttachmentCreateAll)) {
                 $errors[] = trans('errors.import_perms_attachments');
             }
         }

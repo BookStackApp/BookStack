@@ -63,7 +63,7 @@ class UserAccountController extends Controller
             'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
-        $this->userRepo->update($user, $validated, userCan('users-manage'));
+        $this->userRepo->update($user, $validated, userCan(\BookStack\Permissions\Permission::UsersManage));
 
         // Save profile image if in request
         if ($request->hasFile('profile_image')) {
@@ -219,7 +219,7 @@ class UserAccountController extends Controller
         $this->preventAccessInDemoMode();
 
         $requestNewOwnerId = intval($request->get('new_owner_id')) ?: null;
-        $newOwnerId = userCan('users-manage') ? $requestNewOwnerId : null;
+        $newOwnerId = userCan(\BookStack\Permissions\Permission::UsersManage) ? $requestNewOwnerId : null;
 
         $this->userRepo->destroy(user(), $newOwnerId);
 

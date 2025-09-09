@@ -55,7 +55,7 @@ class PageRepo
         }
 
         $defaultTemplate = $page->chapter->defaultTemplate ?? $page->book->defaultTemplate;
-        if ($defaultTemplate && userCan('view', $defaultTemplate)) {
+        if ($defaultTemplate && userCan(\BookStack\Permissions\Permission::View, $defaultTemplate)) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
@@ -142,7 +142,7 @@ class PageRepo
 
     protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
     {
-        if (isset($input['template']) && userCan('templates-manage')) {
+        if (isset($input['template']) && userCan(\BookStack\Permissions\Permission::TemplatesManage)) {
             $page->template = ($input['template'] === 'true');
         }
 
@@ -165,7 +165,7 @@ class PageRepo
             $pageContent->setNewHTML($input['html'], user());
         }
 
-        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan('editor-change')) {
+        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan(\BookStack\Permissions\Permission::EditorChange)) {
             $page->editor = $newEditor->value;
         } elseif (empty($page->editor)) {
             $page->editor = $defaultEditor->value;
@@ -271,7 +271,7 @@ class PageRepo
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (!userCan('page-create', $parent)) {
+        if (!userCan(\BookStack\Permissions\Permission::PageCreate, $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 

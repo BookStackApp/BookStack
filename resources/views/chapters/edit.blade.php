@@ -23,7 +23,7 @@
             </form>
         </main>
 
-        @if(userCan('chapter-delete', $chapter) && userCan('book-create-all'))
+        @if(userCan(\BookStack\Permissions\Permission::ChapterDelete, $chapter) && userCan(\BookStack\Permissions\Permission::BookCreateAll))
             @include('chapters.parts.convert-to-book')
         @endif
 

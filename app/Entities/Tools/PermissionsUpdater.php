@@ -150,7 +150,7 @@ class PermissionsUpdater
 
         /** @var Book $book */
         foreach ($shelfBooks as $book) {
-            if ($checkUserPermissions && !userCan('restrictions-manage', $book)) {
+            if ($checkUserPermissions && !userCan(\BookStack\Permissions\Permission::RestrictionsManage, $book)) {
                 continue;
             }
             $book->permissions()->delete();

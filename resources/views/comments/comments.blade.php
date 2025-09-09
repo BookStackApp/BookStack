@@ -22,7 +22,7 @@
                     refs="page-comments@archived-tab"
                     aria-selected="false">{{ trans_choice('entities.comment_archived_count', count($commentTree->getArchived())) }}</button>
         </div>
-        @if ($commentTree->empty() && userCan('comment-create-all'))
+        @if ($commentTree->empty() && userCan(\BookStack\Permissions\Permission::CommentCreateAll))
             <div refs="page-comments@add-button-container" class="ml-m flex-container-row" >
                 <button type="button"
                         refs="page-comments@add-comment-button"
@@ -45,7 +45,7 @@
 
         <p class="text-center text-muted italic empty-state">{{ trans('entities.comment_none') }}</p>
 
-        @if(userCan('comment-create-all'))
+        @if(userCan(\BookStack\Permissions\Permission::CommentCreateAll))
             @include('comments.create')
             @if (!$commentTree->empty())
                 <div refs="page-comments@addButtonContainer" class="ml-m flex-container-row">
@@ -70,7 +70,7 @@
             <p class="text-center text-muted italic empty-state">{{ trans('entities.comment_none') }}</p>
     </div>
 
-    @if(userCan('comment-create-all') || $commentTree->canUpdateAny())
+    @if(userCan(\BookStack\Permissions\Permission::CommentCreateAll) || $commentTree->canUpdateAny())
         @push('body-end')
             @include('form.editor-translations')
             @include('entities.selector-popup')

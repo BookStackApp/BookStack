@@ -6,6 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Webhook;
 use BookStack\Activity\Queries\WebhooksAllPaginatedAndSorted;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class WebhookController extends Controller
     public function __construct()
     {
         $this->middleware([
-            'can:settings-manage',
+            Permission::SettingsManage->middleware()
         ]);
     }
 

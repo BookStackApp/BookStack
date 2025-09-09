@@ -87,7 +87,7 @@ class ChapterRepo
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
-        if (!userCan('chapter-create', $parent)) {
+        if (!userCan(\BookStack\Permissions\Permission::ChapterCreate, $parent)) {
             throw new PermissionsException('User does not have permission to create a chapter within the chosen book');
         }
 

@@ -342,7 +342,7 @@ class PageController extends Controller
 
         $this->showSuccessNotification(trans('entities.pages_delete_draft_success'));
 
-        if ($chapter && userCan('view', $chapter)) {
+        if ($chapter && userCan(\BookStack\Permissions\Permission::View, $chapter)) {
             return redirect($chapter->getUrl());
         }
 

@@ -26,14 +26,14 @@ class TagClassGenerator
              array_push($classes, ...$this->generateClassesForTag($tag));
         }
 
-        if ($this->entity instanceof BookChild && userCan('view', $this->entity->book)) {
+        if ($this->entity instanceof BookChild && userCan(\BookStack\Permissions\Permission::View, $this->entity->book)) {
             $bookTags = $this->entity->book->tags;
             foreach ($bookTags as $bookTag) {
                  array_push($classes, ...$this->generateClassesForTag($bookTag, 'book-'));
             }
         }
 
-        if ($this->entity instanceof Page && $this->entity->chapter && userCan('view', $this->entity->chapter)) {
+        if ($this->entity instanceof Page && $this->entity->chapter && userCan(\BookStack\Permissions\Permission::View, $this->entity->chapter)) {
             $chapterTags = $this->entity->chapter->tags;
             foreach ($chapterTags as $chapterTag) {
                  array_push($classes, ...$this->generateClassesForTag($chapterTag, 'chapter-'));

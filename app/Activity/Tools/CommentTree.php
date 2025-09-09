@@ -70,7 +70,7 @@ class CommentTree
     public function canUpdateAny(): bool
     {
         foreach ($this->comments as $comment) {
-            if (userCan('comment-update', $comment)) {
+            if (userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment)) {
                 return true;
             }
         }

@@ -33,23 +33,23 @@
                 @endif
             </div>
             <div class="right-meta flex-container-row justify-flex-end items-center px-s">
-                @if(!$readOnly && (userCan('comment-create-all') || userCan('comment-update', $comment) || userCan('comment-delete', $comment)))
+                @if(!$readOnly && (userCan(\BookStack\Permissions\Permission::CommentCreateAll) || userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment) || userCan(\BookStack\Permissions\Permission::CommentDelete, $comment)))
                     <div class="actions mr-s">
-                        @if(userCan('comment-create-all'))
+                        @if(userCan(\BookStack\Permissions\Permission::CommentCreateAll))
                             <button refs="page-comment@reply-button" type="button"
                                     class="text-button text-muted hover-underline text-small p-xs">@icon('reply') {{ trans('common.reply') }}</button>
                         @endif
-                        @if(!$comment->parent_id && (userCan('comment-update', $comment) || userCan('comment-delete', $comment)))
+                        @if(!$comment->parent_id && (userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment) || userCan(\BookStack\Permissions\Permission::CommentDelete, $comment)))
                             <button refs="page-comment@archive-button"
                                     type="button"
                                     data-is-archived="{{ $comment->archived ? 'true' : 'false' }}"
                                     class="text-button text-muted hover-underline text-small p-xs">@icon('archive') {{ trans('common.' . ($comment->archived ? 'unarchive' : 'archive')) }}</button>
                         @endif
-                        @if(userCan('comment-update', $comment))
+                        @if(userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment))
                             <button refs="page-comment@edit-button" type="button"
                                     class="text-button text-muted hover-underline text-small p-xs">@icon('edit') {{ trans('common.edit') }}</button>
                         @endif
-                        @if(userCan('comment-delete', $comment))
+                        @if(userCan(\BookStack\Permissions\Permission::CommentDelete, $comment))
                             <div component="dropdown" class="dropdown-container">
                                 <button type="button" refs="dropdown@toggle" aria-haspopup="true" aria-expanded="false"
                                         class="text-button text-muted hover-underline text-small p-xs">@icon('delete') {{ trans('common.delete') }}</button>
@@ -100,7 +100,7 @@
         {!! $commentHtml  !!}
     </div>
 
-    @if(!$readOnly && userCan('comment-update', $comment))
+    @if(!$readOnly && userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment))
         <form novalidate refs="page-comment@form" hidden class="content pt-s px-s block">
             <div class="form-group description-input">
                 <textarea refs="page-comment@input" name="html" rows="3"
