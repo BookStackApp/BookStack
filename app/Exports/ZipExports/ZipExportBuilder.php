@@ -4,6 +4,7 @@ namespace BookStack\Exports\ZipExports;
 
 use BookStack\App\AppVersion;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\ZipExportException;
@@ -57,6 +58,29 @@ class ZipExportBuilder
         $this->data['book'] = $exportBook;
 
         $this->references->addBook($exportBook);
+
+        return $this->build();
+    }
+
+    /**
+     * @throws ZipExportException
+     */
+    public function buildShelfZip(Bookshelf $shelf): string
+    {
+        $books = $shelf->visibleBooks()->get();
+        $exportBooks = [];
+
+        foreach ($books as $book) {
+            $exportBook = ZipExportBook::fromModel($book, $this->files);
+            $exportBooks[] = $exportBook;
+            $this->references->addBook($exportBook);
+        }
+
+        $this->data['shelf'] = [
+            'name' => $shelf->name,
+            'description' => $shelf->description,
+            'books' => $exportBooks,
+        ];
 
         return $this->build();
     }
