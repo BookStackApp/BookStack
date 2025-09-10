@@ -76,12 +76,13 @@ class PermissionApplicator
      * Checks if a user has the given permission for any items in the system.
      * Can be passed an entity instance to filter on a specific type.
      */
-    public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
+    public function checkUserHasEntityPermissionOnAny(string|Permission $action, string $entityClass = ''): bool
     {
-        $this->ensureValidEntityAction($action);
+        $permissionName = is_string($action) ? $action : $action->value;
+        $this->ensureValidEntityAction($permissionName);
 
         $permissionQuery = EntityPermission::query()
-            ->where($action, '=', true)
+            ->where($permissionName, '=', true)
             ->whereIn('role_id', $this->getCurrentUserRoleIds());
 
         if (!empty($entityClass)) {
