@@ -63,9 +63,9 @@ class UserAccountController extends Controller
             'profile_image'    => array_merge(['nullable'], $this->getImageValidationRules()),
         ]);
 
-        $this->userRepo->update($user, $validated, userCan(\BookStack\Permissions\Permission::UsersManage));
+        $this->userRepo->update($user, $validated, userCan(Permission::UsersManage));
 
-        // Save profile image if in request
+        // Save the profile image if in request
         if ($request->hasFile('profile_image')) {
             $imageUpload = $request->file('profile_image');
             $imageRepo->destroyImage($user->avatar);
@@ -74,7 +74,7 @@ class UserAccountController extends Controller
             $user->save();
         }
 
-        // Delete the profile image if reset option is in request
+        // Delete the profile image if the reset option is in request
         if ($request->has('profile_image_reset')) {
             $imageRepo->destroyImage($user->avatar);
             $user->image_id = 0;
@@ -219,7 +219,7 @@ class UserAccountController extends Controller
         $this->preventAccessInDemoMode();
 
         $requestNewOwnerId = intval($request->get('new_owner_id')) ?: null;
-        $newOwnerId = userCan(\BookStack\Permissions\Permission::UsersManage) ? $requestNewOwnerId : null;
+        $newOwnerId = userCan(Permission::UsersManage) ? $requestNewOwnerId : null;
 
         $this->userRepo->destroy(user(), $newOwnerId);
 

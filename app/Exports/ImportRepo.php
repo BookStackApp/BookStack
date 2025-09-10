@@ -16,6 +16,7 @@ use BookStack\Exports\ZipExports\ZipExportReader;
 use BookStack\Exports\ZipExports\ZipExportValidator;
 use BookStack\Exports\ZipExports\ZipImportRunner;
 use BookStack\Facades\Activity;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\FileStorage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -46,7 +47,7 @@ class ImportRepo
     {
         $query = Import::query();
 
-        if (!userCan(\BookStack\Permissions\Permission::SettingsManage)) {
+        if (!userCan(Permission::SettingsManage)) {
             $query->where('created_by', user()->id);
         }
 
@@ -57,7 +58,7 @@ class ImportRepo
     {
         $query = Import::query();
 
-        if (!userCan(\BookStack\Permissions\Permission::SettingsManage)) {
+        if (!userCan(Permission::SettingsManage)) {
             $query->where('created_by', user()->id);
         }
 

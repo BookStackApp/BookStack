@@ -12,6 +12,7 @@ use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportImage;
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 
@@ -135,7 +136,7 @@ class ZipExportReferences
             // Find and include images if in visibility
             $page = $model->getPage();
             $pageExportModel = $this->pages[$page->id] ?? ($exportModel instanceof ZipExportPage ? $exportModel : null);
-            if (isset($this->images[$model->id]) || ($page && $pageExportModel && userCan(\BookStack\Permissions\Permission::View, $page))) {
+            if (isset($this->images[$model->id]) || ($page && $pageExportModel && userCan(Permission::PageView, $page))) {
                 if (!isset($this->images[$model->id])) {
                     $exportImage = ZipExportImage::fromModel($model, $files);
                     $this->images[$model->id] = $exportImage;

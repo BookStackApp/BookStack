@@ -125,7 +125,7 @@ class UserApiController extends ApiController
     {
         $data = $this->validate($request, $this->rules($id)['update']);
         $user = $this->userRepo->getById($id);
-        $this->userRepo->update($user, $data, userCan(\BookStack\Permissions\Permission::UsersManage));
+        $this->userRepo->update($user, $data, userCan(Permission::UsersManage));
         $this->singleFormatter($user);
 
         return response()->json($user);

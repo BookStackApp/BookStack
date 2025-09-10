@@ -146,7 +146,7 @@
                     <span>{{ trans('common.edit') }}</span>
                 </a>
             @endif
-            @if(userCanOnAny(\BookStack\Permissions\Permission::Create, \BookStack\Entities\Models\Book::class) || userCanOnAny('create', \BookStack\Entities\Models\Chapter::class) || userCan(\BookStack\Permissions\Permission::PageCreateAll) || userCan(\BookStack\Permissions\Permission::PageCreateOwn))
+            @if(userCan(\BookStack\Permissions\Permission::PageCreateAll) || userCan(\BookStack\Permissions\Permission::PageCreateOwn) || userCanOnAny(\BookStack\Permissions\Permission::Create, \BookStack\Entities\Models\Book::class) || userCanOnAny(\BookStack\Permissions\Permission::Create, \BookStack\Entities\Models\Chapter::class))
                 <a href="{{ $page->getUrl('/copy') }}" data-shortcut="copy" class="icon-list-item">
                     <span>@icon('copy')</span>
                     <span>{{ trans('common.copy') }}</span>

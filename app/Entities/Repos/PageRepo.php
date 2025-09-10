@@ -16,6 +16,7 @@ use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\Permissions\Permission;
 use BookStack\References\ReferenceStore;
 use BookStack\References\ReferenceUpdater;
 use BookStack\Util\DatabaseTransaction;
@@ -55,7 +56,7 @@ class PageRepo
         }
 
         $defaultTemplate = $page->chapter->defaultTemplate ?? $page->book->defaultTemplate;
-        if ($defaultTemplate && userCan(\BookStack\Permissions\Permission::View, $defaultTemplate)) {
+        if ($defaultTemplate && userCan(Permission::PageView, $defaultTemplate)) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
@@ -142,7 +143,7 @@ class PageRepo
 
     protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
     {
-        if (isset($input['template']) && userCan(\BookStack\Permissions\Permission::TemplatesManage)) {
+        if (isset($input['template']) && userCan(Permission::TemplatesManage)) {
             $page->template = ($input['template'] === 'true');
         }
 
@@ -165,7 +166,7 @@ class PageRepo
             $pageContent->setNewHTML($input['html'], user());
         }
 
-        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan(\BookStack\Permissions\Permission::EditorChange)) {
+        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan(Permission::EditorChange)) {
             $page->editor = $newEditor->value;
         } elseif (empty($page->editor)) {
             $page->editor = $defaultEditor->value;
@@ -271,7 +272,7 @@ class PageRepo
             throw new MoveOperationException('Book or chapter to move page into not found');
         }
 
-        if (!userCan(\BookStack\Permissions\Permission::PageCreate, $parent)) {
+        if (!userCan(Permission::PageCreate, $parent)) {
             throw new PermissionsException('User does not have permission to create a page within the new parent');
         }
 

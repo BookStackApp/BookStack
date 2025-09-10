@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\Permissions\Permission;
 use BookStack\Util\DatabaseTransaction;
 use Exception;
 
@@ -87,7 +88,7 @@ class ChapterRepo
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
-        if (!userCan(\BookStack\Permissions\Permission::ChapterCreate, $parent)) {
+        if (!userCan(Permission::ChapterCreate, $parent)) {
             throw new PermissionsException('User does not have permission to create a chapter within the chosen book');
         }
 

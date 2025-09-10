@@ -4,6 +4,7 @@ namespace BookStack\Activity\Tools;
 
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\Permission;
 
 class CommentTree
 {
@@ -70,7 +71,7 @@ class CommentTree
     public function canUpdateAny(): bool
     {
         foreach ($this->comments as $comment) {
-            if (userCan(\BookStack\Permissions\Permission::CommentUpdate, $comment)) {
+            if (userCan(Permission::CommentUpdate, $comment)) {
                 return true;
             }
         }

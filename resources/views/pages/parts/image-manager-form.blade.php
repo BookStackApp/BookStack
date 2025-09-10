@@ -105,7 +105,7 @@
         @if($image->createdBy)
             <div>@icon('user') {{ trans('components.image_uploaded_by', ['userName' => $image->createdBy->name]) }}</div>
         @endif
-        @if(($page = $image->getPage()) && userCan(\BookStack\Permissions\Permission::View, $page))
+        @if(($page = $image->getPage()) && userCan(\BookStack\Permissions\Permission::PageView, $page))
             <div>
                 @icon('page')
                 {!! trans('components.image_uploaded_to', [
