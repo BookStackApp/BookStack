@@ -13,6 +13,7 @@ trait HtmlDescriptionTrait
     public function descriptionHtml(bool $raw = false): string
     {
         $html = $this->description_html ?: '<p>' . nl2br(e($this->description)) . '</p>';
+        $html = preg_replace('/<p>(\s|&nbsp;|<br\s*\/?>)*<\/p>/i', '', $html);
         if ($raw) {
             return $html;
         }
