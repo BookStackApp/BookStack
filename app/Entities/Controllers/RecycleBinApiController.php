@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -17,8 +18,8 @@ class RecycleBinApiController extends ApiController
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->checkPermission('settings-manage');
-            $this->checkPermission('restrictions-manage-all');
+            $this->checkPermission(Permission::SettingsManage);
+            $this->checkPermission(Permission::RestrictionsManageAll);
 
             return $next($request);
         });

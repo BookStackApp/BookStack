@@ -20,6 +20,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\References\ReferenceFetcher;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -50,7 +51,7 @@ class PageController extends Controller
             $parent = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
         }
 
-        $this->checkOwnablePermission('page-create', $parent);
+        $this->checkOwnablePermission(Permission::PageCreate, $parent);
 
         // Redirect to draft edit screen if signed in
         if ($this->isSignedIn()) {
@@ -82,7 +83,7 @@ class PageController extends Controller
             $parent = $this->entityQueries->books->findVisibleBySlugOrFail($bookSlug);
         }
 
-        $this->checkOwnablePermission('page-create', $parent);
+        $this->checkOwnablePermission(Permission::PageCreate, $parent);
 
         $page = $this->pageRepo->getNewDraftPage($parent);
         $this->pageRepo->publishDraft($page, [
@@ -100,7 +101,7 @@ class PageController extends Controller
     public function editDraft(Request $request, string $bookSlug, int $pageId)
     {
         $draft = $this->queries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-create', $draft->getParent());
+        $this->checkOwnablePermission(Permission::PageCreate, $draft->getParent());
 
         $editorData = new PageEditorData($draft, $this->entityQueries, $request->query('editor', ''));
         $this->setPageTitle(trans('entities.pages_edit_draft'));
@@ -120,7 +121,7 @@ class PageController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-create', $draftPage->getParent());
+        $this->checkOwnablePermission(Permission::PageCreate, $draftPage->getParent());
 
         $page = $this->pageRepo->publishDraft($draftPage, $request->all());
 
@@ -147,8 +148,6 @@ class PageController extends Controller
 
             return redirect($page->getUrl());
         }
-
-        $this->checkOwnablePermission('page-view', $page);
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
@@ -197,7 +196,7 @@ class PageController extends Controller
     public function edit(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page, $page->getUrl());
+        $this->checkOwnablePermission(Permission::PageUpdate, $page, $page->getUrl());
 
         $editorData = new PageEditorData($page, $this->entityQueries, $request->query('editor', ''));
         if ($editorData->getWarnings()) {
@@ -221,7 +220,7 @@ class PageController extends Controller
             'name' => ['required', 'string', 'max:255'],
         ]);
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $this->pageRepo->update($page, $request->all());
 
@@ -236,7 +235,7 @@ class PageController extends Controller
     public function saveDraft(Request $request, int $pageId)
     {
         $page = $this->queries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
@@ -273,7 +272,7 @@ class PageController extends Controller
     public function showDelete(string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-delete', $page);
+        $this->checkOwnablePermission(Permission::PageDelete, $page);
         $this->setPageTitle(trans('entities.pages_delete_named', ['pageName' => $page->getShortName()]));
         $usedAsTemplate =
             $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
@@ -295,7 +294,7 @@ class PageController extends Controller
     public function showDeleteDraft(string $bookSlug, int $pageId)
     {
         $page = $this->queries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
         $usedAsTemplate =
             $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
@@ -318,7 +317,7 @@ class PageController extends Controller
     public function destroy(string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-delete', $page);
+        $this->checkOwnablePermission(Permission::PageDelete, $page);
         $parent = $page->getParent();
 
         $this->pageRepo->destroy($page);
@@ -337,13 +336,13 @@ class PageController extends Controller
         $page = $this->queries->findVisibleByIdOrFail($pageId);
         $book = $page->book;
         $chapter = $page->chapter;
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $this->pageRepo->destroy($page);
 
         $this->showSuccessNotification(trans('entities.pages_delete_draft_success'));
 
-        if ($chapter && userCan('view', $chapter)) {
+        if ($chapter && userCan(Permission::ChapterView, $chapter)) {
             return redirect($chapter->getUrl());
         }
 
@@ -384,8 +383,8 @@ class PageController extends Controller
     public function showMove(string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('page-delete', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->checkOwnablePermission(Permission::PageDelete, $page);
 
         return view('pages.move', [
             'book' => $page->book,
@@ -402,8 +401,8 @@ class PageController extends Controller
     public function move(Request $request, string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('page-delete', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->checkOwnablePermission(Permission::PageDelete, $page);
 
         $entitySelection = $request->get('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
@@ -431,7 +430,6 @@ class PageController extends Controller
     public function showCopy(string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-view', $page);
         session()->flashInput(['name' => $page->name]);
 
         return view('pages.copy', [
@@ -449,7 +447,7 @@ class PageController extends Controller
     public function copy(Request $request, Cloner $cloner, string $bookSlug, string $pageSlug)
     {
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-view', $page);
+        $this->checkOwnablePermission(Permission::PageView, $page);
 
         $entitySelection = $request->get('entity_selection') ?: null;
         $newParent = $entitySelection ? $this->entityQueries->findVisibleByStringIdentifier($entitySelection) : $page->getParent();
@@ -460,7 +458,7 @@ class PageController extends Controller
             return redirect($page->getUrl('/copy'));
         }
 
-        $this->checkOwnablePermission('page-create', $newParent);
+        $this->checkOwnablePermission(Permission::PageCreate, $newParent);
 
         $newName = $request->get('name') ?: $page->name;
         $pageCopy = $cloner->clonePage($page, $newParent, $newName);

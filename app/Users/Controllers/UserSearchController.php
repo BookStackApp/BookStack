@@ -3,6 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,9 @@ class UserSearchController extends Controller
     public function forSelect(Request $request)
     {
         $hasPermission = !user()->isGuest() && (
-            userCan('users-manage')
-                || userCan('restrictions-manage-own')
-                || userCan('restrictions-manage-all')
+            userCan(Permission::UsersManage)
+                || userCan(Permission::RestrictionsManageOwn)
+                || userCan(Permission::RestrictionsManageAll)
         );
 
         if (!$hasPermission) {

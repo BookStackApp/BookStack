@@ -2,7 +2,7 @@
     <div class="flex-container-row wrap justify-space-between items-center mb-s">
         <h2 class="list-heading">{{ trans('settings.users_api_tokens') }}</h2>
         <div class="text-right pt-xs">
-            @if(userCan('access-api'))
+            @if(userCan(\BookStack\Permissions\Permission::AccessApi))
                 <a href="{{ url('/api/docs') }}" class="button outline">{{ trans('settings.users_api_tokens_docs') }}</a>
                 <a href="{{ url('/api-tokens/' . $user->id . '/create?context=' . $context) }}" class="button outline">{{ trans('settings.users_api_tokens_create') }}</a>
             @endif

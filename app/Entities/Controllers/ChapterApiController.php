@@ -9,6 +9,7 @@ use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -65,7 +66,7 @@ class ChapterApiController extends ApiController
 
         $bookId = $request->get('book_id');
         $book = $this->entityQueries->books->findVisibleByIdOrFail(intval($bookId));
-        $this->checkOwnablePermission('chapter-create', $book);
+        $this->checkOwnablePermission(Permission::ChapterCreate, $book);
 
         $chapter = $this->chapterRepo->create($requestData, $book);
 
@@ -101,10 +102,10 @@ class ChapterApiController extends ApiController
     {
         $requestData = $this->validate($request, $this->rules()['update']);
         $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('chapter-update', $chapter);
+        $this->checkOwnablePermission(Permission::ChapterUpdate, $chapter);
 
         if ($request->has('book_id') && $chapter->book_id !== intval($requestData['book_id'])) {
-            $this->checkOwnablePermission('chapter-delete', $chapter);
+            $this->checkOwnablePermission(Permission::ChapterDelete, $chapter);
 
             try {
                 $this->chapterRepo->move($chapter, "book:{$requestData['book_id']}");
@@ -129,7 +130,7 @@ class ChapterApiController extends ApiController
     public function delete(string $id)
     {
         $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('chapter-delete', $chapter);
+        $this->checkOwnablePermission(Permission::ChapterDelete, $chapter);
 
         $this->chapterRepo->destroy($chapter);
 

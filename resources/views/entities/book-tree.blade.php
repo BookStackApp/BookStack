@@ -5,7 +5,7 @@
     <h5>{{ trans('entities.books_navigation') }}</h5>
 
     <ul class="sidebar-page-list mt-xs menu entity-list">
-        @if (userCan('view', $book))
+        @if (userCan(\BookStack\Permissions\Permission::BookView, $book))
             <li class="list-item-book book">
                 @include('entities.list-item-basic', ['entity' => $book, 'classes' => ($current->matches($book)? 'selected' : '')])
             </li>

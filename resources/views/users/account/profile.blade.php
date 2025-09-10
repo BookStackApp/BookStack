@@ -35,10 +35,10 @@
                             <p class="text-small mb-none">{{ trans('preferences.profile_email_desc') }}</p>
                         </div>
                         <div class="flex stretch-inputs">
-                            @include('form.text', ['name' => 'email', 'disabled' => !userCan('users-manage')])
+                            @include('form.text', ['name' => 'email', 'disabled' => !userCan(\BookStack\Permissions\Permission::UsersManage)])
                         </div>
                     </div>
-                    @if(!userCan('users-manage'))
+                    @if(!userCan(\BookStack\Permissions\Permission::UsersManage))
                         <p class="text-small text-muted">{{ trans('preferences.profile_email_no_permission') }}</p>
                     @endif
                 </div>
@@ -75,7 +75,7 @@
         </form>
     </section>
 
-    @if(userCan('users-manage'))
+    @if(userCan(\BookStack\Permissions\Permission::UsersManage))
         <section class="card content-wrap auto-height">
             <div class="flex-container-row gap-l items-center wrap">
                 <div class="flex">

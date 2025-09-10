@@ -3,6 +3,7 @@
 namespace BookStack\Users\Controllers;
 
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use BookStack\Permissions\PermissionsRepo;
 use BookStack\Users\Models\Role;
 use Illuminate\Http\Request;
@@ -10,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class RoleApiController extends ApiController
 {
-    protected PermissionsRepo $permissionsRepo;
-
     protected array $fieldsToExpose = [
         'display_name', 'description', 'mfa_enforced', 'external_auth_id', 'created_at', 'updated_at',
     ];
@@ -35,13 +34,12 @@ class RoleApiController extends ApiController
         ]
     ];
 
-    public function __construct(PermissionsRepo $permissionsRepo)
-    {
-        $this->permissionsRepo = $permissionsRepo;
-
+    public function __construct(
+        protected PermissionsRepo $permissionsRepo
+    ) {
         // Checks for all endpoints in this controller
         $this->middleware(function ($request, $next) {
-            $this->checkPermission('user-roles-manage');
+            $this->checkPermission(Permission::UserRolesManage);
 
             return $next($request);
         });
@@ -125,9 +123,9 @@ class RoleApiController extends ApiController
     }
 
     /**
-     * Format the given role model for single-result display.
+     * Format the given role model for a single-result display.
      */
-    protected function singleFormatter(Role $role)
+    protected function singleFormatter(Role $role): void
     {
         $role->load('users:id,name,slug');
         $role->unsetRelation('permissions');

@@ -12,6 +12,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\UploadedFile;
@@ -49,7 +50,7 @@ class Cloner
 
         $copyChapter = $this->chapterRepo->create($chapterDetails, $parent);
 
-        if (userCan('page-create', $copyChapter)) {
+        if (userCan(Permission::PageCreate, $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
                 $this->clonePage($page, $copyChapter, $page->name);
@@ -61,7 +62,7 @@ class Cloner
 
     /**
      * Clone the given book.
-     * Clones all child chapters & pages.
+     * Clones all child chapters and pages.
      */
     public function cloneBook(Book $original, string $newName): Book
     {
@@ -74,11 +75,11 @@ class Cloner
         // Clone contents
         $directChildren = $original->getDirectVisibleChildren();
         foreach ($directChildren as $child) {
-            if ($child instanceof Chapter && userCan('chapter-create', $copyBook)) {
+            if ($child instanceof Chapter && userCan(Permission::ChapterCreate, $copyBook)) {
                 $this->cloneChapter($child, $copyBook, $child->name);
             }
 
-            if ($child instanceof Page && !$child->draft && userCan('page-create', $copyBook)) {
+            if ($child instanceof Page && !$child->draft && userCan(Permission::PageCreate, $copyBook)) {
                 $this->clonePage($child, $copyBook, $child->name);
             }
         }
@@ -86,7 +87,7 @@ class Cloner
         // Clone bookshelf relationships
         /** @var Bookshelf $shelf */
         foreach ($original->shelves as $shelf) {
-            if (userCan('bookshelf-update', $shelf)) {
+            if (userCan(Permission::BookshelfUpdate, $shelf)) {
                 $shelf->appendBook($copyBook);
             }
         }

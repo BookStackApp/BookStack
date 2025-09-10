@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
+use BookStack\Permissions\Permission;
 
 class PageEditorData
 {
@@ -98,9 +99,9 @@ class PageEditorData
     {
         $editorType = PageEditorType::forPage($page) ?: PageEditorType::getSystemDefault();
 
-        // Use requested editor if valid and if we have permission
+        // Use the requested editor if valid and if we have permission
         $requestedType = PageEditorType::fromRequestValue($this->requestedEditor);
-        if ($requestedType && userCan('editor-change')) {
+        if ($requestedType && userCan(Permission::EditorChange)) {
             $editorType = $requestedType;
         }
 

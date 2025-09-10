@@ -38,7 +38,7 @@
                 <span>@icon($crumb['icon'])</span>
                 <span>{{ $crumb['text'] }}</span>
             </a>
-        @elseif($isEntity && userCan('view', $crumb))
+        @elseif($isEntity && userCan(\BookStack\Permissions\Permission::View, $crumb))
             @if($breadcrumbCount > 0)
                 @include('entities.breadcrumb-listing', ['entity' => $crumb])
             @endif

@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Permissions\Permission;
 
 class BookSorter
 {
@@ -187,11 +188,11 @@ class BookSorter
 
         $hasNewParent = $newBook->id !== $model->book_id || ($model instanceof Page && $model->chapter_id !== ($sortMapItem->parentChapterId ?? 0));
         if ($model instanceof Chapter) {
-            $hasPermission = userCan('book-update', $currentParent)
-                && userCan('book-update', $newBook)
-                && userCan('chapter-update', $model)
-                && (!$hasNewParent || userCan('chapter-create', $newBook))
-                && (!$hasNewParent || userCan('chapter-delete', $model));
+            $hasPermission = userCan(Permission::BookUpdate, $currentParent)
+                && userCan(Permission::BookUpdate, $newBook)
+                && userCan(Permission::ChapterUpdate, $model)
+                && (!$hasNewParent || userCan(Permission::ChapterCreate, $newBook))
+                && (!$hasNewParent || userCan(Permission::ChapterDelete, $model));
 
             if (!$hasPermission) {
                 return false;
@@ -210,13 +211,13 @@ class BookSorter
                 return false;
             }
 
-            $hasPageEditPermission = userCan('page-update', $model);
+            $hasPageEditPermission = userCan(Permission::PageUpdate, $model);
             $newParentInRightLocation = ($newParent instanceof Book || ($newParent instanceof Chapter && $newParent->book_id === $newBook->id));
             $newParentPermission = ($newParent instanceof Chapter) ? 'chapter-update' : 'book-update';
             $hasNewParentPermission = userCan($newParentPermission, $newParent);
 
-            $hasDeletePermissionIfMoving = (!$hasNewParent || userCan('page-delete', $model));
-            $hasCreatePermissionIfMoving = (!$hasNewParent || userCan('page-create', $newParent));
+            $hasDeletePermissionIfMoving = (!$hasNewParent || userCan(Permission::PageDelete, $model));
+            $hasCreatePermissionIfMoving = (!$hasNewParent || userCan(Permission::PageCreate, $newParent));
 
             $hasPermission = $hasCurrentParentPermission
                 && $newParentInRightLocation
