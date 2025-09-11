@@ -48,7 +48,7 @@ return [
     'superscript' => '上標',
     'subscript' => '下標',
     'text_color' => '文本顏色',
-    'highlight_color' => 'Highlight color',
+    'highlight_color' => '突顯顏色',
     'custom_color' => '自訂顏色',
     'remove_color' => '移除颜色',
     'background_color' => '背景顏色',
