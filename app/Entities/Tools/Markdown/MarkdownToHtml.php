@@ -5,8 +5,10 @@ namespace BookStack\Entities\Tools\Markdown;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\Autolink\AutolinkExtension;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\CommonMark\Node\Block\ListItem;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\Table\TableExtension;
 use League\CommonMark\Extension\TaskList\TaskListExtension;
 use League\CommonMark\MarkdownConverter;
@@ -27,6 +29,10 @@ class MarkdownToHtml
         $environment->addExtension(new TableExtension());
         $environment->addExtension(new TaskListExtension());
         $environment->addExtension(new CustomStrikeThroughExtension());
+        $environment->addExtension(new AutolinkExtension());
+        $environment->addExtension(new FootnoteExtension());
+        $environment->addExtension(new AdmonitionExtension());
+        $environment->addExtension(new HighlightExtension());
         $environment = Theme::dispatch(ThemeEvents::COMMONMARK_ENVIRONMENT_CONFIGURE, $environment) ?? $environment;
         $converter = new MarkdownConverter($environment);
 
