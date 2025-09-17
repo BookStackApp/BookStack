@@ -7946,6 +7946,26 @@ html.dark-mode .callout.warning {
   text-decoration: underline;
 }
 
+body {
+  -webkit-user-select: none; /* Chrome, Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none; /* Standard */
+}
+
+a[href*="/copy"] {
+  display: none !important;
+}
+
+button[title*=copy],
+button[title*=Copy] {
+  display: none !important;
+}
+
+.icon-list-item[data-shortcut=copy] {
+  display: none !important;
+}
+
 @media print {
   html, body {
     font-size: 12px;

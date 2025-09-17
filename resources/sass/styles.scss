@@ -24,6 +24,29 @@
 @use "pages";
 @use "content";
 
+// Disable text selection globally
+body {
+  -webkit-user-select: none;  /* Chrome, Safari */
+  -moz-user-select: none;     /* Firefox */
+  -ms-user-select: none;      /* IE10+ */
+  user-select: none;          /* Standard */
+}
+
+// Hide copy buttons and links
+a[href*="/copy"] {
+  display: none !important;
+}
+
+button[title*="copy"],
+button[title*="Copy"] {
+  display: none !important;
+}
+
+// Hide copy icon list items
+.icon-list-item[data-shortcut="copy"] {
+  display: none !important;
+}
+
 @media print {
   @include meta.load-css("print");
 }
