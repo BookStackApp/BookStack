@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('entities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type', 10);
-            $table->string('slug', 191);
+            $table->string('name');
+            $table->string('slug')->index();
 
             $table->unsignedBigInteger('book_id')->nullable()->index();
             $table->unsignedInteger('priority')->nullable();
@@ -32,7 +33,7 @@ return new class extends Migration
 
         Schema::create('entity_container_data', function (Blueprint $table) {
             $table->unsignedBigInteger('entity_id');
-            $table->string('type', 10);
+            $table->string('entity_type', 10);
             $table->text('description');
             $table->text('description_html');
 
@@ -40,12 +41,12 @@ return new class extends Migration
             $table->unsignedInteger('image_id')->nullable();
             $table->unsignedInteger('sort_rule_id')->nullable();
 
-            $table->primary(['entity_id', 'type'], 'entity_container_data_pk');
+            $table->primary(['entity_id', 'entity_type'], 'entity_container_data_pk');
         });
 
-        Schema::table('entity_page_data', function (Blueprint $table) {
+        Schema::create('entity_page_data', function (Blueprint $table) {
             $table->unsignedBigInteger('page_id')->primary();
-            $table->unsignedBigInteger('chapter_id')->index();
+            $table->unsignedBigInteger('chapter_id')->nullable()->index();
 
             $table->boolean('draft')->index();
             $table->boolean('template')->index();

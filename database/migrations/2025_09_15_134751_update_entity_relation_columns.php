@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        // TODO
     }
 
     /**
@@ -19,6 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        // TODO
     }
 };
