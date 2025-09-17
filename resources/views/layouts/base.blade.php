@@ -107,6 +107,113 @@
     @if($cspNonce ?? false)
         <script src="{{ versioned_asset('dist/app.js') }}" type="module" nonce="{{ $cspNonce }}"></script>
     @endif
+    
+    <!-- Anti-Copy Protection Script -->
+    <script nonce="{{ $cspNonce ?? '' }}">
+    (function() {
+        'use strict';
+        
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Disable Ctrl+C, Ctrl+A, Ctrl+V, Ctrl+X, Ctrl+S, Ctrl+P
+            if (e.ctrlKey && [67, 65, 86, 88, 83, 80].includes(e.keyCode)) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Disable F12 (Developer Tools)
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Disable Ctrl+Shift+I (Developer Tools)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Disable Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Disable Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Disable text selection events
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable drag start
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable print screen
+        document.addEventListener('keyup', function(e) {
+            if (e.keyCode === 44) { // Print Screen
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // Clear clipboard periodically (if supported)
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            setInterval(function() {
+                navigator.clipboard.writeText('').catch(function() {
+                    // Ignore errors if clipboard access is denied
+                });
+            }, 2000);
+        }
+        
+        // Basic developer tools detection
+        let devtools = {open: false};
+        setInterval(function() {
+            if (window.outerHeight - window.innerHeight > 200 || 
+                window.outerWidth - window.innerWidth > 200) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    // You can customize this message or action
+                    console.warn('Developer tools detected!');
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 1000);
+        
+        // Disable image right-click and drag
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(function(img) {
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+                img.addEventListener('dragstart', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            });
+        });
+        
+    })();
+    </script>
+    
     @stack('body-end')
 
     @include('layouts.parts.base-body-end')
