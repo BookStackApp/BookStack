@@ -108,7 +108,8 @@
         <script src="{{ versioned_asset('dist/app.js') }}" type="module" nonce="{{ $cspNonce }}"></script>
     @endif
     
-    <!-- Anti-Copy Protection Script -->
+    <!-- Anti-Copy Protection Script - DISABLED -->
+    <!--
     <script nonce="{{ $cspNonce ?? '' }}">
     (function() {
         'use strict';
@@ -213,6 +214,7 @@
         
     })();
     </script>
+    -->
     
     @stack('body-end')
 
