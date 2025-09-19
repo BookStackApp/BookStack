@@ -48,7 +48,7 @@ return new class extends Migration
             $table->string('editor', 50)->default('');
         });
 
-        Schema::table('chapters', function (Blueprint $table) {
+        Schema::create('chapters', function (Blueprint $table) {
             $table->unsignedInteger('id', true)->primary();
             $table->integer('book_id')->index();
             $table->string('slug')->index();
