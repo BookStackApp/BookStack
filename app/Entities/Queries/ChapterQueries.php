@@ -61,12 +61,14 @@ class ChapterQueries implements ProvidesEntityQueries
 
     public function visibleForList(): Builder
     {
+        // TODO - Review this is working as expected
         return $this->start()
             ->scopes('visible')
             ->select(array_merge(static::$listAttributes, ['book_slug' => function ($builder) {
                 $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'chapters.book_id');
+                    ->from('entities as books')
+                    ->where('type', '=', 'book')
+                    ->whereColumn('books.id', '=', 'entities.book_id');
             }]));
     }
 }

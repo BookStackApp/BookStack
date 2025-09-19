@@ -78,6 +78,19 @@ abstract class Entity extends Model implements
     public float $searchFactor = 1.0;
 
     /**
+     * Set the table to be that used by all entities.
+     */
+    protected $table = 'entities';
+
+    /**
+     * Set global scopes to limit queries down to just the right type of entity.
+     */
+    protected static function booted(): void
+    {
+        static::addGlobalScope('entity', new EntityScope());
+    }
+
+    /**
      * Get the entities that are visible to the current user.
      */
     public function scopeVisible(Builder $query): Builder

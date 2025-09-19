@@ -13,8 +13,6 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
     use HasFactory;
     use HtmlDescriptionTrait;
 
-    protected $table = 'bookshelves';
-
     public float $searchFactor = 1.2;
 
     protected $fillable = ['name', 'description', 'image_id'];
@@ -24,10 +22,8 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
     /**
      * Get the books in this shelf.
      * Should not be used directly since does not take into account permissions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function books()
+    public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
             ->withPivot('order')
@@ -104,14 +100,5 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
 
         $maxOrder = $this->books()->max('order');
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
-    }
-
-    /**
-     * Get a visible shelf by its slug.
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function getBySlug(string $slug): self
-    {
-        return static::visible()->where('slug', '=', $slug)->firstOrFail();
     }
 }

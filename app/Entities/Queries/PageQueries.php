@@ -112,10 +112,12 @@ class PageQueries implements ProvidesEntityQueries
 
     protected function mergeBookSlugForSelect(array $columns): array
     {
+        // TODO - Review this is working as expected
         return array_merge($columns, ['book_slug' => function ($builder) {
             $builder->select('slug')
-                ->from('books')
-                ->whereColumn('books.id', '=', 'pages.book_id');
+                ->from('entities as books')
+                ->where('type', '=', 'book')
+                ->whereColumn('books.id', '=', 'entities.book_id');
         }]);
     }
 }
