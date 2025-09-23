@@ -3,7 +3,6 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,8 +32,6 @@ class Page extends BookChild
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'priority'];
-
     public string $textField = 'text';
     public string $htmlField = 'html';
 
@@ -53,6 +50,14 @@ class Page extends BookChild
         $query = app()->make(PermissionApplicator::class)->restrictDraftsOnPageQuery($query);
 
         return parent::scopeVisible($query);
+    }
+
+    /**
+     * Get the page-specific data for this page.
+     */
+    public function pageData(): HasOne
+    {
+        return $this->hasOne(EntityPageData::class, 'id', 'page_id');
     }
 
     /**

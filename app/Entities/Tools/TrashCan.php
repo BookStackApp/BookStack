@@ -8,7 +8,6 @@ use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\CoverImageInterface;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\NotifyException;
@@ -398,9 +397,11 @@ class TrashCan
         $entity->referencesTo()->delete();
         $entity->referencesFrom()->delete();
 
-        if ($entity instanceof CoverImageInterface && $entity->cover()->exists()) {
+        // TODO - Update
+
+        if ($entity->shouldHaveContainerData() && $entity->containerData->cover()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->cover()->first());
+            $imageService->destroy($entity->containerData->cover()->first());
         }
     }
 }

@@ -64,7 +64,7 @@
 
         @include('form.image-picker', [
             'defaultImage' => url('/book_default_cover.png'),
-            'currentImage' => (isset($shelf) && $shelf->cover) ? $shelf->getBookCover() : url('/book_default_cover.png') ,
+            'currentImage' => (isset($shelf) && $shelf->containerData->cover) ? $shelf->getBookCover() : url('/book_default_cover.png') ,
             'name' => 'image',
             'imageClass' => 'cover'
         ])

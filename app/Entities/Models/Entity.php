@@ -28,6 +28,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -46,6 +47,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int        $updated_by
  * @property int        $owned_by
  * @property Collection $tags
+ *
+ * @property ?EntityContainerData $containerData
  *
  * @method static Entity|Builder visible()
  * @method static Builder withLastView()
@@ -88,6 +91,22 @@ abstract class Entity extends Model implements
     protected static function booted(): void
     {
         static::addGlobalScope('entity', new EntityScope());
+    }
+
+    public function shouldHaveContainerData(): bool
+    {
+        return $this instanceof Bookshelf ||
+            $this instanceof Book ||
+            $this instanceof Chapter;
+    }
+
+    /**
+     * Get the container-specific data for this page.
+     */
+    public function containerData(): HasOne
+    {
+        return $this->hasOne(EntityContainerData::class, 'id', 'entity_id')
+            ->where('entity_type', '=', $this->getMorphClass());
     }
 
     /**

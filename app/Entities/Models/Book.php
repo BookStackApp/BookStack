@@ -26,14 +26,12 @@ use Illuminate\Support\Collection;
  * @property ?Page                                    $defaultTemplate
  * @property ?SortRule                                 $sortRule
  */
-class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterface
+class Book extends Entity
 {
     use HasFactory;
-    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
 
-    protected $fillable = ['name'];
     protected $hidden = ['pivot', 'image_id', 'deleted_at', 'description_html'];
 
     /**
@@ -50,31 +48,15 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
     public function getBookCover(int $width = 440, int $height = 250): string
     {
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id || !$this->cover) {
+        if (!$this->containerData->image_id || !$this->containerData->cover) {
             return $default;
         }
 
         try {
-            return $this->cover->getThumb($width, $height, false) ?? $default;
+            return $this->containerData->cover->getThumb($width, $height, false) ?? $default;
         } catch (Exception $err) {
             return $default;
         }
-    }
-
-    /**
-     * Get the cover image of the book.
-     */
-    public function cover(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
-    }
-
-    /**
-     * Get the type of the image model that is used when storing a cover image.
-     */
-    public function coverImageTypeKey(): string
-    {
-        return 'cover_book';
     }
 
     /**

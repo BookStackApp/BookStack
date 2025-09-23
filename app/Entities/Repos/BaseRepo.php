@@ -7,9 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\CoverImageInterface;
-use BookStack\Entities\Models\HtmlDescriptionInterface;
-use BookStack\Entities\Models\HtmlDescriptionTrait;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
@@ -34,10 +32,10 @@ class BaseRepo
     /**
      * Create a new entity in the system.
      */
-    public function create(Entity $entity, array $input)
+    public function create(Entity $entity, array $input): void
     {
-        $entity->fill($input);
-        $this->updateDescription($entity, $input);
+        $entityInput = array_intersect_key($input, ['name', 'priority']);
+        $entity->forceFill($entityInput);
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
@@ -46,6 +44,12 @@ class BaseRepo
         $entity->refreshSlug();
         $entity->save();
 
+        if ($entity->shouldHaveContainerData()) {
+            $containerData = new EntityContainerData();
+            $this->updateContainerDescription($containerData, $input);
+            $entity->containerData()->save($containerData);
+        }
+
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
         }
@@ -53,18 +57,18 @@ class BaseRepo
         $entity->refresh();
         $entity->rebuildPermissions();
         $entity->indexForSearch();
+
         $this->referenceStore->updateForEntity($entity);
     }
 
     /**
      * Update the given entity.
      */
-    public function update(Entity $entity, array $input)
+    public function update(Entity $entity, array $input): void
     {
         $oldUrl = $entity->getUrl();
 
         $entity->fill($input);
-        $this->updateDescription($entity, $input);
         $entity->updated_by = user()->id;
 
         if ($entity->isDirty('name') || empty($entity->slug)) {
@@ -72,6 +76,9 @@ class BaseRepo
         }
 
         $entity->save();
+        if ($entity->shouldHaveContainerData() && $entity->containerData) {
+            $this->updateContainerDescription($entity->containerData, $input);
+        }
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
@@ -87,25 +94,25 @@ class BaseRepo
     }
 
     /**
-     * Update the given items' cover image, or clear it.
+     * Update the given items' cover image or clear it.
      *
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage(Entity&CoverImageInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false)
+    public function updateCoverImage(EntityContainerData $containerData, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
         if ($coverImage) {
-            $imageType = $entity->coverImageTypeKey();
-            $this->imageRepo->destroyImage($entity->cover()->first());
-            $image = $this->imageRepo->saveNew($coverImage, $imageType, $entity->id, 512, 512, true);
-            $entity->cover()->associate($image);
-            $entity->save();
+            $imageType = 'cover_' . $containerData->entity_type;
+            $this->imageRepo->destroyImage($containerData->cover()->first());
+            $image = $this->imageRepo->saveNew($coverImage, $imageType, $containerData->entity_id, 512, 512, true);
+            $containerData->cover()->associate($image);
+            $containerData->save();
         }
 
         if ($removeImage) {
-            $this->imageRepo->destroyImage($entity->cover()->first());
-            $entity->cover()->dissociate();
-            $entity->save();
+            $this->imageRepo->destroyImage($containerData->cover()->first());
+            $containerData->cover()->dissociate();
+            $containerData->save();
         }
     }
 
@@ -147,19 +154,15 @@ class BaseRepo
         }
     }
 
-    protected function updateDescription(Entity $entity, array $input): void
+    protected function updateContainerDescription(EntityContainerData $data, array $input): void
     {
-        if (!($entity instanceof HtmlDescriptionInterface)) {
-            return;
-        }
-
         if (isset($input['description_html'])) {
-            $entity->setDescriptionHtml(
+            $data->setDescriptionHtml(
                 HtmlDescriptionFilter::filterFromString($input['description_html']),
                 html_entity_decode(strip_tags($input['description_html']))
             );
         } else if (isset($input['description'])) {
-            $entity->setDescriptionHtml('', $input['description']);
+            $data->setDescriptionHtml('', $input['description']);
         }
     }
 }

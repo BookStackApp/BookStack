@@ -135,8 +135,8 @@ class ZipImportRunner
             'tags' => $this->exportTagsToInputArray($exportBook->tags ?? []),
         ]);
 
-        if ($book->cover) {
-            $this->references->addImage($book->cover, null);
+        if ($book->containerData->cover) {
+            $this->references->addImage($book->containerData->cover, null);
         }
 
         $children = [

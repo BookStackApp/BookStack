@@ -2,14 +2,34 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Uploads\Image;
 use BookStack\Util\HtmlContentFilter;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $description
  * @property string $description_html
+ * @property ?int    $default_template_id
+ * @property ?int    $image_id
+ * @property ?int    $sort_rule_id
  */
-trait HtmlDescriptionTrait
+class EntityContainerData extends Model
 {
+    public $timestamps = false;
+
+    /**
+     * Relation for the cover image for this entity.
+     * @return HasOne<Image, $this>
+     */
+    public function cover(): HasOne
+    {
+        return $this->hasOne(Image::class, 'image_id');
+    }
+
+    /**
+     * Get the description as a cleaned/handled HTML string.
+     */
     public function descriptionHtml(bool $raw = false): string
     {
         $html = $this->description_html ?: '<p>' . nl2br(e($this->description)) . '</p>';
@@ -20,6 +40,10 @@ trait HtmlDescriptionTrait
         return HtmlContentFilter::removeScriptsFromHtmlString($html);
     }
 
+    /**
+     * Update the description from HTML code.
+     * Optionally takes plaintext to use for the model also.
+     */
     public function setDescriptionHtml(string $html, string|null $plaintext = null): void
     {
         $this->description_html = $html;

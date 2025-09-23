@@ -2,26 +2,21 @@
 
 namespace BookStack\Entities\Models;
 
-use BookStack\Uploads\Image;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionInterface
+class Bookshelf extends Entity
 {
     use HasFactory;
-    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
-
-    protected $fillable = ['name', 'description', 'image_id'];
 
     protected $hidden = ['image_id', 'deleted_at', 'description_html'];
 
     /**
      * Get the books in this shelf.
-     * Should not be used directly since does not take into account permissions.
+     * Should not be used directly since it does not take into account permissions.
      */
     public function books(): BelongsToMany
     {
@@ -53,32 +48,15 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
     {
         // TODO - Make generic, focused on books right now, Perhaps set-up a better image
         $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id || !$this->cover) {
+        if (!$this->containerData->image_id || !$this->containerData->cover) {
             return $default;
         }
 
         try {
-            return $this->cover->getThumb($width, $height, false) ?? $default;
+            return $this->containerData->cover->getThumb($width, $height, false) ?? $default;
         } catch (Exception $err) {
             return $default;
         }
-    }
-
-    /**
-     * Get the cover image of the shelf.
-     * @return BelongsTo<Image, $this>
-     */
-    public function cover(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
-    }
-
-    /**
-     * Get the type of the image model that is used when storing a cover image.
-     */
-    public function coverImageTypeKey(): string
-    {
-        return 'cover_bookshelf';
     }
 
     /**
@@ -92,7 +70,7 @@ class Bookshelf extends Entity implements CoverImageInterface, HtmlDescriptionIn
     /**
      * Add a book to the end of this shelf.
      */
-    public function appendBook(Book $book)
+    public function appendBook(Book $book): void
     {
         if ($this->contains($book)) {
             return;

@@ -14,14 +14,11 @@ use Illuminate\Support\Collection;
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
  */
-class Chapter extends BookChild implements HtmlDescriptionInterface
+class Chapter extends BookChild
 {
     use HasFactory;
-    use HtmlDescriptionTrait;
 
     public float $searchFactor = 1.2;
-
-    protected $fillable = ['name', 'description', 'priority'];
     protected $hidden = ['pivot', 'deleted_at', 'description_html'];
 
     /**

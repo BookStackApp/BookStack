@@ -116,9 +116,10 @@ class BookshelfApiController extends ApiController
         $shelf = clone $shelf;
         $shelf->unsetRelations()->refresh();
 
-        $shelf->load(['tags', 'cover']);
-        $shelf->makeVisible('description_html')
-            ->setAttribute('description_html', $shelf->descriptionHtml());
+        $shelf->load(['tags']);
+        $shelf->makeVisible(['cover', 'description_html'])
+            ->setAttribute('description_html', $shelf->containerData->getDescriptionHtml())
+            ->setAttribute('cover', $shelf->containerData->cover);
 
         return $shelf;
     }
