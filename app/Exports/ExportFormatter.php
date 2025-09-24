@@ -318,7 +318,7 @@ class ExportFormatter
     {
         $text = '# ' . $chapter->name . "\n\n";
 
-        $description = (new HtmlToMarkdown($chapter->containerData->descriptionHtml()))->convert();
+        $description = (new HtmlToMarkdown($chapter->containerData->getDescriptionHtml()))->convert();
         if ($description) {
             $text .= $description . "\n\n";
         }
@@ -338,7 +338,7 @@ class ExportFormatter
         $bookTree = (new BookContents($book))->getTree(false, true);
         $text = '# ' . $book->name . "\n\n";
 
-        $description = (new HtmlToMarkdown($book->containerData->descriptionHtml()))->convert();
+        $description = (new HtmlToMarkdown($book->containerData->getDescriptionHtml()))->convert();
         if ($description) {
             $text .= $description . "\n\n";
         }

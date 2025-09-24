@@ -85,7 +85,9 @@ class PageRepo
             $draft->pageData->revision_count = 1;
             $draft->pageData->priority = $this->getNewPriority($draft);
             $this->updateTemplateStatusAndContentFromInput($draft, $input);
-            $this->baseRepo->update($draft, $input);
+
+            $draft = $this->baseRepo->update($draft, $input);
+            $draft->pageData->save();
             $draft->rebuildPermissions();
 
             $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
@@ -115,13 +117,15 @@ class PageRepo
      */
     public function update(Page $page, array $input): Page
     {
+        $page = $page->clone()->refresh();
+
         // Hold the old details to compare later
         $oldName = $page->name;
         $oldHtml = $page->pageData->html;
         $oldMarkdown = $page->pageData->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
-        $this->baseRepo->update($page, $input);
+        $page = $this->baseRepo->update($page, $input);
 
         // Update with new details
         $page->pageData->revision_count++;
@@ -187,6 +191,7 @@ class PageRepo
         if ($page->draft) {
             $this->updateTemplateStatusAndContentFromInput($page, $input);
             $page->forceFill(array_intersect_key($input, array_flip(['name'])))->save();
+            $page->pageData->save();
             $page->save();
 
             return $page;
@@ -285,7 +290,7 @@ class PageRepo
         return (new DatabaseTransaction(function () use ($page, $parent) {
             $page->pageData->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
             $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
-            $page->changeBook($newBookId);
+            $page = $page->changeBook($newBookId);
             $page->rebuildPermissions();
 
             Activity::add(ActivityType::PAGE_MOVE, $page);

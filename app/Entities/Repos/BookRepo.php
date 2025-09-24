@@ -30,9 +30,7 @@ class BookRepo
     public function create(array $input): Book
     {
         return (new DatabaseTransaction(function () use ($input) {
-            $book = new Book();
-
-            $this->baseRepo->create($book, $input);
+            $book = $this->baseRepo->create(new Book(), $input);
             $this->baseRepo->updateCoverImage($book->containerData, $input['image'] ?? null);
             $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id'] ?? null));
             Activity::add(ActivityType::BOOK_CREATE, $book);
@@ -52,7 +50,7 @@ class BookRepo
      */
     public function update(Book $book, array $input): Book
     {
-        $this->baseRepo->update($book, $input);
+        $book = $this->baseRepo->update($book, $input);
 
         if (array_key_exists('default_template_id', $input)) {
             $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id']));

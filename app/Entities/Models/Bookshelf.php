@@ -59,6 +59,9 @@ class Bookshelf extends Entity
         }
     }
 
+    // TODO - Still handle cover as relation through containerData (since it's used in code)
+    // TODO - Remove above since we can access that via containerData
+
     /**
      * Check if this shelf contains the given book.
      */

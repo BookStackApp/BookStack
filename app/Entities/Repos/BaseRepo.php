@@ -3,9 +3,7 @@
 namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\TagRepo;
-use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Queries\PageQueries;
@@ -31,9 +29,13 @@ class BaseRepo
 
     /**
      * Create a new entity in the system.
+     * @template T of Entity
+     * @param T $entity
+     * @return T
      */
-    public function create(Entity $entity, array $input): void
+    public function create(Entity $entity, array $input): Entity
     {
+        $entity = $entity->clone()->refresh();
         $entityInput = array_intersect_key($input, ['name', 'priority']);
         $entity->forceFill($entityInput);
         $entity->forceFill([
@@ -59,13 +61,19 @@ class BaseRepo
         $entity->indexForSearch();
 
         $this->referenceStore->updateForEntity($entity);
+
+        return $entity;
     }
 
     /**
      * Update the given entity.
+     * @template T of Entity
+     * @param T $entity
+     * @return T
      */
-    public function update(Entity $entity, array $input): void
+    public function update(Entity $entity, array $input): Entity
     {
+        $entity = $entity->clone()->refresh();
         $oldUrl = $entity->getUrl();
 
         $entity->fill($input);
@@ -78,6 +86,7 @@ class BaseRepo
         $entity->save();
         if ($entity->shouldHaveContainerData() && $entity->containerData) {
             $this->updateContainerDescription($entity->containerData, $input);
+            $entity->containerData->save();
         }
 
         if (isset($input['tags'])) {
@@ -91,6 +100,8 @@ class BaseRepo
         if ($oldUrl !== $entity->getUrl()) {
             $this->referenceUpdater->updateEntityReferences($entity, $oldUrl);
         }
+
+        return $entity;
     }
 
     /**
@@ -147,7 +158,7 @@ class BaseRepo
     }
 
     /**
-     * Sort the parent of the given entity, if any auto sort actions are set for it.
+     * Sort the parent of the given entity if any auto sort actions are set for it.
      * Typically ran during create/update/insert events.
      */
     public function sortParent(Entity $entity): void
@@ -158,6 +169,9 @@ class BaseRepo
         }
     }
 
+    /**
+     * Update the description of the given container data from input data.
+     */
     protected function updateContainerDescription(EntityContainerData $data, array $input): void
     {
         if (isset($input['description_html'])) {

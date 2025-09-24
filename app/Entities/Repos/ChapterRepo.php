@@ -33,7 +33,8 @@ class ChapterRepo
             $chapter = new Chapter();
             $chapter->book_id = $parentBook->id;
             $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
-            $this->baseRepo->create($chapter, $input);
+
+            $chapter = $this->baseRepo->create($chapter, $input);
             $this->baseRepo->updateDefaultTemplate($chapter->containerData, intval($input['default_template_id'] ?? null));
             Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
@@ -48,7 +49,7 @@ class ChapterRepo
      */
     public function update(Chapter $chapter, array $input): Chapter
     {
-        $this->baseRepo->update($chapter, $input);
+        $chapter = $this->baseRepo->update($chapter, $input);
 
         if (array_key_exists('default_template_id', $input)) {
             $this->baseRepo->updateDefaultTemplate($chapter->containerData, intval($input['default_template_id']));
@@ -93,7 +94,7 @@ class ChapterRepo
         }
 
         return (new DatabaseTransaction(function () use ($chapter, $parent) {
-            $chapter->changeBook($parent->id);
+            $chapter = $chapter->changeBook($parent->id);
             $chapter->rebuildPermissions();
             Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 

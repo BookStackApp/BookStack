@@ -3,7 +3,6 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\References\ReferenceUpdater;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -27,25 +26,25 @@ abstract class BookChild extends Entity
     /**
      * Change the book that this entity belongs to.
      */
-    public function changeBook(int $newBookId): Entity
+    public function changeBook(int $newBookId): self
     {
-        $oldUrl = $this->getUrl();
-        $this->book_id = $newBookId;
-        $this->refreshSlug();
-        $this->save();
-        $this->refresh();
+        $altered = $this->clone()->refresh();
+        $oldUrl = $altered->getUrl();
+        $altered->book_id = $newBookId;
+        $altered->refreshSlug();
+        $altered->save();
 
-        if ($oldUrl !== $this->getUrl()) {
-            app()->make(ReferenceUpdater::class)->updateEntityReferences($this, $oldUrl);
+        if ($oldUrl !== $altered->getUrl()) {
+            app()->make(ReferenceUpdater::class)->updateEntityReferences($altered, $oldUrl);
         }
 
         // Update all child pages if a chapter
-        if ($this instanceof Chapter) {
-            foreach ($this->pages()->withTrashed()->get() as $page) {
+        if ($altered instanceof Chapter) {
+            foreach ($altered->pages()->withTrashed()->get() as $page) {
                 $page->changeBook($newBookId);
             }
         }
 
-        return $this;
+        return $altered;
     }
 }

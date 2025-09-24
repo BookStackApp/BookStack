@@ -70,7 +70,7 @@ class ReferenceUpdater
 
     protected function updateReferencesWithinDescription(EntityContainerData $containerData, string $oldLink, string $newLink): void
     {
-        $html = $this->updateLinksInHtml($containerData->descriptionHtml(true) ?: '', $oldLink, $newLink);
+        $html = $this->updateLinksInHtml($containerData->getDescriptionHtml(true) ?: '', $oldLink, $newLink);
         $containerData->setDescriptionHtml($html);
         $containerData->save();
     }

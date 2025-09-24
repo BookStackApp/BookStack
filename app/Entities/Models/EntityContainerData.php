@@ -4,6 +4,7 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Uploads\Image;
 use BookStack\Util\HtmlContentFilter;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -28,6 +29,22 @@ class EntityContainerData extends Model
     }
 
     /**
+     * Returns a shelf cover image URL, if cover not exists return default cover image.
+     */
+    public function getCoverUrl(int $width = 440, int $height = 250, string|null $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='): string|null
+    {
+        if (!$this->image_id) {
+            return $default;
+        }
+
+        try {
+            return $this->cover->getThumb($width, $height, false) ?? $default;
+        } catch (Exception $err) {
+            return $default;
+        }
+    }
+
+    /**
      * Check if this data supports having a default template assigned.
      */
     public function supportsDefaultTemplate(): bool
@@ -46,7 +63,7 @@ class EntityContainerData extends Model
     /**
      * Get the description as a cleaned/handled HTML string.
      */
-    public function descriptionHtml(bool $raw = false): string
+    public function getDescriptionHtml(bool $raw = false): string
     {
         $html = $this->description_html ?: '<p>' . nl2br(e($this->description)) . '</p>';
         if ($raw) {
@@ -69,7 +86,7 @@ class EntityContainerData extends Model
         }
 
         if (empty($html) && !empty($plaintext)) {
-            $this->description_html = $this->descriptionHtml();
+            $this->description_html = $this->getDescriptionHtml();
         }
     }
 }

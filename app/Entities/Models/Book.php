@@ -59,6 +59,9 @@ class Book extends Entity
         }
     }
 
+    // TODO - Still handle cover as relation through containerData (since it's used in code)
+    // TODO - Remove above since we can access that via containerData
+
     /**
      * Get the Page that is used as default template for newly created pages within this Book.
      */

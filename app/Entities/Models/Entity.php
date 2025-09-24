@@ -101,7 +101,7 @@ abstract class Entity extends Model implements
     }
 
     /**
-     * Get the container-specific data for this page.
+     * Get the container-specific data for this item.
      */
     public function containerData(): HasOne
     {

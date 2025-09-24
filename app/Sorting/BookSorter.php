@@ -155,7 +155,7 @@ class BookSorter
 
         // Action the required changes
         if ($bookChanged) {
-            $model->changeBook($newBook->id);
+            $model = $model->changeBook($newBook->id);
         }
 
         if ($model instanceof Page && $chapterChanged) {
