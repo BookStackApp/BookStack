@@ -101,6 +101,10 @@ class BaseRepo
      */
     public function updateCoverImage(EntityContainerData $containerData, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
+        if (!$containerData->supportsCoverImage()) {
+            return;
+        }
+
         if ($coverImage) {
             $imageType = 'cover_' . $containerData->entity_type;
             $this->imageRepo->destroyImage($containerData->cover()->first());
@@ -121,16 +125,16 @@ class BaseRepo
      * Checks that, if changing, the provided value is a valid template and the user
      * has visibility of the provided page template id.
      */
-    public function updateDefaultTemplate(Book|Chapter $entity, int $templateId): void
+    public function updateDefaultTemplate(EntityContainerData $containerData, int $templateId): void
     {
-        $changing = $templateId !== intval($entity->default_template_id);
-        if (!$changing) {
+        $changing = $templateId !== intval($containerData->default_template_id);
+        if (!$changing || !$containerData->supportsDefaultTemplate()) {
             return;
         }
 
         if ($templateId === 0) {
-            $entity->default_template_id = null;
-            $entity->save();
+            $containerData->default_template_id = null;
+            $containerData->save();
             return;
         }
 
@@ -138,8 +142,8 @@ class BaseRepo
             ->where('id', '=', $templateId)
             ->exists();
 
-        $entity->default_template_id = $templateExists ? $templateId : null;
-        $entity->save();
+        $containerData->default_template_id = $templateExists ? $templateId : null;
+        $containerData->save();
     }
 
     /**

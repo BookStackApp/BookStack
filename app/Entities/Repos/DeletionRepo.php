@@ -9,11 +9,9 @@ use BookStack\Facades\Activity;
 
 class DeletionRepo
 {
-    private TrashCan $trashCan;
-
-    public function __construct(TrashCan $trashCan)
-    {
-        $this->trashCan = $trashCan;
+    public function __construct(
+        protected TrashCan $trashCan
+    ) {
     }
 
     public function restore(int $id): int

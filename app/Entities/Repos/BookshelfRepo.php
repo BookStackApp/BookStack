@@ -27,7 +27,7 @@ class BookshelfRepo
         return (new DatabaseTransaction(function () use ($input, $bookIds) {
             $shelf = new Bookshelf();
             $this->baseRepo->create($shelf, $input);
-            $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
+            $this->baseRepo->updateCoverImage($shelf->containerData, $input['image'] ?? null);
             $this->updateBooks($shelf, $bookIds);
             Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
             return $shelf;
@@ -46,7 +46,7 @@ class BookshelfRepo
         }
 
         if (array_key_exists('image', $input)) {
-            $this->baseRepo->updateCoverImage($shelf, $input['image'], $input['image'] === null);
+            $this->baseRepo->updateCoverImage($shelf->containerData, $input['image'], $input['image'] === null);
         }
 
         Activity::add(ActivityType::BOOKSHELF_UPDATE, $shelf);
@@ -96,7 +96,7 @@ class BookshelfRepo
      *
      * @throws Exception
      */
-    public function destroy(Bookshelf $shelf)
+    public function destroy(Bookshelf $shelf): void
     {
         $this->trashCan->softDestroyShelf($shelf);
         Activity::add(ActivityType::BOOKSHELF_DELETE, $shelf);

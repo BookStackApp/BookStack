@@ -23,7 +23,7 @@ class RevisionRepo
 
     /**
      * Get a user update_draft page revision to update for the given page.
-     * Checks for an existing revisions before providing a fresh one.
+     * Checks for an existing revision before providing a fresh one.
      */
     public function getNewDraftForCurrentUser(Page $page): PageRevision
     {
@@ -51,9 +51,9 @@ class RevisionRepo
         $revision = new PageRevision();
 
         $revision->name = $page->name;
-        $revision->html = $page->html;
-        $revision->markdown = $page->markdown;
-        $revision->text = $page->text;
+        $revision->html = $page->pageData->html;
+        $revision->markdown = $page->pageData->markdown;
+        $revision->text = $page->pageData->text;
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -61,7 +61,7 @@ class RevisionRepo
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
-        $revision->revision_number = $page->revision_count;
+        $revision->revision_number = $page->pageData->revision_count;
         $revision->save();
 
         $this->deleteOldRevisions($page);
@@ -72,7 +72,7 @@ class RevisionRepo
     /**
      * Delete old revisions, for the given page, from the system.
      */
-    protected function deleteOldRevisions(Page $page)
+    protected function deleteOldRevisions(Page $page): void
     {
         $revisionLimit = config('app.revision_limit');
         if ($revisionLimit === false) {

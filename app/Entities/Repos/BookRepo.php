@@ -33,14 +33,14 @@ class BookRepo
             $book = new Book();
 
             $this->baseRepo->create($book, $input);
-            $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
-            $this->baseRepo->updateDefaultTemplate($book, intval($input['default_template_id'] ?? null));
+            $this->baseRepo->updateCoverImage($book->containerData, $input['image'] ?? null);
+            $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id'] ?? null));
             Activity::add(ActivityType::BOOK_CREATE, $book);
 
             $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
             if ($defaultBookSortSetting && SortRule::query()->find($defaultBookSortSetting)) {
-                $book->sort_rule_id = $defaultBookSortSetting;
-                $book->save();
+                $book->containerData->sort_rule_id = $defaultBookSortSetting;
+                $book->containerData->save();
             }
 
             return $book;
@@ -55,11 +55,11 @@ class BookRepo
         $this->baseRepo->update($book, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->baseRepo->updateDefaultTemplate($book, intval($input['default_template_id']));
+            $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id']));
         }
 
         if (array_key_exists('image', $input)) {
-            $this->baseRepo->updateCoverImage($book, $input['image'], $input['image'] === null);
+            $this->baseRepo->updateCoverImage($book->containerData, $input['image'], $input['image'] === null);
         }
 
         Activity::add(ActivityType::BOOK_UPDATE, $book);
@@ -68,14 +68,14 @@ class BookRepo
     }
 
     /**
-     * Update the given book's cover image, or clear it.
+     * Update the given book's cover image or clear it.
      *
      * @throws ImageUploadException
      * @throws Exception
      */
-    public function updateCoverImage(Book $book, ?UploadedFile $coverImage, bool $removeImage = false)
+    public function updateCoverImage(Book $book, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
-        $this->baseRepo->updateCoverImage($book, $coverImage, $removeImage);
+        $this->baseRepo->updateCoverImage($book->containerData, $coverImage, $removeImage);
     }
 
     /**
@@ -83,7 +83,7 @@ class BookRepo
      *
      * @throws Exception
      */
-    public function destroy(Book $book)
+    public function destroy(Book $book): void
     {
         $this->trashCan->softDestroyBook($book);
         Activity::add(ActivityType::BOOK_DELETE, $book);

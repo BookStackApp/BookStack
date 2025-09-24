@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Page.
- *
+ * @property EntityPageData $pageData
  * @property int          $chapter_id
  * @property string       $html
  * @property string       $markdown

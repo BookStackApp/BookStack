@@ -28,6 +28,22 @@ class EntityContainerData extends Model
     }
 
     /**
+     * Check if this data supports having a default template assigned.
+     */
+    public function supportsDefaultTemplate(): bool
+    {
+        return in_array($this->entity_type, ['book', 'chapter']);
+    }
+
+    /**
+     * Check this data supports having a cover image assigned.
+     */
+    public function supportsCoverImage(): bool
+    {
+        return in_array($this->entity_type, ['book', 'bookshelf']);
+    }
+
+    /**
      * Get the description as a cleaned/handled HTML string.
      */
     public function descriptionHtml(bool $raw = false): string

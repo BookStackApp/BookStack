@@ -6,6 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\EntityPageData;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\EntityQueries;
@@ -37,34 +38,37 @@ class PageRepo
     /**
      * Get a new draft page belonging to the given parent entity.
      */
-    public function getNewDraftPage(Entity $parent)
+    public function getNewDraftPage(Entity $parent): Page
     {
         $page = (new Page())->forceFill([
             'name'       => trans('entities.pages_initial_name'),
             'created_by' => user()->id,
             'owned_by'   => user()->id,
             'updated_by' => user()->id,
+        ]);
+        $pageData = (new EntityPageData())->forceFill([
             'draft'      => true,
             'editor'     => PageEditorType::getSystemDefault()->value,
         ]);
 
         if ($parent instanceof Chapter) {
-            $page->chapter_id = $parent->id;
+            $pageData->chapter_id = $parent->id;
             $page->book_id = $parent->book_id;
         } else {
             $page->book_id = $parent->id;
         }
 
-        $defaultTemplate = $page->chapter->defaultTemplate ?? $page->book->defaultTemplate;
+        $defaultTemplate = $page->chapter->containerData->defaultTemplate ?? $page->book->containerData->defaultTemplate;
         if ($defaultTemplate && userCan(Permission::PageView, $defaultTemplate)) {
-            $page->forceFill([
+            $pageData->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
             ]);
         }
 
-        (new DatabaseTransaction(function () use ($page) {
+        (new DatabaseTransaction(function () use ($page, $pageData) {
             $page->save();
+            $page->pageData()->save($pageData);
             $page->refresh()->rebuildPermissions();
         }))->run();
 
@@ -77,9 +81,9 @@ class PageRepo
     public function publishDraft(Page $draft, array $input): Page
     {
         return (new DatabaseTransaction(function () use ($draft, $input) {
-            $draft->draft = false;
-            $draft->revision_count = 1;
-            $draft->priority = $this->getNewPriority($draft);
+            $draft->pageData->draft = false;
+            $draft->pageData->revision_count = 1;
+            $draft->pageData->priority = $this->getNewPriority($draft);
             $this->updateTemplateStatusAndContentFromInput($draft, $input);
             $this->baseRepo->update($draft, $input);
             $draft->rebuildPermissions();
@@ -112,15 +116,16 @@ class PageRepo
     public function update(Page $page, array $input): Page
     {
         // Hold the old details to compare later
-        $oldHtml = $page->html;
         $oldName = $page->name;
-        $oldMarkdown = $page->markdown;
+        $oldHtml = $page->pageData->html;
+        $oldMarkdown = $page->pageData->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->revision_count++;
+        $page->pageData->revision_count++;
+        $page->pageData->save();
         $page->save();
 
         // Remove all update drafts for this user and page.
@@ -144,7 +149,7 @@ class PageRepo
     protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
     {
         if (isset($input['template']) && userCan(Permission::TemplatesManage)) {
-            $page->template = ($input['template'] === 'true');
+            $page->pageData->template = ($input['template'] === 'true');
         }
 
         $pageContent = new PageContent($page);
@@ -166,22 +171,22 @@ class PageRepo
             $pageContent->setNewHTML($input['html'], user());
         }
 
-        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan(Permission::EditorChange)) {
-            $page->editor = $newEditor->value;
-        } elseif (empty($page->editor)) {
-            $page->editor = $defaultEditor->value;
+        if (($newEditor !== $currentEditor || empty($page->pageData->editor)) && userCan(Permission::EditorChange)) {
+            $page->pageData->editor = $newEditor->value;
+        } elseif (empty($page->pageData->editor)) {
+            $page->pageData->editor = $defaultEditor->value;
         }
     }
 
     /**
      * Save a page update draft.
      */
-    public function updatePageDraft(Page $page, array $input)
+    public function updatePageDraft(Page $page, array $input): Page|PageRevision
     {
-        // If the page itself is a draft simply update that
+        // If the page itself is a draft, simply update that
         if ($page->draft) {
             $this->updateTemplateStatusAndContentFromInput($page, $input);
-            $page->fill($input);
+            $page->forceFill(array_intersect_key($input, array_flip(['name'])))->save();
             $page->save();
 
             return $page;
@@ -209,7 +214,7 @@ class PageRepo
      *
      * @throws Exception
      */
-    public function destroy(Page $page)
+    public function destroy(Page $page): void
     {
         $this->trashCan->softDestroyPage($page);
         Activity::add(ActivityType::PAGE_DELETE, $page);
@@ -222,7 +227,7 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $oldUrl = $page->getUrl();
-        $page->revision_count++;
+        $page->pageData->revision_count++;
 
         /** @var PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
@@ -238,6 +243,7 @@ class PageRepo
 
         $page->updated_by = user()->id;
         $page->refreshSlug();
+        $page->pageData->save();
         $page->save();
         $page->indexForSearch();
         $this->referenceStore->updateForEntity($page);
@@ -277,7 +283,7 @@ class PageRepo
         }
 
         return (new DatabaseTransaction(function () use ($page, $parent) {
-            $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
+            $page->pageData->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
             $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
             $page->changeBook($newBookId);
             $page->rebuildPermissions();
