@@ -26,7 +26,7 @@ class BookshelfRepo
     {
         return (new DatabaseTransaction(function () use ($input, $bookIds) {
             $shelf = $this->baseRepo->create(new Bookshelf(), $input);
-            $this->baseRepo->updateCoverImage($shelf->containerData, $input['image'] ?? null);
+            $this->baseRepo->updateCoverImage($shelf->contents(), $input['image'] ?? null);
             $this->updateBooks($shelf, $bookIds);
             Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
             return $shelf;
@@ -45,7 +45,7 @@ class BookshelfRepo
         }
 
         if (array_key_exists('image', $input)) {
-            $this->baseRepo->updateCoverImage($shelf->containerData, $input['image'], $input['image'] === null);
+            $this->baseRepo->updateCoverImage($shelf->contents(), $input['image'], $input['image'] === null);
         }
 
         Activity::add(ActivityType::BOOKSHELF_UPDATE, $shelf);

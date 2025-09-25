@@ -18,7 +18,7 @@
 
         @include('form.image-picker', [
             'defaultImage' => url('/book_default_cover.png'),
-            'currentImage' => (($model ?? null)?->containerData?->getCoverUrl(440, 250, url('/book_default_cover.png')) ?? url('/book_default_cover.png')),
+            'currentImage' => (($model ?? null)?->contents()->getCoverUrl(440, 250, url('/book_default_cover.png')) ?? url('/book_default_cover.png')),
             'name' => 'image',
             'imageClass' => 'cover'
         ])

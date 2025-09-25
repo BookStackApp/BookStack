@@ -2,7 +2,6 @@
 
 namespace BookStack\Entities\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -15,6 +14,7 @@ use Illuminate\Support\Collection;
 class Chapter extends BookChild
 {
     use HasFactory;
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
     protected $hidden = ['pivot', 'deleted_at', 'description_html'];

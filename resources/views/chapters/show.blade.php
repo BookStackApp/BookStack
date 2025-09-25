@@ -24,7 +24,7 @@
     <main class="content-wrap card">
         <h1 class="break-text">{{ $chapter->name }}</h1>
         <div refs="entity-search@contentView" class="chapter-content">
-            <div class="text-muted break-text">{!! $chapter->containerData->getDescriptionHtml() !!}</div>
+            <div class="text-muted break-text">{!! $chapter->contents()->getDescriptionHtml() !!}</div>
             @if(count($pages) > 0)
                 <div class="entity-list book-contents">
                     @foreach($pages as $page)

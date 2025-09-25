@@ -31,14 +31,14 @@ class BookRepo
     {
         return (new DatabaseTransaction(function () use ($input) {
             $book = $this->baseRepo->create(new Book(), $input);
-            $this->baseRepo->updateCoverImage($book->containerData, $input['image'] ?? null);
-            $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id'] ?? null));
+            $this->baseRepo->updateCoverImage($book->contents(), $input['image'] ?? null);
+            $this->baseRepo->updateDefaultTemplate($book->contents(), intval($input['default_template_id'] ?? null));
             Activity::add(ActivityType::BOOK_CREATE, $book);
 
             $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
             if ($defaultBookSortSetting && SortRule::query()->find($defaultBookSortSetting)) {
-                $book->containerData->sort_rule_id = $defaultBookSortSetting;
-                $book->containerData->save();
+                $book->contents()->sort_rule_id = $defaultBookSortSetting;
+                $book->contents()->save();
             }
 
             return $book;
@@ -53,11 +53,11 @@ class BookRepo
         $book = $this->baseRepo->update($book, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->baseRepo->updateDefaultTemplate($book->containerData, intval($input['default_template_id']));
+            $this->baseRepo->updateDefaultTemplate($book->contents(), intval($input['default_template_id']));
         }
 
         if (array_key_exists('image', $input)) {
-            $this->baseRepo->updateCoverImage($book->containerData, $input['image'], $input['image'] === null);
+            $this->baseRepo->updateCoverImage($book->contents(), $input['image'], $input['image'] === null);
         }
 
         Activity::add(ActivityType::BOOK_UPDATE, $book);
@@ -73,7 +73,7 @@ class BookRepo
      */
     public function updateCoverImage(Book $book, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
-        $this->baseRepo->updateCoverImage($book->containerData, $coverImage, $removeImage);
+        $this->baseRepo->updateCoverImage($book->contents(), $coverImage, $removeImage);
     }
 
     /**

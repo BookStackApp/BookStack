@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Entity
- * The base class for book-like items such as pages, chapters & books.
+ * The base class for book-like items such as pages, chapters and books.
  * This is not a database model in itself but extended.
  *
  * @property int        $id
@@ -48,8 +48,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int        $updated_by
  * @property int        $owned_by
  * @property Collection $tags
- *
- * @property ?EntityContainerData $containerData
  *
  * @method static Entity|Builder visible()
  * @method static Builder withLastView()
@@ -87,27 +85,48 @@ abstract class Entity extends Model implements
     protected $table = 'entities';
 
     /**
-     * Set global scopes to limit queries down to just the right type of entity.
+     * Set a custom query builder for entities.
      */
-    protected static function booted(): void
+    protected static string $builder = EntityQueryBuilder::class;
+
+    protected static array $commonFields = [
+        'id',
+        'type',
+        'name',
+        'slug',
+        'book_id',
+        'priority',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'created_by',
+        'updated_by',
+        'owned_by',
+    ];
+
+    public function newFromBuilder($attributes = [], $connection = null): static
     {
-        static::addGlobalScope('entity', new EntityScope());
+        $entityFields = array_intersect_key($attributes, array_flip(static::$commonFields));
+        $extraFields = array_diff_key($attributes, $entityFields);
+
+        $instance = parent::newFromBuilder($entityFields, $connection);
+        $data = $instance->relatedData()->newModelInstance()->newFromBuilder($extraFields, $connection);
+
+        $instance->setRelation('contents', $data);
+
+        return $instance;
     }
 
-    public function shouldHaveContainerData(): bool
+    // TODO - Move attribute usage to `->contents()->attr` calls
+
+    /**
+     * Check if this item is a container item.
+     */
+    public function isContainer(): bool
     {
         return $this instanceof Bookshelf ||
             $this instanceof Book ||
             $this instanceof Chapter;
-    }
-
-    /**
-     * Get the container-specific data for this item.
-     */
-    public function containerData(): HasOne
-    {
-        return $this->hasOne(EntityContainerData::class, 'id', 'entity_id')
-            ->where('entity_type', '=', $this->getMorphClass());
     }
 
     /**
@@ -168,7 +187,7 @@ abstract class Entity extends Model implements
         }
 
         if ($entity instanceof Page && $this instanceof Chapter) {
-            return $entity->chapter_id === $this->id;
+            return $entity->contents()->chapter_id === $this->id;
         }
 
         return false;
@@ -411,5 +430,27 @@ abstract class Entity extends Model implements
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}";
+    }
+
+    /**
+     * @return HasOne<EntityContainerContents|EntityPageContents, $this>
+     */
+    abstract public function relatedData(): HasOne;
+
+    /**
+     * Get the contents of this entity.
+     */
+    public function contents(): EntityContainerContents|EntityPageContents|null
+    {
+        if ($this->relationLoaded('contents')) {
+            return $this->getRelation('contents');
+        }
+
+        $relatedData = $this->relatedData()->first();
+        if ($relatedData) {
+            return $relatedData;
+        }
+
+        return null;
     }
 }

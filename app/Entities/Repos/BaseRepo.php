@@ -5,7 +5,7 @@ namespace BookStack\Entities\Repos;
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityContainerData;
+use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
@@ -46,10 +46,10 @@ class BaseRepo
         $entity->refreshSlug();
         $entity->save();
 
-        if ($entity->shouldHaveContainerData()) {
-            $containerData = new EntityContainerData();
-            $this->updateContainerDescription($containerData, $input);
-            $entity->containerData()->save($containerData);
+        if ($entity->isContainer()) {
+            $contents = $entity->contents();
+            $this->updateContainerDescription($contents, $input);
+            $contents->save();
         }
 
         if (isset($input['tags'])) {
@@ -84,9 +84,9 @@ class BaseRepo
         }
 
         $entity->save();
-        if ($entity->shouldHaveContainerData() && $entity->containerData) {
-            $this->updateContainerDescription($entity->containerData, $input);
-            $entity->containerData->save();
+        if ($entity->isContainer()) {
+            $this->updateContainerDescription($entity->contents(), $input);
+            $entity->contents()->save();
         }
 
         if (isset($input['tags'])) {
@@ -110,24 +110,24 @@ class BaseRepo
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage(EntityContainerData $containerData, ?UploadedFile $coverImage, bool $removeImage = false): void
+    public function updateCoverImage(EntityContainerContents $contents, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
-        if (!$containerData->supportsCoverImage()) {
+        if (!$contents->supportsCoverImage()) {
             return;
         }
 
         if ($coverImage) {
-            $imageType = 'cover_' . $containerData->entity_type;
-            $this->imageRepo->destroyImage($containerData->cover()->first());
-            $image = $this->imageRepo->saveNew($coverImage, $imageType, $containerData->entity_id, 512, 512, true);
-            $containerData->cover()->associate($image);
-            $containerData->save();
+            $imageType = 'cover_' . $contents->entity_type;
+            $this->imageRepo->destroyImage($contents->cover()->first());
+            $image = $this->imageRepo->saveNew($coverImage, $imageType, $contents->entity_id, 512, 512, true);
+            $contents->cover()->associate($image);
+            $contents->save();
         }
 
         if ($removeImage) {
-            $this->imageRepo->destroyImage($containerData->cover()->first());
-            $containerData->cover()->dissociate();
-            $containerData->save();
+            $this->imageRepo->destroyImage($contents->cover()->first());
+            $contents->cover()->dissociate();
+            $contents->save();
         }
     }
 
@@ -136,16 +136,16 @@ class BaseRepo
      * Checks that, if changing, the provided value is a valid template and the user
      * has visibility of the provided page template id.
      */
-    public function updateDefaultTemplate(EntityContainerData $containerData, int $templateId): void
+    public function updateDefaultTemplate(EntityContainerContents $contents, int $templateId): void
     {
-        $changing = $templateId !== intval($containerData->default_template_id);
-        if (!$changing || !$containerData->supportsDefaultTemplate()) {
+        $changing = $templateId !== intval($contents->default_template_id);
+        if (!$changing || !$contents->supportsDefaultTemplate()) {
             return;
         }
 
         if ($templateId === 0) {
-            $containerData->default_template_id = null;
-            $containerData->save();
+            $contents->default_template_id = null;
+            $contents->save();
             return;
         }
 
@@ -153,8 +153,8 @@ class BaseRepo
             ->where('id', '=', $templateId)
             ->exists();
 
-        $containerData->default_template_id = $templateExists ? $templateId : null;
-        $containerData->save();
+        $contents->default_template_id = $templateExists ? $templateId : null;
+        $contents->save();
     }
 
     /**
@@ -172,15 +172,15 @@ class BaseRepo
     /**
      * Update the description of the given container data from input data.
      */
-    protected function updateContainerDescription(EntityContainerData $data, array $input): void
+    protected function updateContainerDescription(EntityContainerContents $contents, array $input): void
     {
         if (isset($input['description_html'])) {
-            $data->setDescriptionHtml(
+            $contents->setDescriptionHtml(
                 HtmlDescriptionFilter::filterFromString($input['description_html']),
                 html_entity_decode(strip_tags($input['description_html']))
             );
         } else if (isset($input['description'])) {
-            $data->setDescriptionHtml('', $input['description']);
+            $contents->setDescriptionHtml('', $input['description']);
         }
     }
 }

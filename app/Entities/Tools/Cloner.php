@@ -105,8 +105,8 @@ class Cloner
         $inputData['tags'] = $this->entityTagsToInputArray($entity);
 
         // Add a cover to the data if existing on the original entity
-        if ($entity->shouldHaveContainerData()) {
-            $cover = $entity->containerData->cover()->first();
+        if ($entity->isContainer()) {
+            $cover = $entity->contents()->cover()->first();
             if ($cover) {
                 $inputData['image'] = $this->imageToUploadedFile($cover);
             }

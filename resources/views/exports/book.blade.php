@@ -5,7 +5,7 @@
 @section('content')
 
     <h1 style="font-size: 4.8em">{{$book->name}}</h1>
-    <div>{!! $book->containerData->getDescriptionHtml() !!}</div>
+    <div>{!! $book->contents()->getDescriptionHtml() !!}</div>
 
     @include('exports.parts.book-contents-menu', ['children' => $bookChildren])
 

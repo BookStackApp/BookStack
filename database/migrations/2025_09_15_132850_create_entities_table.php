@@ -31,7 +31,7 @@ return new class extends Migration
             $table->primary(['id', 'type'], 'entities_pk');
         });
 
-        Schema::create('entity_container_data', function (Blueprint $table) {
+        Schema::create('entity_container_contents', function (Blueprint $table) {
             $table->unsignedBigInteger('entity_id');
             $table->string('entity_type', 10);
             $table->text('description');
@@ -41,10 +41,10 @@ return new class extends Migration
             $table->unsignedInteger('image_id')->nullable();
             $table->unsignedInteger('sort_rule_id')->nullable();
 
-            $table->primary(['entity_id', 'entity_type'], 'entity_container_data_pk');
+            $table->primary(['entity_id', 'entity_type'], 'entity_container_contents_pk');
         });
 
-        Schema::create('entity_page_data', function (Blueprint $table) {
+        Schema::create('entity_page_contents', function (Blueprint $table) {
             $table->unsignedBigInteger('page_id')->primary();
             $table->unsignedBigInteger('chapter_id')->nullable()->index();
 
@@ -65,7 +65,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('entities');
-        Schema::dropIfExists('entity_container_data');
-        Schema::dropIfExists('entity_page_data');
+        Schema::dropIfExists('entity_container_contents');
+        Schema::dropIfExists('entity_page_contents');
     }
 };

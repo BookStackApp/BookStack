@@ -33,7 +33,7 @@ class BookSorter
      */
     public function runBookAutoSort(Book $book): void
     {
-        $set = $book->containerData->sortRule;
+        $set = $book->contents()->sortRule;
         if (!$set) {
             return;
         }

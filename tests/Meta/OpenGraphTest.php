@@ -69,7 +69,7 @@ class OpenGraphTest extends TestCase
         $resp = $this->asEditor()->get($shelf->getUrl());
         $tags = $this->getOpenGraphTags($resp);
 
-        $this->assertEquals($shelf->containerData->getCoverUrl(), $tags['image']);
+        $this->assertEquals($shelf->contents()->getCoverUrl(), $tags['image']);
     }
 
     /**

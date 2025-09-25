@@ -6,7 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityPageData;
+use BookStack\Entities\Models\EntityPageContents;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\EntityQueries;
@@ -46,7 +46,7 @@ class PageRepo
             'owned_by'   => user()->id,
             'updated_by' => user()->id,
         ]);
-        $pageData = (new EntityPageData())->forceFill([
+        $pageData = (new EntityPageContents())->forceFill([
             'draft'      => true,
             'editor'     => PageEditorType::getSystemDefault()->value,
         ]);
@@ -58,7 +58,7 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        $defaultTemplate = $page->chapter->containerData->defaultTemplate ?? $page->book->containerData->defaultTemplate;
+        $defaultTemplate = $page->chapter->contents()->defaultTemplate ?? $page->book->contents()->defaultTemplate;
         if ($defaultTemplate && userCan(Permission::PageView, $defaultTemplate)) {
             $pageData->forceFill([
                 'html'  => $defaultTemplate->html,

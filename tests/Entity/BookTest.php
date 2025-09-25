@@ -366,8 +366,8 @@ class BookTest extends TestCase
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
 
-        $this->assertNotNull($copy->containerData->cover);
-        $this->assertNotEquals($book->containerData->cover->id, $copy->containerData->cover->id);
+        $this->assertNotNull($copy->contents()->cover);
+        $this->assertNotEquals($book->contents()->cover->id, $copy->contents()->cover->id);
     }
 
     public function test_copy_adds_book_to_shelves_if_edit_permissions_allows()

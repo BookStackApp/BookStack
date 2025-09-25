@@ -30,29 +30,29 @@ return new class extends Migration
             ]));
         }
 
-        // Migrate shelf data to entity_container_data
-        DB::table('entity_container_data')->insertUsing([
+        // Migrate shelf data to entity_container_contents
+        DB::table('entity_container_contents')->insertUsing([
             'entity_id', 'entity_type', 'description', 'description_html', 'image_id',
         ], DB::table('bookshelves')->select([
             'id', DB::raw("'bookshelf'"), 'description', 'description_html', 'image_id',
         ]));
 
-        // Migrate book data to entity_container_data
-        DB::table('entity_container_data')->insertUsing([
+        // Migrate book data to entity_container_contents
+        DB::table('entity_container_contents')->insertUsing([
             'entity_id', 'entity_type', 'description', 'description_html', 'default_template_id', 'image_id', 'sort_rule_id'
         ], DB::table('books')->select([
             'id', DB::raw("'book'"), 'description', 'description_html', 'default_template_id', 'image_id', 'sort_rule_id'
         ]));
 
-        // Migrate chapter data to entity_container_data
-        DB::table('entity_container_data')->insertUsing([
+        // Migrate chapter data to entity_container_contents
+        DB::table('entity_container_contents')->insertUsing([
             'entity_id', 'entity_type', 'description', 'description_html', 'default_template_id',
         ], DB::table('chapters')->select([
             'id', DB::raw("'chapter'"), 'description', 'description_html', 'default_template_id',
         ]));
 
-        // Migrate page data to entity_page_data
-        DB::table('entity_page_data')->insertUsing([
+        // Migrate page data to entity_page_contents
+        DB::table('entity_page_contents')->insertUsing([
             'page_id', 'chapter_id', 'draft', 'template', 'revision_count', 'editor', 'html', 'text', 'markdown',
         ], DB::table('pages')->select([
             'id', 'chapter_id', 'draft', 'template', 'revision_count', 'editor', 'html', 'text', 'markdown',
@@ -62,14 +62,14 @@ return new class extends Migration
         DB::table('entities')->where('created_by', '=', 0)->update(['created_by' => null]);
         DB::table('entities')->where('updated_by', '=', 0)->update(['updated_by' => null]);
         DB::table('entities')->where('owned_by', '=', 0)->update(['owned_by' => null]);
-        DB::table('entity_page_data')->where('chapter_id', '=', 0)->update(['chapter_id' => null]);
+        DB::table('entity_page_contents')->where('chapter_id', '=', 0)->update(['chapter_id' => null]);
 
         // Fix up data - Convert any missing id-based references to null
         $userIdQuery = DB::table('users')->select('id');
         DB::table('entities')->whereNotIn('created_by', $userIdQuery)->update(['created_by' => null]);
         DB::table('entities')->whereNotIn('updated_by', $userIdQuery)->update(['updated_by' => null]);
         DB::table('entities')->whereNotIn('owned_by', $userIdQuery)->update(['owned_by' => null]);
-        DB::table('entity_page_data')->whereNotIn('chapter_id', DB::table('chapters')->select('id'))->update(['chapter_id' => null]);
+        DB::table('entity_page_contents')->whereNotIn('chapter_id', DB::table('chapters')->select('id'))->update(['chapter_id' => null]);
 
         // Commit our changes within our transaction
         DB::commit();

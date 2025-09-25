@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
+use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Page.
- * @property EntityPageData $pageData
+ * @property EntityPageContents $pageData
  * @property int          $chapter_id
  * @property string       $html
  * @property string       $markdown
@@ -57,7 +58,7 @@ class Page extends BookChild
      */
     public function pageData(): HasOne
     {
-        return $this->hasOne(EntityPageData::class, 'page_id', 'id');
+        return $this->hasOne(EntityPageContents::class, 'page_id', 'id');
     }
 
     /**
@@ -143,5 +144,37 @@ class Page extends BookChild
         $refreshed->setAttribute('html', (new PageContent($refreshed))->render());
 
         return $refreshed;
+    }
+
+    /**
+     * @return HasOne<EntityPageContents, $this>
+     */
+    public function relatedData(): HasOne
+    {
+        return $this->hasOne(EntityPageContents::class, 'page_id', 'id');
+    }
+
+    public function contents(): EntityPageContents
+    {
+        $data = parent::contents();
+        if ($data instanceof EntityPageContents) {
+            return $data;
+        }
+
+        /** @var EntityPageContents $data */
+        $data = $this->relatedData()->newModelInstance();
+        $data->setRawAttributes([
+            'page_id' => $this->id,
+            'chapter_id' => null,
+            'draft' => false,
+            'template' => false,
+            'revision_count' => 0,
+            'editor' => PageEditorType::WysiwygTinymce->value,
+            'html' => '',
+            'text' => '',
+            'markdown' => '',
+        ]);
+
+        return $data;
     }
 }

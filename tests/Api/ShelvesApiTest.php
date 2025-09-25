@@ -48,8 +48,8 @@ class ShelvesApiTest extends TestCase
             [
                 'id'   => $shelf->id,
                 'cover' => [
-                    'id' => $shelf->containerData->cover->id,
-                    'url' => $shelf->containerData->cover->url,
+                    'id' => $shelf->contents()->cover->id,
+                    'url' => $shelf->contents()->cover->url,
                 ],
             ],
         ]]);
@@ -222,7 +222,7 @@ class ShelvesApiTest extends TestCase
         $this->actingAsApiEditor();
         /** @var Book $shelf */
         $shelf = Bookshelf::visible()->first();
-        $this->assertNull($shelf->containerData->cover);
+        $this->assertNull($shelf->contents()->cover);
         $file = $this->files->uploadedImage('image.png');
 
         // Ensure cover image can be set via API
@@ -232,7 +232,7 @@ class ShelvesApiTest extends TestCase
         $shelf->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNotNull($shelf->containerData->cover);
+        $this->assertNotNull($shelf->contents()->cover);
 
         // Ensure further updates without image do not clear cover image
         $resp = $this->put($this->baseEndpoint . "/{$shelf->id}", [
@@ -241,7 +241,7 @@ class ShelvesApiTest extends TestCase
         $shelf->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNotNull($shelf->containerData->cover);
+        $this->assertNotNull($shelf->contents()->cover);
 
         // Ensure update with null image property clears image
         $resp = $this->put($this->baseEndpoint . "/{$shelf->id}", [
@@ -250,7 +250,7 @@ class ShelvesApiTest extends TestCase
         $shelf->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNull($shelf->containerData->cover);
+        $this->assertNull($shelf->contents()->cover);
     }
 
     public function test_delete_endpoint()

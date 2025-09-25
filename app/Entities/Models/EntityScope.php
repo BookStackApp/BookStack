@@ -16,11 +16,11 @@ class EntityScope implements Scope
     {
         $builder = $builder->where('type', '=', $model->getMorphClass());
         if ($model instanceof Page) {
-            $builder->leftJoin('entity_page_data', 'entity_page_data.page_id', '=', 'entities.id');
+            $builder->leftJoin('entity_page_contents', 'entity_page_contents.page_id', '=', 'entities.id');
         } else {
-            $builder->leftJoin('entity_container_data', function (JoinClause $join) use ($model) {
-                $join->on('entity_container_data.entity_id', '=', 'entities.id')
-                    ->where('entity_container_data.entity_type', '=', $model->getMorphClass());
+            $builder->leftJoin('entity_container_contents', function (JoinClause $join) use ($model) {
+                $join->on('entity_container_contents.entity_id', '=', 'entities.id')
+                    ->where('entity_container_contents.entity_type', '=', $model->getMorphClass());
             });
         }
     }

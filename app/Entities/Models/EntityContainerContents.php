@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ?int    $image_id
  * @property ?int    $sort_rule_id
  */
-class EntityContainerData extends Model
+class EntityContainerContents extends Model
 {
     public $timestamps = false;
 

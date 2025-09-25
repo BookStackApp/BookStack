@@ -4,7 +4,7 @@ namespace BookStack\Entities\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EntityPageData extends Model
+class EntityPageContents extends Model
 {
     public $timestamps = false;
 }

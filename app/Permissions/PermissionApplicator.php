@@ -140,10 +140,10 @@ class PermissionApplicator
                 /** @var Builder $query */
                 $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
                 ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
-                    $query->select('page_id')->from('entity_page_data')
-                        ->whereColumn('entity_page_data.page_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    $query->select('page_id')->from('entity_page_contents')
+                        ->whereColumn('entity_page_contents.page_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
-                        ->where('entity_page_data.draft', '=', false);
+                        ->where('entity_page_contents.draft', '=', false);
                 });
             });
     }

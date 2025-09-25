@@ -4,11 +4,10 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 /**
@@ -29,6 +28,7 @@ use Illuminate\Support\Collection;
 class Book extends Entity
 {
     use HasFactory;
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
 
@@ -47,7 +47,7 @@ class Book extends Entity
      */
     public function getCover(int $width = 440, int $height = 250): string
     {
-        return $this->containerData->getCoverUrl($width, $height);
+        return $this->contents()->getCoverUrl($width, $height);
     }
 
     /**

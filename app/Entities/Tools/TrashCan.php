@@ -399,9 +399,9 @@ class TrashCan
 
         // TODO - Update
 
-        if ($entity->shouldHaveContainerData() && $entity->containerData->cover()->exists()) {
+        if ($entity->isContainer() && $entity->contents()->cover()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->containerData->cover()->first());
+            $imageService->destroy($entity->contents()->cover()->first());
         }
     }
 }

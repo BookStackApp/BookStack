@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Bookshelf extends Entity
 {
     use HasFactory;
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
 

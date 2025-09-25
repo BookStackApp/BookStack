@@ -4,7 +4,7 @@ namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityContainerData;
+use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
@@ -63,16 +63,16 @@ class ReferenceUpdater
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
         }
 
-        if ($entity->shouldHaveContainerData()) {
-            $this->updateReferencesWithinDescription($entity->containerData, $oldLink, $newLink);
+        if ($entity->isContainer()) {
+            $this->updateReferencesWithinDescription($entity->contents(), $oldLink, $newLink);
         }
     }
 
-    protected function updateReferencesWithinDescription(EntityContainerData $containerData, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(EntityContainerContents $contents, string $oldLink, string $newLink): void
     {
-        $html = $this->updateLinksInHtml($containerData->getDescriptionHtml(true) ?: '', $oldLink, $newLink);
-        $containerData->setDescriptionHtml($html);
-        $containerData->save();
+        $html = $this->updateLinksInHtml($contents->getDescriptionHtml(true) ?: '', $oldLink, $newLink);
+        $contents->setDescriptionHtml($html);
+        $contents->save();
     }
 
     protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink): void
