@@ -2,10 +2,12 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
 use BookStack\Util\HtmlContentFilter;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -38,7 +40,7 @@ class EntityContainerData extends Model
         }
 
         try {
-            return $this->cover->getThumb($width, $height, false) ?? $default;
+            return $this->cover?->getThumb($width, $height, false) ?? $default;
         } catch (Exception $err) {
             return $default;
         }
@@ -88,5 +90,21 @@ class EntityContainerData extends Model
         if (empty($html) && !empty($plaintext)) {
             $this->description_html = $this->getDescriptionHtml();
         }
+    }
+
+    /**
+     * Get the Page used as a default template to be used for new items within this container.
+     */
+    public function defaultTemplate(): BelongsTo
+    {
+        return $this->belongsTo(Page::class, 'default_template_id');
+    }
+
+    /**
+     * Get the sort rule assigned to this container, if existing.
+     */
+    public function sortRule(): BelongsTo
+    {
+        return $this->belongsTo(SortRule::class);
     }
 }

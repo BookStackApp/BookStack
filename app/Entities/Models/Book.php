@@ -43,39 +43,11 @@ class Book extends Entity
     }
 
     /**
-     * Returns book cover image, if book cover not exists return default cover image.
+     * Returns a book cover image URL or a default URL if no cover image set.
      */
-    public function getBookCover(int $width = 440, int $height = 250): string
+    public function getCover(int $width = 440, int $height = 250): string
     {
-        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->containerData->image_id || !$this->containerData->cover) {
-            return $default;
-        }
-
-        try {
-            return $this->containerData->cover->getThumb($width, $height, false) ?? $default;
-        } catch (Exception $err) {
-            return $default;
-        }
-    }
-
-    // TODO - Still handle cover as relation through containerData (since it's used in code)
-    // TODO - Remove above since we can access that via containerData
-
-    /**
-     * Get the Page that is used as default template for newly created pages within this Book.
-     */
-    public function defaultTemplate(): BelongsTo
-    {
-        return $this->belongsTo(Page::class, 'default_template_id');
-    }
-
-    /**
-     * Get the sort set assigned to this book, if existing.
-     */
-    public function sortRule(): BelongsTo
-    {
-        return $this->belongsTo(SortRule::class);
+        return $this->containerData->getCoverUrl($width, $height);
     }
 
     /**

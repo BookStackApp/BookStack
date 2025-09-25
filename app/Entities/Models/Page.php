@@ -57,17 +57,15 @@ class Page extends BookChild
      */
     public function pageData(): HasOne
     {
-        return $this->hasOne(EntityPageData::class, 'id', 'page_id');
+        return $this->hasOne(EntityPageData::class, 'page_id', 'id');
     }
 
     /**
      * Get the chapter that this page is in, If applicable.
-     *
-     * @return BelongsTo
      */
-    public function chapter()
+    public function chapter(): BelongsTo
     {
-        return $this->belongsTo(Chapter::class);
+        return $this->pageData->belongsTo(Chapter::class);
     }
 
     /**
@@ -112,10 +110,8 @@ class Page extends BookChild
 
     /**
      * Get the attachments assigned to this page.
-     *
-     * @return HasMany
      */
-    public function attachments()
+    public function attachments(): HasMany
     {
         return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
     }
@@ -128,8 +124,8 @@ class Page extends BookChild
         $parts = [
             'books',
             urlencode($this->book_slug ?? $this->book->slug),
-            $this->draft ? 'draft' : 'page',
-            $this->draft ? $this->id : urlencode($this->slug),
+            $this->pageData->draft ? 'draft' : 'page',
+            $this->pageData->draft ? $this->id : urlencode($this->slug),
             trim($path, '/'),
         ];
 
@@ -142,9 +138,9 @@ class Page extends BookChild
     public function forJsonDisplay(): self
     {
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
-        $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
-        $refreshed->setAttribute('raw_html', $refreshed->html);
-        $refreshed->html = (new PageContent($refreshed))->render();
+        $refreshed->setHidden(array_diff($refreshed->getHidden(), ['pageData']));
+        $refreshed->setAttribute('raw_html', $refreshed->pageData->html);
+        $refreshed->setAttribute('html', (new PageContent($refreshed))->render());
 
         return $refreshed;
     }

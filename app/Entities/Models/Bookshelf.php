@@ -2,7 +2,6 @@
 
 namespace BookStack\Entities\Models;
 
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -40,27 +39,6 @@ class Bookshelf extends Entity
     {
         return url('/shelves/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
     }
-
-    /**
-     * Returns shelf cover image, if cover not exists return default cover image.
-     */
-    public function getBookCover(int $width = 440, int $height = 250): string
-    {
-        // TODO - Make generic, focused on books right now, Perhaps set-up a better image
-        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->containerData->image_id || !$this->containerData->cover) {
-            return $default;
-        }
-
-        try {
-            return $this->containerData->cover->getThumb($width, $height, false) ?? $default;
-        } catch (Exception $err) {
-            return $default;
-        }
-    }
-
-    // TODO - Still handle cover as relation through containerData (since it's used in code)
-    // TODO - Remove above since we can access that via containerData
 
     /**
      * Check if this shelf contains the given book.

@@ -38,6 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This is not a database model in itself but extended.
  *
  * @property int        $id
+ * @property string     $type
  * @property string     $name
  * @property string     $slug
  * @property Carbon     $created_at
@@ -123,8 +124,8 @@ abstract class Entity extends Model implements
     public function scopeWithLastView(Builder $query)
     {
         $viewedAtQuery = View::query()->select('updated_at')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
-            ->where('viewable_type', '=', $this->getMorphClass())
+            ->whereColumn('viewable_id', '=', 'entities.id')
+            ->whereColumn('viewable_type', '=', 'entities.type')
             ->where('user_id', '=', user()->id)
             ->take(1);
 
@@ -134,11 +135,12 @@ abstract class Entity extends Model implements
     /**
      * Query scope to get the total view count of the entities.
      */
-    public function scopeWithViewCount(Builder $query)
+    public function scopeWithViewCount(Builder $query): void
     {
         $viewCountQuery = View::query()->selectRaw('SUM(views) as view_count')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
-            ->where('viewable_type', '=', $this->getMorphClass())->take(1);
+            ->whereColumn('viewable_id', '=', 'entities.id')
+            ->whereColumn('viewable_type', '=', 'entities.type')
+            ->take(1);
 
         $query->addSelect(['view_count' => $viewCountQuery]);
     }
@@ -194,7 +196,8 @@ abstract class Entity extends Model implements
      */
     public function tags(): MorphMany
     {
-        return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
+        return $this->morphMany(Tag::class, 'entity')
+            ->orderBy('order', 'asc');
     }
 
     /**
@@ -216,7 +219,7 @@ abstract class Entity extends Model implements
     }
 
     /**
-     * Get this entities restrictions.
+     * Get this entities assigned permissions.
      */
     public function permissions(): MorphMany
     {
@@ -299,7 +302,7 @@ abstract class Entity extends Model implements
     }
 
     /**
-     * Gets a limited-length version of the entities name.
+     * Gets a limited-length version of the entity name.
      */
     public function getShortName(int $length = 25): string
     {
@@ -338,7 +341,7 @@ abstract class Entity extends Model implements
     {
         if ($this instanceof Page) {
             /** @var BelongsTo<Chapter|Book, Page>  $builder */
-            $builder = $this->chapter_id ? $this->chapter() : $this->book();
+            $builder = $this->pageData->chapter_id ? $this->chapter() : $this->book();
             return $builder->withTrashed()->first();
         }
         if ($this instanceof Chapter) {

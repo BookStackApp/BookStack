@@ -9,8 +9,8 @@
                 <span>{{ $book->name }}</span>
             </div>
             <div class="flex-container-row items-center text-book">
-                @if($book->sortRule)
-                    <span title="{{ trans('entities.books_sort_auto_sort_active', ['sortName' => $book->sortRule->name]) }}">@icon('auto-sort')</span>
+                @if($book->containerData->sortRule)
+                    <span title="{{ trans('entities.books_sort_auto_sort_active', ['sortName' => $book->containerData->sortRule->name]) }}">@icon('auto-sort')</span>
                 @endif
             </div>
         </h5>
