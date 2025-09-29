@@ -2,10 +2,15 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityCover;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Bookshelf extends Entity
+/**
+ * @property string $description
+ * @property string $description_html
+ */
+class Bookshelf extends Entity implements DescriptionInterface, CoverInterface
 {
     use HasFactory;
     use ContainerTrait;
@@ -60,5 +65,10 @@ class Bookshelf extends Entity
 
         $maxOrder = $this->books()->max('order');
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
+    }
+
+    public function cover(): EntityCover
+    {
+        return new EntityCover($this);
     }
 }

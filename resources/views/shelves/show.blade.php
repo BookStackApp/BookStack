@@ -2,8 +2,8 @@
 
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($shelf->description, 100, '...') }}">
-    @if($shelf->cover)
-        <meta property="og:image" content="{{ $shelf->contents()->getCoverUrl() }}">
+    @if($shelf->cover()->exists())
+        <meta property="og:image" content="{{ $shelf->cover()->getUrl() }}">
     @endif
 @endpush
 
@@ -28,7 +28,7 @@
         </div>
 
         <div class="book-content">
-            <div class="text-muted break-text">{!! $shelf->contents()->getDescriptionHtml() !!}</div>
+            <div class="text-muted break-text">{!! $shelf->description()->getHtml() !!}</div>
             @if(count($sortedVisibleShelfBooks) > 0)
                 @if($view === 'list')
                     <div class="entity-list">

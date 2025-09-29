@@ -309,22 +309,22 @@ class DefaultTemplateTest extends TestCase
         $chapter = $this->chapterUsingDefaultTemplate($templatePage);
 
         $book->refresh();
-        $this->assertEquals($templatePage->id, $book->default_template_id);
-        $this->assertEquals($templatePage->id, $chapter->default_template_id);
+        $this->assertEquals($templatePage->id, $book->contents()->default_template_id);
+        $this->assertEquals($templatePage->id, $chapter->contents()->default_template_id);
 
         $this->asEditor()->delete($templatePage->getUrl());
         $this->asAdmin()->post('/settings/recycle-bin/empty');
 
         $book->refresh();
         $chapter->refresh();
-        $this->assertEquals(null, $book->default_template_id);
-        $this->assertEquals(null, $chapter->default_template_id);
+        $this->assertEquals(null, $book->contents()->default_template_id);
+        $this->assertEquals(null, $chapter->contents()->default_template_id);
     }
 
     protected function bookUsingDefaultTemplate(Page $page): Book
     {
         $book = $this->entities->book();
-        $book->default_template_id = $page->id;
+        $book->contents()->default_template_id = $page->id;
         $book->save();
 
         return $book;
@@ -333,7 +333,7 @@ class DefaultTemplateTest extends TestCase
     protected function chapterUsingDefaultTemplate(Page $page): Chapter
     {
         $chapter = $this->entities->chapter();
-        $chapter->default_template_id = $page->id;
+        $chapter->contents()->default_template_id = $page->id;
         $chapter->save();
 
         return $chapter;

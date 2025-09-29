@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityHtmlDescription;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -9,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 trait ContainerTrait
 {
+    public function description(): EntityHtmlDescription
+    {
+        return new EntityHtmlDescription($this);
+    }
+
     /**
      * @return HasOne<EntityContainerContents, $this>
      */

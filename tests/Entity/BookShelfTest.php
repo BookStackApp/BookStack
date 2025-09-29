@@ -122,7 +122,7 @@ class BookShelfTest extends TestCase
             'entity_type' => 'bookshelf',
             'image_id' => $lastImage->id,
         ]);
-        $this->assertEquals($lastImage->id, $shelf->contents()->cover->id);
+        $this->assertEquals($lastImage->id, $shelf->cover()->getImage()->id);
         $this->assertEquals('cover_bookshelf', $lastImage->type);
     }
 

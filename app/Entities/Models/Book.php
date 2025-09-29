@@ -2,18 +2,19 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityCover;
 use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Collection;
 
 /**
  * Class Book.
  *
  * @property string                                   $description
+ * @property string                                   $description_html
  * @property int                                      $image_id
  * @property ?int                                     $default_template_id
  * @property ?int                                     $sort_rule_id
@@ -25,14 +26,14 @@ use Illuminate\Support\Collection;
  * @property ?Page                                    $defaultTemplate
  * @property ?SortRule                                 $sortRule
  */
-class Book extends Entity
+class Book extends Entity implements DescriptionInterface, CoverInterface
 {
     use HasFactory;
     use ContainerTrait;
 
     public float $searchFactor = 1.2;
 
-    protected $hidden = ['pivot', 'image_id', 'deleted_at', 'description_html'];
+    protected $hidden = ['pivot', 'deleted_at'];
 
     /**
      * Get the url for this book.
@@ -44,10 +45,16 @@ class Book extends Entity
 
     /**
      * Returns a book cover image URL or a default URL if no cover image set.
+     * TODO - Delete
      */
     public function getCover(int $width = 440, int $height = 250): string
     {
         return $this->contents()->getCoverUrl($width, $height);
+    }
+
+    public function cover(): EntityCover
+    {
+        return new EntityCover($this);
     }
 
     /**

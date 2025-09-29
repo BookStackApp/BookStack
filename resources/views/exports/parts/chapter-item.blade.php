@@ -1,7 +1,7 @@
 <div class="page-break"></div>
 <h1 id="chapter-{{$chapter->id}}">{{ $chapter->name }}</h1>
 
-<div>{!! $chapter->contents()->getDescriptionHtml() !!}</div>
+<div>{!! $chapter->description()->getHtml() !!}</div>
 
 @if(count($chapter->visible_pages) > 0)
     @foreach($chapter->visible_pages as $page)

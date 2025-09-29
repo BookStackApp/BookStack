@@ -10,8 +10,10 @@ use Illuminate\Support\Collection;
  * @property Collection<Page> $pages
  * @property ?int             $default_template_id
  * @property ?Page            $defaultTemplate
+ * @property string $description
+ * @property string $description_html
  */
-class Chapter extends BookChild
+class Chapter extends BookChild implements DescriptionInterface
 {
     use HasFactory;
     use ContainerTrait;

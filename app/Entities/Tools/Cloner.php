@@ -6,6 +6,7 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\CoverInterface;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
@@ -105,8 +106,8 @@ class Cloner
         $inputData['tags'] = $this->entityTagsToInputArray($entity);
 
         // Add a cover to the data if existing on the original entity
-        if ($entity->isContainer()) {
-            $cover = $entity->contents()->cover()->first();
+        if ($entity instanceof CoverInterface) {
+            $cover = $entity->cover()->getImage();
             if ($cover) {
                 $inputData['image'] = $this->imageToUploadedFile($cover);
             }

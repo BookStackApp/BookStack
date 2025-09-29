@@ -124,8 +124,8 @@ class BookApiController extends ApiController
 
         $book->load(['tags']);
         $book->makeVisible(['cover', 'description_html'])
-            ->setAttribute('description_html', $book->contents()->getDescriptionHtml())
-            ->setAttribute('cover', $book->contents()->cover);
+            ->setAttribute('description_html', $book->description()->getHtml())
+            ->setAttribute('cover', $book->cover()->getImage());
 
         return $book;
     }

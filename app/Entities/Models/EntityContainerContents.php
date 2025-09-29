@@ -4,13 +4,15 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
-use BookStack\Util\HtmlContentFilter;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
+ * @property int $entity_id
+ * @property string $entity_type
  * @property string $description
  * @property string $description_html
  * @property ?int    $default_template_id
@@ -20,6 +22,33 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class EntityContainerContents extends Model
 {
     public $timestamps = false;
+    protected $primaryKey = 'entity_id';
+    public $incrementing = false;
+
+    // TODO - Should put the entity methods and relations back onto the original models
+    //    if we're going back to mostly keeping to the models.
+
+    /**
+     * Override the default set keys for save query method to make it work with composite keys.
+     */
+    public function setKeysForSaveQuery($query): Builder
+    {
+        $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery())
+            ->where('type', '=', $this->entity_type);
+
+        return $query;
+    }
+
+    /**
+     * Override the default set keys for select query method to make it work with composite keys.
+     */
+    protected function setKeysForSelectQuery($query): Builder
+    {
+        $query->where($this->getKeyName(), '=', $this->getKeyForSelectQuery())
+            ->where('type', '=', $this->entity_type);
+
+        return $query;
+    }
 
     /**
      * Relation for the cover image for this entity.
@@ -28,6 +57,11 @@ class EntityContainerContents extends Model
     public function cover(): HasOne
     {
         return $this->hasOne(Image::class, 'image_id');
+    }
+
+    public function getCover(): Image|null
+    {
+        return $this->cover()->first();
     }
 
     /**
@@ -40,7 +74,7 @@ class EntityContainerContents extends Model
         }
 
         try {
-            return $this->cover?->getThumb($width, $height, false) ?? $default;
+            return $this->getCover()?->getThumb($width, $height, false) ?? $default;
         } catch (Exception $err) {
             return $default;
         }
@@ -60,36 +94,6 @@ class EntityContainerContents extends Model
     public function supportsCoverImage(): bool
     {
         return in_array($this->entity_type, ['book', 'bookshelf']);
-    }
-
-    /**
-     * Get the description as a cleaned/handled HTML string.
-     */
-    public function getDescriptionHtml(bool $raw = false): string
-    {
-        $html = $this->description_html ?: '<p>' . nl2br(e($this->description)) . '</p>';
-        if ($raw) {
-            return $html;
-        }
-
-        return HtmlContentFilter::removeScriptsFromHtmlString($html);
-    }
-
-    /**
-     * Update the description from HTML code.
-     * Optionally takes plaintext to use for the model also.
-     */
-    public function setDescriptionHtml(string $html, string|null $plaintext = null): void
-    {
-        $this->description_html = $html;
-
-        if ($plaintext !== null) {
-            $this->description = $plaintext;
-        }
-
-        if (empty($html) && !empty($plaintext)) {
-            $this->description_html = $this->getDescriptionHtml();
-        }
     }
 
     /**

@@ -1,7 +1,7 @@
 <a href="{{ $entity->getUrl() }}" class="grid-card"
    data-entity-type="{{ $entity->getType() }}" data-entity-id="{{ $entity->id }}">
     <div class="bg-{{ $entity->getType() }} featured-image-container-wrap">
-        <div class="featured-image-container" @if($entity->contents()->cover) style="background-image: url('{{ $entity->contents()->getCoverUrl() }}')"@endif>
+        <div class="featured-image-container" @if($entity->cover()->exists()) style="background-image: url('{{ $entity->cover()->getUrl() }}')"@endif>
         </div>
         @icon($entity->getType())
     </div>

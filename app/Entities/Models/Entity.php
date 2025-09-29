@@ -104,20 +104,35 @@ abstract class Entity extends Model implements
         'owned_by',
     ];
 
-    public function newFromBuilder($attributes = [], $connection = null): static
+    // TODO - To Remove, reduce contents/relatedData to just one of them.
+    // TODO - Update/remove existing usages of contents/relatedData
+    // TODO - Review usages of query-time update or mass insert of entity model data since those will still need to consider the multi-table layout.
+
+    /**
+     * Override the save method to also save the contents for convenience.
+     */
+    public function save(array $options = []): bool
     {
-        $entityFields = array_intersect_key($attributes, array_flip(static::$commonFields));
-        $extraFields = array_diff_key($attributes, $entityFields);
+        $contents = $this->relatedData()->firstOrNew();
+        $contentFields = $this->getContentsAttributes();
 
-        $instance = parent::newFromBuilder($entityFields, $connection);
-        $data = $instance->relatedData()->newModelInstance()->newFromBuilder($extraFields, $connection);
+        foreach ($contentFields as $key => $value) {
+            $contents->setAttribute($key, $value);
+            unset($this->attributes[$key]);
+        }
 
-        $instance->setRelation('contents', $data);
+        $result = parent::save($options);
+        $contentsResult = true;
 
-        return $instance;
+        if ($result && $contents->isDirty()) {
+            $contentsResult = $contents->save();
+            $this->touch();
+        }
+
+        $this->forceFill($contentFields);
+
+        return $result && $contentsResult;
     }
-
-    // TODO - Move attribute usage to `->contents()->attr` calls
 
     /**
      * Check if this item is a container item.
@@ -187,7 +202,7 @@ abstract class Entity extends Model implements
         }
 
         if ($entity instanceof Page && $this instanceof Chapter) {
-            return $entity->contents()->chapter_id === $this->id;
+            return $entity->chapter_id === $this->id;
         }
 
         return false;
@@ -438,19 +453,36 @@ abstract class Entity extends Model implements
     abstract public function relatedData(): HasOne;
 
     /**
-     * Get the contents of this entity.
+     * Get the attributes that are intended for the related contents model.
+     * @return array<string, mixed>
      */
-    public function contents(): EntityContainerContents|EntityPageContents|null
+    protected function getContentsAttributes(): array
     {
-        if ($this->relationLoaded('contents')) {
-            return $this->getRelation('contents');
+        $contentFields = [];
+
+        foreach ($this->attributes as $key => $value) {
+            if (!in_array($key, static::$commonFields)) {
+                $contentFields[$key] = $value;
+            }
         }
 
-        $relatedData = $this->relatedData()->first();
-        if ($relatedData) {
-            return $relatedData;
-        }
+        return $contentFields;
+    }
 
-        return null;
+    /**
+     * Get the contents model of this entity.
+     * Should only really be used if accessing the methods of the contents model
+     * since the properties would already be part of the fetched entity model.
+     */
+    public function contents(): EntityContainerContents|EntityPageContents
+    {
+        $contentsData = $this->getContentsAttributes();
+
+        /**
+         * @var EntityContainerContents|EntityPageContents $instance
+         */
+        $instance = $this->relatedData()->newModelInstance()->newFromBuilder($contentsData, $this->getConnection());
+
+        return $instance;
     }
 }

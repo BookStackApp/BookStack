@@ -27,7 +27,7 @@ class BookTest extends TestCase
 
         $resp = $this->get('/books/my-first-book');
         $resp->assertSee($book->name);
-        $resp->assertSee($book->description);
+        $resp->assertSee($book->description()->getPlain());
     }
 
     public function test_create_uses_different_slugs_when_name_reused()
@@ -366,8 +366,8 @@ class BookTest extends TestCase
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
 
-        $this->assertNotNull($copy->contents()->cover);
-        $this->assertNotEquals($book->contents()->cover->id, $copy->contents()->cover->id);
+        $this->assertNotNull($copy->cover()->getImage());
+        $this->assertNotEquals($book->cover()->getImage()->id, $copy->cover()->getImage()->id);
     }
 
     public function test_copy_adds_book_to_shelves_if_edit_permissions_allows()

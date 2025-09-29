@@ -4,6 +4,8 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\CoverInterface;
+use BookStack\Entities\Models\DescriptionInterface;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Queries\PageQueries;
@@ -44,13 +46,12 @@ class BaseRepo
             'owned_by'   => user()->id,
         ]);
         $entity->refreshSlug();
-        $entity->save();
 
-        if ($entity->isContainer()) {
-            $contents = $entity->contents();
-            $this->updateContainerDescription($contents, $input);
-            $contents->save();
+        if ($entity instanceof DescriptionInterface) {
+            $this->updateDescription($entity, $input);
         }
+
+        $entity->save();
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
@@ -83,11 +84,11 @@ class BaseRepo
             $entity->refreshSlug();
         }
 
-        $entity->save();
-        if ($entity->isContainer()) {
-            $this->updateContainerDescription($entity->contents(), $input);
-            $entity->contents()->save();
+        if ($entity instanceof DescriptionInterface) {
+            $this->updateDescription($entity, $input);
         }
+
+        $entity->save();
 
         if (isset($input['tags'])) {
             $this->tagRepo->saveTagsToEntity($entity, $input['tags']);
@@ -110,24 +111,20 @@ class BaseRepo
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage(EntityContainerContents $contents, ?UploadedFile $coverImage, bool $removeImage = false): void
+    public function updateCoverImage(Entity&CoverInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
-        if (!$contents->supportsCoverImage()) {
-            return;
-        }
-
         if ($coverImage) {
-            $imageType = 'cover_' . $contents->entity_type;
-            $this->imageRepo->destroyImage($contents->cover()->first());
-            $image = $this->imageRepo->saveNew($coverImage, $imageType, $contents->entity_id, 512, 512, true);
-            $contents->cover()->associate($image);
-            $contents->save();
+            $imageType = 'cover_' . $entity->type;
+            $this->imageRepo->destroyImage($entity->cover()->getImage());
+            $image = $this->imageRepo->saveNew($coverImage, $imageType, $entity->id, 512, 512, true);
+            $entity->cover()->setImage($image);
+            $entity->save();
         }
 
         if ($removeImage) {
-            $this->imageRepo->destroyImage($contents->cover()->first());
-            $contents->cover()->dissociate();
-            $contents->save();
+            $this->imageRepo->destroyImage($entity->cover()->getImage());
+            $entity->cover()->setImage(null);
+            $entity->save();
         }
     }
 
@@ -170,17 +167,21 @@ class BaseRepo
     }
 
     /**
-     * Update the description of the given container data from input data.
+     * Update the description of the given entity from input data.
      */
-    protected function updateContainerDescription(EntityContainerContents $contents, array $input): void
+    protected function updateDescription(Entity $entity, array $input): void
     {
+        if (!$entity instanceof DescriptionInterface) {
+            return;
+        }
+
         if (isset($input['description_html'])) {
-            $contents->setDescriptionHtml(
+            $entity->description()->set(
                 HtmlDescriptionFilter::filterFromString($input['description_html']),
                 html_entity_decode(strip_tags($input['description_html']))
             );
         } else if (isset($input['description'])) {
-            $contents->setDescriptionHtml('', $input['description']);
+            $entity->description()->set('', $input['description']);
         }
     }
 }

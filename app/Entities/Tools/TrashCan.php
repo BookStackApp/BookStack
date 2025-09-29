@@ -6,6 +6,7 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\CoverInterface;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
@@ -399,9 +400,9 @@ class TrashCan
 
         // TODO - Update
 
-        if ($entity->isContainer() && $entity->contents()->cover()->exists()) {
+        if ($entity instanceof CoverInterface && $entity->cover()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->contents()->cover()->first());
+            $imageService->destroy($entity->cover()->getImage());
         }
     }
 }
