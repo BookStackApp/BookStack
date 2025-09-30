@@ -58,8 +58,8 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        $defaultTemplate = $page->chapter->contents()->defaultTemplate ?? $page->book->contents()->defaultTemplate;
-        if ($defaultTemplate && userCan(Permission::PageView, $defaultTemplate)) {
+        $defaultTemplate = $page->chapter->defaultTemplate()->get() ?? $page->book->defaultTemplate()->get();
+        if ($defaultTemplate) {
             $pageData->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,

@@ -35,7 +35,9 @@ class ChapterRepo
             $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
 
             $chapter = $this->baseRepo->create($chapter, $input);
-            $this->baseRepo->updateDefaultTemplate($chapter->contents(), intval($input['default_template_id'] ?? null));
+            $chapter->defaultTemplate()->setFromId(intval($input['default_template_id'] ?? null));
+
+            $chapter->save();
             Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
             $this->baseRepo->sortParent($chapter);
@@ -52,9 +54,10 @@ class ChapterRepo
         $chapter = $this->baseRepo->update($chapter, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->baseRepo->updateDefaultTemplate($chapter->contents(), intval($input['default_template_id']));
+            $chapter->defaultTemplate()->setFromId(intval($input['default_template_id']));
         }
 
+        $chapter->save();
         Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
 
         $this->baseRepo->sortParent($chapter);

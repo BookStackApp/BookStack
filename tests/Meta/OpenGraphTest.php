@@ -49,7 +49,7 @@ class OpenGraphTest extends TestCase
         $resp = $this->asEditor()->get($book->getUrl());
         $tags = $this->getOpenGraphTags($resp);
 
-        $this->assertEquals($book->getCover(), $tags['image']);
+        $this->assertEquals($book->cover()->getUrl(), $tags['image']);
     }
 
     public function test_shelf_tags()

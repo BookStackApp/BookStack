@@ -153,28 +153,4 @@ class Page extends BookChild
     {
         return $this->hasOne(EntityPageContents::class, 'page_id', 'id');
     }
-
-    public function contents(): EntityPageContents
-    {
-        $data = parent::contents();
-        if ($data instanceof EntityPageContents) {
-            return $data;
-        }
-
-        /** @var EntityPageContents $data */
-        $data = $this->relatedData()->newModelInstance();
-        $data->setRawAttributes([
-            'page_id' => $this->id,
-            'chapter_id' => null,
-            'draft' => false,
-            'template' => false,
-            'revision_count' => 0,
-            'editor' => PageEditorType::WysiwygTinymce->value,
-            'html' => '',
-            'text' => '',
-            'markdown' => '',
-        ]);
-
-        return $data;
-    }
 }

@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityDefaultTemplate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -9,11 +10,10 @@ use Illuminate\Support\Collection;
 /**
  * @property Collection<Page> $pages
  * @property ?int             $default_template_id
- * @property ?Page            $defaultTemplate
- * @property string $description
- * @property string $description_html
+ * @property string           $description
+ * @property string           $description_html
  */
-class Chapter extends BookChild implements DescriptionInterface
+class Chapter extends BookChild implements HasDescriptionInterface, HasDefaultTemplateInterface
 {
     use HasFactory;
     use ContainerTrait;
@@ -58,5 +58,10 @@ class Chapter extends BookChild implements DescriptionInterface
         ->orderBy('draft', 'desc')
         ->orderBy('priority', 'asc')
         ->get();
+    }
+
+    public function defaultTemplate(): EntityDefaultTemplate
+    {
+        return new EntityDefaultTemplate($this);
     }
 }

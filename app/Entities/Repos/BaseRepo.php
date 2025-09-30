@@ -4,10 +4,9 @@ namespace BookStack\Entities\Repos;
 
 use BookStack\Activity\TagRepo;
 use BookStack\Entities\Models\BookChild;
-use BookStack\Entities\Models\CoverInterface;
-use BookStack\Entities\Models\DescriptionInterface;
+use BookStack\Entities\Models\HasCoverInterface;
+use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\References\ReferenceStore;
@@ -47,7 +46,7 @@ class BaseRepo
         ]);
         $entity->refreshSlug();
 
-        if ($entity instanceof DescriptionInterface) {
+        if ($entity instanceof HasDescriptionInterface) {
             $this->updateDescription($entity, $input);
         }
 
@@ -84,7 +83,7 @@ class BaseRepo
             $entity->refreshSlug();
         }
 
-        if ($entity instanceof DescriptionInterface) {
+        if ($entity instanceof HasDescriptionInterface) {
             $this->updateDescription($entity, $input);
         }
 
@@ -111,7 +110,7 @@ class BaseRepo
      * @throws ImageUploadException
      * @throws \Exception
      */
-    public function updateCoverImage(Entity&CoverInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false): void
+    public function updateCoverImage(Entity&HasCoverInterface $entity, ?UploadedFile $coverImage, bool $removeImage = false): void
     {
         if ($coverImage) {
             $imageType = 'cover_' . $entity->type;
@@ -126,32 +125,6 @@ class BaseRepo
             $entity->cover()->setImage(null);
             $entity->save();
         }
-    }
-
-    /**
-     * Update the default page template used for this item.
-     * Checks that, if changing, the provided value is a valid template and the user
-     * has visibility of the provided page template id.
-     */
-    public function updateDefaultTemplate(EntityContainerContents $contents, int $templateId): void
-    {
-        $changing = $templateId !== intval($contents->default_template_id);
-        if (!$changing || !$contents->supportsDefaultTemplate()) {
-            return;
-        }
-
-        if ($templateId === 0) {
-            $contents->default_template_id = null;
-            $contents->save();
-            return;
-        }
-
-        $templateExists = $this->pageQueries->visibleTemplates()
-            ->where('id', '=', $templateId)
-            ->exists();
-
-        $contents->default_template_id = $templateExists ? $templateId : null;
-        $contents->save();
     }
 
     /**
@@ -171,7 +144,7 @@ class BaseRepo
      */
     protected function updateDescription(Entity $entity, array $input): void
     {
-        if (!$entity instanceof DescriptionInterface) {
+        if (!$entity instanceof HasDescriptionInterface) {
             return;
         }
 

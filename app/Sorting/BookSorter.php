@@ -33,14 +33,14 @@ class BookSorter
      */
     public function runBookAutoSort(Book $book): void
     {
-        $set = $book->contents()->sortRule;
-        if (!$set) {
+        $rule = $book->sortRule()->first();
+        if (!$rule) {
             return;
         }
 
         $sortFunctions = array_map(function (SortRuleOperation $op) {
             return $op->getSortFunction();
-        }, $set->getOperations());
+        }, $rule->getOperations());
 
         $chapters = $book->chapters()
             ->with('pages:id,name,priority,created_at,updated_at,chapter_id')

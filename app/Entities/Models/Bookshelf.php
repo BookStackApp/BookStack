@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $description
  * @property string $description_html
  */
-class Bookshelf extends Entity implements DescriptionInterface, CoverInterface
+class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInterface
 {
     use HasFactory;
     use ContainerTrait;

@@ -3,7 +3,7 @@
 namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\DescriptionInterface;
+use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Models\Page;
@@ -64,12 +64,12 @@ class ReferenceUpdater
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
         }
 
-        if ($entity instanceof DescriptionInterface) {
+        if ($entity instanceof HasDescriptionInterface) {
             $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
         }
     }
 
-    protected function updateReferencesWithinDescription(DescriptionInterface $entity, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(HasDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
         $description = $entity->description();
         $html = $this->updateLinksInHtml($description->getHtml(true) ?: '', $oldLink, $newLink);

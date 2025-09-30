@@ -32,14 +32,15 @@ class BookRepo
         return (new DatabaseTransaction(function () use ($input) {
             $book = $this->baseRepo->create(new Book(), $input);
             $this->baseRepo->updateCoverImage($book, $input['image'] ?? null);
-            $this->baseRepo->updateDefaultTemplate($book->contents(), intval($input['default_template_id'] ?? null));
+            $book->defaultTemplate()->setFromId(intval($input['default_template_id'] ?? null));
             Activity::add(ActivityType::BOOK_CREATE, $book);
 
             $defaultBookSortSetting = intval(setting('sorting-book-default', '0'));
             if ($defaultBookSortSetting && SortRule::query()->find($defaultBookSortSetting)) {
                 $book->sort_rule_id = $defaultBookSortSetting;
-                $book->save();
             }
+
+            $book->save();
 
             return $book;
         }))->run();
@@ -53,13 +54,14 @@ class BookRepo
         $book = $this->baseRepo->update($book, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->baseRepo->updateDefaultTemplate($book->contents(), intval($input['default_template_id']));
+            $book->defaultTemplate()->setFromId(intval($input['default_template_id']));
         }
 
         if (array_key_exists('image', $input)) {
             $this->baseRepo->updateCoverImage($book, $input['image'], $input['image'] === null);
         }
 
+        $book->save();
         Activity::add(ActivityType::BOOK_UPDATE, $book);
 
         return $book;

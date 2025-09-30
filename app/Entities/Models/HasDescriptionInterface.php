@@ -4,7 +4,7 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\EntityHtmlDescription;
 
-interface DescriptionInterface
+interface HasDescriptionInterface
 {
     public function description(): EntityHtmlDescription;
 }

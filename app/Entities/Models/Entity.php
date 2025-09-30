@@ -104,8 +104,6 @@ abstract class Entity extends Model implements
         'owned_by',
     ];
 
-    // TODO - To Remove, reduce contents/relatedData to just one of them.
-    // TODO - Update/remove existing usages of contents/relatedData
     // TODO - Review usages of query-time update or mass insert of entity model data since those will still need to consider the multi-table layout.
 
     /**
@@ -467,22 +465,5 @@ abstract class Entity extends Model implements
         }
 
         return $contentFields;
-    }
-
-    /**
-     * Get the contents model of this entity.
-     * Should only really be used if accessing the methods of the contents model
-     * since the properties would already be part of the fetched entity model.
-     */
-    public function contents(): EntityContainerContents|EntityPageContents
-    {
-        $contentsData = $this->getContentsAttributes();
-
-        /**
-         * @var EntityContainerContents|EntityPageContents $instance
-         */
-        $instance = $this->relatedData()->newModelInstance()->newFromBuilder($contentsData, $this->getConnection());
-
-        return $instance;
     }
 }

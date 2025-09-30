@@ -3,9 +3,10 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\EntityCover;
+use BookStack\Entities\Tools\EntityDefaultTemplate;
 use BookStack\Sorting\SortRule;
-use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -18,15 +19,13 @@ use Illuminate\Support\Collection;
  * @property int                                      $image_id
  * @property ?int                                     $default_template_id
  * @property ?int                                     $sort_rule_id
- * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
- * @property ?Page                                    $defaultTemplate
- * @property ?SortRule                                 $sortRule
+ * @property ?SortRule                                $sortRule
  */
-class Book extends Entity implements DescriptionInterface, CoverInterface
+class Book extends Entity implements HasDescriptionInterface, HasCoverInterface, HasDefaultTemplateInterface
 {
     use HasFactory;
     use ContainerTrait;
@@ -41,15 +40,6 @@ class Book extends Entity implements DescriptionInterface, CoverInterface
     public function getUrl(string $path = ''): string
     {
         return url('/books/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
-    }
-
-    /**
-     * Returns a book cover image URL or a default URL if no cover image set.
-     * TODO - Delete
-     */
-    public function getCover(int $width = 440, int $height = 250): string
-    {
-        return $this->contents()->getCoverUrl($width, $height);
     }
 
     public function cover(): EntityCover
@@ -100,5 +90,18 @@ class Book extends Entity implements DescriptionInterface, CoverInterface
         $chapters = $this->chapters()->scopes('visible')->get();
 
         return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
+    }
+
+    public function defaultTemplate(): EntityDefaultTemplate
+    {
+        return new EntityDefaultTemplate($this);
+    }
+
+    /**
+     * Get the sort rule assigned to this container, if existing.
+     */
+    public function sortRule(): BelongsTo
+    {
+        return $this->belongsTo(SortRule::class);
     }
 }
