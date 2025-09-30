@@ -116,6 +116,7 @@ class BookshelfController extends Controller
         ]);
 
         $sort = $listOptions->getSort();
+
         $sortedVisibleShelfBooks = $shelf->visibleBooks()
             ->reorder($sort === 'default' ? 'order' : $sort, $listOptions->getOrder())
             ->get()

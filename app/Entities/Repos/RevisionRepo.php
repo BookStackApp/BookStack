@@ -51,9 +51,9 @@ class RevisionRepo
         $revision = new PageRevision();
 
         $revision->name = $page->name;
-        $revision->html = $page->pageData->html;
-        $revision->markdown = $page->pageData->markdown;
-        $revision->text = $page->pageData->text;
+        $revision->html = $page->html;
+        $revision->markdown = $page->markdown;
+        $revision->text = $page->text;
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -61,7 +61,7 @@ class RevisionRepo
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
-        $revision->revision_number = $page->pageData->revision_count;
+        $revision->revision_number = $page->revision_count;
         $revision->save();
 
         $this->deleteOldRevisions($page);

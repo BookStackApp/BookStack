@@ -3,7 +3,6 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,19 +53,11 @@ class Page extends BookChild
     }
 
     /**
-     * Get the page-specific data for this page.
-     */
-    public function pageData(): HasOne
-    {
-        return $this->hasOne(EntityPageContents::class, 'page_id', 'id');
-    }
-
-    /**
      * Get the chapter that this page is in, If applicable.
      */
     public function chapter(): BelongsTo
     {
-        return $this->pageData->belongsTo(Chapter::class);
+        return $this->belongsTo(Chapter::class);
     }
 
     /**
@@ -125,8 +116,8 @@ class Page extends BookChild
         $parts = [
             'books',
             urlencode($this->book_slug ?? $this->book->slug),
-            $this->pageData->draft ? 'draft' : 'page',
-            $this->pageData->draft ? $this->id : urlencode($this->slug),
+            $this->draft ? 'draft' : 'page',
+            $this->draft ? $this->id : urlencode($this->slug),
             trim($path, '/'),
         ];
 
@@ -139,8 +130,8 @@ class Page extends BookChild
     public function forJsonDisplay(): self
     {
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
-        $refreshed->setHidden(array_diff($refreshed->getHidden(), ['pageData']));
-        $refreshed->setAttribute('raw_html', $refreshed->pageData->html);
+        $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
+        $refreshed->setAttribute('raw_html', $refreshed->html);
         $refreshed->setAttribute('html', (new PageContent($refreshed))->render());
 
         return $refreshed;

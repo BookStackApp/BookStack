@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 trait ContainerTrait
 {
-    public function description(): EntityHtmlDescription
+    public function descriptionInfo(): EntityHtmlDescription
     {
         return new EntityHtmlDescription($this);
     }

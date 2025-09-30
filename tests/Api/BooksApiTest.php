@@ -47,8 +47,8 @@ class BooksApiTest extends TestCase
             [
                 'id'   => $book->id,
                 'cover' => [
-                    'id' => $book->cover()->getImage()->id,
-                    'url' => $book->cover()->getImage()->url,
+                    'id' => $book->coverInfo()->getImage()->id,
+                    'url' => $book->coverInfo()->getImage()->url,
                 ],
             ],
         ]]);
@@ -247,7 +247,7 @@ class BooksApiTest extends TestCase
         $this->actingAsApiEditor();
         /** @var Book $book */
         $book = $this->entities->book();
-        $this->assertNull($book->cover()->getImage());
+        $this->assertNull($book->coverInfo()->getImage());
         $file = $this->files->uploadedImage('image.png');
 
         // Ensure cover image can be set via API
@@ -257,7 +257,7 @@ class BooksApiTest extends TestCase
         $book->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNotNull($book->cover()->getImage());
+        $this->assertNotNull($book->coverInfo()->getImage());
 
         // Ensure further updates without image do not clear cover image
         $resp = $this->put($this->baseEndpoint . "/{$book->id}", [
@@ -266,7 +266,7 @@ class BooksApiTest extends TestCase
         $book->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNotNull($book->cover()->getImage());
+        $this->assertNotNull($book->coverInfo()->getImage());
 
         // Ensure update with null image property clears image
         $resp = $this->put($this->baseEndpoint . "/{$book->id}", [
@@ -275,7 +275,7 @@ class BooksApiTest extends TestCase
         $book->refresh();
 
         $resp->assertStatus(200);
-        $this->assertNull($book->cover()->getImage());
+        $this->assertNull($book->coverInfo()->getImage());
     }
 
     public function test_delete_endpoint()

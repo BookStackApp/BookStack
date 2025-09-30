@@ -6,7 +6,6 @@ use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityPageContents;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\EntityQueries;
@@ -45,14 +44,12 @@ class PageRepo
             'created_by' => user()->id,
             'owned_by'   => user()->id,
             'updated_by' => user()->id,
-        ]);
-        $pageData = (new EntityPageContents())->forceFill([
             'draft'      => true,
             'editor'     => PageEditorType::getSystemDefault()->value,
         ]);
 
         if ($parent instanceof Chapter) {
-            $pageData->chapter_id = $parent->id;
+            $page->chapter_id = $parent->id;
             $page->book_id = $parent->book_id;
         } else {
             $page->book_id = $parent->id;
@@ -60,15 +57,14 @@ class PageRepo
 
         $defaultTemplate = $page->chapter->defaultTemplate()->get() ?? $page->book->defaultTemplate()->get();
         if ($defaultTemplate) {
-            $pageData->forceFill([
+            $page->forceFill([
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
             ]);
         }
 
-        (new DatabaseTransaction(function () use ($page, $pageData) {
+        (new DatabaseTransaction(function () use ($page) {
             $page->save();
-            $page->pageData()->save($pageData);
             $page->refresh()->rebuildPermissions();
         }))->run();
 
@@ -81,13 +77,13 @@ class PageRepo
     public function publishDraft(Page $draft, array $input): Page
     {
         return (new DatabaseTransaction(function () use ($draft, $input) {
-            $draft->pageData->draft = false;
-            $draft->pageData->revision_count = 1;
-            $draft->pageData->priority = $this->getNewPriority($draft);
+            $draft->draft = false;
+            $draft->revision_count = 1;
+            $draft->priority = $this->getNewPriority($draft);
             $this->updateTemplateStatusAndContentFromInput($draft, $input);
 
             $draft = $this->baseRepo->update($draft, $input);
-            $draft->pageData->save();
+            $draft->save();
             $draft->rebuildPermissions();
 
             $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
@@ -121,15 +117,14 @@ class PageRepo
 
         // Hold the old details to compare later
         $oldName = $page->name;
-        $oldHtml = $page->pageData->html;
-        $oldMarkdown = $page->pageData->markdown;
+        $oldHtml = $page->html;
+        $oldMarkdown = $page->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
         $page = $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->pageData->revision_count++;
-        $page->pageData->save();
+        $page->revision_count++;
         $page->save();
 
         // Remove all update drafts for this user and page.
@@ -153,7 +148,7 @@ class PageRepo
     protected function updateTemplateStatusAndContentFromInput(Page $page, array $input): void
     {
         if (isset($input['template']) && userCan(Permission::TemplatesManage)) {
-            $page->pageData->template = ($input['template'] === 'true');
+            $page->template = ($input['template'] === 'true');
         }
 
         $pageContent = new PageContent($page);
@@ -175,10 +170,10 @@ class PageRepo
             $pageContent->setNewHTML($input['html'], user());
         }
 
-        if (($newEditor !== $currentEditor || empty($page->pageData->editor)) && userCan(Permission::EditorChange)) {
-            $page->pageData->editor = $newEditor->value;
-        } elseif (empty($page->pageData->editor)) {
-            $page->pageData->editor = $defaultEditor->value;
+        if (($newEditor !== $currentEditor || empty($page->editor)) && userCan(Permission::EditorChange)) {
+            $page->editor = $newEditor->value;
+        } elseif (empty($page->editor)) {
+            $page->editor = $defaultEditor->value;
         }
     }
 
@@ -191,7 +186,6 @@ class PageRepo
         if ($page->draft) {
             $this->updateTemplateStatusAndContentFromInput($page, $input);
             $page->forceFill(array_intersect_key($input, array_flip(['name'])))->save();
-            $page->pageData->save();
             $page->save();
 
             return $page;
@@ -232,7 +226,7 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $oldUrl = $page->getUrl();
-        $page->pageData->revision_count++;
+        $page->revision_count++;
 
         /** @var PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
@@ -248,7 +242,6 @@ class PageRepo
 
         $page->updated_by = user()->id;
         $page->refreshSlug();
-        $page->pageData->save();
         $page->save();
         $page->indexForSearch();
         $this->referenceStore->updateForEntity($page);
@@ -288,7 +281,7 @@ class PageRepo
         }
 
         return (new DatabaseTransaction(function () use ($page, $parent) {
-            $page->pageData->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
+            $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
             $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
             $page = $page->changeBook($newBookId);
             $page->rebuildPermissions();

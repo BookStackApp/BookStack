@@ -5,6 +5,7 @@ namespace BookStack\Entities\Models;
 use BookStack\Entities\Tools\EntityCover;
 use BookStack\Entities\Tools\EntityDefaultTemplate;
 use BookStack\Sorting\SortRule;
+use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -40,11 +41,6 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
     public function getUrl(string $path = ''): string
     {
         return url('/books/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
-    }
-
-    public function cover(): EntityCover
-    {
-        return new EntityCover($this);
     }
 
     /**
@@ -95,6 +91,16 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
     public function defaultTemplate(): EntityDefaultTemplate
     {
         return new EntityDefaultTemplate($this);
+    }
+
+    public function cover(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    public function coverInfo(): EntityCover
+    {
+        return new EntityCover($this);
     }
 
     /**

@@ -114,15 +114,15 @@ class BaseRepo
     {
         if ($coverImage) {
             $imageType = 'cover_' . $entity->type;
-            $this->imageRepo->destroyImage($entity->cover()->getImage());
+            $this->imageRepo->destroyImage($entity->coverInfo()->getImage());
             $image = $this->imageRepo->saveNew($coverImage, $imageType, $entity->id, 512, 512, true);
-            $entity->cover()->setImage($image);
+            $entity->coverInfo()->setImage($image);
             $entity->save();
         }
 
         if ($removeImage) {
-            $this->imageRepo->destroyImage($entity->cover()->getImage());
-            $entity->cover()->setImage(null);
+            $this->imageRepo->destroyImage($entity->coverInfo()->getImage());
+            $entity->coverInfo()->setImage(null);
             $entity->save();
         }
     }
@@ -149,12 +149,12 @@ class BaseRepo
         }
 
         if (isset($input['description_html'])) {
-            $entity->description()->set(
+            $entity->descriptionInfo()->set(
                 HtmlDescriptionFilter::filterFromString($input['description_html']),
                 html_entity_decode(strip_tags($input['description_html']))
             );
         } else if (isset($input['description'])) {
-            $entity->description()->set('', $input['description']);
+            $entity->descriptionInfo()->set('', $input['description']);
         }
     }
 }

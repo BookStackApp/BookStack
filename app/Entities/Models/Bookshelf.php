@@ -3,7 +3,9 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\EntityCover;
+use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -26,6 +28,7 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
     public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
+            ->select(['entities.*', 'entity_container_contents.*'])
             ->withPivot('order')
             ->orderBy('order', 'asc');
     }
@@ -67,8 +70,13 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
 
-    public function cover(): EntityCover
+    public function coverInfo(): EntityCover
     {
         return new EntityCover($this);
+    }
+
+    public function cover(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

@@ -373,7 +373,7 @@ abstract class Entity extends Model implements
     {
         if ($this instanceof Page) {
             /** @var BelongsTo<Chapter|Book, Page>  $builder */
-            $builder = $this->pageData->chapter_id ? $this->chapter() : $this->book();
+            $builder = $this->chapter_id ? $this->chapter() : $this->book();
             return $builder->withTrashed()->first();
         }
         if ($this instanceof Chapter) {

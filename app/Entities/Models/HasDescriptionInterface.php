@@ -6,5 +6,5 @@ use BookStack\Entities\Tools\EntityHtmlDescription;
 
 interface HasDescriptionInterface
 {
-    public function description(): EntityHtmlDescription;
+    public function descriptionInfo(): EntityHtmlDescription;
 }

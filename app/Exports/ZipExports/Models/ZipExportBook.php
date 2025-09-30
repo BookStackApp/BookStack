@@ -55,10 +55,10 @@ final class ZipExportBook extends ZipExportModel
         $instance = new self();
         $instance->id = $model->id;
         $instance->name = $model->name;
-        $instance->description_html = $model->description()->getHtml();
+        $instance->description_html = $model->descriptionInfo()->getHtml();
 
-        if ($model->cover()->exists()) {
-            $instance->cover = $files->referenceForImage($model->cover()->getImage());
+        if ($model->coverInfo()->exists()) {
+            $instance->cover = $files->referenceForImage($model->coverInfo()->getImage());
         }
 
         $instance->tags = ZipExportTag::fromModelArray($model->tags()->get()->all());

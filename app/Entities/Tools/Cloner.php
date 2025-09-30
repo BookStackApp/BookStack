@@ -107,7 +107,7 @@ class Cloner
 
         // Add a cover to the data if existing on the original entity
         if ($entity instanceof HasCoverInterface) {
-            $cover = $entity->cover()->getImage();
+            $cover = $entity->coverInfo()->getImage();
             if ($cover) {
                 $inputData['image'] = $this->imageToUploadedFile($cover);
             }

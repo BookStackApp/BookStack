@@ -6,6 +6,7 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\EntityContainerContents;
 use BookStack\Entities\Models\HasCoverInterface;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
@@ -209,13 +210,8 @@ class TrashCan
             $attachmentService->deleteFile($attachment);
         }
 
-        // Remove book template usages
-        $this->queries->books->start()
-            ->where('default_template_id', '=', $page->id)
-            ->update(['default_template_id' => null]);
-
-        // Remove chapter template usages
-        $this->queries->chapters->start()
+        // Remove use as a template
+        EntityContainerContents::query()
             ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 
@@ -400,9 +396,9 @@ class TrashCan
 
         // TODO - Update
 
-        if ($entity instanceof HasCoverInterface && $entity->cover()->exists()) {
+        if ($entity instanceof HasCoverInterface && $entity->coverInfo()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->cover()->getImage());
+            $imageService->destroy($entity->coverInfo()->getImage());
         }
     }
 }

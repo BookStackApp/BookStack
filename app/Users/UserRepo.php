@@ -6,6 +6,7 @@ use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\Entity;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Facades\Activity;
@@ -203,13 +204,10 @@ class UserRepo
     /**
      * Migrate ownership of items in the system from one user to another.
      */
-    protected function migrateOwnership(User $fromUser, User $toUser)
+    protected function migrateOwnership(User $fromUser, User $toUser): void
     {
-        $entities = (new EntityProvider())->all();
-        foreach ($entities as $instance) {
-            $instance->newQuery()->where('owned_by', '=', $fromUser->id)
-                ->update(['owned_by' => $toUser->id]);
-        }
+        Entity::query()->where('owned_by', '=', $fromUser->id)
+            ->update(['owned_by' => $toUser->id]);
     }
 
     /**
