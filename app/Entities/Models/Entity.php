@@ -95,6 +95,7 @@ abstract class Entity extends Model implements
         'name',
         'slug',
         'book_id',
+        'chapter_id',
         'priority',
         'created_at',
         'updated_at',
@@ -104,13 +105,12 @@ abstract class Entity extends Model implements
         'owned_by',
     ];
 
-    // TODO - Review usages of query-time update or mass insert of entity model data since those will still need to consider the multi-table layout.
-
     /**
      * Override the save method to also save the contents for convenience.
      */
     public function save(array $options = []): bool
     {
+        /** @var EntityPageData|EntityContainerData $contents */
         $contents = $this->relatedData()->firstOrNew();
         $contentFields = $this->getContentsAttributes();
 
@@ -119,10 +119,13 @@ abstract class Entity extends Model implements
             unset($this->attributes[$key]);
         }
 
+        $this->setAttribute('type', $this->getMorphClass());
         $result = parent::save($options);
         $contentsResult = true;
 
         if ($result && $contents->isDirty()) {
+            $contentsFillData = $contents instanceof EntityPageData ? ['page_id' => $this->id] : ['entity_id' => $this->id, 'entity_type' => $this->getMorphClass()];
+            $contents->forceFill($contentsFillData);
             $contentsResult = $contents->save();
             $this->touch();
         }
@@ -446,7 +449,7 @@ abstract class Entity extends Model implements
     }
 
     /**
-     * @return HasOne<EntityContainerContents|EntityPageContents, $this>
+     * @return HasOne<EntityContainerData|EntityPageData, $this>
      */
     abstract public function relatedData(): HasOne;
 

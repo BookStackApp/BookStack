@@ -36,9 +36,8 @@ class BaseRepo
      */
     public function create(Entity $entity, array $input): Entity
     {
-        $entity = $entity->clone()->refresh();
-        $entityInput = array_intersect_key($input, ['name', 'priority']);
-        $entity->forceFill($entityInput);
+        $entity = (clone $entity)->refresh();
+        $entity->fill($input);
         $entity->forceFill([
             'created_by' => user()->id,
             'updated_by' => user()->id,
@@ -73,7 +72,6 @@ class BaseRepo
      */
     public function update(Entity $entity, array $input): Entity
     {
-        $entity = $entity->clone()->refresh();
         $oldUrl = $entity->getUrl();
 
         $entity->fill($input);

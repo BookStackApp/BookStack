@@ -6,7 +6,7 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
-use BookStack\Entities\Models\EntityContainerContents;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Models\HasCoverInterface;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
@@ -211,7 +211,7 @@ class TrashCan
         }
 
         // Remove use as a template
-        EntityContainerContents::query()
+        EntityContainerData::query()
             ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 

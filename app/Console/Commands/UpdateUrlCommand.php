@@ -45,8 +45,8 @@ class UpdateUrlCommand extends Command
 
         $columnsToUpdateByTable = [
             'attachments' => ['path'],
-            'entity_page_contents' => ['html', 'text', 'markdown'],
-            'entity_container_contents' => ['description_html'],
+            'entity_page_data' => ['html', 'text', 'markdown'],
+            'entity_container_data' => ['description_html'],
             'page_revisions' => ['html', 'text', 'markdown'],
             'images'      => ['url'],
             'settings'    => ['value'],

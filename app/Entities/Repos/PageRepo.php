@@ -55,7 +55,7 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        $defaultTemplate = $page->chapter->defaultTemplate()->get() ?? $page->book->defaultTemplate()->get();
+        $defaultTemplate = $page->chapter?->defaultTemplate()->get() ?? $page->book?->defaultTemplate()->get();
         if ($defaultTemplate) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,
@@ -65,7 +65,7 @@ class PageRepo
 
         (new DatabaseTransaction(function () use ($page) {
             $page->save();
-            $page->refresh()->rebuildPermissions();
+            $page->rebuildPermissions();
         }))->run();
 
         return $page;
@@ -83,7 +83,6 @@ class PageRepo
             $this->updateTemplateStatusAndContentFromInput($draft, $input);
 
             $draft = $this->baseRepo->update($draft, $input);
-            $draft->save();
             $draft->rebuildPermissions();
 
             $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
@@ -113,8 +112,6 @@ class PageRepo
      */
     public function update(Page $page, array $input): Page
     {
-        $page = $page->clone()->refresh();
-
         // Hold the old details to compare later
         $oldName = $page->name;
         $oldHtml = $page->html;

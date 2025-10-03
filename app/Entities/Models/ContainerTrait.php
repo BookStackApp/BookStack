@@ -16,11 +16,11 @@ trait ContainerTrait
     }
 
     /**
-     * @return HasOne<EntityContainerContents, $this>
+     * @return HasOne<EntityContainerData, $this>
      */
     public function relatedData(): HasOne
     {
-        return $this->hasOne(EntityContainerContents::class, 'entity_id', 'id')
+        return $this->hasOne(EntityContainerData::class, 'entity_id', 'id')
             ->where('entity_type', '=', $this->getMorphClass());
     }
 }

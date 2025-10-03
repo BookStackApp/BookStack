@@ -20,6 +20,7 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
     public float $searchFactor = 1.2;
 
     protected $hidden = ['image_id', 'deleted_at', 'description_html'];
+    protected $fillable = ['name'];
 
     /**
      * Get the books in this shelf.
@@ -28,7 +29,7 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
     public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
-            ->select(['entities.*', 'entity_container_contents.*'])
+            ->select(['entities.*', 'entity_container_data.*'])
             ->withPivot('order')
             ->orderBy('order', 'asc');
     }

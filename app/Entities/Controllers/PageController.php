@@ -120,6 +120,7 @@ class PageController extends Controller
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
         ]);
+
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission(Permission::PageCreate, $draftPage->getParent());
 

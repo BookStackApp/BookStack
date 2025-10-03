@@ -117,7 +117,7 @@ class BookShelfTest extends TestCase
 
         $lastImage = Image::query()->orderByDesc('id')->firstOrFail();
         $shelf = Bookshelf::query()->where('name', '=', $shelfInfo['name'])->first();
-        $this->assertDatabaseHas('entity_container_contents', [
+        $this->assertDatabaseHas('entity_container_data', [
             'entity_id'       => $shelf->id,
             'entity_type' => 'bookshelf',
             'image_id' => $lastImage->id,

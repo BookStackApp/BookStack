@@ -43,7 +43,7 @@ class BookSorter
         }, $rule->getOperations());
 
         $chapters = $book->chapters()
-            ->with('pages:id,name,priority,created_at,updated_at,chapter_id')
+            ->with('pages:id,name,priority,created_at,updated_at')
             ->get(['id', 'name', 'priority', 'created_at', 'updated_at']);
 
         /** @var (Chapter|Book)[] $topItems */

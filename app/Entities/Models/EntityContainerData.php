@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property ?int    $image_id
  * @property ?int    $sort_rule_id
  */
-class EntityContainerContents extends Model
+class EntityContainerData extends Model
 {
     public $timestamps = false;
     protected $primaryKey = 'entity_id';
@@ -26,7 +26,7 @@ class EntityContainerContents extends Model
     public function setKeysForSaveQuery($query): Builder
     {
         $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery())
-            ->where('type', '=', $this->entity_type);
+            ->where('entity_type', '=', $this->entity_type);
 
         return $query;
     }
@@ -37,7 +37,7 @@ class EntityContainerContents extends Model
     protected function setKeysForSelectQuery($query): Builder
     {
         $query->where($this->getKeyName(), '=', $this->getKeyForSelectQuery())
-            ->where('type', '=', $this->entity_type);
+            ->where('entity_type', '=', $this->entity_type);
 
         return $query;
     }

@@ -5,7 +5,7 @@ namespace BookStack\References;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityContainerContents;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;

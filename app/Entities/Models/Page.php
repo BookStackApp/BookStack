@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Page.
- * @property EntityPageContents $pageData
+ * @property EntityPageData $pageData
  * @property int          $chapter_id
  * @property string       $html
  * @property string       $markdown
@@ -34,8 +34,8 @@ class Page extends BookChild
 
     public string $textField = 'text';
     public string $htmlField = 'html';
-
     protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at'];
+    protected $fillable = ['name', 'priority'];
 
     protected $casts = [
         'draft'    => 'boolean',
@@ -138,10 +138,10 @@ class Page extends BookChild
     }
 
     /**
-     * @return HasOne<EntityPageContents, $this>
+     * @return HasOne<EntityPageData, $this>
      */
     public function relatedData(): HasOne
     {
-        return $this->hasOne(EntityPageContents::class, 'page_id', 'id');
+        return $this->hasOne(EntityPageData::class, 'page_id', 'id');
     }
 }
