@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'Isto irá excluir o arquivo ZIP de importação carregado e não poderá ser desfeito.',
     'import_errors' => 'Erros de importação',
     'import_errors_desc' => 'Os seguintes erros ocorreram durante a tentativa de importação:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'Navegue pelas páginas relacionadas',
+    'breadcrumb_siblings_for_chapter' => 'Navegue pelos capítulos relacionados',
+    'breadcrumb_siblings_for_book' => 'Navegue pelos livros relacionados',
+    'breadcrumb_siblings_for_bookshelf' => 'Navegue pelas estantes relacionadas',
 
     // Permissions and restrictions
     'permissions' => 'Permissões',
