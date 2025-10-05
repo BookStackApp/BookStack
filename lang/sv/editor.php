@@ -48,7 +48,7 @@ return [
     'superscript' => 'Upphöjd',
     'subscript' => 'Nedsänkt',
     'text_color' => 'Textfärg',
-    'highlight_color' => 'Highlight color',
+    'highlight_color' => 'Markera färg',
     'custom_color' => 'Anpassad färg',
     'remove_color' => 'Ta bort färg',
     'background_color' => 'Bakgrundsfärg',

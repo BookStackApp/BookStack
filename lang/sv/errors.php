@@ -37,20 +37,20 @@ return [
     'social_driver_not_found' => 'Drivrutinen för den här tjänsten hittades inte',
     'social_driver_not_configured' => 'Dina inställningar för :socialAccount är inte korrekta.',
     'invite_token_expired' => 'Denna inbjudningslänk har löpt ut. Du kan istället försöka återställa ditt kontos lösenord.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'En användare för denna åtgärd kunde inte hittas.',
 
     // System
     'path_not_writable' => 'Kunde inte ladda upp till sökvägen :filePath. Kontrollera att webbservern har skrivåtkomst.',
     'cannot_get_image_from_url' => 'Kan inte hämta bild från :url',
     'cannot_create_thumbs' => 'Servern kan inte skapa miniatyrer. Kontrollera att du har PHPs GD-tillägg aktiverat.',
     'server_upload_limit' => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
-    'server_post_limit' => 'The server cannot receive the provided amount of data. Try again with less data or a smaller file.',
+    'server_post_limit' => 'Servern kan inte ta emot den angivna mängden data. Försök igen med mindre data eller en mindre fil.',
     'uploaded'  => 'Servern tillåter inte så här stora filer. Prova en mindre fil.',
 
     // Drawing & Images
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
-    'image_upload_replace_type' => 'Image file replacements must be of the same type',
+    'image_upload_replace_type' => 'Bilder som skall ersättas måste vara av samma filtyp',
     'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
     'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
     'image_gallery_thumbnail_memory_limit' => 'Misslyckades att skapa galleriminiatyrer på grund av otillräckliga systemresurser.',
@@ -107,7 +107,7 @@ return [
 
     // Import
     'import_zip_cant_read' => 'Kunde inte läsa ZIP-filen.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
+    'import_zip_cant_decode_data' => 'Kunde inte hitta och avkoda ZIP data.json innehåll.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
     'import_validation_failed' => 'ZIP-filen kunde inte valideras med fel:',
     'import_zip_failed_notification' => 'Det gick inte att importera ZIP-fil.',

@@ -31,7 +31,7 @@ return [
     'update' => '更新',
     'edit' => '編輯',
     'archive' => '歸檔',
-    'unarchive' => 'Un-Archive',
+    'unarchive' => '取消封存',
     'sort' => '排序',
     'move' => '移動',
     'copy' => '複製',
