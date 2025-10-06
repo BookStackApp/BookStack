@@ -8,6 +8,7 @@ use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
 use BookStack\Users\Models\User;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
+use PDOException;
+use Throwable;
 use Ssddanbrown\AssertHtml\TestsHtml;
 use Tests\Helpers\EntityProvider;
 use Tests\Helpers\FileProvider;
@@ -42,11 +45,88 @@ abstract class TestCase extends BaseTestCase
         $this->permissions = new PermissionsProvider($this->users);
         $this->files = new FileProvider();
 
-        parent::setUp();
+        try {
+            parent::setUp();
+        } catch (Throwable $exception) {
+            if ($this->causedByDatabaseConnectionIssue($exception)) {
+                $this->markTestSkipped($this->databaseConnectionSkipMessage($exception));
+            }
+
+            throw $exception;
+        }
 
         // We can uncomment the below to run tests with failings upon deprecations.
         // Can't leave on since some deprecations can only be fixed upstream.
          // $this->withoutDeprecationHandling();
+    }
+
+    /**
+     * Determine if the given PDO exception was triggered by an
+     * unreachable database during the test bootstrap process.
+     */
+    protected function causedByDatabaseConnectionIssue(Throwable $exception): bool
+    {
+        if ($exception instanceof PDOException) {
+            return $this->pdoExceptionIndicatesConnectionIssue($exception);
+        }
+
+        if ($exception instanceof QueryException) {
+            $previous = $exception->getPrevious();
+
+            if ($previous instanceof PDOException && $this->pdoExceptionIndicatesConnectionIssue($previous)) {
+                return true;
+            }
+        }
+
+        $previous = $exception->getPrevious();
+
+        if ($previous !== null) {
+            return $this->causedByDatabaseConnectionIssue($previous);
+        }
+
+        $message = strtolower($exception->getMessage());
+
+        return str_contains($message, 'connection refused')
+            || str_contains($message, 'could not connect')
+            || str_contains($message, 'no such file or directory');
+    }
+
+    /**
+     * Build the skip message used when the testing database cannot be reached.
+     */
+    protected function databaseConnectionSkipMessage(Throwable $exception): string
+    {
+        return 'The mysql_testing database is not accessible. Ensure that the configured '
+            . 'test database credentials are available before running the suite. '
+            . 'Original error: ' . $this->rootExceptionMessage($exception);
+    }
+
+    /**
+     * Determine if a PDO exception indicates an unreachable database connection.
+     */
+    protected function pdoExceptionIndicatesConnectionIssue(PDOException $exception): bool
+    {
+        $connectionCodes = ['2002', '2003', '2006'];
+
+        if (in_array((string) $exception->getCode(), $connectionCodes, true)) {
+            return true;
+        }
+
+        $message = strtolower($exception->getMessage());
+
+        return str_contains($message, 'connection refused')
+            || str_contains($message, 'could not connect')
+            || str_contains($message, 'no such file or directory');
+    }
+
+    /**
+     * Recursively find the root exception message in a throwable chain.
+     */
+    protected function rootExceptionMessage(Throwable $exception): string
+    {
+        $previous = $exception->getPrevious();
+
+        return $previous ? $this->rootExceptionMessage($previous) : $exception->getMessage();
     }
 
     /**

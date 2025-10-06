@@ -17,6 +17,8 @@ You will need to create a database, with access for these credentials, to allow 
 TEST_DATABASE_URL="mysql://username:password@host-name:port/database-name"
 ```
 
+If the configured testing database cannot be reached when the suite boots, PHPUnit will now mark the affected tests as skipped and surface an explanatory message. This usually means the `mysql_testing` connection has not been configured locally.
+
 The testing database will need migrating and seeding with test data beforehand. This can be done by running `composer refresh-test-database`.
 
 ## Running Tests
