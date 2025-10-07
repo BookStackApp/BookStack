@@ -193,18 +193,18 @@ class PermissionApplicator
     {
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         return $this->restrictEntityQuery($query)
-            ->where(function ($query) use ($fullPageIdColumn) {
-                /** @var Builder $query */
-                $query->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', false);
-                })->orWhereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', true)
-                        ->where('pages.created_by', '=', $this->currentUser()->id);
-                });
+            ->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                $query->select('id')->from('entities')
+                    ->leftJoin('entity_page_data', 'entities.id', '=', 'entity_page_data.page_id')
+                    ->whereColumn('entities.id', '=', $fullPageIdColumn)
+                    ->where('entities.type', '=', 'page')
+                    ->where(function (QueryBuilder $query) {
+                        $query->where('entity_page_data.draft', '=', false)
+                            ->orWhere(function (QueryBuilder $query) {
+                                $query->where('entity_page_data.draft', '=', true)
+                                    ->where('entities.created_by', '=', $this->currentUser()->id);
+                            });
+                    });
             });
     }
 

@@ -25,14 +25,17 @@ class EntityHtmlDescription
      */
     public function set(string $html, string|null $plaintext = null): void
     {
-        $this->entity->description_html = $html;
+        $this->html = $html;
+        $this->entity->description_html = $this->html;
 
         if ($plaintext !== null) {
-            $this->entity->description = $plaintext;
+            $this->plain = $plaintext;
+            $this->entity->description = $this->plain;
         }
 
         if (empty($html) && !empty($plaintext)) {
-            $this->entity->description_html = $this->getHtml();
+            $this->html = $this->getHtml();
+            $this->entity->description_html = $this->html;
         }
     }
 
