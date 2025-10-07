@@ -166,7 +166,7 @@ class UserManagementTest extends TestCase
         $newOwner = User::query()->where('id', '!=', $owner->id)->first();
 
         $this->asAdmin()->delete("settings/users/{$owner->id}", ['new_owner_id' => $newOwner->id]);
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('pages', [
             'id'       => $page->id,
             'owned_by' => $newOwner->id,
         ]);

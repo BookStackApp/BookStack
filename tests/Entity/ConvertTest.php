@@ -35,8 +35,8 @@ class ConvertTest extends TestCase
         /** @var Book $newBook */
         $newBook = Book::query()->orderBy('id', 'desc')->first();
 
-        $this->assertDatabaseMissing('chapters', ['id' => $chapter->id]);
-        $this->assertDatabaseHas('pages', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => 0]);
+        $this->assertDatabaseMissing('entities', ['id' => $chapter->id, 'type' => 'chapter']);
+        $this->assertDatabaseHasEntityData('page', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => 0]);
         $this->assertCount(1, $newBook->tags);
         $this->assertEquals('Category', $newBook->tags->first()->name);
         $this->assertEquals('Penguins', $newBook->tags->first()->value);

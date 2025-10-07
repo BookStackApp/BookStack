@@ -104,7 +104,7 @@ class ChapterApiController extends ApiController
         $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission(Permission::ChapterUpdate, $chapter);
 
-        if ($request->has('book_id') && $chapter->book_id !== intval($requestData['book_id'])) {
+        if ($request->has('book_id') && $chapter->book_id !== (intval($requestData['book_id']) ?: null)) {
             $this->checkOwnablePermission(Permission::ChapterDelete, $chapter);
 
             try {

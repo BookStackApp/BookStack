@@ -58,7 +58,7 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
      */
     public function directPages(): HasMany
     {
-        return $this->pages()->where('chapter_id', '=', '0');
+        return $this->pages()->whereNull('chapter_id');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Tests\Settings;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Page;
 use Illuminate\Support\Carbon;
@@ -82,10 +83,10 @@ class RecycleBinTest extends TestCase
         $emptyReq->assertRedirect('/settings/recycle-bin');
 
         $this->assertTrue(Deletion::query()->count() === 0);
-        $this->assertDatabaseMissing('books', ['id' => $book->id]);
-        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
-        $this->assertDatabaseMissing('pages', ['id' => $book->pages->first()->id]);
-        $this->assertDatabaseMissing('chapters', ['id' => $book->chapters->first()->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $book->id, 'type' => 'book']);
+        $this->assertDatabaseMissing('entities', ['id' => $page->id, 'type' => 'page']);
+        $this->assertDatabaseMissing('entities', ['id' => $book->pages->first()->id, 'type' => 'page']);
+        $this->assertDatabaseMissing('entities', ['id' => $book->chapters->first()->id, 'type' => 'chapter']);
 
         $itemCount = 2 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
@@ -98,15 +99,15 @@ class RecycleBinTest extends TestCase
         $this->asEditor()->delete($book->getUrl());
         $deletion = Deletion::query()->firstOrFail();
 
-        $this->assertEquals($book->pages->count(), DB::table('pages')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
-        $this->assertEquals($book->chapters->count(), DB::table('chapters')->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->pages->count(), Page::query()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), Chapter::query()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
 
         $restoreReq = $this->asAdmin()->post("/settings/recycle-bin/{$deletion->id}/restore");
         $restoreReq->assertRedirect('/settings/recycle-bin');
         $this->assertTrue(Deletion::query()->count() === 0);
 
-        $this->assertEquals($book->pages->count(), DB::table('pages')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
-        $this->assertEquals($book->chapters->count(), DB::table('chapters')->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+        $this->assertEquals($book->pages->count(), Page::query()->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), Chapter::query()->where('book_id', '=', $book->id)->whereNull('deleted_at')->count());
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');
@@ -180,14 +181,14 @@ class RecycleBinTest extends TestCase
         $otherPage = $this->entities->page();
 
         $this->asEditor()->delete($page->getUrl());
-        $this->assertDatabaseHas('pages', ['id' => $page->id]);
+        $this->assertDatabaseHasEntityData('page', ['id' => $page->id]);
         $this->assertEquals(1, Deletion::query()->count());
 
         Carbon::setTestNow(Carbon::now()->addDays(6));
         $this->asEditor()->delete($otherPage->getUrl());
         $this->assertEquals(1, Deletion::query()->count());
 
-        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $page->id, 'type' => 'page']);
     }
 
     public function test_auto_clear_functionality_with_negative_time_keeps_forever()
@@ -203,7 +204,7 @@ class RecycleBinTest extends TestCase
         $this->asEditor()->delete($otherPage->getUrl());
         $this->assertEquals(2, Deletion::query()->count());
 
-        $this->assertDatabaseHas('pages', ['id' => $page->id]);
+        $this->assertDatabaseHasEntityData('page', ['id' => $page->id]);
     }
 
     public function test_auto_clear_functionality_with_zero_time_deletes_instantly()
@@ -212,7 +213,7 @@ class RecycleBinTest extends TestCase
         $page = $this->entities->page();
 
         $this->asEditor()->delete($page->getUrl());
-        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $page->id, 'type' => 'page']);
         $this->assertEquals(0, Deletion::query()->count());
     }
 

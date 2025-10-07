@@ -94,7 +94,7 @@ class BooksApiTest extends TestCase
         ]);
 
         $resp->assertJson($expectedDetails);
-        $this->assertDatabaseHas('books', $expectedDetails);
+        $this->assertDatabaseHasEntityData('book', $expectedDetails);
     }
 
     public function test_book_name_needed_to_create()
@@ -224,14 +224,14 @@ class BooksApiTest extends TestCase
         $resp = $this->putJson($this->baseEndpoint . "/{$book->id}", $details);
         $resp->assertStatus(200);
 
-        $this->assertDatabaseHas('books', array_merge($details, ['id' => $book->id, 'description' => 'A book updated via the API']));
+        $this->assertDatabaseHasEntityData('book', array_merge($details, ['id' => $book->id, 'description' => 'A book updated via the API']));
     }
 
     public function test_update_increments_updated_date_if_only_tags_are_sent()
     {
         $this->actingAsApiEditor();
         $book = $this->entities->book();
-        DB::table('books')->where('id', '=', $book->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+        Book::query()->where('id', '=', $book->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
             'tags' => [['name' => 'Category', 'value' => 'Testing']],

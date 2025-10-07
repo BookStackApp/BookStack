@@ -89,7 +89,7 @@ abstract class Entity extends Model implements
      */
     protected static string $builder = EntityQueryBuilder::class;
 
-    protected static array $commonFields = [
+    public static array $commonFields = [
         'id',
         'type',
         'name',

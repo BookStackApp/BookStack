@@ -28,23 +28,22 @@ abstract class BookChild extends Entity
      */
     public function changeBook(int $newBookId): self
     {
-        $altered = $this->clone()->refresh();
-        $oldUrl = $altered->getUrl();
-        $altered->book_id = $newBookId;
-        $altered->refreshSlug();
-        $altered->save();
+        $oldUrl = $this->getUrl();
+        $this->book_id = $newBookId;
+        $this->refreshSlug();
+        $this->save();
 
-        if ($oldUrl !== $altered->getUrl()) {
-            app()->make(ReferenceUpdater::class)->updateEntityReferences($altered, $oldUrl);
+        if ($oldUrl !== $this->getUrl()) {
+            app()->make(ReferenceUpdater::class)->updateEntityReferences($this, $oldUrl);
         }
 
         // Update all child pages if a chapter
-        if ($altered instanceof Chapter) {
-            foreach ($altered->pages()->withTrashed()->get() as $page) {
+        if ($this instanceof Chapter) {
+            foreach ($this->pages()->withTrashed()->get() as $page) {
                 $page->changeBook($newBookId);
             }
         }
 
-        return $altered;
+        return $this;
     }
 }

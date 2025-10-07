@@ -144,7 +144,7 @@ class RecycleBinApiTest extends TestCase
 
         $deletion = Deletion::query()->orderBy('id')->first();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'            => $page->id,
             'deleted_at'    => $page->deleted_at,
         ]);
@@ -154,7 +154,7 @@ class RecycleBinApiTest extends TestCase
             'restore_count' => 1,
         ]);
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'            => $page->id,
             'deleted_at'    => null,
         ]);
@@ -168,7 +168,7 @@ class RecycleBinApiTest extends TestCase
 
         $deletion = Deletion::query()->orderBy('id')->first();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'            => $page->id,
             'deleted_at'    => $page->deleted_at,
         ]);

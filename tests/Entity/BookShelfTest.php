@@ -91,7 +91,7 @@ class BookShelfTest extends TestCase
         ]));
         $resp->assertRedirect();
         $editorId = $this->users->editor()->id;
-        $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['created_by' => $editorId, 'updated_by' => $editorId]));
+        $this->assertDatabaseHasEntityData('bookshelf', array_merge($shelfInfo, ['created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
         $shelfPage = $this->get($shelf->getUrl());
@@ -248,7 +248,7 @@ class BookShelfTest extends TestCase
         $this->assertSessionHas('success');
 
         $editorId = $this->users->editor()->id;
-        $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['id' => $shelf->id, 'created_by' => $editorId, 'updated_by' => $editorId]));
+        $this->assertDatabaseHasEntityData('bookshelf', array_merge($shelfInfo, ['id' => $shelf->id, 'created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelfPage = $this->get($shelf->getUrl());
         $shelfPage->assertSee($shelfInfo['name']);

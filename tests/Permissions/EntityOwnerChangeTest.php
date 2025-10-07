@@ -13,7 +13,7 @@ class EntityOwnerChangeTest extends TestCase
         $user = User::query()->where('id', '!=', $page->owned_by)->first();
 
         $this->asAdmin()->put($page->getUrl('permissions'), ['owned_by' => $user->id]);
-        $this->assertDatabaseHas('pages', ['owned_by' => $user->id, 'id' => $page->id]);
+        $this->assertDatabaseHasEntityData('page', ['owned_by' => $user->id, 'id' => $page->id]);
     }
 
     public function test_changing_chapter_owner()
@@ -22,7 +22,7 @@ class EntityOwnerChangeTest extends TestCase
         $user = User::query()->where('id', '!=', $chapter->owned_by)->first();
 
         $this->asAdmin()->put($chapter->getUrl('permissions'), ['owned_by' => $user->id]);
-        $this->assertDatabaseHas('chapters', ['owned_by' => $user->id, 'id' => $chapter->id]);
+        $this->assertDatabaseHasEntityData('chapter', ['owned_by' => $user->id, 'id' => $chapter->id]);
     }
 
     public function test_changing_book_owner()
@@ -31,7 +31,7 @@ class EntityOwnerChangeTest extends TestCase
         $user = User::query()->where('id', '!=', $book->owned_by)->first();
 
         $this->asAdmin()->put($book->getUrl('permissions'), ['owned_by' => $user->id]);
-        $this->assertDatabaseHas('books', ['owned_by' => $user->id, 'id' => $book->id]);
+        $this->assertDatabaseHasEntityData('book', ['owned_by' => $user->id, 'id' => $book->id]);
     }
 
     public function test_changing_shelf_owner()
@@ -40,6 +40,6 @@ class EntityOwnerChangeTest extends TestCase
         $user = User::query()->where('id', '!=', $shelf->owned_by)->first();
 
         $this->asAdmin()->put($shelf->getUrl('permissions'), ['owned_by' => $user->id]);
-        $this->assertDatabaseHas('bookshelves', ['owned_by' => $user->id, 'id' => $shelf->id]);
+        $this->assertDatabaseHasEntityData('bookshelf', ['owned_by' => $user->id, 'id' => $shelf->id]);
     }
 }

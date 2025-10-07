@@ -159,7 +159,7 @@ class SortRuleTest extends TestCase
         ]);
         $resp->assertOk();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'book_id' => $book->id,
             'name' => '1111 page',
             'priority' => $book->chapters()->count() + 1,
@@ -217,7 +217,7 @@ class SortRuleTest extends TestCase
         }
 
         foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
+            $this->assertDatabaseHasEntityData('pages', [
                 'book_id' => $book->id,
                 'name' => $name,
                 'priority' => $index + 1,
@@ -251,7 +251,7 @@ class SortRuleTest extends TestCase
         }
 
         foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
+            $this->assertDatabaseHasEntityData('pages', [
                 'book_id' => $book->id,
                 'name' => $name,
                 'priority' => $index + 1,

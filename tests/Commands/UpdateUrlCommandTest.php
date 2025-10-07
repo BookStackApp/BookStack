@@ -19,7 +19,7 @@ class UpdateUrlCommandTest extends TestCase
             ->expectsQuestion("This will search for \"https://example.com\" in your database and replace it with  \"https://cats.example.com\".\nAre you sure you want to proceed?", 'y')
             ->expectsQuestion('This operation could cause issues if used incorrectly. Have you made a backup of your existing database?', 'y');
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'   => $page->id,
             'html' => '<a href="https://cats.example.com/donkeys"></a>',
         ]);
@@ -40,7 +40,7 @@ class UpdateUrlCommandTest extends TestCase
             ->expectsQuestion('This operation could cause issues if used incorrectly. Have you made a backup of your existing database?', 'y');
 
         foreach ($models as $model) {
-            $this->assertDatabaseHas($model->getTable(), [
+            $this->assertDatabaseHasEntityData($model->getMorphClass(), [
                 'id'               => $model->id,
                 'description_html' => '<a href="https://cats.example.com/donkeys"></a>',
             ]);

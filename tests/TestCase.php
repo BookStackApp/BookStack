@@ -8,6 +8,7 @@ use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
 use BookStack\Users\Models\User;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +16,7 @@ use Illuminate\Support\Env;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
+use Illuminate\Testing\Constraints\HasInDatabase;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Ssddanbrown\AssertHtml\TestsHtml;
@@ -266,5 +268,36 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->assertDatabaseHas('activities', $detailsToCheck);
+    }
+
+    /**
+     * Assert the database has the given data for an entity type.
+     */
+    protected function assertDatabaseHasEntityData(string $type, array $data = []): self
+    {
+        if (!isset($data['id'])) {
+            throw new \InvalidArgumentException('An id is expected in the entity data.');
+        }
+
+        $entityFields = array_intersect_key($data, array_flip(Entity::$commonFields));
+        $extraFields = array_diff_key($data, $entityFields);
+        $extraTable = $type === 'page' ? 'entity_page_data' : 'entity_container_data';
+        $entityFields['type'] = $type;
+
+        $this->assertThat(
+            $this->getTable('entities'),
+            new HasInDatabase($this->getConnection(null, 'entities'), $entityFields)
+        );
+
+        if (!empty($extraFields)) {
+            $extraFields['entity_id'] = $entityFields['id'];
+            $extraFields['entity_type'] = $type;
+            $this->assertThat(
+                $this->getTable($extraTable),
+                new HasInDatabase($this->getConnection(null, $extraTable), $extraFields)
+            );
+        }
+
+        return $this;
     }
 }
