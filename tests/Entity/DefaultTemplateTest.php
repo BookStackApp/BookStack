@@ -173,7 +173,7 @@ class DefaultTemplateTest extends TestCase
         $templatePage->forceFill(['html' => '<p>My template page</p>', 'markdown' => '# My template page'])->save();
         $book = $this->bookUsingDefaultTemplate($templatePage);
 
-        $this->asEditor()->get($book->getUrl('/create-page'));
+        $this->asEditor()->get($book->getUrl('/create-page'))->assertRedirect();
         $latestPage = $book->pages()
             ->where('draft', '=', true)
             ->where('template', '=', false)
@@ -251,7 +251,7 @@ class DefaultTemplateTest extends TestCase
 
         $this->post($book->getUrl('/create-guest-page'), [
             'name' => 'My guest page with template'
-        ]);
+        ])->assertRedirect();
         $latestBookPage = $book->pages()
             ->where('draft', '=', false)
             ->where('template', '=', false)

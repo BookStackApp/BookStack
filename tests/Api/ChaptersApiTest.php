@@ -155,7 +155,7 @@ class ChaptersApiTest extends TestCase
                     'owned_by' => $page->owned_by,
                     'created_by' => $page->created_by,
                     'updated_by' => $page->updated_by,
-                    'book_id' => $page->id,
+                    'book_id' => $page->book->id,
                     'chapter_id' => $chapter->id,
                     'priority' => $page->priority,
                     'book_slug' => $chapter->book->slug,

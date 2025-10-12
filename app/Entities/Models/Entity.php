@@ -214,6 +214,8 @@ abstract class Entity extends Model implements
      */
     public function activity(): MorphMany
     {
+        // TODO - Ensure this is scoped to entity type properly.
+        //   Add test if not.
         return $this->morphMany(Activity::class, 'loggable')
             ->orderBy('created_at', 'desc');
     }
@@ -460,9 +462,10 @@ abstract class Entity extends Model implements
     protected function getContentsAttributes(): array
     {
         $contentFields = [];
+        $contentModel = $this instanceof Page ? EntityPageData::class : EntityContainerData::class;
 
         foreach ($this->attributes as $key => $value) {
-            if (!in_array($key, static::$commonFields)) {
+            if (in_array($key, $contentModel::$fields)) {
                 $contentFields[$key] = $value;
             }
         }

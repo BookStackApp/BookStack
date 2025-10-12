@@ -33,7 +33,7 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
 
     public float $searchFactor = 1.2;
 
-    protected $hidden = ['pivot', 'deleted_at'];
+    protected $hidden = ['pivot', 'deleted_at', 'entity_id', 'entity_type', 'chapter_id', 'book_id'];
     protected $fillable = ['name'];
 
     /**
@@ -67,7 +67,8 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
      */
     public function chapters(): HasMany
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany(Chapter::class)
+            ->where('type', '=', 'chapter');
     }
 
     /**

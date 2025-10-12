@@ -50,7 +50,7 @@ class EntityProvider
 
     public function pageNotWithinChapter(): Page
     {
-        return $this->page(fn(Builder $query) => $query->where('chapter_id', '=', 0));
+        return $this->page(fn(Builder $query) => $query->whereNull('chapter_id'));
     }
 
     public function templatePage(): Page

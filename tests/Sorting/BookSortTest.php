@@ -299,7 +299,7 @@ class BookSortTest extends TestCase
         $book = $this->entities->bookHasChaptersAndPages();
         $book->chapters()->forceDelete();
         /** @var Page[] $pages */
-        $pages = $book->pages()->where('chapter_id', '=', 0)->take(2)->get();
+        $pages = $book->pages()->whereNull('chapter_id')->take(2)->get();
         $book->pages()->whereNotIn('id', $pages->pluck('id'))->delete();
 
         $resp = $this->asEditor()->get($book->getUrl());

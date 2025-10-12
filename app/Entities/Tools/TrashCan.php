@@ -215,6 +215,13 @@ class TrashCan
             ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 
+        // TODO - Handle related images (uploaded_to for gallery/drawings).
+        //   Should maybe reset to null
+        //   But does that present visibility/permission issues if they used to retain their old
+        //   unused ID?
+        //   If so, might be better to leave them as-is like before, but ensure the maintenance
+        //   cleanup command/action can find these "orged" images and delete them.
+
         $page->forceDelete();
 
         return 1;

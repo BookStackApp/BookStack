@@ -71,4 +71,9 @@ class ChapterQueries implements ProvidesEntityQueries
                     ->whereColumn('books.id', '=', 'entities.book_id');
             }]));
     }
+
+    public function visibleForContent(): Builder
+    {
+        return $this->start()->scopes('visible');
+    }
 }

@@ -84,7 +84,7 @@ class MarkdownExportTest extends TestCase
         $this->asEditor()->get($book->getUrl('/create-page'));
         $this->get($book->getUrl('/create-page'));
 
-        [$pageA, $pageB] = $book->pages()->where('chapter_id', '=', 0)->get();
+        [$pageA, $pageB] = $book->pages()->whereNull('chapter_id')->get();
         $pageA->html = '<p>hello tester</p>';
         $pageA->save();
         $pageB->name = 'The second page in this test';

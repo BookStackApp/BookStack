@@ -1,5 +1,6 @@
 <?php
 
+use BookStack\Permissions\JointPermissionBuilder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,6 +28,11 @@ return new class extends Migration
         'watches' => 'watchable_id',
     ];
 
+    protected static array $nullable = [
+        'activities.loggable_id',
+        'images.uploaded_to',
+    ];
+
     /**
      * Run the migrations.
      */
@@ -40,15 +46,32 @@ return new class extends Migration
 
         // Update column types to unsigned big integers
         foreach (static::$columnByTable as $table => $column) {
-            Schema::table($table, function (Blueprint $table) use ($column) {
+            $tableName = $table;
+            Schema::table($table, function (Blueprint $table) use ($tableName, $column) {
                 if (is_string($column)) {
                     $column = [$column];
                 }
 
                 foreach ($column as $col) {
-                    $table->unsignedBigInteger($col)->change();
+                    if (in_array($tableName . '.' . $col, static::$nullable)) {
+                        $table->unsignedBigInteger($col)->nullable()->change();
+                    } else {
+                        $table->unsignedBigInteger($col)->change();
+                    }
                 }
             });
+        }
+
+        // Convert image zero values to null
+        DB::table('images')->where('uploaded_to', '=', 0)->update(['uploaded_to' => null]);
+
+        // Rebuild joint permissions if needed
+        // This was moved here from 2023_01_24_104625_refactor_joint_permissions_storage since the changes
+        // made for this release would mean our current logic would not be compatible with
+        // the database changes being made. This is based on a count since any joint permissions
+        // would have been truncated in the previous migration.
+        if (\Illuminate\Support\Facades\DB::table('joint_permissions')->count() === 0) {
+            app(JointPermissionBuilder::class)->rebuildForAll();
         }
     }
 
@@ -57,15 +80,25 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Revert columns to integers
+        // Convert image null values back to zeros
+        DB::table('images')->whereNull('uploaded_to')->update(['uploaded_to' => '0']);
+
+        // Revert columns to standard integers
         foreach (static::$columnByTable as $table => $column) {
-            Schema::table($table, function (Blueprint $table) use ($column) {
+            $tableName = $table;
+            Schema::table($table, function (Blueprint $table) use ($tableName, $column) {
                 if (is_string($column)) {
                     $column = [$column];
                 }
 
                 foreach ($column as $col) {
-                    $table->unsignedInteger($col)->change();
+                    if ($tableName . '.' . $col === 'activities.loggable_id') {
+                        $table->unsignedInteger($col)->nullable()->change();
+                    } else if ($tableName . '.' . $col === 'images.uploaded_to') {
+                        $table->unsignedInteger($col)->default(0)->change();
+                    } else {
+                        $table->unsignedInteger($col)->change();
+                    }
                 }
             });
         }

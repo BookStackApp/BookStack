@@ -35,4 +35,11 @@ interface ProvidesEntityQueries
      * @return Builder<TModel>
      */
     public function visibleForList(): Builder;
+
+    /**
+     * Start a query for items that are visible, with selection
+     * configured for using the content of the items found.
+     * @return Builder<TModel>
+     */
+    public function visibleForContent(): Builder;
 }

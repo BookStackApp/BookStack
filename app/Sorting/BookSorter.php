@@ -43,12 +43,12 @@ class BookSorter
         }, $rule->getOperations());
 
         $chapters = $book->chapters()
-            ->with('pages:id,name,priority,created_at,updated_at')
+            ->with('pages:id,name,book_id,chapter_id,priority,created_at,updated_at')
             ->get(['id', 'name', 'priority', 'created_at', 'updated_at']);
 
         /** @var (Chapter|Book)[] $topItems */
         $topItems = [
-            ...$book->directPages()->get(['id', 'name', 'priority', 'created_at', 'updated_at']),
+            ...$book->directPages()->get(['id', 'book_id', 'name', 'priority', 'created_at', 'updated_at']),
             ...$chapters,
         ];
 
@@ -160,6 +160,7 @@ class BookSorter
 
         if ($model instanceof Page && $chapterChanged) {
             $model->chapter_id = $newChapter->id ?? 0;
+            $model->unsetRelation('chapter');
         }
 
         if ($priorityChanged) {

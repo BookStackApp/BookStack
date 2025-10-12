@@ -197,8 +197,8 @@ class ZipImportRunner
 
         $this->pageRepo->publishDraft($page, [
             'name' => $exportPage->name,
-            'markdown' => $exportPage->markdown,
-            'html' => $exportPage->html,
+            'markdown' => $exportPage->markdown ?? '',
+            'html' => $exportPage->html ?? '',
             'tags' => $this->exportTagsToInputArray($exportPage->tags ?? []),
         ]);
 

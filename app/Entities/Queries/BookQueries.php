@@ -55,6 +55,11 @@ class BookQueries implements ProvidesEntityQueries
             ->select(static::$listAttributes);
     }
 
+    public function visibleForContent(): Builder
+    {
+        return $this->start()->scopes('visible');
+    }
+
     public function visibleForListWithCover(): Builder
     {
         return $this->visibleForList()->with('cover');

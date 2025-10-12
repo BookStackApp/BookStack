@@ -6,9 +6,8 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Http\HttpClientHistory;
 use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
-use BookStack\Users\Models\User;
+use Exception;
 use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\JsonResponse;
@@ -275,10 +274,6 @@ abstract class TestCase extends BaseTestCase
      */
     protected function assertDatabaseHasEntityData(string $type, array $data = []): self
     {
-        if (!isset($data['id'])) {
-            throw new \InvalidArgumentException('An id is expected in the entity data.');
-        }
-
         $entityFields = array_intersect_key($data, array_flip(Entity::$commonFields));
         $extraFields = array_diff_key($data, $entityFields);
         $extraTable = $type === 'page' ? 'entity_page_data' : 'entity_container_data';
@@ -290,8 +285,19 @@ abstract class TestCase extends BaseTestCase
         );
 
         if (!empty($extraFields)) {
-            $extraFields['entity_id'] = $entityFields['id'];
-            $extraFields['entity_type'] = $type;
+            $id = $entityFields['id'] ?? DB::table($this->getTable('entities'))
+                ->where($entityFields)->orderByDesc('id')->first()->id ?? null;
+            if (is_null($id)) {
+                throw new Exception('Failed to find entity id for asserting database data');
+            }
+
+            if ($type !== 'page') {
+                $extraFields['entity_id'] = $id;
+                $extraFields['entity_type'] = $type;
+            } else {
+                $extraFields['page_id'] = $id;
+            }
+
             $this->assertThat(
                 $this->getTable($extraTable),
                 new HasInDatabase($this->getConnection(null, $extraTable), $extraFields)

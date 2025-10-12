@@ -13,6 +13,7 @@ use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
+use DB;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -182,6 +183,7 @@ class UserRepo
             if (!is_null($newOwner)) {
                 $this->migrateOwnership($user, $newOwner);
             }
+            // TODO - Should be be nullifying ownership instead?
         }
 
         Activity::add(ActivityType::USER_DELETE, $user);
@@ -206,7 +208,8 @@ class UserRepo
      */
     protected function migrateOwnership(User $fromUser, User $toUser): void
     {
-        Entity::query()->where('owned_by', '=', $fromUser->id)
+        DB::table('entities')
+            ->where('owned_by', '=', $fromUser->id)
             ->update(['owned_by' => $toUser->id]);
     }
 

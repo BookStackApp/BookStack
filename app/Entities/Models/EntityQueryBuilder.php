@@ -26,4 +26,13 @@ class EntityQueryBuilder extends Builder
 
         return parent::withoutGlobalScope($scope);
     }
+
+    /**
+     * Override the default forceDelete method to add type filter onto the query
+     * since it specifically ignores scopes by default.
+     */
+    public function forceDelete()
+    {
+        return $this->query->where('type', '=', $this->model->getMorphClass())->delete();
+    }
 }

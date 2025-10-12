@@ -30,6 +30,7 @@ abstract class BookChild extends Entity
     {
         $oldUrl = $this->getUrl();
         $this->book_id = $newBookId;
+        $this->unsetRelation('book');
         $this->refreshSlug();
         $this->save();
 

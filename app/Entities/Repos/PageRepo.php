@@ -46,6 +46,9 @@ class PageRepo
             'updated_by' => user()->id,
             'draft'      => true,
             'editor'     => PageEditorType::getSystemDefault()->value,
+            'html'       => '',
+            'markdown'   => '',
+            'text'       => '',
         ]);
 
         if ($parent instanceof Chapter) {
@@ -61,6 +64,7 @@ class PageRepo
                 'html'  => $defaultTemplate->html,
                 'markdown' => $defaultTemplate->markdown,
             ]);
+            $page->text = (new PageContent($page))->toPlainText();
         }
 
         (new DatabaseTransaction(function () use ($page) {

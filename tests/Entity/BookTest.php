@@ -362,7 +362,7 @@ class BookTest extends TestCase
         $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
 
-        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book'])->assertRedirect();
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
 

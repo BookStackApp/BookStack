@@ -240,7 +240,7 @@ class ZipExportTest extends TestCase
         $bookRepo = $this->app->make(BookRepo::class);
         $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
-        $coverImage = $book->coverInfo()->first();
+        $coverImage = $book->coverInfo()->getImage();
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
         $zip = ZipTestHelper::extractFromZipResponse($zipResp);

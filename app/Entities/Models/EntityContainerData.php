@@ -20,6 +20,14 @@ class EntityContainerData extends Model
     protected $primaryKey = 'entity_id';
     public $incrementing = false;
 
+    public static array $fields = [
+        'description',
+        'description_html',
+        'default_template_id',
+        'image_id',
+        'sort_rule_id',
+    ];
+
     /**
      * Override the default set keys for save query method to make it work with composite keys.
      */

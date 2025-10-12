@@ -178,6 +178,6 @@ class RecycleBinApiTest extends TestCase
             'delete_count' => 1,
         ]);
 
-        $this->assertDatabaseMissing('pages', ['id' => $page->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $page->id, 'type' => 'page']);
     }
 }

@@ -96,11 +96,11 @@ class RecycleBinTest extends TestCase
     public function test_entity_restore()
     {
         $book = $this->entities->bookHasChaptersAndPages();
-        $this->asEditor()->delete($book->getUrl());
+        $this->asEditor()->delete($book->getUrl())->assertRedirect();
         $deletion = Deletion::query()->firstOrFail();
 
-        $this->assertEquals($book->pages->count(), Page::query()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
-        $this->assertEquals($book->chapters->count(), Chapter::query()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->pages->count(), Page::query()->withTrashed()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
+        $this->assertEquals($book->chapters->count(), Chapter::query()->withTrashed()->where('book_id', '=', $book->id)->whereNotNull('deleted_at')->count());
 
         $restoreReq = $this->asAdmin()->post("/settings/recycle-bin/{$deletion->id}/restore");
         $restoreReq->assertRedirect('/settings/recycle-bin');
@@ -124,9 +124,9 @@ class RecycleBinTest extends TestCase
         $deleteReq->assertRedirect('/settings/recycle-bin');
         $this->assertTrue(Deletion::query()->count() === 0);
 
-        $this->assertDatabaseMissing('books', ['id' => $book->id]);
-        $this->assertDatabaseMissing('pages', ['id' => $book->pages->first()->id]);
-        $this->assertDatabaseMissing('chapters', ['id' => $book->chapters->first()->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $book->id, 'type' => 'book']);
+        $this->assertDatabaseMissing('entities', ['id' => $book->pages->first()->id, 'type' => 'page']);
+        $this->assertDatabaseMissing('entities', ['id' => $book->chapters->first()->id, 'type' => 'chapter']);
 
         $itemCount = 1 + $book->pages->count() + $book->chapters->count();
         $redirectReq = $this->get('/settings/recycle-bin');

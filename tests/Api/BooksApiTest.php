@@ -153,23 +153,23 @@ class BooksApiTest extends TestCase
         $directChildCount = $book->directPages()->count() + $book->chapters()->count();
         $resp->assertStatus(200);
         $resp->assertJsonCount($directChildCount, 'contents');
-        $resp->assertJson([
-            'contents' => [
-                [
-                    'type' => 'chapter',
-                    'id' => $chapter->id,
-                    'name' => $chapter->name,
-                    'slug' => $chapter->slug,
-                    'pages' => [
-                        [
-                            'id' => $chapterPage->id,
-                            'name' => $chapterPage->name,
-                            'slug' => $chapterPage->slug,
-                        ]
-                    ]
-                ]
-            ]
-        ]);
+
+        $contents = $resp->json('contents');
+        $respChapter = array_values(array_filter($contents, fn ($item) =>  ($item['id'] === $chapter->id && $item['type'] === 'chapter')))[0];
+        $this->assertArrayMapIncludes([
+            'id' => $chapter->id,
+            'type' => 'chapter',
+            'name' => $chapter->name,
+            'slug' => $chapter->slug,
+        ], $respChapter);
+
+        $respPage = array_values(array_filter($respChapter['pages'], fn ($item) =>  ($item['id'] === $chapterPage->id)))[0];
+
+        $this->assertArrayMapIncludes([
+            'id' => $chapterPage->id,
+            'name' => $chapterPage->name,
+            'slug' => $chapterPage->slug,
+        ], $respPage);
     }
 
     public function test_read_endpoint_contents_nested_pages_has_permissions_applied()

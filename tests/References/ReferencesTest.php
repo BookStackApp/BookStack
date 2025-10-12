@@ -259,7 +259,7 @@ class ReferencesTest extends TestCase
         }
 
         $oldUrl = $shelf->getUrl();
-        $this->put($shelf->getUrl(), ['name' => 'My updated shelf link']);
+        $this->put($shelf->getUrl(), ['name' => 'My updated shelf link'])->assertRedirect();
         $shelf->refresh();
         $this->assertNotEquals($oldUrl, $shelf->getUrl());
 

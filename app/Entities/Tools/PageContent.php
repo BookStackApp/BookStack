@@ -284,7 +284,7 @@ class PageContent
     /**
      * Get a plain-text visualisation of this page.
      */
-    protected function toPlainText(): string
+    public function toPlainText(): string
     {
         $html = $this->render(true);
 

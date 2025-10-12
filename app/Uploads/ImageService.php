@@ -184,7 +184,7 @@ class ImageService
                 /** @var Image $image */
                 foreach ($images as $image) {
                     $searchQuery = '%' . basename($image->path) . '%';
-                    $inPage = DB::table('pages')
+                    $inPage = DB::table('entity_page_data')
                             ->where('html', 'like', $searchQuery)->count() > 0;
 
                     $inRevision = false;
