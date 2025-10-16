@@ -33,12 +33,11 @@ export class Attachments extends Component {
         });
 
         this.container.addEventListener('event-emit-select-insert', event => {
-            const insertContent = event.target.closest('[data-drag-content]').getAttribute('data-drag-content');
-            const contentTypes = JSON.parse(insertContent);
-            window.$events.emit('editor::insert', {
-                html: contentTypes['text/html'],
-                markdown: contentTypes['text/plain'],
-            });
+            this.insertContentFromCard(event, 'data-drag-content');
+        });
+
+        this.container.addEventListener('event-emit-select-insert-preview', event => {
+            this.insertContentFromCard(event, 'data-preview-content');
         });
 
         this.attachLinkButton.addEventListener('click', () => {
@@ -64,6 +63,28 @@ export class Attachments extends Component {
             this.listPanel.innerHTML = resp.data;
             window.$components.init(this.listPanel);
         });
+    }
+
+    insertContentFromCard(event, attributeName) {
+        const card = event.target.closest(`[${attributeName}]`);
+        if (!card) {
+            return;
+        }
+
+        const insertContent = card.getAttribute(attributeName);
+        if (!insertContent) {
+            return;
+        }
+
+        const contentTypes = JSON.parse(insertContent);
+        const html = contentTypes['text/html'] ?? '';
+        const markdown = contentTypes['text/plain'] ?? html;
+
+        if (!html && !markdown) {
+            return;
+        }
+
+        window.$events.emit('editor::insert', {html, markdown});
     }
 
     updateOrder(idOrder) {

@@ -468,4 +468,37 @@ class AttachmentTest extends TestCase
 
         $this->files->deleteAllAttachmentFiles();
     }
+
+    public function test_preview_content_available_for_supported_internal_files()
+    {
+        $attachment = Attachment::factory()->make([
+            'extension' => 'pdf',
+            'external' => false,
+            'name' => 'Preview.pdf',
+        ]);
+        $attachment->id = 42;
+
+        $this->assertTrue($attachment->hasPreviewContent());
+
+        $preview = $attachment->editorPreviewContent();
+        $this->assertArrayHasKey('text/html', $preview);
+        $this->assertStringContainsString('<iframe', $preview['text/html']);
+        $this->assertStringContainsString('/attachments/42?open=true', $preview['text/html']);
+        $this->assertSame($preview['text/html'], $preview['text/plain']);
+    }
+
+    public function test_preview_content_not_available_for_external_or_unsupported_files()
+    {
+        $attachment = Attachment::factory()->make([
+            'extension' => 'txt',
+            'external' => false,
+        ]);
+        $this->assertFalse($attachment->hasPreviewContent());
+
+        $externalAttachment = Attachment::factory()->make([
+            'extension' => 'pdf',
+            'external' => true,
+        ]);
+        $this->assertFalse($externalAttachment->hasPreviewContent());
+    }
 }

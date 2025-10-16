@@ -5,6 +5,9 @@
              option:ajax-delete-row:url="{{ url('/attachments/' . $attachment->id) }}"
              data-id="{{ $attachment->id }}"
              data-drag-content="{{ json_encode($attachment->editorContent()) }}"
+             @if($attachment->hasPreviewContent())
+                 data-preview-content="{{ json_encode($attachment->editorPreviewContent()) }}"
+             @endif
              class="card drag-card">
             <div class="handle">@icon('grip')</div>
             <div class="py-s">
@@ -16,6 +19,13 @@
                         type="button"
                         title="{{ trans('entities.attachments_insert_link') }}"
                         class="drag-card-action text-center text-link">@icon('link')</button>
+                @if($attachment->hasPreviewContent())
+                    <button component="event-emit-select"
+                            option:event-emit-select:name="insert-preview"
+                            type="button"
+                            title="{{ trans('entities.attachments_insert_preview') }}"
+                            class="drag-card-action text-center text-link">@icon('expand-text')</button>
+                @endif
                 @if(userCan(\BookStack\Permissions\Permission::AttachmentUpdate, $attachment))
                     <button component="event-emit-select"
                             option:event-emit-select:name="edit"
