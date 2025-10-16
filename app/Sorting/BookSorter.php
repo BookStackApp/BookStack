@@ -34,7 +34,7 @@ class BookSorter
     public function runBookAutoSort(Book $book): void
     {
         $rule = $book->sortRule()->first();
-        if (!$rule) {
+        if (!($rule instanceof SortRule)) {
             return;
         }
 

@@ -69,7 +69,7 @@ class ReferenceUpdater
         }
     }
 
-    protected function updateReferencesWithinDescription(HasDescriptionInterface $entity, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(Entity&HasDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
         $description = $entity->descriptionInfo();
         $html = $this->updateLinksInHtml($description->getHtml(true) ?: '', $oldLink, $newLink);

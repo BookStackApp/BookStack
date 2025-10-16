@@ -451,7 +451,7 @@ abstract class Entity extends Model implements
     }
 
     /**
-     * @return HasOne<EntityContainerData|EntityPageData, $this>
+     * @return HasOne<covariant (EntityContainerData|EntityPageData), $this>
      */
     abstract public function relatedData(): HasOne;
 

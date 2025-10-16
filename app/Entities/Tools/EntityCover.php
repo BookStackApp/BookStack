@@ -37,7 +37,12 @@ class EntityCover
             return null;
         }
 
-        return $this->imageQuery()->first();
+        $cover = $this->imageQuery()->first();
+        if ($cover instanceof Image) {
+            return $cover;
+        }
+
+        return null;
     }
 
     /**

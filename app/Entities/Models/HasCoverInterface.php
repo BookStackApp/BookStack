@@ -12,7 +12,7 @@ interface HasCoverInterface
 
     /**
      * The cover image of this entity.
-     * @return BelongsTo<Image, $this>
+     * @return BelongsTo<Image, covariant Entity>
      */
     public function cover(): BelongsTo;
 }

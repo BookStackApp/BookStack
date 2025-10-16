@@ -47,8 +47,14 @@ class EntityDefaultTemplate
         }
 
         $pageQueries = app()->make(PageQueries::class);
-        return $pageQueries->visibleTemplates(true)
+        $page = $pageQueries->visibleTemplates(true)
             ->where('id', '=', $this->entity->default_template_id)
             ->first();
+
+        if ($page instanceof Page) {
+            return $page;
+        }
+
+        return null;
     }
 }
