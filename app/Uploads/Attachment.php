@@ -101,7 +101,7 @@ class Attachment extends Model implements OwnableInterface
             return false;
         }
 
-        return strtolower($this->extension) === 'pdf';
+        return strtolower($this->extension) === 'pdf2';
     }
 
     /**
