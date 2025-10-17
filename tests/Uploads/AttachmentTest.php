@@ -495,10 +495,49 @@ class AttachmentTest extends TestCase
         ]);
         $this->assertFalse($attachment->hasPreviewContent());
 
+        $docAttachment = Attachment::factory()->make([
+            'extension' => 'docx',
+            'external' => false,
+        ]);
+        $this->assertFalse($docAttachment->hasPreviewContent());
+
         $externalAttachment = Attachment::factory()->make([
             'extension' => 'pdf',
             'external' => true,
         ]);
         $this->assertFalse($externalAttachment->hasPreviewContent());
+    }
+
+    public function test_page_attachment_list_shows_preview_option_for_supported_files()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+
+        $pdfAttachment = $this->files->uploadAttachmentDataToPage(
+            $this,
+            $page,
+            'preview.pdf',
+            '%PDF-1.4\n',
+            'application/pdf'
+        );
+
+        $txtAttachment = $this->files->uploadAttachmentDataToPage(
+            $this,
+            $page,
+            'notes.txt',
+            'Plain text content',
+            'text/plain'
+        );
+
+        $response = $this->get($page->getUrl());
+        $html = $this->withHtml($response);
+        $html->assertElementExists(
+            "#page-attachments .attachments-preview-trigger[data-attachment-preview=\"{$pdfAttachment->id}\"]"
+        );
+        $html->assertElementNotExists(
+            "#page-attachments .attachments-preview-trigger[data-attachment-preview=\"{$txtAttachment->id}\"]"
+        );
+
+        $this->files->deleteAllAttachmentFiles();
     }
 }

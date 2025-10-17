@@ -130,6 +130,67 @@
     @include mixins.lightDark(background-color, #FFF, #111);
   }
 
+  .page-attachment-preview {
+    margin: vars.$l 0;
+    padding: vars.$l;
+    border-radius: 6px;
+    border: 1px solid;
+    @include mixins.lightDark(border-color, #DDD, #444);
+    @include mixins.lightDark(background-color, #FFF, #111);
+
+    &-header {
+      display: flex;
+      align-items: center;
+      gap: vars.$m;
+      margin-bottom: vars.$m;
+    }
+
+    &-title {
+      margin: 0;
+      font-size: 1.4em;
+      flex: 1 1 auto;
+    }
+
+    &-body {
+      max-height: 75vh;
+      overflow: auto;
+    }
+
+    &-body iframe {
+      width: 100%;
+      min-height: 70vh;
+      border: none;
+      border-radius: 4px;
+    }
+  }
+
+  .attachment-preview-document {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .attachment-preview-spreadsheet {
+    display: flex;
+    flex-direction: column;
+    gap: vars.$m;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid;
+      padding: vars.$xs;
+      @include mixins.lightDark(border-color, #DDD, #444);
+    }
+  }
+
+  .attachment-preview-sheet-title {
+    margin: 0 0 vars.$s;
+  }
+
   a {
     text-decoration: underline;
   }

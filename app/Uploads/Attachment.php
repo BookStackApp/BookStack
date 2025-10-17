@@ -101,9 +101,7 @@ class Attachment extends Model implements OwnableInterface
             return false;
         }
 
-        $previewExtensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx'];
-
-        return in_array(strtolower($this->extension), $previewExtensions);
+        return strtolower($this->extension) === 'pdf';
     }
 
     /**

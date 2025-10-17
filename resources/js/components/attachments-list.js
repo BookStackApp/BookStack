@@ -10,6 +10,7 @@ export class AttachmentsList extends Component {
     setup() {
         this.container = this.$el;
         this.fileLinks = this.$manyRefs.linkTypeFile;
+        this.previewLinks = Array.from(this.container.querySelectorAll('[data-attachment-preview]'));
 
         this.setupListeners();
     }
@@ -26,6 +27,27 @@ export class AttachmentsList extends Component {
                 this.removeOpenQueryFromLinks();
             }
         }, {passive: true});
+
+        this.setupPreviewLinks();
+    }
+
+    setupPreviewLinks() {
+        for (const link of this.previewLinks) {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                const attachmentId = Number(link.dataset.attachmentPreview || '');
+                if (!attachmentId) {
+                    return;
+                }
+
+                this.$emit('preview', {
+                    attachmentId,
+                    attachmentName: link.dataset.attachmentName || '',
+                    attachmentExtension: link.dataset.attachmentExtension || '',
+                    attachmentUrl: link.dataset.attachmentUrl || '',
+                });
+            });
+        }
     }
 
     addOpenQueryToLinks() {

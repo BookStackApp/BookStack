@@ -1,5 +1,9 @@
 <div component="attachments-list">
     @foreach($attachments as $attachment)
+        @php
+            $attachmentExtension = strtolower($attachment->extension);
+            $supportsPreview = !$attachment->external && in_array($attachmentExtension, ['pdf', 'docx', 'xls', 'xlsx']);
+        @endphp
         <div class="attachment icon-list">
             <div class="split-icon-list-item attachment-{{ $attachment->external ? 'link' : 'file' }}">
                 <a href="{{ $attachment->getUrl() }}"
@@ -20,6 +24,17 @@
                                 @icon('export')
                                 <div>{{ trans('common.open_in_tab') }}</div>
                             </a>
+                            @if($supportsPreview)
+                                <a href="#"
+                                   class="icon-item attachments-preview-trigger"
+                                   data-attachment-preview="{{ $attachment->id }}"
+                                   data-attachment-name="{{ $attachment->name }}"
+                                   data-attachment-extension="{{ $attachmentExtension }}"
+                                   data-attachment-url="{{ $attachment->getUrl(true) }}">
+                                    @icon('view')
+                                    <div>{{ trans('common.preview') }}</div>
+                                </a>
+                            @endif
                         </ul>
                     </div>
                 @endif

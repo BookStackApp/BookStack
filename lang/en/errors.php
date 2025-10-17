@@ -59,6 +59,8 @@ return [
     // Attachments
     'attachment_not_found' => 'Attachment not found',
     'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_preview_unsupported' => 'A preview is not available for this attachment type.',
+    'attachment_preview_error' => 'The attachment preview could not be generated.',
 
     // Pages
     'page_draft_autosave_fail' => 'Failed to save draft. Ensure you have internet connection before saving this page',

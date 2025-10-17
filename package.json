@@ -58,7 +58,9 @@
     "idb-keyval": "^6.2.2",
     "markdown-it": "^14.1.0",
     "markdown-it-task-lists": "^2.1.1",
+    "mammoth": "^1.6.0",
     "snabbdom": "^3.6.2",
-    "sortablejs": "^1.15.6"
+    "sortablejs": "^1.15.6",
+    "xlsx": "^0.18.5"
   }
 }

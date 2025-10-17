@@ -55,6 +55,7 @@ return [
     'download' => 'Download',
     'open_in_tab' => 'Open in Tab',
     'open' => 'Open',
+    'preview' => 'Preview',
 
     // Sort Options
     'sort_options' => 'Sort Options',
