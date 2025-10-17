@@ -220,7 +220,9 @@ class TrashCan
         //   But does that present visibility/permission issues if they used to retain their old
         //   unused ID?
         //   If so, might be better to leave them as-is like before, but ensure the maintenance
-        //   cleanup command/action can find these "orged" images and delete them.
+        //   cleanup command/action can find these "orphaned" images and delete them.
+        //   But that would leave potential attachment to new pages on increment reset scenarios.
+        //   Need to review permission scenarios for null field values relative to storage options.
 
         $page->forceDelete();
 
@@ -401,11 +403,11 @@ class TrashCan
         $entity->referencesTo()->delete();
         $entity->referencesFrom()->delete();
 
-        // TODO - Update
-
         if ($entity instanceof HasCoverInterface && $entity->coverInfo()->exists()) {
             $imageService = app()->make(ImageService::class);
             $imageService->destroy($entity->coverInfo()->getImage());
         }
+
+        $entity->relatedData()->delete();
     }
 }

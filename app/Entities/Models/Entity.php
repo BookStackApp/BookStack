@@ -214,8 +214,6 @@ abstract class Entity extends Model implements
      */
     public function activity(): MorphMany
     {
-        // TODO - Ensure this is scoped to entity type properly.
-        //   Add test if not.
         return $this->morphMany(Activity::class, 'loggable')
             ->orderBy('created_at', 'desc');
     }

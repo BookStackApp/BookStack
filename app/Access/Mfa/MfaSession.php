@@ -11,7 +11,6 @@ class MfaSession
      */
     public function isRequiredForUser(User $user): bool
     {
-        // TODO - Test both these cases
         return $user->mfaValues()->exists() || $this->userRoleEnforcesMfa($user);
     }
 

@@ -120,7 +120,6 @@ class PageQueries implements ProvidesEntityQueries
 
     protected function mergeBookSlugForSelect(array $columns): array
     {
-        // TODO - Review this is working as expected
         return array_merge($columns, ['book_slug' => function ($builder) {
             $builder->select('slug')
                 ->from('entities as books')
