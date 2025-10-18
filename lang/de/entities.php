@@ -65,7 +65,7 @@ return [
     'import_errors_desc' => 'Die folgenden Fehler sind während des Importversuchs aufgetreten:',
     'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
     'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
+    'breadcrumb_siblings_for_book' => 'Navigiere in Büchern',
     'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
     // Permissions and restrictions
