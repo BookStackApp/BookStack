@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('entities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type', 10);
+            $table->string('type', 10)->index();
             $table->string('name');
             $table->string('slug')->index();
 
