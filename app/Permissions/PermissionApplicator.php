@@ -40,10 +40,6 @@ class PermissionApplicator
         $ownerField = $ownable->getOwnerFieldName();
         $ownableFieldVal = $ownable->getAttribute($ownerField);
 
-        if (is_null($ownableFieldVal)) {
-            throw new InvalidArgumentException("{$ownerField} field used but has not been loaded");
-        }
-
         $isOwner = $user->id === $ownableFieldVal;
         $hasRolePermission = $allRolePermission || ($isOwner && $ownRolePermission);
 
@@ -144,10 +140,10 @@ class PermissionApplicator
                 /** @var Builder $query */
                 $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
                 ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    $query->select('page_id')->from('entity_page_data')
+                        ->whereColumn('entity_page_data.page_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
-                        ->where('pages.draft', '=', false);
+                        ->where('entity_page_data.draft', '=', false);
                 });
             });
     }
@@ -197,18 +193,18 @@ class PermissionApplicator
     {
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         return $this->restrictEntityQuery($query)
-            ->where(function ($query) use ($fullPageIdColumn) {
-                /** @var Builder $query */
-                $query->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', false);
-                })->orWhereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', true)
-                        ->where('pages.created_by', '=', $this->currentUser()->id);
-                });
+            ->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                $query->select('id')->from('entities')
+                    ->leftJoin('entity_page_data', 'entities.id', '=', 'entity_page_data.page_id')
+                    ->whereColumn('entities.id', '=', $fullPageIdColumn)
+                    ->where('entities.type', '=', 'page')
+                    ->where(function (QueryBuilder $query) {
+                        $query->where('entity_page_data.draft', '=', false)
+                            ->orWhere(function (QueryBuilder $query) {
+                                $query->where('entity_page_data.draft', '=', true)
+                                    ->where('entities.created_by', '=', $this->currentUser()->id);
+                            });
+                    });
             });
     }
 

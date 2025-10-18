@@ -104,7 +104,7 @@ class ChapterApiController extends ApiController
         $chapter = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission(Permission::ChapterUpdate, $chapter);
 
-        if ($request->has('book_id') && $chapter->book_id !== intval($requestData['book_id'])) {
+        if ($request->has('book_id') && $chapter->book_id !== (intval($requestData['book_id']) ?: null)) {
             $this->checkOwnablePermission(Permission::ChapterDelete, $chapter);
 
             try {
@@ -144,7 +144,7 @@ class ChapterApiController extends ApiController
 
         $chapter->load(['tags']);
         $chapter->makeVisible('description_html');
-        $chapter->setAttribute('description_html', $chapter->descriptionHtml());
+        $chapter->setAttribute('description_html', $chapter->descriptionInfo()->getHtml());
 
         /** @var Book $book */
         $book = $chapter->book()->first();

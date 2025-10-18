@@ -35,8 +35,8 @@ class ConvertTest extends TestCase
         /** @var Book $newBook */
         $newBook = Book::query()->orderBy('id', 'desc')->first();
 
-        $this->assertDatabaseMissing('chapters', ['id' => $chapter->id]);
-        $this->assertDatabaseHas('pages', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => 0]);
+        $this->assertDatabaseMissing('entities', ['id' => $chapter->id, 'type' => 'chapter']);
+        $this->assertDatabaseHasEntityData('page', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => 0]);
         $this->assertCount(1, $newBook->tags);
         $this->assertEquals('Category', $newBook->tags->first()->name);
         $this->assertEquals('Penguins', $newBook->tags->first()->value);
@@ -100,7 +100,7 @@ class ConvertTest extends TestCase
 
         // Checks for new shelf
         $resp->assertRedirectContains('/shelves/');
-        $this->assertDatabaseMissing('chapters', ['id' => $childChapter->id]);
+        $this->assertDatabaseMissing('entities', ['id' => $childChapter->id, 'type' => 'chapter']);
         $this->assertCount(1, $newShelf->tags);
         $this->assertEquals('Category', $newShelf->tags->first()->name);
         $this->assertEquals('Ducks', $newShelf->tags->first()->value);
@@ -112,8 +112,8 @@ class ConvertTest extends TestCase
         $this->assertActivityExists(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $newShelf);
 
         // Checks for old book to contain child pages
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'name' => $book->name . ' Pages']);
-        $this->assertDatabaseHas('pages', ['id' => $childPage->id, 'book_id' => $book->id, 'chapter_id' => 0]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'name' => $book->name . ' Pages']);
+        $this->assertDatabaseHasEntityData('page', ['id' => $childPage->id, 'book_id' => $book->id, 'chapter_id' => null]);
 
         // Checks for nested page
         $chapterChildPage->refresh();

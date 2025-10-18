@@ -43,6 +43,17 @@ class EntityQueries
         return $queries->visibleForList();
     }
 
+    /**
+     * Start a query of visible entities of the given type,
+     * suitable for using the contents of the items.
+     * @return Builder<Entity>
+     */
+    public function visibleForContent(string $entityType): Builder
+    {
+        $queries = $this->getQueriesForType($entityType);
+        return $queries->visibleForContent();
+    }
+
     protected function getQueriesForType(string $type): ProvidesEntityQueries
     {
         $queries = match ($type) {

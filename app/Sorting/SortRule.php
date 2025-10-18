@@ -50,7 +50,7 @@ class SortRule extends Model implements Loggable
 
     public function books(): HasMany
     {
-        return $this->hasMany(Book::class);
+        return $this->hasMany(Book::class, 'entity_container_data.sort_rule_id', 'id');
     }
 
     public static function allByName(): Collection

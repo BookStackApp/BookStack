@@ -3,13 +3,10 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Book;
-use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
-use BookStack\Sorting\BookSortMap;
-use BookStack\Sorting\BookSortMapItem;
 use Illuminate\Support\Collection;
 
 class BookContents
@@ -29,7 +26,7 @@ class BookContents
     {
         $maxPage = $this->book->pages()
             ->where('draft', '=', false)
-            ->where('chapter_id', '=', 0)
+            ->whereDoesntHave('chapter')
             ->max('priority');
 
         $maxChapter = $this->book->chapters()
@@ -80,11 +77,11 @@ class BookContents
     protected function bookChildSortFunc(): callable
     {
         return function (Entity $entity) {
-            if (isset($entity['draft']) && $entity['draft']) {
+            if ($entity->getAttribute('draft') ?? false) {
                 return -100;
             }
 
-            return $entity['priority'] ?? 0;
+            return $entity->getAttribute('priority') ?? 0;
         };
     }
 

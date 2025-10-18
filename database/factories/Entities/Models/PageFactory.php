@@ -31,6 +31,7 @@ class PageFactory extends Factory
             'text'           => strip_tags($html),
             'revision_count' => 1,
             'editor'         => 'wysiwyg',
+            'priority'       => 1,
         ];
     }
 }

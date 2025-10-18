@@ -20,7 +20,7 @@ class MoveTest extends TestCase
 
         $movePageResp = $this->put($page->getUrl('/move'), [
             'entity_selection' => 'book:' . $newBook->id,
-        ]);
+        ])->assertRedirect();
         $page->refresh();
 
         $movePageResp->assertRedirect($page->getUrl());

@@ -85,7 +85,7 @@ class PageEditorTest extends TestCase
         $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
         $resp->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'markdown' => $details['markdown'],
             'id'       => $draft->id,
             'draft'    => false,

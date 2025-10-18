@@ -629,10 +629,8 @@ class EntityPermissionsTest extends TestCase
 
     public function test_book_sort_view_permission()
     {
-        /** @var Book $firstBook */
-        $firstBook = Book::query()->first();
-        /** @var Book $secondBook */
-        $secondBook = Book::query()->find(2);
+        $firstBook = $this->entities->book();
+        $secondBook = $this->entities->book();
 
         $this->setRestrictionsForTestRoles($firstBook, ['view', 'update']);
         $this->setRestrictionsForTestRoles($secondBook, ['view']);

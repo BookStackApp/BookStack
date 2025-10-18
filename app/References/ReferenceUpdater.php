@@ -3,9 +3,9 @@
 namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\HtmlDescriptionInterface;
-use BookStack\Entities\Models\HtmlDescriptionTrait;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
@@ -36,7 +36,7 @@ class ReferenceUpdater
     protected function getReferencesToUpdate(Entity $entity): array
     {
         /** @var Reference[] $references */
-        $references = $this->referenceFetcher->getReferencesToEntity($entity)->values()->all();
+        $references = $this->referenceFetcher->getReferencesToEntity($entity, true)->values()->all();
 
         if ($entity instanceof Book) {
             $pages = $entity->pages()->get(['id']);
@@ -44,7 +44,7 @@ class ReferenceUpdater
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
                 /** @var Reference[] $childRefs */
-                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild)->values()->all();
+                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild, true)->values()->all();
                 array_push($references, ...$childRefs);
             }
         }
@@ -64,16 +64,16 @@ class ReferenceUpdater
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
         }
 
-        if ($entity instanceof HtmlDescriptionInterface) {
+        if ($entity instanceof HasDescriptionInterface) {
             $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
         }
     }
 
-    protected function updateReferencesWithinDescription(Entity&HtmlDescriptionInterface $entity, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(Entity&HasDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
-        $entity = (clone $entity)->refresh();
-        $html = $this->updateLinksInHtml($entity->descriptionHtml(true) ?: '', $oldLink, $newLink);
-        $entity->setDescriptionHtml($html);
+        $description = $entity->descriptionInfo();
+        $html = $this->updateLinksInHtml($description->getHtml(true) ?: '', $oldLink, $newLink);
+        $description->set($html);
         $entity->save();
     }
 

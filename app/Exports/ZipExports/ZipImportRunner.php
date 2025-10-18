@@ -135,8 +135,8 @@ class ZipImportRunner
             'tags' => $this->exportTagsToInputArray($exportBook->tags ?? []),
         ]);
 
-        if ($book->cover) {
-            $this->references->addImage($book->cover, null);
+        if ($book->coverInfo()->getImage()) {
+            $this->references->addImage($book->coverInfo()->getImage(), null);
         }
 
         $children = [
@@ -197,8 +197,8 @@ class ZipImportRunner
 
         $this->pageRepo->publishDraft($page, [
             'name' => $exportPage->name,
-            'markdown' => $exportPage->markdown,
-            'html' => $exportPage->html,
+            'markdown' => $exportPage->markdown ?? '',
+            'html' => $exportPage->html ?? '',
             'tags' => $this->exportTagsToInputArray($exportPage->tags ?? []),
         ]);
 

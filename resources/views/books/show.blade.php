@@ -8,8 +8,8 @@
 
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($book->description, 100, '...') }}">
-    @if($book->cover)
-        <meta property="og:image" content="{{ $book->getBookCover() }}">
+    @if($book->coverInfo()->exists())
+        <meta property="og:image" content="{{ $book->coverInfo()->getUrl() }}">
     @endif
 @endpush
 
@@ -26,7 +26,7 @@
     <main class="content-wrap card">
         <h1 class="break-text">{{$book->name}}</h1>
         <div refs="entity-search@contentView" class="book-content">
-            <div class="text-muted break-text">{!! $book->descriptionHtml() !!}</div>
+            <div class="text-muted break-text">{!! $book->descriptionInfo()->getHtml() !!}</div>
             @if(count($bookChildren) > 0)
                 <div class="entity-list book-contents">
                     @foreach($bookChildren as $childElement)

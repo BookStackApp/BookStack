@@ -35,7 +35,7 @@ class PageTemplateTest extends TestCase
         ];
 
         $this->put($page->getUrl(), $pageUpdateData);
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'       => $page->id,
             'template' => false,
         ]);
@@ -43,7 +43,7 @@ class PageTemplateTest extends TestCase
         $this->permissions->grantUserRolePermissions($editor, ['templates-manage']);
 
         $this->put($page->getUrl(), $pageUpdateData);
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'       => $page->id,
             'template' => true,
         ]);

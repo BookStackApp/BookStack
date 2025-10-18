@@ -6,6 +6,7 @@ use BookStack\Access\Mfa\MfaValue;
 use BookStack\Activity\ActivityType;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
+use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 use Tests\TestCase;
 
@@ -164,6 +165,36 @@ class MfaConfigurationTest extends TestCase
 
         $this->assertActivityExists(ActivityType::MFA_REMOVE_METHOD);
         $this->assertEquals(0, $admin->mfaValues()->count());
+    }
+
+    public function test_mfa_required_if_set_on_role()
+    {
+        $user = $this->users->viewer();
+        $user->password = Hash::make('password');
+        $user->save();
+        /** @var Role $role */
+        $role = $user->roles()->first();
+        $role->mfa_enforced = true;
+        $role->save();
+
+        $resp = $this->post('/login', ['email' => $user->email, 'password' => 'password']);
+        $this->assertFalse(auth()->check());
+        $resp->assertRedirect('/mfa/verify');
+    }
+
+    public function test_mfa_required_if_mfa_option_configured()
+    {
+        $user = $this->users->viewer();
+        $user->password = Hash::make('password');
+        $user->save();
+        $user->mfaValues()->create([
+            'method' => MfaValue::METHOD_TOTP,
+            'value'  => 'test',
+        ]);
+
+        $resp = $this->post('/login', ['email' => $user->email, 'password' => 'password']);
+        $this->assertFalse(auth()->check());
+        $resp->assertRedirect('/mfa/verify');
     }
 
     public function test_totp_setup_url_shows_correct_user_when_setup_forced_upon_login()

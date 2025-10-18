@@ -6,12 +6,14 @@ use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\EntityProvider;
+use BookStack\Entities\Models\Entity;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
+use DB;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -181,6 +183,7 @@ class UserRepo
             if (!is_null($newOwner)) {
                 $this->migrateOwnership($user, $newOwner);
             }
+            // TODO - Should be be nullifying ownership instead?
         }
 
         Activity::add(ActivityType::USER_DELETE, $user);
@@ -203,13 +206,11 @@ class UserRepo
     /**
      * Migrate ownership of items in the system from one user to another.
      */
-    protected function migrateOwnership(User $fromUser, User $toUser)
+    protected function migrateOwnership(User $fromUser, User $toUser): void
     {
-        $entities = (new EntityProvider())->all();
-        foreach ($entities as $instance) {
-            $instance->newQuery()->where('owned_by', '=', $fromUser->id)
-                ->update(['owned_by' => $toUser->id]);
-        }
+        DB::table('entities')
+            ->where('owned_by', '=', $fromUser->id)
+            ->update(['owned_by' => $toUser->id]);
     }
 
     /**

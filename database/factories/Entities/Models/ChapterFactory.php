@@ -26,7 +26,8 @@ class ChapterFactory extends Factory
             'name'        => $this->faker->sentence(),
             'slug'        => Str::random(10),
             'description' => $description,
-            'description_html' => '<p>' . e($description) . '</p>'
+            'description_html' => '<p>' . e($description) . '</p>',
+            'priority' => 5,
         ];
     }
 }

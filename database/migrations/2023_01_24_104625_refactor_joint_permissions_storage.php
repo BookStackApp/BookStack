@@ -25,9 +25,6 @@ return new class extends Migration
                 $table->unsignedInteger('owner_id')->nullable()->index();
             });
         }
-
-        // Rebuild permissions
-        app(JointPermissionBuilder::class)->rebuildForAll();
     }
 
     /**

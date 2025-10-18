@@ -122,9 +122,10 @@ class BookApiController extends ApiController
         $book = clone $book;
         $book->unsetRelations()->refresh();
 
-        $book->load(['tags', 'cover']);
-        $book->makeVisible('description_html')
-            ->setAttribute('description_html', $book->descriptionHtml());
+        $book->load(['tags']);
+        $book->makeVisible(['cover', 'description_html'])
+            ->setAttribute('description_html', $book->descriptionInfo()->getHtml())
+            ->setAttribute('cover', $book->coverInfo()->getImage());
 
         return $book;
     }

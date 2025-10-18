@@ -3,7 +3,6 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\PageContent;
-use BookStack\Entities\Tools\PageEditorType;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Page.
- *
+ * @property EntityPageData $pageData
  * @property int          $chapter_id
  * @property string       $html
  * @property string       $markdown
@@ -33,12 +32,10 @@ class Page extends BookChild
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'priority'];
-
     public string $textField = 'text';
     public string $htmlField = 'html';
-
-    protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at'];
+    protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at',  'entity_id', 'entity_type'];
+    protected $fillable = ['name', 'priority'];
 
     protected $casts = [
         'draft'    => 'boolean',
@@ -57,10 +54,8 @@ class Page extends BookChild
 
     /**
      * Get the chapter that this page is in, If applicable.
-     *
-     * @return BelongsTo
      */
-    public function chapter()
+    public function chapter(): BelongsTo
     {
         return $this->belongsTo(Chapter::class);
     }
@@ -107,10 +102,8 @@ class Page extends BookChild
 
     /**
      * Get the attachments assigned to this page.
-     *
-     * @return HasMany
      */
-    public function attachments()
+    public function attachments(): HasMany
     {
         return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
     }
@@ -139,8 +132,16 @@ class Page extends BookChild
         $refreshed = $this->refresh()->unsetRelations()->load(['tags', 'createdBy', 'updatedBy', 'ownedBy']);
         $refreshed->setHidden(array_diff($refreshed->getHidden(), ['html', 'markdown']));
         $refreshed->setAttribute('raw_html', $refreshed->html);
-        $refreshed->html = (new PageContent($refreshed))->render();
+        $refreshed->setAttribute('html', (new PageContent($refreshed))->render());
 
         return $refreshed;
+    }
+
+    /**
+     * @return HasOne<EntityPageData, $this>
+     */
+    public function relatedData(): HasOne
+    {
+        return $this->hasOne(EntityPageData::class, 'page_id', 'id');
     }
 }

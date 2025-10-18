@@ -2,9 +2,10 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityCover;
+use BookStack\Entities\Tools\EntityDefaultTemplate;
 use BookStack\Sorting\SortRule;
 use BookStack\Uploads\Image;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,26 +16,25 @@ use Illuminate\Support\Collection;
  * Class Book.
  *
  * @property string                                   $description
+ * @property string                                   $description_html
  * @property int                                      $image_id
  * @property ?int                                     $default_template_id
  * @property ?int                                     $sort_rule_id
- * @property Image|null                               $cover
  * @property \Illuminate\Database\Eloquent\Collection $chapters
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
- * @property ?Page                                    $defaultTemplate
- * @property ?SortRule                                 $sortRule
+ * @property ?SortRule                                $sortRule
  */
-class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterface
+class Book extends Entity implements HasDescriptionInterface, HasCoverInterface, HasDefaultTemplateInterface
 {
     use HasFactory;
-    use HtmlDescriptionTrait;
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
 
+    protected $hidden = ['pivot', 'deleted_at', 'description_html', 'entity_id', 'entity_type', 'chapter_id', 'book_id', 'priority'];
     protected $fillable = ['name'];
-    protected $hidden = ['pivot', 'image_id', 'deleted_at', 'description_html'];
 
     /**
      * Get the url for this book.
@@ -42,55 +42,6 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
     public function getUrl(string $path = ''): string
     {
         return url('/books/' . implode('/', [urlencode($this->slug), trim($path, '/')]));
-    }
-
-    /**
-     * Returns book cover image, if book cover not exists return default cover image.
-     */
-    public function getBookCover(int $width = 440, int $height = 250): string
-    {
-        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id || !$this->cover) {
-            return $default;
-        }
-
-        try {
-            return $this->cover->getThumb($width, $height, false) ?? $default;
-        } catch (Exception $err) {
-            return $default;
-        }
-    }
-
-    /**
-     * Get the cover image of the book.
-     */
-    public function cover(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
-    }
-
-    /**
-     * Get the type of the image model that is used when storing a cover image.
-     */
-    public function coverImageTypeKey(): string
-    {
-        return 'cover_book';
-    }
-
-    /**
-     * Get the Page that is used as default template for newly created pages within this Book.
-     */
-    public function defaultTemplate(): BelongsTo
-    {
-        return $this->belongsTo(Page::class, 'default_template_id');
-    }
-
-    /**
-     * Get the sort set assigned to this book, if existing.
-     */
-    public function sortRule(): BelongsTo
-    {
-        return $this->belongsTo(SortRule::class);
     }
 
     /**
@@ -107,7 +58,7 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
      */
     public function directPages(): HasMany
     {
-        return $this->pages()->where('chapter_id', '=', '0');
+        return $this->pages()->whereNull('chapter_id');
     }
 
     /**
@@ -116,7 +67,8 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
      */
     public function chapters(): HasMany
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany(Chapter::class)
+            ->where('type', '=', 'chapter');
     }
 
     /**
@@ -136,5 +88,28 @@ class Book extends Entity implements CoverImageInterface, HtmlDescriptionInterfa
         $chapters = $this->chapters()->scopes('visible')->get();
 
         return $pages->concat($chapters)->sortBy('priority')->sortByDesc('draft');
+    }
+
+    public function defaultTemplate(): EntityDefaultTemplate
+    {
+        return new EntityDefaultTemplate($this);
+    }
+
+    public function cover(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    public function coverInfo(): EntityCover
+    {
+        return new EntityCover($this);
+    }
+
+    /**
+     * Get the sort rule assigned to this container, if existing.
+     */
+    public function sortRule(): BelongsTo
+    {
+        return $this->belongsTo(SortRule::class);
     }
 }

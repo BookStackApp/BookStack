@@ -60,6 +60,11 @@ class BookshelfQueries implements ProvidesEntityQueries
         return $this->start()->scopes('visible')->select(static::$listAttributes);
     }
 
+    public function visibleForContent(): Builder
+    {
+        return $this->start()->scopes('visible');
+    }
+
     public function visibleForListWithCover(): Builder
     {
         return $this->visibleForList()->with('cover');

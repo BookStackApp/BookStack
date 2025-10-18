@@ -130,7 +130,7 @@ class ChapterController extends Controller
         $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
         $this->checkOwnablePermission(Permission::ChapterUpdate, $chapter);
 
-        $this->chapterRepo->update($chapter, $validated);
+        $chapter = $this->chapterRepo->update($chapter, $validated);
 
         return redirect($chapter->getUrl());
     }

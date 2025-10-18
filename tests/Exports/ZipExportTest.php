@@ -227,7 +227,7 @@ class ZipExportTest extends TestCase
         $bookData = $zip->data['book'];
         $this->assertEquals($book->id, $bookData['id']);
         $this->assertEquals($book->name, $bookData['name']);
-        $this->assertEquals($book->descriptionHtml(), $bookData['description_html']);
+        $this->assertEquals($book->descriptionInfo()->getHtml(), $bookData['description_html']);
         $this->assertCount(2, $bookData['tags']);
         $this->assertCount($book->directPages()->count(), $bookData['pages']);
         $this->assertCount($book->chapters()->count(), $bookData['chapters']);
@@ -240,7 +240,7 @@ class ZipExportTest extends TestCase
         $bookRepo = $this->app->make(BookRepo::class);
         $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
-        $coverImage = $book->cover()->first();
+        $coverImage = $book->coverInfo()->getImage();
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
         $zip = ZipTestHelper::extractFromZipResponse($zipResp);
@@ -264,7 +264,7 @@ class ZipExportTest extends TestCase
         $chapterData = $zip->data['chapter'];
         $this->assertEquals($chapter->id, $chapterData['id']);
         $this->assertEquals($chapter->name, $chapterData['name']);
-        $this->assertEquals($chapter->descriptionHtml(), $chapterData['description_html']);
+        $this->assertEquals($chapter->descriptionInfo()->getHtml(), $chapterData['description_html']);
         $this->assertCount(2, $chapterData['tags']);
         $this->assertEquals($chapter->priority, $chapterData['priority']);
         $this->assertCount($chapter->pages()->count(), $chapterData['pages']);

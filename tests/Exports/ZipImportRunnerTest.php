@@ -109,7 +109,7 @@ class ZipImportRunnerTest extends TestCase
 
         // Book checks
         $this->assertEquals('Import test', $book->name);
-        $this->assertFileExists(public_path($book->cover->path));
+        $this->assertFileExists(public_path($book->coverInfo()->getImage()->path));
         $this->assertCount(2, $book->tags);
         $this->assertEquals('Cat', $book->tags()->first()->value);
         $this->assertCount(2, $book->chapters);

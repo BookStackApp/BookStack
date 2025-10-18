@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads\Controllers;
 
+use BookStack\Entities\EntityExistsRule;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\FileUploadException;
@@ -34,7 +35,7 @@ class AttachmentController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+            'uploaded_to' => ['required', 'integer',  new EntityExistsRule('page')],
             'file'        => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
@@ -144,7 +145,7 @@ class AttachmentController extends Controller
 
         try {
             $this->validate($request, [
-                'attachment_link_uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'attachment_link_uploaded_to' => ['required', 'integer',  new EntityExistsRule('page')],
                 'attachment_link_name'        => ['required', 'string', 'min:1', 'max:255'],
                 'attachment_link_url'         => ['required', 'string', 'min:1', 'max:2000', 'safe_url'],
             ]);

@@ -27,7 +27,7 @@ class BookTest extends TestCase
 
         $resp = $this->get('/books/my-first-book');
         $resp->assertSee($book->name);
-        $resp->assertSee($book->description);
+        $resp->assertSee($book->descriptionInfo()->getPlain());
     }
 
     public function test_create_uses_different_slugs_when_name_reused()
@@ -362,12 +362,12 @@ class BookTest extends TestCase
         $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
 
-        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book']);
+        $this->asEditor()->post($book->getUrl('/copy'), ['name' => 'My copy book'])->assertRedirect();
         /** @var Book $copy */
         $copy = Book::query()->where('name', '=', 'My copy book')->first();
 
-        $this->assertNotNull($copy->cover);
-        $this->assertNotEquals($book->cover->id, $copy->cover->id);
+        $this->assertNotNull($copy->coverInfo()->getImage());
+        $this->assertNotEquals($book->coverInfo()->getImage()->id, $copy->coverInfo()->getImage()->id);
     }
 
     public function test_copy_adds_book_to_shelves_if_edit_permissions_allows()

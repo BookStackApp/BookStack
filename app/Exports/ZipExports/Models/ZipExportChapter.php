@@ -40,7 +40,7 @@ final class ZipExportChapter extends ZipExportModel
         $instance = new self();
         $instance->id = $model->id;
         $instance->name = $model->name;
-        $instance->description_html = $model->descriptionHtml();
+        $instance->description_html = $model->descriptionInfo()->getHtml();
         $instance->priority = $model->priority;
         $instance->tags = ZipExportTag::fromModelArray($model->tags()->get()->all());
 

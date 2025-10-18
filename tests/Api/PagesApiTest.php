@@ -286,7 +286,7 @@ class PagesApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $page = $this->entities->page();
-        DB::table('pages')->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+        $page->newQuery()->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
             'tags' => [['name' => 'Category', 'value' => 'Testing']],

@@ -6,9 +6,10 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\EntityContainerData;
+use BookStack\Entities\Models\HasCoverInterface;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\CoverImageInterface;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\NotifyException;
@@ -140,6 +141,7 @@ class TrashCan
     protected function destroyShelf(Bookshelf $shelf): int
     {
         $this->destroyCommonRelations($shelf);
+        $shelf->books()->detach();
         $shelf->forceDelete();
 
         return 1;
@@ -167,6 +169,7 @@ class TrashCan
         }
 
         $this->destroyCommonRelations($book);
+        $book->shelves()->detach();
         $book->forceDelete();
 
         return $count + 1;
@@ -209,15 +212,19 @@ class TrashCan
             $attachmentService->deleteFile($attachment);
         }
 
-        // Remove book template usages
-        $this->queries->books->start()
+        // Remove use as a template
+        EntityContainerData::query()
             ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 
-        // Remove chapter template usages
-        $this->queries->chapters->start()
-            ->where('default_template_id', '=', $page->id)
-            ->update(['default_template_id' => null]);
+        // TODO - Handle related images (uploaded_to for gallery/drawings).
+        //   Should maybe reset to null
+        //   But does that present visibility/permission issues if they used to retain their old
+        //   unused ID?
+        //   If so, might be better to leave them as-is like before, but ensure the maintenance
+        //   cleanup command/action can find these "orphaned" images and delete them.
+        //   But that would leave potential attachment to new pages on increment reset scenarios.
+        //   Need to review permission scenarios for null field values relative to storage options.
 
         $page->forceDelete();
 
@@ -398,9 +405,11 @@ class TrashCan
         $entity->referencesTo()->delete();
         $entity->referencesFrom()->delete();
 
-        if ($entity instanceof CoverImageInterface && $entity->cover()->exists()) {
+        if ($entity instanceof HasCoverInterface && $entity->coverInfo()->exists()) {
             $imageService = app()->make(ImageService::class);
-            $imageService->destroy($entity->cover()->first());
+            $imageService->destroy($entity->coverInfo()->getImage());
         }
+
+        $entity->relatedData()->delete();
     }
 }

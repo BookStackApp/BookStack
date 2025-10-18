@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads\Controllers;
 
+use BookStack\Entities\EntityExistsRule;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Http\ApiController;
@@ -173,13 +174,13 @@ class AttachmentApiController extends ApiController
         return [
             'create' => [
                 'name'        => ['required', 'string', 'min:1', 'max:255'],
-                'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'uploaded_to' => ['required', 'integer', new EntityExistsRule('page')],
                 'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
                 'link'        => ['required_without:file', 'string', 'min:1', 'max:2000', 'safe_url'],
             ],
             'update' => [
                 'name'        => ['string', 'min:1', 'max:255'],
-                'uploaded_to' => ['integer', 'exists:pages,id'],
+                'uploaded_to' => ['integer', new EntityExistsRule('page')],
                 'file'        => $this->attachmentService->getFileValidationRules(),
                 'link'        => ['string', 'min:1', 'max:2000', 'safe_url'],
             ],

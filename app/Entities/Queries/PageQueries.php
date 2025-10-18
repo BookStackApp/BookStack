@@ -13,7 +13,7 @@ class PageQueries implements ProvidesEntityQueries
 {
     protected static array $contentAttributes = [
         'name', 'id', 'slug', 'book_id', 'chapter_id', 'draft',
-        'template', 'html', 'text', 'created_at', 'updated_at', 'priority',
+        'template', 'html', 'markdown', 'text', 'created_at', 'updated_at', 'priority',
         'created_by', 'updated_by', 'owned_by',
     ];
     protected static array $listAttributes = [
@@ -82,6 +82,14 @@ class PageQueries implements ProvidesEntityQueries
             ->select($this->mergeBookSlugForSelect(static::$listAttributes));
     }
 
+    /**
+     * @return Builder<Page>
+     */
+    public function visibleForContent(): Builder
+    {
+        return $this->start()->scopes('visible');
+    }
+
     public function visibleForChapterList(int $chapterId): Builder
     {
         return $this->visibleForList()
@@ -104,18 +112,19 @@ class PageQueries implements ProvidesEntityQueries
             ->where('created_by', '=', user()->id);
     }
 
-    public function visibleTemplates(): Builder
+    public function visibleTemplates(bool $includeContents = false): Builder
     {
-        return $this->visibleForList()
-            ->where('template', '=', true);
+        $base = $includeContents ? $this->visibleWithContents() : $this->visibleForList();
+        return $base->where('template', '=', true);
     }
 
     protected function mergeBookSlugForSelect(array $columns): array
     {
         return array_merge($columns, ['book_slug' => function ($builder) {
             $builder->select('slug')
-                ->from('books')
-                ->whereColumn('books.id', '=', 'pages.book_id');
+                ->from('entities as books')
+                ->where('type', '=', 'book')
+                ->whereColumn('books.id', '=', 'entities.book_id');
         }]);
     }
 }

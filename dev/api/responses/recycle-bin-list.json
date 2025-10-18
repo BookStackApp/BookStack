@@ -10,7 +10,7 @@
       "deletable": {
         "id": 2582,
         "book_id": 25,
-        "chapter_id": 0,
+        "chapter_id": null,
         "name": "A Wonderful Page",
         "slug": "a-wonderful-page",
         "priority": 9,

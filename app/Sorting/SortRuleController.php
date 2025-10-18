@@ -3,6 +3,7 @@
 namespace BookStack\Sorting;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
@@ -88,7 +89,9 @@ class SortRuleController extends Controller
 
         if ($booksAssigned > 0) {
             if ($confirmed) {
-                $rule->books()->update(['sort_rule_id' => null]);
+                EntityContainerData::query()
+                    ->where('sort_rule_id', $rule->id)
+                    ->update(['sort_rule_id' => null]);
             } else {
                 $warnings[] = trans('settings.sort_rule_delete_warn_books', ['count' => $booksAssigned]);
             }

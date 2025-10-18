@@ -91,7 +91,7 @@ class PageRevisionTest extends TestCase
         $restoreReq->assertRedirect($page->getUrl());
 
         $pageView = $this->get($page->getUrl());
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id'       => $page->id,
             'markdown' => '## New Content def456',
         ]);

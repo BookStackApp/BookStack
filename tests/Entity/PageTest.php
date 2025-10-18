@@ -74,7 +74,7 @@ class PageTest extends TestCase
         $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
         $resp->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'markdown' => $details['markdown'],
             'name'     => $details['name'],
             'id'       => $draft->id,
@@ -242,7 +242,7 @@ class PageTest extends TestCase
         ]);
         $movePageResp->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'name'       => 'My copied test page',
             'created_by' => $viewer->id,
             'book_id'    => $newBook->id,
