@@ -179,6 +179,34 @@ class RecycleBinTest extends TestCase
         ]);
     }
 
+    public function test_permanent_book_delete_removes_shelf_relation_data()
+    {
+        $book = $this->entities->book();
+        $shelf = $this->entities->shelf();
+        $shelf->books()->attach($book);
+        $this->assertDatabaseHas('bookshelves_books', ['book_id' => $book->id]);
+
+        $this->asEditor()->delete($book->getUrl());
+        $deletion = $book->deletions()->firstOrFail();
+        $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}")->assertRedirect();
+
+        $this->assertDatabaseMissing('bookshelves_books', ['book_id' => $book->id]);
+    }
+
+    public function test_permanent_shelf_delete_removes_book_relation_data()
+    {
+        $book = $this->entities->book();
+        $shelf = $this->entities->shelf();
+        $shelf->books()->attach($book);
+        $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id]);
+
+        $this->asEditor()->delete($shelf->getUrl());
+        $deletion = $shelf->deletions()->firstOrFail();
+        $this->asAdmin()->delete("/settings/recycle-bin/{$deletion->id}")->assertRedirect();
+
+        $this->assertDatabaseMissing('bookshelves_books', ['bookshelf_id' => $shelf->id]);
+    }
+
     public function test_auto_clear_functionality_works()
     {
         config()->set('app.recycle_bin_lifetime', 5);

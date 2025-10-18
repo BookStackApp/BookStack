@@ -141,6 +141,7 @@ class TrashCan
     protected function destroyShelf(Bookshelf $shelf): int
     {
         $this->destroyCommonRelations($shelf);
+        $shelf->books()->detach();
         $shelf->forceDelete();
 
         return 1;
@@ -168,6 +169,7 @@ class TrashCan
         }
 
         $this->destroyCommonRelations($book);
+        $book->shelves()->detach();
         $book->forceDelete();
 
         return $count + 1;
