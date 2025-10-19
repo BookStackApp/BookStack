@@ -5,6 +5,7 @@ namespace BookStack\Activity\Models;
 use BookStack\Activity\WatchLevels;
 use BookStack\Permissions\Models\JointPermission;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  */
 class Watch extends Model
 {
+    use HasFactory;
+
     protected $guarded = [];
 
     public function watchable(): MorphTo

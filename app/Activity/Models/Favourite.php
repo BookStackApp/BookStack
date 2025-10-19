@@ -4,11 +4,14 @@ namespace BookStack\Activity\Models;
 
 use BookStack\App\Model;
 use BookStack\Permissions\Models\JointPermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Favourite extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['user_id'];
 
     /**
