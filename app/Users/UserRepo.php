@@ -198,7 +198,6 @@ class UserRepo
     protected function nullifyUserNonDependantRelations(User $user): void
     {
         $toNullify = [
-            'activities' => ['user_id'],
             'attachments' => ['created_by', 'updated_by'],
             'comments' => ['created_by', 'updated_by'],
             'deletions' => ['deleted_by'],

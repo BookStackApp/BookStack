@@ -33,7 +33,14 @@
         @endif
     </div>
     <div class="flex-2 px-m py-xs flex-container-row items-center min-width-m">
-        <div><strong class="hide-over-l">{{ trans('settings.recycle_bin_deleted_by') }}:<br></strong>@include('settings.parts.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])</div>
+        <div>
+            <strong class="hide-over-l">{{ trans('settings.recycle_bin_deleted_by') }}:<br></strong>
+            @if($deletion->deleter)
+                @include('settings.parts.table-user', ['user' => $deletion->deleter, 'user_id' => $deletion->deleted_by])
+            @else
+                {{ trans('common.deleted_user') }}
+            @endif
+        </div>
     </div>
     <div class="flex px-m py-xs min-width-s"><strong class="hide-over-l">{{ trans('settings.recycle_bin_deleted_at') }}:<br></strong>{{ $deletion->created_at }}</div>
     <div class="flex px-m py-xs text-m-right min-width-s">

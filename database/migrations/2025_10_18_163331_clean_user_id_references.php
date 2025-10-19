@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     protected static array $toNullify = [
-        'activities' => ['user_id'],
         'attachments' => ['created_by', 'updated_by'],
         'comments' => ['created_by', 'updated_by'],
         'deletions' => ['deleted_by'],
@@ -55,9 +54,6 @@ return new class extends Migration {
                 DB::table($tableName)->whereNotIn($columnName, $idSelectQuery)->delete();
             }
         }
-
-        // TODO - Ensure each is fully handled in user delete
-        //    Start by writing tests for each of these columns
     }
 
     /**

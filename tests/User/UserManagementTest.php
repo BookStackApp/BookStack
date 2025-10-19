@@ -221,7 +221,6 @@ class UserManagementTest extends TestCase
         $watch = Watch::factory()->create(['user_id' => $user->id]);
 
         $userColumnsByTable = [
-            'activities' => ['user_id'],
             'api_tokens' => ['user_id'],
             'attachments' => ['created_by', 'updated_by'],
             'comments' => ['created_by', 'updated_by'],
@@ -259,7 +258,6 @@ class UserManagementTest extends TestCase
         }
 
         // Check models exist where should be retained
-        $this->assertDatabaseHas('activities', ['id' => $activity->id, 'user_id' => null]);
         $this->assertDatabaseHas('attachments', ['id' => $attachment->id, 'created_by' => null, 'updated_by' => null]);
         $this->assertDatabaseHas('comments', ['id' => $comment->id, 'created_by' => null, 'updated_by' => null]);
         $this->assertDatabaseHas('deletions', ['id' => $deletion->id, 'deleted_by' => null]);
@@ -276,6 +274,9 @@ class UserManagementTest extends TestCase
         $this->assertDatabaseMissing('social_accounts', ['id' => $socialAccount->id]);
         $this->assertDatabaseMissing('user_invites', ['token' => 'abc123']);
         $this->assertDatabaseMissing('watches', ['id' => $watch->id]);
+
+        // Ensure activity remains using the old ID (Special case for auditing changes)
+        $this->assertDatabaseHas('activities', ['id' => $activity->id, 'user_id' => $user->id]);
     }
 
     public function test_delete_removes_user_preferences()
