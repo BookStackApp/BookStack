@@ -42,7 +42,7 @@
             @php
                 $logoutPath = match (config('auth.method')) {
                     'saml2' => '/saml2/logout',
-                    'oidc' => '/oidc/logout',
+                    'oidc' => '/oidc/logout/' . (session('oidc_provider') ? session('oidc_provider') : ''),
                     default => '/logout',
                 }
             @endphp

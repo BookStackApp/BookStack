@@ -33,6 +33,7 @@ class LoginController extends Controller
         $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
         $preventInitiation = $request->get('prevent_auto_init') === 'true';
+        $oidcProviders = array_keys(config('oidc.providers'));
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -53,6 +54,7 @@ class LoginController extends Controller
         return view('auth.login', [
             'socialDrivers' => $socialDrivers,
             'authMethod'    => $authMethod,
+            'oidcProviders' => $oidcProviders
         ]);
     }
 

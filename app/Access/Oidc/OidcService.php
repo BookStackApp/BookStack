@@ -41,13 +41,13 @@ class OidcService
      *
      * @return array{url: string, state: string}
      */
-    public function login(): array
+    public function login(string $prov): array
     {
-        $settings = $this->getProviderSettings();
-        $provider = $this->getProvider($settings);
+        $settings = $this->getProviderSettings($prov);
+        $provider = $this->getProvider($settings, $prov);
 
         $url = $provider->getAuthorizationUrl();
-        session()->put('oidc_pkce_code', $provider->getPkceCode() ?? '');
+        session()->put("oidc_pkce_code_$prov", $provider->getPkceCode() ?? '');
 
         return [
             'url'   => $url,
@@ -65,13 +65,13 @@ class OidcService
      * @throws StoppedAuthenticationException
      * @throws IdentityProviderException
      */
-    public function processAuthorizeResponse(?string $authorizationCode): User
+    public function processAuthorizeResponse(?string $authorizationCode, string $prov): User
     {
-        $settings = $this->getProviderSettings();
-        $provider = $this->getProvider($settings);
+        $settings = $this->getProviderSettings($prov);
+        $provider = $this->getProvider($settings, $prov);
 
         // Set PKCE code flashed at login
-        $pkceCode = session()->pull('oidc_pkce_code', '');
+        $pkceCode = session()->pull("oidc_pkce_code_$prov", '');
         $provider->setPkceCode($pkceCode);
 
         // Try to exchange authorization code for access token
@@ -79,15 +79,20 @@ class OidcService
             'code' => $authorizationCode,
         ]);
 
-        return $this->processAccessTokenCallback($accessToken, $settings);
+        return $this->processAccessTokenCallback($accessToken, $settings, $prov);
     }
 
     /**
      * @throws OidcException
      */
-    protected function getProviderSettings(): OidcProviderSettings
+    protected function getProviderSettings(string $prov): OidcProviderSettings
     {
-        $config = $this->config();
+        $config = $this->config($prov);
+
+        if (!$config) {
+            throw new OidcException("OIDC provider config for '$prov' not found.");
+        }
+
         $settings = new OidcProviderSettings([
             'issuer'                => $config['issuer'],
             'clientId'              => $config['client_id'],
@@ -128,17 +133,18 @@ class OidcService
     /**
      * Load the underlying OpenID Connect Provider.
      */
-    protected function getProvider(OidcProviderSettings $settings): OidcOAuthProvider
+    protected function getProvider(OidcProviderSettings $settings, string $prov): OidcOAuthProvider
     {
+        $redirect_uri = url("/oidc/callback/$prov");
         $provider = new OidcOAuthProvider([
             ...$settings->arrayForOAuthProvider(),
-            'redirectUri' => url('/oidc/callback'),
+            'redirectUri' => $redirect_uri,
         ], [
             'httpClient'     => $this->http->buildClient(5),
             'optionProvider' => new HttpBasicAuthOptionProvider(),
         ]);
 
-        foreach ($this->getAdditionalScopes() as $scope) {
+        foreach ($this->getAdditionalScopes($prov) as $scope) {
             $provider->addScope($scope);
         }
 
@@ -150,9 +156,9 @@ class OidcService
      *
      * @return string[]
      */
-    protected function getAdditionalScopes(): array
+    protected function getAdditionalScopes(string $prov): array
     {
-        $scopeConfig = $this->config()['additional_scopes'] ?: '';
+        $scopeConfig = config("oidc.providers.$prov.additional_scopes") ?: '';
 
         $scopeArr = explode(',', $scopeConfig);
         $scopeArr = array_map(fn (string $scope) => trim($scope), $scopeArr);
@@ -168,7 +174,7 @@ class OidcService
      * @throws JsonDebugException
      * @throws StoppedAuthenticationException
      */
-    protected function processAccessTokenCallback(OidcAccessToken $accessToken, OidcProviderSettings $settings): User
+    protected function processAccessTokenCallback(OidcAccessToken $accessToken, OidcProviderSettings $settings, string $prov): User
     {
         $idTokenText = $accessToken->getIdToken();
         $idToken = new OidcIdToken(
@@ -177,7 +183,7 @@ class OidcService
             $settings->keys,
         );
 
-        session()->put("oidc_id_token", $idTokenText);
+        session()->put("oidc_id_token_$prov", $idTokenText);
 
         $returnClaims = Theme::dispatch(ThemeEvents::OIDC_ID_TOKEN_PRE_VALIDATE, $idToken->getAllClaims(), [
             'access_token' => $accessToken->getToken(),
@@ -189,7 +195,7 @@ class OidcService
             $idToken->replaceClaims($returnClaims);
         }
 
-        if ($this->config()['dump_user_details']) {
+        if ($this->config($prov)['dump_user_details']) {
             throw new JsonDebugException($idToken->getAllClaims());
         }
 
@@ -199,7 +205,7 @@ class OidcService
             throw new OidcException("ID token validation failed with error: {$exception->getMessage()}");
         }
 
-        $userDetails = $this->getUserDetailsFromToken($idToken, $accessToken, $settings);
+        $userDetails = $this->getUserDetailsFromToken($idToken, $accessToken, $settings, $prov);
         if (empty($userDetails->email)) {
             throw new OidcException(trans('errors.oidc_no_email_address'));
         }
@@ -222,12 +228,12 @@ class OidcService
             throw new OidcException($exception->getMessage());
         }
 
-        if ($this->config()['fetch_avatar'] && !$user->avatar()->exists() && $userDetails->picture) {
+        if ($this->config($prov)['fetch_avatar'] ?? false && !$user->avatar()->exists() && $userDetails->picture) {
             $this->userAvatars->assignToUserFromUrl($user, $userDetails->picture);
         }
 
-        if ($this->shouldSyncGroups()) {
-            $detachExisting = $this->config()['remove_from_groups'];
+        if ($this->shouldSyncGroups($prov)) {
+            $detachExisting = $this->config($prov)['remove_from_groups'];
             $this->groupService->syncUserWithFoundGroups($user, $userDetails->groups ?? [], $detachExisting);
         }
 
@@ -239,18 +245,18 @@ class OidcService
     /**
      * @throws OidcException
      */
-    protected function getUserDetailsFromToken(OidcIdToken $idToken, OidcAccessToken $accessToken, OidcProviderSettings $settings): OidcUserDetails
+    protected function getUserDetailsFromToken(OidcIdToken $idToken, OidcAccessToken $accessToken, OidcProviderSettings $settings, string $prov): OidcUserDetails
     {
         $userDetails = new OidcUserDetails();
         $userDetails->populate(
             $idToken,
-            $this->config()['external_id_claim'],
-            $this->config()['display_name_claims'] ?? '',
-            $this->config()['groups_claim'] ?? ''
+            $this->config($prov)['external_id_claim'],
+            $this->config($prov)['display_name_claims'] ?? '',
+            $this->config($prov)['groups_claim'] ?? ''
         );
 
-        if (!$userDetails->isFullyPopulated($this->shouldSyncGroups()) && !empty($settings->userinfoEndpoint)) {
-            $provider = $this->getProvider($settings);
+        if (!$userDetails->isFullyPopulated($this->shouldSyncGroups($prov)) && !empty($settings->userinfoEndpoint)) {
+            $provider = $this->getProvider($settings, $prov);
             $request = $provider->getAuthenticatedRequest('GET', $settings->userinfoEndpoint, $accessToken->getToken());
             $response = new OidcUserinfoResponse(
                 $provider->getResponse($request),
@@ -266,9 +272,9 @@ class OidcService
 
             $userDetails->populate(
                 $response,
-                $this->config()['external_id_claim'],
-                $this->config()['display_name_claims'] ?? '',
-                $this->config()['groups_claim'] ?? ''
+                $this->config($prov)['external_id_claim'],
+                $this->config($prov)['display_name_claims'] ?? '',
+                $this->config($prov)['groups_claim'] ?? ''
             );
         }
 
@@ -278,17 +284,17 @@ class OidcService
     /**
      * Get the OIDC config from the application.
      */
-    protected function config(): array
+    protected function config(string $prov): array
     {
-        return config('oidc');
+        return config("oidc.providers.$prov", []);
     }
 
     /**
      * Check if groups should be synced.
      */
-    protected function shouldSyncGroups(): bool
+    protected function shouldSyncGroups(string $prov): bool
     {
-        return $this->config()['user_to_groups'] !== false;
+        return ($this->config($prov)['user_to_groups'] ?? true) !== false;
     }
 
     /**
@@ -297,11 +303,11 @@ class OidcService
      * Reference: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
      * @throws OidcException
      */
-    public function logout(): string
+    public function logout(string $prov): string
     {
-        $oidcToken = session()->pull("oidc_id_token");
+        $oidcToken = session()->pull("oidc_id_token_$prov");
         $defaultLogoutUrl = url($this->loginService->logout());
-        $oidcSettings = $this->getProviderSettings();
+        $oidcSettings = $this->getProviderSettings($prov);
 
         if (!$oidcSettings->endSessionEndpoint) {
             return $defaultLogoutUrl;

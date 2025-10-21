@@ -20,17 +20,17 @@ class OidcController extends Controller
     /**
      * Start the authorization login flow via OIDC.
      */
-    public function login()
+    public function login(string $provider)
     {
         try {
-            $loginDetails = $this->oidcService->login();
+            $loginDetails = $this->oidcService->login($provider);
         } catch (OidcException $exception) {
             $this->showErrorNotification($exception->getMessage());
 
             return redirect('/login');
         }
 
-        session()->flash('oidc_state', $loginDetails['state']);
+        session()->flash("oidc_state_{$provider}", $loginDetails['state']);
 
         return redirect($loginDetails['url']);
     }
@@ -39,33 +39,34 @@ class OidcController extends Controller
      * Authorization flow redirect callback.
      * Processes authorization response from the OIDC Authorization Server.
      */
-    public function callback(Request $request)
+    public function callback(Request $request, string $provider)
     {
-        $storedState = session()->pull('oidc_state');
+        $storedState = session()->pull("oidc_state_{$provider}");
         $responseState = $request->query('state');
 
         if ($storedState !== $responseState) {
-            $this->showErrorNotification(trans('errors.oidc_fail_authed', ['system' => config('oidc.name')]));
+            $this->showErrorNotification(trans('errors.oidc_fail_authed', ['system' => config("oidc.providers.{$provider}.name", 'OIDC')]));
 
             return redirect('/login');
         }
 
         try {
-            $this->oidcService->processAuthorizeResponse($request->query('code'));
+            $this->oidcService->processAuthorizeResponse($request->query('code'), $provider);
         } catch (OidcException $oidcException) {
             $this->showErrorNotification($oidcException->getMessage());
 
             return redirect('/login');
         }
-
+        
+        session(['oidc_provider' => $provider]);
         return redirect()->intended();
     }
 
     /**
      * Log the user out then start the OIDC RP-initiated logout process.
      */
-    public function logout()
+    public function logout(string $provider)
     {
-        return redirect($this->oidcService->logout());
+        return redirect($this->oidcService->logout($provider));
     }
 }
