@@ -31,8 +31,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 
 /**
- * Class User.
- *
  * @property int        $id
  * @property string     $name
  * @property string     $slug

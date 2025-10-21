@@ -6,6 +6,7 @@ use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Users\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -24,6 +25,8 @@ use Illuminate\Support\Str;
  */
 class Activity extends Model
 {
+    use HasFactory;
+
     /**
      * Get the loggable model related to this activity.
      * Currently only used for entities (previously entity_[id/type] columns).

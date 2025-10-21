@@ -62,8 +62,9 @@ return new class extends Migration
             });
         }
 
-        // Convert image zero values to null
+        // Convert image and activity zero values to null
         DB::table('images')->where('uploaded_to', '=', 0)->update(['uploaded_to' => null]);
+        DB::table('activities')->where('loggable_id', '=', 0)->update(['loggable_id' => null]);
 
         // Rebuild joint permissions if needed
         // This was moved here from 2023_01_24_104625_refactor_joint_permissions_storage since the changes
