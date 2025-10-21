@@ -2,6 +2,7 @@
 
 use BookStack\Permissions\JointPermissionBuilder;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -65,6 +66,15 @@ return new class extends Migration
         // Convert image and activity zero values to null
         DB::table('images')->where('uploaded_to', '=', 0)->update(['uploaded_to' => null]);
         DB::table('activities')->where('loggable_id', '=', 0)->update(['loggable_id' => null]);
+
+        // Clean up any orphaned gallery/drawio images to nullify their page relation
+        DB::table('images')
+            ->whereIn('type', ['gallery', 'drawio'])
+            ->whereNotIn('uploaded_to', function (Builder $query) {
+                $query->select('id')
+                    ->from('entities')
+                    ->where('type', '=', 'page');
+            })->update(['uploaded_to' => null]);
 
         // Rebuild joint permissions if needed
         // This was moved here from 2023_01_24_104625_refactor_joint_permissions_storage since the changes

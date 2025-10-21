@@ -4,6 +4,7 @@ namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
+use BookStack\Uploads\Image;
 use Carbon\Carbon;
 use Tests\TestCase;
 
@@ -155,6 +156,25 @@ class PageTest extends TestCase
 
         $this->assertDatabaseMissing('page_revisions', [
             'page_id' => $page->id,
+        ]);
+    }
+
+    public function test_page_full_delete_nulls_related_images()
+    {
+        $page = $this->entities->page();
+        $image = Image::factory()->create(['type' => 'gallery', 'uploaded_to' => $page->id]);
+
+        $this->asEditor()->delete($page->getUrl());
+        $this->asAdmin()->post('/settings/recycle-bin/empty');
+
+        $this->assertDatabaseMissing('images', [
+            'type' => 'gallery',
+            'uploaded_to' => $page->id,
+        ]);
+
+        $this->assertDatabaseHas('images', [
+            'id' => $image->id,
+            'uploaded_to' => null,
         ]);
     }
 
