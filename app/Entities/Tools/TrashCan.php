@@ -15,6 +15,7 @@ use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Uploads\AttachmentService;
+use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use BookStack\Util\DatabaseTransaction;
 use Exception;
@@ -217,14 +218,11 @@ class TrashCan
             ->where('default_template_id', '=', $page->id)
             ->update(['default_template_id' => null]);
 
-        // TODO - Handle related images (uploaded_to for gallery/drawings).
-        //   Should maybe reset to null
-        //   But does that present visibility/permission issues if they used to retain their old
-        //   unused ID?
-        //   If so, might be better to leave them as-is like before, but ensure the maintenance
-        //   cleanup command/action can find these "orphaned" images and delete them.
-        //   But that would leave potential attachment to new pages on increment reset scenarios.
-        //   Need to review permission scenarios for null field values relative to storage options.
+        // Nullify uploaded image relations
+        Image::query()
+            ->whereIn('type', ['gallery', 'drawio'])
+            ->where('uploaded_to', '=', $page->id)
+            ->update(['uploaded_to' => null]);
 
         $page->forceDelete();
 
@@ -275,8 +273,8 @@ class TrashCan
         // exists in the event it has already been destroyed during this request.
         $entity = $deletion->deletable()->first();
         $count = 0;
-        if ($entity) {
-            $count = $this->destroyEntity($deletion->deletable);
+        if ($entity instanceof Entity) {
+            $count = $this->destroyEntity($entity);
         }
         $deletion->delete();
 
