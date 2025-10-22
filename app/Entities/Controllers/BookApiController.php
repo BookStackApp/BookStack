@@ -58,7 +58,7 @@ class BookApiController extends ApiController
 
     /**
      * View the details of a single book.
-     * The response data will contain 'content' property listing the chapter and pages directly within, in
+     * The response data will contain a 'content' property listing the chapter and pages directly within, in
      * the same structure as you'd see within the BookStack interface when viewing a book. Top-level
      * contents will have a 'type' property to distinguish between pages & chapters.
      */

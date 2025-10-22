@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int      $id
- * @property string   $text - Deprecated & now unused (#4821)
  * @property string   $html
  * @property int|null $parent_id  - Relates to local_id, not id
  * @property int      $local_id
@@ -31,6 +30,11 @@ class Comment extends Model implements Loggable, OwnableInterface
     use HasCreatorAndUpdater;
 
     protected $fillable = ['parent_id'];
+    protected $hidden = ['html'];
+
+    protected $casts = [
+        'archived' => 'boolean',
+    ];
 
     /**
      * Get the entity that this comment belongs to.

@@ -71,6 +71,10 @@ Route::delete('image-gallery/{id}', [ImageGalleryApiController::class, 'delete']
 Route::get('search', [SearchApiController::class, 'all']);
 
 Route::get('comments', [ActivityControllers\CommentApiController::class, 'list']);
+Route::post('comments', [ActivityControllers\CommentApiController::class, 'create']);
+Route::get('comments/{id}', [ActivityControllers\CommentApiController::class, 'read']);
+Route::put('comments/{id}', [ActivityControllers\CommentApiController::class, 'update']);
+Route::delete('comments/{id}', [ActivityControllers\CommentApiController::class, 'delete']);
 
 Route::get('shelves', [EntityControllers\BookshelfApiController::class, 'list']);
 Route::post('shelves', [EntityControllers\BookshelfApiController::class, 'create']);
