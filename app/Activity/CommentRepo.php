@@ -5,9 +5,9 @@ namespace BookStack\Activity;
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Entity;
 use BookStack\Exceptions\NotifyException;
-use BookStack\Exceptions\PrettyException;
 use BookStack\Facades\Activity as ActivityService;
 use BookStack\Util\HtmlDescriptionFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class CommentRepo
 {
@@ -17,6 +17,14 @@ class CommentRepo
     public function getById(int $id): Comment
     {
         return Comment::query()->findOrFail($id);
+    }
+
+    /**
+     * Start a query for comments visible to the user.
+     */
+    public function getQueryForVisible(): Builder
+    {
+        return Comment::query()->scopes('visible');
     }
 
     /**

@@ -240,7 +240,7 @@ abstract class Entity extends Model implements
      */
     public function comments(bool $orderByCreated = true): MorphMany
     {
-        $query = $this->morphMany(Comment::class, 'entity');
+        $query = $this->morphMany(Comment::class, 'commentable');
 
         return $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
     }
