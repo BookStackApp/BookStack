@@ -4,6 +4,7 @@ namespace BookStack\Activity;
 
 use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\Page;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity as ActivityService;
 use BookStack\Util\HtmlDescriptionFilter;
@@ -20,6 +21,15 @@ class CommentRepo
     }
 
     /**
+     * Get a comment by ID, ensuring it is visible to the user based upon access to the page
+     * which the comment is attached to.
+     */
+    public function getVisibleById(int $id): Comment
+    {
+        return $this->getQueryForVisible()->findOrFail($id);
+    }
+
+    /**
      * Start a query for comments visible to the user.
      */
     public function getQueryForVisible(): Builder
@@ -32,6 +42,23 @@ class CommentRepo
      */
     public function create(Entity $entity, string $html, ?int $parentId, string $contentRef): Comment
     {
+        // Prevent comments being added to draft pages
+        if ($entity instanceof Page && $entity->draft) {
+            throw new \Exception(trans('errors.cannot_add_comment_to_draft'));
+        }
+
+        // Validate parent ID
+        if ($parentId !== null) {
+            $parentCommentExists = Comment::query()
+                ->where('entity_id', '=', $entity->id)
+                ->where('entity_type', '=', $entity->getMorphClass())
+                ->where('local_id', '=', $parentId)
+                ->exists();
+            if (!$parentCommentExists) {
+                $parentId = null;
+            }
+        }
+
         $userId = user()->id;
         $comment = new Comment();
 
@@ -67,7 +94,7 @@ class CommentRepo
     /**
      * Archive an existing comment.
      */
-    public function archive(Comment $comment): Comment
+    public function archive(Comment $comment, bool $log = true): Comment
     {
         if ($comment->parent_id) {
             throw new NotifyException('Only top-level comments can be archived.', '/', 400);
@@ -76,7 +103,9 @@ class CommentRepo
         $comment->archived = true;
         $comment->save();
 
-        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+        if ($log) {
+            ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+        }
 
         return $comment;
     }
@@ -84,7 +113,7 @@ class CommentRepo
     /**
      * Un-archive an existing comment.
      */
-    public function unarchive(Comment $comment): Comment
+    public function unarchive(Comment $comment, bool $log = true): Comment
     {
         if ($comment->parent_id) {
             throw new NotifyException('Only top-level comments can be un-archived.', '/', 400);
@@ -93,7 +122,9 @@ class CommentRepo
         $comment->archived = false;
         $comment->save();
 
-        ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+        if ($log) {
+            ActivityService::add(ActivityType::COMMENT_UPDATE, $comment);
+        }
 
         return $comment;
     }
