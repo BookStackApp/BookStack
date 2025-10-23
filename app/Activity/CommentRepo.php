@@ -50,8 +50,8 @@ class CommentRepo
         // Validate parent ID
         if ($parentId !== null) {
             $parentCommentExists = Comment::query()
-                ->where('entity_id', '=', $entity->id)
-                ->where('entity_type', '=', $entity->getMorphClass())
+                ->where('commentable_id', '=', $entity->id)
+                ->where('commentable_type', '=', $entity->getMorphClass())
                 ->where('local_id', '=', $parentId)
                 ->exists();
             if (!$parentCommentExists) {

@@ -23,9 +23,6 @@ class CommentApiController extends ApiController
 {
     // TODO - Add tree-style comment listing to page-show responses.
 
-    // TODO - Test visibility controls
-    // TODO - Test permissions of each action
-
     protected array $rules = [
         'create' => [
             'page_id' => ['required', 'integer'],
@@ -34,7 +31,7 @@ class CommentApiController extends ApiController
             'content_ref' => ['string'],
         ],
         'update' => [
-            'html' => ['required', 'string'],
+            'html' => ['string'],
             'archived' => ['boolean'],
         ]
     ];
@@ -85,6 +82,7 @@ class CommentApiController extends ApiController
     public function read(string $id): JsonResponse
     {
         $comment = $this->commentRepo->getVisibleById(intval($id));
+        $comment->load('createdBy', 'updatedBy');
 
         $replies = $this->commentRepo->getQueryForVisible()
             ->where('parent_id', '=', $comment->local_id)
@@ -117,17 +115,19 @@ class CommentApiController extends ApiController
         $this->checkOwnablePermission(Permission::CommentUpdate, $comment);
 
         $input = $this->validate($request, $this->rules()['update']);
+        $hasHtml = isset($input['html']);
 
         if (isset($input['archived'])) {
-            $archived = $input['archived'];
-            if ($archived) {
-                $this->commentRepo->archive($comment, false);
+            if ($input['archived']) {
+                $this->commentRepo->archive($comment, !$hasHtml);
             } else {
-                $this->commentRepo->unarchive($comment, false);
+                $this->commentRepo->unarchive($comment, !$hasHtml);
             }
         }
 
-        $comment = $this->commentRepo->update($comment, $input['html']);
+        if ($hasHtml) {
+            $comment = $this->commentRepo->update($comment, $input['html']);
+        }
 
         return response()->json($comment);
     }

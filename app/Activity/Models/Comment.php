@@ -41,7 +41,7 @@ class Comment extends Model implements Loggable, OwnableInterface
      */
     public function entity(): MorphTo
     {
-        return $this->morphTo('entity');
+        return $this->morphTo('commentable');
     }
 
     /**
