@@ -14,6 +14,7 @@ class CommentStoreTest extends TestCase
         $this->asAdmin();
         $page = $this->entities->page();
 
+        Comment::factory()->create(['commentable_id' => $page->id, 'commentable_type' => 'page', 'local_id' => 2]);
         $comment = Comment::factory()->make(['parent_id' => 2]);
         $resp = $this->postJson("/comment/$page->id", $comment->getAttributes());
 
@@ -24,9 +25,9 @@ class CommentStoreTest extends TestCase
         $pageResp->assertSee($comment->html, false);
 
         $this->assertDatabaseHas('comments', [
-            'local_id'    => 1,
-            'entity_id'   => $page->id,
-            'entity_type' => Page::newModelInstance()->getMorphClass(),
+            'local_id'    => 3,
+            'commentable_id'   => $page->id,
+            'commentable_type' => 'page',
             'parent_id'   => 2,
         ]);
 
@@ -52,9 +53,9 @@ class CommentStoreTest extends TestCase
             ]);
 
             if ($valid) {
-                $this->assertDatabaseHas('comments', ['entity_id' => $page->id, 'content_ref' => $ref]);
+                $this->assertDatabaseHas('comments', ['commentable_id' => $page->id, 'content_ref' => $ref]);
             } else {
-                $this->assertDatabaseMissing('comments', ['entity_id' => $page->id, 'content_ref' => $ref]);
+                $this->assertDatabaseMissing('comments', ['commentable_id' => $page->id, 'content_ref' => $ref]);
             }
         }
     }
@@ -79,7 +80,7 @@ class CommentStoreTest extends TestCase
 
         $this->assertDatabaseHas('comments', [
             'html'      => $newHtml,
-            'entity_id' => $page->id,
+            'commentable_id' => $page->id,
         ]);
 
         $this->assertActivityExists(ActivityType::COMMENT_UPDATE);
@@ -218,7 +219,7 @@ class CommentStoreTest extends TestCase
         $page = $this->entities->page();
         Comment::factory()->create([
             'html' => '<script>superbadscript</script><script>superbadscript</script><p onclick="superbadonclick">scriptincommentest</p>',
-            'entity_type' => 'page', 'entity_id' => $page
+            'commentable_type' => 'page', 'commentable_id' => $page
         ]);
 
         $resp = $this->asAdmin()->get($page->getUrl());
@@ -236,8 +237,8 @@ class CommentStoreTest extends TestCase
         $resp = $this->asAdmin()->post("/comment/{$page->id}", ['html' => $input]);
         $resp->assertOk();
         $this->assertDatabaseHas('comments', [
-           'entity_type' => 'page',
-           'entity_id' => $page->id,
+           'commentable_type' => 'page',
+           'commentable_id' => $page->id,
            'html' => $expected,
         ]);
 
@@ -259,8 +260,8 @@ class CommentStoreTest extends TestCase
         $resp = $this->asAdmin()->post("/comment/{$page->id}", ['html' => $input]);
         $resp->assertOk();
         $this->assertDatabaseHas('comments', [
-            'entity_type' => 'page',
-            'entity_id' => $page->id,
+            'commentable_type' => 'page',
+            'commentable_id' => $page->id,
             'html' => $expected,
         ]);
 

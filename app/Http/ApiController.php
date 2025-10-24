@@ -12,7 +12,7 @@ abstract class ApiController extends Controller
      * The validation rules for this controller.
      * Can alternative be defined in a rules() method is they need to be dynamic.
      *
-     * @var array<string, string[]>
+     * @var array<string, array<string, string[]>>
      */
     protected array $rules = [];
 

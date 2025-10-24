@@ -237,6 +237,7 @@ abstract class Entity extends Model implements
 
     /**
      * Get the comments for an entity.
+     * @return MorphMany<Comment, $this>
      */
     public function comments(bool $orderByCreated = true): MorphMany
     {

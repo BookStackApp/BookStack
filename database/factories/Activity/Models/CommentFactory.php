@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Activity\Models;
 
+use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CommentFactory extends Factory
@@ -29,12 +30,16 @@ class CommentFactory extends Factory
         $html = '<p>' . $text . '</p>';
         $nextLocalId = static::$nextLocalId++;
 
+        $user = User::query()->first();
+
         return [
             'html'      => $html,
             'parent_id' => null,
             'local_id'  => $nextLocalId,
             'content_ref' => '',
             'archived' => false,
+            'created_by' => $user ?? User::factory(),
+            'updated_by' => $user ?? User::factory(),
         ];
     }
 }

@@ -31,6 +31,7 @@ class CommentRepo
 
     /**
      * Start a query for comments visible to the user.
+     * @return Builder<Comment>
      */
     public function getQueryForVisible(): Builder
     {
