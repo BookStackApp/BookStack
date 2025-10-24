@@ -22,7 +22,7 @@ class CommentController extends Controller
     /**
      * Save a new comment for a Page.
      *
-     * @throws ValidationException
+     * @throws ValidationException|\Exception
      */
     public function savePageComment(Request $request, int $pageId)
     {
@@ -35,11 +35,6 @@ class CommentController extends Controller
         $page = $this->pageQueries->findVisibleById($pageId);
         if ($page === null) {
             return response('Not found', 404);
-        }
-
-        // Prevent adding comments to draft pages
-        if ($page->draft) {
-            return $this->jsonError(trans('errors.cannot_add_comment_to_draft'), 400);
         }
 
         // Create a new comment.

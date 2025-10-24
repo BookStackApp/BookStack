@@ -6,7 +6,7 @@
  * Controllers all end with "ApiController"
  */
 
-use BookStack\Activity\Controllers\AuditLogApiController;
+use BookStack\Activity\Controllers as ActivityControllers;
 use BookStack\Api\ApiDocsController;
 use BookStack\App\SystemApiController;
 use BookStack\Entities\Controllers as EntityControllers;
@@ -70,6 +70,12 @@ Route::delete('image-gallery/{id}', [ImageGalleryApiController::class, 'delete']
 
 Route::get('search', [SearchApiController::class, 'all']);
 
+Route::get('comments', [ActivityControllers\CommentApiController::class, 'list']);
+Route::post('comments', [ActivityControllers\CommentApiController::class, 'create']);
+Route::get('comments/{id}', [ActivityControllers\CommentApiController::class, 'read']);
+Route::put('comments/{id}', [ActivityControllers\CommentApiController::class, 'update']);
+Route::delete('comments/{id}', [ActivityControllers\CommentApiController::class, 'delete']);
+
 Route::get('shelves', [EntityControllers\BookshelfApiController::class, 'list']);
 Route::post('shelves', [EntityControllers\BookshelfApiController::class, 'create']);
 Route::get('shelves/{id}', [EntityControllers\BookshelfApiController::class, 'read']);
@@ -101,6 +107,6 @@ Route::delete('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiContro
 Route::get('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'read']);
 Route::put('content-permissions/{contentType}/{contentId}', [ContentPermissionApiController::class, 'update']);
 
-Route::get('audit-log', [AuditLogApiController::class, 'list']);
+Route::get('audit-log', [ActivityControllers\AuditLogApiController::class, 'list']);
 
 Route::get('system', [SystemApiController::class, 'read']);

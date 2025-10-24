@@ -199,7 +199,7 @@ abstract class TestCase extends BaseTestCase
     {
         if ($response->status() === 403 && $response instanceof JsonResponse) {
             $errMessage = $response->getData(true)['error']['message'] ?? '';
-            return $errMessage === 'You do not have permission to perform the requested action.';
+            return str_contains($errMessage, 'do not have permission');
         }
 
         return $response->status() === 302

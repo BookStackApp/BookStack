@@ -340,8 +340,8 @@ class WatchTest extends TestCase
             ActivityType::PAGE_CREATE => $entities['page'],
             ActivityType::PAGE_UPDATE => $entities['page'],
             ActivityType::COMMENT_CREATE => Comment::factory()->make([
-                'entity_id' => $entities['page']->id,
-                'entity_type' => $entities['page']->getMorphClass(),
+                'commentable_id' => $entities['page']->id,
+                'commentable_type' => $entities['page']->getMorphClass(),
             ]),
         ];
 

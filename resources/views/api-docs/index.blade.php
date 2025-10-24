@@ -45,7 +45,9 @@
                 @foreach($docs as $model => $endpoints)
                     <section class="card content-wrap auto-height">
                         <h1 class="list-heading text-capitals">{{ $model }}</h1>
-
+                        @if($endpoints[0]['model_description'])
+                            <p>{{ $endpoints[0]['model_description'] }}</p>
+                        @endif
                         @foreach($endpoints as $endpoint)
                             @include('api-docs.parts.endpoint', ['endpoint' => $endpoint, 'loop' => $loop])
                         @endforeach

@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Controllers;
 
+use BookStack\Activity\Tools\CommentTree;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
@@ -88,21 +89,32 @@ class PageApiController extends ApiController
     /**
      * View the details of a single page.
      * Pages will always have HTML content. They may have markdown content
-     * if the markdown editor was used to last update the page.
+     * if the Markdown editor was used to last update the page.
      *
-     * The 'html' property is the fully rendered & escaped HTML content that BookStack
+     * The 'html' property is the fully rendered and escaped HTML content that BookStack
      * would show on page view, with page includes handled.
      * The 'raw_html' property is the direct database stored HTML content, which would be
      * what BookStack shows on page edit.
      *
      * See the "Content Security" section of these docs for security considerations when using
      * the page content returned from this endpoint.
+     *
+     * Comments for the page are provided in a tree-structure representing the hierarchy of top-level
+     * comments and replies, for both archived and active comments.
      */
     public function read(string $id)
     {
         $page = $this->queries->findVisibleByIdOrFail($id);
 
-        return response()->json($page->forJsonDisplay());
+        $page = $page->forJsonDisplay();
+        $commentTree = (new CommentTree($page));
+        $commentTree->loadVisibleHtml();
+        $page->setAttribute('comments', [
+            'active' => $commentTree->getActive(),
+            'archived' => $commentTree->getArchived(),
+        ]);
+
+        return response()->json($page);
     }
 
     /**

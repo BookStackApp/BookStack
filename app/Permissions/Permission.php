@@ -48,9 +48,7 @@ enum Permission: string
     case AttachmentUpdateAll = 'attachment-update-all';
     case AttachmentUpdateOwn = 'attachment-update-own';
 
-    case CommentCreate = 'comment-create';
     case CommentCreateAll = 'comment-create-all';
-    case CommentCreateOwn = 'comment-create-own';
     case CommentDelete = 'comment-delete';
     case CommentDeleteAll = 'comment-delete-all';
     case CommentDeleteOwn = 'comment-delete-own';

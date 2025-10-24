@@ -5,7 +5,6 @@ namespace Tests\Api;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Repos\BaseRepo;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class BooksApiTest extends TestCase
