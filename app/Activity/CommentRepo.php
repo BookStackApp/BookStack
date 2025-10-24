@@ -74,6 +74,7 @@ class CommentRepo
         ActivityService::add(ActivityType::COMMENT_CREATE, $comment);
         ActivityService::add(ActivityType::COMMENTED_ON, $entity);
 
+        $comment->refresh()->unsetRelations();
         return $comment;
     }
 
