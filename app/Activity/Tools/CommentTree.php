@@ -13,6 +13,11 @@ class CommentTree
      * @var CommentTreeNode[]
      */
     protected array $tree;
+
+    /**
+     * A linear array of loaded comments.
+     * @var Comment[]
+     */
     protected array $comments;
 
     public function __construct(
@@ -39,7 +44,7 @@ class CommentTree
 
     public function getActive(): array
     {
-        return array_filter($this->tree, fn (CommentTreeNode $node) => !$node->comment->archived);
+        return array_values(array_filter($this->tree, fn (CommentTreeNode $node) => !$node->comment->archived));
     }
 
     public function activeThreadCount(): int
@@ -49,7 +54,7 @@ class CommentTree
 
     public function getArchived(): array
     {
-        return array_filter($this->tree, fn (CommentTreeNode $node) => $node->comment->archived);
+        return array_values(array_filter($this->tree, fn (CommentTreeNode $node) => $node->comment->archived));
     }
 
     public function archivedThreadCount(): int
@@ -77,6 +82,14 @@ class CommentTree
         }
 
         return false;
+    }
+
+    public function loadVisibleHtml(): void
+    {
+        foreach ($this->comments as $comment) {
+            $comment->setAttribute('html', $comment->safeHtml());
+            $comment->makeVisible('html');
+        }
     }
 
     /**
@@ -123,6 +136,9 @@ class CommentTree
         return new CommentTreeNode($byId[$id], $depth, $children);
     }
 
+    /**
+     * @return Comment[]
+     */
     protected function loadComments(): array
     {
         if (!$this->enabled()) {

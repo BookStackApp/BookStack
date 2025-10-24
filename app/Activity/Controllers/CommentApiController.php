@@ -18,11 +18,12 @@ use Illuminate\Http\Response;
  * scoped to the page which the comment is on. The 'parent_id' is used for replies
  * and refers to the 'local_id' of the parent comment on the same page, not the main
  * globally unique 'id'.
+ *
+ * If you want to get all comments for a page in a tree-like structure, as reflected in
+ * the UI, then that is provided on pages-read API responses.
  */
 class CommentApiController extends ApiController
 {
-    // TODO - Add tree-style comment listing to page-show responses.
-
     protected array $rules = [
         'create' => [
             'page_id' => ['required', 'integer'],

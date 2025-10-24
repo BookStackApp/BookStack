@@ -14,6 +14,11 @@ class CommentFactory extends Factory
     protected $model = \BookStack\Activity\Models\Comment::class;
 
     /**
+     * A static counter to provide a unique local_id for each comment.
+     */
+    protected static int $nextLocalId = 1000;
+
+    /**
      * Define the model's default state.
      *
      * @return array
@@ -22,11 +27,12 @@ class CommentFactory extends Factory
     {
         $text = $this->faker->paragraph(1);
         $html = '<p>' . $text . '</p>';
+        $nextLocalId = static::$nextLocalId++;
 
         return [
             'html'      => $html,
             'parent_id' => null,
-            'local_id'  => 1,
+            'local_id'  => $nextLocalId,
             'content_ref' => '',
             'archived' => false,
         ];
