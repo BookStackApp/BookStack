@@ -109,16 +109,11 @@ class SearchRunner
     protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page, int $count): Collection
     {
         $entities = $query->clone()
-//            ->with(array_filter($relations))
             ->skip(($page - 1) * $count)
             ->take($count)
             ->get();
 
         $hydrated = (new EntityHydrator($entities->all(), true, true))->hydrate();
-
-        // TODO - Load in books for pages/chapters efficiently (scoped to visible)
-        // TODO - Load in chapters for pages efficiently (scoped to visible)
-        // TODO - Load in tags efficiently
 
         return collect($hydrated);
     }

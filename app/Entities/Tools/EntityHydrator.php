@@ -37,7 +37,7 @@ class EntityHydrator
         $hydrated = [];
 
         foreach ($this->entities as $entity) {
-            $data = $entity->toArray();
+            $data = $entity->getRawOriginal();
             $instance = Entity::instanceFromType($entity->type);
 
             if ($instance instanceof Page) {
@@ -45,7 +45,7 @@ class EntityHydrator
                 unset($data['description']);
             }
 
-            $instance->forceFill($data);
+            $instance = $instance->setRawAttributes($data, true);
             $hydrated[] = $instance;
         }
 
@@ -131,7 +131,8 @@ class EntityHydrator
             }
         });
 
-        $parents = $filtered ? (new EntityHydrator($parentQuery->get()->all()))->hydrate() : [];
+        $parentModels = $filtered ? $parentQuery->get()->all() : [];
+        $parents = (new EntityHydrator($parentModels))->hydrate();
         $parentMap = [];
         foreach ($parents as $parent) {
             $parentMap[$parent->type . ':' . $parent->id] = $parent;
@@ -139,12 +140,12 @@ class EntityHydrator
 
         foreach ($entities as $entity) {
             if ($entity instanceof Page || $entity instanceof Chapter) {
-                $key = 'book:' . $entity->getAttribute('book_id');
-                $entity->setRelation('book', $parentMap[$key] ?? null);
+                $key = 'book:' . $entity->getRawAttribute('book_id');
+                $entity->setAttribute('book', $parentMap[$key] ?? null);
             }
             if ($entity instanceof Page) {
-                $key = 'chapter:' . $entity->getAttribute('chapter_id');
-                $entity->setRelation('chapter', $parentMap[$key] ?? null);
+                $key = 'chapter:' . $entity->getRawAttribute('chapter_id');
+                $entity->setAttribute('chapter', $parentMap[$key] ?? null);
             }
         }
     }
