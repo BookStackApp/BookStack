@@ -6,7 +6,7 @@
 return [
 
     // Shared
-    'recently_created' => 'اخیرا ایجاد شده',
+    'recently_created' => 'تازه ایجاد شده',
     'recently_created_pages' => 'صفحات اخیرا ایجاد شده',
     'recently_updated_pages' => 'صفحاتی که اخیرا روزآمد شده‌اند',
     'recently_created_chapters' => 'فصل های اخیرا ایجاد شده',
@@ -39,7 +39,7 @@ return [
     'export_pdf' => 'فایل PDF',
     'export_text' => 'پرونده متنی ساده',
     'export_md' => 'راهنما مارک‌دون',
-    'export_zip' => 'فایل فشرده‌ی قابل‌حمل (ZIP)',
+    'export_zip' => 'فایل فشرده‌ی زیپ',
     'default_template' => 'قالب پیش‌فرض صفحه',
     'default_template_explain' => 'قالبی برای صفحه تعیین کنید که به‌عنوان محتوای پیش‌فرض در تمام صفحاتی که در این مورد ایجاد می‌شوند، به‌کار رود. توجه داشته باشید این قالب تنها در صورتی اعمال می‌شود که سازندهٔ صفحه به صفحهٔ قالب انتخاب‌شده دسترسی نمایشی داشته باشد.',
     'default_template_select' => 'انتخاب صفحهٔ قالب',
@@ -63,8 +63,8 @@ return [
     'import_delete_desc' => 'با انجام این کار، فایل ZIP واردشده حذف می‌شود و این عمل بازگشت‌ناپذیر است.',
     'import_errors' => 'خطای انتقال ورودی',
     'import_errors_desc' => 'در جریان تلاش برای انتقال ورودی، خطاهای زیر رخ داد:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
+    'breadcrumb_siblings_for_page' => 'پیمایش صفحات هم‌سطح',
+    'breadcrumb_siblings_for_chapter' => 'پیمایش فصل‌های هم‌سطح',
     'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
     'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
 
