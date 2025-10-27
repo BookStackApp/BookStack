@@ -54,7 +54,7 @@ class MixedEntityListLoader
         $modelMap = [];
 
         foreach ($idsByType as $type => $ids) {
-            $base = $withContents ? $this->queries->visibleForContent($type) : $this->queries->visibleForList($type);
+            $base = $withContents ? $this->queries->visibleForContentForType($type) : $this->queries->visibleForListForType($type);
             $models = $base->whereIn('id', $ids)
                 ->with($eagerLoadParents ? $this->getRelationsToEagerLoad($type) : [])
                 ->get();
