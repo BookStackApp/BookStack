@@ -11,7 +11,6 @@ use BookStack\Search\Options\TagSearchOption;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
@@ -30,17 +29,15 @@ class SearchRunner
         protected EntityProvider $entityProvider,
         protected PermissionApplicator $permissions,
         protected EntityQueries $entityQueries,
+        protected EntityHydrator $entityHydrator,
     ) {
         $this->termAdjustmentCache = new WeakMap();
     }
 
     /**
      * Search all entities in the system.
-     * The provided count is for each entity to search,
-     * Total returned could be larger and not guaranteed.
-     * // TODO - Update this comment
      *
-     * @return array{total: int, count: int, has_more: bool, results: Collection<Entity>}
+     * @return array{total: int, results: Collection<Entity>}
      */
     public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20): array
     {
@@ -58,14 +55,9 @@ class SearchRunner
         $total = $searchQuery->count();
         $results = $this->getPageOfDataFromQuery($searchQuery, $page, $count);
 
-        // TODO - Pagination?
-        $hasMore = ($total > ($page * $count));
-
         return [
             'total'    => $total,
-            'count'    => count($results),
-            'has_more' => $hasMore,
-            'results'  => $results->sortByDesc('score')->values(),
+            'results'  => $results->values(),
         ];
     }
 
@@ -79,15 +71,8 @@ class SearchRunner
         $filterMap = $opts->filters->toValueMap();
         $entityTypesToSearch = isset($filterMap['type']) ? explode('|', $filterMap['type']) : $entityTypes;
 
-        $results = collect();
-        foreach ($entityTypesToSearch as $entityType) {
-            if (!in_array($entityType, $entityTypes)) {
-                continue;
-            }
-
-            $search = $this->buildQuery($opts, $entityType)->where('book_id', '=', $bookId)->take(20)->get();
-            $results = $results->merge($search);
-        }
+        $filteredTypes = array_intersect($entityTypesToSearch, $entityTypes);
+        $results = $this->buildQuery($opts, $filteredTypes)->where('book_id', '=', $bookId)->take(20)->get();
 
         return $results->sortByDesc('score')->take(20);
     }
@@ -98,7 +83,7 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $pages = $this->buildQuery($opts, 'page')->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $pages = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId)->take(20)->get();
 
         return $pages->sortByDesc('score');
     }
@@ -113,7 +98,7 @@ class SearchRunner
             ->take($count)
             ->get();
 
-        $hydrated = (new EntityHydrator($entities->all(), true, true))->hydrate();
+        $hydrated = $this->entityHydrator->hydrate($entities->all(), true, true);
 
         return collect($hydrated);
     }

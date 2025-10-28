@@ -12,31 +12,22 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EntityHydrator
 {
-    /**
-     * @var EntityTable[] $entities
-     */
-    protected array $entities;
-
-    protected bool $loadTags = false;
-    protected bool $loadParents = false;
-
-    public function __construct(array $entities, bool $loadTags = false, bool $loadParents = false)
-    {
-        $this->entities = $entities;
-        $this->loadTags = $loadTags;
-        $this->loadParents = $loadParents;
+    public function __construct(
+        protected EntityQueries $entityQueries,
+    ) {
     }
 
     /**
      * Hydrate the entities of this hydrator to return a list of entities represented
      * in their original intended models.
+     * @param EntityTable[] $entities
      * @return Entity[]
      */
-    public function hydrate(): array
+    public function hydrate(array $entities, bool $loadTags = false, bool $loadParents = false): array
     {
         $hydrated = [];
 
-        foreach ($this->entities as $entity) {
+        foreach ($entities as $entity) {
             $data = $entity->getRawOriginal();
             $instance = Entity::instanceFromType($entity->type);
 
@@ -49,11 +40,11 @@ class EntityHydrator
             $hydrated[] = $instance;
         }
 
-        if ($this->loadTags) {
+        if ($loadTags) {
             $this->loadTagsIntoModels($hydrated);
         }
 
-        if ($this->loadParents) {
+        if ($loadParents) {
             $this->loadParentsIntoModels($hydrated);
         }
 
@@ -115,10 +106,7 @@ class EntityHydrator
             }
         }
 
-        // TODO - Inject in?
-        $queries = app()->make(EntityQueries::class);
-
-        $parentQuery = $queries->visibleForList();
+        $parentQuery = $this->entityQueries->visibleForList();
         $filtered = count($parentsByType['book']) > 0 || count($parentsByType['chapter']) > 0;
         $parentQuery = $parentQuery->where(function ($query) use ($parentsByType) {
             foreach ($parentsByType as $type => $ids) {
@@ -132,7 +120,7 @@ class EntityHydrator
         });
 
         $parentModels = $filtered ? $parentQuery->get()->all() : [];
-        $parents = (new EntityHydrator($parentModels))->hydrate();
+        $parents = $this->hydrate($parentModels);
         $parentMap = [];
         foreach ($parents as $parent) {
             $parentMap[$parent->type . ':' . $parent->id] = $parent;
