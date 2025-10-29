@@ -265,6 +265,23 @@ class ImageService
     }
 
     /**
+     * Check if the given path exists and is accessible depending on the current settings.
+     */
+    public function pathAccessible(string $imagePath): bool
+    {
+        $disk = $this->storage->getDisk('gallery');
+
+        if ($this->storage->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
+            return false;
+        }
+
+        // Check local_secure is active
+        return $disk->exists($imagePath)
+            // Check the file is likely an image file
+            && str_starts_with($disk->mimeType($imagePath), 'image/');
+    }
+
+    /**
      * Check that the current user has access to the relation
      * of the image at the given path.
      */
