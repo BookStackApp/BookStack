@@ -471,4 +471,17 @@ abstract class Entity extends Model implements
 
         return $contentFields;
     }
+
+    /**
+     * Create a new instance for the given entity type.
+     */
+    public static function instanceFromType(string $type): self
+    {
+        return match ($type) {
+            'page' => new Page(),
+            'chapter' => new Chapter(),
+            'book' => new Book(),
+            'bookshelf' => new Bookshelf(),
+        };
+    }
 }

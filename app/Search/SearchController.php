@@ -7,6 +7,7 @@ use BookStack\Entities\Queries\QueryPopular;
 use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
 {
@@ -23,20 +24,21 @@ class SearchController extends Controller
     {
         $searchOpts = SearchOptions::fromRequest($request);
         $fullSearchString = $searchOpts->toString();
-        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
-
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page + 1));
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
         $formatter->format($results['results']->all(), $searchOpts);
+        $paginator = new LengthAwarePaginator($results['results'], $results['total'], 20, $page);
+        $paginator->setPath('/search');
+        $paginator->appends($request->except('page'));
+
+        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         return view('search.all', [
             'entities'     => $results['results'],
             'totalResults' => $results['total'],
+            'paginator'    => $paginator,
             'searchTerm'   => $fullSearchString,
-            'hasNextPage'  => $results['has_more'],
-            'nextPageLink' => $nextPageLink,
             'options'      => $searchOpts,
         ]);
     }
@@ -128,7 +130,7 @@ class SearchController extends Controller
     }
 
     /**
-     * Search siblings items in the system.
+     * Search sibling items in the system.
      */
     public function searchSiblings(Request $request, SiblingFetcher $siblingFetcher)
     {

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BookStack\Search;
 
 use BookStack\Api\ApiEntityListFormatter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Http\ApiController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SearchApiController extends ApiController
@@ -31,11 +34,9 @@ class SearchApiController extends ApiController
      * between: bookshelf, book, chapter & page.
      *
      * The paging parameters and response format emulates a standard listing endpoint
-     * but standard sorting and filtering cannot be done on this endpoint. If a count value
-     * is provided this will only be taken as a suggestion. The results in the response
-     * may currently be up to 4x this value.
+     * but standard sorting and filtering cannot be done on this endpoint.
      */
-    public function all(Request $request)
+    public function all(Request $request): JsonResponse
     {
         $this->validate($request, $this->rules['all']);
 

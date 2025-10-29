@@ -27,6 +27,12 @@ class EntitySearchTest extends TestCase
         $search->assertSeeText($shelf->name, true);
     }
 
+    public function test_search_shows_pagination()
+    {
+        $search = $this->asEditor()->get('/search?term=a');
+        $this->withHtml($search)->assertLinkExists('/search?term=a&page=2', '2');
+    }
+
     public function test_invalid_page_search()
     {
         $resp = $this->asEditor()->get('/search?term=' . urlencode('<p>test</p>'));

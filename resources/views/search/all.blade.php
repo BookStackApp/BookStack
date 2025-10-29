@@ -87,11 +87,7 @@
                         @include('entities.list', ['entities' => $entities, 'showPath' => true, 'showTags' => true])
                     </div>
 
-                    @if($hasNextPage)
-                        <div class="text-right mt-m">
-                            <a href="{{ $nextPageLink }}" class="button outline">{{ trans('entities.search_more') }}</a>
-                        </div>
-                    @endif
+                    {{ $paginator->render() }}
                 </div>
             </div>
         </div>
