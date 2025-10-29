@@ -5,6 +5,7 @@ namespace BookStack\Entities\Queries;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\EntityTable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
@@ -43,8 +44,14 @@ class EntityQueries
     public function visibleForList(): Builder
     {
         $rawDescriptionField = DB::raw('COALESCE(description, text) as description');
+        $bookSlugSelect = function (QueryBuilder $query) {
+            return $query->select('slug')->from('entities as books')
+                ->whereColumn('books.id', '=', 'entities.book_id')
+                ->where('type', '=', 'book');
+        };
+
         return EntityTable::query()->scopes('visible')
-            ->select(['id', 'type', 'name', 'slug', 'book_id', 'chapter_id', 'created_at', 'updated_at', 'draft', $rawDescriptionField])
+            ->select(['id', 'type', 'name', 'slug', 'book_id', 'chapter_id', 'created_at', 'updated_at', 'draft', 'book_slug' => $bookSlugSelect, $rawDescriptionField])
             ->leftJoin('entity_container_data', function (JoinClause $join) {
                 $join->on('entity_container_data.entity_id', '=', 'entities.id')
                     ->on('entity_container_data.entity_type', '=', 'entities.type');

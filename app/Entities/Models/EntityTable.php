@@ -2,11 +2,15 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Activity\Models\Tag;
+use BookStack\Activity\Models\View;
 use BookStack\App\Model;
+use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Permissions\PermissionApplicator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -32,6 +36,34 @@ class EntityTable extends Model
      */
     public function jointPermissions(): HasMany
     {
-        return $this->hasMany(JointPermission::class, 'entity_id')->whereColumn('entity_type', '=', 'entities.type');
+        return $this->hasMany(JointPermission::class, 'entity_id')
+            ->whereColumn('entity_type', '=', 'entities.type');
+    }
+
+    /**
+     * Get the Tags that have been assigned to entities.
+     */
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class, 'entity_id')
+            ->whereColumn('entity_type', '=', 'entities.type');
+    }
+
+    /**
+     * Get the assigned permissions.
+     */
+    public function permissions(): HasMany
+    {
+        return $this->hasMany(EntityPermission::class, 'entity_id')
+            ->whereColumn('entity_type', '=', 'entities.type');
+    }
+
+    /**
+     * Get View objects for this entity.
+     */
+    public function views(): HasMany
+    {
+        return $this->hasMany(View::class, 'viewable_id')
+            ->whereColumn('viewable_type', '=', 'entities.type');
     }
 }

@@ -72,9 +72,9 @@ class SearchRunner
         $entityTypesToSearch = isset($filterMap['type']) ? explode('|', $filterMap['type']) : $entityTypes;
 
         $filteredTypes = array_intersect($entityTypesToSearch, $entityTypes);
-        $results = $this->buildQuery($opts, $filteredTypes)->where('book_id', '=', $bookId)->take(20)->get();
+        $query = $this->buildQuery($opts, $filteredTypes)->where('book_id', '=', $bookId);
 
-        return $results->sortByDesc('score')->take(20);
+        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
     }
 
     /**
@@ -83,9 +83,9 @@ class SearchRunner
     public function searchChapter(int $chapterId, string $searchString): Collection
     {
         $opts = SearchOptions::fromString($searchString);
-        $pages = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId)->take(20)->get();
+        $query = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId);
 
-        return $pages->sortByDesc('score');
+        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
     }
 
     /**
@@ -120,7 +120,8 @@ class SearchRunner
             $filter = function (EloquentBuilder $query) use ($exact) {
                 $inputTerm = str_replace('\\', '\\\\', $exact->value);
                 $query->where('name', 'like', '%' . $inputTerm . '%')
-                    ->orWhere('description', 'like', '%' . $inputTerm . '%');
+                    ->orWhere('description', 'like', '%' . $inputTerm . '%')
+                    ->orWhere('text', 'like', '%' . $inputTerm . '%');
             };
 
             $exact->negated ? $entityQuery->whereNot($filter) : $entityQuery->where($filter);
@@ -301,7 +302,7 @@ class SearchRunner
         $option->negated ? $query->whereDoesntHave('tags', $filter) : $query->whereHas('tags', $filter);
     }
 
-    protected function applyNegatableWhere(EloquentBuilder $query, bool $negated, string $column, string $operator, mixed $value): void
+    protected function applyNegatableWhere(EloquentBuilder $query, bool $negated, string|callable $column, string|null $operator, mixed $value): void
     {
         if ($negated) {
             $query->whereNot($column, $operator, $value);
@@ -376,7 +377,10 @@ class SearchRunner
 
     protected function filterInBody(EloquentBuilder $query, string $input, bool $negated)
     {
-        $this->applyNegatableWhere($query, $negated, 'description', 'like', '%' . $input . '%');
+        $this->applyNegatableWhere($query, $negated, function (EloquentBuilder $query) use ($input) {
+            $query->where('description', 'like', '%' . $input . '%')
+                ->orWhere('text', 'like', '%' . $input . '%');
+        }, null, null);
     }
 
     protected function filterIsRestricted(EloquentBuilder $query, string $input, bool $negated)

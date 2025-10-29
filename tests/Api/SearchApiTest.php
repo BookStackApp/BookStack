@@ -113,6 +113,7 @@ class SearchApiTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($book);
 
         $resp = $this->getJson($this->baseEndpoint . '?query=superextrauniquevalue');
+        $resp->assertOk();
         $resp->assertJsonPath('data.0.id', $page->id);
         $resp->assertJsonMissingPath('data.0.book.name');
     }

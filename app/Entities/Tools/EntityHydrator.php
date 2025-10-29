@@ -129,11 +129,11 @@ class EntityHydrator
         foreach ($entities as $entity) {
             if ($entity instanceof Page || $entity instanceof Chapter) {
                 $key = 'book:' . $entity->getRawAttribute('book_id');
-                $entity->setAttribute('book', $parentMap[$key] ?? null);
+                $entity->setRelation('book', $parentMap[$key] ?? null);
             }
             if ($entity instanceof Page) {
                 $key = 'chapter:' . $entity->getRawAttribute('chapter_id');
-                $entity->setAttribute('chapter', $parentMap[$key] ?? null);
+                $entity->setRelation('chapter', $parentMap[$key] ?? null);
             }
         }
     }
