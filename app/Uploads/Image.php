@@ -42,7 +42,9 @@ class Image extends Model implements OwnableInterface
      */
     public function scopeVisible(Builder $query): Builder
     {
-        return app()->make(PermissionApplicator::class)->restrictPageRelationQuery($query, 'images', 'uploaded_to');
+        return app()->make(PermissionApplicator::class)
+            ->restrictPageRelationQuery($query, 'images', 'uploaded_to')
+            ->whereIn('type', ['gallery', 'drawio']);
     }
 
     /**

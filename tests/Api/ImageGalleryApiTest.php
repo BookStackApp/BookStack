@@ -275,6 +275,69 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_read_data_endpoint()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage, 'test-image.png');
+        $image = Image::findOrFail($data['response']->id);
+
+        $resp = $this->get("{$this->baseEndpoint}/{$image->id}/data");
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Type', 'image/png');
+
+        $respData = $resp->streamedContent();
+        $this->assertEquals(file_get_contents($this->files->testFilePath('test-image.png')), $respData);
+    }
+
+    public function test_read_data_endpoint_permission_controlled()
+    {
+        $this->actingAsApiEditor();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage, 'test-image.png');
+        $image = Image::findOrFail($data['response']->id);
+
+        $this->get("{$this->baseEndpoint}/{$image->id}/data")->assertOk();
+
+        $this->permissions->disableEntityInheritedPermissions($imagePage);
+
+        $resp = $this->get("{$this->baseEndpoint}/{$image->id}/data");
+        $resp->assertStatus(404);
+    }
+
+    public function test_read_url_data_endpoint()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage, 'test-image.png');
+
+        $url = url($data['response']->path);
+        $resp = $this->get("{$this->baseEndpoint}/url/data?url=" . urlencode($url));
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Type', 'image/png');
+
+        $respData = $resp->streamedContent();
+        $this->assertEquals(file_get_contents($this->files->testFilePath('test-image.png')), $respData);
+    }
+
+    public function test_read_url_data_endpoint_permission_controlled_when_local_secure_restricted_storage_is_used()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+
+        $this->actingAsApiEditor();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage, 'test-image.png');
+
+        $url = url($data['response']->path);
+        $resp = $this->get("{$this->baseEndpoint}/url/data?url=" . urlencode($url));
+        $resp->assertStatus(200);
+
+        $this->permissions->disableEntityInheritedPermissions($imagePage);
+
+        $resp = $this->get("{$this->baseEndpoint}/url/data?url=" . urlencode($url));
+        $resp->assertStatus(404);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiAdmin();

@@ -64,7 +64,9 @@ Route::get('pages/{id}/export/zip', [ExportControllers\PageExportApiController::
 
 Route::get('image-gallery', [ImageGalleryApiController::class, 'list']);
 Route::post('image-gallery', [ImageGalleryApiController::class, 'create']);
+Route::get('image-gallery/url/data', [ImageGalleryApiController::class, 'readDataForUrl']);
 Route::get('image-gallery/{id}', [ImageGalleryApiController::class, 'read']);
+Route::get('image-gallery/{id}/data', [ImageGalleryApiController::class, 'readData']);
 Route::put('image-gallery/{id}', [ImageGalleryApiController::class, 'update']);
 Route::delete('image-gallery/{id}', [ImageGalleryApiController::class, 'delete']);
 
