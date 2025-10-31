@@ -378,6 +378,21 @@ class EntitySearchTest extends TestCase
         $search->assertSee('<strong>На</strong> <strong>мен</strong> <strong>ми</strong> <strong>трябва</strong> <strong>нещо</strong> <strong>добро</strong> test', false);
     }
 
+    public function test_match_highlighting_is_efficient_with_large_frequency_in_content()
+    {
+        $content = str_repeat('superbeans ', 10000);
+        $this->entities->newPage([
+            'name' => 'Test Page',
+            'html' => "<p>{$content}</p>",
+        ]);
+
+        $time = microtime(true);
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('superbeans'));
+        $this->assertLessThan(0.5, microtime(true) - $time);
+
+        $resp->assertSee('<strong>superbeans</strong>', false);
+    }
+
     public function test_html_entities_in_item_details_remains_escaped_in_search_results()
     {
         $this->entities->newPage(['name' => 'My <cool> TestPageContent', 'html' => '<p>My supercool &lt;great&gt; TestPageContent page</p>']);
