@@ -274,7 +274,19 @@
 
 .sticky-sidebar {
   position: sticky;
-  top: vars.$m;
-  max-height: calc(100vh - #{vars.$m});
+  top: 0;
+  padding-left: 2px;
+  max-height: calc(100vh);
   overflow-y: auto;
+  .sticky-sidebar-header {
+    position: sticky;
+    top: 0;
+    background: #F2F2F2;
+    background: linear-gradient(180deg,rgba(242, 242, 242, 1) 66%, rgba(242, 242, 242, 0) 100%);
+    z-index: 4;
+  }
+}
+.dark-mode .sticky-sidebar-header {
+  background: #111;
+  background: linear-gradient(180deg,rgba(17, 17, 17, 1) 66%, rgba(17, 17, 17, 0) 100%);
 }
