@@ -46,7 +46,7 @@ return [
     'import' => '导入',
     'import_validate' => '验证导入',
     'import_desc' => '使用便携式 zip 导出从相同或不同的实例导入书籍、章节和页面。选择一个 ZIP 文件以继续。文件上传并验证后，您就可以在下一个视图中配置和确认导入。',
-    'import_zip_select' => '选择要上床的 ZIP 文件',
+    'import_zip_select' => '选择要上传的 ZIP 文件',
     'import_zip_validation_errors' => '验证提供的 ZIP 文件时检测到错误:',
     'import_pending' => '等待导入',
     'import_pending_none' => '尚未开始导入。',
