@@ -44,9 +44,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
  * @property Carbon     $deleted_at
- * @property int        $created_by
- * @property int        $updated_by
- * @property int        $owned_by
+ * @property int|null   $created_by
+ * @property int|null   $updated_by
+ * @property int|null   $owned_by
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()

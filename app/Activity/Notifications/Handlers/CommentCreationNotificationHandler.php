@@ -27,7 +27,7 @@ class CommentCreationNotificationHandler extends BaseNotificationHandler
         $watcherIds = $watchers->getWatcherUserIds();
 
         // Page owner if user preferences allow
-        if (!$watchers->isUserIgnoring($page->owned_by) && $page->ownedBy) {
+        if ($page->owned_by && !$watchers->isUserIgnoring($page->owned_by) && $page->ownedBy) {
             $userNotificationPrefs = new UserNotificationPreferences($page->ownedBy);
             if ($userNotificationPrefs->notifyOnOwnPageComments()) {
                 $watcherIds[] = $page->owned_by;
@@ -36,7 +36,7 @@ class CommentCreationNotificationHandler extends BaseNotificationHandler
 
         // Parent comment creator if preferences allow
         $parentComment = $detail->parent()->first();
-        if ($parentComment && !$watchers->isUserIgnoring($parentComment->created_by) && $parentComment->createdBy) {
+        if ($parentComment && $parentComment->created_by && !$watchers->isUserIgnoring($parentComment->created_by) && $parentComment->createdBy) {
             $parentCommenterNotificationsPrefs = new UserNotificationPreferences($parentComment->createdBy);
             if ($parentCommenterNotificationsPrefs->notifyOnCommentReplies()) {
                 $watcherIds[] = $parentComment->created_by;

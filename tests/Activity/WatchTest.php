@@ -327,6 +327,24 @@ class WatchTest extends TestCase
         });
     }
 
+    public function test_notify_watch_page_ignore_when_no_page_owner()
+    {
+        $editor = $this->users->editor();
+        $entities = $this->entities->createChainBelongingToUser($editor);
+        $entities['page']->owned_by = null;
+        $entities['page']->save();
+
+        $watches = new UserEntityWatchOptions($editor, $entities['page']);
+        $watches->updateLevelByValue(WatchLevels::IGNORE);
+
+        $notifications = Notification::fake();
+        $this->asAdmin();
+
+        $this->entities->updatePage($entities['page'], ['name' => 'My updated page', 'html' => 'Hello']);
+
+        $notifications->assertNothingSent();
+    }
+
     public function test_notifications_sent_in_right_language()
     {
         $editor = $this->users->editor();
