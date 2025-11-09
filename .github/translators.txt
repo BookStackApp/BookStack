@@ -177,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: French; Dutch; Portuguese, Brazilian; Portuguese; Turkish; 
+REMOVED_USER :: French; German; Dutch; Portuguese, Brazilian; Portuguese; Turkish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -222,7 +222,7 @@ SmokingCrop :: Dutch
 Maciej Lebiest (Szwendacz) :: Polish
 DiscordDigital :: German; German Informal
 Gábor Marton (dodver) :: Hungarian
-Jasell :: Swedish
+Jakob Åsell (Jasell) :: Swedish
 Ghost_chu (ghostchu) :: Chinese Simplified
 Ravid Shachar (ravidshachar) :: Hebrew
 Helga Guchshenskaya (guchshenskaya) :: Russian
@@ -509,3 +509,5 @@ iamwhoiamwhoami :: Swedish
 Grogui :: French
 MrCharlesIII :: Arabic
 David Olsen (dawin) :: Danish
+ltnzr :: French
+Frank Holler (holler.frank) :: German; German Informal

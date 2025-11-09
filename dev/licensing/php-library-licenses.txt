@@ -465,7 +465,7 @@ Link: https://github.com/php-fig/simple-cache.git
 psy/psysh
 License: MIT
 License File: vendor/psy/psysh/LICENSE
-Copyright: Copyright (c) 2012-2023 Justin Hileman
+Copyright: Copyright (c) 2012-2025 Justin Hileman
 Source: https://github.com/bobthecow/psysh.git
 Link: https://psysh.org
 -----------
@@ -676,6 +676,20 @@ Copyright: Copyright (c) 2022-present Fabien Potencier
 Source: https://github.com/symfony/polyfill-php83.git
 Link: https://symfony.com
 -----------
+symfony/polyfill-php84
+License: MIT
+License File: vendor/symfony/polyfill-php84/LICENSE
+Copyright: Copyright (c) 2024-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php84.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php85
+License: MIT
+License File: vendor/symfony/polyfill-php85/LICENSE
+Copyright: Copyright (c) 2025-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php85.git
+Link: https://symfony.com
+-----------
 symfony/polyfill-uuid
 License: MIT
 License File: vendor/symfony/polyfill-uuid/LICENSE
@@ -759,10 +773,3 @@ License File: vendor/voku/portable-ascii/LICENSE.txt
 Copyright: Copyright (C) 2019 Lars Moelleken
 Source: https://github.com/voku/portable-ascii.git
 Link: https://github.com/voku/portable-ascii
------------
-webmozart/assert
-License: MIT
-License File: vendor/webmozart/assert/LICENSE
-Copyright: Copyright (c) 2014 Bernhard Schussek
-Source: https://github.com/webmozarts/assert.git
-Link: https://github.com/webmozarts/assert.git
