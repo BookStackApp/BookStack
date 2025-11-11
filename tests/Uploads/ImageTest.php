@@ -73,6 +73,10 @@ class ImageTest extends TestCase
 
     public function test_image_display_thumbnail_generation_for_animated_avif_images_uses_original_file()
     {
+        if (! function_exists('imageavif')) {
+            $this->markTestSkipped('imageavif() is not available');
+        }
+
         $page = $this->entities->page();
         $admin = $this->users->admin();
         $this->actingAs($admin);

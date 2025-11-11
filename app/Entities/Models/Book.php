@@ -67,8 +67,7 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
      */
     public function chapters(): HasMany
     {
-        return $this->hasMany(Chapter::class)
-            ->where('type', '=', 'chapter');
+        return $this->hasMany(Chapter::class);
     }
 
     /**
