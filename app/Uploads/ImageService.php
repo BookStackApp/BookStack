@@ -148,7 +148,7 @@ class ImageService
     }
 
     /**
-     * Destroy an image along with its revisions, thumbnails and remaining folders.
+     * Destroy an image along with its revisions, thumbnails, and remaining folders.
      *
      * @throws Exception
      */
@@ -252,16 +252,7 @@ class ImageService
     {
         $disk = $this->storage->getDisk('gallery');
 
-        if ($this->storage->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
-            return false;
-        }
-
-        // Check local_secure is active
-        return $disk->usingSecureImages()
-            // Check the image file exists
-            && $disk->exists($imagePath)
-            // Check the file is likely an image file
-            && str_starts_with($disk->mimeType($imagePath), 'image/');
+        return $disk->usingSecureImages() && $this->pathAccessible($imagePath);
     }
 
     /**
@@ -269,16 +260,40 @@ class ImageService
      */
     public function pathAccessible(string $imagePath): bool
     {
-        $disk = $this->storage->getDisk('gallery');
-
         if ($this->storage->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImageAtPath($imagePath)) {
             return false;
         }
 
-        // Check local_secure is active
-        return $disk->exists($imagePath)
-            // Check the file is likely an image file
-            && str_starts_with($disk->mimeType($imagePath), 'image/');
+        if ($this->storage->usingSecureImages() && user()->isGuest()) {
+            return false;
+        }
+
+        return $this->imageFileExists($imagePath, 'gallery');
+    }
+
+    /**
+     * Check if the given image should be accessible to the current user.
+     */
+    public function imageAccessible(Image $image): bool
+    {
+        if ($this->storage->usingSecureRestrictedImages() && !$this->checkUserHasAccessToRelationOfImage($image)) {
+            return false;
+        }
+
+        if ($this->storage->usingSecureImages() && user()->isGuest()) {
+            return false;
+        }
+
+        return $this->imageFileExists($image->path, $image->type);
+    }
+
+    /**
+     * Check if the given image path exists for the given image type and that it is likely an image file.
+     */
+    protected function imageFileExists(string $imagePath, string $imageType): bool
+    {
+        $disk = $this->storage->getDisk($imageType);
+        return $disk->exists($imagePath) && str_starts_with($disk->mimeType($imagePath), 'image/');
     }
 
     /**
@@ -307,6 +322,11 @@ class ImageService
             return false;
         }
 
+        return $this->checkUserHasAccessToRelationOfImage($image);
+    }
+
+    protected function checkUserHasAccessToRelationOfImage(Image $image): bool
+    {
         $imageType = $image->type;
 
         // Allow user or system (logo) images
