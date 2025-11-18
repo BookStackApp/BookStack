@@ -374,6 +374,54 @@ class ZipExportTest extends TestCase
         $this->assertStringContainsString("<a href=\"{$ref}\">Original URL</a><a href=\"{$ref}\">Storage URL</a>", $pageData['html']);
     }
 
+    public function test_orphaned_images_can_be_used_on_default_local_storage()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $result = $this->files->uploadGalleryImageToPage($this, $page);
+        $displayThumb = $result['response']->thumbs->gallery ?? '';
+        $page->html = '<p><img src="' . $displayThumb . '" alt="My image"></p>';
+        $page->save();
+
+        $image = Image::findOrFail($result['response']->id);
+        $image->uploaded_to = null;
+        $image->save();
+
+        $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
+        $zipResp->assertOk();
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
+        $pageData = $zip->data['page'];
+
+        $this->assertCount(1, $pageData['images']);
+        $imageData = $pageData['images'][0];
+        $this->assertEquals($image->id, $imageData['id']);
+
+        $this->assertEquals('<p><img src="[[bsexport:image:' . $imageData['id'] . ']]" alt="My image"></p>', $pageData['html']);
+    }
+
+    public function test_orphaned_images_cannot_be_used_on_local_secure_restricted()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+
+        $this->asEditor();
+        $page = $this->entities->page();
+        $result = $this->files->uploadGalleryImageToPage($this, $page);
+        $displayThumb = $result['response']->thumbs->gallery ?? '';
+        $page->html = '<p><img src="' . $displayThumb . '" alt="My image"></p>';
+        $page->save();
+
+        $image = Image::findOrFail($result['response']->id);
+        $image->uploaded_to = null;
+        $image->save();
+
+        $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
+        $zipResp->assertOk();
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
+        $pageData = $zip->data['page'];
+
+        $this->assertCount(0, $pageData['images']);
+    }
+
     public function test_cross_reference_links_external_to_export_are_not_converted()
     {
         $page = $this->entities->page();
