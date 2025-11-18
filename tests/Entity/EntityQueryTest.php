@@ -1,6 +1,6 @@
 <?php
 
-namespace Entity;
+namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use Illuminate\Database\Eloquent\Builder;

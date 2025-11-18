@@ -93,6 +93,7 @@
             "@php artisan view:clear"
         ],
         "refresh-test-database": [
+            "@putenv APP_TIMEZONE=UTC",
             "@php artisan migrate:refresh --database=mysql_testing",
             "@php artisan db:seed --class=DummyContentSeeder --database=mysql_testing"
         ]

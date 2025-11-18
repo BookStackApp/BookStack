@@ -7,7 +7,7 @@ When it's time for a release the `development` branch is merged into release wit
 
 ## Building CSS & JavaScript Assets
 
-This project uses SASS for CSS development and this is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
+This project uses SASS for CSS development which is built, along with the JavaScript, using a range of npm scripts. The below npm commands can be used to install the dependencies & run the build tasks:
 
 ``` bash
 # Install NPM Dependencies
@@ -113,4 +113,4 @@ docker-compose run app php vendor/bin/phpunit
 ### Debugging
 
 The docker-compose setup ships with Xdebug, which you can listen to on port 9090.
-NB : For some editors like Visual Studio Code, you might need to map your workspace folder to the /app folder within the docker container for this to work.
+NB: For some editors like Visual Studio Code, you might need to map your workspace folder to the /app folder within the docker container for this to work.

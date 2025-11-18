@@ -13,7 +13,6 @@ use BookStack\Search\SearchIndex;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
@@ -23,10 +22,8 @@ class DummyContentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         // Create an editor user
         $editorUser = User::factory()->create();
