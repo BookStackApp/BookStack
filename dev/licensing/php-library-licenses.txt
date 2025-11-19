@@ -13,7 +13,7 @@ Link: http://aws.amazon.com/sdkforphp
 bacon/bacon-qr-code
 License: BSD-2-Clause
 License File: vendor/bacon/bacon-qr-code/LICENSE
-Copyright: Copyright (c) 2017, Ben Scholzen 'DASPRiD'
+Copyright: Copyright (c) 2017-present, Ben Scholzen 'DASPRiD'
 All rights reserved.
 Source: https://github.com/Bacon/BaconQrCode.git
 Link: https://github.com/Bacon/BaconQrCode

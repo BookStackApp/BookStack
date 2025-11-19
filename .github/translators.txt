@@ -511,3 +511,4 @@ MrCharlesIII :: Arabic
 David Olsen (dawin) :: Danish
 ltnzr :: French
 Frank Holler (holler.frank) :: German; German Informal
+Korab Arifi (korabidev) :: Albanian
