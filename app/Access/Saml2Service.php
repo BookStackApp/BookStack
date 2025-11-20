@@ -65,8 +65,7 @@ class Saml2Service
                 [],
                 $user->email,
                 $sessionIndex,
-                true,
-                Constants::NAMEID_EMAIL_ADDRESS
+                true
             );
             $id = $toolKit->getLastRequestID();
         } catch (Error $error) {
