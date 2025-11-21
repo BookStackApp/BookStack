@@ -264,7 +264,7 @@ class ImageService
             return false;
         }
 
-        if ($this->storage->usingSecureImages() && user()->isGuest()) {
+        if ($this->blockedBySecureImages()) {
             return false;
         }
 
@@ -280,11 +280,22 @@ class ImageService
             return false;
         }
 
-        if ($this->storage->usingSecureImages() && user()->isGuest()) {
+        if ($this->blockedBySecureImages()) {
             return false;
         }
 
         return $this->imageFileExists($image->path, $image->type);
+    }
+
+    /**
+     * Check if the current user should be blocked from accessing images based on if secure images are enabled
+     * and if public access is enabled for the application.
+     */
+    protected function blockedBySecureImages(): bool
+    {
+        $enforced = $this->storage->usingSecureImages() && !setting('app-public');
+
+        return $enforced && user()->isGuest();
     }
 
     /**

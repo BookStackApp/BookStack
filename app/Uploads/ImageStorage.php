@@ -74,7 +74,7 @@ class ImageStorage
             return 'local';
         }
 
-        // Rename local_secure options to get our image specific storage driver which
+        // Rename local_secure options to get our image-specific storage driver, which
         // is scoped to the relevant image directories.
         if ($localSecureInUse) {
             return 'local_secure_images';
