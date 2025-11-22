@@ -3,7 +3,7 @@
 BRANCH=${1:-development}
 
 # Build the container with a known name
-docker build --build-arg BRANCH="$BRANCH" -t bookstack:db-testing .
+docker build --no-cache --build-arg BRANCH="$BRANCH" -t bookstack:db-testing .
 if [ $? -eq 1 ]; then
   echo "Failed to build app container for testing"
   exit 1
