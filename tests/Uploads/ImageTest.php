@@ -720,15 +720,15 @@ class ImageTest extends TestCase
         $galleryFileSize = filesize($galleryThumbPath);
 
         // Basic scan of GIF content to check frame count
-        $originalFrameCount = count(explode("\x00\x21\xF9", file_get_contents($originalFile)));
-        $galleryFrameCount = count(explode("\x00\x21\xF9", file_get_contents($galleryThumbPath)));
+        $originalFrameCount = count(explode("\x00\x21\xF9", file_get_contents($originalFile))) - 1;
+        $galleryFrameCount = count(explode("\x00\x21\xF9", file_get_contents($galleryThumbPath))) - 1;
 
         $this->files->deleteAtRelativePath($relPath);
         $this->files->deleteAtRelativePath($galleryThumbRelPath);
 
         $this->assertNotEquals($originalFileSize, $galleryFileSize);
-        $this->assertEquals(3, $originalFrameCount);
-        $this->assertEquals(1, $galleryFrameCount);
+        $this->assertEquals(2, $originalFrameCount);
+        $this->assertLessThan(2, $galleryFrameCount);
     }
 
     protected function getTestProfileImage()

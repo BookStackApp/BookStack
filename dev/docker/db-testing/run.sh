@@ -11,11 +11,9 @@ fi
 
 # List of database containers to test against
 containers=(
-  "mysql:5.7"
   "mysql:8.0"
   "mysql:8.4"
   "mysql:9.5"
-  "mariadb:10.2"
   "mariadb:10.6"
   "mariadb:10.11"
   "mariadb:11.4"

@@ -19,8 +19,8 @@ ARG BRANCH=development
 # Download BookStack & install PHP deps
 RUN mkdir -p /var/www && \
     git clone https://github.com/bookstackapp/bookstack.git --branch "$BRANCH" --single-branch /var/www/bookstack && \
-    cd /var/www/bookstack && \	
-   wget https://raw.githubusercontent.com/composer/getcomposer.org/f3108f64b4e1c1ce6eb462b159956461592b3e3e/web/installer -O - -q | php -- --quiet --filename=composer && \
+    cd /var/www/bookstack && \
+    wget https://raw.githubusercontent.com/composer/getcomposer.org/f3108f64b4e1c1ce6eb462b159956461592b3e3e/web/installer -O - -q | php -- --quiet --filename=composer && \
     php composer install
 
 # Set the BookStack dir as the default working dir
