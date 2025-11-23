@@ -157,7 +157,7 @@ class Saml2Service
     {
         $toolKit = $this->getToolkit(true);
         $settings = $toolKit->getSettings();
-        $metadata = $settings->getSPMetadata();
+        $metadata = $settings->getSPMetadata(ignoreValidUntil: true);
         $errors = $settings->validateMetadata($metadata);
 
         if (!empty($errors)) {
