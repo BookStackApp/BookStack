@@ -17,7 +17,8 @@ class HierarchyTransformer
         protected BookRepo $bookRepo,
         protected BookshelfRepo $shelfRepo,
         protected Cloner $cloner,
-        protected TrashCan $trashCan
+        protected TrashCan $trashCan,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -35,7 +36,7 @@ class HierarchyTransformer
         foreach ($chapter->pages as $page) {
             $page->chapter_id = 0;
             $page->save();
-            $page->changeBook($book->id);
+            $this->parentChanger->changeBook($page, $book->id);
         }
 
         $this->trashCan->destroyEntity($chapter);

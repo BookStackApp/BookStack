@@ -8,12 +8,14 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Entities\Tools\ParentChanger;
 use BookStack\Permissions\Permission;
 
 class BookSorter
 {
     public function __construct(
         protected EntityQueries $queries,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -155,7 +157,7 @@ class BookSorter
 
         // Action the required changes
         if ($bookChanged) {
-            $model = $model->changeBook($newBook->id);
+            $this->parentChanger->changeBook($model, $newBook->id);
         }
 
         if ($model instanceof Page && $chapterChanged) {

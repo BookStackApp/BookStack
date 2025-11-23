@@ -5,12 +5,14 @@ namespace BookStack\Entities\Tools;
 use BookStack\App\Model;
 use BookStack\App\SluggableInterface;
 use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Entity;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Str;
 
 class SlugGenerator
 {
     /**
-     * Generate a fresh slug for the given entity.
+     * Generate a fresh slug for the given item.
      * The slug will be generated so that it doesn't conflict within the same parent item.
      */
     public function generate(SluggableInterface&Model $model, string $slugSource): string
@@ -21,6 +23,26 @@ class SlugGenerator
         }
 
         return $slug;
+    }
+
+    /**
+     * Regenerate the slug for the given entity.
+     */
+    public function regenerateForEntity(Entity $entity): string
+    {
+        $entity->slug = $this->generate($entity, $entity->name);
+
+        return $entity->slug;
+    }
+
+    /**
+     * Regenerate the slug for a user.
+     */
+    public function regenerateForUser(User $user): string
+    {
+        $user->slug = $this->generate($user, $user->name);
+
+        return $user->slug;
     }
 
     /**

@@ -7,6 +7,7 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\ParentChanger;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
@@ -21,6 +22,7 @@ class ChapterRepo
         protected BaseRepo $baseRepo,
         protected EntityQueries $entityQueries,
         protected TrashCan $trashCan,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -97,7 +99,7 @@ class ChapterRepo
         }
 
         return (new DatabaseTransaction(function () use ($chapter, $parent) {
-            $chapter = $chapter->changeBook($parent->id);
+            $this->parentChanger->changeBook($chapter, $parent->id);
             $chapter->rebuildPermissions();
             Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 

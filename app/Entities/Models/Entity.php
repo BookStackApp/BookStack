@@ -13,7 +13,6 @@ use BookStack\Activity\Models\Viewable;
 use BookStack\Activity\Models\Watch;
 use BookStack\App\Model;
 use BookStack\App\SluggableInterface;
-use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Permissions\JointPermissionBuilder;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\JointPermission;
@@ -403,16 +402,6 @@ abstract class Entity extends Model implements
     public function indexForSearch(): void
     {
         app()->make(SearchIndex::class)->indexEntity(clone $this);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshSlug(): string
-    {
-        $this->slug = app()->make(SlugGenerator::class)->generate($this, $this->name);
-
-        return $this->slug;
     }
 
     /**

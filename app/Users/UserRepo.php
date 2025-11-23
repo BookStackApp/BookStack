@@ -5,6 +5,7 @@ namespace BookStack\Users;
 use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
+use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Facades\Activity;
@@ -21,7 +22,8 @@ class UserRepo
 {
     public function __construct(
         protected UserAvatars $userAvatar,
-        protected UserInviteService $inviteService
+        protected UserInviteService $inviteService,
+        protected SlugGenerator $slugGenerator,
     ) {
     }
 
@@ -63,7 +65,7 @@ class UserRepo
         $user->email_confirmed = $emailConfirmed;
         $user->external_auth_id = $data['external_auth_id'] ?? '';
 
-        $user->refreshSlug();
+        $this->slugGenerator->regenerateForUser($user);
         $user->save();
 
         if (!empty($data['language'])) {
@@ -109,7 +111,7 @@ class UserRepo
     {
         if (!empty($data['name'])) {
             $user->name = $data['name'];
-            $user->refreshSlug();
+            $this->slugGenerator->regenerateForUser($user);
         }
 
         if (!empty($data['email']) && $manageUsersAllowed) {
