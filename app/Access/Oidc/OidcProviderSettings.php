@@ -158,10 +158,10 @@ class OidcProviderSettings
     protected function filterKeys(array $keys): array
     {
         return array_filter($keys, function (array $key) {
-            $alg = $key['alg'] ?? 'RS256';
+            $alg = $key['alg'] ?? OidcJwtSigningKeyAlgorithm::RS256->value;
             $use = $key['use'] ?? 'sig';
 
-            return $key['kty'] === 'RSA' && $use === 'sig' && $alg === 'RS256';
+            return $key['kty'] === 'RSA' && $use === 'sig' && OidcJwtSigningKeyAlgorithm::tryFrom($alg) !== null;
         });
     }
 

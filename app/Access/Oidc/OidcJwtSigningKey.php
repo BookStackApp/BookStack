@@ -2,6 +2,7 @@
 
 namespace BookStack\Access\Oidc;
 
+use Illuminate\Support\Facades\Log;
 use phpseclib3\Crypt\Common\PublicKey;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\RSA;
@@ -63,8 +64,9 @@ class OidcJwtSigningKey
         // 'alg' is optional for a JWK, but we will still attempt to validate if
         // it exists otherwise presume it will be compatible.
         $alg = $jwk['alg'] ?? null;
-        if ($jwk['kty'] !== 'RSA' || !(is_null($alg) || $alg === 'RS256')) {
-            throw new OidcInvalidKeyException("Only RS256 keys are currently supported. Found key using {$alg}");
+        $algorithm = OidcJwtSigningKeyAlgorithm::tryFrom($alg ?? OidcJwtSigningKeyAlgorithm::RS256->value);
+        if ($jwk['kty'] !== 'RSA' || $algorithm === null) {
+            throw new OidcInvalidKeyException("Only " . OidcJwtSigningKeyAlgorithm::getSupportedAlgorithms() . " keys are currently supported. Found key using {$alg}");
         }
 
         // 'use' is optional for a JWK but we assume 'sig' where no value exists since that's what
@@ -97,7 +99,16 @@ class OidcJwtSigningKey
             throw new OidcInvalidKeyException('Key loaded from file path is not an RSA key as expected');
         }
 
-        $this->key = $key->withPadding(RSA::SIGNATURE_PKCS1);
+        // apply key-algorithm depending hash
+        $key = match ($algorithm) {
+            OidcJwtSigningKeyAlgorithm::RS256 => $key->withHash('sha256'),
+            OidcJwtSigningKeyAlgorithm::RS512 => $key->withHash('sha512'),
+        };
+        // apply key-algorithm depending padding
+        $this->key = match ($algorithm) {
+            OidcJwtSigningKeyAlgorithm::RS256,
+            OidcJwtSigningKeyAlgorithm::RS512 => $key->withPadding(RSA::SIGNATURE_PKCS1),
+        };
     }
 
     /**
