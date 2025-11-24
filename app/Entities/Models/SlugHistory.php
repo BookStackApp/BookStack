@@ -4,6 +4,7 @@ namespace BookStack\Entities\Models;
 
 use BookStack\App\Model;
 use BookStack\Permissions\Models\JointPermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class SlugHistory extends Model
 {
+    use HasFactory;
+
     protected $table = 'slug_history';
 
     public function jointPermissions(): HasMany

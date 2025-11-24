@@ -2,6 +2,7 @@
 
 namespace Tests\Entity;
 
+use BookStack\Entities\Models\SlugHistory;
 use Tests\TestCase;
 
 class SlugTest extends TestCase
@@ -109,6 +110,27 @@ class SlugTest extends TestCase
 
         $this->get($chapterUrl)
             ->assertRedirect("/books/super-test-book/chapter/{$chapter->slug}");
+    }
+
+    public function test_slug_lookup_controlled_by_permissions()
+    {
+        $editor = $this->users->editor();
+        $pageA = $this->entities->page();
+        $pageB = $this->entities->page();
+
+        SlugHistory::factory()->create(['sluggable_id' => $pageA->id, 'sluggable_type' => 'page', 'slug' => 'monkey', 'parent_slug' => 'animals', 'created_at' => now()]);
+        SlugHistory::factory()->create(['sluggable_id' => $pageB->id, 'sluggable_type' => 'page', 'slug' => 'monkey', 'parent_slug' => 'animals', 'created_at' => now()->subDay()]);
+
+        // Defaults to latest where visible
+        $this->actingAs($editor)->get("/books/animals/page/monkey")->assertRedirect($pageA->getUrl());
+
+        $this->permissions->disableEntityInheritedPermissions($pageA);
+
+        // Falls back to other entry where the latest is not visible
+        $this->actingAs($editor)->get("/books/animals/page/monkey")->assertRedirect($pageB->getUrl());
+
+        // Original still accessible where permissions allow
+        $this->asAdmin()->get("/books/animals/page/monkey")->assertRedirect($pageA->getUrl());
     }
 
     public function test_slugs_recorded_in_history_on_page_update()
