@@ -431,6 +431,14 @@ abstract class Entity extends Model implements
     }
 
     /**
+     * Get the related slug history for this entity.
+     */
+    public function slugHistory(): MorphMany
+    {
+        return $this->morphMany(SlugHistory::class, 'sluggable');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function logDescriptor(): string

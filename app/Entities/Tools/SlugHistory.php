@@ -2,10 +2,13 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\EntityTable;
 use BookStack\Entities\Models\SlugHistory as SlugHistoryModel;
 use BookStack\Permissions\PermissionApplicator;
+use Illuminate\Support\Facades\DB;
 
 class SlugHistory
 {
@@ -43,6 +46,23 @@ class SlugHistory
         $entry = new SlugHistoryModel();
         $entry->forceFill($info);
         $entry->save();
+
+        if ($entity instanceof Book) {
+            $this->recordForBookChildren($entity);
+        }
+    }
+
+    protected function recordForBookChildren(Book $book): void
+    {
+        $query = EntityTable::query()
+            ->select(['type', 'id', 'slug', DB::raw("'{$book->slug}' as parent_slug"), DB::raw('now() as created_at'), DB::raw('now() as updated_at')])
+            ->where('book_id', '=', $book->id)
+            ->whereNotNull('book_id');
+
+        SlugHistoryModel::query()->insertUsing(
+            ['sluggable_type', 'sluggable_id', 'slug', 'parent_slug', 'created_at', 'updated_at'],
+            $query
+        );
     }
 
     /**

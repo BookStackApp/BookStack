@@ -33,23 +33,82 @@ class SlugTest extends TestCase
     public function test_old_page_slugs_redirect_to_new_pages()
     {
         $page = $this->entities->page();
-
-        // Need to save twice since revisions are not generated in seeder.
-        $this->asAdmin()->put($page->getUrl(), [
-            'name' => 'super test',
-            'html' => '<p></p>',
-        ]);
-
-        $page->refresh();
         $pageUrl = $page->getUrl();
 
-        $this->put($pageUrl, [
+        $this->asAdmin()->put($pageUrl, [
             'name' => 'super test page',
             'html' => '<p></p>',
         ]);
 
         $this->get($pageUrl)
             ->assertRedirect("/books/{$page->book->slug}/page/super-test-page");
+    }
+
+    public function test_old_shelf_slugs_redirect_to_new_shelf()
+    {
+        $shelf = $this->entities->shelf();
+        $shelfUrl = $shelf->getUrl();
+
+        $this->asAdmin()->put($shelf->getUrl(), [
+            'name' => 'super test shelf',
+        ]);
+
+        $this->get($shelfUrl)
+            ->assertRedirect("/shelves/super-test-shelf");
+    }
+
+    public function test_old_book_slugs_redirect_to_new_book()
+    {
+        $book = $this->entities->book();
+        $bookUrl = $book->getUrl();
+
+        $this->asAdmin()->put($book->getUrl(), [
+            'name' => 'super test book',
+        ]);
+
+        $this->get($bookUrl)
+            ->assertRedirect("/books/super-test-book");
+    }
+
+    public function test_old_chapter_slugs_redirect_to_new_chapter()
+    {
+        $chapter = $this->entities->chapter();
+        $chapterUrl = $chapter->getUrl();
+
+        $this->asAdmin()->put($chapter->getUrl(), [
+            'name' => 'super test chapter',
+        ]);
+
+        $this->get($chapterUrl)
+            ->assertRedirect("/books/{$chapter->book->slug}/chapter/super-test-chapter");
+    }
+
+    public function test_old_book_slugs_in_page_urls_redirect_to_current_page_url()
+    {
+        $page = $this->entities->page();
+        $book = $page->book;
+        $pageUrl = $page->getUrl();
+
+        $this->asAdmin()->put($book->getUrl(), [
+            'name' => 'super test book',
+        ]);
+
+        $this->get($pageUrl)
+            ->assertRedirect("/books/super-test-book/page/{$page->slug}");
+    }
+
+    public function test_old_book_slugs_in_chapter_urls_redirect_to_current_chapter_url()
+    {
+        $chapter = $this->entities->chapter();
+        $book = $chapter->book;
+        $chapterUrl = $chapter->getUrl();
+
+        $this->asAdmin()->put($book->getUrl(), [
+            'name' => 'super test book',
+        ]);
+
+        $this->get($chapterUrl)
+            ->assertRedirect("/books/super-test-book/chapter/{$chapter->slug}");
     }
 
     public function test_slugs_recorded_in_history_on_page_update()

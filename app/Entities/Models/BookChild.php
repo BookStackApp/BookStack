@@ -16,6 +16,7 @@ abstract class BookChild extends Entity
 {
     /**
      * Get the book this page sits in.
+     * @return BelongsTo<Book, $this>
      */
     public function book(): BelongsTo
     {

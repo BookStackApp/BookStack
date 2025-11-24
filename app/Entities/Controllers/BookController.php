@@ -8,6 +8,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\Cloner;
@@ -31,6 +32,7 @@ class BookController extends Controller
         protected ShelfContext $shelfContext,
         protected BookRepo $bookRepo,
         protected BookQueries $queries,
+        protected EntityQueries $entityQueries,
         protected BookshelfQueries $shelfQueries,
         protected ReferenceFetcher $referenceFetcher,
     ) {
@@ -127,7 +129,16 @@ class BookController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $book = $this->queries->findVisibleBySlugOrFail($slug);
+        try {
+            $book = $this->queries->findVisibleBySlugOrFail($slug);
+        } catch (NotFoundException $exception) {
+            $book = $this->entityQueries->findVisibleByOldSlugs('book', $slug);
+            if (is_null($book)) {
+                throw $exception;
+            }
+            return redirect($book->getUrl());
+        }
+
         $bookChildren = (new BookContents($book))->getTree(true);
         $bookParentShelves = $book->shelves()->scopes('visible')->get();
 

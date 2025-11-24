@@ -6,6 +6,7 @@ use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\Models\View;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Entities\Tools\ShelfContext;
 use BookStack\Exceptions\ImageUploadException;
@@ -23,6 +24,7 @@ class BookshelfController extends Controller
     public function __construct(
         protected BookshelfRepo $shelfRepo,
         protected BookshelfQueries $queries,
+        protected EntityQueries $entityQueries,
         protected BookQueries $bookQueries,
         protected ShelfContext $shelfContext,
         protected ReferenceFetcher $referenceFetcher,
@@ -105,7 +107,16 @@ class BookshelfController extends Controller
      */
     public function show(Request $request, ActivityQueries $activities, string $slug)
     {
-        $shelf = $this->queries->findVisibleBySlugOrFail($slug);
+        try {
+            $shelf = $this->queries->findVisibleBySlugOrFail($slug);
+        } catch (NotFoundException $exception) {
+            $shelf = $this->entityQueries->findVisibleByOldSlugs('bookshelf', $slug);
+            if (is_null($shelf)) {
+                throw $exception;
+            }
+            return redirect($shelf->getUrl());
+        }
+
         $this->checkOwnablePermission(Permission::BookshelfView, $shelf);
 
         $listOptions = SimpleListOptions::fromRequest($request, 'shelf_books')->withSortOptions([
