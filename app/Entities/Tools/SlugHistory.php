@@ -2,6 +2,7 @@
 
 namespace BookStack\Entities\Tools;
 
+use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use Illuminate\Support\Facades\DB;
 
@@ -12,16 +13,25 @@ class SlugHistory
      */
     public function recordForEntity(Entity $entity): void
     {
+        if (!$entity->id || !$entity->slug) {
+            return;
+        }
+
         $latest = $this->getLatestEntryForEntity($entity);
         if ($latest && $latest->slug === $entity->slug && $latest->parent_slug === $entity->getParent()?->slug) {
             return;
+        }
+
+        $parentSlug = null;
+        if ($entity instanceof BookChild) {
+            $parentSlug = $entity->book()->first()?->slug;
         }
 
         $info = [
             'sluggable_type' => $entity->getMorphClass(),
             'sluggable_id'   => $entity->id,
             'slug'           => $entity->slug,
-            'parent_slug'    => $entity->getParent()?->slug,
+            'parent_slug'    => $parentSlug,
             'created_at'     => now(),
             'updated_at'     => now(),
         ];

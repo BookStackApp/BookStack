@@ -165,10 +165,7 @@ class BaseRepo
      */
     public function refreshSlug(Entity $entity): void
     {
-        if ($entity->id) {
-            $this->slugHistory->recordForEntity($entity);
-        }
-
+        $this->slugHistory->recordForEntity($entity);
         $this->slugGenerator->regenerateForEntity($entity);
     }
 }
