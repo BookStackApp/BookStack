@@ -17,7 +17,6 @@ use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditActivity;
 use BookStack\Entities\Tools\PageEditorData;
 use BookStack\Exceptions\NotFoundException;
-use BookStack\Exceptions\NotifyException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
@@ -140,9 +139,7 @@ class PageController extends Controller
         try {
             $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         } catch (NotFoundException $e) {
-            $revision = $this->entityQueries->revisions->findLatestVersionBySlugs($bookSlug, $pageSlug);
-            $page = $revision->page ?? null;
-
+            $page = $this->entityQueries->findVisibleByOldSlugs('page', $pageSlug, $bookSlug);
             if (is_null($page)) {
                 throw $e;
             }

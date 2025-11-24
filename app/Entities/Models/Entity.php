@@ -13,7 +13,6 @@ use BookStack\Activity\Models\Viewable;
 use BookStack\Activity\Models\Watch;
 use BookStack\App\Model;
 use BookStack\App\SluggableInterface;
-use BookStack\Entities\Tools\SlugGenerator;
 use BookStack\Permissions\JointPermissionBuilder;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\JointPermission;
@@ -408,16 +407,6 @@ abstract class Entity extends Model implements
     /**
      * {@inheritdoc}
      */
-    public function refreshSlug(): string
-    {
-        $this->slug = app()->make(SlugGenerator::class)->generate($this, $this->name);
-
-        return $this->slug;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function favourites(): MorphMany
     {
         return $this->morphMany(Favourite::class, 'favouritable');
@@ -439,6 +428,14 @@ abstract class Entity extends Model implements
     public function watches(): MorphMany
     {
         return $this->morphMany(Watch::class, 'watchable');
+    }
+
+    /**
+     * Get the related slug history for this entity.
+     */
+    public function slugHistory(): MorphMany
+    {
+        return $this->morphMany(SlugHistory::class, 'sluggable');
     }
 
     /**

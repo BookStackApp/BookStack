@@ -12,6 +12,7 @@ use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Entities\Tools\PageEditorType;
+use BookStack\Entities\Tools\ParentChanger;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
@@ -31,6 +32,7 @@ class PageRepo
         protected ReferenceStore $referenceStore,
         protected ReferenceUpdater $referenceUpdater,
         protected TrashCan $trashCan,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -242,7 +244,7 @@ class PageRepo
         }
 
         $page->updated_by = user()->id;
-        $page->refreshSlug();
+        $this->baseRepo->refreshSlug($page);
         $page->save();
         $page->indexForSearch();
         $this->referenceStore->updateForEntity($page);
@@ -284,7 +286,7 @@ class PageRepo
         return (new DatabaseTransaction(function () use ($page, $parent) {
             $page->chapter_id = ($parent instanceof Chapter) ? $parent->id : null;
             $newBookId = ($parent instanceof Chapter) ? $parent->book->id : $parent->id;
-            $page = $page->changeBook($newBookId);
+            $this->parentChanger->changeBook($page, $newBookId);
             $page->rebuildPermissions();
 
             Activity::add(ActivityType::PAGE_MOVE, $page);

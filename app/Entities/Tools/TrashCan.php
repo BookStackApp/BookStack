@@ -388,7 +388,7 @@ class TrashCan
     /**
      * Update entity relations to remove or update outstanding connections.
      */
-    protected function destroyCommonRelations(Entity $entity)
+    protected function destroyCommonRelations(Entity $entity): void
     {
         Activity::removeEntity($entity);
         $entity->views()->delete();
@@ -402,6 +402,7 @@ class TrashCan
         $entity->watches()->delete();
         $entity->referencesTo()->delete();
         $entity->referencesFrom()->delete();
+        $entity->slugHistory()->delete();
 
         if ($entity instanceof HasCoverInterface && $entity->coverInfo()->exists()) {
             $imageService = app()->make(ImageService::class);

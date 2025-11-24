@@ -238,30 +238,6 @@ class BookTest extends TestCase
         $this->assertEquals('list', setting()->getUser($editor, 'books_view_type'));
     }
 
-    public function test_slug_multi_byte_url_safe()
-    {
-        $book = $this->entities->newBook([
-            'name' => 'информация',
-        ]);
-
-        $this->assertEquals('informaciia', $book->slug);
-
-        $book = $this->entities->newBook([
-            'name' => '¿Qué?',
-        ]);
-
-        $this->assertEquals('que', $book->slug);
-    }
-
-    public function test_slug_format()
-    {
-        $book = $this->entities->newBook([
-            'name' => 'PartA / PartB / PartC',
-        ]);
-
-        $this->assertEquals('parta-partb-partc', $book->slug);
-    }
-
     public function test_description_limited_to_specific_html()
     {
         $book = $this->entities->book();

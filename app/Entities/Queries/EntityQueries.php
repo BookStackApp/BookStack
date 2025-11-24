@@ -4,6 +4,7 @@ namespace BookStack\Entities\Queries;
 
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\EntityTable;
+use BookStack\Entities\Tools\SlugHistory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Query\JoinClause;
@@ -18,6 +19,7 @@ class EntityQueries
         public ChapterQueries $chapters,
         public PageQueries $pages,
         public PageRevisionQueries $revisions,
+        protected SlugHistory $slugHistory,
     ) {
     }
 
@@ -31,9 +33,30 @@ class EntityQueries
         $explodedId = explode(':', $identifier);
         $entityType = $explodedId[0];
         $entityId = intval($explodedId[1]);
-        $queries = $this->getQueriesForType($entityType);
 
-        return $queries->findVisibleById($entityId);
+        return $this->findVisibleById($entityType, $entityId);
+    }
+
+    /**
+     * Find an entity by its ID.
+     */
+    public function findVisibleById(string $type, int $id): ?Entity
+    {
+        $queries = $this->getQueriesForType($type);
+        return $queries->findVisibleById($id);
+    }
+
+    /**
+     * Find an entity by looking up old slugs in the slug history.
+     */
+    public function findVisibleByOldSlugs(string $type, string $slug, string $parentSlug = ''): ?Entity
+    {
+        $id = $this->slugHistory->lookupEntityIdUsingSlugs($type, $slug, $parentSlug);
+        if ($id === null) {
+            return null;
+        }
+
+        return $this->findVisibleById($type, $id);
     }
 
     /**

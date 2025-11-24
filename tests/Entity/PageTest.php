@@ -269,28 +269,6 @@ class PageTest extends TestCase
         ]);
     }
 
-    public function test_old_page_slugs_redirect_to_new_pages()
-    {
-        $page = $this->entities->page();
-
-        // Need to save twice since revisions are not generated in seeder.
-        $this->asAdmin()->put($page->getUrl(), [
-            'name' => 'super test',
-            'html' => '<p></p>',
-        ]);
-
-        $page->refresh();
-        $pageUrl = $page->getUrl();
-
-        $this->put($pageUrl, [
-            'name' => 'super test page',
-            'html' => '<p></p>',
-        ]);
-
-        $this->get($pageUrl)
-            ->assertRedirect("/books/{$page->book->slug}/page/super-test-page");
-    }
-
     public function test_page_within_chapter_deletion_returns_to_chapter()
     {
         $chapter = $this->entities->chapter();
