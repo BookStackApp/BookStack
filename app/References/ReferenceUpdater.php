@@ -30,6 +30,14 @@ class ReferenceUpdater
         }
     }
 
+    public function changeReferencesUsingContext(ReferenceChangeContext $context): void
+    {
+        // TODO
+
+        // We should probably have references by this point, so we could use those for efficient
+        // discovery instead of scanning each item within the context.
+    }
+
     /**
      * @return Reference[]
      */
