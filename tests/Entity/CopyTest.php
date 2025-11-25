@@ -201,6 +201,92 @@ class CopyTest extends TestCase
         $this->assertEquals($chapter->pages()->count(), $newChapter2->pages()->count());
     }
 
+    public function test_book_copy_updates_internal_references()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        /** @var Chapter $chapter */
+        $chapter = $book->chapters()->first();
+        /** @var Page $page */
+        $page = $chapter->pages()->first();
+        $this->asEditor();
+        $this->entities->updatePage($page, [
+            'name' => 'reference test page',
+            'html' => '<p>This is a test <a href="' . $book->getUrl() . '">book link</a></p>',
+        ]);
+
+        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
+
+        // Quick pre-update to get stable slug
+        $this->put($book->getUrl(), ['name' => 'Internal ref test']);
+        $book->refresh();
+
+        $this->put($book->getUrl(), ['name' => 'Internal ref test', 'description_html' => $html]);
+
+        $this->post($book->getUrl('/copy'), ['name' => 'My copied book']);
+
+        $newBook = Book::query()->where('name', '=', 'My copied book')->first();
+        $newPage = $newBook->pages()->where('name', '=', 'reference test page')->first();
+
+        $this->assertStringContainsString($newBook->getUrl(), $newPage->html);
+        $this->assertStringContainsString($newPage->getUrl(), $newBook->description_html);
+
+        $this->assertStringNotContainsString($book->getUrl(), $newPage->html);
+        $this->assertStringNotContainsString($page->getUrl(), $newBook->description_html);
+    }
+
+    public function test_chapter_copy_updates_internal_references()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        /** @var Page $page */
+        $page = $chapter->pages()->first();
+        $this->asEditor();
+        $this->entities->updatePage($page, [
+            'name' => 'reference test page',
+            'html' => '<p>This is a test <a href="' . $chapter->getUrl() . '">chapter link</a></p>',
+        ]);
+
+        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
+
+        // Quick pre-update to get stable slug
+        $this->put($chapter->getUrl(), ['name' => 'Internal ref test']);
+        $chapter->refresh();
+
+        $this->put($chapter->getUrl(), ['name' => 'Internal ref test', 'description_html' => $html]);
+
+        $this->post($chapter->getUrl('/copy'), ['name' => 'My copied chapter']);
+
+        $newChapter = Chapter::query()->where('name', '=', 'My copied chapter')->first();
+        $newPage = $newChapter->pages()->where('name', '=', 'reference test page')->first();
+
+        $this->assertStringContainsString($newChapter->getUrl(), $newPage->html);
+        $this->assertStringContainsString($newPage->getUrl(), $newChapter->description_html);
+
+        $this->assertStringNotContainsString($chapter->getUrl(), $newPage->html);
+        $this->assertStringNotContainsString($page->getUrl(), $newChapter->description_html);
+    }
+
+    public function test_page_copy_updates_internal_self_references()
+    {
+        $page = $this->entities->page();
+        $this->asEditor();
+
+        // Initial update to get stable slug
+        $this->entities->updatePage($page, ['name' => 'reference test page']);
+
+        $page->refresh();
+        $this->entities->updatePage($page, [
+            'name' => 'reference test page',
+            'html' => '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>',
+        ]);
+
+        $this->post($page->getUrl('/copy'), ['name' => 'My copied page']);
+        $newPage = Page::query()->where('name', '=', 'My copied page')->first();
+        $this->assertNotNull($newPage);
+
+        $this->assertStringContainsString($newPage->getUrl(), $newPage->html);
+        $this->assertStringNotContainsString($page->getUrl(), $newPage->html);
+    }
+
     public function test_page_copy()
     {
         $page = $this->entities->page();
