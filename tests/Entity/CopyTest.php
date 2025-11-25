@@ -214,12 +214,12 @@ class CopyTest extends TestCase
             'html' => '<p>This is a test <a href="' . $book->getUrl() . '">book link</a></p>',
         ]);
 
-        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
-
         // Quick pre-update to get stable slug
         $this->put($book->getUrl(), ['name' => 'Internal ref test']);
         $book->refresh();
+        $page->refresh();
 
+        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
         $this->put($book->getUrl(), ['name' => 'Internal ref test', 'description_html' => $html]);
 
         $this->post($book->getUrl('/copy'), ['name' => 'My copied book']);
@@ -245,12 +245,12 @@ class CopyTest extends TestCase
             'html' => '<p>This is a test <a href="' . $chapter->getUrl() . '">chapter link</a></p>',
         ]);
 
-        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
-
         // Quick pre-update to get stable slug
         $this->put($chapter->getUrl(), ['name' => 'Internal ref test']);
         $chapter->refresh();
+        $page->refresh();
 
+        $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
         $this->put($chapter->getUrl(), ['name' => 'Internal ref test', 'description_html' => $html]);
 
         $this->post($chapter->getUrl('/copy'), ['name' => 'My copied chapter']);
@@ -258,11 +258,11 @@ class CopyTest extends TestCase
         $newChapter = Chapter::query()->where('name', '=', 'My copied chapter')->first();
         $newPage = $newChapter->pages()->where('name', '=', 'reference test page')->first();
 
-        $this->assertStringContainsString($newChapter->getUrl(), $newPage->html);
-        $this->assertStringContainsString($newPage->getUrl(), $newChapter->description_html);
+        $this->assertStringContainsString($newChapter->getUrl() . '"', $newPage->html);
+        $this->assertStringContainsString($newPage->getUrl() . '"', $newChapter->description_html);
 
-        $this->assertStringNotContainsString($chapter->getUrl(), $newPage->html);
-        $this->assertStringNotContainsString($page->getUrl(), $newChapter->description_html);
+        $this->assertStringNotContainsString($chapter->getUrl() . '"', $newPage->html);
+        $this->assertStringNotContainsString($page->getUrl() . '"', $newChapter->description_html);
     }
 
     public function test_page_copy_updates_internal_self_references()

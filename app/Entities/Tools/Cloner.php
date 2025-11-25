@@ -78,9 +78,11 @@ class Cloner
         if (userCan(Permission::PageCreate, $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
-                $this->clonePage($page, $copyChapter, $page->name);
+                $this->createPageClone($page, $copyChapter, $page->name);
             }
         }
+
+        $this->referenceChangeContext->add($original, $copyChapter);
 
         return $copyChapter;
     }
@@ -109,11 +111,11 @@ class Cloner
         $directChildren = $original->getDirectVisibleChildren();
         foreach ($directChildren as $child) {
             if ($child instanceof Chapter && userCan(Permission::ChapterCreate, $copyBook)) {
-                $this->cloneChapter($child, $copyBook, $child->name);
+                $this->createChapterClone($child, $copyBook, $child->name);
             }
 
             if ($child instanceof Page && !$child->draft && userCan(Permission::PageCreate, $copyBook)) {
-                $this->clonePage($child, $copyBook, $child->name);
+                $this->createPageClone($child, $copyBook, $child->name);
             }
         }
 
@@ -124,6 +126,8 @@ class Cloner
                 $shelf->appendBook($copyBook);
             }
         }
+
+        $this->referenceChangeContext->add($original, $copyBook);
 
         return $copyBook;
     }
