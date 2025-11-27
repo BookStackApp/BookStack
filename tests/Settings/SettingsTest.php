@@ -101,4 +101,17 @@ class SettingsTest extends TestCase
             file_get_contents(public_path('favicon.ico')),
         );
     }
+
+    public function test_both_light_and_dark_colors_are_used_in_the_base_view()
+    {
+        // To allow for dynamic color changes on the front-end where desired.
+        $this->setSettings(['page-color' => 'superlightblue', 'page-color-dark' => 'superdarkblue']);
+
+        $resp = $this->get('/login');
+
+        $resp->assertSee(':root {');
+        $resp->assertSee('superlightblue');
+        $resp->assertSee(':root.dark-mode {');
+        $resp->assertSee('superdarkblue');
+    }
 }
