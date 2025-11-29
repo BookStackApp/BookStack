@@ -265,6 +265,25 @@ class CopyTest extends TestCase
         $this->assertStringNotContainsString($page->getUrl() . '"', $newChapter->description_html);
     }
 
+    public function test_chapter_copy_updates_internal_permalink_references_in_its_description()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        /** @var Page $page */
+        $page = $chapter->pages()->first();
+
+        $this->asEditor()->put($chapter->getUrl(), [
+            'name' => 'Internal ref test',
+            'description_html' => '<p>This is a test <a href="' . $page->getPermalink() . '">page link</a></p>',
+        ]);
+        $chapter->refresh();
+
+        $this->post($chapter->getUrl('/copy'), ['name' => 'My copied chapter']);
+        $newChapter = Chapter::query()->where('name', '=', 'My copied chapter')->first();
+
+        $this->assertStringContainsString('/link/', $newChapter->description_html);
+        $this->assertStringNotContainsString($page->getPermalink() . '"', $newChapter->description_html);
+    }
+
     public function test_page_copy_updates_internal_self_references()
     {
         $page = $this->entities->page();

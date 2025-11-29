@@ -18,17 +18,6 @@ class ReferenceChangeContext
     }
 
     /**
-     * Get all the change pairs.
-     * Returned array is an array of pairs, where the first item is the old entity
-     * and the second is the new entity.
-     * @return array<array{0: Entity, 1: Entity}>
-     */
-    public function getChanges(): array
-    {
-        return $this->changes;
-    }
-
-    /**
      * Get all the new entities from the changes.
      */
     public function getNewEntities(): array

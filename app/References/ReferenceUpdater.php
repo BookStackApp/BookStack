@@ -61,7 +61,7 @@ class ReferenceUpdater
 
                 $this->updateReferencesWithinEntity($new, $oldToEntity->getUrl(), $newToEntity->getUrl());
                 if ($newToEntity instanceof Page && $oldToEntity instanceof Page) {
-                    $this->updateReferencesWithinPage($newToEntity, $oldToEntity->getPermalink(), $newToEntity->getPermalink());
+                    $this->updateReferencesWithinEntity($new, $oldToEntity->getPermalink(), $newToEntity->getPermalink());
                 }
                 $reference->to_id = $newToEntity->id;
                 $reference->to_type = $newToEntity->getMorphClass();
