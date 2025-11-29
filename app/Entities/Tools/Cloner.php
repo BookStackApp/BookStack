@@ -13,18 +13,24 @@ use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\ChapterRepo;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Permissions\Permission;
+use BookStack\References\ReferenceChangeContext;
+use BookStack\References\ReferenceUpdater;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;
 use Illuminate\Http\UploadedFile;
 
 class Cloner
 {
+    protected ReferenceChangeContext $referenceChangeContext;
+
     public function __construct(
         protected PageRepo $pageRepo,
         protected ChapterRepo $chapterRepo,
         protected BookRepo $bookRepo,
         protected ImageService $imageService,
+        protected ReferenceUpdater $referenceUpdater,
     ) {
+        $this->referenceChangeContext = new ReferenceChangeContext();
     }
 
     /**
@@ -32,11 +38,22 @@ class Cloner
      */
     public function clonePage(Page $original, Entity $parent, string $newName): Page
     {
+        $context = $this->newReferenceChangeContext();
+        $page = $this->createPageClone($original, $parent, $newName);
+        $this->referenceUpdater->changeReferencesUsingContext($context);
+        return $page;
+    }
+
+    protected function createPageClone(Page $original, Entity $parent, string $newName): Page
+    {
         $copyPage = $this->pageRepo->getNewDraftPage($parent);
         $pageData = $this->entityToInputData($original);
         $pageData['name'] = $newName;
 
-        return $this->pageRepo->publishDraft($copyPage, $pageData);
+        $newPage = $this->pageRepo->publishDraft($copyPage, $pageData);
+        $this->referenceChangeContext->add($original, $newPage);
+
+        return $newPage;
     }
 
     /**
@@ -44,6 +61,14 @@ class Cloner
      * Clones all child pages.
      */
     public function cloneChapter(Chapter $original, Book $parent, string $newName): Chapter
+    {
+        $context = $this->newReferenceChangeContext();
+        $chapter = $this->createChapterClone($original, $parent, $newName);
+        $this->referenceUpdater->changeReferencesUsingContext($context);
+        return $chapter;
+    }
+
+    protected function createChapterClone(Chapter $original, Book $parent, string $newName): Chapter
     {
         $chapterDetails = $this->entityToInputData($original);
         $chapterDetails['name'] = $newName;
@@ -53,9 +78,11 @@ class Cloner
         if (userCan(Permission::PageCreate, $copyChapter)) {
             /** @var Page $page */
             foreach ($original->getVisiblePages() as $page) {
-                $this->clonePage($page, $copyChapter, $page->name);
+                $this->createPageClone($page, $copyChapter, $page->name);
             }
         }
+
+        $this->referenceChangeContext->add($original, $copyChapter);
 
         return $copyChapter;
     }
@@ -65,6 +92,14 @@ class Cloner
      * Clones all child chapters and pages.
      */
     public function cloneBook(Book $original, string $newName): Book
+    {
+        $context = $this->newReferenceChangeContext();
+        $book = $this->createBookClone($original, $newName);
+        $this->referenceUpdater->changeReferencesUsingContext($context);
+        return $book;
+    }
+
+    protected function createBookClone(Book $original, string $newName): Book
     {
         $bookDetails = $this->entityToInputData($original);
         $bookDetails['name'] = $newName;
@@ -76,11 +111,11 @@ class Cloner
         $directChildren = $original->getDirectVisibleChildren();
         foreach ($directChildren as $child) {
             if ($child instanceof Chapter && userCan(Permission::ChapterCreate, $copyBook)) {
-                $this->cloneChapter($child, $copyBook, $child->name);
+                $this->createChapterClone($child, $copyBook, $child->name);
             }
 
             if ($child instanceof Page && !$child->draft && userCan(Permission::PageCreate, $copyBook)) {
-                $this->clonePage($child, $copyBook, $child->name);
+                $this->createPageClone($child, $copyBook, $child->name);
             }
         }
 
@@ -91,6 +126,8 @@ class Cloner
                 $shelf->appendBook($copyBook);
             }
         }
+
+        $this->referenceChangeContext->add($original, $copyBook);
 
         return $copyBook;
     }
@@ -154,5 +191,11 @@ class Cloner
         }
 
         return $tags;
+    }
+
+    protected function newReferenceChangeContext(): ReferenceChangeContext
+    {
+        $this->referenceChangeContext = new ReferenceChangeContext();
+        return $this->referenceChangeContext;
     }
 }

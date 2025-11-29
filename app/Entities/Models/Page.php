@@ -125,6 +125,14 @@ class Page extends BookChild
     }
 
     /**
+     * Get the ID-based permalink for this page.
+     */
+    public function getPermalink(): string
+    {
+        return url("/link/{$this->id}");
+    }
+
+    /**
      * Get this page for JSON display.
      */
     public function forJsonDisplay(): self

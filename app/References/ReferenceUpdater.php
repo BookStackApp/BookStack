@@ -5,7 +5,6 @@ namespace BookStack\References;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
@@ -27,6 +26,47 @@ class ReferenceUpdater
             /** @var Entity $entity */
             $entity = $reference->from;
             $this->updateReferencesWithinEntity($entity, $oldLink, $newLink);
+        }
+    }
+
+    /**
+     * Change existing references for a range of entities using the given context.
+     */
+    public function changeReferencesUsingContext(ReferenceChangeContext $context): void
+    {
+        $bindings = [];
+        foreach ($context->getOldEntities() as $old) {
+            $bindings[] = $old->getMorphClass();
+            $bindings[] = $old->id;
+        }
+
+        // No targets to update within the context, so no need to continue.
+        if (count($bindings) < 2) {
+            return;
+        }
+
+        $toReferenceQuery = '(to_type, to_id) IN (' . rtrim(str_repeat('(?,?),', count($bindings) / 2), ',') . ')';
+
+        // Cycle each new entity in the context
+        foreach ($context->getNewEntities() as $new) {
+            // For each, get all references from it which lead to other items within the context of the change
+            $newReferencesInContext = $new->referencesFrom()->whereRaw($toReferenceQuery, $bindings)->get();
+            // For each reference, update the URL and the reference entry
+            foreach ($newReferencesInContext as $reference) {
+                $oldToEntity = $reference->to;
+                $newToEntity = $context->getNewForOld($oldToEntity);
+                if ($newToEntity === null) {
+                    continue;
+                }
+
+                $this->updateReferencesWithinEntity($new, $oldToEntity->getUrl(), $newToEntity->getUrl());
+                if ($newToEntity instanceof Page && $oldToEntity instanceof Page) {
+                    $this->updateReferencesWithinEntity($new, $oldToEntity->getPermalink(), $newToEntity->getPermalink());
+                }
+                $reference->to_id = $newToEntity->id;
+                $reference->to_type = $newToEntity->getMorphClass();
+                $reference->save();
+            }
         }
     }
 
