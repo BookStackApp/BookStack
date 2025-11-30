@@ -21,6 +21,7 @@ import {CodeBlockDecorator} from "./ui/decorators/code-block";
 import {DiagramDecorator} from "./ui/decorators/diagram";
 import {registerMouseHandling} from "./services/mouse-handling";
 import {registerSelectionHandling} from "./services/selection-handling";
+import {EditorApi} from "./api/api";
 
 const theme = {
     text: {
@@ -93,6 +94,12 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     };
 
     registerCommonNodeMutationListeners(context);
+
+    // TODO - Emit this as a public event instead
+    // TODO - Add support to basic editor below
+    const api = new EditorApi(context);
+    // @ts-ignore
+    window.editorApi = api;
 
     return new SimpleWysiwygEditorInterface(context);
 }

@@ -109,6 +109,10 @@ export class EditorUIManager {
         this.getContext().containerDOM.prepend(toolbar.getDOMElement());
     }
 
+    getToolbar(): EditorContainerUiElement|null {
+        return this.toolbar;
+    }
+
     registerContextToolbar(key: string, definition: EditorContextToolbarDefinition) {
         this.contextToolbarDefinitionsByKey[key] = definition;
     }
