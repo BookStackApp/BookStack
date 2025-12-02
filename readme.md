@@ -88,7 +88,7 @@ Big thanks to these companies for supporting the project.
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/route4me.png" alt="Route4Me - Route Optimizer and Route Planner Software">
 </a></td>
 <td align="center"><a href="https://phamos.eu" target="_blank">
-    <img width="136" src="https://www.bookstackapp.com/images/sponsors/phamos.png" alt="phamos">
+    <img width="132" src="https://www.bookstackapp.com/images/sponsors/phamos.png" alt="phamos">
 </a></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@ Big thanks to these companies for supporting the project.
     <img width="240" src="https://www.bookstackapp.com/images/sponsors/sitespeak.png" alt="SiteSpeakAI">
 </a></td>
 <td align="center"><a href="https://www.admin-intelligence.de/bookstack/" target="_blank">
-    <img width="240" src="https://www.bookstackapp.com/images/sponsors/admin-intelligence.png" alt="Admin Intelligence">
+    <img width="210" src="https://www.bookstackapp.com/images/sponsors/admin-intelligence.png" alt="Admin Intelligence">
 </a></td>
 </tr>
 </tbody></table>
