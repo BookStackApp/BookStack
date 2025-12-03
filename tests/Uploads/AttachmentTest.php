@@ -323,7 +323,7 @@ class AttachmentTest extends TestCase
 
         $attachmentGet = $this->get($attachment->getUrl(true));
         // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
-        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=utf-8');
         $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="upload_test_file.txt"');
         $attachmentGet->assertHeader('X-Content-Type-Options', 'nosniff');
 
@@ -339,7 +339,7 @@ class AttachmentTest extends TestCase
 
         $attachmentGet = $this->get($attachment->getUrl(true));
         // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
-        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+        $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=utf-8');
         $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="test_file.html"');
 
         $this->files->deleteAllAttachmentFiles();

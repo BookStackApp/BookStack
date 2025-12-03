@@ -478,7 +478,7 @@ END;
 
             $resp = $this->asAdmin()->get("/theme/{$themeFolderName}/file.txt");
             $resp->assertStreamedContent($text);
-            $resp->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
+            $resp->assertHeader('Content-Type', 'text/plain; charset=utf-8');
             $resp->assertHeader('Cache-Control', 'max-age=86400, private');
 
             $resp = $this->asAdmin()->get("/theme/{$themeFolderName}/image.png");
@@ -487,7 +487,7 @@ END;
 
             $resp = $this->asAdmin()->get("/theme/{$themeFolderName}/file.css");
             $resp->assertStreamedContent($css);
-            $resp->assertHeader('Content-Type', 'text/css; charset=UTF-8');
+            $resp->assertHeader('Content-Type', 'text/css; charset=utf-8');
             $resp->assertHeader('Cache-Control', 'max-age=86400, private');
         });
     }

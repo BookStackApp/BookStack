@@ -22,7 +22,7 @@ class ApiDocsTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee(url('/api/docs.json'));
         $resp->assertSee('Show a JSON view of the API docs data.');
-        $resp->assertHeader('Content-Type', 'text/html; charset=UTF-8');
+        $resp->assertHeader('Content-Type', 'text/html; charset=utf-8');
     }
 
     public function test_docs_json_endpoint_returns_json()
