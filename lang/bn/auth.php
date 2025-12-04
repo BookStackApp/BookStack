@@ -25,7 +25,7 @@ return [
     'forgot_password' => 'পাসওয়ার্ড ভুলে গেছেন?',
     'remember_me' => 'লগইন স্থায়িত্ব ধরে রাখুন',
     'ldap_email_hint' => 'অনুগ্রহ করে এই অ্যাকাউন্টের জন্য ব্যবহার করার জন্য একটি ইমেইল ঠিকানা লিখুন।',
-    'create_account' => 'Create Account',
+    'create_account' => 'অ্যাকাউন্ট তৈরি করুন',
     'already_have_account' => 'Already have an account?',
     'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'Social Login',
