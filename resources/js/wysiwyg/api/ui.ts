@@ -5,11 +5,11 @@ import {EditorOverflowContainer} from "../ui/framework/blocks/overflow-container
 type EditorApiButtonOptions = {
     label?: string;
     icon?: string;
-    onClick: () => void;
+    action: () => void;
 };
 
-class EditorApiButton {
-    #button: EditorButton;
+export class EditorApiButton {
+    readonly #button: EditorButton;
     #isActive: boolean = false;
 
     constructor(options: EditorApiButtonOptions, context: EditorUiContext) {
@@ -17,7 +17,7 @@ class EditorApiButton {
             label: options.label || '',
             icon: options.icon || '',
             action: () => {
-                options.onClick();
+                options.action();
             },
             isActive: () => this.#isActive,
         });
@@ -34,8 +34,8 @@ class EditorApiButton {
     }
 }
 
-class EditorApiToolbarSection {
-    #section: EditorOverflowContainer;
+export class EditorApiToolbarSection {
+    readonly #section: EditorOverflowContainer;
     label: string;
 
     constructor(section: EditorOverflowContainer) {
@@ -55,7 +55,7 @@ class EditorApiToolbarSection {
 
 
 export class EditorApiUiModule {
-    #context: EditorUiContext;
+    readonly #context: EditorUiContext;
     
     constructor(context: EditorUiContext) {
         this.#context = context;
@@ -65,7 +65,7 @@ export class EditorApiUiModule {
         return new EditorApiButton(options, this.#context);
     }
 
-    getToolbarSections(): EditorApiToolbarSection[] {
+    getMainToolbarSections(): EditorApiToolbarSection[] {
         const toolbar = this.#context.manager.getToolbar();
         if (!toolbar) {
             return [];

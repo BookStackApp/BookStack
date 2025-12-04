@@ -504,7 +504,7 @@ export function createTestContext(): EditorUiContext {
     options: {},
     scrollDOM: scrollWrap,
     translate(text: string): string {
-      return "";
+      return text;
     }
   };
 
