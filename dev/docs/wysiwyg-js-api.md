@@ -3,14 +3,10 @@
 TODO - Link to this from JS code doc.
 TODO - Create JS events and add to the js public events doc.
 
-TODO - Document the JS API.
-
-TODO - Add testing coverage
-
 **Warning: This API is currently in development and may change without notice.**
 
 This document covers the JavaScript API for the (newer Lexical-based) WYSIWYG editor.
-This API is custom-built, and designed to abstract the internals of the editor away
+This API is built and designed to abstract the internals of the editor away
 to provide a stable interface for performing common customizations.
 
 Only the methods and properties documented here are guaranteed to be stable **once this API
@@ -25,8 +21,9 @@ The API is provided as an object, which itself provides a number of modules
 via its properties:
 
 - `ui` - Provides all actions related to the UI of the editor, like buttons and toolbars.
+- `content` - Provides all actions related to the live user content being edited upon.
 
-Each of these modules, and the relevant types used within, can be found detailed below.
+Each of these modules, and the relevant types used within, are documented in detail below.
 
 ---
 
@@ -36,7 +33,7 @@ This module provides all actions related to the UI of the editor, like buttons a
 
 ### Methods
 
-#### createButton(options)
+#### createButton(options: object)
 
 Creates a new button which can be used by other methods.
 This takes an option object with the following properties:
@@ -92,6 +89,33 @@ This has the following methods:
 Represents a section of the main editor toolbar, which contains a set of buttons.
 This has the following methods:
 
-- `getLabel(): string` - Gets the label of the section.
+- `getLabel(): string` - Provides the string label of the section.
 - `addButton(button: EditorApiButton, targetIndex: number = -1): void` - Adds a button to the section.
   - By default, this will append the button, although a target index can be provided to insert the button at a specific position.
+
+---
+
+## Content Module
+
+This module provides all actions related to the live user content being edited within the editor.
+
+### Methods
+
+#### insertHtml(html, position)
+
+Inserts the given HTML string at the given position string.
+The position, if not provided, will default to `'selection'`, replacing any existing selected content (or inserting at the selection if there's no active selection range).
+Valid position string values are: `selection`, `start` and `end`. `start` & `end` are relative to the whole editor document.
+The HTML is not assured to be added to the editor exactly as provided, since it will be parsed and serialised to fit the editor's internal known model format. Different parts of the HTML content may be handled differently depending on if it's block or inline content.
+
+The function does not return anything.
+
+**Example**
+
+```javascript
+// Basic insert at selection
+api.content.insertHtml('<p>Hello <strong>world</strong>!</p>');
+
+// Insert at the start of the editor content
+api.content.insertHtml('<p>I\'m at the start!</p>', 'start');
+```
