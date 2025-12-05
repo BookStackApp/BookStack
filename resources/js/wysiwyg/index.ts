@@ -95,11 +95,10 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     registerCommonNodeMutationListeners(context);
 
-    // TODO - Emit this as a public event instead
-    // TODO - Add support to basic editor below
-    const api = new EditorApi(context);
-    // @ts-ignore
-    window.editorApi = api;
+    window.$events.emitPublic(container, 'editor-wysiwyg::post-init', {
+        usage: 'page-editor',
+        api: new EditorApi(context),
+    });
 
     return new SimpleWysiwygEditorInterface(context);
 }
@@ -128,6 +127,11 @@ export function createBasicEditorInstance(container: HTMLElement, htmlContent: s
     context.manager.onTeardown(editorTeardown);
 
     setEditorContentFromHtml(editor, htmlContent);
+
+    window.$events.emitPublic(container, 'editor-wysiwyg::post-init', {
+        usage: 'description-editor',
+        api: new EditorApi(context),
+    });
 
     return new SimpleWysiwygEditorInterface(context);
 }

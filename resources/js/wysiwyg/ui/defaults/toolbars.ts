@@ -223,11 +223,13 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
 
 export function getBasicEditorToolbar(context: EditorUiContext): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
-        new EditorButton(bold),
-        new EditorButton(italic),
-        new EditorButton(link),
-        new EditorButton(bulletList),
-        new EditorButton(numberList),
+        new EditorOverflowContainer('formats', 7, [
+            new EditorButton(bold),
+            new EditorButton(italic),
+            new EditorButton(link),
+            new EditorButton(bulletList),
+            new EditorButton(numberList),
+        ])
     ]);
 }
 
