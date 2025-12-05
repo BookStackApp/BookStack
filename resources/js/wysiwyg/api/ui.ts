@@ -1,5 +1,5 @@
 import {EditorButton} from "../ui/framework/buttons";
-import {EditorUiContext} from "../ui/framework/core";
+import {EditorContainerUiElement, EditorUiContext} from "../ui/framework/core";
 import {EditorOverflowContainer} from "../ui/framework/blocks/overflow-container";
 
 type EditorApiButtonOptions = {
@@ -34,13 +34,26 @@ export class EditorApiButton {
     }
 }
 
+export class EditorApiToolbar {
+    readonly #toolbar: EditorContainerUiElement;
+
+    constructor(toolbar: EditorContainerUiElement) {
+        this.#toolbar = toolbar;
+    }
+
+    getSections(): EditorApiToolbarSection[] {
+        const sections = this.#toolbar.getChildren();
+        return sections.filter(section => {
+            return section instanceof EditorOverflowContainer;
+        }).map(section => new EditorApiToolbarSection(section));
+    }
+}
+
 export class EditorApiToolbarSection {
     readonly #section: EditorOverflowContainer;
-    label: string;
 
     constructor(section: EditorOverflowContainer) {
         this.#section = section;
-        this.label = section.getLabel();
     }
 
     getLabel(): string {
@@ -65,15 +78,12 @@ export class EditorApiUiModule {
         return new EditorApiButton(options, this.#context);
     }
 
-    getMainToolbarSections(): EditorApiToolbarSection[] {
+    getMainToolbar(): EditorApiToolbar|null {
         const toolbar = this.#context.manager.getToolbar();
         if (!toolbar) {
-            return [];
+            return null;
         }
 
-        const sections = toolbar.getChildren();
-        return sections.filter(section => {
-            return section instanceof EditorOverflowContainer;
-        }).map(section => new EditorApiToolbarSection(section));
+        return new EditorApiToolbar(toolbar);
     }
 }

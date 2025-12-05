@@ -1,8 +1,8 @@
 # WYSIWYG JavaScript API
 
-TODO - Create JS events and add to the js public events doc.
-
 **Warning: This API is currently in development and may change without notice.**
+
+Feedback is very much welcomed via this issue: https://github.com/BookStackApp/BookStack/issues/5937
 
 This document covers the JavaScript API for the (newer Lexical-based) WYSIWYG editor.
 This API is built and designed to abstract the internals of the editor away
@@ -19,8 +19,8 @@ Stable parts of the API may still change where needed, but such changes would be
 The API is provided as an object, which itself provides a number of modules
 via its properties:
 
-- `ui` - Provides all actions related to the UI of the editor, like buttons and toolbars.
-- `content` - Provides all actions related to the live user content being edited upon.
+- `ui` - Provides methods related to the UI of the editor, like buttons and toolbars.
+- `content` - Provides methods related to the live user content being edited upon.
 
 Each of these modules, and the relevant types used within, are documented in detail below.
 
@@ -28,7 +28,7 @@ Each of these modules, and the relevant types used within, are documented in det
 
 ## UI Module
 
-This module provides all actions related to the UI of the editor, like buttons and toolbars.
+This module provides methods related to the UI of the editor, like buttons and toolbars.
 
 ### Methods
 
@@ -55,17 +55,16 @@ const button = api.ui.createButton({
 });
 ```
 
-### getMainToolbarSections()
+### getMainToolbar()
 
-Get the sections of the main editor toolbar. These are those which contain groups of buttons
-with overflow control.
-
-The function returns an array of [EditorToolbarSection](#editortoolbarsection) objects.
+Get the main editor toolbar. This is typically the toolbar at the top of the editor.
+The function returns an [EditorApiToolbar](#editorapitoolbar) object, or null if no toolbar is found.
 
 **Example**
 
 ```javascript
-const sections = api.ui.getMainToolbarSections();
+const toolbar = api.ui.getMainToolbar();
+const sections = toolbar?.getSections() || [];
 if (sections.length > 0) {
     sections[0].addButton(button);
 }
@@ -83,20 +82,27 @@ This has the following methods:
 
 - `setActive(isActive: boolean): void` - Sets whether the button should be in an active state or not (typically active buttons appear as pressed).
 
-#### EditorToolbarSection
+#### EditorApiToolbar
+
+Represents a toolbar within the editor. This is a bar typically containing sets of buttons.
+This has the following methods:
+
+- `getSections(): EditorApiToolbarSection[]` - Provides the main [EditorApiToolbarSections](#editorapitoolbarsection) contained within this toolbar.
+
+#### EditorApiToolbarSection
 
 Represents a section of the main editor toolbar, which contains a set of buttons.
 This has the following methods:
 
 - `getLabel(): string` - Provides the string label of the section.
 - `addButton(button: EditorApiButton, targetIndex: number = -1): void` - Adds a button to the section.
-  - By default, this will append the button, although a target index can be provided to insert the button at a specific position.
+  - By default, this will append the button, although a target index can be provided to insert at a specific position.
 
 ---
 
 ## Content Module
 
-This module provides all actions related to the live user content being edited within the editor.
+This module provides methods related to the live user content being edited within the editor.
 
 ### Methods
 

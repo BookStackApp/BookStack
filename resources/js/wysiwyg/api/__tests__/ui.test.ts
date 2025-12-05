@@ -1,5 +1,5 @@
 import {createEditorApiInstance} from "./api-test-utils";
-import {EditorApiButton, EditorApiToolbarSection} from "../ui";
+import {EditorApiButton, EditorApiToolbar, EditorApiToolbarSection} from "../ui";
 import {getMainEditorFullToolbar} from "../../ui/defaults/toolbars";
 import {EditorContainerUiElement} from "../../ui/framework/core";
 import {EditorOverflowContainer} from "../../ui/framework/blocks/overflow-container";
@@ -59,17 +59,31 @@ describe('Editor API: UI Module', () => {
 
     });
 
-    describe('getMainToolbarSections()', () => {
-        it('should return an array of toolbar sections', () => {
+    describe('getMainToolbar()', () => {
+        it('should return the main editor toolbar', () => {
             const {api, context} = createEditorApiInstance();
             context.manager.setToolbar(getMainEditorFullToolbar(context));
 
-            const sections = api.ui.getMainToolbarSections();
-            expect(Array.isArray(sections)).toBe(true);
+            const toolbar = api.ui.getMainToolbar();
 
-            expect(sections[0]).toBeInstanceOf(EditorApiToolbarSection);
+            expect(toolbar).toBeInstanceOf(EditorApiToolbar);
         });
     });
+
+    describe('EditorApiToolbar', () => {
+        describe('getSections()', () => {
+            it('should return the sections of the toolbar', () => {
+                const {api, context} = createEditorApiInstance();
+                context.manager.setToolbar(testToolbar());
+                const toolbar = api.ui.getMainToolbar();
+
+                const sections = toolbar?.getSections() || [];
+
+                expect(sections.length).toBe(2);
+                expect(sections[0]).toBeInstanceOf(EditorApiToolbarSection);
+            })
+        })
+    })
 
     describe('EditorApiToolbarSection', () => {
 
@@ -77,7 +91,7 @@ describe('Editor API: UI Module', () => {
             it('should return the label of the section', () => {
                 const {api, context} = createEditorApiInstance();
                 context.manager.setToolbar(testToolbar());
-                const section = api.ui.getMainToolbarSections()[0];
+                const section = api.ui.getMainToolbar()?.getSections()[0] as EditorApiToolbarSection;
                 expect(section.getLabel()).toBe('section-a');
              })
         });
@@ -87,7 +101,7 @@ describe('Editor API: UI Module', () => {
                 const {api, context} = createEditorApiInstance();
                 const toolbar = testToolbar();
                 context.manager.setToolbar(toolbar);
-                const section = api.ui.getMainToolbarSections()[0];
+                const section = api.ui.getMainToolbar()?.getSections()[0] as EditorApiToolbarSection;
 
                 const button = api.ui.createButton({label: 'TestButtonText!', action: () => ''});
                 section.addButton(button);

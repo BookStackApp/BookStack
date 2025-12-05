@@ -134,6 +134,47 @@ window.addEventListener('editor-tinymce::setup', event => {
 });
 ```
 
+### `editor-wysiwyg::post-init`
+
+This is called after the (new custom-built Lexical-based) WYSIWYG editor has been initialised.
+
+#### Event Data
+
+- `usage` - A string label to identify the usage type of the WYSIWYG editor in BookStack.
+- `api` - An instance to the WYSIWYG editor API, as documented in the [WYSIWYG JavaScript API file](./wysiwyg-js-api.md).
+
+##### Example
+
+The below example shows how you'd use this API to create a button, with that button added to the main toolbar of the page editor, which inserts bold "Hello!" text on press:
+
+<details>
+<summary>Show Example</summary>
+
+```javascript
+window.addEventListener('editor-wysiwyg::post-init', event => {
+    const {usage, api} = event.detail;
+    // Check that it's the page editor which is being loaded
+    if (usage !== 'page-editor') {
+        return;
+    }
+    
+    // Create a custom button which inserts bold hello text on press
+    const button = api.ui.createButton({
+        label: 'Greet',
+        action: () => {
+            api.content.insertHtml(`<strong>Hello!</strong>`);
+        }
+    });
+    
+    // Add the button to the start of the first section within the main toolbar
+    const toolbar = api.ui.getMainToolbar();
+    if (toolbar) {
+      toolbar.getSections()[0]?.addButton(button, 0);   
+    }
+});
+```
+</details>
+
 ### `library-cm6::configure-theme`
 
 This event is called whenever a CodeMirror instance is loaded, as a method to configure the theme used by CodeMirror. This applies to all CodeMirror instances including in-page code blocks, editors using in BookStack settings, and the Page markdown editor.
@@ -316,44 +357,6 @@ window.addEventListener('library-cm6::post-init', event => {
           changes: {from: 0, to: 0, insert: 'Copyright 2023\n\n'}
         });
     }
-});
-```
-</details>
-
-### `editor-wysiwyg::post-init`
-
-This is called after the (new custom-built Lexical-based) WYSIWYG editor has been initialised.
-
-#### Event Data
-
-- `usage` - A string label to identify the usage type of the WYSIWYG editor in BookStack.
-- `api` - An instance to the WYSIWYG editor API, as documented in the [WYSIWYG JavaScript API file](./wysiwyg-js-api.md).
-
-##### Example
-
-The below shows how you'd use this API to create a button, with that button added to the toolbar of the page editor, which inserts bold hello text on press:
-
-<details>
-<summary>Show Example</summary>
-
-```javascript
-window.addEventListener('editor-wysiwyg::post-init', event => {
-    const {usage, api} = event.detail;
-    // Check that it's the page editor being loaded.
-    if (usage !== 'page-editor') {
-        return;
-    }
-    
-    // Create a custom button which inserts bold hello text on press.
-    const button = api.ui.createButton({
-        label: 'Greet',
-        action: () => {
-            api.content.insertHtml(`<strong>Hello!</strong>`);
-        }
-    });
-    
-    // Add the button to the start of the first section within the main toolbar.
-    api.ui.getMainToolbarSections()[0]?.addButton(button, 0);
 });
 ```
 </details>
