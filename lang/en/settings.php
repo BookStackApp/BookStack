@@ -76,6 +76,10 @@ return [
 
     // Sorting Settings
     'sorting' => 'Sorting',
+    'sorting_shelves_per_page' => 'Shelves Per Page',
+    'sorting_shelves_per_page_desc' => 'Sets the number of shelves shown per page in shelf listings.',
+    'sorting_books_per_page' => 'Books Per Page',
+    'sorting_books_per_page_desc' => 'Sets the number of books shown per page in book listings.',
     'sorting_book_default' => 'Default Book Sort',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',

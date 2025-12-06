@@ -52,7 +52,7 @@ class BookController extends Controller
 
         $books = $this->queries->visibleForListWithCover()
             ->orderBy($listOptions->getSort(), $listOptions->getOrder())
-            ->paginate(18);
+            ->paginate(intval(setting('sorting-books-per-page', '18')));
         $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->take(4)->get() : false;
         $popular = $this->queries->popularForList()->take(4)->get();
         $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();

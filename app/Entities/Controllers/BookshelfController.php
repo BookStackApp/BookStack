@@ -45,7 +45,7 @@ class BookshelfController extends Controller
 
         $shelves = $this->queries->visibleForListWithCover()
             ->orderBy($listOptions->getSort(), $listOptions->getOrder())
-            ->paginate(18);
+            ->paginate(intval(setting('sorting-shelves-per-page', '18')));
         $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->get() : false;
         $popular = $this->queries->popularForList()->get();
         $new = $this->queries->visibleForList()
