@@ -14,6 +14,8 @@ Other elements may be accessible but are not designed to be used directly, and t
 without notice.
 Stable parts of the API may still change where needed, but such changes would be noted as part of BookStack update advisories.
 
+The methods shown here are documented using standard TypeScript notation.
+
 ## Overview
 
 The API is provided as an object, which itself provides a number of modules
@@ -32,7 +34,7 @@ This module provides methods related to the UI of the editor, like buttons and t
 
 ### Methods
 
-#### createButton(options: object)
+#### createButton(options: object): EditorApiButton
 
 Creates a new button which can be used by other methods.
 This takes an option object with the following properties:
@@ -55,7 +57,7 @@ const button = api.ui.createButton({
 });
 ```
 
-### getMainToolbar()
+### getMainToolbar(): EditorApiToolbar
 
 Get the main editor toolbar. This is typically the toolbar at the top of the editor.
 The function returns an [EditorApiToolbar](#editorapitoolbar) object, or null if no toolbar is found.
@@ -73,7 +75,6 @@ if (sections.length > 0) {
 ### Types
 
 These are types which may be provided from UI module methods.
-The methods on these types are documented using standard TypeScript notation.
 
 #### EditorApiButton
 
@@ -106,7 +107,7 @@ This module provides methods related to the live user content being edited withi
 
 ### Methods
 
-#### insertHtml(html, position)
+#### insertHtml(html: string, position: string = 'selection'): void
 
 Inserts the given HTML string at the given position string.
 The position, if not provided, will default to `'selection'`, replacing any existing selected content (or inserting at the selection if there's no active selection range).
