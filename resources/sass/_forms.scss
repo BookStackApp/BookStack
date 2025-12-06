@@ -348,6 +348,10 @@ input[type=color] {
   }
 }
 
+.small-inputs input {
+  width: 150px;
+}
+
 .simple-code-input {
   background-color: #F8F8F8;
   font-family: monospace;

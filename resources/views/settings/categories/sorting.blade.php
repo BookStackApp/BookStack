@@ -10,41 +10,30 @@
         {{ csrf_field() }}
         <input type="hidden" name="section" value="sorting">
 
-        <div class="grid half gap-xl items-center">
-            <div>
-                <label for="setting-sorting-shelves-per-page"
-                    class="setting-list-label">{{ trans('settings.sorting_shelves_per_page') }}</label>
-                <p class="small">{{ trans('settings.sorting_shelves_per_page_desc') }}</p>
-            </div>
-            <div>
-                <input type="number"
-                    id="setting-sorting-shelves-per-page"
-                    name="setting-sorting-shelves-per-page"
-                    value="{{ intval(setting('sorting-shelves-per-page', 18)) }}"
-                    min="1"
-                    step="1"
-                    class="@if($errors->has('setting-sorting-shelves-per-page')) neg @endif">
-            </div>
-        </div>
-
-        <div class="grid half gap-xl items-center">
-            <div>
-                <label for="setting-sorting-books-per-page"
-                    class="setting-list-label">{{ trans('settings.sorting_books_per_page') }}</label>
-                <p class="small">{{ trans('settings.sorting_books_per_page_desc') }}</p>
-            </div>
-            <div>
-                <input type="number"
-                    id="setting-sorting-books-per-page"
-                    name="setting-sorting-books-per-page"
-                    value="{{ intval(setting('sorting-books-per-page', 18)) }}"
-                    min="1"
-                    step="1"
-                    class="@if($errors->has('setting-sorting-books-per-page')) neg @endif">
-            </div>
-        </div>
-
         <div class="setting-list">
+            <div>
+                <div class="mb-m">
+                    <label class="setting-list-label">{{ trans('settings.sorting_page_limits') }}</label>
+                    <p class="small">{{ trans('settings.sorting_page_limits_desc') }}</p>
+                </div>
+                <div class="flex-container-row wrap gap-m small-inputs">
+                    @php
+                        $labelByKey = ['shelves' => trans('entities.shelves'), 'books' => trans('entities.books'), 'search' => trans('entities.search_results')];
+                    @endphp
+                    @foreach($labelByKey as $key => $label)
+                        <div>
+                            <label for="setting-lists-page-count-{{ $key }}">{{ $label }}</label>
+                            @include('form.number', [
+                                'name' => 'setting-lists-page-count-' . $key,
+                                'value' => setting()->getInteger('lists-page-count-' . $key, 18, 1, 1000),
+                                'min' => 1,
+                                'step' => 1,
+                            ])
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <div class="grid half gap-xl items-center">
                 <div>
                     <label for="setting-sorting-book-default"

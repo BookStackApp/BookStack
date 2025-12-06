@@ -75,12 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'No restriction set',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_shelves_per_page' => 'Shelves Per Page',
-    'sorting_shelves_per_page_desc' => 'Sets the number of shelves shown per page in shelf listings.',
-    'sorting_books_per_page' => 'Books Per Page',
-    'sorting_books_per_page_desc' => 'Sets the number of books shown per page in book listings.',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -107,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Maintenance',
