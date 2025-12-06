@@ -60,7 +60,7 @@ This event is called when the markdown editor loads, post configuration but befo
 
 #### Event Data
 
-- `markdownIt` - A references to the [MarkdownIt](https://markdown-it.github.io/markdown-it/#MarkdownIt) instance used to render markdown to HTML (Just for the preview).
+- `markdownIt` - A reference to the [MarkdownIt](https://markdown-it.github.io/markdown-it/#MarkdownIt) instance used to render markdown to HTML (Just for the preview).
 - `displayEl` - The IFrame Element that wraps the HTML preview display.
 - `cmEditorView` - The CodeMirror [EditorView](https://codemirror.net/docs/ref/#view.EditorView) instance used for the markdown input editor.
 
@@ -79,7 +79,7 @@ window.addEventListener('editor-markdown::setup', event => {
 This event is called as the embedded diagrams.net drawing editor loads, to allow configuration of the diagrams.net interface.
 See [this diagrams.net page](https://www.diagrams.net/doc/faq/configure-diagram-editor) for details on the available options for the configure event.
 
-If using a custom diagrams.net instance, via the `DRAWIO` option, you will need to ensure  your DRAWIO option URL has the `configure=1` query parameter.
+If using a custom diagrams.net instance, via the `DRAWIO` option, you will need to ensure your DRAWIO option URL has the `configure=1` query parameter.
 
 #### Event Data
 
@@ -134,6 +134,47 @@ window.addEventListener('editor-tinymce::setup', event => {
 });
 ```
 
+### `editor-wysiwyg::post-init`
+
+This is called after the (new custom-built Lexical-based) WYSIWYG editor has been initialised.
+
+#### Event Data
+
+- `usage` - A string label to identify the usage type of the WYSIWYG editor in BookStack.
+- `api` - An instance to the WYSIWYG editor API, as documented in the [WYSIWYG JavaScript API file](./wysiwyg-js-api.md).
+
+##### Example
+
+The below example shows how you'd use this API to create a button, with that button added to the main toolbar of the page editor, which inserts bold "Hello!" text on press:
+
+<details>
+<summary>Show Example</summary>
+
+```javascript
+window.addEventListener('editor-wysiwyg::post-init', event => {
+    const {usage, api} = event.detail;
+    // Check that it's the page editor which is being loaded
+    if (usage !== 'page-editor') {
+        return;
+    }
+    
+    // Create a custom button which inserts bold hello text on press
+    const button = api.ui.createButton({
+        label: 'Greet',
+        action: () => {
+            api.content.insertHtml(`<strong>Hello!</strong>`);
+        }
+    });
+    
+    // Add the button to the start of the first section within the main toolbar
+    const toolbar = api.ui.getMainToolbar();
+    if (toolbar) {
+      toolbar.getSections()[0]?.addButton(button, 0);   
+    }
+});
+```
+</details>
+
 ### `library-cm6::configure-theme`
 
 This event is called whenever a CodeMirror instance is loaded, as a method to configure the theme used by CodeMirror. This applies to all CodeMirror instances including in-page code blocks, editors using in BookStack settings, and the Page markdown editor.
@@ -142,7 +183,7 @@ This event is called whenever a CodeMirror instance is loaded, as a method to co
 
 - `darkModeActive` - A boolean to indicate if the current view/page is being loaded with dark mode active.
 - `registerViewTheme(builder)` - A method that can be called to register a new view (CodeMirror UI) theme.
-  - `builder` - A function that will return  an object that will be passed into the CodeMirror [EditorView.theme()](https://codemirror.net/docs/ref/#view.EditorView^theme) function as a StyleSpec.
+  - `builder` - A function that will return an object that will be passed into the CodeMirror [EditorView.theme()](https://codemirror.net/docs/ref/#view.EditorView^theme) function as a StyleSpec.
 - `registerHighlightStyle(builder)` - A method that can be called to register a new HighlightStyle (code highlighting) theme.
   - `builder` - A function, that receives a reference to [Tag.tags](https://lezer.codemirror.net/docs/ref/#highlight.tags) and returns an array of [TagStyle](https://codemirror.net/docs/ref/#language.TagStyle) objects.
 
@@ -301,7 +342,7 @@ This event is called just after any CodeMirror instances are initialised so that
 
 ##### Example
 
-The below shows how you'd prepend some default text to all content (page) code blocks.
+The below example shows how you'd prepend some default text to all content (page) code blocks.
 
 <details>
 <summary>Show Example</summary>

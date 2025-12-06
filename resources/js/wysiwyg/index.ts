@@ -21,6 +21,7 @@ import {CodeBlockDecorator} from "./ui/decorators/code-block";
 import {DiagramDecorator} from "./ui/decorators/diagram";
 import {registerMouseHandling} from "./services/mouse-handling";
 import {registerSelectionHandling} from "./services/selection-handling";
+import {EditorApi} from "./api/api";
 
 const theme = {
     text: {
@@ -94,6 +95,11 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     registerCommonNodeMutationListeners(context);
 
+    window.$events.emitPublic(container, 'editor-wysiwyg::post-init', {
+        usage: 'page-editor',
+        api: new EditorApi(context),
+    });
+
     return new SimpleWysiwygEditorInterface(context);
 }
 
@@ -121,6 +127,11 @@ export function createBasicEditorInstance(container: HTMLElement, htmlContent: s
     context.manager.onTeardown(editorTeardown);
 
     setEditorContentFromHtml(editor, htmlContent);
+
+    window.$events.emitPublic(container, 'editor-wysiwyg::post-init', {
+        usage: 'description-editor',
+        api: new EditorApi(context),
+    });
 
     return new SimpleWysiwygEditorInterface(context);
 }

@@ -25,10 +25,13 @@ function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     });
 }
 
-export function $htmlToBlockNodes(editor: LexicalEditor, html: string): LexicalNode[] {
+export function $htmlToNodes(editor: LexicalEditor, html: string): LexicalNode[] {
     const dom = htmlToDom(html);
-    const nodes = $generateNodesFromDOM(editor, dom);
-    return wrapTextNodes(nodes);
+    return $generateNodesFromDOM(editor, dom);
+}
+
+export function $htmlToBlockNodes(editor: LexicalEditor, html: string): LexicalNode[] {
+    return wrapTextNodes($htmlToNodes(editor, html));
 }
 
 export function $getParentOfType(node: LexicalNode, matcher: LexicalNodeMatcher): LexicalNode | null {

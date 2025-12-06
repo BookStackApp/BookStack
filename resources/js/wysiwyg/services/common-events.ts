@@ -1,4 +1,4 @@
-import {$getSelection, LexicalEditor} from "lexical";
+import {LexicalEditor} from "lexical";
 import {
     appendHtmlToEditor,
     focusEditor,

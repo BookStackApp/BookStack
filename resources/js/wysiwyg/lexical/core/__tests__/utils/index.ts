@@ -504,7 +504,7 @@ export function createTestContext(): EditorUiContext {
     options: {},
     scrollDOM: scrollWrap,
     translate(text: string): string {
-      return "";
+      return text;
     }
   };
 
@@ -769,6 +769,7 @@ export function expectHtmlToBeEqual(expected: string, actual: string): void {
 
 type nodeTextShape = {
   text: string;
+  format?: number;
 };
 
 type nodeShape = {
@@ -786,7 +787,13 @@ export function getNodeShape(node: SerializedLexicalNode): nodeShape|nodeTextSha
 
   if (shape.type === 'text') {
     // @ts-ignore
-    return  {text: node.text}
+    const shape: nodeTextShape =  {text: node.text}
+    // @ts-ignore
+    if (node && node.format) {
+      // @ts-ignore
+      shape.format = node.format;
+    }
+    return shape;
   }
 
   if (children.length > 0) {
