@@ -52,7 +52,7 @@ class PageListLimitsTest extends TestCase
         $this->withHtml($resp)->assertElementCount('main [data-entity-type="bookshelf"]', 1);
     }
 
-    public function test_shelf_count_is_used_on_books_view()
+    public function test_book_count_is_used_on_books_view()
     {
         $resp = $this->asAdmin()->get('/books');
         $defaultCount = min(Book::query()->count(), 18);
@@ -66,7 +66,7 @@ class PageListLimitsTest extends TestCase
         $this->withHtml($resp)->assertElementCount('main [data-entity-type="book"]', 1);
     }
 
-    public function test_shelf_count_is_used_on_search_view()
+    public function test_search_count_is_used_on_search_view()
     {
         $resp = $this->asAdmin()->get('/search');
         $this->withHtml($resp)->assertElementCount('.entity-list [data-entity-id]', 18);
