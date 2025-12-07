@@ -14,6 +14,7 @@ export interface EditorFormModalDefinition extends EditorModalDefinition {
 export class EditorFormModal extends EditorContainerUiElement {
     protected definition: EditorFormModalDefinition;
     protected key: string;
+    protected originalFocus: Element|null = null;
 
     constructor(definition: EditorFormModalDefinition, key: string) {
         super([new EditorForm(definition.form)]);
@@ -22,6 +23,7 @@ export class EditorFormModal extends EditorContainerUiElement {
     }
 
     show(defaultValues: Record<string, string>) {
+        this.originalFocus = document.activeElement as Element;
         const dom = this.getDOMElement();
         document.body.append(dom);
 
@@ -31,11 +33,15 @@ export class EditorFormModal extends EditorContainerUiElement {
         form.setOnSuccessfulSubmit(this.hide.bind(this));
 
         this.getContext().manager.setModalActive(this.key, this);
+        form.focusOnFirst();
     }
 
     hide() {
         this.getContext().manager.setModalInactive(this.key);
         this.teardown();
+        if (this.originalFocus instanceof HTMLElement && this.originalFocus.isConnected) {
+            this.originalFocus.focus();
+        }
     }
 
     getForm(): EditorForm {
@@ -65,6 +71,12 @@ export class EditorFormModal extends EditorContainerUiElement {
 
         wrapper.addEventListener('click', event => {
             if (event.target && !modal.contains(event.target as HTMLElement)) {
+                this.hide();
+            }
+        });
+
+        wrapper.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
                 this.hide();
             }
         });
