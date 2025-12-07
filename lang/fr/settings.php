@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Aucune restriction en place',
 
     // Sorting Settings
-    'sorting' => 'Tri',
-    'sorting_book_default' => 'Tri des livres par défaut',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Sélectionnez le tri par défaut à mettre en place sur les nouveaux livres. Cela n’affectera pas les livres existants, et peut être redéfini dans les livres.',
     'sorting_rules' => 'Règles de tri',
     'sorting_rules_desc' => 'Ce sont les opérations de tri qui peuvent être appliquées au contenu du système.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Date de mise à jour',
     'sort_rule_op_chapters_first' => 'Chapitres en premier',
     'sort_rule_op_chapters_last' => 'Chapitres en dernier',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Maintenance',
