@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '制限しない',
 
     // Sorting Settings
-    'sorting' => 'ソート',
-    'sorting_book_default' => 'ブックのデフォルトソート',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '新しいブックに適用するデフォルトのソートルールを選択します。これは既存のブックには影響しません。ルールはブックごとに上書きすることができます。',
     'sorting_rules' => 'ソートルール',
     'sorting_rules_desc' => 'これらはシステム内のコンテンツに適用できる事前定義のソート操作です。',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '更新日時',
     'sort_rule_op_chapters_first' => 'チャプタを最初に',
     'sort_rule_op_chapters_last' => 'チャプタを最後に',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'メンテナンス',
