@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Geen beperkingen ingesteld',
 
     // Sorting Settings
-    'sorting' => 'Sorteren',
-    'sorting_book_default' => 'Standaard Sorteerregel Boek',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Selecteer de standaard sorteerregel om toe te passen op nieuwe boeken. Dit heeft geen invloed op bestaande boeken, en kan per boek worden overschreven.',
     'sorting_rules' => 'Sorteerregels',
     'sorting_rules_desc' => 'Dit zijn vooraf ingestelde sorteeroperaties die kunnen worden toegepast op inhoud in het systeem.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Bijwerkdatum',
     'sort_rule_op_chapters_first' => 'Hoofdstukken Eerst',
     'sort_rule_op_chapters_last' => 'Hoofdstukken Laatst',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Onderhoud',
