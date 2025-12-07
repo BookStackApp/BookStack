@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Không có giới hạn nào được thiết lập',
 
     // Sorting Settings
-    'sorting' => 'Sắp xếp',
-    'sorting_book_default' => 'Sắp xếp sách mặc định',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Chọn quy tắc sắp xếp mặc định để áp dụng cho sách mới. Điều này sẽ không ảnh hưởng đến các sách hiện có và có thể được ghi đè cho từng sách.',
     'sorting_rules' => 'Quy tắc sắp xếp',
     'sorting_rules_desc' => 'Đây là các thao tác sắp xếp được xác định trước có thể được áp dụng cho nội dung trong hệ thống.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Ngày cập nhật',
     'sort_rule_op_chapters_first' => 'Chương trước',
     'sort_rule_op_chapters_last' => 'Chương sau',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Bảo trì',
