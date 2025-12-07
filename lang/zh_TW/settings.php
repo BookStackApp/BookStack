@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未設定限制',
 
     // Sorting Settings
-    'sorting' => '排序',
-    'sorting_book_default' => '預設書籍排序',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '選取要套用至新書籍的預設排序規則。這不會影響現有書籍，並可按書籍覆寫。',
     'sorting_rules' => '排序規則',
     'sorting_rules_desc' => '這些是預先定義的排序作業，可套用於系統中的內容。',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '更新日期',
     'sort_rule_op_chapters_first' => '第一章',
     'sort_rule_op_chapters_last' => '最後一章',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => '維護',
