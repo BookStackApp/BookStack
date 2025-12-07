@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Tidak ada batasan yang ditetapkan',
 
     // Sorting Settings
-    'sorting' => 'Menyortir',
-    'sorting_book_default' => 'Penyortiran Buku Default',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Pilih aturan sortir default yang akan diterapkan pada buku baru. Aturan ini tidak akan memengaruhi buku yang sudah ada, dan dapat diganti per buku.',
     'sorting_rules' => 'Aturan Penyortiran',
     'sorting_rules_desc' => 'Ini adalah operasi penyortiran yang telah ditetapkan sebelumnya yang dapat diterapkan pada konten dalam sistem.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Tanggal Pembaruan',
     'sort_rule_op_chapters_first' => 'Bab di Urutan Pertama',
     'sort_rule_op_chapters_last' => 'Bab di Urutan Terakhir',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Pemeliharaan',
