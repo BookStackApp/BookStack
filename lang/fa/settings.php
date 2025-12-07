@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'بدون محدودیت',
 
     // Sorting Settings
-    'sorting' => 'مرتب‌سازی',
-    'sorting_book_default' => 'مرتب‌سازی پیش‌فرض کتاب',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'قانون پیش‌فرض مرتب‌سازی را برای کتاب‌های جدید انتخاب کنید. تغییر قانون بر ترتیب کتاب‌های موجود تأثیری ندارد و می‌تواند برای هر کتاب به‌صورت جداگانه تغییر یابد.',
     'sorting_rules' => 'قوانین مرتب‌سازی',
     'sorting_rules_desc' => 'این‌ها عملیات مرتب‌سازی از پیش تعریف‌شده‌ای هستند که می‌توانید آن‌ها را بر محتوای سیستم اعمال کنید.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'تاریخ به‌روزرسانی',
     'sort_rule_op_chapters_first' => 'ابتدا فصل‌ها',
     'sort_rule_op_chapters_last' => 'فصل‌ها در آخر',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'نگهداری',
