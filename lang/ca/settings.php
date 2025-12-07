@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'No hi ha cap restricció',
 
     // Sorting Settings
-    'sorting' => 'Ordenar',
-    'sorting_book_default' => 'Ordre predeterminat del llibre',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Selecciona la regla d\'ordenació predeterminada per aplicar a nous llibres. Això no afectarà els llibres existents, i pot ser anul·lat per llibre.',
     'sorting_rules' => 'Regles d\'ordenació',
     'sorting_rules_desc' => 'Són operacions d\'ordenació predefinides que es poden aplicar al contingut en el sistema.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Data d\'actualització',
     'sort_rule_op_chapters_first' => 'Capítols a l\'inici',
     'sort_rule_op_chapters_last' => 'Capítols al final',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Manteniment',
