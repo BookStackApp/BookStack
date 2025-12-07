@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nav ierobežojumu',
 
     // Sorting Settings
-    'sorting' => 'Kārtošana',
-    'sorting_book_default' => 'Noklusētā grāmatu kārtošana',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Izvēlieties noklusēto kārtošanas nosacījumu, ko pielietot jaunām grāmatām. Šis neskars jau esošas grāmatas, un to var izmainīt grāmatas iestatījumos.',
     'sorting_rules' => 'Kārtošanas noteikumi',
     'sorting_rules_desc' => 'Šīs ir iepriekš noteiktas kārtošanas darbības, ko var pielietot saturam šajā sistēmā.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Atjaunināšanas datums',
     'sort_rule_op_chapters_first' => 'Nodaļas pirmās',
     'sort_rule_op_chapters_last' => 'Nodaļas pēdējās',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Apkope',
