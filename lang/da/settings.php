@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ingen restriktion opsat',
 
     // Sorting Settings
-    'sorting' => 'Sortering',
-    'sorting_book_default' => 'Standard bog-sortering',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Vælg den standardsorteringsregel, der skal gælde for nye bøger. Dette påvirker ikke eksisterende bøger og kan tilsidesættes for hver enkelt bog.',
     'sorting_rules' => 'Regler for sortering',
     'sorting_rules_desc' => 'Det er foruddefinerede sorteringsoperationer, som kan anvendes på indhold i systemet.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Opdateret dato',
     'sort_rule_op_chapters_first' => 'Kapitler først',
     'sort_rule_op_chapters_last' => 'De sidste kapitler',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Vedligeholdelse',
