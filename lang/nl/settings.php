@@ -76,7 +76,7 @@ return [
 
     // Sorting Settings
     'sorting' => 'Lijsten & Sorteren',
-    'sorting_book_default' => 'Standaard Boek Sorteerregel',
+    'sorting_book_default' => 'Standaard Sorteerregel Boek',
     'sorting_book_default_desc' => 'Selecteer de standaard sorteerregel om toe te passen op nieuwe boeken. Dit heeft geen invloed op bestaande boeken, en kan per boek worden overschreven.',
     'sorting_rules' => 'Sorteerregels',
     'sorting_rules_desc' => 'Dit zijn vooraf ingestelde sorteeroperaties die kunnen worden toegepast op inhoud in het systeem.',
@@ -103,8 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Bijwerkdatum',
     'sort_rule_op_chapters_first' => 'Hoofdstukken Eerst',
     'sort_rule_op_chapters_last' => 'Hoofdstukken Laatst',
-    'sorting_page_limits' => 'Per Pagina Weergave Limieten',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits' => 'Weergavelimiet Per Pagina',
+    'sorting_page_limits_desc' => 'Stel in hoeveel items er op een pagina worden laten zien in de verschillende lijstweergaves. Een lager aantal verbeterd de snelheid, een hoger aantal verminderd het doorklikken door pagina\'s. Een even veelvoud van 3 (18, 24, 30, etc...) wordt aanbevolen.',
 
     // Maintenance settings
     'maint' => 'Onderhoud',
