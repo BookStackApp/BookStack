@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nenhuma restrição definida',
 
     // Sorting Settings
-    'sorting' => 'Ordenação',
-    'sorting_book_default' => 'Ordenação padrão de livros',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Selecione a regra de ordenação padrão a ser aplicada a novos livros. Isso não afetará os livros existentes e pode ser substituído para cada livro individualmente.',
     'sorting_rules' => 'Regras de ordenação',
     'sorting_rules_desc' => 'Estas são operações de ordenação pré-definidas que podem ser aplicadas a conteúdos no sistema.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Data de Atualização',
     'sort_rule_op_chapters_first' => 'Capítulos Primeiro',
     'sort_rule_op_chapters_last' => 'Capítulos por Último',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Manutenção',
