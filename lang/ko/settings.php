@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '차단한 도메인 없음',
 
     // Sorting Settings
-    'sorting' => '정렬',
-    'sorting_book_default' => '기본 책 정렬',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '새로운 책에 적용할 기본 정렬 규칙을 선택하세요. 이 선택은 기존 책에는 영향을 주지 않고, 기존 책의 설정은 책마다 변경할 수 있습니다.',
     'sorting_rules' => '정렬 규칙',
     'sorting_rules_desc' => '현재 시스템에 미리 정의된 정렬 규칙의 목록입니다.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '수정일',
     'sort_rule_op_chapters_first' => '챕터 우선 정렬',
     'sort_rule_op_chapters_last' => '챕터 나중 정렬',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => '유지관리',
