@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'कुनै प्रतिबन्ध छैन',
 
     // Sorting Settings
-    'sorting' => 'क्रमबद्धता',
-    'sorting_book_default' => 'डिफल्ट पुस्तक क्रम',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'नयाँ पुस्तकहरूमा लागु गर्न डिफल्ट क्रम नियम चयन गर्नुहोस्। यो अस्तित्वमा रहेका पुस्तकहरूमा असर पार्दैन र पुस्तक अनुसार ओभरराइड गर्न सकिन्छ।',
     'sorting_rules' => 'क्रम नियमहरू',
     'sorting_rules_desc' => 'यी पूर्वनिर्धारित क्रम सञ्चालनहरू हुन् जुन प्रणालीमा सामग्रीमा लागू गर्न सकिन्छ।',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'अपडेट मिति',
     'sort_rule_op_chapters_first' => 'पहिले अध्यायहरू',
     'sort_rule_op_chapters_last' => 'अन्त्यमा अध्यायहरू',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'सम्भार',
