@@ -176,7 +176,7 @@ License: MIT
 License File: vendor/intervention/image/LICENSE
 Copyright: Copyright (c) 2013-present Oliver Vogel
 Source: https://github.com/Intervention/image.git
-Link: https://image.intervention.io/
+Link: https://image.intervention.io
 -----------
 knplabs/knp-snappy
 License: MIT
@@ -590,6 +590,13 @@ License: MIT
 License File: vendor/symfony/event-dispatcher-contracts/LICENSE
 Copyright: Copyright (c) 2018-present Fabien Potencier
 Source: https://github.com/symfony/event-dispatcher-contracts.git
+Link: https://symfony.com
+-----------
+symfony/filesystem
+License: MIT
+License File: vendor/symfony/filesystem/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/filesystem.git
 Link: https://symfony.com
 -----------
 symfony/finder
