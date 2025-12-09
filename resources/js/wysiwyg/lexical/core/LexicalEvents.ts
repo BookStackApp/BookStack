@@ -67,7 +67,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from '.';
-import {KEY_MODIFIER_COMMAND, SELECT_ALL_COMMAND} from './LexicalCommands';
+import {KEY_AT_COMMAND, KEY_MODIFIER_COMMAND, SELECT_ALL_COMMAND} from './LexicalCommands';
 import {
   COMPOSITION_START_CHAR,
   DOM_ELEMENT_TYPE,
@@ -97,7 +97,7 @@ import {
   getEditorPropertyFromDOMNode,
   getEditorsToPropagate,
   getNearestEditorFromDOMNode,
-  getWindow,
+  getWindow, isAt,
   isBackspace,
   isBold,
   isCopy,
@@ -1062,6 +1062,8 @@ function onKeyDown(event: KeyboardEvent, editor: LexicalEditor): void {
   } else if (isDeleteLineForward(key, metaKey)) {
     event.preventDefault();
     dispatchCommand(editor, DELETE_LINE_COMMAND, false);
+  } else if (isAt(key)) {
+    dispatchCommand(editor, KEY_AT_COMMAND, event);
   } else if (isBold(key, altKey, metaKey, ctrlKey)) {
     event.preventDefault();
     dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'bold');

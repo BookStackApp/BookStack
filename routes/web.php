@@ -198,6 +198,7 @@ Route::middleware('auth')->group(function () {
 
     // User Search
     Route::get('/search/users/select', [UserControllers\UserSearchController::class, 'forSelect']);
+    Route::get('/search/users/mention', [UserControllers\UserSearchController::class, 'forMentions']);
 
     // Template System
     Route::get('/templates', [EntityControllers\PageTemplateController::class, 'list']);

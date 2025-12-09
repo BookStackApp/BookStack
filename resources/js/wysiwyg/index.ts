@@ -160,7 +160,7 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
         registerHistory(editor, createEmptyHistoryState(), 300),
         registerShortcuts(context),
         registerAutoLinks(editor),
-        registerMentions(editor),
+        registerMentions(context),
     );
 
     // Register toolbars, modals & decorators

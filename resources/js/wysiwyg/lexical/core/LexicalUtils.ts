@@ -1056,6 +1056,10 @@ export function isDelete(key: string): boolean {
   return key === 'Delete';
 }
 
+export function isAt(key: string): boolean {
+  return key === '@';
+}
+
 export function isSelectAll(
   key: string,
   metaKey: boolean,
