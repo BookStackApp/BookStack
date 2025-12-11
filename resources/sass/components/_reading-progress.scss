@@ -1,0 +1,196 @@
+.reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+
+    &.completed {
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+    }
+
+    &.loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    .reading-progress-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 4px;
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            .progress-text {
+                font-weight: 600;
+                color: #1f2937;
+                font-size: 14px;
+            }
+
+            .time-text {
+                color: #6b7280;
+                font-size: 12px;
+            }
+        }
+
+        .progress-actions {
+            display: flex;
+            gap: 8px;
+
+            .btn-small {
+                padding: 4px 8px;
+                font-size: 12px;
+                border-radius: 4px;
+                border: 1px solid #d1d5db;
+                background: white;
+                color: #374151;
+                cursor: pointer;
+                transition: all 0.2s ease;
+
+                &:hover:not(:disabled) {
+                    background: #f9fafb;
+                    border-color: #9ca3af;
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+
+                &.btn-secondary {
+                    background: #f3f4f6;
+                    border-color: #d1d5db;
+
+                    &:hover:not(:disabled) {
+                        background: #e5e7eb;
+                    }
+                }
+            }
+        }
+    }
+
+    .progress-bar-container {
+        position: relative;
+        height: 4px;
+        background: #e5e7eb;
+        border-radius: 2px;
+        overflow: hidden;
+
+        .progress-bar-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .progress-bar-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+        }
+    }
+
+    .save-status {
+        text-align: right;
+        margin-top: 2px;
+
+        small {
+            color: #6b7280;
+            font-size: 11px;
+        }
+    }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+    .reading-progress-bar {
+        background: rgba(17, 24, 39, 0.95);
+        border-bottom-color: #374151;
+
+        .reading-progress-header {
+            .progress-info {
+                .progress-text {
+                    color: #f9fafb;
+                }
+
+                .time-text {
+                    color: #9ca3af;
+                }
+            }
+
+            .progress-actions {
+                .btn-small {
+                    background: #374151;
+                    border-color: #4b5563;
+                    color: #e5e7eb;
+
+                    &:hover:not(:disabled) {
+                        background: #4b5563;
+                        border-color: #6b7280;
+                    }
+
+                    &.btn-secondary {
+                        background: #1f2937;
+                        border-color: #4b5563;
+
+                        &:hover:not(:disabled) {
+                            background: #374151;
+                        }
+                    }
+                }
+            }
+        }
+
+        .progress-bar-container {
+            background: #374151;
+
+            .progress-bar-fill {
+                background: linear-gradient(90deg, #60a5fa, #3b82f6);
+            }
+        }
+
+        .save-status {
+            small {
+                color: #9ca3af;
+            }
+        }
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .reading-progress-bar {
+        padding: 6px 12px;
+
+        .reading-progress-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+
+            .progress-info {
+                justify-content: space-between;
+            }
+
+            .progress-actions {
+                justify-content: flex-end;
+            }
+        }
+    }
+}

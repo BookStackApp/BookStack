@@ -31,6 +31,9 @@ Route::get('pages/{id}/export/pdf', [ExportControllers\PageExportApiController::
 Route::get('pages/{id}/export/plaintext', [ExportControllers\PageExportApiController::class, 'exportPlainText']);
 Route::get('pages/{id}/export/markdown', [ExportControllers\PageExportApiController::class, 'exportMarkdown']);
 Route::get('pages/{id}/export/zip', [ExportControllers\PageExportApiController::class, 'exportZip']);
+Route::get('pages/{id}/reading-progress', [EntityControllers\ReadingProgressApiController::class, 'getProgress']);
+Route::put('pages/{id}/reading-progress', [EntityControllers\ReadingProgressApiController::class, 'updateProgress']);
+Route::delete('pages/{id}/reading-progress', [EntityControllers\ReadingProgressApiController::class, 'deleteProgress']);
 
 Route::get('chapters', [EntityControllers\ChapterApiController::class, 'list']);
 Route::post('chapters', [EntityControllers\ChapterApiController::class, 'create']);
@@ -114,3 +117,5 @@ Route::post('users', [UserApiController::class, 'create']);
 Route::get('users/{id}', [UserApiController::class, 'read']);
 Route::put('users/{id}', [UserApiController::class, 'update']);
 Route::delete('users/{id}', [UserApiController::class, 'delete']);
+Route::get('users/me/reading-progress', [EntityControllers\ReadingProgressApiController::class, 'getUserProgress']);
+Route::get('users/me/reading-stats', [EntityControllers\ReadingProgressApiController::class, 'getUserStats']);
