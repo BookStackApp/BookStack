@@ -16,6 +16,8 @@
         ]])
     </div>
 
+    <reading-progress-bar :page-id="{{ $page->id }}"></reading-progress-bar>
+
     <main class="content-wrap card">
         <div component="page-display"
              option:page-display:page-id="{{ $page->id }}"

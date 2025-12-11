@@ -17,6 +17,7 @@ use BookStack\Uploads\Controllers\AttachmentApiController;
 use BookStack\Uploads\Controllers\ImageGalleryApiController;
 use BookStack\Users\Controllers\RoleApiController;
 use BookStack\Users\Controllers\UserApiController;
+use App\Http\Controllers\Api\ReadingProgressController;
 use Illuminate\Support\Facades\Route;
 
 // Main Entity Routes
@@ -42,6 +43,12 @@ Route::get('chapters/{id}/export/pdf', [ExportControllers\ChapterExportApiContro
 Route::get('chapters/{id}/export/plaintext', [ExportControllers\ChapterExportApiController::class, 'exportPlainText']);
 Route::get('chapters/{id}/export/markdown', [ExportControllers\ChapterExportApiController::class, 'exportMarkdown']);
 Route::get('chapters/{id}/export/zip', [ExportControllers\ChapterExportApiController::class, 'exportZip']);
+
+        // 阅读进度API路由
+        Route::middleware('auth:api')->group(function () {
+            Route::get('/reading-progress/{pageId}', [ReadingProgressController::class, 'show']);
+            Route::post('/reading-progress', [ReadingProgressController::class, 'store']);
+        });
 
 Route::get('books', [EntityControllers\BookApiController::class, 'list']);
 Route::post('books', [EntityControllers\BookApiController::class, 'create']);
