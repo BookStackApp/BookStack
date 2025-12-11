@@ -30,6 +30,7 @@ class SearchRunner
         protected PermissionApplicator $permissions,
         protected EntityQueries $entityQueries,
         protected EntityHydrator $entityHydrator,
+        protected SearchCache $searchCache,
     ) {
         $this->termAdjustmentCache = new WeakMap();
     }
@@ -41,6 +42,13 @@ class SearchRunner
      */
     public function searchEntities(SearchOptions $searchOpts, string $entityType = 'all', int $page = 1, int $count = 20): array
     {
+        $cacheKey = $this->generateCacheKey($searchOpts, $entityType, $page, $count);
+        
+        // 尝试从缓存获取结果
+        if ($cached = $this->searchCache->getSearchResults($cacheKey)) {
+            return $cached;
+        }
+
         $entityTypes = array_keys($this->entityProvider->all());
         $entityTypesToSearch = $entityTypes;
 
@@ -51,14 +59,22 @@ class SearchRunner
             $entityTypesToSearch = explode('|', $filterMap['type']);
         }
 
-        $searchQuery = $this->buildQuery($searchOpts, $entityTypesToSearch);
-        $total = $searchQuery->count();
+        // 使用优化的查询构建
+        $searchQuery = $this->buildOptimizedQuery($searchOpts, $entityTypesToSearch);
+        
+        // 使用分页查询减少内存使用
+        $total = $searchQuery->clone()->count();
         $results = $this->getPageOfDataFromQuery($searchQuery, $page, $count);
 
-        return [
+        $result = [
             'total'    => $total,
             'results'  => $results->values(),
         ];
+
+        // 缓存结果
+        $this->searchCache->cacheSearchResults($cacheKey, $result);
+
+        return $result;
     }
 
     /**
@@ -86,6 +102,95 @@ class SearchRunner
         $query = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId);
 
         return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
+    }
+
+    /**
+     * Build an optimized search query.
+     * @param string[] $entityTypes
+     */
+    protected function buildOptimizedQuery(SearchOptions $searchOpts, array $entityTypes): EloquentBuilder
+    {
+        $entityQuery = $this->entityQueries->visibleForList()
+            ->select('entities.*')
+            ->whereIn('type', $entityTypes)
+            ->with(['book:id,name', 'chapter:id,name']) // 预加载关联数据，避免N+1查询
+            ->limit(1000); // 限制结果集大小
+
+        // 处理正常搜索词
+        $this->applyTermSearch($entityQuery, $searchOpts, $entityTypes);
+
+        // 处理精确匹配 - 使用索引优化的查询
+        foreach ($searchOpts->exacts->all() as $exact) {
+            $this->applyExactMatch($entityQuery, $exact);
+        }
+
+        // 处理标签搜索
+        foreach ($searchOpts->tags->all() as $tagOption) {
+            $this->applyTagSearchOptimized($entityQuery, $tagOption);
+        }
+
+        // 处理过滤器
+        foreach ($searchOpts->filters->all() as $filterOption) {
+            $this->applyFilterOptimized($entityQuery, $filterOption);
+        }
+
+        return $entityQuery;
+    }
+
+    /**
+     * Apply optimized exact match search.
+     */
+    protected function applyExactMatch(EloquentBuilder $query, $exact): void
+    {
+        $inputTerm = str_replace('\\', '\\\\', $exact->value);
+        
+        // 使用全文搜索或索引优化的LIKE查询
+        $filter = function (EloquentBuilder $query) use ($inputTerm) {
+            $query->where(function ($q) use ($inputTerm) {
+                $q->where('name', 'like', $inputTerm . '%') // 前缀匹配使用索引
+                  ->orWhere('name', '=', $inputTerm) // 精确匹配
+                  ->orWhere('description', 'like', $inputTerm . '%')
+                  ->orWhere('text', 'like', $inputTerm . '%');
+            });
+        };
+
+        $exact->negated ? $query->whereNot($filter) : $query->where($filter);
+    }
+
+    /**
+     * Apply optimized tag search.
+     */
+    protected function applyTagSearchOptimized(EloquentBuilder $query, $tagOption): void
+    {
+        // 使用EXISTS子查询替代JOIN，提高性能
+        $query->whereExists(function ($subQuery) use ($tagOption) {
+            $subQuery->select(DB::raw(1))
+                ->from('tags')
+                ->whereColumn('tags.entity_id', 'entities.id')
+                ->whereColumn('tags.entity_type', 'entities.type')
+                ->where('tags.name', '=', $tagOption->name);
+
+            if ($tagOption->value !== null) {
+                $subQuery->where('tags.value', '=', $tagOption->value);
+            }
+        });
+    }
+
+    /**
+     * Apply optimized filter.
+     */
+    protected function applyFilterOptimized(EloquentBuilder $query, $filterOption): void
+    {
+        $functionName = Str::camel('filter_' . $filterOption->getKey());
+        if (method_exists($this, $functionName)) {
+            // 使用优化的过滤器方法
+            $optimizedMethod = $functionName . 'Optimized';
+            if (method_exists($this, $optimizedMethod)) {
+                $this->$optimizedMethod($query, $filterOption->value, $filterOption->negated);
+            } else {
+                $this->$functionName($query, $filterOption->value, $filterOption->negated);
+            }
+        }
     }
 
     /**
@@ -156,6 +261,7 @@ class SearchRunner
         $scoredTerms = $this->getTermAdjustments($options);
         $scoreSelect = $this->selectForScoredTerms($scoredTerms);
 
+        // 创建优化的子查询，限制结果集大小
         $subQuery = DB::table('search_terms')->select([
             'entity_id',
             'entity_type',
@@ -165,12 +271,16 @@ class SearchRunner
         $subQuery->addBinding($scoreSelect['bindings'], 'select');
         $subQuery->where(function (Builder $query) use ($terms) {
             foreach ($terms as $inputTerm) {
-                $escapedTerm = str_replace('\\', '\\\\', $inputTerm);
+                $escapedTerm = strtolower(str_replace('\\', '\\\\', $inputTerm));
+                // 使用索引优化的前缀匹配
                 $query->orWhere('term', 'like', $escapedTerm . '%');
             }
         });
-        $subQuery->groupBy('entity_type', 'entity_id');
+        $subQuery->groupBy('entity_type', 'entity_id')
+                 ->having(DB::raw($scoreSelect['statement']), '>', 0.1) // 过滤低分结果
+                 ->limit(1000); // 限制结果集大小
 
+        // 使用优化的JOIN方式
         $entityQuery->joinSub($subQuery, 's', function (JoinClause $join) {
             $join->on('s.entity_id', '=', 'entities.id')
                 ->on('s.entity_type', '=', 'entities.type');
@@ -432,4 +542,56 @@ class SearchRunner
                 ->on('entities.type', '=', 'comments.commentable_type');
         })->orderBy('last_commented', $negated ? 'asc' : 'desc');
     }
-}
+
+    /**
+     * Generate cache key for search results.
+     */
+    protected function generateCacheKey(SearchOptions $searchOpts, string $entityType, int $page, int $count): string
+    {
+        $keyData = [
+            'search' => $searchOpts->toString(),
+            'type' => $entityType,
+            'page' => $page,
+            'count' => $count,
+            'user_id' => user()->id ?? 0,
+        ];
+
+        return md5(serialize($keyData));
+    }
+
+    /**
+     * Optimized filter for updated after date.
+     */
+    protected function filterUpdatedAfterOptimized(EloquentBuilder $query, string $value, bool $negated): void
+    {
+        $date = $this->parseDateFromString($value);
+        if ($date) {
+            $negated ? $query->where('updated_at', '<', $date) : $query->where('updated_at', '>=', $date);
+        }
+    }
+
+    /**
+     * Optimized filter for created by user.
+     */
+    protected function filterCreatedByOptimized(EloquentBuilder $query, string $value, bool $negated): void
+    {
+        $user = User::query()->where('email', '=', $value)->first(['id']);
+        if ($user) {
+            $negated ? $query->where('created_by', '!=', $user->id) : $query->where('created_by', '=', $user->id);
+        }
+    }
+
+    /**
+     * Parse date from string with improved error handling.
+     */
+    protected function parseDateFromString(string $value): ?Carbon
+    {
+        try {
+            if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $value)) {
+                return Carbon::createFromFormat('Y-m-d', $value);
+            }
+            return Carbon::parse($value);
+        } catch (Exception $e) {
+            return null;
+        }
+    }
