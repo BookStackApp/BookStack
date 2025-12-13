@@ -90,7 +90,7 @@ export class EditorUIManager {
         }
 
         // @ts-ignore
-        const decorator = new decoratorClass(nodeKey);
+        const decorator = new decoratorClass(this.getContext());
         this.decoratorInstancesByNodeKey[nodeKey] = decorator;
         return decorator;
     }
@@ -262,7 +262,7 @@ export class EditorUIManager {
                     const adapter = decorators[key];
                     const decorator = this.getDecorator(adapter.type, key);
                     decorator.setNode(adapter.getNode());
-                    const decoratorEl = decorator.render(this.getContext(), decoratedEl);
+                    const decoratorEl = decorator.render(decoratedEl);
                     if (decoratorEl) {
                         decoratedEl.append(decoratorEl);
                     }

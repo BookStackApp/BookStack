@@ -14,7 +14,7 @@ export class CodeBlockDecorator extends EditorDecorator {
     // @ts-ignore
     protected editor: any = null;
 
-    setup(context: EditorUiContext, element: HTMLElement) {
+    setup(element: HTMLElement) {
         const codeNode = this.getNode() as CodeBlockNode;
         const preEl = element.querySelector('pre');
         if (!preEl) {
@@ -35,24 +35,24 @@ export class CodeBlockDecorator extends EditorDecorator {
 
         element.addEventListener('click', event => {
             requestAnimationFrame(() => {
-                context.editor.update(() => {
+                this.context.editor.update(() => {
                     $selectSingleNode(this.getNode());
                 });
             });
         });
 
         element.addEventListener('dblclick', event => {
-            context.editor.getEditorState().read(() => {
-                $openCodeEditorForNode(context.editor, (this.getNode() as CodeBlockNode));
+            this.context.editor.getEditorState().read(() => {
+                $openCodeEditorForNode(this.context.editor, (this.getNode() as CodeBlockNode));
             });
         });
 
         const selectionChange = (selection: BaseSelection|null): void => {
             element.classList.toggle('selected', $selectionContainsNode(selection, codeNode));
         };
-        context.manager.onSelectionChange(selectionChange);
+        this.context.manager.onSelectionChange(selectionChange);
         this.onDestroy(() => {
-            context.manager.offSelectionChange(selectionChange);
+            this.context.manager.offSelectionChange(selectionChange);
         });
 
         // @ts-ignore
@@ -89,11 +89,11 @@ export class CodeBlockDecorator extends EditorDecorator {
         }
     }
 
-    render(context: EditorUiContext, element: HTMLElement): void {
+    render(element: HTMLElement): void {
         if (this.completedSetup) {
             this.update();
         } else {
-            this.setup(context, element);
+            this.setup(element);
         }
     }
 }

@@ -9,33 +9,33 @@ import {$openDrawingEditorForNode} from "../../utils/diagrams";
 export class DiagramDecorator extends EditorDecorator {
     protected completedSetup: boolean = false;
 
-    setup(context: EditorUiContext, element: HTMLElement) {
+    setup(element: HTMLElement) {
         const diagramNode = this.getNode();
         element.classList.add('editor-diagram');
 
-        context.editor.registerCommand(CLICK_COMMAND, (event: MouseEvent): boolean => {
+        this.context.editor.registerCommand(CLICK_COMMAND, (event: MouseEvent): boolean => {
             if (!element.contains(event.target as HTMLElement)) {
                 return false;
             }
 
-            context.editor.update(() => {
+            this.context.editor.update(() => {
                 $selectSingleNode(this.getNode());
             });
             return true;
         }, COMMAND_PRIORITY_NORMAL);
 
         element.addEventListener('dblclick', event => {
-            context.editor.getEditorState().read(() => {
-                $openDrawingEditorForNode(context, (this.getNode() as DiagramNode));
+            this.context.editor.getEditorState().read(() => {
+                $openDrawingEditorForNode(this.context, (this.getNode() as DiagramNode));
             });
         });
 
         const selectionChange = (selection: BaseSelection|null): void => {
             element.classList.toggle('selected', $selectionContainsNode(selection, diagramNode));
         };
-        context.manager.onSelectionChange(selectionChange);
+        this.context.manager.onSelectionChange(selectionChange);
         this.onDestroy(() => {
-            context.manager.offSelectionChange(selectionChange);
+            this.context.manager.offSelectionChange(selectionChange);
         });
 
         this.completedSetup = true;
@@ -45,11 +45,11 @@ export class DiagramDecorator extends EditorDecorator {
         //
     }
 
-    render(context: EditorUiContext, element: HTMLElement): void {
+    render(element: HTMLElement): void {
         if (this.completedSetup) {
             this.update();
         } else {
-            this.setup(context, element);
+            this.setup(element);
         }
     }
 }

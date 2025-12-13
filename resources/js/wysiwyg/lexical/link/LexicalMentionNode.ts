@@ -1,20 +1,21 @@
 import {
+    DecoratorNode,
     DOMConversion,
-    DOMConversionMap, DOMConversionOutput,
+    DOMConversionMap, DOMConversionOutput, DOMExportOutput,
     type EditorConfig,
-    ElementNode,
     LexicalEditor, LexicalNode,
-    SerializedElementNode,
+    SerializedLexicalNode,
     Spread
 } from "lexical";
+import {EditorDecoratorAdapter} from "../../ui/framework/decorator";
 
 export type SerializedMentionNode = Spread<{
     user_id: number;
     user_name: string;
     user_slug: string;
-}, SerializedElementNode>
+}, SerializedLexicalNode>
 
-export class MentionNode extends ElementNode {
+export class MentionNode extends DecoratorNode<EditorDecoratorAdapter> {
     __user_id: number = 0;
     __user_name: string = '';
     __user_slug: string = '';
@@ -22,7 +23,6 @@ export class MentionNode extends ElementNode {
     static getType(): string {
         return 'mention';
     }
-
     static clone(node: MentionNode): MentionNode {
         const newNode = new MentionNode(node.__key);
         newNode.__user_id = node.__user_id;
@@ -42,12 +42,24 @@ export class MentionNode extends ElementNode {
         return true;
     }
 
+    isParentRequired(): boolean {
+        return true;
+    }
+
+    decorate(editor: LexicalEditor, config: EditorConfig): EditorDecoratorAdapter {
+        return {
+            type: 'mention',
+            getNode: () => this,
+        };
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const element = document.createElement('a');
         element.setAttribute('target', '_blank');
-        element.setAttribute('href', window.baseUrl('/users/' + this.__user_slug));
-        element.setAttribute('data-user-mention-id', String(this.__user_id));
+        element.setAttribute('href', window.baseUrl('/user/' + this.__user_slug));
+        element.setAttribute('data-mention-user-id', String(this.__user_id));
         element.textContent = '@' + this.__user_name;
+        // element.setAttribute('contenteditable', 'false');
         return element;
     }
 
@@ -55,21 +67,30 @@ export class MentionNode extends ElementNode {
         return prevNode.__user_id !== this.__user_id;
     }
 
+    exportDOM(editor: LexicalEditor): DOMExportOutput {
+        const element = this.createDOM(editor._config, editor);
+        // element.removeAttribute('contenteditable');
+        return {element};
+    }
+
     static importDOM(): DOMConversionMap|null {
         return {
             a(node: HTMLElement): DOMConversion|null {
-                if (node.hasAttribute('data-user-mention-id')) {
+                if (node.hasAttribute('data-mention-user-id')) {
                     return {
                         conversion: (element: HTMLElement): DOMConversionOutput|null => {
                             const node = new MentionNode();
                             node.setUserDetails(
-                                Number(element.getAttribute('data-user-mention-id') || '0'),
+                                Number(element.getAttribute('data-mention-user-id') || '0'),
                                 element.innerText.replace(/^@/, ''),
                                 element.getAttribute('href')?.split('/user/')[1] || ''
                             );
 
                             return {
                                 node,
+                                after(childNodes): LexicalNode[] {
+                                    return [];
+                                }
                             };
                         },
                         priority: 4,
@@ -82,7 +103,6 @@ export class MentionNode extends ElementNode {
 
     exportJSON(): SerializedMentionNode {
         return {
-            ...super.exportJSON(),
             type: 'mention',
             version: 1,
             user_id: this.__user_id,

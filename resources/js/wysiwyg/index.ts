@@ -22,12 +22,13 @@ import {registerKeyboardHandling} from "./services/keyboard-handling";
 import {registerAutoLinks} from "./services/auto-links";
 import {contextToolbars, getBasicEditorToolbar, getMainEditorFullToolbar} from "./ui/defaults/toolbars";
 import {modals} from "./ui/defaults/modals";
-import {CodeBlockDecorator} from "./ui/decorators/code-block";
-import {DiagramDecorator} from "./ui/decorators/diagram";
+import {CodeBlockDecorator} from "./ui/decorators/CodeBlockDecorator";
+import {DiagramDecorator} from "./ui/decorators/DiagramDecorator";
 import {registerMouseHandling} from "./services/mouse-handling";
 import {registerSelectionHandling} from "./services/selection-handling";
 import {EditorApi} from "./api/api";
 import {registerMentions} from "./services/mentions";
+import {MentionDecorator} from "./ui/decorators/MentionDecorator";
 
 const theme = {
     text: {
@@ -151,7 +152,7 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
     });
 
     // TODO - Dedupe this with the basic editor instance
-    //   Changed elements: namespace, registerMentions, toolbar, public event usage
+    //   Changed elements: namespace, registerMentions, toolbar, public event usage, mentioned decorator
     const context: EditorUiContext = buildEditorUI(container, editor, options);
     editor.setRootElement(context.editorDOM);
 
@@ -168,6 +169,7 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
     context.manager.registerContextToolbar('link', contextToolbars.link);
     context.manager.registerModal('link', modals.link);
     context.manager.onTeardown(editorTeardown);
+    context.manager.registerDecoratorType('mention', MentionDecorator);
 
     setEditorContentFromHtml(editor, htmlContent);
 
