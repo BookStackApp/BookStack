@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nessuna restrizione impostata',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'Elenchi E Ordinamento',
+    'sorting_book_default' => 'Regola Di Ordinamento Libro Predefinita',
     'sorting_book_default_desc' => 'Selezionare la regola di ordinamento predefinita da applicare ai nuovi libri. Questa regola non influisce sui libri esistenti e può essere modificata per ogni libro.',
     'sorting_rules' => 'Regole di ordinamento',
     'sorting_rules_desc' => 'Si tratta di operazioni di ordinamento predefinite applicabili ai contenuti del sistema.',
@@ -103,8 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Data di aggiornamento',
     'sort_rule_op_chapters_first' => 'Capitoli Prima',
     'sort_rule_op_chapters_last' => 'Capitoli dopo',
-    'sorting_page_limits' => 'Per-Page Display Limits',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits' => 'Limiti Visualizzazione Per Pagina',
+    'sorting_page_limits_desc' => 'Imposta il numero di elementi da visualizzare per pagina nei vari elenchi all\'interno del sistema. In genere, un numero inferiore garantisce prestazioni migliori, mentre un numero più elevato evita la necessità di cliccare su più pagine. Si consiglia di utilizzare un multiplo pari di 3 (18, 24, 30, ecc...).',
 
     // Maintenance settings
     'maint' => 'Manutenzione',
