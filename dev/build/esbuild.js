@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 
-const esbuild = require('esbuild');
-const path = require('path');
-const fs = require('fs');
+import * as esbuild from 'esbuild';
+import * as path from 'node:path';
+import * as fs from 'node:fs';
+import * as process from "node:process";
+
 
 // Check if we're building for production
 // (Set via passing `production` as first argument)
-const isProd = process.argv[2] === 'production';
+const mode = process.argv[2];
+const isProd = mode === 'production';
+const __dirname = import.meta.dirname;
 
 // Gather our input files
 const entryPoints = {
@@ -17,11 +21,16 @@ const entryPoints = {
     wysiwyg: path.join(__dirname, '../../resources/js/wysiwyg/index.ts'),
 };
 
+// Watch styles so we can reload on change
+if (mode === 'watch') {
+    entryPoints['styles-dummy'] = path.join(__dirname, '../../public/dist/styles.css');
+}
+
 // Locate our output directory
 const outdir = path.join(__dirname, '../../public/dist');
 
-// Build via esbuild
-esbuild.build({
+// Define the options for esbuild
+const options = {
     bundle: true,
     metafile: true,
     entryPoints,
@@ -33,6 +42,7 @@ esbuild.build({
     minify: isProd,
     logLevel: 'info',
     loader: {
+        '.html': 'copy',
         '.svg': 'text',
     },
     absWorkingDir: path.join(__dirname, '../..'),
@@ -45,6 +55,28 @@ esbuild.build({
         js: '// See the "/licenses" URI for full package license details',
         css: '/* See the "/licenses" URI for full package license details */',
     },
-}).then(result => {
-    fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
-}).catch(() => process.exit(1));
+};
+
+if (mode === 'watch') {
+    options.inject = [
+        path.join(__dirname, './livereload.js'),
+    ];
+}
+
+const ctx = await esbuild.context(options);
+
+if (mode === 'watch') {
+    // Watch for changes and rebuild on change
+    ctx.watch({});
+    let {hosts, port} = await ctx.serve({
+        servedir: path.join(__dirname, '../../public'),
+        cors: {
+            origin: '*',
+        }
+    });
+} else {
+    // Build with meta output for analysis
+    ctx.rebuild().then(result => {
+        fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
+    }).catch(() => process.exit(1));
+}
