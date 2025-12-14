@@ -20,7 +20,7 @@ function listen() {
 
                 if (url.pathname.endsWith(name)) {
                     const next = link.cloneNode();
-                    next.href = name + '?' + Math.random().toString(36).slice(2);
+                    next.href = name + '?version=' + Math.random().toString(36).slice(2);
                     next.onload = function() {
                         link.remove();
                     };

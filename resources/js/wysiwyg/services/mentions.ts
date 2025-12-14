@@ -1,9 +1,9 @@
 import {
     $getSelection, $isRangeSelection,
-    COMMAND_PRIORITY_NORMAL, RangeSelection, TextNode
+    COMMAND_PRIORITY_NORMAL, KEY_ENTER_COMMAND, RangeSelection, TextNode
 } from "lexical";
 import {KEY_AT_COMMAND} from "lexical/LexicalCommands";
-import {$createMentionNode} from "@lexical/link/LexicalMentionNode";
+import {$createMentionNode, $isMentionNode, MentionNode} from "@lexical/link/LexicalMentionNode";
 import {EditorUiContext} from "../ui/framework/core";
 import {MentionDecorator} from "../ui/decorators/MentionDecorator";
 
@@ -38,6 +38,20 @@ function enterUserSelectMode(context: EditorUiContext, selection: RangeSelection
     });
 }
 
+function selectMention(context: EditorUiContext, event: KeyboardEvent): boolean {
+    const selected = $getSelection()?.getNodes() || [];
+    if (selected.length === 1 && $isMentionNode(selected[0])) {
+        const mention = selected[0] as MentionNode;
+        const decorator = context.manager.getDecoratorByNodeKey(mention.getKey()) as MentionDecorator;
+        decorator.showSelection();
+        event.preventDefault();
+        event.stopPropagation();
+        return true;
+    }
+
+    return false;
+}
+
 export function registerMentions(context: EditorUiContext): () => void {
     const editor = context.editor;
 
@@ -53,7 +67,12 @@ export function registerMentions(context: EditorUiContext): () => void {
         return false;
     }, COMMAND_PRIORITY_NORMAL);
 
+    const unregisterEnter = editor.registerCommand(KEY_ENTER_COMMAND, function (event: KeyboardEvent): boolean {
+        return selectMention(context, event);
+    }, COMMAND_PRIORITY_NORMAL);
+
     return (): void => {
         unregisterCommand();
+        unregisterEnter();
     };
 }

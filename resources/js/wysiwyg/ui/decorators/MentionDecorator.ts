@@ -5,6 +5,9 @@ import {showLoading} from "../../../services/dom";
 import {MentionNode} from "@lexical/link/LexicalMentionNode";
 import {debounce} from "../../../services/util";
 import {$createTextNode} from "lexical";
+import {KeyboardNavigationHandler} from "../../../services/keyboard-navigation";
+
+import searchIcon from "@icons/search.svg";
 
 function userClickHandler(onSelect: (id: number, name: string, slug: string)=>void): (event: PointerEvent) => void {
     return (event: PointerEvent) => {
@@ -51,7 +54,7 @@ function handleUserListLoading(selectList: HTMLElement) {
 
     const updateUserList = async (searchTerm: string) => {
         // Empty list
-        for (const child of [...selectList.children].slice(1)) {
+        for (const child of [...selectList.children]) {
             child.remove();
         }
 
@@ -60,7 +63,7 @@ function handleUserListLoading(selectList: HTMLElement) {
         if (cache.has(searchTerm)) {
             responseHtml = cache.get(searchTerm) || '';
         } else {
-            const loadingWrap = el('li');
+            const loadingWrap = el('div', {class: 'flex-container-row items-center dropdown-search-item'});
             showLoading(loadingWrap);
             selectList.appendChild(loadingWrap);
 
@@ -71,18 +74,17 @@ function handleUserListLoading(selectList: HTMLElement) {
         }
 
         const doc = htmlToDom(responseHtml);
-        const toInsert = doc.querySelectorAll('li');
+        const toInsert = doc.body.children;
         for (const listEl of toInsert) {
             const adopted = window.document.adoptNode(listEl) as HTMLElement;
             selectList.appendChild(adopted);
         }
-
     };
 
     // Initial load
     updateUserList('');
 
-    const input = selectList.querySelector('input') as HTMLInputElement;
+    const input = selectList.parentElement?.querySelector('input') as HTMLInputElement;
     const updateUserListDebounced = debounce(updateUserList, 200, false);
     input.addEventListener('input', () => {
         const searchTerm = input.value;
@@ -92,8 +94,15 @@ function handleUserListLoading(selectList: HTMLElement) {
 
 function buildAndShowUserSelectorAtElement(context: EditorUiContext, mentionDOM: HTMLElement): HTMLElement {
     const searchInput = el('input', {type: 'text'});
-    const searchItem = el('li', {}, [searchInput]);
-    const userSelect = el('ul', {class: 'suggestion-box dropdown-menu'}, [searchItem]);
+    const list = el('div', {class: 'dropdown-search-list'});
+    const iconWrap = el('div');
+    iconWrap.innerHTML = searchIcon;
+    const icon = iconWrap.children[0] as HTMLElement;
+    icon.classList.add('svg-icon');
+    const userSelect = el('div', {class: 'dropdown-search-dropdown compact card'}, [
+        el('div', {class: 'dropdown-search-search'}, [icon, searchInput]),
+        list,
+    ]);
 
     context.containerDOM.appendChild(userSelect);
 
@@ -111,28 +120,32 @@ function buildAndShowUserSelectorAtElement(context: EditorUiContext, mentionDOM:
 }
 
 export class MentionDecorator extends EditorDecorator {
-    protected completedSetup: boolean = false;
     protected abortController: AbortController | null = null;
-    protected selectList: HTMLElement | null = null;
+    protected dropdownContainer: HTMLElement | null = null;
     protected mentionElement: HTMLElement | null = null;
 
     setup(element: HTMLElement) {
         this.mentionElement = element;
-        this.completedSetup = true;
+
+        element.addEventListener('click', (event: PointerEvent) => {
+            this.showSelection();
+            event.preventDefault();
+            event.stopPropagation();
+        });
     }
 
     showSelection() {
-        if (!this.mentionElement) {
+        if (!this.mentionElement || this.dropdownContainer) {
             return;
         }
 
         this.hideSelection();
         this.abortController = new AbortController();
 
-        this.selectList = buildAndShowUserSelectorAtElement(this.context, this.mentionElement);
-        handleUserListLoading(this.selectList);
+        this.dropdownContainer = buildAndShowUserSelectorAtElement(this.context, this.mentionElement);
+        handleUserListLoading(this.dropdownContainer.querySelector('.dropdown-search-list') as HTMLElement);
 
-        this.selectList.addEventListener('click', userClickHandler((id, name, slug) => {
+        this.dropdownContainer.addEventListener('click', userClickHandler((id, name, slug) => {
             this.context.editor.update(() => {
                 const mentionNode = this.getNode() as MentionNode;
                 this.hideSelection();
@@ -141,12 +154,22 @@ export class MentionDecorator extends EditorDecorator {
             });
         }), {signal: this.abortController.signal});
 
-        handleUserSelectCancel(this.context, this.selectList, this.abortController, this.revertMention.bind(this));
+        handleUserSelectCancel(this.context, this.dropdownContainer, this.abortController, () => {
+            if ((this.getNode() as MentionNode).hasUserSet()) {
+                this.hideSelection()
+            } else {
+                this.revertMention();
+            }
+        });
+
+        new KeyboardNavigationHandler(this.dropdownContainer);
     }
 
     hideSelection() {
         this.abortController?.abort();
-        this.selectList?.remove();
+        this.dropdownContainer?.remove();
+        this.abortController = null;
+        this.dropdownContainer = null;
     }
 
     revertMention() {
@@ -158,15 +181,7 @@ export class MentionDecorator extends EditorDecorator {
         });
     }
 
-    update() {
-        //
-    }
-
     render(element: HTMLElement): void {
-        if (this.completedSetup) {
-            this.update();
-        } else {
-            this.setup(element);
-        }
+        this.setup(element);
     }
 }

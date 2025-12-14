@@ -243,7 +243,7 @@ export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
         content: () => [new EditorButton(media)],
     },
     link: {
-        selector: 'a',
+        selector: 'a:not([data-mention-user-id])',
         content() {
             return [
                 new EditorButton(link),

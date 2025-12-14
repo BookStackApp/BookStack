@@ -1,7 +1,7 @@
 import {
     DecoratorNode,
     DOMConversion,
-    DOMConversionMap, DOMConversionOutput, DOMExportOutput,
+    DOMConversionMap, DOMConversionOutput,
     type EditorConfig,
     LexicalEditor, LexicalNode,
     SerializedLexicalNode,
@@ -38,6 +38,10 @@ export class MentionNode extends DecoratorNode<EditorDecoratorAdapter> {
         self.__user_slug = userSlug;
     }
 
+    hasUserSet(): boolean {
+        return this.__user_id > 0;
+    }
+
     isInline(): boolean {
         return true;
     }
@@ -58,19 +62,13 @@ export class MentionNode extends DecoratorNode<EditorDecoratorAdapter> {
         element.setAttribute('target', '_blank');
         element.setAttribute('href', window.baseUrl('/user/' + this.__user_slug));
         element.setAttribute('data-mention-user-id', String(this.__user_id));
+        element.setAttribute('title', '@' + this.__user_name);
         element.textContent = '@' + this.__user_name;
-        // element.setAttribute('contenteditable', 'false');
         return element;
     }
 
     updateDOM(prevNode: MentionNode): boolean {
         return prevNode.__user_id !== this.__user_id;
-    }
-
-    exportDOM(editor: LexicalEditor): DOMExportOutput {
-        const element = this.createDOM(editor._config, editor);
-        // element.removeAttribute('contenteditable');
-        return {element};
     }
 
     static importDOM(): DOMConversionMap|null {
