@@ -6,6 +6,7 @@ use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\Activity;
 use BookStack\Activity\Models\Loggable;
 use BookStack\Activity\Notifications\Handlers\CommentCreationNotificationHandler;
+use BookStack\Activity\Notifications\Handlers\CommentMentionNotificationHandler;
 use BookStack\Activity\Notifications\Handlers\NotificationHandler;
 use BookStack\Activity\Notifications\Handlers\PageCreationNotificationHandler;
 use BookStack\Activity\Notifications\Handlers\PageUpdateNotificationHandler;
@@ -48,5 +49,7 @@ class NotificationManager
         $this->registerHandler(ActivityType::PAGE_CREATE, PageCreationNotificationHandler::class);
         $this->registerHandler(ActivityType::PAGE_UPDATE, PageUpdateNotificationHandler::class);
         $this->registerHandler(ActivityType::COMMENT_CREATE, CommentCreationNotificationHandler::class);
+        $this->registerHandler(ActivityType::COMMENT_CREATE, CommentMentionNotificationHandler::class);
+        $this->registerHandler(ActivityType::COMMENT_UPDATE, CommentMentionNotificationHandler::class);
     }
 }

@@ -33,6 +33,13 @@
                                 'label' => trans('preferences.notifications_opt_comment_replies'),
                             ])
                         </div>
+                        <div>
+                            @include('form.toggle-switch', [
+                                'name' => 'preferences[comment-mentions]',
+                                'value' => $preferences->notifyOnCommentMentions(),
+                                'label' => trans('preferences.notifications_opt_comment_mentions'),
+                            ])
+                        </div>
                     @endif
                 </div>
 

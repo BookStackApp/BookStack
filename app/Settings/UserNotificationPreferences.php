@@ -26,9 +26,14 @@ class UserNotificationPreferences
         return $this->getNotificationSetting('comment-replies');
     }
 
+    public function notifyOnCommentMentions(): bool
+    {
+        return $this->getNotificationSetting('comment-mentions');
+    }
+
     public function updateFromSettingsArray(array $settings)
     {
-        $allowList = ['own-page-changes', 'own-page-comments', 'comment-replies'];
+        $allowList = ['own-page-changes', 'own-page-comments', 'comment-replies', 'comment-mentions'];
         foreach ($settings as $setting => $status) {
             if (!in_array($setting, $allowList)) {
                 continue;

@@ -41,6 +41,7 @@ return [
         'bookshelves_view_type' => env('APP_VIEWS_BOOKSHELVES', 'grid'),
         'bookshelf_view_type'   => env('APP_VIEWS_BOOKSHELF', 'grid'),
         'books_view_type'       => env('APP_VIEWS_BOOKS', 'grid'),
+        'notifications#comment-mentions' => true,
     ],
 
 ];
