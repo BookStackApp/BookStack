@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'لم يتم اختيار أي قيود',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'القوائم و الفرز',
+    'sorting_book_default' => 'ترتيب الكتاب الافتراضي',
     'sorting_book_default_desc' => 'حدد قاعدة الترتيب الافتراضية لتطبيقها على الكتب الجديدة. لن يؤثر هذا على الكتب الحالية، ويمكن تجاوزه لكل كتاب على حدة.',
     'sorting_rules' => 'قواعد الترتيب',
     'sorting_rules_desc' => 'هذه هي عمليات الترتيب المحددة مسبقًا الذي يمكن تطبيقها على المحتوى الموجود في النظام.',
@@ -103,8 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'تاريخ التحديث',
     'sort_rule_op_chapters_first' => 'الفصول الأولى',
     'sort_rule_op_chapters_last' => 'الفصول الأخيرة',
-    'sorting_page_limits' => 'Per-Page Display Limits',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits' => 'حدود العرض لكل صفحة',
+    'sorting_page_limits_desc' => 'تعيين عدد العناصر لإظهار كل صفحة في قوائم مختلفة داخل النظام. عادةً ما يكون الرقم الأقل هو الأكثر أداء، بينما وضع رقم أعلى يغني عن النقر على صفحات متعددة. يوصى باستخدام مضاعفات رقم ٣ (18 و 24 و 30 و إلخ...).',
 
     // Maintenance settings
     'maint' => 'الصيانة',
