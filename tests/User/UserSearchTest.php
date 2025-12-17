@@ -2,6 +2,7 @@
 
 namespace Tests\User;
 
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\User;
 use Tests\TestCase;
 
@@ -61,5 +62,71 @@ class UserSearchTest extends TestCase
 
         $resp = $this->get('/search/users/select?search=a');
         $this->assertPermissionError($resp);
+    }
+
+    public function test_mentions_search_matches_by_name()
+    {
+        $viewer = $this->users->viewer();
+        $editor = $this->users->editor();
+
+        $resp = $this->actingAs($editor)->get('/search/users/mention?search=' . urlencode($viewer->name));
+
+        $resp->assertOk();
+        $resp->assertSee($viewer->name);
+        $resp->assertDontSee($editor->name);
+    }
+
+    public function test_mentions_search_does_not_match_by_email()
+    {
+        $viewer = $this->users->viewer();
+
+        $resp = $this->asEditor()->get('/search/users/mention?search=' . urlencode($viewer->email));
+
+        $resp->assertDontSee($viewer->name);
+    }
+
+    public function test_mentions_search_requires_logged_in_user()
+    {
+        $this->setSettings(['app-public' => true]);
+        $guest = $this->users->guest();
+        $this->permissions->grantUserRolePermissions($guest, [Permission::CommentCreateAll, Permission::CommentUpdateAll]);
+
+        $resp = $this->get('/search/users/mention?search=a');
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_mentions_search_requires_comment_create_or_update_permission()
+    {
+        $viewer = $this->users->viewer();
+        $editor = $this->users->editor();
+
+        $resp = $this->actingAs($viewer)->get('/search/users/mention?search=' . urlencode($editor->name));
+        $this->assertPermissionError($resp);
+
+        $this->permissions->grantUserRolePermissions($viewer, [Permission::CommentCreateAll]);
+
+        $resp = $this->actingAs($editor)->get('/search/users/mention?search=' . urlencode($viewer->name));
+        $resp->assertOk();
+        $resp->assertSee($viewer->name);
+
+        $this->permissions->removeUserRolePermissions($viewer, [Permission::CommentCreateAll]);
+        $this->permissions->grantUserRolePermissions($viewer, [Permission::CommentUpdateAll]);
+
+        $resp = $this->actingAs($editor)->get('/search/users/mention?search=' . urlencode($viewer->name));
+        $resp->assertOk();
+        $resp->assertSee($viewer->name);
+    }
+
+    public function test_mentions_search_shows_first_by_name_without_search()
+    {
+        /** @var User $firstUser */
+        $firstUser = User::query()
+            ->orderBy('name', 'asc')
+            ->first();
+
+        $resp = $this->asEditor()->get('/search/users/mention');
+
+        $resp->assertOk();
+        $this->withHtml($resp)->assertElementContains('a[data-id]:first-child', $firstUser->name);
     }
 }

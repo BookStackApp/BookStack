@@ -19,10 +19,12 @@ class CommentMentionNotificationHandler extends BaseNotificationHandler
 {
     public function handle(Activity $activity, Loggable|string $detail, User $user): void
     {
-        $page = $detail->entity;
-        if (!($detail instanceof Comment) || !($page instanceof Page)) {
+        if (!($detail instanceof Comment) || !($detail->entity instanceof Page)) {
             throw new \InvalidArgumentException("Detail for comment mention notifications must be a comment on a page");
         }
+
+        /** @var Page $page */
+        $page = $detail->entity;
 
         $parser = new MentionParser();
         $mentionedUserIds = $parser->parseUserIdsFromHtml($detail->html);
@@ -50,6 +52,9 @@ class CommentMentionNotificationHandler extends BaseNotificationHandler
         $this->sendNotificationToUserIds(CommentMentionNotification::class, $receivingNotificationsUserIds, $user, $detail, $page);
     }
 
+    /**
+     * @param Collection<User> $mentionedUsers
+     */
     protected function logMentions(Collection $mentionedUsers, Comment $comment, User $fromUser): void
     {
         $mentions = [];
