@@ -16,4 +16,5 @@ use Illuminate\Support\Carbon;
  */
 class MentionHistory extends Model
 {
+    protected $table = 'mention_history';
 }

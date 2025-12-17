@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Entity;
+namespace Activity;
 
 use Tests\TestCase;
 

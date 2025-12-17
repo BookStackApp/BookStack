@@ -329,11 +329,19 @@ class UserMyAccountTest extends TestCase
         $resp = $this->asEditor()->get('/my-account/notifications');
         $resp->assertSee('Notify upon comments');
         $resp->assertSee('Notify upon replies');
+        $resp->assertSee('Notify when I\'m mentioned in a comment');
 
         setting()->put('app-disable-comments', true);
 
         $resp = $this->get('/my-account/notifications');
         $resp->assertDontSee('Notify upon comments');
         $resp->assertDontSee('Notify upon replies');
+        $resp->assertDontSee('Notify when I\'m mentioned in a comment');
+    }
+
+    public function test_notification_comment_mention_option_enabled_by_default()
+    {
+        $resp = $this->asEditor()->get('/my-account/notifications');
+        $this->withHtml($resp)->assertElementExists('input[name="preferences[comment-mentions]"][value="true"]');
     }
 }
