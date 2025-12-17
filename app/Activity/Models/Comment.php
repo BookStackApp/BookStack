@@ -41,7 +41,19 @@ class Comment extends Model implements Loggable, OwnableInterface
      */
     public function entity(): MorphTo
     {
-        return $this->morphTo('commentable');
+        // We specifically define null here to avoid the different name (commentable)
+        // being used by Laravel eager loading instead of the method name, which it was doing
+        // in some scenarios like when deserialized when going through the queue system.
+        // So we instead specify the type and id column names to use.
+        // Related to:
+        // https://github.com/laravel/framework/pull/24815
+        // https://github.com/laravel/framework/issues/27342
+        // https://github.com/laravel/framework/issues/47953
+        // (and probably more)
+
+        // Ultimately, we could just align the method name to 'commentable' but that would be a potential
+        // breaking change and not really worthwhile in a patch due to the risk of creating extra problems.
+        return $this->morphTo(null, 'commentable_type', 'commentable_id');
     }
 
     /**

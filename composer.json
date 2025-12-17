@@ -29,7 +29,7 @@
         "league/flysystem-aws-s3-v3": "^3.0",
         "league/html-to-markdown": "^5.0.0",
         "league/oauth2-client": "^2.6",
-        "onelogin/php-saml": "^4.0",
+        "onelogin/php-saml": "^4.3.1",
         "phpseclib/phpseclib": "^3.0",
         "pragmarx/google2fa": "^8.0",
         "predis/predis": "^3.2",
