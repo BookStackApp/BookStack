@@ -206,6 +206,14 @@ export class EditorUIManager {
         }
     }
 
+    /**
+     * Set the UI focus to the editor.
+     */
+    focus(): void {
+        this.getContext().editorDOM.focus();
+        this.getContext().editor.focus();
+    }
+
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
         for (let i = this.activeContextToolbars.length - 1; i >= 0; i--) {
             const toolbar = this.activeContextToolbars[i];

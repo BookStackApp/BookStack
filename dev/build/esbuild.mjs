@@ -5,7 +5,6 @@ import * as path from 'node:path';
 import * as fs from 'node:fs';
 import * as process from "node:process";
 
-
 // Check if we're building for production
 // (Set via passing `production` as first argument)
 const mode = process.argv[2];
@@ -76,7 +75,13 @@ if (mode === 'watch') {
     });
 } else {
     // Build with meta output for analysis
-    ctx.rebuild().then(result => {
-        fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
-    }).catch(() => process.exit(1));
+    const result = await ctx.rebuild();
+    const outputs = result.metafile.outputs;
+    const files = Object.keys(outputs);
+    for (const file of files) {
+        const output = outputs[file];
+        console.log(`Written: ${file} @ ${Math.round(output.bytes / 1000)}kB`);
+    }
+    fs.writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
+    process.exit(0);
 }

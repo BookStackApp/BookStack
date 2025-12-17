@@ -6,6 +6,7 @@ import {KEY_AT_COMMAND} from "lexical/LexicalCommands";
 import {$createMentionNode, $isMentionNode, MentionNode} from "@lexical/link/LexicalMentionNode";
 import {EditorUiContext} from "../ui/framework/core";
 import {MentionDecorator} from "../ui/decorators/MentionDecorator";
+import {$selectSingleNode} from "../utils/selection";
 
 
 function enterUserSelectMode(context: EditorUiContext, selection: RangeSelection) {
@@ -25,10 +26,13 @@ function enterUserSelectMode(context: EditorUiContext, selection: RangeSelection
     }
 
     const split = textNode.splitText(offset);
-    const newNode = split[atStart ? 0 : 1];
+    const priorTextNode = split[0];
+    const afterTextNode = split[atStart ? 0 : 1];
 
     const mention = $createMentionNode(0, '', '');
-    newNode.replace(mention);
+    priorTextNode.insertAfter(mention);
+    afterTextNode.spliceText(0, 1, '', false);
+    $selectSingleNode(mention);
 
     requestAnimationFrame(() => {
         const mentionDecorator = context.manager.getDecoratorByNodeKey(mention.getKey());

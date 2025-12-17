@@ -985,6 +985,7 @@ body.flexbox-support #entity-selector-wrap .popup-body .form-group {
     font-size: 0.8rem;
     &:hover,&:focus {
       background-color: #F2F2F2;
+      @include mixins.lightDark(background-color, #F2F2F2, #444);
       text-decoration: none;
     }
   }

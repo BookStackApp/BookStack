@@ -170,14 +170,24 @@ export class MentionDecorator extends EditorDecorator {
         this.dropdownContainer?.remove();
         this.abortController = null;
         this.dropdownContainer = null;
+        this.context.manager.focus();
     }
 
     revertMention() {
         this.hideSelection();
         this.context.editor.update(() => {
             const text = $createTextNode('@');
+            const before = this.getNode().getPreviousSibling();
             this.getNode().replace(text);
-            text.selectEnd();
+            requestAnimationFrame(() => {
+                this.context.editor.update(() => {
+                    if (text.isAttached()) {
+                        text.selectEnd();
+                    } else if (before?.isAttached()) {
+                        before?.selectEnd();
+                    }
+                });
+            });
         });
     }
 

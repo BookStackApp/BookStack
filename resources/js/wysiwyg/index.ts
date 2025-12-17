@@ -151,8 +151,6 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
         theme: theme,
     });
 
-    // TODO - Dedupe this with the basic editor instance
-    //   Changed elements: namespace, registerMentions, toolbar, public event usage, mentioned decorator
     const context: EditorUiContext = buildEditorUI(container, editor, options);
     editor.setRootElement(context.editorDOM);
 
