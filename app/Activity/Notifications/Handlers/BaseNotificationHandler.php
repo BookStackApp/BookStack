@@ -20,6 +20,7 @@ abstract class BaseNotificationHandler implements NotificationHandler
     {
         $users = User::query()->whereIn('id', array_unique($userIds))->get();
 
+        /** @var User $user */
         foreach ($users as $user) {
             // Prevent sending to the user that initiated the activity
             if ($user->id === $initiator->id) {

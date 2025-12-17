@@ -138,7 +138,7 @@ class OidcTest extends TestCase
     {
         // Start auth
         $this->post('/oidc/login');
-        $state = session()->get('oidc_state');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
 
         $transactions = $this->mockHttpClient([$this->getMockAuthorizationResponse([
             'email' => 'benny@example.com',
@@ -187,6 +187,35 @@ class OidcTest extends TestCase
 
         $this->post('/oidc/login');
         $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=abc124');
+        $this->assertSessionError('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
+    }
+
+    public function test_callback_works_even_if_other_request_made_by_session()
+    {
+        $this->mockHttpClient([$this->getMockAuthorizationResponse([
+            'email' => 'benny@example.com',
+            'sub'   => 'benny1010101',
+        ])]);
+
+        $this->post('/oidc/login');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
+
+        $this->get('/');
+
+        $resp = $this->get("/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state={$state}");
+        $resp->assertRedirect('/');
+    }
+
+    public function test_callback_fails_if_state_timestamp_is_too_old()
+    {
+        $this->post('/oidc/login');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
+        session()->put('oidc_state', (time() - 60 * 4) . ':' . $state);
+
+        $this->get('/');
+
+        $resp = $this->get("/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state={$state}");
+        $resp->assertRedirect('/login');
         $this->assertSessionError('Login using SingleSignOn-Testing failed, system did not provide successful authorization');
     }
 
@@ -797,7 +826,7 @@ class OidcTest extends TestCase
     {
         // Start auth
         $resp = $this->post('/oidc/login');
-        $state = session()->get('oidc_state');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
 
         $pkceCode = session()->get('oidc_pkce_code');
         $this->assertGreaterThan(30, strlen($pkceCode));
@@ -825,7 +854,7 @@ class OidcTest extends TestCase
     {
         config()->set('oidc.display_name_claims', 'first_name|last_name');
         $this->post('/oidc/login');
-        $state = session()->get('oidc_state');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
 
         $client = $this->mockHttpClient([
             $this->getMockAuthorizationResponse(['name' => null]),
@@ -973,7 +1002,7 @@ class OidcTest extends TestCase
         ]);
 
         $this->post('/oidc/login');
-        $state = session()->get('oidc_state');
+        $state = explode(':', session()->get('oidc_state'), 2)[1];
         $client = $this->mockHttpClient([$this->getMockAuthorizationResponse([
             'groups' => [],
         ])]);
@@ -999,7 +1028,7 @@ class OidcTest extends TestCase
     protected function runLogin($claimOverrides = [], $additionalHttpResponses = []): TestResponse
     {
         $this->post('/oidc/login');
-        $state = session()->get('oidc_state');
+        $state = explode(':', session()->get('oidc_state'), 2)[1] ?? '';
         $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides), ...$additionalHttpResponses]);
 
         return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);

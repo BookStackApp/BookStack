@@ -14,7 +14,10 @@ use Illuminate\Session\Middleware\StartSession as Middleware;
 class StartSessionExtended extends Middleware
 {
     protected static array $pathPrefixesExcludedFromHistory = [
-        'uploads/images/'
+        'uploads/images/',
+        'dist/',
+        'manifest.json',
+        'opensearch.xml',
     ];
 
     /**
