@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'S’ha actualitzat la pàgina :pageName',
     'updated_page_intro' => 'S’ha actualitzat una pàgina a :appName.',
     'updated_page_debounce' => 'Per a evitar que s’acumulin les notificacions, durant un temps no se us notificarà cap canvi fet en aquesta pàgina pel mateix usuari.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Nom de la pàgina:',
     'detail_page_path' => 'Ruta de la pàgina:',
