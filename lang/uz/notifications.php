@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => ':pageName sahifasi yangilandi',
     'updated_page_intro' => ':appName ichida sahifa yangilandi:',
     'updated_page_debounce' => 'Xabarnomalar koʻp boʻlishining oldini olish uchun bir muncha vaqt oʻsha muharrir tomonidan ushbu sahifaga keyingi tahrirlar haqida bildirishnomalar yuborilmaydi.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Sahifa nomi:',
     'detail_page_path' => 'Page Path:',
