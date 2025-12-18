@@ -13,6 +13,8 @@ return [
 Ažurirana stranica: :pageName',
     'updated_page_intro' => 'Stranica je ažurirana u :appName:',
     'updated_page_debounce' => 'Kako biste spriječili velik broj obavijesti, nećete primati obavijesti o daljnjim izmjenama ove stranice od istog urednika neko vrijeme.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Naziv Stranice:',
     'detail_page_path' => 'Page Path:',
