@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Kontroluj otrzymywane powiadomienia e-mail, gdy określona aktywność jest wykonywana w systemie.',
     'notifications_opt_own_page_changes' => 'Powiadom o zmianach na stronach, których jestem właścicielem',
     'notifications_opt_own_page_comments' => 'Powiadom o komentarzach na stronach, których jestem właścicielem',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Powiadom o odpowiedziach na moje komentarze',
     'notifications_save' => 'Zapisz preferencje',
     'notifications_update_success' => 'Preferencje powiadomień zostały zaktualizowane!',
