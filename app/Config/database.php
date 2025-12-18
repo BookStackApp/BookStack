@@ -81,6 +81,7 @@ return [
             'strict'         => false,
             'engine'         => null,
             'options'        => extension_loaded('pdo_mysql') ? array_filter([
+                // @phpstan-ignore class.notFound
                 (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],

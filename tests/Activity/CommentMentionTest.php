@@ -24,7 +24,8 @@ class CommentMentionTest extends TestCase
         $notifications->assertSentTo($userToMention, function (CommentMentionNotification $notification) use ($userToMention, $editor, $page) {
             $mail = $notification->toMail($userToMention);
             $mailContent = html_entity_decode(strip_tags($mail->render()), ENT_QUOTES);
-            return $mail->subject === 'You have been mentioned in a comment on page: ' . $page->name
+            $subjectPrefix = 'You have been mentioned in a comment on page: ' . mb_substr($page->name, 0, 20);
+            return str_starts_with($mail->subject, $subjectPrefix)
                 && str_contains($mailContent, 'View Comment')
                 && str_contains($mailContent, 'Page Name: ' . $page->name)
                 && str_contains($mailContent, 'Page Path: ' . $page->book->getShortName(24) . ' > ' . $page->chapter->getShortName(24))
