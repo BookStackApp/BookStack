@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Tudalen wedi\'i diweddaru :pageName',
     'updated_page_intro' => 'Mae tudalen newydd wedi cael ei diweddaru yn :appName:',
     'updated_page_debounce' => 'Er mwyn atal llu o hysbysiadau, am gyfnod ni fyddwch yn cael hysbysiadau am ragor o olygiadau i\'r dudalen hon gan yr un golygydd.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Enw\'r dudalen:',
     'detail_page_path' => 'Llwybr Tudalen:',
