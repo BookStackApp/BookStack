@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
     'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
     'notifications_opt_own_page_comments' => 'Notify upon comments on pages I own',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Notify upon replies to my comments',
     'notifications_save' => 'Save Preferences',
     'notifications_update_success' => 'Notification preferences have been updated!',
