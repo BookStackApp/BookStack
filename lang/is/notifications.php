@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Uppfærð síða á: :pageName',
     'updated_page_intro' => 'Síða hefur verið uppfærð á :appName:',
     'updated_page_debounce' => 'Til að fyrirbyggja fjöldatilkynningar verður þér ekki sendar tilkynningar í smá stund um uppfærslu á þessari síðu frá sama höfundi.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Síðunafn:',
     'detail_page_path' => 'Síðuslóð:',
