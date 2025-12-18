@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Muudetud leht: :pageName',
     'updated_page_intro' => 'Rakenduses :appName muudeti lehte:',
     'updated_page_debounce' => 'Et vältida liigseid teavitusi, ei saadeta sulle mõnda aega teavitusi selle lehe muutmiste kohta sama kasutaja poolt.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Lehe nimetus:',
     'detail_page_path' => 'Lehe asukoht:',
