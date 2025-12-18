@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Halaman yang diperbarui: :pageName',
     'updated_page_intro' => 'Halaman telah diperbarui di :appName:',
     'updated_page_debounce' => 'Untuk mencegah banyaknya pemberitahuan, untuk sementara Anda tidak akan dikirimi pemberitahuan untuk pengeditan lebih lanjut pada halaman ini oleh editor yang sama.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Nama Halaman:',
     'detail_page_path' => 'Jalur Halaman:',
