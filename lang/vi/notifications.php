@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Trang đã cập nhật: :pageName',
     'updated_page_intro' => 'Một trang mới đã được cập nhật trong :appName:',
     'updated_page_debounce' => 'Để tránh việc nhận quá nhiều thông báo, trong một thời gian, bạn sẽ không nhận được thông báo về những chỉnh sửa tiếp theo cho trang này từ cùng một biên tập viên.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Tên Trang:',
     'detail_page_path' => 'Đường dẫn trang:',
