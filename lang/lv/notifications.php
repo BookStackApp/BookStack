@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Atjaunināta lapa: :pageName',
     'updated_page_intro' => 'Lapa atjaunināta :appName:',
     'updated_page_debounce' => 'Lai novērstu pārliecīgu paziņojumu sūtīšanu, uz laiku jums tiks pārtraukti paziņojumi par turpmākiem šī lietotāja labojumiem šai lapai.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Lapas nosaukums:',
     'detail_page_path' => 'Ceļš uz lapu:',
