@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Bepaal welke e-mailmeldingen je ontvangt wanneer bepaalde activiteiten in het systeem worden uitgevoerd.',
     'notifications_opt_own_page_changes' => 'Geef melding bij wijzigingen aan pagina\'s waarvan ik de eigenaar ben',
     'notifications_opt_own_page_comments' => 'Geef melding van opmerkingen op pagina\'s waarvan ik de eigenaar ben',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Geef melding van reacties op mijn opmerkingen',
     'notifications_save' => 'Voorkeuren opslaan',
     'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
