@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Frissített oldal: :pageName',
     'updated_page_intro' => 'Az oldal frissítése sikeres volt itt: :appName:',
     'updated_page_debounce' => 'Az értesítések tömegének elkerülése érdekében egy ideig nem kap értesítést az oldal további szerkesztéseiről ugyanaz a szerkesztő.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Oldal neve:',
     'detail_page_path' => 'Oldal helye:',
