@@ -6,16 +6,19 @@
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.create') }}<br></small>
         @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-create-all', 'label' => ''])
+        @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.view') }}<br></small>
-        <small class="faded">{{ trans('settings.role_controlled_by_asset') }}@if($refMark ?? false)<sup>{{ $refMark }}</sup>@endif</small>
+        <small class="faded">{{ trans('settings.role_controlled_by_asset') }}@if($permissionPrefix === 'image')<sup class="text-muted">1</sup>@endif</small>
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.edit') }}<br></small>
         @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-own', 'label' => trans('settings.role_own')])
+        @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
         <br>
         @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-all', 'label' => trans('settings.role_all')])
+        @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.delete') }}<br></small>

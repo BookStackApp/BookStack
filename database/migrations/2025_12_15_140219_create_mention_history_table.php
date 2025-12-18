@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('mentionable_type', 50)->index();
             $table->unsignedBigInteger('mentionable_id')->index();
-            $table->unsignedInteger('from_user_id')->index();
+            $table->unsignedInteger('from_user_id');
             $table->unsignedInteger('to_user_id');
             $table->timestamps();
         });
