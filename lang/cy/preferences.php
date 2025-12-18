@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Rheoli’r hysbysiadau e-bost a gewch pan fydd gweithgaredd penodol yn cael ei gyflawni o fewn y system.',
     'notifications_opt_own_page_changes' => 'Hysbysu am newidiadau i dudalennau yr wyf yn berchen arnynt',
     'notifications_opt_own_page_comments' => 'Hysbysu am sylwadau ar dudalennau yr wyf yn berchen arnynt',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Hysbysu am atebion i\'m sylwadau',
     'notifications_save' => 'Dewisiadau Cadw',
     'notifications_update_success' => 'Mae’r dewisiadau hysbysu wedi\'u diweddaru!',
