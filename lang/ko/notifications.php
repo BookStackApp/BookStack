@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => '페이지 업데이트됨: :pageName',
     'updated_page_intro' => ':appName: 에서 페이지가 업데이트되었습니다:',
     'updated_page_debounce' => '알림이 한꺼번에 몰리는 것을 방지하기 위해 당분간 동일한 편집자가 이 페이지를 추가로 편집할 경우 알림이 전송되지 않습니다.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => '페이지 이름:',
     'detail_page_path' => '페이지 경로:',
