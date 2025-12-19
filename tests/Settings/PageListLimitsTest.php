@@ -1,6 +1,6 @@
 <?php
 
-namespace Settings;
+namespace Tests\Settings;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;

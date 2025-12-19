@@ -31,7 +31,7 @@
         "league/oauth2-client": "^2.6",
         "onelogin/php-saml": "^4.3.1",
         "phpseclib/phpseclib": "^3.0",
-        "pragmarx/google2fa": "^8.0",
+        "pragmarx/google2fa": "^9.0",
         "predis/predis": "^3.2",
         "socialiteproviders/discord": "^4.1",
         "socialiteproviders/gitlab": "^4.1",
@@ -47,7 +47,7 @@
         "nunomaduro/collision": "^8.6",
         "larastan/larastan": "^v3.0",
         "phpunit/phpunit": "^11.5",
-        "squizlabs/php_codesniffer": "^3.7",
+        "squizlabs/php_codesniffer": "^4.0.1",
         "ssddanbrown/asserthtml": "^3.1"
     },
     "autoload": {
