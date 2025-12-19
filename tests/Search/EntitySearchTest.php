@@ -30,7 +30,15 @@ class EntitySearchTest extends TestCase
     public function test_search_shows_pagination()
     {
         $search = $this->asEditor()->get('/search?term=a');
-        $this->withHtml($search)->assertLinkExists('/search?term=a&page=2', '2');
+        $this->withHtml($search)->assertLinkExists(url('/search?term=a&page=2'), '2');
+    }
+
+    public function test_pagination_considers_sub_path_url_handling()
+    {
+        $this->runWithEnv(['APP_URL' => 'https://example.com/subpath'], function () {
+            $search = $this->asEditor()->get('https://example.com/search?term=a');
+            $this->withHtml($search)->assertLinkExists('https://example.com/subpath/search?term=a&page=2', '2');
+        });
     }
 
     public function test_invalid_page_search()
