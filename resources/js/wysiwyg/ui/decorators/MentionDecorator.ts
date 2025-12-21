@@ -74,7 +74,7 @@ function handleUserListLoading(selectList: HTMLElement) {
         }
 
         const doc = htmlToDom(responseHtml);
-        const toInsert = doc.body.children;
+        const toInsert = [...doc.body.children];
         for (const listEl of toInsert) {
             const adopted = window.document.adoptNode(listEl) as HTMLElement;
             selectList.appendChild(adopted);
