@@ -26,6 +26,15 @@ via its properties:
 
 Each of these modules, and the relevant types used within, are documented in detail below.
 
+The API object itself is provided via the [editor-wysiwyg::post-init](./javascript-public-events.md#editor-wysiwygpost-init)
+JavaScript public event, so you can access it like so:
+
+```javascript
+window.addEventListener('editor-wysiwyg::post-init', event => {
+    const {api} = event.detail;
+});
+```
+
 ---
 
 ## UI Module
