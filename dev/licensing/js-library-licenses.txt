@@ -1619,20 +1619,6 @@ Copyright: Copyright (c) 2015 Vitaly Puzrin.
 Source: markdown-it/linkify-it
 Link: markdown-it/linkify-it
 -----------
-livereload-js
-License: MIT
-License File: node_modules/livereload-js/LICENSE
-Copyright: Copyright (c) 2010-2012 Andrey Tarantsov
-Source: git://github.com/livereload/livereload-js.git
-Link: https://github.com/livereload/livereload-js
------------
-livereload
-License: MIT
-License File: node_modules/livereload/LICENSE
-Copyright: Copyright (c) 2010 Joshua Peek
-Source: http://github.com/napcs/node-livereload.git
-Link: http://github.com/napcs/node-livereload.git
------------
 load-json-file
 License: MIT
 License File: node_modules/load-json-file/license
@@ -1927,14 +1913,6 @@ License File: node_modules/optionator/LICENSE
 Copyright: Copyright (c) George Zahariev
 Source: git://github.com/gkz/optionator.git
 Link: https://github.com/gkz/optionator
------------
-opts
-License: BSD-2-Clause
-License File: node_modules/opts/LICENSE.txt
-Copyright: Copyright (c) 2010, Joey Mazzarelli
-All rights reserved.
-Source: github:khtdr/opts
-Link: http://khtdr.com/opts
 -----------
 own-keys
 License: MIT
@@ -2318,9 +2296,9 @@ Link: https://github.com/ljharb/side-channel#readme
 signal-exit
 License: ISC
 License File: node_modules/signal-exit/LICENSE.txt
-Copyright: Copyright (c) 2015, Contributors
+Copyright: Copyright (c) 2015-2023 Benjamin Coe, Isaac Z. Schlueter, and Contributors
 Source: https://github.com/tapjs/signal-exit.git
-Link: https://github.com/tapjs/signal-exit
+Link: https://github.com/tapjs/signal-exit.git
 -----------
 slash
 License: MIT
@@ -3343,6 +3321,20 @@ Copyright: Copyright 2022 Romain Menke, Antonio Laguna <*******@******.**>
 Source: git+https://github.com/csstools/postcss-plugins.git
 Link: https://github.com/csstools/postcss-plugins/tree/main/packages/css-tokenizer#readme
 -----------
+@emnapi/core
+License: MIT
+License File: node_modules/@emnapi/core/LICENSE
+Copyright: Copyright (c) 2021-present Toyobayashi
+Source: git+https://github.com/toyobayashi/emnapi.git
+Link: https://github.com/toyobayashi/emnapi#readme
+-----------
+@emnapi/runtime
+License: MIT
+License File: node_modules/@emnapi/runtime/LICENSE
+Copyright: Copyright (c) 2021-present Toyobayashi
+Source: git+https://github.com/toyobayashi/emnapi.git
+Link: https://github.com/toyobayashi/emnapi#readme
+-----------
 @esbuild/linux-x64
 License: MIT
 Source: git+https://github.com/evanw/esbuild.git
@@ -3396,7 +3388,7 @@ Link: https://eslint.org
 License: Apache-2.0
 License File: node_modules/@eslint/object-schema/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
-Link: https://github.com/eslint/rewrite#readme
+Link: https://github.com/eslint/rewrite/tree/main/packages/object-schema#readme
 -----------
 @eslint/plugin-kit
 License: Apache-2.0
@@ -3791,6 +3783,11 @@ License File: node_modules/@tsconfig/node16/LICENSE
 Copyright: Copyright (c) Microsoft Corporation.
 Source: https://github.com/tsconfig/bases.git
 Link: https://github.com/tsconfig/bases.git
+-----------
+@tybys/wasm-util
+License: MIT
+Source: https://github.com/toyobayashi/wasm-util.git
+Link: https://github.com/toyobayashi/wasm-util.git
 -----------
 @types/babel__core
 License: MIT

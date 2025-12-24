@@ -512,3 +512,10 @@ David Olsen (dawin) :: Danish
 ltnzr :: French
 Frank Holler (holler.frank) :: German; German Informal
 Korab Arifi (korabidev) :: Albanian
+Petr Husák (petrhusak) :: Czech
+Bernardo Maia (bernardo.bmaia2) :: Portuguese, Brazilian
+Amr (amr3k) :: Arabic
+Tahsin Ahmed (tahsinahmed2012) :: Bengali
+bojan_che :: Serbian (Cyrillic)
+setiawan setiawan (culture.setiawan) :: Indonesian
+Donald Mac Kenzie (kiuman) :: Norwegian Bokmal
