@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => '页面更新：:pageName',
     'updated_page_intro' => ':appName: 中的一个页面已被更新',
     'updated_page_debounce' => '为了防止出现大量通知，一段时间内您不会收到同一编辑者再次编辑本页面的通知。',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => '页面名称：',
     'detail_page_path' => '页面路径：',

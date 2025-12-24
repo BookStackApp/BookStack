@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nincs beállítva korlátozás',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Karbantartás',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Oldalszerkesztő módosítása',
     'role_notifications' => 'Értesítések fogadása és kezelése',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Eszköz jogosultságok',
     'roles_system_warning' => 'Ne feledje, hogy a fenti három engedély bármelyikéhez való hozzáférés lehetővé teszi a felhasználó számára, hogy módosítsa saját vagy a rendszerben mások jogosultságait. Csak megbízható felhasználókhoz rendeljen szerepeket ezekkel az engedélyekkel.',
     'role_asset_desc' => 'Ezek a jogosultságok vezérlik az alapértelmezés szerinti hozzáférést a rendszerben található eszközökhöz. A könyvek, fejezetek és oldalak jogosultságai felülírják ezeket a jogosultságokat.',
     'role_asset_admins' => 'Az adminisztrátorok automatikusan hozzáférést kapnak minden tartalomhoz, de ezek a beállítások megjeleníthetnek vagy elrejthetnek felhasználói felület beállításokat.',
     'role_asset_image_view_note' => 'Ez a képkezelőn belüli láthatóságra vonatkozik. A feltöltött képfájlok tényleges elérése a rendszerkép tárolási beállításától függ.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Összes',
     'role_own' => 'Saját',
     'role_controlled_by_asset' => 'Az általuk feltöltött eszköz által ellenőrzött',

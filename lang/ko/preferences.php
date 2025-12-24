@@ -23,6 +23,7 @@ return [
     'notifications_desc' => '시스템 내에서 특정 활동이 수행될 때 수신하는 이메일 알림을 제어합니다.',
     'notifications_opt_own_page_changes' => '내가 소유한 페이지가 변경되면 알림 받기',
     'notifications_opt_own_page_comments' => '내가 소유한 페이지에 댓글이 달렸을 때 알림 받기',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => '내 댓글에 대한 답글 알림 받기',
     'notifications_save' => '환경설정 저장',
     'notifications_update_success' => '알림 환경설정이 업데이트되었습니다!',

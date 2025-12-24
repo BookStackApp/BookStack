@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Geen beperkingen ingesteld',
 
     // Sorting Settings
-    'sorting' => 'Sorteren',
+    'sorting' => 'Lijsten & Sorteren',
     'sorting_book_default' => 'Standaard Sorteerregel Boek',
     'sorting_book_default_desc' => 'Selecteer de standaard sorteerregel om toe te passen op nieuwe boeken. Dit heeft geen invloed op bestaande boeken, en kan per boek worden overschreven.',
     'sorting_rules' => 'Sorteerregels',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Bijwerkdatum',
     'sort_rule_op_chapters_first' => 'Hoofdstukken Eerst',
     'sort_rule_op_chapters_last' => 'Hoofdstukken Laatst',
+    'sorting_page_limits' => 'Weergavelimiet Per Pagina',
+    'sorting_page_limits_desc' => 'Stel in hoeveel items er op een pagina worden laten zien in de verschillende lijstweergaves. Een lager aantal verbeterd de snelheid, een hoger aantal verminderd het doorklikken door pagina\'s. Een even veelvoud van 3 (18, 24, 30, etc...) wordt aanbevolen.',
 
     // Maintenance settings
     'maint' => 'Onderhoud',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Importeer inhoud',
     'role_editor_change' => 'Wijzig pagina bewerker',
     'role_notifications' => 'Meldingen ontvangen & beheren',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Asset Machtigingen',
     'roles_system_warning' => 'Wees ervan bewust dat toegang tot een van de bovengenoemde drie machtigingen een gebruiker in staat kan stellen zijn eigen machtigingen of de machtigingen van anderen in het systeem kan wijzigen. Wijs alleen rollen toe met deze machtigingen aan vertrouwde gebruikers.',
     'role_asset_desc' => 'Deze machtigingen bepalen de standaard toegang tot de assets binnen het systeem. Machtigingen op boeken, hoofdstukken en pagina\'s overschrijven deze instelling.',
     'role_asset_admins' => 'Beheerders krijgen automatisch toegang tot alle inhoud, maar deze opties kunnen gebruikersinterface opties tonen of verbergen.',
     'role_asset_image_view_note' => 'Dit heeft betrekking op de zichtbaarheid binnen de afbeeldingsbeheerder. De werkelijke toegang tot geüploade afbeeldingsbestanden hangt af van de gekozen opslagmethode.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',

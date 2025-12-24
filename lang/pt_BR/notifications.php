@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Página atualizada: :pageName',
     'updated_page_intro' => 'Uma página foi atualizada em :appName:',
     'updated_page_debounce' => 'Para prevenir notificações em massa, por enquanto notificações não serão enviadas para você para próximas edições nessa página pelo mesmo editor.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Nome da Página:',
     'detail_page_path' => 'Caminho da Página:',

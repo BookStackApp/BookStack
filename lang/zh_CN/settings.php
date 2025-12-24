@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未设置限制',
 
     // Sorting Settings
-    'sorting' => '排序',
-    'sorting_book_default' => '默认书卷排序',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '选择要应用于新书的默认排序规则。这不会影响现有书，并且可以每本书覆盖。',
     'sorting_rules' => '排序规则',
     'sorting_rules_desc' => '这些是预定义的排序操作，可应用于系统中的内容。',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '更新时间',
     'sort_rule_op_chapters_first' => '章节正序',
     'sort_rule_op_chapters_last' => '章节倒序',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => '维护',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => '导入内容',
     'role_editor_change' => '更改页面编辑器',
     'role_notifications' => '管理和接收通知',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => '资源许可',
     'roles_system_warning' => '请注意，拥有以上三个权限中的任何一个都会允许用户更改自己的权限或系统中其他人的权限。 请只将拥有这些权限的角色分配给你信任的用户。',
     'role_asset_desc' => '对系统内资源的默认访问许可将由这些权限控制。单独设置在书籍、章节和页面上的权限将覆盖这里的权限设定。',
     'role_asset_admins' => '管理员可自动获得对所有内容的访问权限，但这些选项可能会显示或隐藏UI选项。',
     'role_asset_image_view_note' => '这与图像管理器中的可见性有关。已经上传的图片的实际访问取决于系统图像存储选项。',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => '全部的',
     'role_own' => '拥有的',
     'role_controlled_by_asset' => '由其所在的资源来控制',

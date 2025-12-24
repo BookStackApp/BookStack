@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'No hi ha cap restricció',
 
     // Sorting Settings
-    'sorting' => 'Ordenar',
-    'sorting_book_default' => 'Ordre predeterminat del llibre',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Selecciona la regla d\'ordenació predeterminada per aplicar a nous llibres. Això no afectarà els llibres existents, i pot ser anul·lat per llibre.',
     'sorting_rules' => 'Regles d\'ordenació',
     'sorting_rules_desc' => 'Són operacions d\'ordenació predefinides que es poden aplicar al contingut en el sistema.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Data d\'actualització',
     'sort_rule_op_chapters_first' => 'Capítols a l\'inici',
     'sort_rule_op_chapters_last' => 'Capítols al final',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Manteniment',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Importar contingut',
     'role_editor_change' => 'Canvi de l’editor de pàgina',
     'role_notifications' => 'Recepció i gestió de notificacions',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Permisos de recursos',
     'roles_system_warning' => 'Tingueu en compte que l’accés a qualsevol dels tres permisos de dalt permeten que l’usuari canviï els seus privilegis i els privilegis d’altres usuaris. Assigneu rols d’usuari amb aquests permisos només a usuaris de confiança.',
     'role_asset_desc' => 'Aquests permisos controlen l’accés per defecte als recursos del sistema. El permisos dels llibres, capítols i pàgines sobreescriuran aquests permisos.',
     'role_asset_admins' => 'Als administradors se’ls dona accés automàticament a tot el contingut però aquestes opcions mostren o amaguen opcions de la interfície d’usuari.',
     'role_asset_image_view_note' => 'Això té relació amb la visibilitat al gestor d’imatges. L’accés a les imatges pujades dependrà de l’opció d’emmagatzematge d’imatges dels sistema.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Tot',
     'role_own' => 'Propi',
     'role_controlled_by_asset' => 'Controlat pel recurs a què estan pujats',

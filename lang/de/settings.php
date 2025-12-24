@@ -76,8 +76,8 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'reg_confirm_restrict_domain_placeholder' => 'Keine Einschränkung gesetzt',
 
     // Sorting Settings
-    'sorting' => 'Sortierung',
-    'sorting_book_default' => 'Standard-Buchsortierung',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Wählen Sie die Standard-Sortierregel aus, die auf neue Bücher angewendet werden soll. Dies wirkt sich nicht auf bestehende Bücher aus und kann pro Buch überschrieben werden.',
     'sorting_rules' => 'Sortierregeln',
     'sorting_rules_desc' => 'Dies sind vordefinierte Sortieraktionen, die auf Inhalte im System angewendet werden können.',
@@ -104,6 +104,8 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'sort_rule_op_updated_date' => 'Aktualisierungsdatum',
     'sort_rule_op_chapters_first' => 'Kapitel zuerst',
     'sort_rule_op_chapters_last' => 'Kapitel zuletzt',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Wartung',
@@ -196,11 +198,13 @@ Hinweis: Benutzer können ihre E-Mail-Adresse nach erfolgreicher Registrierung �
     'role_import_content' => 'Inhalt importieren',
     'role_editor_change' => 'Seiten-Editor ändern',
     'role_notifications' => 'Empfangen und Verwalten von Benachrichtigungen',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Berechtigungen',
     'roles_system_warning' => 'Beachten Sie, dass der Zugriff auf eine der oben genannten drei Berechtigungen einem Benutzer erlauben kann, seine eigenen Berechtigungen oder die Rechte anderer im System zu ändern. Weisen Sie nur Rollen, mit diesen Berechtigungen, vertrauenswürdigen Benutzern zu.',
     'role_asset_desc' => 'Diese Berechtigungen gelten für den Standard-Zugriff innerhalb des Systems. Berechtigungen für Bücher, Kapitel und Seiten überschreiben diese Berechtigungenen.',
     'role_asset_admins' => 'Administratoren erhalten automatisch Zugriff auf alle Inhalte, aber diese Optionen können Oberflächenoptionen ein- oder ausblenden.',
     'role_asset_image_view_note' => 'Das bezieht sich auf die Sichtbarkeit innerhalb des Bildmanagers. Der tatsächliche Zugriff auf hochgeladene Bilddateien hängt von der Speicheroption des Systems für Bilder ab.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
     'role_controlled_by_asset' => 'Berechtigungen werden vom Uploadziel bestimmt',

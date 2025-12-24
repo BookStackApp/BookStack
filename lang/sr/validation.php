@@ -14,7 +14,7 @@ return [
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
-    'array'                => 'The :attribute must be an array.',
+    'array'                => ':attribute мора бити низ.',
     'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'The :attribute must be a date before :date.',
     'between'              => [

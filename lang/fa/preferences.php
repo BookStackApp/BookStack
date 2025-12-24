@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'تنظیمات اطلاعیه‌های ایمیلی هنگام انجام فعالیت‌های خاص در سیستم.',
     'notifications_opt_own_page_changes' => 'در صورت تغییرات در صفحاتی که متعلق به من است، اطلاع بده',
     'notifications_opt_own_page_comments' => 'در صورت ثبت نظر در صفحاتی که متعلق به من است، اطلاع بده',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'پس از درج پاسخ به روی نظراتی که من ثبت کرده‌ام، اطلاع بده',
     'notifications_save' => 'ذخیره تنظیمات',
     'notifications_update_success' => 'تنظیمات اعلان‌ها به روز شده است!',

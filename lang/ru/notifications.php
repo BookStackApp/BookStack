@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Обновлена страница: :pageName',
     'updated_page_intro' => 'Страница была обновлена в :appName:',
     'updated_page_debounce' => 'Чтобы предотвратить массовые уведомления, в течение некоторого времени вы не будете получать уведомления о дальнейших правках этой страницы этим же редактором.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Имя страницы:',
     'detail_page_path' => 'Путь страницы:',

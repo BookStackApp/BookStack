@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Pārvaldiet epasta paziņojumus, ko saņemsiet, kad sistēmā tiek veiktas noteiktas darbības.',
     'notifications_opt_own_page_changes' => 'Paziņot par izmaiņām manās lapās',
     'notifications_opt_own_page_comments' => 'Paziņot par komentāriem manās lapās',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Paziņot par atbildēm uz maniem komentāriem',
     'notifications_save' => 'Saglabāt iestatījumus',
     'notifications_update_success' => 'Paziņojumu iestatījumi ir atjaunoti!',

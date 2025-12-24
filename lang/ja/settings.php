@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '制限しない',
 
     // Sorting Settings
-    'sorting' => 'ソート',
-    'sorting_book_default' => 'ブックのデフォルトソート',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '新しいブックに適用するデフォルトのソートルールを選択します。これは既存のブックには影響しません。ルールはブックごとに上書きすることができます。',
     'sorting_rules' => 'ソートルール',
     'sorting_rules_desc' => 'これらはシステム内のコンテンツに適用できる事前定義のソート操作です。',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '更新日時',
     'sort_rule_op_chapters_first' => 'チャプタを最初に',
     'sort_rule_op_chapters_last' => 'チャプタを最後に',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'メンテナンス',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'コンテンツのインポート',
     'role_editor_change' => 'ページエディタの変更',
     'role_notifications' => '通知の受信と管理',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'アセット権限',
     'roles_system_warning' => '上記の3つの権限のいずれかを付与することは、ユーザーが自分の特権またはシステム内の他のユーザーの特権を変更できる可能性があることに注意してください。これらの権限は信頼できるユーザーにのみ割り当ててください。',
     'role_asset_desc' => '各アセットに対するデフォルトの権限を設定します。ここで設定した権限が優先されます。',
     'role_asset_admins' => '管理者にはすべてのコンテンツへのアクセス権が自動的に付与されますが、これらのオプションはUIオプションを表示または非表示にする場合があります。',
     'role_asset_image_view_note' => 'これは画像マネージャー内の可視性に関連しています。アップロードされた画像ファイルへの実際のアクセスは、システムの画像保存オプションに依存します。',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => '全て',
     'role_own' => '自身',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',

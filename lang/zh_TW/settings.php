@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '尚未設定限制',
 
     // Sorting Settings
-    'sorting' => '排序',
-    'sorting_book_default' => '預設書籍排序',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '選取要套用至新書籍的預設排序規則。這不會影響現有書籍，並可按書籍覆寫。',
     'sorting_rules' => '排序規則',
     'sorting_rules_desc' => '這些是預先定義的排序作業，可套用於系統中的內容。',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '更新日期',
     'sort_rule_op_chapters_first' => '第一章',
     'sort_rule_op_chapters_last' => '最後一章',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => '維護',
@@ -196,11 +198,13 @@ return [
     'role_import_content' => '匯入內容',
     'role_editor_change' => '重設頁面編輯器',
     'role_notifications' => '管理和接收通知',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => '資源權限',
     'roles_system_warning' => '請注意，有上述三項權限中的任一項的使用者都可以更改自己或系統中其他人的權限。有這些權限的角色只應分配給受信任的使用者。',
     'role_asset_desc' => '對系統內資源的預設權限將由這裡的權限控制。若有單獨設定在書本、章節和頁面上的權限，將會覆寫這裡的權限設定。',
     'role_asset_admins' => '管理員會自動取得對所有內容的存取權，但這些選項可能會顯示或隱藏使用者介面的選項。',
     'role_asset_image_view_note' => '這與圖像管理器中的可見性有關。已經上傳的圖片的實際訪問取決於系統圖像存儲選項。',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => '全部',
     'role_own' => '擁有',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',

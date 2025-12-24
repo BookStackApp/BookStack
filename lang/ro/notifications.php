@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Pagina actualizată: :pageName',
     'updated_page_intro' => 'O nouă pagină a fost creată în :appName:',
     'updated_page_debounce' => 'Pentru a preveni notificări în masă, pentru un timp nu veți primi notificări suplimentare la această pagină de către același editor.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Nume pagină:',
     'detail_page_path' => 'Page Path:',

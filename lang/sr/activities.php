@@ -85,9 +85,9 @@ return [
     'webhook_delete_notification' => 'Вебхоок је успешно обрисан',
 
     // Imports
-    'import_create' => 'created import',
+    'import_create' => 'креиран увоз',
     'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
+    'import_run' => 'ажуриран увоз',
     'import_run_notification' => 'Content successfully imported',
     'import_delete' => 'deleted import',
     'import_delete_notification' => 'Import successfully deleted',

@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Без ограничений',
 
     // Sorting Settings
-    'sorting' => 'Сортировка',
-    'sorting_book_default' => 'Сортировка книг по умолчанию',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Выберите правило сортировки по умолчанию для новых книг. Это не повлияет на существующие книги, и может быть изменено для каждой книги отдельно.',
     'sorting_rules' => 'Правила сортировки',
     'sorting_rules_desc' => 'Выберите правило сортировки по умолчанию для новых книг. Это не повлияет на существующие книги и может быть изменено для каждой книги отдельно.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Главы в конце',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Обслуживание',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Изменение редактора страниц',
     'role_notifications' => 'Получение и управление уведомлениями',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Права доступа к материалам',
     'roles_system_warning' => 'Имейте в виду, что доступ к любому из указанных выше трех разрешений может позволить пользователю изменить свои собственные привилегии или привилегии других пользователей системы. Назначать роли с этими правами можно только доверенным пользователям.',
     'role_asset_desc' => 'Эти разрешения контролируют доступ по умолчанию к параметрам внутри системы. Разрешения на книги, главы и страницы перезапишут эти разрешения.',
     'role_asset_admins' => 'Администраторы автоматически получают доступ ко всему контенту, но эти опции могут отображать или скрывать параметры пользовательского интерфейса.',
     'role_asset_image_view_note' => 'Это относится к видимости в менеджере изображений. Фактический доступ к загруженным файлам изображений будет зависеть от опции хранения системных изображений.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Все',
     'role_own' => 'Владелец',
     'role_controlled_by_asset' => 'Контролируется активом, в который они загружены',

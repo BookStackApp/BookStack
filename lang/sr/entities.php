@@ -50,7 +50,7 @@ return [
     'import_zip_validation_errors' => 'Errors were detected while validating the provided ZIP file:',
     'import_pending' => 'Pending Imports',
     'import_pending_none' => 'No imports have been started.',
-    'import_continue' => 'Continue Import',
+    'import_continue' => 'Настави увоз',
     'import_continue_desc' => 'Review the content due to be imported from the uploaded ZIP file. When ready, run the import to add its contents to this system. The uploaded ZIP import file will be automatically removed on successful import.',
     'import_details' => 'Import Details',
     'import_run' => 'Run Import',
@@ -109,7 +109,7 @@ return [
 
     // Shelves
     'shelf' => 'Shelf',
-    'shelves' => 'Shelves',
+    'shelves' => 'Полице',
     'x_shelves' => ':count Shelf|:count Shelves',
     'shelves_empty' => 'No shelves have been created',
     'shelves_create' => 'Create New Shelf',

@@ -6,7 +6,7 @@
  */
 return [
 
-    'password' => 'Kata sandi harus setidaknya delapan karakter dan sesuai dengan konfirmasi.',
+    'password' => 'Passwords must be at least eight characters and match the confirmation.',
     'user' => "Kami tidak dapat menemukan pengguna dengan alamat email tersebut.",
     'token' => 'Token setel ulang sandi tidak valid untuk alamat email ini.',
     'sent' => 'Kami telah mengirimkan email tautan pengaturan ulang kata sandi Anda!',

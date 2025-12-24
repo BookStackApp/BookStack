@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Piirangut ei ole',
 
     // Sorting Settings
-    'sorting' => 'Sorteerimine',
-    'sorting_book_default' => 'Vaikimisi raamatu sorteerimine',
+    'sorting' => 'Loendid ja järjestamine',
+    'sorting_book_default' => 'Vaikimisi raamatute sorteerimise reegel',
     'sorting_book_default_desc' => 'Vali vaikimisi uutele raamatutele rakenduv sorteerimisreegel. See ei mõjuta olemasolevaid raamatuid ning seda saab raamatupõhiselt muuta.',
     'sorting_rules' => 'Sorteerimisreeglid',
     'sorting_rules_desc' => 'Need on eeldefineeritud sorteerimistoimingud, mida saab süsteemis olevale sisule rakendada.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Muutmise aeg',
     'sort_rule_op_chapters_first' => 'Peatükid eespool',
     'sort_rule_op_chapters_last' => 'Peatükid tagapool',
+    'sorting_page_limits' => 'Leheküljepõhised kuvalimiidid',
+    'sorting_page_limits_desc' => 'Seadista, mitut objekti erinevates loendites ühel leheküljel kuvada. Väiksem väärtus tähendab reeglina paremat jõudlust, samas kui suurem väärtus vähendab vajadust mitut lehekülge läbi klikkida. Soovituslik on kasutada 3-ga jaguvat väärtust (18, 24, 30 jne).',
 
     // Maintenance settings
     'maint' => 'Hooldus',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Imporditud sisu',
     'role_editor_change' => 'Lehe redaktori muutmine',
     'role_notifications' => 'Võta vastu ja halda teavitusi',
+    'role_permission_note_users_and_roles' => 'Need õigused lubavad ka süsteemis olevaid kasutajaid ja rolle vaadata ja otsida.',
     'role_asset' => 'Sisu õigused',
     'roles_system_warning' => 'Pane tähele, et ülalolevad kolm õigust võimaldavad kasutajal enda või teiste kasutajate õiguseid muuta. Määra nende õigustega roll ainult usaldusväärsetele kasutajatele.',
     'role_asset_desc' => 'Need load kontrollivad vaikimisi ligipääsu süsteemis olevale sisule. Raamatute, peatükkide ja lehtede õigused rakenduvad esmajärjekorras.',
     'role_asset_admins' => 'Administraatoritel on automaatselt ligipääs kogu sisule, aga need valikud võivad peida või näidata kasutajaliidese elemente.',
     'role_asset_image_view_note' => 'See käib nähtavuse kohta pildifailide halduris. Tegelik ligipääs üleslaaditud pildifailidele sõltub süsteemsest piltide salvestamise valikust.',
+    'role_asset_users_note' => 'Need õigused lubavad ka süsteemis olevaid kasutajaid vaadata ja otsida.',
     'role_all' => 'Kõik',
     'role_own' => 'Enda omad',
     'role_controlled_by_asset' => 'Õigused määratud seotud objekti kaudu',

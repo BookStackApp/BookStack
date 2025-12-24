@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begränsning inställd',
 
     // Sorting Settings
-    'sorting' => 'Sorterar',
-    'sorting_book_default' => 'Standard boksortering',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Välj standard sorteringsregel som skall tillämpas på nya böcker. Detta påverkar inte befintliga böcker och kan åsidosättas per bok.',
     'sorting_rules' => 'Sorteringsregler',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Datum uppdaterat',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Underhåll',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Ändra sidredigerare',
     'role_notifications' => 'Receive & manage notifications',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Tillgång till innehåll',
     'roles_system_warning' => 'Var medveten om att åtkomst till någon av ovanstående tre behörigheter kan tillåta en användare att ändra sina egna rättigheter eller andras rättigheter i systemet. Tilldela endast roller med dessa behörigheter till betrodda användare.',
     'role_asset_desc' => 'Det här är standardinställningarna för allt innehåll i systemet. Eventuella anpassade rättigheter på böcker, kapitel och sidor skriver över dessa inställningar.',
     'role_asset_admins' => 'Administratörer har automatisk tillgång till allt innehåll men dessa alternativ kan visa och dölja vissa gränssnittselement',
     'role_asset_image_view_note' => 'Detta avser synlighet inom bildhanteraren. Faktisk åtkomst för uppladdade bildfiler kommer att bero på alternativ för bildlagring.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Alla',
     'role_own' => 'Egna',
     'role_controlled_by_asset' => 'Kontrolleras av den sida de laddas upp till',

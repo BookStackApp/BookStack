@@ -24,8 +24,8 @@ return [
     'password_hint' => 'ন্যূনতম ৮ অক্ষরের হতে হবে',
     'forgot_password' => 'পাসওয়ার্ড ভুলে গেছেন?',
     'remember_me' => 'লগইন স্থায়িত্ব ধরে রাখুন',
-    'ldap_email_hint' => 'Please enter an email to use for this account.',
-    'create_account' => 'Create Account',
+    'ldap_email_hint' => 'অনুগ্রহ করে এই অ্যাকাউন্টের জন্য ব্যবহার করার জন্য একটি ইমেইল ঠিকানা লিখুন।',
+    'create_account' => 'অ্যাকাউন্ট তৈরি করুন',
     'already_have_account' => 'Already have an account?',
     'dont_have_account' => 'Don\'t have an account?',
     'social_login' => 'Social Login',
@@ -39,16 +39,16 @@ return [
     'register_success' => 'Thanks for signing up! You are now registered and signed in.',
 
     // Login auto-initiation
-    'auto_init_starting' => 'Attempting Login',
+    'auto_init_starting' => 'লগইন করার চেষ্টা করা হচ্ছে',
     'auto_init_starting_desc' => 'We\'re contacting your authentication system to start the login process. If there\'s no progress after 5 seconds you can try clicking the link below.',
     'auto_init_start_link' => 'Proceed with authentication',
 
     // Password Reset
-    'reset_password' => 'Reset Password',
+    'reset_password' => 'পাসওয়ার্ড রিসেট করুন',
     'reset_password_send_instructions' => 'Enter your email below and you will be sent an email with a password reset link.',
     'reset_password_send_button' => 'Send Reset Link',
     'reset_password_sent' => 'A password reset link will be sent to :email if that email address is found in the system.',
-    'reset_password_success' => 'Your password has been successfully reset.',
+    'reset_password_success' => 'আপনার পাসওয়ার্ড সফলভাবে রিসেট করা হয়েছে.',
     'email_reset_subject' => 'Reset your :appName password',
     'email_reset_text' => 'You are receiving this email because we received a password reset request for your account.',
     'email_reset_not_requested' => 'If you did not request a password reset, no further action is required.',

@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'העדפות קבלת מייל והתראות כאשר מבוצעת פעולה מסויימת במערכת.',
     'notifications_opt_own_page_changes' => 'עדכן אותי כאשר מתבצעים שינויים לדפים שבבעלותי',
     'notifications_opt_own_page_comments' => 'עדכן אותי כאשר נוספות הערות לדפים שבבעלותי',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'עדכן אותי כאשר מתקבלות תגובות להערות שלי',
     'notifications_save' => 'שמור העדפות',
     'notifications_update_success' => 'הגדרת התראות עודכנו!',

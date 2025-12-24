@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Управляйте полученными по электронной почте уведомлениями при выполнении определенных действий в системе.',
     'notifications_opt_own_page_changes' => 'Уведомлять об изменениях в собственных страницах',
     'notifications_opt_own_page_comments' => 'Уведомлять о комментариях на собственных страницах',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Уведомлять об ответах на мои комментарии',
     'notifications_save' => 'Сохранить настройки',
     'notifications_update_success' => 'Настройки уведомлений были обновлены!',

@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Tizimda muayyan harakatlar amalga oshirilganda qabul qilinadigan elektron pochta xabarnomalarini boshqaring.',
     'notifications_opt_own_page_changes' => 'Menga tegishli boʻlgan sahifalarimdagi oʻzgarishlar haqida xabar bering',
     'notifications_opt_own_page_comments' => 'Menga tegishli sahifalardagi sharhlar haqida xabar bering',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Fikrlarimga javoblarim haqida xabar bering',
     'notifications_save' => 'Afzalliklarni saqlash',
     'notifications_update_success' => 'Bildirishnoma sozlamalari yangilandi!',

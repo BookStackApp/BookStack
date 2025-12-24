@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Ажурирана страница: :pageName',
     'updated_page_intro' => 'Страница је ажурирана у :appName:',
     'updated_page_debounce' => 'To prevent a mass of notifications, for a while you won\'t be sent notifications for further edits to this page by the same editor.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Назив странице:',
     'detail_page_path' => 'Путања странице:',

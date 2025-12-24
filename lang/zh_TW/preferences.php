@@ -23,6 +23,7 @@ return [
     'notifications_desc' => '控制在系統有特定活動時，是否要接收電子郵件通知',
     'notifications_opt_own_page_changes' => '當我的頁面有異動時發送通知',
     'notifications_opt_own_page_comments' => '當我的頁面有評論時發送通知',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => '當我的評論有新的回覆時發送通知',
     'notifications_save' => '儲存偏好設定',
     'notifications_update_success' => '通知設定已更新',

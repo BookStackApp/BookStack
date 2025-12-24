@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ninguna restricción establecida',
 
     // Sorting Settings
-    'sorting' => 'Ordenación',
-    'sorting_book_default' => 'Orden por defecto del libro',
+    'sorting' => 'Listas y ordenación',
+    'sorting_book_default' => 'Orden de libros por defecto',
     'sorting_book_default_desc' => 'Seleccione la regla de ordenación predeterminada para aplicar a nuevos libros. Esto no afectará a los libros existentes, y puede ser anulado por libro.',
     'sorting_rules' => 'Reglas de ordenación',
     'sorting_rules_desc' => 'Son operaciones de ordenación predefinidas que se pueden aplicar al contenido en el sistema.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Fecha de actualización',
     'sort_rule_op_chapters_first' => 'Capítulos al inicio',
     'sort_rule_op_chapters_last' => 'Capítulos al final',
+    'sorting_page_limits' => 'Límites de visualización por página',
+    'sorting_page_limits_desc' => 'Establecer cuántos elementos a mostrar por página en varias listas dentro del sistema. Normalmente una cantidad más baja rendirá mejor, mientras que una cantidad más alta evita la necesidad de hacer clic a través de varias páginas. Se recomienda utilizar un múltiplo par de 3 (18, 24, 30, etc).',
 
     // Maintenance settings
     'maint' => 'Mantenimiento',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Importar contenido',
     'role_editor_change' => 'Cambiar editor de página',
     'role_notifications' => 'Recibir y gestionar notificaciones',
+    'role_permission_note_users_and_roles' => 'Estos permisos proporcionarán también visibilidad y búsqueda de usuarios y roles en el sistema.',
     'role_asset' => 'Permisos de contenido',
     'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario alterar sus propios privilegios o los privilegios de otros en el sistema. Sólo asignar roles con estos permisos a usuarios de confianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los contenidos del sistema. Los permisos de Libros, Capítulos y Páginas sobreescribiran estos permisos.',
     'role_asset_admins' => 'A los administradores se les asigna automáticamente permisos para acceder a todo el contenido pero estas opciones podrían mostrar u ocultar opciones de la interfaz.',
     'role_asset_image_view_note' => 'Esto se refiere a la visibilidad dentro del gestor de imágenes. El acceso a los archivos de imagen subidos dependerá de la opción de almacenamiento de imágenes del sistema.',
+    'role_asset_users_note' => 'Estos permisos proporcionarán también visibilidad y búsqueda de usuarios en el sistema.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el contenido al que ha sido subido',

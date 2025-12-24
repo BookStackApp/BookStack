@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Hallitse järjestelmän toimintoihin liittyviä sähköposti-ilmoituksia.',
     'notifications_opt_own_page_changes' => 'Ilmoita omistamilleni sivuille tehdyistä muutoksista',
     'notifications_opt_own_page_comments' => 'Ilmoita omistamilleni sivuille tehdyistä kommenteista',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Ilmoita vastauksista kommentteihini',
     'notifications_save' => 'Tallenna asetukset',
     'notifications_update_success' => 'Ilmoitusasetukset on päivitetty!',

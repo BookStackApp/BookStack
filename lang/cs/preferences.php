@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Nastavte si e-mailová oznámení, která dostanete při provedení určitých akcí v systému.',
     'notifications_opt_own_page_changes' => 'Upozornit na změny stránek u kterých jsem vlastníkem',
     'notifications_opt_own_page_comments' => 'Upozornit na komentáře na stránkách, které vlastním',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Upozornit na odpovědi na mé komentáře',
     'notifications_save' => 'Uložit nastavení',
     'notifications_update_success' => 'Nastavení oznámení byla aktualizována!',

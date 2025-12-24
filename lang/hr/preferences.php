@@ -25,6 +25,7 @@ return [
     'notifications_opt_own_page_comments' => 'ChatGPT
 
 Obavijesti o komentarima na stranicama koje posjedujem',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Obavijesti o odgovorima na moje komentare',
     'notifications_save' => 'Spremi Postavke',
     'notifications_update_success' => 'Postavke obavijesti su ažurirane!',
