@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '制限しない',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => '一覧とソート',
+    'sorting_book_default' => 'ブックのデフォルトソートルール',
     'sorting_book_default_desc' => '新しいブックに適用するデフォルトのソートルールを選択します。これは既存のブックには影響しません。ルールはブックごとに上書きすることができます。',
     'sorting_rules' => 'ソートルール',
     'sorting_rules_desc' => 'これらはシステム内のコンテンツに適用できる事前定義のソート操作です。',
