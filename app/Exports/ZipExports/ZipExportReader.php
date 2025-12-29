@@ -58,6 +58,16 @@ class ZipExportReader
     {
         $this->open();
 
+        $info = $this->zip->statName('data.json');
+        if ($info === false) {
+            throw new ZipExportException(trans('errors.import_zip_cant_decode_data'));
+        }
+
+        $maxSize = max(intval(config()->get('app.upload_limit')), 1) * 1000000;
+        if ($info['size'] > $maxSize) {
+            throw new ZipExportException(trans('errors.import_zip_data_too_large'));
+        }
+
         // Validate json data exists, including metadata
         $jsonData = $this->zip->getFromName('data.json') ?: '';
         $importData = json_decode($jsonData, true);
@@ -71,6 +81,17 @@ class ZipExportReader
     public function fileExists(string $fileName): bool
     {
         return $this->zip->statName("files/{$fileName}") !== false;
+    }
+
+    public function fileWithinSizeLimit(string $fileName): bool
+    {
+        $fileInfo = $this->zip->statName("files/{$fileName}");
+        if ($fileInfo === false) {
+            return false;
+        }
+
+        $maxSize = max(intval(config()->get('app.upload_limit')), 1) * 1000000;
+        return $fileInfo['size'] <= $maxSize;
     }
 
     /**

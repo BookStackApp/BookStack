@@ -265,6 +265,12 @@ class ZipImportRunner
 
     protected function zipFileToUploadedFile(string $fileName, ZipExportReader $reader): UploadedFile
     {
+        if (!$reader->fileWithinSizeLimit($fileName)) {
+            throw new ZipImportException([
+                "File $fileName exceeds app upload limit."
+            ]);
+        }
+
         $tempPath = tempnam(sys_get_temp_dir(), 'bszipextract');
         $fileStream = $reader->streamFile($fileName);
         $tempStream = fopen($tempPath, 'wb');
