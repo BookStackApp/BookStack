@@ -18,8 +18,8 @@ return [
     'detail_page_path' => 'Page Path:',
     'detail_commenter' => 'Commenter:',
     'detail_comment' => 'Komentaras:',
-    'detail_created_by' => 'Created By:',
-    'detail_updated_by' => 'Updated By:',
+    'detail_created_by' => 'Sukurta:',
+    'detail_updated_by' => 'Atnaujinta:',
 
     'action_view_comment' => 'View Comment',
     'action_view_page' => 'Peržiūrėti puslapį',
