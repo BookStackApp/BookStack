@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Tidak dapat membaca berkas ZIP.',
     'import_zip_cant_decode_data' => 'Tidak dapat menemukan dan mendekode konten ZIP data.json.',
     'import_zip_no_data' => 'Data berkas ZIP tidak berisi konten buku, bab, atau halaman yang diharapkan.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Impor ZIP gagal divalidasi dengan kesalahan:',
     'import_zip_failed_notification' => 'Gagal mengimpor berkas ZIP.',
     'import_perms_books' => 'Anda tidak memiliki izin yang diperlukan untuk membuat buku.',
