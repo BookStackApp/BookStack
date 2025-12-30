@@ -82,4 +82,12 @@ class SearchOptionSet
         $values = array_values(array_filter($this->options, fn (SearchOption $option) => !$option->negated));
         return new self($values);
     }
+
+    /**
+     * @return self<T>
+     */
+    public function limit(int $limit): self
+    {
+        return new self(array_slice(array_values($this->options), 0, $limit));
+    }
 }
