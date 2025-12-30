@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIP 파일을 읽을 수 없습니다.',
     'import_zip_cant_decode_data' => 'ZIP data.json 콘텐츠를 찾아서 디코딩할 수 없습니다.',
     'import_zip_no_data' => '컨텐츠 ZIP 파일 데이터에 데이터가 비어있습니다.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => '컨텐츠 ZIP 파일을 가져오려다 실패했습니다. 이유:',
     'import_zip_failed_notification' => '컨텐츠 ZIP 파일을 가져오지 못했습니다.',
     'import_perms_books' => '책을 만드는 데 필요한 권한이 없습니다.',
