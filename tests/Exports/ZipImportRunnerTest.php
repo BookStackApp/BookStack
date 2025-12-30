@@ -5,6 +5,7 @@ namespace Tests\Exports;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Exceptions\ZipImportException;
 use BookStack\Exports\ZipExports\ZipImportRunner;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
@@ -429,6 +430,58 @@ class ZipImportRunnerTest extends TestCase
         $this->assertStringNotContainsString('[[bsexport:image:1125]]', $page->html);
         $this->assertStringNotContainsString('drawio-diagram="1125"', $page->html);
 
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_error_thrown_if_zip_item_exceeds_app_file_upload_limit()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'bs-zip-test');
+        file_put_contents($tempFile, str_repeat('a', 2500000));
+        $parent = $this->entities->chapter();
+        config()->set('app.upload_limit', 1);
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>Hello</p>',
+                'attachments' => [
+                    [
+                        'name' => 'Text attachment',
+                        'file' => 'file_attachment'
+                    ]
+                ],
+            ],
+        ], [
+            'file_attachment' => $tempFile,
+        ]);
+
+        $this->asAdmin();
+
+        $this->expectException(ZipImportException::class);
+        $this->expectExceptionMessage('The file file_attachment must not exceed 1 MB.');
+
+        $this->runner->run($import, $parent);
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_error_thrown_if_zip_data_exceeds_app_file_upload_limit()
+    {
+        $parent = $this->entities->chapter();
+        config()->set('app.upload_limit', 1);
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>' . str_repeat('a', 2500000) . '</p>',
+            ],
+        ]);
+
+        $this->asAdmin();
+
+        $this->expectException(ZipImportException::class);
+        $this->expectExceptionMessage('ZIP data.json content exceeds the configured application maximum upload size.');
+
+        $this->runner->run($import, $parent);
         ZipTestHelper::deleteZipForImport($import);
     }
 }

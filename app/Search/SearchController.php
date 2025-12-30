@@ -78,8 +78,9 @@ class SearchController extends Controller
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
-            $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20)['results'];
+            $options = SearchOptions::fromString($searchTerm);
+            $options->setFilter('type', implode('|', $entityTypes));
+            $entities = $this->searchRunner->searchEntities($options, 'all', 1, 20)['results'];
         } else {
             $entities = $queryPopular->run(20, 0, $entityTypes);
         }
