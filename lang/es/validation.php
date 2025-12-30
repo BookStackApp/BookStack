@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'El archivo no ha podido subirse. Es posible que el servidor no acepte archivos de este tamaño.',
 
     'zip_file' => 'El :attribute necesita hacer referencia a un archivo dentro del ZIP.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => 'El :attribute necesita hacer referencia a un archivo de tipo :validTypes, encontrado :foundType.',
     'zip_model_expected' => 'Se esperaba un objeto de datos, pero se encontró ":type".',
     'zip_unique' => 'El :attribute debe ser único para el tipo de objeto dentro del ZIP.',
