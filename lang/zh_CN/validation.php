@@ -106,6 +106,7 @@ return [
     'uploaded'             => '无法上传文件。 服务器可能不接受此大小的文件。',
 
     'zip_file' => ':attribute 需要引用 ZIP 内的文件。',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute 需要引用类型为 :validTypes 的文件，找到 :foundType 。',
     'zip_model_expected' => '预期的数据对象，但找到了 ":type" 。',
     'zip_unique' => '对于 ZIP 中的对象类型来说，:attribute 必须是唯一的。',
