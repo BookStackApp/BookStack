@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'ページの更新： :pageName',
     'updated_page_intro' => ':appName でページが更新されました',
     'updated_page_debounce' => '大量の通知を防ぐために、しばらくの間は同じユーザがこのページをさらに編集しても通知は送信されません。',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'ページのコメントであなたにメンションされています: :pageName',
+    'comment_mention_intro' => ':appName: のコメントであなたにメンションされました',
 
     'detail_page_name' => 'ページ名：',
     'detail_page_path' => 'ページパス：',

@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'بارگذاری فایل :attribute موفقیت آمیز نبود.',
 
     'zip_file' => 'ویژگی :attribute باید به یک فایل درون پرونده فشرده شده اشاره کند.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => 'ویژگی :attribute باید به فایلی با نوع :validTypes اشاره کند، اما نوع یافت‌شده :foundType است.',
     'zip_model_expected' => 'سیستم در این بخش انتظار دریافت یک شیء داده‌ای را داشت، اما «:type» دریافت گردید',
     'zip_unique' => 'برای هر نوع شیء در فایل ZIP، مقدار ویژگی :attribute باید یکتا و بدون تکرار باشد.',

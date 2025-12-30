@@ -9,8 +9,8 @@ return [
     // Common Messages
     'settings' => 'Nustatymai',
     'settings_save' => 'Išsaugoti nustatymus',
-    'system_version' => 'System Version',
-    'categories' => 'Categories',
+    'system_version' => 'Sistemos versija',
+    'categories' => 'Kategorijos',
 
     // App Settings
     'app_customization' => 'Tinkinimas',

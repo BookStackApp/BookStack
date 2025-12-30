@@ -110,6 +110,7 @@ Sovellus ei tunnista ulkoisen todennuspalvelun pyyntöä. Ongelman voi aiheuttaa
     'import_zip_cant_read' => 'ZIP-tiedostoa ei voitu lukea.',
     'import_zip_cant_decode_data' => 'ZIP-tiedoston data.json sisältöä ei löydy eikä sitä voitu purkaa.',
     'import_zip_no_data' => 'ZIP-tiedostoilla ei ole odotettua kirjaa, lukua tai sivun sisältöä.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Tuonti ZIP epäonnistui virheiden kanssa:',
     'import_zip_failed_notification' => 'ZIP-tiedoston tuominen epäonnistui.',
     'import_perms_books' => 'Sinulla ei ole tarvittavia oikeuksia luoda kirjoja.',

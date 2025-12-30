@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'फाइल अपलोड हुन सकेन। सर्भरले यस्तो साइज स्वीकार नगर्न सक्छ।',
 
     'zip_file' => ':attribute ले ZIP फाइलभित्रको फाइल देखाउनु पर्छ।',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute मा :validTypes प्रकारको फाइल हुनुपर्छ, तर :foundType भेटियो।',
     'zip_model_expected' => 'डेटा वस्तु चाहिएको थियो तर ":type" भेटियो।',
     'zip_unique' => ':attribute ZIP भित्रको वस्तु प्रकारको लागि अद्वितीय हुनुपर्छ।',

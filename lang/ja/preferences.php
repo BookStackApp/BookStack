@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'システム内で特定のアクティビティが実行されたときに受信する電子メール通知を制御します。',
     'notifications_opt_own_page_changes' => '自分が所有するページの変更を通知する',
     'notifications_opt_own_page_comments' => '自分が所有するページへのコメントを通知する',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'コメントでメンションされたときに通知する',
     'notifications_opt_comment_replies' => '自分のコメントへの返信を通知する',
     'notifications_save' => '設定を保存',
     'notifications_update_success' => '通知設定を更新しました。',

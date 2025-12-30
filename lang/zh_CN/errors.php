@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => '无法读取 ZIP 文件。',
     'import_zip_cant_decode_data' => '无法找到并解码 ZIP data.json 内容。',
     'import_zip_no_data' => 'ZIP 文件数据没有预期的书籍、章节或页面内容。',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => '导入 ZIP 验证失败，出现错误：',
     'import_zip_failed_notification' => 'ZIP 文件导入失败。',
     'import_perms_books' => '您缺少创建书籍所需的权限。',

@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Nelze načíst ZIP soubor.',
     'import_zip_cant_decode_data' => 'Nelze najít a dekódovat data.json v archivu ZIP.',
     'import_zip_no_data' => 'ZIP archiv neobsahuje knihy, kapitoly nebo stránky.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Importování ZIP selhalo s chybami:',
     'import_zip_failed_notification' => 'Nepodařilo se naimportovat ZIP soubor.',
     'import_perms_books' => 'Chybí vám požadovaná oprávnění k vytvoření knih.',

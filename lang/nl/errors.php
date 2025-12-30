@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Kon het Zip-bestand niet lezen.',
     'import_zip_cant_decode_data' => 'Kon de data.json Zip-inhoud niet vinden of decoderen.',
     'import_zip_no_data' => 'Zip-bestand bevat niet de verwachte boek, hoofdstuk of pagina-inhoud.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'De validatie van het Zip-bestand is mislukt met de volgende fouten:',
     'import_zip_failed_notification' => 'Importeren van het Zip-bestand is mislukt.',
     'import_perms_books' => 'Je mist de vereiste machtigingen om boeken te maken.',

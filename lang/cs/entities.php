@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'Potvrzením odstraníte nahraný ZIP soubor. Tento krok nelze vrátit zpět.',
     'import_errors' => 'Chyby importu',
     'import_errors_desc' => 'Při pokusu o import došlo k následujícím chybám:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'Přejít na jinou stránku',
+    'breadcrumb_siblings_for_chapter' => 'Přejít na jinou kapitolu',
+    'breadcrumb_siblings_for_book' => 'Přejít na jinou knihu',
+    'breadcrumb_siblings_for_bookshelf' => 'Přejít na jinou polici',
 
     // Permissions and restrictions
     'permissions' => 'Oprávnění',

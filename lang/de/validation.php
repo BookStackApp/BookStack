@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Die Datei konnte nicht hochgeladen werden. Der Server akzeptiert möglicherweise keine Dateien dieser Größe.',
 
     'zip_file' => ':attribute muss eine Datei innerhalb des ZIP referenzieren.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute muss eine Datei des Typs :validType referenzieren, gefunden :foundType.',
     'zip_model_expected' => 'Datenobjekt erwartet, aber ":type" gefunden.',
     'zip_unique' => ':attribute muss für den Objekttyp innerhalb des ZIP eindeutig sein.',

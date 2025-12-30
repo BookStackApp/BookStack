@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'لم أتمكن من قراءة المِلَفّ المضغوط -ZIP-.',
     'import_zip_cant_decode_data' => 'لم نتمكن من العثور على محتوى المِلَفّ المضغوط data.json وفك تشفيره.',
     'import_zip_no_data' => 'لا تتضمن بيانات المِلَفّ المضغوط أي محتوى متوقع للكتاب أو الفصل أو الصفحة.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'فشل التحقق من صحة استيراد المِلَفّ المضغوط بسبب الأخطاء التالية:',
     'import_zip_failed_notification' => 'فشل استيراد المِلَفّ المضغوط.',
     'import_perms_books' => 'أنت تفتقر إلى الصلاحيات المطلوبة لإنشاء الكتب.',
