@@ -519,3 +519,5 @@ Tahsin Ahmed (tahsinahmed2012) :: Bengali
 bojan_che :: Serbian (Cyrillic)
 setiawan setiawan (culture.setiawan) :: Indonesian
 Donald Mac Kenzie (kiuman) :: Norwegian Bokmal
+Gabriel Silver (GabrielBSilver) :: Hebrew
+Tomas Darius Davainis (Tomasdd) :: Lithuanian
