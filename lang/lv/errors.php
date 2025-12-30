@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Nevarēja nolasīt ZIP failu.',
     'import_zip_cant_decode_data' => 'Nevarēja atrast un nolasīt data.json saturu ZIP failā.',
     'import_zip_no_data' => 'ZIP faila datos nav atrasts grāmatu, nodaļu vai lapu saturs.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'ZIP faila imports ir neveiksmīgs ar šādām kļūdām:',
     'import_zip_failed_notification' => 'ZIP faila imports ir neveiksmīgs.',
     'import_perms_books' => 'Jums nav nepieciešamo tiesību izveidot grāmatas.',
