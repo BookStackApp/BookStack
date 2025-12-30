@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'امکان ایجاد کاربر وجود ندارد؛ زیرا ارسال ایمیل دعوت با خطا مواجه شد.',
     'import_zip_cant_decode_data' => 'محتوای data.json در فایل ZIP پیدا یا رمزگشایی نشد.',
     'import_zip_no_data' => 'داده‌های فایل ZIP فاقد محتوای کتاب، فصل یا صفحه مورد انتظار است.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'اعتبارسنجی فایل ZIP واردشده با خطا مواجه شد:',
     'import_zip_failed_notification' => ' فایل ZIP وارد نشد.',
     'import_perms_books' => 'شما مجوز لازم برای ایجاد کتاب را ندارید.',
