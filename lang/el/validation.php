@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Δεν ήταν δυνατή η αποστολή του αρχείου. Ο διακομιστής ενδέχεται να μην δέχεται αρχεία αυτού του μεγέθους.',
 
     'zip_file' => 'Το :attribute πρέπει να παραπέμπει σε ένα αρχείο εντός του ZIP.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => 'Το :attribute πρέπει να αναφέρεται σε αρχείο τύπου :validTypes, βρέθηκε :foundType.',
     'zip_model_expected' => 'Αναμενόταν αντικείμενο δεδομένων, αλλά ":type" βρέθηκε.',
     'zip_unique' => 'Το :attribute πρέπει να είναι μοναδικό για τον τύπο αντικειμένου εντός του ZIP.',
