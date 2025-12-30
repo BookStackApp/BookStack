@@ -109,7 +109,7 @@ return [
     'import_zip_cant_read' => 'No se pudo leer el archivo ZIP.',
     'import_zip_cant_decode_data' => 'No se pudo encontrar y decodificar el archivo data.json. en el archivo ZIP.',
     'import_zip_no_data' => 'Los datos del archivo ZIP no contienen ningún libro, capítulo o contenido de página.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_data_too_large' => 'El contenido del ZIP data.json excede el tamaño máximo de carga configurado.',
     'import_validation_failed' => 'Error al validar la importación del ZIP con errores:',
     'import_zip_failed_notification' => 'Error al importar archivo ZIP.',
     'import_perms_books' => 'Le faltan los permisos necesarios para crear libros.',
