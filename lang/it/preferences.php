@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'Controlla le notifiche email che ricevi quando viene eseguita una determinata attività all\'interno del sistema.',
     'notifications_opt_own_page_changes' => 'Notifica in caso di modifiche alle pagine che possiedo',
     'notifications_opt_own_page_comments' => 'Notifica i commenti sulle pagine che possiedo',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'Avvisami quando vengo menzionato in un commento',
     'notifications_opt_comment_replies' => 'Notificare le risposte ai miei commenti',
     'notifications_save' => 'Salva preferenze',
     'notifications_update_success' => 'Le preferenze di notifica sono state aggiornate!',
