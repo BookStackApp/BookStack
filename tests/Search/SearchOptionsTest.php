@@ -35,9 +35,14 @@ class SearchOptionsTest extends TestCase
 
     public function test_from_string_properly_parses_escaped_quotes()
     {
-        $options = SearchOptions::fromString('"\"cat\"" surprise "\"\"" "\"donkey" "\"" "\\\\"');
+        $options = SearchOptions::fromString('"\"cat\"" surprise');
+        $this->assertEquals(['"cat"'], $options->exacts->toValueArray());
 
-        $this->assertEquals(['"cat"', '""', '"donkey', '"', '\\'], $options->exacts->toValueArray());
+        $options = SearchOptions::fromString('"\"\"" "\"donkey"');
+        $this->assertEquals(['""', '"donkey'], $options->exacts->toValueArray());
+
+        $options = SearchOptions::fromString('"\"" "\\\\"');
+        $this->assertEquals(['"', '\\'], $options->exacts->toValueArray());
     }
 
     public function test_to_string_includes_all_items_in_the_correct_format()
@@ -104,6 +109,7 @@ class SearchOptionsTest extends TestCase
 
     public function test_from_request_properly_parses_exacts_from_search_terms()
     {
+        $this->asEditor();
         $request = new Request([
             'search' => 'biscuits "cheese" "" "baked beans"'
         ]);
