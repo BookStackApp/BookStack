@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIP फाइल पढ्न सकिएन।',
     'import_zip_cant_decode_data' => 'ZIP डाटा.json सामग्री पत्ता लाग्न र डिकोड गर्न सकिएन।',
     'import_zip_no_data' => 'ZIP फाइल डाटामा अपेक्षित पुस्तक, अध्याय वा पाना सामग्री छैन।',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'आयात ZIP प्रमाणीकरण असफल भयो। त्रुटिहरू छन्:',
     'import_zip_failed_notification' => 'ZIP फाइल आयात गर्न असफल भयो।',
     'import_perms_books' => 'तपाईंलाई पुस्तकहरू सिर्जना गर्न आवश्यक अनुमति छैन।',
