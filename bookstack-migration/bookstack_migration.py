@@ -666,28 +666,61 @@ def inspect_database_schema(config: DatabaseConfig) -> Dict[str, Any]:
 def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
     """Try to identify which tables contain content"""
     print("\n🤔 Trying to identify content tables...")
-    
+
     content_tables = {}
-    
-    # Look for common BookStack table patterns
+
+    # Pattern definitions with required columns and optional content columns
     table_patterns = {
-        'pages': ['id', 'name', 'slug', 'html', 'markdown'],
-        'books': ['id', 'name', 'slug', 'description'],
-        'chapters': ['id', 'name', 'slug', 'description', 'book_id'],
-        'attachments': ['id', 'name', 'path'],
-        'images': ['id', 'name', 'path'],
+        'pages': {
+            'required_all': ['id', 'name', 'slug'],
+            'requires_any': ['html', 'markdown', 'text', 'content'],
+        },
+        'books': {
+            'required_all': ['id', 'name', 'slug'],
+            'requires_any': [],
+        },
+        'chapters': {
+            'required_all': ['id', 'name', 'slug', 'book_id'],
+            'requires_any': [],
+        },
+        'attachments': {
+            'required_all': ['id', 'name', 'path'],
+            'requires_any': [],
+        },
+        'images': {
+            'required_all': ['id', 'name', 'path'],
+            'requires_any': [],
+        },
     }
-    
+
+    # Collect candidates per pattern
+    candidates: Dict[str, List[str]] = {k: [] for k in table_patterns.keys()}
+
     for table_name, table_info in schema.items():
         column_names = [col['Field'] for col in table_info['columns']]
-        
-        # Check if it matches known patterns
-        for pattern_name, required_cols in table_patterns.items():
-            if all(col in column_names for col in required_cols[:2]):  # At least first 2 cols
-                content_tables[pattern_name] = table_name
-                print(f"   ✅ Found {pattern_name} table: {table_name}")
-                break
-    
+
+        for pattern_name, rules in table_patterns.items():
+            if not all(col in column_names for col in rules['required_all']):
+                continue
+            if rules['requires_any'] and not any(col in column_names for col in rules['requires_any']):
+                continue
+            candidates[pattern_name].append(table_name)
+
+    # Choose best candidate for each pattern (prefer exact name, then first)
+    for pattern_name, tables in candidates.items():
+        if not tables:
+            continue
+
+        exact = [t for t in tables if t == pattern_name]
+        if exact:
+            chosen = exact[0]
+        else:
+            suffix_match = [t for t in tables if t.endswith(pattern_name)]
+            chosen = suffix_match[0] if suffix_match else tables[0]
+
+        content_tables[pattern_name] = chosen
+        print(f"   ✅ Found {pattern_name} table: {chosen}")
+
     return content_tables
 
 def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -> Dict[str, str]:
