@@ -80,13 +80,80 @@ struct Args {
     verbose: bool,
 }
 
+/// Load .env file from standard BookStack locations
+fn load_env_file(args: &mut Args) -> Result<()> {
+    let env_paths = vec![
+        PathBuf::from("/var/www/bookstack/.env"),    // Standard BookStack location
+        PathBuf::from("/var/www/html/.env"),         // Alternative standard
+        PathBuf::from(".env"),                        // Current directory
+        PathBuf::from("../.env"),                     // Parent directory
+        PathBuf::from("../../.env"),                  // Two levels up
+    ];
+    
+    for path in env_paths {
+        if let Ok(content) = fs::read_to_string(&path) {
+            info!("Found .env at: {:?}", path);
+            
+            for line in content.lines() {
+                // Skip comments and empty lines
+                if line.starts_with('#') || line.trim().is_empty() {
+                    continue;
+                }
+                
+                // Parse KEY=VALUE format
+                if let Some((key, value)) = line.split_once('=') {
+                    let key = key.trim();
+                    let mut value = value.trim();
+                    
+                    // Remove quotes if present
+                    if (value.starts_with('"') && value.ends_with('"')) 
+                        || (value.starts_with('\'') && value.ends_with('\'')) {
+                        value = &value[1..value.len()-1];
+                    }
+                    
+                    // Populate args from .env only if not already set via CLI
+                    match key {
+                        "DB_HOST" if args.host == "localhost" => {
+                            args.host = value.to_string();
+                        }
+                        "DB_PORT" if args.port == 3306 => {
+                            if let Ok(port) = value.parse() {
+                                args.port = port;
+                            }
+                        }
+                        "DB_DATABASE" if args.database.is_empty() => {
+                            args.database = value.to_string();
+                        }
+                        "DB_USERNAME" if args.user.is_empty() => {
+                            args.user = value.to_string();
+                        }
+                        "DB_PASSWORD" if args.password.is_empty() => {
+                            args.password = value.to_string();
+                        }
+                        _ => {}
+                    }
+                }
+            }
+            
+            info!("✓ Loaded database configuration from .env");
+            return Ok(());
+        }
+    }
+    
+    info!("No .env file found in standard locations - using command-line arguments");
+    Ok(())
+}
+
 #[tokio::main]
 async fn main() -> Result<()> {
     env_logger::Builder::from_default_env()
         .filter_level(log::LevelFilter::Info)
         .init();
 
-    let args = Args::parse();
+    let mut args = Args::parse();
+    
+    // Try to load .env file (CLI arguments take precedence)
+    let _ = load_env_file(&mut args);
 
     println!(
         r#"
