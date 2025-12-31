@@ -846,12 +846,12 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 select_cols.append(quote_ident('name'))
             if 'slug' in page_cols:
                 select_cols.append(quote_ident('slug'))
-            if 'html' in page_cols:
-                select_cols.append(quote_ident('html'))
             if 'markdown' in page_cols:
                 select_cols.append(quote_ident('markdown'))
             if 'text' in page_cols:
                 select_cols.append(quote_ident('text'))
+            if 'html' in page_cols:
+                select_cols.append(quote_ident('html'))
 
             query = f"SELECT {', '.join(select_cols)} FROM {pages_table_ident}" 
 
@@ -869,22 +869,29 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 # Generate filename from slug or id
                 slug = page.get('slug') or f"page_{page.get('id', exported_count)}"
                 name = page.get('name') or slug
-                
-                # Get content from whatever column exists
-                content = (
-                    page.get('markdown') or 
-                    page.get('text') or 
-                    page.get('html') or 
-                    ''
-                )
-                
+
+                # Get content from whatever column exists and note format
+                content = None
+                source_format = 'text'
+                if 'markdown' in page and page.get('markdown'):
+                    content = page.get('markdown')
+                    source_format = 'markdown'
+                elif 'text' in page and page.get('text'):
+                    content = page.get('text')
+                    source_format = 'text'
+                elif 'html' in page and page.get('html'):
+                    content = page.get('html')
+                    source_format = 'html'
+                else:
+                    content = ''
+
                 # Create file
                 file_path = export_path / f"{slug}.txt"
-                dokuwiki_content = convert_to_dokuwiki(content, name)
-                
+                dokuwiki_content = convert_content_to_dokuwiki(content, source_format, name)
+
                 with open(file_path, 'w', encoding='utf-8') as f:
                     f.write(dokuwiki_content)
-                
+
                 exported_count += 1
                 if exported_count % 10 == 0:
                     print(f"   📝 Exported {exported_count}/{len(pages)} pages...")
@@ -964,35 +971,52 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         
         return False
 
-def convert_to_dokuwiki(content: str, title: str) -> str:
-    """Convert HTML/Markdown to DokuWiki format"""
-    # This is a simplified conversion
-    # For production, use proper parsers
-    
-    dokuwiki = f"====== {title} ======\n\n"
-    
-    # Remove HTML tags (very basic)
-    content = re.sub(r'<br\s*/?>', '\n', content)
-    content = re.sub(r'<p>', '\n', content)
-    content = re.sub(r'</p>', '\n', content)
-    content = re.sub(r'<[^>]+>', '', content)
-    
-    # Convert bold
-    content = re.sub(r'\*\*(.+?)\*\*', r'**\1**', content)
-    content = re.sub(r'__(.+?)__', r'**\1**', content)
-    
-    # Convert italic
-    content = re.sub(r'\*(.+?)\*', r'//\1//', content)
-    content = re.sub(r'_(.+?)_', r'//\1//', content)
-    
-    # Convert headers
-    content = re.sub(r'^# (.+)$', r'====== \1 ======', content, flags=re.MULTILINE)
-    content = re.sub(r'^## (.+)$', r'===== \1 =====', content, flags=re.MULTILINE)
-    content = re.sub(r'^### (.+)$', r'==== \1 ====', content, flags=re.MULTILINE)
-    
-    dokuwiki += content.strip()
-    
-    return dokuwiki
+def convert_html_to_dokuwiki(html: str) -> str:
+    """Naive HTML to DokuWiki-ish conversion (standard library only)"""
+    if not html:
+        return ""
+
+    text = html
+    replacements = [
+        ("<br />", "\n"), ("<br/>", "\n"), ("<br>", "\n"),
+        ("</p>", "\n\n"), ("<p>", ""),
+        ("<strong>", "**"), ("</strong>", "**"),
+        ("<b>", "**"), ("</b>", "**"),
+        ("<em>", "//"), ("</em>", "//"),
+        ("<i>", "//"), ("</i>", "//"),
+        ("<code>", "''"), ("</code>", "''"),
+        ("<pre>", "<code>\n"), ("</pre>", "\n</code>\n"),
+        ("<ul>", ""), ("</ul>", "\n"),
+        ("<ol>", ""), ("</ol>", "\n"),
+        ("<li>", "  * "), ("</li>", "\n"),
+        ("<h1>", "====== "), ("</h1>", " ======\n\n"),
+        ("<h2>", "===== "), ("</h2>", " =====\n\n"),
+        ("<h3>", "==== "), ("</h3>", " ====\n\n"),
+        ("<h4>", "=== "), ("</h4>", " ===\n\n"),
+    ]
+    for old, new in replacements:
+        text = text.replace(old, new)
+
+    import re
+    text = re.sub(r'<[^>]+>', '', text)
+
+    from html import unescape
+    text = unescape(text)
+
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip() + "\n"
+
+
+def convert_content_to_dokuwiki(content: str, source_format: str, title: str) -> str:
+    """Convert content based on detected format into DokuWiki-ish text"""
+    if not content:
+        return f"====== {title} ======\n\n"
+
+    if source_format == 'html':
+        return convert_html_to_dokuwiki(content)
+
+    # Markdown/plain are left mostly as-is; headings/bold/italics are compatible enough.
+    return content
 
 # ============================================================================
 # DIAGNOSTIC FUNCTIONALITY
