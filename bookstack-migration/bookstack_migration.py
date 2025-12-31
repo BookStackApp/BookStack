@@ -836,7 +836,31 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
 
         dump_all = tables.pop('__dump_all_tables__', 'no') == 'yes'
         
-        # Export pages
+        # Preload books/chapters for path building
+        books_index = {}
+        if 'books' in tables:
+            books_table = tables['books']
+            cursor.execute(f"SELECT * FROM {quote_ident(books_table)}")
+            books = cursor.fetchall()
+            for book in books:
+                bid = book.get('id')
+                bslug = book.get('slug') or f"book_{bid}"
+                books_index[bid] = bslug
+
+        chapters_index = {}
+        if 'chapters' in tables:
+            chapters_table = tables['chapters']
+            cursor.execute(f"SELECT * FROM {quote_ident(chapters_table)}")
+            chapters = cursor.fetchall()
+            for chapter in chapters:
+                cid = chapter.get('id')
+                cslug = chapter.get('slug') or f"chapter_{cid}"
+                chapters_index[cid] = {
+                    'slug': cslug,
+                    'book_id': chapter.get('book_id')
+                }
+
+        # Export pages (use hierarchy book/chapter/page)
         if 'pages' in tables:
             print(f"\n📄 Exporting pages from {tables['pages']}...")      
 
@@ -854,6 +878,10 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 select_cols.append(quote_ident('name'))
             if 'slug' in page_cols:
                 select_cols.append(quote_ident('slug'))
+            if 'book_id' in page_cols:
+                select_cols.append(quote_ident('book_id'))
+            if 'chapter_id' in page_cols:
+                select_cols.append(quote_ident('chapter_id'))
             if 'markdown' in page_cols:
                 select_cols.append(quote_ident('markdown'))
             if 'text' in page_cols:
@@ -878,6 +906,17 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 slug = page.get('slug') or f"page_{page.get('id', exported_count)}"
                 name = page.get('name') or slug
 
+                # Build path using book/chapter if available
+                book_id = page.get('book_id')
+                chapter_id = page.get('chapter_id')
+                parts = []
+                if book_id and book_id in books_index:
+                    parts.append(books_index[book_id])
+                if chapter_id and chapter_id in chapters_index:
+                    parts.append(chapters_index[chapter_id]['slug'])
+                page_dir = export_path.joinpath(*parts) if parts else export_path
+                page_dir.mkdir(parents=True, exist_ok=True)
+
                 # Get content from whatever column exists and note format
                 content = None
                 source_format = 'text'
@@ -894,7 +933,7 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                     content = ''
 
                 # Create file
-                file_path = export_path / f"{slug}.txt"
+                file_path = page_dir / f"{slug}.txt"
                 dokuwiki_content = convert_content_to_dokuwiki(content, source_format, name)
 
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -908,34 +947,26 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         else:
             print("\n⚠️  No pages table selected, skipping pages export")
         
-        # Export books if available
-        if 'books' in tables:
+        # Export books mapping if available
+        if 'books' in tables and books_index:
             print(f"\n📚 Exporting books from {tables['books']}...")      
-
             books_table = tables['books']
             cursor.execute(f"SELECT * FROM {quote_ident(books_table)}")
             books = cursor.fetchall()
-            
-            # Create a mapping file
             books_file = export_path / '_books.json'
             with open(books_file, 'w') as f:
                 json.dump(books, f, indent=2, default=str)
-            
-            print(f"   ✅ Exported {len(books)} books to {books_file}")
-        
-        # Export chapters if available
-        if 'chapters' in tables:
-            print(f"\n📖 Exporting chapters from {tables['chapters']}...") 
+            print(f"   ✅ Exported {len(books)} books to {books_file}")   
 
+        # Export chapters mapping if available
+        if 'chapters' in tables and chapters_index:
+            print(f"\n📖 Exporting chapters from {tables['chapters']}...") 
             chapters_table = tables['chapters']
             cursor.execute(f"SELECT * FROM {quote_ident(chapters_table)}")
             chapters = cursor.fetchall()
-            
-            # Create a mapping file
             chapters_file = export_path / '_chapters.json'
             with open(chapters_file, 'w') as f:
                 json.dump(chapters, f, indent=2, default=str)
-            
             print(f"   ✅ Exported {len(chapters)} chapters to {chapters_file}")
 
         # Optional full-table JSON dump for everything
