@@ -724,7 +724,7 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
     return content_tables
 
 def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -> Dict[str, str]:
-    """Let user confirm/select which tables to use"""
+    """Let user confirm/select which tables to use. Enter 'all' to dump every table to JSON too."""
     print("\n" + "="*70)
     print("TABLE SELECTION")
     print("="*70)
@@ -739,9 +739,13 @@ def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -
         print(f"   {i}. {table_name} ({row_count} rows)")
     
     print("\nAre the identified tables correct?")
-    confirm = input("Use these tables? (yes/no): ").strip().lower()
+    confirm = input("Use these tables? (yes/no/all): ").strip().lower()
     
     if confirm == 'yes':
+        identified['__dump_all_tables__'] = 'no'
+        return identified
+    if confirm == 'all':
+        identified['__dump_all_tables__'] = 'yes'
         return identified
     
     # Let user manually select
@@ -773,6 +777,8 @@ def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -
             except ValueError:
                 print("   ❌ Enter a number")
     
+    dump_all = input("\nAlso dump ALL tables to JSON? (yes/no): ").strip().lower() == 'yes'
+    selected['__dump_all_tables__'] = 'yes' if dump_all else 'no'
     return selected
 
 # ============================================================================
@@ -819,6 +825,8 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         
         export_path = Path(output_dir)
         export_path.mkdir(parents=True, exist_ok=True)
+
+        dump_all = tables.pop('__dump_all_tables__', 'no') == 'yes'
         
         # Export pages
         if 'pages' in tables:
@@ -914,6 +922,21 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 json.dump(chapters, f, indent=2, default=str)
             
             print(f"   ✅ Exported {len(chapters)} chapters to {chapters_file}")
+
+        # Optional full-table JSON dump for everything
+        if dump_all:
+            print("\n🧺 Dumping ALL tables to JSON...")
+            all_dir = export_path / 'all_tables'
+            all_dir.mkdir(parents=True, exist_ok=True)
+
+            for table_name in schema.keys():
+                print(f"   • Dumping {table_name}...")
+                cursor.execute(f"SELECT * FROM {quote_ident(table_name)}")
+                rows = cursor.fetchall()
+                out_file = all_dir / f"{table_name}.json"
+                with open(out_file, 'w', encoding='utf-8') as f:
+                    json.dump(rows, f, indent=2, default=str)
+            print("   ✅ All tables dumped to all_tables/*.json")
         
         conn.close()
         
