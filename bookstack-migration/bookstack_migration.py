@@ -669,6 +669,11 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
 
     content_tables = {}
 
+    # Prefer canonical table names if they exist
+    for canonical in ['pages', 'books', 'chapters', 'attachments', 'images']:
+        if canonical in schema:
+            content_tables[canonical] = canonical
+
     # Pattern definitions with required columns and optional content columns
     table_patterns = {
         'pages': {
@@ -710,6 +715,9 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
     for pattern_name, tables in candidates.items():
         if not tables:
             continue
+
+        if pattern_name in content_tables:
+            continue  # already set to canonical
 
         exact = [t for t in tables if t == pattern_name]
         if exact:
