@@ -670,7 +670,7 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
     content_tables = {}
 
     # Prefer canonical table names if they exist
-    for canonical in ['pages', 'books', 'chapters', 'attachments', 'images']:
+    for canonical in ['pages', 'books', 'chapters', 'attachments', 'images', 'bookshelves', 'bookshelves_books']:
         if canonical in schema:
             content_tables[canonical] = canonical
 
@@ -694,6 +694,14 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
         },
         'images': {
             'required_all': ['id', 'name', 'path'],
+            'requires_any': [],
+        },
+        'bookshelves': {
+            'required_all': ['id', 'name', 'slug'],
+            'requires_any': [],
+        },
+        'bookshelves_books': {
+            'required_all': ['bookshelf_id', 'book_id'],
             'requires_any': [],
         },
     }
@@ -836,7 +844,31 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
 
         dump_all = tables.pop('__dump_all_tables__', 'no') == 'yes'
         
-        # Preload books/chapters for path building
+        # Preload shelves/books/chapters for path building
+        shelves_index = {}
+        if 'bookshelves' in tables:
+            shelves_table = tables['bookshelves']
+            cursor.execute(f"SELECT * FROM {quote_ident(shelves_table)}")
+            shelves = cursor.fetchall()
+            for shelf in shelves:
+                sid = shelf.get('id')
+                sslug = shelf.get('slug') or f"bookshelf_{sid}"
+                shelves_index[sid] = sslug
+
+        shelf_book_map = {}
+        if 'bookshelves_books' in tables:
+            bsb_table = tables['bookshelves_books']
+            cursor.execute(f"SELECT * FROM {quote_ident(bsb_table)}")
+            bsb_rows = cursor.fetchall()
+            for row in bsb_rows:
+                shelf_id = row.get('bookshelf_id')
+                book_id = row.get('book_id')
+                if shelf_id is None or book_id is None:
+                    continue
+                shelf_slug = shelves_index.get(shelf_id)
+                if shelf_slug:
+                    shelf_book_map.setdefault(book_id, []).append(shelf_slug)
+
         books_index = {}
         if 'books' in tables:
             books_table = tables['books']
@@ -911,6 +943,11 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 chapter_id = page.get('chapter_id')
                 page_dir = export_path
                 if book_id and book_id in books_index:
+                    # If this book is on a shelf, add that first
+                    shelf_slugs = shelf_book_map.get(book_id, [])
+                    if shelf_slugs:
+                        page_dir = page_dir / shelf_slugs[0]
+                        page_dir.mkdir(parents=True, exist_ok=True)
                     page_dir = page_dir / books_index[book_id]
                     page_dir.mkdir(parents=True, exist_ok=True)
                 if chapter_id and chapter_id in chapters_index:
