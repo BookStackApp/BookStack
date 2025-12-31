@@ -21,7 +21,9 @@ source of truth for the toolkit as it stands today.
   (`--diagnose`, `--backup`, `--export`, `--full`, `--db-host`, `--db-name`,
   `--db-user`, `--db-pass`, `--output`, `--backup-dir`, `--dry-run`,
   `--verbose`). If `/etc/mysql/my.cnf` exists, it is read automatically for
-  defaults (client group) in addition to the provided flags.
+  defaults (client group) in addition to the provided flags. The installer will
+  try OS packages for DBI/DBD::mysql (`apt-get`/`yum`/`dnf`/`pacman`) before
+  falling back to CPAN.
 - `help_me_fix_my_mistake.sh` — menu wrapper around install, backup, and export
   flows.
 - `AUTO_INSTALL_EVERYTHING.sh` and `scripts/*.sh` — helper scripts for
