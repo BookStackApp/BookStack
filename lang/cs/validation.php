@@ -106,7 +106,7 @@ return [
     'uploaded'             => 'Nahrávání :attribute se nezdařilo.',
 
     'zip_file' => ':attribute musí odkazovat na soubor v archivu ZIP.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
+    'zip_file_size' => 'Soubor :attribute nesmí překročit :size MB.',
     'zip_file_mime' => ':attribute musí odkazovat na soubor typu :validTypes, nalezen :foundType.',
     'zip_model_expected' => 'Očekáván datový objekt, ale nalezen „:type“.',
     'zip_unique' => ':attribute musí být jedinečný pro typ objektu v archivu ZIP.',
