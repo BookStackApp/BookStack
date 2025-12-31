@@ -217,6 +217,9 @@ if ($opts{help}) {
     exit 0;
 }
 
+# Auto-install Perl modules if they're missing
+install_perl_modules();
+
 # Logging setup
 my $log_dir = './migration_logs';
 make_path($log_dir) unless -d $log_dir;
@@ -399,6 +402,73 @@ sub get_db_config {
     }
     
     log_message("INFO", "DB Config: host=$opts{'db-host'}, db=$opts{'db-name'}, user=$opts{'db-user'}");
+}
+
+sub install_perl_modules {
+    # My precious! We needs our modules, yesss?
+    smeagol_comment("Checking for required Perl modules, precious...", "precious");
+    
+    my @required_modules = (
+        { name => 'DBI', cpan => 'DBI' },
+        { name => 'DBD::mysql', cpan => 'DBD::mysql' },
+        { name => 'JSON', cpan => 'JSON' },
+        { name => 'LWP::UserAgent', cpan => 'libwww-perl' },
+    );
+    
+    my @missing = ();
+    
+    # Check which modules are missing
+    foreach my $mod (@required_modules) {
+        my $check = "require $mod->{name}";
+        if (eval $check) {
+            smeagol_comment("✓ $mod->{name} is installed, yesss!", "happy");
+            log_message("INFO", "$mod->{name} found");
+        } else {
+            push @missing, $mod;
+            smeagol_comment("✗ $mod->{name} is missing! Tricksy!", "worried");
+            log_message("WARNING", "$mod->{name} not found");
+        }
+    }
+    
+    # If any missing, try to install
+    if (@missing) {
+        smeagol_comment("We must install the precious modules!", "precious");
+        print "\n";
+        
+        foreach my $mod (@missing) {
+            print "Installing $mod->{cpan}...\n";
+            log_message("INFO", "Installing $mod->{cpan}");
+            
+            # Try cpanm first (faster)
+            if (system("cpanm --notest $mod->{cpan} >/dev/null 2>&1") == 0) {
+                smeagol_comment("✓ $mod->{name} installed via cpanm, yesss!", "happy");
+                log_message("INFO", "$mod->{name} installed successfully");
+            }
+            # Fallback to cpan
+            elsif (system("cpan -i $mod->{cpan} >/dev/null 2>&1") == 0) {
+                smeagol_comment("✓ $mod->{name} installed via cpan, yesss!", "happy");
+                log_message("INFO", "$mod->{name} installed successfully");
+            }
+            # Last resort - manual with SUDO
+            elsif (system("sudo cpanm --notest $mod->{cpan} >/dev/null 2>&1") == 0) {
+                smeagol_comment("✓ $mod->{name} installed via sudo cpanm, yesss!", "happy");
+                log_message("INFO", "$mod->{name} installed successfully");
+            }
+            else {
+                smeagol_comment("Could not auto-install $mod->{name}. Manual intervention needed.", "angry");
+                log_message("ERROR", "Failed to install $mod->{name}");
+                print "\nTry manually:\n";
+                print "  cpanm $mod->{cpan}\n";
+                print "  or: cpan $mod->{cpan}\n";
+                print "  or: sudo cpanm $mod->{cpan}\n";
+            }
+        }
+        
+        print "\n";
+    }
+    
+    smeagol_comment("Module check complete, precious!", "happy");
+    log_message("INFO", "Perl module installation complete");
 }
 
 sub connect_db {
