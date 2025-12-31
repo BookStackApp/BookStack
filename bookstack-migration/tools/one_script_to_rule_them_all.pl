@@ -225,7 +225,8 @@ my $log_dir = './migration_logs';
 make_path($log_dir) unless -d $log_dir;
 my $timestamp = strftime('%Y%m%d_%H%M%S', localtime);
 my $log_file = "$log_dir/migration_$timestamp.log";
-open(my $LOG, '>:utf8', $log_file) or die "Cannot create log file: $!";
+our $LOG;
+open($LOG, '>:utf8', $log_file) or die "Cannot create log file: $!";
 
 log_message("INFO", "=== Migration started ===");
 log_message("INFO", "My precious script awakens... yesss...");
@@ -306,9 +307,10 @@ sub smeagol_comment {
 
 sub log_message {
     my ($level, $message) = @_;
+    return unless $LOG;
     my $timestamp = strftime('%Y-%m-%d %H:%M:%S', localtime);
-    print $LOG "[$timestamp] [$level] $message\n";
-    
+    print {$LOG} "[$timestamp] [$level] $message\n";
+
     if ($opts{verbose}) {
         say "  [$level] $message";
     }
@@ -408,6 +410,16 @@ sub install_perl_modules {
     # My precious! We needs our modules, yesss?
     smeagol_comment("Checking for required Perl modules, precious...", "precious");
     
+    # Ensure cpanm exists (some systems don't ship it)
+    my $cpanm_ok = system("cpanm --version >/dev/null 2>&1") == 0;
+    if (!$cpanm_ok) {
+        log_message("INFO", "cpanm not found, attempting to bootstrap App::cpanminus");
+        system("cpan App::cpanminus >/dev/null 2>&1") == 0
+            || system("curl -L https://cpanmin.us | perl - App::cpanminus >/dev/null 2>&1") == 0;
+        $cpanm_ok = system("cpanm --version >/dev/null 2>&1") == 0;
+        log_message("INFO", $cpanm_ok ? "cpanm available after bootstrap" : "cpanm still missing after bootstrap");
+    }
+
     my @required_modules = (
         { name => 'DBI', cpan => 'DBI' },
         { name => 'DBD::mysql', cpan => 'DBD::mysql' },
@@ -438,9 +450,9 @@ sub install_perl_modules {
         foreach my $mod (@missing) {
             print "Installing $mod->{cpan}...\n";
             log_message("INFO", "Installing $mod->{cpan}");
-            
+
             # Try cpanm first (faster)
-            if (system("cpanm --notest $mod->{cpan} >/dev/null 2>&1") == 0) {
+            if ($cpanm_ok && system("cpanm --notest $mod->{cpan} >/dev/null 2>&1") == 0) {
                 smeagol_comment("✓ $mod->{name} installed via cpanm, yesss!", "happy");
                 log_message("INFO", "$mod->{name} installed successfully");
             }
@@ -457,13 +469,16 @@ sub install_perl_modules {
             else {
                 smeagol_comment("Could not auto-install $mod->{name}. Manual intervention needed.", "angry");
                 log_message("ERROR", "Failed to install $mod->{name}");
-                print "\nTry manually:\n";
+                print "\nTry manually (OS packages can also help):\n";
                 print "  cpanm $mod->{cpan}\n";
                 print "  or: cpan $mod->{cpan}\n";
                 print "  or: sudo cpanm $mod->{cpan}\n";
+                print "  Debian/Ubuntu: sudo apt-get install libdbi-perl libdbd-mysql-perl\n";
+                print "  RHEL/CentOS:   sudo yum install perl-DBI perl-DBD-MySQL\n";
+                print "  Arch:          sudo pacman -S perl-dbi perl-dbd-mysql\n";
             }
         }
-        
+
         print "\n";
     }
     
@@ -486,7 +501,23 @@ sub connect_db {
         die "DBD::mysql not installed. Install with: cpan DBD::mysql\n";
     }
     
-    my $dsn = "DBI:mysql:database=$opts{'db-name'};host=$opts{'db-host'}";
+    my @dsn_bits = (
+        "database=$opts{'db-name'}",
+        "host=$opts{'db-host'}",
+    );
+
+    # Respect a system defaults file if present (common location)
+    my $defaults_file = '/etc/mysql/my.cnf';
+    if (-f $defaults_file) {
+        push @dsn_bits, "mysql_read_default_file=$defaults_file";
+        push @dsn_bits, "mysql_read_default_group=client";
+        log_message("INFO", "Using MySQL defaults file: $defaults_file");
+        smeagol_comment("We reads from $defaults_file, precious!", "excited");
+    } else {
+        log_message("INFO", "No /etc/mysql/my.cnf found; using explicit credentials only");
+    }
+
+    my $dsn = 'DBI:mysql:' . join(';', @dsn_bits);
     
     my $dbh = eval {
         DBI->connect($dsn, $opts{'db-user'}, $opts{'db-pass'}, {

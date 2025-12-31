@@ -23,16 +23,11 @@
 /// i use arch btw
 
 use anyhow::{Context, Result};
-use chrono::Local;
 use clap::Parser;
-use log::{error, info, warn};
-use mysql::prelude::*;
+use log::info;
 use mysql::Pool;
 use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
-use std::fs;
-use std::path::PathBuf;
-use walkdir::WalkDir;
+use std::{fs, path::PathBuf};
 
 mod backup;
 mod export;
@@ -144,8 +139,7 @@ fn load_env_file(args: &mut Args) -> Result<()> {
     Ok(())
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
+fn main() -> Result<()> {
     env_logger::Builder::from_default_env()
         .filter_level(log::LevelFilter::Info)
         .init();
@@ -197,25 +191,25 @@ async fn main() -> Result<()> {
 
     // STEP 1: Backup (we never destroy without a backup)
     println!("\n📦 STEP 1: Creating backup...");
-    backup::create_backup(&pool, &args.output).await?;
+    backup::create_backup(&pool, &args.output)?;
     println!("✓ Backup created successfully");
 
     // STEP 2: Export data
     println!("\n📤 STEP 2: Exporting BookStack data...");
-    let export_stats = export::export_all_books(&pool, &args.output).await?;
+    let export_stats = export::export_all_books(&pool, &args.output)?;    
     println!("✓ Export complete: {} books, {} pages", export_stats.books, export_stats.pages);
 
     // STEP 3: Validate (if requested)
     if args.validate {
         println!("\n✅ STEP 3: Validating export...");
-        validate::validate_export(&args.output).await?;
+        validate::validate_export(&args.output)?;
         println!("✓ All data validated successfully");
     }
 
     // Print completion message
     println!("\n{}", "=".repeat(60));
     println!("✨ MIGRATION COMPLETE ✨");
-    println!("=".repeat(60));
+    println!("{}", "=".repeat(60));
     println!("\nExported to: {:?}", args.output);
     println!("\nNext steps:");
     println!("  1. Install DokuWiki");

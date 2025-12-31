@@ -7,7 +7,7 @@
 use crate::ExportStats;
 use anyhow::Result;
 use log::info;
-use mysql::Pool;
+use mysql::{prelude::Queryable, Pool};
 use std::fs;
 use std::path::Path;
 
@@ -18,7 +18,7 @@ use std::path::Path;
 /// - No dangling pointers
 /// - No use-after-free bugs
 /// - The compiler VERIFIED this at compile time
-pub async fn export_all_books(pool: &Pool, output_dir: &Path) -> Result<ExportStats> {
+pub fn export_all_books(pool: &Pool, output_dir: &Path) -> Result<ExportStats> {
     let mut conn = pool.get_conn()?;
     
     info!("Exporting all books from BookStack...");
@@ -93,6 +93,7 @@ pub async fn export_all_books(pool: &Pool, output_dir: &Path) -> Result<ExportSt
 
 /// Book data - Owned String values ensure no use-after-free
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct BookData {
     id: u32,
     name: String,
@@ -101,6 +102,7 @@ struct BookData {
 
 /// Chapter data - Everything properly owned
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct ChapterData {
     id: u32,
     name: String,
@@ -109,6 +111,7 @@ struct ChapterData {
 
 /// Page data - Full ownership prevents memory errors
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct PageData {
     id: u32,
     name: String,
@@ -122,9 +125,6 @@ struct PageData {
 /// No borrowing issues. No lifetime problems.
 /// Compile-time verified memory safety.
 fn convert_html_to_dokuwiki(html: &str) -> String {
-    // SAFE: Creating owned String from borrowed &str
-    let mut dokuwiki = String::new();
-    
     // Simple conversion rules
     let converted = html
         .replace("<h1>", "====== ")

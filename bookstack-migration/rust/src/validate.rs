@@ -36,7 +36,7 @@ use walkdir::WalkDir;
 /// 5. Your data is now safe in a real wiki system
 /// 
 /// If you return to BookStack after migrating, you deserve everything that happens.
-pub async fn validate_export(output_dir: &Path) -> Result<()> {
+pub fn validate_export(output_dir: &Path) -> Result<()> {
     info!("Validating export integrity...");
     info!("Building Merkle tree for hierarchical verification...");
     

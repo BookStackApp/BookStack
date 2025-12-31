@@ -138,7 +138,7 @@ echo "90% of failures come from people who skipped this step."
 echo "But you're not 90% of people, right?"
 echo ""
 echo -e "${GREEN}Step 3: Read the complete guide${NC}"
-echo "  cat MIGRATION_README.md | less"
+echo "  cat README.md | less"
 echo ""
 
 read -p "Press enter to continue with the psychological warfare..."
