@@ -906,16 +906,16 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
                 slug = page.get('slug') or f"page_{page.get('id', exported_count)}"
                 name = page.get('name') or slug
 
-                # Build path using book/chapter if available
+                # Build path using book/chapter if available, ensure nested dirs exist
                 book_id = page.get('book_id')
                 chapter_id = page.get('chapter_id')
-                parts = []
+                page_dir = export_path
                 if book_id and book_id in books_index:
-                    parts.append(books_index[book_id])
+                    page_dir = page_dir / books_index[book_id]
+                    page_dir.mkdir(parents=True, exist_ok=True)
                 if chapter_id and chapter_id in chapters_index:
-                    parts.append(chapters_index[chapter_id]['slug'])
-                page_dir = export_path.joinpath(*parts) if parts else export_path
-                page_dir.mkdir(parents=True, exist_ok=True)
+                    page_dir = page_dir / chapters_index[chapter_id]['slug']
+                    page_dir.mkdir(parents=True, exist_ok=True)
 
                 # Get content from whatever column exists and note format
                 content = None
