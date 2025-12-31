@@ -426,9 +426,30 @@ sub install_perl_modules {
         { name => 'JSON', cpan => 'JSON' },
         { name => 'LWP::UserAgent', cpan => 'libwww-perl' },
     );
-    
+
     my @missing = ();
-    
+
+    # Helper to install OS packages for DBI/DBD if available
+    my $install_os_pkg = sub {
+        my ($debian_pkg, $rhel_pkg, $arch_pkg) = @_;
+        if (system("apt-get --version >/dev/null 2>&1") == 0) {
+            smeagol_comment("Trying apt-get install $debian_pkg, precious...", "precious");
+            system("apt-get update >/dev/null 2>&1");
+            system("apt-get install -y $debian_pkg >/dev/null 2>&1");
+        } elsif (system("yum --version >/dev/null 2>&1") == 0) {
+            smeagol_comment("Trying yum install $rhel_pkg, precious...", "precious");
+            system("yum install -y $rhel_pkg >/dev/null 2>&1");
+        } elsif (system("dnf --version >/dev/null 2>&1") == 0) {
+            smeagol_comment("Trying dnf install $rhel_pkg, precious...", "precious");
+            system("dnf install -y $rhel_pkg >/dev/null 2>&1");
+        } elsif (system("pacman -V >/dev/null 2>&1") == 0) {
+            smeagol_comment("Trying pacman -S --noconfirm $arch_pkg, precious...", "precious");
+            system("pacman -Sy --noconfirm $arch_pkg >/dev/null 2>&1");
+        } else {
+            log_message("INFO", "No known package manager auto-install attempted");
+        }
+    };
+
     # Check which modules are missing
     foreach my $mod (@required_modules) {
         my $check = "require $mod->{name}";
@@ -441,15 +462,22 @@ sub install_perl_modules {
             log_message("WARNING", "$mod->{name} not found");
         }
     }
-    
+
     # If any missing, try to install
     if (@missing) {
         smeagol_comment("We must install the precious modules!", "precious");
         print "\n";
-        
+
         foreach my $mod (@missing) {
             print "Installing $mod->{cpan}...\n";
             log_message("INFO", "Installing $mod->{cpan}");
+
+            # If DBD::mysql or DBI is missing, try OS package first
+            if ($mod->{name} eq 'DBD::mysql') {
+                $install_os_pkg->('libdbd-mysql-perl', 'perl-DBD-MySQL', 'perl-dbd-mysql');
+            } elsif ($mod->{name} eq 'DBI') {
+                $install_os_pkg->('libdbi-perl', 'perl-DBI', 'perl-dbi');
+            }
 
             # Try cpanm first (faster)
             if ($cpanm_ok && system("cpanm --notest $mod->{cpan} >/dev/null 2>&1") == 0) {
@@ -476,6 +504,7 @@ sub install_perl_modules {
                 print "  Debian/Ubuntu: sudo apt-get install libdbi-perl libdbd-mysql-perl\n";
                 print "  RHEL/CentOS:   sudo yum install perl-DBI perl-DBD-MySQL\n";
                 print "  Arch:          sudo pacman -S perl-dbi perl-dbd-mysql\n";
+                smeagol_comment("We can't find the precious modules. Install OS packages first, then rerun!", "angry");
             }
         }
 
