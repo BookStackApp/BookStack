@@ -560,23 +560,23 @@ def python_database_backup(config: DatabaseConfig, output_file: Path) -> bool:
             # Get all tables
             cursor.execute("SHOW TABLES")
             tables = [table[0] for table in cursor.fetchall()]
-            
+
             for table in tables:
                 f.write(f"\n-- Table: {table}\n")
-                f.write(f"DROP TABLE IF EXISTS `{table}`;\n")
-                
+                f.write(f"DROP TABLE IF EXISTS {quote_ident(table)};\n")
+
                 # Get CREATE TABLE
-                cursor.execute(f"SHOW CREATE TABLE `{table}`")
+                cursor.execute(f"SHOW CREATE TABLE {quote_ident(table)}")
                 create_table = cursor.fetchone()[1]
                 f.write(f"{create_table};\n\n")
-                
+
                 # Get data
-                cursor.execute(f"SELECT * FROM `{table}`")
+                cursor.execute(f"SELECT * FROM {quote_ident(table)}")
                 rows = cursor.fetchall()
-                
+
                 if rows:
-                    columns = [col[0] for col in cursor.description]
-                    f.write(f"INSERT INTO `{table}` ({', '.join(f'`{c}`' for c in columns)}) VALUES\n")
+                    columns = [col[0] for col in cursor.description]      
+                    f.write(f"INSERT INTO {quote_ident(table)} ({', '.join(quote_ident(c) for c in columns)}) VALUES\n")
                     
                     for i, row in enumerate(rows):
                         values = []
@@ -600,9 +600,18 @@ def python_database_backup(config: DatabaseConfig, output_file: Path) -> bool:
         print(f"   ❌ Python backup also failed: {e}")
         return False
 
-# ============================================================================
+# ============================================================================  
+# SQL IDENTIFIER QUOTING
+# ============================================================================  
+
+def quote_ident(name: str) -> str:
+    """Quote MySQL identifiers to avoid reserved word conflicts"""
+    safe = name.replace("`", "``")
+    return f"`{safe}`"
+
+# ============================================================================  
 # SCHEMA INSPECTION - NO MORE HALLUCINATING
-# ============================================================================
+# ============================================================================  
 
 def inspect_database_schema(config: DatabaseConfig) -> Dict[str, Any]:
     """Actually inspect the real database schema (no assumptions)"""
@@ -625,20 +634,20 @@ def inspect_database_schema(config: DatabaseConfig) -> Dict[str, Any]:
         # Get all tables
         cursor.execute("SHOW TABLES")
         tables = [list(row.values())[0] for row in cursor.fetchall()]
-        
+
         print(f"\n📋 Found {len(tables)} tables:")
-        
+
         schema = {}
-        
+
         for table in tables:
             # Get column info
-            cursor.execute(f"DESCRIBE {table}")
+            cursor.execute(f"DESCRIBE {quote_ident(table)}")
             columns = cursor.fetchall()
-            
+
             # Get row count
-            cursor.execute(f"SELECT COUNT(*) as count FROM {table}")
+            cursor.execute(f"SELECT COUNT(*) as count FROM {quote_ident(table)}")
             row_count = cursor.fetchone()['count']
-            
+
             schema[table] = {
                 'columns': columns,
                 'row_count': row_count
@@ -780,34 +789,35 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         
         # Export pages
         if 'pages' in tables:
-            print(f"\n📄 Exporting pages from {tables['pages']}...")
-            
+            print(f"\n📄 Exporting pages from {tables['pages']}...")      
+
             pages_table = tables['pages']
-            
+            pages_table_ident = quote_ident(pages_table)
+
             # Get columns for this table
             page_cols = [col['Field'] for col in schema[pages_table]['columns']]
-            
+
             # Build query based on actual columns
             select_cols = []
             if 'id' in page_cols:
-                select_cols.append('id')
+                select_cols.append(quote_ident('id'))
             if 'name' in page_cols:
-                select_cols.append('name')
+                select_cols.append(quote_ident('name'))
             if 'slug' in page_cols:
-                select_cols.append('slug')
+                select_cols.append(quote_ident('slug'))
             if 'html' in page_cols:
-                select_cols.append('html')
+                select_cols.append(quote_ident('html'))
             if 'markdown' in page_cols:
-                select_cols.append('markdown')
+                select_cols.append(quote_ident('markdown'))
             if 'text' in page_cols:
-                select_cols.append('text')
-            
-            query = f"SELECT {', '.join(select_cols)} FROM {pages_table}"
-            
+                select_cols.append(quote_ident('text'))
+
+            query = f"SELECT {', '.join(select_cols)} FROM {pages_table_ident}" 
+
             # Add WHERE clause if deleted_at exists
             if 'deleted_at' in page_cols:
-                query += " WHERE deleted_at IS NULL"
-            
+                query += " WHERE `deleted_at` IS NULL"
+
             print(f"   Executing: {query}")
             cursor.execute(query)
             pages = cursor.fetchall()
@@ -844,10 +854,10 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         
         # Export books if available
         if 'books' in tables:
-            print(f"\n📚 Exporting books from {tables['books']}...")
-            
+            print(f"\n📚 Exporting books from {tables['books']}...")      
+
             books_table = tables['books']
-            cursor.execute(f"SELECT * FROM {books_table}")
+            cursor.execute(f"SELECT * FROM {quote_ident(books_table)}")
             books = cursor.fetchall()
             
             # Create a mapping file
@@ -859,10 +869,10 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         
         # Export chapters if available
         if 'chapters' in tables:
-            print(f"\n📖 Exporting chapters from {tables['chapters']}...")
-            
+            print(f"\n📖 Exporting chapters from {tables['chapters']}...") 
+
             chapters_table = tables['chapters']
-            cursor.execute(f"SELECT * FROM {chapters_table}")
+            cursor.execute(f"SELECT * FROM {quote_ident(chapters_table)}")
             chapters = cursor.fetchall()
             
             # Create a mapping file
@@ -1115,8 +1125,8 @@ def main():
             
         elif choice == '7':
             print("\n📖 Documentation:")
-            print("   README: ./bookstack-migration/README.txt")
-            print("   Full guide: ./bookstack-migration/docs/MIGRATION_README.md")
+            print("   README: ./bookstack-migration/README.md")
+            print("   (Single source of truth; legacy docs were removed)")
             print()
             
         elif choice == '8':

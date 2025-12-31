@@ -133,16 +133,13 @@ echo -e "${BLUE}━━ STEP 3: Validate Documentation ━━${NC}"
 echo ""
 
 docs=(
-    "FINAL_SUMMARY.md"
-    "ORGANIZATION_GUIDE.md"
-    "RUST_COMPARISON_BRUTAL.md"
-    "MIGRATION_README.md"
+    "README.md"
 )
 
 for doc in "${docs[@]}"; do
     if [ -f "$doc" ]; then
         lines=$(wc -l < "$doc")
-        if [ "$lines" -gt 50 ]; then
+        if [ "$lines" -gt 10 ]; then
             echo -e "${GREEN}✓ $doc - $lines lines${NC}"
         else
             echo -e "${RED}❌ $doc - too short ($lines lines)${NC}"

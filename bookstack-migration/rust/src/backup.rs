@@ -7,7 +7,7 @@
 use anyhow::Result;
 use chrono::Local;
 use log::info;
-use mysql::Pool;
+use mysql::{prelude::Queryable, Pool};
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
@@ -17,7 +17,7 @@ use std::path::Path;
 /// # Safety
 /// This function owns all allocated data and properly releases it.
 /// No memory leaks. No dangling pointers. The Borrow Checker ensures it.
-pub async fn create_backup(pool: &Pool, output_dir: &Path) -> Result<()> {
+pub fn create_backup(pool: &Pool, output_dir: &Path) -> Result<()> {
     let mut conn = pool.get_conn()?;
     
     info!("Creating database backup...");

@@ -877,9 +877,7 @@ show_help() {
     echo "Available documentation:"
     echo ""
     
-    [[ -f "README.md" ]] && echo "  📖 README.md - Main documentation"
-    [[ -f "DETAILED_GUIDE.md" ]] && echo "  📖 DETAILED_GUIDE.md - Complete migration guide"
-    [[ -f "LANGUAGE_COMPARISON.md" ]] && echo "  📖 LANGUAGE_COMPARISON.md - Implementation comparisons"
+    [[ -f "README.md" ]] && echo "  📖 README.md - Main documentation (single source of truth)"
     
     echo ""
     echo "To read a file:"
