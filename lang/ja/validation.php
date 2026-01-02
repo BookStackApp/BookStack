@@ -106,7 +106,7 @@ return [
     'uploaded'             => 'ファイルをアップロードできませんでした。サーバーがこのサイズのファイルを受け付けていない可能性があります。',
 
     'zip_file' => ':attribute はZIP 内のファイルを参照する必要があります。',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
+    'zip_file_size' => ':attribute は :size MB を超えてはいけません。',
     'zip_file_mime' => ':attribute は種別 :validType のファイルを参照する必要がありますが、種別 :foundType となっています。',
     'zip_model_expected' => 'データオブジェクトが期待されますが、":type" が見つかりました。',
     'zip_unique' => 'ZIP内のオブジェクトタイプに :attribute が一意である必要があります。',
