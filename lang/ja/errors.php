@@ -109,7 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIPファイルを読み込めません。',
     'import_zip_cant_decode_data' => 'ZIPファイル内に data.json が見つからないかデコードできませんでした。',
     'import_zip_no_data' => 'ZIPファイルのデータにブック、チャプター、またはページコンテンツがありません。',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_data_too_large' => 'ZIPに含まれる data.json が、アプリケーションで設定された最大アップロードサイズを超えています。',
     'import_validation_failed' => 'エラーによりインポートZIPの検証に失敗しました:',
     'import_zip_failed_notification' => 'ZIP ファイルのインポートに失敗しました。',
     'import_perms_books' => 'ブックを作成するために必要な権限がありません。',
