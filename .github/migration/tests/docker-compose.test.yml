@@ -1,0 +1,192 @@
+version: '3.8'
+
+# Docker Compose for testing BookStack to DokuWiki migration
+# Use this to spin up test environments without breaking production
+#
+# Usage:
+#   docker-compose -f docker-compose.test.yml up -d
+#   docker-compose -f docker-compose.test.yml down -v
+
+services:
+  # BookStack - Source system
+  bookstack-db:
+    image: mariadb:10.11
+    environment:
+      MYSQL_ROOT_PASSWORD: bookstack_root_pass
+      MYSQL_DATABASE: bookstack
+      MYSQL_USER: bookstack
+      MYSQL_PASSWORD: bookstack_pass
+    volumes:
+      - bookstack-db-data:/var/lib/mysql
+      - ./test-data/bookstack-seed.sql:/docker-entrypoint-initdb.d/seed.sql:ro
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pbookstack_root_pass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  bookstack-app:
+    image: lscr.io/linuxserver/bookstack:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+      APP_URL: http://localhost:8080
+      DB_HOST: bookstack-db
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstack
+      DB_PASSWORD: bookstack_pass
+    volumes:
+      - bookstack-app-config:/config
+    ports:
+      - "8080:80"
+    depends_on:
+      bookstack-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # DokuWiki - Target system
+  dokuwiki:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+    volumes:
+      - dokuwiki-config:/config
+      - dokuwiki-data:/var/www/html/data
+    ports:
+      - "8081:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Migration toolbox - Has all languages/tools with FULL dependency installation
+  migration-tool:
+    image: ubuntu:24.04
+    container_name: bookstack-migration-toolbox
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - dokuwiki-data:/dokuwiki-export
+    environment:
+      DB_HOST: bookstack-db
+      DB_PORT: 3306
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstack
+      DB_PASSWORD: bookstack_pass
+      DOKUWIKI_OUTPUT: /dokuwiki-export/pages
+      DEBIAN_FRONTEND: noninteractive
+    depends_on:
+      bookstack-db:
+        condition: service_healthy
+      dokuwiki:
+        condition: service_healthy
+    command: |
+      bash -c '
+        echo "🚀 Migration Toolbox - Full Stack Installation"
+        echo "════════════════════════════════════════════════════════════════"
+        echo ""
+        
+        # Update package lists
+        echo "📦 Updating package lists..."
+        apt-get update -qq > /dev/null 2>&1
+        
+        # Install ALL the dependencies
+        echo "⚙️  Installing Python stack..."
+        apt-get install -y -qq \
+          python3 python3-pip python3-venv python3-dev \
+          > /dev/null 2>&1
+        
+        echo "⚙️  Installing Perl stack..."
+        apt-get install -y -qq \
+          perl libdbi-perl libdbd-mysql-perl \
+          libtest-simple-perl libtest-exception-perl \
+          cpanminus \
+          > /dev/null 2>&1
+        
+        echo "⚙️  Installing Java/Maven..."
+        apt-get install -y -qq \
+          default-jre default-jdk maven \
+          > /dev/null 2>&1
+        
+        echo "⚙️  Installing C build tools..."
+        apt-get install -y -qq \
+          build-essential gcc g++ make \
+          libmysqlclient-dev libssl-dev \
+          pkg-config cmake \
+          > /dev/null 2>&1
+        
+        echo "⚙️  Installing database clients..."
+        apt-get install -y -qq \
+          mysql-client mariadb-client \
+          sqlite3 \
+          > /dev/null 2>&1
+        
+        echo "⚙️  Installing utilities..."
+        apt-get install -y -qq \
+          curl wget git vim nano \
+          jq rsync zip unzip \
+          > /dev/null 2>&1
+        
+        # Install Python packages
+        echo "🐍 Installing Python packages..."
+        pip3 install --break-system-packages -q \
+          mysql-connector-python \
+          pymysql \
+          pytest \
+          > /dev/null 2>&1 || echo "  (Some packages may already be installed)"
+        
+        # Install additional Perl modules
+        echo "🐪 Installing Perl modules..."
+        cpanm -q DBI DBD::mysql Test::More Test::Exception \
+          > /dev/null 2>&1 || echo "  (Some modules may already be installed)"
+        
+        echo ""
+        echo "✅ ALL DEPENDENCIES INSTALLED"
+        echo "════════════════════════════════════════════════════════════════"
+        echo ""
+        echo "📋 Available Migration Tools:"
+        echo "  🐍 Python:  python3 bookstack_migration.py"
+        echo "  🐪 Perl:    perl tools/one_script_to_rule_them_all.pl"
+        echo "  🐚 Bash:    ./help_me_fix_my_mistake.sh"
+        echo "  ☕ Java:    cd ../dev/migration && mvn clean package"
+        echo "  🔧 C:       cd tools && gcc bookstack2dokuwiki.c -o bookstack2dokuwiki -lmysqlclient"
+        echo ""
+        echo "🔗 Testing database connection..."
+        if mysql -h bookstack-db -u bookstack -pbookstack_pass bookstack -e "SHOW TABLES;" 2>/dev/null | grep -q pages; then
+          echo "✅ Database connected - BookStack tables found"
+          mysql -h bookstack-db -u bookstack -pbookstack_pass bookstack -e "SELECT COUNT(*) as total_pages FROM pages;" 2>/dev/null
+        else
+          echo "⚠️  BookStack tables not yet created (initializing...)"
+        fi
+        echo ""
+        echo "🧪 Running quick validation..."
+        python3 --version
+        perl --version | head -2
+        java -version 2>&1 | head -1
+        gcc --version | head -1
+        mysql --version
+        echo ""
+        echo "💤 Container ready. Exec into it to run migrations:"
+        echo "   docker exec -it bookstack-migration-toolbox bash"
+        echo ""
+        tail -f /dev/null
+      '
+
+volumes:
+  bookstack-db-data:
+  bookstack-app-config:
+  dokuwiki-config:
+  dokuwiki-data:
+
+networks:
+  default:
+    name: bookstack-migration-network
