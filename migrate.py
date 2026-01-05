@@ -420,6 +420,16 @@ def create_backup(config: DatabaseConfig, backup_dir: str = './backups') -> bool
 
 # ============================================================================
 # EXPORT FUNCTIONALITY
+def sanitize_filename(name: str) -> str:
+    """Convert a name to a valid filesystem path component"""
+    if not name:
+        return 'unnamed'
+    safe = re.sub(r'[^a-z0-9\s_\-.]', '', name.lower())
+    safe = re.sub(r'\s+', '_', safe)
+    safe = re.sub(r'_+', '_', safe)
+    safe = safe.strip('_')
+    return safe or 'unnamed'
+
 # ============================================================================
 
 def convert_to_dokuwiki(content: str, title: str) -> str:
@@ -454,7 +464,7 @@ def convert_to_dokuwiki(content: str, title: str) -> str:
 
 def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str], 
                        output_dir: str = './dokuwiki_export') -> int:
-    """Export BookStack to DokuWiki format"""
+    """Export BookStack to DokuWiki format with folder hierarchy (shelf/book/chapter/page)"""
     print("\n📤 Exporting to DokuWiki format...")
     logger.info("Starting export")
     
