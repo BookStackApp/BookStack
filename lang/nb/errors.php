@@ -109,7 +109,7 @@ return [
     'import_zip_cant_read' => 'Kunne ikke lese ZIP-filen.',
     'import_zip_cant_decode_data' => 'Kunne ikke finne og dekode ZIP data.json innhold.',
     'import_zip_no_data' => 'ZIP-fildata har ingen forventet bok, kapittel eller sideinnhold.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_data_too_large' => 'ZIP data.json innholdet overskrider maksimal filstørrelse for opplasting.',
     'import_validation_failed' => 'Import av ZIP feilet i å validere med feil:',
     'import_zip_failed_notification' => 'Kunne ikke importere ZIP-fil.',
     'import_perms_books' => 'Du mangler nødvendige tillatelser for å lage bøker.',
