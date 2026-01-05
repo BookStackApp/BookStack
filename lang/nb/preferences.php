@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'Kontroller e-postvarslene du mottar når en bestemt aktivitet utføres i systemet.',
     'notifications_opt_own_page_changes' => 'Varsle ved endringer til sider jeg eier',
     'notifications_opt_own_page_comments' => 'Varsle om kommentarer på sider jeg eier',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'Varsle når jeg blir nevnt i en kommentar',
     'notifications_opt_comment_replies' => 'Varsle ved svar på mine kommentarer',
     'notifications_save' => 'Lagre innstillinger',
     'notifications_update_success' => 'Varslingsinnstillingene er oppdatert!',
