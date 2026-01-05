@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Oppdatert side: :pageName',
     'updated_page_intro' => 'En side er oppdatert i :appName:',
     'updated_page_debounce' => 'For å forhindre mange varslinger, vil du ikke få nye varslinger for endringer på denne siden fra samme forfatter.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Du har blitt nevnt i en kommentar på siden: :pageName',
+    'comment_mention_intro' => 'Du har blitt nevnt i en kommentar på :appName:',
 
     'detail_page_name' => 'Sidenavn:',
     'detail_page_path' => 'Side bane:',
