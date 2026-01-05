@@ -106,7 +106,7 @@ return [
     'uploaded'             => 'Не вдалося завантажити файл. Сервер може не приймати файли такого розміру.',
 
     'zip_file' => 'Поле :attribute повинне вказувати файл в ZIP.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
+    'zip_file_size' => 'Файл :attribute не повинен перевищувати :size МБ.',
     'zip_file_mime' => 'Поле :attribute повинне посилатись на файл типу :validtypes, знайдений :foundType.',
     'zip_model_expected' => 'Очікувався об’єкт даних, але знайдено ":type".',
     'zip_unique' => 'Поле :attribute має бути унікальним для типу об\'єкта в ZIP.',
