@@ -33,3 +33,4 @@ phpstan.neon
 esbuild-meta.json
 .phpactor.json
 /*.zip
+migration_logs/
