@@ -261,17 +261,13 @@ def inspect_schema(conn) -> Dict[str, Any]:
     print("\n🔍 Inspecting database schema...")
     logger.info("Starting schema inspection")
     
-    cursor = conn.cursor(dictionary=True) if hasattr(conn, 'cursor') else conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     
-    try:
-        cursor.execute("SHOW TABLES")
-    except:
-        cursor.execute("SHOW TABLES")
+    cursor.execute("SHOW TABLES")
     
     tables = []
-    if hasattr(cursor, 'fetchall'):
-        for row in cursor.fetchall():
-            tables.append(row[0] if isinstance(row, tuple) else list(row.values())[0])
+    for row in cursor.fetchall():
+        tables.append(list(row.values())[0] if isinstance(row, dict) else row[0])
     
     print(f"\n   Found {len(tables)} tables:")
     
@@ -283,7 +279,7 @@ def inspect_schema(conn) -> Dict[str, Any]:
         
         cursor.execute(f"SELECT COUNT(*) as cnt FROM `{table}`")
         count_row = cursor.fetchone()
-        row_count = count_row[0] if isinstance(count_row, tuple) else count_row.get('cnt', 0) if hasattr(count_row, 'get') else 0
+        row_count = count_row.get('cnt', 0) if isinstance(count_row, dict) else count_row[0]
         
         # Extract column names for debug
         col_names = []
@@ -500,7 +496,7 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
     print(f"\n   Output directory: {output_path.absolute()}")
     logger.info(f"Export directory: {output_path.absolute()}")
     
-    cursor = conn.cursor(dictionary=True) if hasattr(conn, 'cursor') else conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     exported = 0
     
     # Export pages
@@ -525,14 +521,10 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         if 'deleted_at' in col_set:
             query += " WHERE deleted_at IS NULL"
         
+        logger.debug(f"Pages query: {query}")
         cursor.execute(query)
-        raw_pages = cursor.fetchall()
-        pages = []
-        for row in raw_pages:
-            if isinstance(row, dict):
-                pages.append(row)
-            else:
-                pages.append({col: (row[idx] if idx < len(row) else None) for idx, col in enumerate(select_cols)})
+        pages = cursor.fetchall()
+        logger.info(f"Fetched {len(pages)} pages from {pages_table}")
         
         # Build hierarchy lookup
         books_lookup = {}
@@ -546,9 +538,9 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             try:
                 cursor.execute(f"SELECT id, name, slug FROM `{books_table}`")
                 for book in cursor.fetchall():
-                    bid = book.get('id') if isinstance(book, dict) else book[0]
-                    bname = book.get('name') if isinstance(book, dict) else book[1]
-                    bslug = book.get('slug') if isinstance(book, dict) else book[2]
+                    bid = book['id']
+                    bname = book['name']
+                    bslug = book['slug']
                     books_lookup[bid] = {'name': bname, 'slug': bslug}
             except Exception as e:
                 logger.debug(f"Books lookup failed: {e}")
@@ -560,9 +552,9 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             try:
                 cursor.execute(f"SELECT id, name, slug FROM `{shelves_table}`")
                 for shelf in cursor.fetchall():
-                    sid = shelf.get('id') if isinstance(shelf, dict) else shelf[0]
-                    sname = shelf.get('name') if isinstance(shelf, dict) else shelf[1]
-                    sslug = shelf.get('slug') if isinstance(shelf, dict) else (shelf[2] if len(shelf) > 2 else '')
+                    sid = shelf['id']
+                    sname = shelf['name']
+                    sslug = shelf.get('slug', '')
                     shelves_lookup[sid] = {'name': sname, 'slug': sslug}
             except Exception as e:
                 logger.debug(f"Shelves lookup failed: {e}")
@@ -570,8 +562,8 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             try:
                 cursor.execute(f"SELECT bookshelf_id, book_id FROM `{pivot_table}`")
                 for row in cursor.fetchall():
-                    sid = row.get('bookshelf_id') if isinstance(row, dict) else row[0]
-                    bid = row.get('book_id') if isinstance(row, dict) else row[1]
+                    sid = row['bookshelf_id']
+                    bid = row['book_id']
                     book_to_shelves.setdefault(bid, []).append(sid)
             except Exception as e:
                 logger.debug(f"Pivot lookup failed: {e}")
@@ -582,10 +574,10 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             try:
                 cursor.execute(f"SELECT id, name, slug, book_id FROM `{chapters_table}`")
                 for chapter in cursor.fetchall():
-                    cid = chapter.get('id') if isinstance(chapter, dict) else chapter[0]
-                    cname = chapter.get('name') if isinstance(chapter, dict) else chapter[1]
-                    cslug = chapter.get('slug') if isinstance(chapter, dict) else chapter[2]
-                    bid = chapter.get('book_id') if isinstance(chapter, dict) else (chapter[3] if len(chapter) > 3 else None)
+                    cid = chapter['id']
+                    cname = chapter['name']
+                    cslug = chapter['slug']
+                    bid = chapter.get('book_id')
                     chapters_lookup[cid] = {'name': cname, 'slug': cslug, 'book_id': bid}
             except Exception as e:
                 logger.debug(f"Chapters lookup failed: {e}")
@@ -602,13 +594,15 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             content = ''
             content_source = None
             for col in ['markdown', 'text', 'html', 'raw_html']:
-                if col in page and page[col]:
-                    content = page[col]
+                if page.get(col):
+                    content = page.get(col)
                     content_source = col
                     break
             
             if not content:
-                logger.debug(f"Page {page_id} ({page_name}): no content found in {[c for c in ['markdown', 'text', 'html', 'raw_html'] if c in page]}")
+                logger.debug(f"Page {page_id} ({page_name}): no content in any column")
+            else:
+                logger.debug(f"Page {page_id}: using content from '{content_source}' ({len(content)} chars)")
             
             # Build directory path: shelf/book/chapter/page
             path_parts = [output_path]
