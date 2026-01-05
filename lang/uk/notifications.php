@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Оновлено сторінку: :pageName',
     'updated_page_intro' => 'Оновлено сторінку у :appName:',
     'updated_page_debounce' => 'Для запобігання кількості сповіщень, деякий час ви не будете відправлені повідомлення для подальших змін на цій сторінці тим самим редактором.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Вас згадали в коментарях на сторінці: :pageName',
+    'comment_mention_intro' => 'Вас згадали в коментарі до :appName:',
 
     'detail_page_name' => 'Назва сторінки:',
     'detail_page_path' => 'Шлях до сторінки:',
