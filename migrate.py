@@ -285,56 +285,75 @@ def inspect_schema(conn) -> Dict[str, Any]:
         count_row = cursor.fetchone()
         row_count = count_row[0] if isinstance(count_row, tuple) else count_row.get('cnt', 0) if hasattr(count_row, 'get') else 0
         
+        # Extract column names for debug
+        col_names = []
+        for col in columns:
+            if isinstance(col, dict):
+                col_names.append(col.get('Field', ''))
+            elif isinstance(col, tuple):
+                col_names.append(col[0])
+        
         schema[table] = {
             'columns': columns,
             'row_count': row_count
         }
         
-        print(f"      • {table}: {row_count} rows")
-        logger.info(f"Table {table}: {row_count} rows, {len(columns)} columns")
+        print(f"      • {table}: {row_count} rows, cols: {col_names[:5]}...")
+        logger.info(f"Table {table}: {row_count} rows, {len(columns)} columns: {col_names}")
     
     return schema
 
-def identify_tables(schema: Dict[str, Any]) -> Dict[str, str]:
-    """Identify content tables by column patterns"""
+def identify_tables(schema: Dict[str, Any], conn=None) -> Dict[str, str]:
+    """Identify content tables by direct column check"""
     print("\n🤔 Identifying content tables...")
     logger.info("Identifying content tables")
     
-    identified = {}
+    identified: Dict[str, str] = {}
     
-    # Column patterns that must ALL be present
-    patterns = {
-        'pages': ['id', 'name', 'slug'],
-        'books': ['id', 'name', 'slug'],
-        'chapters': ['id', 'name', 'slug'],
+    # Required columns for each type
+    required = {
+        'pages': {'id', 'name', 'slug'},
+        'books': {'id', 'name', 'slug'},
+        'chapters': {'id', 'name', 'slug'},
     }
     
-    for table, info in schema.items():
-        col_names = []
+    # Check each table
+    for table_name in schema.keys():
+        info = schema[table_name]
+        
+        # Extract column names
+        cols = set()
         for col in info['columns']:
             if isinstance(col, dict):
-                col_names.append(col.get('Field', col.get('0', '')))
+                cols.add(col.get('Field', ''))
             elif isinstance(col, tuple):
-                col_names.append(col[0])
+                cols.add(col[0])
         
-        col_set = set(col_names)
+        logger.debug(f"Table {table_name} columns: {cols}")
         
-        # Try to match patterns
-        for pattern_name, required_cols in patterns.items():
-            if pattern_name in identified:
-                continue
+        # Match each type
+        for ctype, req_cols in required.items():
+            if ctype in identified:
+                continue  # Already found
             
-            if all(col in col_set for col in required_cols):
-                identified[pattern_name] = table
-                print(f"      ✅ Found {pattern_name}: {table}")
-                logger.info(f"Identified {pattern_name} → {table}")
+            if req_cols.issubset(cols):
+                identified[ctype] = table_name
+                print(f"      ✅ {ctype} → {table_name}")
+                logger.info(f"Identified {ctype} → {table_name}")
     
     if not identified:
         print("      ⚠️  No content tables identified!")
-        logger.warning("No content tables matched expected patterns")
-        print("\n   Available tables in database:")
-        for table in sorted(schema.keys()):
-            print(f"      • {table}")
+        logger.warning("Could not auto-identify tables")
+        print("\n   Available tables:")
+        for table_name in sorted(schema.keys()):
+            info = schema[table_name]
+            cols = []
+            for col in info['columns']:
+                if isinstance(col, dict):
+                    cols.append(col.get('Field', ''))
+                elif isinstance(col, tuple):
+                    cols.append(col[0])
+            print(f"      • {table_name} ({', '.join(cols[:5])}...)")
     
     return identified
 
@@ -507,7 +526,13 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             query += " WHERE deleted_at IS NULL"
         
         cursor.execute(query)
-        pages = cursor.fetchall()
+        raw_pages = cursor.fetchall()
+        pages = []
+        for row in raw_pages:
+            if isinstance(row, dict):
+                pages.append(row)
+            else:
+                pages.append({col: (row[idx] if idx < len(row) else None) for idx, col in enumerate(select_cols)})
         
         # Build hierarchy lookup
         books_lookup = {}
@@ -567,21 +592,18 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         
         # Process each page
         for page in pages:
-            page_id = page.get('id') if isinstance(page, dict) else page[0]
-            page_name = page.get('name') if isinstance(page, dict) else ''
-            page_slug = page.get('slug') if isinstance(page, dict) else ''
-            chapter_id = page.get('chapter_id') if isinstance(page, dict) else None
-            book_id = page.get('book_id') if isinstance(page, dict) else None
+            page_id = page.get('id')
+            page_name = page.get('name') or ''
+            page_slug = page.get('slug') or ''
+            chapter_id = page.get('chapter_id')
+            book_id = page.get('book_id')
             
             # Get content - try multiple columns in order
             content = ''
             for col in ['markdown', 'text', 'html', 'raw_html']:
-                if isinstance(page, dict) and col in page and page[col]:
+                if col in page and page[col]:
                     content = page[col]
                     break
-                if not isinstance(page, dict) and len(page) > 0:
-                    # tuple fallback: assume select order matches select_cols
-                    pass
             
             # Build directory path: shelf/book/chapter/page
             path_parts = [output_path]
