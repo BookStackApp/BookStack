@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begrensninger er satt',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'Lister & Sortering',
+    'sorting_book_default' => 'Standard regel for boksortering',
     'sorting_book_default_desc' => 'Velg standard sorteringsregelen som skal brukes for nye bøker. Dette vil ikke påvirke eksisterende bøker, og kan overstyres per bok.',
     'sorting_rules' => 'Sorteringsregler',
     'sorting_rules_desc' => 'Dette er forhåndsdefinerte sorteringsoperasjoner som kan brukes på innhold i systemet.',
@@ -91,7 +91,7 @@ return [
     'sort_rule_details_desc' => 'Angi et navn for denne sorteringsregelen, som vil vises i lister når brukerne velger en sorteringsmetode.',
     'sort_rule_operations' => 'Sorteringsoperasjoner',
     'sort_rule_operations_desc' => 'Konfigurer sorteringshandlinger ved å flytte dem fra listen over tilgjengelige operasjoner. Ved bruk vil operasjonene bli brukt i rekkefølge, fra topp til bunn. Eventuelle endringer gjort her vil bli brukt for alle tildelte bøker når du lagrer.',
-    'sort_rule_available_operations' => 'Available Operations',
+    'sort_rule_available_operations' => 'Tilgjengelige handlinger',
     'sort_rule_available_operations_empty' => 'No operations remaining',
     'sort_rule_configured_operations' => 'Configured Operations',
     'sort_rule_configured_operations_empty' => 'Dra/legg til operasjoner fra listen "Tilgjengelige operasjoner"',
