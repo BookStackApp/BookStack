@@ -4,15 +4,15 @@
  */
 return [
 
-    'new_comment_subject' => 'Nouveau commentaire sur la page: :pageName',
+    'new_comment_subject' => 'Nouveau commentaire sur la page : :pageName',
     'new_comment_intro' => 'Un utilisateur a commenté une page dans :appName:',
     'new_page_subject' => 'Nouvelle page: :pageName',
     'new_page_intro' => 'Une nouvelle page a été créée dans :appName:',
     'updated_page_subject' => 'Page mise à jour: :pageName',
     'updated_page_intro' => 'Une page a été mise à jour dans :appName:',
     'updated_page_debounce' => 'Pour éviter de nombreuses notifications, pendant un certain temps, vous ne recevrez pas de notifications pour d\'autres modifications de cette page par le même éditeur.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Vous avez été mentionné dans un commentaire sur la page : :pageName',
+    'comment_mention_intro' => 'Vous avez été mentionné dans un commentaire sur :appName:',
 
     'detail_page_name' => 'Nom de la page :',
     'detail_page_path' => 'Chemin de la page :',
