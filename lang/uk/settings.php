@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Не встановлено обмежень',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'Списки і сортування',
+    'sorting_book_default' => 'Типовий порядок сортування книги',
     'sorting_book_default_desc' => 'Виберіть правило сортування за замовчуванням для застосування нових книг. Це не вплине на існуючі книги, і може бути перевизначено для кожної книги.',
     'sorting_rules' => 'Сортувати правила',
     'sorting_rules_desc' => 'Це попередньо визначені операції сортування, які можуть бути застосовані до вмісту в системі.',
@@ -103,8 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Дата оновлення',
     'sort_rule_op_chapters_first' => 'Спочатку розділи',
     'sort_rule_op_chapters_last' => 'Розділи останні',
-    'sorting_page_limits' => 'Per-Page Display Limits',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits' => 'Обмеження відображення сторінок',
+    'sorting_page_limits_desc' => 'Кількість елементів для відображення в різних списках в системі. Зазвичай менша кількість буде більш продуктивною, в той час як більша кількість уникає необхідність натискання на кілька сторінок. Рекомендується використовувати парне кратне 3 (18, 24, 30 тощо).',
 
     // Maintenance settings
     'maint' => 'Обслуговування',
@@ -197,13 +197,13 @@ return [
     'role_import_content' => 'Імпортувати вміст',
     'role_editor_change' => 'Змінити редактор сторінок',
     'role_notifications' => 'Отримувати та керувати повідомленнями',
-    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
+    'role_permission_note_users_and_roles' => 'Ці дозволи технічно також забезпечать видимість і пошук ролей у системі.',
     'role_asset' => 'Дозволи',
     'roles_system_warning' => 'Майте на увазі, що доступ до будь-якого з вищезазначених трьох дозволів може дозволити користувачеві змінювати власні привілеї або привілеї інших в системі. Ролі з цими дозволами призначайте лише довіреним користувачам.',
     'role_asset_desc' => 'Ці дозволи контролюють стандартні доступи всередині системи. Права на книги, розділи та сторінки перевизначать ці дозволи.',
     'role_asset_admins' => 'Адміністратори автоматично отримують доступ до всього вмісту, але ці параметри можуть відображати або приховувати параметри інтерфейсу користувача.',
     'role_asset_image_view_note' => 'Це стосується видимості в менеджері зображень. Фактичний доступ завантажуваних зображень буде залежний від опції зберігання системних зображень.',
-    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
+    'role_asset_users_note' => 'Ці дозволи технічно також забезпечать видимість і пошук користувачів і ролей у системі.',
     'role_all' => 'Все',
     'role_own' => 'Власне',
     'role_controlled_by_asset' => 'Контролюється за об\'єктом, до якого вони завантажуються',
