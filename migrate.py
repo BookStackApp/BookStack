@@ -743,6 +743,7 @@ Examples:
     parser.add_argument('--diagnose', action='store_true', help='Diagnose system')
     parser.add_argument('--backup', action='store_true', help='Backup only')
     parser.add_argument('--export', action='store_true', help='Export only')
+    parser.add_argument('--test', action='store_true', help='Show sample page content from DB')
     parser.add_argument('--output', default='./dokuwiki_export', help='Export directory')
     parser.add_argument('--backup-dir', default='./backups', help='Backup directory')
     
@@ -784,9 +785,35 @@ Examples:
     # Identify tables
     identified = identify_tables(schema)
     
+    if args.test:
+        print("\n🧥 Testing content extraction...")
+        if 'pages' not in identified:
+            print("   No pages table found")
+            conn.close()
+            return
+        
+        pages_table = identified['pages']
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute(f"SELECT id, name, slug, markdown, text, html FROM `{pages_table}` LIMIT 3")
+        pages = cursor.fetchall()
+        
+        if not pages:
+            print("   No pages in database")
+        else:
+            for i, page in enumerate(pages, 1):
+                print(f"\n   Page {i}: {page.get('name')} (id={page.get('id')})")
+                for col in ['markdown', 'text', 'html']:
+                    val = page.get(col)
+                    if val:
+                        preview = val[:100].replace('\n', ' ')
+                        print(f"      {col}: {preview}...")
+        
+        conn.close()
+        return
+    
     # Determine what to do
-    do_backup = args.backup or args.full or (not args.diagnose and not args.export)
-    do_export = args.export or args.full or (not args.diagnose and not args.backup)
+    do_backup = args.backup or args.full or (not args.diagnose and not args.export and not args.test)
+    do_export = args.export or args.full or (not args.diagnose and not args.backup and not args.test)
     
     if args.diagnose:
         print("\n✅ Diagnostics complete. All systems ready.")
