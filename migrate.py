@@ -600,10 +600,15 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
             
             # Get content - try multiple columns in order
             content = ''
+            content_source = None
             for col in ['markdown', 'text', 'html', 'raw_html']:
                 if col in page and page[col]:
                     content = page[col]
+                    content_source = col
                     break
+            
+            if not content:
+                logger.debug(f"Page {page_id} ({page_name}): no content found in {[c for c in ['markdown', 'text', 'html', 'raw_html'] if c in page]}")
             
             # Build directory path: shelf/book/chapter/page
             path_parts = [output_path]
@@ -647,6 +652,8 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
                     logger.error(f"File not created: {file_path}")
                     continue
                 
+                file_size = file_path.stat().st_size
+                logger.debug(f"Page {page_id} exported to {file_path} ({file_size} bytes, content from {content_source})")
                 exported += 1
                 
                 if exported % 50 == 0:
