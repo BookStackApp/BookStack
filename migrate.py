@@ -278,10 +278,10 @@ def inspect_schema(conn) -> Dict[str, Any]:
     schema = {}
     
     for table in tables:
-        cursor.execute(f"DESCRIBE {table}")
+        cursor.execute(f"DESCRIBE `{table}`")
         columns = cursor.fetchall()
         
-        cursor.execute(f"SELECT COUNT(*) as cnt FROM {table}")
+        cursor.execute(f"SELECT COUNT(*) as cnt FROM `{table}`")
         count_row = cursor.fetchone()
         row_count = count_row[0] if isinstance(count_row, tuple) else count_row.get('cnt', 0) if hasattr(count_row, 'get') else 0
         
@@ -480,14 +480,14 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         print(f"\n   📄 Exporting pages from {pages_table}...")
         
         # Get columns
-        cursor.execute(f"DESCRIBE {pages_table}")
+        cursor.execute(f"DESCRIBE `{pages_table}`")
         columns = cursor.fetchall()
         col_names = [c['Field'] if isinstance(c, dict) else c[0] for c in columns]
         col_set = set(col_names)
         
         # Build SELECT
         select_cols = [c for c in ['id', 'name', 'slug', 'markdown', 'text', 'html'] if c in col_set]
-        query = f"SELECT {', '.join(select_cols)} FROM {pages_table}"
+        query = f"SELECT {', '.join(select_cols)} FROM `{pages_table}`"
         
         if 'deleted_at' in col_set:
             query += " WHERE deleted_at IS NULL"
@@ -532,7 +532,7 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         books_table = tables['books']
         print(f"\n   📚 Exporting books...")
         
-        cursor.execute(f"SELECT * FROM {books_table}")
+        cursor.execute(f"SELECT * FROM `{books_table}`")
         books = cursor.fetchall()
         
         if books:
@@ -548,7 +548,7 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         chapters_table = tables['chapters']
         print(f"\n   📖 Exporting chapters...")
         
-        cursor.execute(f"SELECT * FROM {chapters_table}")
+        cursor.execute(f"SELECT * FROM `{chapters_table}`")
         chapters = cursor.fetchall()
         
         if chapters:
