@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'Контролюйте сповіщення по електронній пошті, які ви отримуєте, коли виконується певна активність у системі.',
     'notifications_opt_own_page_changes' => 'Повідомляти при змінах сторінок якими я володію',
     'notifications_opt_own_page_comments' => 'Повідомляти при коментарях на моїх сторінках',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'Сповіщати, якщо мене згадали у коментарі',
     'notifications_opt_comment_replies' => 'Повідомляти про відповіді на мої коментарі',
     'notifications_save' => 'Зберегти налаштування',
     'notifications_update_success' => 'Налаштування сповіщень було оновлено!',
