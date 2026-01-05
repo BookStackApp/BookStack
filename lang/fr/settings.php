@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Aucune restriction en place',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'Listes et tri',
+    'sorting_book_default' => 'Tri des livres par défaut',
     'sorting_book_default_desc' => 'Sélectionnez le tri par défaut à mettre en place sur les nouveaux livres. Cela n’affectera pas les livres existants, et peut être redéfini dans les livres.',
     'sorting_rules' => 'Règles de tri',
     'sorting_rules_desc' => 'Ce sont les opérations de tri qui peuvent être appliquées au contenu du système.',
