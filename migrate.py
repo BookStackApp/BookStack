@@ -495,27 +495,127 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         col_names = [c['Field'] if isinstance(c, dict) else c[0] for c in columns]
         col_set = set(col_names)
         
-        # Build SELECT
-        select_cols = [c for c in ['id', 'name', 'slug', 'markdown', 'text', 'html'] if c in col_set]
-        query = f"SELECT {', '.join(select_cols)} FROM `{pages_table}`"
+        # Build SELECT with all possible content and hierarchy columns
+        select_cols = []
+        for col in ['id', 'name', 'slug', 'chapter_id', 'book_id', 'text',
+                    'markdown', 'html', 'raw_html']:
+            if col in col_set:
+                select_cols.append(col)
         
+        query = f"SELECT {', '.join(select_cols)} FROM `{pages_table}`"
         if 'deleted_at' in col_set:
             query += " WHERE deleted_at IS NULL"
         
         cursor.execute(query)
         pages = cursor.fetchall()
         
+        # Build hierarchy lookup
+        books_lookup = {}
+        chapters_lookup = {}
+        shelves_lookup = {}
+        book_to_shelves = {}
+        
+        # Get books info if available
+        if 'books' in tables:
+            books_table = tables['books']
+            try:
+                cursor.execute(f"SELECT id, name, slug FROM `{books_table}`")
+                for book in cursor.fetchall():
+                    bid = book.get('id') if isinstance(book, dict) else book[0]
+                    bname = book.get('name') if isinstance(book, dict) else book[1]
+                    bslug = book.get('slug') if isinstance(book, dict) else book[2]
+                    books_lookup[bid] = {'name': bname, 'slug': bslug}
+            except Exception as e:
+                logger.debug(f"Books lookup failed: {e}")
+        
+        # Get shelves info via pivot (bookshelves_books)
+        shelves_table = 'bookshelves' if 'bookshelves' in schema else 'bookshelf' if 'bookshelf' in schema else None
+        pivot_table = 'bookshelves_books' if 'bookshelves_books' in schema else None
+        if shelves_table:
+            try:
+                cursor.execute(f"SELECT id, name, slug FROM `{shelves_table}`")
+                for shelf in cursor.fetchall():
+                    sid = shelf.get('id') if isinstance(shelf, dict) else shelf[0]
+                    sname = shelf.get('name') if isinstance(shelf, dict) else shelf[1]
+                    sslug = shelf.get('slug') if isinstance(shelf, dict) else (shelf[2] if len(shelf) > 2 else '')
+                    shelves_lookup[sid] = {'name': sname, 'slug': sslug}
+            except Exception as e:
+                logger.debug(f"Shelves lookup failed: {e}")
+        if pivot_table and shelves_lookup:
+            try:
+                cursor.execute(f"SELECT bookshelf_id, book_id FROM `{pivot_table}`")
+                for row in cursor.fetchall():
+                    sid = row.get('bookshelf_id') if isinstance(row, dict) else row[0]
+                    bid = row.get('book_id') if isinstance(row, dict) else row[1]
+                    book_to_shelves.setdefault(bid, []).append(sid)
+            except Exception as e:
+                logger.debug(f"Pivot lookup failed: {e}")
+        
+        # Get chapters info if available
+        if 'chapters' in tables:
+            chapters_table = tables['chapters']
+            try:
+                cursor.execute(f"SELECT id, name, slug, book_id FROM `{chapters_table}`")
+                for chapter in cursor.fetchall():
+                    cid = chapter.get('id') if isinstance(chapter, dict) else chapter[0]
+                    cname = chapter.get('name') if isinstance(chapter, dict) else chapter[1]
+                    cslug = chapter.get('slug') if isinstance(chapter, dict) else chapter[2]
+                    bid = chapter.get('book_id') if isinstance(chapter, dict) else (chapter[3] if len(chapter) > 3 else None)
+                    chapters_lookup[cid] = {'name': cname, 'slug': cslug, 'book_id': bid}
+            except Exception as e:
+                logger.debug(f"Chapters lookup failed: {e}")
+        
+        # Process each page
         for page in pages:
-            slug = page.get('slug') or f"page_{page.get('id', exported)}"
-            slug = re.sub(r'[^a-z0-9_\-]', '_', slug.lower())
-            if not slug:
-                slug = f"page_{page.get('id', exported)}"
+            page_id = page.get('id') if isinstance(page, dict) else page[0]
+            page_name = page.get('name') if isinstance(page, dict) else ''
+            page_slug = page.get('slug') if isinstance(page, dict) else ''
+            chapter_id = page.get('chapter_id') if isinstance(page, dict) else None
+            book_id = page.get('book_id') if isinstance(page, dict) else None
             
-            name = page.get('name', slug)
-            content = page.get('markdown') or page.get('text') or page.get('html') or ''
+            # Get content - try multiple columns in order
+            content = ''
+            for col in ['markdown', 'text', 'html', 'raw_html']:
+                if isinstance(page, dict) and col in page and page[col]:
+                    content = page[col]
+                    break
+                if not isinstance(page, dict) and len(page) > 0:
+                    # tuple fallback: assume select order matches select_cols
+                    pass
             
-            file_path = output_path / f"{slug}.txt"
-            dokuwiki_content = convert_to_dokuwiki(content, name)
+            # Build directory path: shelf/book/chapter/page
+            path_parts = [output_path]
+            shelf_slug = None
+            if book_id and book_id in book_to_shelves and book_to_shelves[book_id]:
+                sid = book_to_shelves[book_id][0]
+                if sid in shelves_lookup:
+                    shelf_slug = shelves_lookup[sid]['slug']
+            if shelf_slug:
+                path_parts.append(sanitize_filename(shelf_slug))
+            elif shelves_lookup:
+                path_parts.append('unshelved')
+            
+            if book_id and book_id in books_lookup:
+                book_slug = books_lookup[book_id]['slug']
+                path_parts.append(sanitize_filename(book_slug))
+            elif book_id:
+                path_parts.append(f"book_{book_id}")
+            
+            if chapter_id and chapter_id in chapters_lookup:
+                chapter_slug = chapters_lookup[chapter_id]['slug']
+                path_parts.append(sanitize_filename(chapter_slug))
+            elif chapter_id:
+                path_parts.append(f"chapter_{chapter_id}")
+            
+            if not page_slug:
+                page_slug = f"page_{page_id}"
+            page_slug = sanitize_filename(page_slug)
+            
+            page_dir = Path(*path_parts)
+            page_dir.mkdir(parents=True, exist_ok=True)
+            
+            file_path = page_dir / f"{page_slug}.txt"
+            dokuwiki_content = convert_to_dokuwiki(content, page_name or page_slug)
             
             try:
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -536,7 +636,7 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
         
         print(f"\n      ✅ Pages exported: {exported}")
         logger.info(f"Pages export complete: {exported} files")
-    
+
     # Export books as JSON
     if 'books' in tables:
         books_table = tables['books']
@@ -583,8 +683,8 @@ def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str],
     except Exception as e:
         logger.warning(f"Archive creation failed: {e}")
     
-    # Verify files
-    txt_files = list(output_path.glob('*.txt'))
+    # Verify files (recursive to include nested structure)
+    txt_files = list(output_path.rglob('*.txt'))
     print(f"\n   ✅ Files created: {len(txt_files)}")
     logger.info(f"Export complete: {len(txt_files)} files")
     
