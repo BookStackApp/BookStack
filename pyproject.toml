@@ -3,11 +3,39 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bookstack-migration"
+name = "bookstack-migrate"
 version = "1.0.0"
-description = "BookStack to DokuWiki migration - auto-detect, export, load"
+description = "Command-line tool to migrate content from BookStack to DokuWiki"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Alexander Alvonellos", email = "alex@alvonellos.com"}]
 requires-python = ">=3.8"
 dependencies = []
+classifiers = [
+	"Development Status :: 4 - Beta",
+	"Environment :: Console",
+	"Intended Audience :: System Administrators",
+	"License :: OSI Approved :: MIT License",
+	"Operating System :: OS Independent",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Topic :: System :: Systems Administration",
+]
+keywords = ["bookstack", "dokuwiki", "migration", "export", "import"]
+
+[project.optional-dependencies]
+mysql = ["mysql-connector-python>=8.0.0"]
+dev = ["pytest>=7.0", "pyinstaller>=5.0"]
+
+[project.urls]
+Homepage = "https://github.com/alvonellos/BookStack"
+Documentation = "https://github.com/alvonellos/BookStack/blob/feature/standalone/README.md"
+Repository = "https://github.com/alvonellos/BookStack"
+"Bug Tracker" = "https://github.com/alvonellos/BookStack/issues"
 
 [project.scripts]
 bookstack-migrate = "bookstack_migrate:main"

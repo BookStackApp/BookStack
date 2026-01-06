@@ -5,7 +5,9 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bookstack_test
+      MYSQL_DATABASE: bookstack
+      MYSQL_USER: bookstack_user
+      MYSQL_PASSWORD: bookstack_pass
     ports:
       - "3306:3306"
     healthcheck:
@@ -13,17 +15,51 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  bookstack:
+    image: solidnerd/bookstack:latest
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: bookstack
+      DB_USERNAME: bookstack_user
+      DB_PASSWORD: bookstack_pass
+      APP_URL: http://localhost:8000
+      APP_DEBUG: "false"
+    ports:
+      - "8000:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - bookstack_uploads:/var/www/html/storage/uploads
 
   dokuwiki:
-    image: linuxserver/dokuwiki
+    image: linuxserver/dokuwiki:latest
     environment:
       PUID: 1000
       PGID: 1000
       TZ: UTC
     ports:
       - "8080:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/doku.php"]
       interval: 10s
       timeout: 5s
       retries: 5
+    volumes:
+      - dokuwiki_data:/data
+
+volumes:
+  mysql_data:
+  bookstack_uploads:
+  dokuwiki_data:
