@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => '頁面更新：:pageName',
     'updated_page_intro' => ':appName: 中的一個頁面已被更新',
     'updated_page_debounce' => '為了防止出現大量通知，一段時間內您不會收到同一編輯者再次編輯本頁面的通知。',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => '您在以下頁面的留言中被提及：:pageName',
+    'comment_mention_intro' => '您再在 :appName: 的留言中被提及',
 
     'detail_page_name' => '頁面名稱:',
     'detail_page_path' => '頁面路徑：',
