@@ -11,6 +11,8 @@ import json
 from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Optional
+import importlib
+import subprocess
 
 __version__ = "1.0.0"
 
@@ -90,13 +92,82 @@ def cmd_detect():
 def cmd_export(args):
     """Export BookStack to DokuWiki"""
     print("📤 Export BookStack to DokuWiki")
-    # Implementation here
+
+    driver, driver_name = get_db_driver()
+    if not driver:
+        return 1
+
+    print(f"✅ Using database driver: {driver_name}")
+    # TODO: add full export implementation using `driver`
     return 0
 
 def cmd_version():
     """Show version"""
     print(f"BookStack Migration Tool v{__version__}")
     return 0
+
+
+def get_db_driver():
+    """Select a DB driver. Preference order:
+    1) DB_DRIVER env (mysql|mariadb)
+    2) mysql-connector-python
+    3) mariadb
+    Returns: (module, name) or (None, None) on failure.
+    """
+
+    preferred = os.environ.get("DB_DRIVER", "").strip().lower()
+    order = []
+
+    if preferred in {"mysql", "mariadb"}:
+        order.append(preferred)
+    # default fallback order
+    order.extend([d for d in ("mysql", "mariadb") if d not in order])
+
+    for driver in order:
+        mod = load_driver(driver)
+        if mod:
+            return mod
+
+    print("❌ No database driver found. Tried mysql-connector and mariadb.")
+    print("   Attempted auto-install; if it failed, install manually:")
+    print("   pip install mysql-connector-python")
+    print("   pip install mariadb")
+    print("Or set DB_DRIVER=mysql|mariadb to choose explicitly.")
+    return None, None
+
+
+def load_driver(driver: str):
+    """Try to import a driver; auto-install if missing.
+
+    Returns (module, name) or None on failure.
+    """
+    mapping = {
+        "mysql": ("mysql.connector", "mysql-connector-python"),
+        "mariadb": ("mariadb", "mariadb"),
+    }
+    if driver not in mapping:
+        return None
+
+    module_name, package = mapping[driver]
+
+    # First attempt import
+    try:
+        return importlib.import_module(module_name), driver
+    except ImportError:
+        pass
+
+    # Attempt lightweight auto-install to user site
+    print(f"ℹ️  Installing {package} (driver: {driver})...")
+    result = subprocess.run([sys.executable, "-m", "pip", "install", "--user", package], capture_output=True, text=True)
+    if result.returncode != 0:
+        print(f"❌ Failed to install {package}: {result.stderr.strip() or result.stdout.strip()}")
+        return None
+
+    try:
+        return importlib.import_module(module_name), driver
+    except ImportError as exc:
+        print(f"❌ Installed {package} but could not import: {exc}")
+        return None
 
 def cmd_help():
     """Show help"""
