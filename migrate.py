@@ -669,47 +669,82 @@ def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
     
     content_tables = {}
     
-    # Look for common BookStack table patterns
-    table_patterns = {
-        'pages': ['id', 'name', 'slug', 'html', 'markdown'],
-        'books': ['id', 'name', 'slug', 'description'],
-        'chapters': ['id', 'name', 'slug', 'description', 'book_id'],
-        'attachments': ['id', 'name', 'path'],
-        'images': ['id', 'name', 'path'],
-    }
-    
+    # BookStack v24+ uses unified entity model
+    # Look for 'entities' table with 'type' column
     for table_name, table_info in schema.items():
         column_names = [col['Field'] for col in table_info['columns']]
         
-        # Check if it matches known patterns
-        for pattern_name, required_cols in table_patterns.items():
-            if all(col in column_names for col in required_cols[:2]):  # At least first 2 cols
-                content_tables[pattern_name] = table_name
-                print(f"   ✅ Found {pattern_name} table: {table_name}")
-                break
+        # Check for unified entities table (BookStack v24+)
+        if table_name == 'entities' and 'type' in column_names:
+            content_tables['entities'] = table_name
+            print(f"   ✅ Found unified entities table: {table_name}")
+            
+            # Check for page data table
+            if 'entity_page_data' in schema:
+                content_tables['page_data'] = 'entity_page_data'
+                print(f"   ✅ Found page data table: entity_page_data")
+            
+            # Check for container data (book/chapter descriptions)
+            if 'entity_container_data' in schema:
+                content_tables['container_data'] = 'entity_container_data'
+                print(f"   ✅ Found container data table: entity_container_data")
+            
+            break
+    
+    # If no unified table, look for legacy separate tables
+    if 'entities' not in content_tables:
+        table_patterns = {
+            'pages': ['id', 'name', 'slug', 'html', 'markdown'],
+            'books': ['id', 'name', 'slug', 'description'],
+            'chapters': ['id', 'name', 'slug', 'description', 'book_id'],
+        }
+        
+        for table_name, table_info in schema.items():
+            column_names = [col['Field'] for col in table_info['columns']]
+            
+            for pattern_name, required_cols in table_patterns.items():
+                if all(col in column_names for col in required_cols[:2]):
+                    content_tables[pattern_name] = table_name
+                    print(f"   ✅ Found {pattern_name} table: {table_name}")
+                    break
     
     return content_tables
 
 def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -> Dict[str, str]:
-    """Let user confirm/select which tables to use"""
+    """Auto-select tables based on identification"""
     print("\n" + "="*70)
     print("TABLE SELECTION")
     print("="*70)
     
-    print("\nI found these tables that might be content:")
+    print("\nIdentified content tables:")
     for content_type, table_name in identified.items():
-        print(f"   {content_type}: {table_name}")
+        row_count = schema.get(table_name, {}).get('row_count', '?')
+        print(f"   ✅ {content_type}: {table_name} ({row_count} rows)")
     
+    # For unified entities table, auto-confirm
+    if 'entities' in identified:
+        print("\n✅ Using BookStack unified entity model (v24+)")
+        print("   Hierarchical structure will be created automatically.")
+        return identified
+    
+    # For legacy schema, also auto-confirm
+    if identified:
+        print("\n✅ Using legacy BookStack schema (separate tables)")
+        print("   Hierarchical structure will be created automatically.")
+        return identified
+    
+    # No tables identified - show all and ask for manual selection
+    print("\n⚠️  Could not automatically identify content tables.")
     print("\nAll available tables:")
     for i, table_name in enumerate(sorted(schema.keys()), 1):
         row_count = schema[table_name]['row_count']
         print(f"   {i}. {table_name} ({row_count} rows)")
     
-    print("\nAre the identified tables correct?")
-    confirm = input("Use these tables? (yes/no): ").strip().lower()
+    print("\nWould you like to manually select tables?")
+    confirm = input("Manual selection? (yes/no): ").strip().lower()
     
-    if confirm == 'yes':
-        return identified
+    if confirm != 'yes':
+        return {}
     
     # Let user manually select
     print("\nOkay, let's do this manually...")
@@ -747,9 +782,9 @@ def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -
 # ============================================================================
 
 def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_export') -> bool:
-    """Export BookStack data to DokuWiki format"""
+    """Export BookStack data to DokuWiki format with recursive directory structure"""
     print("\n📤 Exporting to DokuWiki format...")
-    print("(Using ACTUAL schema, not hallucinated nonsense)")
+    print("(Using ACTUAL schema with proper hierarchical structure)")
     
     start_time = time.time()
     
@@ -787,115 +822,12 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
         export_path = Path(output_dir)
         export_path.mkdir(parents=True, exist_ok=True)
         
-        # Export pages
-        if 'pages' in tables:
-            print(f"\n📄 Exporting pages from {tables['pages']}...")      
-
-            pages_table = tables['pages']
-            pages_table_ident = quote_ident(pages_table)
-
-            # Get columns for this table
-            page_cols = [col['Field'] for col in schema[pages_table]['columns']]
-
-            # Build query based on actual columns
-            select_cols = []
-            if 'id' in page_cols:
-                select_cols.append(quote_ident('id'))
-            if 'name' in page_cols:
-                select_cols.append(quote_ident('name'))
-            if 'slug' in page_cols:
-                select_cols.append(quote_ident('slug'))
-            if 'html' in page_cols:
-                select_cols.append(quote_ident('html'))
-            if 'markdown' in page_cols:
-                select_cols.append(quote_ident('markdown'))
-            if 'text' in page_cols:
-                select_cols.append(quote_ident('text'))
-
-            query = f"SELECT {', '.join(select_cols)} FROM {pages_table_ident}" 
-
-            # Add WHERE clause if deleted_at exists
-            if 'deleted_at' in page_cols:
-                query += " WHERE `deleted_at` IS NULL"
-
-            print(f"   Executing: {query}")
-            cursor.execute(query)
-            pages = cursor.fetchall()
-            
-            exported_count = 0
-            
-            for page in pages:
-                # Generate filename from slug or id
-                slug = page.get('slug') or f"page_{page.get('id', exported_count)}"
-                name = page.get('name') or slug
-                
-                # Get content from whatever column exists
-                content = (
-                    page.get('markdown') or 
-                    page.get('text') or 
-                    page.get('html') or 
-                    ''
-                )
-                
-                # Create file
-                file_path = export_path / f"{slug}.txt"
-                dokuwiki_content = convert_to_dokuwiki(content, name)
-                
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(dokuwiki_content)
-                
-                exported_count += 1
-                if exported_count % 10 == 0:
-                    print(f"   📝 Exported {exported_count}/{len(pages)} pages...")
-            
-            print(f"\n✅ Exported {exported_count} pages!")
-        else:
-            print("\n⚠️  No pages table selected, skipping pages export")
+        # Check if using unified entities table (BookStack v24+)
+        if 'entities' in tables:
+            return export_unified_entities(cursor, schema, tables, export_path, start_time)
         
-        # Export books if available
-        if 'books' in tables:
-            print(f"\n📚 Exporting books from {tables['books']}...")      
-
-            books_table = tables['books']
-            cursor.execute(f"SELECT * FROM {quote_ident(books_table)}")
-            books = cursor.fetchall()
-            
-            # Create a mapping file
-            books_file = export_path / '_books.json'
-            with open(books_file, 'w') as f:
-                json.dump(books, f, indent=2, default=str)
-            
-            print(f"   ✅ Exported {len(books)} books to {books_file}")
-        
-        # Export chapters if available
-        if 'chapters' in tables:
-            print(f"\n📖 Exporting chapters from {tables['chapters']}...") 
-
-            chapters_table = tables['chapters']
-            cursor.execute(f"SELECT * FROM {quote_ident(chapters_table)}")
-            chapters = cursor.fetchall()
-            
-            # Create a mapping file
-            chapters_file = export_path / '_chapters.json'
-            with open(chapters_file, 'w') as f:
-                json.dump(chapters, f, indent=2, default=str)
-            
-            print(f"   ✅ Exported {len(chapters)} chapters to {chapters_file}")
-        
-        conn.close()
-        
-        duration = time.time() - start_time
-        gloat_regina_george("Export", duration)
-        
-        print(f"\n✅ Export complete: {export_path}")
-        print("\n📝 Files created:")
-        print(f"   • Pages: {len(list(export_path.glob('*.txt')))} .txt files")
-        if (export_path / '_books.json').exists():
-            print(f"   • Books mapping: _books.json")
-        if (export_path / '_chapters.json').exists():
-            print(f"   • Chapters mapping: _chapters.json")
-        
-        return True
+        # Otherwise use legacy export
+        return export_legacy_schema(cursor, schema, tables, export_path, start_time)
         
     except Exception as e:
         print(f"\n❌ Export failed: {e}")
@@ -907,6 +839,364 @@ def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_exp
             print("\n" + traceback.format_exc())
         
         return False
+
+def export_unified_entities(cursor, schema, tables, export_path, start_time) -> bool:
+    """Export using BookStack v24+ unified entities schema"""
+    print("\n📦 Using unified entities model (BookStack v24+)")
+    
+    books_dict = {}
+    chapters_dict = {}
+    
+    # Load all entities
+    print("\n📚 Loading entities...")
+    cursor.execute("""
+        SELECT * FROM entities 
+        WHERE deleted_at IS NULL 
+        ORDER BY type, book_id, chapter_id, priority
+    """)
+    entities = cursor.fetchall()
+    
+    # Load container data (descriptions for books/chapters)
+    container_data = {}
+    if 'container_data' in tables:
+        cursor.execute("SELECT * FROM entity_container_data")
+        for row in cursor.fetchall():
+            container_data[row['entity_id']] = row.get('description', '')
+    
+    # Load page data
+    page_data = {}
+    if 'page_data' in tables:
+        cursor.execute("SELECT * FROM entity_page_data")
+        for row in cursor.fetchall():
+            page_data[row['page_id']] = row
+    
+    # First pass: create books
+    print("\n📚 Creating book directories...")
+    for entity in entities:
+        if entity['type'] != 'book':
+            continue
+            
+        book_id = entity['id']
+        slug = entity['slug'] or f"book_{book_id}"
+        name = entity['name'] or slug
+        description = container_data.get(book_id, '')
+        
+        books_dict[book_id] = {
+            'slug': slug,
+            'name': name,
+            'description': description,
+            'path': export_path / slug
+        }
+        
+        # Create book directory
+        books_dict[book_id]['path'].mkdir(parents=True, exist_ok=True)
+        
+        # Create book start page
+        book_content = convert_to_dokuwiki(description, name)
+        start_file = books_dict[book_id]['path'] / 'start.txt'
+        with open(start_file, 'w', encoding='utf-8') as f:
+            f.write(book_content)
+    
+    print(f"   ✅ Created {len(books_dict)} book directories")
+    
+    # Second pass: create chapters
+    print("\n📖 Creating chapter directories...")
+    for entity in entities:
+        if entity['type'] != 'chapter':
+            continue
+            
+        chapter_id = entity['id']
+        book_id = entity['book_id']
+        slug = entity['slug'] or f"chapter_{chapter_id}"
+        name = entity['name'] or slug
+        description = container_data.get(chapter_id, '')
+        
+        # Find parent book
+        if book_id and book_id in books_dict:
+            book_path = books_dict[book_id]['path']
+            chapter_path = book_path / slug
+        else:
+            # Orphaned chapter
+            chapter_path = export_path / '_orphaned' / slug
+        
+        chapters_dict[chapter_id] = {
+            'slug': slug,
+            'name': name,
+            'description': description,
+            'path': chapter_path,
+            'book_id': book_id
+        }
+        
+        # Create chapter directory
+        chapter_path.mkdir(parents=True, exist_ok=True)
+        
+        # Create chapter start page
+        chapter_content = convert_to_dokuwiki(description, name)
+        start_file = chapter_path / 'start.txt'
+        with open(start_file, 'w', encoding='utf-8') as f:
+            f.write(chapter_content)
+    
+    print(f"   ✅ Created {len(chapters_dict)} chapter directories")
+    
+    # Third pass: export pages
+    print("\n📄 Exporting pages...")
+    exported_count = 0
+    orphaned_count = 0
+    
+    for entity in entities:
+        if entity['type'] != 'page':
+            continue
+            
+        page_id = entity['id']
+        slug = entity['slug'] or f"page_{page_id}"
+        name = entity['name'] or slug
+        chapter_id = entity['chapter_id']
+        book_id = entity['book_id']
+        
+        # Get page content
+        data = page_data.get(page_id, {})
+        content = (
+            data.get('markdown') or 
+            data.get('text') or 
+            data.get('html') or 
+            ''
+        )
+        
+        # Determine target directory
+        target_dir = None
+        
+        if chapter_id and chapter_id in chapters_dict:
+            target_dir = chapters_dict[chapter_id]['path']
+        elif book_id and book_id in books_dict:
+            target_dir = books_dict[book_id]['path']
+        else:
+            target_dir = export_path / '_orphaned'
+            target_dir.mkdir(parents=True, exist_ok=True)
+            orphaned_count += 1
+        
+        # Create page file
+        file_path = target_dir / f"{slug}.txt"
+        dokuwiki_content = convert_to_dokuwiki(content, name)
+        
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(dokuwiki_content)
+        
+        exported_count += 1
+        if exported_count % 10 == 0:
+            print(f"   📝 Exported {exported_count} pages...")
+    
+    print(f"\n✅ Exported {exported_count} pages!")
+    if orphaned_count > 0:
+        print(f"   ⚠️  {orphaned_count} orphaned pages in _orphaned/")
+    
+    duration = time.time() - start_time
+    gloat_regina_george("Export", duration)
+    
+    print(f"\n✅ Export complete: {export_path}")
+    print("\n📂 Directory structure created:")
+    print(f"   • Books: {len(books_dict)} directories")
+    print(f"   • Chapters: {len(chapters_dict)} subdirectories")
+    print(f"   • Pages: {exported_count} files")
+    
+    # Show sample structure
+    if books_dict:
+        print("\n📋 Sample structure:")
+        for book_id, book_info in list(books_dict.items())[:3]:
+            print(f"   📚 {book_info['slug']}/")
+            print(f"      └─ start.txt (book index)")
+            
+            book_chapters = [c for c in chapters_dict.values() if c.get('book_id') == book_id]
+            for chapter_info in book_chapters[:2]:
+                print(f"      └─ {chapter_info['slug']}/")
+                print(f"         └─ start.txt (chapter index)")
+                print(f"         └─ *.txt (pages)")
+    
+    return True
+
+def export_legacy_schema(cursor, schema, tables, export_path, start_time) -> bool:
+    """Export using legacy separate tables schema (BookStack < v24)"""
+    print("\n📦 Using legacy schema (separate tables)")
+    
+    books_dict = {}
+    chapters_dict = {}
+    
+    # First, load books
+    if 'books' in tables:
+        print(f"\n📚 Loading books from {tables['books']}...")
+        books_table = tables['books']
+        book_cols = [col['Field'] for col in schema[books_table]['columns']]
+        
+        query = f"SELECT * FROM {quote_ident(books_table)}"
+        if 'deleted_at' in book_cols:
+            query += " WHERE `deleted_at` IS NULL"
+        
+        cursor.execute(query)
+        books = cursor.fetchall()
+        
+        for book in books:
+            book_id = book.get('id')
+            slug = book.get('slug') or f"book_{book_id}"
+            name = book.get('name') or slug
+            description = book.get('description', '')
+            
+            books_dict[book_id] = {
+                'slug': slug,
+                'name': name,
+                'description': description,
+                'path': export_path / slug
+            }
+            
+            # Create book directory
+            books_dict[book_id]['path'].mkdir(parents=True, exist_ok=True)
+            
+            # Create book start page (index)
+            book_content = convert_to_dokuwiki(description, name)
+            start_file = books_dict[book_id]['path'] / 'start.txt'
+            with open(start_file, 'w', encoding='utf-8') as f:
+                f.write(book_content)
+        
+        print(f"   ✅ Created {len(books_dict)} book directories")
+    
+    # Second, load chapters
+    if 'chapters' in tables:
+        print(f"\n📖 Loading chapters from {tables['chapters']}...")
+        chapters_table = tables['chapters']
+        chapter_cols = [col['Field'] for col in schema[chapters_table]['columns']]
+        
+        query = f"SELECT * FROM {quote_ident(chapters_table)}"
+        if 'deleted_at' in chapter_cols:
+            query += " WHERE `deleted_at` IS NULL"
+        
+        cursor.execute(query)
+        chapters = cursor.fetchall()
+        
+        for chapter in chapters:
+            chapter_id = chapter.get('id')
+            book_id = chapter.get('book_id')
+            slug = chapter.get('slug') or f"chapter_{chapter_id}"
+            name = chapter.get('name') or slug
+            description = chapter.get('description', '')
+            
+            # Find parent book
+            if book_id and book_id in books_dict:
+                book_path = books_dict[book_id]['path']
+                chapter_path = book_path / slug
+            else:
+                # Orphaned chapter - put in root
+                chapter_path = export_path / slug
+            
+            chapters_dict[chapter_id] = {
+                'slug': slug,
+                'name': name,
+                'description': description,
+                'path': chapter_path,
+                'book_id': book_id
+            }
+            
+            # Create chapter directory
+            chapter_path.mkdir(parents=True, exist_ok=True)
+            
+            # Create chapter start page (index)
+            chapter_content = convert_to_dokuwiki(description, name)
+            start_file = chapter_path / 'start.txt'
+            with open(start_file, 'w', encoding='utf-8') as f:
+                f.write(chapter_content)
+        
+        print(f"   ✅ Created {len(chapters_dict)} chapter directories")
+    
+    # Finally, export pages into the hierarchy
+    if 'pages' in tables:
+        print(f"\n📄 Exporting pages from {tables['pages']}...")
+        pages_table = tables['pages']
+        page_cols = [col['Field'] for col in schema[pages_table]['columns']]
+        
+        # Build query based on actual columns
+        select_cols = []
+        for col_name in ['id', 'name', 'slug', 'html', 'markdown', 'text', 'book_id', 'chapter_id']:
+            if col_name in page_cols:
+                select_cols.append(quote_ident(col_name))
+        
+        query = f"SELECT {', '.join(select_cols)} FROM {quote_ident(pages_table)}"
+        if 'deleted_at' in page_cols:
+            query += " WHERE `deleted_at` IS NULL"
+        
+        cursor.execute(query)
+        pages = cursor.fetchall()
+        
+        exported_count = 0
+        orphaned_count = 0
+        
+        for page in pages:
+            page_id = page.get('id')
+            slug = page.get('slug') or f"page_{page_id}"
+            name = page.get('name') or slug
+            chapter_id = page.get('chapter_id')
+            book_id = page.get('book_id')
+            
+            # Get content from whatever column exists
+            content = (
+                page.get('markdown') or 
+                page.get('text') or 
+                page.get('html') or 
+                ''
+            )
+            
+            # Determine target directory based on hierarchy
+            target_dir = None
+            
+            # Try chapter first (most specific)
+            if chapter_id and chapter_id in chapters_dict:
+                target_dir = chapters_dict[chapter_id]['path']
+            # Then try book (if no chapter)
+            elif book_id and book_id in books_dict:
+                target_dir = books_dict[book_id]['path']
+            # Otherwise, orphaned page goes to root
+            else:
+                target_dir = export_path / '_orphaned'
+                target_dir.mkdir(parents=True, exist_ok=True)
+                orphaned_count += 1
+            
+            # Create page file
+            file_path = target_dir / f"{slug}.txt"
+            dokuwiki_content = convert_to_dokuwiki(content, name)
+            
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(dokuwiki_content)
+            
+            exported_count += 1
+            if exported_count % 10 == 0:
+                print(f"   📝 Exported {exported_count}/{len(pages)} pages...")
+        
+        print(f"\n✅ Exported {exported_count} pages!")
+        if orphaned_count > 0:
+            print(f"   ⚠️  {orphaned_count} orphaned pages in _orphaned/")
+    else:
+        exported_count = 0
+        print("\n⚠️  No pages table selected, skipping pages export")
+    
+    duration = time.time() - start_time
+    gloat_regina_george("Export", duration)
+    
+    print(f"\n✅ Export complete: {export_path}")
+    print("\n📂 Directory structure created:")
+    print(f"   • Books: {len(books_dict)} directories")
+    print(f"   • Chapters: {len(chapters_dict)} subdirectories")
+    print(f"   • Pages: {exported_count} files")
+    
+    # Show sample structure
+    if books_dict:
+        print("\n📋 Sample structure:")
+        for book_id, book_info in list(books_dict.items())[:3]:
+            print(f"   📚 {book_info['slug']}/")
+            print(f"      └─ start.txt (book index)")
+            
+            book_chapters = [c for c in chapters_dict.values() if c.get('book_id') == book_id]
+            for chapter_info in book_chapters[:2]:
+                print(f"      └─ {chapter_info['slug']}/")
+                print(f"         └─ start.txt (chapter index)")
+                print(f"         └─ *.txt (pages)")
+    
+    return True
 
 def convert_to_dokuwiki(content: str, title: str) -> str:
     """Convert HTML/Markdown to DokuWiki format"""
