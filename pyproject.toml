@@ -29,6 +29,7 @@ keywords = ["bookstack", "dokuwiki", "migration", "export", "import"]
 [project.optional-dependencies]
 mysql = ["mysql-connector-python>=8.0.0"]
 mariadb = ["mariadb>=1.1.0"]
+test = ["pytest>=7.0"]
 dev = ["pytest>=7.0", "pyinstaller>=5.0"]
 
 [project.urls]

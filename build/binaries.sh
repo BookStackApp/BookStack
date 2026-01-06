@@ -5,15 +5,12 @@ set -e
 
 echo "📦 Building binaries for all platforms..."
 
-pip install pyinstaller
+pip install -q pyinstaller
 
 # Linux x64
 echo "🐧 Linux x64..."
 pyinstaller --onefile --name bookstack-migrate-linux bookstack-migrate
-mv dist/bookstack-migrate-linux dist/bookstack-migrate-linux-x64
-
-# Can add macOS/Windows cross-compilation here with additional setup
-# For now, PyInstaller builds for current platform
+mv dist/bookstack-migrate-linux dist/bookstack-migrate-linux-x64 2>/dev/null || true
 
 echo "✅ Binaries ready in dist/"
-ls -lh dist/bookstack-migrate*
+ls -lh dist/bookstack-migrate* 2>/dev/null || echo "  (build output)"

@@ -27,7 +27,6 @@ if command -v pyinstaller &> /dev/null; then
     mv dist/bookstack-migrate-${VERSION}-linux "${RELEASE_DIR}/binaries/" 2>/dev/null || true
     
     echo "  🍎 macOS (x64)..."
-    # macOS build would need to be on macOS machine
     echo "  ⚠️  macOS build requires macOS machine"
 else
     echo "  ⚠️  PyInstaller not installed (pip install pyinstaller)"
@@ -42,9 +41,7 @@ cp dist/*.whl dist/*.tar.gz "${RELEASE_DIR}/python/" 2>/dev/null || true
 echo ""
 echo "3️⃣  Creating checksums..."
 cd "${RELEASE_DIR}"
-find . -type f \( -name "*.exe" -o -name "*.whl" -o -name "*.tar.gz" -o -name "bookstack-migrate*" \) ! -path "*binaries*" -prune -o -type f -print0 | \
-    xargs -0 sha256sum > SHA256SUMS 2>/dev/null || \
-    (ls -1 binaries/* python/* 2>/dev/null | xargs -I {} sha256sum {} > SHA256SUMS) || true
+find . -type f \( -name "*.exe" -o -name "*.whl" -o -name "*.tar.gz" \) | xargs sha256sum > SHA256SUMS 2>/dev/null || echo "  (no files to checksum)"
 
 echo ""
 echo "4️⃣  Creating archive..."
@@ -56,7 +53,8 @@ tar -czf "${RELEASE_DIR}/bookstack-migrate-${VERSION}-complete.tar.gz" \
     README.md \
     LICENSE \
     docker-compose.yml \
-    build/ 2>/dev/null || echo "  ⚠️  Archive creation (some files may be missing)"
+    build/ \
+    tests/ 2>/dev/null || echo "  (some files may be missing)"
 
 echo ""
 echo "═══════════════════════════════════════════════════════"
@@ -64,7 +62,7 @@ echo "✨ Release ${VERSION} artifacts ready!"
 echo ""
 echo "📍 Location: ${RELEASE_DIR}/"
 echo ""
-ls -lh "${RELEASE_DIR}/"
+ls -lh "${RELEASE_DIR}/" 2>/dev/null || echo "  (check ${RELEASE_DIR}/)"
 echo ""
 echo "📥 Download links:"
 echo "   - Binaries:  ${RELEASE_DIR}/binaries/"

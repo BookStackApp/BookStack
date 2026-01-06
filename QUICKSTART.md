@@ -8,6 +8,10 @@
 wget https://github.com/alvonellos/BookStack/releases/download/v1.0.0/bookstack-migrate-linux
 chmod +x bookstack-migrate-linux
 
+# Set environment variables
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+
 # Run
 ./bookstack-migrate-linux detect
 ```
@@ -15,6 +19,12 @@ chmod +x bookstack-migrate-linux
 ### Option 2: Python Package
 ```bash
 pip install bookstack-migrate
+
+# Set environment variables
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+
+# Run
 bookstack-migrate detect
 ```
 
@@ -22,6 +32,13 @@ bookstack-migrate detect
 ```bash
 git clone https://github.com/alvonellos/BookStack.git
 cd BookStack && git checkout feature/standalone
+pip install -e .
+
+# Set environment variables
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+
+# Run
 python bookstack-migrate detect
 ```
 
@@ -41,7 +58,10 @@ bookstack-migrate export \
   --db bookstack_db \
   --user root \
   --password secret \
-  --output ./export
+  --host localhost \
+  --port 3306 \
+  --output ./export \
+  --driver mysql
 ```
 
 ### Show Help
@@ -75,6 +95,23 @@ docker-compose down
 
 ---
 
+## 🔑 API Token Setup
+
+### Generate BookStack API Token
+
+1. **Log in to BookStack** as an admin user
+2. **Go to Settings** → **Users** → **[Your User]** → **API Tokens**
+3. **Click "Create Token"**
+4. **Copy the ID and Secret**
+5. **Export them**:
+   ```bash
+   export BOOKSTACK_TOKEN_ID="abc123def456"
+   export BOOKSTACK_TOKEN_SECRET="xyz789uvw012"
+   export BOOKSTACK_BASE_URL="https://your-bookstack.example.com"
+   ```
+
+---
+
 ## 🔍 Troubleshooting
 
 **Tool not found?**
@@ -95,16 +132,22 @@ python --version
 pip3 install bookstack-migrate
 ```
 
+**API token errors?**
+```bash
+# Verify env vars are set
+echo $BOOKSTACK_TOKEN_ID
+echo $BOOKSTACK_TOKEN_SECRET
+
+# Test API connection
+python bookstack-migrate export --db test --user admin --password test
+```
+
 **DokuWiki not detected?**
 ```bash
 # Check common paths
 ls -la /var/lib/dokuwiki      # APT install
 ls -la /var/www/dokuwiki      # Manual install
 ls -la /data/dokuwiki         # Docker
-
-# Specify custom path
-export DOKUWIKI_PATH=/custom/path
-bookstack-migrate detect
 ```
 
 ---
@@ -121,10 +164,12 @@ bookstack-migrate detect
 
 ## 🎯 Next Steps
 
-1. ✅ Detect your DokuWiki installation
-2. ✅ Export BookStack content
-3. ✅ Load into DokuWiki
-4. ✅ Verify migration
-5. ✅ Report issues/feedback
+1. ✅ Generate your API token (Settings → Users → API Tokens)
+2. ✅ Set environment variables
+3. ✅ Detect your DokuWiki installation
+4. ✅ Export BookStack content
+5. ✅ Load into DokuWiki
+6. ✅ Verify migration
+7. ✅ Report feedback/issues
 
 Happy migrating! 🎉
