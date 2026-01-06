@@ -33,7 +33,7 @@ return [
     'book_create_from_chapter'              => '챕터를 책으로 변환',
     'book_create_from_chapter_notification' => '챕터가 책으로 성공적으로 변환되었습니다.',
     'book_update'                 => '업데이트된 책',
-    'book_update_notification'    => '책이 성공적으로 업데이트되었습니다.',
+    'book_update_notification'    => '책 수정함',
     'book_delete'                 => '삭제된 책',
     'book_delete_notification'    => '책이 성공적으로 삭제되었습니다.',
     'book_sort'                   => '책 정렬',
@@ -50,7 +50,7 @@ return [
     'bookshelf_delete_notification'    => '책장이 성공적으로 삭제되었습니다.',
 
     // Revisions
-    'revision_restore' => '복구한 수정본',
+    'revision_restore' => '복원한 수정본',
     'revision_delete' => '삭제한 수정본',
     'revision_delete_notification' => '수정본을 잘 삭제함',
 
