@@ -2,37 +2,46 @@
 
 Command-line utility to migrate content from BookStack to DokuWiki.
 
-## Quick Start
+## Installation & Usage
 
+### Option 1: Standalone Binary (Recommended)
 ```bash
-# Set API credentials
+# Download from releases
+wget https://github.com/alvonellos/BookStack/releases/download/v1.0.0/bookstack-migrate-linux
+chmod +x bookstack-migrate-linux
+
+# Set environment variables
 export BOOKSTACK_TOKEN_ID="your_api_token_id"
 export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
-export BOOKSTACK_BASE_URL="https://your-bookstack.example.com"
 
-# Run tool
-python bookstack-migrate detect          # Find DokuWiki installations
-python bookstack-migrate export \
-  --db bookstack_db \
-  --user root \
-  --password secret \
-  --output ./export
-
-python bookstack-migrate version         # Show version
+# Run
+./bookstack-migrate-linux detect
 ```
 
-## Installation
-
-### From Source
-```bash
-pip install -r requirements.txt
-./bookstack-migrate --help
-```
-
-### From PyPI (when released)
+### Option 2: Python Package
 ```bash
 pip install bookstack-migrate
-bookstack-migrate --help
+
+# Set environment variables
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+
+# Run
+bookstack-migrate detect
+```
+
+### Option 3: From Source
+```bash
+git clone https://github.com/alvonellos/BookStack.git
+cd BookStack
+pip install -e .
+
+# Set environment variables
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+
+# Run
+python bookstack_migrate.py detect
 ```
 
 ### With optional dependencies
@@ -47,21 +56,9 @@ pip install "bookstack-migrate[mariadb]"
 pip install "bookstack-migrate[dev]"
 ```
 
-### With Docker
-```bash
-docker-compose up -d
-```
+## Quick Start
 
-## Environment Variables
-
-The tool requires the following environment variables for API access:
-
-- `BOOKSTACK_TOKEN_ID` - Your BookStack API token ID (required)
-- `BOOKSTACK_TOKEN_SECRET` - Your BookStack API token secret (required)
-- `BOOKSTACK_BASE_URL` (optional) - BookStack instance URL (default: `http://localhost:8000`)
-- `BOOKSTACK_SPEC_CACHE` (optional) - OpenAPI spec cache path (default: `~/.cache/bookstack/openapi.json`)
-
-**To generate API tokens:**
+### Generate BookStack API Token
 1. Log into your BookStack instance as an admin
 2. Go to Settings → Users → [Your User] → API Tokens
 3. Create a new token and save the ID and secret
@@ -72,6 +69,45 @@ The tool requires the following environment variables for API access:
    export BOOKSTACK_BASE_URL="https://your-bookstack.example.com"
    ```
 
+### Detect DokuWiki Installation
+```bash
+bookstack-migrate detect
+# Lists all found installations with paths and permissions
+```
+
+### Export BookStack to DokuWiki Format
+```bash
+bookstack-migrate export \
+  --db bookstack_db \
+  --user root \
+  --password secret \
+  --host localhost \
+  --port 3306 \
+  --output ./export \
+  --driver mysql
+```
+
+### Show Help
+```bash
+bookstack-migrate help
+```
+
+### Check Version
+```bash
+bookstack-migrate version
+```
+
+## Configuration
+
+All configuration is read from environment variables. No interactive prompts.
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| BOOKSTACK_TOKEN_ID | Yes | API token ID from BookStack |
+| BOOKSTACK_TOKEN_SECRET | Yes | API token secret from BookStack |
+| BOOKSTACK_BASE_URL | No | Base URL of BookStack (auto-detected if possible) |
+| BOOKSTACK_SPEC_CACHE | No | Path to cache OpenAPI spec |
+
 ## Features
 
 - Automatic DokuWiki installation detection (apt, manual, Docker)
@@ -80,27 +116,21 @@ The tool requires the following environment variables for API access:
 - Comprehensive error handling and logging
 - Non-interactive: all config via environment variables and CLI flags
 
-## Usage
+## Docker Environment (Full Stack)
 
-### Detect DokuWiki Installations
 ```bash
-bookstack-migrate detect
-```
+# Start all services
+docker-compose up -d
 
-### Export BookStack Database
-```bash
-bookstack-migrate export \
-  --db bookstack_db \
-  --user root \
-  --password secret \
-  --host localhost \
-  --port 3306 \
-  --output ./export
-```
+# Wait for services to be ready (30 seconds)
 
-### Show Version
-```bash
-bookstack-migrate version
+# Access:
+# - BookStack: http://localhost:8000
+# - DokuWiki:  http://localhost:8080
+# - MySQL:     localhost:3306
+
+# Stop all
+docker-compose down
 ```
 
 ## Development
@@ -129,6 +159,7 @@ bash build/binaries.sh
 
 - Python 3.8+
 - Optional: mysql-connector-python for database export
+- Optional: mariadb for database export
 - Optional: Docker for testing environment
 - Optional: pytest for running tests
 - Optional: pyinstaller for building standalone binaries

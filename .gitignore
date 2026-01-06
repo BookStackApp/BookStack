@@ -41,7 +41,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
-/build/
+build/pybuild/
+build/specs/
 develop-eggs/
 dist/
 downloads/

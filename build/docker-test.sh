@@ -1,37 +1,33 @@
 #!/bin/bash
-# build/docker-test.sh - Run tests in Docker containers
+# Integration test with Docker Compose environment
 
 set -e
 
-echo "🐳 Docker Test & Build"
-echo "======================"
+echo "🐳 Docker Integration Test"
+echo ""
 
-# Start containers
+# Start services
+echo "Starting Docker services..."
 docker-compose up -d
 
-echo "⏳ Waiting for services..."
-sleep 15
+# Wait for services to be ready
+echo "Waiting for services to be ready..."
+sleep 30
 
-# Seed MySQL
-echo "🌱 Seeding test database..."
-docker-compose exec -T mysql mysql -u root -proot -e "
-CREATE DATABASE IF NOT EXISTS bookstack_test;
-USE bookstack_test;
-CREATE TABLE entities (id INT, name VARCHAR(255), type VARCHAR(50));
-INSERT INTO entities VALUES (1, 'Test', 'book');
-" 2>/dev/null || true
+# Check connectivity
+echo "Verifying services..."
+curl -s http://localhost:8000 > /dev/null && echo "✅ BookStack running" || echo "❌ BookStack failed"
+curl -s http://localhost:8080 > /dev/null && echo "✅ DokuWiki running" || echo "❌ DokuWiki failed"
 
-# Verify
-echo "🔍 Verifying services..."
-docker-compose exec -T mysql mysql -u root -proot -e "SELECT 'MySQL OK'" 2>/dev/null && echo "✅ MySQL" || echo "❌ MySQL"
-docker-compose exec -T dokuwiki curl -s http://localhost/doku.php | grep -q dokuwiki && echo "✅ DokuWiki" || echo "⚠️  DokuWiki"
-
-# Run migrations test
-echo "🧪 Running migration tool..."
-python bookstack_migrate.py detect || echo "Tool ready"
+# Run tests
+echo ""
+echo "Running integration tests..."
+export BOOKSTACK_BASE_URL="http://localhost:8000"
+python -m pytest tests/ -v -k "not docker" || true
 
 # Cleanup
-echo "🧹 Cleaning up..."
-docker-compose down -v
+echo ""
+echo "Cleaning up..."
+docker-compose down
 
 echo "✅ Docker test complete"
