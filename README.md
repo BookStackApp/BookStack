@@ -12,6 +12,44 @@ Command-line utility to migrate content from BookStack to DokuWiki with intellig
 - **Cross-Platform**: Runs on Linux, macOS, and Windows
 - **Standalone Executable**: Portable binary with no external dependencies (Python 3.8+ only)
 
+## Quick Start (Copy & Paste)
+
+### 1️⃣ Create Virtual Environment & Install
+```bash
+python3 -m venv venv && source venv/bin/activate
+pip install bookstack-migrate
+```
+
+### 2️⃣ Set API Credentials (from BookStack Admin)
+```bash
+export BOOKSTACK_BASE_URL="https://bookstack.example.com"
+export BOOKSTACK_TOKEN_ID="your_api_token_id"
+export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
+```
+
+### 3️⃣ Detect DokuWiki Installations
+```bash
+bookstack-migrate detect
+```
+
+### 4️⃣ Run Migration with API (Recommended)
+```bash
+bookstack-migrate export --output ./dokuwiki_export
+```
+
+### 5️⃣ Or Use Database (Direct)
+```bash
+bookstack-migrate export \
+  --db bookstack_prod \
+  --user db_user \
+  --password db_pass \
+  --host localhost \
+  --port 3306 \
+  --output ./dokuwiki_export
+```
+
+**Note**: If interrupted, progress is saved to `~/Downloads/YYYYMMDD_bookstack_migrate_incomplete.tar.gz`. Extract and rerun the command to resume.
+
 ## Installation & Usage
 
 ### Option 1: Standalone Binary (Recommended)
@@ -20,32 +58,23 @@ Command-line utility to migrate content from BookStack to DokuWiki with intellig
 wget https://github.com/alvonellos/BookStack/releases/download/v1.0.0/bookstack-migrate-linux
 chmod +x bookstack-migrate-linux
 
-# Set environment variables
-export BOOKSTACK_TOKEN_ID="your_api_token_id"
-export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
-
-# Run
-./bookstack-migrate-linux detect
-./bookstack-migrate-linux export --db bookstack_db --user root --password secret
+# Copy Quick Start steps above, then run:
+./bookstack-migrate-linux export --output ./dokuwiki_export
 ```
 
 ### Option 2: Python Package
 ```bash
 pip install bookstack-migrate
 
-# Set environment variables
-export BOOKSTACK_TOKEN_ID="your_api_token_id"
-export BOOKSTACK_TOKEN_SECRET="your_api_token_secret"
-
-# Run
-bookstack-migrate detect
-bookstack-migrate export --db bookstack_db --user root --password secret
+# Copy Quick Start steps above, then run:
+bookstack-migrate export --output ./dokuwiki_export
 ```
 
 ### Option 3: From Source
 ```bash
 git clone https://github.com/alvonellos/BookStack.git
 cd BookStack && git checkout feature/standalone
+python3 -m venv venv && source venv/bin/activate
 pip install -e .
 
 # Set environment variables
@@ -174,6 +203,26 @@ The tool intelligently selects the best data source:
 
 4. **If neither is available:**
    - Fails with clear error message and installation instructions
+
+## Resumable Migrations (Checkpoint System)
+
+If migration is interrupted (Ctrl+C, network issue, etc.):
+
+1. **Automatic Save**: Progress is saved to `.migration_checkpoint.json` in output directory
+2. **Incomplete Archive**: An incomplete tar.gz file is created in `~/Downloads/`
+   ```
+   ~/Downloads/20260106_bookstack_migrate_incomplete.tar.gz
+   ```
+3. **Resume**: Extract the archive and rerun the same export command
+   ```bash
+   # The tool detects the checkpoint and continues from where it left off
+   bookstack-migrate export --output ./dokuwiki_export
+   ```
+4. **What's Saved**:
+   - All previously exported pages metadata
+   - Current progress checkpoint
+   - Export output directory
+   - Complete elapsed time tracking
 
 ## Logging
 

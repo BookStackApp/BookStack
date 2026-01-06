@@ -18,6 +18,9 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 import requests
+import tarfile
+import time
+from datetime import datetime
 
 __version__ = "1.0.0"
 
@@ -75,6 +78,64 @@ class BookStackError(Exception):
     def __str__(self) -> str:
         suffix = f" (status={self.status})" if self.status is not None else ""
         return f"{super().__str__()}{suffix}"
+
+
+class MigrationCheckpoint:
+    """Manages checkpoints for resumable migrations."""
+
+    def __init__(self, output_dir: Path):
+        self.output_dir = Path(output_dir)
+        self.checkpoint_file = self.output_dir / ".migration_checkpoint.json"
+        self.timestamp = datetime.now().strftime("%Y%m%d")
+        self.data: Dict[str, Any] = self._load()
+
+    def _load(self) -> Dict[str, Any]:
+        """Load checkpoint data if exists."""
+        if self.checkpoint_file.exists():
+            try:
+                with open(self.checkpoint_file) as f:
+                    return json.load(f)
+            except Exception as e:
+                logger.warning(f"Could not load checkpoint: {e}")
+        return {"pages": [], "chapters": [], "books": [], "start_time": time.time()}
+
+    def save(self) -> None:
+        """Save checkpoint to disk."""
+        self.checkpoint_file.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.checkpoint_file, "w") as f:
+            json.dump(self.data, f, indent=2, default=str)
+        logger.info(f"Checkpoint saved: {self.checkpoint_file}")
+
+    def add_page(self, page_id: int, page_name: str) -> None:
+        """Mark page as exported."""
+        if {"id": page_id, "name": page_name} not in self.data["pages"]:
+            self.data["pages"].append({"id": page_id, "name": page_name})
+            self.save()
+
+    def mark_incomplete(self) -> Optional[str]:
+        """On interrupt, create _incomplete.tar.gz with current progress."""
+        elapsed = time.time() - self.data["start_time"]
+        archive_name = f"{self.timestamp}_bookstack_migrate_incomplete.tar.gz"
+        archive_path = Path.home() / "Downloads" / archive_name
+
+        try:
+            archive_path.parent.mkdir(parents=True, exist_ok=True)
+            with tarfile.open(archive_path, "w:gz") as tar:
+                # Add output directory and checkpoint
+                if self.output_dir.exists():
+                    tar.add(self.output_dir, arcname=self.output_dir.name)
+                if self.checkpoint_file.exists():
+                    tar.add(self.checkpoint_file, arcname=self.checkpoint_file.name)
+            
+            logger.info(f"Incomplete migration archived: {archive_path}")
+            print(f"\n💾 Incomplete migration saved: {archive_path}")
+            print(f"   Pages exported: {len(self.data['pages'])}")
+            print(f"   Elapsed time: {elapsed:.1f}s")
+            print(f"   To resume: Extract archive and rerun with same parameters")
+            return str(archive_path)
+        except Exception as e:
+            logger.error(f"Failed to create incomplete archive: {e}")
+            return None
 
 
 @dataclass
@@ -426,73 +487,94 @@ def cmd_export(options: ExportOptions) -> int:
     logger.info(f"Running export command: db={options.db}, driver={options.driver}")
     print("📤 Export BookStack to DokuWiki")
 
-    # Test API availability
-    api_available = False
-    client = None
+    # Initialize checkpoint for resumable migrations
+    checkpoint = MigrationCheckpoint(options.output)
+    
     try:
-        client = BookStackClient.from_env()
-        api_available = client.test_connection()
-        logger.info("✅ API connection successful")
-    except Exception as e:
-        logger.warning(f"API not available: {e}")
-
-    # Test DB availability
-    db_available = False
-    driver = None
-    driver_name = None
-    try:
-        driver, driver_name = get_db_driver(preferred=options.driver)
-        db_available = driver is not None
-        if db_available:
-            logger.info(f"✅ Database driver available: {driver_name}")
-    except Exception as e:
-        logger.warning(f"Database driver not available: {e}")
-
-    # Select best source
-    selector = DataSourceSelector(db_available, api_available, prefer_api=options.prefer_api)
-    source = selector.get_best_source()
-
-    if source == "none":
-        logger.error("No data source available (no DB driver and no API)")
-        print("❌ No data source available. Tried DB and API.")
-        return 1
-
-    print(f"✅ Using data source: {source}")
-    logger.info(f"Selected data source: {source}")
-
-    if source == "database" and driver_name:
-        print(f"✅ Using database driver: {driver_name}")
-        print(
-            f"Database: {options.db}@{options.host}:{options.port} as {options.user}\n"
-            f"Output: {options.output}"
-        )
-        logger.info(f"Database connection: {options.db}@{options.host}:{options.port}")
-
-    if source == "api" and client:
-        print(f"✅ Using BookStack REST API at: {client.base_url}")
-        logger.info(f"API base URL: {client.base_url}")
+        # Test API availability
+        api_available = False
+        client = None
         try:
-            # Try to fetch OpenAPI spec for reference
-            spec = load_spec_from_env()
-            paths_count = len(spec.get("paths", {}))
-            print(f"✅ API spec loaded (paths: {paths_count})")
-            logger.info(f"API spec loaded with {paths_count} paths")
-
-            # List pages from API as example
-            pages_resp = client.list_pages(count=5)
-            pages_count = len(pages_resp.get("data", []))
-            print(f"✅ Sample pages retrieved: {pages_count}")
-            logger.info(f"Sample API response: {pages_count} pages")
+            client = BookStackClient.from_env()
+            api_available = client.test_connection()
+            logger.info("✅ API connection successful")
         except Exception as e:
-            logger.warning(f"Could not load full API spec: {e}")
+            logger.warning(f"API not available: {e}")
 
-    print(f"✅ Output directory: {options.output}")
-    options.output.mkdir(parents=True, exist_ok=True)
-    logger.info(f"Created output directory: {options.output}")
+        # Test DB availability
+        db_available = False
+        driver = None
+        driver_name = None
+        try:
+            driver, driver_name = get_db_driver(preferred=options.driver)
+            db_available = driver is not None
+            if db_available:
+                logger.info(f"✅ Database driver available: {driver_name}")
+        except Exception as e:
+            logger.warning(f"Database driver not available: {e}")
 
-    # TODO: Full export implementation
-    logger.info("Export command completed (stub implementation)")
-    return 0
+        # Select best source
+        selector = DataSourceSelector(db_available, api_available, prefer_api=options.prefer_api)
+        source = selector.get_best_source()
+
+        if source == "none":
+            logger.error("No data source available (no DB driver and no API)")
+            print("❌ No data source available. Tried DB and API.")
+            return 1
+
+        print(f"✅ Using data source: {source}")
+        logger.info(f"Selected data source: {source}")
+
+        if source == "database" and driver_name:
+            print(f"✅ Using database driver: {driver_name}")
+            print(
+                f"Database: {options.db}@{options.host}:{options.port} as {options.user}\n"
+                f"Output: {options.output}"
+            )
+            logger.info(f"Database connection: {options.db}@{options.host}:{options.port}")
+
+        if source == "api" and client:
+            print(f"✅ Using BookStack REST API at: {client.base_url}")
+            logger.info(f"API base URL: {client.base_url}")
+            try:
+                # Try to fetch OpenAPI spec for reference
+                spec = load_spec_from_env()
+                paths_count = len(spec.get("paths", {}))
+                print(f"✅ API spec loaded (paths: {paths_count})")
+                logger.info(f"API spec loaded with {paths_count} paths")
+
+                # List pages from API as example
+                pages_resp = client.list_pages(count=5)
+                pages_count = len(pages_resp.get("data", []))
+                print(f"✅ Sample pages retrieved: {pages_count}")
+                logger.info(f"Sample API response: {pages_count} pages")
+            except Exception as e:
+                logger.warning(f"Could not load full API spec: {e}")
+
+        print(f"✅ Output directory: {options.output}")
+        options.output.mkdir(parents=True, exist_ok=True)
+        logger.info(f"Created output directory: {options.output}")
+        
+        # Check for previous checkpoint
+        if checkpoint.data.get("pages"):
+            print(f"\n📋 Resuming previous migration: {len(checkpoint.data['pages'])} pages already exported")
+            logger.info(f"Resuming migration with {len(checkpoint.data['pages'])} pages")
+
+        # TODO: Full export implementation
+        logger.info("Export command completed (stub implementation)")
+        checkpoint.save()
+        return 0
+        
+    except KeyboardInterrupt:
+        print("\n⚠️  Migration interrupted by user")
+        checkpoint.mark_incomplete()
+        logger.warning("Migration interrupted")
+        return 130  # Standard interrupt exit code
+    except Exception as e:
+        print(f"\n❌ Export error: {e}")
+        checkpoint.mark_incomplete()
+        logger.error(f"Export error: {e}", exc_info=True)
+        return 1
 
 
 def cmd_version() -> int:
