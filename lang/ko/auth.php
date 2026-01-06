@@ -17,7 +17,7 @@ return [
     'logout' => '로그아웃',
 
     'name' => '이름',
-    'username' => '사용자 이름',
+    'username' => '이용자명',
     'email' => '전자우편 주소',
     'password' => '비밀번호',
     'password_confirm' => '비밀번호 확인',
