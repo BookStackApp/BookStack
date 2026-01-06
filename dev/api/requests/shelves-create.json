@@ -1,8 +1,0 @@
-{
-  "name": "My shelf",
-  "description_html": "<p>This is <strong>my shelf</strong> with some books</p>",
-  "books": [5,1,3],
-  "tags": [
-    {"name": "Category", "value": "Learning"}
-  ]
-}

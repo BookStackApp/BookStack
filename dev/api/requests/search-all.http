@@ -1,1 +1,0 @@
-GET /api/search?query=cats+{created_by:me}&page=1&count=2

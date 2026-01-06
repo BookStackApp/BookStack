@@ -1,8 +1,0 @@
-{
-  "name": "My updated book",
-  "description_html": "<p>This is my book with <em>updated</em> details</p>",
-  "default_template_id": 2427,
-  "tags": [
-    {"name": "Subject", "value": "Updates"}
-  ]
-}

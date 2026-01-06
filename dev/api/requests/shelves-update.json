@@ -1,5 +1,0 @@
-{
-  "name": "My updated shelf",
-  "description_html": "<p>This is my <em>updated shelf</em> with some books</p>",
-  "books": [5,1,3]
-}

@@ -1,0 +1,4 @@
+# BookStack Migration Tool Dependencies
+
+# Optional: MySQL driver for database operations
+mysql-connector-python>=8.0.0; python_version >= "3.7"
