@@ -50,9 +50,9 @@ return [
     'bookshelf_delete_notification'    => '책장이 성공적으로 삭제되었습니다.',
 
     // Revisions
-    'revision_restore' => '버전 복구',
-    'revision_delete' => '버전 삭제',
-    'revision_delete_notification' => '버전 삭제 성공',
+    'revision_restore' => '복구한 수정본',
+    'revision_delete' => '삭제한 수정본',
+    'revision_delete_notification' => '수정본을 잘 삭제함',
 
     // Favourites
     'favourite_add_notification' => '":name" 을 북마크에 추가하였습니다.',
