@@ -1,23 +1,35 @@
 #!/bin/bash
-# Build standalone binaries using zipapp or shiv
+# Build standalone binaries using PyInstaller
 
 set -e
 
 echo "🔨 Building standalone binaries..."
 
+# Check dependencies
+if ! command -v pyinstaller &> /dev/null; then
+    echo "Installing PyInstaller..."
+    pip install pyinstaller
+fi
+
 # Create dist directory
 mkdir -p dist
 
-# Method 1: Try shiv for a standalone .pyz file
-if command -v shiv &> /dev/null; then
-    echo "Building with shiv..."
-    shiv -c bookstack-migrate -o dist/bookstack-migrate-linux .
-    chmod +x dist/bookstack-migrate-linux
-elif command -v python3 -m zipapp &> /dev/null; then
-    echo "Building with zipapp..."
-    python3 -m pip install -q . -t dist/bookstack_app
-    cd dist/bookstack_app
-    python3 -m zipapp -m bookstack_migrate:main -o bookstack-migrate-linux -c .
+# Build Linux binary
+echo "Building bookstack-migrate-linux..."
+pyinstaller \
+    --onefile \
+    --name bookstack-migrate-linux \
+    --specpath build/specs \
+    --distpath dist \
+    --workpath build/pybuild \
+    --noupx \
+    bookstack_migrate.py
+
+# Make executable
+chmod +x dist/bookstack-migrate-linux
+
+echo "✅ Binary built: dist/bookstack-migrate-linux"
+ls -lh dist/bookstack-migrate-linux
     cd ../..
 else
     echo "⚠️  No standalone binary builder found"

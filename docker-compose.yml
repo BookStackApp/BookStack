@@ -27,6 +27,7 @@ services:
       DB_PASSWORD: bookstack_pass
       APP_URL: http://localhost:8000
       APP_DEBUG: "false"
+      APP_KEY: base64:SomeRandomStringOf32CharactersLong
     ports:
       - "8000:80"
     depends_on:
