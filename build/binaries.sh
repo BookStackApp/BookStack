@@ -9,8 +9,8 @@ pip install -q pyinstaller
 
 # Linux x64
 echo "🐧 Linux x64..."
-pyinstaller --onefile --name bookstack-migrate-linux bookstack-migrate
-mv dist/bookstack-migrate-linux dist/bookstack-migrate-linux-x64 2>/dev/null || true
+pyinstaller --onefile --name bookstack-migrate bookstack_migrate.py
+mv dist/bookstack-migrate dist/bookstack-migrate-linux-x64 2>/dev/null || true
 
 echo "✅ Binaries ready in dist/"
 ls -lh dist/bookstack-migrate* 2>/dev/null || echo "  (build output)"

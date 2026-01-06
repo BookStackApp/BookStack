@@ -15,7 +15,7 @@ echo "✅ Setup complete"
 # 2. Lint
 echo ""
 echo "2️⃣  Quality checks..."
-python -m py_compile bookstack-migrate bookstack_migrate.py bookstack_api.py 2>/dev/null || true
+python -m py_compile bookstack_migrate.py bookstack_api.py tests/ 2>/dev/null || true
 echo "✅ Syntax OK"
 
 # 3. Unit tests

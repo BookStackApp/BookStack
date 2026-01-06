@@ -6,7 +6,7 @@ import sys
 def test_help():
     """Test help command."""
     result = subprocess.run(
-        [sys.executable, "bookstack-migrate", "help"],
+        [sys.executable, "bookstack_migrate.py", "help"],
         capture_output=True,
         text=True,
     )
@@ -17,7 +17,7 @@ def test_help():
 def test_version():
     """Test version command."""
     result = subprocess.run(
-        [sys.executable, "bookstack-migrate", "version"],
+        [sys.executable, "bookstack_migrate.py", "version"],
         capture_output=True,
         text=True,
     )
@@ -28,7 +28,7 @@ def test_version():
 def test_detect_no_dokuwiki():
     """Test detect command when no DokuWiki is installed."""
     result = subprocess.run(
-        [sys.executable, "bookstack-migrate", "detect"],
+        [sys.executable, "bookstack_migrate.py", "detect"],
         capture_output=True,
         text=True,
     )
@@ -39,7 +39,7 @@ def test_detect_no_dokuwiki():
 def test_export_missing_args():
     """Test export command requires arguments."""
     result = subprocess.run(
-        [sys.executable, "bookstack-migrate", "export"],
+        [sys.executable, "bookstack_migrate.py", "export"],
         capture_output=True,
         text=True,
     )

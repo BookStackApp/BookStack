@@ -47,7 +47,8 @@ echo ""
 echo "4️⃣  Creating archive..."
 cd /workspaces/BookStack
 tar -czf "${RELEASE_DIR}/bookstack-migrate-${VERSION}-complete.tar.gz" \
-    bookstack-migrate \
+    bookstack_migrate.py \
+    bookstack_api.py \
     pyproject.toml \
     requirements.txt \
     README.md \

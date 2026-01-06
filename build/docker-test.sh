@@ -28,7 +28,7 @@ docker-compose exec -T dokuwiki curl -s http://localhost/doku.php | grep -q doku
 
 # Run migrations test
 echo "🧪 Running migration tool..."
-python bookstack-migrate detect || echo "Tool ready"
+python bookstack_migrate.py detect || echo "Tool ready"
 
 # Cleanup
 echo "🧹 Cleaning up..."

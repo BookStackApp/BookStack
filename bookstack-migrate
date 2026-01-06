@@ -1,8 +1,0 @@
-#!/usr/bin/env python3
-"""Compat wrapper that forwards to the packaged module."""
-
-from bookstack_migrate import main
-
-
-if __name__ == "__main__":
-    raise SystemExit(main() or 0)
