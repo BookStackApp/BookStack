@@ -26,9 +26,9 @@ Procedures for migrating existing BookStack database instances.
 
 ## 🎯 Quick Links
 
-- **[migrate.py](../../migrate.py)** - Main migration script (57KB)
-- **[test_hierarchical_export.py](../../test_hierarchical_export.py)** - Test & validation script
-- **[Migration Logs](../../migration_logs/)** - Execution logs
+- **[migrate.py](../../migrate.py)** - Experimental BookStack → DokuWiki export helper (books/chapters/pages only)
+- **[test_hierarchical_export.py](../../test_hierarchical_export.py)** - Test & validation script (for the experimental exporter)
+- **[Migration Logs](../../migration_logs/)** - Execution logs created by the exporter
 
 ---
 
@@ -36,8 +36,8 @@ Procedures for migrating existing BookStack database instances.
 
 | Tool | Purpose | Status |
 |------|---------|--------|
-| migrate.py | BookStack → DokuWiki export | ✅ Complete |
-| Backup utility | Database & file backup | ✅ Integrated |
+| migrate.py | BookStack → DokuWiki export (text content only) | ⚠️ Experimental |
+| Backup utility | Database & file backup (best effort) | ✅ Integrated |
 | Schema inspector | Database analysis | ✅ Integrated |
 | Dry-run mode | Test without changes | ✅ Available |
 

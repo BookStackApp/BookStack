@@ -1,6 +1,8 @@
 # DokuWiki Export Guide
 
-> Complete guide to exporting BookStack content to DokuWiki format
+> Complete guide to exporting BookStack content to DokuWiki format.
+
+**Note:** The bundled exporter is experimental and focused on text content (books, chapters, pages). It does **not** move attachments/media or rewrite internal links. Use it in staging and validate results before touching production data.
 
 ---
 
@@ -10,30 +12,33 @@
 
 The BookStack to DokuWiki migration tool (`migrate.py`) exports your entire BookStack installation into DokuWiki's flat-file structure while preserving the hierarchical organization.
 
-### Key Features
+### Key Features & Limits
 
 ✅ **Hierarchical Structure Preservation**
 - Books → Directories with `start.txt`
 - Chapters → Subdirectories with `start.txt`
 - Pages → Individual `.txt` files
-- Proper namespace organization
 
 ✅ **Automatic Schema Detection**
 - Detects BookStack v24+ unified entity model
 - Falls back to legacy separate-tables schema
-- No manual table selection required for standard setups
+- Manual selection offered if detection fails
 
-✅ **Content Conversion**
-- HTML → DokuWiki markup
-- Markdown → DokuWiki markup
-- Preserves formatting, headers, lists
-- Handles images and attachments
+✅ **Content Conversion (basic)**
+- HTML/Markdown → DokuWiki-ish markup (simplified)
+- Headers, bold, italics, lists
+- **Attachments/media are not exported or rewritten**
 
 ✅ **Safety Features**
-- Database backup before export
+- Optional backup step before export
 - Dry-run mode for testing
-- Comprehensive logging
-- Error recovery
+- Logging to `migration_logs/`
+
+### Limitations
+
+- Does not move or rewrite attachments/media; copy uploads manually if needed.
+- Does not rewrite internal links; review and fix links after import.
+- Conversion is lightweight and may lose complex formatting or embeds.
 
 ---
 
@@ -197,8 +202,9 @@ EOF
 2. ✅ Identify content tables (auto-detected)
 3. ✅ Load all entities (books, chapters, pages)
 4. ✅ Create directory structure
-5. ✅ Export content to DokuWiki format
+5. ✅ Export text content to DokuWiki format
 6. ✅ Generate `start.txt` index files
+7. ⚠️  Attachments/media are **not** exported; copy uploads manually if needed
 
 **Output Structure:**
 ```
@@ -485,6 +491,19 @@ $conf['indexdelay'] = 0;  # Rebuild search index immediately
 # In DokuWiki root
 php bin/indexer.php -c
 ```
+
+---
+
+## 🧹 Cleanup
+
+- Delete test exports after verification:
+   ```bash
+   rm -rf dokuwiki_export
+   ```
+- Remove old backups you no longer need, keeping at least one known-good copy:
+   ```bash
+   rm -rf backup/bookstack_backup_*
+   ```
 
 ---
 

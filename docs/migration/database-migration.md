@@ -1,6 +1,8 @@
 # Database Migration Procedures
 
-> Procedures for migrating existing BookStack database instances
+> Procedures for migrating existing BookStack database instances.
+
+**Important:** The bundled `migrate.py` script is an **experimental** BookStack → DokuWiki exporter with a best-effort backup helper. Use standard database tools for production migrations between BookStack instances, and treat the exporter as an optional, staging-only utility.
 
 ---
 
@@ -14,10 +16,15 @@
 - PHP 7.4+ (for older versions) or 8.1+ (for v24+)
 - Database access credentials
 
-**Target System:**
-- Python 3.8+ with `mysql-connector-python` or `pymysql`
+**Target System (standard BookStack → BookStack moves):**
+- MySQL/MariaDB client tools available (`mysqldump`, `mysql`)
 - Network access to source database
 - Sufficient disk space (2x database size)
+
+**Optional (experimental BookStack → DokuWiki export):**
+- Python 3.8+
+- `mysql-connector-python` **or** `pymysql`
+- Access to the source BookStack database
 
 ### Pre-Migration Checklist
 
@@ -33,15 +40,16 @@
 
 ## 📖 Chapter 2: Migration Script
 
-### Script Overview
+### Script Overview (experimental)
 
-The `migrate.py` script provides comprehensive database migration capabilities:
+The `migrate.py` script is an **experimental, best-effort** helper focused on:
 
-```python
-# Location: /workspaces/BookStack/migrate.py
-# Size: 57 KB
-# Dependencies: mysql-connector-python OR pymysql
-```
+- Inspecting a BookStack database schema and counting rows
+- Creating a basic backup (database dump + uploads + `.env`) if `mysqldump` is available
+- Exporting BookStack books/chapters/pages to a DokuWiki-style text tree
+- Providing a dry-run mode for visibility
+
+It is **not** an official or supported migration path. Use only in a disposable or staging environment.
 
 ### Features
 
@@ -50,33 +58,29 @@ The `migrate.py` script provides comprehensive database migration capabilities:
 - Automatic version detection
 - Row count and size estimation
 
-✅ **Backup Creation**
-- Full database dump via `mysqldump`
-- File upload archival
-- Configuration preservation
+✅ **Backup Creation (best effort)**
+- Full database dump via `mysqldump` (falls back to a Python dump when available)
+- File upload archival (`storage/uploads`, `public/uploads`, `.env` if present)
 
-✅ **Export Options**
-- DokuWiki format export
+✅ **Export**
+- BookStack → DokuWiki text export (books/chapters/pages)
 - Hierarchical structure preservation
-- Custom format support (extensible)
+- **Does not** move attachments/media or rewrite internal links
 
 ✅ **Validation**
 - Connectivity testing
 - Dependency checking
 - Dry-run capability
 
-### Installation
+### Installation (experimental exporter)
 
 ```bash
-# 1. Copy migration script
-cp migrate.py /opt/migration/
-
-# 2. Install dependencies
+# Install dependencies
 pip3 install mysql-connector-python
 
-# 3. Test connectivity
+# Run in place (no install step required)
 python3 migrate.py
-# Choose option 1: Run Diagnostics
+# Choose option 1 to run diagnostics
 ```
 
 ---
@@ -311,49 +315,47 @@ php artisan config:cache
    php artisan bookstack:test-environment
    ```
 
-### Procedure 3: Platform Migration
+### Procedure 3: Platform Migration (BookStack → DokuWiki, experimental)
 
-**Use Case:** Migrating BookStack to different platform (e.g., DokuWiki)
+**Use Case:** Exporting BookStack text content for DokuWiki. This exporter is best-effort and does **not** move attachments/media or rewrite internal links.
 
-1. **Create backup:**
+1. **Create backup (recommended):**
    ```bash
    python3 migrate.py
    # Option 4: Create Backup
    ```
 
-2. **Inspect database:**
+2. **Inspect database and dry-run:**
    ```bash
    python3 migrate.py
    # Option 2: Inspect Database Schema
-   ```
-
-3. **Dry run export:**
-   ```bash
-   python3 migrate.py
    # Option 3: Dry Run Export
    ```
 
-4. **Perform export:**
+3. **Perform export:**
    ```bash
    python3 migrate.py
    # Option 5: Export to DokuWiki
    ```
 
-5. **Verify export:**
+4. **Verify export:**
    ```bash
    tree -L 3 dokuwiki_export
    find dokuwiki_export -name "*.txt" | wc -l
    ```
 
-6. **Import to target platform:**
+5. **Move text pages into DokuWiki:**
    ```bash
-   # For DokuWiki:
-   rsync -av dokuwiki_export/ \
-       /var/www/dokuwiki/data/pages/
-   
-   # Rebuild search index:
+   rsync -av dokuwiki_export/ /var/www/dokuwiki/data/pages/
    cd /var/www/dokuwiki
    php bin/indexer.php -c
+   ```
+
+6. **Manually handle attachments/media:**
+   ```bash
+   # Copy uploads if needed (not handled by the exporter)
+   rsync -av /var/www/bookstack/storage/uploads/ /var/www/dokuwiki/data/media/
+   rsync -av /var/www/bookstack/public/uploads/ /var/www/dokuwiki/data/media/
    ```
 
 ---
@@ -551,6 +553,20 @@ mysql -u bookstack -p bookstack -e "
 2. Recover soft-deleted items
 3. Re-upload missing files
 4. Run content regeneration commands
+
+---
+
+## 🧹 Cleanup
+
+- Remove test exports once validated:
+   ```bash
+   rm -rf dokuwiki_export
+   ```
+- Remove old backups you no longer need:
+   ```bash
+   rm -rf backup/bookstack_backup_*
+   ```
+- Keep at least one verified backup before deleting anything.
 
 ---
 
