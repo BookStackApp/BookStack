@@ -12,6 +12,8 @@ services:
       MYSQL_USER: bookstack-test
       MYSQL_PASSWORD: bookstack-test
       MYSQL_RANDOM_ROOT_PASSWORD: 'true'
+    ports:
+      - "3306:3306"
     volumes:
       - ./dev/docker/init.db:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql

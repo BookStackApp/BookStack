@@ -1,21 +1,33 @@
 #!/usr/bin/env python3
 """
-BookStack to DokuWiki Migration Tool
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║      📦 BOOKSTACK TO DOKUWIKI MIGRATION - PYTHON EDITION 📦         ║
+║                                                                      ║
+║  The ONE script because Python is what people actually use           ║
+║                                                                      ║
+║  I use Norton as my antivirus. My WinRAR isn't insecure,            ║
+║  it's vintage. kthxbai.                                             ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
 
-Automates complete migration from BookStack to DokuWiki format including:
-- Database schema inspection and table identification
-- Full database backup with mysqldump
-- Content export to DokuWiki format (.txt files)
-- Metadata export (books/chapters as JSON)
-- Archive creation for portability
-- Complete logging and verification
+Features:
+- Combines ALL Perl/PHP/Shell functionality into Python
+- Overly accommodating when you mess up package installation (gently)
+- Provides intimate guidance through pip/venv/--break-system-packages
+- Tests everything before running
+- Robust error handling (because you WILL break it)
+- Interactive hand-holding through the entire process
 
 Usage:
-    python3 migrate.py                    # Interactive mode
-    python3 migrate.py --full             # Full migration (non-interactive)
-    python3 migrate.py --diagnose         # Check system health
-    python3 migrate.py --backup           # Backup only
-    python3 migrate.py --export           # Export only
+    python3 bookstack_migration.py [--help]
+    
+Or just run it and let it hold your hand:
+    chmod +x bookstack_migration.py
+    ./bookstack_migration.py
+
+Alex Alvonellos
+I use Norton as my antivirus. My WinRAR isn't insecure, it's vintage. kthxbai.
 """
 
 import sys
@@ -23,18 +35,17 @@ import os
 import subprocess
 import json
 import time
+import hashlib
 import shutil
 import re
 import logging
-import argparse
-import tarfile
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
 
 # ============================================================================
-# SETUP & CONFIGURATION
+# LOGGING SETUP - Because we need intimate visibility into operations
 # ============================================================================
 
 def setup_logging():
@@ -45,10 +56,11 @@ def setup_logging():
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     log_file = log_dir / f'migration_{timestamp}.log'
     
+    # Create logger
     logger = logging.getLogger('bookstack_migration')
     logger.setLevel(logging.DEBUG)
     
-    # File handler
+    # File handler - everything
     file_handler = logging.FileHandler(log_file, encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
     file_formatter = logging.Formatter(
@@ -57,7 +69,7 @@ def setup_logging():
     )
     file_handler.setFormatter(file_formatter)
     
-    # Console handler
+    # Console handler - info and above
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
     console_formatter = logging.Formatter('%(message)s')
@@ -66,9 +78,283 @@ def setup_logging():
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
     
+    logger.info(f"📝 Logging to: {log_file}")
+    
     return logger
 
+# Initialize logger
 logger = setup_logging()
+
+# ============================================================================
+# DEPENDENCY MANAGEMENT - Gloating Edition
+# ============================================================================
+
+REQUIRED_PACKAGES = {
+    'mysql-connector-python': 'mysql.connector',
+    'pymysql': 'pymysql',
+}
+
+def gloat_about_python_packages():
+    """Gloat about Python's package management situation (it's complicated)"""
+    logger.info("Checking Python package management situation...")
+    print("""
+╔══════════════════════════════════════════════════════════════════════╗
+║                  🐍 PYTHON PACKAGE MANAGEMENT 🐍                    ║
+║                                                                      ║
+║  Ah yes, Python. The language where:                                 ║
+║  • pip breaks system packages                                        ║
+║  • venv is "recommended" but nobody uses it                          ║
+║  • --break-system-packages is a REAL FLAG                           ║
+║  • Everyone has 47 versions of Python installed                      ║
+║  • pip install works on your machine but nowhere else                ║
+║                                                                      ║
+║  But hey, at least it's not JavaScript! *nervous laughter*           ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+""")
+
+def check_dependencies() -> Tuple[bool, List[str]]:
+    """Check if required packages are installed - My precious, my precious!"""
+    missing = []
+    
+    for package, import_name in REQUIRED_PACKAGES.items():
+        try:
+            __import__(import_name)
+        except ImportError:
+            missing.append(package)
+            logger.debug(f"Missing package: {package}")
+    
+    return len(missing) == 0, missing
+
+def try_install_package_least_invasive(pkg: str) -> bool:
+    """
+    Try to install package, least invasive option first - precious strategy!
+    My precious, we try gently... then aggressively. That's the way.
+    """
+    logger.info(f"Trying to install {pkg} (least invasive first)...")
+    
+    # Option 1: Try pip3 with normal install
+    try:
+        logger.debug(f"  Attempt 1: pip3 install {pkg}")
+        subprocess.check_call(
+            ['pip3', 'install', pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"✅ {pkg} installed via pip3")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        logger.debug(f"    pip3 failed: {type(e).__name__}")
+    
+    # Option 2: Try pip (in case pip3 doesn't exist)
+    try:
+        logger.debug(f"  Attempt 2: pip install {pkg}")
+        subprocess.check_call(
+            ['pip', 'install', pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"✅ {pkg} installed via pip")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        logger.debug(f"    pip failed: {type(e).__name__}")
+    
+    # Option 3: Try python3 -m pip (most portable)
+    try:
+        logger.debug(f"  Attempt 3: python3 -m pip install {pkg}")
+        subprocess.check_call(
+            [sys.executable, '-m', 'pip', 'install', pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"✅ {pkg} installed via python3 -m pip")
+        return True
+    except subprocess.CalledProcessError as e:
+        logger.debug(f"    python3 -m pip failed: {e}")
+    
+    # Option 4: Try --user flag (per-user install, less invasive)
+    try:
+        logger.debug(f"  Attempt 4: pip3 install --user {pkg}")
+        subprocess.check_call(
+            ['pip3', 'install', '--user', pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"✅ {pkg} installed via pip3 --user")
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        logger.debug(f"    pip3 --user failed: {type(e).__name__}")
+    
+    # Option 5: Try python3 -m pip --user
+    try:
+        logger.debug(f"  Attempt 5: python3 -m pip install --user {pkg}")
+        subprocess.check_call(
+            [sys.executable, '-m', 'pip', 'install', '--user', pkg],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"✅ {pkg} installed via python3 -m pip --user")
+        return True
+    except subprocess.CalledProcessError as e:
+        logger.debug(f"    python3 -m pip --user failed: {e}")
+    
+    # Last resort: --break-system-packages (only if user explicitly allows)
+    logger.warning(f"❌ All gentle installation attempts failed for {pkg}")
+    return False
+
+def offer_to_install_packages(missing: List[str]) -> bool:
+    """
+    Offer to install packages - We hisses at the dependencies, my precious!
+    Tries automatic installation, then asks user what to do.
+    """
+    print(f"\n❌ Missing packages: {', '.join(missing)}")
+    logger.warning(f"Missing packages: {', '.join(missing)}")
+    print("\nOh no! You don't have the required packages installed!")
+    print("But don't worry, my precious... we can fix this...\n")
+    
+    # Try automatic installation (least invasive options)
+    print("🤔 Let me try to install these automatically...\n")
+    
+    all_installed = True
+    for pkg in missing:
+        if not try_install_package_least_invasive(pkg):
+            all_installed = False
+            logger.error(f"⚠️  Failed to auto-install {pkg}")
+    
+    if all_installed:
+        print("\n✅ All packages installed successfully!")
+        return True
+    
+    # If automatic installation failed, ask user
+    print("\nAutomatic installation failed. Let me show you the options:\n")
+    print("1. 💀 --break-system-packages (NOT RECOMMENDED - nuclear option)")
+    print("2. 🎁 Create venv (proper way, install once and reuse)")
+    print("3. 📝 Just show me the command (I'll do it myself)")
+    print("4. 🚪 Exit and give up")
+    print()
+    
+    while True:
+        choice = input("Please choose (1-4): ").strip()
+        
+        if choice == '1':
+            print("\n⚠️  WARNING: Using --break-system-packages WILL modify system Python!")
+            print("   This can break other Python tools on your system.")
+            confirm = input("   Are you REALLY sure? Type 'yes' to continue: ").strip().lower()
+            
+            if confirm == 'yes':
+                print("\n💀 Using --break-system-packages... *at your own risk*")
+                for pkg in missing:
+                    try:
+                        subprocess.check_call([
+                            sys.executable, '-m', 'pip', 'install',
+                            '--break-system-packages', pkg
+                        ])
+                        logger.info(f"✅ {pkg} installed via --break-system-packages")
+                    except subprocess.CalledProcessError as e:
+                        print(f"\n❌ Even --break-system-packages failed for {pkg}: {e}")
+                        logger.error(f"--break-system-packages failed for {pkg}: {e}")
+                        return False
+                return True
+            else:
+                print("   Smart choice. Try option 2 instead.\n")
+                continue
+            
+        elif choice == '2':
+            print("\n🎓 Creating virtual environment (the RIGHT way)...")
+            venv_path = Path.cwd() / 'migration_venv'
+            try:
+                subprocess.check_call([sys.executable, '-m', 'venv', str(venv_path)])
+                pip_path = venv_path / 'bin' / 'pip'
+                
+                print("   Installing packages into venv...")
+                for pkg in missing:
+                    subprocess.check_call([str(pip_path), 'install', pkg])
+                
+                print(f"\n✅ Packages installed in venv!")
+                print(f"\nNow activate it and run migration:")
+                print(f"  source {venv_path}/bin/activate")
+                print(f"  python3 {sys.argv[0]}")
+                print()
+                logger.info("Venv created successfully")
+                return False  # They need to rerun in venv
+                
+            except subprocess.CalledProcessError as e:
+                print(f"\n❌ venv creation failed: {e}")
+                logger.error(f"venv creation failed: {e}")
+                return False
+                
+        elif choice == '3':
+            print("\n📝 Here's what you need to run:\n")
+            for pkg in missing:
+                print(f"pip3 install {pkg}")
+                print(f"  or")
+                print(f"pip install --user {pkg}")
+                print()
+            print("Or use venv (safest):")
+            print(f"python3 -m venv migration_venv")
+            print(f"source migration_venv/bin/activate")
+            print(f"pip install {' '.join(missing)}")
+            print()
+            sys.exit(1)
+            
+        elif choice == '4':
+            print("\n😢 Understood. Can't work without packages though.")
+            logger.error("User chose to exit")
+            sys.exit(1)
+        else:
+            print("❌ Invalid choice. Please choose 1-4.")
+
+# ============================================================================
+# OS DETECTION AND INSULTS
+# ============================================================================
+
+def detect_os_and_insult():
+    """Detect OS and appropriately roast the user"""
+    os_name = sys.platform
+    
+    if os_name.startswith('linux'):
+        print("\n💻 Linux detected.")
+        print("   You should switch to Windows for better gaming performance.")
+        print("   Just kidding - you're doing great, sweetie. 🐧")
+        return 'linux'
+        
+    elif os_name == 'darwin':
+        print("\n🍎 macOS detected.")
+        print("   Real twink boys make daddy buy them a new one when it breaks.")
+        print("   But at least your Unix shell works... *chef's kiss* 💋")
+        return 'macos'
+        
+    elif os_name == 'win32':
+        print("\n🪟 Windows detected.")
+        print("   You should switch to Mac for that sweet, sweet Unix terminal.")
+        print("   Or just use WSL like everyone else who got stuck on Windows.")
+        return 'windows'
+        
+    else:
+        print(f"\n❓ Unknown OS: {os_name}")
+        print("   What exotic system are you running? FreeBSD? TempleOS?")
+        return 'unknown'
+
+# ============================================================================
+# MEAN GIRLS GLOATING
+# ============================================================================
+
+def gloat_regina_george(task_name: str, duration: float):
+    """Gloat like Regina George when something takes too long"""
+    if duration > 5.0:
+        print(f"\n💅 {task_name} took {duration:.1f} seconds?")
+        print("   Stop trying to make fetch happen! It's not going to happen!")
+        print("   (But seriously, that's quite sluggish)")
+    elif duration > 10.0:
+        print(f"\n💅 {task_name} took {duration:.1f} seconds...")
+        print("   Is butter a carb? Because this migration sure is slow.")
+    elif duration > 30.0:
+        print(f"\n💅 {task_name} took {duration:.1f} seconds!?")
+        print("   On Wednesdays we wear pink. On other days we wait for migrations.")
+
+# ============================================================================
+# DATABASE CONNECTION
+# ============================================================================
 
 @dataclass
 class DatabaseConfig:
@@ -79,83 +365,27 @@ class DatabaseConfig:
     password: str
     port: int = 3306
 
-# ============================================================================
-# DEPENDENCY MANAGEMENT
-# ============================================================================
-
-REQUIRED_PACKAGES = {
-    'mysql-connector-python': 'mysql.connector',
-    'pymysql': 'pymysql',
-}
-
-def check_and_install_dependencies():
-    """Auto-install dependencies with multiple fallback strategies"""
-    logger.info("Checking dependencies...")
-    print("\n🔧 Checking Python packages...")
+def load_env_file(env_path: str = None) -> Dict[str, str]:
+    """Load Laravel .env file from standard BookStack location or fallback paths"""
+    paths_to_try = []
     
-    missing = []
-    for package, import_name in REQUIRED_PACKAGES.items():
-        try:
-            __import__(import_name)
-            print(f"   ✅ {package}")
-        except ImportError:
-            missing.append(package)
-            print(f"   ❌ {package} (missing)")
+    # If user provided path, try it first
+    if env_path:
+        paths_to_try.append(env_path)
     
-    if not missing:
-        print("\n✅ All packages installed!")
-        return True
-    
-    print(f"\n⚠️  Missing packages: {', '.join(missing)}")
-    print("   Attempting auto-installation...\n")
-    
-    for pkg in missing:
-        installed = False
-        
-        # Try pip3
-        if subprocess.run(['pip3', 'install', pkg], 
-                         stdout=subprocess.DEVNULL, 
-                         stderr=subprocess.DEVNULL).returncode == 0:
-            print(f"   ✅ Installed {pkg} via pip3")
-            installed = True
-        # Try python3 -m pip
-        elif subprocess.run([sys.executable, '-m', 'pip', 'install', pkg],
-                           stdout=subprocess.DEVNULL,
-                           stderr=subprocess.DEVNULL).returncode == 0:
-            print(f"   ✅ Installed {pkg} via python -m pip")
-            installed = True
-        # Try with --user
-        elif subprocess.run([sys.executable, '-m', 'pip', 'install', '--user', pkg],
-                           stdout=subprocess.DEVNULL,
-                           stderr=subprocess.DEVNULL).returncode == 0:
-            print(f"   ✅ Installed {pkg} via python -m pip --user")
-            installed = True
-        
-        if not installed:
-            print(f"\n   ❌ Could not auto-install {pkg}")
-            print(f"   Try manually: pip3 install {pkg}")
-            logger.error(f"Failed to auto-install {pkg}")
-            return False
-    
-    print("\n✅ Dependencies installed!")
-    return True
-
-# ============================================================================
-# ENVIRONMENT LOADING
-# ============================================================================
-
-def load_env_file() -> Dict[str, str]:
-    """Load .env file from standard BookStack locations"""
-    paths_to_try = [
-        '/var/www/bookstack/.env',
-        '/var/www/html/.env',
-        '.env',
-        '../.env',
-        '../../.env',
-    ]
+    # Standard paths in priority order
+    paths_to_try.extend([
+        '/var/www/bookstack/.env',      # Standard BookStack location (most likely)
+        '/var/www/html/.env',           # Alternative standard location
+        '.env',                         # Current directory
+        '../.env',                      # Parent directory
+        '../../.env'                    # Two levels up
+    ])
     
     env = {}
+    found_file = None
     
+    # Try each path
     for path in paths_to_try:
         if os.path.exists(path):
             try:
@@ -169,61 +399,53 @@ def load_env_file() -> Dict[str, str]:
                         value = value.strip('\'"')
                         env[key] = value
                 
-                logger.info(f"Loaded .env from: {path}")
-                print(f"\n✅ Found .env: {path}")
-                return env
+                found_file = path
+                logger.info(f"✓ Loaded .env from: {path}")
+                break
             except Exception as e:
                 logger.debug(f"Error reading {path}: {e}")
                 continue
     
-    logger.info("No .env file found in standard locations")
+    if not found_file and env_path is None:
+        logger.info("No .env file found in standard locations")
+    
     return env
 
 def get_database_config() -> Optional[DatabaseConfig]:
-    """Get database config from .env or prompt user"""
+    """Get database configuration from .env or prompt user"""
     env = load_env_file()
     
-    # Check if we have all required fields
+    # Try to get from .env
     if all(k in env for k in ['DB_HOST', 'DB_DATABASE', 'DB_USERNAME', 'DB_PASSWORD']):
-        config = DatabaseConfig(
-            host=env.get('DB_HOST', 'localhost'),
+        return DatabaseConfig(
+            host=env['DB_HOST'],
             database=env['DB_DATABASE'],
             user=env['DB_USERNAME'],
             password=env['DB_PASSWORD'],
             port=int(env.get('DB_PORT', 3306))
         )
-        logger.info(f"Using config from .env: {config.host}/{config.database}")
-        return config
     
     # Prompt user
     print("\n📋 Database Configuration")
-    print("   (Could not find .env, please enter credentials)\n")
+    print("(I couldn't find a .env file, so I need your help... 🥺)")
+    print()
     
-    try:
-        host = input("Database host [localhost]: ").strip() or 'localhost'
-        database = input("Database name: ").strip()
-        user = input("Database user: ").strip()
-        password = input("Database password: ").strip()
-        
-        if not all([database, user, password]):
-            print("\n❌ Database credentials required!")
-            return None
-        
-        config = DatabaseConfig(host, database, user, password)
-        logger.info(f"Using user-provided config: {host}/{database}")
-        return config
-    except KeyboardInterrupt:
-        print("\n\n⚠️  Cancelled")
+    host = input("Database host [localhost]: ").strip() or 'localhost'
+    database = input("Database name: ").strip()
+    user = input("Database user: ").strip()
+    password = input("Database password: ").strip()
+    
+    if not all([database, user, password]):
+        print("\n❌ You need to provide database credentials!")
         return None
+    
+    return DatabaseConfig(host, database, user, password)
 
-# ============================================================================
-# DATABASE CONNECTION & INSPECTION
-# ============================================================================
-
-def connect_to_db(config: DatabaseConfig) -> Optional[Any]:
-    """Connect to database with fallback drivers"""
+def test_database_connection(config: DatabaseConfig) -> Tuple[bool, str]:
+    """Test database connection"""
     try:
         import mysql.connector
+        
         conn = mysql.connector.connect(
             host=config.host,
             user=config.user,
@@ -231,144 +453,46 @@ def connect_to_db(config: DatabaseConfig) -> Optional[Any]:
             database=config.database,
             port=config.port
         )
-        logger.info(f"Connected to {config.host}/{config.database} via mysql.connector")
-        return conn
+        conn.close()
+        return True, "Connected successfully!"
+        
     except ImportError:
-        pass
-    except Exception as e:
-        logger.warning(f"mysql.connector connection failed: {e}")
-    
-    try:
-        import pymysql
-        conn = pymysql.connect(
-            host=config.host,
-            user=config.user,
-            password=config.password,
-            database=config.database,
-            port=config.port
-        )
-        logger.info(f"Connected to {config.host}/{config.database} via pymysql")
-        return conn
-    except ImportError:
-        logger.error("Neither mysql.connector nor pymysql available")
-    except Exception as e:
-        logger.error(f"Database connection failed: {e}")
-    
-    return None
-
-def inspect_schema(conn) -> Dict[str, Any]:
-    """Inspect real database schema"""
-    print("\n🔍 Inspecting database schema...")
-    logger.info("Starting schema inspection")
-    
-    cursor = conn.cursor(dictionary=True)
-    
-    cursor.execute("SHOW TABLES")
-    
-    tables = []
-    for row in cursor.fetchall():
-        tables.append(list(row.values())[0] if isinstance(row, dict) else row[0])
-    
-    print(f"\n   Found {len(tables)} tables:")
-    
-    schema = {}
-    
-    for table in tables:
-        cursor.execute(f"DESCRIBE `{table}`")
-        columns = cursor.fetchall()
-        
-        cursor.execute(f"SELECT COUNT(*) as cnt FROM `{table}`")
-        count_row = cursor.fetchone()
-        row_count = count_row.get('cnt', 0) if isinstance(count_row, dict) else count_row[0]
-        
-        # Extract column names for debug
-        col_names = []
-        for col in columns:
-            if isinstance(col, dict):
-                col_names.append(col.get('Field', ''))
-            elif isinstance(col, tuple):
-                col_names.append(col[0])
-        
-        schema[table] = {
-            'columns': columns,
-            'row_count': row_count
-        }
-        
-        print(f"      • {table}: {row_count} rows, cols: {col_names[:5]}...")
-        logger.info(f"Table {table}: {row_count} rows, {len(columns)} columns: {col_names}")
-    
-    return schema
-
-def identify_tables(schema: Dict[str, Any], conn=None) -> Dict[str, str]:
-    """Identify content tables by direct column check"""
-    print("\n🤔 Identifying content tables...")
-    logger.info("Identifying content tables")
-    
-    identified: Dict[str, str] = {}
-    
-    # Required columns for each type
-    required = {
-        'pages': {'id', 'name', 'slug'},
-        'books': {'id', 'name', 'slug'},
-        'chapters': {'id', 'name', 'slug'},
-    }
-    
-    # Check each table
-    for table_name in schema.keys():
-        info = schema[table_name]
-        
-        # Extract column names
-        cols = set()
-        for col in info['columns']:
-            if isinstance(col, dict):
-                cols.add(col.get('Field', ''))
-            elif isinstance(col, tuple):
-                cols.add(col[0])
-        
-        logger.debug(f"Table {table_name} columns: {cols}")
-        
-        # Match each type
-        for ctype, req_cols in required.items():
-            if ctype in identified:
-                continue  # Already found
+        try:
+            import pymysql
             
-            if req_cols.issubset(cols):
-                identified[ctype] = table_name
-                print(f"      ✅ {ctype} → {table_name}")
-                logger.info(f"Identified {ctype} → {table_name}")
-    
-    if not identified:
-        print("      ⚠️  No content tables identified!")
-        logger.warning("Could not auto-identify tables")
-        print("\n   Available tables:")
-        for table_name in sorted(schema.keys()):
-            info = schema[table_name]
-            cols = []
-            for col in info['columns']:
-                if isinstance(col, dict):
-                    cols.append(col.get('Field', ''))
-                elif isinstance(col, tuple):
-                    cols.append(col[0])
-            print(f"      • {table_name} ({', '.join(cols[:5])}...)")
-    
-    return identified
+            conn = pymysql.connect(
+                host=config.host,
+                user=config.user,
+                password=config.password,
+                database=config.database,
+                port=config.port
+            )
+            conn.close()
+            return True, "Connected successfully (using pymysql)!"
+            
+        except ImportError:
+            return False, "No MySQL driver installed!"
+            
+    except Exception as e:
+        return False, f"Connection failed: {str(e)}"
 
 # ============================================================================
 # BACKUP FUNCTIONALITY
 # ============================================================================
 
-def create_backup(config: DatabaseConfig, backup_dir: str = './backups') -> bool:
-    """Create database and file backup"""
+def create_backup(config: DatabaseConfig, output_dir: str = './backup') -> bool:
+    """Create backup of database and files"""
     print("\n💾 Creating backup...")
-    logger.info("Starting backup")
+    print("(Because you WILL need this later, trust me)")
     
     start_time = time.time()
+    
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    backup_path = Path(backup_dir) / f'bookstack_backup_{timestamp}'
+    backup_path = Path(output_dir) / f'bookstack_backup_{timestamp}'
     backup_path.mkdir(parents=True, exist_ok=True)
     
-    # Database dump
-    print("\n   📦 Backing up database...")
+    # Database backup
+    print("\n📦 Backing up database...")
     db_file = backup_path / 'database.sql'
     
     try:
@@ -381,80 +505,417 @@ def create_backup(config: DatabaseConfig, backup_dir: str = './backups') -> bool
         ]
         
         with open(db_file, 'w') as f:
-            result = subprocess.run(cmd, stdout=f, stderr=subprocess.PIPE, timeout=300)
+            subprocess.run(cmd, stdout=f, check=True, stderr=subprocess.PIPE)
         
-        if result.returncode == 0 and db_file.stat().st_size > 0:
-            print(f"      ✅ Database backup: {db_file.stat().st_size / 1024 / 1024:.1f}MB")
-            logger.info(f"Database backup successful: {db_file}")
-        else:
-            print(f"      ⚠️  mysqldump had issues (return code: {result.returncode})")
-            logger.warning(f"mysqldump returned code: {result.returncode}")
+        print(f"   ✅ Database backed up to: {db_file}")
+        
+    except subprocess.CalledProcessError as e:
+        print(f"   ❌ Database backup failed: {e.stderr.decode()}")
+        print("\n   Would you like me to try a different approach? 🥺")
+        
+        if input("   Try Python-based backup? (yes/no): ").lower() == 'yes':
+            # Fallback to Python-based dump
+            print("   💝 Let me handle that for you...")
+            return python_database_backup(config, db_file)
+        return False
     
-    except FileNotFoundError:
-        print("      ⚠️  mysqldump not found, skipping database backup")
-        logger.warning("mysqldump not found on system")
-    except Exception as e:
-        print(f"      ⚠️  Backup error: {e}")
-        logger.error(f"Backup error: {e}")
-    
-    # File backups
-    print("\n   📁 Backing up files...")
+    # File backup
+    print("\n📁 Backing up files...")
     for dir_name in ['storage/uploads', 'public/uploads', '.env']:
         if os.path.exists(dir_name):
+            dest = backup_path / dir_name
+            
             try:
-                dest = backup_path / dir_name
                 if os.path.isfile(dir_name):
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(dir_name, dest)
                 else:
                     shutil.copytree(dir_name, dest, dirs_exist_ok=True)
-                print(f"      ✅ Backed up: {dir_name}")
-                logger.info(f"Backed up: {dir_name}")
+                print(f"   ✅ Backed up: {dir_name}")
             except Exception as e:
-                logger.warning(f"Could not backup {dir_name}: {e}")
-    
-    # Create archive
-    print("\n   📦 Creating archive...")
-    archive_path = Path(backup_dir) / f'bookstack_backup_{timestamp}.tar.gz'
-    
-    try:
-        with tarfile.open(archive_path, 'w:gz') as tar:
-            tar.add(backup_path, arcname=backup_path.name)
-        
-        size_mb = archive_path.stat().st_size / 1024 / 1024
-        print(f"      ✅ Archive: {archive_path.name} ({size_mb:.1f}MB)")
-        logger.info(f"Backup archive created: {archive_path}")
-    except Exception as e:
-        logger.warning(f"Archive creation failed: {e}")
+                print(f"   ⚠️  Failed to backup {dir_name}: {e}")
     
     duration = time.time() - start_time
-    print(f"\n✅ Backup complete in {duration:.1f}s: {backup_path.parent.absolute()}")
-    logger.info(f"Backup completed in {duration:.1f}s")
+    gloat_regina_george("Backup", duration)
     
+    print(f"\n✅ Backup complete: {backup_path}")
     return True
 
-# ============================================================================
-# EXPORT FUNCTIONALITY
-def sanitize_filename(name: str) -> str:
-    """Convert a name to a valid filesystem path component"""
-    if not name:
-        return 'unnamed'
-    safe = re.sub(r'[^a-z0-9\s_\-.]', '', name.lower())
-    safe = re.sub(r'\s+', '_', safe)
-    safe = re.sub(r'_+', '_', safe)
-    safe = safe.strip('_')
-    return safe or 'unnamed'
+def python_database_backup(config: DatabaseConfig, output_file: Path) -> bool:
+    """Python-based database backup fallback"""
+    try:
+        import mysql.connector
+        
+        conn = mysql.connector.connect(
+            host=config.host,
+            user=config.user,
+            password=config.password,
+            database=config.database,
+            port=config.port
+        )
+        
+        cursor = conn.cursor()
+        
+        with open(output_file, 'w') as f:
+            # Get all tables
+            cursor.execute("SHOW TABLES")
+            tables = [table[0] for table in cursor.fetchall()]
+
+            for table in tables:
+                f.write(f"\n-- Table: {table}\n")
+                f.write(f"DROP TABLE IF EXISTS {quote_ident(table)};\n")
+
+                # Get CREATE TABLE
+                cursor.execute(f"SHOW CREATE TABLE {quote_ident(table)}")
+                create_table = cursor.fetchone()[1]
+                f.write(f"{create_table};\n\n")
+
+                # Get data
+                cursor.execute(f"SELECT * FROM {quote_ident(table)}")
+                rows = cursor.fetchall()
+
+                if rows:
+                    columns = [col[0] for col in cursor.description]      
+                    f.write(f"INSERT INTO {quote_ident(table)} ({', '.join(quote_ident(c) for c in columns)}) VALUES\n")
+                    
+                    for i, row in enumerate(rows):
+                        values = []
+                        for val in row:
+                            if val is None:
+                                values.append('NULL')
+                            elif isinstance(val, str):
+                                escaped = val.replace("'", "\\'")
+                                values.append(f"'{escaped}'")
+                            else:
+                                values.append(str(val))
+                        
+                        sep = ',' if i < len(rows) - 1 else ';'
+                        f.write(f"({', '.join(values)}){sep}\n")
+        
+        conn.close()
+        print("   ✅ Python backup successful!")
+        return True
+        
+    except Exception as e:
+        print(f"   ❌ Python backup also failed: {e}")
+        return False
+
+# ============================================================================  
+# SQL IDENTIFIER QUOTING
+# ============================================================================  
+
+def quote_ident(name: str) -> str:
+    """Quote MySQL identifiers to avoid reserved word conflicts"""
+    safe = name.replace("`", "``")
+    return f"`{safe}`"
+
+# ============================================================================  
+# SCHEMA INSPECTION - NO MORE HALLUCINATING
+# ============================================================================  
+
+def inspect_database_schema(config: DatabaseConfig) -> Dict[str, Any]:
+    """Actually inspect the real database schema (no assumptions)"""
+    print("\n🔍 Inspecting database schema...")
+    print("(Let's see what you ACTUALLY have, not what I assume)")
+    
+    try:
+        import mysql.connector
+        
+        conn = mysql.connector.connect(
+            host=config.host,
+            user=config.user,
+            password=config.password,
+            database=config.database,
+            port=config.port
+        )
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        # Get all tables
+        cursor.execute("SHOW TABLES")
+        tables = [list(row.values())[0] for row in cursor.fetchall()]
+
+        print(f"\n📋 Found {len(tables)} tables:")
+
+        schema = {}
+
+        for table in tables:
+            # Get column info
+            cursor.execute(f"DESCRIBE {quote_ident(table)}")
+            columns = cursor.fetchall()
+
+            # Get row count
+            cursor.execute(f"SELECT COUNT(*) as count FROM {quote_ident(table)}")
+            row_count = cursor.fetchone()['count']
+
+            schema[table] = {
+                'columns': columns,
+                'row_count': row_count
+            }
+            
+            print(f"   • {table}: {row_count} rows")
+        
+        conn.close()
+        
+        return schema
+        
+    except Exception as e:
+        print(f"\n❌ Schema inspection failed: {e}")
+        return {}
+
+def identify_content_tables(schema: Dict[str, Any]) -> Dict[str, str]:
+    """Try to identify which tables contain content"""
+    print("\n🤔 Trying to identify content tables...")
+    
+    content_tables = {}
+    
+    # Look for common BookStack table patterns
+    table_patterns = {
+        'pages': ['id', 'name', 'slug', 'html', 'markdown'],
+        'books': ['id', 'name', 'slug', 'description'],
+        'chapters': ['id', 'name', 'slug', 'description', 'book_id'],
+        'attachments': ['id', 'name', 'path'],
+        'images': ['id', 'name', 'path'],
+    }
+    
+    for table_name, table_info in schema.items():
+        column_names = [col['Field'] for col in table_info['columns']]
+        
+        # Check if it matches known patterns
+        for pattern_name, required_cols in table_patterns.items():
+            if all(col in column_names for col in required_cols[:2]):  # At least first 2 cols
+                content_tables[pattern_name] = table_name
+                print(f"   ✅ Found {pattern_name} table: {table_name}")
+                break
+    
+    return content_tables
+
+def prompt_user_for_tables(schema: Dict[str, Any], identified: Dict[str, str]) -> Dict[str, str]:
+    """Let user confirm/select which tables to use"""
+    print("\n" + "="*70)
+    print("TABLE SELECTION")
+    print("="*70)
+    
+    print("\nI found these tables that might be content:")
+    for content_type, table_name in identified.items():
+        print(f"   {content_type}: {table_name}")
+    
+    print("\nAll available tables:")
+    for i, table_name in enumerate(sorted(schema.keys()), 1):
+        row_count = schema[table_name]['row_count']
+        print(f"   {i}. {table_name} ({row_count} rows)")
+    
+    print("\nAre the identified tables correct?")
+    confirm = input("Use these tables? (yes/no): ").strip().lower()
+    
+    if confirm == 'yes':
+        return identified
+    
+    # Let user manually select
+    print("\nOkay, let's do this manually...")
+    
+    tables = sorted(schema.keys())
+    selected = {}
+    
+    for content_type in ['pages', 'books', 'chapters']:
+        print(f"\n📋 Which table contains {content_type}?")
+        print("Available tables:")
+        for i, table_name in enumerate(tables, 1):
+            print(f"   {i}. {table_name}")
+        print("   0. Skip (no table for this)")
+        
+        while True:
+            choice = input(f"Select {content_type} table (0-{len(tables)}): ").strip()
+            
+            try:
+                idx = int(choice)
+                if idx == 0:
+                    break
+                if 1 <= idx <= len(tables):
+                    selected[content_type] = tables[idx - 1]
+                    print(f"   ✅ Using {tables[idx - 1]} for {content_type}")
+                    break
+                else:
+                    print(f"   ❌ Invalid choice. Pick 0-{len(tables)}")
+            except ValueError:
+                print("   ❌ Enter a number")
+    
+    return selected
 
 # ============================================================================
+# EXPORT FUNCTIONALITY - USING REAL SCHEMA
+# ============================================================================
+
+def export_to_dokuwiki(config: DatabaseConfig, output_dir: str = './dokuwiki_export') -> bool:
+    """Export BookStack data to DokuWiki format"""
+    print("\n📤 Exporting to DokuWiki format...")
+    print("(Using ACTUAL schema, not hallucinated nonsense)")
+    
+    start_time = time.time()
+    
+    try:
+        import mysql.connector
+        
+        # First, inspect the schema
+        schema = inspect_database_schema(config)
+        
+        if not schema:
+            print("\n❌ Could not inspect database schema")
+            return False
+        
+        # Identify content tables
+        identified = identify_content_tables(schema)
+        
+        # Let user confirm
+        tables = prompt_user_for_tables(schema, identified)
+        
+        if not tables:
+            print("\n❌ No tables selected. Cannot export.")
+            return False
+        
+        # Now do the actual export
+        conn = mysql.connector.connect(
+            host=config.host,
+            user=config.user,
+            password=config.password,
+            database=config.database,
+            port=config.port
+        )
+        
+        cursor = conn.cursor(dictionary=True)
+        
+        export_path = Path(output_dir)
+        export_path.mkdir(parents=True, exist_ok=True)
+        
+        # Export pages
+        if 'pages' in tables:
+            print(f"\n📄 Exporting pages from {tables['pages']}...")      
+
+            pages_table = tables['pages']
+            pages_table_ident = quote_ident(pages_table)
+
+            # Get columns for this table
+            page_cols = [col['Field'] for col in schema[pages_table]['columns']]
+
+            # Build query based on actual columns
+            select_cols = []
+            if 'id' in page_cols:
+                select_cols.append(quote_ident('id'))
+            if 'name' in page_cols:
+                select_cols.append(quote_ident('name'))
+            if 'slug' in page_cols:
+                select_cols.append(quote_ident('slug'))
+            if 'html' in page_cols:
+                select_cols.append(quote_ident('html'))
+            if 'markdown' in page_cols:
+                select_cols.append(quote_ident('markdown'))
+            if 'text' in page_cols:
+                select_cols.append(quote_ident('text'))
+
+            query = f"SELECT {', '.join(select_cols)} FROM {pages_table_ident}" 
+
+            # Add WHERE clause if deleted_at exists
+            if 'deleted_at' in page_cols:
+                query += " WHERE `deleted_at` IS NULL"
+
+            print(f"   Executing: {query}")
+            cursor.execute(query)
+            pages = cursor.fetchall()
+            
+            exported_count = 0
+            
+            for page in pages:
+                # Generate filename from slug or id
+                slug = page.get('slug') or f"page_{page.get('id', exported_count)}"
+                name = page.get('name') or slug
+                
+                # Get content from whatever column exists
+                content = (
+                    page.get('markdown') or 
+                    page.get('text') or 
+                    page.get('html') or 
+                    ''
+                )
+                
+                # Create file
+                file_path = export_path / f"{slug}.txt"
+                dokuwiki_content = convert_to_dokuwiki(content, name)
+                
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(dokuwiki_content)
+                
+                exported_count += 1
+                if exported_count % 10 == 0:
+                    print(f"   📝 Exported {exported_count}/{len(pages)} pages...")
+            
+            print(f"\n✅ Exported {exported_count} pages!")
+        else:
+            print("\n⚠️  No pages table selected, skipping pages export")
+        
+        # Export books if available
+        if 'books' in tables:
+            print(f"\n📚 Exporting books from {tables['books']}...")      
+
+            books_table = tables['books']
+            cursor.execute(f"SELECT * FROM {quote_ident(books_table)}")
+            books = cursor.fetchall()
+            
+            # Create a mapping file
+            books_file = export_path / '_books.json'
+            with open(books_file, 'w') as f:
+                json.dump(books, f, indent=2, default=str)
+            
+            print(f"   ✅ Exported {len(books)} books to {books_file}")
+        
+        # Export chapters if available
+        if 'chapters' in tables:
+            print(f"\n📖 Exporting chapters from {tables['chapters']}...") 
+
+            chapters_table = tables['chapters']
+            cursor.execute(f"SELECT * FROM {quote_ident(chapters_table)}")
+            chapters = cursor.fetchall()
+            
+            # Create a mapping file
+            chapters_file = export_path / '_chapters.json'
+            with open(chapters_file, 'w') as f:
+                json.dump(chapters, f, indent=2, default=str)
+            
+            print(f"   ✅ Exported {len(chapters)} chapters to {chapters_file}")
+        
+        conn.close()
+        
+        duration = time.time() - start_time
+        gloat_regina_george("Export", duration)
+        
+        print(f"\n✅ Export complete: {export_path}")
+        print("\n📝 Files created:")
+        print(f"   • Pages: {len(list(export_path.glob('*.txt')))} .txt files")
+        if (export_path / '_books.json').exists():
+            print(f"   • Books mapping: _books.json")
+        if (export_path / '_chapters.json').exists():
+            print(f"   • Chapters mapping: _chapters.json")
+        
+        return True
+        
+    except Exception as e:
+        print(f"\n❌ Export failed: {e}")
+        print("\n   Oh no! Something went wrong... 😢")
+        print("   Would you like me to show you the full error?")
+        
+        if input("   Show full error? (yes/no): ").lower() == 'yes':
+            import traceback
+            print("\n" + traceback.format_exc())
+        
+        return False
 
 def convert_to_dokuwiki(content: str, title: str) -> str:
     """Convert HTML/Markdown to DokuWiki format"""
+    # This is a simplified conversion
+    # For production, use proper parsers
+    
     dokuwiki = f"====== {title} ======\n\n"
     
-    if not content:
-        return dokuwiki
-    
-    # Remove HTML tags
+    # Remove HTML tags (very basic)
     content = re.sub(r'<br\s*/?>', '\n', content)
     content = re.sub(r'<p>', '\n', content)
     content = re.sub(r'</p>', '\n', content)
@@ -477,410 +938,246 @@ def convert_to_dokuwiki(content: str, title: str) -> str:
     
     return dokuwiki
 
-def export_to_dokuwiki(conn, schema: Dict[str, Any], tables: Dict[str, str], 
-                       output_dir: str = './dokuwiki_export') -> int:
-    """Export BookStack to DokuWiki format with folder hierarchy (shelf/book/chapter/page)"""
-    print("\n📤 Exporting to DokuWiki format...")
-    logger.info("Starting export")
-    
-    start_time = time.time()
-    
-    if not tables:
-        print("   ❌ No tables selected!")
-        logger.error("Export aborted - no tables selected")
-        return 0
-    
-    output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
-    
-    print(f"\n   Output directory: {output_path.absolute()}")
-    logger.info(f"Export directory: {output_path.absolute()}")
-    
-    cursor = conn.cursor(dictionary=True)
-    exported = 0
-    
-    # Export pages
-    if 'pages' in tables:
-        pages_table = tables['pages']
-        print(f"\n   📄 Exporting pages from {pages_table}...")
-        
-        # Get columns
-        cursor.execute(f"DESCRIBE `{pages_table}`")
-        columns = cursor.fetchall()
-        col_names = [c['Field'] if isinstance(c, dict) else c[0] for c in columns]
-        col_set = set(col_names)
-        
-        # Build SELECT with all possible content and hierarchy columns
-        select_cols = []
-        for col in ['id', 'name', 'slug', 'chapter_id', 'book_id', 'text',
-                    'markdown', 'html', 'raw_html']:
-            if col in col_set:
-                select_cols.append(col)
-        
-        query = f"SELECT {', '.join(select_cols)} FROM `{pages_table}`"
-        if 'deleted_at' in col_set:
-            query += " WHERE deleted_at IS NULL"
-        
-        logger.debug(f"Pages query: {query}")
-        cursor.execute(query)
-        pages = cursor.fetchall()
-        logger.info(f"Fetched {len(pages)} pages from {pages_table}")
-        
-        # Build hierarchy lookup
-        books_lookup = {}
-        chapters_lookup = {}
-        shelves_lookup = {}
-        book_to_shelves = {}
-        
-        # Get books info if available
-        if 'books' in tables:
-            books_table = tables['books']
-            try:
-                cursor.execute(f"SELECT id, name, slug FROM `{books_table}`")
-                for book in cursor.fetchall():
-                    bid = book['id']
-                    bname = book['name']
-                    bslug = book['slug']
-                    books_lookup[bid] = {'name': bname, 'slug': bslug}
-            except Exception as e:
-                logger.debug(f"Books lookup failed: {e}")
-        
-        # Get shelves info via pivot (bookshelves_books)
-        shelves_table = 'bookshelves' if 'bookshelves' in schema else 'bookshelf' if 'bookshelf' in schema else None
-        pivot_table = 'bookshelves_books' if 'bookshelves_books' in schema else None
-        if shelves_table:
-            try:
-                cursor.execute(f"SELECT id, name, slug FROM `{shelves_table}`")
-                for shelf in cursor.fetchall():
-                    sid = shelf['id']
-                    sname = shelf['name']
-                    sslug = shelf.get('slug', '')
-                    shelves_lookup[sid] = {'name': sname, 'slug': sslug}
-            except Exception as e:
-                logger.debug(f"Shelves lookup failed: {e}")
-        if pivot_table and shelves_lookup:
-            try:
-                cursor.execute(f"SELECT bookshelf_id, book_id FROM `{pivot_table}`")
-                for row in cursor.fetchall():
-                    sid = row['bookshelf_id']
-                    bid = row['book_id']
-                    book_to_shelves.setdefault(bid, []).append(sid)
-            except Exception as e:
-                logger.debug(f"Pivot lookup failed: {e}")
-        
-        # Get chapters info if available
-        if 'chapters' in tables:
-            chapters_table = tables['chapters']
-            try:
-                cursor.execute(f"SELECT id, name, slug, book_id FROM `{chapters_table}`")
-                for chapter in cursor.fetchall():
-                    cid = chapter['id']
-                    cname = chapter['name']
-                    cslug = chapter['slug']
-                    bid = chapter.get('book_id')
-                    chapters_lookup[cid] = {'name': cname, 'slug': cslug, 'book_id': bid}
-            except Exception as e:
-                logger.debug(f"Chapters lookup failed: {e}")
-        
-        # Process each page
-        for page in pages:
-            page_id = page.get('id')
-            page_name = page.get('name') or ''
-            page_slug = page.get('slug') or ''
-            chapter_id = page.get('chapter_id')
-            book_id = page.get('book_id')
-            
-            # Get content - try multiple columns in order
-            content = ''
-            content_source = None
-            for col in ['markdown', 'text', 'html', 'raw_html']:
-                if page.get(col):
-                    content = page.get(col)
-                    content_source = col
-                    break
-            
-            if not content:
-                logger.debug(f"Page {page_id} ({page_name}): no content in any column")
-            else:
-                logger.debug(f"Page {page_id}: using content from '{content_source}' ({len(content)} chars)")
-            
-            # Build directory path: shelf/book/chapter/page
-            path_parts = [output_path]
-            shelf_slug = None
-            if book_id and book_id in book_to_shelves and book_to_shelves[book_id]:
-                sid = book_to_shelves[book_id][0]
-                if sid in shelves_lookup:
-                    shelf_slug = shelves_lookup[sid]['slug']
-            if shelf_slug:
-                path_parts.append(sanitize_filename(shelf_slug))
-            elif shelves_lookup:
-                path_parts.append('unshelved')
-            
-            if book_id and book_id in books_lookup:
-                book_slug = books_lookup[book_id]['slug']
-                path_parts.append(sanitize_filename(book_slug))
-            elif book_id:
-                path_parts.append(f"book_{book_id}")
-            
-            if chapter_id and chapter_id in chapters_lookup:
-                chapter_slug = chapters_lookup[chapter_id]['slug']
-                path_parts.append(sanitize_filename(chapter_slug))
-            elif chapter_id:
-                path_parts.append(f"chapter_{chapter_id}")
-            
-            if not page_slug:
-                page_slug = f"page_{page_id}"
-            page_slug = sanitize_filename(page_slug)
-            
-            page_dir = Path(*path_parts)
-            page_dir.mkdir(parents=True, exist_ok=True)
-            
-            file_path = page_dir / f"{page_slug}.txt"
-            dokuwiki_content = convert_to_dokuwiki(content, page_name or page_slug)
-            
-            try:
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(dokuwiki_content)
-                
-                if not file_path.exists():
-                    logger.error(f"File not created: {file_path}")
-                    continue
-                
-                file_size = file_path.stat().st_size
-                logger.debug(f"Page {page_id} exported to {file_path} ({file_size} bytes, content from {content_source})")
-                exported += 1
-                
-                if exported % 50 == 0:
-                    print(f"      📝 {exported} pages exported...")
-                    logger.info(f"Exported {exported} pages so far")
-            
-            except Exception as e:
-                logger.error(f"Error writing {file_path}: {e}")
-        
-        print(f"\n      ✅ Pages exported: {exported}")
-        logger.info(f"Pages export complete: {exported} files")
+# ============================================================================
+# DIAGNOSTIC FUNCTIONALITY
+# ============================================================================
 
-    # Export books as JSON
-    if 'books' in tables:
-        books_table = tables['books']
-        print(f"\n   📚 Exporting books...")
-        
-        cursor.execute(f"SELECT * FROM `{books_table}`")
-        books = cursor.fetchall()
-        
-        if books:
-            books_file = output_path / '_books.json'
-            with open(books_file, 'w') as f:
-                json.dump(books, f, indent=2, default=str)
-            
-            print(f"      ✅ Books metadata: {len(books)} items")
-            logger.info(f"Books export: {len(books)} items")
+def run_diagnostics() -> Dict[str, Any]:
+    """Run comprehensive diagnostics"""
+    print("\n🔍 Running diagnostics...")
+    print("(Checking what needs attention)")
     
-    # Export chapters as JSON
-    if 'chapters' in tables:
-        chapters_table = tables['chapters']
-        print(f"\n   📖 Exporting chapters...")
-        
-        cursor.execute(f"SELECT * FROM `{chapters_table}`")
-        chapters = cursor.fetchall()
-        
-        if chapters:
-            chapters_file = output_path / '_chapters.json'
-            with open(chapters_file, 'w') as f:
-                json.dump(chapters, f, indent=2, default=str)
-            
-            print(f"      ✅ Chapters metadata: {len(chapters)} items")
-            logger.info(f"Chapters export: {len(chapters)} items")
+    diag = {
+        'timestamp': datetime.now().isoformat(),
+        'python_version': sys.version,
+        'os': detect_os_and_insult(),
+        'packages': {},
+        'database': None,
+        'disk_space': None,
+    }
     
-    # Create archive
-    print(f"\n   📦 Creating archive...")
-    archive_path = Path(output_dir).parent / f"{Path(output_dir).name}.tar.gz"
+    # Check packages
+    print("\n📦 Checking Python packages...")
+    for package, import_name in REQUIRED_PACKAGES.items():
+        try:
+            __import__(import_name)
+            diag['packages'][package] = 'installed'
+            print(f"   ✅ {package}")
+        except ImportError:
+            diag['packages'][package] = 'missing'
+            print(f"   ❌ {package} (MISSING)")
     
+    # Check database
+    print("\n🗄️  Checking database connection...")
+    config = get_database_config()
+    if config:
+        success, message = test_database_connection(config)
+        diag['database'] = {'success': success, 'message': message}
+        
+        if success:
+            print(f"   ✅ {message}")
+        else:
+            print(f"   ❌ {message}")
+    
+    # Check disk space
+    print("\n💾 Checking disk space...")
     try:
-        with tarfile.open(archive_path, 'w:gz') as tar:
-            tar.add(output_path, arcname=output_path.name)
+        stat = shutil.disk_usage('.')
+        free_gb = stat.free / (1024**3)
+        diag['disk_space'] = f"{free_gb:.2f} GB free"
+        print(f"   💽 {free_gb:.2f} GB free")
         
-        size_mb = archive_path.stat().st_size / 1024 / 1024
-        print(f"      ✅ Archive: {archive_path.name} ({size_mb:.1f}MB)")
-        logger.info(f"Export archive created: {archive_path}")
+        if free_gb < 1.0:
+            print("   ⚠️  Less than 1GB free! You might run out of space!")
     except Exception as e:
-        logger.warning(f"Archive creation failed: {e}")
+        diag['disk_space'] = f"error: {e}"
+        print(f"   ❌ Could not check disk space: {e}")
     
-    # Verify files (recursive to include nested structure)
-    txt_files = list(output_path.rglob('*.txt'))
-    print(f"\n   ✅ Files created: {len(txt_files)}")
-    logger.info(f"Export complete: {len(txt_files)} files")
+    print("\n✅ Diagnostics complete!")
     
-    duration = time.time() - start_time
-    
-    print(f"\n✅ Export complete in {duration:.1f}s")
-    print(f"   Output: {output_path.absolute()}")
-    logger.info(f"Export completed in {duration:.1f}s to {output_path.absolute()}")
-    
-    return exported
+    return diag
 
 # ============================================================================
-# MAIN FLOW
+# MAIN MENU
 # ============================================================================
+
+def show_main_menu():
+    """Show interactive main menu"""
+    print("""
+╔══════════════════════════════════════════════════════════════════════╗
+║                    📦 MAIN MENU 📦                                   ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+1. 🔍 Run Diagnostics
+2. �️  Inspect Database Schema (see what you actually have)
+3. 🧪 Dry Run Export (see what WOULD happen)
+4. 💾 Create Backup
+5. 📤 Export to DokuWiki
+6. 🚀 Full Migration (Backup + Export)
+7. 📖 Show Documentation
+8. 🆘 Help (I'm lost)
+9. 🚪 Exit
+
+""")
 
 def main():
-    """Main entry point"""
+    """Main entry point - The One Script to rule them all, precious!"""
     
-    parser = argparse.ArgumentParser(
-        description='BookStack to DokuWiki Migration',
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  python3 migrate.py                # Interactive mode
-  python3 migrate.py --full         # Full migration (non-interactive)
-  python3 migrate.py --diagnose     # Check system health
-  python3 migrate.py --backup       # Backup only
-  python3 migrate.py --export       # Export only
-        """
-    )
-    
-    parser.add_argument('--full', action='store_true', help='Full migration (backup + export)')
-    parser.add_argument('--diagnose', action='store_true', help='Diagnose system')
-    parser.add_argument('--backup', action='store_true', help='Backup only')
-    parser.add_argument('--export', action='store_true', help='Export only')
-    parser.add_argument('--test', action='store_true', help='Show sample page content from DB')
-    parser.add_argument('--output', default='./dokuwiki_export', help='Export directory')
-    parser.add_argument('--backup-dir', default='./backups', help='Backup directory')
-    
-    args = parser.parse_args()
-    
-    # Banner
+    # Show banner
     print(__doc__)
-    print("\n" + "="*80)
-    print("Starting BookStack Migration")
-    print("="*80)
     
-    # Check dependencies
-    if not check_and_install_dependencies():
-        print("\n❌ Failed to install dependencies")
-        sys.exit(1)
+    # Detect OS and insult
+    detect_os_and_insult()
     
-    # Get database config
-    config = get_database_config()
-    if not config:
-        print("\n❌ Could not get database configuration")
-        sys.exit(1)
+    # Gloat about Python (my precious Python!)
+    logger.info("Starting migration tool - Sméagol mode engaged")
+    gloat_about_python_packages()
     
-    # Connect to database
-    print("\n🔗 Connecting to database...")
-    conn = connect_to_db(config)
-    if not conn:
-        print("\n❌ Could not connect to database")
-        sys.exit(1)
+    # Check dependencies - We needs them, my precious dependencies!
+    logger.info("Checking dependencies...")
+    has_deps, missing = check_dependencies()
     
-    print(f"   ✅ Connected to {config.host}/{config.database}")
-    logger.info(f"Connected to {config.host}/{config.database}")
+    if not has_deps:
+        logger.warning(f"Missing dependencies: {missing}")
+        if not offer_to_install_packages(missing):
+            print("\n❌ Dependencies not installed. Cannot continue.")
+            print("   Sméagol is so sad... he cannot work without his precious packages...")
+            logger.error("Dependencies not satisfied")
+            sys.exit(1)
     
-    # Inspect schema
-    schema = inspect_schema(conn)
-    if not schema:
-        print("\n❌ Could not inspect database schema")
-        sys.exit(1)
+    print("\n✅ All dependencies satisfied!")
+    logger.info("All dependencies ready")
     
-    # Identify tables
-    identified = identify_tables(schema)
-    
-    if args.test:
-        print("\n🧥 Testing content extraction...")
-        if 'pages' not in identified:
-            print("   No pages table found")
-            conn.close()
-            return
+    # Main loop - Sméagol's interactive dance
+    while True:
+        show_main_menu()
         
-        pages_table = identified['pages']
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute(f"SELECT id, name, slug, markdown, text, html FROM `{pages_table}` LIMIT 3")
-        pages = cursor.fetchall()
+        choice = input("Choose an option (1-9): ").strip()
         
-        if not pages:
-            print("   No pages in database")
-        else:
-            for i, page in enumerate(pages, 1):
-                print(f"\n   Page {i}: {page.get('name')} (id={page.get('id')})")
-                for col in ['markdown', 'text', 'html']:
-                    val = page.get(col)
-                    if val:
-                        preview = val[:100].replace('\n', ' ')
-                        print(f"      {col}: {preview}...")
-        
-        conn.close()
-        return
-    
-    # Determine what to do
-    do_backup = args.backup or args.full or (not args.diagnose and not args.export and not args.test)
-    do_export = args.export or args.full or (not args.diagnose and not args.backup and not args.test)
-    
-    if args.diagnose:
-        print("\n✅ Diagnostics complete. All systems ready.")
-        logger.info("Diagnostics completed successfully")
-        conn.close()
-        return
-    
-    # Ask user to confirm tables if interactive
-    selected_tables = identified
-    if sys.stdin.isatty() and (do_backup or do_export):
-        print("\n" + "="*80)
-        print("TABLE SELECTION")
-        print("="*80)
-        
-        print("\nIdentified tables:")
-        for ctype, table in identified.items():
-            print(f"   {ctype}: {table}")
-        
-        confirm = input("\nUse these tables? (yes/no): ").strip().lower()
-        
-        if confirm not in ['yes', 'y', '']:
-            print("\nManual selection:")
-            selected_tables = {}
+        if choice == '1':
+            diag = run_diagnostics()
+            print("\n📋 Diagnostic report generated")
             
-            for ctype in ['pages', 'books', 'chapters']:
-                tables_list = sorted(schema.keys())
-                print(f"\n{ctype} table:")
-                for i, t in enumerate(tables_list, 1):
-                    print(f"   {i}. {t}")
+        elif choice == '2':
+            config = get_database_config()
+            if config:
+                schema = inspect_database_schema(config)
                 
-                choice = input(f"Select (1-{len(tables_list)}, 0=skip): ").strip()
-                try:
-                    idx = int(choice)
-                    if idx > 0:
-                        selected_tables[ctype] = tables_list[idx - 1]
-                except:
-                    pass
-    
-    # Perform backup
-    if do_backup:
-        create_backup(config, args.backup_dir)
-    
-    # Perform export
-    if do_export:
-        export_to_dokuwiki(conn, schema, selected_tables, args.output)
-    
-    conn.close()
-    
-    print("\n" + "="*80)
-    print("✅ MIGRATION COMPLETE")
-    print("="*80)
-    print(f"\n📝 Logs: ./migration_logs/")
-    print(f"📤 Export: {Path(args.output).absolute()}")
-    print(f"💾 Backup: {Path(args.backup_dir).absolute()}")
-    print("\n🎉 Done! Your BookStack data is safe and ready for DokuWiki.")
-    logger.info("Migration completed successfully")
+                print("\n" + "="*70)
+                print("DATABASE SCHEMA DETAILS")
+                print("="*70)
+                
+                for table_name, info in sorted(schema.items()):
+                    print(f"\n📋 {table_name} ({info['row_count']} rows)")
+                    print("   Columns:")
+                    for col in info['columns']:
+                        null = "NULL" if col['Null'] == 'YES' else "NOT NULL"
+                        key = f" [{col['Key']}]" if col['Key'] else ""
+                        print(f"      • {col['Field']}: {col['Type']} {null}{key}")
+        
+        elif choice == '3':
+            config = get_database_config()
+            if config:
+                print("\n🧪 DRY RUN MODE - Nothing will be exported")
+                print("="*70)
+                
+                schema = inspect_database_schema(config)
+                identified = identify_content_tables(schema)
+                tables = prompt_user_for_tables(schema, identified)
+                
+                if tables:
+                    print("\n✅ DRY RUN SUMMARY:")
+                    print(f"   Selected tables: {list(tables.keys())}")
+                    
+                    for content_type, table_name in tables.items():
+                        row_count = schema[table_name]['row_count']
+                        print(f"   • {content_type}: {table_name} ({row_count} items)")
+                    
+                    print("\n📝 This would export:")
+                    total_files = sum(schema[t]['row_count'] for t in tables.values() if t in schema)
+                    print(f"   • Approximately {total_files} files")
+                    print(f"   • To directory: ./dokuwiki_export/")
+                    print("\n✅ Dry run complete. No files were created.")
+                else:
+                    print("\n❌ No tables selected.")
+            
+        elif choice == '4':
+            config = get_database_config()
+            if config:
+                create_backup(config)
+            
+        elif choice == '5':
+            config = get_database_config()
+            if config:
+                export_to_dokuwiki(config)
+            
+        elif choice == '6':
+            config = get_database_config()
+            if config:
+                print("\n🚀 Starting full migration...")
+                print("(This will take a while. Stop trying to make fetch happen!)")
+                
+                if create_backup(config):
+                    export_to_dokuwiki(config)
+                    print("\n✅ Migration complete!")
+                else:
+                    print("\n❌ Backup failed. Not continuing with export.")
+            
+        elif choice == '7':
+            print("\n📖 Documentation:")
+            print("   README: ./bookstack-migration/README.md")
+            print("   (Single source of truth; legacy docs were removed)")
+            print()
+            
+        elif choice == '8':
+            print("""
+🆘 HELP
+
+This script does everything you need:
+1. Run diagnostics to check your setup
+2. Inspect database schema (see what tables you actually have)
+3. Dry run export (see what would happen without doing it)
+4. Create a backup (DO THIS FIRST!)
+5. Export your BookStack data to DokuWiki format
+6. Full migration does both backup and export
+
+If something breaks:
+- Run diagnostics (option 1)
+- Inspect schema (option 2)
+- Try dry run (option 3)
+- Copy the output
+- Paste it to Claude AI or ChatGPT
+- Ask for help
+
+I use Norton as my antivirus. My WinRAR isn't insecure, it's vintage. kthxbai.
+""")
+            
+        elif choice == '9':
+            print("\n👋 Goodbye! Come back when you're ready!")
+            print("\nI use Norton as my antivirus. My WinRAR isn't insecure,")
+            print("it's vintage. kthxbai.")
+            break
+            
+        else:
+            print("\n❌ Invalid choice. Try again.")
+            print("(I know, making decisions is hard... 🥺)")
+        
+        input("\nPress ENTER to continue...")
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
         print("\n\n⚠️  Interrupted by user")
-        logger.warning("User interrupted migration")
+        print("I understand... this is overwhelming. Take a break! 💕")
         sys.exit(0)
     except Exception as e:
-        print(f"\n\n❌ Error: {e}")
-        logger.exception("Unexpected error")
-        import traceback
-        print(traceback.format_exc())
+        print(f"\n\n💀 Unexpected error: {e}")
+        print("\nOh no! Something went terribly wrong! 😱")
+        print("Would you like me to show you the full error?")
+        
+        if input("Show full error? (yes/no): ").lower() == 'yes':
+            import traceback
+            print("\n" + traceback.format_exc())
+        
         sys.exit(1)
