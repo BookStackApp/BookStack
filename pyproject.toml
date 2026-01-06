@@ -7,15 +7,14 @@ name = "bookstack-migrate"
 version = "1.0.0"
 description = "Command-line tool to migrate content from BookStack to DokuWiki"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [{name = "Alexander Alvonellos", email = "alex@alvonellos.com"}]
 requires-python = ">=3.8"
-dependencies = []
+dependencies = ["requests>=2.31.0"]
 classifiers = [
 	"Development Status :: 4 - Beta",
 	"Environment :: Console",
 	"Intended Audience :: System Administrators",
-	"License :: OSI Approved :: MIT License",
 	"Operating System :: OS Independent",
 	"Programming Language :: Python :: 3",
 	"Programming Language :: Python :: 3.8",
@@ -40,3 +39,6 @@ Repository = "https://github.com/alvonellos/BookStack"
 
 [project.scripts]
 bookstack-migrate = "bookstack_migrate:main"
+
+[tool.setuptools]
+py-modules = ["bookstack_migrate", "bookstack_api"]

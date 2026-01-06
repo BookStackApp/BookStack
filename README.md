@@ -23,6 +23,26 @@ pip install -r requirements.txt
 docker-compose up -d
 ```
 
+### Environment Variables
+
+The tool requires the following environment variables for API access:
+
+- `BOOKSTACK_TOKEN_ID` - Your BookStack API token ID
+- `BOOKSTACK_TOKEN_SECRET` - Your BookStack API token secret
+- `BOOKSTACK_BASE_URL` (optional) - BookStack instance URL (default: `http://localhost:8000`)
+- `BOOKSTACK_SPEC_CACHE` (optional) - OpenAPI spec cache path (default: `~/.cache/bookstack/openapi.json`)
+
+**To generate API tokens:**
+1. Log into your BookStack instance as an admin
+2. Go to Settings → Users → [Your User] → API Tokens
+3. Create a new token and save the ID and secret
+4. Export them:
+   ```bash
+   export BOOKSTACK_TOKEN_ID="your_token_id"
+   export BOOKSTACK_TOKEN_SECRET="your_token_secret"
+   export BOOKSTACK_BASE_URL="https://your-bookstack.example.com"
+   ```
+
 ## Features
 
 - Automatic DokuWiki installation detection (apt, manual, Docker)
