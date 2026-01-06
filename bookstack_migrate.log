@@ -1,0 +1,6 @@
+2026-01-06 23:50:31,845 [INFO] Command: help
+2026-01-06 23:50:32,018 [INFO] Command: version
+2026-01-06 23:50:32,019 [INFO] Version: 1.0.0
+2026-01-06 23:50:32,175 [INFO] Command: detect
+2026-01-06 23:50:32,176 [INFO] Running detect command
+2026-01-06 23:50:32,176 [ERROR] No DokuWiki installations found

@@ -21,6 +21,28 @@ import requests
 
 __version__ = "1.0.0"
 
+
+# ============================================================================
+# VENV CHECK (Runtime Safety)
+# ============================================================================
+
+def check_venv_and_prompt() -> None:
+    """Check if running in virtual environment; prompt to install if not."""
+    in_venv = hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix)
+    
+    if not in_venv:
+        print("\n⚠️  WARNING: Not running in a virtual environment!")
+        print("   It's recommended to use a venv to avoid conflicts:")
+        print("   $ python3 -m venv venv")
+        print("   $ source venv/bin/activate")
+        print("   $ pip install -e .")
+        print("   $ bookstack-migrate --help")
+        print()
+        response = input("Continue anyway? (y/n): ").strip().lower()
+        if response not in {"y", "yes"}:
+            print("Aborted.")
+            sys.exit(0)
+
 # Logging
 logging.basicConfig(
     level=logging.INFO,
@@ -559,6 +581,10 @@ def cmd_help() -> int:
 
 def main() -> int:
     """Main entry point."""
+    # Check venv (only for interactive terminal, not CI/CD)
+    if sys.stdin.isatty() and os.environ.get("CI") is None:
+        check_venv_and_prompt()
+    
     parser = build_parser()
     args = parser.parse_args()
 
