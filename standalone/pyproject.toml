@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bookstack-migration"
+version = "1.0.0"
+description = "BookStack to DokuWiki migration - auto-detect, export, load"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+bookstack-migrate = "bookstack_migrate:main"

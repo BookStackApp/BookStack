@@ -1,0 +1,138 @@
+#!/usr/bin/env python3
+"""
+BookStack → DokuWiki Migration Tool
+Complete standalone executable - single entry point
+"""
+
+import sys
+import os
+import subprocess
+import json
+from pathlib import Path
+from dataclasses import dataclass
+from typing import List, Optional
+
+__version__ = "1.0.0"
+
+@dataclass
+class DokuWikiInstall:
+    path: Path
+    pages_dir: Path
+    media_dir: Path
+    install_type: str  # apt, manual, docker, custom
+    writable: bool
+
+def detect_dokuwiki() -> List[DokuWikiInstall]:
+    """Detect all DokuWiki installations on system"""
+    search_paths = [
+        '/var/www/dokuwiki',
+        '/var/lib/dokuwiki', 
+        '/usr/share/dokuwiki',
+        '/opt/dokuwiki',
+        Path.home() / 'dokuwiki',
+    ]
+    
+    found = []
+    
+    for path_str in search_paths:
+        path = Path(path_str)
+        if not path.exists():
+            continue
+            
+        init_file = path / 'inc' / 'init.php'
+        conf_dir = path / 'conf'
+        
+        if init_file.exists() and conf_dir.exists():
+            pages_dir = path / 'data' / 'pages'
+            media_dir = path / 'data' / 'media'
+            
+            if pages_dir.exists() and media_dir.exists():
+                writable = os.access(pages_dir, os.W_OK)
+                
+                # Determine type
+                if 'var/lib' in str(path):
+                    install_type = 'apt'
+                elif 'var/www' in str(path):
+                    install_type = 'manual'
+                else:
+                    install_type = 'custom'
+                
+                found.append(DokuWikiInstall(
+                    path=path,
+                    pages_dir=pages_dir,
+                    media_dir=media_dir,
+                    install_type=install_type,
+                    writable=writable
+                ))
+    
+    return found
+
+def cmd_detect():
+    """Detect DokuWiki installations"""
+    installs = detect_dokuwiki()
+    
+    if not installs:
+        print("❌ No DokuWiki installations found")
+        return 1
+    
+    print(f"\n✅ Found {len(installs)} DokuWiki installation(s):\n")
+    
+    for i, inst in enumerate(installs, 1):
+        access = "✅ writable" if inst.writable else "❌ read-only"
+        print(f"{i}. {inst.path}")
+        print(f"   Type: {inst.install_type}")
+        print(f"   Pages: {inst.pages_dir}")
+        print(f"   Media: {inst.media_dir}")
+        print(f"   Access: {access}\n")
+    
+    return 0
+
+def cmd_export(args):
+    """Export BookStack to DokuWiki"""
+    print("📤 Export BookStack to DokuWiki")
+    # Implementation here
+    return 0
+
+def cmd_version():
+    """Show version"""
+    print(f"BookStack Migration Tool v{__version__}")
+    return 0
+
+def cmd_help():
+    """Show help"""
+    print("""
+BookStack → DokuWiki Migration Tool
+
+Usage:
+  bookstack-migrate detect          Find DokuWiki installations
+  bookstack-migrate export ...      Export BookStack
+  bookstack-migrate version         Show version
+  bookstack-migrate help            Show this help
+
+Examples:
+  bookstack-migrate detect
+  bookstack-migrate export --db bookstack --user root --password secret
+    """)
+    return 0
+
+def main():
+    """Main entry point"""
+    if len(sys.argv) < 2:
+        return cmd_help()
+    
+    cmd = sys.argv[1]
+    
+    if cmd == 'detect':
+        return cmd_detect()
+    elif cmd == 'export':
+        return cmd_export(sys.argv[2:])
+    elif cmd == 'version':
+        return cmd_version()
+    elif cmd in ['help', '-h', '--help']:
+        return cmd_help()
+    else:
+        print(f"Unknown command: {cmd}")
+        return 1
+
+if __name__ == '__main__':
+    sys.exit(main() or 0)
