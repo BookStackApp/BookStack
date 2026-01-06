@@ -1,0 +1,169 @@
+name: Build & Release
+
+on:
+  push:
+    branches:
+      - feature/standalone
+      - bookstack-migrate
+    tags:
+      - 'v*'
+  pull_request:
+    branches:
+      - development
+      - feature/standalone
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Lint with pylint
+        run: |
+          python -m pylint bookstack_migrate.py --disable=all --enable=syntax-error || true
+      
+      - name: Run unit tests
+        run: |
+          python -m pytest tests/ -v --tb=short
+      
+      - name: Test package build
+        run: |
+          python -m build
+      
+      - name: Upload test coverage
+        if: matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results
+          path: test_output.txt
+
+  build-binaries:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Build standalone wrapper
+        run: bash build/binaries.sh
+      
+      - name: Test standalone binary
+        run: |
+          ./dist/bookstack-migrate version
+          ./dist/bookstack-migrate help | head -10
+      
+      - name: Upload binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: binaries
+          path: dist/
+
+  build-package:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip build
+      
+      - name: Build package
+        run: python -m build
+      
+      - name: Upload packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: packages
+          path: dist/
+
+  release:
+    needs: [test, build-binaries, build-package]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            binaries/bookstack-migrate
+            packages/bookstack_migrate-*.whl
+            packages/bookstack_migrate-*.tar.gz
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  docker-integration-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Start services
+        run: |
+          docker-compose up -d
+          sleep 30
+      
+      - name: Check services
+        run: |
+          curl -f http://localhost:8000 || echo "BookStack not ready"
+          curl -f http://localhost:8080 || echo "DokuWiki not ready"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      
+      - name: Run integration tests
+        run: |
+          python bookstack_migrate.py detect || true
+          python bookstack_migrate.py version
+      
+      - name: Cleanup
+        if: always()
+        run: docker-compose down

@@ -42,4 +42,4 @@ Repository = "https://github.com/alvonellos/BookStack"
 bookstack-migrate = "bookstack_migrate:main"
 
 [tool.setuptools]
-py-modules = ["bookstack_migrate", "bookstack_api"]
+py-modules = ["bookstack_migrate"]
