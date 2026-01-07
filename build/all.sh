@@ -12,11 +12,14 @@ if [ ! -d venv ]; then
     python3 -m venv venv
 fi
 source venv/bin/activate
-pip install -q -e ".[dev]"
+python -m pip install -q --upgrade pip
+python -m pip install -q -e ".[dev]"
+python -m pip install -q pylint
+python -m pip install -q build
 
 # Lint
 echo "📝 Running linters..."
-python -m pylint bookstack_migrate.py bookstack_api.py --disable=all --enable=syntax-error || true
+python -m pylint bookstack_migrate.py --disable=all --enable=syntax-error || true
 
 # Unit tests
 echo "🧪 Running unit tests..."

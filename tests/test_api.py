@@ -1,7 +1,7 @@
-"""Tests for bookstack_api module."""
+"""Tests for API/config pieces in the consolidated module."""
 import pytest
 
-from bookstack_api import EnvConfig, PageRef, BookStackError, read_env_config
+from bookstack_migrate import EnvConfig, PageRef, BookStackError, read_env_config
 
 
 def test_page_ref():

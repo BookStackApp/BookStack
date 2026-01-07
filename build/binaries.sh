@@ -12,6 +12,14 @@ else
     PYTHON_BIN="python"
 fi
 
+# PyInstaller requires a Python built with a shared library.
+PY_SHARED=$($PYTHON_BIN -c "import sysconfig; print(int(sysconfig.get_config_var('Py_ENABLE_SHARED') or 0))" 2>/dev/null || echo "0")
+if [ "$PY_SHARED" = "0" ]; then
+    echo "⚠️  Skipping PyInstaller build (Python missing shared library)"
+    echo "   You can still use the wheel/sdist artifacts from 'python -m build'."
+    exit 0
+fi
+
 # Check dependencies
 if ! command -v pyinstaller &> /dev/null; then
     echo "Installing PyInstaller..."
