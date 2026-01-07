@@ -29,6 +29,21 @@ class SettingService
     }
 
     /**
+     * Get a setting from the database as an integer.
+     * Returns the default value if not found or not an integer, and clamps the value to the given min/max range.
+     */
+    public function getInteger(string $key, int $default, int $min = 0, int $max = PHP_INT_MAX): int
+    {
+        $value = $this->get($key, $default);
+        if (!is_numeric($value)) {
+            return $default;
+        }
+
+        $int = intval($value);
+        return max($min, min($max, $int));
+    }
+
+    /**
      * Get a value from the session instead of the main store option.
      */
     protected function getFromSession(string $key, $default = false)

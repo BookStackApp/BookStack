@@ -75,13 +75,14 @@ return [
             'collation'      => 'utf8mb4_unicode_ci',
             // Prefixes are only semi-supported and may be unstable
             // since they are not tested as part of our automated test suite.
-            // If used, the prefix should not be changed otherwise you will likely receive errors.
+            // If used, the prefix should not be changed; otherwise you will likely receive errors.
             'prefix'         => env('DB_TABLE_PREFIX', ''),
             'prefix_indexes' => true,
             'strict'         => false,
             'engine'         => null,
             'options'        => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+                // @phpstan-ignore class.notFound
+                (PHP_VERSION_ID >= 80500 ? \Pdo\Mysql::ATTR_SSL_CA : \PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 
@@ -103,9 +104,7 @@ return [
     ],
 
     // Migration Repository Table
-    // This table keeps track of all the migrations that have already run for
-    // your application. Using this information, we can determine which of
-    // the migrations on disk haven't actually been run in the database.
+    // This table keeps track of all the migrations that have already run for the application.
     'migrations' => 'migrations',
 
     // Redis configuration to use if set

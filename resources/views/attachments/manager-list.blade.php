@@ -16,7 +16,7 @@
                         type="button"
                         title="{{ trans('entities.attachments_insert_link') }}"
                         class="drag-card-action text-center text-link">@icon('link')</button>
-                @if(userCan('attachment-update', $attachment))
+                @if(userCan(\BookStack\Permissions\Permission::AttachmentUpdate, $attachment))
                     <button component="event-emit-select"
                             option:event-emit-select:name="edit"
                             option:event-emit-select:id="{{ $attachment->id }}"
@@ -24,7 +24,7 @@
                             title="{{ trans('common.edit') }}"
                             class="drag-card-action text-center text-link">@icon('edit')</button>
                 @endif
-                @if(userCan('attachment-delete', $attachment))
+                @if(userCan(\BookStack\Permissions\Permission::AttachmentDelete, $attachment))
                     <div component="dropdown" class="flex-fill relative">
                         <button refs="dropdown@toggle"
                                 type="button"

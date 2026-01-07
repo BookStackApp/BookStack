@@ -13,7 +13,7 @@
                 <div>
                     <label for="setting-app-public" class="setting-list-label">{{ trans('settings.app_public_access') }}</label>
                     <p class="small">{!! trans('settings.app_public_access_desc') !!}</p>
-                    @if(userCan('users-manage'))
+                    @if(userCan(\BookStack\Permissions\Permission::UsersManage))
                         <p class="small mb-none">
                             <a href="{{ url($guestUser->getEditUrl()) }}">{!! trans('settings.app_public_access_desc_guest') !!}</a>
                         </p>

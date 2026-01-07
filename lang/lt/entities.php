@@ -416,7 +416,7 @@ return [
     'comment_jump_to_thread' => 'Jump to thread',
     'comment_delete_confirm' => 'Esate tikri, kad norite ištrinti šį komentarą?',
     'comment_in_reply_to' => 'Atsakydamas į :commentId',
-    'comment_reference' => 'Reference',
+    'comment_reference' => 'Nuoroda',
     'comment_reference_outdated' => '(Outdated)',
     'comment_editor_explain' => 'Here are the comments that have been left on this page. Comments can be added & managed when viewing the saved page.',
 
@@ -446,7 +446,7 @@ return [
     'convert_chapter_confirm' => 'Are you sure you want to convert this chapter?',
 
     // References
-    'references' => 'References',
+    'references' => 'Nuorodos',
     'references_none' => 'There are no tracked references to this item.',
     'references_to_desc' => 'Listed below is all the known content in the system that links to this item.',
 

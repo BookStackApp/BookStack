@@ -11,6 +11,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -47,7 +48,7 @@ class BookApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('book-create-all');
+        $this->checkPermission(Permission::BookCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $book = $this->bookRepo->create($requestData);
@@ -57,7 +58,7 @@ class BookApiController extends ApiController
 
     /**
      * View the details of a single book.
-     * The response data will contain 'content' property listing the chapter and pages directly within, in
+     * The response data will contain a 'content' property listing the chapter and pages directly within, in
      * the same structure as you'd see within the BookStack interface when viewing a book. Top-level
      * contents will have a 'type' property to distinguish between pages & chapters.
      */
@@ -92,7 +93,7 @@ class BookApiController extends ApiController
     public function update(Request $request, string $id)
     {
         $book = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('book-update', $book);
+        $this->checkOwnablePermission(Permission::BookUpdate, $book);
 
         $requestData = $this->validate($request, $this->rules()['update']);
         $book = $this->bookRepo->update($book, $requestData);
@@ -109,7 +110,7 @@ class BookApiController extends ApiController
     public function delete(string $id)
     {
         $book = $this->queries->findVisibleByIdOrFail(intval($id));
-        $this->checkOwnablePermission('book-delete', $book);
+        $this->checkOwnablePermission(Permission::BookDelete, $book);
 
         $this->bookRepo->destroy($book);
 
@@ -121,9 +122,10 @@ class BookApiController extends ApiController
         $book = clone $book;
         $book->unsetRelations()->refresh();
 
-        $book->load(['tags', 'cover']);
-        $book->makeVisible('description_html')
-            ->setAttribute('description_html', $book->descriptionHtml());
+        $book->load(['tags']);
+        $book->makeVisible(['cover', 'description_html'])
+            ->setAttribute('description_html', $book->descriptionInfo()->getHtml())
+            ->setAttribute('cover', $book->coverInfo()->getImage());
 
         return $book;
     }

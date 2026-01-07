@@ -42,7 +42,7 @@ class OutOfMemoryHandler
     }
 
     /**
-     * Forget the handler so no action is taken place on out of memory.
+     * Forget the handler, so no action is taken place on out of memory.
      */
     public function forget(): void
     {
@@ -53,6 +53,11 @@ class OutOfMemoryHandler
 
     protected function getHandler(): Handler
     {
+        /**
+         * We want to resolve our specific BookStack handling via the set app handler
+         * singleton, but phpstan will only infer based on the interface.
+         * @phpstan-ignore return.type
+         */
         return app()->make(ExceptionHandler::class);
     }
 }

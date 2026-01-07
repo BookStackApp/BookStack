@@ -3,8 +3,8 @@
 namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
-use BookStack\Entities\Models\HasHtmlDescription;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
@@ -30,12 +30,53 @@ class ReferenceUpdater
     }
 
     /**
+     * Change existing references for a range of entities using the given context.
+     */
+    public function changeReferencesUsingContext(ReferenceChangeContext $context): void
+    {
+        $bindings = [];
+        foreach ($context->getOldEntities() as $old) {
+            $bindings[] = $old->getMorphClass();
+            $bindings[] = $old->id;
+        }
+
+        // No targets to update within the context, so no need to continue.
+        if (count($bindings) < 2) {
+            return;
+        }
+
+        $toReferenceQuery = '(to_type, to_id) IN (' . rtrim(str_repeat('(?,?),', count($bindings) / 2), ',') . ')';
+
+        // Cycle each new entity in the context
+        foreach ($context->getNewEntities() as $new) {
+            // For each, get all references from it which lead to other items within the context of the change
+            $newReferencesInContext = $new->referencesFrom()->whereRaw($toReferenceQuery, $bindings)->get();
+            // For each reference, update the URL and the reference entry
+            foreach ($newReferencesInContext as $reference) {
+                $oldToEntity = $reference->to;
+                $newToEntity = $context->getNewForOld($oldToEntity);
+                if ($newToEntity === null) {
+                    continue;
+                }
+
+                $this->updateReferencesWithinEntity($new, $oldToEntity->getUrl(), $newToEntity->getUrl());
+                if ($newToEntity instanceof Page && $oldToEntity instanceof Page) {
+                    $this->updateReferencesWithinEntity($new, $oldToEntity->getPermalink(), $newToEntity->getPermalink());
+                }
+                $reference->to_id = $newToEntity->id;
+                $reference->to_type = $newToEntity->getMorphClass();
+                $reference->save();
+            }
+        }
+    }
+
+    /**
      * @return Reference[]
      */
     protected function getReferencesToUpdate(Entity $entity): array
     {
         /** @var Reference[] $references */
-        $references = $this->referenceFetcher->getReferencesToEntity($entity)->values()->all();
+        $references = $this->referenceFetcher->getReferencesToEntity($entity, true)->values()->all();
 
         if ($entity instanceof Book) {
             $pages = $entity->pages()->get(['id']);
@@ -43,7 +84,7 @@ class ReferenceUpdater
             $children = $pages->concat($chapters);
             foreach ($children as $bookChild) {
                 /** @var Reference[] $childRefs */
-                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild)->values()->all();
+                $childRefs = $this->referenceFetcher->getReferencesToEntity($bookChild, true)->values()->all();
                 array_push($references, ...$childRefs);
             }
         }
@@ -61,20 +102,18 @@ class ReferenceUpdater
     {
         if ($entity instanceof Page) {
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
-            return;
         }
 
-        if (in_array(HasHtmlDescription::class, class_uses($entity))) {
+        if ($entity instanceof HasDescriptionInterface) {
             $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
         }
     }
 
-    protected function updateReferencesWithinDescription(Entity $entity, string $oldLink, string $newLink): void
+    protected function updateReferencesWithinDescription(Entity&HasDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
-        /** @var HasHtmlDescription&Entity $entity */
-        $entity = (clone $entity)->refresh();
-        $html = $this->updateLinksInHtml($entity->description_html ?: '', $oldLink, $newLink);
-        $entity->description_html = $html;
+        $description = $entity->descriptionInfo();
+        $html = $this->updateLinksInHtml($description->getHtml(true) ?: '', $oldLink, $newLink);
+        $description->set($html);
         $entity->save();
     }
 

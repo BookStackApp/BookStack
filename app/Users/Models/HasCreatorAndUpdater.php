@@ -27,4 +27,9 @@ trait HasCreatorAndUpdater
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
+
+    public function getOwnerFieldName(): string
+    {
+        return 'created_by';
+    }
 }

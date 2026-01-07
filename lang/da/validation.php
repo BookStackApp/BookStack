@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Filen kunne ikke oploades. Serveren accepterer muligvis ikke filer af denne størrelse.',
 
     'zip_file' => 'Attributten skal henvise til en fil i ZIP.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => 'Attributten skal henvise til en fil af typen: validTypes, fundet:foundType.',
     'zip_model_expected' => 'Data objekt forventet men ":type" fundet.',
     'zip_unique' => 'Attributten skal være unik for objekttypen i ZIP.',

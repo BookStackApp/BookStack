@@ -2,7 +2,7 @@ import {Component} from './component';
 import {getLoading, htmlToDom} from '../services/dom';
 import {PageCommentReference} from "./page-comment-reference";
 import {HttpError} from "../services/http";
-import {SimpleWysiwygEditorInterface} from "../wysiwyg";
+import {createCommentEditorInstance, SimpleWysiwygEditorInterface} from "../wysiwyg";
 import {el} from "../wysiwyg/utils/dom";
 
 export interface PageCommentReplyEventData {
@@ -104,7 +104,7 @@ export class PageComment extends Component {
         this.input.parentElement?.appendChild(container);
         this.input.hidden = true;
 
-        this.wysiwygEditor = wysiwygModule.createBasicEditorInstance(container as HTMLElement, editorContent, {
+        this.wysiwygEditor = wysiwygModule.createCommentEditorInstance(container as HTMLElement, editorContent, {
             darkMode: document.documentElement.classList.contains('dark-mode'),
             textDirection: this.$opts.textDirection,
             translations: (window as unknown as Record<string, Object>).editor_translations,

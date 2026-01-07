@@ -66,7 +66,7 @@ class BookSortTest extends TestCase
         $sortResp = $this->asEditor()->put($newBook->getUrl() . '/sort', ['sort-tree' => json_encode($reqData)]);
         $sortResp->assertRedirect($newBook->getUrl());
         $sortResp->assertStatus(302);
-        $this->assertDatabaseHas('chapters', [
+        $this->assertDatabaseHasEntityData('chapter', [
             'id'       => $chapterToMove->id,
             'book_id'  => $newBook->id,
             'priority' => 0,
@@ -93,7 +93,7 @@ class BookSortTest extends TestCase
         ];
         $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -114,7 +114,7 @@ class BookSortTest extends TestCase
         ];
         $this->asEditor()->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -136,7 +136,7 @@ class BookSortTest extends TestCase
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -158,7 +158,7 @@ class BookSortTest extends TestCase
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -180,7 +180,7 @@ class BookSortTest extends TestCase
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -202,7 +202,7 @@ class BookSortTest extends TestCase
         ];
         $this->actingAs($editor)->put($page->book->getUrl('/sort'), ['sort-tree' => json_encode([$sortData])])->assertRedirect();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'id' => $page->id, 'chapter_id' => $page->chapter_id, 'book_id' => $page->book_id,
         ]);
     }
@@ -211,7 +211,7 @@ class BookSortTest extends TestCase
     {
         $book = $this->entities->bookHasChaptersAndPages();
         $chapter = $book->chapters()->first();
-        \DB::table('chapters')->where('id', '=', $chapter->id)->update([
+        Chapter::query()->where('id', '=', $chapter->id)->update([
             'priority' => 10001,
             'updated_at' => \Carbon\Carbon::now()->subYear(5),
         ]);
@@ -299,7 +299,7 @@ class BookSortTest extends TestCase
         $book = $this->entities->bookHasChaptersAndPages();
         $book->chapters()->forceDelete();
         /** @var Page[] $pages */
-        $pages = $book->pages()->where('chapter_id', '=', 0)->take(2)->get();
+        $pages = $book->pages()->whereNull('chapter_id')->take(2)->get();
         $book->pages()->whereNotIn('id', $pages->pluck('id'))->delete();
 
         $resp = $this->asEditor()->get($book->getUrl());

@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIP-Datei konnte nicht gelesen werden.',
     'import_zip_cant_decode_data' => 'Konnte Inhalt der data.json im ZIP nicht finden und dekodieren.',
     'import_zip_no_data' => 'ZIP-Datei hat kein erwartetes Buch, Kapitel oder Seiteninhalt.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'ZIP Import konnte aufgrund folgender Fehler nicht validiert werden:',
     'import_zip_failed_notification' => 'Importieren der ZIP-Datei fehlgeschlagen.',
     'import_perms_books' => 'Dir fehlt die erforderliche Berechtigung, um Bücher zu erstellen.',

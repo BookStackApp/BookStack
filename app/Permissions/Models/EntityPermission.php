@@ -18,8 +18,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class EntityPermission extends Model
 {
-    public const PERMISSIONS = ['view', 'create', 'update', 'delete'];
-
     protected $fillable = ['role_id', 'view', 'create', 'update', 'delete'];
     public $timestamps = false;
     protected $hidden = ['entity_id', 'entity_type', 'id'];

@@ -12,7 +12,7 @@
 
             <p>{{ trans('preferences.delete_my_account_desc') }}</p>
 
-            @if(userCan('users-manage'))
+            @if(userCan(\BookStack\Permissions\Permission::UsersManage))
                 <hr class="my-l">
 
                 <div class="grid half gap-xl v-center">

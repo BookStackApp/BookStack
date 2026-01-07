@@ -284,7 +284,7 @@ class ExportFormatter
     public function bookToPlainText(Book $book): string
     {
         $bookTree = (new BookContents($book))->getTree(false, true);
-        $text = $book->name . "\n" . $book->description;
+        $text = $book->name . "\n" . $book->descriptionInfo()->getPlain();
         $text = rtrim($text) . "\n\n";
 
         $parts = [];
@@ -318,7 +318,7 @@ class ExportFormatter
     {
         $text = '# ' . $chapter->name . "\n\n";
 
-        $description = (new HtmlToMarkdown($chapter->descriptionHtml()))->convert();
+        $description = (new HtmlToMarkdown($chapter->descriptionInfo()->getHtml()))->convert();
         if ($description) {
             $text .= $description . "\n\n";
         }
@@ -338,7 +338,7 @@ class ExportFormatter
         $bookTree = (new BookContents($book))->getTree(false, true);
         $text = '# ' . $book->name . "\n\n";
 
-        $description = (new HtmlToMarkdown($book->descriptionHtml()))->convert();
+        $description = (new HtmlToMarkdown($book->descriptionInfo()->getHtml()))->convert();
         if ($description) {
             $text .= $description . "\n\n";
         }

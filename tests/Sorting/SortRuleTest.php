@@ -142,7 +142,7 @@ class SortRuleTest extends TestCase
         $resp = $this->delete("settings/sorting/rules/{$rule->id}", ['confirm' => 'true']);
         $resp->assertRedirect('/settings/sorting');
         $this->assertDatabaseMissing('sort_rules', ['id' => $rule->id]);
-        $this->assertDatabaseMissing('books', ['sort_rule_id' => $rule->id]);
+        $this->assertDatabaseMissing('entity_container_data', ['sort_rule_id' => $rule->id]);
     }
 
     public function test_page_create_triggers_book_sort()
@@ -159,7 +159,7 @@ class SortRuleTest extends TestCase
         ]);
         $resp->assertOk();
 
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'book_id' => $book->id,
             'name' => '1111 page',
             'priority' => $book->chapters()->count() + 1,
@@ -217,7 +217,7 @@ class SortRuleTest extends TestCase
         }
 
         foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
+            $this->assertDatabaseHasEntityData('page', [
                 'book_id' => $book->id,
                 'name' => $name,
                 'priority' => $index + 1,
@@ -251,7 +251,7 @@ class SortRuleTest extends TestCase
         }
 
         foreach ($namesToAdd as $index => $name) {
-            $this->assertDatabaseHas('pages', [
+            $this->assertDatabaseHasEntityData('page', [
                 'book_id' => $book->id,
                 'name' => $name,
                 'priority' => $index + 1,

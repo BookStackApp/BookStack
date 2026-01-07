@@ -18,6 +18,7 @@ use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportImage;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
 use BookStack\Exports\ZipExports\Models\ZipExportTag;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use BookStack\Uploads\FileStorage;
@@ -134,8 +135,8 @@ class ZipImportRunner
             'tags' => $this->exportTagsToInputArray($exportBook->tags ?? []),
         ]);
 
-        if ($book->cover) {
-            $this->references->addImage($book->cover, null);
+        if ($book->coverInfo()->getImage()) {
+            $this->references->addImage($book->coverInfo()->getImage(), null);
         }
 
         $children = [
@@ -196,8 +197,8 @@ class ZipImportRunner
 
         $this->pageRepo->publishDraft($page, [
             'name' => $exportPage->name,
-            'markdown' => $exportPage->markdown,
-            'html' => $exportPage->html,
+            'markdown' => $exportPage->markdown ?? '',
+            'html' => $exportPage->html ?? '',
             'tags' => $this->exportTagsToInputArray($exportPage->tags ?? []),
         ]);
 
@@ -264,6 +265,12 @@ class ZipImportRunner
 
     protected function zipFileToUploadedFile(string $fileName, ZipExportReader $reader): UploadedFile
     {
+        if (!$reader->fileWithinSizeLimit($fileName)) {
+            throw new ZipImportException([
+                "File $fileName exceeds app upload limit."
+            ]);
+        }
+
         $tempPath = tempnam(sys_get_temp_dir(), 'bszipextract');
         $fileStream = $reader->streamFile($fileName);
         $tempStream = fopen($tempPath, 'wb');
@@ -288,7 +295,7 @@ class ZipImportRunner
         $attachments = [];
 
         if ($exportModel instanceof ZipExportBook) {
-            if (!userCan('book-create-all')) {
+            if (!userCan(Permission::BookCreateAll)) {
                 $errors[] = trans('errors.import_perms_books');
             }
             array_push($pages, ...$exportModel->pages);
@@ -317,11 +324,11 @@ class ZipImportRunner
 
         if (count($pages) > 0) {
             if ($parent) {
-                if (!userCan('page-create', $parent)) {
+                if (!userCan(Permission::PageCreate, $parent)) {
                     $errors[] = trans('errors.import_perms_pages');
                 }
             } else {
-                $hasPermission = userCan('page-create-all') || userCan('page-create-own');
+                $hasPermission = userCan(Permission::PageCreateAll) || userCan(Permission::PageCreateOwn);
                 if (!$hasPermission) {
                     $errors[] = trans('errors.import_perms_pages');
                 }
@@ -329,13 +336,13 @@ class ZipImportRunner
         }
 
         if (count($images) > 0) {
-            if (!userCan('image-create-all')) {
+            if (!userCan(Permission::ImageCreateAll)) {
                 $errors[] = trans('errors.import_perms_images');
             }
         }
 
         if (count($attachments) > 0) {
-            if (!userCan('attachment-create-all')) {
+            if (!userCan(Permission::AttachmentCreateAll)) {
                 $errors[] = trans('errors.import_perms_attachments');
             }
         }

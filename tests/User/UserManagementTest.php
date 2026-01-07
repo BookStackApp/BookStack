@@ -2,9 +2,21 @@
 
 namespace Tests\User;
 
+use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\SocialAccount;
 use BookStack\Access\UserInviteException;
 use BookStack\Access\UserInviteService;
 use BookStack\Activity\ActivityType;
+use BookStack\Activity\Models\Activity;
+use BookStack\Activity\Models\Comment;
+use BookStack\Activity\Models\Favourite;
+use BookStack\Activity\Models\View;
+use BookStack\Activity\Models\Watch;
+use BookStack\Api\ApiToken;
+use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\PageRevision;
+use BookStack\Exports\Import;
+use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;
@@ -28,10 +40,10 @@ class UserManagementTest extends TestCase
         $this->withHtml($resp)->assertElementContains('form[action="' . url('/settings/users/create') . '"]', 'Save');
 
         $resp = $this->post('/settings/users/create', [
-            'name'                          => $user->name,
-            'email'                         => $user->email,
-            'password'                      => $user->password,
-            'password-confirm'              => $user->password,
+            'name' => $user->name,
+            'email' => $user->email,
+            'password' => $user->password,
+            'password-confirm' => $user->password,
             'roles[' . $adminRole->id . ']' => 'true',
         ]);
         $resp->assertRedirect('/settings/users');
@@ -77,7 +89,7 @@ class UserManagementTest extends TestCase
         $this->get($userProfilePage)->assertSee('Password confirmation required');
 
         $this->put($userProfilePage, [
-            'password'         => 'newpassword',
+            'password' => 'newpassword',
             'password-confirm' => 'newpassword',
         ])->assertRedirect('/settings/users');
 
@@ -165,9 +177,9 @@ class UserManagementTest extends TestCase
         $owner = $page->ownedBy;
         $newOwner = User::query()->where('id', '!=', $owner->id)->first();
 
-        $this->asAdmin()->delete("settings/users/{$owner->id}", ['new_owner_id' => $newOwner->id]);
-        $this->assertDatabaseHas('pages', [
-            'id'       => $page->id,
+        $this->asAdmin()->delete("settings/users/{$owner->id}", ['new_owner_id' => $newOwner->id])->assertRedirect();
+        $this->assertDatabaseHasEntityData('page', [
+            'id' => $page->id,
             'owned_by' => $newOwner->id,
         ]);
     }
@@ -180,6 +192,91 @@ class UserManagementTest extends TestCase
         $resp->assertRedirect('/settings/users');
         $this->assertActivityExists(ActivityType::USER_DELETE);
         $this->assertSessionHas('success');
+    }
+
+    public function test_delete_with_empty_owner_migration_id_clears_relevant_id_uses()
+    {
+        $user = $this->users->editor();
+        $page = $this->entities->page();
+        $this->actingAs($user);
+
+        // Create relations
+        $activity = Activity::factory()->create(['user_id' => $user->id]);
+        $attachment = Attachment::factory()->create(['created_by' => $user->id, 'updated_by' => $user->id]);
+        $comment = Comment::factory()->create(['created_by' => $user->id, 'updated_by' => $user->id]);
+        $deletion = Deletion::factory()->create(['deleted_by' => $user->id]);
+        $page->forceFill(['owned_by' => $user->id, 'created_by' => $user->id, 'updated_by' => $user->id])->save();
+        $page->rebuildPermissions();
+        $image = Image::factory()->create(['created_by' => $user->id, 'updated_by' => $user->id]);
+        $import = Import::factory()->create(['created_by' => $user->id]);
+        $revision = PageRevision::factory()->create(['created_by' => $user->id]);
+
+        $apiToken = ApiToken::factory()->create(['user_id' => $user->id]);
+        \DB::table('email_confirmations')->insert(['user_id' => $user->id, 'token' => 'abc123']);
+        $favourite = Favourite::factory()->create(['user_id' => $user->id]);
+        $mfaValue = MfaValue::factory()->create(['user_id' => $user->id]);
+        $socialAccount = SocialAccount::factory()->create(['user_id' => $user->id]);
+        \DB::table('user_invites')->insert(['user_id' => $user->id, 'token' => 'abc123']);
+        View::incrementFor($page);
+        $watch = Watch::factory()->create(['user_id' => $user->id]);
+
+        $userColumnsByTable = [
+            'api_tokens' => ['user_id'],
+            'attachments' => ['created_by', 'updated_by'],
+            'comments' => ['created_by', 'updated_by'],
+            'deletions' => ['deleted_by'],
+            'email_confirmations' => ['user_id'],
+            'entities' => ['created_by', 'updated_by', 'owned_by'],
+            'favourites' => ['user_id'],
+            'images' => ['created_by', 'updated_by'],
+            'imports' => ['created_by'],
+            'joint_permissions' => ['owner_id'],
+            'mfa_values' => ['user_id'],
+            'page_revisions' => ['created_by'],
+            'role_user' => ['user_id'],
+            'social_accounts' => ['user_id'],
+            'user_invites' => ['user_id'],
+            'views' => ['user_id'],
+            'watches' => ['user_id'],
+        ];
+
+        // Ensure columns have user id before deletion
+        foreach ($userColumnsByTable as $table => $columns) {
+            foreach ($columns as $column) {
+                $this->assertDatabaseHas($table, [$column => $user->id]);
+            }
+        }
+
+        $resp = $this->asAdmin()->delete("settings/users/{$user->id}", ['new_owner_id' => '']);
+        $resp->assertRedirect('/settings/users');
+
+        // Ensure columns missing user id after deletion
+        foreach ($userColumnsByTable as $table => $columns) {
+            foreach ($columns as $column) {
+                $this->assertDatabaseMissing($table, [$column => $user->id]);
+            }
+        }
+
+        // Check models exist where should be retained
+        $this->assertDatabaseHas('attachments', ['id' => $attachment->id, 'created_by' => null, 'updated_by' => null]);
+        $this->assertDatabaseHas('comments', ['id' => $comment->id, 'created_by' => null, 'updated_by' => null]);
+        $this->assertDatabaseHas('deletions', ['id' => $deletion->id, 'deleted_by' => null]);
+        $this->assertDatabaseHas('entities', ['id' => $page->id, 'created_by' => null, 'updated_by' => null, 'owned_by' => null]);
+        $this->assertDatabaseHas('images', ['id' => $image->id, 'created_by' => null, 'updated_by' => null]);
+        $this->assertDatabaseHas('imports', ['id' => $import->id, 'created_by' => null]);
+        $this->assertDatabaseHas('page_revisions', ['id' => $revision->id, 'created_by' => null]);
+
+        // Check models no longer exist where should have been deleted with the user
+        $this->assertDatabaseMissing('api_tokens', ['id' => $apiToken->id]);
+        $this->assertDatabaseMissing('email_confirmations', ['token' => 'abc123']);
+        $this->assertDatabaseMissing('favourites', ['id' => $favourite->id]);
+        $this->assertDatabaseMissing('mfa_values', ['id' => $mfaValue->id]);
+        $this->assertDatabaseMissing('social_accounts', ['id' => $socialAccount->id]);
+        $this->assertDatabaseMissing('user_invites', ['token' => 'abc123']);
+        $this->assertDatabaseMissing('watches', ['id' => $watch->id]);
+
+        // Ensure activity remains using the old ID (Special case for auditing changes)
+        $this->assertDatabaseHas('activities', ['id' => $activity->id, 'user_id' => $user->id]);
     }
 
     public function test_delete_removes_user_preferences()
@@ -247,9 +344,9 @@ class UserManagementTest extends TestCase
         });
 
         $this->asAdmin()->post('/settings/users/create', [
-            'name'                          => $user->name,
-            'email'                         => $user->email,
-            'send_invite'                   => 'true',
+            'name' => $user->name,
+            'email' => $user->email,
+            'send_invite' => 'true',
             'roles[' . $adminRole->id . ']' => 'true',
         ]);
 
@@ -267,9 +364,9 @@ class UserManagementTest extends TestCase
         });
 
         $this->asAdmin()->post('/settings/users/create', [
-            'name'                          => $user->name,
-            'email'                         => $user->email,
-            'send_invite'                   => 'true',
+            'name' => $user->name,
+            'email' => $user->email,
+            'send_invite' => 'true',
         ]);
 
         $this->assertDatabaseMissing('activities', ['type' => 'USER_CREATE']);
@@ -286,9 +383,9 @@ class UserManagementTest extends TestCase
         });
 
         $resp = $this->asAdmin()->post('/settings/users/create', [
-            'name'                          => $user->name,
-            'email'                         => $user->email,
-            'send_invite'                   => 'true',
+            'name' => $user->name,
+            'email' => $user->email,
+            'send_invite' => 'true',
         ]);
 
         $resp->assertRedirect('/settings/users/create');
@@ -314,8 +411,8 @@ class UserManagementTest extends TestCase
         // Both on create
         $resp = $this->post('/settings/users/create', [
             'language' => 'en<GB_and_this_is_longer',
-            'name'     => 'My name',
-            'email'    => 'jimmy@example.com',
+            'name' => 'My name',
+            'email' => 'jimmy@example.com',
         ]);
         $resp->assertSessionHasErrors(['language' => 'The language may not be greater than 15 characters.']);
         $resp->assertSessionHasErrors(['language' => 'The language may only contain letters, numbers, dashes and underscores.']);

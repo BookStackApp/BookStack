@@ -14,6 +14,9 @@ RUN apt-get update && \
         wait-for-it && \
     rm -rf /var/lib/apt/lists/*
 
+# Mark /app as safe for Git >= 2.35.2
+RUN git config --system --add safe.directory /app
+
 # Install PHP extensions
 RUN docker-php-ext-configure ldap --with-libdir="lib/$(gcc -dumpmachine)" && \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \

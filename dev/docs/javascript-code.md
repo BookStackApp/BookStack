@@ -161,3 +161,7 @@ window.$components.firstOnElement(element, name);
 There are a range of available events that are emitted as part of a public & supported API for accessing or extending JavaScript libraries & components used in the system.
 
 Details on these events can be found in the [JavaScript Public Events file](javascript-public-events.md).
+
+## WYSIWYG Editor API
+
+Details on the API for our custom-built WYSIWYG editor can be found in the [WYSIWYG JavaScript API file](./wysiwyg-js-api.md).

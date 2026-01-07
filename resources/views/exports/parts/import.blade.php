@@ -5,6 +5,6 @@
     </div>
     <div class="px-m py-s flex-container-row gap-m items-center">
         <div class="bold opacity-80 text-muted">{{ $import->getSizeString() }}</div>
-        <div class="bold opacity-80 text-muted min-width-xs text-right" title="{{ $import->created_at->toISOString() }}">@icon('time'){{ $import->created_at->diffForHumans() }}</div>
+        <div class="bold opacity-80 text-muted min-width-xs text-right" title="{{ $dates->absolute($import->created_at) }}">@icon('time'){{ $dates->relative($import->created_at) }}</div>
     </div>
 </div>

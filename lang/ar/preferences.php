@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'التحكم في إشعارات البريد الإلكتروني الذي تتلقاها عند إجراء نشاط معين داخل النظام.',
     'notifications_opt_own_page_changes' => 'إشعاري عند حدوث تغييرات في الصفحات التي أملكها',
     'notifications_opt_own_page_comments' => 'إشعاري بشأن التعليقات على الصفحات التي أملكها',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'إشعاري عند الردود على تعليقاتي',
     'notifications_save' => 'حفظ اﻹعدادات',
     'notifications_update_success' => 'تم تحديث إعدادات الإشعارات!',

@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Lege fest, welche E-Mail-Benachrichtigungen du erhältst, wenn bestimmte Aktivitäten im System durchgeführt werden.',
     'notifications_opt_own_page_changes' => 'Benachrichtigung bei Änderungen an eigenen Seiten',
     'notifications_opt_own_page_comments' => 'Benachrichtigung bei Kommentaren an eigenen Seiten',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Bei Antworten auf meine Kommentare benachrichtigen',
     'notifications_save' => 'Einstellungen speichern',
     'notifications_update_success' => 'Benachrichtigungseinstellungen wurden aktualisiert!',

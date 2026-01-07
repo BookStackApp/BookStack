@@ -91,7 +91,7 @@ class ChaptersApiTest extends TestCase
             'description' => 'A chapter created via the API',
         ]);
         $resp->assertJson($expectedDetails);
-        $this->assertDatabaseHas('chapters', $expectedDetails);
+        $this->assertDatabaseHasEntityData('chapter', $expectedDetails);
     }
 
     public function test_chapter_name_needed_to_create()
@@ -155,7 +155,7 @@ class ChaptersApiTest extends TestCase
                     'owned_by' => $page->owned_by,
                     'created_by' => $page->created_by,
                     'updated_by' => $page->updated_by,
-                    'book_id' => $page->id,
+                    'book_id' => $page->book->id,
                     'chapter_id' => $chapter->id,
                     'priority' => $page->priority,
                     'book_slug' => $chapter->book->slug,
@@ -213,7 +213,7 @@ class ChaptersApiTest extends TestCase
         $resp = $this->putJson($this->baseEndpoint . "/{$chapter->id}", $details);
         $resp->assertStatus(200);
 
-        $this->assertDatabaseHas('chapters', array_merge($details, [
+        $this->assertDatabaseHasEntityData('chapter', array_merge($details, [
             'id' => $chapter->id, 'description' => 'A chapter updated via the API'
         ]));
     }
@@ -222,7 +222,7 @@ class ChaptersApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $chapter = $this->entities->chapter();
-        DB::table('chapters')->where('id', '=', $chapter->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+        $chapter->newQuery()->where('id', '=', $chapter->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
             'tags' => [['name' => 'Category', 'value' => 'Testing']],
@@ -244,8 +244,8 @@ class ChaptersApiTest extends TestCase
         $resp->assertOk();
         $chapter->refresh();
 
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'book_id' => $newBook->id]);
-        $this->assertDatabaseHas('pages', ['id' => $page->id, 'book_id' => $newBook->id, 'chapter_id' => $chapter->id]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'book_id' => $newBook->id]);
+        $this->assertDatabaseHasEntityData('page', ['id' => $page->id, 'book_id' => $newBook->id, 'chapter_id' => $chapter->id]);
     }
 
     public function test_update_with_new_book_id_requires_delete_permission()

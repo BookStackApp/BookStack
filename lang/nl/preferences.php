@@ -23,11 +23,12 @@ return [
     'notifications_desc' => 'Bepaal welke e-mailmeldingen je ontvangt wanneer bepaalde activiteiten in het systeem worden uitgevoerd.',
     'notifications_opt_own_page_changes' => 'Geef melding bij wijzigingen aan pagina\'s waarvan ik de eigenaar ben',
     'notifications_opt_own_page_comments' => 'Geef melding van opmerkingen op pagina\'s waarvan ik de eigenaar ben',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Geef melding van reacties op mijn opmerkingen',
     'notifications_save' => 'Voorkeuren opslaan',
     'notifications_update_success' => 'Voorkeuren voor meldingen zijn bijgewerkt!',
     'notifications_watched' => 'Gevolgde & Genegeerde Items',
-    'notifications_watched_desc' => 'Hieronder staan de items waarvoor aangepaste \'Volg\'-voorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de \'Volg\' opties in de zijbalk.',
+    'notifications_watched_desc' => 'Hieronder staan de items waarvoor aangepaste volgvoorkeuren zijn toegepast. Om je voorkeuren voor deze items bij te werken, bekijk je het item en zoek je naar de volgopties in de zijbalk.',
 
     'auth' => 'Toegang & Beveiliging',
     'auth_change_password' => 'Wachtwoord Wijzigen',

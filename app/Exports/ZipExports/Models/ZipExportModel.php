@@ -30,12 +30,12 @@ abstract class ZipExportModel implements JsonSerializable
     /**
      * Decode the array of data into this export model.
      */
-    abstract public static function fromArray(array $data): self;
+    abstract public static function fromArray(array $data): static;
 
     /**
      * Decode an array of array data into an array of export models.
      * @param array[] $data
-     * @return self[]
+     * @return static[]
      */
     public static function fromManyArray(array $data): array
     {

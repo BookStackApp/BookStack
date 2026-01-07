@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Cheklov oʻrnatilmagan',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Xizmat',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Sahifa muharririni o\'zgartirish',
     'role_notifications' => 'Bildirishnomalarni qabul qilish va boshqarish',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Obyektga ruxsatlar',
     'roles_system_warning' => 'Shuni yodda tutingki, yuqoridagi uchta ruxsatdan birortasiga kirish foydalanuvchiga o\'z imtiyozlarini yoki tizimdagi boshqalarning imtiyozlarini o\'zgartirishi mumkin. Ishonchli foydalanuvchilarga faqat ushbu ruxsatlarga ega rollarni tayinlang.',
     'role_asset_desc' => 'Bu ruxsatlar tizim ichidagi aktivlarga standart kirishni nazorat qiladi. Kitoblar, boblar va sahifalardagi ruxsatlar bu ruxsatlarni bekor qiladi.',
     'role_asset_admins' => 'Administratorlarga avtomatik ravishda barcha kontentga kirish huquqi beriladi, lekin bu parametrlar UI parametrlarini koʻrsatishi yoki yashirishi mumkin.',
     'role_asset_image_view_note' => 'Bu tasvir menejeridagi ko\'rinishga tegishli. Yuklangan rasm fayllariga haqiqiy kirish tizim tasvirini saqlash opsiyasiga bog\'liq bo\'ladi.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Hammasi',
     'role_own' => 'Shaxsiy',
     'role_controlled_by_asset' => 'Ular yuklangan obyekt tomonidan nazorat qilinadi',

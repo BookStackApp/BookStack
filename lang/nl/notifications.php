@@ -5,16 +5,18 @@
 return [
 
     'new_comment_subject' => 'Nieuwe opmerking op pagina: :pageName',
-    'new_comment_intro' => 'Een gebruiker heeft gereageerd op een pagina in :appName:',
+    'new_comment_intro' => 'Een gebruiker heeft een opmerking geplaatst op een pagina in :appName:',
     'new_page_subject' => 'Nieuwe pagina: :pageName',
     'new_page_intro' => 'Een nieuwe pagina is gemaakt in :appName:',
     'updated_page_subject' => 'Aangepaste pagina: :pageName',
     'updated_page_intro' => 'Een pagina werd aangepast in :appName:',
     'updated_page_debounce' => 'Om een stortvloed aan meldingen te voorkomen, zul je een tijdje geen meldingen ontvangen voor verdere bewerkingen van deze pagina door dezelfde redacteur.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Pagina Naam:',
     'detail_page_path' => 'Paginapad:',
-    'detail_commenter' => 'Reageerder:',
+    'detail_commenter' => 'Commentator:',
     'detail_comment' => 'Opmerking:',
     'detail_created_by' => 'Gemaakt Door:',
     'detail_updated_by' => 'Aangepast Door:',

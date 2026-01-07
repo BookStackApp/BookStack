@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Aktualizovaná stránka: :pageName',
     'updated_page_intro' => 'V :appName byla aktualizována stránka:',
     'updated_page_debounce' => 'Po nějakou dobu neobdržíte další oznámení o aktualizaci této stránky stejným editorem, aby se omezil počet stejných zpráv.',
+    'comment_mention_subject' => 'Byli jste zmíněni v komentáři na stránce: :pageName',
+    'comment_mention_intro' => 'Byli jste zmíněni v komentáři na webu :appName:',
 
     'detail_page_name' => 'Název stránky:',
     'detail_page_path' => 'Umístění:',

@@ -2,6 +2,7 @@
 
 namespace Tests\Api;
 
+use BookStack\Activity\Models\Comment;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
 use Carbon\Carbon;
@@ -199,6 +200,31 @@ class PagesApiTest extends TestCase
         $this->assertSame(404, $resp->json('error')['code']);
     }
 
+    public function test_read_endpoint_includes_page_comments_tree_structure()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $relation = ['commentable_type' => 'page', 'commentable_id' => $page->id];
+        $active = Comment::factory()->create([...$relation, 'html' => '<p>My active<script>cat</script> comment</p>']);
+        Comment::factory()->count(5)->create([...$relation, 'parent_id' => $active->local_id]);
+        $archived = Comment::factory()->create([...$relation, 'archived' => true]);
+        Comment::factory()->count(2)->create([...$relation, 'parent_id' => $archived->local_id]);
+
+        $resp = $this->getJson("{$this->baseEndpoint}/{$page->id}");
+        $resp->assertOk();
+
+        $resp->assertJsonCount(1, 'comments.active');
+        $resp->assertJsonCount(1, 'comments.archived');
+        $resp->assertJsonCount(5, 'comments.active.0.children');
+        $resp->assertJsonCount(2, 'comments.archived.0.children');
+
+        $resp->assertJsonFragment([
+            'id' => $active->id,
+            'local_id' => $active->local_id,
+            'html' => '<p>My active comment</p>',
+        ]);
+    }
+
     public function test_update_endpoint()
     {
         $this->actingAsApiEditor();
@@ -286,7 +312,7 @@ class PagesApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $page = $this->entities->page();
-        DB::table('pages')->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
+        $page->newQuery()->where('id', '=', $page->id)->update(['updated_at' => Carbon::now()->subWeek()]);
 
         $details = [
             'tags' => [['name' => 'Category', 'value' => 'Testing']],

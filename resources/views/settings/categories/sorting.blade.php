@@ -11,6 +11,29 @@
         <input type="hidden" name="section" value="sorting">
 
         <div class="setting-list">
+            <div>
+                <div class="mb-m">
+                    <label class="setting-list-label">{{ trans('settings.sorting_page_limits') }}</label>
+                    <p class="small">{{ trans('settings.sorting_page_limits_desc') }}</p>
+                </div>
+                <div class="flex-container-row wrap gap-m small-inputs">
+                    @php
+                        $labelByKey = ['shelves' => trans('entities.shelves'), 'books' => trans('entities.books'), 'search' => trans('entities.search_results')];
+                    @endphp
+                    @foreach($labelByKey as $key => $label)
+                        <div>
+                            <label for="setting-lists-page-count-{{ $key }}">{{ $label }}</label>
+                            @include('form.number', [
+                                'name' => 'setting-lists-page-count-' . $key,
+                                'value' => setting()->getInteger('lists-page-count-' . $key, 18, 1, 1000),
+                                'min' => 1,
+                                'step' => 1,
+                            ])
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
             <div class="grid half gap-xl items-center">
                 <div>
                     <label for="setting-sorting-book-default"

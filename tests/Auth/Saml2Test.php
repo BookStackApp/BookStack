@@ -36,7 +36,7 @@ class Saml2Test extends TestCase
     public function test_metadata_endpoint_displays_xml_as_expected()
     {
         $req = $this->get('/saml2/metadata');
-        $req->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+        $req->assertHeader('Content-Type', 'text/xml; charset=utf-8');
         $req->assertSee('md:EntityDescriptor');
         $req->assertSee(url('/saml2/acs'));
     }
@@ -51,7 +51,7 @@ class Saml2Test extends TestCase
 
         $req = $this->get('/saml2/metadata');
         $req->assertOk();
-        $req->assertHeader('Content-Type', 'text/xml; charset=UTF-8');
+        $req->assertHeader('Content-Type', 'text/xml; charset=utf-8');
         $req->assertSee('md:EntityDescriptor');
     }
 

@@ -50,7 +50,7 @@
                         <div>{{ trans('entities.pages_edit_delete_draft') }}</div>
                     </button>
                 </li>
-                @if(userCan('editor-change'))
+                @if(userCan(\BookStack\Permissions\Permission::EditorChange))
                     <li role="presentation">
                         <hr>
                     </li>

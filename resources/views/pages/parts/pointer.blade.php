@@ -26,11 +26,11 @@
                 </div>
             </div>
             <div>
-                @if(userCan('page-update', $page))
+                @if(userCan(\BookStack\Permissions\Permission::PageUpdate, $page))
                     <a href="{{ $page->getUrl('/edit') }}" id="pointer-edit" data-edit-href="{{ $page->getUrl('/edit') }}"
                        class="button primary outline icon heading-edit-icon px-xs" title="{{ trans('entities.pages_edit_content_link')}}">@icon('edit')</a>
                 @endif
-                @if($commentTree->enabled() && userCan('comment-create-all'))
+                @if($commentTree->enabled() && userCan(\BookStack\Permissions\Permission::CommentCreateAll))
                     <button type="button"
                             refs="pointer@comment-button"
                             class="button primary outline icon px-xs m-none" title="{{ trans('entities.comment_add')}}">@icon('comment')</button>

@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => '차단한 도메인 없음',
 
     // Sorting Settings
-    'sorting' => '정렬',
-    'sorting_book_default' => '기본 책 정렬',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => '새로운 책에 적용할 기본 정렬 규칙을 선택하세요. 이 선택은 기존 책에는 영향을 주지 않고, 기존 책의 설정은 책마다 변경할 수 있습니다.',
     'sorting_rules' => '정렬 규칙',
     'sorting_rules_desc' => '현재 시스템에 미리 정의된 정렬 규칙의 목록입니다.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => '수정일',
     'sort_rule_op_chapters_first' => '챕터 우선 정렬',
     'sort_rule_op_chapters_last' => '챕터 나중 정렬',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => '유지관리',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => '내용 가져오기',
     'role_editor_change' => '페이지 편집기 변경',
     'role_notifications' => '알림 수신 및 관리',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => '권한 항목',
     'roles_system_warning' => '위 세 권한은 자신의 권한이나 다른 유저의 권한을 바꿀 수 있습니다.',
     'role_asset_desc' => '책, 챕터, 문서별 권한은 이 설정에 우선합니다.',
     'role_asset_admins' => '관리자 권한은 어디든 접근할 수 있지만 이 설정은 사용자 인터페이스에서 해당 활동을 표시할지 결정합니다.',
     'role_asset_image_view_note' => '이는 이미지 관리자 내 가시성과 관련이 있습니다. 업로드된 이미지 파일의 실제 접근은 시스템의 이미지 저장 설정에 따라 달라집니다.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => '모든 항목',
     'role_own' => '직접 만든 항목',
     'role_controlled_by_asset' => '저마다 다름',

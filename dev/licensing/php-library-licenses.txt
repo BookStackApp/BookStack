@@ -13,7 +13,7 @@ Link: http://aws.amazon.com/sdkforphp
 bacon/bacon-qr-code
 License: BSD-2-Clause
 License File: vendor/bacon/bacon-qr-code/LICENSE
-Copyright: Copyright (c) 2017, Ben Scholzen 'DASPRiD'
+Copyright: Copyright (c) 2017-present, Ben Scholzen 'DASPRiD'
 All rights reserved.
 Source: https://github.com/Bacon/BaconQrCode.git
 Link: https://github.com/Bacon/BaconQrCode
@@ -176,7 +176,7 @@ License: MIT
 License File: vendor/intervention/image/LICENSE
 Copyright: Copyright (c) 2013-present Oliver Vogel
 Source: https://github.com/Intervention/image.git
-Link: https://image.intervention.io/
+Link: https://image.intervention.io
 -----------
 knplabs/knp-snappy
 License: MIT
@@ -465,7 +465,7 @@ Link: https://github.com/php-fig/simple-cache.git
 psy/psysh
 License: MIT
 License File: vendor/psy/psysh/LICENSE
-Copyright: Copyright (c) 2012-2023 Justin Hileman
+Copyright: Copyright (c) 2012-2025 Justin Hileman
 Source: https://github.com/bobthecow/psysh.git
 Link: https://psysh.org
 -----------
@@ -592,6 +592,13 @@ Copyright: Copyright (c) 2018-present Fabien Potencier
 Source: https://github.com/symfony/event-dispatcher-contracts.git
 Link: https://symfony.com
 -----------
+symfony/filesystem
+License: MIT
+License File: vendor/symfony/filesystem/LICENSE
+Copyright: Copyright (c) 2004-present Fabien Potencier
+Source: https://github.com/symfony/filesystem.git
+Link: https://symfony.com
+-----------
 symfony/finder
 License: MIT
 License File: vendor/symfony/finder/LICENSE
@@ -674,6 +681,20 @@ License: MIT
 License File: vendor/symfony/polyfill-php83/LICENSE
 Copyright: Copyright (c) 2022-present Fabien Potencier
 Source: https://github.com/symfony/polyfill-php83.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php84
+License: MIT
+License File: vendor/symfony/polyfill-php84/LICENSE
+Copyright: Copyright (c) 2024-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php84.git
+Link: https://symfony.com
+-----------
+symfony/polyfill-php85
+License: MIT
+License File: vendor/symfony/polyfill-php85/LICENSE
+Copyright: Copyright (c) 2025-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-php85.git
 Link: https://symfony.com
 -----------
 symfony/polyfill-uuid
@@ -759,10 +780,3 @@ License File: vendor/voku/portable-ascii/LICENSE.txt
 Copyright: Copyright (C) 2019 Lars Moelleken
 Source: https://github.com/voku/portable-ascii.git
 Link: https://github.com/voku/portable-ascii
------------
-webmozart/assert
-License: MIT
-License File: vendor/webmozart/assert/LICENSE
-Copyright: Copyright (c) 2014 Bernhard Schussek
-Source: https://github.com/webmozarts/assert.git
-Link: https://github.com/webmozarts/assert.git

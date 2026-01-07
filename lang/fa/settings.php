@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'بدون محدودیت',
 
     // Sorting Settings
-    'sorting' => 'مرتب‌سازی',
-    'sorting_book_default' => 'مرتب‌سازی پیش‌فرض کتاب',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'قانون پیش‌فرض مرتب‌سازی را برای کتاب‌های جدید انتخاب کنید. تغییر قانون بر ترتیب کتاب‌های موجود تأثیری ندارد و می‌تواند برای هر کتاب به‌صورت جداگانه تغییر یابد.',
     'sorting_rules' => 'قوانین مرتب‌سازی',
     'sorting_rules_desc' => 'این‌ها عملیات مرتب‌سازی از پیش تعریف‌شده‌ای هستند که می‌توانید آن‌ها را بر محتوای سیستم اعمال کنید.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'تاریخ به‌روزرسانی',
     'sort_rule_op_chapters_first' => 'ابتدا فصل‌ها',
     'sort_rule_op_chapters_last' => 'فصل‌ها در آخر',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'نگهداری',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'وارد کردن محتوا',
     'role_editor_change' => 'تغییر ویرایشگر صفحه',
     'role_notifications' => 'دریافت و مدیریت اعلان‌ها',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'مجوزهای دارایی',
     'roles_system_warning' => 'توجه داشته باشید که دسترسی به هر یک از سه مجوز فوق می‌تواند به کاربر اجازه دهد تا امتیازات خود یا امتیازات دیگران را در سیستم تغییر دهد. فقط نقش هایی را با این مجوزها به کاربران مورد اعتماد اختصاص دهید.',
     'role_asset_desc' => 'این مجوزها دسترسی پیش‌فرض به دارایی‌های درون سیستم را کنترل می‌کنند. مجوزهای مربوط به کتاب‌ها، فصل‌ها و صفحات این مجوزها را لغو می‌کنند.',
     'role_asset_admins' => 'به ادمین‌ها به‌طور خودکار به همه محتوا دسترسی داده می‌شود، اما این گزینه‌ها ممکن است گزینه‌های UI را نشان داده یا پنهان کنند.',
     'role_asset_image_view_note' => 'این مربوط به مرئی بودن در بخش مدیر تصاویر است. دسترسی عملی به تصاویر آپلود شده بستگی به گزینه ذخیره‌سازی تصویر سیستم دارد.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'همه',
     'role_own' => 'صاحب',
     'role_controlled_by_asset' => 'توسط دارایی که در آن آپلود می شود کنترل می شود',

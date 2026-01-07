@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Päivitetty sivu: :pageName',
     'updated_page_intro' => 'Sivu on päivitetty sivustolla :appName:',
     'updated_page_debounce' => 'Useiden ilmoitusten välttämiseksi sinulle ei toistaiseksi lähetetä ilmoituksia saman toimittajan tekemistä uusista muokkauksista tälle sivulle.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Sivun nimi:',
     'detail_page_path' => 'Sivun polku:',

@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Gat ekki lesið ZIP skrá.',
     'import_zip_cant_decode_data' => 'Fann ekki ZIP data.json innihald.',
     'import_zip_no_data' => 'ZIP skráin inniheldur ekkert efni.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'ZIP skráin stóðst ekki staðfestingu og skilaði villu:',
     'import_zip_failed_notification' => 'Gat ekki lesið inn ZIP skrá.',
     'import_perms_books' => 'Þú hefur ekki heimild til að búa til bækur.',

@@ -6,18 +6,20 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Deletion;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Http\ApiController;
-use Closure;
+use BookStack\Permissions\Permission;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RecycleBinApiController extends ApiController
 {
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $this->checkPermission('settings-manage');
-            $this->checkPermission('restrictions-manage-all');
+            $this->checkPermission(Permission::SettingsManage);
+            $this->checkPermission(Permission::RestrictionsManageAll);
 
             return $next($request);
         });
@@ -40,7 +42,7 @@ class RecycleBinApiController extends ApiController
             'updated_at',
             'deletable_type',
             'deletable_id',
-        ], [Closure::fromCallable([$this, 'listFormatter'])]);
+        ], [$this->listFormatter(...)]);
     }
 
     /**
@@ -69,10 +71,9 @@ class RecycleBinApiController extends ApiController
     /**
      * Load some related details for the deletion listing.
      */
-    protected function listFormatter(Deletion $deletion)
+    protected function listFormatter(Deletion $deletion): void
     {
         $deletable = $deletion->deletable;
-        $withTrashedQuery = fn (Builder $query) => $query->withTrashed();
 
         if ($deletable instanceof BookChild) {
             $parent = $deletable->getParent();
@@ -81,11 +82,19 @@ class RecycleBinApiController extends ApiController
         }
 
         if ($deletable instanceof Book || $deletable instanceof Chapter) {
-            $countsToLoad = ['pages' => $withTrashedQuery];
+            $countsToLoad = ['pages' => static::withTrashedQuery(...)];
             if ($deletable instanceof Book) {
-                $countsToLoad['chapters'] = $withTrashedQuery;
+                $countsToLoad['chapters'] = static::withTrashedQuery(...);
             }
             $deletable->loadCount($countsToLoad);
         }
+    }
+
+    /**
+     * @param Builder<Chapter|Page> $query
+     */
+    protected static function withTrashedQuery(Builder $query): void
+    {
+        $query->withTrashed();
     }
 }

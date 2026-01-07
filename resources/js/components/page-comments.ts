@@ -5,7 +5,7 @@ import {PageCommentReference} from "./page-comment-reference";
 import {scrollAndHighlightElement} from "../services/util";
 import {PageCommentArchiveEventData, PageCommentReplyEventData} from "./page-comment";
 import {el} from "../wysiwyg/utils/dom";
-import {SimpleWysiwygEditorInterface} from "../wysiwyg";
+import {createCommentEditorInstance, SimpleWysiwygEditorInterface} from "../wysiwyg";
 
 export class PageComments extends Component {
 
@@ -200,7 +200,7 @@ export class PageComments extends Component {
         this.formInput.parentElement?.appendChild(container);
         this.formInput.hidden = true;
 
-        this.wysiwygEditor = wysiwygModule.createBasicEditorInstance(container as HTMLElement, '<p></p>', {
+        this.wysiwygEditor = wysiwygModule.createCommentEditorInstance(container as HTMLElement, '<p></p>', {
             darkMode: document.documentElement.classList.contains('dark-mode'),
             textDirection: this.wysiwygTextDirection,
             translations: (window as unknown as Record<string, Object>).editor_translations,

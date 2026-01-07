@@ -383,6 +383,14 @@ export class LexicalNode {
     return isSelected;
   }
 
+    /**
+     * Indicate if this node should be selected directly instead of the default
+     * where the selection would descend to the nearest initial child element.
+     */
+  shouldSelectDirectly(): boolean {
+      return false;
+  }
+
   /**
    * Returns this nodes key.
    */

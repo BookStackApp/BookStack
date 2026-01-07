@@ -6,6 +6,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageResizer;
@@ -50,7 +51,7 @@ class ImageController extends Controller
 
         $image = $this->imageRepo->getById($id);
         $this->checkImagePermission($image);
-        $this->checkOwnablePermission('image-update', $image);
+        $this->checkOwnablePermission(Permission::ImageUpdate, $image);
 
         $image = $this->imageRepo->updateImageDetails($image, $data);
 
@@ -71,7 +72,7 @@ class ImageController extends Controller
 
         $image = $this->imageRepo->getById($id);
         $this->checkImagePermission($image);
-        $this->checkOwnablePermission('image-update', $image);
+        $this->checkOwnablePermission(Permission::ImageUpdate, $image);
         $file = $request->file('file');
 
         new OutOfMemoryHandler(function () {
@@ -125,7 +126,7 @@ class ImageController extends Controller
     public function destroy(string $id)
     {
         $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission('image-delete', $image);
+        $this->checkOwnablePermission(Permission::ImageDelete, $image);
         $this->checkImagePermission($image);
 
         $this->imageRepo->destroyImage($image);
@@ -140,7 +141,7 @@ class ImageController extends Controller
     {
         $image = $this->imageRepo->getById($id);
         $this->checkImagePermission($image);
-        $this->checkOwnablePermission('image-update', $image);
+        $this->checkOwnablePermission(Permission::ImageUpdate, $image);
 
         new OutOfMemoryHandler(function () {
             return $this->jsonError(trans('errors.image_thumbnail_memory_limit'));
@@ -163,7 +164,7 @@ class ImageController extends Controller
 
         $relatedPage = $image->getPage();
         if ($relatedPage) {
-            $this->checkOwnablePermission('page-view', $relatedPage);
+            $this->checkOwnablePermission(Permission::PageView, $relatedPage);
         }
     }
 }

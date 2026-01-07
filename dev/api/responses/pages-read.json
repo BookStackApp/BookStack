@@ -1,7 +1,7 @@
 {
 	"id": 306,
 	"book_id": 1,
-	"chapter_id": 0,
+	"chapter_id": null,
 	"name": "A page written in markdown",
 	"slug": "a-page-written-in-markdown",
 	"html": "<h1 id=\"bkmrk-this-is-my-cool-page\">This is my cool page! With some included text</h1>",
@@ -29,6 +29,79 @@
 	"revision_count": 5,
 	"template": false,
 	"editor": "wysiwyg",
+	"comments": {
+		"active": [
+			{
+				"comment": {
+					"id": 22,
+					"commentable_id": 306,
+					"commentable_type": "page",
+					"html": "<p>Does this need revising?<\/p>\n",
+					"parent_id": null,
+					"local_id": 1,
+					"created_by": {
+						"id": 1,
+						"name": "Admin",
+						"slug": "admin"
+					},
+					"updated_by": 1,
+					"created_at": "2023-06-07T07:50:56.000000Z",
+					"updated_at": "2023-06-07T07:50:56.000000Z",
+					"content_ref": "",
+					"archived": false
+				},
+				"depth": 0,
+				"children": [
+					{
+						"comment": {
+							"id": 34,
+							"commentable_id": 2646,
+							"commentable_type": "page",
+							"html": "<p>I think it's okay!<\/p>\n",
+							"parent_id": 1,
+							"local_id": 2,
+							"created_by": {
+								"id": 2,
+								"name": "Editor",
+								"slug": "editor"
+							},
+							"updated_by": 1,
+							"created_at": "2023-06-07T13:46:25.000000Z",
+							"updated_at": "2023-06-07T13:46:25.000000Z",
+							"content_ref": "",
+							"archived": false
+						},
+						"depth": 1,
+						"children": []
+					}
+				]
+			}
+		],
+		"archived": [
+			{
+				"comment": {
+					"id": 21,
+					"commentable_id": 2646,
+					"commentable_type": "page",
+					"html": "<p>The title needs to be fixed<\/p>\n",
+					"parent_id": null,
+					"local_id": 3,
+					"created_by": {
+						"id": 2,
+						"name": "Editor",
+						"slug": "editor"
+					},
+					"updated_by": 1,
+					"created_at": "2023-06-07T07:50:49.000000Z",
+					"updated_at": "2025-10-24T08:37:22.000000Z",
+					"content_ref": "",
+					"archived": true
+				},
+				"depth": 0,
+				"children": []
+			}
+		]
+	},
 	"tags": [
 		{
 			"name": "Category",

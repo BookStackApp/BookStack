@@ -4,6 +4,7 @@ namespace BookStack\Entities\Models;
 
 use BookStack\Activity\Models\Loggable;
 use BookStack\Users\Models\User;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -13,10 +14,12 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property int       $deleted_by
  * @property string    $deletable_type
  * @property int       $deletable_id
- * @property Deletable $deletable
+ * @property DeletableInterface $deletable
  */
 class Deletion extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $hidden = [];
 
     /**

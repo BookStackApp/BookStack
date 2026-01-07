@@ -150,6 +150,20 @@ export class ElementNode extends LexicalNode {
     }
     return node;
   }
+    getFirstSelectableDescendant<T extends LexicalNode>(): null | T {
+      if (this.shouldSelectDirectly()) {
+          return null;
+      }
+        let node = this.getFirstChild<T>();
+        while ($isElementNode(node) && !node.shouldSelectDirectly()) {
+            const child = node.getFirstChild<T>();
+            if (child === null) {
+                break;
+            }
+            node = child;
+        }
+        return node;
+    }
   getLastDescendant<T extends LexicalNode>(): null | T {
     let node = this.getLastChild<T>();
     while ($isElementNode(node)) {
@@ -161,6 +175,20 @@ export class ElementNode extends LexicalNode {
     }
     return node;
   }
+    getLastSelectableDescendant<T extends LexicalNode>(): null | T {
+      if (this.shouldSelectDirectly()) {
+          return null;
+      }
+        let node = this.getLastChild<T>();
+        while ($isElementNode(node) && !node.shouldSelectDirectly()) {
+            const child = node.getLastChild<T>();
+            if (child === null) {
+                break;
+            }
+            node = child;
+        }
+        return node;
+    }
   getDescendantByIndex<T extends LexicalNode>(index: number): null | T {
     const children = this.getChildren<T>();
     const childrenLength = children.length;
@@ -279,7 +307,7 @@ export class ElementNode extends LexicalNode {
     let anchorOffset = _anchorOffset;
     let focusOffset = _focusOffset;
     const childrenCount = this.getChildrenSize();
-    if (!this.canBeEmpty()) {
+    if (!this.canBeEmpty() && !this.shouldSelectDirectly()) {
       if (_anchorOffset === 0 && _focusOffset === 0) {
         const firstChild = this.getFirstChild();
         if ($isTextNode(firstChild) || $isElementNode(firstChild)) {
@@ -319,11 +347,11 @@ export class ElementNode extends LexicalNode {
     return selection;
   }
   selectStart(): RangeSelection {
-    const firstNode = this.getFirstDescendant();
+    const firstNode = this.getFirstSelectableDescendant();
     return firstNode ? firstNode.selectStart() : this.select();
   }
   selectEnd(): RangeSelection {
-    const lastNode = this.getLastDescendant();
+    const lastNode = this.getLastSelectableDescendant();
     return lastNode ? lastNode.selectEnd() : this.select();
   }
   clear(): this {

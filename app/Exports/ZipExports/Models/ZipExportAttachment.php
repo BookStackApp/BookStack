@@ -6,7 +6,7 @@ use BookStack\Exports\ZipExports\ZipExportFiles;
 use BookStack\Exports\ZipExports\ZipValidationHelper;
 use BookStack\Uploads\Attachment;
 
-class ZipExportAttachment extends ZipExportModel
+final class ZipExportAttachment extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
@@ -52,9 +52,9 @@ class ZipExportAttachment extends ZipExportModel
         return $context->validateData($data, $rules);
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
-        $model = new self();
+        $model = new static();
 
         $model->id = $data['id'] ?? null;
         $model->name = $data['name'];

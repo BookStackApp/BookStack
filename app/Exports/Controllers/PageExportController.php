@@ -8,6 +8,7 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exports\ExportFormatter;
 use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use Throwable;
 
 class PageExportController extends Controller
@@ -16,7 +17,7 @@ class PageExportController extends Controller
         protected PageQueries $queries,
         protected ExportFormatter $exportFormatter,
     ) {
-        $this->middleware('can:content-export');
+        $this->middleware(Permission::ContentExport->middleware());
         $this->middleware('throttle:exports');
     }
 

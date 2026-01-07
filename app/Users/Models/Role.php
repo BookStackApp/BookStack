@@ -53,10 +53,12 @@ class Role extends Model implements Loggable
 
     /**
      * The RolePermissions that belong to the role.
+     * @return BelongsToMany<RolePermission, $this>
      */
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id');
+        return $this->belongsToMany(RolePermission::class, 'permission_role', 'role_id', 'permission_id')
+            ->select(['id', 'name']);
     }
 
     /**

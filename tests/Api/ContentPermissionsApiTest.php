@@ -280,7 +280,7 @@ class ContentPermissionsApiTest extends TestCase
         ]);
 
         $resp->assertOk();
-        $this->assertDatabaseHas('pages', ['id' => $page->id, 'owned_by' => $user->id]);
+        $this->assertDatabaseHasEntityData('page', ['id' => $page->id, 'owned_by' => $user->id]);
         $this->assertDatabaseHas('entity_permissions', [
             'entity_id' => $page->id,
             'entity_type' => 'page',

@@ -366,9 +366,10 @@ details.sort-box[open] summary .caret-container svg {
 
 ul.pagination {
   display: inline-flex;
+  flex-wrap: wrap;
   list-style: none;
   margin: vars.$m 0;
-  padding-inline-start: 1px;
+  padding-inline: 1px;
   li:first-child {
     a, span {
       border-radius: 3px 0 0 3px;
@@ -384,6 +385,7 @@ ul.pagination {
     padding: vars.$xxs vars.$s;
     border: 1px solid #CCC;
     margin-inline-start: -1px;
+    margin-block-end: -1px;
     user-select: none;
     @include mixins.lightDark(color, #555, #eee);
     @include mixins.lightDark(border-color, #ccc, #666);

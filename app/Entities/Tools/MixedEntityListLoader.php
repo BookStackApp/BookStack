@@ -19,7 +19,7 @@ class MixedEntityListLoader
      * This will look for a model id and type via 'name_id' and 'name_type'.
      * @param Model[] $relations
      */
-    public function loadIntoRelations(array $relations, string $relationName, bool $loadParents): void
+    public function loadIntoRelations(array $relations, string $relationName, bool $loadParents, bool $withContents = false): void
     {
         $idsByType = [];
         foreach ($relations as $relation) {
@@ -33,7 +33,7 @@ class MixedEntityListLoader
             $idsByType[$type][] = $id;
         }
 
-        $modelMap = $this->idsByTypeToModelMap($idsByType, $loadParents);
+        $modelMap = $this->idsByTypeToModelMap($idsByType, $loadParents, $withContents);
 
         foreach ($relations as $relation) {
             $type = $relation->getAttribute($relationName . '_type');
@@ -49,13 +49,13 @@ class MixedEntityListLoader
      * @param array<string, int[]> $idsByType
      * @return array<string, array<int, Model>>
      */
-    protected function idsByTypeToModelMap(array $idsByType, bool $eagerLoadParents): array
+    protected function idsByTypeToModelMap(array $idsByType, bool $eagerLoadParents, bool $withContents): array
     {
         $modelMap = [];
 
         foreach ($idsByType as $type => $ids) {
-            $models = $this->queries->visibleForList($type)
-                ->whereIn('id', $ids)
+            $base = $withContents ? $this->queries->visibleForContentForType($type) : $this->queries->visibleForListForType($type);
+            $models = $base->whereIn('id', $ids)
                 ->with($eagerLoadParents ? $this->getRelationsToEagerLoad($type) : [])
                 ->get();
 

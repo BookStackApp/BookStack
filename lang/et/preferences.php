@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Halda e-posti teavitusi, mis saadetakse teatud tegevuste puhul.',
     'notifications_opt_own_page_changes' => 'Teavita muudatustest minu lehtedel',
     'notifications_opt_own_page_comments' => 'Teavita kommentaaridest minu lehtedel',
+    'notifications_opt_comment_mentions' => 'Teavita mind, kui mind kommentaaris mainitakse',
     'notifications_opt_comment_replies' => 'Teavita vastustest minu kommentaaridele',
     'notifications_save' => 'Salvesta eelistused',
     'notifications_update_success' => 'Teavituste eelistused on salvestatud!',

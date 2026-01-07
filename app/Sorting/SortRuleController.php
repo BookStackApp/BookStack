@@ -3,14 +3,16 @@
 namespace BookStack\Sorting;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Entities\Models\EntityContainerData;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
 
 class SortRuleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:settings-manage');
+        $this->middleware(Permission::SettingsManage->middleware());
     }
 
     public function create()
@@ -29,7 +31,7 @@ class SortRuleController extends Controller
 
         $operations = SortRuleOperation::fromSequence($request->input('sequence'));
         if (count($operations) === 0) {
-            return redirect()->withInput()->withErrors(['sequence' => 'No operations set.']);
+            return redirect('/settings/sorting/rules/new')->withInput()->withErrors(['sequence' => 'No operations set.']);
         }
 
         $rule = new SortRule();
@@ -87,7 +89,9 @@ class SortRuleController extends Controller
 
         if ($booksAssigned > 0) {
             if ($confirmed) {
-                $rule->books()->update(['sort_rule_id' => null]);
+                EntityContainerData::query()
+                    ->where('sort_rule_id', $rule->id)
+                    ->update(['sort_rule_id' => null]);
             } else {
                 $warnings[] = trans('settings.sort_rule_delete_warn_books', ['count' => $booksAssigned]);
             }

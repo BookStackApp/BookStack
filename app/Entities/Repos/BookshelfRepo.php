@@ -25,8 +25,7 @@ class BookshelfRepo
     public function create(array $input, array $bookIds): Bookshelf
     {
         return (new DatabaseTransaction(function () use ($input, $bookIds) {
-            $shelf = new Bookshelf();
-            $this->baseRepo->create($shelf, $input);
+            $shelf = $this->baseRepo->create(new Bookshelf(), $input);
             $this->baseRepo->updateCoverImage($shelf, $input['image'] ?? null);
             $this->updateBooks($shelf, $bookIds);
             Activity::add(ActivityType::BOOKSHELF_CREATE, $shelf);
@@ -39,7 +38,7 @@ class BookshelfRepo
      */
     public function update(Bookshelf $shelf, array $input, ?array $bookIds): Bookshelf
     {
-        $this->baseRepo->update($shelf, $input);
+        $shelf = $this->baseRepo->update($shelf, $input);
 
         if (!is_null($bookIds)) {
             $this->updateBooks($shelf, $bookIds);
@@ -56,20 +55,37 @@ class BookshelfRepo
 
     /**
      * Update which books are assigned to this shelf by syncing the given book ids.
-     * Function ensures the books are visible to the current user and existing.
+     * Function ensures the managed books are visible to the current user and existing,
+     * and that the user does not alter the assignment of books that are not visible to them.
      */
-    protected function updateBooks(Bookshelf $shelf, array $bookIds)
+    protected function updateBooks(Bookshelf $shelf, array $bookIds): void
     {
         $numericIDs = collect($bookIds)->map(function ($id) {
             return intval($id);
         });
 
-        $syncData = $this->bookQueries->visibleForList()
+        $existingBookIds = $shelf->books()->pluck('id')->toArray();
+        $visibleExistingBookIds = $this->bookQueries->visibleForList()
+            ->whereIn('id', $existingBookIds)
+            ->pluck('id')
+            ->toArray();
+        $nonVisibleExistingBookIds = array_values(array_diff($existingBookIds, $visibleExistingBookIds));
+
+        $newIdsToAssign = $this->bookQueries->visibleForList()
             ->whereIn('id', $bookIds)
             ->pluck('id')
-            ->mapWithKeys(function ($bookId) use ($numericIDs) {
-                return [$bookId => ['order' => $numericIDs->search($bookId)]];
-            });
+            ->toArray();
+
+        $maxNewIndex = max($numericIDs->keys()->toArray() ?: [0]);
+
+        $syncData = [];
+        foreach ($newIdsToAssign as $id) {
+            $syncData[$id] = ['order' => $numericIDs->search($id)];
+        }
+
+        foreach ($nonVisibleExistingBookIds as $index => $id) {
+            $syncData[$id] = ['order' => $maxNewIndex + ($index + 1)];
+        }
 
         $shelf->books()->sync($syncData);
     }
@@ -79,7 +95,7 @@ class BookshelfRepo
      *
      * @throws Exception
      */
-    public function destroy(Bookshelf $shelf)
+    public function destroy(Bookshelf $shelf): void
     {
         $this->trashCan->softDestroyShelf($shelf);
         Activity::add(ActivityType::BOOKSHELF_DELETE, $shelf);

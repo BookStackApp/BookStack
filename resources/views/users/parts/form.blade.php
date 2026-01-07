@@ -17,9 +17,9 @@
             @include('form.text', ['name' => 'name'])
         </div>
         <div>
-            @if($authMethod !== 'ldap' || userCan('users-manage'))
+            @if($authMethod !== 'ldap' || userCan(\BookStack\Permissions\Permission::UsersManage))
                 <label for="email">{{ trans('auth.email') }}</label>
-                @include('form.text', ['name' => 'email', 'disabled' => !userCan('users-manage')])
+                @include('form.text', ['name' => 'email', 'disabled' => !userCan(\BookStack\Permissions\Permission::UsersManage)])
             @endif
         </div>
     </div>

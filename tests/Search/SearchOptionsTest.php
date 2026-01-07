@@ -35,9 +35,14 @@ class SearchOptionsTest extends TestCase
 
     public function test_from_string_properly_parses_escaped_quotes()
     {
-        $options = SearchOptions::fromString('"\"cat\"" surprise "\"\"" "\"donkey" "\"" "\\\\"');
+        $options = SearchOptions::fromString('"\"cat\"" surprise');
+        $this->assertEquals(['"cat"'], $options->exacts->toValueArray());
 
-        $this->assertEquals(['"cat"', '""', '"donkey', '"', '\\'], $options->exacts->toValueArray());
+        $options = SearchOptions::fromString('"\"\"" "\"donkey"');
+        $this->assertEquals(['""', '"donkey'], $options->exacts->toValueArray());
+
+        $options = SearchOptions::fromString('"\"" "\\\\"');
+        $this->assertEquals(['"', '\\'], $options->exacts->toValueArray());
     }
 
     public function test_to_string_includes_all_items_in_the_correct_format()
@@ -104,6 +109,7 @@ class SearchOptionsTest extends TestCase
 
     public function test_from_request_properly_parses_exacts_from_search_terms()
     {
+        $this->asEditor();
         $request = new Request([
             'search' => 'biscuits "cheese" "" "baked beans"'
         ]);
@@ -141,5 +147,54 @@ class SearchOptionsTest extends TestCase
         $this->assertTrue($options->filters->all()[0]->negated);
         $this->assertEquals('dino', $options->exacts->all()[0]->value);
         $this->assertTrue($options->exacts->all()[0]->negated);
+    }
+
+    public function test_from_string_results_are_count_limited_and_larger_for_logged_in_users()
+    {
+        $terms = [
+            ...array_fill(0, 40, 'cat'),
+            ...array_fill(0, 50, '"bees"'),
+            ...array_fill(0, 50, '{is_template}'),
+            ...array_fill(0, 50, '[a=b]'),
+        ];
+
+        $options = SearchOptions::fromString(implode(' ', $terms));
+
+        $this->assertCount(5, $options->searches->all());
+        $this->assertCount(2, $options->exacts->all());
+        $this->assertCount(4, $options->tags->all());
+        $this->assertCount(5, $options->filters->all());
+
+        $this->asEditor();
+        $options = SearchOptions::fromString(implode(' ', $terms));
+
+        $this->assertCount(10, $options->searches->all());
+        $this->assertCount(4, $options->exacts->all());
+        $this->assertCount(8, $options->tags->all());
+        $this->assertCount(10, $options->filters->all());
+    }
+
+    public function test_from_request_results_are_count_limited_and_larger_for_logged_in_users()
+    {
+        $request = new Request([
+            'search' => str_repeat('hello ', 20),
+            'tags' => array_fill(0, 20, 'a=b'),
+            'extras' => str_repeat('-[b=c] -{viewed_by_me} -"dino"', 20),
+        ]);
+
+        $options = SearchOptions::fromRequest($request);
+
+        $this->assertCount(5, $options->searches->all());
+        $this->assertCount(2, $options->exacts->all());
+        $this->assertCount(4, $options->tags->all());
+        $this->assertCount(5, $options->filters->all());
+
+        $this->asEditor();
+        $options = SearchOptions::fromRequest($request);
+
+        $this->assertCount(10, $options->searches->all());
+        $this->assertCount(4, $options->exacts->all());
+        $this->assertCount(8, $options->tags->all());
+        $this->assertCount(10, $options->filters->all());
     }
 }

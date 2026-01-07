@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Không thể đọc tệp ZIP.',
     'import_zip_cant_decode_data' => 'Không thể tìm và giải mã nội dung ZIP data.json.',
     'import_zip_no_data' => 'Dữ liệu tệp ZIP không có nội dung sách, chương hoặc trang mong đợi.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Nhập tệp ZIP không hợp lệ với các lỗi:',
     'import_zip_failed_notification' => 'Không thể nhập tệp ZIP.',
     'import_perms_books' => 'Bạn không có quyền cần thiết để tạo sách.',

@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'पाना अपडेट भयो: :pageName',
     'updated_page_intro' => ':appName मा पाना अपडेट गरिएको छ',
     'updated_page_debounce' => 'धेरै सूचना नपरोस् भनेर, केही समयको लागि एउटै सम्पादकबाट हुने थप सम्पादनहरूका सूचना तपाईंलाई पठाइने छैन।',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'पानाको नाम:',
     'detail_page_path' => 'पानाको स्थान:',

@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'Ενημερωμένη σελίδα: :pageName',
     'updated_page_intro' => 'Μια σελίδα έχει ενημερωθεί στο :appName:',
     'updated_page_debounce' => 'Για να αποτρέψετε μαζικές ειδοποιήσεις, για κάποιο διάστημα δε θα σας αποστέλλονται ειδοποιήσεις για περαιτέρω αλλαγές σε αυτήν τη σελίδα από τον ίδιο συντάκτη.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Όνομα σελίδας:',
     'detail_page_path' => 'Διαδρομή σελίδας:',

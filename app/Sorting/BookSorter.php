@@ -8,11 +8,14 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Entities\Tools\ParentChanger;
+use BookStack\Permissions\Permission;
 
 class BookSorter
 {
     public function __construct(
         protected EntityQueries $queries,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -32,22 +35,22 @@ class BookSorter
      */
     public function runBookAutoSort(Book $book): void
     {
-        $set = $book->sortRule;
-        if (!$set) {
+        $rule = $book->sortRule()->first();
+        if (!($rule instanceof SortRule)) {
             return;
         }
 
         $sortFunctions = array_map(function (SortRuleOperation $op) {
             return $op->getSortFunction();
-        }, $set->getOperations());
+        }, $rule->getOperations());
 
         $chapters = $book->chapters()
-            ->with('pages:id,name,priority,created_at,updated_at,chapter_id')
+            ->with('pages:id,name,book_id,chapter_id,priority,created_at,updated_at')
             ->get(['id', 'name', 'priority', 'created_at', 'updated_at']);
 
         /** @var (Chapter|Book)[] $topItems */
         $topItems = [
-            ...$book->directPages()->get(['id', 'name', 'priority', 'created_at', 'updated_at']),
+            ...$book->directPages()->get(['id', 'book_id', 'name', 'priority', 'created_at', 'updated_at']),
             ...$chapters,
         ];
 
@@ -78,7 +81,7 @@ class BookSorter
      * Sort the books content using the given sort map.
      * Returns a list of books that were involved in the operation.
      *
-     * @returns Book[]
+     * @return Book[]
      */
     public function sortUsingMap(BookSortMap $sortMap): array
     {
@@ -154,11 +157,12 @@ class BookSorter
 
         // Action the required changes
         if ($bookChanged) {
-            $model->changeBook($newBook->id);
+            $this->parentChanger->changeBook($model, $newBook->id);
         }
 
         if ($model instanceof Page && $chapterChanged) {
             $model->chapter_id = $newChapter->id ?? 0;
+            $model->unsetRelation('chapter');
         }
 
         if ($priorityChanged) {
@@ -187,11 +191,11 @@ class BookSorter
 
         $hasNewParent = $newBook->id !== $model->book_id || ($model instanceof Page && $model->chapter_id !== ($sortMapItem->parentChapterId ?? 0));
         if ($model instanceof Chapter) {
-            $hasPermission = userCan('book-update', $currentParent)
-                && userCan('book-update', $newBook)
-                && userCan('chapter-update', $model)
-                && (!$hasNewParent || userCan('chapter-create', $newBook))
-                && (!$hasNewParent || userCan('chapter-delete', $model));
+            $hasPermission = userCan(Permission::BookUpdate, $currentParent)
+                && userCan(Permission::BookUpdate, $newBook)
+                && userCan(Permission::ChapterUpdate, $model)
+                && (!$hasNewParent || userCan(Permission::ChapterCreate, $newBook))
+                && (!$hasNewParent || userCan(Permission::ChapterDelete, $model));
 
             if (!$hasPermission) {
                 return false;
@@ -210,13 +214,13 @@ class BookSorter
                 return false;
             }
 
-            $hasPageEditPermission = userCan('page-update', $model);
+            $hasPageEditPermission = userCan(Permission::PageUpdate, $model);
             $newParentInRightLocation = ($newParent instanceof Book || ($newParent instanceof Chapter && $newParent->book_id === $newBook->id));
             $newParentPermission = ($newParent instanceof Chapter) ? 'chapter-update' : 'book-update';
             $hasNewParentPermission = userCan($newParentPermission, $newParent);
 
-            $hasDeletePermissionIfMoving = (!$hasNewParent || userCan('page-delete', $model));
-            $hasCreatePermissionIfMoving = (!$hasNewParent || userCan('page-create', $newParent));
+            $hasDeletePermissionIfMoving = (!$hasNewParent || userCan(Permission::PageDelete, $model));
+            $hasCreatePermissionIfMoving = (!$hasNewParent || userCan(Permission::PageCreate, $newParent));
 
             $hasPermission = $hasCurrentParentPermission
                 && $newParentInRightLocation

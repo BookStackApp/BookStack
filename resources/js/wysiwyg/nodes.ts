@@ -19,6 +19,7 @@ import {MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {HeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 import {QuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
 import {CaptionNode} from "@lexical/table/LexicalCaptionNode";
+import {MentionNode} from "@lexical/link/LexicalMentionNode";
 
 export function getNodesForPageEditor(): (KlassConstructor<typeof LexicalNode> | LexicalNodeReplacement)[] {
     return [
@@ -48,6 +49,13 @@ export function getNodesForBasicEditor(): (KlassConstructor<typeof LexicalNode> 
         ListItemNode,
         ParagraphNode,
         LinkNode,
+    ];
+}
+
+export function getNodesForCommentEditor(): (KlassConstructor<typeof LexicalNode> | LexicalNodeReplacement)[] {
+    return [
+        ...getNodesForBasicEditor(),
+        MentionNode,
     ];
 }
 

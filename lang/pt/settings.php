@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nenhuma restrição definida',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Manutenção',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Alterar editor de página',
     'role_notifications' => 'Receive & manage notifications',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Permissões de Ativos',
     'roles_system_warning' => 'Esteja ciente de que o acesso a qualquer uma das três permissões acima pode permitir que um utilizador altere os seus próprios privilégios ou privilégios de outros no sistema. Apenas atribua cargos com essas permissões a utilizadores de confiança.',
     'role_asset_desc' => 'Estas permissões controlam o acesso padrão para os ativos dentro do sistema. Permissões em Livros, Capítulos e Páginas serão sobrescritas por estas permissões.',
     'role_asset_admins' => 'Os administradores recebem automaticamente acesso a todo o conteúdo, mas estas opções podem mostrar ou ocultar as opções da Interface de Usuário.',
     'role_asset_image_view_note' => 'Isto está relacionado com a visibilidade do gerenciador de imagens. O acesso real dos arquivos de imagem enviados dependerá da opção de armazenamento de imagens do sistema.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelo ativo para o qual eles são enviados',

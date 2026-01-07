@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'لم يتم اختيار أي قيود',
 
     // Sorting Settings
-    'sorting' => 'طريقة الترتيب',
+    'sorting' => 'القوائم و الفرز',
     'sorting_book_default' => 'ترتيب الكتاب الافتراضي',
     'sorting_book_default_desc' => 'حدد قاعدة الترتيب الافتراضية لتطبيقها على الكتب الجديدة. لن يؤثر هذا على الكتب الحالية، ويمكن تجاوزه لكل كتاب على حدة.',
     'sorting_rules' => 'قواعد الترتيب',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'تاريخ التحديث',
     'sort_rule_op_chapters_first' => 'الفصول الأولى',
     'sort_rule_op_chapters_last' => 'الفصول الأخيرة',
+    'sorting_page_limits' => 'حدود العرض لكل صفحة',
+    'sorting_page_limits_desc' => 'تعيين عدد العناصر لإظهار كل صفحة في قوائم مختلفة داخل النظام. عادةً ما يكون الرقم الأقل هو الأكثر أداء، بينما وضع رقم أعلى يغني عن النقر على صفحات متعددة. يوصى باستخدام مضاعفات رقم ٣ (18 و 24 و 30 و إلخ...).',
 
     // Maintenance settings
     'maint' => 'الصيانة',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'استيراد المحتوى',
     'role_editor_change' => 'تغيير محرر الصفحة',
     'role_notifications' => 'تلقي الإشعارات وإدارتها',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'أذونات الأصول',
     'roles_system_warning' => 'اعلم أن الوصول إلى أي من الأذونات الثلاثة المذكورة أعلاه يمكن أن يسمح للمستخدم بتغيير امتيازاته الخاصة أو امتيازات الآخرين في النظام. قم بتعيين الأدوار مع هذه الأذونات فقط للمستخدمين الموثوق بهم.',
     'role_asset_desc' => 'تتحكم هذه الأذونات في الوصول الافتراضي إلى الأصول داخل النظام. ستتجاوز الأذونات الخاصة بالكتب والفصول والصفحات هذه الأذونات.',
     'role_asset_admins' => 'يُمنح المسؤولين حق الوصول تلقائيًا إلى جميع المحتويات ولكن هذه الخيارات قد تعرض خيارات واجهة المستخدم أو تخفيها.',
     'role_asset_image_view_note' => 'يتعلق هذا بالرؤية داخل مدير الصور. يعتمد الوصول الفعلي لملفات الصور المُحمّلة على خِيار تخزين الصور في النظام.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'الكل',
     'role_own' => 'ما يخص',
     'role_controlled_by_asset' => 'يتحكم فيها الأصول التي يتم رفعها إلى',

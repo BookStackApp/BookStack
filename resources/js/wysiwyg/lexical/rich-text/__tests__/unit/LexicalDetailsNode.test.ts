@@ -1,6 +1,5 @@
-import {dispatchKeydownEventForNode, initializeUnitTest} from "lexical/__tests__/utils";
-import {$createDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
-import {$createParagraphNode, $getRoot, LexicalNode, ParagraphNode} from "lexical";
+import {createTestContext} from "lexical/__tests__/utils";
+import {$createDetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 
 const editorConfig = Object.freeze({
     namespace: '',
@@ -9,32 +8,28 @@ const editorConfig = Object.freeze({
 });
 
 describe('LexicalDetailsNode tests', () => {
-    initializeUnitTest((testEnv) => {
+    test('createDOM()', () => {
+        const {editor} = createTestContext();
+        let html!: string;
 
-        test('createDOM()', () => {
-            const {editor} = testEnv;
-            let html!: string;
-
-            editor.updateAndCommit(() => {
-                const details = $createDetailsNode();
-                html = details.createDOM(editorConfig, editor).outerHTML;
-            });
-
-            expect(html).toBe(`<details><summary contenteditable="false"></summary></details>`);
+        editor.updateAndCommit(() => {
+            const details = $createDetailsNode();
+            html = details.createDOM(editorConfig, editor).outerHTML;
         });
 
-        test('exportDOM()', () => {
-            const {editor} = testEnv;
-            let html!: string;
+        expect(html).toBe(`<details contenteditable="false"><summary contenteditable="false"></summary></details>`);
+    });
 
-            editor.updateAndCommit(() => {
-                const details = $createDetailsNode();
-                html = (details.exportDOM(editor).element as HTMLElement).outerHTML;
-            });
+    test('exportDOM()', () => {
+        const {editor} = createTestContext();
+        let html!: string;
 
-            expect(html).toBe(`<details><summary></summary></details>`);
+        editor.updateAndCommit(() => {
+            const details = $createDetailsNode();
+            details.setSummary('Hello there<>!')
+            html = (details.exportDOM(editor).element as HTMLElement).outerHTML;
         });
 
-
+        expect(html).toBe(`<details><summary>Hello there&lt;&gt;!</summary></details>`);
     });
 })

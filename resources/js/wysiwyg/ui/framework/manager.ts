@@ -90,7 +90,7 @@ export class EditorUIManager {
         }
 
         // @ts-ignore
-        const decorator = new decoratorClass(nodeKey);
+        const decorator = new decoratorClass(this.getContext());
         this.decoratorInstancesByNodeKey[nodeKey] = decorator;
         return decorator;
     }
@@ -107,6 +107,10 @@ export class EditorUIManager {
         this.toolbar = toolbar;
         toolbar.setContext(this.getContext());
         this.getContext().containerDOM.prepend(toolbar.getDOMElement());
+    }
+
+    getToolbar(): EditorContainerUiElement|null {
+        return this.toolbar;
     }
 
     registerContextToolbar(key: string, definition: EditorContextToolbarDefinition) {
@@ -202,6 +206,14 @@ export class EditorUIManager {
         }
     }
 
+    /**
+     * Set the UI focus to the editor.
+     */
+    focus(): void {
+        this.getContext().editorDOM.focus();
+        this.getContext().editor.focus();
+    }
+
     protected updateContextToolbars(update: EditorUiStateUpdate): void {
         for (let i = this.activeContextToolbars.length - 1; i >= 0; i--) {
             const toolbar = this.activeContextToolbars[i];
@@ -258,7 +270,7 @@ export class EditorUIManager {
                     const adapter = decorators[key];
                     const decorator = this.getDecorator(adapter.type, key);
                     decorator.setNode(adapter.getNode());
-                    const decoratorEl = decorator.render(this.getContext(), decoratedEl);
+                    const decoratorEl = decorator.render(decoratedEl);
                     if (decoratorEl) {
                         decoratedEl.append(decoratorEl);
                     }

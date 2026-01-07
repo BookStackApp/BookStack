@@ -7,6 +7,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Facades\Theme;
+use BookStack\Permissions\Permission;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageService;
@@ -122,7 +123,7 @@ class PageContent
         $imageInfo = $this->parseBase64ImageUri($uri);
 
         // Validate user has permission to create images
-        if (!$updater->can('image-create-all')) {
+        if (!$updater->can(Permission::ImageCreateAll)) {
             return '';
         }
 
@@ -283,7 +284,7 @@ class PageContent
     /**
      * Get a plain-text visualisation of this page.
      */
-    protected function toPlainText(): string
+    public function toPlainText(): string
     {
         $html = $this->render(true);
 

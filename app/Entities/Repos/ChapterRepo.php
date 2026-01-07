@@ -7,10 +7,12 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
+use BookStack\Entities\Tools\ParentChanger;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Exceptions\MoveOperationException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Facades\Activity;
+use BookStack\Permissions\Permission;
 use BookStack\Util\DatabaseTransaction;
 use Exception;
 
@@ -20,6 +22,7 @@ class ChapterRepo
         protected BaseRepo $baseRepo,
         protected EntityQueries $entityQueries,
         protected TrashCan $trashCan,
+        protected ParentChanger $parentChanger,
     ) {
     }
 
@@ -32,8 +35,11 @@ class ChapterRepo
             $chapter = new Chapter();
             $chapter->book_id = $parentBook->id;
             $chapter->priority = (new BookContents($parentBook))->getLastPriority() + 1;
-            $this->baseRepo->create($chapter, $input);
-            $this->baseRepo->updateDefaultTemplate($chapter, intval($input['default_template_id'] ?? null));
+
+            $chapter = $this->baseRepo->create($chapter, $input);
+            $chapter->defaultTemplate()->setFromId(intval($input['default_template_id'] ?? null));
+
+            $chapter->save();
             Activity::add(ActivityType::CHAPTER_CREATE, $chapter);
 
             $this->baseRepo->sortParent($chapter);
@@ -47,12 +53,13 @@ class ChapterRepo
      */
     public function update(Chapter $chapter, array $input): Chapter
     {
-        $this->baseRepo->update($chapter, $input);
+        $chapter = $this->baseRepo->update($chapter, $input);
 
         if (array_key_exists('default_template_id', $input)) {
-            $this->baseRepo->updateDefaultTemplate($chapter, intval($input['default_template_id']));
+            $chapter->defaultTemplate()->setFromId(intval($input['default_template_id']));
         }
 
+        $chapter->save();
         Activity::add(ActivityType::CHAPTER_UPDATE, $chapter);
 
         $this->baseRepo->sortParent($chapter);
@@ -65,7 +72,7 @@ class ChapterRepo
      *
      * @throws Exception
      */
-    public function destroy(Chapter $chapter)
+    public function destroy(Chapter $chapter): void
     {
         $this->trashCan->softDestroyChapter($chapter);
         Activity::add(ActivityType::CHAPTER_DELETE, $chapter);
@@ -87,12 +94,12 @@ class ChapterRepo
             throw new MoveOperationException('Book to move chapter into not found');
         }
 
-        if (!userCan('chapter-create', $parent)) {
+        if (!userCan(Permission::ChapterCreate, $parent)) {
             throw new PermissionsException('User does not have permission to create a chapter within the chosen book');
         }
 
         return (new DatabaseTransaction(function () use ($chapter, $parent) {
-            $chapter->changeBook($parent->id);
+            $this->parentChanger->changeBook($chapter, $parent->id);
             $chapter->rebuildPermissions();
             Activity::add(ActivityType::CHAPTER_MOVE, $chapter);
 

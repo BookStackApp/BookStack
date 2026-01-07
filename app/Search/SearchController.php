@@ -8,6 +8,7 @@ use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
 use BookStack\Search\Queries\VectorSearchRunner;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class SearchController extends Controller
 {
@@ -24,20 +25,22 @@ class SearchController extends Controller
     {
         $searchOpts = SearchOptions::fromRequest($request);
         $fullSearchString = $searchOpts->toString();
-        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
-
         $page = intval($request->get('page', '0')) ?: 1;
-        $nextPageLink = url('/search?term=' . urlencode($fullSearchString) . '&page=' . ($page + 1));
+        $count = setting()->getInteger('lists-page-count-search', 18, 1, 1000);
 
-        $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, 20);
+        $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, $count);
         $formatter->format($results['results']->all(), $searchOpts);
+        $paginator = new LengthAwarePaginator($results['results'], $results['total'], $count, $page);
+        $paginator->setPath(url('/search'));
+        $paginator->appends($request->except('page'));
+
+        $this->setPageTitle(trans('entities.search_for_term', ['term' => $fullSearchString]));
 
         return view('search.all', [
             'entities'     => $results['results'],
             'totalResults' => $results['total'],
+            'paginator'    => $paginator,
             'searchTerm'   => $fullSearchString,
-            'hasNextPage'  => $results['has_more'],
-            'nextPageLink' => $nextPageLink,
             'options'      => $searchOpts,
         ]);
     }
@@ -76,8 +79,9 @@ class SearchController extends Controller
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            $searchTerm .= ' {type:' . implode('|', $entityTypes) . '}';
-            $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 20)['results'];
+            $options = SearchOptions::fromString($searchTerm);
+            $options->setFilter('type', implode('|', $entityTypes));
+            $entities = $this->searchRunner->searchEntities($options, 'all', 1, 20)['results'];
         } else {
             $entities = $queryPopular->run(20, 0, $entityTypes);
         }

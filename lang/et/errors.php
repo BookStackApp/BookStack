@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIP-faili lugemine ebaõnnestus.',
     'import_zip_cant_decode_data' => 'ZIP-failist ei leitud data.json sisu.',
     'import_zip_no_data' => 'ZIP-failist ei leitud raamatute, peatükkide või lehtede sisu.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Imporditud ZIP-faili valideerimine ebaõnnestus vigadega:',
     'import_zip_failed_notification' => 'ZIP-faili importimine ebaõnnestus.',
     'import_perms_books' => 'Sul puuduvad õigused raamatute lisamiseks.',

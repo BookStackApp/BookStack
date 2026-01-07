@@ -26,7 +26,7 @@
         </main>
 
 
-        @if(userCan('book-delete', $book) && userCan('book-create-all') && userCan('bookshelf-create-all'))
+        @if(userCan(\BookStack\Permissions\Permission::BookDelete, $book) && userCan(\BookStack\Permissions\Permission::BookCreateAll) && userCan(\BookStack\Permissions\Permission::BookshelfCreateAll))
             @include('books.parts.convert-to-shelf', ['book' => $book])
         @endif
     </div>

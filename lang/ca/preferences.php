@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Gestioneu les notificacions de correu electrònic que rebreu quan es facin certes activitats.',
     'notifications_opt_own_page_changes' => 'Notifica’m els canvis a les meves pàgines.',
     'notifications_opt_own_page_comments' => 'Notifica’m la creació de comentaris a les meves pàgines.',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Notifica’m les respostes als meus comentaris.',
     'notifications_save' => 'Desa les preferències',
     'notifications_update_success' => 'S’han actualitzat les preferències de notificació',

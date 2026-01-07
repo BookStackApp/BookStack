@@ -3,6 +3,7 @@
 namespace BookStack\Http\Middleware;
 
 use BookStack\Exceptions\ApiAuthException;
+use BookStack\Permissions\Permission;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,7 @@ class ApiAuthenticate
      */
     protected function sessionUserHasApiAccess(): bool
     {
-        $hasApiPermission = user()->can('access-api');
+        $hasApiPermission = user()->can(Permission::AccessApi);
 
         return $hasApiPermission && user()->hasAppAccess();
     }

@@ -6,6 +6,7 @@ use BookStack\Entities\Queries\ChapterQueries;
 use BookStack\Exports\ExportFormatter;
 use BookStack\Exports\ZipExports\ZipExportBuilder;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use Throwable;
 
 class ChapterExportApiController extends ApiController
@@ -14,7 +15,7 @@ class ChapterExportApiController extends ApiController
         protected ExportFormatter $exportFormatter,
         protected ChapterQueries $queries,
     ) {
-        $this->middleware('can:content-export');
+        $this->middleware(Permission::ContentExport->middleware());
     }
 
     /**

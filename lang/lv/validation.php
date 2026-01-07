@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Fails netika ielādēts. Serveris nevar pieņemt šāda izmēra failus.',
 
     'zip_file' => ':attribute ir jāatsaucas uz failu ZIP arhīvā.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute ir jāatsaucas uz failu ar tipu :validTypes, bet atrasts :foundType.',
     'zip_model_expected' => 'Sagaidīts datu objekts, bet atrasts ":type".',
     'zip_unique' => ':attribute jābūt unikālam šim objekta tipam ZIP arhīvā.',

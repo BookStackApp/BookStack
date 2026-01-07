@@ -30,7 +30,7 @@ return [
     'create' => 'Креирај',
     'update' => 'Ажурирање',
     'edit' => 'Уреди',
-    'archive' => 'Archive',
+    'archive' => 'Архивирај',
     'unarchive' => 'Un-Archive',
     'sort' => 'Разврстај',
     'move' => 'Премести',

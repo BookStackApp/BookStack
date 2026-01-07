@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Tidak ada batasan yang ditetapkan',
 
     // Sorting Settings
-    'sorting' => 'Menyortir',
-    'sorting_book_default' => 'Penyortiran Buku Default',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Pilih aturan sortir default yang akan diterapkan pada buku baru. Aturan ini tidak akan memengaruhi buku yang sudah ada, dan dapat diganti per buku.',
     'sorting_rules' => 'Aturan Penyortiran',
     'sorting_rules_desc' => 'Ini adalah operasi penyortiran yang telah ditetapkan sebelumnya yang dapat diterapkan pada konten dalam sistem.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Tanggal Pembaruan',
     'sort_rule_op_chapters_first' => 'Bab di Urutan Pertama',
     'sort_rule_op_chapters_last' => 'Bab di Urutan Terakhir',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Pemeliharaan',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Impor Konten',
     'role_editor_change' => 'Ubah editor halaman',
     'role_notifications' => 'Terima dan kelola notifikasi',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Izin Aset',
     'roles_system_warning' => 'Ketahuilah bahwa akses ke salah satu dari tiga izin di atas dapat memungkinkan pengguna untuk mengubah hak mereka sendiri atau orang lain dalam sistem. Hanya tetapkan peran dengan izin ini untuk pengguna tepercaya.',
     'role_asset_desc' => 'Izin ini mengontrol akses default ke aset dalam sistem. Izin pada Buku, Bab, dan Halaman akan menggantikan izin ini.',
     'role_asset_admins' => 'Admin secara otomatis diberi akses ke semua konten tetapi opsi ini dapat menampilkan atau menyembunyikan opsi UI.',
     'role_asset_image_view_note' => 'This relates to visibility within the image manager. Actual access of uploaded image files will be dependant upon system image storage option.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Semua',
     'role_own' => 'Sendiri',
     'role_controlled_by_asset' => 'Dikendalikan oleh aset tempat mereka diunggah',

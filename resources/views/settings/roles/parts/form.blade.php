@@ -30,10 +30,10 @@
         <label class="setting-list-label">{{ trans('settings.role_system') }}</label>
         <a href="#" refs="permissions-table@toggle-all" class="text-small text-link">{{ trans('common.toggle_all') }}</a>
 
-        <div class="toggle-switch-list grid half mt-m">
+        <div class="toggle-switch-list grid half my-m">
             <div>
-                <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-all', 'label' => trans('settings.role_manage_entity_permissions')])</div>
-                <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')])</div>
+                <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-all', 'label' => trans('settings.role_manage_entity_permissions')]) <sup>1</sup></div>
+                <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')]) <sup>1</sup></div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'templates-manage', 'label' => trans('settings.role_manage_page_templates')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'access-api', 'label' => trans('settings.role_access_api')])</div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'content-export', 'label' => trans('settings.role_export_content')])</div>
@@ -48,6 +48,10 @@
                 <p class="text-warn text-small mt-s mb-none">{{ trans('settings.roles_system_warning') }}</p>
             </div>
         </div>
+
+        <p class="mb-none text-small text-muted">
+            <sup>1</sup> {{ trans('settings.role_permission_note_users_and_roles') }}
+        </p>
     </div>
 
     <div>
@@ -75,7 +79,7 @@
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.books'), 'permissionPrefix' => 'book'])
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.chapters'), 'permissionPrefix' => 'chapter'])
             @include('settings.roles.parts.asset-permissions-row', ['title' => trans('entities.pages'), 'permissionPrefix' => 'page'])
-            @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.images'), 'permissionPrefix' => 'image', 'refMark' => '1'])
+            @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.images'), 'permissionPrefix' => 'image'])
             @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.attachments'), 'permissionPrefix' => 'attachment'])
             @include('settings.roles.parts.related-asset-permissions-row', ['title' => trans('entities.comments'), 'permissionPrefix' => 'comment'])
         </div>
@@ -83,6 +87,8 @@
         <div>
             <p class="text-muted text-small p-m">
                 <sup>1</sup> {{ trans('settings.role_asset_image_view_note') }}
+                <br>
+                <sup>2</sup> {{ trans('settings.role_asset_users_note') }}
             </p>
         </div>
     </div>

@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Stýrðu þeim tölvupóst tilkynningum sem þú færð þegar ákveðnar aðgerðir eru gerðar af kerfinu.',
     'notifications_opt_own_page_changes' => 'Láta vita þegar gerðar eru breytingar á síðum sem ég á',
     'notifications_opt_own_page_comments' => 'Láta vita þegar gerðar eru athugasmedir við síður sem ég á',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Láta vita þegar athugasemdum mínum er svarað',
     'notifications_save' => 'Vista stillingar',
     'notifications_update_success' => 'Stillingar á tilkynningum hafa verið uppfærðar!',

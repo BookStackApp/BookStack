@@ -13,7 +13,6 @@ class ZipFileReferenceRule implements ValidationRule
     ) {
     }
 
-
     /**
      * @inheritDoc
      */
@@ -21,6 +20,13 @@ class ZipFileReferenceRule implements ValidationRule
     {
         if (!$this->context->zipReader->fileExists($value)) {
             $fail('validation.zip_file')->translate();
+        }
+
+        if (!$this->context->zipReader->fileWithinSizeLimit($value)) {
+            $fail('validation.zip_file_size')->translate([
+                'attribute' => $value,
+                'size' => config('app.upload_limit'),
+            ]);
         }
 
         if (!empty($this->acceptedMimes)) {

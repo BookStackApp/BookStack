@@ -35,6 +35,15 @@ class ImageStorage
     }
 
     /**
+     * Check if "local secure" (Fetched behind auth, either with or without permissions enforced)
+     * is currently active in the instance.
+     */
+    public function usingSecureImages(): bool
+    {
+        return config('filesystems.images') === 'local_secure' || $this->usingSecureRestrictedImages();
+    }
+
+    /**
      * Clean up an image file name to be both URL and storage safe.
      */
     public function cleanImageFileName(string $name): string
@@ -65,7 +74,7 @@ class ImageStorage
             return 'local';
         }
 
-        // Rename local_secure options to get our image specific storage driver which
+        // Rename local_secure options to get our image-specific storage driver, which
         // is scoped to the relevant image directories.
         if ($localSecureInUse) {
             return 'local_secure_images';

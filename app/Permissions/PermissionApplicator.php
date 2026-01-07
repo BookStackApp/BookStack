@@ -7,8 +7,7 @@ use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\EntityPermission;
-use BookStack\Users\Models\HasCreatorAndUpdater;
-use BookStack\Users\Models\HasOwner;
+use BookStack\Users\Models\OwnableInterface;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -24,14 +23,13 @@ class PermissionApplicator
 
     /**
      * Checks if an entity has a restriction set upon it.
-     *
-     * @param Model&(HasCreatorAndUpdater|HasOwner) $ownable
      */
-    public function checkOwnableUserAccess(Model $ownable, string $permission): bool
+    public function checkOwnableUserAccess(Model&OwnableInterface $ownable, string|Permission $permission): bool
     {
-        $explodedPermission = explode('-', $permission);
+        $permissionName = is_string($permission) ? $permission : $permission->value;
+        $explodedPermission = explode('-', $permissionName);
         $action = $explodedPermission[1] ?? $explodedPermission[0];
-        $fullPermission = count($explodedPermission) > 1 ? $permission : $ownable->getMorphClass() . '-' . $permission;
+        $fullPermission = count($explodedPermission) > 1 ? $permissionName : $ownable->getMorphClass() . '-' . $permissionName;
 
         $user = $this->currentUser();
         $userRoleIds = $this->getCurrentUserRoleIds();
@@ -39,19 +37,19 @@ class PermissionApplicator
         $allRolePermission = $user->can($fullPermission . '-all');
         $ownRolePermission = $user->can($fullPermission . '-own');
         $nonJointPermissions = ['restrictions', 'image', 'attachment', 'comment'];
-        $ownerField = ($ownable instanceof Entity) ? 'owned_by' : 'created_by';
+        $ownerField = $ownable->getOwnerFieldName();
         $ownableFieldVal = $ownable->getAttribute($ownerField);
-
-        if (is_null($ownableFieldVal)) {
-            throw new InvalidArgumentException("{$ownerField} field used but has not been loaded");
-        }
 
         $isOwner = $user->id === $ownableFieldVal;
         $hasRolePermission = $allRolePermission || ($isOwner && $ownRolePermission);
 
-        // Handle non entity specific jointPermissions
+        // Handle non-entity-specific jointPermissions
         if (in_array($explodedPermission[0], $nonJointPermissions)) {
             return $hasRolePermission;
+        }
+
+        if (!($ownable instanceof Entity)) {
+            return false;
         }
 
         $hasApplicableEntityPermissions = $this->hasEntityPermission($ownable, $userRoleIds, $action);
@@ -74,12 +72,13 @@ class PermissionApplicator
      * Checks if a user has the given permission for any items in the system.
      * Can be passed an entity instance to filter on a specific type.
      */
-    public function checkUserHasEntityPermissionOnAny(string $action, string $entityClass = ''): bool
+    public function checkUserHasEntityPermissionOnAny(string|Permission $action, string $entityClass = ''): bool
     {
-        $this->ensureValidEntityAction($action);
+        $permissionName = is_string($action) ? $action : $action->value;
+        $this->ensureValidEntityAction($permissionName);
 
         $permissionQuery = EntityPermission::query()
-            ->where($action, '=', true)
+            ->where($permissionName, '=', true)
             ->whereIn('role_id', $this->getCurrentUserRoleIds());
 
         if (!empty($entityClass)) {
@@ -141,10 +140,10 @@ class PermissionApplicator
                 /** @var Builder $query */
                 $query->where($tableDetails['entityTypeColumn'], '!=', $pageMorphClass)
                 ->orWhereExists(function (QueryBuilder $query) use ($tableDetails, $pageMorphClass) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
+                    $query->select('page_id')->from('entity_page_data')
+                        ->whereColumn('entity_page_data.page_id', '=', $tableDetails['tableName'] . '.' . $tableDetails['entityIdColumn'])
                         ->where($tableDetails['tableName'] . '.' . $tableDetails['entityTypeColumn'], '=', $pageMorphClass)
-                        ->where('pages.draft', '=', false);
+                        ->where('entity_page_data.draft', '=', false);
                 });
             });
     }
@@ -194,18 +193,18 @@ class PermissionApplicator
     {
         $fullPageIdColumn = $tableName . '.' . $pageIdColumn;
         return $this->restrictEntityQuery($query)
-            ->where(function ($query) use ($fullPageIdColumn) {
-                /** @var Builder $query */
-                $query->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', false);
-                })->orWhereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
-                    $query->select('id')->from('pages')
-                        ->whereColumn('pages.id', '=', $fullPageIdColumn)
-                        ->where('pages.draft', '=', true)
-                        ->where('pages.created_by', '=', $this->currentUser()->id);
-                });
+            ->whereExists(function (QueryBuilder $query) use ($fullPageIdColumn) {
+                $query->select('id')->from('entities')
+                    ->leftJoin('entity_page_data', 'entities.id', '=', 'entity_page_data.page_id')
+                    ->whereColumn('entities.id', '=', $fullPageIdColumn)
+                    ->where('entities.type', '=', 'page')
+                    ->where(function (QueryBuilder $query) {
+                        $query->where('entity_page_data.draft', '=', false)
+                            ->orWhere(function (QueryBuilder $query) {
+                                $query->where('entity_page_data.draft', '=', true)
+                                    ->where('entities.created_by', '=', $this->currentUser()->id);
+                            });
+                    });
             });
     }
 
@@ -234,8 +233,13 @@ class PermissionApplicator
      */
     protected function ensureValidEntityAction(string $action): void
     {
-        if (!in_array($action, EntityPermission::PERMISSIONS)) {
-            throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
+        $allowed = Permission::genericForEntity();
+        foreach ($allowed as $permission) {
+            if ($permission->value === $action) {
+                return;
+            }
         }
+
+        throw new InvalidArgumentException('Action should be a simple entity permission action, not a role permission');
     }
 }

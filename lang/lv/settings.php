@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nav ierobežojumu',
 
     // Sorting Settings
-    'sorting' => 'Kārtošana',
-    'sorting_book_default' => 'Noklusētā grāmatu kārtošana',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Izvēlieties noklusēto kārtošanas nosacījumu, ko pielietot jaunām grāmatām. Šis neskars jau esošas grāmatas, un to var izmainīt grāmatas iestatījumos.',
     'sorting_rules' => 'Kārtošanas noteikumi',
     'sorting_rules_desc' => 'Šīs ir iepriekš noteiktas kārtošanas darbības, ko var pielietot saturam šajā sistēmā.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Atjaunināšanas datums',
     'sort_rule_op_chapters_first' => 'Nodaļas pirmās',
     'sort_rule_op_chapters_last' => 'Nodaļas pēdējās',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Apkope',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Importēt saturu',
     'role_editor_change' => 'Mainīt lapu redaktoru',
     'role_notifications' => 'Saņemt un pārvaldīt paziņojumus',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Resursa piekļuves tiesības',
     'roles_system_warning' => 'Jebkuras no trīs augstāk redzamajām atļaujām dod iespēju lietotājam mainīt savas un citu lietotāju sistēmas atļaujas. Pievieno šīs grupu atļaujas tikai tiem lietotājiem, kuriem uzticies.',
     'role_asset_desc' => 'Šīs piekļuves tiesības kontrolē noklusēto piekļuvi sistēmas resursiem. Grāmatām, nodaļām un lapām norādītās tiesības būs pārākas par šīm.',
     'role_asset_admins' => 'Administratoriem automātiski ir piekļuve visam saturam, bet šie uzstādījumi var noslēpt vai parādīt lietotāja saskarnes iespējas.',
     'role_asset_image_view_note' => 'Šis ir saistīts ar redzamību attēlu pārvaldniekā. Faktiskā piekļuve augšupielādēto attēlu failiem būs atkarīga no sistēmas attēlu glabātuves uzstādījuma.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Visi',
     'role_own' => 'Savi',
     'role_controlled_by_asset' => 'Kontrolē resurss, uz ko tie ir augšupielādēti',

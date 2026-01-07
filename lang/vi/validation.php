@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Tệp tin đã không được tải lên. Máy chủ không chấp nhận các tệp tin với dung lượng lớn như tệp tin trên.',
 
     'zip_file' => ':attribute cần tham chiếu đến một tệp trong ZIP.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute cần tham chiếu đến một tệp có kiểu: :validTypes, tìm thấy :foundType.',
     'zip_model_expected' => 'Đối tượng dữ liệu được mong đợi nhưng tìm thấy ":type".',
     'zip_unique' => ':attribute phải là duy nhất cho kiểu đối tượng trong ZIP.',

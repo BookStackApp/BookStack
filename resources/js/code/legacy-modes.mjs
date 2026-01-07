@@ -5,6 +5,8 @@ export {clojure} from '@codemirror/legacy-modes/mode/clojure';
 export {diff} from '@codemirror/legacy-modes/mode/diff';
 export {fortran} from '@codemirror/legacy-modes/mode/fortran';
 export {go} from '@codemirror/legacy-modes/mode/go';
+export {groovy} from '@codemirror/legacy-modes/mode/groovy';
+export {haxe} from '@codemirror/legacy-modes/mode/haxe';
 export {haskell} from '@codemirror/legacy-modes/mode/haskell';
 export {julia} from '@codemirror/legacy-modes/mode/julia';
 export {lua} from '@codemirror/legacy-modes/mode/lua';

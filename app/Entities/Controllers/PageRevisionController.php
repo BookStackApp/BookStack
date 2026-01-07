@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
 use Ssddanbrown\HtmlDiff\Diff;
@@ -98,7 +99,7 @@ class PageRevisionController extends Controller
             throw new NotFoundException();
         }
 
-        $prev = $revision->getPrevious();
+        $prev = $revision->getPreviousRevision();
         $prevContent = $prev->html ?? '';
         $diff = Diff::excecute($prevContent, $revision->html);
 
@@ -124,7 +125,7 @@ class PageRevisionController extends Controller
     public function restore(string $bookSlug, string $pageSlug, int $revisionId)
     {
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $page = $this->pageRepo->restoreRevision($page, $revisionId);
 
@@ -139,7 +140,7 @@ class PageRevisionController extends Controller
     public function destroy(string $bookSlug, string $pageSlug, int $revId)
     {
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $this->checkOwnablePermission('page-delete', $page);
+        $this->checkOwnablePermission(Permission::PageDelete, $page);
 
         $revision = $page->revisions()->where('id', '=', $revId)->first();
         if ($revision === null) {

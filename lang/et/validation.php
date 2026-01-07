@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'Faili üleslaadimine ebaõnnestus. Server ei pruugi sellise suurusega faile vastu võtta.',
 
     'zip_file' => ':attribute peab viitama failile ZIP-arhiivi sees.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute peab viitama :validTypes tüüpi failile, leiti :foundType.',
     'zip_model_expected' => 'Oodatud andmete asemel leiti ":type".',
     'zip_unique' => ':attribute peab olema ZIP-arhiivi piires objekti tüübile unikaalne.',

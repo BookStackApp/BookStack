@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'تعذر تحميل الملف. قد لا يقبل الخادم ملفات بهذا الحجم.',
 
     'zip_file' => ':attribute بحاجة إلى الرجوع إلى مِلَفّ داخل المِلَفّ المضغوط.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => ':attribute بحاجة إلى الإشارة إلى مِلَفّ من نوع :validTypes، وجدت :foundType.',
     'zip_model_expected' => 'عنصر البيانات المتوقع ولكن ":type" تم العثور عليه.',
     'zip_unique' => 'يجب أن يكون :attribute فريداً لنوع الكائن داخل المِلَفّ المضغوط.',

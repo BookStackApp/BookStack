@@ -88,7 +88,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
     return new EditorSimpleClassContainer('editor-toolbar-main', [
 
         // History state
-        new EditorOverflowContainer(2, [
+        new EditorOverflowContainer('history', 2, [
             new EditorButton(undo),
             new EditorButton(redo),
         ]),
@@ -110,7 +110,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         ]),
 
         // Inline formats
-        new EditorOverflowContainer(6, [
+        new EditorOverflowContainer('inline_formats', 6, [
             new EditorButton(bold),
             new EditorButton(italic),
             new EditorButton(underline),
@@ -128,7 +128,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         ]),
 
         // Alignment
-        new EditorOverflowContainer(6, [
+        new EditorOverflowContainer('alignment', 6, [
             new EditorButton(alignLeft),
             new EditorButton(alignCenter),
             new EditorButton(alignRight),
@@ -138,7 +138,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         ].filter(x => x !== null)),
 
         // Lists
-        new EditorOverflowContainer(3, [
+        new EditorOverflowContainer('lists', 3, [
             new EditorButton(bulletList),
             new EditorButton(numberList),
             new EditorButton(taskList),
@@ -147,7 +147,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         ]),
 
         // Insert types
-        new EditorOverflowContainer(4, [
+        new EditorOverflowContainer('inserts', 4, [
             new EditorButton(link),
 
             new EditorDropdownButton({button: table, direction: 'vertical', showAside: false}, [
@@ -200,7 +200,7 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
         ]),
 
         // Meta elements
-        new EditorOverflowContainer(3, [
+        new EditorOverflowContainer('meta', 3, [
             new EditorButton(source),
             new EditorButton(about),
             new EditorButton(fullscreen),
@@ -223,11 +223,13 @@ export function getMainEditorFullToolbar(context: EditorUiContext): EditorContai
 
 export function getBasicEditorToolbar(context: EditorUiContext): EditorContainerUiElement {
     return new EditorSimpleClassContainer('editor-toolbar-main', [
-        new EditorButton(bold),
-        new EditorButton(italic),
-        new EditorButton(link),
-        new EditorButton(bulletList),
-        new EditorButton(numberList),
+        new EditorOverflowContainer('formats', 7, [
+            new EditorButton(bold),
+            new EditorButton(italic),
+            new EditorButton(link),
+            new EditorButton(bulletList),
+            new EditorButton(numberList),
+        ])
     ]);
 }
 
@@ -241,7 +243,7 @@ export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
         content: () => [new EditorButton(media)],
     },
     link: {
-        selector: 'a',
+        selector: 'a:not([data-mention-user-id])',
         content() {
             return [
                 new EditorButton(link),
@@ -261,16 +263,16 @@ export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
         selector: 'td,th',
         content() {
             return [
-                new EditorOverflowContainer(2, [
+                new EditorOverflowContainer('table', 2, [
                     new EditorButton(tableProperties),
                     new EditorButton(deleteTable),
                 ]),
-                new EditorOverflowContainer(3, [
+                new EditorOverflowContainer('table_row',3, [
                     new EditorButton(insertRowAbove),
                     new EditorButton(insertRowBelow),
                     new EditorButton(deleteRow),
                 ]),
-                new EditorOverflowContainer(3, [
+                new EditorOverflowContainer('table_column', 3, [
                     new EditorButton(insertColumnBefore),
                     new EditorButton(insertColumnAfter),
                     new EditorButton(deleteColumn),

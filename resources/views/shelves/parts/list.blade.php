@@ -29,7 +29,7 @@
         </div>
     @else
         <p class="text-muted">{{ trans('entities.shelves_empty') }}</p>
-        @if(userCan('bookshelf-create-all'))
+        @if(userCan(\BookStack\Permissions\Permission::BookshelfCreateAll))
             <div class="icon-list block inline">
                 <a href="{{ url("/create-shelf") }}"
                    class="icon-list-item text-bookshelf">

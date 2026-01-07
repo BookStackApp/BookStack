@@ -42,7 +42,7 @@ export abstract class EditorDecorator {
      * If an element is returned, this will be appended to the element
      * that is being decorated.
      */
-    abstract render(context: EditorUiContext, decorated: HTMLElement): HTMLElement|void;
+    abstract render(decorated: HTMLElement): HTMLElement|void;
 
     /**
      * Destroy this decorator. Used for tear-down operations upon destruction

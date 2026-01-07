@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Δε έχουν ρυθμιστεί περιορισμοί ακόμα',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Συντήρηση',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Εισαγωγή περιεχομένου',
     'role_editor_change' => 'Αλλαγή προγράμματος επεξεργασίας σελίδας',
     'role_notifications' => 'Λήψη & διαχείριση ειδοποιήσεων',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Δικαιώματα Συστήματος',
     'roles_system_warning' => 'Λάβετε υπόψη ότι η πρόσβαση σε οποιοδήποτε από τις τρεις παραπάνω άδειες (δικαιώματα) μπορεί να επιτρέψει σε έναν χρήστη να αλλάξει τα δικά του προνόμια ή τα προνόμια άλλων στο σύστημα. Εκχωρήστε ρόλους με αυτά τα δικαιώματα μόνο σε αξιόπιστους χρήστες.',
     'role_asset_desc' => 'Αυτά τα δικαιώματα ελέγχουν την προεπιλεγμένη πρόσβαση στα στοιχεία (άδειες) εντός του συστήματος. Τα δικαιώματα σε Βιβλία, Κεφάλαια και Σελίδες θα παρακάμψουν αυτές τις άδειες.',
     'role_asset_admins' => 'Οι διαχειριστές έχουν αυτόματα πρόσβαση σε όλο το περιεχόμενο, αλλά αυτές οι επιλογές ενδέχεται να εμφανίζουν ή να αποκρύπτουν τις επιλογές διεπαφής χρήστη.',
     'role_asset_image_view_note' => 'Αυτό σχετίζεται με την ορατότητα εντός του διαχειριστή εικόνων. Η πραγματική πρόσβαση των μεταφορτωμένων αρχείων εικόνας θα εξαρτηθεί από την επιλογή αποθήκευσης εικόνας συστήματος.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Ολα',
     'role_own' => 'Τα δικά του',
     'role_controlled_by_asset' => 'Ελέγχονται από το στοιχείο στο οποίο ανεβαίνουν (Ράφια, Βιβλία)',

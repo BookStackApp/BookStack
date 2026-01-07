@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Állítsd be az e-mail értesítéseket, amelyeket akkor kapsz, ha bizonyos tevékenység történik a rendszeren belül.',
     'notifications_opt_own_page_changes' => 'Értesítsen változásokról az általam tulajdonolt oldalakon',
     'notifications_opt_own_page_comments' => 'Értesítés a hozzászólásokról az általam tulajdonolt oldalakon',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Értesítsen válaszokról a hozzászólásaimra',
     'notifications_save' => 'Beállítások mentése',
     'notifications_update_success' => 'Az értesítési beállítások frissítve lettek!',

@@ -4,6 +4,7 @@ namespace BookStack\Api;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use BookStack\Users\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +17,8 @@ class UserApiTokenController extends Controller
      */
     public function create(Request $request, int $userId)
     {
-        $this->checkPermission('access-api');
-        $this->checkPermissionOrCurrentUser('users-manage', $userId);
+        $this->checkPermission(Permission::AccessApi);
+        $this->checkPermissionOrCurrentUser(Permission::UsersManage, $userId);
         $this->updateContext($request);
 
         $user = User::query()->findOrFail($userId);
@@ -35,8 +36,8 @@ class UserApiTokenController extends Controller
      */
     public function store(Request $request, int $userId)
     {
-        $this->checkPermission('access-api');
-        $this->checkPermissionOrCurrentUser('users-manage', $userId);
+        $this->checkPermission(Permission::AccessApi);
+        $this->checkPermissionOrCurrentUser(Permission::UsersManage, $userId);
 
         $this->validate($request, [
             'name'       => ['required', 'max:250'],
@@ -143,8 +144,8 @@ class UserApiTokenController extends Controller
      */
     protected function checkPermissionAndFetchUserToken(int $userId, int $tokenId): array
     {
-        $this->checkPermissionOr('users-manage', function () use ($userId) {
-            return $userId === user()->id && userCan('access-api');
+        $this->checkPermissionOr(Permission::UsersManage, function () use ($userId) {
+            return $userId === user()->id && userCan(Permission::AccessApi);
         });
 
         $user = User::query()->findOrFail($userId);

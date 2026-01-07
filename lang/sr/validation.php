@@ -14,7 +14,7 @@ return [
     'alpha'                => 'The :attribute may only contain letters.',
     'alpha_dash'           => 'The :attribute may only contain letters, numbers, dashes and underscores.',
     'alpha_num'            => 'The :attribute may only contain letters and numbers.',
-    'array'                => 'The :attribute must be an array.',
+    'array'                => ':attribute мора бити низ.',
     'backup_codes'         => 'The provided code is not valid or has already been used.',
     'before'               => 'The :attribute must be a date before :date.',
     'between'              => [
@@ -106,6 +106,7 @@ return [
     'uploaded'             => 'The file could not be uploaded. The server may not accept files of this size.',
 
     'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
+    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
     'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
     'zip_model_expected' => 'Data object expected but ":type" found.',
     'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',

@@ -104,7 +104,7 @@ class PublicActionTest extends TestCase
         $resp->assertRedirect($chapter->book->getUrl('/page/my-guest-page/edit'));
 
         $user = $this->users->guest();
-        $this->assertDatabaseHas('pages', [
+        $this->assertDatabaseHasEntityData('page', [
             'name'       => 'My guest page',
             'chapter_id' => $chapter->id,
             'created_by' => $user->id,

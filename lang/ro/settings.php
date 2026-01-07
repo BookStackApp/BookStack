@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Nicio restricție setată',
 
     // Sorting Settings
-    'sorting' => 'Sorting',
-    'sorting_book_default' => 'Default Book Sort',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Select the default sort rule to apply to new books. This won\'t affect existing books, and can be overridden per-book.',
     'sorting_rules' => 'Sort Rules',
     'sorting_rules_desc' => 'These are predefined sorting operations which can be applied to content in the system.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Chapters First',
     'sort_rule_op_chapters_last' => 'Chapters Last',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Mentenanţă',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import content',
     'role_editor_change' => 'Schimbă editorul de pagină',
     'role_notifications' => 'Primire și gestionare notificări',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Permisiuni active',
     'roles_system_warning' => 'Fi conștient de faptul că accesul la oricare dintre cele trei permisiuni de mai sus poate permite unui utilizator să își modifice propriile privilegii sau privilegiile altor persoane din sistem. Atribuie doar roluri cu aceste permisiuni utilizatorilor de încredere.',
     'role_asset_desc' => 'Aceste permisiuni controlează accesul implicit la activele din sistem. Permisiunile pe Cărți, Capitole și Pagini vor suprascrie aceste permisiuni.',
     'role_asset_admins' => 'Administratorilor li se acordă automat acces la tot conținutul, dar aceste opțiuni pot afișa sau ascunde opțiunile UI.',
     'role_asset_image_view_note' => 'Acest lucru se referă la vizibilitatea în managerul de imagini. Accesul efectiv al fișierelor de imagine încărcate va depinde de opțiunea de stocare a imaginilor din sistem.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Tot',
     'role_own' => 'Propriu',
     'role_controlled_by_asset' => 'Controlat de activele pe care sunt încărcate',

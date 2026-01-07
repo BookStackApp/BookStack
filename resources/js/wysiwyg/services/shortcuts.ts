@@ -71,13 +71,17 @@ const actionsByKeys: Record<string, ShortcutAction> = {
         return true;
     },
     'meta+shift+k': (editor, context) => {
-        showLinkSelector(entity => {
-            insertOrUpdateLink(editor, {
-                text: entity.name,
-                title: entity.link,
-                target: '',
-                url: entity.link,
-            });
+        editor.getEditorState().read(() => {
+            const selection = $getSelection();
+            const selectionText = selection?.getTextContent() || '';
+            showLinkSelector(entity => {
+                insertOrUpdateLink(editor, {
+                    text: entity.name,
+                    title: entity.link,
+                    target: '',
+                    url: entity.link,
+                });
+            }, selectionText);
         });
         return true;
     },

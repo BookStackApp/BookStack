@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="form-group text-right">
-                    <a href="{{  url(userCan('users-manage') ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
+                    <a href="{{  url(userCan(\BookStack\Permissions\Permission::UsersManage) ? "/settings/users" : "/") }}" class="button outline">{{ trans('common.cancel') }}</a>
                     <button class="button" type="submit">{{ trans('common.save') }}</button>
                 </div>
 

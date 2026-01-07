@@ -9,6 +9,7 @@ use BookStack\Exceptions\LoginAttemptInvalidUserException;
 use BookStack\Exceptions\StoppedAuthenticationException;
 use BookStack\Facades\Activity;
 use BookStack\Facades\Theme;
+use BookStack\Permissions\Permission;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Exception;
@@ -50,7 +51,7 @@ class LoginService
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, $method, $user);
 
         // Authenticate on all session guards if a likely admin
-        if ($user->can('users-manage') && $user->can('user-roles-manage')) {
+        if ($user->can(Permission::UsersManage) && $user->can(Permission::UserRolesManage)) {
             $guards = ['standard', 'ldap', 'saml2', 'oidc'];
             foreach ($guards as $guard) {
                 auth($guard)->login($user);
@@ -95,7 +96,7 @@ class LoginService
     {
         $value = session()->get(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
         if (!$value) {
-            return ['user_id' => null, 'method' => null];
+            return ['user_id' => null, 'method' => null, 'remember' => false];
         }
 
         [$id, $method, $remember, $time] = explode(':', $value);
@@ -103,18 +104,18 @@ class LoginService
         if ($time < $hourAgo) {
             $this->clearLastLoginAttempted();
 
-            return ['user_id' => null, 'method' => null];
+            return ['user_id' => null, 'method' => null, 'remember' => false];
         }
 
         return ['user_id' => $id, 'method' => $method, 'remember' => boolval($remember)];
     }
 
     /**
-     * Set the last login attempted user.
+     * Set the last login-attempted user.
      * Must be only used when credentials are correct and a login could be
-     * achieved but a secondary factor has stopped the login.
+     * achieved, but a secondary factor has stopped the login.
      */
-    protected function setLastLoginAttemptedForUser(User $user, string $method, bool $remember)
+    protected function setLastLoginAttemptedForUser(User $user, string $method, bool $remember): void
     {
         session()->put(
             self::LAST_LOGIN_ATTEMPTED_SESSION_KEY,

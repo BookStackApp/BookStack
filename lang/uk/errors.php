@@ -109,6 +109,7 @@ return [
     'import_zip_cant_read' => 'Не вдалося прочитати ZIP-файл.',
     'import_zip_cant_decode_data' => 'Не вдалося знайти і розшифрувати контент ZIP data.json.',
     'import_zip_no_data' => 'ZIP-файл не містить очікуваної книги, глави або вмісту сторінки.',
+    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
     'import_validation_failed' => 'Не вдалося виконати перевірку ZIP-адреси із помилками:',
     'import_zip_failed_notification' => 'Не вдалося імпортувати ZIP-файл.',
     'import_perms_books' => 'У Вас не вистачає необхідних прав для створення книг.',

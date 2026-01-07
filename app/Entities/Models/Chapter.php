@@ -2,32 +2,30 @@
 
 namespace BookStack\Entities\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use BookStack\Entities\Tools\EntityDefaultTemplate;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 /**
- * Class Chapter.
- *
  * @property Collection<Page> $pages
  * @property ?int             $default_template_id
- * @property ?Page            $defaultTemplate
+ * @property string           $description
+ * @property string           $description_html
  */
-class Chapter extends BookChild
+class Chapter extends BookChild implements HasDescriptionInterface, HasDefaultTemplateInterface
 {
     use HasFactory;
-    use HasHtmlDescription;
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
-
-    protected $fillable = ['name', 'description', 'priority'];
-    protected $hidden = ['pivot', 'deleted_at', 'description_html'];
+    protected $hidden = ['pivot', 'deleted_at', 'description_html', 'sort_rule_id', 'image_id', 'entity_id', 'entity_type', 'chapter_id'];
+    protected $fillable = ['name', 'priority'];
 
     /**
      * Get the pages that this chapter contains.
      *
-     * @return HasMany<Page>
+     * @return HasMany<Page, $this>
      */
     public function pages(string $dir = 'ASC'): HasMany
     {
@@ -51,16 +49,8 @@ class Chapter extends BookChild
     }
 
     /**
-     * Get the Page that is used as default template for newly created pages within this Chapter.
-     */
-    public function defaultTemplate(): BelongsTo
-    {
-        return $this->belongsTo(Page::class, 'default_template_id');
-    }
-
-    /**
      * Get the visible pages in this chapter.
-     * @returns Collection<Page>
+     * @return Collection<Page>
      */
     public function getVisiblePages(): Collection
     {
@@ -69,5 +59,10 @@ class Chapter extends BookChild
         ->orderBy('draft', 'desc')
         ->orderBy('priority', 'asc')
         ->get();
+    }
+
+    public function defaultTemplate(): EntityDefaultTemplate
+    {
+        return new EntityDefaultTemplate($this);
     }
 }

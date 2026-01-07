@@ -6,6 +6,9 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Exceptions\NotFoundException;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @implements ProvidesEntityQueries<Chapter>
+ */
 class ChapterQueries implements ProvidesEntityQueries
 {
     protected static array $listAttributes = [
@@ -62,8 +65,14 @@ class ChapterQueries implements ProvidesEntityQueries
             ->scopes('visible')
             ->select(array_merge(static::$listAttributes, ['book_slug' => function ($builder) {
                 $builder->select('slug')
-                    ->from('books')
-                    ->whereColumn('books.id', '=', 'chapters.book_id');
+                    ->from('entities as books')
+                    ->where('type', '=', 'book')
+                    ->whereColumn('books.id', '=', 'entities.book_id');
             }]));
+    }
+
+    public function visibleForContent(): Builder
+    {
+        return $this->start()->scopes('visible');
     }
 }

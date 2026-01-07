@@ -9,6 +9,8 @@ class Kernel extends HttpKernel
     /**
      * The application's global HTTP middleware stack.
      * These middleware are run during every request to your application.
+     *
+     * @var list<class-string>
      */
     protected $middleware = [
         \BookStack\Http\Middleware\PreventRequestsDuringMaintenance::class,
@@ -21,7 +23,7 @@ class Kernel extends HttpKernel
     /**
      * The application's route middleware groups.
      *
-     * @var array
+     * @var array<string, array<int, class-string>>
      */
     protected $middlewareGroups = [
         'web' => [
@@ -47,7 +49,7 @@ class Kernel extends HttpKernel
     /**
      * The application's middleware aliases.
      *
-     * @var array
+     * @var array<string, class-string>
      */
     protected $middlewareAliases = [
         'auth'       => \BookStack\Http\Middleware\Authenticate::class,

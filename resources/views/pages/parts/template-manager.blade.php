@@ -1,5 +1,5 @@
 <div component="template-manager">
-    @if(userCan('templates-manage'))
+    @if(userCan(\BookStack\Permissions\Permission::TemplatesManage))
         <p class="text-muted small mb-none">
             {{ trans('entities.templates_explain_set_as_template') }}
         </p>

@@ -2,9 +2,11 @@
 
 namespace BookStack\Uploads\Controllers;
 
+use BookStack\Entities\EntityExistsRule;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Http\ApiController;
+use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
 use Exception;
@@ -45,12 +47,12 @@ class AttachmentApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->checkPermission('attachment-create-all');
+        $this->checkPermission(Permission::AttachmentCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
         $pageId = $request->get('uploaded_to');
         $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission('page-update', $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -137,9 +139,9 @@ class AttachmentApiController extends ApiController
             $attachment->uploaded_to = $requestData['uploaded_to'];
         }
 
-        $this->checkOwnablePermission('page-view', $page);
-        $this->checkOwnablePermission('page-update', $page);
-        $this->checkOwnablePermission('attachment-update', $attachment);
+        $this->checkOwnablePermission(Permission::PageView, $page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -160,7 +162,7 @@ class AttachmentApiController extends ApiController
     {
         /** @var Attachment $attachment */
         $attachment = Attachment::visible()->findOrFail($id);
-        $this->checkOwnablePermission('attachment-delete', $attachment);
+        $this->checkOwnablePermission(Permission::AttachmentDelete, $attachment);
 
         $this->attachmentService->deleteFile($attachment);
 
@@ -172,13 +174,13 @@ class AttachmentApiController extends ApiController
         return [
             'create' => [
                 'name'        => ['required', 'string', 'min:1', 'max:255'],
-                'uploaded_to' => ['required', 'integer', 'exists:pages,id'],
+                'uploaded_to' => ['required', 'integer', new EntityExistsRule('page')],
                 'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
                 'link'        => ['required_without:file', 'string', 'min:1', 'max:2000', 'safe_url'],
             ],
             'update' => [
                 'name'        => ['string', 'min:1', 'max:255'],
-                'uploaded_to' => ['integer', 'exists:pages,id'],
+                'uploaded_to' => ['integer', new EntityExistsRule('page')],
                 'file'        => $this->attachmentService->getFileValidationRules(),
                 'link'        => ['string', 'min:1', 'max:2000', 'safe_url'],
             ],

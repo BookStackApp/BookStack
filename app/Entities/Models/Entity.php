@@ -12,8 +12,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Activity\Models\Viewable;
 use BookStack\Activity\Models\Watch;
 use BookStack\App\Model;
-use BookStack\App\Sluggable;
-use BookStack\Entities\Tools\SlugGenerator;
+use BookStack\App\SluggableInterface;
 use BookStack\Permissions\JointPermissionBuilder;
 use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Models\JointPermission;
@@ -22,38 +21,47 @@ use BookStack\References\Reference;
 use BookStack\Search\SearchIndex;
 use BookStack\Search\SearchTerm;
 use BookStack\Users\Models\HasCreatorAndUpdater;
-use BookStack\Users\Models\HasOwner;
+use BookStack\Users\Models\OwnableInterface;
+use BookStack\Users\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Entity
- * The base class for book-like items such as pages, chapters & books.
+ * The base class for book-like items such as pages, chapters and books.
  * This is not a database model in itself but extended.
  *
  * @property int        $id
+ * @property string     $type
  * @property string     $name
  * @property string     $slug
  * @property Carbon     $created_at
  * @property Carbon     $updated_at
  * @property Carbon     $deleted_at
- * @property int        $created_by
- * @property int        $updated_by
+ * @property int|null   $created_by
+ * @property int|null   $updated_by
+ * @property int|null   $owned_by
  * @property Collection $tags
  *
  * @method static Entity|Builder visible()
  * @method static Builder withLastView()
  * @method static Builder withViewCount()
  */
-abstract class Entity extends Model implements Sluggable, Favouritable, Viewable, Deletable, Loggable
+abstract class Entity extends Model implements
+    SluggableInterface,
+    Favouritable,
+    Viewable,
+    DeletableInterface,
+    OwnableInterface,
+    Loggable
 {
     use SoftDeletes;
     use HasCreatorAndUpdater;
-    use HasOwner;
 
     /**
      * @var string - Name of property where the main text content is found
@@ -71,6 +79,72 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public float $searchFactor = 1.0;
 
     /**
+     * Set the table to be that used by all entities.
+     */
+    protected $table = 'entities';
+
+    /**
+     * Set a custom query builder for entities.
+     */
+    protected static string $builder = EntityQueryBuilder::class;
+
+    public static array $commonFields = [
+        'id',
+        'type',
+        'name',
+        'slug',
+        'book_id',
+        'chapter_id',
+        'priority',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'created_by',
+        'updated_by',
+        'owned_by',
+    ];
+
+    /**
+     * Override the save method to also save the contents for convenience.
+     */
+    public function save(array $options = []): bool
+    {
+        /** @var EntityPageData|EntityContainerData $contents */
+        $contents = $this->relatedData()->firstOrNew();
+        $contentFields = $this->getContentsAttributes();
+
+        foreach ($contentFields as $key => $value) {
+            $contents->setAttribute($key, $value);
+            unset($this->attributes[$key]);
+        }
+
+        $this->setAttribute('type', $this->getMorphClass());
+        $result = parent::save($options);
+        $contentsResult = true;
+
+        if ($result && $contents->isDirty()) {
+            $contentsFillData = $contents instanceof EntityPageData ? ['page_id' => $this->id] : ['entity_id' => $this->id, 'entity_type' => $this->getMorphClass()];
+            $contents->forceFill($contentsFillData);
+            $contentsResult = $contents->save();
+            $this->touch();
+        }
+
+        $this->forceFill($contentFields);
+
+        return $result && $contentsResult;
+    }
+
+    /**
+     * Check if this item is a container item.
+     */
+    public function isContainer(): bool
+    {
+        return $this instanceof Bookshelf ||
+            $this instanceof Book ||
+            $this instanceof Chapter;
+    }
+
+    /**
      * Get the entities that are visible to the current user.
      */
     public function scopeVisible(Builder $query): Builder
@@ -84,8 +158,8 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function scopeWithLastView(Builder $query)
     {
         $viewedAtQuery = View::query()->select('updated_at')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
-            ->where('viewable_type', '=', $this->getMorphClass())
+            ->whereColumn('viewable_id', '=', 'entities.id')
+            ->whereColumn('viewable_type', '=', 'entities.type')
             ->where('user_id', '=', user()->id)
             ->take(1);
 
@@ -95,11 +169,12 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * Query scope to get the total view count of the entities.
      */
-    public function scopeWithViewCount(Builder $query)
+    public function scopeWithViewCount(Builder $query): void
     {
         $viewCountQuery = View::query()->selectRaw('SUM(views) as view_count')
-            ->whereColumn('viewable_id', '=', $this->getTable() . '.id')
-            ->where('viewable_type', '=', $this->getMorphClass())->take(1);
+            ->whereColumn('viewable_id', '=', 'entities.id')
+            ->whereColumn('viewable_type', '=', 'entities.type')
+            ->take(1);
 
         $query->addSelect(['view_count' => $viewCountQuery]);
     }
@@ -155,15 +230,17 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
      */
     public function tags(): MorphMany
     {
-        return $this->morphMany(Tag::class, 'entity')->orderBy('order', 'asc');
+        return $this->morphMany(Tag::class, 'entity')
+            ->orderBy('order', 'asc');
     }
 
     /**
      * Get the comments for an entity.
+     * @return MorphMany<Comment, $this>
      */
     public function comments(bool $orderByCreated = true): MorphMany
     {
-        $query = $this->morphMany(Comment::class, 'entity');
+        $query = $this->morphMany(Comment::class, 'commentable');
 
         return $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
     }
@@ -177,7 +254,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Get this entities restrictions.
+     * Get this entities assigned permissions.
      */
     public function permissions(): MorphMany
     {
@@ -198,6 +275,20 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     public function jointPermissions(): MorphMany
     {
         return $this->morphMany(JointPermission::class, 'entity');
+    }
+
+    /**
+     * Get the user who owns this entity.
+     * @return BelongsTo<User, $this>
+     */
+    public function ownedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'owned_by');
+    }
+
+    public function getOwnerFieldName(): string
+    {
+        return 'owned_by';
     }
 
     /**
@@ -246,7 +337,7 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
-     * Gets a limited-length version of the entities name.
+     * Gets a limited-length version of the entity name.
      */
     public function getShortName(int $length = 25): string
     {
@@ -316,16 +407,6 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     /**
      * {@inheritdoc}
      */
-    public function refreshSlug(): string
-    {
-        $this->slug = app()->make(SlugGenerator::class)->generate($this);
-
-        return $this->slug;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function favourites(): MorphMany
     {
         return $this->morphMany(Favourite::class, 'favouritable');
@@ -350,10 +431,54 @@ abstract class Entity extends Model implements Sluggable, Favouritable, Viewable
     }
 
     /**
+     * Get the related slug history for this entity.
+     */
+    public function slugHistory(): MorphMany
+    {
+        return $this->morphMany(SlugHistory::class, 'sluggable');
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}";
+    }
+
+    /**
+     * @return HasOne<covariant (EntityContainerData|EntityPageData), $this>
+     */
+    abstract public function relatedData(): HasOne;
+
+    /**
+     * Get the attributes that are intended for the related contents model.
+     * @return array<string, mixed>
+     */
+    protected function getContentsAttributes(): array
+    {
+        $contentFields = [];
+        $contentModel = $this instanceof Page ? EntityPageData::class : EntityContainerData::class;
+
+        foreach ($this->attributes as $key => $value) {
+            if (in_array($key, $contentModel::$fields)) {
+                $contentFields[$key] = $value;
+            }
+        }
+
+        return $contentFields;
+    }
+
+    /**
+     * Create a new instance for the given entity type.
+     */
+    public static function instanceFromType(string $type): self
+    {
+        return match ($type) {
+            'page' => new Page(),
+            'chapter' => new Chapter(),
+            'book' => new Book(),
+            'bookshelf' => new Bookshelf(),
+        };
     }
 }

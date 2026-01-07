@@ -83,6 +83,22 @@ class AuditLogTest extends TestCase
         $resp->assertSeeText("[ID: {$viewer->id}] Deleted User");
     }
 
+    public function test_deleted_user_shows_if_user_created_date_is_later_than_activity()
+    {
+        $viewer = $this->users->viewer();
+        $this->actingAs($viewer);
+        $page = $this->entities->page();
+        $this->activityService->add(ActivityType::PAGE_CREATE, $page);
+        $viewer->created_at = Carbon::now()->addDay();
+        $viewer->save();
+
+        $this->actingAs($this->users->admin());
+
+        $resp = $this->get('settings/audit');
+        $resp->assertSeeText("[ID: {$viewer->id}] Deleted User");
+        $resp->assertDontSee($viewer->name);
+    }
+
     public function test_filters_by_key()
     {
         $this->actingAs($this->users->admin());

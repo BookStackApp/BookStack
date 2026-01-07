@@ -504,7 +504,7 @@ export function createTestContext(): EditorUiContext {
     options: {},
     scrollDOM: scrollWrap,
     translate(text: string): string {
-      return "";
+      return text;
     }
   };
 
@@ -769,6 +769,7 @@ export function expectHtmlToBeEqual(expected: string, actual: string): void {
 
 type nodeTextShape = {
   text: string;
+  format?: number;
 };
 
 type nodeShape = {
@@ -786,7 +787,13 @@ export function getNodeShape(node: SerializedLexicalNode): nodeShape|nodeTextSha
 
   if (shape.type === 'text') {
     // @ts-ignore
-    return  {text: node.text}
+    const shape: nodeTextShape =  {text: node.text}
+    // @ts-ignore
+    if (node && node.format) {
+      // @ts-ignore
+      shape.format = node.format;
+    }
+    return shape;
   }
 
   if (children.length > 0) {
@@ -864,4 +871,26 @@ export function dispatchEditorMouseClick(editor: LexicalEditor, clientX: number,
   });
   dom?.dispatchEvent(event);
   editor.commitUpdates();
+}
+
+export function patchRange() {
+    const RangePrototype = Object.getPrototypeOf(document.createRange());
+    RangePrototype.getBoundingClientRect = function (): DOMRect {
+        const rect = {
+            bottom: 0,
+            height: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+            width: 0,
+            x: 0,
+            y: 0,
+        };
+        return {
+            ...rect,
+            toJSON() {
+                return rect;
+            },
+        };
+    };
 }

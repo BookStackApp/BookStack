@@ -3,19 +3,21 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\App\Model;
-use BookStack\App\Sluggable;
+use BookStack\App\SluggableInterface;
 use BookStack\Entities\Models\BookChild;
+use BookStack\Entities\Models\Entity;
+use BookStack\Users\Models\User;
 use Illuminate\Support\Str;
 
 class SlugGenerator
 {
     /**
-     * Generate a fresh slug for the given entity.
+     * Generate a fresh slug for the given item.
      * The slug will be generated so that it doesn't conflict within the same parent item.
      */
-    public function generate(Sluggable $model): string
+    public function generate(SluggableInterface&Model $model, string $slugSource): string
     {
-        $slug = $this->formatNameAsSlug($model->name);
+        $slug = $this->formatNameAsSlug($slugSource);
         while ($this->slugInUse($slug, $model)) {
             $slug .= '-' . Str::random(3);
         }
@@ -24,7 +26,27 @@ class SlugGenerator
     }
 
     /**
-     * Format a name as a url slug.
+     * Regenerate the slug for the given entity.
+     */
+    public function regenerateForEntity(Entity $entity): string
+    {
+        $entity->slug = $this->generate($entity, $entity->name);
+
+        return $entity->slug;
+    }
+
+    /**
+     * Regenerate the slug for a user.
+     */
+    public function regenerateForUser(User $user): string
+    {
+        $user->slug = $this->generate($user, $user->name);
+
+        return $user->slug;
+    }
+
+    /**
+     * Format a name as a URL slug.
      */
     protected function formatNameAsSlug(string $name): string
     {
@@ -39,10 +61,8 @@ class SlugGenerator
     /**
      * Check if a slug is already in-use for this
      * type of model within the same parent.
-     *
-     * @param Sluggable&Model $model
      */
-    protected function slugInUse(string $slug, Sluggable $model): bool
+    protected function slugInUse(string $slug, SluggableInterface&Model $model): bool
     {
         $query = $model->newQuery()->where('slug', '=', $slug);
 

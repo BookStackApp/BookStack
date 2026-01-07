@@ -6,6 +6,7 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\BookChild;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\Permission;
 
 class TagClassGenerator
 {
@@ -26,14 +27,14 @@ class TagClassGenerator
              array_push($classes, ...$this->generateClassesForTag($tag));
         }
 
-        if ($this->entity instanceof BookChild && userCan('view', $this->entity->book)) {
+        if ($this->entity instanceof BookChild && userCan(Permission::BookView, $this->entity->book)) {
             $bookTags = $this->entity->book->tags;
             foreach ($bookTags as $bookTag) {
                  array_push($classes, ...$this->generateClassesForTag($bookTag, 'book-'));
             }
         }
 
-        if ($this->entity instanceof Page && $this->entity->chapter && userCan('view', $this->entity->chapter)) {
+        if ($this->entity instanceof Page && $this->entity->chapter && userCan(Permission::ChapterView, $this->entity->chapter)) {
             $chapterTags = $this->entity->chapter->tags;
             foreach ($chapterTags as $chapterTag) {
                  array_push($classes, ...$this->generateClassesForTag($chapterTag, 'chapter-'));

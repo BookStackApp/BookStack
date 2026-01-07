@@ -91,7 +91,7 @@ class BookShelfTest extends TestCase
         ]));
         $resp->assertRedirect();
         $editorId = $this->users->editor()->id;
-        $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['created_by' => $editorId, 'updated_by' => $editorId]));
+        $this->assertDatabaseHasEntityData('bookshelf', array_merge($shelfInfo, ['created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelf = Bookshelf::where('name', '=', $shelfInfo['name'])->first();
         $shelfPage = $this->get($shelf->getUrl());
@@ -117,11 +117,12 @@ class BookShelfTest extends TestCase
 
         $lastImage = Image::query()->orderByDesc('id')->firstOrFail();
         $shelf = Bookshelf::query()->where('name', '=', $shelfInfo['name'])->first();
-        $this->assertDatabaseHas('bookshelves', [
-            'id'       => $shelf->id,
+        $this->assertDatabaseHas('entity_container_data', [
+            'entity_id'       => $shelf->id,
+            'entity_type' => 'bookshelf',
             'image_id' => $lastImage->id,
         ]);
-        $this->assertEquals($lastImage->id, $shelf->cover->id);
+        $this->assertEquals($lastImage->id, $shelf->coverInfo()->getImage()->id);
         $this->assertEquals('cover_bookshelf', $lastImage->type);
     }
 
@@ -247,7 +248,7 @@ class BookShelfTest extends TestCase
         $this->assertSessionHas('success');
 
         $editorId = $this->users->editor()->id;
-        $this->assertDatabaseHas('bookshelves', array_merge($shelfInfo, ['id' => $shelf->id, 'created_by' => $editorId, 'updated_by' => $editorId]));
+        $this->assertDatabaseHasEntityData('bookshelf', array_merge($shelfInfo, ['id' => $shelf->id, 'created_by' => $editorId, 'updated_by' => $editorId]));
 
         $shelfPage = $this->get($shelf->getUrl());
         $shelfPage->assertSee($shelfInfo['name']);
@@ -257,6 +258,35 @@ class BookShelfTest extends TestCase
 
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[0]->id]);
         $this->assertDatabaseHas('bookshelves_books', ['bookshelf_id' => $shelf->id, 'book_id' => $booksToInclude[1]->id]);
+    }
+
+    public function test_shelf_edit_does_not_alter_books_we_dont_have_access_to()
+    {
+        $shelf = $this->entities->shelf();
+        $shelf->books()->detach();
+        $this->entities->book();
+        $this->entities->book();
+
+        $newBooks = [$this->entities->book(), $this->entities->book()];
+        $originalBooks = [$this->entities->book(), $this->entities->book()];
+        foreach ($originalBooks as $book) {
+            $this->permissions->disableEntityInheritedPermissions($book);
+            $shelf->books()->attach($book->id);
+        }
+
+        $this->asEditor()->put($shelf->getUrl(), [
+            'name' => $shelf->name,
+            'books' => "{$newBooks[0]->id},{$newBooks[1]->id}",
+        ])->assertRedirect($shelf->getUrl());
+
+        $resultingBooksById = $shelf->books()->get()->keyBy('id')->toArray();
+        $this->assertCount(4, $resultingBooksById);
+        foreach ($newBooks as $book) {
+            $this->assertArrayHasKey($book->id, $resultingBooksById);
+        }
+        foreach ($originalBooks as $book) {
+            $this->assertArrayHasKey($book->id, $resultingBooksById);
+        }
     }
 
     public function test_shelf_create_new_book()

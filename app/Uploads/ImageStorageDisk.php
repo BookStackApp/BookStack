@@ -61,7 +61,7 @@ class ImageStorageDisk
 
     /**
      * Get a stream to the file at the given path.
-     * @returns ?resource
+     * @return ?resource
      */
     public function stream(string $path): mixed
     {

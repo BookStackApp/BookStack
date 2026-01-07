@@ -6,6 +6,7 @@ use BookStack\Activity\Models\Loggable;
 use BookStack\App\Model;
 use BookStack\Users\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -30,6 +31,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class PageRevision extends Model implements Loggable
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'text', 'summary'];
     protected $hidden = ['html', 'markdown', 'text'];
 
@@ -60,7 +63,7 @@ class PageRevision extends Model implements Loggable
     /**
      * Get the previous revision for the same page if existing.
      */
-    public function getPrevious(): ?PageRevision
+    public function getPreviousRevision(): ?PageRevision
     {
         $id = static::newQuery()->where('page_id', '=', $this->page_id)
             ->where('id', '<', $this->id)

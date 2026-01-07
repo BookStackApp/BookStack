@@ -13,7 +13,7 @@ return [
     'image_intro_upload' => 'Unggah gambar baru dengan menyeret berkas gambar ke jendela ini, atau dengan menggunakan tombol "Unggah Gambar" di atas.',
     'image_all' => 'Semua',
     'image_all_title' => 'Lihat semua gambar',
-    'image_book_title' => 'Lihat gambar yang diunggah ke buku ini',
+    'image_book_title' => 'Lihat gambar untuk diunggah ke buku ini',
     'image_page_title' => 'Lihat gambar yang diunggah ke halaman ini',
     'image_search_hint' => 'Cari berdasarkan nama gambar',
     'image_uploaded' => 'Diunggah :uploadedDate',
@@ -33,7 +33,7 @@ return [
     'image_update_success' => 'Detail gambar berhasil diperbarui',
     'image_delete_success' => 'Gambar berhasil dihapus',
     'image_replace' => 'Ganti Gambar',
-    'image_replace_success' => 'Berkas gambar berhasil diperbarui',
+    'image_replace_success' => 'Detail gambar berhasil diperbarui',
     'image_rebuild_thumbs' => 'Buat Ulang Variasi Ukuran',
     'image_rebuild_thumbs_success' => 'Variasi ukuran gambar berhasil dibuat ulang!',
 

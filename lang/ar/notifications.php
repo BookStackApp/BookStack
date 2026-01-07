@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'تم تحديث الصفحة: :pageName',
     'updated_page_intro' => 'تم تحديث الصفحة في :appName:',
     'updated_page_debounce' => 'لمنع تلقي عدد كبير من الإشعارات، لن يتم إرسال إشعارات إليك لفترة من الوقت لإجراء المزيد من التعديلات على هذه الصفحة بواسطة نفس المحرر.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'اسم الصفحة:',
     'detail_page_path' => 'مسار الصفحة:',

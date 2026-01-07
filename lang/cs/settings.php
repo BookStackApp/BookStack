@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Žádná omezení nebyla nastavena',
 
     // Sorting Settings
-    'sorting' => 'Řazení',
+    'sorting' => 'Seznamy a řazení',
     'sorting_book_default' => 'Výchozí řazení knih',
     'sorting_book_default_desc' => 'Vybere výchozí pravidlo řazení pro nové knihy. Řazení neovlivní existující knihy a může být upraveno u konkrétní knihy.',
     'sorting_rules' => 'Pravidla řazení',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Datum aktualizace',
     'sort_rule_op_chapters_first' => 'Kapitoly jako první',
     'sort_rule_op_chapters_last' => 'Kapitoly jako poslední',
+    'sorting_page_limits' => 'Počet zobrazených položek na stránce',
+    'sorting_page_limits_desc' => 'Nastavte, kolik položek se má zobrazit na stránce v různých seznamech na webu. Obvykle bude nižší počet výkonnější, zatímco vyšší počet eliminuje nutnost proklikávat se několika stránkami. Doporučuje se použít sudý násobek čísla 3 (18, 24, 30 atd.).',
 
     // Maintenance settings
     'maint' => 'Údržba',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Importovat obsah',
     'role_editor_change' => 'Změnit editor stránek',
     'role_notifications' => 'Přijímat a spravovat oznámení',
+    'role_permission_note_users_and_roles' => 'Tato oprávnění zároveň umožní zobrazit a vyhledat uživatele a role na webu.',
     'role_asset' => 'Obsahová oprávnění',
     'roles_system_warning' => 'Berte na vědomí, že přístup k některému ze tří výše uvedených oprávnění může uživateli umožnit změnit svá vlastní oprávnění nebo oprávnění ostatních uživatelů v systému. Přiřazujte role s těmito oprávněními pouze důvěryhodným uživatelům.',
     'role_asset_desc' => 'Tato oprávnění řídí přístup k obsahu napříč systémem. Specifická oprávnění na knihách, kapitolách a stránkách převáží tato nastavení.',
     'role_asset_admins' => 'Administrátoři automaticky dostávají přístup k veškerému obsahu, ale tyto volby mohou ukázat nebo skrýt volby v uživatelském rozhraní.',
     'role_asset_image_view_note' => 'To se týká viditelnosti ve správci obrázků. Skutečný přístup k nahraným souborům obrázků bude záviset na možnosti uložení systémových obrázků.',
+    'role_asset_users_note' => 'Tato oprávnění zároveň umožní zobrazit a vyhledat uživatele v systému.',
     'role_all' => 'Vše',
     'role_own' => 'Vlastní',
     'role_controlled_by_asset' => 'Řídí se obsahem, do kterého jsou nahrávány',

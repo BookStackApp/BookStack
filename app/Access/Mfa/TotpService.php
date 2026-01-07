@@ -14,10 +14,9 @@ use PragmaRX\Google2FA\Support\Constants;
 
 class TotpService
 {
-    protected $google2fa;
-
-    public function __construct(Google2FA $google2fa)
-    {
+    public function __construct(
+        protected Google2FA $google2fa
+    ) {
         $this->google2fa = $google2fa;
         // Use SHA1 as a default, Personal testing of other options in 2021 found
         // many apps lack support for other algorithms yet still will scan
@@ -35,7 +34,7 @@ class TotpService
     }
 
     /**
-     * Generate a TOTP URL from secret key.
+     * Generate a TOTP URL from a secret key.
      */
     public function generateUrl(string $secret, User $user): string
     {

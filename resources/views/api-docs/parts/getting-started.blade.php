@@ -2,7 +2,7 @@
 
 <p class="mb-none">
     This documentation covers use of the REST API. <br>
-    Examples of API usage, in a variety of programming languages, can be found in the <a href="https://github.com/BookStackApp/api-scripts" target="_blank" rel="noopener noreferrer">BookStack api-scripts repo on GitHub</a>.
+    Examples of API usage, in a variety of programming languages, can be found in the <a href="https://codeberg.org/bookstack/api-scripts" target="_blank" rel="noopener noreferrer">BookStack api-scripts repo on GitHub</a>.
 
     <br> <br>
     Some alternative options for extension and customization can be found below:

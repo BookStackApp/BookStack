@@ -8,7 +8,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Exports\ZipExports\ZipExportFiles;
 use BookStack\Exports\ZipExports\ZipValidationHelper;
 
-class ZipExportBook extends ZipExportModel
+final class ZipExportBook extends ZipExportModel
 {
     public ?int $id = null;
     public string $name;
@@ -55,10 +55,10 @@ class ZipExportBook extends ZipExportModel
         $instance = new self();
         $instance->id = $model->id;
         $instance->name = $model->name;
-        $instance->description_html = $model->descriptionHtml();
+        $instance->description_html = $model->descriptionInfo()->getHtml();
 
-        if ($model->cover) {
-            $instance->cover = $files->referenceForImage($model->cover);
+        if ($model->coverInfo()->exists()) {
+            $instance->cover = $files->referenceForImage($model->coverInfo()->getImage());
         }
 
         $instance->tags = ZipExportTag::fromModelArray($model->tags()->get()->all());
@@ -101,9 +101,9 @@ class ZipExportBook extends ZipExportModel
         return $errors;
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $data): static
     {
-        $model = new self();
+        $model = new static();
 
         $model->id = $data['id'] ?? null;
         $model->name = $data['name'];

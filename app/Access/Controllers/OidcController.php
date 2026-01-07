@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 
 class OidcController extends Controller
 {
-    protected OidcService $oidcService;
-
-    public function __construct(OidcService $oidcService)
-    {
-        $this->oidcService = $oidcService;
+    public function __construct(
+        protected OidcService $oidcService
+    ) {
         $this->middleware('guard:oidc');
     }
 
@@ -30,7 +28,7 @@ class OidcController extends Controller
             return redirect('/login');
         }
 
-        session()->flash('oidc_state', $loginDetails['state']);
+        session()->put('oidc_state', time() . ':' . $loginDetails['state']);
 
         return redirect($loginDetails['url']);
     }
@@ -41,10 +39,16 @@ class OidcController extends Controller
      */
     public function callback(Request $request)
     {
-        $storedState = session()->pull('oidc_state');
         $responseState = $request->query('state');
+        $splitState =  explode(':', session()->pull('oidc_state', ':'), 2);
+        if (count($splitState) !== 2) {
+            $splitState = [null, null];
+        }
 
-        if ($storedState !== $responseState) {
+        [$storedStateTime, $storedState] = $splitState;
+        $threeMinutesAgo = time() - 3 * 60;
+
+        if (!$storedState || $storedState !== $responseState || intval($storedStateTime) < $threeMinutesAgo) {
             $this->showErrorNotification(trans('errors.oidc_fail_authed', ['system' => config('oidc.name')]));
 
             return redirect('/login');
@@ -62,7 +66,7 @@ class OidcController extends Controller
     }
 
     /**
-     * Log the user out then start the OIDC RP-initiated logout process.
+     * Log the user out, then start the OIDC RP-initiated logout process.
      */
     public function logout()
     {

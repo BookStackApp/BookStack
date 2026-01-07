@@ -2,34 +2,34 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityCover;
 use BookStack\Uploads\Image;
-use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Bookshelf extends Entity implements HasCoverImage
+/**
+ * @property string $description
+ * @property string $description_html
+ */
+class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInterface
 {
     use HasFactory;
-    use HasHtmlDescription;
-
-    protected $table = 'bookshelves';
+    use ContainerTrait;
 
     public float $searchFactor = 1.2;
 
-    protected $fillable = ['name', 'description', 'image_id'];
-
-    protected $hidden = ['image_id', 'deleted_at', 'description_html'];
+    protected $hidden = ['image_id', 'deleted_at', 'description_html', 'priority', 'default_template_id', 'sort_rule_id', 'entity_id', 'entity_type', 'chapter_id', 'book_id'];
+    protected $fillable = ['name'];
 
     /**
      * Get the books in this shelf.
-     * Should not be used directly since does not take into account permissions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Should not be used directly since it does not take into account permissions.
      */
-    public function books()
+    public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
+            ->select(['entities.*', 'entity_container_data.*'])
             ->withPivot('order')
             ->orderBy('order', 'asc');
     }
@@ -51,40 +51,6 @@ class Bookshelf extends Entity implements HasCoverImage
     }
 
     /**
-     * Returns shelf cover image, if cover not exists return default cover image.
-     */
-    public function getBookCover(int $width = 440, int $height = 250): string
-    {
-        // TODO - Make generic, focused on books right now, Perhaps set-up a better image
-        $default = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-        if (!$this->image_id || !$this->cover) {
-            return $default;
-        }
-
-        try {
-            return $this->cover->getThumb($width, $height, false) ?? $default;
-        } catch (Exception $err) {
-            return $default;
-        }
-    }
-
-    /**
-     * Get the cover image of the shelf.
-     */
-    public function cover(): BelongsTo
-    {
-        return $this->belongsTo(Image::class, 'image_id');
-    }
-
-    /**
-     * Get the type of the image model that is used when storing a cover image.
-     */
-    public function coverImageTypeKey(): string
-    {
-        return 'cover_bookshelf';
-    }
-
-    /**
      * Check if this shelf contains the given book.
      */
     public function contains(Book $book): bool
@@ -95,7 +61,7 @@ class Bookshelf extends Entity implements HasCoverImage
     /**
      * Add a book to the end of this shelf.
      */
-    public function appendBook(Book $book)
+    public function appendBook(Book $book): void
     {
         if ($this->contains($book)) {
             return;
@@ -105,12 +71,13 @@ class Bookshelf extends Entity implements HasCoverImage
         $this->books()->attach($book->id, ['order' => $maxOrder + 1]);
     }
 
-    /**
-     * Get a visible shelf by its slug.
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-     */
-    public static function getBySlug(string $slug): self
+    public function coverInfo(): EntityCover
     {
-        return static::visible()->where('slug', '=', $slug)->firstOrFail();
+        return new EntityCover($this);
+    }
+
+    public function cover(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

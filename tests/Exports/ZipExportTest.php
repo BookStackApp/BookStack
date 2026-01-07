@@ -227,7 +227,7 @@ class ZipExportTest extends TestCase
         $bookData = $zip->data['book'];
         $this->assertEquals($book->id, $bookData['id']);
         $this->assertEquals($book->name, $bookData['name']);
-        $this->assertEquals($book->descriptionHtml(), $bookData['description_html']);
+        $this->assertEquals($book->descriptionInfo()->getHtml(), $bookData['description_html']);
         $this->assertCount(2, $bookData['tags']);
         $this->assertCount($book->directPages()->count(), $bookData['pages']);
         $this->assertCount($book->chapters()->count(), $bookData['chapters']);
@@ -240,7 +240,7 @@ class ZipExportTest extends TestCase
         $bookRepo = $this->app->make(BookRepo::class);
         $coverImageFile = $this->files->uploadedImage('cover.png');
         $bookRepo->updateCoverImage($book, $coverImageFile);
-        $coverImage = $book->cover()->first();
+        $coverImage = $book->coverInfo()->getImage();
 
         $zipResp = $this->asEditor()->get($book->getUrl("/export/zip"));
         $zip = ZipTestHelper::extractFromZipResponse($zipResp);
@@ -264,7 +264,7 @@ class ZipExportTest extends TestCase
         $chapterData = $zip->data['chapter'];
         $this->assertEquals($chapter->id, $chapterData['id']);
         $this->assertEquals($chapter->name, $chapterData['name']);
-        $this->assertEquals($chapter->descriptionHtml(), $chapterData['description_html']);
+        $this->assertEquals($chapter->descriptionInfo()->getHtml(), $chapterData['description_html']);
         $this->assertCount(2, $chapterData['tags']);
         $this->assertEquals($chapter->priority, $chapterData['priority']);
         $this->assertCount($chapter->pages()->count(), $chapterData['pages']);
@@ -372,6 +372,54 @@ class ZipExportTest extends TestCase
 
         $ref = '[[bsexport:image:' . $image->id . ']]';
         $this->assertStringContainsString("<a href=\"{$ref}\">Original URL</a><a href=\"{$ref}\">Storage URL</a>", $pageData['html']);
+    }
+
+    public function test_orphaned_images_can_be_used_on_default_local_storage()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $result = $this->files->uploadGalleryImageToPage($this, $page);
+        $displayThumb = $result['response']->thumbs->gallery ?? '';
+        $page->html = '<p><img src="' . $displayThumb . '" alt="My image"></p>';
+        $page->save();
+
+        $image = Image::findOrFail($result['response']->id);
+        $image->uploaded_to = null;
+        $image->save();
+
+        $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
+        $zipResp->assertOk();
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
+        $pageData = $zip->data['page'];
+
+        $this->assertCount(1, $pageData['images']);
+        $imageData = $pageData['images'][0];
+        $this->assertEquals($image->id, $imageData['id']);
+
+        $this->assertEquals('<p><img src="[[bsexport:image:' . $imageData['id'] . ']]" alt="My image"></p>', $pageData['html']);
+    }
+
+    public function test_orphaned_images_cannot_be_used_on_local_secure_restricted()
+    {
+        config()->set('filesystems.images', 'local_secure_restricted');
+
+        $this->asEditor();
+        $page = $this->entities->page();
+        $result = $this->files->uploadGalleryImageToPage($this, $page);
+        $displayThumb = $result['response']->thumbs->gallery ?? '';
+        $page->html = '<p><img src="' . $displayThumb . '" alt="My image"></p>';
+        $page->save();
+
+        $image = Image::findOrFail($result['response']->id);
+        $image->uploaded_to = null;
+        $image->save();
+
+        $zipResp = $this->asEditor()->get($page->getUrl("/export/zip"));
+        $zipResp->assertOk();
+        $zip = ZipTestHelper::extractFromZipResponse($zipResp);
+        $pageData = $zip->data['page'];
+
+        $this->assertCount(0, $pageData['images']);
     }
 
     public function test_cross_reference_links_external_to_export_are_not_converted()

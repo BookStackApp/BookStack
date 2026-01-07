@@ -1,7 +1,7 @@
 {
 	"id": 358,
 	"book_id": 1,
-	"chapter_id": 0,
+	"chapter_id": null,
 	"name": "My API Page",
 	"slug": "my-api-page",
 	"html": "<p id=\"bkmrk-my-new-api-page\">my new API page</p>",

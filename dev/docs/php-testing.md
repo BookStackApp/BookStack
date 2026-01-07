@@ -4,7 +4,7 @@ BookStack has many test cases defined within the `tests/` directory of the app. 
 
 ## Setup
 
-The application tests are mostly functional, rather than unit tests, meaning they simulate user actions and system components and therefore these require use of the database. To avoid potential conflicts within your development environment, the tests use a separate database. This is defined via a specific `mysql_testing` database connection in our configuration, and expects to use the following database access details:
+The application tests are mostly functional, rather than unit tests, meaning they simulate user actions and system components, and therefore these require use of the database. To avoid potential conflicts within your development environment, the tests use a separate database. This is defined via a specific `mysql_testing` database connection in our configuration, and expects to use the following database access details:
 
 - Host: `127.0.0.1`
 - Username: `bookstack-test`

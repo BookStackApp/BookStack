@@ -4,6 +4,7 @@ namespace BookStack\Access\Mfa;
 
 use BookStack\Users\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class MfaValue extends Model
 {
+    use HasFactory;
+
     protected static $unguarded = true;
 
     const METHOD_TOTP = 'totp';

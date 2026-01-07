@@ -3,6 +3,7 @@
 namespace BookStack\App\Providers;
 
 use BookStack\Access\SocialDriverManager;
+use BookStack\Activity\Models\Comment;
 use BookStack\Activity\Tools\ActivityLogger;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
@@ -73,6 +74,7 @@ class AppServiceProvider extends ServiceProvider
             'book'      => Book::class,
             'chapter'   => Chapter::class,
             'page'      => Page::class,
+            'comment'   => Comment::class,
         ]);
     }
 }

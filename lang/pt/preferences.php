@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'Controlar as notificações via correio eletrónico quando certas atividades são executadas pelo sistema.',
     'notifications_opt_own_page_changes' => 'Notificar quando páginas que possuo sofrem alterações',
     'notifications_opt_own_page_comments' => 'Notificar quando comentam páginas que possuo',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'Notificar respostas aos meus comentários',
     'notifications_save' => 'Guardar preferências',
     'notifications_update_success' => 'Preferências de notificação foram atualizadas!',

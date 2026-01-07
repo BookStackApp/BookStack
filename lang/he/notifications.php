@@ -11,6 +11,8 @@ return [
     'updated_page_subject' => 'עמוד עודכן :pageName',
     'updated_page_intro' => 'דף עודכן ב:appName:',
     'updated_page_debounce' => 'על מנת לעצור הצפת התראות, לזמן מסוים אתה לא תקבל התראות על שינויים עתידיים בדף זה על ידי אותו עורך.',
+    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
+    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'שם עמוד:',
     'detail_page_path' => 'נתיב לעמוד:',

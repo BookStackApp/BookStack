@@ -39,8 +39,8 @@ class PageUpdateNotificationHandler extends BaseNotificationHandler
         $watchers = new EntityWatchers($detail, WatchLevels::UPDATES);
         $watcherIds = $watchers->getWatcherUserIds();
 
-        // Add page owner if preferences allow
-        if (!$watchers->isUserIgnoring($detail->owned_by) && $detail->ownedBy) {
+        // Add the page owner if preferences allow
+        if ($detail->owned_by && !$watchers->isUserIgnoring($detail->owned_by) && $detail->ownedBy) {
             $userNotificationPrefs = new UserNotificationPreferences($detail->ownedBy);
             if ($userNotificationPrefs->notifyOnOwnPageChanges()) {
                 $watcherIds[] = $detail->owned_by;

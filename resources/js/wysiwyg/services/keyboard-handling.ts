@@ -18,6 +18,7 @@ import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {$isDiagramNode} from "../utils/diagrams";
+import {$unwrapDetailsNode} from "../utils/details";
 
 function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
@@ -172,6 +173,35 @@ function getDetailsScenario(editor: LexicalEditor): {
     }
 }
 
+function unwrapDetailsNode(context: EditorUiContext, event: KeyboardEvent): boolean {
+    const selection = $getSelection();
+    const nodes = selection?.getNodes() || [];
+
+    if (nodes.length !== 1) {
+        return false;
+    }
+
+    const selectedNearestBlock = $getNearestNodeBlockParent(nodes[0]);
+    if (!selectedNearestBlock) {
+        return false;
+    }
+
+    const selectedParentBlock = selectedNearestBlock.getParent();
+    const selectRange = selection?.getStartEndPoints();
+
+    if (selectRange && $isDetailsNode(selectedParentBlock) && selectRange[0].offset === 0 && selectedNearestBlock.getIndexWithinParent() === 0) {
+        event.preventDefault();
+        context.editor.update(() => {
+            $unwrapDetailsNode(selectedParentBlock);
+            selectedNearestBlock.selectStart();
+            context.manager.triggerLayoutUpdate();
+        });
+        return true;
+    }
+
+    return false;
+}
+
 function $isSingleListItem(nodes: LexicalNode[]): boolean {
     if (nodes.length !== 1) {
         return false;
@@ -201,9 +231,9 @@ function handleInsetOnTab(editor: LexicalEditor, event: KeyboardEvent|null): boo
 }
 
 export function registerKeyboardHandling(context: EditorUiContext): () => void {
-    const unregisterBackspace = context.editor.registerCommand(KEY_BACKSPACE_COMMAND, (): boolean => {
+    const unregisterBackspace = context.editor.registerCommand(KEY_BACKSPACE_COMMAND, (event): boolean => {
         deleteSingleSelectedNode(context.editor);
-        return false;
+        return unwrapDetailsNode(context, event);
     }, COMMAND_PRIORITY_LOW);
 
     const unregisterDelete = context.editor.registerCommand(KEY_DELETE_COMMAND, (): boolean => {

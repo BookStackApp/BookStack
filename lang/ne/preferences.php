@@ -23,6 +23,7 @@ return [
     'notifications_desc' => 'प्रणालीमा केही क्रियाकलापहरू गर्दा तपाईंलाई प्राप्त हुने इमेल सूचनाहरू नियन्त्रण गर्नुहोस्।',
     'notifications_opt_own_page_changes' => 'मैले स्वामित्व राख्ने पृष्ठहरूमा परिवर्तन हुँदा सूचित गर्नुहोस्',
     'notifications_opt_own_page_comments' => 'मैले स्वामित्व राख्ने पृष्ठहरूमा टिप्पणी हुँदा सूचित गर्नुहोस्',
+    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
     'notifications_opt_comment_replies' => 'मेरो टिप्पणीहरूमा उत्तर आएको बेला सूचित गर्नुहोस्',
     'notifications_save' => 'प्राथमिकताहरू बचत गर्नुहोस्',
     'notifications_update_success' => 'सूचना प्राथमिकताहरू अपडेट गरिएका छन्!',

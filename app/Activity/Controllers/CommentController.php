@@ -7,6 +7,7 @@ use BookStack\Activity\Tools\CommentTree;
 use BookStack\Activity\Tools\CommentTreeNode;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Http\Controller;
+use BookStack\Permissions\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -21,7 +22,7 @@ class CommentController extends Controller
     /**
      * Save a new comment for a Page.
      *
-     * @throws ValidationException
+     * @throws ValidationException|\Exception
      */
     public function savePageComment(Request $request, int $pageId)
     {
@@ -36,13 +37,8 @@ class CommentController extends Controller
             return response('Not found', 404);
         }
 
-        // Prevent adding comments to draft pages
-        if ($page->draft) {
-            return $this->jsonError(trans('errors.cannot_add_comment_to_draft'), 400);
-        }
-
         // Create a new comment.
-        $this->checkPermission('comment-create-all');
+        $this->checkPermission(Permission::CommentCreateAll);
         $contentRef = $input['content_ref'] ?? '';
         $comment = $this->commentRepo->create($page, $input['html'], $input['parent_id'] ?? null, $contentRef);
 
@@ -64,8 +60,8 @@ class CommentController extends Controller
         ]);
 
         $comment = $this->commentRepo->getById($commentId);
-        $this->checkOwnablePermission('page-view', $comment->entity);
-        $this->checkOwnablePermission('comment-update', $comment);
+        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        $this->checkOwnablePermission(Permission::CommentUpdate, $comment);
 
         $comment = $this->commentRepo->update($comment, $input['html']);
 
@@ -81,8 +77,8 @@ class CommentController extends Controller
     public function archive(int $id)
     {
         $comment = $this->commentRepo->getById($id);
-        $this->checkOwnablePermission('page-view', $comment->entity);
-        if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
+        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        if (!userCan(Permission::CommentUpdate, $comment) && !userCan(Permission::CommentDelete, $comment)) {
             $this->showPermissionError();
         }
 
@@ -101,8 +97,8 @@ class CommentController extends Controller
     public function unarchive(int $id)
     {
         $comment = $this->commentRepo->getById($id);
-        $this->checkOwnablePermission('page-view', $comment->entity);
-        if (!userCan('comment-update', $comment) && !userCan('comment-delete', $comment)) {
+        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        if (!userCan(Permission::CommentUpdate, $comment) && !userCan(Permission::CommentDelete, $comment)) {
             $this->showPermissionError();
         }
 
@@ -121,7 +117,7 @@ class CommentController extends Controller
     public function destroy(int $id)
     {
         $comment = $this->commentRepo->getById($id);
-        $this->checkOwnablePermission('comment-delete', $comment);
+        $this->checkOwnablePermission(Permission::CommentDelete, $comment);
 
         $this->commentRepo->delete($comment);
 

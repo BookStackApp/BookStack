@@ -14,9 +14,17 @@
                 <div>
                     <label class="setting-list-label">{{ trans('settings.webhooks_status') }}</label>
                     <p class="mb-none">
-                        {{ trans('settings.webhooks_last_called') }} {{ $webhook->last_called_at ? $webhook->last_called_at->diffForHumans() : trans('common.never') }}
+                        @if($webhook->last_called_at)
+                            <span title="{{ $dates->absolute($webhook->last_called_at) }}">{{ trans('settings.webhooks_last_called') }} {{  $dates->relative($webhook->last_called_at) }}</span>
+                        @else
+                            <span>{{ trans('settings.webhooks_last_called') }} {{ trans('common.never') }}</span>
+                        @endif
                         <br>
-                        {{ trans('settings.webhooks_last_errored') }} {{ $webhook->last_errored_at ? $webhook->last_errored_at->diffForHumans() : trans('common.never') }}
+                        @if($webhook->last_errored_at)
+                            <span title="{{ $dates->absolute($webhook->last_errored_at) }}">{{ trans('settings.webhooks_last_errored') }} {{  $dates->relative($webhook->last_errored_at) }}</span>
+                        @else
+                            <span>{{ trans('settings.webhooks_last_errored') }} {{ trans('common.never') }}</span>
+                        @endif
                     </p>
                 </div>
                 <div class="text-muted">

@@ -40,7 +40,7 @@ return [
     'delete_confirm' => 'Verwijdering bevestigen',
     'search' => 'Zoek',
     'search_clear' => 'Zoekopdracht wissen',
-    'reset' => 'Reset',
+    'reset' => 'Wissen',
     'remove' => 'Verwijder',
     'add' => 'Voeg toe',
     'configure' => 'Configureer',

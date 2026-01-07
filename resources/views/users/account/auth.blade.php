@@ -81,7 +81,7 @@
         </section>
     @endif
 
-    @if(userCan('access-api'))
+    @if(userCan(\BookStack\Permissions\Permission::AccessApi))
         @include('users.api-tokens.parts.list', ['user' => user(), 'context' => 'my-account'])
     @endif
 @stop

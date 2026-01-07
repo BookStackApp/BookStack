@@ -6,7 +6,7 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Http\HttpClientHistory;
 use BookStack\Http\HttpRequestService;
 use BookStack\Settings\SettingService;
-use BookStack\Users\Models\User;
+use Exception;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
@@ -15,6 +15,7 @@ use Illuminate\Support\Env;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
+use Illuminate\Testing\Constraints\HasInDatabase;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Ssddanbrown\AssertHtml\TestsHtml;
@@ -198,7 +199,7 @@ abstract class TestCase extends BaseTestCase
     {
         if ($response->status() === 403 && $response instanceof JsonResponse) {
             $errMessage = $response->getData(true)['error']['message'] ?? '';
-            return $errMessage === 'You do not have permission to perform the requested action.';
+            return str_contains($errMessage, 'do not have permission');
         }
 
         return $response->status() === 302
@@ -266,5 +267,43 @@ abstract class TestCase extends BaseTestCase
         }
 
         $this->assertDatabaseHas('activities', $detailsToCheck);
+    }
+
+    /**
+     * Assert the database has the given data for an entity type.
+     */
+    protected function assertDatabaseHasEntityData(string $type, array $data = []): self
+    {
+        $entityFields = array_intersect_key($data, array_flip(Entity::$commonFields));
+        $extraFields = array_diff_key($data, $entityFields);
+        $extraTable = $type === 'page' ? 'entity_page_data' : 'entity_container_data';
+        $entityFields['type'] = $type;
+
+        $this->assertThat(
+            $this->getTable('entities'),
+            new HasInDatabase($this->getConnection(null, 'entities'), $entityFields)
+        );
+
+        if (!empty($extraFields)) {
+            $id = $entityFields['id'] ?? DB::table($this->getTable('entities'))
+                ->where($entityFields)->orderByDesc('id')->first()->id ?? null;
+            if (is_null($id)) {
+                throw new Exception('Failed to find entity id for asserting database data');
+            }
+
+            if ($type !== 'page') {
+                $extraFields['entity_id'] = $id;
+                $extraFields['entity_type'] = $type;
+            } else {
+                $extraFields['page_id'] = $id;
+            }
+
+            $this->assertThat(
+                $this->getTable($extraTable),
+                new HasInDatabase($this->getConnection(null, $extraTable), $extraFields)
+            );
+        }
+
+        return $this;
     }
 }

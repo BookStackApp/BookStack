@@ -33,6 +33,7 @@ const modeMap = {
     'f#': () => legacyLoad('fSharp'),
     fsharp: () => legacyLoad('fSharp'),
     go: () => legacyLoad('go'),
+    groovy: () => legacyLoad('groovy'),
     haskell: () => legacyLoad('haskell'),
     hs: () => legacyLoad('haskell'),
     html: async () => html({selfClosingTags: true}),

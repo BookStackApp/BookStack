@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ingen begrensninger er satt',
 
     // Sorting Settings
-    'sorting' => 'Sortering',
-    'sorting_book_default' => 'Standard boksortering',
+    'sorting' => 'Lists & Sorting',
+    'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Velg standard sorteringsregelen som skal brukes for nye bøker. Dette vil ikke påvirke eksisterende bøker, og kan overstyres per bok.',
     'sorting_rules' => 'Sorteringsregler',
     'sorting_rules_desc' => 'Dette er forhåndsdefinerte sorteringsoperasjoner som kan brukes på innhold i systemet.',
@@ -103,6 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Updated Date',
     'sort_rule_op_chapters_first' => 'Kapitler først',
     'sort_rule_op_chapters_last' => 'Kapitler sist',
+    'sorting_page_limits' => 'Per-Page Display Limits',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
 
     // Maintenance settings
     'maint' => 'Vedlikehold',
@@ -195,11 +197,13 @@ return [
     'role_import_content' => 'Import innhold',
     'role_editor_change' => 'Endre sideredigering',
     'role_notifications' => 'Motta og administrere varslinger',
+    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
     'role_asset' => 'Eiendomstillatelser',
     'roles_system_warning' => 'Vær oppmerksom på at tilgang til noen av de ovennevnte tre tillatelsene kan tillate en bruker å endre sine egne rettigheter eller rettighetene til andre i systemet. Bare tildel roller med disse tillatelsene til pålitelige brukere.',
     'role_asset_desc' => 'Disse tillatelsene kontrollerer standard tilgang til eiendelene i systemet. Tillatelser til bøker, kapitler og sider overstyrer disse tillatelsene.',
     'role_asset_admins' => 'Administratorer får automatisk tilgang til alt innhold, men disse alternativene kan vise eller skjule UI-alternativer.',
     'role_asset_image_view_note' => 'Dette gjelder synlighet innenfor bilde-administrasjonen. Faktisk tilgang på opplastede bildefiler vil være avhengig av valget for systemlagring av bildet.',
+    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Alle',
     'role_own' => 'Egne',
     'role_controlled_by_asset' => 'Kontrollert av eiendelen de er lastet opp til',

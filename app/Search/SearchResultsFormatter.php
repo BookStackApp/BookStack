@@ -91,7 +91,7 @@ class SearchResultsFormatter
             $offset = 0;
             $term = mb_strtolower($term);
             $pos = mb_strpos($text, $term, $offset);
-            while ($pos !== false) {
+            while ($pos !== false && count($matchRefs) < 25) {
                 $end = $pos + mb_strlen($term);
                 $matchRefs[$pos] = $end;
                 $offset = $end;

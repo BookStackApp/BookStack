@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'سيؤدي هذا إلى حذف مِلَفّ الاستيراد المضغوط ZIP، ولا يمكن التراجع عنه.',
     'import_errors' => 'أخطاء الاستيراد',
     'import_errors_desc' => 'حدثت الأخطاء التالية خلال محاولة الاستيراد:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'تصفح أشقاء هذه الصفحة',
+    'breadcrumb_siblings_for_chapter' => 'تصفح أشقاء هذا الفصل',
+    'breadcrumb_siblings_for_book' => 'تصفح أشقاء هذا الكتاب',
+    'breadcrumb_siblings_for_bookshelf' => 'تصفح أشقاء هذا الرف',
 
     // Permissions and restrictions
     'permissions' => 'الأذونات',

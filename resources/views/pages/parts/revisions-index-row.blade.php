@@ -17,8 +17,8 @@
                 @if($revision->createdBy) {{ $revision->createdBy->name }} @else {{ trans('common.deleted_user') }} @endif
                 <br>
                 <div class="text-muted">
-                    <small>{{ $revision->created_at->isoFormat('D MMMM Y HH:mm:ss') }}</small>
-                    <small>({{ $revision->created_at->diffForHumans() }})</small>
+                    <small>{{ $dates->absolute($revision->created_at) }}</small>
+                    <small>({{ $dates->relative($revision->created_at) }})</small>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
         @else
             <a href="{{ $revision->getUrl() }}" target="_blank" rel="noopener">{{ trans('entities.pages_revisions_preview') }}</a>
 
-            @if(userCan('page-update', $revision->page))
+            @if(userCan(\BookStack\Permissions\Permission::PageUpdate, $revision->page))
                 <span class="text-muted opacity-70">&nbsp;|&nbsp;</span>
                 <div component="dropdown" class="dropdown-container">
                     <a refs="dropdown@toggle" href="#" aria-haspopup="true" aria-expanded="false">{{ trans('entities.pages_revisions_restore') }}</a>
@@ -58,7 +58,7 @@
                 </div>
             @endif
 
-            @if(userCan('page-delete', $revision->page))
+            @if(userCan(\BookStack\Permissions\Permission::PageDelete, $revision->page))
                 <span class="text-muted opacity-70">&nbsp;|&nbsp;</span>
                 <div component="dropdown" class="dropdown-container">
                     <a refs="dropdown@toggle" href="#" aria-haspopup="true" aria-expanded="false">{{ trans('common.delete') }}</a>

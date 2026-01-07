@@ -3,6 +3,7 @@
 use BookStack\App\AppVersion;
 use BookStack\App\Model;
 use BookStack\Facades\Theme;
+use BookStack\Permissions\Permission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Settings\SettingService;
 use BookStack\Users\Models\User;
@@ -39,7 +40,7 @@ function user(): User
  * Check if the current user has a permission. If an ownable element
  * is passed in the jointPermissions are checked against that particular item.
  */
-function userCan(string $permission, ?Model $ownable = null): bool
+function userCan(string|Permission $permission, ?Model $ownable = null): bool
 {
     if (is_null($ownable)) {
         return user()->can($permission);
@@ -55,7 +56,7 @@ function userCan(string $permission, ?Model $ownable = null): bool
  * Check if the current user can perform the given action on any items in the system.
  * Can be provided the class name of an entity to filter ability to that specific entity type.
  */
-function userCanOnAny(string $action, string $entityClass = ''): bool
+function userCanOnAny(string|Permission $action, string $entityClass = ''): bool
 {
     $permissions = app()->make(PermissionApplicator::class);
 

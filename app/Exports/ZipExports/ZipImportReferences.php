@@ -29,7 +29,10 @@ class ZipImportReferences
     /** @var Image[] */
     protected array $images = [];
 
-    /** @var array<string, Model> */
+    /**
+     * Mapping keyed by "type:old-reference-id" with values being the new imported equivalent model.
+     * @var array<string, Model>
+     */
     protected array $referenceMap = [];
 
     /** @var array<int, ZipExportPage> */
@@ -108,6 +111,22 @@ class ZipImportReferences
         return null;
     }
 
+    protected function replaceDrawingIdReferences(string $content): string
+    {
+        $referenceRegex = '/\sdrawio-diagram=[\'"](\d+)[\'"]/';
+
+        $result = preg_replace_callback($referenceRegex, function ($matches) {
+            $key = 'image:' . $matches[1];
+            $model = $this->referenceMap[$key] ?? null;
+            if ($model instanceof Image && $model->type === 'drawio') {
+                return ' drawio-diagram="' . $model->id . '"';
+            }
+            return $matches[0];
+        }, $content);
+
+        return $result ?: $content;
+    }
+
     public function replaceReferences(): void
     {
         foreach ($this->books as $book) {
@@ -134,7 +153,9 @@ class ZipImportReferences
             $exportPage = $this->zipExportPageMap[$page->id];
             $contentType = $exportPage->markdown ? 'markdown' : 'html';
             $content = $exportPage->markdown ?: ($exportPage->html ?: '');
+
             $parsed = $this->parser->parseReferences($content, $this->handleReference(...));
+            $parsed = $this->replaceDrawingIdReferences($parsed);
 
             $this->pageRepo->setContentFromInput($page, [
                 $contentType => $parsed,

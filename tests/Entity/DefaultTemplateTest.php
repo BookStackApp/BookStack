@@ -18,7 +18,7 @@ class DefaultTemplateTest extends TestCase
         ];
 
         $this->asEditor()->post('/books', $details);
-        $this->assertDatabaseHas('books', $details);
+        $this->assertDatabaseHasEntityData('book', $details);
     }
 
     public function test_creating_chapter_with_default_template()
@@ -31,7 +31,7 @@ class DefaultTemplateTest extends TestCase
         ];
 
         $this->asEditor()->post($book->getUrl('/create-chapter'), $details);
-        $this->assertDatabaseHas('chapters', $details);
+        $this->assertDatabaseHasEntityData('chapter', $details);
     }
 
     public function test_updating_book_with_default_template()
@@ -40,10 +40,10 @@ class DefaultTemplateTest extends TestCase
         $templatePage = $this->entities->templatePage();
 
         $this->asEditor()->put($book->getUrl(), ['name' => $book->name, 'default_template_id' => strval($templatePage->id)]);
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'default_template_id' => $templatePage->id]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'default_template_id' => $templatePage->id]);
 
         $this->asEditor()->put($book->getUrl(), ['name' => $book->name, 'default_template_id' => '']);
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'default_template_id' => null]);
     }
 
     public function test_updating_chapter_with_default_template()
@@ -52,10 +52,10 @@ class DefaultTemplateTest extends TestCase
         $templatePage = $this->entities->templatePage();
 
         $this->asEditor()->put($chapter->getUrl(), ['name' => $chapter->name, 'default_template_id' => strval($templatePage->id)]);
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'default_template_id' => $templatePage->id]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'default_template_id' => $templatePage->id]);
 
         $this->asEditor()->put($chapter->getUrl(), ['name' => $chapter->name, 'default_template_id' => '']);
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'default_template_id' => null]);
     }
 
     public function test_default_book_template_cannot_be_set_if_not_a_template()
@@ -65,7 +65,7 @@ class DefaultTemplateTest extends TestCase
         $this->assertFalse($page->template);
 
         $this->asEditor()->put("/books/{$book->slug}", ['name' => $book->name, 'default_template_id' => $page->id]);
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'default_template_id' => null]);
     }
 
     public function test_default_chapter_template_cannot_be_set_if_not_a_template()
@@ -75,7 +75,7 @@ class DefaultTemplateTest extends TestCase
         $this->assertFalse($page->template);
 
         $this->asEditor()->put("/chapters/{$chapter->slug}", ['name' => $chapter->name, 'default_template_id' => $page->id]);
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'default_template_id' => null]);
     }
 
 
@@ -86,7 +86,7 @@ class DefaultTemplateTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($templatePage);
 
         $this->asEditor()->put("/books/{$book->slug}", ['name' => $book->name, 'default_template_id' => $templatePage->id]);
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'default_template_id' => null]);
     }
 
     public function test_default_chapter_template_cannot_be_set_if_not_have_access()
@@ -96,7 +96,7 @@ class DefaultTemplateTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($templatePage);
 
         $this->asEditor()->put("/chapters/{$chapter->slug}", ['name' => $chapter->name, 'default_template_id' => $templatePage->id]);
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'default_template_id' => null]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'default_template_id' => null]);
     }
 
     public function test_inaccessible_book_default_template_can_be_set_if_unchanged()
@@ -106,7 +106,7 @@ class DefaultTemplateTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($templatePage);
 
         $this->asEditor()->put("/books/{$book->slug}", ['name' => $book->name, 'default_template_id' => $templatePage->id]);
-        $this->assertDatabaseHas('books', ['id' => $book->id, 'default_template_id' => $templatePage->id]);
+        $this->assertDatabaseHasEntityData('book', ['id' => $book->id, 'default_template_id' => $templatePage->id]);
     }
 
     public function test_inaccessible_chapter_default_template_can_be_set_if_unchanged()
@@ -116,7 +116,7 @@ class DefaultTemplateTest extends TestCase
         $this->permissions->disableEntityInheritedPermissions($templatePage);
 
         $this->asEditor()->put("/chapters/{$chapter->slug}", ['name' => $chapter->name, 'default_template_id' => $templatePage->id]);
-        $this->assertDatabaseHas('chapters', ['id' => $chapter->id, 'default_template_id' => $templatePage->id]);
+        $this->assertDatabaseHasEntityData('chapter', ['id' => $chapter->id, 'default_template_id' => $templatePage->id]);
     }
 
     public function test_default_page_template_option_shows_on_book_form()
@@ -173,7 +173,7 @@ class DefaultTemplateTest extends TestCase
         $templatePage->forceFill(['html' => '<p>My template page</p>', 'markdown' => '# My template page'])->save();
         $book = $this->bookUsingDefaultTemplate($templatePage);
 
-        $this->asEditor()->get($book->getUrl('/create-page'));
+        $this->asEditor()->get($book->getUrl('/create-page'))->assertRedirect();
         $latestPage = $book->pages()
             ->where('draft', '=', true)
             ->where('template', '=', false)
@@ -251,7 +251,7 @@ class DefaultTemplateTest extends TestCase
 
         $this->post($book->getUrl('/create-guest-page'), [
             'name' => 'My guest page with template'
-        ]);
+        ])->assertRedirect();
         $latestBookPage = $book->pages()
             ->where('draft', '=', false)
             ->where('template', '=', false)

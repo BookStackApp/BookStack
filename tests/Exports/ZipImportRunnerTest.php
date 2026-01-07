@@ -5,6 +5,7 @@ namespace Tests\Exports;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Exceptions\ZipImportException;
 use BookStack\Exports\ZipExports\ZipImportRunner;
 use BookStack\Uploads\Image;
 use Tests\TestCase;
@@ -109,7 +110,7 @@ class ZipImportRunnerTest extends TestCase
 
         // Book checks
         $this->assertEquals('Import test', $book->name);
-        $this->assertFileExists(public_path($book->cover->path));
+        $this->assertFileExists(public_path($book->coverInfo()->getImage()->path));
         $this->assertCount(2, $book->tags);
         $this->assertEquals('Cat', $book->tags()->first()->value);
         $this->assertCount(2, $book->chapters);
@@ -391,6 +392,96 @@ class ZipImportRunnerTest extends TestCase
         $this->assertStringEndsWith('.png', $pageImages[0]->url);
         $this->assertStringEndsWith('.png', $pageImages[0]->path);
 
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_drawing_references_are_updated_within_content()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<div drawio-diagram="1125"><img src="[[bsexport:image:1125]]"></div>',
+                'images' => [
+                    [
+                        'id' => 1125,
+                        'name' => 'Cat',
+                        'type' => 'drawio',
+                        'file' => 'my_drawing'
+                    ]
+                ],
+            ],
+        ], [
+            'my_drawing' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+        /** @var Page $page */
+        $page = $this->runner->run($import, $parent);
+
+        $pageImages = Image::where('uploaded_to', '=', $page->id)->whereIn('type', ['gallery', 'drawio'])->get();
+        $this->assertCount(1, $pageImages);
+        $this->assertEquals('drawio', $pageImages[0]->type);
+
+        $drawingId = $pageImages[0]->id;
+        $this->assertStringContainsString("drawio-diagram=\"{$drawingId}\"", $page->html);
+        $this->assertStringNotContainsString('[[bsexport:image:1125]]', $page->html);
+        $this->assertStringNotContainsString('drawio-diagram="1125"', $page->html);
+
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_error_thrown_if_zip_item_exceeds_app_file_upload_limit()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'bs-zip-test');
+        file_put_contents($tempFile, str_repeat('a', 2500000));
+        $parent = $this->entities->chapter();
+        config()->set('app.upload_limit', 1);
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>Hello</p>',
+                'attachments' => [
+                    [
+                        'name' => 'Text attachment',
+                        'file' => 'file_attachment'
+                    ]
+                ],
+            ],
+        ], [
+            'file_attachment' => $tempFile,
+        ]);
+
+        $this->asAdmin();
+
+        $this->expectException(ZipImportException::class);
+        $this->expectExceptionMessage('The file file_attachment must not exceed 1 MB.');
+
+        $this->runner->run($import, $parent);
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
+    public function test_error_thrown_if_zip_data_exceeds_app_file_upload_limit()
+    {
+        $parent = $this->entities->chapter();
+        config()->set('app.upload_limit', 1);
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>' . str_repeat('a', 2500000) . '</p>',
+            ],
+        ]);
+
+        $this->asAdmin();
+
+        $this->expectException(ZipImportException::class);
+        $this->expectExceptionMessage('ZIP data.json content exceeds the configured application maximum upload size.');
+
+        $this->runner->run($import, $parent);
         ZipTestHelper::deleteZipForImport($import);
     }
 }
