@@ -166,6 +166,13 @@ log "Building standalone binary..."
 cd /workspaces/BookStack
 rm -rf build/pybuild build/specs dist/bookstack-migrate-linux 2>/dev/null || true
 
+# Some container-provided Pythons are built without a shared lib, which PyInstaller requires.
+PY_SHARED=$($python_cmd -c "import sysconfig; print(int(sysconfig.get_config_var('Py_ENABLE_SHARED') or 0))" 2>/dev/null || echo "0")
+if [ "$PY_SHARED" = "0" ]; then
+    warning "Skipping PyInstaller build (Python missing shared library)"
+    echo "⚠️  PyInstaller: skipped (no shared lib)" | tee -a "$TEST_LOG"
+else
+
 $python_cmd -m PyInstaller \
     --onefile \
     --name bookstack-migrate-linux \
@@ -193,6 +200,7 @@ if [ -f "dist/bookstack-migrate-linux" ]; then
 else
     error "Binary build failed"
     exit 1
+fi
 fi
 
 # ============================================================================
@@ -319,7 +327,6 @@ cd /workspaces/BookStack
 # Check required files exist
 REQUIRED_FILES=(
     "bookstack_migrate.py"
-    "bookstack_api.py"
     "tests/test_migrate.py"
     "tests/test_api.py"
     "README.md"

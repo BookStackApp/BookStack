@@ -30,7 +30,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          python -m pip install -e ".[dev]"
+          python -m pip install pytest-cov
       
       - name: Lint with pylint
         run: |
@@ -38,22 +39,25 @@ jobs:
       
       - name: Run unit tests
         run: |
-          python -m pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=short --cov=bookstack_migrate --cov-report=term-missing --cov-report=xml
       
       - name: Test package build
         run: |
           python -m build
       
-      - name: Upload test coverage
+      - name: Upload coverage report
         if: matrix.python-version == '3.12'
         uses: actions/upload-artifact@v3
         with:
-          name: pytest-results
-          path: test_output.txt
+          name: coverage-xml
+          path: coverage.xml
 
   build-binaries:
     needs: test
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     
     steps:
       - uses: actions/checkout@v4
@@ -66,20 +70,71 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
-      
-      - name: Build standalone wrapper
-        run: bash build/binaries.sh
+          python -m pip install -e ".[dev]"
+
+      - name: Build standalone binary
+        shell: bash
+        run: |
+          set -e
+          OS="${{ runner.os }}"
+          ARCH="$(uname -m 2>/dev/null || echo unknown)"
+          BIN_NAME="bookstack-migrate-linux"
+          OUT_PATH="dist/bookstack-migrate-linux"
+
+          if [ "$OS" = "Windows" ]; then
+            BIN_NAME="bookstack-migrate-windows"
+            OUT_PATH="dist/bookstack-migrate-windows.exe"
+          elif [ "$OS" = "macOS" ]; then
+            if [ "$ARCH" = "arm64" ]; then
+              BIN_NAME="bookstack-migrate-macos-arm64"
+              OUT_PATH="dist/bookstack-migrate-macos-arm64"
+            else
+              BIN_NAME="bookstack-migrate-macos"
+              OUT_PATH="dist/bookstack-migrate-macos"
+            fi
+          fi
+
+          python -m PyInstaller \
+            --onefile \
+            --name "$BIN_NAME" \
+            --distpath dist \
+            --workpath build/pybuild \
+            --specpath build/specs \
+            --noupx \
+            bookstack_migrate.py
+
+          if [ -f "$OUT_PATH" ]; then
+            echo "Built: $OUT_PATH"
+          else
+            echo "Expected binary not found: $OUT_PATH" >&2
+            ls -la dist || true
+            exit 1
+          fi
       
       - name: Test standalone binary
+        shell: bash
         run: |
-          ./dist/bookstack-migrate version
-          ./dist/bookstack-migrate help | head -10
+          set -e
+          if [ "${{ runner.os }}" = "Windows" ]; then
+            ./dist/bookstack-migrate-windows.exe version
+            ./dist/bookstack-migrate-windows.exe help | head -10
+          elif [ "${{ runner.os }}" = "macOS" ]; then
+            if [ "$(uname -m)" = "arm64" ]; then
+              ./dist/bookstack-migrate-macos-arm64 version
+              ./dist/bookstack-migrate-macos-arm64 help | head -10
+            else
+              ./dist/bookstack-migrate-macos version
+              ./dist/bookstack-migrate-macos help | head -10
+            fi
+          else
+            ./dist/bookstack-migrate-linux version
+            ./dist/bookstack-migrate-linux help | head -10
+          fi
       
       - name: Upload binaries
         uses: actions/upload-artifact@v3
         with:
-          name: binaries
+          name: binaries-${{ matrix.os }}
           path: dist/
 
   build-package:
@@ -122,9 +177,9 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            binaries/bookstack-migrate
-            packages/bookstack_migrate-*.whl
-            packages/bookstack_migrate-*.tar.gz
+            **/bookstack-migrate-*
+            **/bookstack_migrate-*.whl
+            **/bookstack_migrate-*.tar.gz
           draft: false
           prerelease: false
         env:

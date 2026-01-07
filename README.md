@@ -17,7 +17,7 @@ Command-line utility to migrate content from BookStack to DokuWiki with intellig
 ### 1️⃣ Create Virtual Environment & Install
 ```bash
 python3 -m venv venv && source venv/bin/activate
-pip install bookstack-migrate
+python3 -m pip install bookstack-migrate
 ```
 
 ### 2️⃣ Set API Credentials (from BookStack Admin)
@@ -64,7 +64,7 @@ chmod +x bookstack-migrate-linux
 
 ### Option 2: Python Package
 ```bash
-pip install bookstack-migrate
+python3 -m pip install bookstack-migrate
 
 # Copy Quick Start steps above, then run:
 bookstack-migrate export --output ./dokuwiki_export
@@ -75,7 +75,7 @@ bookstack-migrate export --output ./dokuwiki_export
 git clone https://github.com/alvonellos/BookStack.git
 cd BookStack && git checkout feature/standalone
 python3 -m venv venv && source venv/bin/activate
-pip install -e .
+python3 -m pip install -e .
 
 # Set environment variables
 export BOOKSTACK_TOKEN_ID="your_api_token_id"
@@ -88,13 +88,13 @@ python bookstack_migrate.py detect
 ### With optional dependencies
 ```bash
 # For MySQL support
-pip install "bookstack-migrate[mysql]"
+python3 -m pip install "bookstack-migrate[mysql]"
 
 # For MariaDB support
-pip install "bookstack-migrate[mariadb]"
+python3 -m pip install "bookstack-migrate[mariadb]"
 
 # For development & testing
-pip install "bookstack-migrate[dev]"
+python3 -m pip install "bookstack-migrate[dev]"
 ```
 
 ## Quick Start
@@ -118,12 +118,8 @@ bookstack-migrate detect
 
 ### Step 3: Export BookStack Content
 ```bash
-# Option A: Export via API (auto-uses if DB not available)
-bookstack-migrate export \
-  --db bookstack_db \
-  --user root \
-  --password secret \
-  --prefer-api
+# Option A: Export via API only (recommended)
+bookstack-migrate export --output ./export
 
 # Option B: Export via Database (preferred for large content)
 bookstack-migrate export \
@@ -134,6 +130,12 @@ bookstack-migrate export \
   --port 3306 \
   --driver mysql \
   --output ./export
+
+# Option C: Export from a SQL dump (requires Docker)
+bookstack-migrate export \
+   --sql-file ./bookstack.sql \
+   --sql-db bookstack \
+   --output ./export
 ```
 
 ### Step 4: Verify Results
@@ -263,7 +265,7 @@ docker-compose down
 
 ### Install dev dependencies
 ```bash
-pip install -e ".[dev]"
+python3 -m pip install -e ".[dev]"
 ```
 
 ### Run tests
@@ -350,9 +352,9 @@ If the standard API and database export methods don't work:
 ```
 **Solution**: Install MySQL connector
 ```bash
-pip install mysql-connector-python
+python3 -m pip install mysql-connector-python
 # or
-pip install mariadb
+python3 -m pip install mariadb
 ```
 
 ### API Not Available

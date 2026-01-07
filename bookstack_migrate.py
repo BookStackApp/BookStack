@@ -21,6 +21,8 @@ import requests
 import tarfile
 import time
 from datetime import datetime
+import shutil
+import secrets
 
 __version__ = "1.0.0"
 
@@ -136,6 +138,156 @@ class MigrationCheckpoint:
         except Exception as e:
             logger.error(f"Failed to create incomplete archive: {e}")
             return None
+
+
+class SqlDumpImportError(BookStackError):
+    pass
+
+
+class SqlDumpImporter:
+    """Import a MySQL/MariaDB .sql dump into a temporary MariaDB container.
+
+    This is intended to let users migrate from a database dump without needing
+    a running database server on the host.
+    """
+
+    def __init__(self, sql_file: Path, database: str = "bookstack"):
+        self.sql_file = Path(sql_file)
+        self.database = database
+        self.container_id: Optional[str] = None
+        self.root_password = secrets.token_urlsafe(18)
+        self.host = "127.0.0.1"
+        self.port: Optional[int] = None
+
+    def _require_docker(self) -> None:
+        if shutil.which("docker") is None:
+            raise SqlDumpImportError(
+                "Docker is required for --sql-file mode but was not found in PATH. "
+                "Restore the dump into your MySQL/MariaDB server and use --host/--port/--db instead."
+            )
+
+    def _run(self, args: List[str], input_bytes: Optional[bytes] = None) -> str:
+        try:
+            res = subprocess.run(
+                args,
+                input=input_bytes,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=True,
+            )
+            return res.stdout.decode("utf-8", errors="replace").strip()
+        except subprocess.CalledProcessError as e:
+            msg = e.stderr.decode("utf-8", errors="replace").strip() or str(e)
+            raise SqlDumpImportError(f"SQL import command failed: {' '.join(args)}\n{msg}")
+
+    def start_and_import(self, timeout_seconds: int = 60) -> Tuple[str, int, str, str, str]:
+        """Start a temp container, import dump, and return connection info.
+
+        Returns: (host, port, db, user, password)
+        """
+        self._require_docker()
+
+        if not self.sql_file.exists() or not self.sql_file.is_file():
+            raise SqlDumpImportError(f"SQL file not found: {self.sql_file}")
+
+        # Start MariaDB and publish 3306 to a random host port.
+        out = self._run(
+            [
+                "docker",
+                "run",
+                "-d",
+                "--rm",
+                "-e",
+                f"MARIADB_ROOT_PASSWORD={self.root_password}",
+                "-e",
+                f"MARIADB_DATABASE={self.database}",
+                "-P",
+                "mariadb:10.11",
+            ]
+        )
+        self.container_id = out.splitlines()[-1].strip()
+        logger.info(f"Started temp MariaDB container: {self.container_id}")
+
+        # Wait for DB readiness.
+        start = time.time()
+        while time.time() - start < timeout_seconds:
+            try:
+                subprocess.run(
+                    [
+                        "docker",
+                        "exec",
+                        self.container_id,
+                        "mariadb-admin",
+                        "ping",
+                        "-uroot",
+                        f"-p{self.root_password}",
+                    ],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    check=True,
+                )
+                break
+            except Exception:
+                time.sleep(1)
+        else:
+            raise SqlDumpImportError("Timed out waiting for MariaDB container to be ready")
+
+        # Determine host port mapping.
+        port_out = self._run(["docker", "port", self.container_id, "3306/tcp"])
+        # Example: 0.0.0.0:49154 or :::49154
+        mapped = port_out.split(":")[-1]
+        try:
+            self.port = int(mapped)
+        except ValueError:
+            raise SqlDumpImportError(f"Could not determine mapped MariaDB port from: {port_out}")
+
+        logger.info(f"MariaDB port mapping: {self.host}:{self.port}")
+
+        # Import dump via stdin into mariadb client inside container.
+        # Stream to avoid loading large dumps into memory.
+        logger.info(f"Importing SQL dump into temp database '{self.database}'")
+        cmd = [
+            "docker",
+            "exec",
+            "-i",
+            self.container_id,
+            "mariadb",
+            "-uroot",
+            f"-p{self.root_password}",
+            self.database,
+        ]
+        try:
+            with open(self.sql_file, "rb") as f:
+                proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                assert proc.stdin is not None
+                shutil.copyfileobj(f, proc.stdin)
+                proc.stdin.close()
+                out, err = proc.communicate()
+                if proc.returncode != 0:
+                    raise SqlDumpImportError(
+                        f"SQL import command failed: {' '.join(cmd)}\n"
+                        f"{err.decode('utf-8', errors='replace').strip()}"
+                    )
+        except SqlDumpImportError:
+            raise
+        except Exception as e:
+            raise SqlDumpImportError(f"Failed to stream SQL dump into container: {e}")
+
+        return (self.host, self.port, self.database, "root", self.root_password)
+
+    def cleanup(self) -> None:
+        if not self.container_id:
+            return
+        try:
+            subprocess.run(
+                ["docker", "stop", self.container_id],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
+        finally:
+            logger.info(f"Stopped temp MariaDB container: {self.container_id}")
+            self.container_id = None
 
 
 @dataclass
@@ -368,14 +520,16 @@ class DokuWikiInstall:
 
 @dataclass
 class ExportOptions:
-    db: str
-    user: str
-    password: str
+    db: Optional[str] = None
+    user: Optional[str] = None
+    password: Optional[str] = None
     host: str = "localhost"
     port: int = 3306
     output: Path = Path("./export")
     driver: Optional[str] = None
     prefer_api: bool = False
+    sql_file: Optional[Path] = None
+    sql_db: str = "bookstack"
 
 
 class DataSourceSelector:
@@ -489,29 +643,43 @@ def cmd_export(options: ExportOptions) -> int:
 
     # Initialize checkpoint for resumable migrations
     checkpoint = MigrationCheckpoint(options.output)
+    importer: Optional[SqlDumpImporter] = None
     
     try:
         # Test API availability
         api_available = False
         client = None
         try:
-            client = BookStackClient.from_env()
+            timeout = int(os.environ.get("BOOKSTACK_TIMEOUT", str(DEFAULT_TIMEOUT)))
+            client = BookStackClient.from_env(timeout=timeout)
             api_available = client.test_connection()
             logger.info("✅ API connection successful")
         except Exception as e:
             logger.warning(f"API not available: {e}")
 
-        # Test DB availability
-        db_available = False
-        driver = None
+        # If provided a SQL dump, import into a temp DB container and use that connection.
+        if options.sql_file is not None:
+            importer = SqlDumpImporter(options.sql_file, database=options.sql_db)
+            host, port, db, user, password = importer.start_and_import()
+            options.host = host
+            options.port = port
+            options.db = db
+            options.user = user
+            options.password = password
+            logger.info(f"SQL dump imported; temp DB available at {host}:{port}/{db}")
+
+        # Test DB availability only if we have DB connection details.
+        db_available = bool(options.db and options.user and options.password)
         driver_name = None
-        try:
-            driver, driver_name = get_db_driver(preferred=options.driver)
-            db_available = driver is not None
-            if db_available:
-                logger.info(f"✅ Database driver available: {driver_name}")
-        except Exception as e:
-            logger.warning(f"Database driver not available: {e}")
+        if db_available:
+            try:
+                driver, driver_name = get_db_driver(preferred=options.driver)
+                db_available = driver is not None
+                if db_available:
+                    logger.info(f"✅ Database driver available: {driver_name}")
+            except Exception as e:
+                db_available = False
+                logger.warning(f"Database driver not available: {e}")
 
         # Select best source
         selector = DataSourceSelector(db_available, api_available, prefer_api=options.prefer_api)
@@ -525,8 +693,11 @@ def cmd_export(options: ExportOptions) -> int:
         print(f"✅ Using data source: {source}")
         logger.info(f"Selected data source: {source}")
 
-        if source == "database" and driver_name:
-            print(f"✅ Using database driver: {driver_name}")
+        if source == "database":
+            if not (options.db and options.user and options.password):
+                raise BookStackError("Database selected but missing DB connection details")
+            if driver_name:
+                print(f"✅ Using database driver: {driver_name}")
             print(
                 f"Database: {options.db}@{options.host}:{options.port} as {options.user}\n"
                 f"Output: {options.output}"
@@ -575,6 +746,9 @@ def cmd_export(options: ExportOptions) -> int:
         checkpoint.mark_incomplete()
         logger.error(f"Export error: {e}", exc_info=True)
         return 1
+    finally:
+        if importer is not None:
+            importer.cleanup()
 
 
 def cmd_version() -> int:
@@ -663,12 +837,17 @@ def cmd_help() -> int:
 
 def main() -> int:
     """Main entry point."""
-    # Check venv (only for interactive terminal, not CI/CD)
-    if sys.stdin.isatty() and os.environ.get("CI") is None:
-        check_venv_and_prompt()
-    
     parser = build_parser()
     args = parser.parse_args()
+
+    # Check venv only for export runs (avoid breaking help/version/detect and automation).
+    if (
+        args.command == "export"
+        and sys.stdin.isatty()
+        and os.environ.get("CI") is None
+        and os.environ.get("BOOKSTACK_MIGRATE_SKIP_VENV_CHECK") is None
+    ):
+        check_venv_and_prompt()
 
     logger.info(f"Command: {args.command}")
 
@@ -685,6 +864,8 @@ def main() -> int:
             output=Path(args.output),
             driver=args.driver,
             prefer_api=getattr(args, "prefer_api", False),
+            sql_file=Path(args.sql_file) if getattr(args, "sql_file", None) else None,
+            sql_db=getattr(args, "sql_db", "bookstack"),
         )
         return cmd_export(export_opts)
 
@@ -712,9 +893,9 @@ def build_parser() -> argparse.ArgumentParser:
         "export",
         help="Export BookStack content into DokuWiki-compatible format",
     )
-    export.add_argument("--db", required=True, help="BookStack database name")
-    export.add_argument("--user", required=True, help="Database user")
-    export.add_argument("--password", required=True, help="Database password")
+    export.add_argument("--db", required=False, help="BookStack database name")
+    export.add_argument("--user", required=False, help="Database user")
+    export.add_argument("--password", required=False, help="Database password")
     export.add_argument("--host", default="localhost", help="Database host")
     export.add_argument("--port", type=int, default=3306, help="Database port")
     export.add_argument(
@@ -726,6 +907,15 @@ def build_parser() -> argparse.ArgumentParser:
         "--output",
         default="./export",
         help="Output directory for DokuWiki content",
+    )
+    export.add_argument(
+        "--sql-file",
+        help="Path to a MySQL/MariaDB .sql dump to import (requires Docker)",
+    )
+    export.add_argument(
+        "--sql-db",
+        default="bookstack",
+        help="Database name to use when importing --sql-file (default: bookstack)",
     )
     export.add_argument(
         "--prefer-api",

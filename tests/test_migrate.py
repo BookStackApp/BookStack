@@ -37,14 +37,14 @@ def test_detect_no_dokuwiki():
 
 
 def test_export_missing_args():
-    """Test export command requires arguments."""
+    """Test export command gracefully fails without any data source."""
     result = subprocess.run(
         [sys.executable, "bookstack_migrate.py", "export"],
         capture_output=True,
         text=True,
     )
-    assert result.returncode != 0
-    assert "required" in result.stderr or "required" in result.stdout
+    assert result.returncode == 1
+    assert "No data source" in result.stdout or "No data source" in result.stderr
 
 
 def test_checkpoint_creation():

@@ -41,6 +41,10 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.coverage
+coverage.xml
+htmlcov/
+bookstack_migrate.log
 build/pybuild/
 build/specs/
 develop-eggs/

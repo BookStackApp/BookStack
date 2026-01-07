@@ -5,37 +5,49 @@ set -e
 
 echo "🔨 Building standalone binaries..."
 
+PYTHON_BIN=""
+if command -v python3 >/dev/null 2>&1; then
+    PYTHON_BIN="python3"
+else
+    PYTHON_BIN="python"
+fi
+
 # Check dependencies
 if ! command -v pyinstaller &> /dev/null; then
     echo "Installing PyInstaller..."
-    pip install pyinstaller
+    "$PYTHON_BIN" -m pip install --upgrade pip
+    "$PYTHON_BIN" -m pip install pyinstaller
 fi
 
 # Create dist directory
 mkdir -p dist
 
-# Build Linux binary
-echo "Building bookstack-migrate-linux..."
+OS=$(uname -s)
+ARCH=$(uname -m)
+BIN_NAME="bookstack-migrate-linux"
+
+if [ "$OS" = "Darwin" ]; then
+    if [ "$ARCH" = "arm64" ]; then
+        BIN_NAME="bookstack-migrate-macos-arm64"
+    else
+        BIN_NAME="bookstack-migrate-macos"
+    fi
+fi
+
+echo "Building $BIN_NAME..."
 pyinstaller \
     --onefile \
-    --name bookstack-migrate-linux \
+    --name "$BIN_NAME" \
     --specpath build/specs \
     --distpath dist \
     --workpath build/pybuild \
     --noupx \
     bookstack_migrate.py
 
-# Make executable
-chmod +x dist/bookstack-migrate-linux
+chmod +x "dist/$BIN_NAME" || true
 
-echo "✅ Binary built: dist/bookstack-migrate-linux"
-ls -lh dist/bookstack-migrate-linux
-    cd ../..
-else
-    echo "⚠️  No standalone binary builder found"
-    echo "Building Python distribution instead..."
-    python -m build
-fi
+echo "✅ Binary built: dist/$BIN_NAME"
+ls -lh "dist/$BIN_NAME" || true
 
 # Create portable shell wrapper
 cat > dist/bookstack-migrate-linux-wrapper << 'EOF'
