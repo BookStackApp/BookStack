@@ -347,6 +347,15 @@ class BookStackClient:
     def list_books(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
         return self._get("/books", params={"page": page, "count": count})
 
+    def get_book(self, book_id: int) -> Dict[str, Any]:
+        return self._get(f"/books/{book_id}")
+
+    def list_chapters(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
+        return self._get("/chapters", params={"page": page, "count": count})
+
+    def get_chapter(self, chapter_id: int) -> Dict[str, Any]:
+        return self._get(f"/chapters/{chapter_id}")
+
     def list_pages(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
         return self._get("/pages", params={"page": page, "count": count})
 
@@ -660,6 +669,345 @@ def detect_dokuwiki() -> List[DokuWikiInstall]:
     return found
 
 
+def _sanitize_namespace_part(value: str, fallback: str) -> str:
+    """Sanitize a path segment for DokuWiki namespace/page file usage."""
+    cleaned = (value or "").strip().lower()
+    if not cleaned:
+        return fallback
+    out_chars: List[str] = []
+    for ch in cleaned:
+        if ch.isalnum() or ch in {"-", "_"}:
+            out_chars.append(ch)
+        elif ch.isspace() or ch in {"/", "\\", ":"}:
+            out_chars.append("_")
+        # else: drop
+    out = "".join(out_chars).strip("_")
+    return out or fallback
+
+
+def _convert_markdown_to_dokuwiki(markdown: str, title: str) -> str:
+    """Best-effort conversion from BookStack markdown/html-ish content to DokuWiki syntax."""
+    content = markdown or ""
+
+    # Normalize line endings
+    content = content.replace("\r\n", "\n")
+
+    # Headings: # -> ======
+    import re
+
+    content = re.sub(r"^######\s+(.+)$", r"= \1 =", content, flags=re.MULTILINE)
+    content = re.sub(r"^#####\s+(.+)$", r"== \1 ==", content, flags=re.MULTILINE)
+    content = re.sub(r"^####\s+(.+)$", r"=== \1 ===", content, flags=re.MULTILINE)
+    content = re.sub(r"^###\s+(.+)$", r"==== \1 ====", content, flags=re.MULTILINE)
+    content = re.sub(r"^##\s+(.+)$", r"===== \1 =====", content, flags=re.MULTILINE)
+    content = re.sub(r"^#\s+(.+)$", r"====== \1 ======", content, flags=re.MULTILINE)
+
+    # Links: [text](url) -> [[url|text]]
+    content = re.sub(r"\[([^\]]+)\]\(([^\)]+)\)", r"[[\2|\1]]", content)
+
+    # Images: ![alt](url) -> {{url|alt}}
+    content = re.sub(r"!\[([^\]]*)\]\(([^\)]+)\)", r"{{\2|\1}}", content)
+
+    # Bold/italic (keep simple)
+    content = re.sub(r"\*\*([^\*]+)\*\*", r"**\1**", content)
+    content = re.sub(r"__([^_]+)__", r"**\1**", content)
+    content = re.sub(r"(?<!\*)\*([^\*]+)\*(?!\*)", r"//\1//", content)
+    content = re.sub(r"(?<!_)_([^_]+)_(?!_)", r"//\1//", content)
+
+    header = f"====== {title} ======\n\n"
+    return header + content.strip() + "\n"
+
+
+def _write_text_file(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def _ensure_start_page(dir_path: Path, title: str) -> None:
+    start_file = dir_path / "start.txt"
+    if start_file.exists():
+        return
+    _write_text_file(start_file, f"====== {title} ======\n")
+
+
+def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint: MigrationCheckpoint) -> None:
+    pages_root = options.output / "pages"
+    media_root = options.output / "media"
+    pages_root.mkdir(parents=True, exist_ok=True)
+    media_root.mkdir(parents=True, exist_ok=True)
+
+    exported_ids = {p.get("id") for p in (checkpoint.data.get("pages") or []) if isinstance(p, dict)}
+    book_cache: Dict[int, Dict[str, Any]] = {}
+    chapter_cache: Dict[int, Dict[str, Any]] = {}
+
+    def get_book(book_id: int) -> Dict[str, Any]:
+        if book_id not in book_cache:
+            book_cache[book_id] = client.get_book(book_id)
+        return book_cache[book_id]
+
+    def get_chapter(chapter_id: int) -> Dict[str, Any]:
+        if chapter_id not in chapter_cache:
+            chapter_cache[chapter_id] = client.get_chapter(chapter_id)
+        return chapter_cache[chapter_id]
+
+    exported_count = 0
+    skipped_count = 0
+    for page_ref in client.iter_pages(count=50):
+        if not page_ref.id:
+            continue
+        if page_ref.id in exported_ids:
+            skipped_count += 1
+            continue
+
+        # Determine namespace path
+        parts: List[str] = []
+        if page_ref.book_id:
+            book = get_book(int(page_ref.book_id))
+            book_slug = _sanitize_namespace_part(str(book.get("slug") or book.get("name") or ""), f"book_{page_ref.book_id}")
+            parts.append(book_slug)
+            _ensure_start_page(pages_root / book_slug, str(book.get("name") or book_slug))
+
+        if page_ref.chapter_id:
+            chapter = get_chapter(int(page_ref.chapter_id))
+            chap_slug = _sanitize_namespace_part(str(chapter.get("slug") or chapter.get("name") or ""), f"chapter_{page_ref.chapter_id}")
+            parts.append(chap_slug)
+            _ensure_start_page(pages_root.joinpath(*parts), str(chapter.get("name") or chap_slug))
+
+        if not parts:
+            parts = ["_orphaned"]
+
+        page_slug = _sanitize_namespace_part(str(page_ref.slug or page_ref.name or ""), f"page_{page_ref.id}")
+        page_dir = pages_root.joinpath(*parts)
+        page_path = page_dir / f"{page_slug}.txt"
+
+        logger.info(f"Exporting page {page_ref.id}: {page_ref.name} -> {page_path}")
+        raw_md = client.export_page_markdown(int(page_ref.id))
+        doc = _convert_markdown_to_dokuwiki(raw_md, str(page_ref.name or page_slug))
+        _write_text_file(page_path, doc)
+
+        # Best-effort: Download any obvious uploaded assets referenced in content.
+        # We only attempt direct URL fetch; if the instance blocks it, we keep the link.
+        try:
+            import re
+
+            urls = set(re.findall(r"https?://[^\s\)\]\"']+", raw_md))
+            for url in list(urls)[:50]:
+                if "/uploads/" not in url:
+                    continue
+                filename = url.split("/")[-1].split("?")[0]
+                if not filename:
+                    continue
+                media_rel_dir = media_root.joinpath(*parts)
+                media_rel_dir.mkdir(parents=True, exist_ok=True)
+                target = media_rel_dir / filename
+                if target.exists():
+                    continue
+                resp = client.session.get(url, stream=True, timeout=client.timeout)
+                if resp.status_code >= 400:
+                    continue
+                with open(target, "wb") as f:
+                    for chunk in resp.iter_content(chunk_size=1024 * 128):
+                        if chunk:
+                            f.write(chunk)
+        except Exception:
+            pass
+
+        checkpoint.add_page(int(page_ref.id), str(page_ref.name or page_slug))
+        exported_count += 1
+        if exported_count % 25 == 0:
+            print(f"   📝 Exported {exported_count} pages...")
+
+    print(f"\n✅ Exported {exported_count} pages (skipped {skipped_count} already done)")
+    print(f"✅ Output written under: {options.output}")
+
+
+def _db_cursor_dict(driver_module: object, conn: object):
+    # mysql.connector supports dictionary=True, mariadb supports dictionary=True as well.
+    try:
+        return conn.cursor(dictionary=True)
+    except TypeError:
+        return conn.cursor()
+
+
+def _export_from_database(driver_module: object, options: ExportOptions, checkpoint: MigrationCheckpoint) -> None:
+    pages_root = options.output / "pages"
+    pages_root.mkdir(parents=True, exist_ok=True)
+
+    if driver_module.__name__.startswith("mysql"):
+        conn = driver_module.connect(
+            host=options.host,
+            user=options.user,
+            password=options.password,
+            database=options.db,
+            port=options.port,
+        )
+    else:
+        conn = driver_module.connect(
+            host=options.host,
+            user=options.user,
+            password=options.password,
+            database=options.db,
+            port=options.port,
+        )
+
+    cursor = _db_cursor_dict(driver_module, conn)
+
+    def fetchall(query: str, params: Tuple[Any, ...] = ()) -> List[Dict[str, Any]]:
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        if isinstance(rows, list) and rows and not isinstance(rows[0], dict):
+            # Convert tuples to dict via description
+            cols = [d[0] for d in cursor.description]
+            return [dict(zip(cols, r)) for r in rows]
+        return rows or []
+
+    def table_columns(table: str) -> List[str]:
+        cols = fetchall(f"SHOW COLUMNS FROM `{table}`")
+        return [c.get("Field") for c in cols if isinstance(c, dict) and c.get("Field")]
+
+    # Determine schema style
+    tables = fetchall("SHOW TABLES")
+    table_names = set()
+    for row in tables:
+        if isinstance(row, dict):
+            table_names.update(row.values())
+
+    use_entities = "entities" in table_names and "entity_page_data" in table_names
+
+    books: Dict[int, Dict[str, Any]] = {}
+    chapters: Dict[int, Dict[str, Any]] = {}
+
+    if use_entities:
+        entities = fetchall(
+            "SELECT * FROM entities WHERE deleted_at IS NULL ORDER BY type, book_id, chapter_id, priority"
+        )
+        page_data_rows = fetchall("SELECT * FROM entity_page_data")
+        page_data = {int(r.get("page_id")): r for r in page_data_rows if r.get("page_id") is not None}
+        container_rows = fetchall("SELECT * FROM entity_container_data") if "entity_container_data" in table_names else []
+        container_data = {int(r.get("entity_id")): (r.get("description") or "") for r in container_rows if r.get("entity_id") is not None}
+
+        for e in entities:
+            if e.get("type") != "book":
+                continue
+            book_id = int(e.get("id"))
+            slug = _sanitize_namespace_part(str(e.get("slug") or e.get("name") or ""), f"book_{book_id}")
+            name = str(e.get("name") or slug)
+            book_dir = pages_root / slug
+            book_dir.mkdir(parents=True, exist_ok=True)
+            _ensure_start_page(book_dir, name)
+            books[book_id] = {"slug": slug, "name": name, "path": book_dir}
+
+        for e in entities:
+            if e.get("type") != "chapter":
+                continue
+            chap_id = int(e.get("id"))
+            book_id = e.get("book_id")
+            slug = _sanitize_namespace_part(str(e.get("slug") or e.get("name") or ""), f"chapter_{chap_id}")
+            name = str(e.get("name") or slug)
+            if book_id and int(book_id) in books:
+                chap_dir = books[int(book_id)]["path"] / slug
+            else:
+                chap_dir = pages_root / "_orphaned" / slug
+            chap_dir.mkdir(parents=True, exist_ok=True)
+            _ensure_start_page(chap_dir, name)
+            chapters[chap_id] = {"slug": slug, "name": name, "path": chap_dir, "book_id": book_id}
+
+        exported = 0
+        exported_ids = {p.get("id") for p in (checkpoint.data.get("pages") or []) if isinstance(p, dict)}
+        for e in entities:
+            if e.get("type") != "page":
+                continue
+            page_id = int(e.get("id"))
+            if page_id in exported_ids:
+                continue
+            name = str(e.get("name") or f"page_{page_id}")
+            slug = _sanitize_namespace_part(str(e.get("slug") or name), f"page_{page_id}")
+            chapter_id = e.get("chapter_id")
+            book_id = e.get("book_id")
+            if chapter_id and int(chapter_id) in chapters:
+                target_dir = chapters[int(chapter_id)]["path"]
+            elif book_id and int(book_id) in books:
+                target_dir = books[int(book_id)]["path"]
+            else:
+                target_dir = pages_root / "_orphaned"
+                target_dir.mkdir(parents=True, exist_ok=True)
+
+            pdata = page_data.get(page_id, {})
+            content = pdata.get("markdown") or pdata.get("text") or pdata.get("html") or ""
+            doc = _convert_markdown_to_dokuwiki(str(content), name)
+            _write_text_file(target_dir / f"{slug}.txt", doc)
+            checkpoint.add_page(page_id, name)
+            exported += 1
+
+        print(f"\n✅ Exported {exported} pages from database")
+
+    else:
+        # Legacy BookStack schema
+        if "books" in table_names:
+            cols = set(table_columns("books"))
+            select_cols = [c for c in ("id", "name", "slug", "description", "description_html") if c in cols]
+            rows = fetchall(f"SELECT {', '.join('`'+c+'`' for c in select_cols)} FROM `books`")
+            for r in rows:
+                book_id = int(r.get("id"))
+                slug = _sanitize_namespace_part(str(r.get("slug") or r.get("name") or ""), f"book_{book_id}")
+                name = str(r.get("name") or slug)
+                book_dir = pages_root / slug
+                book_dir.mkdir(parents=True, exist_ok=True)
+                _ensure_start_page(book_dir, name)
+                books[book_id] = {"slug": slug, "name": name, "path": book_dir}
+
+        if "chapters" in table_names:
+            cols = set(table_columns("chapters"))
+            select_cols = [c for c in ("id", "book_id", "name", "slug", "description", "description_html") if c in cols]
+            rows = fetchall(f"SELECT {', '.join('`'+c+'`' for c in select_cols)} FROM `chapters`")
+            for r in rows:
+                chap_id = int(r.get("id"))
+                book_id = r.get("book_id")
+                slug = _sanitize_namespace_part(str(r.get("slug") or r.get("name") or ""), f"chapter_{chap_id}")
+                name = str(r.get("name") or slug)
+                if book_id and int(book_id) in books:
+                    chap_dir = books[int(book_id)]["path"] / slug
+                else:
+                    chap_dir = pages_root / "_orphaned" / slug
+                chap_dir.mkdir(parents=True, exist_ok=True)
+                _ensure_start_page(chap_dir, name)
+                chapters[chap_id] = {"slug": slug, "name": name, "path": chap_dir, "book_id": book_id}
+
+        exported = 0
+        if "pages" in table_names:
+            cols = set(table_columns("pages"))
+            select_cols = [c for c in ("id", "book_id", "chapter_id", "name", "slug", "markdown", "text", "html") if c in cols]
+            rows = fetchall(f"SELECT {', '.join('`'+c+'`' for c in select_cols)} FROM `pages`")
+            exported_ids = {p.get("id") for p in (checkpoint.data.get("pages") or []) if isinstance(p, dict)}
+            for r in rows:
+                page_id = int(r.get("id"))
+                if page_id in exported_ids:
+                    continue
+                name = str(r.get("name") or f"page_{page_id}")
+                slug = _sanitize_namespace_part(str(r.get("slug") or name), f"page_{page_id}")
+                chap_id = r.get("chapter_id")
+                book_id = r.get("book_id")
+                if chap_id and int(chap_id) in chapters:
+                    target_dir = chapters[int(chap_id)]["path"]
+                elif book_id and int(book_id) in books:
+                    target_dir = books[int(book_id)]["path"]
+                else:
+                    target_dir = pages_root / "_orphaned"
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                content = r.get("markdown") or r.get("text") or r.get("html") or ""
+                doc = _convert_markdown_to_dokuwiki(str(content), name)
+                _write_text_file(target_dir / f"{slug}.txt", doc)
+                checkpoint.add_page(page_id, name)
+                exported += 1
+
+        print(f"\n✅ Exported {exported} pages from database")
+
+    try:
+        conn.close()
+    except Exception:
+        pass
+
+
 def cmd_detect() -> int:
     """Detect DokuWiki installations."""
     logger.info("Running detect command")
@@ -795,8 +1143,16 @@ def cmd_export(options: ExportOptions) -> int:
             print(f"\n📋 Resuming previous migration: {len(checkpoint.data['pages'])} pages already exported")
             logger.info(f"Resuming migration with {len(checkpoint.data['pages'])} pages")
 
-        # TODO: Full export implementation
-        logger.info("Export command completed (stub implementation)")
+        if source == "api":
+            if client is None:
+                raise BookStackError("API selected but client is not initialized")
+            _export_from_api(client, options, checkpoint)
+        else:
+            driver, driver_name = get_db_driver(preferred=options.driver)
+            if driver is None:
+                raise BookStackError("Database selected but no database driver available")
+            _export_from_database(driver, options, checkpoint)
+
         checkpoint.save()
         return 0
         

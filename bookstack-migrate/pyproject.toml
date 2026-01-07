@@ -33,10 +33,10 @@ test = ["pytest>=7.0"]
 dev = ["pytest>=7.0", "pyinstaller>=5.0"]
 
 [project.urls]
-Homepage = "https://github.com/alvonellos/BookStack"
-Documentation = "https://github.com/alvonellos/BookStack/blob/feature/standalone/README.md"
-Repository = "https://github.com/alvonellos/BookStack"
-"Bug Tracker" = "https://github.com/alvonellos/BookStack/issues"
+Homepage = "https://github.com/BookStackApp/BookStack"
+Documentation = "https://github.com/BookStackApp/BookStack/tree/development/bookstack-migrate"
+Repository = "https://github.com/BookStackApp/BookStack"
+"Bug Tracker" = "https://github.com/BookStackApp/BookStack/issues"
 
 [project.scripts]
 bookstack-migrate = "bookstack_migrate:main"

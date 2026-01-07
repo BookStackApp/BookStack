@@ -144,6 +144,10 @@ bookstack-migrate export \
    --output ./export
 ```
 
+**Output layout**
+- Pages are written under `OUTPUT/pages/...` (DokuWiki namespaces)
+- Media (best-effort downloads from `/uploads/...`) is written under `OUTPUT/media/...`
+
 ### Step 4: Verify Results
 ```bash
 bookstack-migrate version
