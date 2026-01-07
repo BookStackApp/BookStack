@@ -541,6 +541,7 @@ class ExportOptions:
     prefer_api: bool = False
     sql_file: Optional[Path] = None
     sql_db: str = "bookstack"
+    justdoit: bool = False
 
 
 class DataSourceSelector:
@@ -909,6 +910,7 @@ def main() -> int:
         and sys.stdin.isatty()
         and os.environ.get("CI") is None
         and os.environ.get("BOOKSTACK_MIGRATE_SKIP_VENV_CHECK") is None
+        and not getattr(args, "justdoit", False)
     ):
         check_venv_and_prompt()
 
@@ -929,6 +931,7 @@ def main() -> int:
             prefer_api=getattr(args, "prefer_api", False),
             sql_file=Path(args.sql_file) if getattr(args, "sql_file", None) else None,
             sql_db=getattr(args, "sql_db", "bookstack"),
+            justdoit=getattr(args, "justdoit", False),
         )
         return cmd_export(export_opts)
 
@@ -984,6 +987,12 @@ def build_parser() -> argparse.ArgumentParser:
         "--prefer-api",
         action="store_true",
         help="Prefer API over database if both available",
+    )
+
+    export.add_argument(
+        "--justdoit",
+        action="store_true",
+        help="Best-effort non-interactive mode (skips prompts; tries DB/SQL/API automatically)",
     )
 
     sub.add_parser("version", help="Show version and exit")

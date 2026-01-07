@@ -53,3 +53,23 @@ def test_checkpoint_mark_incomplete_creates_archive(tmp_path: Path):
     assert archive is not None
     assert archive.endswith("_bookstack_migrate_incomplete.tar.gz")
     assert Path(archive).exists()
+
+
+def test_justdoit_skips_venv_prompt(monkeypatch):
+    import bookstack_migrate
+
+    # Ensure we'd otherwise prompt
+    monkeypatch.setenv("CI", "")
+    monkeypatch.delenv("BOOKSTACK_MIGRATE_SKIP_VENV_CHECK", raising=False)
+
+    monkeypatch.setattr(bookstack_migrate.sys, "argv", ["bookstack-migrate", "export", "--justdoit"])
+    monkeypatch.setattr(bookstack_migrate.sys.stdin, "isatty", lambda: True)
+
+    def _boom():
+        raise AssertionError("venv prompt should be skipped in --justdoit mode")
+
+    monkeypatch.setattr(bookstack_migrate, "check_venv_and_prompt", _boom)
+
+    # No env creds, no DB args -> should fail with no data source, but must not prompt.
+    rc = bookstack_migrate.main()
+    assert rc == 1
