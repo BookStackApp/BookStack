@@ -1,12 +1,16 @@
 """Tests for bookstack_migrate CLI."""
 import subprocess
 import sys
+from pathlib import Path
+
+
+SCRIPT_PATH = (Path(__file__).resolve().parents[1] / "bookstack_migrate.py").resolve()
 
 
 def test_help():
     """Test help command."""
     result = subprocess.run(
-        [sys.executable, "bookstack_migrate.py", "help"],
+        [sys.executable, str(SCRIPT_PATH), "help"],
         capture_output=True,
         text=True,
     )
@@ -17,7 +21,7 @@ def test_help():
 def test_version():
     """Test version command."""
     result = subprocess.run(
-        [sys.executable, "bookstack_migrate.py", "version"],
+        [sys.executable, str(SCRIPT_PATH), "version"],
         capture_output=True,
         text=True,
     )
@@ -28,7 +32,7 @@ def test_version():
 def test_detect_no_dokuwiki():
     """Test detect command when no DokuWiki is installed."""
     result = subprocess.run(
-        [sys.executable, "bookstack_migrate.py", "detect"],
+        [sys.executable, str(SCRIPT_PATH), "detect"],
         capture_output=True,
         text=True,
     )
@@ -39,7 +43,7 @@ def test_detect_no_dokuwiki():
 def test_export_missing_args():
     """Test export command gracefully fails without any data source."""
     result = subprocess.run(
-        [sys.executable, "bookstack_migrate.py", "export"],
+        [sys.executable, str(SCRIPT_PATH), "export"],
         capture_output=True,
         text=True,
     )

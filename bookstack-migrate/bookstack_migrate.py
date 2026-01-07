@@ -356,6 +356,15 @@ class BookStackClient:
     def get_chapter(self, chapter_id: int) -> Dict[str, Any]:
         return self._get(f"/chapters/{chapter_id}")
 
+    def list_shelves(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
+        return self._get("/shelves", params={"page": page, "count": count})
+
+    def get_shelf(self, shelf_id: int) -> Dict[str, Any]:
+        return self._get(f"/shelves/{shelf_id}")
+
+    def list_shelf_books(self, shelf_id: int, page: int = 1, count: int = 50) -> Dict[str, Any]:
+        return self._get(f"/shelves/{shelf_id}/books", params={"page": page, "count": count})
+
     def list_pages(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
         return self._get("/pages", params={"page": page, "count": count})
 
@@ -411,6 +420,19 @@ class BookStackClient:
                 break
             page_num += 1
 
+    def iter_shelves(self, count: int = 50) -> Iterable[Dict[str, Any]]:
+        page_num = 1
+        while True:
+            payload = self.list_shelves(page=page_num, count=count)
+            data = payload.get("data", []) or []
+            for item in data:
+                if isinstance(item, dict):
+                    yield item
+
+            if not payload.get("next_page_url") or not data:
+                break
+            page_num += 1
+
     def _get(self, path: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         resp = self._request("GET", path, params=params)
         return self._parse_json(resp)
@@ -423,14 +445,38 @@ class BookStackClient:
 
     def _request(self, method: str, path: str, **kwargs: Any) -> requests.Response:
         url = self._build_url(path)
-        resp = self.session.request(method, url, timeout=self.timeout, **kwargs)
-        if resp.status_code >= 400:
-            raise BookStackError(
-                f"BookStack API error {resp.status_code}",
-                status=resp.status_code,
-                body=resp.text,
-            )
-        return resp
+
+        # Retry policy: keep default low to avoid hanging forever.
+        max_retries = int(os.environ.get("BOOKSTACK_RETRIES", "2"))
+        backoff = float(os.environ.get("BOOKSTACK_RETRY_BACKOFF", "0.25"))
+
+        last_exc: Optional[Exception] = None
+        for attempt in range(max_retries + 1):
+            try:
+                resp = self.session.request(method, url, timeout=self.timeout, **kwargs)
+
+                # Retry on transient server errors and rate limits.
+                if resp.status_code in {429} or 500 <= resp.status_code <= 599:
+                    if attempt < max_retries:
+                        time.sleep(backoff * (2 ** attempt))
+                        continue
+
+                if resp.status_code >= 400:
+                    raise BookStackError(
+                        f"BookStack API error {resp.status_code}",
+                        status=resp.status_code,
+                        body=resp.text,
+                    )
+                return resp
+            except (requests.RequestException, BookStackError) as exc:
+                last_exc = exc
+                if attempt < max_retries:
+                    time.sleep(backoff * (2 ** attempt))
+                    continue
+                raise
+
+        # Should not reach here.
+        raise BookStackError(f"BookStack API request failed: {last_exc}")
 
     def _build_url(self, path: str) -> str:
         if not path.startswith("/"):
@@ -730,6 +776,50 @@ def _ensure_start_page(dir_path: Path, title: str) -> None:
     _write_text_file(start_file, f"====== {title} ======\n")
 
 
+def _page_id_from_parts(parts: List[str], page_slug: str) -> str:
+    ns = ":".join([p for p in parts if p])
+    if ns:
+        return f"{ns}:{page_slug}"
+    return page_slug
+
+
+def _namespace_id_from_parts(parts: List[str]) -> str:
+    return ":".join([p for p in parts if p])
+
+
+def _write_namespace_index(
+    *,
+    file_path: Path,
+    title: str,
+    child_namespaces: List[Tuple[str, str]],
+    child_pages: List[Tuple[str, str]],
+) -> None:
+    """Write a DokuWiki 'start.txt' index page.
+
+    child_namespaces: List[(namespace_id, display_name)]
+    child_pages:      List[(page_id, display_name)]
+    """
+    lines: List[str] = [f"====== {title} ======", ""]
+
+    if child_namespaces:
+        lines.append("===== Contents =====")
+        lines.append("")
+        for ns_id, name in sorted(child_namespaces, key=lambda x: x[1].lower()):
+            # Link to namespace start page explicitly.
+            lines.append(f"  * [[{ns_id}:start|{name}]]")
+        lines.append("")
+
+    if child_pages:
+        if not child_namespaces:
+            lines.append("===== Pages =====")
+            lines.append("")
+        for page_id, name in sorted(child_pages, key=lambda x: x[1].lower()):
+            lines.append(f"  * [[{page_id}|{name}]]")
+        lines.append("")
+
+    _write_text_file(file_path, "\n".join(lines).rstrip() + "\n")
+
+
 def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint: MigrationCheckpoint) -> None:
     pages_root = options.output / "pages"
     media_root = options.output / "media"
@@ -739,6 +829,37 @@ def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint
     exported_ids = {p.get("id") for p in (checkpoint.data.get("pages") or []) if isinstance(p, dict)}
     book_cache: Dict[int, Dict[str, Any]] = {}
     chapter_cache: Dict[int, Dict[str, Any]] = {}
+
+    # Shelf mapping (book_id -> list of shelf dicts)
+    shelves: Dict[int, Dict[str, Any]] = {}
+    book_to_shelves: Dict[int, List[Dict[str, Any]]] = {}
+    try:
+        for shelf in client.iter_shelves(count=50):
+            shelf_id = shelf.get("id")
+            if shelf_id is None:
+                continue
+            shelves[int(shelf_id)] = shelf
+            # Pull books for this shelf
+            page_num = 1
+            while True:
+                payload = client.list_shelf_books(int(shelf_id), page=page_num, count=50)
+                data = payload.get("data", []) or []
+                for b in data:
+                    if not isinstance(b, dict) or b.get("id") is None:
+                        continue
+                    book_id = int(b.get("id"))
+                    book_to_shelves.setdefault(book_id, []).append(shelf)
+                if not payload.get("next_page_url") or not data:
+                    break
+                page_num += 1
+    except Exception:
+        # Shelf endpoints may be disabled/limited; export still works.
+        book_to_shelves = {}
+
+    # Track hierarchy for index generation.
+    shelf_nodes: Dict[str, Dict[str, Any]] = {}
+    book_nodes: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    chapter_nodes: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
 
     def get_book(book_id: int) -> Dict[str, Any]:
         if book_id not in book_cache:
@@ -759,21 +880,47 @@ def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint
             skipped_count += 1
             continue
 
-        # Determine namespace path
+        # Determine namespace path: shelf > book > chapter
         parts: List[str] = []
+        shelf_slug = "_no_shelf"
+        shelf_name = "No Shelf"
+
+        if page_ref.book_id:
+            shelves_for_book = book_to_shelves.get(int(page_ref.book_id), [])
+            if shelves_for_book:
+                s = shelves_for_book[0]
+                shelf_slug = _sanitize_namespace_part(str(s.get("slug") or s.get("name") or ""), f"shelf_{s.get('id')}")
+                shelf_name = str(s.get("name") or shelf_slug)
+
+        parts.append(shelf_slug)
+        shelf_nodes.setdefault(shelf_slug, {"name": shelf_name, "books": {}})
+
         if page_ref.book_id:
             book = get_book(int(page_ref.book_id))
-            book_slug = _sanitize_namespace_part(str(book.get("slug") or book.get("name") or ""), f"book_{page_ref.book_id}")
+            book_slug = _sanitize_namespace_part(
+                str(book.get("slug") or book.get("name") or ""),
+                f"book_{page_ref.book_id}",
+            )
+            book_name = str(book.get("name") or book_slug)
             parts.append(book_slug)
-            _ensure_start_page(pages_root / book_slug, str(book.get("name") or book_slug))
 
-        if page_ref.chapter_id:
+            shelf_nodes[shelf_slug]["books"].setdefault(book_slug, book_name)
+            book_nodes.setdefault((shelf_slug, book_slug), {"name": book_name, "chapters": {}, "pages": {}})
+
+        if page_ref.chapter_id and page_ref.book_id:
             chapter = get_chapter(int(page_ref.chapter_id))
-            chap_slug = _sanitize_namespace_part(str(chapter.get("slug") or chapter.get("name") or ""), f"chapter_{page_ref.chapter_id}")
+            chap_slug = _sanitize_namespace_part(
+                str(chapter.get("slug") or chapter.get("name") or ""),
+                f"chapter_{page_ref.chapter_id}",
+            )
+            chap_name = str(chapter.get("name") or chap_slug)
             parts.append(chap_slug)
-            _ensure_start_page(pages_root.joinpath(*parts), str(chapter.get("name") or chap_slug))
 
-        if not parts:
+            book_nodes[(shelf_slug, parts[1])]["chapters"].setdefault(chap_slug, chap_name)
+            chapter_nodes.setdefault((shelf_slug, parts[1], chap_slug), {"name": chap_name, "pages": {}})
+
+        if not page_ref.book_id:
+            # Truly orphaned
             parts = ["_orphaned"]
 
         page_slug = _sanitize_namespace_part(str(page_ref.slug or page_ref.name or ""), f"page_{page_ref.id}")
@@ -782,16 +929,14 @@ def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint
 
         logger.info(f"Exporting page {page_ref.id}: {page_ref.name} -> {page_path}")
         raw_md = client.export_page_markdown(int(page_ref.id))
-        doc = _convert_markdown_to_dokuwiki(raw_md, str(page_ref.name or page_slug))
-        _write_text_file(page_path, doc)
 
-        # Best-effort: Download any obvious uploaded assets referenced in content.
-        # We only attempt direct URL fetch; if the instance blocks it, we keep the link.
+        # Best-effort: Download uploaded assets referenced in content.
+        media_url_to_id: Dict[str, str] = {}
         try:
             import re
 
             urls = set(re.findall(r"https?://[^\s\)\]\"']+", raw_md))
-            for url in list(urls)[:50]:
+            for url in list(urls)[:200]:
                 if "/uploads/" not in url:
                     continue
                 filename = url.split("/")[-1].split("?")[0]
@@ -800,17 +945,36 @@ def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint
                 media_rel_dir = media_root.joinpath(*parts)
                 media_rel_dir.mkdir(parents=True, exist_ok=True)
                 target = media_rel_dir / filename
-                if target.exists():
-                    continue
-                resp = client.session.get(url, stream=True, timeout=client.timeout)
-                if resp.status_code >= 400:
-                    continue
-                with open(target, "wb") as f:
-                    for chunk in resp.iter_content(chunk_size=1024 * 128):
-                        if chunk:
-                            f.write(chunk)
+                if not target.exists():
+                    resp = client.session.get(url, stream=True, timeout=client.timeout)
+                    if resp.status_code >= 400:
+                        continue
+                    with open(target, "wb") as f:
+                        for chunk in resp.iter_content(chunk_size=1024 * 128):
+                            if chunk:
+                                f.write(chunk)
+
+                media_id = ":" + _namespace_id_from_parts(parts) + ":" + filename
+                media_url_to_id[url] = media_id
         except Exception:
+            media_url_to_id = {}
+
+        doc = _convert_markdown_to_dokuwiki(raw_md, str(page_ref.name or page_slug))
+        for url, media_id in media_url_to_id.items():
+            doc = doc.replace(url, media_id)
+        _write_text_file(page_path, doc)
+
+        # Record in hierarchy for indexes.
+        if parts and parts[0] == "_orphaned":
             pass
+        elif len(parts) >= 2:
+            shelf_slug2, book_slug2 = parts[0], parts[1]
+            page_name = str(page_ref.name or page_slug)
+            if len(parts) >= 3:
+                chap_slug2 = parts[2]
+                chapter_nodes[(shelf_slug2, book_slug2, chap_slug2)]["pages"].setdefault(page_slug, page_name)
+            else:
+                book_nodes[(shelf_slug2, book_slug2)]["pages"].setdefault(page_slug, page_name)
 
         checkpoint.add_page(int(page_ref.id), str(page_ref.name or page_slug))
         exported_count += 1
@@ -819,6 +983,45 @@ def _export_from_api(client: BookStackClient, options: ExportOptions, checkpoint
 
     print(f"\n✅ Exported {exported_count} pages (skipped {skipped_count} already done)")
     print(f"✅ Output written under: {options.output}")
+
+    # Write indexes after export.
+    for shelf_slug2, shelf_info in shelf_nodes.items():
+        shelf_dir = pages_root / shelf_slug2
+        shelf_title = str(shelf_info.get("name") or shelf_slug2)
+        books = shelf_info.get("books") or {}
+        ns_children = [(_namespace_id_from_parts([shelf_slug2, bslug]), bname) for bslug, bname in books.items()]
+        _write_namespace_index(
+            file_path=shelf_dir / "start.txt",
+            title=shelf_title,
+            child_namespaces=ns_children,
+            child_pages=[],
+        )
+
+    for (shelf_slug2, book_slug2), info in book_nodes.items():
+        book_dir = pages_root / shelf_slug2 / book_slug2
+        book_title = str(info.get("name") or book_slug2)
+        chapters = info.get("chapters") or {}
+        pages = info.get("pages") or {}
+        ns_children = [(_namespace_id_from_parts([shelf_slug2, book_slug2, cslug]), cname) for cslug, cname in chapters.items()]
+        page_children = [(_page_id_from_parts([shelf_slug2, book_slug2], pslug), pname) for pslug, pname in pages.items()]
+        _write_namespace_index(
+            file_path=book_dir / "start.txt",
+            title=book_title,
+            child_namespaces=ns_children,
+            child_pages=page_children,
+        )
+
+    for (shelf_slug2, book_slug2, chap_slug2), info in chapter_nodes.items():
+        chap_dir = pages_root / shelf_slug2 / book_slug2 / chap_slug2
+        chap_title = str(info.get("name") or chap_slug2)
+        pages = info.get("pages") or {}
+        page_children = [(_page_id_from_parts([shelf_slug2, book_slug2, chap_slug2], pslug), pname) for pslug, pname in pages.items()]
+        _write_namespace_index(
+            file_path=chap_dir / "start.txt",
+            title=chap_title,
+            child_namespaces=[],
+            child_pages=page_children,
+        )
 
 
 def _db_cursor_dict(driver_module: object, conn: object):
@@ -874,8 +1077,33 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
 
     use_entities = "entities" in table_names and "entity_page_data" in table_names
 
+    # Shelf mapping (legacy tables)
+    shelf_by_book: Dict[int, Tuple[str, str]] = {}
+    if "bookshelves" in table_names and "bookshelf_books" in table_names:
+        try:
+            shelves = fetchall("SELECT id, name, slug FROM `bookshelves`")
+            shelves_by_id = {int(r["id"]): r for r in shelves if r.get("id") is not None}
+            pivots = fetchall("SELECT bookshelf_id, book_id FROM `bookshelf_books`")
+            # Pick first shelf per book.
+            for r in pivots:
+                if r.get("book_id") is None or r.get("bookshelf_id") is None:
+                    continue
+                book_id = int(r.get("book_id"))
+                shelf_id = int(r.get("bookshelf_id"))
+                if book_id in shelf_by_book:
+                    continue
+                shelf = shelves_by_id.get(shelf_id) or {}
+                sslug = _sanitize_namespace_part(str(shelf.get("slug") or shelf.get("name") or ""), f"shelf_{shelf_id}")
+                sname = str(shelf.get("name") or sslug)
+                shelf_by_book[book_id] = (sslug, sname)
+        except Exception:
+            shelf_by_book = {}
+
     books: Dict[int, Dict[str, Any]] = {}
     chapters: Dict[int, Dict[str, Any]] = {}
+    shelf_nodes: Dict[str, Dict[str, Any]] = {}
+    book_nodes: Dict[Tuple[str, str], Dict[str, Any]] = {}
+    chapter_nodes: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
 
     if use_entities:
         entities = fetchall(
@@ -892,7 +1120,13 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
             book_id = int(e.get("id"))
             slug = _sanitize_namespace_part(str(e.get("slug") or e.get("name") or ""), f"book_{book_id}")
             name = str(e.get("name") or slug)
-            book_dir = pages_root / slug
+            shelf_slug = shelf_by_book.get(book_id, ("_no_shelf", "No Shelf"))[0]
+            shelf_name = shelf_by_book.get(book_id, ("_no_shelf", "No Shelf"))[1]
+            shelf_nodes.setdefault(shelf_slug, {"name": shelf_name, "books": {}})
+            shelf_nodes[shelf_slug]["books"].setdefault(slug, name)
+            book_nodes.setdefault((shelf_slug, slug), {"name": name, "chapters": {}, "pages": {}})
+
+            book_dir = pages_root / shelf_slug / slug
             book_dir.mkdir(parents=True, exist_ok=True)
             _ensure_start_page(book_dir, name)
             books[book_id] = {"slug": slug, "name": name, "path": book_dir}
@@ -906,6 +1140,10 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
             name = str(e.get("name") or slug)
             if book_id and int(book_id) in books:
                 chap_dir = books[int(book_id)]["path"] / slug
+                shelf_slug = books[int(book_id)]["path"].parts[-2]
+                book_slug = books[int(book_id)]["slug"]
+                book_nodes[(shelf_slug, book_slug)]["chapters"].setdefault(slug, name)
+                chapter_nodes.setdefault((shelf_slug, book_slug, slug), {"name": name, "pages": {}})
             else:
                 chap_dir = pages_root / "_orphaned" / slug
             chap_dir.mkdir(parents=True, exist_ok=True)
@@ -926,8 +1164,16 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
             book_id = e.get("book_id")
             if chapter_id and int(chapter_id) in chapters:
                 target_dir = chapters[int(chapter_id)]["path"]
+                # indexes
+                shelf_slug = target_dir.parts[-3]
+                book_slug = target_dir.parts[-2]
+                chap_slug = target_dir.parts[-1]
+                chapter_nodes[(shelf_slug, book_slug, chap_slug)]["pages"].setdefault(slug, name)
             elif book_id and int(book_id) in books:
                 target_dir = books[int(book_id)]["path"]
+                shelf_slug = target_dir.parts[-2]
+                book_slug = target_dir.parts[-1]
+                book_nodes[(shelf_slug, book_slug)]["pages"].setdefault(slug, name)
             else:
                 target_dir = pages_root / "_orphaned"
                 target_dir.mkdir(parents=True, exist_ok=True)
@@ -941,6 +1187,45 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
 
         print(f"\n✅ Exported {exported} pages from database")
 
+        # Write indexes
+        for shelf_slug2, shelf_info in shelf_nodes.items():
+            shelf_dir = pages_root / shelf_slug2
+            shelf_title = str(shelf_info.get("name") or shelf_slug2)
+            books_map = shelf_info.get("books") or {}
+            ns_children = [(_namespace_id_from_parts([shelf_slug2, bslug]), bname) for bslug, bname in books_map.items()]
+            _write_namespace_index(
+                file_path=shelf_dir / "start.txt",
+                title=shelf_title,
+                child_namespaces=ns_children,
+                child_pages=[],
+            )
+
+        for (shelf_slug2, book_slug2), info in book_nodes.items():
+            book_dir = pages_root / shelf_slug2 / book_slug2
+            book_title = str(info.get("name") or book_slug2)
+            chapters_map = info.get("chapters") or {}
+            pages_map = info.get("pages") or {}
+            ns_children = [(_namespace_id_from_parts([shelf_slug2, book_slug2, cslug]), cname) for cslug, cname in chapters_map.items()]
+            page_children = [(_page_id_from_parts([shelf_slug2, book_slug2], pslug), pname) for pslug, pname in pages_map.items()]
+            _write_namespace_index(
+                file_path=book_dir / "start.txt",
+                title=book_title,
+                child_namespaces=ns_children,
+                child_pages=page_children,
+            )
+
+        for (shelf_slug2, book_slug2, chap_slug2), info in chapter_nodes.items():
+            chap_dir = pages_root / shelf_slug2 / book_slug2 / chap_slug2
+            chap_title = str(info.get("name") or chap_slug2)
+            pages_map = info.get("pages") or {}
+            page_children = [(_page_id_from_parts([shelf_slug2, book_slug2, chap_slug2], pslug), pname) for pslug, pname in pages_map.items()]
+            _write_namespace_index(
+                file_path=chap_dir / "start.txt",
+                title=chap_title,
+                child_namespaces=[],
+                child_pages=page_children,
+            )
+
     else:
         # Legacy BookStack schema
         if "books" in table_names:
@@ -951,7 +1236,12 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
                 book_id = int(r.get("id"))
                 slug = _sanitize_namespace_part(str(r.get("slug") or r.get("name") or ""), f"book_{book_id}")
                 name = str(r.get("name") or slug)
-                book_dir = pages_root / slug
+                shelf_slug, shelf_name = shelf_by_book.get(book_id, ("_no_shelf", "No Shelf"))
+                shelf_nodes.setdefault(shelf_slug, {"name": shelf_name, "books": {}})
+                shelf_nodes[shelf_slug]["books"].setdefault(slug, name)
+                book_nodes.setdefault((shelf_slug, slug), {"name": name, "chapters": {}, "pages": {}})
+
+                book_dir = pages_root / shelf_slug / slug
                 book_dir.mkdir(parents=True, exist_ok=True)
                 _ensure_start_page(book_dir, name)
                 books[book_id] = {"slug": slug, "name": name, "path": book_dir}
@@ -967,6 +1257,10 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
                 name = str(r.get("name") or slug)
                 if book_id and int(book_id) in books:
                     chap_dir = books[int(book_id)]["path"] / slug
+                    shelf_slug2 = books[int(book_id)]["path"].parts[-2]
+                    book_slug2 = books[int(book_id)]["slug"]
+                    book_nodes[(shelf_slug2, book_slug2)]["chapters"].setdefault(slug, name)
+                    chapter_nodes.setdefault((shelf_slug2, book_slug2, slug), {"name": name, "pages": {}})
                 else:
                     chap_dir = pages_root / "_orphaned" / slug
                 chap_dir.mkdir(parents=True, exist_ok=True)
@@ -989,8 +1283,15 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
                 book_id = r.get("book_id")
                 if chap_id and int(chap_id) in chapters:
                     target_dir = chapters[int(chap_id)]["path"]
+                    shelf_slug2 = target_dir.parts[-3]
+                    book_slug2 = target_dir.parts[-2]
+                    chap_slug2 = target_dir.parts[-1]
+                    chapter_nodes[(shelf_slug2, book_slug2, chap_slug2)]["pages"].setdefault(slug, name)
                 elif book_id and int(book_id) in books:
                     target_dir = books[int(book_id)]["path"]
+                    shelf_slug2 = target_dir.parts[-2]
+                    book_slug2 = target_dir.parts[-1]
+                    book_nodes[(shelf_slug2, book_slug2)]["pages"].setdefault(slug, name)
                 else:
                     target_dir = pages_root / "_orphaned"
                     target_dir.mkdir(parents=True, exist_ok=True)
@@ -1001,6 +1302,45 @@ def _export_from_database(driver_module: object, options: ExportOptions, checkpo
                 exported += 1
 
         print(f"\n✅ Exported {exported} pages from database")
+
+        # Write indexes
+        for shelf_slug2, shelf_info in shelf_nodes.items():
+            shelf_dir = pages_root / shelf_slug2
+            shelf_title = str(shelf_info.get("name") or shelf_slug2)
+            books_map = shelf_info.get("books") or {}
+            ns_children = [(_namespace_id_from_parts([shelf_slug2, bslug]), bname) for bslug, bname in books_map.items()]
+            _write_namespace_index(
+                file_path=shelf_dir / "start.txt",
+                title=shelf_title,
+                child_namespaces=ns_children,
+                child_pages=[],
+            )
+
+        for (shelf_slug2, book_slug2), info in book_nodes.items():
+            book_dir = pages_root / shelf_slug2 / book_slug2
+            book_title = str(info.get("name") or book_slug2)
+            chapters_map = info.get("chapters") or {}
+            pages_map = info.get("pages") or {}
+            ns_children = [(_namespace_id_from_parts([shelf_slug2, book_slug2, cslug]), cname) for cslug, cname in chapters_map.items()]
+            page_children = [(_page_id_from_parts([shelf_slug2, book_slug2], pslug), pname) for pslug, pname in pages_map.items()]
+            _write_namespace_index(
+                file_path=book_dir / "start.txt",
+                title=book_title,
+                child_namespaces=ns_children,
+                child_pages=page_children,
+            )
+
+        for (shelf_slug2, book_slug2, chap_slug2), info in chapter_nodes.items():
+            chap_dir = pages_root / shelf_slug2 / book_slug2 / chap_slug2
+            chap_title = str(info.get("name") or chap_slug2)
+            pages_map = info.get("pages") or {}
+            page_children = [(_page_id_from_parts([shelf_slug2, book_slug2, chap_slug2], pslug), pname) for pslug, pname in pages_map.items()]
+            _write_namespace_index(
+                file_path=chap_dir / "start.txt",
+                title=chap_title,
+                child_namespaces=[],
+                child_pages=page_children,
+            )
 
     try:
         conn.close()
@@ -1054,17 +1394,6 @@ def cmd_export(options: ExportOptions) -> int:
         except Exception as e:
             logger.warning(f"API not available: {e}")
 
-        # If provided a SQL dump, import into a temp DB container and use that connection.
-        if options.sql_file is not None:
-            importer = SqlDumpImporter(options.sql_file, database=options.sql_db)
-            host, port, db, user, password = importer.start_and_import()
-            options.host = host
-            options.port = port
-            options.db = db
-            options.user = user
-            options.password = password
-            logger.info(f"SQL dump imported; temp DB available at {host}:{port}/{db}")
-
         # Test DB availability only if we have DB connection details.
         db_available = bool(options.db and options.user and options.password)
         driver_name = None
@@ -1088,7 +1417,7 @@ def cmd_export(options: ExportOptions) -> int:
             large_sql_mb_threshold=large_sql_mb_threshold,
         )
 
-        # Select best source
+        # Select best source (used only for ordering; we will still fall back).
         selector = DataSourceSelector(
             db_available,
             api_available,
@@ -1143,15 +1472,59 @@ def cmd_export(options: ExportOptions) -> int:
             print(f"\n📋 Resuming previous migration: {len(checkpoint.data['pages'])} pages already exported")
             logger.info(f"Resuming migration with {len(checkpoint.data['pages'])} pages")
 
-        if source == "api":
-            if client is None:
-                raise BookStackError("API selected but client is not initialized")
-            _export_from_api(client, options, checkpoint)
-        else:
-            driver, driver_name = get_db_driver(preferred=options.driver)
-            if driver is None:
-                raise BookStackError("Database selected but no database driver available")
-            _export_from_database(driver, options, checkpoint)
+        # Try strategies in order, with fallbacks: API -> DB -> SQL dump (DB via temp container)
+        last_error: Optional[Exception] = None
+        strategies: List[str] = []
+
+        if api_available and client is not None:
+            strategies.append("api")
+        if db_available:
+            strategies.append("database")
+        if options.sql_file is not None:
+            strategies.append("sql")
+
+        # If the selector says database is best (large instance), prioritize DB but still allow API fallback.
+        if source == "database" and "database" in strategies:
+            strategies = ["database"] + [s for s in strategies if s != "database"]
+
+        for strat in strategies:
+            try:
+                if strat == "api":
+                    assert client is not None
+                    _export_from_api(client, options, checkpoint)
+                    last_error = None
+                    break
+
+                if strat == "database":
+                    driver, _ = get_db_driver(preferred=options.driver)
+                    if driver is None:
+                        raise BookStackError("No database driver available")
+                    _export_from_database(driver, options, checkpoint)
+                    last_error = None
+                    break
+
+                if strat == "sql":
+                    importer = SqlDumpImporter(options.sql_file, database=options.sql_db)  # type: ignore[arg-type]
+                    host, port, db, user, password = importer.start_and_import()
+                    options.host = host
+                    options.port = port
+                    options.db = db
+                    options.user = user
+                    options.password = password
+                    driver, _ = get_db_driver(preferred=options.driver)
+                    if driver is None:
+                        raise BookStackError("No database driver available for SQL dump import")
+                    _export_from_database(driver, options, checkpoint)
+                    last_error = None
+                    break
+
+            except Exception as exc:
+                last_error = exc
+                logger.warning(f"Export strategy '{strat}' failed: {exc}")
+                continue
+
+        if last_error is not None:
+            raise last_error
 
         checkpoint.save()
         return 0

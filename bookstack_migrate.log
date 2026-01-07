@@ -1,0 +1,11 @@
+2026-01-07 00:56:58,044 [INFO] Command: help
+2026-01-07 00:56:58,203 [INFO] Command: version
+2026-01-07 00:56:58,203 [INFO] Version: 1.0.0
+2026-01-07 00:56:58,359 [INFO] Command: detect
+2026-01-07 00:56:58,359 [INFO] Running detect command
+2026-01-07 00:56:58,359 [ERROR] No DokuWiki installations found
+2026-01-07 00:56:58,546 [INFO] Command: export
+2026-01-07 00:56:58,546 [INFO] Running export command: db=None, driver=None
+2026-01-07 00:56:58,547 [WARNING] API not available: BOOKSTACK_TOKEN_ID/BOOKSTACK_TOKEN_SECRET are required for API access
+2026-01-07 00:56:58,547 [INFO] DataSourceSelector: DB=False, API=False, prefer_api=False, large=False
+2026-01-07 00:56:58,548 [ERROR] No data source available (no DB driver and no API)
