@@ -10,6 +10,28 @@ INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
 GITHUB_URL="https://github.com/alvonellos/BookStack"
 RELEASE_URL="$GITHUB_URL/releases/download/v$VERSION"
 
+SUDO=""
+
+need_root_for_install() {
+    [ ! -w "$INSTALL_DIR" ]
+}
+
+ensure_sudo_noninteractive() {
+    if ! command -v sudo >/dev/null 2>&1; then
+        echo "❌ No write permission to $INSTALL_DIR and sudo is not installed."
+        exit 1
+    fi
+
+    # Require sudo to work without prompting (for automation/curl|bash flows)
+    if ! sudo -n true >/dev/null 2>&1; then
+        echo "❌ No write permission to $INSTALL_DIR and sudo requires a password prompt."
+        echo "   Re-run in an interactive shell and run: sudo bash install.sh"
+        exit 1
+    fi
+
+    SUDO="sudo -n"
+}
+
 echo "📦 BookStack Migration Tool Installer"
 echo "Version: $VERSION"
 echo ""
@@ -45,11 +67,11 @@ case "$OS" in
         ;;
 esac
 
-# Check for write permission
-if [ ! -w "$INSTALL_DIR" ]; then
+# Check for write permission (auto-escalate only if sudo works immediately)
+if need_root_for_install; then
     echo "⚠️  No write permission to $INSTALL_DIR"
-    echo "   Try: sudo bash install.sh"
-    exit 1
+    ensure_sudo_noninteractive
+    echo "✅ Using sudo for install"
 fi
 
 # Download binary
@@ -73,12 +95,14 @@ fi
 
 # Install
 echo "📥 Installing to $INSTALL_DIR/$BINARY..."
-mv "$TEMP_FILE" "$INSTALL_DIR/$BINARY"
-chmod +x "$INSTALL_DIR/$BINARY"
+$SUDO mv "$TEMP_FILE" "$INSTALL_DIR/$BINARY"
+
+# Ensure executable permissions explicitly
+$SUDO chmod 0755 "$INSTALL_DIR/$BINARY"
 
 # Create symlink
 if [ ! -L "$INSTALL_DIR/bookstack-migrate" ]; then
-    ln -s "$INSTALL_DIR/$BINARY" "$INSTALL_DIR/bookstack-migrate"
+    $SUDO ln -s "$INSTALL_DIR/$BINARY" "$INSTALL_DIR/bookstack-migrate"
 fi
 
 echo ""
