@@ -350,6 +350,17 @@ class BookStackClient:
     def list_pages(self, page: int = 1, count: int = 50) -> Dict[str, Any]:
         return self._get("/pages", params={"page": page, "count": count})
 
+    def get_total_pages(self) -> Optional[int]:
+        """Best-effort total page count from API, if provided by server."""
+        try:
+            resp = self.list_pages(page=1, count=1)
+            total = resp.get("total")
+            if isinstance(total, int):
+                return total
+        except Exception:
+            return None
+        return None
+
     def list_book_pages(self, book_id: int, page: int = 1, count: int = 50) -> Dict[str, Any]:
         return self._get(f"/books/{book_id}/pages", params={"page": page, "count": count})
 
@@ -535,11 +546,20 @@ class ExportOptions:
 class DataSourceSelector:
     """Intelligently select between DB and API for data retrieval."""
 
-    def __init__(self, db_available: bool, api_available: bool, prefer_api: bool = False):
+    def __init__(
+        self,
+        db_available: bool,
+        api_available: bool,
+        prefer_api: bool = False,
+        large_instance: bool = False,
+    ):
         self.db_available = db_available
         self.api_available = api_available
         self.prefer_api = prefer_api
-        logger.info(f"DataSourceSelector: DB={db_available}, API={api_available}, prefer_api={prefer_api}")
+        self.large_instance = large_instance
+        logger.info(
+            f"DataSourceSelector: DB={db_available}, API={api_available}, prefer_api={prefer_api}, large={large_instance}"
+        )
 
     def should_use_api(self) -> bool:
         """Determine if we should use API instead of DB."""
@@ -557,11 +577,39 @@ class DataSourceSelector:
 
     def get_best_source(self) -> str:
         """Return 'api' or 'database' or 'none'."""
+        # If instance is large and DB/SQL is available, force DB for performance.
+        if self.large_instance and self.db_available:
+            return "database"
+
         if self.db_available and (not self.prefer_api or not self.api_available):
             return "database"
         if self.api_available:
             return "api"
         return "none"
+
+
+def is_large_instance(
+    *,
+    client: Optional[BookStackClient],
+    sql_file: Optional[Path],
+    large_pages_threshold: int,
+    large_sql_mb_threshold: int,
+) -> bool:
+    """Heuristic for deciding when to avoid API mode for performance."""
+    if sql_file is not None:
+        try:
+            size_mb = sql_file.stat().st_size / (1024 * 1024)
+            if size_mb >= large_sql_mb_threshold:
+                return True
+        except Exception:
+            pass
+
+    if client is not None:
+        total = client.get_total_pages()
+        if isinstance(total, int) and total >= large_pages_threshold:
+            return True
+
+    return False
 
 
 def detect_dokuwiki() -> List[DokuWikiInstall]:
@@ -681,8 +729,23 @@ def cmd_export(options: ExportOptions) -> int:
                 db_available = False
                 logger.warning(f"Database driver not available: {e}")
 
+        # Large-instance heuristic: if large and DB/SQL available, force DB for performance.
+        large_pages_threshold = int(os.environ.get("BOOKSTACK_LARGE_PAGES_THRESHOLD", "5000"))
+        large_sql_mb_threshold = int(os.environ.get("BOOKSTACK_LARGE_SQL_MB_THRESHOLD", "500"))
+        large_instance = is_large_instance(
+            client=client if api_available else None,
+            sql_file=options.sql_file,
+            large_pages_threshold=large_pages_threshold,
+            large_sql_mb_threshold=large_sql_mb_threshold,
+        )
+
         # Select best source
-        selector = DataSourceSelector(db_available, api_available, prefer_api=options.prefer_api)
+        selector = DataSourceSelector(
+            db_available,
+            api_available,
+            prefer_api=options.prefer_api,
+            large_instance=large_instance,
+        )
         source = selector.get_best_source()
 
         if source == "none":

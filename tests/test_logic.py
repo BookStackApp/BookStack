@@ -18,6 +18,13 @@ def test_data_source_selector_scenarios():
     assert DataSourceSelector(db_available=False, api_available=False, prefer_api=False).get_best_source() == "none"
 
 
+def test_large_instance_forces_database_even_if_prefer_api():
+    from bookstack_migrate import DataSourceSelector
+
+    sel = DataSourceSelector(db_available=True, api_available=True, prefer_api=True, large_instance=True)
+    assert sel.get_best_source() == "database"
+
+
 def test_sql_dump_requires_docker():
     from bookstack_migrate import SqlDumpImporter, SqlDumpImportError
 
