@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# Virtualenv
+venv/
+.venv/
+
+# Test/coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Local logs
+bookstack_migrate.log
+
+# Build artifacts (keep scripts under build/)
+dist/
+release/
+build/pybuild/
+build/specs/
+build/lib/
+
+# Editor
+.vscode/
+.DS_Store

@@ -1,0 +1,100 @@
+#!/bin/bash
+# Build standalone binaries using PyInstaller
+
+set -e
+
+echo "🔨 Building standalone binaries..."
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TOOL_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+PYTHON_BIN=""
+if command -v python3 >/dev/null 2>&1; then
+    PYTHON_BIN="python3"
+else
+    PYTHON_BIN="python"
+fi
+
+# Check dependencies
+if ! command -v pyinstaller &> /dev/null; then
+    echo "Installing PyInstaller..."
+    "$PYTHON_BIN" -m pip install --upgrade pip
+    "$PYTHON_BIN" -m pip install pyinstaller
+fi
+
+# Create dist directory
+mkdir -p "$TOOL_ROOT/dist"
+
+cd "$TOOL_ROOT"
+
+OS=$(uname -s)
+ARCH=$(uname -m)
+BIN_NAME="bookstack-migrate-linux"
+
+# Handle Windows runners (Git Bash / MSYS)
+if [[ "$OS" == MINGW* || "$OS" == MSYS* || "$OS" == CYGWIN* ]]; then
+    BIN_NAME="bookstack-migrate-windows"
+fi
+
+# PyInstaller requires a Python built with a shared library on some Unix builds.
+# On Windows, this flag isn't meaningful for PyInstaller, so don't block builds.
+if [[ "$OS" != MINGW* && "$OS" != MSYS* && "$OS" != CYGWIN* ]]; then
+    PY_SHARED=$($PYTHON_BIN -c "import sysconfig; print(int(sysconfig.get_config_var('Py_ENABLE_SHARED') or 0))" 2>/dev/null || echo "0")
+    if [ "$PY_SHARED" = "0" ]; then
+        echo "⚠️  Skipping PyInstaller build (Python missing shared library)"
+        echo "   You can still use the wheel/sdist artifacts from 'python -m build'."
+        exit 0
+    fi
+fi
+
+if [ "$OS" = "Darwin" ]; then
+    if [ "$ARCH" = "arm64" ]; then
+        BIN_NAME="bookstack-migrate-macos-arm64"
+    else
+        BIN_NAME="bookstack-migrate-macos"
+    fi
+fi
+
+echo "Building $BIN_NAME..."
+pyinstaller \
+    --onefile \
+    --name "$BIN_NAME" \
+    --specpath build/specs \
+    --distpath dist \
+    --workpath build/pybuild \
+    --noupx \
+    bookstack_migrate.py
+
+chmod +x "dist/$BIN_NAME" || true
+
+# Windows output will typically be .exe
+if [ -f "dist/$BIN_NAME.exe" ]; then
+    echo "✅ Binary built: dist/$BIN_NAME.exe"
+    ls -lh "dist/$BIN_NAME.exe" || true
+else
+    echo "✅ Binary built: dist/$BIN_NAME"
+    ls -lh "dist/$BIN_NAME" || true
+fi
+
+# Create wrappers only on Unix-like systems
+if [[ "$OS" != MINGW* && "$OS" != MSYS* && "$OS" != CYGWIN* ]]; then
+    # Create portable shell wrapper
+    cat > dist/bookstack-migrate-linux-wrapper << 'EOF'
+#!/bin/bash
+# BookStack Migration Tool - Standalone Wrapper
+exec python3 -m bookstack_migrate "$@"
+EOF
+    chmod +x dist/bookstack-migrate-linux-wrapper
+
+    # Also create simple Python wrapper that works with pip
+    cat > dist/bookstack-migrate << 'EOF'
+#!/usr/bin/env python3
+import sys
+from bookstack_migrate import main
+sys.exit(main() or 0)
+EOF
+    chmod +x dist/bookstack-migrate
+
+    echo "✅ Binaries/wrappers built:"
+    ls -lh dist/bookstack-migrate* || true
+fi

@@ -33,3 +33,7 @@ phpstan.neon
 esbuild-meta.json
 .phpactor.json
 /*.zip
+
+# Python tooling artifacts (migration utilities)
+/.pytest_cache/
+/venv/

@@ -1,0 +1,8 @@
+# BookStack Migration Tool Dependencies
+
+# Core HTTP client
+requests>=2.31.0
+
+# Optional: MySQL/MariaDB drivers for database operations
+mysql-connector-python>=8.0.0; python_version >= "3.7"
+mariadb>=1.1.0; python_version >= "3.7"
