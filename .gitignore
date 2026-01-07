@@ -45,6 +45,7 @@ __pycache__/
 coverage.xml
 htmlcov/
 bookstack_migrate.log
+venv/
 build/pybuild/
 build/specs/
 develop-eggs/
