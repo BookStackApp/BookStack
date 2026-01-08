@@ -65,7 +65,7 @@ return [
     'email_confirm_thanks_desc' => 'Почакайте малко, обработвайки потвърждението ви. Ако не сте пренасочени след 3 секунди, то натиснете долу връзката "Продължаване", за да продължите.',
 
     'email_not_confirmed' => 'Имейл адресът не е потвърден',
-    'email_not_confirmed_text' => 'Вашият емейл адрес все още не е потвърден.',
+    'email_not_confirmed_text' => 'Вашият имейл адрес все още не е потвърден.',
     'email_not_confirmed_click_link' => 'Моля да последвате линка, който ви беше изпратен непосредствено след регистрацията.',
     'email_not_confirmed_resend' => 'Ако не откривате писмото, може да го изпратите отново като попълните формуляра по-долу.',
     'email_not_confirmed_resend_button' => 'Изпрати отново емейла за потвърждение',
@@ -91,7 +91,7 @@ return [
     'mfa_option_totp_title' => 'Мобилно приложение',
     'mfa_option_totp_desc' => 'За да използваш многофакторно удостоверяване, ще ти трябва мобилно приложение, което поддържа временни еднократни пароли (TOTP), като например Google Authenticator, Authy или Microsoft Authenticator.',
     'mfa_option_backup_codes_title' => 'Резервни кодове',
-    'mfa_option_backup_codes_desc' => 'Generates a set of one-time-use backup codes which you\'ll enter on login to verify your identity. Make sure to store these in a safe & secure place.',
+    'mfa_option_backup_codes_desc' => 'Генерира набор от еднократни резервни кодове, които ще въвеждате при влизане, за да потвърдите самоличността си. Уверете се, че ги съхранявате на безопасно и сигурно място.',
     'mfa_gen_confirm_and_enable' => 'Потвърди и включи',
     'mfa_gen_backup_codes_title' => 'Настройка на резервни кодове',
     'mfa_gen_backup_codes_desc' => 'Запази този лист с кодове на сигурно място. Когато достъпваш системата, ще можеш да използваш един от тези кодове като вторичен механизъм за удостоверяване.',
