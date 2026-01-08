@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Aangepaste pagina: :pageName',
     'updated_page_intro' => 'Een pagina werd aangepast in :appName:',
     'updated_page_debounce' => 'Om een stortvloed aan meldingen te voorkomen, zul je een tijdje geen meldingen ontvangen voor verdere bewerkingen van deze pagina door dezelfde redacteur.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Je bent vermeld in een opmerking op pagina: :pageName',
+    'comment_mention_intro' => 'Je bent vermeld in een opmerking in :appName:',
 
     'detail_page_name' => 'Pagina Naam:',
     'detail_page_path' => 'Paginapad:',
