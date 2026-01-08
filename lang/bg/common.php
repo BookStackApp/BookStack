@@ -6,7 +6,7 @@ return [
 
     // Buttons
     'cancel' => 'Отказ',
-    'close' => 'Close',
+    'close' => 'Затвори',
     'confirm' => 'Потвърждаване',
     'back' => 'Назад',
     'save' => 'Запис',
@@ -20,7 +20,7 @@ return [
     'description' => 'Описание',
     'role' => 'Роля',
     'cover_image' => 'Образ на корицата',
-    'cover_image_description' => 'This image should be approximately 440x250px although it will be flexibly scaled & cropped to fit the user interface in different scenarios as required, so actual dimensions for display will differ.',
+    'cover_image_description' => 'Изображението трябва да е около 440x250 px. Тъй като ще се мащабира и изрязва автоматично спрямо нуждите на интерфейса, крайните размери при показване може да се различават.',
 
     // Actions
     'actions' => 'Действия',
@@ -30,8 +30,8 @@ return [
     'create' => 'Създаване',
     'update' => 'Обновяване',
     'edit' => 'Редактиране',
-    'archive' => 'Archive',
-    'unarchive' => 'Un-Archive',
+    'archive' => 'Архивирай',
+    'unarchive' => 'Разархивирай',
     'sort' => 'Сортиране',
     'move' => 'Преместване',
     'copy' => 'Копиране',
@@ -44,7 +44,7 @@ return [
     'remove' => 'Премахване',
     'add' => 'Добавяне',
     'configure' => 'Конфигуриране',
-    'manage' => 'Manage',
+    'manage' => 'Управлявай',
     'fullscreen' => 'Цял екран',
     'favourite' => 'Любимо',
     'unfavourite' => 'Не е любимо',
@@ -54,7 +54,7 @@ return [
     'filter_clear' => 'Изчистване на филтрите',
     'download' => 'Изтегляне',
     'open_in_tab' => 'Отваряне в раздел',
-    'open' => 'Open',
+    'open' => 'Отвори',
 
     // Sort Options
     'sort_options' => 'Опции за сортиране',
@@ -111,5 +111,5 @@ return [
     'terms_of_service' => 'Условия на услугата',
 
     // OpenSearch
-    'opensearch_description' => 'Search :appName',
+    'opensearch_description' => 'Търси :appName',
 ];
