@@ -9,5 +9,5 @@
   <Url type="text/html" rel="results" template="{{ url('/search') }}?term={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="{{ url('/opensearch.xml') }}"/>
 </OpenSearchDescription>
-<!-- helo  -->
- <!-- minh thu yeu manh -->
+<!-- helo  dkmmm-->
+ <!-- minh thu yeu manh kkkkk -->
