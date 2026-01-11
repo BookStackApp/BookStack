@@ -23,6 +23,6 @@ $kernel = $app->make(Kernel::class);
 $response = tap($kernel->handle(
     $request = Request::capture()
 ))->send();
-
+// 12121
 $kernel->terminate($request, $response);
 // kim oanh test 
