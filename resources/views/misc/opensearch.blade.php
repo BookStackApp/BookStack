@@ -10,3 +10,4 @@
   <Url type="application/opensearchdescription+xml" rel="self" template="{{ url('/opensearch.xml') }}"/>
 </OpenSearchDescription>
 <!-- helo  -->
+ <!-- minh thu yeu manh -->
