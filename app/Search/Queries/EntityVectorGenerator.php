@@ -6,13 +6,13 @@ namespace BookStack\Search\Queries;
 
 use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Entity;
-use BookStack\Search\Queries\Services\VectorQueryService;
+use BookStack\Search\Queries\Services\LlmQueryService;
 use Illuminate\Support\Facades\DB;
 
 class EntityVectorGenerator
 {
     public function __construct(
-        protected VectorQueryServiceProvider $vectorQueryServiceProvider
+        protected LlmQueryServiceProvider $vectorQueryServiceProvider
     ) {
     }
 
@@ -60,7 +60,7 @@ class EntityVectorGenerator
      * @param string[] $chunks
      * @return float[] array
      */
-    protected function chunksToEmbeddings(array $chunks, VectorQueryService $vectorQueryService): array
+    protected function chunksToEmbeddings(array $chunks, LlmQueryService $vectorQueryService): array
     {
         $embeddings = [];
         foreach ($chunks as $index => $chunk) {

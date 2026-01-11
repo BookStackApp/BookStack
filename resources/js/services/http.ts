@@ -196,7 +196,7 @@ export class HttpManager {
             url = window.baseUrl(url);
         }
 
-        return createEventSource({
+        const es = createEventSource({
             url,
             method,
             body: JSON.stringify(body),
@@ -204,8 +204,14 @@ export class HttpManager {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': this.getCSRFToken(),
+            },
+            onDisconnect: () => {
+                console.log('here');
+                es.close();
             }
         });
+
+        return es;
     }
 
     protected getCSRFToken(): string {

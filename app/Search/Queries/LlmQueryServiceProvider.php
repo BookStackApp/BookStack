@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace BookStack\Search\Queries;
 
 use BookStack\Http\HttpRequestService;
-use BookStack\Search\Queries\Services\OpenAiVectorQueryService;
-use BookStack\Search\Queries\Services\VectorQueryService;
+use BookStack\Search\Queries\Services\OpenAiLlmQueryService;
+use BookStack\Search\Queries\Services\LlmQueryService;
 
-class VectorQueryServiceProvider
+class LlmQueryServiceProvider
 {
     public function __construct(
         protected HttpRequestService $http,
     ) {
     }
 
-    public function get(): VectorQueryService
+    public function get(): LlmQueryService
     {
         $service = $this->getServiceName();
 
         if ($service === 'openai') {
-            return new OpenAiVectorQueryService(config('services.openai'), $this->http);
+            return new OpenAiLlmQueryService(config('services.openai'), $this->http);
         }
 
         throw new \Exception("No '{$service}' LLM service found");

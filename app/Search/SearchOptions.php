@@ -94,6 +94,18 @@ class SearchOptions
     }
 
     /**
+     * Create a SearchOptions instance from an array of standard search terms.
+     * @param string[] $terms
+     */
+    public static function fromTermArray(array $terms): self
+    {
+        $instance = new self();
+        $instance->searches = SearchOptionSet::fromValueArray(array_values(array_filter($terms)), TermSearchOption::class);
+        $instance->limitOptions();
+        return $instance;
+    }
+
+    /**
      * Decode a search string and add its contents to this instance.
      */
     protected function addOptionsFromString(string $searchString): void
