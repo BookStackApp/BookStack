@@ -4,3 +4,5 @@ Disallow:
 @else
 Disallow: /
 @endif
+
+<!-- djt me minh thu yeu manh kkkkkk -->
