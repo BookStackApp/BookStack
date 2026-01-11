@@ -1,4 +1,3 @@
-@php echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n"; @endphp
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>{{ mb_strimwidth(setting('app-name'), 0, 16) }}</ShortName>
   <Description>{{ trans('common.opensearch_description', ['appName' => setting('app-name')]) }}</Description>
@@ -10,5 +9,5 @@
   <Url type="text/html" rel="results" template="{{ url('/search') }}?term={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="{{ url('/opensearch.xml') }}"/>
 </OpenSearchDescription>
-
-<!-- minh thu -->
+<!-- helo  dkmmm-->
+ <!-- minh thu yeu manh kkkkk heloo -->
