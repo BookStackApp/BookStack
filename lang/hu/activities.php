@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Webhook sikeresen törölve',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
-    'import_run' => 'updated import',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_create' => 'import elkészült',
+    'import_create_notification' => 'Az import sikeresen feltöltötve',
+    'import_run' => 'import frissítve',
+    'import_run_notification' => 'A tartalmat sikeresen importáltam.',
+    'import_delete' => 'import törölve',
+    'import_delete_notification' => 'Az import sikeresen törölve',
 
     // Users
     'user_create' => 'létrehozta a felhasználót',
