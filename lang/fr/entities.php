@@ -54,7 +54,7 @@ return [
     'import_continue_desc' => 'Examinez le contenu à importer à partir du fichier ZIP téléchargé. Lorsque vous êtes prêt, lancez l\'importation pour ajouter son contenu à ce système. Le fichier d\'importation ZIP téléchargé sera automatiquement supprimé si l\'importation est réussie.',
     'import_details' => 'Détails de l\'importation',
     'import_run' => 'Exécuter Importation',
-    'import_size' => ':size taille du ZIP d\'import',
+    'import_size' => ':size Taille du fichier ZIP à importer',
     'import_uploaded_at' => ':relativeTime téléchargé',
     'import_uploaded_by' => 'Téléchargé par',
     'import_location' => 'Emplacement de l\'importation',
