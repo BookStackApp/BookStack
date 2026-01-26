@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'Administrer de e-mail-notifikationer, du modtager, når visse aktiviteter udføres i systemet.',
     'notifications_opt_own_page_changes' => 'Adviser ved ændringer af sider, jeg ejer',
     'notifications_opt_own_page_comments' => 'Adviser ved kommentarer på sider, jeg ejer',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'Giv besked, når jeg er nævnt i en kommentar',
     'notifications_opt_comment_replies' => 'Adviser ved svar på mine kommentarer',
     'notifications_save' => 'Gem indstillinger',
     'notifications_update_success' => 'Indstillinger for notifikationer er blevet opdateret!',
