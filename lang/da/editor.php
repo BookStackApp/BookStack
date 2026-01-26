@@ -48,7 +48,7 @@ return [
     'superscript' => 'Hævet',
     'subscript' => 'Sænket',
     'text_color' => 'Tekstfarve',
-    'highlight_color' => 'Highlight color',
+    'highlight_color' => 'Fremhævelsesfarve',
     'custom_color' => 'Tilpasset farve',
     'remove_color' => 'Fjern farve',
     'background_color' => 'Baggrundsfarve',
