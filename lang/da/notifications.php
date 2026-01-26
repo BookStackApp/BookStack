@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Opdateret side: :pageName',
     'updated_page_intro' => 'En side er blevet opdateret i :appName:',
     'updated_page_debounce' => 'For at forhindre en masse af notifikationer, i et stykke tid vil du ikke blive sendt notifikationer for yderligere redigeringer til denne side af den samme editor.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Du er blevet nævnt i en kommentar på siden: :pageName',
+    'comment_mention_intro' => 'Du blev nævnt i en kommentar på :appName:',
 
     'detail_page_name' => 'Sidens navn:',
     'detail_page_path' => 'Sidesti:',
