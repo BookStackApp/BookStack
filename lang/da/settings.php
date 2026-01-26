@@ -75,8 +75,8 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Ingen restriktion opsat',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
-    'sorting_book_default' => 'Default Book Sort Rule',
+    'sorting' => 'Lister & Sortering',
+    'sorting_book_default' => 'Standardregel for sortering af bog',
     'sorting_book_default_desc' => 'Vælg den standardsorteringsregel, der skal gælde for nye bøger. Dette påvirker ikke eksisterende bøger og kan tilsidesættes for hver enkelt bog.',
     'sorting_rules' => 'Regler for sortering',
     'sorting_rules_desc' => 'Det er foruddefinerede sorteringsoperationer, som kan anvendes på indhold i systemet.',
@@ -103,8 +103,8 @@ return [
     'sort_rule_op_updated_date' => 'Opdateret dato',
     'sort_rule_op_chapters_first' => 'Kapitler først',
     'sort_rule_op_chapters_last' => 'De sidste kapitler',
-    'sorting_page_limits' => 'Per-Page Display Limits',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits' => 'Visningsgrænser pr. side',
+    'sorting_page_limits_desc' => 'Angiv, hvor mange elementer der skal vises pr. side i forskellige lister i systemet. Typisk vil et lavere beløb være mere effektivt, mens et højere beløb undgår behovet for at klikke sig igennem flere sider. Det anbefales at bruge et lige multiplum af 3 (18, 24, 30 osv.).',
 
     // Maintenance settings
     'maint' => 'Vedligeholdelse',
@@ -197,13 +197,13 @@ return [
     'role_import_content' => 'Importer indhold',
     'role_editor_change' => 'Skift side editor',
     'role_notifications' => 'Modtag og administrer notifikationer',
-    'role_permission_note_users_and_roles' => 'These permissions will technically also provide visibility & searching of users & roles in the system.',
+    'role_permission_note_users_and_roles' => 'Disse tilladelser vil teknisk set også give synlighed og søgning efter brugere og roller i systemet.',
     'role_asset' => 'Tilladelser for medier og "assets"',
     'roles_system_warning' => 'Vær opmærksom på, at adgang til alle af de ovennævnte tre tilladelser, kan give en bruger mulighed for at ændre deres egne brugerrettigheder eller brugerrettigheder for andre i systemet. Tildel kun roller med disse tilladelser til betroede brugere.',
     'role_asset_desc' => 'Disse tilladelser kontrollerer standardadgang til medier og "assets" i systemet. Tilladelser til bøger, kapitler og sider tilsidesætter disse tilladelser.',
     'role_asset_admins' => 'Administratorer får automatisk adgang til alt indhold, men disse indstillinger kan vise eller skjule UI-indstillinger.',
     'role_asset_image_view_note' => 'Dette vedrører synlighed i billedhåndteringen. Den faktiske adgang til uploadede billedfiler vil afhænge af systemets billedlagringsindstilling.',
-    'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
+    'role_asset_users_note' => 'Disse tilladelser vil teknisk set også give synlighed og søgning efter brugere i systemet.',
     'role_all' => 'Alle',
     'role_own' => 'Eget',
     'role_controlled_by_asset' => 'Styres af det medie/"asset", de uploades til',
