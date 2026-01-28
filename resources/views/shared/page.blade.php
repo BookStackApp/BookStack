@@ -23,9 +23,12 @@
 
 @section('body')
     <main class="content-wrap card">
-        <h1 class="break-text" id="bkmrk-page-title">{{ $page->name }}</h1>
-        <div class="page-display-content" dir="auto">
-            {!! $page->html !!}
+        <div class="page-content clearfix">
+            <h1 class="break-text" id="bkmrk-page-title">{{ $page->name }}</h1>
+            <div style="clear:left;"></div>
+            <div class="page-display-content" dir="auto">
+                {!! $page->html !!}
+            </div>
         </div>
     </main>
 @endsection
