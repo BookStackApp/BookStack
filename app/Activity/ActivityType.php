@@ -75,6 +75,9 @@ class ActivityType
     const SORT_RULE_UPDATE = 'sort_rule_update';
     const SORT_RULE_DELETE = 'sort_rule_delete';
 
+    const SHARE_LINK_CREATE = 'share_link_create';
+    const SHARE_LINK_DELETE = 'share_link_delete';
+
     /**
      * Get all the possible values.
      */

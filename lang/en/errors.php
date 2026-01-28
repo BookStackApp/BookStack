@@ -131,4 +131,7 @@ return [
 
     // HTTP errors
     'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+
+    // Share links
+    'share_link_not_found' => 'The share link you are trying to access could not be found or has been removed.',
 ];

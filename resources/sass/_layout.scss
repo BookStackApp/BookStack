@@ -186,6 +186,34 @@ body.flexbox {
   flex: none;
 }
 
+.content.flex {
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+}
+
+.sidebar-layout {
+  flex: 0 0 auto;
+  min-width: 240px;
+  max-width: 280px;
+  padding: vars.$xl vars.$m;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  &.sidebar-layout-right {
+    min-width: 200px;
+    max-width: 240px;
+  }
+}
+
+.scroll-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  padding-top: vars.$m;
+}
+
 .justify-flex-start {
   justify-content: flex-start;
 }

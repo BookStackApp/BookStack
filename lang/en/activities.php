@@ -137,4 +137,8 @@ return [
 
     // Other
     'permissions_update'          => 'updated permissions',
+
+    // Share Links
+    'share_link_create' => 'created share link',
+    'share_link_delete' => 'deleted share link',
 ];

@@ -24,6 +24,23 @@
             @if($model instanceof \BookStack\Entities\Models\Bookshelf)
                 <p class="text-warn">{{ trans('entities.shelves_permissions_cascade_warning') }}</p>
             @endif
+
+            @php
+                $shareLinkCount = 0;
+                if ($model instanceof \BookStack\Entities\Models\Entity) {
+                    $shareLinkService = app(\BookStack\Entities\EntityShareLinkService::class);
+                    $shareLinkCount = $shareLinkService->getShareLinkCount($model);
+                }
+            @endphp
+            @if($shareLinkCount > 0)
+                <div class="text-warn mt-m">
+                    <strong>@icon('warning') {{ trans('entities.share_link_permission_warning', ['count' => $shareLinkCount]) }}</strong>
+                    <br>
+                    @if(userCan(\BookStack\Permissions\Permission::ContentShareManage))
+                        <a href="{{ $model->getUrl('/share-links') }}" class="text-link">{{ trans('entities.share_link_view_all') }}</a>
+                    @endif
+                </div>
+            @endif
         </div>
         <div class="flex-container-row justify-flex-end">
             <div class="form-group mb-m">

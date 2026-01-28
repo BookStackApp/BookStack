@@ -27,6 +27,7 @@ enum Permission: string
     case AccessApi = 'access-api';
     case ContentExport = 'content-export';
     case ContentImport = 'content-import';
+    case ContentShareManage = 'content-share-manage';
     case EditorChange = 'editor-change';
     case ReceiveNotifications = 'receive-notifications';
     case RestrictionsManage = 'restrictions-manage';

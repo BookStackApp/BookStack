@@ -14,6 +14,9 @@
                     <a href="{{ url('/settings/customization') }}" class="{{ $category === 'customization' ? 'active' : '' }}">@icon('palette') {{ trans('settings.app_customization') }}</a>
                     <a href="{{ url('/settings/registration') }}" class="{{ $category === 'registration' ? 'active' : '' }}">@icon('security') {{ trans('settings.reg_settings') }}</a>
                     <a href="{{ url('/settings/sorting') }}" class="{{ $category === 'sorting' ? 'active' : '' }}">@icon('sort') {{ trans('settings.sorting') }}</a>
+                    @if(userCan(\BookStack\Permissions\Permission::SettingsManage))
+                        <a href="{{ url('/settings/share-links') }}" class="{{ $category === 'share-links' ? 'active' : '' }}">@icon('link') {{ trans('entities.share_links') }}</a>
+                    @endif
                 </nav>
 
                 <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>

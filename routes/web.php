@@ -29,6 +29,9 @@ Route::get('/manifest.json', [MetaController::class, 'pwaManifest']);
 Route::get('/licenses', [MetaController::class, 'licenses']);
 Route::get('/opensearch.xml', [MetaController::class, 'opensearch']);
 
+// Public share link route (no authentication required)
+Route::get('/share/{token}', [EntityControllers\SharedContentController::class, 'show'])->name('shared.show');
+
 // Authenticated routes...
 Route::middleware('auth')->group(function () {
 
@@ -140,6 +143,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/references', [ReferenceController::class, 'chapter']);
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/delete', [EntityControllers\ChapterController::class, 'showDelete']);
     Route::delete('/books/{bookSlug}/chapter/{chapterSlug}', [EntityControllers\ChapterController::class, 'destroy']);
+
+    // Share link management routes
+    Route::get('/books/{bookSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'indexForBook']);
+    Route::post('/books/{bookSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'storeForBook']);
+    Route::get('/books/{bookSlug}/chapter/{chapterSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'indexForChapter']);
+    Route::post('/books/{bookSlug}/chapter/{chapterSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'storeForChapter']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'indexForPage']);
+    Route::post('/books/{bookSlug}/page/{pageSlug}/share-links', [EntityControllers\EntityShareLinkController::class, 'storeForPage']);
+    Route::delete('/share-links/{id}', [EntityControllers\EntityShareLinkController::class, 'destroy']);
 
     // User Profile routes
     Route::get('/user/{slug}', [UserControllers\UserProfileController::class, 'show']);

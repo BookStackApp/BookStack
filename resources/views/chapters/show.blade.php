@@ -140,6 +140,12 @@
                     <span>{{ trans('entities.permissions') }}</span>
                 </a>
             @endif
+            @if(userCan(\BookStack\Permissions\Permission::ContentShareManage))
+                <a href="{{ $chapter->getUrl('/share-links') }}" class="icon-list-item">
+                    <span>@icon('link')</span>
+                    <span>{{ trans('entities.share_links') }}</span>
+                </a>
+            @endif
             @if(userCan(\BookStack\Permissions\Permission::ChapterDelete, $chapter))
                 <a href="{{ $chapter->getUrl('/delete') }}" data-shortcut="delete" class="icon-list-item">
                     <span>@icon('delete')</span>

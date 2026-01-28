@@ -370,5 +370,9 @@ return [
         'zh_CN' => '简体中文',
         'zh_TW' => '繁體中文',
     ],
+
+    // Share Links
+    'share_links_desc' => 'Manage all public share links created across the system. Share links allow unauthenticated access to the content they reference.',
+    'share_links_none' => 'No share links have been created yet.',
     //!////////////////////////////////
 ];

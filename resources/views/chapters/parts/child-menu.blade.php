@@ -11,7 +11,17 @@
         role="menu">
         @foreach($bookChild->visible_pages as $childPage)
             <li class="list-item-page {{ $childPage->isA('page') && $childPage->draft ? 'draft' : '' }}" role="presentation">
-                @include('entities.list-item-basic', ['entity' => $childPage, 'classes' => $current->matches($childPage)? 'selected' : '' ])
+                @if(isset($shareToken) && $shareToken)
+                    @include('shared.list-item-basic', [
+                        'entity' => $childPage,
+                        'classes' => $current->matches($childPage)? 'selected' : '',
+                        'shareToken' => $shareToken,
+                        'shareLink' => $shareLink ?? null,
+                        'currentEntityId' => $current->id
+                    ])
+                @else
+                    @include('entities.list-item-basic', ['entity' => $childPage, 'classes' => $current->matches($childPage)? 'selected' : '' ])
+                @endif
             </li>
         @endforeach
     </ul>

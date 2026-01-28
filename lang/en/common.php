@@ -112,4 +112,7 @@ return [
 
     // OpenSearch
     'opensearch_description' => 'Search :appName',
+
+    // Copy action
+    'copied' => 'Copied',
 ];

@@ -215,13 +215,43 @@ class AttachmentController extends Controller
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
 
-        try {
-            $page = $this->pageQueries->findVisibleByIdOrFail($attachment->uploaded_to);
-        } catch (NotFoundException $exception) {
-            throw new NotFoundException(trans('errors.attachment_not_found'));
-        }
+        $shareToken = $request->get('share_token');
+        
+        if ($shareToken) {
+            $shareLink = \BookStack\Entities\Models\EntityShareLink::query()
+                ->where('token', '=', $shareToken)
+                ->first();
+            
+            if (!$shareLink) {
+                abort(404, trans('errors.share_link_not_found'));
+            }
+            
+            $page = $this->pageQueries->start()->find($attachment->uploaded_to);
+            if (!$page) {
+                abort(404, trans('errors.attachment_not_found'));
+            }
+            
+            $hasShareAccess = false;
+            if ($shareLink->entity_type === 'page' && $shareLink->entity_id === $page->id) {
+                $hasShareAccess = true;
+            } elseif ($shareLink->entity_type === 'chapter' && $shareLink->entity_id === $page->chapter_id) {
+                $hasShareAccess = true;
+            } elseif ($shareLink->entity_type === 'book' && $shareLink->entity_id === $page->book_id) {
+                $hasShareAccess = true;
+            }
+            
+            if (!$hasShareAccess) {
+                abort(404, trans('errors.attachment_not_found'));
+            }
+        } else {
+            try {
+                $page = $this->pageQueries->findVisibleByIdOrFail($attachment->uploaded_to);
+            } catch (NotFoundException $exception) {
+                throw new NotFoundException(trans('errors.attachment_not_found'));
+            }
 
-        $this->checkOwnablePermission(Permission::PageView, $page);
+            $this->checkOwnablePermission(Permission::PageView, $page);
+        }
 
         if ($attachment->external) {
             return redirect($attachment->path);

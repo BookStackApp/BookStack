@@ -12,6 +12,17 @@ class Authenticate
      */
     public function handle(Request $request, Closure $next)
     {
+        $shareToken = $request->get('share_token');
+        if ($shareToken && $request->is('attachments/*')) {
+            $shareLinkExists = \BookStack\Entities\Models\EntityShareLink::query()
+                ->where('token', '=', $shareToken)
+                ->exists();
+            
+            if ($shareLinkExists) {
+                return $next($request);
+            }
+        }
+
         if (!user()->hasAppAccess()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);

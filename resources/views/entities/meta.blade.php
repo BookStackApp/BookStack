@@ -10,18 +10,30 @@
     @endif
 
     @if ($entity->isA('page'))
-        <a href="{{ $entity->getUrl('/revisions') }}" class="entity-meta-item">
-            @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }}
-        </a>
+        @if(!user()->isGuest())
+            <a href="{{ $entity->getUrl('/revisions') }}" class="entity-meta-item">
+                @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }}
+            </a>
+        @else
+            <div class="entity-meta-item">
+                @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }}
+            </div>
+        @endif
     @endif
 
     @if ($entity->ownedBy && $entity->owned_by !== $entity->created_by)
         <div class="entity-meta-item">
             @icon('user')
             <div>
-                {!! trans('entities.meta_owned_name', [
-                    'user' => "<a href='{$entity->ownedBy->getProfileUrl()}'>".e($entity->ownedBy->name). "</a>"
-                ]) !!}
+                @if(!user()->isGuest())
+                    {!! trans('entities.meta_owned_name', [
+                        'user' => "<a href='{$entity->ownedBy->getProfileUrl()}'>".e($entity->ownedBy->name). "</a>"
+                    ]) !!}
+                @else
+                    {!! trans('entities.meta_owned_name', [
+                        'user' => e($entity->ownedBy->name)
+                    ]) !!}
+                @endif
             </div>
         </div>
     @endif
@@ -30,10 +42,17 @@
         <div class="entity-meta-item">
             @icon('star')
             <div>
-                {!! trans('entities.meta_created_name', [
-                    'timeLength' => '<span title="'. $dates->absolute($entity->created_at) .'">'. $dates->relative($entity->created_at) . '</span>',
-                    'user' => "<a href='{$entity->createdBy->getProfileUrl()}'>".e($entity->createdBy->name). "</a>"
-                ]) !!}
+                @if(!user()->isGuest())
+                    {!! trans('entities.meta_created_name', [
+                        'timeLength' => '<span title="'. $dates->absolute($entity->created_at) .'">'. $dates->relative($entity->created_at) . '</span>',
+                        'user' => "<a href='{$entity->createdBy->getProfileUrl()}'>".e($entity->createdBy->name). "</a>"
+                    ]) !!}
+                @else
+                    {!! trans('entities.meta_created_name', [
+                        'timeLength' => '<span title="'. $dates->absolute($entity->created_at) .'">'. $dates->relative($entity->created_at) . '</span>',
+                        'user' => e($entity->createdBy->name)
+                    ]) !!}
+                @endif
             </div>
         </div>
     @else
@@ -47,10 +66,17 @@
         <div class="entity-meta-item">
             @icon('edit')
             <div>
-                {!! trans('entities.meta_updated_name', [
-                    'timeLength' => '<span title="' . $dates->absolute($entity->updated_at) .'">' . $dates->relative($entity->updated_at) .'</span>',
-                    'user' => "<a href='{$entity->updatedBy->getProfileUrl()}'>".e($entity->updatedBy->name). "</a>"
-                ]) !!}
+                @if(!user()->isGuest())
+                    {!! trans('entities.meta_updated_name', [
+                        'timeLength' => '<span title="' . $dates->absolute($entity->updated_at) .'">' . $dates->relative($entity->updated_at) .'</span>',
+                        'user' => "<a href='{$entity->updatedBy->getProfileUrl()}'>".e($entity->updatedBy->name). "</a>"
+                    ]) !!}
+                @else
+                    {!! trans('entities.meta_updated_name', [
+                        'timeLength' => '<span title="' . $dates->absolute($entity->updated_at) .'">' . $dates->relative($entity->updated_at) .'</span>',
+                        'user' => e($entity->updatedBy->name)
+                    ]) !!}
+                @endif
             </div>
         </div>
     @elseif (!$entity->isA('revision'))
@@ -61,12 +87,21 @@
     @endif
 
     @if($referenceCount ?? 0)
-        <a href="{{ $entity->getUrl('/references') }}" class="entity-meta-item">
-            @icon('reference')
-            <div>
-                {{ trans_choice('entities.meta_reference_count', $referenceCount, ['count' => $referenceCount]) }}
+        @if(!user()->isGuest())
+            <a href="{{ $entity->getUrl('/references') }}" class="entity-meta-item">
+                @icon('reference')
+                <div>
+                    {{ trans_choice('entities.meta_reference_count', $referenceCount, ['count' => $referenceCount]) }}
+                </div>
+            </a>
+        @else
+            <div class="entity-meta-item">
+                @icon('reference')
+                <div>
+                    {{ trans_choice('entities.meta_reference_count', $referenceCount, ['count' => $referenceCount]) }}
+                </div>
             </div>
-        </a>
+        @endif
     @endif
 
     @if($watchOptions?->canWatch())

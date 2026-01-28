@@ -346,6 +346,36 @@ class ImageService
             return true;
         }
 
+        $shareToken = request()->get('share_token');
+        if ($shareToken) {
+            $shareLink = \BookStack\Entities\Models\EntityShareLink::query()
+                ->where('token', '=', $shareToken)
+                ->first();
+
+            if ($shareLink) {
+                if ($imageType === 'gallery' || $imageType === 'drawio') {
+                    $page = $this->queries->pages->findById($image->uploaded_to);
+                    if ($page) {
+                        if ($shareLink->entity_type === 'page' && $shareLink->entity_id === $page->id) {
+                            return true;
+                        }
+                        if ($shareLink->entity_type === 'chapter' && $shareLink->entity_id === $page->chapter_id) {
+                            return true;
+                        }
+                        if ($shareLink->entity_type === 'book' && $shareLink->entity_id === $page->book_id) {
+                            return true;
+                        }
+                    }
+                }
+
+                if ($imageType === 'cover_book') {
+                    if ($shareLink->entity_type === 'book' && $shareLink->entity_id === $image->uploaded_to) {
+                        return true;
+                    }
+                }
+            }
+        }
+
         if ($imageType === 'gallery' || $imageType === 'drawio') {
             return $this->queries->pages->visibleForList()->where('id', '=', $image->uploaded_to)->exists();
         }
