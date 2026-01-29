@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Norādītā slepenā atslēga izmantotajam API žetonam nav pareiza',
     'api_user_no_api_permission' => 'Izmantotā API žetona īpašniekam nav tiesības veikt API izsaukumus',
     'api_user_token_expired' => 'Autorizācijas žetona derīguma termiņš ir izbeidzies',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Radusies kļūda sūtot testa epastu:',
