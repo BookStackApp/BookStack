@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'API 토큰이 제공한 암호에 문제가 있습니다.',
     'api_user_no_api_permission' => 'API 토큰의 소유자가 API를 호출할 권한이 없습니다.',
     'api_user_token_expired' => '인증 토큰이 만료되었습니다.',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => '메일을 발송하는 도중 문제가 생겼습니다:',
