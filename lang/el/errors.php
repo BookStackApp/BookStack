@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Το μυστικό που παρέχεται για το δεδομένο χρησιμοποιημένο διακριτικό API είναι εσφαλμένο',
     'api_user_no_api_permission' => 'Ο ιδιοκτήτης του χρησιμοποιημένου διακριτικού API δεν έχει άδεια για να κάνει κλήσεις API',
     'api_user_token_expired' => 'Το διακριτικό εξουσιοδότησης που χρησιμοποιείται έχει λήξει',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Σφάλμα κατά την αποστολή δοκιμαστικού email:',
