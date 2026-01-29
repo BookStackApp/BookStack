@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Skrivnost, ki je bila dana za uporabljeni žeton API, je napačna',
     'api_user_no_api_permission' => 'Lastnik API nima pravic za klicanje API',
     'api_user_token_expired' => 'Avtorizacijski žeton je pretečen',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Napaka se je pojavila pri pošiljanju testne e-pošte:',
