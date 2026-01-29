@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Mã bí mật được cung cấp cho token API đang được sử dụng không hợp lệ',
     'api_user_no_api_permission' => 'Chủ của token API đang sử dụng không có quyền gọi API',
     'api_user_token_expired' => 'Token sử dụng cho việc ủy quyền đã hết hạn',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Lỗi khi gửi email thử:',
