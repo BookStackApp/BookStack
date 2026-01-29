@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Pateiktas panaudoto API žetono slėpinys yra neteisingas',
     'api_user_no_api_permission' => 'API prieigos rakto savininkas neturi leidimo daryti API skambučius',
     'api_user_token_expired' => 'Prieigos rakto naudojimas baigė galioti',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Siunčiant bandymo email: įvyko klaida',
