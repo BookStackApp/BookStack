@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Poskytnutý Token Secret neodpovídá použitému API tokenu',
     'api_user_no_api_permission' => 'Vlastník použitého API tokenu nemá oprávnění provádět API volání',
     'api_user_token_expired' => 'Platnost autorizačního tokenu vypršela',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Při posílání testovacího e-mailu nastala chyba:',
