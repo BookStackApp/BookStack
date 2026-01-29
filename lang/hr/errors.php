@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Netočan API token',
     'api_user_no_api_permission' => 'Vlasnik API tokena nema potrebna dopuštenja',
     'api_user_token_expired' => 'Autorizacija je istekla',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Pogreška prilikom slanja testnog email:',
