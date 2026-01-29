@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Le secret fourni pour le jeton d\'API utilisé est incorrect',
     'api_user_no_api_permission' => 'Le propriétaire du jeton API utilisé n\'a pas la permission de passer des requêtes API',
     'api_user_token_expired' => 'Le jeton d\'autorisation utilisé a expiré',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Erreur émise lors de l\'envoi d\'un e-mail de test :',
