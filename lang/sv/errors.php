@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Hemligheten för den angivna API-token är felaktig',
     'api_user_no_api_permission' => 'Ägaren av den använda API-token har inte behörighet att göra API-anrop',
     'api_user_token_expired' => 'Den använda auktoriseringstoken har löpt ut',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Ett fel uppstod när ett test mail skulle skickas:',
