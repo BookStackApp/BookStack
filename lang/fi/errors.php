@@ -126,6 +126,7 @@ Sovellus ei tunnista ulkoisen todennuspalvelun pyyntöä. Ongelman voi aiheuttaa
     'api_incorrect_token_secret' => 'API-tunnisteelle annettu salainen avain on virheellinen',
     'api_user_no_api_permission' => 'Käytetyn API-tunnisteen omistajalla ei ole oikeutta tehdä API-kutsuja',
     'api_user_token_expired' => 'Käytetty valtuutuskoodi on vanhentunut',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Virhe testisähköpostia lähetettäessä:',
