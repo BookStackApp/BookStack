@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => '利用されたAPIトークンに対して提供されたシークレットが正しくありません',
     'api_user_no_api_permission' => '使用されているAPIトークンの所有者には、API呼び出しを行う権限がありません',
     'api_user_token_expired' => '認証トークンが期限切れです。',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'テストメール送信時にエラーが発生しました:',
