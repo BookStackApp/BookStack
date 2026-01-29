@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Rahasia yang diberikan untuk token API bekas yang diberikan salah',
     'api_user_no_api_permission' => 'Pemilik token API yang digunakan tidak memiliki izin untuk melakukan panggilan API',
     'api_user_token_expired' => 'Token otorisasi yang digunakan telah kedaluwarsa',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Kesalahan dilempar saat mengirim email uji:',
