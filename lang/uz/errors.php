@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Foydalanilgan API tokeni uchun berilgan sir notoʻgʻri',
     'api_user_no_api_permission' => 'Foydalanilgan API tokeni egasi API qoʻngʻiroqlarini amalga oshirishga ruxsatga ega emas',
     'api_user_token_expired' => 'Amaldagi avtorizatsiya tokeni muddati tugagan',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Sinov xatini yuborishda xatolik yuz berdi:',
