@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Секретния код, който беше предоставен за достъп до API-а е неправилен',
     'api_user_no_api_permission' => 'Собственика на АPI кода няма право да прави API заявки',
     'api_user_token_expired' => 'Кода за достъп, който беше използван, вече не е валиден',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Беше върната грешка, когато се изпрати тестовият емейл:',
