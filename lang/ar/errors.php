@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'الشفرة المُقدمة لرمز API المستخدم المحدد غير صحيحة',
     'api_user_no_api_permission' => 'مالك رمز API المستخدم ليس لديه الصلاحية لإجراء مكالمات API',
     'api_user_token_expired' => 'انتهت صلاحية رمز الترخيص المستخدم',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'حدث خطأ عند إرسال بريد إلكتروني تجريبي:',
