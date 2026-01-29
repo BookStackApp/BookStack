@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => '给已给出的API所提供的密钥不正确',
     'api_user_no_api_permission' => '使用过的 API 令牌的所有者没有进行API 调用的权限',
     'api_user_token_expired' => '所使用的身份令牌已过期',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => '发送测试电子邮件时出现错误：',
