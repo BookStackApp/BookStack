@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'दिइएको API टोकनको लागि प्रदान गरिएको गोप्य सही छैन।',
     'api_user_no_api_permission' => 'API टोकनको मालिकसँग API कल गर्ने अनुमति छैन।',
     'api_user_token_expired' => 'प्रमाणीकरण टोकन समाप्त भइसकेको छ।',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'टेस्ट इमेल पठाउँदा त्रुटि:',
