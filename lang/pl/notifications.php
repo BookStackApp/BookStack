@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Zaktualizowano stronę: :pageName',
     'updated_page_intro' => 'Strona została zaktualizowana w :appName:',
     'updated_page_debounce' => 'Aby zapobiec nadmiarowi powiadomień, przez jakiś czas nie będziesz otrzymywać powiadomień o dalszych edycjach tej strony przez tego samego edytora.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Zostałeś oznaczony w komentarzu na stronie: :pageName',
+    'comment_mention_intro' => 'Zostałeś oznaczony w komentarzu w :appName:',
 
     'detail_page_name' => 'Nazwa strony:',
     'detail_page_path' => 'Ścieżka strony:',
