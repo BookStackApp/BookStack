@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Mae\'r gyfrinach a ddarparwyd ar gyfer y tocyn API defnyddiedig a roddwyd yn anghywir',
     'api_user_no_api_permission' => 'Nid oes gan berchennog y tocyn API a ddefnyddiwyd ganiatâd i wneud galwadau API',
     'api_user_token_expired' => 'Mae\'r tocyn awdurdodi a ddefnyddiwyd wedi dod i ben',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Gwall a daflwyd wrth anfon e-bost prawf:',
