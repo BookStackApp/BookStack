@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'راز ارائه شده برای کد API استفاده شده نادرست است',
     'api_user_no_api_permission' => 'مالک نشانه API استفاده شده اجازه برقراری تماس های API را ندارد',
     'api_user_token_expired' => 'رمز مجوز استفاده شده منقضی شده است',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'خطا در هنگام ارسال ایمیل آزمایشی:',
