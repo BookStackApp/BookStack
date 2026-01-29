@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Leyndarmálið sem gefið var upp fyrir API tókann er rangt',
     'api_user_no_api_permission' => 'Eigandi API tókans hefur ekki heimild til að gera API köll',
     'api_user_token_expired' => 'Auðkenningar tókin er útrunninn',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Villa kom upp viðað reyna senda prufu tölvupóst:',
