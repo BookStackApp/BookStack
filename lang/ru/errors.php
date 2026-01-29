@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Секрет, предоставленный для данного использованного API токена неверен',
     'api_user_no_api_permission' => 'Владелец используемого API токена не имеет прав на выполнение вызовов API',
     'api_user_token_expired' => 'Срок действия используемого токена авторизации истек',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Ошибка при отправке тестового письма:',
