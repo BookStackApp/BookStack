@@ -105,11 +105,11 @@ return [
     'url'                  => 'Format :attribute jest nieprawidłowy.',
     'uploaded'             => 'Plik nie może zostać wysłany. Serwer nie akceptuje plików o takim rozmiarze.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute musi odnosić się do pliku w archiwum ZIP.',
+    'zip_file_size' => 'Plik :attribute nie może przekraczać :size MB.',
+    'zip_file_mime' => ':attribute musi odnosić się do pliku typu :validTypes. Znaleziono :foundType.',
+    'zip_model_expected' => 'Oczekiwano obiektu danych, ale znaleziono ":type".',
+    'zip_unique' => ':attribute musi być unikalny dla typu obiektu w archiwum ZIP.',
 
     // Custom validation lines
     'custom' => [
