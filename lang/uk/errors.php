@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Секрет, наданий для даного використовуваного токена API є неправильним',
     'api_user_no_api_permission' => 'Власник використовуваного токена API не має дозволу здійснювати виклики API',
     'api_user_token_expired' => 'Термін дії токена авторизації закінчився',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Помилка під час надсилання тестового електронного листа:',
