@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Kullanılan API için sağlanan gizli anahtar doğru değil',
     'api_user_no_api_permission' => 'Kullanılan API anahtarının sahibi API çağrısı yapmak için izne sahip değil',
     'api_user_token_expired' => 'Kullanılan yetkilendirme anahtarının süresi doldu',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Test e-postası gönderilirken bir hata meydana geldi:',
