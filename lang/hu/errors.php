@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Az API tokenhez használt secret helytelen',
     'api_user_no_api_permission' => 'A használt API vezérjel tulajdonosának nincs jogosultsága API hívások végrehajtásához',
     'api_user_token_expired' => 'A használt hitelesítési vezérjel lejárt',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Hiba történt egy teszt email küldésekor:',
