@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'API tunnusele lisatud salajane võti ei ole korrektne',
     'api_user_no_api_permission' => 'Selle API tunnuse omanikul ei ole õigust API päringuid teha',
     'api_user_token_expired' => 'Volitustunnus on aegunud',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Test e-kirja saatmisel tekkis viga:',
