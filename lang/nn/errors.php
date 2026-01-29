@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Hemmeligheten som er gitt for det gitte brukte API-tokenet er feil',
     'api_user_no_api_permission' => 'Eieren av det brukte API-tokenet har ikke tillatelse til å ringe API-samtaler',
     'api_user_token_expired' => 'Autorisasjonstokenet som er brukt, har utløpt',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Feil kastet når du sendte en test-e-post:',
