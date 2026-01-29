@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Podany sekret dla tego API jest nieprawidłowy',
     'api_user_no_api_permission' => 'Właściciel używanego tokenu API nie ma uprawnień do wykonywania zapytań do API',
     'api_user_token_expired' => 'Token uwierzytelniania wygasł',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Błąd podczas wysyłania testowej wiadomości e-mail:',
