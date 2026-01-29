@@ -125,6 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Secretul furnizat pentru token-ul API folosit este incorect',
     'api_user_no_api_permission' => 'Proprietarul token-ului API folosit nu are permisiunea de a efectua apeluri API',
     'api_user_token_expired' => 'Token-ul de autorizare utilizat a expirat',
+    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Eroare la trimiterea unui e-mail de test:',
