@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => '这将删除上传的ZIP文件，不能撤消。',
     'import_errors' => '导入错误',
     'import_errors_desc' => '在尝试导入过程中出现了以下错误:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigate siblings for book',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => '导航页面',
+    'breadcrumb_siblings_for_chapter' => '导航章节',
+    'breadcrumb_siblings_for_book' => '导航书籍',
+    'breadcrumb_siblings_for_bookshelf' => '导航书架',
 
     // Permissions and restrictions
     'permissions' => '权限',
@@ -399,7 +399,7 @@ return [
     'comment_add' => '添加评论',
     'comment_none' => '没有要显示的评论',
     'comment_placeholder' => '在这里评论',
-    'comment_thread_count' => ':count Comment Thread|:count Comment Threads',
+    'comment_thread_count' => ':count 条',
     'comment_archived_count' => ':count 条评论已存档',
     'comment_archived_threads' => '已存档的贴子',
     'comment_save' => '保存评论',
