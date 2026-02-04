@@ -397,7 +397,7 @@ return [
     'comment' => 'Kommentar',
     'comments' => 'Kommentarer',
     'comment_add' => 'Lägg till kommentar',
-    'comment_none' => 'No comments to display',
+    'comment_none' => 'Inga kommentarer att visa',
     'comment_placeholder' => 'Lämna en kommentar här',
     'comment_thread_count' => ':count Comment Thread|:count Comment Threads',
     'comment_archived_count' => ':count Archived',
