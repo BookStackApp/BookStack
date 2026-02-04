@@ -13,7 +13,7 @@ return [
     'auth_pre_register_theme_prevention' => 'Le compte utilisateur n\'a pas pu être enregistré avec les informations fournies',
     'email_already_confirmed' => 'Cet e-mail a déjà été validé, vous pouvez vous connecter.',
     'email_confirmation_invalid' => 'Cette confirmation est invalide. Veuillez essayer de vous inscrire à nouveau.',
-    'email_confirmation_expired' => 'Le jeton de confirmation est périmé. Un nouvel e-mail vous a été envoyé.',
+    'email_confirmation_expired' => 'Le jeton de confirmation a expiré. Un nouvel e-mail vous a été envoyé.',
     'email_confirmation_awaiting' => 'L\'adresse e-mail du compte utilisé doit être confirmée',
     'ldap_fail_anonymous' => 'L\'accès LDAP anonyme n\'a pas abouti',
     'ldap_fail_authed' => 'L\'accès LDAP n\'a pas abouti avec cet utilisateur et ce mot de passe',
@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Le secret fourni pour le jeton d\'API utilisé est incorrect',
     'api_user_no_api_permission' => 'Le propriétaire du jeton API utilisé n\'a pas la permission de passer des requêtes API',
     'api_user_token_expired' => 'Le jeton d\'autorisation utilisé a expiré',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Seules les requêtes GET sont autorisées lors de l’utilisation de l’API avec une authentification basée sur les cookies',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Erreur émise lors de l\'envoi d\'un e-mail de test :',
