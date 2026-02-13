@@ -3,7 +3,7 @@ name: Deploy BookStack to Demo EC2
 on:
   push:
     branches:
-      - implement-custom-notification-for-slack-app # Your specific branch
+      - implement-custom-notification-for-slack-app
 
 jobs:
   deploy:
@@ -18,16 +18,17 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script_stop: true
           script: |
             cd ~/bookstack-demo
             
-            # Update the code from the specific branch
+            # Sync code
             git fetch origin
             git checkout implement-custom-notification-for-slack-app
             git pull origin implement-custom-notification-for-slack-app
             
-            # Restart and Rebuild the containers to apply changes
-            docker-compose up -d --build
+            sudo docker-compose up -d --build
             
-            # Fix the "dubious ownership" git issue inside the container
-            docker exec -u root bookstack-demo_app_1 git config --global --add safe.directory /app
+            # Fix ownership issue
+            sudo docker exec -u root bookstack-demo_app_1 git config --global --add safe.directory /app
