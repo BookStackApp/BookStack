@@ -28,7 +28,7 @@ jobs:
             git checkout implement-custom-notification-for-slack-app
             git pull origin implement-custom-notification-for-slack-app
             
-            sudo docker-compose up -d --build
+            docker-compose up -d --build
             
             # Fix ownership issue
-            sudo docker exec -u root bookstack-demo_app_1 git config --global --add safe.directory /app
+            docker exec -u root bookstack-demo_app_1 git config --global --add safe.directory /app
