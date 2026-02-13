@@ -20,6 +20,8 @@ use BookStack\Users\Controllers as UserControllers;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 // Status & Meta routes
 Route::get('/status', [SettingControllers\StatusController::class, 'show']);
@@ -381,3 +383,23 @@ Route::get('/theme/{theme}/{path}', [ThemeController::class, 'publicFile'])
     ->where('path', '.*$');
 
 Route::fallback([MetaController::class, 'notFound'])->name('fallback');
+
+//custom added rotues for training
+Route::post('/ajax/training-complete', function (Request $request) {
+    $webhookUrl = config('services.slack.webhook_url') ?: env('SLACK_WEBHOOK_URL');
+
+    if (!$webhookUrl) {
+        return response()->json(['status' => 'error', 'message' => 'Webhook missing'], 500);
+    }
+
+    $payload = [
+        "text" => ":blue_book: *Training Completed!* :blue_book:\n" .
+                  "*User:* " . auth()->user()->name . "\n" .
+                  "*Page:* <" . $request->page_url . "|" . $request->page_name . ">\n" .
+                  "*Time:* " . now()->setTimezone('Asia/Kolkata')->format('Y-m-d h:i:s A')
+    ];
+
+    $response = Http::post($webhookUrl, $payload);
+
+    return response()->json(['status' => $response->successful() ? 'ok' : 'error']);
+})->middleware(['web', 'auth']);
