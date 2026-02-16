@@ -43,7 +43,7 @@ class GroupSyncService
         $cleanIds = [];
 
         foreach ($inputIds as $inputId) {
-            $cleanIds[] = str_replace('\,', ',', trim($inputId));
+            $cleanIds[] = str_replace(' ', '-', str_replace('\,', ',', trim($inputId)));
         }
 
         return $cleanIds;
