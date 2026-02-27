@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => '章节正序',
     'sort_rule_op_chapters_last' => '章节倒序',
     'sorting_page_limits' => '每页显示限制',
-    'sorting_page_limits_desc' => '设置系统中各种列表每页显示的项目数。通常，项目数越少性能越好，而项目数越多可以避免用户点击多个页面。建议使用 3 的整数倍（例如 18、24、30 等）。',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => '维护',
