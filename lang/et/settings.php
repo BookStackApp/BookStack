@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Peatükid eespool',
     'sort_rule_op_chapters_last' => 'Peatükid tagapool',
     'sorting_page_limits' => 'Leheküljepõhised kuvalimiidid',
-    'sorting_page_limits_desc' => 'Seadista, mitut objekti erinevates loendites ühel leheküljel kuvada. Väiksem väärtus tähendab reeglina paremat jõudlust, samas kui suurem väärtus vähendab vajadust mitut lehekülge läbi klikkida. Soovituslik on kasutada 3-ga jaguvat väärtust (18, 24, 30 jne).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Hooldus',
