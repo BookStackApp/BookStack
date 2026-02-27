@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => '第一章',
     'sort_rule_op_chapters_last' => '最後一章',
     'sorting_page_limits' => '每頁顯示限制',
-    'sorting_page_limits_desc' => '設定系統內各類清單每頁顯示的項目數量。通常較低的數量能提升效能表現，而較高的數量則可避免使用者需點擊翻閱多頁。建議採用 3 的整數倍數（如 18、24、30 等）。',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => '維護',
