@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Rozdziały na początku',
     'sort_rule_op_chapters_last' => 'Rozdziały na końcu',
     'sorting_page_limits' => 'Limity wyświetlania per strona',
-    'sorting_page_limits_desc' => 'Ustaw ile elementów pokazywać per strona w różnych listach w systemie. Zazwyczaj mniejsza ilość będzie bardziej wydajna, podczas gdy większa ilość unika konieczności przeglądania wielu stron. Zaleca się stosowanie parzystej wielokrotności 3 (18, 24, 30 itp...).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Konserwacja',
