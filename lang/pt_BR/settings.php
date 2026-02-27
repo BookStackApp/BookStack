@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Capítulos Primeiro',
     'sort_rule_op_chapters_last' => 'Capítulos por Último',
     'sorting_page_limits' => 'Limites de exibição por página',
-    'sorting_page_limits_desc' => 'Defina quantos itens serão exibidos por página em diferentes listas do sistema. Normalmente, um número menor proporciona melhor desempenho, enquanto um número maior evita a necessidade de clicar em várias páginas. É recomendado o uso de um múltiplo par de 3 (18, 24, 30, etc.).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Manutenção',
