@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Capitoli Prima',
     'sort_rule_op_chapters_last' => 'Capitoli dopo',
     'sorting_page_limits' => 'Limiti Visualizzazione Per Pagina',
-    'sorting_page_limits_desc' => 'Imposta il numero di elementi da visualizzare per pagina nei vari elenchi all\'interno del sistema. In genere, un numero inferiore garantisce prestazioni migliori, mentre un numero più elevato evita la necessità di cliccare su più pagine. Si consiglia di utilizzare un multiplo pari di 3 (18, 24, 30, ecc...).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Manutenzione',
