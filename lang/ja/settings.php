@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'チャプタを最初に',
     'sort_rule_op_chapters_last' => 'チャプタを最後に',
     'sorting_page_limits' => 'ページング表示制限',
-    'sorting_page_limits_desc' => 'システム内の各種リストで1ページに表示するアイテム数を設定します。 通常、少ない数に設定するとパフォーマンスが向上し、多い数に設定するとページの移動操作が少なくなります。 3の倍数(18、24、30など)を使用することをお勧めします。',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'メンテナンス',
