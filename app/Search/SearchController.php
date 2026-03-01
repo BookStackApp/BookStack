@@ -8,6 +8,7 @@ use BookStack\Entities\Tools\SiblingFetcher;
 use BookStack\Http\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use BookStack\Users\Models\User;
 
 class SearchController extends Controller
 {
@@ -17,15 +18,19 @@ class SearchController extends Controller
     ) {
     }
 
-    /**
-     * Searches all entities.
-     */
     public function search(Request $request, SearchResultsFormatter $formatter)
     {
         $searchOpts = SearchOptions::fromRequest($request);
         $fullSearchString = $searchOpts->toString();
         $page = intval($request->get('page', '0')) ?: 1;
         $count = setting()->getInteger('lists-page-count-search', 18, 1, 1000);
+
+        $users = [];
+        if (!empty($fullSearchString)) {
+            $users = User::where('name', 'like', '%' . $fullSearchString . '%')
+                ->take(5)
+                ->get();
+        }
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, $count);
         $formatter->format($results['results']->all(), $searchOpts);
@@ -41,23 +46,16 @@ class SearchController extends Controller
             'paginator'    => $paginator,
             'searchTerm'   => $fullSearchString,
             'options'      => $searchOpts,
+            'users'        => $users,
         ]);
     }
-
-    /**
-     * Searches all entities within a book.
-     */
     public function searchBook(Request $request, int $bookId)
     {
-        $term = $request->get('term', '');
+        $term = $request->get('term', '');      
         $results = $this->searchRunner->searchBook($bookId, $term);
 
         return view('entities.list', ['entities' => $results]);
     }
-
-    /**
-     * Searches all entities within a chapter.
-     */
     public function searchChapter(Request $request, int $chapterId)
     {
         $term = $request->get('term', '');
@@ -76,7 +74,6 @@ class SearchController extends Controller
         $searchTerm = $request->get('term', false);
         $permission = $request->get('permission', 'view');
 
-        // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
             $options = SearchOptions::fromString($searchTerm);
             $options->setFilter('type', implode('|', $entityTypes));
@@ -87,10 +84,6 @@ class SearchController extends Controller
 
         return view('search.parts.entity-selector-list', ['entities' => $entities, 'permission' => $permission]);
     }
-
-    /**
-     * Search for a list of templates to choose from.
-     */
     public function templatesForSelector(Request $request)
     {
         $searchTerm = $request->get('term', false);
@@ -112,14 +105,17 @@ class SearchController extends Controller
             'permission' => 'view'
         ]);
     }
-
-    /**
-     * Search for a list of entities and return a partial HTML response of matching entities
-     * to be used as a result preview suggestion list for global system searches.
-     */
     public function searchSuggestions(Request $request)
     {
         $searchTerm = $request->get('term', '');
+        
+        $users = [];
+        if (!empty($searchTerm)) {
+            $users = User::where('name', 'like', '%' . $searchTerm . '%')
+                ->take(3)
+                ->get();
+        }
+
         $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 5)['results'];
 
         foreach ($entities as $entity) {
@@ -127,13 +123,10 @@ class SearchController extends Controller
         }
 
         return view('search.parts.entity-suggestion-list', [
-            'entities' => $entities->slice(0, 5)
+            'entities' => $entities->slice(0, 5),
+            'users'    => $users,
         ]);
     }
-
-    /**
-     * Search sibling items in the system.
-     */
     public function searchSiblings(Request $request, SiblingFetcher $siblingFetcher)
     {
         $type = $request->get('entity_type', null);

@@ -83,6 +83,23 @@
                     </form>
 
                     <h6 class="text-muted">{{ trans_choice('entities.search_total_results_found', $totalResults, ['count' => $totalResults]) }}</h6>
+
+                    @if(isset($users) && count($users) > 0)
+                        <div class="mb-m">
+                            <h6 class="text-muted">Matching Users</h6>
+                            <div class="grid third gap-m">
+                                @foreach($users as $user)
+                                    <a href="{{ $user->getProfileUrl() }}" class="card flex-container-row items-center p-s hover-bg-wash" style="text-decoration: none;">
+                                        <img class="avatar me-m" src="{{ $user->getAvatar(40) }}" alt="{{ $user->name }}" style="border-radius: 50%; width: 40px; height: 40px;">
+                                        <div>
+                                            <h4 class="text-user mb-none" style="font-size: 1.1rem; color: var(--color-link);">{{ $user->name }}</h4>
+                                        </div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="book-contents">
                         @include('entities.list', ['entities' => $entities, 'showPath' => true, 'showTags' => true])
                     </div>
