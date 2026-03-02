@@ -74,6 +74,7 @@
 @section('left')
     @include('entities.search-form', ['label' => trans('entities.books_search_this')])
     @include('books.parts.show-sidebar-section-tags', ['book' => $book])
+    @include('books.parts.show-sidebar-section-attachments', ['book' => $book])
     @include('books.parts.show-sidebar-section-shelves', ['bookParentShelves' => $bookParentShelves])
     @include('books.parts.show-sidebar-section-activity', ['activity' => $activity])
 @stop

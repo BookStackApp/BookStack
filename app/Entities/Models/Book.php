@@ -5,6 +5,7 @@ namespace BookStack\Entities\Models;
 use BookStack\Entities\Tools\EntityCover;
 use BookStack\Entities\Tools\EntityDefaultTemplate;
 use BookStack\Sorting\SortRule;
+use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,7 @@ use Illuminate\Support\Collection;
  * @property \Illuminate\Database\Eloquent\Collection $pages
  * @property \Illuminate\Database\Eloquent\Collection $directPages
  * @property \Illuminate\Database\Eloquent\Collection $shelves
+ * @property \Illuminate\Database\Eloquent\Collection $attachments
  * @property ?SortRule                                $sortRule
  */
 class Book extends Entity implements HasDescriptionInterface, HasCoverInterface, HasDefaultTemplateInterface
@@ -76,6 +78,16 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
     public function shelves(): BelongsToMany
     {
         return $this->belongsToMany(Bookshelf::class, 'bookshelves_books', 'book_id', 'bookshelf_id');
+    }
+
+    /**
+     * Get the attachments assigned to this book.
+     */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(Attachment::class, 'attachable_id')
+            ->where('attachments.attachable_type', 'BookStack\\Entities\\Models\\Book')
+            ->orderBy('order', 'asc');
     }
 
     /**

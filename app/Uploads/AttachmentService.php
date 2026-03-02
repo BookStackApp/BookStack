@@ -36,21 +36,33 @@ class AttachmentService
      *
      * @throws FileUploadException
      */
-    public function saveNewUpload(UploadedFile $uploadedFile, int $pageId): Attachment
+    public function saveNewUpload(UploadedFile $uploadedFile, int $entityId, string $entityType = 'page'): Attachment
     {
         $attachmentName = $uploadedFile->getClientOriginalName();
         $attachmentPath = $this->putFileInStorage($uploadedFile);
-        $largestExistingOrder = Attachment::query()->where('uploaded_to', '=', $pageId)->max('order');
+        
+        // Determine the model class
+        $modelClass = $entityType === 'book' 
+            ? 'BookStack\\Entities\\Models\\Book' 
+            : 'BookStack\\Entities\\Models\\Page';
+        
+        // Get max order for the entity using polymorphic relationship
+        $largestExistingOrder = Attachment::query()
+            ->where('attachable_type', $modelClass)
+            ->where('attachable_id', $entityId)
+            ->max('order') ?? 0;
 
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->forceCreate([
-            'name'        => $attachmentName,
-            'path'        => $attachmentPath,
-            'extension'   => $uploadedFile->getClientOriginalExtension(),
-            'uploaded_to' => $pageId,
-            'created_by'  => user()->id,
-            'updated_by'  => user()->id,
-            'order'       => $largestExistingOrder + 1,
+            'name'           => $attachmentName,
+            'path'           => $attachmentPath,
+            'extension'      => $uploadedFile->getClientOriginalExtension(),
+            'uploaded_to'    => $entityType === 'page' ? $entityId : null, // Backward compatibility
+            'attachable_type' => $modelClass,
+            'attachable_id'  => $entityId,
+            'created_by'     => user()->id,
+            'updated_by'     => user()->id,
+            'order'          => $largestExistingOrder + 1,
         ]);
 
         return $attachment;
@@ -83,19 +95,30 @@ class AttachmentService
     /**
      * Save a new File attachment from a given link and name.
      */
-    public function saveNewFromLink(string $name, string $link, int $page_id): Attachment
+    public function saveNewFromLink(string $name, string $link, int $entityId, string $entityType = 'page'): Attachment
     {
-        $largestExistingOrder = Attachment::where('uploaded_to', '=', $page_id)->max('order');
+        // Determine the model class
+        $modelClass = $entityType === 'book' 
+            ? 'BookStack\\Entities\\Models\\Book' 
+            : 'BookStack\\Entities\\Models\\Page';
+        
+        // Get max order for the entity using polymorphic relationship
+        $largestExistingOrder = Attachment::query()
+            ->where('attachable_type', $modelClass)
+            ->where('attachable_id', $entityId)
+            ->max('order') ?? 0;
 
         return Attachment::forceCreate([
-            'name'        => $name,
-            'path'        => $link,
-            'external'    => true,
-            'extension'   => '',
-            'uploaded_to' => $page_id,
-            'created_by'  => user()->id,
-            'updated_by'  => user()->id,
-            'order'       => $largestExistingOrder + 1,
+            'name'           => $name,
+            'path'           => $link,
+            'external'       => true,
+            'extension'      => '',
+            'uploaded_to'    => $entityType === 'page' ? $entityId : null, // Backward compatibility
+            'attachable_type' => $modelClass,
+            'attachable_id'  => $entityId,
+            'created_by'     => user()->id,
+            'updated_by'     => user()->id,
+            'order'          => $largestExistingOrder + 1,
         ]);
     }
 
@@ -104,8 +127,26 @@ class AttachmentService
      */
     public function updateFileOrderWithinPage(array $attachmentOrder, string $pageId)
     {
+        $modelClass = 'BookStack\\Entities\\Models\\Page';
         foreach ($attachmentOrder as $index => $attachmentId) {
-            Attachment::query()->where('uploaded_to', '=', $pageId)
+            Attachment::query()
+                ->where('attachable_type', $modelClass)
+                ->where('attachable_id', '=', $pageId)
+                ->where('id', '=', $attachmentId)
+                ->update(['order' => $index]);
+        }
+    }
+
+    /**
+     * Updates the ordering for a listing of attached files for a book.
+     */
+    public function updateFileOrderWithinBook(array $attachmentOrder, string $bookId)
+    {
+        $modelClass = 'BookStack\\Entities\\Models\\Book';
+        foreach ($attachmentOrder as $index => $attachmentId) {
+            Attachment::query()
+                ->where('attachable_type', $modelClass)
+                ->where('attachable_id', '=', $bookId)
                 ->where('id', '=', $attachmentId)
                 ->update(['order' => $index]);
         }

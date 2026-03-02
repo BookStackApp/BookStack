@@ -5,6 +5,7 @@ namespace BookStack\Uploads;
 use BookStack\App\Model;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\Book;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\HasCreatorAndUpdater;
@@ -13,6 +14,7 @@ use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -21,6 +23,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $path
  * @property string $extension
  * @property ?Page  $page
+ * @property ?Book  $book
+ * @property ?Entity $attachable
+ * @property string $attachable_type
+ * @property int    $attachable_id
  * @property bool   $external
  * @property int    $uploaded_to
  * @property User   $updatedBy
@@ -52,17 +58,40 @@ class Attachment extends Model implements OwnableInterface
     }
 
     /**
-     * Get the page this file was uploaded to.
+     * Get the polymorphic entity this file was uploaded to (page or book).
+     */
+    public function attachable(): MorphTo
+    {
+        return $this->morphTo('attachable');
+    }
+
+    /**
+     * Get the page this file was uploaded to (backward compatibility).
      */
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class, 'uploaded_to');
     }
 
+    /**
+     * Get the book this file was uploaded to.
+     * Returns null if the attachment is not attached to a book.
+     */
+    public function book(): ?Book
+    {
+        if ($this->attachable_type === 'BookStack\\Entities\\Models\\Book') {
+            return $this->attachable;
+        }
+        return null;
+    }
+
     public function jointPermissions(): HasMany
     {
-        return $this->hasMany(JointPermission::class, 'entity_id', 'uploaded_to')
-            ->where('joint_permissions.entity_type', '=', 'page');
+        return $this->hasMany(JointPermission::class, 'entity_id', 'attachable_id')
+            ->where(function($query) {
+                $query->where('joint_permissions.entity_type', '=', 'page')
+                      ->orWhere('joint_permissions.entity_type', '=', 'book');
+            });
     }
 
     /**
@@ -109,16 +138,18 @@ class Attachment extends Model implements OwnableInterface
     }
 
     /**
-     * Scope the query to those attachments that are visible based upon related page permissions.
+     * Scope the query to those attachments that are visible based upon related entity permissions.
      */
     public function scopeVisible(): Builder
     {
         $permissions = app()->make(PermissionApplicator::class);
 
-        return $permissions->restrictPageRelationQuery(
+        // Use polymorphic relationship restriction for both pages and books
+        return $permissions->restrictEntityRelationQuery(
             self::query(),
             'attachments',
-            'uploaded_to'
+            'attachable_id',
+            'attachable_type'
         );
     }
 }

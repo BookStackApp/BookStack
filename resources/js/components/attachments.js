@@ -5,12 +5,19 @@ export class Attachments extends Component {
 
     setup() {
         this.container = this.$el;
-        this.pageId = this.$opts.pageId;
+        // Support both old pageId and new entityId/entityType
+        this.entityId = this.$opts.entityId || this.$opts.pageId;
+        this.entityType = this.$opts.entityType || 'page';
         this.editContainer = this.$refs.editContainer;
         this.listContainer = this.$refs.listContainer;
         this.linksContainer = this.$refs.linksContainer;
         this.listPanel = this.$refs.listPanel;
         this.attachLinkButton = this.$refs.attachLinkButton;
+
+        // If listPanel exists, use it; otherwise fall back to listContainer
+        if (!this.listPanel && this.listContainer) {
+            this.listPanel = this.listContainer;
+        }
 
         this.setupListeners();
     }
@@ -50,24 +57,26 @@ export class Attachments extends Component {
         const sectionMap = {
             links: this.linksContainer,
             edit: this.editContainer,
-            list: this.listContainer,
+            list: this.listPanel || this.listContainer,
         };
 
         for (const [name, elem] of Object.entries(sectionMap)) {
-            elem.toggleAttribute('hidden', name !== section);
+            if (elem) {
+                elem.toggleAttribute('hidden', name !== section);
+            }
         }
     }
 
     reloadList() {
         this.stopEdit();
-        window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
+        window.$http.get(`/attachments/get/${this.entityType}/${this.entityId}`).then(resp => {
             this.listPanel.innerHTML = resp.data;
             window.$components.init(this.listPanel);
         });
     }
 
     updateOrder(idOrder) {
-        window.$http.put(`/attachments/sort/page/${this.pageId}`, {order: idOrder}).then(resp => {
+        window.$http.put(`/attachments/sort/${this.entityType}/${this.entityId}`, {order: idOrder}).then(resp => {
             window.$events.emit('success', resp.data.message);
         });
     }
@@ -82,7 +91,16 @@ export class Attachments extends Component {
     }
 
     stopEdit() {
-        this.showSection('list');
+        if (this.listPanel || this.listContainer) {
+            this.showSection('list');
+        }
+        // Hide edit and link containers
+        if (this.editContainer) {
+            this.editContainer.toggleAttribute('hidden', true);
+        }
+        if (this.linksContainer) {
+            this.linksContainer.toggleAttribute('hidden', true);
+        }
     }
 
 }

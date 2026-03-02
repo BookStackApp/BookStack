@@ -1,13 +1,20 @@
+@php
+    $entityId = $entity->id ?? $page->id ?? $book->id ?? 0;
+    $entityType = isset($book) ? 'book' : 'page';
+    $uploadUrl = url('/attachments/upload?uploaded_to=' . $entityId . '&entity_type=' . $entityType);
+    $attachments = ($page->attachments ?? $book->attachments ?? collect())->all();
+@endphp
 <div style="display: block;"
      refs="editor-toolbox@tab-content"
      data-tab-content="files"
      component="attachments"
-     option:attachments:page-id="{{ $page->id ?? 0 }}"
+     option:attachments:entity-id="{{ $entityId }}"
+     option:attachments:entity-type="{{ $entityType }}"
      class="toolbox-tab-content">
 
     <h4>{{ trans('entities.attachments') }}</h4>
     <div component="dropzone"
-         option:dropzone:url="{{ url('/attachments/upload?uploaded_to=' . $page->id) }}"
+         option:dropzone:url="{{ $uploadUrl }}"
          option:dropzone:success-message="{{ trans('entities.attachments_file_uploaded') }}"
          option:dropzone:error-message="{{ trans('errors.attachment_upload_error') }}"
          option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
@@ -35,14 +42,18 @@
             <hr>
 
             <div refs="attachments@list-panel">
-                @include('attachments.manager-list', ['attachments' => $page->attachments->all()])
+                @include('attachments.manager-list', ['attachments' => $attachments])
             </div>
 
         </div>
     </div>
 
     <div id="link-form-container" refs="attachments@links-container" hidden class="px-l">
-        @include('attachments.manager-link-form', ['pageId' => $page->id])
+        @include('attachments.manager-link-form', [
+            'entityId' => $entityId,
+            'entityType' => $entityType,
+            'pageId' => $page->id ?? null
+        ])
     </div>
 
     <div id="edit-form-container" refs="attachments@edit-container" hidden class="px-l"></div>
