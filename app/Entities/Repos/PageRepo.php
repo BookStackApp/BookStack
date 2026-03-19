@@ -118,27 +118,29 @@ class PageRepo
      */
     public function update(Page $page, array $input): Page
     {
-        // Hold the old details to compare later
+        // Hold the old details to compare later.
         $oldName = $page->name;
         $oldHtml = $page->html;
         $oldMarkdown = $page->markdown;
 
         $this->updateTemplateStatusAndContentFromInput($page, $input);
-        $page = $this->baseRepo->update($page, $input);
 
-        // Update with new details
-        $page->revision_count++;
-        $page->save();
-
-        // Remove all update drafts for this user and page.
-        $this->revisionRepo->deleteDraftsForCurrentUser($page);
-
-        // Save a revision after updating
+        // Values used to determine if a change has been made.
         $summary = trim($input['summary'] ?? '');
-        $htmlChanged = isset($input['html']) && $input['html'] !== $oldHtml;
+        $htmlChanged = isset($page->html) && $page->html !== $oldHtml;
         $nameChanged = isset($input['name']) && $input['name'] !== $oldName;
-        $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;
+        $markdownChanged = isset($page->markdown) && $page->markdown !== $oldMarkdown;
+
+        // Update with new details, only if the page really changed.
         if ($htmlChanged || $nameChanged || $markdownChanged || $summary) {
+            $page = $this->baseRepo->update($page, $input);
+
+            $page->revision_count++;
+            $page->save();
+
+            // Remove all update drafts for this user and page.
+            $this->revisionRepo->deleteDraftsForCurrentUser($page);
+
             $this->revisionRepo->storeNewForPage($page, $summary);
         }
 
