@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Kapitoly jako první',
     'sort_rule_op_chapters_last' => 'Kapitoly jako poslední',
     'sorting_page_limits' => 'Počet zobrazených položek na stránce',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => 'Nastavte, kolik položek se má zobrazit na stránce v různých seznamech na webu. Obvykle bude nižší počet výkonnější, zatímco vyšší počet eliminuje nutnost proklikávat se několika stránkami. Doporučuje se použít násobek čísla 6.',
 
     // Maintenance settings
     'maint' => 'Údržba',
