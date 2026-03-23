@@ -109,7 +109,7 @@ return [
     'import_zip_cant_read' => 'ZIP-Datei konnte nicht gelesen werden.',
     'import_zip_cant_decode_data' => 'Konnte Inhalt der data.json im ZIP nicht finden und dekodieren.',
     'import_zip_no_data' => 'ZIP-Datei hat kein erwartetes Buch, Kapitel oder Seiteninhalt.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_data_too_large' => 'Der Inhalt der ZIP data.json überschreitet die maximale Dateigröße der Anwendung.',
     'import_validation_failed' => 'ZIP Import konnte aufgrund folgender Fehler nicht validiert werden:',
     'import_zip_failed_notification' => 'Importieren der ZIP-Datei fehlgeschlagen.',
     'import_perms_books' => 'Dir fehlt die erforderliche Berechtigung, um Bücher zu erstellen.',
@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Das für den API-Token angegebene geheime Token ist falsch',
     'api_user_no_api_permission' => 'Der Besitzer des verwendeten API-Token hat keine Berechtigung für API-Aufrufe',
     'api_user_token_expired' => 'Das verwendete Autorisierungs-Token ist abgelaufen',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Nur GET Anfragen sind erlaubt, wenn die API mit Cookie-basierter Authentifizierung verwendet wird',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Fehler beim Senden einer Test E-Mail:',
