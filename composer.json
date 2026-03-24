@@ -88,6 +88,7 @@
             "@php artisan key:generate --ansi"
         ],
         "pre-install-cmd": [
+            "@php -r \"!file_exists('bootstrap/cache/packages.php') || @unlink('bootstrap/cache/packages.php');\"",
             "@php -r \"!file_exists('bootstrap/cache/services.php') || @unlink('bootstrap/cache/services.php');\""
         ],
         "post-install-cmd": [

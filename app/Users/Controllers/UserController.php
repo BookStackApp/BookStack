@@ -81,6 +81,7 @@ class UserController extends Controller
 
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
         $externalAuth = array_intersect(auth_methods(), ['ldap', 'saml2', 'oidc']) !== [];
+        $externalAuthRequired = $externalAuth && !auth_method_enabled('standard');
         $passwordRequired = (auth_method_enabled('standard') && !$sendInvite);
 
         $validationRules = [
@@ -91,7 +92,7 @@ class UserController extends Controller
             'roles.*'          => ['integer'],
             'password'         => $passwordRequired ? ['required', Password::default()] : null,
             'password-confirm' => $passwordRequired ? ['required', 'same:password'] : null,
-            'external_auth_id' => $externalAuth ? ['required'] : null,
+            'external_auth_id' => $externalAuth ? ($externalAuthRequired ? ['required'] : ['nullable', 'string']) : null,
         ];
 
         $validated = $this->validate($request, array_filter($validationRules));
