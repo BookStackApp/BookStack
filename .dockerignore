@@ -1,7 +1,11 @@
 .git
+.gitignore
+.dockerignore
 node_modules
 vendor
 public/uploads
+public/uploads/
+public/uploads/**
 storage/logs
 storage/backups
 storage/uploads
