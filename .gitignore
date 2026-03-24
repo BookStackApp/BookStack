@@ -5,6 +5,7 @@
 /coverage
 Homestead.yaml
 .env
+.env.docker-dev
 .idea
 npm-debug.log
 yarn-error.log
@@ -32,4 +33,5 @@ webpack-stats.json
 phpstan.neon
 esbuild-meta.json
 .phpactor.json
+/docker-compose.dev.override.yml
 /*.zip

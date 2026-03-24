@@ -1,0 +1,13 @@
+.git
+.github
+node_modules
+vendor
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/testing
+storage/framework/views
+coverage
+.env
+.env.docker-dev
+docker-compose.dev.override.yml
