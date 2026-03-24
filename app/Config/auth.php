@@ -13,6 +13,14 @@ return [
     // Options: standard, ldap, saml2, oidc
     'method' => env('AUTH_METHOD', 'standard'),
 
+    // Comma-separated list of active authentication methods.
+    // If empty, AUTH_METHOD will be used as a single-method fallback.
+    'methods' => env('AUTH_METHODS', ''),
+
+    // Primary authentication method to prefer for UI/redirect behavior.
+    // If empty, AUTH_METHOD is used, then the first enabled method.
+    'primary_method' => env('AUTH_PRIMARY_METHOD', ''),
+
     // Automatically initiate login via external auth system if it's the sole auth method.
     // Works with saml2 or oidc auth methods.
     'auto_initiate' => env('AUTH_AUTO_INITIATE', false),
@@ -21,7 +29,7 @@ return [
     // This option controls the default authentication "guard" and password
     // reset options for your application.
     'defaults' => [
-        'guard'     => env('AUTH_METHOD', 'standard'),
+        'guard'     => 'standard',
         'passwords' => 'users',
     ],
 

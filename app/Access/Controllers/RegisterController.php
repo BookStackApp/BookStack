@@ -52,7 +52,7 @@ class RegisterController extends Controller
 
         try {
             $user = $this->registrationService->registerUser($userData);
-            $this->loginService->login($user, auth()->getDefaultDriver());
+            $this->loginService->login($user, 'standard');
         } catch (UserRegistrationException $exception) {
             if ($exception->getMessage()) {
                 $this->showErrorNotification($exception->getMessage());

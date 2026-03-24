@@ -11,7 +11,13 @@
 
             @include('auth.parts.login-message')
 
-            @include('auth.parts.login-form-' . $authMethod)
+            @foreach($authMethods as $authMethod)
+                @if(!$loop->first)
+                    <hr class="my-l">
+                @endif
+
+                @include('auth.parts.login-form-' . $authMethod, ['formId' => 'login-form-' . $authMethod])
+            @endforeach
 
             @if(count($socialDrivers) > 0)
                 <hr class="my-l">
@@ -25,7 +31,7 @@
                 @endforeach
             @endif
 
-            @if(setting('registration-enabled') && config('auth.method') === 'standard')
+            @if(setting('registration-enabled') && auth_method_enabled('standard'))
                 <div class="text-center pb-s">
                     <hr class="my-l">
                     <a href="{{ url('/register') }}">{{ trans('auth.dont_have_account') }}</a>

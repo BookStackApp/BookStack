@@ -55,7 +55,7 @@ class ResetPasswordController extends Controller
             $user->setRememberToken(Str::random(60));
             $user->save();
 
-            $this->loginService->login($user, auth()->getDefaultDriver());
+            $this->loginService->login($user, 'standard');
         });
 
         // If the password was successfully reset, we will redirect the user back to

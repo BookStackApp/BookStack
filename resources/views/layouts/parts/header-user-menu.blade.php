@@ -40,7 +40,7 @@
         <li role="presentation"><hr></li>
         <li>
             @php
-                $logoutPath = match (config('auth.method')) {
+                $logoutPath = match (auth_session_method()) {
                     'saml2' => '/saml2/logout',
                     'oidc' => '/oidc/logout',
                     default => '/logout',

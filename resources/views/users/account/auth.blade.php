@@ -2,7 +2,7 @@
 
 @section('main')
 
-    @if($authMethod === 'standard')
+    @if(auth_method_enabled('standard') && $sessionAuthMethod === 'standard')
         <section class="card content-wrap auto-height">
             <form action="{{ url('/my-account/auth/password') }}" method="post">
                 {{ method_field('put') }}

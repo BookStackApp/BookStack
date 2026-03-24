@@ -60,11 +60,14 @@ class UserController extends Controller
     public function create()
     {
         $this->checkPermission(Permission::UsersManage);
-        $authMethod = config('auth.method');
         $roles = Role::query()->orderBy('display_name', 'asc')->get();
         $this->setPageTitle(trans('settings.users_add_new'));
 
-        return view('users.create', ['authMethod' => $authMethod, 'roles' => $roles]);
+        return view('users.create', [
+            'authMethod' => auth_primary_method(),
+            'authMethods' => auth_methods(),
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -76,10 +79,9 @@ class UserController extends Controller
     {
         $this->checkPermission(Permission::UsersManage);
 
-        $authMethod = config('auth.method');
         $sendInvite = ($request->get('send_invite', 'false') === 'true');
-        $externalAuth = $authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'oidc';
-        $passwordRequired = ($authMethod === 'standard' && !$sendInvite);
+        $externalAuth = array_intersect(auth_methods(), ['ldap', 'saml2', 'oidc']) !== [];
+        $passwordRequired = (auth_method_enabled('standard') && !$sendInvite);
 
         $validationRules = [
             'name'             => ['required', 'max:100'],
@@ -116,7 +118,7 @@ class UserController extends Controller
 
         $user = $this->userRepo->getById($id);
         $user->load(['apiTokens', 'mfaValues']);
-        $authMethod = ($user->system_name) ? 'system' : config('auth.method');
+        $authMethod = $user->system_name ? 'system' : auth_primary_method();
 
         $activeSocialDrivers = $socialDriverManager->getActive();
         $mfaMethods = $user->mfaValues->groupBy('method');
@@ -128,6 +130,7 @@ class UserController extends Controller
             'activeSocialDrivers' => $activeSocialDrivers,
             'mfaMethods'          => $mfaMethods,
             'authMethod'          => $authMethod,
+            'authMethods'         => auth_methods(),
             'roles'               => $roles,
         ]);
     }

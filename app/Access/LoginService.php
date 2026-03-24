@@ -17,6 +17,7 @@ use Exception;
 class LoginService
 {
     protected const LAST_LOGIN_ATTEMPTED_SESSION_KEY = 'auth-login-last-attempted';
+    protected const SESSION_METHOD_KEY = 'auth-login-method';
 
     public function __construct(
         protected MfaSession $mfaSession,
@@ -35,18 +36,24 @@ class LoginService
      */
     public function login(User $user, string $method, bool $remember = false): void
     {
+        $sessionMethod = in_array($method, ['standard', 'ldap', 'saml2', 'oidc']) ? $method : 'standard';
+
         if ($user->isGuest()) {
             throw new LoginAttemptInvalidUserException('Login not allowed for guest user');
         }
 
         if ($this->awaitingEmailConfirmation($user) || $this->needsMfaVerification($user)) {
-            $this->setLastLoginAttemptedForUser($user, $method, $remember);
+            $this->setLastLoginAttemptedForUser($user, $sessionMethod, $remember);
 
             throw new StoppedAuthenticationException($user, $this);
         }
 
         $this->clearLastLoginAttempted();
-        auth()->login($user, $remember);
+        $this->setSessionLoginMethod($sessionMethod);
+        auth('standard')->login($user, $remember);
+        if (in_array($method, ['ldap', 'saml2', 'oidc'])) {
+            auth($method)->login($user, $remember);
+        }
         Activity::add(ActivityType::AUTH_LOGIN, "{$method}; {$user->logDescriptor()}");
         Theme::dispatch(ThemeEvents::AUTH_LOGIN, $method, $user);
 
@@ -162,10 +169,10 @@ class LoginService
             return false;
         }
 
-        $result = auth()->attempt($credentials, $remember);
+        $result = auth($method)->attempt($credentials, $remember);
         if ($result) {
-            $user = auth()->user();
-            auth()->logout();
+            $user = auth($method)->user();
+            auth($method)->logout();
             try {
                 $this->login($user, $method, $remember);
             } catch (LoginAttemptInvalidUserException $e) {
@@ -198,17 +205,18 @@ class LoginService
      */
     public function logout(): string
     {
-        auth()->logout();
+        $logoutMethod = $this->getSessionLoginMethod();
+        $this->logoutFromAllGuards();
         session()->invalidate();
         session()->regenerateToken();
 
-        return $this->shouldAutoInitiate() ? '/login?prevent_auto_init=true' : '/';
+        return $this->shouldAutoInitiate($logoutMethod) ? '/login?prevent_auto_init=true' : '/';
     }
 
     /**
      * Check if login auto-initiate should be active based upon authentication config.
      */
-    public function shouldAutoInitiate(): bool
+    public function shouldAutoInitiate(?string $method = null): bool
     {
         $autoRedirect = config('auth.auto_initiate');
         if (!$autoRedirect) {
@@ -216,8 +224,40 @@ class LoginService
         }
 
         $socialDrivers = $this->socialDriverManager->getActive();
-        $authMethod = config('auth.method');
+        $authMethod = $method ?? auth_primary_method();
+        $enabledMethods = auth_methods();
 
-        return count($socialDrivers) === 0 && in_array($authMethod, ['oidc', 'saml2']);
+        return count($socialDrivers) === 0
+            && count($enabledMethods) === 1
+            && in_array($authMethod, ['oidc', 'saml2']);
+    }
+
+    /**
+     * Get the login method stored for the current session.
+     */
+    public function getSessionLoginMethod(): string
+    {
+        return auth_session_method();
+    }
+
+    /**
+     * Persist the method used for the current session login.
+     */
+    protected function setSessionLoginMethod(string $method): void
+    {
+        session()->put(self::SESSION_METHOD_KEY, $method);
+    }
+
+    /**
+     * Log the user out of all supported guards to fully clear auth state.
+     */
+    protected function logoutFromAllGuards(): void
+    {
+        foreach (['standard', 'ldap', 'saml2', 'oidc'] as $guard) {
+            auth($guard)->logout();
+        }
+
+        session()->remove(self::SESSION_METHOD_KEY);
+        $this->clearLastLoginAttempted();
     }
 }

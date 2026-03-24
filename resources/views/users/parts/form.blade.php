@@ -5,10 +5,10 @@
 
 <div class="pt-m">
     <label class="setting-list-label">{{ trans('settings.users_details') }}</label>
-    @if($authMethod === 'standard')
+    @if(auth_method_enabled('standard'))
         <p class="small">{{ trans('settings.users_details_desc') }}</p>
     @endif
-    @if($authMethod === 'ldap' || $authMethod === 'system')
+    @if($authMethod === 'system' || (auth_method_enabled('standard') === false && auth_method_enabled('ldap')))
         <p class="small">{{ trans('settings.users_details_desc_no_email') }}</p>
     @endif
     <div class="grid half mt-m gap-xl mb-l">
@@ -17,7 +17,7 @@
             @include('form.text', ['name' => 'name'])
         </div>
         <div>
-            @if($authMethod !== 'ldap' || userCan(\BookStack\Permissions\Permission::UsersManage))
+            @if($authMethod !== 'ldap' || userCan(\BookStack\Permissions\Permission::UsersManage) || auth_method_enabled('standard'))
                 <label for="email">{{ trans('auth.email') }}</label>
                 @include('form.text', ['name' => 'email', 'disabled' => !userCan(\BookStack\Permissions\Permission::UsersManage)])
             @endif
@@ -44,7 +44,7 @@
     </div>
 </div>
 
-@if($authMethod === 'standard')
+@if(auth_method_enabled('standard') && $authMethod !== 'system')
     <div component="new-user-password">
         <label class="setting-list-label">{{ trans('settings.users_password') }}</label>
 

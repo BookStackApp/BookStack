@@ -38,10 +38,7 @@ class RegistrationService
      */
     protected function registrationAllowed(): bool
     {
-        $authMethod = config('auth.method');
-        $authMethodsWithRegistration = ['standard'];
-
-        return in_array($authMethod, $authMethodsWithRegistration) && setting('registration-enabled');
+        return auth_method_enabled('standard') && setting('registration-enabled');
     }
 
     /**
@@ -78,7 +75,7 @@ class RegistrationService
     public function registerUser(array $userData, ?SocialAccount $socialAccount = null, bool $emailConfirmed = false): User
     {
         $userEmail = $userData['email'];
-        $authSystem = $socialAccount ? $socialAccount->driver : auth()->getDefaultDriver();
+        $authSystem = $socialAccount ? $socialAccount->driver : 'standard';
 
         // Email restriction
         $this->ensureEmailDomainAllowed($userEmail);

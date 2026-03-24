@@ -171,7 +171,8 @@ class UserAccountController extends Controller
         return view('users.account.auth', [
             'category' => 'auth',
             'mfaMethods' => $mfaMethods,
-            'authMethod' => config('auth.method'),
+            'authMethods' => auth_methods(),
+            'sessionAuthMethod' => auth_session_method(),
             'activeSocialDrivers' => $socialDriverManager->getActive(),
         ]);
     }
@@ -183,7 +184,7 @@ class UserAccountController extends Controller
     {
         $this->preventAccessInDemoMode();
 
-        if (config('auth.method') !== 'standard') {
+        if (!auth_method_enabled('standard') || auth_session_method() !== 'standard') {
             $this->showPermissionError();
         }
 

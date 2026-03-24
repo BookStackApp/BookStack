@@ -29,7 +29,7 @@ class LdapService
         protected GroupSyncService $groupSyncService
     ) {
         $this->config = config('services.ldap');
-        $this->enabled = config('auth.method') === 'ldap';
+        $this->enabled = auth_method_enabled('ldap');
     }
 
     /**

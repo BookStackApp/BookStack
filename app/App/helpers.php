@@ -37,6 +37,77 @@ function user(): User
 }
 
 /**
+ * Get the enabled authentication methods in configured priority order.
+ *
+ * @return array<int, string>
+ */
+function auth_methods(): array
+{
+    $validMethods = ['standard', 'ldap', 'saml2', 'oidc'];
+    $methodsConfig = config('auth.methods', '');
+    $singleMethod = config('auth.method', 'standard');
+
+    $methods = is_string($methodsConfig)
+        ? array_map('trim', explode(',', $methodsConfig))
+        : (array) $methodsConfig;
+
+    $methods = array_values(array_unique(array_filter($methods, function (mixed $method) use ($validMethods) {
+        return is_string($method) && in_array($method, $validMethods);
+    })));
+
+    if (count($methods) === 0 && in_array($singleMethod, $validMethods)) {
+        $methods[] = $singleMethod;
+    }
+
+    return $methods;
+}
+
+/**
+ * Check if the given authentication method is enabled.
+ */
+function auth_method_enabled(string $method): bool
+{
+    return in_array($method, auth_methods());
+}
+
+/**
+ * Get the primary configured authentication method.
+ */
+function auth_primary_method(): string
+{
+    $primaryMethod = config('auth.primary_method', '');
+    if (is_string($primaryMethod) && auth_method_enabled($primaryMethod)) {
+        return $primaryMethod;
+    }
+
+    $singleMethod = config('auth.method', 'standard');
+    if (is_string($singleMethod) && auth_method_enabled($singleMethod)) {
+        return $singleMethod;
+    }
+
+    return auth_methods()[0] ?? 'standard';
+}
+
+/**
+ * Get the authentication method used for the current session, where known.
+ */
+function auth_session_method(): string
+{
+    $sessionMethod = session()->get('auth-login-method');
+    if (is_string($sessionMethod) && auth_method_enabled($sessionMethod)) {
+        return $sessionMethod;
+    }
+
+    foreach (['standard', 'ldap', 'oidc', 'saml2'] as $guard) {
+        if (auth_method_enabled($guard) && auth($guard)->check()) {
+            return $guard;
+        }
+    }
+
+    return auth_primary_method();
+}
+
+/**
  * Check if the current user has a permission. If an ownable element
  * is passed in the jointPermissions are checked against that particular item.
  */

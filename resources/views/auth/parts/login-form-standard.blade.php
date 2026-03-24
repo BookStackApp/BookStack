@@ -1,5 +1,6 @@
-<form action="{{ url('/login') }}" method="POST" id="login-form" class="mt-l">
+<form action="{{ url('/login') }}" method="POST" id="{{ $formId ?? 'login-form' }}" class="mt-l">
     {!! csrf_field() !!}
+    <input type="hidden" name="login_method" value="standard">
 
     <div class="stretch-inputs">
         <div class="form-group">
@@ -32,5 +33,3 @@
     </div>
 
 </form>
-
-

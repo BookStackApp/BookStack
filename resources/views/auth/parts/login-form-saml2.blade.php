@@ -1,4 +1,4 @@
-<form action="{{ url('/saml2/login') }}" method="POST" id="login-form" class="mt-l">
+<form action="{{ url('/saml2/login') }}" method="POST" id="{{ $formId ?? 'login-form' }}" class="mt-l">
     {!! csrf_field() !!}
 
     <div>

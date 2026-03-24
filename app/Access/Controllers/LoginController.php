@@ -31,7 +31,8 @@ class LoginController extends Controller
     public function getLogin(Request $request)
     {
         $socialDrivers = $this->socialDriverManager->getActive();
-        $authMethod = config('auth.method');
+        $authMethods = $this->getEnabledLoginMethods();
+        $primaryAuthMethod = auth_primary_method();
         $preventInitiation = $request->get('prevent_auto_init') === 'true';
 
         if ($request->has('email')) {
@@ -46,13 +47,14 @@ class LoginController extends Controller
 
         if (!$preventInitiation && $this->loginService->shouldAutoInitiate()) {
             return view('auth.login-initiate', [
-                'authMethod'    => $authMethod,
+                'authMethod'    => $primaryAuthMethod,
             ]);
         }
 
         return view('auth.login', [
-            'socialDrivers' => $socialDrivers,
-            'authMethod'    => $authMethod,
+            'socialDrivers'     => $socialDrivers,
+            'authMethods'       => $authMethods,
+            'primaryAuthMethod' => $primaryAuthMethod,
         ]);
     }
 
@@ -61,8 +63,10 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
-        $username = $request->get($this->username());
+        $loginMethod = $this->getRequestedLoginMethod($request);
+        $this->ensureMethodEnabled($loginMethod);
+        $this->validateLogin($request, $loginMethod);
+        $username = $request->get($this->username($loginMethod));
 
         // Check login throttling attempts to see if they've gone over the limit
         if ($this->hasTooManyLoginAttempts($request)) {
@@ -86,7 +90,7 @@ class LoginController extends Controller
 
         // Throw validation failure for failed login
         throw ValidationException::withMessages([
-            $this->username() => [trans('auth.failed')],
+            $this->username($loginMethod) => [trans('auth.failed')],
         ])->redirectTo('/login');
     }
 
@@ -101,9 +105,10 @@ class LoginController extends Controller
     /**
      * Get the expected username input based upon the current auth method.
      */
-    protected function username(): string
+    protected function username(?string $method = null): string
     {
-        return config('auth.method') === 'standard' ? 'email' : 'username';
+        $method ??= $this->getRequestedLoginMethod(request());
+        return $method === 'standard' ? 'email' : 'username';
     }
 
     /**
@@ -131,9 +136,11 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request): bool
     {
+        $loginMethod = $this->getRequestedLoginMethod($request);
+
         return $this->loginService->attempt(
             $this->credentials($request),
-            auth()->getDefaultDriver(),
+            $loginMethod,
             $request->filled('remember')
         );
     }
@@ -143,10 +150,9 @@ class LoginController extends Controller
      * Validate the user login request.
      * @throws ValidationException
      */
-    protected function validateLogin(Request $request): void
+    protected function validateLogin(Request $request, string $authMethod): void
     {
         $rules = ['password' => ['required', 'string']];
-        $authMethod = config('auth.method');
 
         if ($authMethod === 'standard') {
             $rules['email'] = ['required', 'email'];
@@ -158,6 +164,43 @@ class LoginController extends Controller
         }
 
         $request->validate($rules);
+    }
+
+    /**
+     * Get the login methods to display on the login page.
+     *
+     * @return array<int, string>
+     */
+    protected function getEnabledLoginMethods(): array
+    {
+        return array_values(array_filter(auth_methods(), fn (string $method) => in_array($method, ['standard', 'ldap', 'saml2', 'oidc'])));
+    }
+
+    /**
+     * Get the requested method for a credential-based login post.
+     */
+    protected function getRequestedLoginMethod(Request $request): string
+    {
+        $method = $request->string('login_method')->toString();
+        if ($method === '' && auth_method_enabled('standard')) {
+            return 'standard';
+        }
+
+        if ($method === '' && auth_method_enabled('ldap')) {
+            return 'ldap';
+        }
+
+        return in_array($method, ['standard', 'ldap']) ? $method : auth_primary_method();
+    }
+
+    /**
+     * Ensure the given method is enabled for login.
+     */
+    protected function ensureMethodEnabled(string $method): void
+    {
+        if (!auth_method_enabled($method)) {
+            $this->showPermissionError('/login');
+        }
     }
 
     /**

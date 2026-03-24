@@ -17,7 +17,7 @@
                 @include('form.checkbox', ['name' => 'mfa_enforced', 'label' => trans('settings.role_mfa_enforced'), 'model' => $role ])
             </div>
 
-            @if(in_array(config('auth.method'), ['ldap', 'saml2', 'oidc']))
+            @if(count(array_intersect(auth_methods(), ['ldap', 'saml2', 'oidc'])) > 0)
                 <div class="form-group">
                     <label for="name">{{ trans('settings.role_external_auth_id') }}</label>
                     @include('form.text', ['name' => 'external_auth_id', 'model' => $role])

@@ -18,7 +18,7 @@
 @endif
 
 @if(user()->isGuest())
-    @if(setting('registration-enabled') && config('auth.method') === 'standard')
+    @if(setting('registration-enabled') && auth_method_enabled('standard'))
         <a href="{{ url('/register') }}">@icon('new-user'){{ trans('auth.sign_up') }}</a>
     @endif
     <a href="{{ url('/login')  }}">@icon('login'){{ trans('auth.log_in') }}</a>
