@@ -3,6 +3,7 @@
 namespace Database\Factories\Uploads;
 
 use BookStack\Entities\Models\Page;
+use BookStack\Uploads\Attachment;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -31,6 +32,7 @@ class AttachmentFactory extends Factory
             'extension' => '',
             'external' => true,
             'uploaded_to' => Page::factory(),
+            'uploaded_to_type' => Attachment::UPLOAD_TO_PAGE,
             'created_by' => User::factory(),
             'updated_by' => User::factory(),
             'order' => 0,

@@ -105,7 +105,9 @@ class Page extends BookChild
      */
     public function attachments(): HasMany
     {
-        return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
+        return $this->hasMany(Attachment::class, 'uploaded_to')
+            ->where('uploaded_to_type', '=', Attachment::UPLOAD_TO_PAGE)
+            ->orderBy('order', 'asc');
     }
 
     /**

@@ -43,6 +43,22 @@
     </div>
 </div>
 
+@if(isset($book) && userCan(\BookStack\Permissions\Permission::AttachmentCreateAll))
+    <div class="form-group collapsible" component="collapsible" id="attachments-control">
+        <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
+            <label>{{ trans('entities.attachments') }}</label>
+        </button>
+        <div refs="collapsible@content" class="collapse-content">
+            @include('attachments.manager', [
+                'attachments' => $book->attachments->all(),
+                'uploadedToId' => $book->id,
+                'uploadedToType' => \BookStack\Uploads\Attachment::UPLOAD_TO_BOOK,
+                'allowInsertLinks' => false,
+            ])
+        </div>
+    </div>
+@endif
+
 <div class="form-group text-right">
     <a href="{{ $returnLocation }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.books_save') }}</button>

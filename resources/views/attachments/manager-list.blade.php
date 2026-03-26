@@ -11,11 +11,13 @@
                 <a href="{{ $attachment->getUrl() }}" target="_blank" rel="noopener">{{ $attachment->name }}</a>
             </div>
             <div class="flex-fill justify-flex-end">
-                <button component="event-emit-select"
-                        option:event-emit-select:name="insert"
-                        type="button"
-                        title="{{ trans('entities.attachments_insert_link') }}"
-                        class="drag-card-action text-center text-link">@icon('link')</button>
+                @if($allowInsertLinks ?? true)
+                    <button component="event-emit-select"
+                            option:event-emit-select:name="insert"
+                            type="button"
+                            title="{{ trans('entities.attachments_insert_link') }}"
+                            class="drag-card-action text-center text-link">@icon('link')</button>
+                @endif
                 @if(userCan(\BookStack\Permissions\Permission::AttachmentUpdate, $attachment))
                     <button component="event-emit-select"
                             option:event-emit-select:name="edit"

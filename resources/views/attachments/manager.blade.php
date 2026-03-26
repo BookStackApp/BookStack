@@ -2,12 +2,13 @@
      refs="editor-toolbox@tab-content"
      data-tab-content="files"
      component="attachments"
-     option:attachments:page-id="{{ $page->id ?? 0 }}"
+    option:attachments:uploaded-to-id="{{ $uploadedToId }}"
+    option:attachments:uploaded-to-type="{{ $uploadedToType }}"
      class="toolbox-tab-content">
 
     <h4>{{ trans('entities.attachments') }}</h4>
     <div component="dropzone"
-         option:dropzone:url="{{ url('/attachments/upload?uploaded_to=' . $page->id) }}"
+            option:dropzone:url="{{ url('/attachments/upload?uploaded_to=' . $uploadedToId . '&uploaded_to_type=' . $uploadedToType) }}"
          option:dropzone:success-message="{{ trans('entities.attachments_file_uploaded') }}"
          option:dropzone:error-message="{{ trans('errors.attachment_upload_error') }}"
          option:dropzone:upload-limit="{{ config('app.upload_limit') }}"
@@ -35,14 +36,14 @@
             <hr>
 
             <div refs="attachments@list-panel">
-                @include('attachments.manager-list', ['attachments' => $page->attachments->all()])
+                @include('attachments.manager-list', ['attachments' => $attachments, 'allowInsertLinks' => $allowInsertLinks ?? false])
             </div>
 
         </div>
     </div>
 
     <div id="link-form-container" refs="attachments@links-container" hidden class="px-l">
-        @include('attachments.manager-link-form', ['pageId' => $page->id])
+        @include('attachments.manager-link-form', ['uploadedToId' => $uploadedToId, 'uploadedToType' => $uploadedToType])
     </div>
 
     <div id="edit-form-container" refs="attachments@edit-container" hidden class="px-l"></div>

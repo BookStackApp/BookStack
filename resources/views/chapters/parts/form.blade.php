@@ -27,6 +27,22 @@
     </div>
 </div>
 
+@if(isset($chapter) && userCan(\BookStack\Permissions\Permission::AttachmentCreateAll))
+    <div class="form-group collapsible" component="collapsible" id="attachments-control">
+        <button refs="collapsible@trigger" type="button" class="collapse-title text-link" aria-expanded="false">
+            <label>{{ trans('entities.attachments') }}</label>
+        </button>
+        <div refs="collapsible@content" class="collapse-content">
+            @include('attachments.manager', [
+                'attachments' => $chapter->attachments->all(),
+                'uploadedToId' => $chapter->id,
+                'uploadedToType' => \BookStack\Uploads\Attachment::UPLOAD_TO_CHAPTER,
+                'allowInsertLinks' => false,
+            ])
+        </div>
+    </div>
+@endif
+
 <div class="form-group text-right">
     <a href="{{ isset($chapter) ? $chapter->getUrl() : $book->getUrl() }}" class="button outline">{{ trans('common.cancel') }}</a>
     <button type="submit" class="button">{{ trans('entities.chapters_save') }}</button>

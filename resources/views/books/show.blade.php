@@ -67,6 +67,7 @@
 @stop
 
 @section('right')
+    @include('books.parts.show-sidebar-section-attachments', ['book' => $book])
     @include('books.parts.show-sidebar-section-details', ['book' => $book, 'watchOptions' => $watchOptions])
     @include('books.parts.show-sidebar-section-actions', ['book' => $book, 'watchOptions' => $watchOptions])
 @stop

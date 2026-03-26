@@ -2,8 +2,8 @@
 
 namespace BookStack\Uploads\Controllers;
 
-use BookStack\Entities\EntityExistsRule;
-use BookStack\Entities\Queries\PageQueries;
+use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\FileUploadException;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;
@@ -12,13 +12,14 @@ use BookStack\Uploads\AttachmentService;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class AttachmentApiController extends ApiController
 {
     public function __construct(
         protected AttachmentService $attachmentService,
-        protected PageQueries $pageQueries,
+        protected EntityQueries $entityQueries,
     ) {
     }
 
@@ -30,7 +31,7 @@ class AttachmentApiController extends ApiController
     public function list()
     {
         return $this->apiListingResponse(Attachment::visible(), [
-            'id', 'name', 'extension', 'uploaded_to', 'external', 'order', 'created_at', 'updated_at', 'created_by', 'updated_by',
+            'id', 'name', 'extension', 'uploaded_to', 'uploaded_to_type', 'external', 'order', 'created_at', 'updated_at', 'created_by', 'updated_by',
         ]);
     }
 
@@ -50,18 +51,20 @@ class AttachmentApiController extends ApiController
         $this->checkPermission(Permission::AttachmentCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
-        $pageId = $request->get('uploaded_to');
-        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $uploadedToId = intval($request->get('uploaded_to'));
+        $uploadedToType = $requestData['uploaded_to_type'] ?? Attachment::UPLOAD_TO_PAGE;
+        $target = $this->findVisibleUploadTarget($uploadedToType, $uploadedToId);
+        $this->checkUploadTargetPermission($target, 'update');
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
-            $attachment = $this->attachmentService->saveNewUpload($uploadedFile, $page->id);
+            $attachment = $this->attachmentService->saveNewUpload($uploadedFile, $uploadedToId, $uploadedToType);
         } else {
             $attachment = $this->attachmentService->saveNewFromLink(
                 $requestData['name'],
                 $requestData['link'],
-                $page->id
+                $uploadedToId,
+                $uploadedToType
             );
         }
 
@@ -132,15 +135,17 @@ class AttachmentApiController extends ApiController
         /** @var Attachment $attachment */
         $attachment = Attachment::visible()->findOrFail($id);
 
-        $page = $attachment->page;
+        $uploadedToType = $requestData['uploaded_to_type'] ?? $attachment->uploaded_to_type;
+        $uploadedToId = $requestData['uploaded_to'] ?? $attachment->uploaded_to;
+
+        $target = $this->findVisibleUploadTarget($uploadedToType, intval($uploadedToId));
         if ($requestData['uploaded_to'] ?? false) {
-            $pageId = $request->get('uploaded_to');
-            $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
             $attachment->uploaded_to = $requestData['uploaded_to'];
+            $attachment->uploaded_to_type = $uploadedToType;
         }
 
-        $this->checkOwnablePermission(Permission::PageView, $page);
-        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->checkUploadTargetPermission($target, 'view');
+        $this->checkUploadTargetPermission($target, 'update');
         $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         if ($request->hasFile('file')) {
@@ -174,16 +179,52 @@ class AttachmentApiController extends ApiController
         return [
             'create' => [
                 'name'        => ['required', 'string', 'min:1', 'max:255'],
-                'uploaded_to' => ['required', 'integer', new EntityExistsRule('page')],
+                'uploaded_to' => ['required', 'integer'],
+                'uploaded_to_type' => ['nullable', 'string', Rule::in(Attachment::UPLOAD_TO_ENTITY_TYPES)],
                 'file'        => array_merge(['required_without:link'], $this->attachmentService->getFileValidationRules()),
                 'link'        => ['required_without:file', 'string', 'min:1', 'max:2000', 'safe_url'],
             ],
             'update' => [
                 'name'        => ['string', 'min:1', 'max:255'],
-                'uploaded_to' => ['integer', new EntityExistsRule('page')],
+                'uploaded_to' => ['integer', 'required_with:uploaded_to_type'],
+                'uploaded_to_type' => ['string', Rule::in(Attachment::UPLOAD_TO_ENTITY_TYPES), 'required_with:uploaded_to'],
                 'file'        => $this->attachmentService->getFileValidationRules(),
                 'link'        => ['string', 'min:1', 'max:2000', 'safe_url'],
             ],
         ];
+    }
+
+    protected function findVisibleUploadTarget(string $type, int $id): Entity
+    {
+        if (!in_array($type, Attachment::UPLOAD_TO_ENTITY_TYPES)) {
+            abort(404, trans('errors.attachment_not_found'));
+        }
+
+        $target = $this->entityQueries->findVisibleById($type, $id);
+
+        if ($target === null) {
+            abort(404, trans('errors.attachment_not_found'));
+        }
+
+        return $target;
+    }
+
+    protected function checkUploadTargetPermission(Entity $entity, string $action): void
+    {
+        $permission = match ([$entity->getMorphClass(), $action]) {
+            [Attachment::UPLOAD_TO_PAGE, 'view'] => Permission::PageView,
+            [Attachment::UPLOAD_TO_PAGE, 'update'] => Permission::PageUpdate,
+            [Attachment::UPLOAD_TO_CHAPTER, 'view'] => Permission::ChapterView,
+            [Attachment::UPLOAD_TO_CHAPTER, 'update'] => Permission::ChapterUpdate,
+            [Attachment::UPLOAD_TO_BOOK, 'view'] => Permission::BookView,
+            [Attachment::UPLOAD_TO_BOOK, 'update'] => Permission::BookUpdate,
+            default => null,
+        };
+
+        if ($permission === null) {
+            abort(404, trans('errors.attachment_not_found'));
+        }
+
+        $this->checkOwnablePermission($permission, $entity);
     }
 }

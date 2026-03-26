@@ -78,6 +78,28 @@ class AttachmentsApiTest extends TestCase
         $resp->assertJson(['id' => $newItem->id, 'external' => true, 'name' => $details['name'], 'uploaded_to' => $page->id]);
     }
 
+    public function test_create_endpoint_for_link_attachment_to_chapter()
+    {
+        $this->actingAsApiAdmin();
+        $chapter = $this->entities->chapter();
+
+        $details = [
+            'name' => 'My chapter attachment',
+            'uploaded_to' => $chapter->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_CHAPTER,
+            'link' => 'https://cats.example.com/chapter.zip',
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertStatus(200);
+        $resp->assertJson([
+            'external' => true,
+            'name' => $details['name'],
+            'uploaded_to' => $chapter->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_CHAPTER,
+        ]);
+    }
+
     public function test_create_endpoint_for_upload_attachment()
     {
         $this->actingAsApiAdmin();
@@ -363,6 +385,7 @@ class AttachmentsApiTest extends TestCase
         /** @var Attachment $attachment */
         $attachment = $page->attachments()->forceCreate(array_merge([
             'uploaded_to' => $page->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_PAGE,
             'name'        => 'test attachment',
             'external'    => true,
             'order'       => 1,

@@ -63,6 +63,7 @@
 @stop
 
 @section('right')
+    @include('chapters.parts.show-sidebar-section-attachments', ['chapter' => $chapter])
     @include('chapters.parts.show-sidebar-section-details', ['chapter' => $chapter, 'book' => $book, 'watchOptions' => $watchOptions])
     @include('chapters.parts.show-sidebar-section-actions', ['chapter' => $chapter, 'watchOptions' => $watchOptions])
 @stop

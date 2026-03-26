@@ -5,7 +5,8 @@ export class Attachments extends Component {
 
     setup() {
         this.container = this.$el;
-        this.pageId = this.$opts.pageId;
+        this.uploadedToId = this.$opts.uploadedToId;
+        this.uploadedToType = this.$opts.uploadedToType;
         this.editContainer = this.$refs.editContainer;
         this.listContainer = this.$refs.listContainer;
         this.linksContainer = this.$refs.linksContainer;
@@ -60,14 +61,14 @@ export class Attachments extends Component {
 
     reloadList() {
         this.stopEdit();
-        window.$http.get(`/attachments/get/page/${this.pageId}`).then(resp => {
+        window.$http.get(`/attachments/get/${this.uploadedToType}/${this.uploadedToId}`).then(resp => {
             this.listPanel.innerHTML = resp.data;
             window.$components.init(this.listPanel);
         });
     }
 
     updateOrder(idOrder) {
-        window.$http.put(`/attachments/sort/page/${this.pageId}`, {order: idOrder}).then(resp => {
+        window.$http.put(`/attachments/sort/${this.uploadedToType}/${this.uploadedToId}`, {order: idOrder}).then(resp => {
             window.$events.emit('success', resp.data.message);
         });
     }

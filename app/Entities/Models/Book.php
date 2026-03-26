@@ -5,6 +5,7 @@ namespace BookStack\Entities\Models;
 use BookStack\Entities\Tools\EntityCover;
 use BookStack\Entities\Tools\EntityDefaultTemplate;
 use BookStack\Sorting\SortRule;
+use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -68,6 +69,16 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
     public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
+    }
+
+    /**
+     * Get the attachments assigned directly to this book.
+     */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(Attachment::class, 'uploaded_to')
+            ->where('uploaded_to_type', '=', Attachment::UPLOAD_TO_BOOK)
+            ->orderBy('order', 'asc');
     }
 
     /**

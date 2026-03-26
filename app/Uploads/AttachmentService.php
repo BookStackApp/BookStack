@@ -36,18 +36,22 @@ class AttachmentService
      *
      * @throws FileUploadException
      */
-    public function saveNewUpload(UploadedFile $uploadedFile, int $pageId): Attachment
+    public function saveNewUpload(UploadedFile $uploadedFile, int $uploadedToId, string $uploadedToType = Attachment::UPLOAD_TO_PAGE): Attachment
     {
         $attachmentName = $uploadedFile->getClientOriginalName();
         $attachmentPath = $this->putFileInStorage($uploadedFile);
-        $largestExistingOrder = Attachment::query()->where('uploaded_to', '=', $pageId)->max('order');
+        $largestExistingOrder = Attachment::query()
+            ->where('uploaded_to', '=', $uploadedToId)
+            ->where('uploaded_to_type', '=', $uploadedToType)
+            ->max('order');
 
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->forceCreate([
             'name'        => $attachmentName,
             'path'        => $attachmentPath,
             'extension'   => $uploadedFile->getClientOriginalExtension(),
-            'uploaded_to' => $pageId,
+            'uploaded_to' => $uploadedToId,
+            'uploaded_to_type' => $uploadedToType,
             'created_by'  => user()->id,
             'updated_by'  => user()->id,
             'order'       => $largestExistingOrder + 1,
@@ -83,16 +87,20 @@ class AttachmentService
     /**
      * Save a new File attachment from a given link and name.
      */
-    public function saveNewFromLink(string $name, string $link, int $page_id): Attachment
+    public function saveNewFromLink(string $name, string $link, int $uploadedToId, string $uploadedToType = Attachment::UPLOAD_TO_PAGE): Attachment
     {
-        $largestExistingOrder = Attachment::where('uploaded_to', '=', $page_id)->max('order');
+        $largestExistingOrder = Attachment::query()
+            ->where('uploaded_to', '=', $uploadedToId)
+            ->where('uploaded_to_type', '=', $uploadedToType)
+            ->max('order');
 
         return Attachment::forceCreate([
             'name'        => $name,
             'path'        => $link,
             'external'    => true,
             'extension'   => '',
-            'uploaded_to' => $page_id,
+            'uploaded_to' => $uploadedToId,
+            'uploaded_to_type' => $uploadedToType,
             'created_by'  => user()->id,
             'updated_by'  => user()->id,
             'order'       => $largestExistingOrder + 1,
@@ -102,10 +110,11 @@ class AttachmentService
     /**
      * Updates the ordering for a listing of attached files.
      */
-    public function updateFileOrderWithinPage(array $attachmentOrder, string $pageId)
+    public function updateFileOrderWithinEntity(array $attachmentOrder, string $uploadedToId, string $uploadedToType = Attachment::UPLOAD_TO_PAGE)
     {
         foreach ($attachmentOrder as $index => $attachmentId) {
-            Attachment::query()->where('uploaded_to', '=', $pageId)
+            Attachment::query()->where('uploaded_to', '=', $uploadedToId)
+                ->where('uploaded_to_type', '=', $uploadedToType)
                 ->where('id', '=', $attachmentId)
                 ->update(['order' => $index]);
         }

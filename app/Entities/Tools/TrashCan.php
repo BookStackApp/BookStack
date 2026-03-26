@@ -157,6 +157,7 @@ class TrashCan
     protected function destroyBook(Book $book): int
     {
         $count = 0;
+        $attachmentService = app()->make(AttachmentService::class);
         $pages = $book->pages()->withTrashed()->get();
         foreach ($pages as $page) {
             $this->destroyPage($page);
@@ -167,6 +168,10 @@ class TrashCan
         foreach ($chapters as $chapter) {
             $this->destroyChapter($chapter);
             $count++;
+        }
+
+        foreach ($book->attachments as $attachment) {
+            $attachmentService->deleteFile($attachment);
         }
 
         $this->destroyCommonRelations($book);
@@ -185,10 +190,15 @@ class TrashCan
     protected function destroyChapter(Chapter $chapter): int
     {
         $count = 0;
+        $attachmentService = app()->make(AttachmentService::class);
         $pages = $chapter->pages()->withTrashed()->get();
         foreach ($pages as $page) {
             $this->destroyPage($page);
             $count++;
+        }
+
+        foreach ($chapter->attachments as $attachment) {
+            $attachmentService->deleteFile($attachment);
         }
 
         $this->destroyCommonRelations($chapter);

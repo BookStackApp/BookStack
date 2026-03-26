@@ -22,7 +22,12 @@
     </div>
 
     @if(userCan(\BookStack\Permissions\Permission::AttachmentCreateAll))
-        @include('attachments.manager', ['page' => $page])
+        @include('attachments.manager', [
+            'attachments' => $page->attachments->all(),
+            'uploadedToId' => $page->id,
+            'uploadedToType' => \BookStack\Uploads\Attachment::UPLOAD_TO_PAGE,
+            'allowInsertLinks' => true,
+        ])
     @endif
 
     <div refs="editor-toolbox@tab-content" data-tab-content="templates" class="toolbox-tab-content">

@@ -111,6 +111,50 @@ class AttachmentTest extends TestCase
         $this->files->deleteAllAttachmentFiles();
     }
 
+    public function test_can_upload_attachment_to_chapter()
+    {
+        $chapter = $this->entities->chapter();
+        $this->asAdmin();
+        $fileName = 'chapter_attachment.txt';
+
+        $upload = $this->files->uploadAttachmentFile($this, $fileName, $chapter->id, Attachment::UPLOAD_TO_CHAPTER);
+        $upload->assertStatus(200);
+        $upload->assertJson([
+            'uploaded_to' => $chapter->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_CHAPTER,
+        ]);
+
+        $this->assertDatabaseHas('attachments', [
+            'name' => $fileName,
+            'uploaded_to' => $chapter->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_CHAPTER,
+        ]);
+
+        $this->files->deleteAllAttachmentFiles();
+    }
+
+    public function test_can_attach_link_to_book()
+    {
+        $book = $this->entities->book();
+        $this->asAdmin();
+
+        $linkReq = $this->call('POST', 'attachments/link', [
+            'attachment_link_url' => 'https://example.com/book-file.zip',
+            'attachment_link_name' => 'Book ZIP',
+            'attachment_link_uploaded_to' => $book->id,
+            'attachment_link_uploaded_to_type' => Attachment::UPLOAD_TO_BOOK,
+        ]);
+
+        $linkReq->assertStatus(200);
+        $this->assertDatabaseHas('attachments', [
+            'name' => 'Book ZIP',
+            'path' => 'https://example.com/book-file.zip',
+            'uploaded_to' => $book->id,
+            'uploaded_to_type' => Attachment::UPLOAD_TO_BOOK,
+            'external' => true,
+        ]);
+    }
+
     public function test_attaching_long_links_to_a_page()
     {
         $page = $this->entities->page();

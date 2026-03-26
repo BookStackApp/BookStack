@@ -1,12 +1,14 @@
 {{--
-@pageId
+@uploadedToId
+@uploadedToType
 --}}
 <div component="ajax-form"
      option:ajax-form:url="/attachments/link"
      option:ajax-form:method="post"
      option:ajax-form:response-container="#link-form-container"
      option:ajax-form:success-message="{{ trans('entities.attachments_link_attached') }}">
-    <input type="hidden" name="attachment_link_uploaded_to" value="{{ $pageId }}">
+    <input type="hidden" name="attachment_link_uploaded_to" value="{{ $uploadedToId }}">
+    <input type="hidden" name="attachment_link_uploaded_to_type" value="{{ $uploadedToType }}">
     <p class="text-muted small">{{ trans('entities.attachments_explain_link') }}</p>
     <div class="form-group">
         <label for="attachment_link_name">{{ trans('entities.attachments_link_name') }}</label>

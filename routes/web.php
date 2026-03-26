@@ -163,8 +163,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/attachments/link', [UploadControllers\AttachmentController::class, 'attachLink']);
     Route::put('/attachments/{id}', [UploadControllers\AttachmentController::class, 'update']);
     Route::get('/attachments/edit/{id}', [UploadControllers\AttachmentController::class, 'getUpdateForm']);
-    Route::get('/attachments/get/page/{pageId}', [UploadControllers\AttachmentController::class, 'listForPage']);
-    Route::put('/attachments/sort/page/{pageId}', [UploadControllers\AttachmentController::class, 'sortForPage']);
+    Route::get('/attachments/get/{entityType}/{entityId}', [UploadControllers\AttachmentController::class, 'listForEntity']);
+    Route::put('/attachments/sort/{entityType}/{entityId}', [UploadControllers\AttachmentController::class, 'sortForEntity']);
+    Route::get('/attachments/get/page/{entityId}', [UploadControllers\AttachmentController::class, 'listForEntity'])
+        ->defaults('entityType', 'page')
+        ->whereNumber('entityId');
+    Route::put('/attachments/sort/page/{entityId}', [UploadControllers\AttachmentController::class, 'sortForEntity'])
+        ->defaults('entityType', 'page')
+        ->whereNumber('entityId');
     Route::delete('/attachments/{id}', [UploadControllers\AttachmentController::class, 'delete']);
 
     // AJAX routes

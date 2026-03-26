@@ -3,6 +3,8 @@
 namespace BookStack\Uploads;
 
 use BookStack\App\Model;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\JointPermission;
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int    $id
@@ -33,11 +36,29 @@ class Attachment extends Model implements OwnableInterface
     use HasCreatorAndUpdater;
     use HasFactory;
 
+    public const UPLOAD_TO_PAGE = 'page';
+    public const UPLOAD_TO_CHAPTER = 'chapter';
+    public const UPLOAD_TO_BOOK = 'book';
+
+    public const UPLOAD_TO_ENTITY_TYPES = [
+        self::UPLOAD_TO_PAGE,
+        self::UPLOAD_TO_CHAPTER,
+        self::UPLOAD_TO_BOOK,
+    ];
+
     protected $fillable = ['name', 'order'];
-    protected $hidden = ['path', 'page'];
+    protected $hidden = ['path', 'page', 'uploadedTo'];
     protected $casts = [
         'external' => 'bool',
     ];
+
+    /**
+     * Ensure uploaded target type defaults to page for backward compatibility.
+     */
+    public function getUploadedToTypeAttribute(?string $value): string
+    {
+        return $value ?: self::UPLOAD_TO_PAGE;
+    }
 
     /**
      * Get the downloadable file name for this upload.
@@ -56,13 +77,27 @@ class Attachment extends Model implements OwnableInterface
      */
     public function page(): BelongsTo
     {
-        return $this->belongsTo(Page::class, 'uploaded_to');
+        $relation = $this->belongsTo(Page::class, 'uploaded_to');
+
+        if ($this->uploaded_to_type !== self::UPLOAD_TO_PAGE) {
+            $relation->whereRaw('1 = 0');
+        }
+
+        return $relation;
+    }
+
+    /**
+     * Get the entity this attachment is uploaded to.
+     */
+    public function uploadedTo(): MorphTo
+    {
+        return $this->morphTo(__FUNCTION__, 'uploaded_to_type', 'uploaded_to');
     }
 
     public function jointPermissions(): HasMany
     {
         return $this->hasMany(JointPermission::class, 'entity_id', 'uploaded_to')
-            ->where('joint_permissions.entity_type', '=', 'page');
+            ->where('joint_permissions.entity_type', '=', $this->uploaded_to_type);
     }
 
     /**
@@ -115,10 +150,21 @@ class Attachment extends Model implements OwnableInterface
     {
         $permissions = app()->make(PermissionApplicator::class);
 
-        return $permissions->restrictPageRelationQuery(
-            self::query(),
-            'attachments',
-            'uploaded_to'
-        );
+        return $permissions
+            ->restrictEntityRelationQuery(self::query(), 'attachments', 'uploaded_to', 'uploaded_to_type')
+            ->whereIn('uploaded_to_type', self::UPLOAD_TO_ENTITY_TYPES);
+    }
+
+    /**
+     * Get the target entity class for an upload type.
+     */
+    public static function classForUploadType(string $type): ?string
+    {
+        return match ($type) {
+            self::UPLOAD_TO_PAGE => Page::class,
+            self::UPLOAD_TO_CHAPTER => Chapter::class,
+            self::UPLOAD_TO_BOOK => Book::class,
+            default => null,
+        };
     }
 }

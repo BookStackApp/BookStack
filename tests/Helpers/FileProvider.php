@@ -113,11 +113,14 @@ class FileProvider
     /**
      * Uploads an attachment file with the given name.
      */
-    public function uploadAttachmentFile(TestCase $case, string $name, int $uploadedTo = 0): TestResponse
+    public function uploadAttachmentFile(TestCase $case, string $name, int $uploadedTo = 0, string $uploadedToType = Attachment::UPLOAD_TO_PAGE): TestResponse
     {
         $file = $this->uploadedTextFile($name);
 
-        return $case->call('POST', '/attachments/upload', ['uploaded_to' => $uploadedTo], [], ['file' => $file], []);
+        return $case->call('POST', '/attachments/upload', [
+            'uploaded_to' => $uploadedTo,
+            'uploaded_to_type' => $uploadedToType,
+        ], [], ['file' => $file], []);
     }
 
     /**

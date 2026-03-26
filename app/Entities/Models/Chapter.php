@@ -3,6 +3,7 @@
 namespace BookStack\Entities\Models;
 
 use BookStack\Entities\Tools\EntityDefaultTemplate;
+use BookStack\Uploads\Attachment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -30,6 +31,16 @@ class Chapter extends BookChild implements HasDescriptionInterface, HasDefaultTe
     public function pages(string $dir = 'ASC'): HasMany
     {
         return $this->hasMany(Page::class)->orderBy('priority', $dir);
+    }
+
+    /**
+     * Get the attachments assigned directly to this chapter.
+     */
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(Attachment::class, 'uploaded_to')
+            ->where('uploaded_to_type', '=', Attachment::UPLOAD_TO_CHAPTER)
+            ->orderBy('order', 'asc');
     }
 
     /**
