@@ -57,6 +57,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->validateEnvironment();
+
         // Set root URL
         $appUrl = config('app.url');
         if ($appUrl) {
@@ -83,5 +85,43 @@ class AppServiceProvider extends ServiceProvider
             'page'      => Page::class,
             'comment'   => Comment::class,
         ]);
+    }
+
+    /**
+     * Validate critical environment configuration.
+     * Fails fast if required configuration is missing in production.
+     */
+    protected function validateEnvironment(): void
+    {
+        $appKey = config('app.key');
+        $appEnv = config('app.env', 'production');
+
+        // Fail fast if APP_KEY is not set
+        if (empty($appKey)) {
+            $message = 'APP_KEY is not set. Run `php artisan key:generate` to create one.';
+
+            if ($appEnv === 'production') {
+                throw new \RuntimeException(
+                    'SECURITY ERROR: ' . $message . ' Application cannot start in production without APP_KEY.'
+                );
+            }
+
+            // In non-production, just warn but don't fail
+            if ($appEnv !== 'testing') {
+                logger()->warning('APP_KEY not set. ' . $message);
+            }
+        }
+
+        // Warn if APP_KEY doesn't have the base64 prefix (Laravel format)
+        if (!empty($appKey) && !str_starts_with($appKey, 'base64:')) {
+            $message = 'APP_KEY should be prefixed with "base64:" for proper encoding. ' .
+                'Run `php artisan key:generate` to create a valid key.';
+
+            if ($appEnv === 'production') {
+                logger()->error('SECURITY WARNING: ' . $message);
+            } elseif ($appEnv !== 'testing') {
+                logger()->warning($message);
+            }
+        }
     }
 }

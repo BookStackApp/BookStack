@@ -109,7 +109,9 @@ return [
     'auto_detect_locale' => env('APP_AUTO_LANG_PUBLIC', true),
 
     // Encryption key
-    'key' => env('APP_KEY', 'AbAZchsay4uBTU33RubBzLKw203yqSqr'),
+    // Must be set via APP_KEY environment variable
+    // Run `php artisan key:generate` to create a valid key
+    'key' => env('APP_KEY'),
 
     // Encryption cipher
     'cipher' => 'AES-256-CBC',

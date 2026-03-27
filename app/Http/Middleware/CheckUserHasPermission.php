@@ -24,8 +24,14 @@ class CheckUserHasPermission
 
     protected function errorResponse(Request $request)
     {
-        if ($request->wantsJson()) {
-            return response()->json(['error' => trans('errors.permissionJson')], 403);
+        if ($request->wantsJson() || $request->is('api/*')) {
+            return response()->json([
+                'error' => [
+                    'message' => trans('errors.permissionJson'),
+                    'code'    => 'FORBIDDEN',
+                    'status'  => 403,
+                ],
+            ], 403);
         }
 
         session()->flash('error', trans('errors.permission'));

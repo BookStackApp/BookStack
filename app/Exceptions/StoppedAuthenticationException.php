@@ -43,8 +43,9 @@ class StoppedAuthenticationException extends \Exception implements Responsable
         if ($request->wantsJson()) {
             return response()->json([
                 'error' => [
-                    'code'    => 401,
                     'message' => trans('errors.email_confirmation_awaiting'),
+                    'code'    => 'UNAUTHORIZED',
+                    'status'  => 401,
                 ],
             ], 401);
         }

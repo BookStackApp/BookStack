@@ -1,0 +1,72 @@
+# Dependencies - installed during build
+/vendor
+/node_modules
+
+# Git metadata - not needed in image
+/.git
+.gitignore
+
+# Environment - secrets passed via docker-compose env
+/.env
+.env.*
+/.env.example.complete
+
+# Build artifacts - regenerated during build
+/public/dist
+/public/plugins
+/public/css
+/public/js
+/public/bower
+/public/build/
+/public/favicon.ico
+esbuild-meta.json
+webpack-stats.json
+
+# Storage - should be volumes in production
+/storage/debugbar
+/storage/images
+
+# IDE and editor files
+/.vscode
+/.idea
+/.phpstorm.meta.php
+nbproject
+.nvmrc
+.settings/
+/.phpstorm.meta.php
+
+# Laravel
+Homestead.yaml
+bootstrap/cache/*
+phpstan.neon
+phpunit.result.cache
+
+# Logs
+/coverage
+npm-debug.log
+yarn-error.log
+yarn.lock
+composer.lock
+
+# OS files
+/.DS_Store
+Thumbs.db
+
+# Documentation - not needed in image
+/*.md
+/dev/docs
+/readme.md
+
+# CI/CD and config
+/github
+/crowdin.yml
+/phpcs.xml
+/phpstan.neon.dist
+/eslint.config.mjs
+/jest.config.ts
+
+# ZIP exports and downloads
+/*.zip
+
+# Test files
+/dev/db-testing

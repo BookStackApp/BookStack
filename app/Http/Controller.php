@@ -114,7 +114,23 @@ abstract class Controller extends BaseController
      */
     protected function jsonError(string $messageText = '', int $statusCode = 500): JsonResponse
     {
-        return response()->json(['message' => $messageText, 'status' => 'error'], $statusCode);
+        $errorCode = match ($statusCode) {
+            400 => 'BAD_REQUEST',
+            401 => 'UNAUTHORIZED',
+            403 => 'FORBIDDEN',
+            404 => 'NOT_FOUND',
+            422 => 'VALIDATION_ERROR',
+            429 => 'TOO_MANY_REQUESTS',
+            default => 'INTERNAL_ERROR',
+        };
+
+        return response()->json([
+            'error' => [
+                'message' => $messageText ?: 'An error occurred',
+                'code'    => $errorCode,
+                'status'  => $statusCode,
+            ],
+        ], $statusCode);
     }
 
     /**

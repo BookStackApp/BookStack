@@ -3,6 +3,7 @@
 
 volumes:
   db: {}
+  redis: {}
 
 services:
   db:
@@ -15,6 +16,12 @@ services:
     volumes:
       - ./dev/docker/init.db:/docker-entrypoint-initdb.d
       - db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
     build:
       context: .
@@ -31,6 +38,9 @@ services:
       MAIL_DRIVER: smtp
       MAIL_HOST: mailhog
       MAIL_PORT: 1025
+      CACHE_DRIVER: redis
+      SESSION_DRIVER: redis
+      REDIS_SERVERS: redis:6379:0
     ports:
       - ${DEV_PORT:-8080}:80
     volumes:
@@ -38,7 +48,11 @@ services:
       - ./dev/docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     entrypoint: /app/dev/docker/entrypoint.app.sh
     extra_hosts:
-    - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      db:
+        condition: service_healthy
+
   node:
     image: node:22-alpine
     working_dir: /app
@@ -46,6 +60,19 @@ services:
     volumes:
       - ./:/app
     entrypoint: /app/dev/docker/entrypoint.node.sh
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - ${DEV_REDIS_PORT:-6379}:6379
+    volumes:
+      - redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   mailhog:
     image: mailhog/mailhog
     ports:

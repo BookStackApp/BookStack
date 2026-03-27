@@ -129,21 +129,77 @@ class Handler extends ExceptionHandler
             $code = 404;
         }
 
+        $errorCode = $this->getErrorCodeFromException($e);
         $responseData = [
             'error' => [
-                'message' => $e->getMessage(),
+                'message' => $e->getMessage() ?: $this->getDefaultErrorMessage($code),
+                'code'   => $errorCode,
+                'status' => $code,
             ],
         ];
 
         if ($e instanceof ValidationException) {
             $responseData['error']['message'] = 'The given data was invalid.';
             $responseData['error']['validation'] = $e->errors();
+            $responseData['error']['code'] = 'VALIDATION_ERROR';
             $code = $e->status;
         }
 
-        $responseData['error']['code'] = $code;
-
         return new JsonResponse($responseData, $code, $headers);
+    }
+
+    /**
+     * Get a machine-readable error code from an exception.
+     */
+    protected function getErrorCodeFromException(Throwable $e): string
+    {
+        if ($e instanceof HttpExceptionInterface) {
+            return match ($e->getStatusCode()) {
+                400 => 'BAD_REQUEST',
+                401 => 'UNAUTHORIZED',
+                403 => 'FORBIDDEN',
+                404 => 'NOT_FOUND',
+                405 => 'METHOD_NOT_ALLOWED',
+                409 => 'CONFLICT',
+                422 => 'UNPROCESSABLE_ENTITY',
+                429 => 'TOO_MANY_REQUESTS',
+                500 => 'INTERNAL_ERROR',
+                502 => 'BAD_GATEWAY',
+                503 => 'SERVICE_UNAVAILABLE',
+                default => 'HTTP_ERROR',
+            };
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            return 'NOT_FOUND';
+        }
+
+        if ($e instanceof ValidationException) {
+            return 'VALIDATION_ERROR';
+        }
+
+        return 'INTERNAL_ERROR';
+    }
+
+    /**
+     * Get a default error message for a given HTTP status code.
+     */
+    protected function getDefaultErrorMessage(int $statusCode): string
+    {
+        return match ($statusCode) {
+            400 => 'Bad request',
+            401 => 'Unauthenticated',
+            403 => 'Forbidden',
+            404 => 'Resource not found',
+            405 => 'Method not allowed',
+            409 => 'Conflict',
+            422 => 'Validation failed',
+            429 => 'Too many requests',
+            500 => 'Internal server error',
+            502 => 'Bad gateway',
+            503 => 'Service unavailable',
+            default => 'An error occurred',
+        };
     }
 
     /**
@@ -154,7 +210,13 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception): SymfonyResponse
     {
         if ($request->expectsJson()) {
-            return response()->json(['error' => 'Unauthenticated.'], 401);
+            return response()->json([
+                'error' => [
+                    'message' => 'Unauthenticated',
+                    'code'    => 'UNAUTHORIZED',
+                    'status'  => 401,
+                ],
+            ], 401);
         }
 
         return redirect()->guest('login');
@@ -167,6 +229,13 @@ class Handler extends ExceptionHandler
      */
     protected function invalidJson($request, ValidationException $exception): JsonResponse
     {
-        return response()->json($exception->errors(), $exception->status);
+        return new JsonResponse([
+            'error' => [
+                'message' => 'The given data was invalid.',
+                'code' => 'VALIDATION_ERROR',
+                'status' => $exception->status,
+                'validation' => $exception->errors(),
+            ],
+        ], $exception->status);
     }
 }
