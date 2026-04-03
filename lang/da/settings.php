@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Kapitler først',
     'sort_rule_op_chapters_last' => 'De sidste kapitler',
     'sorting_page_limits' => 'Visningsgrænser pr. side',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => 'Indstil, hvor mange poster der skal vises pr. side i de forskellige lister i systemet. Normalt giver et lavere antal bedre ydeevne, mens et højere antal undgår, at man skal klikke sig igennem flere sider. Det anbefales at vælge et tal, der er et multiplum af 6.',
 
     // Maintenance settings
     'maint' => 'Vedligeholdelse',
