@@ -36,7 +36,7 @@ return [
     'paragraph' => 'Paragraf',
     'blockquote' => 'Citat',
     'inline_code' => 'Inline kode',
-    'callouts' => 'Callouts',
+    'callouts' => 'Tekstfelter',
     'callout_information' => 'Information',
     'callout_success' => 'Succes',
     'callout_warning' => 'Advarsel',
