@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Hemmeligheden leveret til det givne anvendte API-token er forkert',
     'api_user_no_api_permission' => 'Ejeren af den brugte API token har ikke adgang til at foretage API-kald',
     'api_user_token_expired' => 'Den brugte godkendelsestoken er udløbet',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Der tillades kun GET-anmodninger, når API\'et bruges med cookie-baseret godkendelse',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Følgende fejl opstod under afsendelse af testemail:',
