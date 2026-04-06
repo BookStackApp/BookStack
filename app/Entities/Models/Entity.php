@@ -479,6 +479,7 @@ abstract class Entity extends Model implements
             'chapter' => new Chapter(),
             'book' => new Book(),
             'bookshelf' => new Bookshelf(),
+            default => throw new \InvalidArgumentException("Invalid entity type: {$type}"),
         };
     }
 }

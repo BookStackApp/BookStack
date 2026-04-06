@@ -121,13 +121,11 @@ class SearchOptions
         foreach ($patterns as $termType => $pattern) {
             $matches = [];
             preg_match_all($pattern, $searchString, $matches);
-            if (count($matches) > 0) {
-                foreach ($matches[1] as $index => $value) {
-                    $negated = str_starts_with($matches[0][$index], '-');
-                    $terms[$termType][] = $constructors[$termType]($value, $negated);
-                }
-                $searchString = preg_replace($pattern, '', $searchString);
+            foreach ($matches[1] as $index => $value) {
+                $negated = str_starts_with($matches[0][$index], '-');
+                $terms[$termType][] = $constructors[$termType]($value, $negated);
             }
+            $searchString = preg_replace($pattern, '', $searchString);
         }
 
         // Unescape exacts and backslash escapes
@@ -261,7 +259,7 @@ class SearchOptions
         $userFilters = ['updated_by', 'created_by', 'owned_by'];
         $unsupportedFilters = ['is_template', 'sort_by'];
         foreach ($this->filters->all() as $filter) {
-            if (in_array($filter->getKey(), $userFilters, true) && $filter->value !== null && $filter->value !== 'me') {
+            if (in_array($filter->getKey(), $userFilters, true) && $filter->value && $filter->value !== 'me') {
                 $options[] = $filter;
             } else if (in_array($filter->getKey(), $unsupportedFilters, true)) {
                 $options[] = $filter;

@@ -62,7 +62,7 @@ abstract class Controller extends BaseController
      */
     protected function checkPermission(string|Permission $permission): void
     {
-        if (!user() || !user()->can($permission)) {
+        if (!user()->can($permission)) {
             $this->showPermissionError();
         }
     }

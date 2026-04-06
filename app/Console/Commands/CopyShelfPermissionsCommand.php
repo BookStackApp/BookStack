@@ -32,6 +32,7 @@ class CopyShelfPermissionsCommand extends Command
     {
         $shelfSlug = $this->option('slug');
         $cascadeAll = $this->option('all');
+        $noInteraction = boolval($this->option('no-interaction'));
         $shelves = null;
 
         if (!$cascadeAll && !$shelfSlug) {
@@ -41,14 +42,16 @@ class CopyShelfPermissionsCommand extends Command
         }
 
         if ($cascadeAll) {
-            $continue = $this->confirm(
-                'Permission settings for all shelves will be cascaded. ' .
-                        'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. ' .
-                        'Are you sure you want to proceed?'
-            );
+            if (!$noInteraction) {
+                $continue = $this->confirm(
+                    'Permission settings for all shelves will be cascaded. ' .
+                    'Books assigned to multiple shelves will receive only the permissions of it\'s last processed shelf. ' .
+                    'Are you sure you want to proceed?',
+                );
 
-            if (!$continue && !$this->hasOption('no-interaction')) {
-                return 0;
+                if (!$continue) {
+                    return 0;
+                }
             }
 
             $shelves = $queries->start()->get(['id']);
