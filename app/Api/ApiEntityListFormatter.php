@@ -78,7 +78,7 @@ class ApiEntityListFormatter
     public function withParents(): self
     {
         $this->withField('book', function (Entity $entity) {
-            if ($entity instanceof BookChild && $entity->book) {
+            if ($entity instanceof BookChild) {
                 return $entity->book->only(['id', 'name', 'slug']);
             }
             return null;

@@ -17,7 +17,14 @@ use ReflectionMethod;
 
 class ApiDocsGenerator
 {
+    /**
+     * @var array<string, ReflectionClass>
+     */
     protected array $reflectionClasses = [];
+
+    /**
+     * @var array<string, ApiController>
+     */
     protected array $controllerClasses = [];
 
     /**
@@ -107,7 +114,6 @@ class ApiDocsGenerator
      */
     protected function getBodyParamsFromClass(string $className, string $methodName): ?array
     {
-        /** @var ApiController $class */
         $class = $this->controllerClasses[$className] ?? null;
         if ($class === null) {
             $class = app()->make($className);
@@ -153,7 +159,7 @@ class ApiDocsGenerator
         $matches = [];
         preg_match_all('/^\s*?\*\s?($|((?![\/@\s]).*?))$/m', $comment, $matches);
 
-        $text = implode(' ', $matches[1] ?? []);
+        $text = implode(' ', $matches[1]);
         return str_replace('  ', "\n", $text);
     }
 

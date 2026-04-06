@@ -2,6 +2,7 @@
 /node_modules
 /.vscode
 /composer
+/composer.phar
 /coverage
 Homestead.yaml
 .env

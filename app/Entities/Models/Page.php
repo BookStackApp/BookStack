@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool         $draft
  * @property int          $revision_count
  * @property string       $editor
- * @property Chapter      $chapter
+ * @property Chapter|null $chapter
  * @property Collection   $attachments
  * @property Collection   $revisions
  * @property PageRevision $currentRevision

@@ -9,10 +9,7 @@ use phpseclib3\Math\BigInteger;
 
 class OidcJwtSigningKey
 {
-    /**
-     * @var PublicKey
-     */
-    protected $key;
+    protected PublicKey $key;
 
     /**
      * Can be created either from a JWK parameter array or local file path to load a certificate from.
@@ -20,15 +17,13 @@ class OidcJwtSigningKey
      * 'file:///var/www/cert.pem'
      * ['kty' => 'RSA', 'alg' => 'RS256', 'n' => 'abc123...'].
      *
-     * @param array|string $jwkOrKeyPath
-     *
      * @throws OidcInvalidKeyException
      */
-    public function __construct($jwkOrKeyPath)
+    public function __construct(array|string $jwkOrKeyPath)
     {
         if (is_array($jwkOrKeyPath)) {
             $this->loadFromJwkArray($jwkOrKeyPath);
-        } elseif (is_string($jwkOrKeyPath) && strpos($jwkOrKeyPath, 'file://') === 0) {
+        } elseif (str_starts_with($jwkOrKeyPath, 'file://')) {
             $this->loadFromPath($jwkOrKeyPath);
         } else {
             throw new OidcInvalidKeyException('Unexpected type of key value provided');
@@ -38,7 +33,7 @@ class OidcJwtSigningKey
     /**
      * @throws OidcInvalidKeyException
      */
-    protected function loadFromPath(string $path)
+    protected function loadFromPath(string $path): void
     {
         try {
             $key = PublicKeyLoader::load(
@@ -58,7 +53,7 @@ class OidcJwtSigningKey
     /**
      * @throws OidcInvalidKeyException
      */
-    protected function loadFromJwkArray(array $jwk)
+    protected function loadFromJwkArray(array $jwk): void
     {
         // 'alg' is optional for a JWK, but we will still attempt to validate if
         // it exists otherwise presume it will be compatible.
@@ -82,7 +77,7 @@ class OidcJwtSigningKey
             throw new OidcInvalidKeyException('A "n" parameter on the provided key is expected');
         }
 
-        $n = strtr($jwk['n'] ?? '', '-_', '+/');
+        $n = strtr($jwk['n'], '-_', '+/');
 
         try {
             $key = PublicKeyLoader::load([
