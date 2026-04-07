@@ -39,20 +39,27 @@
         </li>
         <li role="presentation"><hr></li>
         <li>
-            @php
-                $logoutPath = match (config('auth.method')) {
-                    'saml2' => '/saml2/logout',
-                    'oidc' => '/oidc/logout',
-                    default => '/logout',
-                }
-            @endphp
-            <form action="{{ url($logoutPath) }}" method="post">
-                {{ csrf_field() }}
-                <button class="icon-item" role="menuitem" data-shortcut="logout">
+            @if(session('impersonate'))
+                <a href="{{ url('/impersonate/stop') }}" role="menuitem" class="icon-item">
                     @icon('logout')
-                    <div>{{ trans('auth.logout') }}</div>
-                </button>
-            </form>
+                    <div>{{ trans('settings.users_impersonate_stop') }}</div>
+                </a>
+            @else
+                @php
+                    $logoutPath = match (config('auth.method')) {
+                        'saml2' => '/saml2/logout',
+                        'oidc' => '/oidc/logout',
+                        default => '/logout',
+                    }
+                @endphp
+                <form action="{{ url($logoutPath) }}" method="post">
+                    {{ csrf_field() }}
+                    <button class="icon-item" role="menuitem" data-shortcut="logout">
+                        @icon('logout')
+                        <div>{{ trans('auth.logout') }}</div>
+                    </button>
+                </form>
+            @endif
         </li>
     </ul>
 </div>

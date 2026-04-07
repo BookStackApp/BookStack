@@ -54,6 +54,13 @@
     @include('layouts.parts.base-body-start')
     @include('layouts.parts.skip-to-content')
     @include('layouts.parts.notifications')
+    @if(session('impersonate'))
+        <div style="background-color:#c0392b;color:#fff;text-align:center;padding:8px 16px;font-size:0.9em;">
+            {{ trans('settings.users_impersonating', ['name' => user()->name]) }}
+            &nbsp;|&nbsp;
+            <a href="{{ url('/impersonate/stop') }}" style="color:#fff;text-decoration:underline;">{{ trans('settings.users_impersonate_stop') }}</a>
+        </div>
+    @endif
     @include('layouts.parts.header')
 
     <div id="content" components="@yield('content-components')" class="block">

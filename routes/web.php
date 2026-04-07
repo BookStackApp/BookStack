@@ -251,6 +251,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/users/{id}', [UserControllers\UserController::class, 'edit']);
     Route::put('/settings/users/{id}', [UserControllers\UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
+    Route::post('/settings/users/{id}/impersonate', [UserControllers\UserController::class, 'impersonate']);
+    Route::get('/impersonate/stop', [UserControllers\UserController::class, 'stopImpersonate']);
 
     // User Account
     Route::get('/my-account', [UserControllers\UserAccountController::class, 'redirect']);

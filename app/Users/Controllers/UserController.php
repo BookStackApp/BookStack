@@ -192,6 +192,36 @@ class UserController extends Controller
     }
 
     /**
+     * Start impersonating the specified user.
+     */
+    public function impersonate(int $id)
+    {
+        $this->checkPermission(Permission::UsersManage);
+
+        $user = $this->userRepo->getById($id);
+
+        if ($user->isGuest() || $user->id === user()->id) {
+            $this->showErrorNotification(trans('errors.users_cannot_impersonate'));
+            return redirect("/settings/users/{$id}");
+        }
+
+        session(['impersonate' => $user->id]);
+
+        return redirect('/');
+    }
+
+    /**
+     * Stop impersonating and return to user edit page.
+     */
+    public function stopImpersonate()
+    {
+        $userId = session('impersonate');
+        session()->forget('impersonate');
+
+        return redirect("/settings/users/{$userId}");
+    }
+
+    /**
      * Remove the specified user from storage.
      *
      * @throws Exception

@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\CheckEmailConfirmed::class,
             \BookStack\Http\Middleware\RunThemeActions::class,
             \BookStack\Http\Middleware\Localization::class,
+            \BookStack\Http\Middleware\Impersonate::class,
         ],
         'api' => [
             \BookStack\Http\Middleware\ThrottleApiRequests::class,

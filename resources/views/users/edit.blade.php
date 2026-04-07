@@ -103,6 +103,17 @@
         @endif
 
         @include('users.api-tokens.parts.list', ['user' => $user, 'context' => 'settings'])
+
+        @if(!$user->isGuest() && $user->id !== user()->id && userCan('users-manage') && !session('impersonate'))
+            <section class="card content-wrap auto-height">
+                <h2 class="list-heading">{{ trans('settings.users_impersonate') }}</h2>
+                <p class="text-muted text-small">{{ trans('settings.users_impersonate_desc') }}</p>
+                <form action="{{ url("/settings/users/{$user->id}/impersonate") }}" method="post">
+                    {!! csrf_field() !!}
+                    <button type="submit" class="button outline">{{ trans('settings.users_impersonate_action') }}</button>
+                </form>
+            </section>
+        @endif
     </div>
 
 @stop
