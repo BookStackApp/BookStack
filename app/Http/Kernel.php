@@ -33,10 +33,10 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\StartSessionExtended::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \BookStack\Http\Middleware\VerifyCsrfToken::class,
+            \BookStack\Http\Middleware\Impersonate::class,
             \BookStack\Http\Middleware\CheckEmailConfirmed::class,
             \BookStack\Http\Middleware\RunThemeActions::class,
             \BookStack\Http\Middleware\Localization::class,
-            \BookStack\Http\Middleware\Impersonate::class,
         ],
         'api' => [
             \BookStack\Http\Middleware\ThrottleApiRequests::class,
