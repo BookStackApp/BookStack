@@ -6,6 +6,12 @@ use Tests\TestCase;
 
 class UserImpersonationTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        session()->forget('impersonate');
+        parent::tearDown();
+    }
+
     public function test_impersonate_button_shown_on_edit_page_for_admin()
     {
         $viewer = $this->users->viewer();
