@@ -6,7 +6,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "rootDir": "./resources/js/",
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "paths": {
       "@icons/*": ["./resources/icons/*"],
       "lexical": ["./resources/js/wysiwyg/lexical/core/index.ts"],
