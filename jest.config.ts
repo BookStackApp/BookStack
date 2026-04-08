@@ -5,9 +5,9 @@
 
 import type {Config} from 'jest';
 import {pathsToModuleNameMapper} from "ts-jest";
-import { createRequire } from 'module';
-const { compilerOptions } = createRequire(import.meta.url)('./tsconfig.json');
+import fs from "node:fs";
 
+const { compilerOptions } = JSON.parse(fs.readFileSync('./tsconfig.json', 'utf8'));
 const compilerPaths = compilerOptions.paths as Record<string, string[]>;
 const cleanedPaths: Record<string, string[]> = {};
 Object.keys(compilerPaths).forEach((key) => {
@@ -119,7 +119,7 @@ const config: Config = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  // preset: undefined,
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,
