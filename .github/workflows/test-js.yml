@@ -17,7 +17,7 @@ jobs:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Install NPM deps
       run: npm ci
