@@ -208,7 +208,7 @@ class ExportFormatter
         preg_match_all("/\<img.*?src\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $imageTagsOutput);
 
         // Replace image src with base64 encoded image strings
-        if (isset($imageTagsOutput[0]) && count($imageTagsOutput[0]) > 0) {
+        if (count($imageTagsOutput[0]) > 0) {
             foreach ($imageTagsOutput[0] as $index => $imgMatch) {
                 $oldImgTagString = $imgMatch;
                 $srcString = $imageTagsOutput[2][$index];
@@ -225,7 +225,7 @@ class ExportFormatter
         preg_match_all("/\<a.*href\=(\'|\")(.*?)(\'|\").*?\>/i", $htmlContent, $linksOutput);
 
         // Update relative links to be absolute, with instance url
-        if (isset($linksOutput[0]) && count($linksOutput[0]) > 0) {
+        if (count($linksOutput[0]) > 0) {
             foreach ($linksOutput[0] as $index => $linkMatch) {
                 $oldLinkString = $linkMatch;
                 $srcString = $linksOutput[2][$index];

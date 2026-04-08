@@ -82,10 +82,8 @@ class ZipImportRunner
             $entity = $this->importBook($exportModel, $reader);
         } else if ($exportModel instanceof ZipExportChapter) {
             $entity = $this->importChapter($exportModel, $parent, $reader);
-        } else if ($exportModel instanceof ZipExportPage) {
-            $entity = $this->importPage($exportModel, $parent, $reader);
         } else {
-            throw new ZipImportException(['No importable data found in import data.']);
+            $entity = $this->importPage($exportModel, $parent, $reader);
         }
 
         $this->references->replaceReferences();
@@ -132,7 +130,7 @@ class ZipImportRunner
             'name' => $exportBook->name,
             'description_html' => $exportBook->description_html ?? '',
             'image' => $exportBook->cover ? $this->zipFileToUploadedFile($exportBook->cover, $reader) : null,
-            'tags' => $this->exportTagsToInputArray($exportBook->tags ?? []),
+            'tags' => $this->exportTagsToInputArray($exportBook->tags),
         ]);
 
         if ($book->coverInfo()->getImage()) {
@@ -151,7 +149,7 @@ class ZipImportRunner
         foreach ($children as $child) {
             if ($child instanceof ZipExportChapter) {
                 $this->importChapter($child, $book, $reader);
-            } else if ($child instanceof ZipExportPage) {
+            } else {
                 $this->importPage($child, $book, $reader);
             }
         }
@@ -166,7 +164,7 @@ class ZipImportRunner
         $chapter = $this->chapterRepo->create([
             'name' => $exportChapter->name,
             'description_html' => $exportChapter->description_html ?? '',
-            'tags' => $this->exportTagsToInputArray($exportChapter->tags ?? []),
+            'tags' => $this->exportTagsToInputArray($exportChapter->tags),
         ], $parent);
 
         $exportPages = $exportChapter->pages;
@@ -199,7 +197,7 @@ class ZipImportRunner
             'name' => $exportPage->name,
             'markdown' => $exportPage->markdown ?? '',
             'html' => $exportPage->html ?? '',
-            'tags' => $this->exportTagsToInputArray($exportPage->tags ?? []),
+            'tags' => $this->exportTagsToInputArray($exportPage->tags),
         ]);
 
         $this->references->addPage($page, $exportPage);
@@ -302,7 +300,7 @@ class ZipImportRunner
             array_push($chapters, ...$exportModel->chapters);
         } else if ($exportModel instanceof ZipExportChapter) {
             $chapters[] = $exportModel;
-        } else if ($exportModel instanceof ZipExportPage) {
+        } else {
             $pages[] = $exportModel;
         }
 

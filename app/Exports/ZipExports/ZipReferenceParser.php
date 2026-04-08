@@ -68,10 +68,6 @@ class ZipReferenceParser
         $matches = [];
         preg_match_all($referenceRegex, $content, $matches);
 
-        if (count($matches) < 3) {
-            return $content;
-        }
-
         for ($i = 0; $i < count($matches[0]); $i++) {
             $referenceText = $matches[0][$i];
             $type = strtolower($matches[1][$i]);

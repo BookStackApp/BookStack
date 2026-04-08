@@ -47,7 +47,7 @@ class PermissionsUpdater
     {
         if (isset($data['role_permissions'])) {
             $entity->permissions()->where('role_id', '!=', 0)->delete();
-            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions($data['role_permissions'] ?? [], false);
+            $rolePermissionData = $this->formatPermissionsFromApiRequestToEntityPermissions($data['role_permissions'], false);
             $entity->permissions()->createMany($rolePermissionData);
         }
 

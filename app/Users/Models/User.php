@@ -222,8 +222,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function getAvatar(int $size = 50): string
     {
         $default = url('/user_avatar.png');
-        $imageId = $this->image_id;
-        if ($imageId === 0 || $imageId === '0' || $imageId === null) {
+        if ($this->image_id === 0) {
             return $default;
         }
 

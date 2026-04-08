@@ -17,7 +17,7 @@ use Illuminate\Support\Collection;
  *
  * @property string                                   $description
  * @property string                                   $description_html
- * @property int                                      $image_id
+ * @property ?int                                     $image_id
  * @property ?int                                     $default_template_id
  * @property ?int                                     $sort_rule_id
  * @property \Illuminate\Database\Eloquent\Collection $chapters
