@@ -35,7 +35,7 @@ class Page extends BookChild
     public string $textField = 'text';
     public string $htmlField = 'html';
     protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at',  'entity_id', 'entity_type'];
-    protected $fillable = ['name', 'priority'];
+    protected $fillable = ['name', 'slug', 'priority'];
 
     protected $casts = [
         'draft'    => 'boolean',

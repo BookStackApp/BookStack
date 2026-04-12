@@ -146,6 +146,7 @@ class BookApiController extends ApiController
         return [
             'create' => [
                 'name'                => ['required', 'string', 'max:255'],
+                'slug'                => ['string', 'max:255'],
                 'description'         => ['string', 'max:1900'],
                 'description_html'    => ['string', 'max:2000'],
                 'tags'                => ['array'],
@@ -154,6 +155,7 @@ class BookApiController extends ApiController
             ],
             'update' => [
                 'name'                => ['string', 'min:1', 'max:255'],
+                'slug'                => ['string', 'max:255'],
                 'description'         => ['string', 'max:1900'],
                 'description_html'    => ['string', 'max:2000'],
                 'tags'                => ['array'],

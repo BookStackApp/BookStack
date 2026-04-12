@@ -20,7 +20,7 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
     public float $searchFactor = 1.2;
 
     protected $hidden = ['pivot', 'image_id', 'deleted_at', 'description_html', 'priority', 'default_template_id', 'sort_rule_id', 'entity_id', 'entity_type', 'chapter_id', 'book_id'];
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     /**
      * Get the books in this shelf.

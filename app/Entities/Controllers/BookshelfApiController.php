@@ -129,6 +129,7 @@ class BookshelfApiController extends ApiController
         return [
             'create' => [
                 'name'             => ['required', 'string', 'max:255'],
+                'slug'             => ['string', 'max:255'],
                 'description'      => ['string', 'max:1900'],
                 'description_html' => ['string', 'max:2000'],
                 'books'            => ['array'],
@@ -137,6 +138,7 @@ class BookshelfApiController extends ApiController
             ],
             'update' => [
                 'name'             => ['string', 'min:1', 'max:255'],
+                'slug'             => ['string', 'max:255'],
                 'description'      => ['string', 'max:1900'],
                 'description_html' => ['string', 'max:2000'],
                 'books'            => ['array'],

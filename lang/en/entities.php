@@ -331,7 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Toggle Sidebar',
+    'slug' => 'Slug',
     'page_tags' => 'Page Tags',
+    'page_slug_tags' => 'Page Slug & Tags',
     'chapter_tags' => 'Chapter Tags',
     'book_tags' => 'Book Tags',
     'shelf_tags' => 'Shelf Tags',

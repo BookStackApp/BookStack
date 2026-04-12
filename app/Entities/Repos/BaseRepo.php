@@ -48,7 +48,9 @@ class BaseRepo
             'updated_by' => user()->id,
             'owned_by'   => user()->id,
         ]);
-        $this->refreshSlug($entity);
+        if (empty($input['slug'])) {
+            $this->refreshSlug($entity);
+        }
 
         if ($entity instanceof HasDescriptionInterface) {
             $this->updateDescription($entity, $input);
@@ -82,8 +84,11 @@ class BaseRepo
         $entity->fill($input);
         $entity->updated_by = user()->id;
 
-        if ($entity->isDirty('name') || empty($entity->slug)) {
-            $this->refreshSlug($entity);
+        $slugUnsetOrEmpty = !array_key_exists('slug', $input) || empty($input['slug']);
+        if ($slugUnsetOrEmpty) {
+            if ($entity->isDirty('name') || empty($entity->slug)) {
+                $this->refreshSlug($entity);
+            }
         }
 
         if ($entity instanceof HasDescriptionInterface) {

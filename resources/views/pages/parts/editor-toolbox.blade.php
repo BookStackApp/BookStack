@@ -15,8 +15,12 @@
     </div>
 
     <div refs="editor-toolbox@tab-content" data-tab-content="tags" class="toolbox-tab-content">
-        <h4>{{ trans('entities.page_tags') }}</h4>
+        <h4>{{ trans('entities.page_slug_tags') }}</h4>
         <div class="px-l">
+            <div class="form-group stretch-inputs">
+                <label for="slug">{{ trans('entities.slug') }}</label>
+                @include('form.text', ['name' => 'slug', 'model' => $page])
+            </div>
             @include('entities.tag-manager', ['entity' => $page])
         </div>
     </div>

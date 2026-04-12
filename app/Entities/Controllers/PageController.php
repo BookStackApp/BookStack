@@ -76,6 +76,7 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['string', 'max:255'],
         ]);
 
         if ($chapterSlug) {
@@ -120,6 +121,7 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['string', 'max:255'],
         ]);
 
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
@@ -222,6 +224,7 @@ class PageController extends Controller
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['string', 'max:255'],
         ]);
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageUpdate, $page);

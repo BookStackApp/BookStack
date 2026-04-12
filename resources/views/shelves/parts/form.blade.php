@@ -4,6 +4,11 @@
     @include('form.text', ['name' => 'name', 'autofocus' => true])
 </div>
 
+<div class="form-group stretch-inputs">
+    <label for="slug">{{ trans('entities.slug') }}</label>
+    @include('form.text', ['name' => 'slug', 'model' => $shelf ?? null])
+</div>
+
 <div class="form-group description-input">
     <label for="description_html">{{ trans('common.description') }}</label>
     @include('form.description-html-input')

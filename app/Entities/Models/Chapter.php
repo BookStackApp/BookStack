@@ -20,7 +20,7 @@ class Chapter extends BookChild implements HasDescriptionInterface, HasDefaultTe
 
     public float $searchFactor = 1.2;
     protected $hidden = ['pivot', 'deleted_at', 'description_html', 'sort_rule_id', 'image_id', 'entity_id', 'entity_type', 'chapter_id'];
-    protected $fillable = ['name', 'priority'];
+    protected $fillable = ['name', 'slug', 'priority'];
 
     /**
      * Get the pages that this chapter contains.

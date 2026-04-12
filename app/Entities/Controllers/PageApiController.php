@@ -19,6 +19,7 @@ class PageApiController extends ApiController
             'book_id'    => ['required_without:chapter_id', 'integer'],
             'chapter_id' => ['required_without:book_id', 'integer'],
             'name'       => ['required', 'string', 'max:255'],
+            'slug'       => ['string', 'max:255'],
             'html'       => ['required_without:markdown', 'string'],
             'markdown'   => ['required_without:html', 'string'],
             'tags'       => ['array'],
@@ -28,6 +29,7 @@ class PageApiController extends ApiController
             'book_id'    => ['integer'],
             'chapter_id' => ['integer'],
             'name'       => ['string', 'min:1', 'max:255'],
+            'slug'       => ['string', 'max:255'],
             'html'       => ['string'],
             'markdown'   => ['string'],
             'tags'       => ['array'],
@@ -71,7 +73,7 @@ class PageApiController extends ApiController
      */
     public function create(Request $request)
     {
-        $this->validate($request, $this->rules['create']);
+        $requestData = $this->validate($request, $this->rules['create']);
 
         if ($request->has('chapter_id')) {
             $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->get('chapter_id')));
@@ -81,7 +83,7 @@ class PageApiController extends ApiController
         $this->checkOwnablePermission(Permission::PageCreate, $parent);
 
         $draft = $this->pageRepo->getNewDraftPage($parent);
-        $this->pageRepo->publishDraft($draft, $request->only(array_keys($this->rules['create'])));
+        $this->pageRepo->publishDraft($draft, $requestData);
 
         return response()->json($draft->forJsonDisplay());
     }
