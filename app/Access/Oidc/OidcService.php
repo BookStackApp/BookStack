@@ -14,7 +14,6 @@ use BookStack\Theming\ThemeEvents;
 use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\Cache;
-use League\OAuth2\Client\OptionProvider\HttpBasicAuthOptionProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
 /**
@@ -140,7 +139,7 @@ class OidcService
             'redirectUri' => url('/oidc/callback'),
         ], [
             'httpClient'     => $this->http->buildClient(5),
-            'optionProvider' => new HttpBasicAuthOptionProvider(),
+            'optionProvider' => new OidcHttpBasicWithClientIdOptionProvider(),
         ]);
 
         foreach ($this->getAdditionalScopes() as $scope) {
@@ -199,7 +198,7 @@ class OidcService
         }
 
         try {
-            $idToken->validate($settings->clientId);
+            $idToken->validate($settings);
         } catch (OidcInvalidTokenException $exception) {
             throw new OidcException("ID token validation failed with error: {$exception->getMessage()}");
         }

@@ -9,7 +9,9 @@ class OidcJwtWithClaims implements ProvidesClaims
     protected string $signature;
     protected string $issuer;
     protected array $tokenParts = [];
-
+    protected array $acceptedSignatures = [self::hs256Signature, self::rs256Signature];
+    private const hs256Signature = 'HS256'
+        , rs256Signature = 'RS256';
     /**
      * @var array[]|string[]
      */
@@ -59,11 +61,11 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    public function validateCommonTokenDetails(string $clientId): bool
+    public function validateCommonTokenDetails(OidcProviderSettings $settings): bool
     {
         $this->validateTokenStructure();
-        $this->validateTokenSignature();
-        $this->validateCommonClaims($clientId);
+        $this->validateTokenSignature($settings);
+        $this->validateCommonClaims($settings->clientId);
 
         return true;
     }
@@ -102,12 +104,12 @@ class OidcJwtWithClaims implements ProvidesClaims
     protected function validateTokenStructure(): void
     {
         foreach (['header', 'payload'] as $prop) {
-            if (empty($this->$prop)) {
+            if (empty($this->$prop) || !is_array($this->$prop)) {
                 throw new OidcInvalidTokenException("Could not parse out a valid {$prop} within the provided token");
             }
         }
 
-        if (empty($this->signature)) {
+        if (empty($this->signature) || !is_string($this->signature)) {
             throw new OidcInvalidTokenException('Could not parse out a valid signature within the provided token');
         }
     }
@@ -117,31 +119,42 @@ class OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    protected function validateTokenSignature(): void
-    {
-        if ($this->header['alg'] !== 'RS256') {
-            throw new OidcInvalidTokenException("Only RS256 signature validation is supported. Token reports using {$this->header['alg']}");
+    protected function validateTokenSignature(OidcProviderSettings $settings): void {  
+        $validSignatures = implode(', ',$this->acceptedSignatures);
+        switch ($this->header['alg']) {
+            case self::rs256Signature:
+                $parsedKeys = array_map(function ($key) {
+                    try {
+                        return new OidcJwtSigningKey($key);
+                    } catch (OidcInvalidKeyException $e) {
+                        throw new OidcInvalidTokenException('Failed to read signing key with error: ' . $e->getMessage());
+                    }
+                }, $this->keys);
+
+                $parsedKeys = array_filter($parsedKeys);
+
+                $contentToSign = $this->tokenParts[0] . '.' . $this->tokenParts[1];
+                /** @var OidcJwtSigningKey $parsedKey */
+                foreach ($parsedKeys as $parsedKey) {
+                    if ($parsedKey->verify($contentToSign, $this->signature)) {
+                        return;
+                    }
+                }
+            
+                throw new OidcInvalidTokenException('Token signature could not be validated using the provided keys');                
+            case self::hs256Signature:
+                $secret = $settings->clientSecret;
+                $contentToSign = $this->tokenParts[0] . '.' . $this->tokenParts[1];
+                $expectedSignature = hash_hmac('sha256', $contentToSign, $secret, true);
+
+                if (hash_equals($expectedSignature, $this->signature)) {
+                    return;
+                }
+            
+                throw new OidcInvalidTokenException('Token signature could not be validated using the provided secret');                
+            default:
+                throw new OidcInvalidTokenException("Only $validSignatures signatures validation are supported. Token reports using {$this->header['alg']}");
         }
-
-        $parsedKeys = array_map(function ($key) {
-            try {
-                return new OidcJwtSigningKey($key);
-            } catch (OidcInvalidKeyException $e) {
-                throw new OidcInvalidTokenException('Failed to read signing key with error: ' . $e->getMessage());
-            }
-        }, $this->keys);
-
-        $parsedKeys = array_filter($parsedKeys);
-
-        $contentToSign = $this->tokenParts[0] . '.' . $this->tokenParts[1];
-        /** @var OidcJwtSigningKey $parsedKey */
-        foreach ($parsedKeys as $parsedKey) {
-            if ($parsedKey->verify($contentToSign, $this->signature)) {
-                return;
-            }
-        }
-
-        throw new OidcInvalidTokenException('Token signature could not be validated using the provided keys');
     }
 
     /**

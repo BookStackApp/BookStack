@@ -9,10 +9,10 @@ class OidcIdToken extends OidcJwtWithClaims implements ProvidesClaims
      *
      * @throws OidcInvalidTokenException
      */
-    public function validate(string $clientId): bool
+    public function validate(OidcProviderSettings $settings): bool
     {
-        parent::validateCommonTokenDetails($clientId);
-        $this->validateTokenClaims($clientId);
+        parent::validateCommonTokenDetails($settings);
+        $this->validateTokenClaims($settings->clientId);
 
         return true;
     }
