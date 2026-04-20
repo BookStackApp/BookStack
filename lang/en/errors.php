@@ -26,7 +26,6 @@ return [
     'oidc_already_logged_in' => 'Already logged in',
     'oidc_no_email_address' => 'Could not find an email address, for this user, in the data provided by the external authentication system',
     'oidc_fail_authed' => 'Login using :system failed, system did not provide successful authorization',
-    'oidc_need_auth' => 'You need to be authenticated to perform this action.',
     'social_no_action_defined' => 'No action defined',
     'social_login_bad_response' => "Error received during :socialAccount login: \n:error",
     'social_account_in_use' => 'This :socialAccount account is already in use, Try logging in via the :socialAccount option.',

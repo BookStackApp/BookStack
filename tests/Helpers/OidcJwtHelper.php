@@ -2,6 +2,7 @@
 
 namespace Tests\Helpers;
 
+use BookStack\Access\Oidc\OidcProviderSettings;
 use phpseclib3\Crypt\RSA;
 
 /**
@@ -117,6 +118,41 @@ efqXPwg2wAPYeiec49EbfnteQQKAkqNfJ9K69yE2naf6bw3/5mCBsq/cXeuaBMII
 ylysUIRBqt2J0kWm2yCpFWR7H+Ilhdx9A7ZLCqYVt8e+vjO/BOI3cQDe2VPOLPSl
 q/1PY4iJviGKddtmfClH3v4=
 -----END PRIVATE KEY-----';
+    }
+
+    public static function defaultSecret(): string
+    {
+        return 'test-client-secret-for-hs256';
+    }
+
+    /**
+     * Build a minimal OidcProviderSettings for use in token validation tests.
+     */
+    public static function defaultProviderSettings(array $overrides = []): OidcProviderSettings
+    {
+        return new OidcProviderSettings(array_merge([
+            'issuer'       => static::defaultIssuer(),
+            'clientId'     => static::defaultClientId(),
+            'clientSecret' => static::defaultSecret(),
+        ], $overrides));
+    }
+
+    /**
+     * Build an HS256-signed ID token using the given secret.
+     */
+    public static function hs256IdToken(string $secret, array $payloadOverrides = []): string
+    {
+        $payload = array_merge(static::defaultPayload(), $payloadOverrides);
+        $header = ['alg' => 'HS256', 'typ' => 'JWT'];
+
+        $top = implode('.', [
+            static::base64UrlEncode(json_encode($header)),
+            static::base64UrlEncode(json_encode($payload)),
+        ]);
+
+        $signature = hash_hmac('sha256', $top, $secret, true);
+
+        return $top . '.' . static::base64UrlEncode($signature);
     }
 
     public static function publicJwkKeyArray(): array

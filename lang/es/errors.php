@@ -26,7 +26,6 @@ return [
     'oidc_already_logged_in' => 'Ya tenías la sesión iniciada',
     'oidc_no_email_address' => 'No se pudo encontrar una dirección de correo electrónico, para este usuario, en los datos proporcionados por el sistema de autenticación externo',
     'oidc_fail_authed' => 'El inicio de sesión con :system falló, el sistema no proporcionó una autorización correcta',
-    'oidc_need_auth' => 'Necesita estar autenticado para realizar esta acción.',
     'social_no_action_defined' => 'Acción no definida',
     'social_login_bad_response' => "Se ha recibido un error durante el acceso con :socialAccount error: \n:error",
     'social_account_in_use' => 'la cuenta :socialAccount ya se encuentra en uso, intente acceder a través de la opción :socialAccount .',

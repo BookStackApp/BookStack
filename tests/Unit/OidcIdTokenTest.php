@@ -15,7 +15,7 @@ class OidcIdTokenTest extends TestCase
             OidcJwtHelper::publicJwkKeyArray(),
         ]);
 
-        $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
+        $this->assertTrue($token->validate(OidcJwtHelper::defaultProviderSettings()));
     }
 
     public function test_get_claim_returns_value_if_existing()
@@ -56,7 +56,7 @@ class OidcIdTokenTest extends TestCase
             $err = null;
 
             try {
-                $token->validate('abc');
+                $token->validate(OidcJwtHelper::defaultProviderSettings());
             } catch (\Exception $exception) {
                 $err = $exception;
             }
@@ -71,7 +71,7 @@ class OidcIdTokenTest extends TestCase
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), []);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
-        $token->validate('abc');
+        $token->validate(OidcJwtHelper::defaultProviderSettings());
     }
 
     public function test_error_thrown_if_token_signature_not_validated_from_non_matching_key()
@@ -83,7 +83,7 @@ class OidcIdTokenTest extends TestCase
         ]);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Token signature could not be validated using the provided keys');
-        $token->validate('abc');
+        $token->validate(OidcJwtHelper::defaultProviderSettings());
     }
 
     public function test_error_thrown_if_invalid_key_provided()
@@ -91,15 +91,34 @@ class OidcIdTokenTest extends TestCase
         $token = new OidcIdToken(OidcJwtHelper::idToken(), OidcJwtHelper::defaultIssuer(), ['url://example.com']);
         $this->expectException(OidcInvalidTokenException::class);
         $this->expectExceptionMessage('Unexpected type of key value provided');
-        $token->validate('abc');
+        $token->validate(OidcJwtHelper::defaultProviderSettings());
     }
 
-    public function test_error_thrown_if_token_algorithm_is_not_rs256()
+    public function test_error_thrown_if_token_algorithm_is_not_supported()
     {
-        $token = new OidcIdToken(OidcJwtHelper::idToken([], ['alg' => 'HS256']), OidcJwtHelper::defaultIssuer(), []);
+        $token = new OidcIdToken(OidcJwtHelper::idToken([], ['alg' => 'ES256']), OidcJwtHelper::defaultIssuer(), []);
         $this->expectException(OidcInvalidTokenException::class);
-        $this->expectExceptionMessage('Only RS256 signature validation is supported. Token reports using HS256');
-        $token->validate('abc');
+        $this->expectExceptionMessage('Only HS256, RS256 signatures validation are supported. Token reports using ES256');
+        $token->validate(OidcJwtHelper::defaultProviderSettings());
+    }
+
+    public function test_hs256_token_passes_validation_with_correct_secret()
+    {
+        $secret = OidcJwtHelper::defaultSecret();
+        $token = new OidcIdToken(OidcJwtHelper::hs256IdToken($secret), OidcJwtHelper::defaultIssuer(), []);
+        $settings = OidcJwtHelper::defaultProviderSettings(['clientSecret' => $secret]);
+
+        $this->assertTrue($token->validate($settings));
+    }
+
+    public function test_hs256_token_fails_validation_with_wrong_secret()
+    {
+        $token = new OidcIdToken(OidcJwtHelper::hs256IdToken('correct-secret'), OidcJwtHelper::defaultIssuer(), []);
+        $settings = OidcJwtHelper::defaultProviderSettings(['clientSecret' => 'wrong-secret']);
+
+        $this->expectException(OidcInvalidTokenException::class);
+        $this->expectExceptionMessage('Token signature could not be validated using the provided secret');
+        $token->validate($settings);
     }
 
     public function test_token_claim_error_cases()
@@ -141,7 +160,7 @@ class OidcIdTokenTest extends TestCase
             $err = null;
 
             try {
-                $token->validate('xxyyzz.aaa.bbccdd.123');
+                $token->validate(OidcJwtHelper::defaultProviderSettings());
             } catch (\Exception $exception) {
                 $err = $exception;
             }
@@ -160,7 +179,7 @@ class OidcIdTokenTest extends TestCase
             $testFilePath,
         ]);
 
-        $this->assertTrue($token->validate('xxyyzz.aaa.bbccdd.123'));
+        $this->assertTrue($token->validate(OidcJwtHelper::defaultProviderSettings()));
         unlink($testFilePath);
     }
 }

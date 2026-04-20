@@ -55,7 +55,7 @@ class OidcController extends Controller
         }
 
         try {
-            $this->_catchCustomErrorAndFail($request);
+            $this->throwIfAuthorizationError($request);
             $this->oidcService->processAuthorizeResponse($request->query('code'));
         } catch (OidcException $oidcException) {
             $this->showErrorNotification($oidcException->getMessage());
@@ -74,19 +74,22 @@ class OidcController extends Controller
         return redirect($this->oidcService->logout());
     }
 
-    private function _catchCustomErrorAndFail(Request $request):void {
-        $_errorCode = $request->query('error');
-        if ($_errorCode) {
-            if ($_errorCode === 'need_auth') {
-                if ( null === ($errorMsg = $request->query('error_description')) ){
-                    $customError = trans('errors.oidc_need_auth', ['system' => config('oidc.name')]);
-                }else {
-                    $customError = $errorMsg;
-                }
-            }
-            throw new OidcException($customError);
+    /**
+     *
+     * @throws OidcException
+     */
+    private function throwIfAuthorizationError(Request $request): void
+    {
+        $errorCode = $request->query('error');
+        if (!$errorCode) {
+            return;
         }
+
+        $errorDescription = $request->query('error_description');
+        if ($errorDescription) {
+            throw new OidcException($errorDescription);
+        }
+
+        throw new OidcException(trans('errors.oidc_fail_authed', ['system' => config('oidc.name')]));
     }
-
-
 }
