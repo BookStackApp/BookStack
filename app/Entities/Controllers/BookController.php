@@ -144,7 +144,7 @@ class BookController extends Controller
 
         View::incrementFor($book);
         if ($request->has('shelf')) {
-            $this->shelfContext->setShelfContext(intval($request->get('shelf')));
+            $this->shelfContext->setShelfContext(intval($request->input('shelf')));
         }
 
         $this->setPageTitle($book->getShortName());
@@ -224,8 +224,13 @@ class BookController extends Controller
     {
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $this->checkOwnablePermission(Permission::BookDelete, $book);
+        $contextShelf = $this->shelfContext->getContextualShelfForBook($book);
 
         $this->bookRepo->destroy($book);
+
+        if ($contextShelf) {
+            return redirect($contextShelf->getUrl());
+        }
 
         return redirect('/books');
     }
@@ -258,7 +263,7 @@ class BookController extends Controller
         $this->checkOwnablePermission(Permission::BookView, $book);
         $this->checkPermission(Permission::BookCreateAll);
 
-        $newName = $request->get('name') ?: $book->name;
+        $newName = $request->input('name') ?: $book->name;
         $bookCopy = $cloner->cloneBook($book, $newName);
         $this->showSuccessNotification(trans('entities.books_copy_success'));
 

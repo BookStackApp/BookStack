@@ -32,12 +32,12 @@ class LoginController extends Controller
     {
         $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
-        $preventInitiation = $request->get('prevent_auto_init') === 'true';
+        $preventInitiation = $request->input('prevent_auto_init') === 'true';
 
         if ($request->has('email')) {
             session()->flashInput([
-                'email'    => $request->get('email'),
-                'password' => (config('app.env') === 'demo') ? $request->get('password', '') : '',
+                'email'    => $request->input('email'),
+                'password' => (config('app.env') === 'demo') ? $request->input('password', '') : '',
             ]);
         }
 
@@ -62,7 +62,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        $username = $request->get($this->username());
+        $username = $request->input($this->username());
 
         // Check login throttling attempts to see if they've gone over the limit
         if ($this->hasTooManyLoginAttempts($request)) {

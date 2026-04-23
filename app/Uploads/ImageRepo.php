@@ -91,7 +91,7 @@ class ImageRepo
             $parentFilter = function (Builder $query) use ($filterType, $contextPage) {
                 if ($filterType === 'page') {
                     $query->where('uploaded_to', '=', $contextPage->id);
-                } else if ($filterType === 'book') {
+                } else {
                     $validPageIds = $contextPage->book->pages()
                         ->scopes('visible')
                         ->pluck('id')

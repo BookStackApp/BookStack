@@ -77,7 +77,7 @@ class UserController extends Controller
         $this->checkPermission(Permission::UsersManage);
 
         $authMethod = config('auth.method');
-        $sendInvite = ($request->get('send_invite', 'false') === 'true');
+        $sendInvite = ($request->input('send_invite', 'false') === 'true');
         $externalAuth = $authMethod === 'ldap' || $authMethod === 'saml2' || $authMethod === 'oidc';
         $passwordRequired = ($authMethod === 'standard' && !$sendInvite);
 
@@ -202,7 +202,7 @@ class UserController extends Controller
         $this->checkPermission(Permission::UsersManage);
 
         $user = $this->userRepo->getById($id);
-        $newOwnerId = intval($request->get('new_owner_id')) ?: null;
+        $newOwnerId = intval($request->input('new_owner_id')) ?: null;
 
         $this->userRepo->destroy($user, $newOwnerId);
 

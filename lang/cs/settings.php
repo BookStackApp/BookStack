@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Kapitoly jako první',
     'sort_rule_op_chapters_last' => 'Kapitoly jako poslední',
     'sorting_page_limits' => 'Počet zobrazených položek na stránce',
-    'sorting_page_limits_desc' => 'Nastavte, kolik položek se má zobrazit na stránce v různých seznamech na webu. Obvykle bude nižší počet výkonnější, zatímco vyšší počet eliminuje nutnost proklikávat se několika stránkami. Doporučuje se použít sudý násobek čísla 3 (18, 24, 30 atd.).',
+    'sorting_page_limits_desc' => 'Nastavte, kolik položek se má zobrazit na stránce v různých seznamech na webu. Obvykle bude nižší počet výkonnější, zatímco vyšší počet eliminuje nutnost proklikávat se několika stránkami. Doporučuje se použít násobek čísla 6.',
 
     // Maintenance settings
     'maint' => 'Údržba',

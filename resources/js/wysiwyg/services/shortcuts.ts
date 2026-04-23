@@ -38,29 +38,9 @@ type ShortcutAction = (editor: LexicalEditor, context: EditorUiContext) => boole
  * List of action functions by their shortcut combo.
  * We use "meta" as an abstraction for ctrl/cmd depending on platform.
  */
-const actionsByKeys: Record<string, ShortcutAction> = {
-    'meta+s': () => {
-        window.$events.emit('editor-save-draft');
-        return true;
-    },
-    'meta+enter': () => {
-        window.$events.emit('editor-save-page');
-        return true;
-    },
-    'meta+1': (editor, context) => headerHandler(context, 'h2'),
-    'meta+2': (editor, context) => headerHandler(context, 'h3'),
-    'meta+3': (editor, context) => headerHandler(context, 'h4'),
-    'meta+4': (editor, context) => headerHandler(context, 'h5'),
-    'meta+5': wrapFormatAction(toggleSelectionAsParagraph),
-    'meta+d': wrapFormatAction(toggleSelectionAsParagraph),
-    'meta+6': wrapFormatAction(toggleSelectionAsBlockquote),
-    'meta+q': wrapFormatAction(toggleSelectionAsBlockquote),
-    'meta+7': wrapFormatAction(formatCodeBlock),
-    'meta+e': wrapFormatAction(formatCodeBlock),
+const baseActionsByKeys: Record<string, ShortcutAction> = {
     'meta+8': toggleInlineCode,
     'meta+shift+e': toggleInlineCode,
-    'meta+9': wrapFormatAction(cycleSelectionCalloutFormats),
-
     'meta+o': wrapFormatAction((e) => toggleSelectionAsList(e, 'number')),
     'meta+p': wrapFormatAction((e) => toggleSelectionAsList(e, 'bullet')),
     'meta+k': (editor, context) => {
@@ -87,12 +67,39 @@ const actionsByKeys: Record<string, ShortcutAction> = {
     },
 };
 
-function createKeyDownListener(context: EditorUiContext): (e: KeyboardEvent) => void {
+/**
+ * An extended set of the above, used for fuller-featured editors with heavier block-level formatting.
+ */
+const extendedActionsByKeys: Record<string, ShortcutAction> = {
+    ...baseActionsByKeys,
+    'meta+s': () => {
+        window.$events.emit('editor-save-draft');
+        return true;
+    },
+    'meta+enter': () => {
+        window.$events.emit('editor-save-page');
+        return true;
+    },
+    'meta+1': (editor, context) => headerHandler(context, 'h2'),
+    'meta+2': (editor, context) => headerHandler(context, 'h3'),
+    'meta+3': (editor, context) => headerHandler(context, 'h4'),
+    'meta+4': (editor, context) => headerHandler(context, 'h5'),
+    'meta+5': wrapFormatAction(toggleSelectionAsParagraph),
+    'meta+d': wrapFormatAction(toggleSelectionAsParagraph),
+    'meta+6': wrapFormatAction(toggleSelectionAsBlockquote),
+    'meta+7': wrapFormatAction(formatCodeBlock),
+    'meta+e': wrapFormatAction(formatCodeBlock),
+    'meta+q': wrapFormatAction(toggleSelectionAsBlockquote),
+    'meta+9': wrapFormatAction(cycleSelectionCalloutFormats),
+};
+
+function createKeyDownListener(context: EditorUiContext, useExtended: boolean): (e: KeyboardEvent) => void {
+    const keySetToUse = useExtended ? extendedActionsByKeys : baseActionsByKeys;
     return (event: KeyboardEvent) => {
         const combo = keyboardEventToKeyComboString(event);
         // console.log(`pressed: ${combo}`);
-        if (actionsByKeys[combo]) {
-            const handled = actionsByKeys[combo](context.editor, context);
+        if (keySetToUse[combo]) {
+            const handled = keySetToUse[combo](context.editor, context);
             if (handled) {
                 event.stopPropagation();
                 event.preventDefault();
@@ -127,8 +134,8 @@ function overrideDefaultCommands(editor: LexicalEditor) {
     }, COMMAND_PRIORITY_HIGH);
 }
 
-export function registerShortcuts(context: EditorUiContext) {
-    const listener = createKeyDownListener(context);
+export function registerShortcuts(context: EditorUiContext, useExtended: boolean) {
+    const listener = createKeyDownListener(context, useExtended);
     overrideDefaultCommands(context.editor);
 
     return context.editor.registerRootListener((rootElement: null | HTMLElement, prevRootElement: null | HTMLElement) => {

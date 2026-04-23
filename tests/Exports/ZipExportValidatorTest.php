@@ -90,4 +90,29 @@ class ZipExportValidatorTest extends TestCase
 
         $this->assertEquals('The file needs to reference a file of type image/png,image/jpeg,image/gif,image/webp, found text/plain.', $results['page.images.0.file']);
     }
+
+    public function test_page_link_attachments_cant_be_data_or_js()
+    {
+        $validateResultCountByLink = [
+            'data:text/html,<p>hi</p>' => 1,
+            'javascript:alert(\'hi\')' => 1,
+            'mailto:email@example.com' => 0,
+        ];
+
+        foreach ($validateResultCountByLink as $link => $count) {
+            $validator = $this->getValidatorForData([
+                'page' => [
+                    'id' => 4,
+                    'name' => 'My page',
+                    'markdown' => 'hello',
+                    'attachments' => [
+                        ['id' => 4, 'name' => 'Attachment A', 'link' => $link],
+                    ],
+                ]
+            ]);
+
+            $results = $validator->validate();
+            $this->assertCount($count, $results);
+        }
+    }
 }

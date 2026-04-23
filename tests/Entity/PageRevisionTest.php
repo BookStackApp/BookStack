@@ -4,6 +4,8 @@ namespace Tests\Entity;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Models\PageRevision;
+use BookStack\Permissions\Permission;
 use Tests\TestCase;
 
 class PageRevisionTest extends TestCase
@@ -45,6 +47,20 @@ class PageRevisionTest extends TestCase
         $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new revision content');
+    }
+
+    public function test_page_revision_preview_filters_html_content()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<script>dontwantthishere</script><style>dontwantthishere</style><p>expectthisthough</p>']);
+        $pageRevision = $page->revisions->last();
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>Updated content</p>']);
+
+        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('expectthisthough');
+        $revisionView->assertDontSee('dontwantthishere');
     }
 
     public function test_page_revision_restore_updates_content()
@@ -213,6 +229,61 @@ class PageRevisionTest extends TestCase
 
         $html->assertElementNotExists('.item-list > .item-list-row:last-child a[href*="/changes"]');
         $html->assertElementContains('.item-list > .item-list-row:nth-child(2)', 'Changes');
+    }
+
+    public function test_revision_changes_view_shows_diff()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p id="bkmrk-hello">Hello there dog</p>']);
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p id="bkmrk-hello">Hello there cat</p>']);
+
+        $pageRevision = $page->revisions()->orderBy('id', 'desc')->first();
+        $revisionView = $this->get("{$page->getUrl()}/revisions/{$pageRevision->id}/changes");
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('<p id="bkmrk-hello">Hello there <del class="diffmod">dog</del><ins class="diffmod">cat</ins></p>', false);
+    }
+
+    public function test_revision_changes_view_filters_html_content()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $html = '<script>dontwantthishere</script><style>dontwantthishere</style><p>expectthisthough</p>';
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => $html]);
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => $html]);
+
+        $pageRevision = $page->revisions()->orderBy('id', 'desc')->first();
+        $revisionView = $this->get("{$page->getUrl()}/revisions/{$pageRevision->id}/changes");
+        $revisionView->assertStatus(200);
+        $revisionView->assertSee('expectthisthough');
+        $revisionView->assertDontSee('dontwantthishere');
+    }
+
+    public function test_access_to_revision_operation_requires_revision_view_all_permission()
+    {
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $page = $this->entities->page();
+        $this->createRevisions($page, 3);
+        /** @var PageRevision $revision */
+        $revision = $page->revisions()->orderBy('id', 'desc')->first();
+
+        $this->get($page->getUrl())->assertSee($page->getUrl('/revisions'), false);
+        $this->get($page->getUrl('/revisions'))->assertOk();
+        $this->get($revision->getUrl())->assertOk();
+        $this->get($revision->getUrl('/changes'))->assertOk();
+        $this->put($revision->getUrl('/restore'))->assertRedirect($page->getUrl());
+        $this->delete($revision->getUrl('/delete'))->assertRedirect($page->getUrl('/revisions'));
+
+        $this->permissions->removeUserRolePermissions($editor, [Permission::RevisionViewAll]);
+
+        $this->get($page->getUrl())->assertDontSee($page->getUrl('/revisions'), false);
+        $this->assertPermissionError($this->get($page->getUrl('/revisions')));
+        $this->assertPermissionError($this->get($revision->getUrl()));
+        $this->assertPermissionError($this->get($revision->getUrl('/changes')));
+        $this->assertPermissionError($this->put($revision->getUrl('/restore')));
+        $this->assertPermissionError($this->delete($revision->getUrl('/delete')));
     }
 
     public function test_revision_restore_action_only_visible_with_permission()

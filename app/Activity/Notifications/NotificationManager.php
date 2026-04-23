@@ -15,14 +15,14 @@ use BookStack\Users\Models\User;
 class NotificationManager
 {
     /**
-     * @var class-string<NotificationHandler>[]
+     * @var array<string, class-string<NotificationHandler>[]>
      */
-    protected array $handlers = [];
+    protected array $handlersByActivity = [];
 
     public function handle(Activity $activity, string|Loggable $detail, User $user): void
     {
         $activityType = $activity->type;
-        $handlersToRun = $this->handlers[$activityType] ?? [];
+        $handlersToRun = $this->handlersByActivity[$activityType] ?? [];
         foreach ($handlersToRun as $handlerClass) {
             /** @var NotificationHandler $handler */
             $handler = new $handlerClass();
@@ -35,12 +35,12 @@ class NotificationManager
      */
     public function registerHandler(string $activityType, string $handlerClass): void
     {
-        if (!isset($this->handlers[$activityType])) {
-            $this->handlers[$activityType] = [];
+        if (!isset($this->handlersByActivity[$activityType])) {
+            $this->handlersByActivity[$activityType] = [];
         }
 
-        if (!in_array($handlerClass, $this->handlers[$activityType])) {
-            $this->handlers[$activityType][] = $handlerClass;
+        if (!in_array($handlerClass, $this->handlersByActivity[$activityType])) {
+            $this->handlersByActivity[$activityType][] = $handlerClass;
         }
     }
 

@@ -83,7 +83,7 @@ class RegistrationService
         // Email restriction
         $this->ensureEmailDomainAllowed($userEmail);
 
-        // Ensure user does not already exist
+        // Ensure the user does not already exist
         $alreadyUser = !is_null($this->userRepo->getByEmail($userEmail));
         if ($alreadyUser) {
             throw new UserRegistrationException(trans('errors.error_user_exists_different_creds', ['email' => $userEmail]), '/login');
@@ -99,7 +99,7 @@ class RegistrationService
         $newUser = $this->userRepo->createWithoutActivity($userData, $emailConfirmed);
         $newUser->attachDefaultRole();
 
-        // Assign social account if given
+        // Assign a social account if given
         if ($socialAccount) {
             $newUser->socialAccounts()->save($socialAccount);
         }
@@ -107,7 +107,7 @@ class RegistrationService
         Activity::add(ActivityType::AUTH_REGISTER, $socialAccount ?? $newUser);
         Theme::dispatch(ThemeEvents::AUTH_REGISTER, $authSystem, $newUser);
 
-        // Start email confirmation flow if required
+        // Start the email confirmation flow if required
         if ($this->emailConfirmationService->confirmationRequired() && !$emailConfirmed) {
             $newUser->save();
 

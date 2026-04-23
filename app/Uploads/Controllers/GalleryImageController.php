@@ -24,10 +24,10 @@ class GalleryImageController extends Controller
      */
     public function list(Request $request, ImageResizer $resizer)
     {
-        $page = $request->get('page', 1);
-        $searchTerm = $request->get('search', null);
-        $uploadedToFilter = $request->get('uploaded_to', null);
-        $parentTypeFilter = $request->get('filter_type', null);
+        $page = $request->input('page', 1);
+        $searchTerm = $request->input('search', null);
+        $uploadedToFilter = $request->input('uploaded_to', null);
+        $parentTypeFilter = $request->input('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('gallery', $parentTypeFilter, $page, 30, $uploadedToFilter, $searchTerm);
         $viewData = [
@@ -69,7 +69,7 @@ class GalleryImageController extends Controller
 
         try {
             $imageUpload = $request->file('file');
-            $uploadedTo = $request->get('uploaded_to', 0);
+            $uploadedTo = $request->input('uploaded_to', 0);
             $image = $this->imageRepo->saveNew($imageUpload, 'gallery', $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);

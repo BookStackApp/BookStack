@@ -65,7 +65,7 @@ class CspService
      */
     protected function getScriptSrc(): string
     {
-        if (config('app.allow_content_scripts')) {
+        if ($this->scriptFilteringDisabled()) {
             return '';
         }
 
@@ -108,7 +108,7 @@ class CspService
      */
     protected function getObjectSrc(): string
     {
-        if (config('app.allow_content_scripts')) {
+        if ($this->scriptFilteringDisabled()) {
             return '';
         }
 
@@ -122,6 +122,11 @@ class CspService
     protected function getBaseUri(): string
     {
         return "base-uri 'self'";
+    }
+
+    protected function scriptFilteringDisabled(): bool
+    {
+        return !HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'))->filterOutJavaScript;
     }
 
     protected function getAllowedIframeHosts(): array

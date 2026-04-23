@@ -79,5 +79,17 @@
     "path": "/uploads/images/cover_book/2020-01/sjovall_m117hUWMu40.jpg",
     "type": "cover_book",
     "uploaded_to": 16
-  }
+  },
+  "shelves": [
+    {
+      "id": 1,
+      "name": "Great reads",
+      "slug": "great-reads"
+    },
+    {
+      "id": 5,
+      "name": "Personal Books",
+      "slug": "personal-books"
+    }
+  ]
 }

@@ -24,10 +24,10 @@ class DrawioImageController extends Controller
      */
     public function list(Request $request, ImageResizer $resizer)
     {
-        $page = $request->get('page', 1);
-        $searchTerm = $request->get('search', null);
-        $uploadedToFilter = $request->get('uploaded_to', null);
-        $parentTypeFilter = $request->get('filter_type', null);
+        $page = $request->input('page', 1);
+        $searchTerm = $request->input('search', null);
+        $uploadedToFilter = $request->input('uploaded_to', null);
+        $parentTypeFilter = $request->input('filter_type', null);
 
         $imgData = $this->imageRepo->getEntityFiltered('drawio', $parentTypeFilter, $page, 24, $uploadedToFilter, $searchTerm);
         $viewData = [
@@ -59,10 +59,10 @@ class DrawioImageController extends Controller
         ]);
 
         $this->checkPermission(Permission::ImageCreateAll);
-        $imageBase64Data = $request->get('image');
+        $imageBase64Data = $request->input('image');
 
         try {
-            $uploadedTo = $request->get('uploaded_to', 0);
+            $uploadedTo = $request->input('uploaded_to', 0);
             $image = $this->imageRepo->saveDrawing($imageBase64Data, $uploadedTo);
         } catch (ImageUploadException $e) {
             return response($e->getMessage(), 500);

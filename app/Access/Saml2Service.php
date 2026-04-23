@@ -266,7 +266,7 @@ class Saml2Service
     /**
      * Extract the details of a user from a SAML response.
      *
-     * @return array{external_id: string, name: string, email: string, saml_id: string}
+     * @return array{external_id: string, name: string, email: string|null, saml_id: string}
      */
     protected function getUserDetails(string $samlID, $samlAttributes): array
     {
@@ -357,7 +357,7 @@ class Saml2Service
             ]);
         }
 
-        if ($userDetails['email'] === null) {
+        if (empty($userDetails['email'])) {
             throw new SamlException(trans('errors.saml_no_email_address'));
         }
 

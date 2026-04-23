@@ -93,14 +93,14 @@ class SecurityHeaderTest extends TestCase
         $this->assertNotEquals($firstHeader, $secondHeader);
     }
 
-    public function test_allow_content_scripts_settings_controls_csp_script_headers()
+    public function test_content_filtering_config_controls_csp_script_headers()
     {
-        config()->set('app.allow_content_scripts', true);
+        config()->set('app.content_filtering', '');
         $resp = $this->get('/');
         $scriptHeader = $this->getCspHeader($resp, 'script-src');
         $this->assertEmpty($scriptHeader);
 
-        config()->set('app.allow_content_scripts', false);
+        config()->set('app.content_filtering', 'j');
         $resp = $this->get('/');
         $scriptHeader = $this->getCspHeader($resp, 'script-src');
         $this->assertNotEmpty($scriptHeader);

@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Спочатку розділи',
     'sort_rule_op_chapters_last' => 'Розділи останні',
     'sorting_page_limits' => 'Обмеження відображення сторінок',
-    'sorting_page_limits_desc' => 'Кількість елементів для відображення в різних списках в системі. Зазвичай менша кількість буде більш продуктивною, в той час як більша кількість уникає необхідність натискання на кілька сторінок. Рекомендується використовувати парне кратне 3 (18, 24, 30 тощо).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Обслуговування',

@@ -1,2 +1,6 @@
+# Font cache files have once been stored directly in this folder
+# therefore its important the contents non-ignored by git
+# are chosen selectively
 *
 !.gitignore
+!dompdf/

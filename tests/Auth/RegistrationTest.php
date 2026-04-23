@@ -188,6 +188,30 @@ class RegistrationTest extends TestCase
         $resp->assertSee('The password must be at least 8 characters.');
     }
 
+    public function test_registration_input_filtered_to_validated_input()
+    {
+        $this->setSettings(['registration-enabled' => 'true']);
+        $roleIds = Role::all()->pluck('id')->toArray();
+
+        $resp = $this->post('/register', [
+            'name'     => 'Barry',
+            'email'    => 'barry@example.com',
+            'password' => 'superpassword',
+            'password_confirmation' => 'superpassword',
+            'external_auth_id' => 'ext5691284',
+            'roles' => $roleIds,
+        ]);
+
+        $resp->assertRedirect('/');
+
+        /** @var User $user */
+        $user = auth()->user();
+        $this->assertNotNull($user);
+        $this->assertFalse($user->isGuest());
+        $this->assertEmpty($user->external_auth_id);
+        $this->assertEquals(0, $user->roles()->count());
+    }
+
     public function test_registration_simple_honeypot_active()
     {
         $this->setSettings(['registration-enabled' => 'true']);

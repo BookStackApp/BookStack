@@ -29,7 +29,7 @@ export class EditorUIManager {
     setContext(context: EditorUiContext) {
         this.context = context;
         this.setupEventListeners();
-        this.setupEditor(context.editor);
+        this.setupEditor(context.editor, context);
     }
 
     getContext(): EditorUiContext {
@@ -256,7 +256,10 @@ export class EditorUIManager {
         }
     }
 
-    protected setupEditor(editor: LexicalEditor) {
+    protected setupEditor(editor: LexicalEditor, context: EditorUiContext) {
+        // Pass the context to the editor
+        editor.setUiContext(context);
+
         // Register our DOM decorate listener with the editor
         const domDecorateListener: DecoratorListener<EditorDecoratorAdapter> = (decorators: Record<NodeKey, EditorDecoratorAdapter>) => {
             editor.getEditorState().read(() => {

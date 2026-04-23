@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Capítulos al inicio',
     'sort_rule_op_chapters_last' => 'Capítulos al final',
     'sorting_page_limits' => 'Límites de visualización por página',
-    'sorting_page_limits_desc' => 'Establecer cuántos elementos a mostrar por página en varias listas dentro del sistema. Normalmente una cantidad más baja rendirá mejor, mientras que una cantidad más alta evita la necesidad de hacer clic a través de varias páginas. Se recomienda utilizar un múltiplo par de 3 (18, 24, 30, etc).',
+    'sorting_page_limits_desc' => 'Establecer cuántos elementos a mostrar por página en varias listas dentro del sistema. Normalmente una cantidad más baja rendirá mejor, mientras que una cantidad más alta evita la necesidad de hacer clic a través de varias páginas. Se recomienda utilizar un múltiplo de 6.',
 
     // Maintenance settings
     'maint' => 'Mantenimiento',

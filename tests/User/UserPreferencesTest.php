@@ -153,6 +153,26 @@ class UserPreferencesTest extends TestCase
             ->assertElementNotExists('.content-wrap .entity-list-item');
     }
 
+    public function test_redirect_on_preference_change_checks_host()
+    {
+        $expectedByRedirect = [
+            'http://localhost/beans' => 'http://localhost/beans',
+            'https://localhost/beans' => 'http://localhost',
+            'http://localhost:9090/beans' => 'http://localhost',
+            'http://localhost.example.com/beans' => 'http://localhost',
+            'http://localhost@example.com/beans' => 'http://localhost',
+        ];
+
+        $this->asEditor();
+        foreach ($expectedByRedirect as $url => $expected) {
+            $req = $this->patch("/preferences/change-view/bookshelf", [
+                'view' => 'grid',
+                '_return' => $url,
+            ]);
+            $req->assertRedirect($expected);
+        }
+    }
+
     public function test_update_code_language_favourite()
     {
         $editor = $this->users->editor();

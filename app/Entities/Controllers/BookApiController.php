@@ -7,11 +7,14 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -21,6 +24,7 @@ class BookApiController extends ApiController
         protected BookRepo $bookRepo,
         protected BookQueries $queries,
         protected PageQueries $pageQueries,
+        protected BookshelfQueries $shelfQueries,
     ) {
     }
 
@@ -60,13 +64,20 @@ class BookApiController extends ApiController
      * View the details of a single book.
      * The response data will contain a 'content' property listing the chapter and pages directly within, in
      * the same structure as you'd see within the BookStack interface when viewing a book. Top-level
-     * contents will have a 'type' property to distinguish between pages & chapters.
+     * contents will have a 'type' property to distinguish between pages and chapters.
      */
     public function read(string $id)
     {
         $book = $this->queries->findVisibleByIdOrFail(intval($id));
         $book = $this->forJsonDisplay($book);
-        $book->load(['createdBy', 'updatedBy', 'ownedBy']);
+        $book->load([
+            'createdBy',
+            'updatedBy',
+            'ownedBy',
+            'shelves' => function (BelongsToMany $query) {
+                $query->select(['id', 'name', 'slug'])->scopes('visible');
+            }
+        ]);
 
         $contents = (new BookContents($book))->getTree(true, false)->all();
         $contentsApiData = (new ApiEntityListFormatter($contents))

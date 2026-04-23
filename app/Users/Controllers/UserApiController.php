@@ -141,7 +141,7 @@ class UserApiController extends ApiController
     public function delete(Request $request, string $id)
     {
         $user = $this->userRepo->getById($id);
-        $newOwnerId = $request->get('migrate_ownership_id', null);
+        $newOwnerId = $request->input('migrate_ownership_id', null);
 
         $this->userRepo->destroy($user, $newOwnerId);
 

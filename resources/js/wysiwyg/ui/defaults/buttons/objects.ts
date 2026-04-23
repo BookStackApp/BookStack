@@ -221,7 +221,7 @@ export const detailsEditLabel: EditorButtonDefinition = {
             if ($isDetailsNode(details)) {
                 $showDetailsForm(details, context);
             }
-        })
+        });
     },
     isActive(selection: BaseSelection | null): boolean {
         return false;

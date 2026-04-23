@@ -27,6 +27,7 @@ class HtmlDescriptionFilter
         'span' => [],
         'em' => [],
         'br' => [],
+        'code' => [],
     ];
 
     public static function filterFromString(string $html): string

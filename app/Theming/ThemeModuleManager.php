@@ -44,14 +44,21 @@ class ThemeModuleManager
      */
     public function addFromZip(string $name, ThemeModuleZip $zip): ThemeModule
     {
-        $baseFolderName = Str::limit(Str::slug($name), 20);
+        $baseFolderName = Str::limit(Str::slug($name), 40, '');
         $folderName = $baseFolderName;
         while (!$baseFolderName || file_exists($this->modulesFolderPath . DIRECTORY_SEPARATOR . $folderName)) {
             $folderName = ($baseFolderName ?: 'mod') . '-' . Str::random(4);
         }
 
         $folderPath = $this->modulesFolderPath . DIRECTORY_SEPARATOR . $folderName;
-        $zip->extractTo($folderPath);
+        try {
+            $zip->extractTo($folderPath);
+        } catch (ThemeModuleException $exception) {
+            if (is_dir($folderPath)) {
+                $this->deleteDirectoryRecursively($folderPath);
+            }
+            throw new ThemeModuleException("Failed to load extract files from module ZIP with error: {$exception->getMessage()}");
+        }
 
         $module = $this->loadFromFolder($folderName);
         if (!$module) {

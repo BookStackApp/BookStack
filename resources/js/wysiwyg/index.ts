@@ -59,7 +59,7 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
     mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, true),
         registerKeyboardHandling(context),
         registerMouseHandling(context),
         registerSelectionHandling(context),
@@ -123,7 +123,7 @@ export function createBasicEditorInstance(container: HTMLElement, htmlContent: s
     const editorTeardown = mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, false),
         registerAutoLinks(editor),
     );
 
@@ -157,7 +157,7 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
     const editorTeardown = mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, false),
         registerAutoLinks(editor),
         registerMentions(context),
     );

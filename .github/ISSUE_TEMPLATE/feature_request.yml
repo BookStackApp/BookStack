@@ -56,3 +56,13 @@ body:
       description: Add any other context or screenshots about the feature request here.
     validations:
       required: false
+  - type: checkboxes
+    id: ai-thoughts
+    attributes:
+      label: Have you used generative AI/LLMs to create any thoughts in this request?
+      description: |
+        We ask that no machine generated thoughts or ideas are provided, to avoid us spending time considering the ideas
+        of a machine instead of a human. Further guidance on this can be found [in the BookStack community rules](https://www.bookstackapp.com/about/community-rules/#use-of-llmsai).
+      options:
+        - label: This request only contains the thoughts & ideas of a human
+          required: true

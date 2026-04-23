@@ -20,7 +20,7 @@ class FavouriteController extends Controller
     public function index(Request $request, QueryTopFavourites $topFavourites)
     {
         $viewCount = 20;
-        $page = intval($request->get('page', 1));
+        $page = intval($request->input('page', 1));
         $favourites = $topFavourites->run($viewCount + 1, (($page - 1) * $viewCount));
 
         $hasMoreLink = ($favourites->count() > $viewCount) ? url('/favourites?page=' . ($page + 1)) : null;

@@ -5,6 +5,7 @@ namespace Tests\Exports;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
+use BookStack\Permissions\Permission;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -18,7 +19,7 @@ class HtmlExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $page->slug . '.html');
     }
 
     public function test_book_html_export()
@@ -31,7 +32,7 @@ class HtmlExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($book->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $book->slug . '.html');
     }
 
     public function test_book_html_export_shows_html_descriptions()
@@ -58,7 +59,7 @@ class HtmlExportTest extends TestCase
         $resp->assertStatus(200);
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.html"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $chapter->slug . '.html');
     }
 
     public function test_chapter_html_export_shows_html_descriptions()
@@ -227,6 +228,20 @@ class HtmlExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/html'));
         $resp->assertStatus(200);
         $resp->assertDontSee('ExportWizardTheFifth');
+    }
+
+    public function test_page_export_only_includes_revision_count_if_user_has_revision_view_permissions()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+
+        $resp = $this->actingAs($editor)->get($page->getUrl('/export/html'));
+        $resp->assertSee('Revision #');
+
+        $this->permissions->removeUserRolePermissions($editor, [Permission::RevisionViewAll]);
+
+        $resp = $this->actingAs($editor)->get($page->getUrl('/export/html'));
+        $resp->assertDontSee('Revision #');
     }
 
     public function test_html_exports_contain_csp_meta_tag()

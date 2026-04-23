@@ -127,6 +127,20 @@ class ThemeService
     }
 
     /**
+     * Get a hash to represent the currently loaded modules.
+     */
+    public function getModulesHash(): string
+    {
+        $key = "";
+
+        foreach ($this->modules as $module) {
+            $key .= $module->name . ':' . $module->version . ';';
+        }
+
+        return md5($key);
+    }
+
+    /**
      * Look for a specific file within the theme or its modules.
      * Returns the first file found or null if not found.
      */

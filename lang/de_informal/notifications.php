@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Aktualisierte Seite: :pageName',
     'updated_page_intro' => 'Eine Seite wurde in :appName aktualisiert:',
     'updated_page_debounce' => 'Um eine Flut von Benachrichtigungen zu vermeiden, wirst du für eine gewisse Zeit keine Benachrichtigungen für weitere Bearbeitungen dieser Seite durch denselben Bearbeiter erhalten.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Sie wurden in einem Kommentar auf der Seite :pageName erwähnt',
+    'comment_mention_intro' => 'Sie wurden in einem Kommentar zu :appName: erwähnt',
 
     'detail_page_name' => 'Seitenname:',
     'detail_page_path' => 'Seitenpfad:',

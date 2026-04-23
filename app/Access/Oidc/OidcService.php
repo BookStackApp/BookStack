@@ -49,6 +49,11 @@ class OidcService
         $url = $provider->getAuthorizationUrl();
         session()->put('oidc_pkce_code', $provider->getPkceCode() ?? '');
 
+        $returnUrl = Theme::dispatch(ThemeEvents::OIDC_AUTH_PRE_REDIRECT, $url);
+        if (is_string($returnUrl)) {
+            $url = $returnUrl;
+        }
+
         return [
             'url'   => $url,
             'state' => $provider->getState(),

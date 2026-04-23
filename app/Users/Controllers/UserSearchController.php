@@ -26,7 +26,7 @@ class UserSearchController extends Controller
             $this->showPermissionError();
         }
 
-        $search = $request->get('search', '');
+        $search = $request->input('search', '');
         $query = User::query()
             ->orderBy('name', 'asc')
             ->take(20);
@@ -58,7 +58,7 @@ class UserSearchController extends Controller
             $this->showPermissionError();
         }
 
-        $search = $request->get('search', '');
+        $search = $request->input('search', '');
         $query = User::query()
             ->orderBy('name', 'asc')
             ->take(20);

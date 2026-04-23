@@ -38,9 +38,9 @@
                 <div>
                     <label for="setting-sorting-book-default"
                            class="setting-list-label">{{ trans('settings.sorting_book_default') }}</label>
-                    <p class="small">{{ trans('settings.sorting_book_default_desc') }}</p>
+                    <p class="small mb-s">{{ trans('settings.sorting_book_default_desc') }}</p>
                 </div>
-                <div>
+                <div class="pt-s">
                     <select id="setting-sorting-book-default" name="setting-sorting-book-default"
                             @if($errors->has('setting-sorting-book-default')) class="neg" @endif>
                         <option value="0" @if(intval(setting('sorting-book-default', '0')) === 0) selected @endif>
@@ -54,6 +54,9 @@
                             </option>
                         @endforeach
                     </select>
+                    <p class="small">
+                        <a href="{{ url('/settings/sorting/rules/new') }}" class="text-button" target="_blank">{{ trans('settings.sort_rule_create') }}</a>
+                    </p>
                 </div>
             </div>
 

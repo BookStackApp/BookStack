@@ -103,7 +103,13 @@ class HtmlDocument
      */
     public function getBody(): DOMNode
     {
-        return $this->document->getElementsByTagName('body')[0];
+        $bodies = $this->document->getElementsByTagName('body');
+
+        if ($bodies->length === 0) {
+            return new DOMElement('body', '');
+        }
+
+        return $bodies[0];
     }
 
     /**

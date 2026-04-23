@@ -24,7 +24,7 @@ class CommentMentionNotification extends BaseActivityNotification
             $locale->trans('notifications.detail_page_name') => new EntityLinkMessageLine($page),
             $locale->trans('notifications.detail_page_path') => $this->buildPagePathLine($page, $notifiable),
             $locale->trans('notifications.detail_commenter') => $this->user->name,
-            $locale->trans('notifications.detail_comment') => strip_tags($comment->html),
+            $locale->trans('notifications.detail_comment') => $comment->getPlainText(),
         ]);
 
         return $this->newMailMessage($locale)

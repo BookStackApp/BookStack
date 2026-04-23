@@ -75,7 +75,7 @@ return [
     'reg_confirm_restrict_domain_placeholder' => 'Без ограничений',
 
     // Sorting Settings
-    'sorting' => 'Lists & Sorting',
+    'sorting' => 'Списки и сортировка',
     'sorting_book_default' => 'Default Book Sort Rule',
     'sorting_book_default_desc' => 'Выберите правило сортировки по умолчанию для новых книг. Это не повлияет на существующие книги, и может быть изменено для каждой книги отдельно.',
     'sorting_rules' => 'Правила сортировки',
@@ -101,10 +101,10 @@ return [
     'sort_rule_op_name_numeric' => 'По нумерации',
     'sort_rule_op_created_date' => 'Created Date',
     'sort_rule_op_updated_date' => 'Updated Date',
-    'sort_rule_op_chapters_first' => 'Chapters First',
+    'sort_rule_op_chapters_first' => 'Главы в начале',
     'sort_rule_op_chapters_last' => 'Главы в конце',
     'sorting_page_limits' => 'Per-Page Display Limits',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using an even multiple of 3 (18, 24, 30, etc...) is recommended.',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Обслуживание',

@@ -154,6 +154,20 @@ class BookTest extends TestCase
         $this->assertNotificationContains($redirectReq, 'Book Successfully Deleted');
     }
 
+    public function test_delete_with_shelf_context_returns_to_shelf_view_after_delete()
+    {
+        $shelf = $this->entities->shelfHasBooks();
+        /** @var Book $book */
+        $book = $shelf->books()->first();
+
+        $this->asEditor()->get($shelf->getUrl());
+        $this->get($book->getUrl());
+        $this->get($book->getUrl('/delete'));
+        $resp = $this->delete($book->getUrl());
+
+        $resp->assertRedirect($shelf->getUrl());
+    }
+
     public function test_cancel_on_create_page_leads_back_to_books_listing()
     {
         $resp = $this->asEditor()->get('/create-book');
@@ -242,8 +256,8 @@ class BookTest extends TestCase
     {
         $book = $this->entities->book();
 
-        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" target="_blank" data-a="b">a</a><section>Hello</section></p>';
-        $expected = '<p>Content<a href="#cat" target="_blank">a</a></p>';
+        $input = '<h1>Test</h1><p id="abc" href="beans">Content<a href="#cat" target="_blank" data-a="b">a</a><section>Hello</section><code id="abc">code</code></p>';
+        $expected = '<p>Content<a href="#cat" target="_blank">a</a><code>code</code></p>';
 
         $this->asEditor()->put($book->getUrl(), [
             'name' => $book->name,
@@ -263,5 +277,26 @@ class BookTest extends TestCase
 
         $resp = $this->asEditor()->get($book->getUrl());
         $resp->assertSee("<p>My great<br>\ndescription<br>\n<br>\nwith newlines</p>", false);
+    }
+
+    public function test_description_with_only_br_tags_results_in_empty_p_tag_used_on_show()
+    {
+        $descriptions = [
+            '<p><br></p>',
+            '<p><br><br><br><br></p>',
+            '<p><br><br><br></p><h1><br><br><br><br><br></h1>',
+        ];
+        $book = $this->entities->book();
+        $this->asEditor();
+
+        foreach ($descriptions as $descriptionTestCase) {
+            $book->description_html = $descriptionTestCase;
+            $book->save();
+
+            $resp = $this->get($book->getUrl());
+            $html = $this->withHtml($resp);
+            $descriptionHtml = $html->getInnerHtml('.book-content > div.text-muted:first-child');
+            $this->assertEquals('<p></p>', $descriptionHtml);
+        }
     }
 }

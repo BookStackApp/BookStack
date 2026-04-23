@@ -32,7 +32,7 @@ class AssignSortRuleCommand extends Command
      */
     public function handle(BookSorter $sorter): int
     {
-        $sortRuleId = intval($this->argument('sort-rule')) ?? 0;
+        $sortRuleId = intval($this->argument('sort-rule'));
         if ($sortRuleId === 0) {
             return $this->listSortRules();
         }

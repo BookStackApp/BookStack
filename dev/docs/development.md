@@ -37,7 +37,7 @@ We use tools to manage code standards and formatting within the project. If subm
 
 ### PHP
 
-PHP code standards are managed by [using PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer).
+PHP code standards are managed by [using PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer).
 Static analysis is in place using [PHPStan](https://phpstan.org/) & [Larastan](https://github.com/nunomaduro/larastan).
 The below commands can be used to utilise these tools:
 

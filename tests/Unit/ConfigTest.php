@@ -122,6 +122,27 @@ class ConfigTest extends TestCase
         });
     }
 
+    public function test_app_url_changes_smtp_ehlo_host_on_mailer()
+    {
+        $getLocalDomain = function (): string {
+            /** @var EsmtpTransport $transport */
+            $transport = Mail::mailer('smtp')->getSymfonyTransport();
+            return $transport->getLocalDomain();
+        };
+
+        $this->runWithEnv(['APP_URL' => ''], function () use ($getLocalDomain) {
+            $this->assertEquals('[127.0.0.1]', $getLocalDomain());
+        });
+
+        $this->runWithEnv(['APP_URL' => 'https://example.com/cats/dogs'], function () use ($getLocalDomain) {
+            $this->assertEquals('example.com', $getLocalDomain());
+        });
+
+        $this->runWithEnv(['APP_URL' => 'http://beans.cat.example.com'], function () use ($getLocalDomain) {
+            $this->assertEquals('beans.cat.example.com', $getLocalDomain());
+        });
+    }
+
     public function test_non_null_mail_encryption_options_enforce_smtp_scheme()
     {
         $this->checkEnvConfigResult('MAIL_ENCRYPTION', 'tls', 'mail.mailers.smtp.require_tls', true);
@@ -168,6 +189,27 @@ class ConfigTest extends TestCase
                 $this->assertEquals($expectedPort, config("database.connections.mysql.port"));
             }, false);
         }
+    }
+
+    public function test_content_filtering_defaults_to_enabled()
+    {
+        $this->runWithEnv(['APP_CONTENT_FILTERING' => null, 'ALLOW_CONTENT_SCRIPTS' => null], function () {
+            $this->assertEquals('jhfa', config('app.content_filtering'));
+        });
+    }
+
+    public function test_content_filtering_can_be_disabled()
+    {
+        $this->runWithEnv(['APP_CONTENT_FILTERING' => "", 'ALLOW_CONTENT_SCRIPTS' => null], function () {
+            $this->assertEquals('', config('app.content_filtering'));
+        });
+    }
+
+    public function test_allow_content_scripts_disables_content_filtering()
+    {
+        $this->runWithEnv(['APP_CONTENT_FILTERING' => null, 'ALLOW_CONTENT_SCRIPTS' => 'true'], function () {
+            $this->assertEquals('', config('app.content_filtering'));
+        });
     }
 
     /**

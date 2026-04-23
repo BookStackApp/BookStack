@@ -17,19 +17,19 @@ class AuditLogController extends Controller
         $this->checkPermission(Permission::SettingsManage);
         $this->checkPermission(Permission::UsersManage);
 
-        $sort = $request->get('sort', 'activity_date');
-        $order = $request->get('order', 'desc');
+        $sort = $request->input('sort', 'activity_date');
+        $order = $request->input('order', 'desc');
         $listOptions = (new SimpleListOptions('', $sort, $order))->withSortOptions([
             'created_at' => trans('settings.audit_table_date'),
             'type' => trans('settings.audit_table_event'),
         ]);
 
         $filters = [
-            'event'     => $request->get('event', ''),
-            'date_from' => $request->get('date_from', ''),
-            'date_to'   => $request->get('date_to', ''),
-            'user'      => $request->get('user', ''),
-            'ip'        => $request->get('ip', ''),
+            'event'     => $request->input('event', ''),
+            'date_from' => $request->input('date_from', ''),
+            'date_to'   => $request->input('date_to', ''),
+            'user'      => $request->input('user', ''),
+            'ip'        => $request->input('ip', ''),
         ];
 
         $query = Activity::query()

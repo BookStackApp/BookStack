@@ -822,6 +822,34 @@ class OidcTest extends TestCase
         ]);
     }
 
+    public function test_oidc_auth_pre_redirect_theme_event_with_return()
+    {
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+            return 'https://cats.example.com?beans=true';
+        };
+        Theme::listen(ThemeEvents::OIDC_AUTH_PRE_REDIRECT, $callback);
+
+        $resp = $this->post('/oidc/login');
+        $resp->assertRedirect('https://cats.example.com?beans=true');
+
+        $this->assertCount(1, $args);
+        $this->assertStringStartsWith('https://oidc.local/auth', $args[0]);
+    }
+
+    public function test_oidc_auth_pre_redirect_theme_event_with_no_return()
+    {
+        $callback = function ($redirectUrl) {
+            $redirectUrl = 'cat';
+        };
+        Theme::listen(ThemeEvents::OIDC_AUTH_PRE_REDIRECT, $callback);
+
+        $resp = $this->post('/oidc/login');
+        $redirect = $resp->headers->get('Location');
+        $this->assertStringStartsWith('https://oidc.local/auth?', $redirect);
+    }
+
     public function test_pkce_used_on_authorize_and_access()
     {
         // Start auth

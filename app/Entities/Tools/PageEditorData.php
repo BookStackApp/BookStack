@@ -8,6 +8,8 @@ use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Entities\Tools\Markdown\MarkdownToHtml;
 use BookStack\Permissions\Permission;
+use BookStack\Util\HtmlContentFilter;
+use BookStack\Util\HtmlContentFilterConfig;
 
 class PageEditorData
 {
@@ -47,6 +49,7 @@ class PageEditorData
         $isDraftRevision = false;
         $this->warnings = [];
         $editActivity = new PageEditActivity($page);
+        $lastEditorId = $page->updated_by ?? user()->id;
 
         if ($editActivity->hasActiveEditing()) {
             $this->warnings[] = $editActivity->activeEditingMessage();
@@ -58,10 +61,19 @@ class PageEditorData
             $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
             $isDraftRevision = true;
             $this->warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
+            $lastEditorId = $userDraft->created_by;
         }
 
+        // Get editor type and handle changes
         $editorType = $this->getEditorType($page);
         $this->updateContentForEditor($page, $editorType);
+
+        // Filter HTML content if required
+        if ($editorType->isHtmlBased() && !old('html') && $lastEditorId !== user()->id) {
+            $filterConfig = HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'));
+            $filter = new HtmlContentFilter($filterConfig);
+            $page->html = $filter->filterString($page->html);
+        }
 
         return [
             'page'            => $page,

@@ -265,4 +265,40 @@ class PageEditorTest extends TestCase
             $this->assertEquals($test['expected'], $page->refresh()->editor, "Failed asserting global editor {$test['setting']} with request editor {$test['request']} results in {$test['expected']} set for the page");
         }
     }
+
+    public function test_editor_html_content_is_filtered_if_loaded_by_a_different_user()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $page->html = '<style>hellotherethisisaturtlemonster</style>';
+        $page->updated_by = $editor->id;
+        $page->save();
+
+        $resp = $this->asAdmin()->get($page->getUrl('edit'));
+        $resp->assertOk();
+        $resp->assertDontSee('hellotherethisisaturtlemonster', false);
+
+        $resp = $this->asAdmin()->get("/ajax/page/{$page->id}");
+        $resp->assertOk();
+        $resp->assertDontSee('hellotherethisisaturtlemonster', false);
+    }
+
+    public function test_editor_html_filtered_does_not_cause_error_if_empty()
+    {
+        $emptyExamples = ['', '<p></p>', '<p>&nbsp;</p>', ' ', "\n"];
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $page->updated_by = $editor->id;
+
+        foreach ($emptyExamples as $emptyExample) {
+            $page->html = $emptyExample;
+            $page->save();
+
+            $resp = $this->asAdmin()->get($page->getUrl('edit'));
+            $resp->assertOk();
+
+            $resp = $this->asAdmin()->get("/ajax/page/{$page->id}");
+            $resp->assertOk();
+        }
+    }
 }

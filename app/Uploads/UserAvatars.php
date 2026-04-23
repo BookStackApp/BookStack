@@ -148,7 +148,7 @@ class UserAvatars
                 $responseCount++;
                 $isRedirect = ($response->getStatusCode() === 301 || $response->getStatusCode() === 302);
                 $url = $response->getHeader('Location')[0] ?? '';
-            } while ($responseCount < 3 && $isRedirect && is_string($url) && str_starts_with($url, 'http'));
+            } while ($responseCount < 3 && $isRedirect && str_starts_with($url, 'http'));
 
             if ($responseCount === 3) {
                 throw new HttpFetchException("Failed to fetch image, max redirect limit of 3 tries reached. Last fetched URL: {$url}");

@@ -9,6 +9,7 @@ import {
 } from 'lexical';
 
 import {extractDirectionFromElement} from "lexical/nodes/common";
+import {$showDetailsForm} from "../../ui/defaults/forms/objects";
 
 export type SerializedDetailsNode = Spread<{
     id: string;
@@ -88,6 +89,16 @@ export class DetailsNode extends ElementNode {
             _editor.update(() => {
                 this.select();
             });
+        });
+
+        summary.addEventListener('dblclick', event => {
+            event.preventDefault();
+            const uiContext = _editor.getUiContext();
+            if (uiContext) {
+                _editor.read(() => {
+                    $showDetailsForm(this, uiContext);
+                });
+            }
         });
 
         el.append(summary);

@@ -215,6 +215,82 @@ class LogicalThemeEventsTest extends TestCase
         $this->assertEquals($book->id, $args[1]->id);
     }
 
+    public function test_page_content_pre_store_fires_on_page_save()
+    {
+        $page = $this->entities->page();
+
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+            return '<p>New Content!</p>';
+        };
+
+        Theme::listen(ThemeEvents::PAGE_CONTENT_PRE_STORE, $callback);
+
+        $this->asEditor();
+        $this->entities->updatePage($page, ['name' => 'My cool update page!', 'html' => '<p>Old content!</p>']);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals($page->id, $args[1]->id);
+        $this->assertEquals('<p id="bkmrk-old-content%21">Old content!</p>', $args[0]);
+
+        $newPageHtml = $page->refresh()->html;
+        $this->assertEquals('<p>New Content!</p>', $newPageHtml);
+    }
+
+    public function test_page_content_pre_store_does_not_change_content_if_nothing_returned()
+    {
+        $page = $this->entities->page();
+        Theme::listen(ThemeEvents::PAGE_CONTENT_PRE_STORE, fn() => null);
+
+        $this->asEditor();
+        $this->entities->updatePage($page, ['name' => 'My cool update page!', 'html' => '<p>Old content!</p>']);
+
+        $newPageHtml = $page->refresh()->html;
+        $this->assertEquals('<p id="bkmrk-old-content%21">Old content!</p>', $newPageHtml);
+    }
+
+    public function test_page_content_post_render_fires_on_page_view()
+    {
+        $page = $this->entities->page();
+        $page->html = '<p>Old content!</p>';
+        $page->save();
+
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+            return '<p>New postrendercontentforyou!</p>';
+        };
+
+        Theme::listen(ThemeEvents::PAGE_CONTENT_POST_RENDER, $callback);
+
+        $resp = $this->asEditor()->get($page->getUrl());
+        $resp->assertSee('<p>New postrendercontentforyou!</p>', false);
+
+        $this->assertCount(2, $args);
+        $this->assertEquals($page->id, $args[1]->id);
+        $this->assertEquals('<p>Old content!</p>', $args[0]);
+    }
+
+    public function test_page_content_post_render_returns_original_content_if_no_return()
+    {
+        $page = $this->entities->page();
+        $page->html = '<p>Old content!</p>';
+        $page->save();
+
+        $args = [];
+        $callback = function (...$eventArgs) use (&$args) {
+            $args = $eventArgs;
+        };
+
+        Theme::listen(ThemeEvents::PAGE_CONTENT_POST_RENDER, $callback);
+
+        $resp = $this->asEditor()->get($page->getUrl());
+        $resp->assertSee('<p>Old content!</p>', false);
+
+        $this->assertCount(2, $args);
+    }
+
     public function test_page_include_parse()
     {
         /** @var Page $page */

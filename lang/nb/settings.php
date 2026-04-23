@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Kapitler først',
     'sort_rule_op_chapters_last' => 'Kapitler sist',
     'sorting_page_limits' => 'Visningsgrenser for hver side',
-    'sorting_page_limits_desc' => 'Angi hvor mange elementer som skal vises på hver side i ulike lister i systemet. Et lavere antall vil vanligvis gi bedre ytelse, mens et høyere antall reduserer behovet for å bla gjennom mange sider. Det er anbefalt å bruke en multiplikasjon av 3 som gir partall (18, 24, 30 osv.).',
+    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
 
     // Maintenance settings
     'maint' => 'Vedlikehold',

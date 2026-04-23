@@ -48,8 +48,7 @@ class RegisterController extends Controller
     public function postRegister(Request $request)
     {
         $this->registrationService->ensureRegistrationAllowed();
-        $this->validator($request->all())->validate();
-        $userData = $request->all();
+        $userData = $this->validator($request->all())->validate();
 
         try {
             $user = $this->registrationService->registerUser($userData);

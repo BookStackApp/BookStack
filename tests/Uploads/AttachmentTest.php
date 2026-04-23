@@ -324,7 +324,7 @@ class AttachmentTest extends TestCase
         $attachmentGet = $this->get($attachment->getUrl(true));
         // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
         $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=utf-8');
-        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="upload_test_file.txt"');
+        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename*=UTF-8\'\'upload_test_file.txt');
         $attachmentGet->assertHeader('X-Content-Type-Options', 'nosniff');
 
         $this->files->deleteAllAttachmentFiles();
@@ -340,7 +340,22 @@ class AttachmentTest extends TestCase
         $attachmentGet = $this->get($attachment->getUrl(true));
         // http-foundation/Response does some 'fixing' of responses to add charsets to text responses.
         $attachmentGet->assertHeader('Content-Type', 'text/plain; charset=utf-8');
-        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename="test_file.html"');
+        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename*=UTF-8\'\'test_file.html');
+
+        $this->files->deleteAllAttachmentFiles();
+    }
+
+    public function test_file_access_name_in_content_disposition_header_is_sanitized()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+
+        $attachment = $this->files->uploadAttachmentDataToPage($this, $page, 'test_file.html', '<html></html><p>testing</p>', 'text/html');
+        $attachment->name = "my\\_/super\n_fu\$n_\tfile";
+        $attachment->save();
+
+        $attachmentGet = $this->get($attachment->getUrl(true));
+        $attachmentGet->assertHeader('Content-Disposition', 'inline; filename*=UTF-8\'\'my_super_fun_file.html');
 
         $this->files->deleteAllAttachmentFiles();
     }

@@ -117,14 +117,14 @@ class SocialAuthService
         }
 
         // When a user is logged in and the social account exists and is already linked to the current user.
-        if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id === $currentUser->id) {
+        if ($isLoggedIn && $socialAccount->user->id === $currentUser->id) {
             session()->flash('error', trans('errors.social_account_existing', ['socialAccount' => $titleCaseDriver]));
 
             return redirect('/my-account/auth#social_accounts');
         }
 
         // When a user is logged in, A social account exists but the users do not match.
-        if ($isLoggedIn && $socialAccount !== null && $socialAccount->user->id != $currentUser->id) {
+        if ($isLoggedIn && $socialAccount->user->id != $currentUser->id) {
             session()->flash('error', trans('errors.social_account_already_used_existing', ['socialAccount' => $titleCaseDriver]));
 
             return redirect('/my-account/auth#social_accounts');

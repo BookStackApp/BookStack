@@ -19,6 +19,8 @@ function setSummary(editor, summaryContent) {
         }
         summary.textContent = summaryContent;
     });
+
+    editor.selection.select(details);
 }
 
 /**
@@ -202,8 +204,12 @@ function register(editor) {
     });
 
     editor.on('dblclick', event => {
-        if (!getSelectedDetailsBlock(editor) || event.target.closest('doc-root')) return;
-        showDetailLabelEditWindow(editor);
+        const domElClass = event?.target?.ownerDocument?.defaultView?.HTMLDetailsElement;
+        if (domElClass && event.target instanceof domElClass && getSelectedDetailsBlock(editor)) {
+            showDetailLabelEditWindow(editor);
+            event.preventDefault();
+            event.stopPropagation();
+        }
     });
 
     editor.ui.registry.addButton('toggledetails', {

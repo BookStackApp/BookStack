@@ -142,6 +142,9 @@
     padding-inline-end: 12px;
     max-width: 864px;
   }
+  [drawio-diagram] {
+    cursor: pointer;
+  }
   [drawio-diagram]:hover {
     outline: 2px solid var(--color-primary);
   }

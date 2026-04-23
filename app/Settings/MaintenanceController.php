@@ -38,7 +38,7 @@ class MaintenanceController extends Controller
         $this->checkPermission(Permission::SettingsManage);
         $this->logActivity(ActivityType::MAINTENANCE_ACTION_RUN, 'cleanup-images');
 
-        $checkRevisions = !($request->get('ignore_revisions', 'false') === 'true');
+        $checkRevisions = !($request->input('ignore_revisions', 'false') === 'true');
         $dryRun = !($request->has('confirm'));
 
         $imagesToDelete = $imageService->deleteUnusedImages($checkRevisions, $dryRun);

@@ -67,7 +67,7 @@ class UserInviteController extends Controller
         }
 
         $user = $this->userRepo->getById($userId);
-        $user->password = Hash::make($request->get('password'));
+        $user->password = Hash::make($request->input('password'));
         $user->email_confirmed = true;
         $user->save();
 

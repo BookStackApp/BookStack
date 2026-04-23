@@ -3,6 +3,7 @@
 namespace Tests\Theme;
 
 use BookStack\Facades\Theme;
+use BookStack\Util\CspService;
 use Tests\TestCase;
 
 class ThemeModuleTest extends TestCase
@@ -217,6 +218,23 @@ class ThemeModuleTest extends TestCase
             $this->refreshApplication();
 
             $this->asAdmin()->get('/')->assertSee('mysupercatispouncy');
+        });
+    }
+
+    public function test_module_can_provide_head_content()
+    {
+        $this->usingModuleFolder(function (string $moduleFolderPath) {
+            mkdir($moduleFolderPath . '/head', 0777, true);
+            file_put_contents($moduleFolderPath . '/head/hello.html', '<meta name="beans" content="hello"><script>hellofromcustomscript</script>');
+
+            $this->refreshApplication();
+
+            $cspService = $this->app->make(CspService::class);
+            $nonce = $cspService->getNonce();
+
+            $resp = $this->asAdmin()->get('/');
+            $resp->assertSee('<meta name="beans" content="hello">', false);
+            $resp->assertSee('<script nonce="' . $nonce . '">hellofromcustomscript</script>', false);
         });
     }
 

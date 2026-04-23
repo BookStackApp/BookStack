@@ -3321,20 +3321,6 @@ Copyright: Copyright 2022 Romain Menke, Antonio Laguna <*******@******.**>
 Source: git+https://github.com/csstools/postcss-plugins.git
 Link: https://github.com/csstools/postcss-plugins/tree/main/packages/css-tokenizer#readme
 -----------
-@emnapi/core
-License: MIT
-License File: node_modules/@emnapi/core/LICENSE
-Copyright: Copyright (c) 2021-present Toyobayashi
-Source: git+https://github.com/toyobayashi/emnapi.git
-Link: https://github.com/toyobayashi/emnapi#readme
------------
-@emnapi/runtime
-License: MIT
-License File: node_modules/@emnapi/runtime/LICENSE
-Copyright: Copyright (c) 2021-present Toyobayashi
-Source: git+https://github.com/toyobayashi/emnapi.git
-Link: https://github.com/toyobayashi/emnapi#readme
------------
 @esbuild/linux-x64
 License: MIT
 Source: git+https://github.com/evanw/esbuild.git
@@ -3783,11 +3769,6 @@ License File: node_modules/@tsconfig/node16/LICENSE
 Copyright: Copyright (c) Microsoft Corporation.
 Source: https://github.com/tsconfig/bases.git
 Link: https://github.com/tsconfig/bases.git
------------
-@tybys/wasm-util
-License: MIT
-Source: https://github.com/toyobayashi/wasm-util.git
-Link: https://github.com/toyobayashi/wasm-util.git
 -----------
 @types/babel__core
 License: MIT

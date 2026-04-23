@@ -5,7 +5,15 @@
 
 import type {Config} from 'jest';
 import {pathsToModuleNameMapper} from "ts-jest";
-import { compilerOptions }  from './tsconfig.json';
+import fs from "node:fs";
+
+const { compilerOptions } = JSON.parse(fs.readFileSync('./tsconfig.json', 'utf8'));
+const compilerPaths = compilerOptions.paths as Record<string, string[]>;
+const cleanedPaths: Record<string, string[]> = {};
+Object.keys(compilerPaths).forEach((key) => {
+  const paths = compilerPaths[key];
+    cleanedPaths[key] = paths.map(p => p.replace('./', ''));
+});
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -98,7 +106,7 @@ const config: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     'lexical/shared/invariant': 'resources/js/wysiwyg/lexical/core/shared/__mocks__/invariant',
-    ...pathsToModuleNameMapper(compilerOptions.paths),
+    ...pathsToModuleNameMapper(cleanedPaths),
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -111,7 +119,7 @@ const config: Config = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  // preset: undefined,
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,

@@ -21,6 +21,8 @@ use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
 use BookStack\References\ReferenceFetcher;
+use BookStack\Util\HtmlContentFilter;
+use BookStack\Util\HtmlContentFilterConfig;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
@@ -86,7 +88,7 @@ class PageController extends Controller
 
         $page = $this->pageRepo->getNewDraftPage($parent);
         $this->pageRepo->publishDraft($page, [
-            'name' => $request->get('name'),
+            'name' => $request->input('name'),
         ]);
 
         return redirect($page->getUrl('/edit'));
@@ -173,7 +175,7 @@ class PageController extends Controller
     }
 
     /**
-     * Get page from an ajax request.
+     * Get a page from an ajax request.
      *
      * @throws NotFoundException
      */
@@ -182,6 +184,10 @@ class PageController extends Controller
         $page = $this->queries->findVisibleByIdOrFail($pageId);
         $page->setHidden(array_diff($page->getHidden(), ['html', 'markdown']));
         $page->makeHidden(['book']);
+
+        $filterConfig = HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'));
+        $filter = new HtmlContentFilter($filterConfig);
+        $page->html = $filter->filterString($page->html);
 
         return response()->json($page);
     }
@@ -408,7 +414,7 @@ class PageController extends Controller
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
         $this->checkOwnablePermission(Permission::PageDelete, $page);
 
-        $entitySelection = $request->get('entity_selection', null);
+        $entitySelection = $request->input('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
             return redirect($page->getUrl());
         }
@@ -453,7 +459,7 @@ class PageController extends Controller
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageView, $page);
 
-        $entitySelection = $request->get('entity_selection') ?: null;
+        $entitySelection = $request->input('entity_selection') ?: null;
         $newParent = $entitySelection ? $this->entityQueries->findVisibleByStringIdentifier($entitySelection) : $page->getParent();
 
         if (!$newParent instanceof Book && !$newParent instanceof Chapter) {
@@ -464,7 +470,7 @@ class PageController extends Controller
 
         $this->checkOwnablePermission(Permission::PageCreate, $newParent);
 
-        $newName = $request->get('name') ?: $page->name;
+        $newName = $request->input('name') ?: $page->name;
         $pageCopy = $cloner->clonePage($page, $newParent, $newName);
         $this->showSuccessNotification(trans('entities.pages_copy_success'));
 

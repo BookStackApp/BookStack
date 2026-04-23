@@ -20,7 +20,12 @@
                     <h1 class="list-heading">{{ trans('entities.books_sort') }}</h1>
 
                     <div class="flex-container-row gap-m wrap mb-m">
-                        <p class="text-muted flex min-width-s mb-none">{{ trans('entities.books_sort_desc') }}</p>
+                        <div class="flex min-width-s">
+                            <p class="text-muted  mb-none">{{ trans('entities.books_sort_desc') }}</p>
+                            @if(!userCan(\BookStack\Permissions\Permission::SettingsManage))
+                                <p class="text-muted mb-none mt-s small">{{ trans('entities.books_sort_auto_sort_creation_hint') }}</p>
+                            @endif
+                        </div>
                         <div class="min-width-s">
                             @php
                                 $autoSortVal = intval(old('auto-sort') ?? $book->sort_rule_id ?? 0);
@@ -41,6 +46,11 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @if(userCan(\BookStack\Permissions\Permission::SettingsManage))
+                                <p class="small">
+                                    <a href="{{ url('/settings/sorting/rules/new') }}" class="text-button" target="_blank">{{ trans('settings.sort_rule_create') }}</a>
+                                </p>
+                            @endif
                         </div>
                     </div>
 

@@ -451,6 +451,9 @@ body.editor-is-fullscreen {
   outline: 1px dashed var(--editor-color-primary);
   outline-offset: 1px;
 }
+.editor-content-area  [drawio-diagram] {
+  cursor: pointer;
+}
 
 .editor-table-marker {
   position: fixed;

@@ -1,0 +1,32 @@
+{
+	"data": [
+		{
+			"name": "Category",
+			"value": "Cool Stuff",
+			"usages": 3,
+			"page_count": 1,
+			"chapter_count": 0,
+			"book_count": 2,
+			"shelf_count": 0
+		},
+		{
+			"name": "Category",
+			"value": "Top Content",
+			"usages": 168,
+			"page_count": 0,
+			"chapter_count": 3,
+			"book_count": 165,
+			"shelf_count": 0
+		},
+		{
+			"name": "Category",
+			"value": "Learning",
+			"usages": 2,
+			"page_count": 0,
+			"chapter_count": 0,
+			"book_count": 0,
+			"shelf_count": 2
+		}
+	],
+	"total": 3
+}

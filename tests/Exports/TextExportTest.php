@@ -14,7 +14,7 @@ class TextExportTest extends TestCase
         $resp = $this->get($page->getUrl('/export/plaintext'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $page->slug . '.txt');
     }
 
     public function test_book_text_export()
@@ -35,7 +35,7 @@ class TextExportTest extends TestCase
         $resp->assertSee($directPage->name);
         $resp->assertSee('My awesome page');
         $resp->assertSee('My little nested page');
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $book->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $book->slug . '.txt');
     }
 
     public function test_book_text_export_format()
@@ -52,7 +52,7 @@ class TextExportTest extends TestCase
         $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
 
         $expected = "Export Book\nThis is a book with stuff to export\n\nExport chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
-        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $expected .= "My wonderful page!\nMy great page\nFull of great stuff";
         $resp->assertSee($expected);
     }
 
@@ -68,7 +68,7 @@ class TextExportTest extends TestCase
         $resp->assertSee($chapter->name);
         $resp->assertSee($page->name);
         $resp->assertSee('This is content within the page!');
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $chapter->slug . '.txt"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $chapter->slug . '.txt');
     }
 
     public function test_chapter_text_export_format()
@@ -82,7 +82,7 @@ class TextExportTest extends TestCase
         $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
 
         $expected = "Export chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
-        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $expected .= "My wonderful page!\nMy great page\nFull of great stuff";
         $resp->assertSee($expected);
     }
 }

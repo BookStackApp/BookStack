@@ -178,5 +178,5 @@ return [
     'shortcuts_intro' => '편집기에서 사용할 수 있는 바로 가기는 다음과 같습니다:',
     'windows_linux' => '(윈도우/리눅스)',
     'mac' => '(맥)',
-    'description' => '상세정보',
+    'description' => '설명',
 ];

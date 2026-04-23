@@ -102,12 +102,15 @@ class DownloadResponseFactory
     protected function getHeaders(string $fileName, int $fileSize, string $mime = 'application/octet-stream'): array
     {
         $disposition = ($mime === 'application/octet-stream') ? 'attachment' : 'inline';
-        $downloadName = str_replace('"', '', $fileName);
+
+        $downloadName = str_replace(['"', '/', '\\', '$'], '', $fileName);
+        $downloadName = preg_replace('/[\x00-\x1F\x7F]/', '', $downloadName);
+        $encodedDownloadName = rawurlencode($downloadName);
 
         return [
             'Content-Type'           => $mime,
             'Content-Length'         => $fileSize,
-            'Content-Disposition'    => "{$disposition}; filename=\"{$downloadName}\"",
+            'Content-Disposition'    => "{$disposition}; filename*=UTF-8''{$encodedDownloadName}",
             'X-Content-Type-Options' => 'nosniff',
         ];
     }

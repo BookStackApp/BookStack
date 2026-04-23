@@ -4,25 +4,17 @@ namespace BookStack\Theming;
 
 use BookStack\Util\CspService;
 use BookStack\Util\HtmlContentFilter;
+use BookStack\Util\HtmlContentFilterConfig;
 use BookStack\Util\HtmlNonceApplicator;
 use Illuminate\Contracts\Cache\Repository as Cache;
 
 class CustomHtmlHeadContentProvider
 {
-    /**
-     * @var CspService
-     */
-    protected $cspService;
-
-    /**
-     * @var Cache
-     */
-    protected $cache;
-
-    public function __construct(CspService $cspService, Cache $cache)
-    {
-        $this->cspService = $cspService;
-        $this->cache = $cache;
+    public function __construct(
+        protected CspService $cspService,
+        protected Cache $cache,
+        protected ThemeService $themeService,
+    ) {
     }
 
     /**
@@ -32,8 +24,9 @@ class CustomHtmlHeadContentProvider
     public function forWeb(): string
     {
         $content = $this->getSourceContent();
-        $hash = md5($content);
+        $hash = md5($content) . ':' . $this->themeService->getModulesHash();
         $html = $this->cache->remember('custom-head-web:' . $hash, 86400, function () use ($content) {
+            $content .= "\n" . $this->getModuleHeadContent();
             return HtmlNonceApplicator::prepare($content);
         });
 
@@ -50,7 +43,8 @@ class CustomHtmlHeadContentProvider
         $hash = md5($content);
 
         return $this->cache->remember('custom-head-export:' . $hash, 86400, function () use ($content) {
-            return HtmlContentFilter::removeActiveContentFromHtmlString($content);
+            $config = new HtmlContentFilterConfig(filterOutNonContentElements: false, useAllowListFilter: false);
+            return (new HtmlContentFilter($config))->filterString($content);
         });
     }
 
@@ -60,5 +54,24 @@ class CustomHtmlHeadContentProvider
     protected function getSourceContent(): string
     {
         return setting('app-custom-head', '');
+    }
+
+    /**
+     * Get any custom head content from installed modules.
+     */
+    protected function getModuleHeadContent(): string
+    {
+        $content = '';
+        foreach ($this->themeService->getModules() as $module) {
+            $headContentPath = $module->path('head');
+            if (file_exists($headContentPath) && is_dir($headContentPath)) {
+                $htmlFiles = glob($headContentPath . '/*.html');
+                foreach ($htmlFiles as $file) {
+                    $content .= file_get_contents($file);
+                }
+            }
+        }
+
+        return $content;
     }
 }

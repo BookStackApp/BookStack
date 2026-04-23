@@ -30,7 +30,7 @@ class SimpleListOptions
      */
     public static function fromRequest(Request $request, string $typeKey, bool $sortDescDefault = false): self
     {
-        $search = $request->get('search', '');
+        $search = $request->input('search', '');
         $sort = setting()->getForCurrentUser($typeKey . '_sort', '');
         $order = setting()->getForCurrentUser($typeKey . '_sort_order', $sortDescDefault ? 'desc' : 'asc');
 

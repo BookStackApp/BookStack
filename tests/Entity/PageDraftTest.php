@@ -160,9 +160,11 @@ class PageDraftTest extends TestCase
     {
         $this->asAdmin();
         $page = $this->entities->page();
+        $page->html = '<p>test content<script>hellotherekitty</script></p>';
+        $page->save();
 
         $this->getJson('/ajax/page/' . $page->id)->assertJson([
-            'html' => $page->html,
+            'html' => '<p>test content</p>',
         ]);
     }
 

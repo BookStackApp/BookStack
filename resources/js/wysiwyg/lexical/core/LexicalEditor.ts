@@ -45,6 +45,7 @@ import {LineBreakNode} from './nodes/LexicalLineBreakNode';
 import {ParagraphNode} from './nodes/LexicalParagraphNode';
 import {RootNode} from './nodes/LexicalRootNode';
 import {TabNode} from './nodes/LexicalTabNode';
+import {EditorUiContext} from "../../ui/framework/core";
 
 export type Spread<T1, T2> = Omit<T2, keyof T1> & T1;
 
@@ -621,6 +622,8 @@ export class LexicalEditor {
   _editable: boolean;
   /** @internal */
   _blockCursorElement: null | HTMLDivElement;
+  /** @internal */
+  _context: null | EditorUiContext;
 
   /** @internal */
   constructor(
@@ -682,6 +685,7 @@ export class LexicalEditor {
     this._headless = parentEditor !== null && parentEditor._headless;
     this._window = null;
     this._blockCursorElement = null;
+    this._context = null;
   }
 
   /**
@@ -1285,6 +1289,21 @@ export class LexicalEditor {
       triggerListeners('editable', this, true, editable);
     }
   }
+
+  /**
+   * Set the UI context that this editor is intended to be part of.
+   */
+  setUiContext(context: EditorUiContext) {
+    this._context = context;
+  }
+
+  /**
+   * Get the UI context that this editor is considered to be part of.
+   */
+  getUiContext(): EditorUiContext|null {
+    return this._context;
+  }
+
   /**
    * Returns a JSON-serializable javascript object NOT a JSON string.
    * You still must call JSON.stringify (or something else) to turn the

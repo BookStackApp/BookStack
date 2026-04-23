@@ -203,3 +203,10 @@ body.page-content.mce-content-body  {
   background-position: 50% 50%;
   background-size: 100% 100%;
 }
+
+/**
+ * Ensure cursor indicates that drawings are clickable
+ */
+.page-content.mce-content-body [drawio-diagram] {
+  cursor: pointer;
+}

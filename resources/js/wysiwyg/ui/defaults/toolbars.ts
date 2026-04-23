@@ -227,6 +227,7 @@ export function getBasicEditorToolbar(context: EditorUiContext): EditorContainer
             new EditorButton(bold),
             new EditorButton(italic),
             new EditorButton(link),
+            new EditorButton(code),
             new EditorButton(bulletList),
             new EditorButton(numberList),
         ])

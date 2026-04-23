@@ -111,6 +111,14 @@ class EntityProvider
     }
 
     /**
+     * Get a shelf that has books assigned.
+     */
+    public function shelfHasBooks(): Bookshelf
+    {
+        return $this->shelf(fn(Builder $query) => $query->whereHas('books'));
+    }
+
+    /**
      * Get all entity types from the system.
      * @return array{page: Page, chapter: Chapter, book: Book, bookshelf: Bookshelf}
      */

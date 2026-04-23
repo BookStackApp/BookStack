@@ -444,7 +444,7 @@ Irjan Olsen (Irch) :: Norwegian Bokmal
 Aleksandar Jovanovic (jovanoviczaleksandar) :: Serbian (Cyrillic)
 Red (RedVortex) :: Hebrew
 xgrug :: Chinese Simplified
-HrCalmar :: Danish
+Calle Calmar (HrCalmar) :: Danish
 Avishay Rapp (AvishayRapp) :: Hebrew
 matthias4217 :: French
 Berke BOYLU2 (berkeboylu2) :: Turkish
@@ -530,3 +530,10 @@ Shadluk Avan (quldosh) :: Uzbek
 Marci (MartonPoto) :: Hungarian
 Michał Sadurski (wheeskeey) :: Polish
 JanDziaslo :: Polish
+Charllys Fernandes (CharllysFernandes) :: Portuguese, Brazilian
+Ilgiz Zigangirov (inov8) :: Russian
+Max Israelsson (Blezie) :: Swedish
+Skiddybison5924 (chris-devel0per) :: German
+Veyilla Nightwhisper (Veyilla) :: German
+João Barbosa (hypeedd) :: Portuguese
+Abcdefg Hijklmn (collatek) :: Korean

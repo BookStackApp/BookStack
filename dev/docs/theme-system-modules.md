@@ -24,6 +24,7 @@ The content within the module folder should then follow this format:
 
 - `bookstack-module.json` - REQUIRED - A JSON file containing [the metadata](#module-json-metadata) for the module.
 - `functions.php` - OPTIONAL - A PHP file containing code for the [logical theme system](logical-theme-system.md).
+- `head/` - OPTIONAL - A folder containing HTML files which will be included into the HTML head of app-views.
 - `icons/` - OPTIONAL - A folder containing any icons to use as per [the visual theme system](visual-theme-system.md#customizing-icons).
 - `lang/` - OPTIONAL - A folder containing any language files to use as per [the visual theme system](visual-theme-system.md#customizing-text-content).
 - `public/` - OPTIONAL - A folder containing any files to expose into public web-space as per [the visual theme system](visual-theme-system.md#publicly-accessible-files).
@@ -65,6 +66,7 @@ Here are some general best practices when it comes to creating modules:
 ### Distribution Format
 
 Modules are expected to be distributed as a compressed ZIP file, where the ZIP contents follow that of a module folder.
+Contents may optionally be placed within a nested folder inside the ZIP.
 BookStack provides a `php artisan bookstack:install-module` command which allows modules to be installed from these ZIP files, either from a local path or from a web URL.
 Currently, there's a hardcoded total filesize limit of 50MB for module contents installed via this method.
 

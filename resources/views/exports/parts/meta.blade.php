@@ -1,5 +1,5 @@
 <div class="entity-meta">
-    @if ($entity->isA('page'))
+    @if ($entity->isA('page') && userCan(\BookStack\Permissions\Permission::RevisionViewAll))
         @icon('history'){{ trans('entities.meta_revision', ['revisionCount' => $entity->revision_count]) }} <br>
     @endif
 

@@ -8,7 +8,7 @@ aws/aws-sdk-php
 License: Apache-2.0
 License File: vendor/aws/aws-sdk-php/LICENSE
 Source: https://github.com/aws/aws-sdk-php.git
-Link: http://aws.amazon.com/sdkforphp
+Link: https://aws.amazon.com/sdk-for-php
 -----------
 bacon/bacon-qr-code
 License: BSD-2-Clause
@@ -97,6 +97,13 @@ License File: vendor/egulias/email-validator/LICENSE
 Copyright: Copyright (c) 2013-2023 Eduardo Gulias Davis
 Source: https://github.com/egulias/EmailValidator.git
 Link: https://github.com/egulias/EmailValidator
+-----------
+ezyang/htmlpurifier
+License: LGPL-2.1-or-later
+License File: vendor/ezyang/htmlpurifier/LICENSE
+Copyright: Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+Source: https://github.com/ezyang/htmlpurifier.git
+Link: http://htmlpurifier.org/
 -----------
 firebase/php-jwt
 License: BSD-3-Clause
@@ -465,7 +472,7 @@ Link: https://github.com/php-fig/simple-cache.git
 psy/psysh
 License: MIT
 License File: vendor/psy/psysh/LICENSE
-Copyright: Copyright (c) 2012-2025 Justin Hileman
+Copyright: Copyright (c) 2012-2026 Justin Hileman
 Source: https://github.com/bobthecow/psysh.git
 Link: https://psysh.org
 -----------
@@ -787,3 +794,10 @@ License File: vendor/voku/portable-ascii/LICENSE.txt
 Copyright: Copyright (C) 2019 Lars Moelleken
 Source: https://github.com/voku/portable-ascii.git
 Link: https://github.com/voku/portable-ascii
+-----------
+xemlock/htmlpurifier-html5
+License: MIT
+License File: vendor/xemlock/htmlpurifier-html5/LICENSE
+Copyright: Copyright (c) 2015 Xemlock
+Source: https://github.com/xemlock/htmlpurifier-html5.git
+Link: https://github.com/xemlock/htmlpurifier-html5

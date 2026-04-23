@@ -14,7 +14,7 @@ class MarkdownExportTest extends TestCase
         $resp = $this->asEditor()->get($page->getUrl('/export/markdown'));
         $resp->assertStatus(200);
         $resp->assertSee($page->name);
-        $resp->assertHeader('Content-Disposition', 'attachment; filename="' . $page->slug . '.md"');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'' . $page->slug . '.md');
     }
 
     public function test_page_markdown_export_uses_existing_markdown_if_apparent()
@@ -56,6 +56,20 @@ class MarkdownExportTest extends TestCase
         $resp->assertSee('My **chapter** description');
     }
 
+    public function test_chapter_markdown_export_pages_are_permission_controlled()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        $page = $chapter->pages()->first();
+        $page->name = 'MyPageWhichShouldNotBeFound';
+        $page->save();
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->asEditor()->get($chapter->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $chapter->name);
+        $resp->assertDontSee('MyPageWhichShouldNotBeFound');
+    }
+
     public function test_book_markdown_export()
     {
         $book = Book::query()->whereHas('pages')->whereHas('chapters')->first();
@@ -74,6 +88,38 @@ class MarkdownExportTest extends TestCase
         $resp->assertSee('# ' . $page->name);
         $resp->assertSee('My **book** description');
         $resp->assertSee('My **chapter** description');
+    }
+
+    public function test_book_markdown_export_chapters_are_permission_controlled()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters()->first();
+        $page = $chapter->pages()->first();
+        $page->name = 'MyPageWhichShouldNotBeFound';
+        $page->save();
+        $chapter->name = 'MyChapterWhichShouldNotBeFound';
+        $chapter->save();
+        $this->permissions->disableEntityInheritedPermissions($chapter);
+
+        $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertDontSee('MyChapterWhichShouldNotBeFound');
+        $resp->assertDontSee('MyPageWhichShouldNotBeFound');
+    }
+
+    public function test_book_markdown_export_direct_pages_are_permission_controlled()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        $page = $book->directPages()->first();
+        $page->name = 'MyPageWhichShouldNotBeFound';
+        $page->save();
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->asEditor()->get($book->getUrl('/export/markdown'));
+
+        $resp->assertSee('# ' . $book->name);
+        $resp->assertDontSee('MyPageWhichShouldNotBeFound');
     }
 
     public function test_book_markdown_export_concats_immediate_pages_with_newlines()

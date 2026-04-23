@@ -7,6 +7,7 @@
  */
 
 use BookStack\Activity\Controllers as ActivityControllers;
+use BookStack\Activity\Controllers\TagApiController;
 use BookStack\Api\ApiDocsController;
 use BookStack\App\SystemApiController;
 use BookStack\Entities\Controllers as EntityControllers;
@@ -108,6 +109,9 @@ Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 Route::get('search', [SearchApiController::class, 'all']);
 
 Route::get('system', [SystemApiController::class, 'read']);
+
+Route::get('tags/names', [TagApiController::class, 'listNames']);
+Route::get('tags/values-for-name', [TagApiController::class, 'listValues']);
 
 Route::get('users', [UserApiController::class, 'list']);
 Route::post('users', [UserApiController::class, 'create']);

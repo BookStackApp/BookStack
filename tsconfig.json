@@ -2,15 +2,16 @@
   "include": ["resources/js/**/*"],
   "exclude": ["resources/js/wysiwyg/lexical/yjs/*"],
   "compilerOptions": {
-    "target": "es2022",
-    "module": "commonjs",
+    "target": "es2023",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "rootDir": "./resources/js/",
-    "baseUrl": "./",
+    "types": ["jest", "node"],
     "paths": {
-      "@icons/*": ["resources/icons/*"],
-      "lexical": ["resources/js/wysiwyg/lexical/core/index.ts"],
-      "lexical/*": ["resources/js/wysiwyg/lexical/core/*"],
-      "@lexical/*": ["resources/js/wysiwyg/lexical/*"]
+      "@icons/*": ["./resources/icons/*"],
+      "lexical": ["./resources/js/wysiwyg/lexical/core/index.ts"],
+      "lexical/*": ["./resources/js/wysiwyg/lexical/core/*"],
+      "@lexical/*": ["./resources/js/wysiwyg/lexical/*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,

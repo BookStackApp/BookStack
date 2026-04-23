@@ -63,10 +63,10 @@ return [
     'import_delete_desc' => 'Dies löscht die hochgeladene ZIP-Datei und kann nicht rückgängig gemacht werden.',
     'import_errors' => 'Importfehler',
     'import_errors_desc' => 'Die folgenden Fehler sind während des Importversuchs aufgetreten:',
-    'breadcrumb_siblings_for_page' => 'Navigate siblings for page',
-    'breadcrumb_siblings_for_chapter' => 'Navigate siblings for chapter',
-    'breadcrumb_siblings_for_book' => 'Navigiere in Büchern',
-    'breadcrumb_siblings_for_bookshelf' => 'Navigate siblings for shelf',
+    'breadcrumb_siblings_for_page' => 'Durch die untergeordneten Elemente der Seite navigieren',
+    'breadcrumb_siblings_for_chapter' => 'Durch die Unterelemente des Kapitels navigieren',
+    'breadcrumb_siblings_for_book' => 'Durch die Unterordner des Buches navigieren',
+    'breadcrumb_siblings_for_bookshelf' => 'Durch die untergeordneten Elemente des Regals navigieren',
 
     // Permissions and restrictions
     'permissions' => 'Berechtigungen',

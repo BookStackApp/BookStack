@@ -57,7 +57,7 @@ async function updateContent(pngData) {
             });
         } catch (err) {
             handleUploadError(err);
-            throw new Error(`Failed to save image with error: ${err}`);
+            throw new Error(`Failed to save image with error: ${err}`, {cause: err});
         }
         return;
     }
@@ -78,7 +78,7 @@ async function updateContent(pngData) {
     } catch (err) {
         pageEditor.dom.remove(wrapId);
         handleUploadError(err);
-        throw new Error(`Failed to save image with error: ${err}`);
+        throw new Error(`Failed to save image with error: ${err}`, {cause: err});
     }
 }
 

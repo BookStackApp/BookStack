@@ -84,7 +84,7 @@ class MfaBackupCodesController extends Controller
             ],
         ]);
 
-        $updatedCodes = $codeService->removeInputCodeFromSet($request->get('code'), $codes);
+        $updatedCodes = $codeService->removeInputCodeFromSet($request->input('code'), $codes);
         MfaValue::upsertWithValue($user, MfaValue::METHOD_BACKUP_CODES, $updatedCodes);
 
         $mfaSession->markVerifiedForUser($user);
