@@ -25,7 +25,7 @@ class BookContents
     public function getLastPriority(): int
     {
         $maxPage = $this->book->pages()
-            ->where('draft', '=', false)
+            ->where('entity_page_data.draft', '=', false)
             ->whereDoesntHave('chapter')
             ->max('priority');
 
@@ -97,7 +97,7 @@ class BookContents
         }
 
         if (!$showDrafts) {
-            $query->where('draft', '=', false);
+            $query->where('entity_page_data.draft', '=', false);
         }
 
         return $query->where('book_id', '=', $this->book->id)->get();

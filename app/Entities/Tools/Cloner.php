@@ -106,6 +106,7 @@ class Cloner
 
         // Clone book
         $copyBook = $this->bookRepo->create($bookDetails);
+        $this->referenceChangeContext->add($original, $copyBook);
 
         // Clone contents
         $directChildren = $original->getDirectVisibleChildren();
@@ -126,8 +127,6 @@ class Cloner
                 $shelf->appendBook($copyBook);
             }
         }
-
-        $this->referenceChangeContext->add($original, $copyBook);
 
         return $copyBook;
     }

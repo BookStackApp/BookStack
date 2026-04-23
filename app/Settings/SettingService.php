@@ -291,4 +291,9 @@ class SettingService
     {
         $this->localCache = [];
     }
+
+    public function getDefaultPageCoverImage()
+    {
+        return config('setting-defaults.default_page_cover_image');
+    }
 }

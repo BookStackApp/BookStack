@@ -47,6 +47,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null   $updated_by
  * @property int|null   $owned_by
  * @property Collection $tags
+ * @property string $description
+ * @property string $description_html
  *
  * @method static Entity|Builder visible()
  * @method static Builder withLastView()

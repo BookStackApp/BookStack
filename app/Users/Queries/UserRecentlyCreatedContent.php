@@ -30,7 +30,7 @@ class UserRecentlyCreatedContent
         };
 
         return [
-            'pages'    => $query($this->queries->pages->visibleForList()->where('draft', '=', false)),
+            'pages'    => $query($this->queries->pages->visibleForList()->where('entity_page_data.draft', '=', false)),
             'chapters' => $query($this->queries->chapters->visibleForList()),
             'books'    => $query($this->queries->books->visibleForList()),
             'shelves'  => $query($this->queries->shelves->visibleForList()),

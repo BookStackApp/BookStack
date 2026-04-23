@@ -77,8 +77,10 @@ class ChapterController extends Controller
      */
     public function show(string $bookSlug, string $chapterSlug)
     {
+        $view = setting()->getForCurrentUser(key: 'pages_view_type');
         try {
             $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
+            $this->checkOwnablePermission('chapter-view', $chapter);
         } catch (NotFoundException $exception) {
             $chapter = $this->entityQueries->findVisibleByOldSlugs('chapter', $chapterSlug, $bookSlug);
             if (is_null($chapter)) {
@@ -105,6 +107,7 @@ class ChapterController extends Controller
             'next'           => $nextPreviousLocator->getNext(),
             'previous'       => $nextPreviousLocator->getPrevious(),
             'referenceCount' => $this->referenceFetcher->getReferenceCountToEntity($chapter),
+            'view'    => $view,
         ]);
     }
 

@@ -5,7 +5,7 @@
 @section('content')
 
     <div id="main-content" class="flex-fill flex height-fill">
-        <form action="{{ $page->getUrl() }}" autocomplete="off" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill">
+        <form action="{{ $page->getUrl() }}" autocomplete="off" data-page-id="{{ $page->id }}" method="POST" class="flex flex-fill" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             @if(!$isDraft) {{ method_field('PUT') }} @endif

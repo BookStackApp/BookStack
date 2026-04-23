@@ -18,7 +18,7 @@ class UserPreferencesController extends Controller
      */
     public function changeView(Request $request, string $type)
     {
-        $valueViewTypes = ['books', 'bookshelves', 'bookshelf'];
+        $valueViewTypes = ['books', 'bookshelves', 'bookshelf','pages'];
         if (!in_array($type, $valueViewTypes)) {
             return $this->redirectToRequest($request);
         }

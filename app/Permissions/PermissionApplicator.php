@@ -117,10 +117,10 @@ class PermissionApplicator
     public function restrictDraftsOnPageQuery(Builder $query): Builder
     {
         return $query->where(function (Builder $query) {
-            $query->where('draft', '=', false)
+            $query->where('entity_page_data.draft', '=', false)
                 ->orWhere(function (Builder $query) {
-                    $query->where('draft', '=', true)
-                        ->where('owned_by', '=', $this->currentUser()->id);
+                    $query->where('entity_page_data.draft', '=', true)
+                        ->where('entities.owned_by', '=', $this->currentUser()->id);
                 });
         });
     }

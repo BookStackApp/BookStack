@@ -220,6 +220,12 @@ class PageController extends Controller
         $page = $this->queries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
+        if ($request->has('image_reset')) {
+            $request['image'] = null;
+        } elseif (array_key_exists('image', $request->all()) && is_null($request['image'])) {
+            unset($request['image']);
+        }
+
         $this->pageRepo->update($page, $request->all());
 
         return redirect($page->getUrl());

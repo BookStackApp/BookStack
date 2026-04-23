@@ -2,9 +2,14 @@
 
 namespace BookStack\Entities\Models;
 
+use BookStack\Entities\Tools\EntityCover;
+use BookStack\Entities\Tools\EntityDefaultTemplate;
+use BookStack\Entities\Tools\EntityHtmlDescription;
+use BookStack\Uploads\Image;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Uploads\Attachment;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,22 +28,25 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property bool         $draft
  * @property int          $revision_count
  * @property string       $editor
+ * @property Image|null   $cover
  * @property Chapter      $chapter
  * @property Collection   $attachments
  * @property Collection   $revisions
  * @property PageRevision $currentRevision
  */
-class Page extends BookChild
+class Page extends BookChild implements HasDescriptionInterface, HasCoverInterface
 {
     use HasFactory;
 
+    // use ContainerTrait;
+
     public string $textField = 'text';
     public string $htmlField = 'html';
-    protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at',  'entity_id', 'entity_type'];
+    protected $hidden = ['html', 'markdown', 'text', 'pivot', 'deleted_at', 'entity_id', 'entity_type'];
     protected $fillable = ['name', 'priority'];
 
     protected $casts = [
-        'draft'    => 'boolean',
+        'draft' => 'boolean',
         'template' => 'boolean',
     ];
 
@@ -145,6 +153,26 @@ class Page extends BookChild
         return $refreshed;
     }
 
+
+    public function descriptionInfo(): EntityHtmlDescription
+    {
+        return new EntityHtmlDescription($this);
+    }
+
+    public function cover(): BelongsTo
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
+
+    public function coverInfo(): EntityCover
+    {
+        return new EntityCover($this);
+    }
+
+    public function coverImageTypeKey(): string
+    {
+        return 'cover_page';
+    }
     /**
      * @return HasOne<EntityPageData, $this>
      */

@@ -19,6 +19,15 @@ class EntityContainerData extends Model
     public $timestamps = false;
     protected $primaryKey = 'entity_id';
     public $incrementing = false;
+    protected $fillable = [
+        'entity_id',
+        'entity_type',
+        'description',
+        'description_html',
+        'default_template_id',
+        'image_id',
+        'sort_rule_id',
+    ];
 
     public static array $fields = [
         'description',

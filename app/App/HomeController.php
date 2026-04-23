@@ -45,7 +45,7 @@ class HomeController extends Controller
             : $this->queries->books->visibleForList()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
         $favourites = $topFavourites->run(6);
         $recentlyUpdatedPages = $this->queries->pages->visibleForList()
-            ->where('draft', false)
+            ->where('entity_page_data.draft', false)
             ->orderBy('updated_at', 'desc')
             ->take($favourites->count() > 0 ? 5 : 10)
             ->get();
@@ -102,7 +102,9 @@ class HomeController extends Controller
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
             /** @var Page $customHomepage */
-            $customHomepage = $this->queries->pages->start()->where('draft', '=', false)->findOrFail($id);
+            $customHomepage = $this->queries->pages->start()
+                ->where('entity_page_data.draft', '=', false)
+                ->findOrFail($id);
             $pageContent = new PageContent($customHomepage);
             $customHomepage->html = $pageContent->render(false);
 

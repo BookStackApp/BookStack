@@ -11,6 +11,7 @@
             @if($comments->enabled())
                 <button type="button" refs="editor-toolbox@tab-button" data-tab="comments" title="{{ trans('entities.comments') }}">@icon('comment')</button>
             @endif
+            <button type="button" refs="editor-toolbox@tab-button" data-tab="cover_image" title="{{ trans('common.cover_image') }}">@icon('image')</button>
         </div>
     </div>
 
@@ -36,5 +37,19 @@
     @if($comments->enabled())
         @include('pages.parts.toolbox-comments')
     @endif
+
+    <div refs="editor-toolbox@tab-content" data-tab-content="cover_image" class="toolbox-tab-content">
+        <h4>{{ trans('common.cover_image') }}</h4>
+        <div class="px-l">
+                <p class="small">{{ trans('common.cover_image_description') }}</p>
+
+                @include('form.image-picker', [
+                    'defaultImage' => url('/book_default_cover.png'),
+                    'currentImage' => (isset($page) && $page->cover) ? $page->coverInfo()->getUrl() : url('/book_default_cover.png') ,
+                    'name' => 'image',
+                    'imageClass' => 'cover'
+                ])
+        </div>
+    </div>
 
 </div>

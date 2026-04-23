@@ -21,5 +21,6 @@ class EntityPageData extends Model
         'html',
         'text',
         'markdown',
+        'image_id'
     ];
 }

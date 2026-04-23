@@ -4,6 +4,7 @@ namespace Tests\Entity;
 
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
+use BookStack\Entities\Repos\BaseRepo;
 use BookStack\Uploads\Image;
 use Carbon\Carbon;
 use Tests\TestCase;
@@ -27,6 +28,15 @@ class PageTest extends TestCase
             ->orderBy('created_at', 'desc')
             ->first();
         $resp->assertRedirect($draftPage->getUrl());
+
+        $baseRepo = $this->app->make(BaseRepo::class);
+
+        $coverImageFile = $this->files->uploadedImage('page_cover.png');
+
+        $baseRepo->updateCoverImage($draftPage, $coverImageFile);
+
+        $this->assertNotNull($draftPage->cover);
+        $this->assertEquals('page_cover.png', $draftPage->cover->name);
 
         $resp = $this->get($draftPage->getUrl());
         $this->withHtml($resp)->assertElementContains('form[action="' . $draftPage->getUrl() . '"][method="POST"]', 'Save Page');

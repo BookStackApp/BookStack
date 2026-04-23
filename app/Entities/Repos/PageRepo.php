@@ -88,6 +88,10 @@ class PageRepo
             $draft->priority = $this->getNewPriority($draft);
             $this->updateTemplateStatusAndContentFromInput($draft, $input);
 
+            if (array_key_exists('image', $input)) {
+                $this->baseRepo->updateCoverImage($draft, $input['image'], $input['image'] === null);
+            }
+
             $draft = $this->baseRepo->update($draft, $input);
             $draft->rebuildPermissions();
 
@@ -140,6 +144,10 @@ class PageRepo
         $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;
         if ($htmlChanged || $nameChanged || $markdownChanged || $summary) {
             $this->revisionRepo->storeNewForPage($page, $summary);
+        }
+
+        if (array_key_exists('image', $input)) {
+            $this->baseRepo->updateCoverImage($page, $input['image'], $input['image'] === null);
         }
 
         Activity::add(ActivityType::PAGE_UPDATE, $page);

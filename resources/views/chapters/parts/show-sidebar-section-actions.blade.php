@@ -2,6 +2,7 @@
     <h5>{{ trans('common.actions') }}</h5>
     <div class="icon-list text-link">
 
+        @include('entities.view-toggle', ['view' => $view, 'type' => 'pages'])
         @if(userCan(\BookStack\Permissions\Permission::PageCreate, $chapter))
             <a href="{{ $chapter->getUrl('/create-page') }}" data-shortcut="new" class="icon-list-item">
                 <span>@icon('add')</span>

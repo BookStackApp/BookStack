@@ -143,7 +143,7 @@ class CopyTest extends TestCase
         $otherBook = Book::query()->where('id', '!=', $chapter->book_id)->first();
 
         $resp = $this->asEditor()->post($chapter->getUrl('/copy'), [
-            'name'             => 'My copied chapter',
+            'name' => 'My copied chapter',
             'entity_selection' => 'book:' . $otherBook->id,
         ]);
 
@@ -253,9 +253,16 @@ class CopyTest extends TestCase
         $html = '<p>This is a test <a href="' . $page->getUrl() . '">page link</a></p>';
         $this->put($chapter->getUrl(), ['name' => 'Internal ref test', 'description_html' => $html]);
 
-        $this->post($chapter->getUrl('/copy'), ['name' => 'My copied chapter']);
+        $response = $this->post($chapter->getUrl('/copy'), ['name' => 'My copied chapter']);
+        $response->assertStatus(302); // Expect a redirect
+        $redirectUrl = $response->headers->get('Location');
 
-        $newChapter = Chapter::query()->where('name', '=', 'My copied chapter')->first();
+        // Extract the chapter slug from the redirect URL
+        // URL format: /books/{bookSlug}/chapter/{chapterSlug}
+        $urlParts = explode('/', $redirectUrl);
+        $newChapterSlug = end($urlParts);
+
+        $newChapter = Chapter::query()->where('slug', '=', $newChapterSlug)->first();
         $newPage = $newChapter->pages()->where('name', '=', 'reference test page')->first();
 
         $this->assertStringContainsString($newChapter->getUrl() . '"', $newPage->html);
@@ -320,7 +327,7 @@ class CopyTest extends TestCase
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name'             => 'My copied test page',
+            'name' => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
@@ -339,7 +346,7 @@ class CopyTest extends TestCase
 
         $this->asEditor()->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name'             => 'My copied test page',
+            'name' => 'My copied test page',
         ]);
         $pageCopy = Page::where('name', '=', 'My copied test page')->first();
 
@@ -386,14 +393,14 @@ class CopyTest extends TestCase
 
         $movePageResp = $this->post($page->getUrl('/copy'), [
             'entity_selection' => 'book:' . $newBook->id,
-            'name'             => 'My copied test page',
+            'name' => 'My copied test page',
         ]);
         $movePageResp->assertRedirect();
 
         $this->assertDatabaseHasEntityData('page', [
-            'name'       => 'My copied test page',
+            'name' => 'My copied test page',
             'created_by' => $viewer->id,
-            'book_id'    => $newBook->id,
+            'book_id' => $newBook->id,
         ]);
     }
 }

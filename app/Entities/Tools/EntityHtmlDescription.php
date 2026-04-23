@@ -5,6 +5,7 @@ namespace BookStack\Entities\Tools;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Util\HtmlContentFilter;
 
 class EntityHtmlDescription
@@ -13,7 +14,7 @@ class EntityHtmlDescription
     protected string $plain = '';
 
     public function __construct(
-        protected Book|Chapter|Bookshelf $entity,
+        protected Book|Chapter|Bookshelf|Page $entity,
     ) {
         $this->html = $this->entity->description_html ?? '';
         $this->plain = $this->entity->description ?? '';

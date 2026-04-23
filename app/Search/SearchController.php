@@ -101,7 +101,7 @@ class SearchController extends Controller
             $entities = $this->searchRunner->searchEntities($searchOptions, 'page', 1, 20)['results'];
         } else {
             $entities = $this->pageQueries->visibleTemplates()
-                ->where('draft', '=', false)
+                ->where('entity_page_data.draft', '=', false)
                 ->orderBy('updated_at', 'desc')
                 ->take(20)
                 ->get();

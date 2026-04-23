@@ -3,9 +3,12 @@
 namespace BookStack\References;
 
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\HasDescriptionInterface;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
+use Illuminate\Support\Facades\DB;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Util\HtmlDocument;
 
@@ -67,6 +70,17 @@ class ReferenceUpdater
                 $reference->to_type = $newToEntity->getMorphClass();
                 $reference->save();
             }
+
+            // Handle embedded HTML links within content fields
+            foreach ($context->getUrlMap() as $oldUrl => $newUrl) {
+                if ($new instanceof Page) {
+                    $this->updateReferencesWithinPage($new, $oldUrl, $newUrl);
+                }
+                // Only for Chapter, Book, or Bookshelf - entities with descriptions
+                if (($new instanceof Chapter) || ($new instanceof Book) || ($new instanceof Bookshelf)) {
+                    $this->updateReferencesWithinDescription($new, $oldUrl, $newUrl);
+                }
+            }
         }
     }
 
@@ -104,7 +118,7 @@ class ReferenceUpdater
             $this->updateReferencesWithinPage($entity, $oldLink, $newLink);
         }
 
-        if ($entity instanceof HasDescriptionInterface) {
+        if (($entity instanceof Chapter) || ($entity instanceof Book) || ($entity instanceof Bookshelf)) {
             $this->updateReferencesWithinDescription($entity, $oldLink, $newLink);
         }
     }
@@ -112,9 +126,35 @@ class ReferenceUpdater
     protected function updateReferencesWithinDescription(Entity&HasDescriptionInterface $entity, string $oldLink, string $newLink): void
     {
         $description = $entity->descriptionInfo();
-        $html = $this->updateLinksInHtml($description->getHtml(true) ?: '', $oldLink, $newLink);
+        $originalHtml = $description->getHtml(true) ?: '';
+        $html = $this->updateLinksInHtml($originalHtml, $oldLink, $newLink);
         $description->set($html);
-        $entity->save();
+
+        $plainText = $description->getPlain();
+        $entity->description_html = $html;
+        $entity->description = $plainText;
+
+        $existing = DB::table('entity_container_data')
+            ->where('entity_id', $entity->id)
+            ->where('entity_type', $entity->getMorphClass())
+            ->first();
+
+        if ($existing) {
+            DB::table('entity_container_data')
+                ->where('entity_id', $entity->id)
+                ->where('entity_type', $entity->getMorphClass())
+                ->update([
+                    'description_html' => $html,
+                    'description' => $plainText,
+                ]);
+        } else {
+            DB::table('entity_container_data')->insert([
+                'entity_id' => $entity->id,
+                'entity_type' => $entity->getMorphClass(),
+                'description_html' => $html,
+                'description' => $plainText,
+            ]);
+        }
     }
 
     protected function updateReferencesWithinPage(Page $page, string $oldLink, string $newLink): void
@@ -159,10 +199,15 @@ class ReferenceUpdater
         /** @var \DOMElement $anchor */
         foreach ($anchors as $anchor) {
             $link = $anchor->getAttribute('href');
-            $updated = str_ireplace($oldLink, $newLink, $link);
-            $anchor->setAttribute('href', $updated);
+            $isExactMatch = strcasecmp($link, $oldLink) === 0;
+            $isPrefixMatch = strcasecmp(substr($link, 0, strlen($oldLink)), $oldLink) === 0 && strlen($link) > strlen($oldLink) && $link[strlen($oldLink)] === '/';
+            if (!$isExactMatch && !$isPrefixMatch) {
+                continue;
+            }
+            $anchor->setAttribute('href', $newLink . ($isPrefixMatch ? substr($link, strlen($oldLink)) : ''));
         }
 
-        return $doc->getBodyInnerHtml();
+        $result = $doc->getBodyInnerHtml();
+        return $result;
     }
 }
