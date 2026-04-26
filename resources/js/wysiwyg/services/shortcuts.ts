@@ -94,30 +94,78 @@ const extendedActionsByKeys: Record<string, ShortcutAction> = {
 };
 
 function createKeyDownListener(context: EditorUiContext, useExtended: boolean): (e: KeyboardEvent) => void {
-    const keySetToUse = useExtended ? extendedActionsByKeys : baseActionsByKeys;
+    const baseKeySetToUse = useExtended ? extendedActionsByKeys : baseActionsByKeys;
+    const keySetToUse = extendKeySetWithKeyCodes(baseKeySetToUse);
     return (event: KeyboardEvent) => {
-        const combo = keyboardEventToKeyComboString(event);
-        // console.log(`pressed: ${combo}`);
-        if (keySetToUse[combo]) {
-            const handled = keySetToUse[combo](context.editor, context);
-            if (handled) {
-                event.stopPropagation();
-                event.preventDefault();
+        const comboStrings = keyboardEventToKeyComboStrings(event);
+        // console.log(comboStrings, event, keySetToUse);
+        for (const combo of comboStrings) {
+            if (keySetToUse[combo]) {
+                const handled = keySetToUse[combo](context.editor, context);
+                if (handled) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+                break;
             }
         }
     };
 }
 
-function keyboardEventToKeyComboString(event: KeyboardEvent): string {
+/**
+ * Takes a shortcut key set and returns a new set with added variations of shortcts where
+ * they can be sensibly represented as their key code instead of just key, which we can use
+ * for matching in scenarios where the physical key may be represented of the letter used
+ * in the shortcut, but produces a different 'key' value.
+ * Useful for Cyrillic scenarios where the keyboard key would show a latin character
+ * as an option, and therefore be expected for use for the relevant latin shortcut, but the main
+ * key output is a Cyrillic character.
+ */
+function extendKeySetWithKeyCodes(keySet: Record<string, ShortcutAction>): Record<string, ShortcutAction> {
+    const newKeys: Record<string, ShortcutAction> = {};
+
+    const setKeys = Object.keys(keySet);
+    for (const keyCombo of setKeys) {
+        const action = keySet[keyCombo];
+        newKeys[keyCombo] = action;
+
+        const comboParts = keyCombo.split('+');
+        const lastComboPart = comboParts.pop() || '';
+        if (lastComboPart.match(/^[a-zA-Z]$/)) {
+            const keyCode = lastComboPart.toUpperCase().charCodeAt(0);
+            comboParts.push(String(keyCode));
+            const newCombo = comboParts.join('+');
+            newKeys[newCombo] = action;
+        }
+    }
+
+    return newKeys;
+}
+
+function keyboardEventToKeyComboStrings(event: KeyboardEvent): string[] {
     const metaKeyPressed = isMac() ? event.metaKey : event.ctrlKey;
 
-    const parts = [
+    const mainParts = [
         metaKeyPressed ? 'meta' : '',
         event.shiftKey ? 'shift' : '',
         event.key,
     ];
 
-    return parts.filter(Boolean).join('+').toLowerCase();
+    const toReturn = [
+        mainParts.filter(Boolean).join('+').toLowerCase(),
+    ];
+
+    // If ending with a standard latin character, provide an alternative
+    // keyCode based option for scenarios of dual-language keyboard use.
+    const keyCode = event.keyCode || 0;
+    if (keyCode >= 65 && keyCode <= 90) {
+        const keyCodeParts = [...mainParts];
+        keyCodeParts.pop();
+        keyCodeParts.push(String(keyCode));
+        toReturn.push(keyCodeParts.filter(Boolean).join('+').toLowerCase());
+    }
+
+    return toReturn;
 }
 
 function isMac(): boolean {
