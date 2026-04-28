@@ -207,6 +207,7 @@ return [
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelo ativo para o qual eles são enviados',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Guardar Cargo',
     'role_users' => 'Utilizadores com este cargo',
     'role_users_none' => 'Nenhum utilizador está atualmente vinculado a este cargo',

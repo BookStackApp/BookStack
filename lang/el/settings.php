@@ -207,6 +207,7 @@ return [
     'role_all' => 'Ολα',
     'role_own' => 'Τα δικά του',
     'role_controlled_by_asset' => 'Ελέγχονται από το στοιχείο στο οποίο ανεβαίνουν (Ράφια, Βιβλία)',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Αποθήκευση Ρόλου',
     'role_users' => 'Χρήστες σε αυτόν τον Ρόλο',
     'role_users_none' => 'Σε κανένα χρήστη δεν έχει ανατεθεί αυτήν τη στιγμή αυτός ο ρόλος.',

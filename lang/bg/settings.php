@@ -207,6 +207,7 @@ return [
     'role_all' => 'Всички',
     'role_own' => 'Собствени',
     'role_controlled_by_asset' => 'Контролирани от актива, към който са качени',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Запази ролята',
     'role_users' => 'Потребители в тази роля',
     'role_users_none' => 'В момента няма потребители, назначени за тази роля',

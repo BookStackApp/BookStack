@@ -207,6 +207,7 @@ return [
     'role_all' => 'Hammasi',
     'role_own' => 'Shaxsiy',
     'role_controlled_by_asset' => 'Ular yuklangan obyekt tomonidan nazorat qilinadi',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rolni saqlash',
     'role_users' => 'Ushbu roldagi foydalanuvchilar',
     'role_users_none' => 'Hozirda bu rolga hech qanday foydalanuvchi tayinlanmagan',

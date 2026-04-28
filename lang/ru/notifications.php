@@ -12,7 +12,7 @@ return [
     'updated_page_intro' => 'Страница была обновлена в :appName:',
     'updated_page_debounce' => 'Чтобы предотвратить массовые уведомления, в течение некоторого времени вы не будете получать уведомления о дальнейших правках этой страницы этим же редактором.',
     'comment_mention_subject' => 'Вы были упомянуты в комментарии на странице: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_intro' => 'Вы были упомянуты в комментариях к :appName:',
 
     'detail_page_name' => 'Имя страницы:',
     'detail_page_path' => 'Путь страницы:',

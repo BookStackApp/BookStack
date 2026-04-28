@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tot',
     'role_own' => 'Propriu',
     'role_controlled_by_asset' => 'Controlat de activele pe care sunt încărcate',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Salvare rol',
     'role_users' => 'Utilizatori cu acest rol',
     'role_users_none' => 'Nici un utilizator nu este asociat acestui rol',

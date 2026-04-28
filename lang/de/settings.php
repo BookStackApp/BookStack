@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
     'role_controlled_by_asset' => 'Abhängig von dem Asset, in das sie hochgeladen werden',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rolle speichern',
     'role_users' => 'Dieser Rolle zugeordnete Benutzer',
     'role_users_none' => 'Derzeit sind diesem Rollentyp keine Benutzer zugewiesen',

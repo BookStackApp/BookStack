@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tất cả',
     'role_own' => 'Sở hữu',
     'role_controlled_by_asset' => 'Kiểm soát các tài sản (asset) người dùng tải lên',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Lưu Quyền',
     'role_users' => 'Người dùng được gán quyền này',
     'role_users_none' => 'Không có người dùng nào hiện được gán quyền này',

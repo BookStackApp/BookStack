@@ -207,6 +207,7 @@ return [
     'role_all' => '全て',
     'role_own' => '自身',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '役割を保存',
     'role_users' => 'この役割を持つユーザー',
     'role_users_none' => 'この役割が付与されたユーザーはいません',

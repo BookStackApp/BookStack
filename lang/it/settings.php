@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tutti',
     'role_own' => 'Propri',
     'role_controlled_by_asset' => 'Controllato dall\'entità in cui sono caricati',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Salva ruolo',
     'role_users' => 'Utenti in questo ruolo',
     'role_users_none' => 'Nessun utente assegnato a questo ruolo',

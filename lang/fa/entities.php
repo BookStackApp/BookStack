@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'برای سامان‌دهی محتوای یک کتاب، می‌توانید فصل‌ها و صفحات آن را جابه‌جا کنید. همچنین می‌توانید کتاب‌های دیگری بیفزایید تا جابه‌جایی فصل‌ها و صفحات میان کتاب‌ها آسان شود. در صورت تمایل، می‌توانید قاعده‌ای برای مرتب‌سازی خودکار تعیین کنید تا محتوای کتاب در صورت ایجاد تغییرات، به طور خودکار مرتب شود.',
     'books_sort_auto_sort' => 'گزینه مرتب‌سازی خودکار',
     'books_sort_auto_sort_active' => 'مرتب‌سازی خودکار با قاعده: :sortName فعال است',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'مرتب‌سازی کتاب:bookName',
     'books_sort_name' => 'مرتب‌سازی بر اساس نام',
     'books_sort_created' => 'مرتب‌سازی بر اساس تاریخ ایجاد',

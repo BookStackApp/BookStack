@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Liiguta raamatu sees peatükke ja lehti, et selle sisu ümber organiseerida. Saad lisada teisi raamatuid, mis võimaldab peatükke ja lehti lihtsasti raamatute vahel liigutada. Lisaks saad määrata automaatse sorteerimise reegli, et selle raamatu sisu muudatuste puhul automaatselt järjestada.',
     'books_sort_auto_sort' => 'Automaatne sorteerimine',
     'books_sort_auto_sort_active' => 'Automaatne sorteerimine aktiivne: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Sorteeri raamat :bookName',
     'books_sort_name' => 'Sorteeri nime järgi',
     'books_sort_created' => 'Sorteeri loomisaja järgi',

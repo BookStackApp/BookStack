@@ -207,6 +207,7 @@ return [
     'role_all' => 'Kaikki',
     'role_own' => 'Omat',
     'role_controlled_by_asset' => 'Määräytyy sen sisällön mukaan, johon ne on ladattu',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Tallenna rooli',
     'role_users' => 'Käyttäjät tässä roolissa',
     'role_users_none' => 'Yhtään käyttäjää ei ole osoitettuna tähän rooliin',

@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => '책 내의 챕터와 페이지를 이동하여 콘텐츠를 재구성할 수 있습니다. 다른 책들을 추가하여 책 간의 챕터와 페이지를 쉽게 이동할 수 있습니다. 선택적으로 자동 정렬 규칙을 설정하여 변경 시 이 책의 콘텐츠를 자동으로 정렬할 수 있습니다.',
     'books_sort_auto_sort' => '자동 정렬 옵션',
     'books_sort_auto_sort_active' => '현재 설정된 자동 정렬: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => ':bookName 정렬',
     'books_sort_name' => '제목',
     'books_sort_created' => '만든 날짜',

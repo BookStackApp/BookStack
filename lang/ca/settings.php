@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tot',
     'role_own' => 'Propi',
     'role_controlled_by_asset' => 'Controlat pel recurs a què estan pujats',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Desa el rol',
     'role_users' => 'Usuaris assignats en aquest rol',
     'role_users_none' => 'No hi ha cap usuari assignat en aquest rol',

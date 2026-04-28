@@ -207,6 +207,7 @@ return [
     'role_all' => 'همه',
     'role_own' => 'صاحب',
     'role_controlled_by_asset' => 'توسط دارایی که در آن آپلود می شود کنترل می شود',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'ذخیره نقش',
     'role_users' => 'کاربران در این نقش',
     'role_users_none' => 'در حال حاضر هیچ کاربری به این نقش اختصاص داده نشده است',

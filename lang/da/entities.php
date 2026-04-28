@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Flyt kapitler og sider i en bog for at omorganisere dens indhold. Der kan tilføjes andre bøger, som gør det nemt at flytte kapitler og sider mellem bøgerne. Man kan indstille en automatisk sorteringsregel, så bogens indhold automatisk sorteres efter ændringer.',
     'books_sort_auto_sort' => 'Mulighed for automatisk sortering',
     'books_sort_auto_sort_active' => 'Automatisk sortering Aktiv: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'En bruger med de nødvendige rettigheder kan oprette regler for automatisk sortering i indstillingsområdet »Lister og sortering«.',
     'books_sort_named' => 'Sorter bog :bookName',
     'books_sort_name' => 'Sortér efter navn',
     'books_sort_created' => 'Sortér efter oprettelsesdato',

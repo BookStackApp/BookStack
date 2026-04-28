@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Mueve capítulos y páginas dentro de un libro para reorganizar su contenido. Se pueden añadir otros libros que permiten mover fácilmente capítulos y páginas entre libros. Opcionalmente, se puede establecer una regla de ordenación automática para el contenido de este libro cuando haya cambios.',
     'books_sort_auto_sort' => 'Opción de ordenación automática',
     'books_sort_auto_sort_active' => 'Opción de ordenación activa: sortName',
+    'books_sort_auto_sort_creation_hint' => 'Las reglas para los ajustes de ordenación automática pueden ser creadas en el área de configuración "Listas y ordenación" por un usuario con los permisos pertinentes.',
     'books_sort_named' => 'Organizar libro :bookName',
     'books_sort_name' => 'Organizar por nombre',
     'books_sort_created' => 'Organizar por fecha de creación',

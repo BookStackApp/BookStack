@@ -207,6 +207,7 @@ return [
     'role_all' => 'Visi',
     'role_own' => 'Savi',
     'role_controlled_by_asset' => 'Kontrolē resurss, uz ko tie ir augšupielādēti',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Saglabāt grupu',
     'role_users' => 'Lietotāji šajā grupā',
     'role_users_none' => 'Pagaidām neviens lietotājs nav pievienots šai grupai',

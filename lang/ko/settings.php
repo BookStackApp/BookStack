@@ -207,6 +207,7 @@ return [
     'role_all' => '모든 항목',
     'role_own' => '직접 만든 항목',
     'role_controlled_by_asset' => '저마다 다름',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '저장',
     'role_users' => '이 역할을 가진 사용자들',
     'role_users_none' => '역할이 부여된 사용자가 없습니다.',

@@ -207,6 +207,7 @@ return [
     'role_all' => 'Összes',
     'role_own' => 'Saját',
     'role_controlled_by_asset' => 'Az általuk feltöltött eszköz által ellenőrzött',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Szerepkör mentése',
     'role_users' => 'Felhasználók ebben a szerepkörben',
     'role_users_none' => 'Jelenleg nincsenek felhasználók hozzárendelve ehhez a szerepkörhöz',

@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rol Opslaan',
     'role_users' => 'Gebruikers in deze rol',
     'role_users_none' => 'Geen enkele gebruiker heeft deze rol',

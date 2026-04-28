@@ -207,6 +207,7 @@ return [
     'role_all' => 'Semua',
     'role_own' => 'Sendiri',
     'role_controlled_by_asset' => 'Dikendalikan oleh aset tempat mereka diunggah',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Simpan Peran',
     'role_users' => 'Peran berhasil diperbarui',
     'role_users_none' => 'Saat ini tidak ada pengguna yang ditugaskan untuk peran ini',

@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Pro přeuspořádání obsahu přesuňte kapitoly a stránky v knize. Mohou být přidány další knihy, které umožní snadný přesun kapitol a stránek mezi knihami. Volitelně lze nastavit pravidlo automatického řazení, aby se při změnách automaticky seřadil obsah této knihy.',
     'books_sort_auto_sort' => 'Možnost automatického řazení',
     'books_sort_auto_sort_active' => 'Aktivní automatické řazení: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Seřadit knihu :bookName',
     'books_sort_name' => 'Seřadit podle názvu',
     'books_sort_created' => 'Seřadit podle data vytvoření',

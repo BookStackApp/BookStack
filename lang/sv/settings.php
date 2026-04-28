@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alla',
     'role_own' => 'Egna',
     'role_controlled_by_asset' => 'Kontrolleras av den sida de laddas upp till',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Spara roll',
     'role_users' => 'Användare med denna roll',
     'role_users_none' => 'Inga användare tillhör den här rollen',

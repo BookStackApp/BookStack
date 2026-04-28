@@ -207,6 +207,7 @@ return [
     'role_all' => 'Wszyscy',
     'role_own' => 'Własne',
     'role_controlled_by_asset' => 'Kontrolowane przez zasób, do którego zostały udostępnione',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Zapisz rolę',
     'role_users' => 'Użytkownicy w tej roli',
     'role_users_none' => 'Brak użytkowników zapisanych do tej roli',

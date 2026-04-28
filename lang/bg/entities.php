@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Move chapters and pages within a book to reorganise its contents. Other books can be added which allows easy moving of chapters and pages between books. Optionally an auto sort rule can be set to automatically sort this book\'s contents upon changes.',
     'books_sort_auto_sort' => 'Auto Sort Option',
     'books_sort_auto_sort_active' => 'Auto Sort Active: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Сортирай книга :bookName',
     'books_sort_name' => 'Сортиране по име',
     'books_sort_created' => 'Сортирай по дата на създаване',

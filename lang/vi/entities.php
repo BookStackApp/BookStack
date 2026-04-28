@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Di chuyển các chương và trang trong một cuốn sách để sắp xếp lại nội dung của nó. Các sách khác có thể được thêm vào để dễ dàng di chuyển các chương và trang giữa các sách. Tùy chọn, một quy tắc sắp xếp tự động có thể được đặt để tự động sắp xếp nội dung cuốn sách này khi có thay đổi.',
     'books_sort_auto_sort' => 'Tùy chọn sắp xếp tự động',
     'books_sort_auto_sort_active' => 'Sắp xếp tự động đang hoạt động: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Sắp xếp sách :bookName',
     'books_sort_name' => 'Sắp xếp theo tên',
     'books_sort_created' => 'Sắp xếp theo ngày tạo',

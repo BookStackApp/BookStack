@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Egne',
     'role_controlled_by_asset' => 'Kontrollert av eiendelen de er lastet opp til',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Lagre rolle',
     'role_users' => 'Kontoholdere med denne rollen',
     'role_users_none' => 'Ingen kontoholdere er gitt denne rollen',

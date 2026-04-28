@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => '在书籍内部移动章节与页面以重组内容；支持添加其他书籍，实现跨书籍便捷移动章节与页面；还可设置自动排序规则，在内容发生变更时自动对本书内容进行排序。',
     'books_sort_auto_sort' => '自动排序选项',
     'books_sort_auto_sort_active' => '自动排序已激活：::sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => '排序书籍「:bookName」',
     'books_sort_name' => '按名称排序',
     'books_sort_created' => '创建时间排序',

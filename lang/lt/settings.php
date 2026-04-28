@@ -207,6 +207,7 @@ return [
     'role_all' => 'Visi',
     'role_own' => 'Nuosavi',
     'role_controlled_by_asset' => 'Kontroliuojami nuosavybės, į kurią yra įkelti',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Išsaugoti vaidmenį',
     'role_users' => 'Naudotojai šiame vaidmenyje',
     'role_users_none' => 'Šiuo metu prie šio vaidmens nėra priskirta naudotojų',

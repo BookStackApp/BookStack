@@ -207,6 +207,7 @@ return [
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelos ativos nos quais o upload foi realizado',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Salvar Perfil',
     'role_users' => 'Usuários com este perfil',
     'role_users_none' => 'Nenhum usuário está atualmente vinculado a este perfil',

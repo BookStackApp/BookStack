@@ -207,6 +207,7 @@ return [
     'role_all' => 'Allt',
     'role_own' => 'Eigin',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Vista hlutverk',
     'role_users' => 'Notendur í þessu hlutverki',
     'role_users_none' => 'Engir notendur eru eins og er í þessu hlutverki',

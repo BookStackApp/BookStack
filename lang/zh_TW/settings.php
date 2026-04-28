@@ -208,6 +208,7 @@ return [
     'role_all' => '全部',
     'role_own' => '擁有',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '儲存角色',
     'role_users' => '屬於此角色的使用者',
     'role_users_none' => '目前沒有使用者被分配到此角色',

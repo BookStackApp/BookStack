@@ -207,6 +207,7 @@ return [
     'role_all' => 'Sve',
     'role_own' => 'Vlastito',
     'role_controlled_by_asset' => 'Kontrolirano od strane vlasnika',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Spremi ulogu',
     'role_users' => 'Korisnici u ovoj ulozi',
     'role_users_none' => 'Trenutno nijedan korisnik nije u ovoj ulozi',

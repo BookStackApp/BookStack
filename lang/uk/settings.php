@@ -207,6 +207,7 @@ return [
     'role_all' => 'Все',
     'role_own' => 'Власне',
     'role_controlled_by_asset' => 'Контролюється за об\'єктом, до якого вони завантажуються',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Зберегти роль',
     'role_users' => 'Користувачі в цій ролі',
     'role_users_none' => 'Наразі жоден користувач не призначений для цієї ролі',

@@ -207,6 +207,7 @@ return [
     'role_all' => 'Vse',
     'role_own' => 'Lasten',
     'role_controlled_by_asset' => 'Nadzira ga sredstvo, v katerega so naloženi',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Shrani vlogo',
     'role_users' => 'Uporabniki v tej vlogi',
     'role_users_none' => 'Tej vlogi trenutno ni dodeljen noben uporabnik',

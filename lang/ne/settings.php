@@ -207,6 +207,7 @@ return [
     'role_all' => 'सबै',
     'role_own' => 'आफ्नो',
     'role_controlled_by_asset' => 'अपलोड गरिएको सम्पत्तिले नियन्त्रण गरेको',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'भूमिका सुरक्षित गर्नुहोस्',
     'role_users' => 'यस भूमिकाका प्रयोगकर्ताहरू',
     'role_users_none' => 'यो भूमिकामा हाल कुनै प्रयोगकर्ता छैन',

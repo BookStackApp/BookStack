@@ -207,6 +207,7 @@ return [
     'role_all' => '全部的',
     'role_own' => '拥有的',
     'role_controlled_by_asset' => '由其所在的资源来控制',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '保存角色',
     'role_users' => '此角色的用户',
     'role_users_none' => '目前没有用户被分配到这个角色',

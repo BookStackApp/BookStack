@@ -207,6 +207,7 @@ return [
     'role_all' => 'Hepsi',
     'role_own' => 'Kendine Ait',
     'role_controlled_by_asset' => 'Yüklendikleri varlık tarafından kontrol ediliyor',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rolü Kaydet',
     'role_users' => 'Bu roldeki kullanıcılar',
     'role_users_none' => 'Bu role henüz bir kullanıcı atanmadı',

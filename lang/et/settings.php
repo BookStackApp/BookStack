@@ -207,6 +207,7 @@ return [
     'role_all' => 'Kõik',
     'role_own' => 'Enda omad',
     'role_controlled_by_asset' => 'Õigused määratud seotud objekti kaudu',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Salvesta roll',
     'role_users' => 'Selle rolliga kasutajad',
     'role_users_none' => 'Seda rolli ei ole hetkel ühelgi kasutajal',

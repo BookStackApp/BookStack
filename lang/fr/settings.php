@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tous',
     'role_own' => 'Propres',
     'role_controlled_by_asset' => 'Contrôlé par les ressources les ayant envoyés',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Enregistrer le rôle',
     'role_users' => 'Utilisateurs ayant ce rôle',
     'role_users_none' => 'Aucun utilisateur avec ce rôle actuellement',

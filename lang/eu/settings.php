@@ -207,6 +207,7 @@ return [
     'role_all' => 'Guztiak',
     'role_own' => 'Norberarenak',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Gorde rol-a',
     'role_users' => 'Rol honetako erabiltzaileak',
     'role_users_none' => 'No users are currently assigned to this role',

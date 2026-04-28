@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Mou capítols i pàgines dins d\'un llibre per reorganitzar el seu contingut. Es poden afegir altres llibres que permetin moure fàcilment capítols i pàgines entre llibres. De manera opcional, es poden establir regles d\'ordenació automàtica per ordenar automàticament el contingut d\'aquest llibre quan hi hagi canvis.',
     'books_sort_auto_sort' => 'Opció d\'ordenació automàtica',
     'books_sort_auto_sort_active' => 'Opció d\'ordenació activa :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Ordena el llibre &laquo;:bookName&raquo;',
     'books_sort_name' => 'Ordena pel nom',
     'books_sort_created' => 'Ordena per la data de creació',

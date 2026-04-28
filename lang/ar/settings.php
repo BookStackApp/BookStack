@@ -207,6 +207,7 @@ return [
     'role_all' => 'الكل',
     'role_own' => 'ما يخص',
     'role_controlled_by_asset' => 'يتحكم فيها الأصول التي يتم رفعها إلى',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'حفظ الدور',
     'role_users' => 'مستخدمون داخل هذا الدور',
     'role_users_none' => 'لم يتم تعيين أي مستخدمين لهذا الدور',

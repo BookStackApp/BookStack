@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'نقل الفصول والصفحات داخل الكتاب لإعادة تنظيم محتوياته. يمكن إضافة كتب أخرى مما يسمح بنقل الفصول والصفحات بسهولة بين الكتب. اختياريًا، يمكن تعيين قاعدة فرز تلقائي لفرز محتويات هذا الكتاب تلقائيًا عند حدوث تغييرات.',
     'books_sort_auto_sort' => 'خِيار الفرز التلقائي',
     'books_sort_auto_sort_active' => 'الفرز التلقائي الشَغَّال: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'فرز كتاب :bookName',
     'books_sort_name' => 'ترتيب حسب الإسم',
     'books_sort_created' => 'ترتيب حسب تاريخ الإنشاء',

@@ -208,6 +208,7 @@ return [
     'role_all' => 'Todo',
     'role_own' => 'Propio',
     'role_controlled_by_asset' => 'Controlado por el activo al que ha sido subido',
+    'role_controlled_by_page_delete' => 'Controlado por página de eliminación de permisos',
     'role_save' => 'Guardar rol',
     'role_users' => 'Usuarios en este rol',
     'role_users_none' => 'No hay usuarios asignados a este rol',

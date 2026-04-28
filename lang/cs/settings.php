@@ -207,6 +207,7 @@ return [
     'role_all' => 'Vše',
     'role_own' => 'Vlastní',
     'role_controlled_by_asset' => 'Řídí se obsahem, do kterého jsou nahrávány',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Uložit roli',
     'role_users' => 'Uživatelé mající tuto roli',
     'role_users_none' => 'Žádný uživatel nemá tuto roli',

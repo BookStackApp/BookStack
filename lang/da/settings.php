@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Eget',
     'role_controlled_by_asset' => 'Styres af det medie/"asset", de uploades til',
+    'role_controlled_by_page_delete' => 'Styres af tilladelser til sletning af sider',
     'role_save' => 'Gem rolle',
     'role_users' => 'Brugere med denne rolle',
     'role_users_none' => 'Ingen brugere er i øjeblikket tildelt denne rolle',

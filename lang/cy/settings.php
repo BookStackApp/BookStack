@@ -207,6 +207,7 @@ return [
     'role_all' => 'Popeth',
     'role_own' => 'Meddu',
     'role_controlled_by_asset' => 'Wedi\'u rheoli gan yr ased y maent yn cael eu huwchlwytho iddo',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Cadw Rôl',
     'role_users' => 'Defnyddwyr yn y rôl hon',
     'role_users_none' => 'Nid oes unrhyw ddefnyddwyr wedi’u neilltuo i\'r rôl hon ar hyn o bryd',

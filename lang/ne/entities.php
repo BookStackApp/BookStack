@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'पुस्तकमा अध्यायहरू र पृष्ठहरूलाई पुनः व्यवस्थित गर्नका लागि सार्नुहोस्। अन्य पुस्तकहरू थप्न सकिन्छ जसले अध्याय र पृष्ठहरूलाई पुस्तकहरू बीच सजिलै सर्न मद्दत गर्दछ। वैकल्पिक रूपमा एक स्वचालित वर्गीकरण नियम सेट गर्न सकिन्छ जसले पुस्तकको सामग्रीहरू परिवर्तन भएपछि स्वत: वर्गीकृत गर्छ।',
     'books_sort_auto_sort' => 'स्वचालित वर्गीकरण विकल्प',
     'books_sort_auto_sort_active' => 'स्वचालित वर्गीकरण सक्रिय: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'पुस्तक :bookName को वर्गीकरण गर्नुहोस्',
     'books_sort_name' => 'नाम अनुसार वर्गीकृत गर्नुहोस्',
     'books_sort_created' => 'सिर्जना मितिअनुसार वर्गीकृत गर्नुहोस्',
