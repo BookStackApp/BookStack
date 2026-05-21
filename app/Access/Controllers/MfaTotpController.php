@@ -5,6 +5,7 @@ namespace BookStack\Access\Controllers;
 use BookStack\Access\LoginService;
 use BookStack\Access\Mfa\MfaSession;
 use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\Mfa\MfaVerificationLimiter;
 use BookStack\Access\Mfa\TotpService;
 use BookStack\Access\Mfa\TotpValidationRule;
 use BookStack\Activity\ActivityType;
@@ -20,7 +21,8 @@ class MfaTotpController extends Controller
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-totp-secret';
 
     public function __construct(
-        protected TotpService $totp
+        protected TotpService $totp,
+        protected MfaVerificationLimiter $limiter,
     ) {
     }
 
@@ -86,6 +88,12 @@ class MfaTotpController extends Controller
     public function verify(Request $request, LoginService $loginService, MfaSession $mfaSession)
     {
         $user = $this->currentOrLastAttemptedUser();
+        $this->limiter->incrementAttempts($user, $request);
+        if ($this->limiter->hasHitLimit($user, $request)) {
+            $this->clearLastAttemptedUser();
+            $this->limiter->throwException();
+        }
+
         $totpSecret = MfaValue::getValueForUser($user, MfaValue::METHOD_TOTP);
 
         $this->validate($request, [
@@ -98,6 +106,7 @@ class MfaTotpController extends Controller
 
         $mfaSession->markVerifiedForUser($user);
         $loginService->reattemptLoginFor($user);
+        $this->limiter->decrementAttempts($user, $request);
 
         return redirect()->intended();
     }

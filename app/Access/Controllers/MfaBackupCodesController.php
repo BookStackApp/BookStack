@@ -6,6 +6,7 @@ use BookStack\Access\LoginService;
 use BookStack\Access\Mfa\BackupCodeService;
 use BookStack\Access\Mfa\MfaSession;
 use BookStack\Access\Mfa\MfaValue;
+use BookStack\Access\Mfa\MfaVerificationLimiter;
 use BookStack\Activity\ActivityType;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controller;
@@ -18,6 +19,11 @@ class MfaBackupCodesController extends Controller
     use HandlesPartialLogins;
 
     protected const SETUP_SECRET_SESSION_KEY = 'mfa-setup-backup-codes';
+
+    public function __construct(
+        protected MfaVerificationLimiter $limiter,
+    ) {
+    }
 
     /**
      * Show a view that generates and displays backup codes.
@@ -71,6 +77,12 @@ class MfaBackupCodesController extends Controller
     public function verify(Request $request, BackupCodeService $codeService, MfaSession $mfaSession, LoginService $loginService)
     {
         $user = $this->currentOrLastAttemptedUser();
+        $this->limiter->incrementAttempts($user, $request);
+        if ($this->limiter->hasHitLimit($user, $request)) {
+            $this->clearLastAttemptedUser();
+            $this->limiter->throwException();
+        }
+
         $codes = MfaValue::getValueForUser($user, MfaValue::METHOD_BACKUP_CODES) ?? '[]';
 
         $this->validate($request, [
@@ -89,6 +101,7 @@ class MfaBackupCodesController extends Controller
 
         $mfaSession->markVerifiedForUser($user);
         $loginService->reattemptLoginFor($user);
+        $this->limiter->decrementAttempts($user, $request);
 
         if ($codeService->countCodesInSet($updatedCodes) < 5) {
             $this->showWarningNotification(trans('auth.mfa_backup_codes_usage_limit_warning'));

@@ -126,7 +126,7 @@ class LoginService
     /**
      * Clear the last login attempted session value.
      */
-    protected function clearLastLoginAttempted(): void
+    public function clearLastLoginAttempted(): void
     {
         session()->remove(self::LAST_LOGIN_ATTEMPTED_SESSION_KEY);
     }

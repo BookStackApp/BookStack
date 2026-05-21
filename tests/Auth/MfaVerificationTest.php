@@ -66,6 +66,27 @@ class MfaVerificationTest extends TestCase
         $html->assertElementExists('input[autocomplete="one-time-code"][name="code"]');
     }
 
+    public function test_totp_verification_is_rate_limited()
+    {
+        [$user, $secret, $loginResp] = $this->startTotpLogin();
+        $loginService = $this->app->make(LoginService::class);
+
+        $resp = $this->get('/mfa/verify');
+        for ($i = 0; $i < 5; $i++) {
+            $this->post('/mfa/totp/verify', [
+                'code' => '123456',
+            ])->assertRedirect('/mfa/verify');
+            $this->assertNotNull($loginService->getLastLoginAttemptUser());
+        }
+
+        $resp = $this->post('/mfa/totp/verify', [
+            'code' => '123456',
+        ]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Too many multi-factor verification attempts. Please try again in 60 seconds.');
+        $this->assertNull($loginService->getLastLoginAttemptUser());
+    }
+
     public function test_backup_code_verification()
     {
         [$user, $codes, $loginResp] = $this->startBackupCodeLogin();
@@ -145,6 +166,27 @@ class MfaVerificationTest extends TestCase
         ]);
         $resp = $this->followRedirects($resp);
         $resp->assertSeeText('You have less than 5 backup codes remaining, Please generate and store a new set before you run out of codes to prevent being locked out of your account.');
+    }
+
+    public function test_backup_code_verification_is_rate_limited()
+    {
+        [$user, $codes, $loginResp] = $this->startBackupCodeLogin(['abc12-def45', 'abc12-def46']);
+        $loginService = $this->app->make(LoginService::class);
+
+        $resp = $this->get('/mfa/verify');
+        for ($i = 0; $i < 5; $i++) {
+            $this->post('/mfa/backup_codes/verify', [
+                'code' => '123456abcd',
+            ])->assertRedirect('/mfa/verify');
+            $this->assertNotNull($loginService->getLastLoginAttemptUser());
+        }
+
+        $resp = $this->post('/mfa/backup_codes/verify', [
+            'code' => '123456abcd',
+        ]);
+        $resp->assertRedirect('/login');
+        $this->assertSessionError('Too many multi-factor verification attempts. Please try again in 60 seconds.');
+        $this->assertNull($loginService->getLastLoginAttemptUser());
     }
 
     public function test_backup_code_form_has_autofill_configured()

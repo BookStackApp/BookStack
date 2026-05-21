@@ -22,4 +22,10 @@ trait HandlesPartialLogins
 
         return $user;
     }
+
+    protected function clearLastAttemptedUser(): void
+    {
+        $loginService = app()->make(LoginService::class);
+        $loginService->clearLastLoginAttempted();
+    }
 }
