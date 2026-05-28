@@ -184,14 +184,41 @@ export class Actions {
         }
     }
 
-    focus() {
+    /**
+     * Set user focus on the editor edit area.
+     */
+    focus(): void {
         this.editor.input.focus();
+    }
+
+    /**
+     * Focus on the text for a specific header in the content.
+     */
+    focusOnHeader(index: number): void {
+        const headerPattern = /^\s{0,3}(#+|<h[1-6][\s>])/i;
+        const codeBoundary = /^\s{0,3}```/i;
+        let currentIndex = -1;
+        let inCodeBoundary = false;
+        this.editor.input.forEachLine((num: number, content: string, range: MarkdownEditorInputSelection) => {
+             const isHeader = headerPattern.test(content);
+             if (isHeader && !inCodeBoundary) {
+                 currentIndex++;
+                 if (currentIndex === index) {
+                     this.editor.input.setSelection({from: range.to, to: range.to}, true);
+                     return false;
+                 }
+             } else if (codeBoundary.test(content)) {
+                 inCodeBoundary = !inCodeBoundary;
+             }
+        });
+
+        this.focus();
     }
 
     /**
      * Insert content into the editor.
      */
-    insertContent(content: string) {
+    insertContent(content: string): void {
         this.#replaceSelection(content, content.length);
     }
 

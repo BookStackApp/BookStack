@@ -207,6 +207,7 @@ return [
     'role_all' => '全て',
     'role_own' => '自身',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '役割を保存',
     'role_users' => 'この役割を持つユーザー',
     'role_users_none' => 'この役割が付与されたユーザーはいません',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'アカウントのセキュリティを強化するために、多要素認証を設定してください。',
     'users_mfa_x_methods' => ':count個の手段が設定されています|:count個の手段が設定されています',
     'users_mfa_configure' => '手段を設定',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'APIトークンの作成',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

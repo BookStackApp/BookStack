@@ -1,3 +1,5 @@
+import {getViewportRect, RTLRect} from "../../../utils/rtl";
+
 interface HandleDropdownParams {
     toggle: HTMLElement;
     menu: HTMLElement;
@@ -7,30 +9,31 @@ interface HandleDropdownParams {
     showAside?: boolean;
 }
 
-function positionMenu(menu: HTMLElement, toggle: HTMLElement, showAside: boolean) {
-    const toggleRect = toggle.getBoundingClientRect();
-    const menuBounds = menu.getBoundingClientRect();
+function positionMenu(menu: HTMLElement, toggle: HTMLElement, showAside: boolean, isRTL: boolean) {
+    const toggleRect = new RTLRect(toggle, isRTL);
+    const menuBounds = new RTLRect(menu, isRTL);
+    const viewport = getViewportRect();
 
     menu.style.position = 'fixed';
 
     if (showAside) {
-        let targetLeft = toggleRect.right;
-        const isRightOOB = toggleRect.right + menuBounds.width > window.innerWidth;
-        if (isRightOOB) {
-            targetLeft = Math.max(toggleRect.left - menuBounds.width, 0);
+        let targetLeft = toggleRect.inlineEnd;
+        const isEndOOB = toggleRect.inlineEnd + menuBounds.width > viewport.width;
+        if (isEndOOB) {
+            targetLeft = Math.max(toggleRect.inlineStart - menuBounds.width, 0);
         }
 
-        menu.style.top = toggleRect.top + 'px';
-        menu.style.left = targetLeft + 'px';
+        menu.style.top = toggleRect.blockStart + 'px';
+        menu.style.insetInlineStart = targetLeft + 'px';
     } else {
-        const isRightOOB = toggleRect.left + menuBounds.width > window.innerWidth;
-        let targetLeft = toggleRect.left;
-        if (isRightOOB) {
-            targetLeft = Math.max(toggleRect.right - menuBounds.width, 0);
+        const isEndOOB = toggleRect.inlineStart + menuBounds.width > viewport.width;
+        let targetLeft = toggleRect.inlineStart;
+        if (isEndOOB) {
+            targetLeft = Math.max(toggleRect.inlineEnd - menuBounds.width, 0);
         }
 
-        menu.style.top = toggleRect.bottom + 'px';
-        menu.style.left = targetLeft + 'px';
+        menu.style.top = toggleRect.blockEnd + 'px';
+        menu.style.insetInlineStart = targetLeft + 'px';
     }
 }
 
@@ -38,12 +41,17 @@ export class DropDownManager {
 
     protected dropdownOptions: WeakMap<HTMLElement, HandleDropdownParams> = new WeakMap();
     protected openDropdowns: Set<HTMLElement> = new Set();
+    protected isRTL: boolean = false;
 
     constructor() {
         this.onMenuMouseOver = this.onMenuMouseOver.bind(this);
         this.onWindowClick = this.onWindowClick.bind(this);
 
         window.addEventListener('click', this.onWindowClick);
+    }
+
+    setIsRTL(isRTL: boolean): void {
+        this.isRTL = isRTL;
     }
 
     teardown(): void {
@@ -80,7 +88,7 @@ export class DropDownManager {
     protected closeDropdown(menu: HTMLElement): void {
         menu.hidden = true;
         menu.style.removeProperty('position');
-        menu.style.removeProperty('left');
+        menu.style.removeProperty('inset-inline-start');
         menu.style.removeProperty('top');
 
         this.openDropdowns.delete(menu);
@@ -94,8 +102,8 @@ export class DropDownManager {
 
     protected openDropdown(menu: HTMLElement): void {
         const {toggle, showAside, onOpen} = this.getOptions(menu);
-        menu.hidden = false
-        positionMenu(menu, toggle, Boolean(showAside));
+        menu.hidden = false;
+        positionMenu(menu, toggle, Boolean(showAside), this.isRTL);
 
         this.openDropdowns.add(menu);
         menu.addEventListener('mouseover', this.onMenuMouseOver);

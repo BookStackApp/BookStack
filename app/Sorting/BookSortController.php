@@ -58,7 +58,7 @@ class BookSortController extends Controller
         // Sort via map
         if ($request->filled('sort-tree')) {
             (new DatabaseTransaction(function () use ($book, $request, $sorter, &$loggedActivityForBook) {
-                $sortMap = BookSortMap::fromJson($request->get('sort-tree'));
+                $sortMap = BookSortMap::fromJson($request->input('sort-tree'));
                 $booksInvolved = $sorter->sortUsingMap($sortMap);
 
                 // Add activity for involved books.
@@ -72,7 +72,7 @@ class BookSortController extends Controller
         }
 
         if ($request->filled('auto-sort')) {
-            $sortSetId = intval($request->get('auto-sort')) ?: null;
+            $sortSetId = intval($request->input('auto-sort')) ?: null;
             if ($sortSetId && SortRule::query()->find($sortSetId) === null) {
                 $sortSetId = null;
             }

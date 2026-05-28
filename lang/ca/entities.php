@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Mou capítols i pàgines dins d\'un llibre per reorganitzar el seu contingut. Es poden afegir altres llibres que permetin moure fàcilment capítols i pàgines entre llibres. De manera opcional, es poden establir regles d\'ordenació automàtica per ordenar automàticament el contingut d\'aquest llibre quan hi hagi canvis.',
     'books_sort_auto_sort' => 'Opció d\'ordenació automàtica',
     'books_sort_auto_sort_active' => 'Opció d\'ordenació activa :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Ordena el llibre &laquo;:bookName&raquo;',
     'books_sort_name' => 'Ordena pel nom',
     'books_sort_created' => 'Ordena per la data de creació',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Commuta la barra lateral',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Etiquetes de la pàgina',
     'chapter_tags' => 'Etiquetes del capítol',
     'book_tags' => 'Etiquetes del llibre',

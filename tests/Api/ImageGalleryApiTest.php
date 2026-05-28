@@ -154,6 +154,34 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_create_requires_update_permission_for_the_target_page()
+    {
+        $editor = $this->users->editor();
+        $this->actingAsForApi($editor);
+
+        $makeRequest = function (int $uploadedTo) {
+            return $this->call('POST', $this->baseEndpoint, [
+                'type' => 'gallery',
+                'uploaded_to' => $uploadedTo,
+                'name' => 'My awesome image!',
+            ], [], [
+                'image' => $this->files->uploadedImage('my-cool-image.png'),
+            ]);
+        };
+
+        $page = $this->entities->page();
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editor->roles()->first());
+
+        $resp = $makeRequest($page->id);
+        $resp->assertStatus(403);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editor->roles()->first());
+
+        $resp = $makeRequest($page->id);
+        $resp->assertStatus(200);
+    }
+
     public function test_create_has_restricted_types()
     {
         $this->actingAsApiEditor();

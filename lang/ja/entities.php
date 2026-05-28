@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'ブック内のチャプタおよびページを移動して内容を再編成できます。他のブックを並べて、ブック間でチャプタやページを簡単に移動することもできます。オプションで自動ソートルールを設定すると、変更時にブックの内容を自動的にソートすることができます。',
     'books_sort_auto_sort' => '自動ソートオプション',
     'books_sort_auto_sort_active' => '自動ソート有効: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'ブック「:bookName」を並べ替え',
     'books_sort_name' => '名前で並べ替え',
     'books_sort_created' => '作成日で並べ替え',
@@ -331,6 +332,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'サイドバーの切り替え',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'タグ',
     'chapter_tags' => 'チャプターのタグ',
     'book_tags' => 'ブックのタグ',

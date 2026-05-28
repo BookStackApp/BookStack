@@ -28,7 +28,7 @@ import {
     pasteRowBefore, resizeTableToContents,
     rowProperties,
     splitCell,
-    table, tableProperties
+    table, tableProperties, toggleRowHeaders
 } from "./buttons/tables";
 import {about, fullscreen, redo, source, undo} from "./buttons/controls";
 import {
@@ -227,6 +227,7 @@ export function getBasicEditorToolbar(context: EditorUiContext): EditorContainer
             new EditorButton(bold),
             new EditorButton(italic),
             new EditorButton(link),
+            new EditorButton(code),
             new EditorButton(bulletList),
             new EditorButton(numberList),
         ])
@@ -276,6 +277,19 @@ export const contextToolbars: Record<string, EditorContextToolbarDefinition> = {
                     new EditorButton(insertColumnBefore),
                     new EditorButton(insertColumnAfter),
                     new EditorButton(deleteColumn),
+                ]),
+            ];
+        },
+        displayTargetLocator(originalTarget: HTMLElement): HTMLElement {
+            return originalTarget.closest('table') as HTMLTableElement;
+        }
+    },
+    table_header: {
+        selector: 'table tr:first-of-type td, table tr:first-of-type th',
+        content() {
+            return [
+                new EditorOverflowContainer('table_headers', 1, [
+                    new EditorButton(toggleRowHeaders),
                 ]),
             ];
         },

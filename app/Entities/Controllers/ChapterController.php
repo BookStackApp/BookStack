@@ -203,7 +203,7 @@ class ChapterController extends Controller
         $this->checkOwnablePermission(Permission::ChapterUpdate, $chapter);
         $this->checkOwnablePermission(Permission::ChapterDelete, $chapter);
 
-        $entitySelection = $request->get('entity_selection', null);
+        $entitySelection = $request->input('entity_selection', null);
         if ($entitySelection === null || $entitySelection === '') {
             return redirect($chapter->getUrl());
         }
@@ -248,7 +248,7 @@ class ChapterController extends Controller
     {
         $chapter = $this->queries->findVisibleBySlugsOrFail($bookSlug, $chapterSlug);
 
-        $entitySelection = $request->get('entity_selection') ?: null;
+        $entitySelection = $request->input('entity_selection') ?: null;
         $newParentBook = $entitySelection ? $this->entityQueries->findVisibleByStringIdentifier($entitySelection) : $chapter->getParent();
 
         if (!$newParentBook instanceof Book) {
@@ -259,7 +259,7 @@ class ChapterController extends Controller
 
         $this->checkOwnablePermission(Permission::ChapterCreate, $newParentBook);
 
-        $newName = $request->get('name') ?: $chapter->name;
+        $newName = $request->input('name') ?: $chapter->name;
         $chapterCopy = $cloner->cloneChapter($chapter, $newParentBook, $newName);
         $this->showSuccessNotification(trans('entities.chapters_copy_success'));
 

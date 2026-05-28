@@ -1,3 +1,5 @@
+import {scrollToHeader} from "./scrolling";
+
 /**
  * @param {Editor} editor
  */
@@ -29,5 +31,10 @@ export function listen(editor) {
         if (editor.initialized) {
             editor.focus();
         }
+    });
+
+    // Focus on a specific heading
+    window.$events.listen('editor::focus-heading', ({index}) => {
+        scrollToHeader(editor, index);
     });
 }

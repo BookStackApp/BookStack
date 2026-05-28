@@ -39,7 +39,7 @@ class OidcUserDetails
     ): void {
         $this->externalId = $claims->getClaim($idClaim) ?? $this->externalId;
         $this->email = $claims->getClaim('email') ?? $this->email;
-        $this->name = static::getUserDisplayName($displayNameClaims, $claims) ?? $this->name;
+        $this->name = static::getUserDisplayName($displayNameClaims, $claims) ?: $this->name;
         $this->groups = static::getUserGroups($groupsClaim, $claims) ?? $this->groups;
         $this->picture = static::getPicture($claims) ?: $this->picture;
     }

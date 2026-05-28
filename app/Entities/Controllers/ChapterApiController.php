@@ -64,7 +64,7 @@ class ChapterApiController extends ApiController
     {
         $requestData = $this->validate($request, $this->rules['create']);
 
-        $bookId = $request->get('book_id');
+        $bookId = $request->input('book_id');
         $book = $this->entityQueries->books->findVisibleByIdOrFail(intval($bookId));
         $this->checkOwnablePermission(Permission::ChapterCreate, $book);
 

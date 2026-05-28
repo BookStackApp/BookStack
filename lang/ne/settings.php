@@ -207,6 +207,7 @@ return [
     'role_all' => 'सबै',
     'role_own' => 'आफ्नो',
     'role_controlled_by_asset' => 'अपलोड गरिएको सम्पत्तिले नियन्त्रण गरेको',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'भूमिका सुरक्षित गर्नुहोस्',
     'role_users' => 'यस भूमिकाका प्रयोगकर्ताहरू',
     'role_users_none' => 'यो भूमिकामा हाल कुनै प्रयोगकर्ता छैन',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'तपाईंको प्रयोगकर्ता खाताको लागि थप सुरक्षा तहको रूपमा बहु-फ्याक्टर प्रमाणीकरण सेटअप गर्नुहोस्।',
     'users_mfa_x_methods' => ':count विधि सेटअप गरिएको|:count विधिहरू सेटअप गरिएको',
     'users_mfa_configure' => 'विधिहरू सेटअप गर्नुहोस्',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'API टोकन सिर्जना गर्नुहोस्',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

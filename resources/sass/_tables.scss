@@ -4,10 +4,6 @@
 table {
   min-width: 100px;
   max-width: 100%;
-  thead {
-    @include mixins.lightDark(background-color, #f8f8f8, #333);
-    font-weight: 500;
-  }
   td, th {
     min-width: 10px;
     padding: 6px 8px;
@@ -20,6 +16,15 @@ table {
   td p, th p {
     margin: 0;
   }
+}
+
+// Table Header styles.
+// Initial selector for in-body th cells, intended to (somewhat) not conflict with
+// previous approach (second selector) to table headers where
+// we would target the thead specifically.
+table:not(:has(thead)) th, table thead {
+  @include mixins.lightDark(background-color, #f8f8f8, #333);
+  font-weight: 500;
 }
 
 table.table {

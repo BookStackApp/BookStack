@@ -16,6 +16,7 @@ use BookStack\Users\Models\User;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
 use BookStack\Util\HtmlDocument;
+use BookStack\Util\HtmlToPlainText;
 use BookStack\Util\WebSafeMimeSniffer;
 use Closure;
 use DOMElement;
@@ -303,8 +304,8 @@ class PageContent
     public function toPlainText(): string
     {
         $html = $this->render(true);
-
-        return html_entity_decode(strip_tags($html));
+        $converter = new HtmlToPlainText();
+        return $converter->convert($html);
     }
 
     /**
@@ -359,7 +360,7 @@ class PageContent
     {
         $contentHash = md5($html);
         $contentId = $this->page->id;
-        $contentTime = $this->page->updated_at?->timestamp ?? time();
+        $contentTime = $this->page->updated_at->timestamp ?? time();
         $appVersion = AppVersion::get();
         $filterConfig = config('app.content_filtering') ?? '';
         return "page-content-cache::{$filterConfig}::{$appVersion}::{$contentId}::{$contentTime}::{$contentHash}";

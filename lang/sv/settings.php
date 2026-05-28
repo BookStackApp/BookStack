@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alla',
     'role_own' => 'Egna',
     'role_controlled_by_asset' => 'Kontrolleras av den sida de laddas upp till',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Spara roll',
     'role_users' => 'Användare med denna roll',
     'role_users_none' => 'Inga användare tillhör den här rollen',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Konfigurera multifaktorsautentisering som ett extra skydd för ditt konto.',
     'users_mfa_x_methods' => ':count metod konfigurerad|:count metoder konfigurerade',
     'users_mfa_configure' => 'Konfigurera metoder',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Skapa API-nyckel',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenska',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

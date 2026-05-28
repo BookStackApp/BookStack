@@ -1,0 +1,33 @@
+name: Crowdin Action
+
+on:
+  push:
+    branches: [ development ]
+    paths:
+      - 'lang/**.php'
+  schedule:
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  synchronize-with-crowdin:
+    runs-on: docker
+    container:
+      image: docker.io/library/node:24-trixie
+
+    steps:
+      - name: Checkout
+        uses: https://code.forgejo.org/actions/checkout@v6
+
+      - name: crowdin action
+        uses: https://github.com/crowdin/github-action@v2
+        with:
+          upload_sources: true
+          upload_translations: false
+          download_translations: true
+          localization_branch_name: l10n_development
+          create_pull_request: false
+          github_base_url: codeberg.org
+        env:
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}

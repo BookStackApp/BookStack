@@ -72,6 +72,7 @@ import {$isTableRowNode} from './LexicalTableRowNode';
 import {$isTableSelection} from './LexicalTableSelection';
 import {$computeTableMap, $getNodeTriplet} from './LexicalTableUtils';
 import {$selectOrCreateAdjacent} from "../../utils/nodes";
+import {$selectNodeAtXPixelOffset} from "../../utils/selection";
 
 const LEXICAL_ELEMENT_KEY = '__lexicalTableSelection';
 
@@ -1073,6 +1074,7 @@ const selectTableNodeInDirection = (
   x: number,
   y: number,
   direction: Direction,
+  selectionOffset: number = -1
 ): boolean => {
   const isForward = direction === 'forward';
 
@@ -1112,6 +1114,7 @@ const selectTableNodeInDirection = (
         selectTableCellNode(
           tableNode.getCellNodeFromCordsOrThrow(x, y - 1, tableObserver.table),
           false,
+          selectionOffset,
         );
       } else {
         $selectOrCreateAdjacent(tableNode, false);
@@ -1124,6 +1127,7 @@ const selectTableNodeInDirection = (
         selectTableCellNode(
           tableNode.getCellNodeFromCordsOrThrow(x, y + 1, tableObserver.table),
           true,
+          selectionOffset,
         );
       } else {
         $selectOrCreateAdjacent(tableNode, true);
@@ -1197,7 +1201,14 @@ function $isSelectionInTable(
   return false;
 }
 
-function selectTableCellNode(tableCell: TableCellNode, fromStart: boolean) {
+function selectTableCellNode(tableCell: TableCellNode, fromStart: boolean, selectionOffsetPixels : number = -1) {
+  if (selectionOffsetPixels !== -1) {
+    const selection = $selectNodeAtXPixelOffset(tableCell, selectionOffsetPixels, fromStart);
+    if (selection) {
+      return;
+    }
+  }
+
   if (fromStart) {
     tableCell.selectStart();
   } else {
@@ -1491,12 +1502,14 @@ function $handleArrowKey(
         tableObserver.setAnchorCellForSelection(cell);
         tableObserver.setFocusCellForSelection(cell, true);
       } else {
+        const selectionOffset = edgeSelectionRect.x - edgeRect.x;
         return selectTableNodeInDirection(
           tableObserver,
           tableNode,
           cords.x,
           cords.y,
           direction,
+          selectionOffset
         );
       }
 

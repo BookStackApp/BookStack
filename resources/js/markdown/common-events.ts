@@ -33,4 +33,8 @@ export function listenToCommonEvents(editor: MarkdownEditor): void {
     window.$events.listen('editor::focus', () => {
         editor.actions.focus();
     });
+
+    window.$events.listen<{id: string, index: number}>('editor::focus-heading', ({index}) => {
+        editor.actions.focusOnHeader(index);
+    });
 }

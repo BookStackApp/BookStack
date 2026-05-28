@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Only the [latest version](https://github.com/BookStackApp/BookStack/releases) of BookStack is supported.
+Only the [latest version](https://codeberg.org/bookstack/bookstack/releases) of BookStack is supported.
 We generally don't support older versions of BookStack due to maintenance effort and
 since we aim to provide a fairly stable upgrade path for new versions.
 
@@ -12,13 +12,11 @@ If you'd like to be notified of new potential security concerns you can [sign-up
 
 ## Reporting a Vulnerability
 
-If you've found an issue that likely has no impact to existing users (For example, in a development-only branch)
-feel free to raise it via a standard GitHub bug report issue.
+If you've found an issue that likely has no impact to existing users (For example, an issue only in the development branch)
+feel free to raise it via a standard Codeberg bug report issue.
 
 If the issue could have a security impact to BookStack instances, 
-please directly contact the lead maintainer [@ssddanbrown](https://github.com/ssddanbrown). 
-You will need to log in to be able to see the email address on the [GitHub profile page](https://github.com/ssddanbrown).
-Alternatively you can send a DM via Mastodon to [@danb@fosstodon.org](https://fosstodon.org/@danb).
+please directly contact the lead maintainer via email Dan Brown using the [details found here](https://www.bookstackapp.com/links/contact/).
 
 Please be patient while the vulnerability is being reviewed. Deploying the fix to address the vulnerability
 can often take a little time due to the amount of preparation required, to ensure the vulnerability has

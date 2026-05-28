@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Brukaren vart oppdatert',
     'user_delete' => 'sletta brukar',
     'user_delete_notification' => 'Brukaren vart fjerna',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'opprett API-nøkkel',

@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Poverilnice se ne ujemajo s podatki v naši bazi.',
     'throttle' => 'Prekoračili ste število možnih prijav. Poskusite znova čez :seconds sekund.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registracija',

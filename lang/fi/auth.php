@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Annettuja käyttäjätietoja ei löydy.',
     'throttle' => 'Liikaa kirjautumisyrityksiä. Yritä uudelleen :seconds sekunnin päästä.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Rekisteröidy',

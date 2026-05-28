@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Girdiğiniz bilgiler kayıtlarımızla uyuşmuyor.',
     'throttle' => 'Çok fazla giriş yapmaya çalıştınız. Lütfen :seconds saniye içinde tekrar deneyin.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Kaydol',

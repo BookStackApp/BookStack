@@ -50,7 +50,7 @@ class AttachmentApiController extends ApiController
         $this->checkPermission(Permission::AttachmentCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
-        $pageId = $request->get('uploaded_to');
+        $pageId = $request->input('uploaded_to');
         $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
@@ -134,7 +134,7 @@ class AttachmentApiController extends ApiController
 
         $page = $attachment->page;
         if ($requestData['uploaded_to'] ?? false) {
-            $pageId = $request->get('uploaded_to');
+            $pageId = $request->input('uploaded_to');
             $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
             $attachment->uploaded_to = $requestData['uploaded_to'];
         }

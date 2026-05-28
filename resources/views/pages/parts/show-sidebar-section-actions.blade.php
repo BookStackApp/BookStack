@@ -24,10 +24,12 @@
                 </a>
             @endif
         @endif
-        <a href="{{ $page->getUrl('/revisions') }}" data-shortcut="revisions" class="icon-list-item">
-            <span>@icon('history')</span>
-            <span>{{ trans('entities.revisions') }}</span>
-        </a>
+        @if(userCan(\BookStack\Permissions\Permission::RevisionViewAll))
+            <a href="{{ $page->getUrl('/revisions') }}" data-shortcut="revisions" class="icon-list-item">
+                <span>@icon('history')</span>
+                <span>{{ trans('entities.revisions') }}</span>
+            </a>
+        @endif
         @if(userCan(\BookStack\Permissions\Permission::RestrictionsManage, $page))
             <a href="{{ $page->getUrl('/permissions') }}" data-shortcut="permissions" class="icon-list-item">
                 <span>@icon('lock')</span>

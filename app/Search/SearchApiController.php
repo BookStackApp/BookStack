@@ -40,9 +40,9 @@ class SearchApiController extends ApiController
     {
         $this->validate($request, $this->rules['all']);
 
-        $options = SearchOptions::fromString($request->get('query') ?? '');
-        $page = intval($request->get('page', '0')) ?: 1;
-        $count = min(intval($request->get('count', '0')) ?: 20, 100);
+        $options = SearchOptions::fromString($request->input('query') ?? '');
+        $page = intval($request->input('page', '0')) ?: 1;
+        $count = min(intval($request->input('count', '0')) ?: 20, 100);
 
         $results = $this->searchRunner->searchEntities($options, 'all', $page, $count);
         $this->resultsFormatter->format($results['results']->all(), $options);

@@ -55,7 +55,7 @@ class RoleController extends Controller
         /** @var ?Role $role */
         $role = null;
         if ($request->has('copy_from')) {
-            $role = Role::query()->find($request->get('copy_from'));
+            $role = Role::query()->find($request->input('copy_from'));
         }
 
         if ($role) {
@@ -150,7 +150,7 @@ class RoleController extends Controller
         $this->checkPermission(Permission::UserRolesManage);
 
         try {
-            $migrateRoleId = intval($request->get('migrate_role_id') ?: "0");
+            $migrateRoleId = intval($request->input('migrate_role_id') ?: "0");
             $this->permissionsRepo->deleteRole($id, $migrateRoleId);
         } catch (PermissionsException $e) {
             $this->showErrorNotification($e->getMessage());

@@ -213,15 +213,23 @@ class InstallModuleCommand extends Command
                 $redirectLocation = $resp->getHeaderLine('Location');
                 if ($redirectLocation) {
                     $redirectUrl = parse_url($redirectLocation);
-                    if (
-                        ($originalUrl['host'] ?? '') === ($redirectUrl['host'] ?? '')
+                    $redirectOriginMatches = ($originalUrl['host'] ?? '') === ($redirectUrl['host'] ?? '')
                         && ($originalUrl['scheme'] ?? '') === ($redirectUrl['scheme'] ?? '')
-                        && ($originalUrl['port'] ?? '') === ($redirectUrl['port'] ?? '')
-                    ) {
-                        $currentLocation = $redirectLocation;
-                        $redirectCount++;
-                        continue;
+                        && ($originalUrl['port'] ?? '') === ($redirectUrl['port'] ?? '');
+
+                    if (!$redirectOriginMatches) {
+                        $redirectOrigin = ($redirectUrl['scheme'] ?? '') . '://' . ($redirectUrl['host'] ?? '') . (isset($redirectUrl['port']) ? ':' . $redirectUrl['port'] : '');
+                        $this->info("The download URL is redirecting to a different site: {$redirectOrigin}");
+                        $shouldContinue = $this->confirm("Do you trust downloading the module from this site?");
+                        if (!$shouldContinue) {
+                            $this->error("Stopping module installation");
+                            return null;
+                        }
                     }
+
+                    $currentLocation = $redirectLocation;
+                    $redirectCount++;
+                    continue;
                 }
             }
 

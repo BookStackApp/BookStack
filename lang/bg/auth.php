@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Въведените данни не съвпадат с информацията в системата.',
     'throttle' => 'Твърде много опити за влизане. Опитайте пак след :seconds секунди.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Регистриране',

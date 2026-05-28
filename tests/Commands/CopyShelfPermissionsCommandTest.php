@@ -2,6 +2,7 @@
 
 namespace Tests\Commands;
 
+use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use Tests\TestCase;
 
@@ -60,5 +61,22 @@ class CopyShelfPermissionsCommandTest extends TestCase
             'role_id' => $editorRole->id,
             'view' => true, 'update' => true, 'create' => false, 'delete' => false,
         ]);
+    }
+
+    public function test_copy_shelf_permissions_command_using_slug_without_interaction()
+    {
+        $shelf = $this->entities->shelfHasBooks();
+        $editorRole = $this->users->editor()->roles()->first();
+        /** @var Book $child */
+        $child = $shelf->books()->first();
+        $child->shelves()->where('id', '!=', $shelf->id)->delete();
+
+        $this->assertFalse($child->hasPermissions());
+
+        $this->permissions->setEntityPermissions($shelf, ['view', 'update'], [$editorRole]);
+        $this->artisan('bookstack:copy-shelf-permissions --all --no-interaction');
+
+        $child->refresh();
+        $this->assertTrue($child->hasPermissions(), 'Child book should now be restricted');
     }
 }

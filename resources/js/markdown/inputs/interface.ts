@@ -75,6 +75,12 @@ export interface MarkdownEditorInput {
     searchForLineContaining(text: string): MarkdownEditorInputSelection|null;
 
     /**
+     * Run the provided callback against each line of content within the input.
+     * Callback can return false to stop further processing.
+     */
+    forEachLine(callback: (lineNum: number, content: string, range: MarkdownEditorInputSelection) => false|void): void;
+
+    /**
      * Tear down the input.
      */
     teardown(): void;

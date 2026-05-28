@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Tieto údaje sa nezhodujú s našimi záznamami.',
     'throttle' => 'Priveľa pokusov o prihlásenie. Skúste znova o :seconds sekúnd.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registrácia',

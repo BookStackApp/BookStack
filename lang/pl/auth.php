@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Wprowadzone poświadczenia są nieprawidłowe.',
     'throttle' => 'Zbyt wiele prób logowania. Spróbuj ponownie za :seconds s.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Zarejestruj się',

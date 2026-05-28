@@ -18,9 +18,10 @@ class TagRepo
     }
 
     /**
-     * Start a query against all tags in the system.
+     * Start a query against all tags in the system, with total counts for their usage,
+     * suitable for a system interface list with listing options.
      */
-    public function queryWithTotals(SimpleListOptions $listOptions, string $nameFilter): Builder
+    public function queryWithTotalsForList(SimpleListOptions $listOptions, string $nameFilter): Builder
     {
         $searchTerm = $listOptions->getSearch();
         $sort = $listOptions->getSort();
@@ -28,17 +29,34 @@ class TagRepo
             $sort = 'value';
         }
 
+        $query = $this->baseQueryWithTotals($nameFilter, $searchTerm)
+            ->orderBy($sort, $listOptions->getOrder());
+
+        return $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
+    }
+
+    /**
+     * Start a query against all tags in the system, with total counts for their usage,
+     * which can be used via the API.
+     */
+    public function queryWithTotalsForApi(string $nameFilter): Builder
+    {
+        $query = $this->baseQueryWithTotals($nameFilter, '');
+        return $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
+    }
+
+    protected function baseQueryWithTotals(string $nameFilter, string $searchTerm): Builder
+    {
         $query = Tag::query()
             ->select([
                 'name',
                 ($searchTerm || $nameFilter) ? 'value' : DB::raw('COUNT(distinct value) as `values`'),
                 DB::raw('COUNT(id) as usages'),
-                DB::raw('SUM(IF(entity_type = \'page\', 1, 0)) as page_count'),
-                DB::raw('SUM(IF(entity_type = \'chapter\', 1, 0)) as chapter_count'),
-                DB::raw('SUM(IF(entity_type = \'book\', 1, 0)) as book_count'),
-                DB::raw('SUM(IF(entity_type = \'bookshelf\', 1, 0)) as shelf_count'),
+                DB::raw('CAST(SUM(IF(entity_type = \'page\', 1, 0)) as UNSIGNED) as page_count'),
+                DB::raw('CAST(SUM(IF(entity_type = \'chapter\', 1, 0)) as UNSIGNED) as chapter_count'),
+                DB::raw('CAST(SUM(IF(entity_type = \'book\', 1, 0)) as UNSIGNED) as book_count'),
+                DB::raw('CAST(SUM(IF(entity_type = \'bookshelf\', 1, 0)) as UNSIGNED) as shelf_count'),
             ])
-            ->orderBy($sort, $listOptions->getOrder())
             ->whereHas('entity');
 
         if ($nameFilter) {
@@ -57,7 +75,7 @@ class TagRepo
             });
         }
 
-        return $this->permissions->restrictEntityRelationQuery($query, 'tags', 'entity_id', 'entity_type');
+        return $query;
     }
 
     /**

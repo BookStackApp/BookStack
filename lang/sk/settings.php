@@ -207,6 +207,7 @@ return [
     'role_all' => 'Všetko',
     'role_own' => 'Vlastné',
     'role_controlled_by_asset' => 'Regulované zdrojom, do ktorého sú nahrané',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Uložiť rolu',
     'role_users' => 'Používatelia s touto rolou',
     'role_users_none' => 'Žiadni používatelia nemajú priradenú túto rolu',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Pre vyššiu úroveň bezpečnosti si nastavte viacúrovňové prihlasovanie.',
     'users_mfa_x_methods' => ':count nakonfigurované metódy|:count nakonfigurovaných metód',
     'users_mfa_configure' => 'Konfigurovať metódy',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Vytvoriť API token',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

@@ -5,6 +5,7 @@ namespace BookStack\Access;
 use BookStack\Access\Notifications\ConfirmEmailNotification;
 use BookStack\Exceptions\ConfirmationEmailException;
 use BookStack\Users\Models\User;
+use Exception;
 
 class EmailConfirmationService extends UserTokenService
 {
@@ -16,6 +17,7 @@ class EmailConfirmationService extends UserTokenService
      * Also removes any existing old ones.
      *
      * @throws ConfirmationEmailException
+     * @throws Exception
      */
     public function sendConfirmation(User $user): void
     {

@@ -1,7 +1,7 @@
 import {LexicalEditor} from "lexical";
 import {
     appendHtmlToEditor,
-    focusEditor,
+    focusEditor, focusOnHeader,
     insertHtmlIntoEditor,
     prependHtmlToEditor,
     setEditorContentFromHtml
@@ -39,6 +39,10 @@ export function listen(editor: LexicalEditor): void {
 
     window.$events.listen<EditorEventContent>('editor::focus', () => {
         focusEditor(editor);
+    });
+
+    window.$events.listen<{id: string, index: number}>('editor::focus-heading', ({index}) => {
+        focusOnHeader(editor, index);
     });
 
     let changeFromLoading = true;

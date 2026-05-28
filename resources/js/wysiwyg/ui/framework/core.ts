@@ -30,7 +30,7 @@ export function isUiBuilderDefinition(object: any): object is EditorUiBuilderDef
 export abstract class EditorUiElement {
     protected dom: HTMLElement|null = null;
     private context: EditorUiContext|null = null;
-    private abortController: AbortController = new AbortController();
+    protected abortController: AbortController = new AbortController();
 
     protected abstract buildDOM(): HTMLElement;
 

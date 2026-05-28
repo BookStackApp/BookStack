@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Введенные вами данные не найдены в нашей базе.',
     'throttle' => 'Слишком много попыток входа. Пожалуйста, повторите попытку через :seconds секунд.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Регистрация',

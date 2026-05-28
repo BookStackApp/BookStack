@@ -78,7 +78,7 @@ class Saml2Controller extends Controller
      */
     public function startAcs(Request $request)
     {
-        $samlResponse = $request->get('SAMLResponse', null);
+        $samlResponse = $request->input('SAMLResponse', null);
 
         if (empty($samlResponse)) {
             $this->showErrorNotification(trans('errors.saml_fail_authed', ['system' => config('saml2.name')]));
@@ -100,7 +100,7 @@ class Saml2Controller extends Controller
      */
     public function processAcs(Request $request)
     {
-        $acsId = $request->get('id', null);
+        $acsId = $request->input('id', null);
         $cacheKey = 'saml2_acs:' . $acsId;
         $samlResponse = null;
 

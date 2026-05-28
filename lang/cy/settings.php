@@ -207,6 +207,7 @@ return [
     'role_all' => 'Popeth',
     'role_own' => 'Meddu',
     'role_controlled_by_asset' => 'Wedi\'u rheoli gan yr ased y maent yn cael eu huwchlwytho iddo',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Cadw Rôl',
     'role_users' => 'Defnyddwyr yn y rôl hon',
     'role_users_none' => 'Nid oes unrhyw ddefnyddwyr wedi’u neilltuo i\'r rôl hon ar hyn o bryd',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Gosod dilysu aml-ffactor fel haen ychwanegol o ddiogelwch ar gyfer eich cyfrif defnyddiwr.',
     'users_mfa_x_methods' => ':count dull wedi\'i ffurfweddu|:count dull wedi\'u ffurfweddu',
     'users_mfa_configure' => 'Ffurfweddu Dulliau',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Creu Tocyn API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

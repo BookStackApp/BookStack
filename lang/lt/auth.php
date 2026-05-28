@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Šie įgaliojimai neatitinka mūsų įrašų.',
     'throttle' => 'Per daug prisijungimo bandymų. Prašome pabandyti dar kartą po :seconds sekundžių.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Užsiregistruoti',

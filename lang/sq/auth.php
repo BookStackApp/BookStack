@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Këto kredenciale nuk përputhen me të dhënat tona.',
     'throttle' => 'Shumë përpjekje për hyrje. Ju lutemi provoni përsëri në :seconds sekonda.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Regjistrohu',

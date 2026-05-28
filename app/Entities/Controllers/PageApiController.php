@@ -74,9 +74,9 @@ class PageApiController extends ApiController
         $this->validate($request, $this->rules['create']);
 
         if ($request->has('chapter_id')) {
-            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->get('chapter_id')));
+            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->input('chapter_id')));
         } else {
-            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->get('book_id')));
+            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->input('book_id')));
         }
         $this->checkOwnablePermission(Permission::PageCreate, $parent);
 
@@ -133,9 +133,9 @@ class PageApiController extends ApiController
 
         $parent = null;
         if ($request->has('chapter_id')) {
-            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->get('chapter_id')));
+            $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->input('chapter_id')));
         } elseif ($request->has('book_id')) {
-            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->get('book_id')));
+            $parent = $this->entityQueries->books->findVisibleByIdOrFail(intval($request->input('book_id')));
         }
 
         if ($parent && !$parent->matches($page->getParent())) {

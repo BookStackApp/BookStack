@@ -11,6 +11,7 @@
             @if($comments->enabled())
                 <button type="button" refs="editor-toolbox@tab-button" data-tab="comments" title="{{ trans('entities.comments') }}">@icon('comment')</button>
             @endif
+            <button type="button" refs="editor-toolbox@tab-button" data-tab="contents" title="{{ trans('entities.page_contents') }}">@icon('contents')</button>
         </div>
     </div>
 
@@ -36,5 +37,7 @@
     @if($comments->enabled())
         @include('pages.parts.toolbox-comments')
     @endif
+
+    @include('pages.parts.toolbox-contents')
 
 </div>

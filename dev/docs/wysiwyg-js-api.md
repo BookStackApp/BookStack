@@ -2,7 +2,7 @@
 
 **Warning: This API is currently in development and may change without notice.**
 
-Feedback is very much welcomed via this issue: https://github.com/BookStackApp/BookStack/issues/5937
+Feedback is very much welcomed via this issue: https://codeberg.org/bookstack/bookstack/issues/5937
 
 This document covers the JavaScript API for the (newer Lexical-based) WYSIWYG editor.
 This API is built and designed to abstract the internals of the editor away

@@ -48,7 +48,7 @@ class ResetPasswordController extends Controller
 
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        // database. Otherwise, we will parse the error and return the response.
         $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
         $response = Password::broker()->reset($credentials, function (User $user, string $password) {
             $user->password = Hash::make($password);
@@ -63,7 +63,7 @@ class ResetPasswordController extends Controller
         // redirect them back to where they came from with their error message.
         return $response === Password::PASSWORD_RESET
             ? $this->sendResetResponse()
-            : $this->sendResetFailedResponse($request, $response, $request->get('token'));
+            : $this->sendResetFailedResponse($request, $response, $request->input('token'));
     }
 
     /**

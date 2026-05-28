@@ -18,7 +18,7 @@
 
                 <h5 class="mt-xl">{{ trans('settings.system_version') }}</h5>
                 <div class="py-xs">
-                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/BookStackApp/BookStack/releases">
+                    <a target="_blank" rel="noopener noreferrer" href="https://codeberg.org/bookstack/bookstack/releases">
                         BookStack @if(!str_starts_with($version, 'v')) version @endif {{ $version }}
                     </a>
                     <br>

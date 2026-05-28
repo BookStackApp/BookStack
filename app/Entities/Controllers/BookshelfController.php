@@ -94,7 +94,7 @@ class BookshelfController extends Controller
             'tags'             => ['array'],
         ]);
 
-        $bookIds = explode(',', $request->get('books', ''));
+        $bookIds = explode(',', $request->input('books', ''));
         $shelf = $this->shelfRepo->create($validated, $bookIds);
 
         return redirect($shelf->getUrl());
@@ -196,7 +196,7 @@ class BookshelfController extends Controller
             unset($validated['image']);
         }
 
-        $bookIds = explode(',', $request->get('books', ''));
+        $bookIds = explode(',', $request->input('books', ''));
         $shelf = $this->shelfRepo->update($shelf, $validated, $bookIds);
 
         return redirect($shelf->getUrl());

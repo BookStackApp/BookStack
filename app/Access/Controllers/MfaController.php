@@ -51,14 +51,14 @@ class MfaController extends Controller
      */
     public function verify(Request $request)
     {
-        $desiredMethod = $request->get('method');
+        $desiredMethod = $request->input('method');
         $userMethods = $this->currentOrLastAttemptedUser()
             ->mfaValues()
             ->get(['id', 'method'])
             ->groupBy('method');
 
         // Basic search for the default option for a user.
-        // (Prioritises totp over backup codes)
+        // (Prioritises TOTP over backup codes)
         $method = $userMethods->has($desiredMethod) ? $desiredMethod : $userMethods->keys()->sort()->reverse()->first();
         $otherMethods = $userMethods->keys()->filter(function ($userMethod) use ($method) {
             return $method !== $userMethod;

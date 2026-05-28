@@ -207,6 +207,7 @@ return [
     'role_all' => 'הכל',
     'role_own' => 'שלי',
     'role_controlled_by_asset' => 'נשלטים על ידי המשאב אליו הועלו',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'שמור תפקיד',
     'role_users' => 'משתמשים משוייכים לתפקיד זה',
     'role_users_none' => 'אין משתמשים המשוייכים לתפקיד זה',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
     'users_mfa_configure' => 'Configure Methods',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'צור אסימון API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

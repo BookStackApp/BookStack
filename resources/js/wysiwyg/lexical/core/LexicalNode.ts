@@ -208,9 +208,9 @@ export class LexicalNode {
   }
 
   /**
-   * Clones this node, creating a new node with a different key
-   * and adding it to the EditorState (but not attaching it anywhere!). All nodes must
-   * implement this method.
+   * Clones this node, creating a new matching instance.
+   * Should be created with the existing node key if it exists.
+   * All nodes must implement this method.
    *
    */
   static clone(_data: unknown): LexicalNode {

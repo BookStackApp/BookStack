@@ -44,7 +44,7 @@ class AppSettingsStore
         }
 
         // Clear icon image if requested
-        if ($request->get('app_icon_reset')) {
+        if ($request->input('app_icon_reset')) {
             $this->destroyExistingSettingImage('app-icon');
             setting()->remove('app-icon');
             foreach ($sizes as $size) {
@@ -67,7 +67,7 @@ class AppSettingsStore
         }
 
         // Clear logo image if requested
-        if ($request->get('app_logo_reset')) {
+        if ($request->input('app_logo_reset')) {
             $this->destroyExistingSettingImage('app-logo');
             setting()->remove('app-logo');
         }

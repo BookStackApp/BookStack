@@ -271,6 +271,21 @@ class BookSortTest extends TestCase
         $this->withHtml($resp)->assertElementExists('select[name="auto-sort"] option[value="' . $sort->id . '"]');
     }
 
+    public function test_auto_sort_rule_create_hint_shown_on_sort_page()
+    {
+        $book = $this->entities->book();
+        $hintText = 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.';
+
+        // Admin users see link for creating new rule
+        $resp = $this->asAdmin()->get($book->getUrl('/sort'));
+        $this->withHtml($resp)->assertLinkExists(url('/settings/sorting/rules/new'), 'Create Sort Rule');
+        $resp->assertDontSee($hintText);
+
+        // Non-admin users see help text
+        $resp = $this->asEditor()->get($book->getUrl('/sort'));
+        $resp->assertSee($hintText);
+    }
+
     public function test_auto_sort_option_submit_saves_to_book()
     {
         $sort = SortRule::factory()->create();

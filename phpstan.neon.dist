@@ -7,11 +7,11 @@ parameters:
         - app
 
     # The level 8 is the highest level
-    level: 3
+    level: 4
 
     phpVersion:
         min: 80200
-        max: 80400
+        max: 80500
 
     bootstrapFiles:
       - bootstrap/phpstan.php

@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tất cả',
     'role_own' => 'Sở hữu',
     'role_controlled_by_asset' => 'Kiểm soát các tài sản (asset) người dùng tải lên',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Lưu Quyền',
     'role_users' => 'Người dùng được gán quyền này',
     'role_users_none' => 'Không có người dùng nào hiện được gán quyền này',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Thiết lập xác thực đa yếu tố như một lớp bảo mật bổ sung cho tài khoản người dùng của bạn.',
     'users_mfa_x_methods' => ':count phương thức đã cấu hình|:count phương thức đã cấu hình',
     'users_mfa_configure' => 'Cấu hình phương thức',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Tạo Token API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

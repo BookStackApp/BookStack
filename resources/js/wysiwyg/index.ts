@@ -29,6 +29,7 @@ import {registerSelectionHandling} from "./services/selection-handling";
 import {EditorApi} from "./api/api";
 import {registerMentions} from "./services/mentions";
 import {MentionDecorator} from "./ui/decorators/MentionDecorator";
+import {registerLists} from "@lexical/list";
 
 const theme = {
     text: {
@@ -58,8 +59,9 @@ export function createPageEditorInstance(container: HTMLElement, htmlContent: st
 
     mergeRegister(
         registerRichText(editor),
+        registerLists(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, true),
         registerKeyboardHandling(context),
         registerMouseHandling(context),
         registerSelectionHandling(context),
@@ -122,8 +124,9 @@ export function createBasicEditorInstance(container: HTMLElement, htmlContent: s
 
     const editorTeardown = mergeRegister(
         registerRichText(editor),
+        registerLists(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, false),
         registerAutoLinks(editor),
     );
 
@@ -157,7 +160,7 @@ export function createCommentEditorInstance(container: HTMLElement, htmlContent:
     const editorTeardown = mergeRegister(
         registerRichText(editor),
         registerHistory(editor, createEmptyHistoryState(), 300),
-        registerShortcuts(context),
+        registerShortcuts(context, false),
         registerAutoLinks(editor),
         registerMentions(context),
     );

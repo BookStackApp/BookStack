@@ -52,7 +52,7 @@ class TextExportTest extends TestCase
         $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
 
         $expected = "Export Book\nThis is a book with stuff to export\n\nExport chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
-        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $expected .= "My wonderful page!\nMy great page\nFull of great stuff";
         $resp->assertSee($expected);
     }
 
@@ -82,7 +82,7 @@ class TextExportTest extends TestCase
         $resp = $this->asEditor()->get($entities['book']->getUrl('/export/plaintext'));
 
         $expected = "Export chapter\nA test chapter to be exported\nIt has loads of info within\n\n";
-        $expected .= "My wonderful page!\nMy great page Full of great stuff";
+        $expected .= "My wonderful page!\nMy great page\nFull of great stuff";
         $resp->assertSee($expected);
     }
 }

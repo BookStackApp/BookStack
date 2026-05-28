@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Kasutajanimi ja parool ei klapi.',
     'throttle' => 'Liiga palju sisselogimiskatseid. Proovi uuesti :seconds sekundi pärast.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registreeru',

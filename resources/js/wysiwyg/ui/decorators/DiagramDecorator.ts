@@ -1,5 +1,4 @@
 import {EditorDecorator} from "../framework/decorator";
-import {EditorUiContext} from "../framework/core";
 import {BaseSelection, CLICK_COMMAND, COMMAND_PRIORITY_NORMAL} from "lexical";
 import {DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import {$selectionContainsNode, $selectSingleNode} from "../../utils/selection";

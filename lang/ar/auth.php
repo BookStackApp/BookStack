@@ -8,6 +8,7 @@ return [
 
     'failed' => 'البيانات المعطاة لا توافق سجلاتنا.',
     'throttle' => 'تجاوزت الحد الأقصى من المحاولات. الرجاء المحاولة مرة أخرى بعد :seconds ثانية/ثواني.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'إنشاء حساب',

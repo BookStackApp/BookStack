@@ -29,8 +29,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
 
         $this->permissions->disableEntityInheritedPermissions($page);
-        $this->permissions->addEntityPermission($page, [], $roleA);
-        $this->permissions->addEntityPermission($page, ['view'], $roleB);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleB);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -42,7 +42,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -54,7 +54,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -67,8 +67,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleB);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleB);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -80,8 +80,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
-        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -93,8 +93,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
-        $this->permissions->addEntityPermission($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -107,8 +107,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($page, [], $roleA);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleB);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleB);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -121,8 +121,8 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->disableEntityInheritedPermissions($chapter);
-        $this->permissions->addEntityPermission($page, ['view'], $roleA);
-        $this->permissions->addEntityPermission($chapter, [], $roleB);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleB);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -131,7 +131,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
     {
         [$user, $roleA] = $this->users->newUserWithRole();
         $page = $this->entities->page();
-        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -140,7 +140,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
     {
         [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
         $page = $this->entities->page();
-        $this->permissions->addEntityPermission($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -150,7 +150,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         [$user, $roleA] = $this->users->newUserWithRole([], []);
         $page = $this->entities->pageWithinChapter();
         $chapter = $page->chapter;
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -160,7 +160,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-all']);
         $page = $this->entities->pageWithinChapter();
         $chapter = $page->chapter;
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -170,7 +170,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         [$user, $roleA] = $this->users->newUserWithRole([], ['page-view-own']);
         $page = $this->entities->pageWithinChapter();
         $chapter = $page->chapter;
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
         $this->permissions->changeEntityOwner($page, $user);
 
         $this->assertNotVisibleToUser($page, $user);
@@ -182,7 +182,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $roleB = $this->users->attachNewRole($user);
         $page = $this->entities->page();
 
-        $this->permissions->addEntityPermission($page, [], $roleB);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleB);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -194,7 +194,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
         $this->permissions->changeEntityOwner($page, $user);
 
-        $this->permissions->addEntityPermission($page, [], $roleB);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleB);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -207,7 +207,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->pageWithinChapter();
         $chapter = $page->chapter;
 
-        $this->permissions->addEntityPermission($chapter, [], $roleB);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleB);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -220,7 +220,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
         $this->permissions->changeEntityOwner($page, $user);
 
-        $this->permissions->addEntityPermission($chapter, [], $roleB);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleB);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -231,7 +231,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
 
         $this->permissions->setFallbackPermissions($page, []);
-        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -241,7 +241,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
 
         $this->permissions->setFallbackPermissions($page, ['view']);
-        $this->permissions->addEntityPermission($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -253,7 +253,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
 
         $this->permissions->setFallbackPermissions($page, []);
-        $this->permissions->addEntityPermission($page, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -265,7 +265,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $page = $this->entities->page();
 
         $this->permissions->setFallbackPermissions($page, ['view']);
-        $this->permissions->addEntityPermission($page, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($page, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -277,7 +277,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->setFallbackPermissions($chapter, []);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -289,7 +289,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->setFallbackPermissions($chapter, ['view']);
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -302,7 +302,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->setFallbackPermissions($chapter, []);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
 
         $this->assertVisibleToUser($page, $user);
     }
@@ -315,7 +315,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
         $chapter = $page->chapter;
 
         $this->permissions->setFallbackPermissions($chapter, ['view']);
-        $this->permissions->addEntityPermission($chapter, [], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, [], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -328,7 +328,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
 
         $this->permissions->setFallbackPermissions($chapter, []);
         $this->permissions->setFallbackPermissions($page, []);
-        $this->permissions->addEntityPermission($chapter, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($chapter, ['view'], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }
@@ -342,7 +342,7 @@ class EntityRolePermissionsTest extends PermissionScenarioTestCase
 
         $this->permissions->setFallbackPermissions($book, []);
         $this->permissions->setFallbackPermissions($chapter, []);
-        $this->permissions->addEntityPermission($book, ['view'], $roleA);
+        $this->permissions->setEntityPermissionsForRole($book, ['view'], $roleA);
 
         $this->assertNotVisibleToUser($page, $user);
     }

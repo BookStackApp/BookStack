@@ -39,7 +39,7 @@ class ContentPermissionsApiTest extends TestCase
         $page = $this->entities->page();
         $owner = $this->users->newUser();
         $role = $this->users->createRole();
-        $this->permissions->addEntityPermission($page, ['view', 'delete'], $role);
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'delete'], $role);
         $this->permissions->changeEntityOwner($page, $owner);
         $this->permissions->setFallbackPermissions($page, ['update', 'create']);
 
@@ -209,7 +209,7 @@ class ContentPermissionsApiTest extends TestCase
     public function test_update_can_clear_roles_permissions()
     {
         $page = $this->entities->page();
-        $this->permissions->addEntityPermission($page, ['view'], $this->users->createRole());
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $this->users->createRole());
         $page->owned_by = null;
         $page->save();
 

@@ -8,13 +8,14 @@ return [
 
     'failed' => 'Ces informations ne correspondent à aucun compte.',
     'throttle' => 'Trop d\'essais, veuillez réessayer dans :seconds secondes.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'S\'inscrire',
     'log_in' => 'Se connecter',
-    'log_in_with' => 'Se connecter avec :socialDriver',
+    'log_in_with' => 'Connexion avec :socialDriver',
     'sign_up_with' => 'S\'inscrire avec :socialDriver',
-    'logout' => 'Se déconnecter',
+    'logout' => 'Déconnexion',
 
     'name' => 'Nom',
     'username' => 'Nom d\'utilisateur',

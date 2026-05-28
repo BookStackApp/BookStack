@@ -79,6 +79,39 @@ class PdfExportTest extends TestCase
         $this->assertStringContainsString('<details open="open"', $pdfHtml);
     }
 
+    public function test_custom_fonts_loaded_for_dom_pdf_when_used()
+    {
+        // Set up custom font usage
+        $page = $this->entities->page()->forceFill([
+            'html'     => '<p><strong>Bold</strong>text</p>',
+        ]);
+        $page->save();
+        $this->setSettings([
+            'app-custom-head' => '<style>* { font-family: "meow words"}</style>'
+        ]);
+        $normalFont = $this->files->testFilePath('fonts/Cardiff.ttf');
+        $normalFontTarget = storage_path('fonts/dompdf/MeowWords.ttf');
+        $boldFont = $this->files->testFilePath('fonts/Cardiff-Bold.ttf');
+        $boldFontTarget = storage_path('fonts/dompdf/MeowWords-Bold.ttf');
+        copy($normalFont, $normalFontTarget);
+        copy($boldFont, $boldFontTarget);
+
+        $resp = $this->asEditor()->get($page->getUrl('/export/pdf'));
+        $resp->assertStatus(200);
+
+        // Existance of UFM files indicates the metrics have been generated
+        $this->assertFileExists(storage_path('fonts/dompdf/MeowWords.ufm'));
+        $this->assertFileExists(storage_path('fonts/dompdf/MeowWords-Bold.ufm'));
+        // Existence of cache json files indicates the fonts have been used
+        $this->assertFileExists(storage_path('fonts/dompdf/cache/MeowWords.ufm.json'));
+        $this->assertFileExists(storage_path('fonts/dompdf/cache/MeowWords-Bold.ufm.json'));
+
+        $filesToCleanUp = [...glob(storage_path('fonts/dompdf/Meow*')), ...glob(storage_path('fonts/dompdf/cache/Meow*'))];
+        foreach ($filesToCleanUp as $file) {
+            unlink($file);
+        }
+    }
+
     public function test_wkhtmltopdf_only_used_when_allow_untrusted_is_true()
     {
         $page = $this->entities->page();

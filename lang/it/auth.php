@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Credenziali errate.',
     'throttle' => 'Troppi tentativi di login. Riprova in :seconds secondi.',
+    'mfa_throttle' => 'Troppi tentativi di verifica multi-fattore. Riprova tra :seconds secondi.',
 
     // Login & Register
     'sign_up' => 'Registrati',

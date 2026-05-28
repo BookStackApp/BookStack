@@ -72,6 +72,30 @@ class DrawioTest extends TestCase
         $this->assertTrue($testImageData === $uploadedImageData, 'Uploaded image file data does not match our test image as expected');
     }
 
+    public function test_base64_upload_requires_edit_permission_to_page()
+    {
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $upload = function () use ($page) {
+            return $this->postJson('images/drawio', [
+                'uploaded_to' => $page->id,
+                'image'       => 'image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAIAAAACDbGyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4gEcDCo5iYNs+gAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAFElEQVQI12O0jN/KgASYGFABqXwAZtoBV6Sl3hIAAAAASUVORK5CYII=',
+            ]);
+        };
+
+        $upload()->assertStatus(404);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editor->roles()->first());
+        $upload()->assertStatus(403);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editor->roles()->first());
+        $upload()->assertStatus(200);
+    }
+
     public function test_drawio_url_can_be_configured()
     {
         config()->set('services.drawio', 'http://cats.com?dog=tree');

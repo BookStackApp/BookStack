@@ -34,6 +34,7 @@ class PageRevisionController extends Controller
      */
     public function index(Request $request, string $bookSlug, string $pageSlug)
     {
+        $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $listOptions = SimpleListOptions::fromRequest($request, 'page_revisions', true)->withSortOptions([
             'id' => trans('entities.pages_revisions_sort_number')
@@ -65,6 +66,8 @@ class PageRevisionController extends Controller
      */
     public function show(string $bookSlug, string $pageSlug, int $revisionId)
     {
+        $this->checkPermission(Permission::RevisionViewAll);
+
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
@@ -94,6 +97,8 @@ class PageRevisionController extends Controller
      */
     public function changes(string $bookSlug, string $pageSlug, int $revisionId)
     {
+        $this->checkPermission(Permission::RevisionViewAll);
+
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         /** @var ?PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
@@ -129,6 +134,7 @@ class PageRevisionController extends Controller
      */
     public function restore(string $bookSlug, string $pageSlug, int $revisionId)
     {
+        $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
@@ -144,6 +150,7 @@ class PageRevisionController extends Controller
      */
     public function destroy(string $bookSlug, string $pageSlug, int $revId)
     {
+        $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageDelete, $page);
 

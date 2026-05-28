@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Pengguna berhasil diperbarui',
     'user_delete' => 'pengguna yang dihapus',
     'user_delete_notification' => 'Pengguna berhasil dihapus',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'API token yang dibuat',

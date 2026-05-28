@@ -1,7 +1,6 @@
 import {
     $createTextNode,
     DOMConversionMap,
-    DOMExportOutput,
     EditorConfig,
     ElementNode,
     LexicalEditor,

@@ -102,6 +102,19 @@ export class CodemirrorInput implements MarkdownEditorInput {
         return {from: line.from, to: line.to};
     }
 
+    forEachLine(callback: (lineNum: number, content: string, range: MarkdownEditorInputSelection) => false | void): void {
+        const docText = this.cm.state.doc;
+        let lineCount = 0;
+        for (const line of docText.iterLines()) {
+            lineCount++;
+            const lineInfo = docText.line(lineCount);
+            const result = callback(lineCount, line, {from: lineInfo.from, to: lineInfo.to});
+            if (result === false) {
+                break;
+            }
+        }
+    }
+
     /**
      * Dispatch changes to the editor.
      */

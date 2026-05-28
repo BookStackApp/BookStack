@@ -19,6 +19,13 @@ class ListingResponseBuilder
     protected array $fields;
 
     /**
+     * Which fields are filterable.
+     * When null, the $fields above are used instead (Allow all fields).
+     * @var string[]|null
+     */
+    protected array|null $filterableFields = null;
+
+    /**
      * @var array<callable>
      */
     protected array $resultModifiers = [];
@@ -54,7 +61,7 @@ class ListingResponseBuilder
     {
         $filteredQuery = $this->filterQuery($this->query);
 
-        $total = $filteredQuery->count();
+        $total = $filteredQuery->getCountForPagination();
         $data = $this->fetchData($filteredQuery)->each(function ($model) {
             foreach ($this->resultModifiers as $modifier) {
                 $modifier($model);
@@ -78,6 +85,14 @@ class ListingResponseBuilder
     }
 
     /**
+     * Limit filtering to just the given set of fields.
+     */
+    public function setFilterableFields(array $fields): void
+    {
+        $this->filterableFields = $fields;
+    }
+
+    /**
      * Fetch the data to return within the response.
      */
     protected function fetchData(Builder $query): Collection
@@ -94,7 +109,7 @@ class ListingResponseBuilder
     protected function filterQuery(Builder $query): Builder
     {
         $query = clone $query;
-        $requestFilters = $this->request->get('filter', []);
+        $requestFilters = $this->request->input('filter', []);
         if (!is_array($requestFilters)) {
             return $query;
         }
@@ -114,10 +129,11 @@ class ListingResponseBuilder
     protected function requestFilterToQueryFilter($fieldKey, $value): ?array
     {
         $splitKey = explode(':', $fieldKey);
-        $field = $splitKey[0];
+        $field = strtolower($splitKey[0]);
         $filterOperator = $splitKey[1] ?? 'eq';
 
-        if (!in_array($field, $this->fields)) {
+        $filterFields = $this->filterableFields ?? $this->fields;
+        if (!in_array($field, $filterFields)) {
             return null;
         }
 
@@ -140,8 +156,8 @@ class ListingResponseBuilder
         $defaultSortName = $this->fields[0];
         $direction = 'asc';
 
-        $sort = $this->request->get('sort', '');
-        if (strpos($sort, '-') === 0) {
+        $sort = $this->request->input('sort', '');
+        if (str_starts_with($sort, '-')) {
             $direction = 'desc';
         }
 
@@ -160,9 +176,9 @@ class ListingResponseBuilder
     protected function countAndOffsetQuery(Builder $query): Builder
     {
         $query = clone $query;
-        $offset = max(0, $this->request->get('offset', 0));
+        $offset = max(0, $this->request->input('offset', 0));
         $maxCount = config('api.max_item_count');
-        $count = $this->request->get('count', config('api.default_item_count'));
+        $count = $this->request->input('count', config('api.default_item_count'));
         $count = max(min($maxCount, $count), 1);
 
         return $query->skip($offset)->take($count);

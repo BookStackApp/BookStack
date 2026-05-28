@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Aquestes credencials no existeixen al nostre registre.',
     'throttle' => 'Massa intents d’inici de sessió. Torneu-ho a provar d’aquí :seconds segons.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registreu-vos',

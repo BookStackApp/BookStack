@@ -2,7 +2,7 @@
 
 <p class="mb-none">
     This documentation covers use of the REST API. <br>
-    Examples of API usage, in a variety of programming languages, can be found in the <a href="https://codeberg.org/bookstack/api-scripts" target="_blank" rel="noopener noreferrer">BookStack api-scripts repo on GitHub</a>.
+    Examples of API usage, in a variety of programming languages, can be found in the <a href="https://codeberg.org/bookstack/api-scripts" target="_blank" rel="noopener noreferrer">BookStack api-scripts repo on Codeberg</a>.
 
     <br> <br>
     Some alternative options for extension and customization can be found below:
@@ -14,11 +14,11 @@
         HTTP POST calls upon events occurring in BookStack.
     </li>
     <li>
-        <a href="https://github.com/BookStackApp/BookStack/blob/development/dev/docs/visual-theme-system.md" target="_blank" rel="noopener noreferrer">Visual Theme System</a> -
+        <a href="https://codeberg.org/bookstack/bookstack/src/branch/development/dev/docs/visual-theme-system.md" target="_blank" rel="noopener noreferrer">Visual Theme System</a> -
         Methods to override views, translations and icons within BookStack.
     </li>
     <li>
-        <a href="https://github.com/BookStackApp/BookStack/blob/development/dev/docs/logical-theme-system.md" target="_blank" rel="noopener noreferrer">Logical Theme System</a> -
+        <a href="https://codeberg.org/bookstack/bookstack/src/branch/development/dev/docs/logical-theme-system.md" target="_blank" rel="noopener noreferrer">Logical Theme System</a> -
         Methods to extend back-end functionality within BookStack.
     </li>
 </ul>

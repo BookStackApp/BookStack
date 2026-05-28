@@ -3,7 +3,7 @@ import {
     $createTextNode,
     $getSelection,
     $insertNodes,
-    $isParagraphNode,
+    $isParagraphNode, $isRangeSelection,
     LexicalEditor,
     LexicalNode
 } from "lexical";
@@ -16,10 +16,12 @@ import {
 } from "./selection";
 import {$createCodeBlockNode, $isCodeBlockNode, $openCodeEditorForNode, CodeBlockNode} from "@lexical/rich-text/LexicalCodeBlockNode";
 import {$createCalloutNode, $isCalloutNode, CalloutCategory} from "@lexical/rich-text/LexicalCalloutNode";
-import {$isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
+import {$isListItemNode, $isListNode, insertList, ListNode, ListType, removeList} from "@lexical/list";
 import {$createLinkNode, $isLinkNode} from "@lexical/link";
 import {$createHeadingNode, $isHeadingNode, HeadingTagType} from "@lexical/rich-text/LexicalHeadingNode";
 import {$createQuoteNode, $isQuoteNode} from "@lexical/rich-text/LexicalQuoteNode";
+import {$setBlocksType} from "@lexical/selection";
+
 
 const $isHeaderNodeOfTag = (node: LexicalNode | null | undefined, tag: HeadingTagType) => {
     return $isHeadingNode(node) && node.getTag() === tag;
@@ -62,28 +64,35 @@ export function toggleSelectionAsList(editor: LexicalEditor, type: ListType) {
 }
 
 export function formatCodeBlock(editor: LexicalEditor) {
-    editor.getEditorState().read(() => {
+    editor.update(() => {
         const selection = $getSelection();
         const lastSelection = getLastSelection(editor);
         const codeBlock = $getNodeFromSelection(lastSelection, $isCodeBlockNode) as (CodeBlockNode | null);
         if (codeBlock === null) {
-            editor.update(() => {
-                const codeBlock = $createCodeBlockNode();
-                codeBlock.setCode(selection?.getTextContent() || '');
+            const codeBlock = $createCodeBlockNode();
 
-                const selectionNodes = $getBlockElementNodesInSelection(selection);
-                const firstSelectionNode = selectionNodes[0];
-                const extraNodes = selectionNodes.slice(1);
-                if (firstSelectionNode) {
-                    firstSelectionNode.replace(codeBlock);
-                    extraNodes.forEach(n => n.remove());
-                } else {
-                    $insertNewBlockNodeAtSelection(codeBlock, true);
-                }
+            const codeLines = [];
+            const selectionNodes = $getBlockElementNodesInSelection(selection);
+            for (const node of selectionNodes) {
+                codeLines.push(node.getTextContent());
+            }
+            codeBlock.setCode(codeLines.join('\n'));
 
-                $openCodeEditorForNode(editor, codeBlock);
-                $selectSingleNode(codeBlock);
-            });
+            const firstSelectionNode = selectionNodes[0];
+            const extraNodes = selectionNodes.slice(1);
+            if ($isListItemNode(firstSelectionNode)) {
+                firstSelectionNode.getChildren().forEach(c => c.remove());
+                firstSelectionNode.append(codeBlock);
+                extraNodes.forEach(n => n.remove());
+            } else if (firstSelectionNode) {
+                firstSelectionNode.replace(codeBlock);
+                extraNodes.forEach(n => n.remove());
+            } else {
+                $insertNewBlockNodeAtSelection(codeBlock, true);
+            }
+
+            $openCodeEditorForNode(editor, codeBlock);
+            $selectSingleNode(codeBlock);
         } else {
             $openCodeEditorForNode(editor, codeBlock);
         }

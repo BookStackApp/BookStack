@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Support\Facades\Log;
 
 class ErrorTest extends TestCase
@@ -44,7 +43,7 @@ class ErrorTest extends TestCase
         $this->actingAs($editor)->get($page->getUrl())->assertOk();
 
         $this->permissions->disableEntityInheritedPermissions($book);
-        $this->permissions->addEntityPermission($page, ['view'], $editor->roles()->first());
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editor->roles()->first());
 
         $resp = $this->actingAs($editor)->get($book->getUrl());
         $resp->assertNotFound();

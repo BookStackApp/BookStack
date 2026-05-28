@@ -117,7 +117,7 @@ class CommentMentionTest extends TestCase
         $page = $this->entities->page();
 
         $this->permissions->disableEntityInheritedPermissions($page);
-        $this->permissions->addEntityPermission($page, ['view'], $userA->roles()->first());
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $userA->roles()->first());
 
         $this->asAdmin()->post("/comment/{$page->id}", [
             'html' => '<p>Hello <a data-mention-user-id="' . $userA->id . '"></a> and <a data-mention-user-id="' . $userB->id . '"></a></p>'

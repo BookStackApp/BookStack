@@ -93,6 +93,8 @@
   list-style: none;
   @include mixins.margin(vars.$s, 0, vars.$m, vars.$xs);
   position: relative;
+  padding-inline: 0;
+  display: block;
   &:after {
     content: '';
     display: block;
@@ -151,6 +153,14 @@
       left: auto;
       right: -2px;
     }
+  }
+}
+.toolbox-tab-content .sidebar-page-nav {
+  .sidebar-page-nav-bullet {
+    box-shadow: 0 0 0 6px #FFFFFF;
+  }
+  li {
+    font-size: 1em;
   }
 }
 

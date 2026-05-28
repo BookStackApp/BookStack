@@ -74,7 +74,7 @@ Theme::registerCommand(new SayHelloCommand());
 
 ## Available Events
 
-All available events dispatched by BookStack are exposed as static properties on the `\BookStack\Theming\ThemeEvents` class, which can be found within the file `app/Theming/ThemeEvents.php` relative to your root BookStack folder. Alternatively, the events for the latest release can be [seen on GitHub here](https://github.com/BookStackApp/BookStack/blob/release/app/Theming/ThemeEvents.php).
+All available events dispatched by BookStack are exposed as static properties on the `\BookStack\Theming\ThemeEvents` class, which can be found within the file `app/Theming/ThemeEvents.php` relative to your root BookStack folder. Alternatively, the events for the latest release can be [seen on Codeberg here](https://codeberg.org/bookstack/bookstack/src/branch/release/app/Theming/ThemeEvents.php).
 
 The comments above each constant with the `ThemeEvents.php` file describe the dispatch conditions of the event, in addition to the arguments the action will receive. The comments may also describe any ways the return value of the action may be used. 
 

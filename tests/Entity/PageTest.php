@@ -273,4 +273,29 @@ class PageTest extends TestCase
 
         $resp->assertSessionHas('error', 'You do not have permission to access the requested page.');
     }
+
+    public function test_page_html_content_remains_stable_through_re_edit_and_does_not_create_revision()
+    {
+        $page = $this->entities->page();
+
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => 'Stability Test',
+            'html' => '<table border="1" style="border-collapse: collapse; width: 100%;" border="1"><tbody><tr><td>a</td></tr></tbody></table>',
+        ]);
+        $initialRevisionCount = $page->revisions()->count();
+        $page->refresh();
+
+        // Get the page content from the edit view to ensure we're using the
+        // exact same content which would be loaded into the editor.
+        $editView = $this->get($page->getUrl('/edit'));
+        $htmlContentEncoded = $this->withHtml($editView)->getInnerHtml('textarea#html-editor');
+        $htmlContent = html_entity_decode($htmlContentEncoded);
+
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => 'Stability Test',
+            'html' => $htmlContent,
+        ]);
+
+        $this->assertEquals($initialRevisionCount, $page->revisions()->count());
+    }
 }

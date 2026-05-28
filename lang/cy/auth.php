@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Nid yw\'r manylion hyn yn cyfateb i\'n cofnodion.',
     'throttle' => 'Gormod o ymdrechion mewngofnodi. Rhowch gynnig arall arni o gwmpas :seconds eiliadau.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Cofrestru',

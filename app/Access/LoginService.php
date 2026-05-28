@@ -71,7 +71,7 @@ class LoginService
         }
 
         $lastLoginDetails = $this->getLastLoginAttemptDetails();
-        $this->login($user, $lastLoginDetails['method'], $lastLoginDetails['remember'] ?? false);
+        $this->login($user, $lastLoginDetails['method'], $lastLoginDetails['remember']);
     }
 
     /**

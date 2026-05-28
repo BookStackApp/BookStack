@@ -461,6 +461,7 @@ body.editor-is-fullscreen {
   z-index: 3;
   user-select: none;
   opacity: 0;
+  transition: opacity 120ms ease-in-out;
   &:hover, &.active {
     opacity: 0.4;
   }

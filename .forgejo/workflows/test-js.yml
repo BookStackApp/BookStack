@@ -1,0 +1,32 @@
+name: test-js
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+  pull_request:
+    paths:
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+
+jobs:
+  build:
+    if: ${{ github.ref != 'refs/heads/l10n_development' }}
+    runs-on: docker
+    container:
+      image: docker.io/library/node:24-trixie
+    steps:
+    - uses: https://code.forgejo.org/actions/checkout@v6
+
+    - name: Install NPM deps
+      run: npm ci
+
+    - name: Run TypeScript type checking
+      run: npm run ts:lint
+
+    - name: Run JavaScript tests
+      run: npm run test:ci

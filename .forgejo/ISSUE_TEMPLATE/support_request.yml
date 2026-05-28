@@ -1,6 +1,6 @@
 name: Support Request
 description: Request support for a specific problem you have not been able to solve yourself
-labels: [":dog2: Support"]
+labels: ["Type/Support"]
 body:
   - type: checkboxes
     id: useddocs
@@ -15,11 +15,11 @@ body:
   - type: checkboxes
     id: searchissue
     attributes:
-      label: Searched GitHub Issues
+      label: Searched Existing Issues
       description: |
-        I have searched for the issue and potential resolutions within the [project's GitHub issue list](https://github.com/BookStackApp/BookStack/issues)
+        I have searched for the issue and potential resolutions within the [project's issue list](https://codeberg.org/bookstack/bookstack/issues)
       options:
-        - label: I have searched GitHub for the issue.
+        - label: I have searched for the issue.
           required: true
   - type: textarea
     id: scenario

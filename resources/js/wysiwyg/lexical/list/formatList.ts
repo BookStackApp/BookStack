@@ -25,12 +25,14 @@ import invariant from 'lexical/shared/invariant';
 
 import {
   $createListItemNode,
-  $createListNode,
   $isListItemNode,
-  $isListNode,
   ListItemNode,
+} from './LexicalListItemNode';
+import {
+  $createListNode,
+  $isListNode,
   ListNode,
-} from './';
+} from './LexicalListNode';
 import {ListType} from './LexicalListNode';
 import {
   $getAllListItems,

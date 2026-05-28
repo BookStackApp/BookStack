@@ -106,8 +106,8 @@ class UserAccountController extends Controller
      */
     public function updateShortcuts(Request $request)
     {
-        $enabled = $request->get('enabled') === 'true';
-        $providedShortcuts = $request->get('shortcut', []);
+        $enabled = $request->input('enabled') === 'true';
+        $providedShortcuts = $request->input('shortcut', []);
         $shortcuts = new UserShortcutMap($providedShortcuts);
 
         setting()->putForCurrentUser('ui-shortcuts', $shortcuts->toJson());
@@ -218,7 +218,7 @@ class UserAccountController extends Controller
     {
         $this->preventAccessInDemoMode();
 
-        $requestNewOwnerId = intval($request->get('new_owner_id')) ?: null;
+        $requestNewOwnerId = intval($request->input('new_owner_id')) ?: null;
         $newOwnerId = userCan(Permission::UsersManage) ? $requestNewOwnerId : null;
 
         $this->userRepo->destroy(user(), $newOwnerId);

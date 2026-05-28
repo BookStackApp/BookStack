@@ -30,7 +30,7 @@ import {
 import invariant from 'lexical/shared/invariant';
 import normalizeClassNames from 'lexical/shared/normalizeClassNames';
 
-import {$createListItemNode, $isListItemNode, ListItemNode} from '.';
+import {$createListItemNode, $isListItemNode, ListItemNode} from './LexicalListItemNode';
 import {
   mergeNextSiblingListIfSameType,
   updateChildrenListItemValue,

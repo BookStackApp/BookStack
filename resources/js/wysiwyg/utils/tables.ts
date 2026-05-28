@@ -3,7 +3,7 @@ import {
     $isTableCellNode,
     $isTableNode,
     $isTableRowNode,
-    $isTableSelection, TableCellNode, TableNode,
+    $isTableSelection, TableCellHeaderStates, TableCellNode, TableNode,
     TableRowNode,
     TableSelection,
 } from "@lexical/table";
@@ -328,9 +328,21 @@ export function $getCellPaddingForTable(table: TableNode): string {
     return padding || '';
 }
 
-
-
-
+/**
+ * Toggle the header state of the cells in the provided row.
+ * Returns a boolean to indicate if the new state of the cells is as headers.
+ */
+export function $toggleRowCellHeaderState(row: TableRowNode): boolean {
+    const firstCell = row.getFirstChild();
+    const isHeader = $isTableCellNode(firstCell) ? firstCell.getHeaderStyles() !== TableCellHeaderStates.NO_STATUS : false;
+    const cells = row.getChildren();
+    for (const cell of cells) {
+        if ($isTableCellNode(cell)) {
+            cell.setHeaderStyles(isHeader ? TableCellHeaderStates.NO_STATUS : TableCellHeaderStates.ROW);
+        }
+    }
+    return !isHeader;
+}
 
 
 

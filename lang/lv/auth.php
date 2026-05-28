@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Šie reģistrācijas dati neatbilst mūsu ierakstiem.',
     'throttle' => 'Pārāk daudz pieteikšanās mēģinājumu. Lūdzu, mēģiniet vēlreiz pēc :seconds seconds.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Reģistrēties',

@@ -74,18 +74,21 @@ class ApiEntityListFormatter
 
     /**
      * Include parent book/chapter info in the formatted data.
+     * These functions are careful to not load the relation themselves, since they should
+     * have already been loaded in a more efficient manner, with permissions applied, by the time
+     * the parent fields are handled here.
      */
     public function withParents(): self
     {
         $this->withField('book', function (Entity $entity) {
-            if ($entity instanceof BookChild && $entity->book) {
+            if ($entity instanceof BookChild && $entity->relationLoaded('book') && $entity->getRelationValue('book')) {
                 return $entity->book->only(['id', 'name', 'slug']);
             }
             return null;
         });
 
         $this->withField('chapter', function (Entity $entity) {
-            if ($entity instanceof Page && $entity->chapter) {
+            if ($entity instanceof Page && $entity->relationLoaded('chapter') && $entity->getRelationValue('chapter')) {
                 return $entity->chapter->only(['id', 'name', 'slug']);
             }
             return null;

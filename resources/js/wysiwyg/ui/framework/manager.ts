@@ -30,6 +30,7 @@ export class EditorUIManager {
         this.context = context;
         this.setupEventListeners();
         this.setupEditor(context.editor, context);
+        this.dropdowns.setIsRTL(this.context.manager.getDefaultDirection() === 'rtl');
     }
 
     getContext(): EditorUiContext {
@@ -166,8 +167,10 @@ export class EditorUIManager {
 
     triggerLayoutUpdate(): void {
         window.requestAnimationFrame(() => {
+            const toolbarBounds: (DOMRect|null)[] = [];
             for (const toolbar of this.activeContextToolbars) {
-                toolbar.updatePosition();
+                const bounds = toolbar.updatePosition(toolbarBounds);
+                toolbarBounds.push(bounds);
             }
         });
     }
@@ -246,13 +249,15 @@ export class EditorUIManager {
             }
         }
 
+        const toolbarBounds: (DOMRect|null)[] = [];
         for (const [target, contents] of contentByTarget) {
             const toolbar = new EditorContextToolbar(target, contents);
             toolbar.setContext(this.getContext());
             this.activeContextToolbars.push(toolbar);
 
             this.getContext().containerDOM.append(toolbar.getDOMElement());
-            toolbar.updatePosition();
+            const bounds = toolbar.updatePosition(toolbarBounds);
+            toolbarBounds.push(bounds);
         }
     }
 

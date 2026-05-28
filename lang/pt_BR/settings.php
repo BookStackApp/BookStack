@@ -207,6 +207,7 @@ return [
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
     'role_controlled_by_asset' => 'Controlado pelos ativos nos quais o upload foi realizado',
+    'role_controlled_by_page_delete' => 'Controlado pelas permissões de exclusão de página',
     'role_save' => 'Salvar Perfil',
     'role_users' => 'Usuários com este perfil',
     'role_users_none' => 'Nenhum usuário está atualmente vinculado a este perfil',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'A autenticação multi-fator adiciona outra camada de segurança à sua conta.',
     'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
     'users_mfa_configure' => 'Configurar Métodos',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Criar Token de API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

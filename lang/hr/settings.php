@@ -207,6 +207,7 @@ return [
     'role_all' => 'Sve',
     'role_own' => 'Vlastito',
     'role_controlled_by_asset' => 'Kontrolirano od strane vlasnika',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Spremi ulogu',
     'role_users' => 'Korisnici u ovoj ulozi',
     'role_users_none' => 'Trenutno nijedan korisnik nije u ovoj ulozi',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Postavite višestruku provjeru autentičnosti kao dodatni sloj sigurnosti za svoj korisnički račun.',
     'users_mfa_x_methods' => ':count metoda konfigurirano|:count metode konfigurirane',
     'users_mfa_configure' => 'Konfiguriraj Metode',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Stvori API token',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

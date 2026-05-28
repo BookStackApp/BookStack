@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Uchbu ma‘lumotlar, bizdagi ma‘lumotlarga mos kelmadi.',
     'throttle' => 'Kirishga urinishlar juda ko‘p. Iltimos :seconds soniyadan so‘ng urinib ko‘ring.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Ro‘yxatdan o‘tish',

@@ -24,7 +24,7 @@ class SearchController extends Controller
     {
         $searchOpts = SearchOptions::fromRequest($request);
         $fullSearchString = $searchOpts->toString();
-        $page = intval($request->get('page', '0')) ?: 1;
+        $page = intval($request->input('page', '0')) ?: 1;
         $count = setting()->getInteger('lists-page-count-search', 18, 1, 1000);
 
         $results = $this->searchRunner->searchEntities($searchOpts, 'all', $page, $count);
@@ -49,7 +49,7 @@ class SearchController extends Controller
      */
     public function searchBook(Request $request, int $bookId)
     {
-        $term = $request->get('term', '');
+        $term = $request->input('term', '');
         $results = $this->searchRunner->searchBook($bookId, $term);
 
         return view('entities.list', ['entities' => $results]);
@@ -60,7 +60,7 @@ class SearchController extends Controller
      */
     public function searchChapter(Request $request, int $chapterId)
     {
-        $term = $request->get('term', '');
+        $term = $request->input('term', '');
         $results = $this->searchRunner->searchChapter($chapterId, $term);
 
         return view('entities.list', ['entities' => $results]);
@@ -72,9 +72,9 @@ class SearchController extends Controller
      */
     public function searchForSelector(Request $request, QueryPopular $queryPopular)
     {
-        $entityTypes = $request->filled('types') ? explode(',', $request->get('types')) : ['page', 'chapter', 'book'];
-        $searchTerm = $request->get('term', false);
-        $permission = $request->get('permission', 'view');
+        $entityTypes = $request->filled('types') ? explode(',', $request->input('types')) : ['page', 'chapter', 'book'];
+        $searchTerm = $request->input('term', false);
+        $permission = $request->input('permission', 'view');
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
@@ -93,7 +93,7 @@ class SearchController extends Controller
      */
     public function templatesForSelector(Request $request)
     {
-        $searchTerm = $request->get('term', false);
+        $searchTerm = $request->input('term', false);
 
         if ($searchTerm !== false) {
             $searchOptions = SearchOptions::fromString($searchTerm);
@@ -119,7 +119,7 @@ class SearchController extends Controller
      */
     public function searchSuggestions(Request $request)
     {
-        $searchTerm = $request->get('term', '');
+        $searchTerm = $request->input('term', '');
         $entities = $this->searchRunner->searchEntities(SearchOptions::fromString($searchTerm), 'all', 1, 5)['results'];
 
         foreach ($entities as $entity) {
@@ -136,8 +136,8 @@ class SearchController extends Controller
      */
     public function searchSiblings(Request $request, SiblingFetcher $siblingFetcher)
     {
-        $type = $request->get('entity_type', null);
-        $id = $request->get('entity_id', null);
+        $type = $request->input('entity_type', null);
+        $id = $request->input('entity_id', null);
 
         $entities = $siblingFetcher->fetch($type, $id);
 

@@ -61,8 +61,7 @@ class JointPermissionBuilder
             return;
         }
 
-        /** @var BookChild $entity */
-        if ($entity->book) {
+        if ($entity instanceof BookChild) {
             $entities[] = $entity->book;
         }
 

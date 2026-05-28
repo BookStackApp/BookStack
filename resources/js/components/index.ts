@@ -58,6 +58,7 @@ export {Tabs} from './tabs';
 export {TagManager} from './tag-manager';
 export {TemplateManager} from './template-manager';
 export {ToggleSwitch} from './toggle-switch';
+export {ToolboxContents} from './toolbox-contents';
 export {TriLayout} from './tri-layout';
 export {UserSelect} from './user-select';
 export {WebhookEvents} from './webhook-events';

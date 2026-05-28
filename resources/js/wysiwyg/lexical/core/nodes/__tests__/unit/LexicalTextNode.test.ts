@@ -42,6 +42,7 @@ import {
   getEditorStateTextContent,
 } from '../../../LexicalUtils';
 import {$generateHtmlFromNodes} from "@lexical/html";
+import {setEditorContentFromHtml} from "../../../../../utils/actions";
 
 const editorConfig = Object.freeze({
   namespace: '',
@@ -806,12 +807,13 @@ describe('LexicalTextNode tests', () => {
       });
     });
 
-    test('simple text wrapped in span if leading or ending spacing', async () => {
+    test('non-breaking-spaces used if leading or ending spacing', async () => {
 
       const textByExpectedHtml = {
-        'hello ': '<p><span style="white-space: pre-wrap;">hello </span></p>',
-        ' hello': '<p><span style="white-space: pre-wrap;"> hello</span></p>',
-        ' hello ': '<p><span style="white-space: pre-wrap;"> hello </span></p>',
+        'hello ': '<p>hello&nbsp;</p>',
+        ' hello': '<p>&nbsp;hello</p>',
+        ' hello ': '<p>&nbsp;hello&nbsp;</p>',
+        'hello   ': '<p>hello&nbsp; &nbsp;</p>',
       }
 
       await update(() => {
@@ -824,6 +826,31 @@ describe('LexicalTextNode tests', () => {
           const html = $generateHtmlFromNodes($getEditor(), null);
           expect(html).toBe(expectedHtml);
         }
+      });
+    });
+
+    test('normal spaces used when text is adjacent to other inline text', async () => {
+      await update(() => {
+        setEditorContentFromHtml($getEditor(), '<p>&nbsp;Hello <strong>there</strong> is <em>text</em> here&nbsp;</p>');
+      });
+
+      await update(() => {
+        const html = $generateHtmlFromNodes($getEditor(), null);
+        expect(html).toBe('<p>&nbsp;Hello <strong>there</strong> is <em>text</em> here&nbsp;</p>');
+      });
+    });
+
+    test('normal and non-breaking spaces used when text with multiple spaces is adjacent to inline text', async () => {
+      await update(() => {
+        const paragraph = $getRoot().getFirstChild<ElementNode>()!;
+        $getRoot().append(paragraph);
+        paragraph.append($createTextNode('hello   '));
+        const bold = $createTextNode('world   ');
+        bold.setFormat("bold");
+        paragraph.append(bold);
+
+        const html = $generateHtmlFromNodes($getEditor(), null);
+        expect(html).toBe('<p>hello &nbsp; <strong>world&nbsp; &nbsp;</strong></p>');
       });
     });
 

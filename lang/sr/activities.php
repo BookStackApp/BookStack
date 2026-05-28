@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Корисник је успешно ажуриран',
     'user_delete' => 'избрисан корисника',
     'user_delete_notification' => 'Корисник је успешно уклоњен',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'креирао апи токен',

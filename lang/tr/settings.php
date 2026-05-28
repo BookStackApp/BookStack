@@ -207,6 +207,7 @@ return [
     'role_all' => 'Hepsi',
     'role_own' => 'Kendine Ait',
     'role_controlled_by_asset' => 'Yüklendikleri varlık tarafından kontrol ediliyor',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rolü Kaydet',
     'role_users' => 'Bu roldeki kullanıcılar',
     'role_users_none' => 'Bu role henüz bir kullanıcı atanmadı',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',
     'users_mfa_x_methods' => ':count method configured|:count methods configured',
     'users_mfa_configure' => 'Yöntemleri Yapılandır',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'API Anahtarı Oluştur',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovence',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

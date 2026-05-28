@@ -9,12 +9,12 @@
 import {
   $createParagraphNode,
   $createRangeSelection,
-  $getRoot, LexicalEditor,
+  $getRoot, LexicalEditor, LexicalNode, ParagraphNode,
   TextNode,
 } from 'lexical';
 import {
   createTestContext, destroyFromContext,
-  expectHtmlToBeEqual,
+  expectHtmlToBeEqual, expectNodeShapeToMatch,
   html,
 } from 'lexical/__tests__/utils';
 
@@ -1199,6 +1199,70 @@ describe('LexicalListItemNode tests', () => {
             <li value="3"><span data-lexical-text="true">Item B</span></li>
           </ul>`,
       );
+    });
+
+    test('new items after empty top-level items splits the list in two, and inserts a paragraph inbetween', () => {
+      let newItem: LexicalNode|null = null;
+      const input = `<ul>
+        <li>Item A</li>        
+        <li></li>        
+        <li>Item C</li>        
+        </ul>`;
+
+      editor.updateAndCommit(() => {
+        const root = $getRoot();
+        root.append(...$htmlToBlockNodes(editor, input));
+        const list = root.getFirstChild() as ListNode;
+        const itemB = list.getChildAtIndex(1) as ListItemNode;
+
+        newItem = itemB.insertNewAfter($createRangeSelection());
+      });
+
+      expect(newItem).toBeInstanceOf(ParagraphNode);
+
+      expectNodeShapeToMatch(editor, [
+        {
+          type: 'list',
+          children: [{type: 'listitem', children: [{text: 'Item A'}]}],
+        },
+        {
+          type: 'paragraph',
+        },
+        {
+          type: 'list',
+          children: [{type: 'listitem', children: [{text: 'Item C'}]}],
+        }
+      ])
+    });
+
+    test('new items after last empty top-level inserts a new paragraph below, and removes the list item', () => {
+      let newItem: LexicalNode|null = null;
+      const input = `<ul>
+        <li>Item A</li>        
+        <li>Item B</li>        
+        <li></li>        
+        </ul>`;
+
+      editor.updateAndCommit(() => {
+        const root = $getRoot();
+        root.append(...$htmlToBlockNodes(editor, input));
+        const list = root.getFirstChild() as ListNode;
+        const itemC = list.getChildAtIndex(2) as ListItemNode;
+
+        newItem = itemC.insertNewAfter($createRangeSelection());
+      });
+
+      expect(newItem).toBeInstanceOf(ParagraphNode);
+
+      expectNodeShapeToMatch(editor, [
+        {
+          type: 'list',
+          children: [{type: 'listitem', children: [{text: 'Item A'}]}, {type: 'listitem', children: [{text: 'Item B'}]}],
+        },
+        {
+          type: 'paragraph',
+        },
+      ])
     });
   });
 

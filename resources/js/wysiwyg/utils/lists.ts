@@ -1,7 +1,7 @@
-import {$createTextNode, $getSelection, BaseSelection, LexicalEditor, TextNode} from "lexical";
+import {$createParagraphNode, $createTextNode, $getSelection, BaseSelection, LexicalEditor, ParagraphNode, TextNode} from "lexical";
 import {$getBlockElementNodesInSelection, $selectNodes, $toggleSelection} from "./selection";
 import {$sortNodes, nodeHasInset} from "./nodes";
-import {$createListItemNode, $createListNode, $isListItemNode, $isListNode, ListItemNode} from "@lexical/list";
+import {$createListItemNode, $createListNode, $isListItemNode, $isListNode, ListItemNode, ListNode} from "@lexical/list";
 
 
 export function $nestListItem(node: ListItemNode): ListItemNode {
@@ -186,4 +186,31 @@ export function $setInsetForSelection(editor: LexicalEditor, change: number): vo
     }
 
     $toggleSelection(editor);
+}
+
+export function $escapeListAtItem(item: ListItemNode): ParagraphNode|null {
+    const list = item.getParentOrThrow<ListNode>();
+    const parentListItem = list.getParent();
+
+    // Un-nest list item if it's an empty nested item
+    if ($isListItemNode(parentListItem)) {
+        parentListItem.insertAfter(item);
+        item.selectStart();
+        return null;
+    }
+
+    // If we're anywhere but at the end, split the list, with following items
+    // moved into their own new list.
+    if (!item.isLastChild()) {
+        const afterSiblings = item.getNextSiblings();
+        const newList = $createListNode(list.getListType());
+        newList.append(...afterSiblings);
+        list.insertAfter(newList);
+    }
+
+    // Insert a new empty paragraph to land on after our list
+    const paragraph = $createParagraphNode();
+    list.insertAfter(paragraph, true);
+    item.remove();
+    return paragraph;
 }

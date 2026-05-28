@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Thông tin đăng nhập này không khớp với dữ liệu của chúng tôi.',
     'throttle' => 'Quá nhiều lần đăng nhập sai. Vui lòng thử lại sau :seconds giây.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Đăng ký',

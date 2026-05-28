@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Discord Chat Support
-    url: https://discord.gg/ztkBqR2
-    about: Realtime support & chat with the BookStack community and the team.
+  - name: Open Issues Here Instead
+    url: https://codeberg.org/bookstack/bookstack/issues
+    about: This project has migrated to Codeberg, please open issues there instead.
 
   - name: Debugging & Common Issues
     url: https://www.bookstackapp.com/docs/admin/debugging/

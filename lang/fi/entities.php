@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Move chapters and pages within a book to reorganise its contents. Other books can be added which allows easy moving of chapters and pages between books. Optionally an auto sort rule can be set to automatically sort this book\'s contents upon changes.',
     'books_sort_auto_sort' => 'Auto Sort Option',
     'books_sort_auto_sort_active' => 'Auto Sort Active: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Järjestä kirja :bookName',
     'books_sort_name' => 'Järjestä nimen mukaan',
     'books_sort_created' => 'Järjestä luontipäiväyksen mukaan',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Näytä/piilota sivupalkki',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Sivun tunnisteet',
     'chapter_tags' => 'Lukujen tunnisteet',
     'book_tags' => 'Kirjojen tunnisteet',

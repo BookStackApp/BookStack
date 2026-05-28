@@ -1,6 +1,7 @@
-import {$getRoot, $getSelection, $insertNodes, $isBlockElementNode, LexicalEditor} from "lexical";
+import {$createParagraphNode, $getRoot, $getSelection, $insertNodes, $isBlockElementNode, LexicalEditor} from "lexical";
 import {$generateHtmlFromNodes} from "@lexical/html";
-import {$getNearestNodeBlockParent, $htmlToBlockNodes, $htmlToNodes} from "./nodes";
+import {$getAllNodesOfType, $getNearestNodeBlockParent, $htmlToBlockNodes, $htmlToNodes} from "./nodes";
+import {$isHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
     editor.update(() => {
@@ -12,6 +13,12 @@ export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
 
         const nodes = $htmlToBlockNodes(editor, html);
         root.append(...nodes);
+
+        // Always ensure we at least have a paragraph in the root
+        // as a target for the cursor/focus/actions.
+        if (root.isEmpty()) {
+            root.append($createParagraphNode());
+        }
     });
 }
 
@@ -85,5 +92,24 @@ export function getEditorContentAsHtml(editor: LexicalEditor): Promise<string> {
 }
 
 export function focusEditor(editor: LexicalEditor): void {
+    editor.update(() => {
+        const root = $getRoot();
+        const selection = $getSelection();
+        const firstChild = root.getFirstChild();
+        if (firstChild && !selection) {
+            firstChild.selectStart();
+        }
+    });
+    editor.commitUpdates();
     editor.focus(() => {}, {defaultSelection: "rootStart"});
+}
+
+export function focusOnHeader(editor: LexicalEditor, headerIndex: number): void {
+    editor.update(() => {
+        const headers = $getAllNodesOfType($isHeadingNode);
+        const target = headers[headerIndex];
+        if (target) {
+            target.selectEnd();
+        }
+    });
 }

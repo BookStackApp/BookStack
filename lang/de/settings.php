@@ -147,7 +147,7 @@ return [
     'recycle_bin_restore_confirm' => 'Durch diese Aktion wird das gelöschte Element einschließlich aller untergeordneten Elemente an seinem ursprünglichen Speicherort wiederhergestellt. Sollte der ursprüngliche Speicherort inzwischen gelöscht worden sein und sich nun im Papierkorb befinden, muss auch das übergeordnete Element wiederhergestellt werden.',
     'recycle_bin_restore_deleted_parent' => 'Das übergeordnete Element dieses Eintrags wurde ebenfalls gelöscht. Diese Einträge bleiben gelöscht, bis auch das übergeordnete Element wiederhergestellt wird.',
     'recycle_bin_restore_parent' => 'Übergeordneter Eintrag wiederherstellen',
-    'recycle_bin_destroy_notification' => 'Löscht :count Elemente aus dem Papierkorb.',
+    'recycle_bin_destroy_notification' => ':count Elemente aus dem Papierkorb gelöscht.',
     'recycle_bin_restore_notification' => 'Es wurden :count der Elemente aus dem Papierkorb wiederhergestellt.',
 
     // Audit Log
@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
     'role_controlled_by_asset' => 'Abhängig von dem Asset, in das sie hochgeladen werden',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rolle speichern',
     'role_users' => 'Dieser Rolle zugeordnete Benutzer',
     'role_users_none' => 'Derzeit sind diesem Rollentyp keine Benutzer zugewiesen',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Richten Sie die Multi-Faktor-Authentifizierung als zusätzliche Sicherheitsstufe für Ihr Benutzerkonto ein.',
     'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
     'users_mfa_configure' => 'Methoden konfigurieren',
+    'users_mfa_reset' => 'Setze Multifaktor-Authentifizierung zurück',
+    'users_mfa_reset_desc' => 'Dies wird alle konfigurierten Multifaktor-Authentifizierungsmethoden für diesen Nutzer zurücksetzen. Falls Multifaktor-Authentifizierung für eine seiner Rollen erforderlich ist, werden sie aufgefordert, neue Methoden beim nächsten Login zu konfigurieren.',
+    'users_mfa_reset_confirm' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode für diesen Nutzer zurücksetzen möchten?',
 
     // API Tokens
     'user_api_token_create' => 'Neuen API-Token erstellen',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slowenisch',
         'sl' => 'Slowenisch',
         'sv' => 'Schwedisch',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkisch',
         'uk' => 'Ukrainisch',
         'uz' => 'O‘zbekcha',

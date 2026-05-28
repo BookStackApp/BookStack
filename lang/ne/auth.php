@@ -8,6 +8,7 @@ return [
 
     'failed' => 'यी प्रमाणिकरण जानकारी हाम्रो अभिलेखसँग मेल खाँदैन।',
     'throttle' => 'लगइन प्रयासहरूको संख्या धेरै भएको छ। कृपया :seconds सेकेन्ड पछि पुनः प्रयास गर्नुहोस्।',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'साइन अप गर्नुहोस्',

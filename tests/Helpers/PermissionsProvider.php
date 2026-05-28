@@ -101,8 +101,9 @@ class PermissionsProvider
         $this->addEntityPermissionEntries($entity, $permissions);
     }
 
-    public function addEntityPermission(Entity $entity, array $actionList, Role $role)
+    public function setEntityPermissionsForRole(Entity $entity, array $actionList, Role $role)
     {
+        $entity->permissions()->where('role_id', '=', $role->id)->delete();
         $permissionData = $this->actionListToEntityPermissionData($actionList, $role->id);
         $this->addEntityPermissionEntries($entity, [$permissionData]);
     }

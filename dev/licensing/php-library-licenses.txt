@@ -109,7 +109,7 @@ firebase/php-jwt
 License: BSD-3-Clause
 License File: vendor/firebase/php-jwt/LICENSE
 Copyright: Copyright (c) 2011, Neuman Vong
-Source: https://github.com/firebase/php-jwt.git
+Source: https://github.com/googleapis/php-jwt.git
 Link: https://github.com/firebase/php-jwt
 -----------
 fruitcake/php-cors

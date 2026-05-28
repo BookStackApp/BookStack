@@ -370,7 +370,7 @@ class PageContentTest extends TestCase
 
     public function test_base64_images_within_html_blanked_if_not_supported_extension_for_extract()
     {
-        // Relevant to https://github.com/BookStackApp/BookStack/issues/3010 and other cases
+        // Relevant to https://codeberg.org/bookstack/bookstack/issues/3010 and other cases
         $extensions = [
             'jiff', 'pngr', 'png ', ' png', '.png', 'png.', 'p.ng', ',png',
             'data:image/png', ',data:image/png',

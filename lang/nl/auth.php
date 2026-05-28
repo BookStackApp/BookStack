@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Deze inloggegevens zijn niet bij ons bekend.',
     'throttle' => 'Te veel inlogpogingen! Probeer het opnieuw na :seconds seconden.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registreer',

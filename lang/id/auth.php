@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Kredensial tidak cocok dengan catatan kami.',
     'throttle' => 'Terlalu banyak upaya masuk. Silahkan mencoba lagi dalam :seconds detik.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Daftar',

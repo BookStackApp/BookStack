@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Eget',
     'role_controlled_by_asset' => 'Styres af det medie/"asset", de uploades til',
+    'role_controlled_by_page_delete' => 'Styres af tilladelser til sletning af sider',
     'role_save' => 'Gem rolle',
     'role_users' => 'Brugere med denne rolle',
     'role_users_none' => 'Ingen brugere er i øjeblikket tildelt denne rolle',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Opsæt multi-faktor godkendelse som et ekstra lag af sikkerhed for din brugerkonto.',
     'users_mfa_x_methods' => ':count metode konfigureret|:count metoder konfigureret',
     'users_mfa_configure' => 'Konfigurer metoder',
+    'users_mfa_reset' => 'Nulstil metoder til multifaktor-godkendelse',
+    'users_mfa_reset_desc' => 'Dette vil nulstille og slette alle konfigurerede metoder til multifaktor-godkendelse for denne bruger. Hvis multifaktor-godkendelse er påkrævet for en af brugerens roller, vil vedkommende blive bedt om at konfigurere nye metoder ved næste login.',
+    'users_mfa_reset_confirm' => 'Er du sikker på, at du vil nulstille multifaktorautentificering for denne bruger?',
 
     // API Tokens
     'user_api_token_create' => 'Opret API-token',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

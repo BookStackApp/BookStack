@@ -49,7 +49,7 @@ class BookshelfApiController extends ApiController
         $this->checkPermission(Permission::BookshelfCreateAll);
         $requestData = $this->validate($request, $this->rules()['create']);
 
-        $bookIds = $request->get('books', []);
+        $bookIds = $request->input('books', []);
         $shelf = $this->bookshelfRepo->create($requestData, $bookIds);
 
         return response()->json($this->forJsonDisplay($shelf));
@@ -88,7 +88,7 @@ class BookshelfApiController extends ApiController
         $this->checkOwnablePermission(Permission::BookshelfUpdate, $shelf);
 
         $requestData = $this->validate($request, $this->rules()['update']);
-        $bookIds = $request->get('books', null);
+        $bookIds = $request->input('books', null);
 
         $shelf = $this->bookshelfRepo->update($shelf, $requestData, $bookIds);
 

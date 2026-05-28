@@ -1,6 +1,7 @@
 import {
     init,
     attributesModule,
+    datasetModule,
     toVNode,
 } from 'snabbdom';
 import {VNode} from "snabbdom/build/vnode";
@@ -14,6 +15,7 @@ function getPatcher(): vDomPatcher {
 
     patcher = init([
         attributesModule,
+        datasetModule,
     ]);
 
     return patcher;
@@ -23,4 +25,8 @@ export function patchDomFromHtmlString(domTarget: Element, html: string): void {
     const contentDom = document.createElement('div');
     contentDom.innerHTML = html;
     getPatcher()(toVNode(domTarget), toVNode(contentDom));
+}
+
+export function patchDomFromDom(domTarget: Element, domSource: Element): void {
+    getPatcher()(toVNode(domTarget), toVNode(domSource));
 }

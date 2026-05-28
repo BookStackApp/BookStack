@@ -218,10 +218,10 @@ class WatchTest extends TestCase
 
         $notifications = Notification::fake();
 
-        $this->actingAs($editor)->post("/comment/{$entities['page']->id}", [
+        $resp = $this->actingAs($editor)->post("/comment/{$entities['page']->id}", [
             'html' => '<p>My new comment</p>'
         ]);
-        $comment = $entities['page']->comments()->orderBy('id', 'desc')->first();
+        $comment = $entities['page']->comments()->reorder('id', 'desc')->first();
 
         $this->asAdmin()->post("/comment/{$entities['page']->id}", [
             'html' => '<p>My new comment response</p>',

@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Ove vjerodajnice ne podudaraju se s našim zapisima.',
     'throttle' => 'Previše pokušaja prijave. Molimo vas da pokušate za :seconds sekundi.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registrirajte se',

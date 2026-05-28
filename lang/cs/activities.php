@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Uživatel byl úspěšně aktualizován',
     'user_delete' => 'odstranil uživatele',
     'user_delete_notification' => 'Uživatel byl úspěšně odstraněn',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'API token byl vytvořen',

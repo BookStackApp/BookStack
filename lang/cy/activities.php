@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Diweddarwyd y defnyddiwr yn llwyddiannus',
     'user_delete' => 'dileodd ddefnyddiwr',
     'user_delete_notification' => 'Tynnwyd y defnyddiwr yn llwyddiannus',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'creodd docyn API',

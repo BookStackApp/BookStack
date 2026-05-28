@@ -214,6 +214,20 @@ export class TextareaInput implements MarkdownEditorInput {
         return null;
     }
 
+    forEachLine(callback: (lineNum: number, content: string, range: MarkdownEditorInputSelection) => false | void): void {
+        const lines = this.getText().split('\n');
+        let lineStart = 0;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const lineEnd = lineStart + line.length;
+            const result = callback(i + 1, line, {from: lineStart, to: lineEnd});
+            if (result === false) {
+                break;
+            }
+            lineStart = lineEnd + 1;
+        }
+    }
+
     setSelection(selection: MarkdownEditorInputSelection, scrollIntoView: boolean): void {
         this.input.selectionStart = selection.from;
         this.input.selectionEnd = selection.to;

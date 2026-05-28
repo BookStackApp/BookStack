@@ -1,5 +1,6 @@
 import {
     $createParagraphNode,
+    $getNearestNodeFromDOMNode,
     $getRoot,
     $isDecoratorNode,
     $isElementNode, $isRootNode,
@@ -62,6 +63,27 @@ export function $getAllNodesOfType(matcher: LexicalNodeMatcher, root?: ElementNo
     }
 
     return matches;
+}
+
+/**
+ * Get the node based on the given mouse event.
+ */
+export function $getNodePositionFromMouseEvent(event: MouseEvent, editor: LexicalEditor): {node: LexicalNode, offset: number}|null {
+    const x = event.clientX;
+    const y = event.clientY;
+    const caretPosition = window.document.caretPositionFromPoint(event.x, event.y);
+    if (!caretPosition) {
+        const backup = $getNearestBlockNodeForCoords(editor, x, y);
+        return backup ? {node: backup, offset: 0} : null;
+    }
+
+    const node = $getNearestNodeFromDOMNode(caretPosition.offsetNode);
+    if (!node) {
+        const backup = $getNearestBlockNodeForCoords(editor, x, y);
+        return backup ? {node: backup, offset: 0} : null;
+    }
+
+    return {node, offset: caretPosition.offset};
 }
 
 /**

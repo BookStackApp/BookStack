@@ -60,7 +60,7 @@ class PageRepo
             $page->book_id = $parent->id;
         }
 
-        $defaultTemplate = $page->chapter?->defaultTemplate()->get() ?? $page->book?->defaultTemplate()->get();
+        $defaultTemplate = $page->chapter?->defaultTemplate()->get() ?? $page->book->defaultTemplate()->get();
         if ($defaultTemplate) {
             $page->forceFill([
                 'html'  => $defaultTemplate->html,

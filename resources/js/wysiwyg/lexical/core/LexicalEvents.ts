@@ -99,7 +99,6 @@ import {
   getNearestEditorFromDOMNode,
   getWindow, isAt,
   isBackspace,
-  isBold,
   isCopy,
   isCut,
   isDelete,
@@ -111,7 +110,6 @@ import {
   isDeleteWordForward,
   isEscape,
   isFirefoxClipboardEvents,
-  isItalic,
   isLexicalEditor,
   isLineBreak,
   isModifier,
@@ -128,7 +126,6 @@ import {
   isSelectionWithinEditor,
   isSpace,
   isTab,
-  isUnderline,
   isUndo,
 } from './LexicalUtils';
 
@@ -479,7 +476,6 @@ function onClick(event: PointerEvent, editor: LexicalEditor): void {
 }
 
 function onPointerDown(event: PointerEvent, editor: LexicalEditor) {
-  // TODO implement text drag & drop
   const target = event.target;
   const pointerType = event.pointerType;
   if (target instanceof Node && pointerType !== 'touch') {
@@ -1064,15 +1060,6 @@ function onKeyDown(event: KeyboardEvent, editor: LexicalEditor): void {
     dispatchCommand(editor, DELETE_LINE_COMMAND, false);
   } else if (isAt(key)) {
     dispatchCommand(editor, KEY_AT_COMMAND, event);
-  } else if (isBold(key, altKey, metaKey, ctrlKey)) {
-    event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'bold');
-  } else if (isUnderline(key, altKey, metaKey, ctrlKey)) {
-    event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'underline');
-  } else if (isItalic(key, altKey, metaKey, ctrlKey)) {
-    event.preventDefault();
-    dispatchCommand(editor, FORMAT_TEXT_COMMAND, 'italic');
   } else if (isTab(key, altKey, ctrlKey, metaKey)) {
     dispatchCommand(editor, KEY_TAB_COMMAND, event);
   } else if (isUndo(key, shiftKey, metaKey, ctrlKey)) {

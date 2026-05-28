@@ -21,8 +21,8 @@ class PageTemplateController extends Controller
      */
     public function list(Request $request)
     {
-        $page = $request->get('page', 1);
-        $search = $request->get('search', '');
+        $page = $request->input('page', 1);
+        $search = $request->input('search', '');
         $count = 10;
 
         $query = $this->pageQueries->visibleTemplates()

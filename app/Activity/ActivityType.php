@@ -46,6 +46,7 @@ class ActivityType
     const USER_CREATE = 'user_create';
     const USER_UPDATE = 'user_update';
     const USER_DELETE = 'user_delete';
+    const USER_MFA_RESET = 'user_mfa_reset';
 
     const API_TOKEN_CREATE = 'api_token_create';
     const API_TOKEN_UPDATE = 'api_token_update';

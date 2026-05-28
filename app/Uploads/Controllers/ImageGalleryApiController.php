@@ -75,6 +75,7 @@ class ImageGalleryApiController extends ApiController
         $this->checkPermission(Permission::ImageCreateAll);
         $data = $this->validate($request, $this->rules()['create']);
         $page = $this->pageQueries->findVisibleByIdOrFail($data['uploaded_to']);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $image = $this->imageRepo->saveNew($data['image'], $data['type'], $page->id);
 

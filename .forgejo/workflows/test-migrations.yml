@@ -1,6 +1,7 @@
 name: test-migrations
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '**.php'
@@ -13,15 +14,25 @@ on:
 jobs:
   build:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
-    runs-on: ubuntu-24.04
+    runs-on: docker
+    container:
+      image: docker.io/library/node:24-trixie
     strategy:
       matrix:
         php: ['8.2', '8.3', '8.4', '8.5']
+    services:
+      mysql:
+        image: docker.io/library/mariadb:12.2.2-noble
+        env:
+          MARIADB_USER: bookstack-test
+          MARIADB_PASSWORD: bookstack-test
+          MARIADB_DATABASE: bookstack-test
+          MARIADB_ROOT_PASSWORD: password
     steps:
-      - uses: actions/checkout@v4
+      - uses: https://code.forgejo.org/actions/checkout@v6
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+        uses: https://github.com/shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
           extensions: gd, mbstring, json, curl, xml, mysql, ldap
@@ -32,34 +43,31 @@ jobs:
           echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer packages
-        uses: actions/cache@v4
+        uses: https://code.forgejo.org/actions/cache@v5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ matrix.php }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Start MySQL
-        run: |
-          sudo systemctl start mysql
-
-      - name: Create database & user
-        run: |
-          mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
-          mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bookstack-test';"
-          mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
-          mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
-
       - name: Install composer dependencies
         run: composer install --prefer-dist --no-interaction --ansi
+        env:
+          COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GH_TOKEN }}"}}'
 
       - name: Start migration test
+        env:
+          TEST_DATABASE_URL: 'mysql://bookstack-test:bookstack-test@mysql/bookstack-test'
         run: |
           php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing
 
       - name: Start migration:rollback test
+        env:
+          TEST_DATABASE_URL: 'mysql://bookstack-test:bookstack-test@mysql/bookstack-test'
         run: |
           php${{ matrix.php }} artisan migrate:rollback --force -n --database=mysql_testing
 
       - name: Start migration rerun test
+        env:
+          TEST_DATABASE_URL: 'mysql://bookstack-test:bookstack-test@mysql/bookstack-test'
         run: |
           php${{ matrix.php }} artisan migrate --force -n --database=mysql_testing

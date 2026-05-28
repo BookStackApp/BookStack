@@ -8,6 +8,7 @@ return [
 
     'failed' => 'প্রদত্ত তথ্যনিরূপিত কোন রেকর্ড পাওয়া যায়নি।',
     'throttle' => 'লগইন প্রচেষ্টার সীমা অতিক্রান্ত। দয়া করে :seconds সেকেন্ড পর আবার চেষ্টা করুন।',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'নিবন্ধিত হোন',

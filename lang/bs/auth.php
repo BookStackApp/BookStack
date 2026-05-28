@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Ovi pristupni podaci se ne slažu sa našom evidencijom.',
     'throttle' => 'Preveliki broj pokušaja prijave. Molimo vas da pokušate ponovo za :seconds sekundi.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registruj se',

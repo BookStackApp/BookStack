@@ -27,7 +27,7 @@ export class EditorTableCreator extends EditorUiElement {
             }, rowCells));
         }
 
-        const display = el('div', {class: 'editor-table-creator-display'}, ['0 x 0']);
+        const display = el('div', {class: 'editor-table-creator-display', dir: 'ltr'}, ['0 x 0']);
         const grid = el('div', {class: 'editor-table-creator-grid'}, rows);
         grid.addEventListener('mousemove', event => {
             const cell = (event.target as HTMLElement).closest('.editor-table-creator-cell') as HTMLElement|null;

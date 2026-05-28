@@ -58,7 +58,7 @@ import {
 import {errorOnReadOnly} from '../LexicalUpdates';
 import {
   $applyNodeReplacement,
-  $getCompositionKey,
+  $getCompositionKey, $isInlineElementOrTextNode,
   $setCompositionKey,
   getCachedClassNameArray,
   internalMarkSiblingsAsDirty,
@@ -273,6 +273,16 @@ function wrapElementWith(
   const el = document.createElement(tag);
   el.appendChild(element);
   return el;
+}
+
+function alternatingWhitespaceReplacer(inlineAdjacent: boolean): (match: string) => string {
+  return (match: string): string => {
+    let offset = inlineAdjacent ? 1 : 0;
+    return match
+        .split('')
+        .map((char, i) => (i % 2 === offset ? '\u00A0' : char))
+        .join('');
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -626,10 +636,15 @@ export class TextNode extends LexicalNode {
       'Expected TextNode createDOM to always return a HTMLElement',
     );
 
-    // Wrap up to retain space if head/tail whitespace exists
-    const text = this.getTextContent();
-    if (/^\s|\s$/.test(text)) {
-      element.style.whiteSpace = 'pre-wrap';
+    // Handle head/tail whitespace if it exists
+    let text = this.getTextContent();
+    const prevIsInline = $isInlineElementOrTextNode(this.getPreviousSibling());
+    const nextIsInline = $isInlineElementOrTextNode(this.getNextSibling());
+    if (/^\s/.test(text)) {
+      text = text.replace(/^(\s+)/, alternatingWhitespaceReplacer(prevIsInline));
+    }
+    if (/\s$/.test(text)) {
+      text = text.replace(/(\s+)$/, alternatingWhitespaceReplacer(nextIsInline));
     }
 
     // Strip editor theme classes
@@ -645,6 +660,14 @@ export class TextNode extends LexicalNode {
     // Remove placeholder tag if redundant
     if (element.nodeName === 'SPAN' && !element.getAttribute('style')) {
       element = document.createTextNode(text);
+    } else {
+      // Apply whitespace replaced text to the element
+      // Search down the child chain in the event this element is already wrapped
+      let child: Element = element;
+      while (child.childElementCount > 0) {
+        child = child.children[0];
+      }
+      child.textContent = text;
     }
 
     // This is the only way to properly add support for most clients,
@@ -653,7 +676,7 @@ export class TextNode extends LexicalNode {
     if (this.hasFormat('bold') && originalElementName !== 'strong') {
       element = wrapElementWith(element, 'strong');
     }
-    if (this.hasFormat('italic')) {
+    if (this.hasFormat('italic') && originalElementName !== 'em') {
       element = wrapElementWith(element, 'em');
     }
     if (this.hasFormat('strikethrough')) {

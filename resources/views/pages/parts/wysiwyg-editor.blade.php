@@ -11,7 +11,7 @@
 
 {{--    <div id="lexical-debug" style="white-space: pre-wrap; font-size: 12px; height: 200px; overflow-y: scroll; background-color: #000; padding: 1rem; border-radius: 4px; color: #FFF;"></div>--}}
 
-    <textarea refs="wysiwyg-editor@input" id="html-editor" hidden="hidden"  name="html" rows="5">{{ old('html') ?? $model->html ?? '' }}</textarea>
+    <textarea refs="wysiwyg-editor@input" id="html-editor" hidden="hidden"  name="html" rows="5">{{ (old('html') ?? $model->html ?? '') ?: '<p></p>' }}</textarea>
 </div>
 
 @if($errors->has('html'))

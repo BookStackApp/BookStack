@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Flytta kapitel och sidor inom en bok för att omorganisera dess innehåll. Andra böcker kan läggas till, vilket gör det enkelt att flytta kapitel och sidor mellan böcker. Du kan även ställa in en regel som automatiskt sorterar bokens innehåll vid ändringar.',
     'books_sort_auto_sort' => 'Automatiskt sorteringsalternativ',
     'books_sort_auto_sort_active' => 'Aktiv automatisk sorteringsregel: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
     'books_sort_named' => 'Sortera boken :bookName',
     'books_sort_name' => 'Sortera utifrån namn',
     'books_sort_created' => 'Sortera utifrån skapelse',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Visa/Dölj sidopanel',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Sidtaggar',
     'chapter_tags' => 'Kapiteltaggar',
     'book_tags' => 'Boktaggar',

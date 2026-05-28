@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Die eingegebenen Anmeldedaten sind ungültig.',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuche es in :seconds Sekunden erneut.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registrieren',

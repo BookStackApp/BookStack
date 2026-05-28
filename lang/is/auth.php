@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Þeesi auðkenning er ekki á skrá.',
     'throttle' => 'Of margar tilraunir til innskráningar. Reyndu aftur eftir :seconds sekúndur.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Nýskrá',

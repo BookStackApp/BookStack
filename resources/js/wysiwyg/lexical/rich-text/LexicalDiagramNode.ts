@@ -27,7 +27,7 @@ export class DiagramNode extends DecoratorNode<EditorDecoratorAdapter> {
     }
 
     static clone(node: DiagramNode): DiagramNode {
-        const newNode = new DiagramNode(node.__drawingId, node.__drawingUrl);
+        const newNode = new DiagramNode(node.__drawingId, node.__drawingUrl, node.__key);
         newNode.__id = node.__id;
         return newNode;
     }

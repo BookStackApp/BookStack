@@ -2,6 +2,7 @@
 
 namespace BookStack\Theming;
 
+use BookStack\Util\FilePathNormalizer;
 use ZipArchive;
 
 readonly class ThemeModuleZip
@@ -15,7 +16,46 @@ readonly class ThemeModuleZip
     {
         $zip = new ZipArchive();
         $zip->open($this->path);
-        $zip->extractTo($destinationPath);
+        $prefix = $this->getZipContentPrefix($zip);
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name = $zip->getNameIndex($i);
+            $entryIsDir = str_ends_with($name, "/");
+            if ($entryIsDir) {
+                continue;
+            }
+
+            $stream = $zip->getStreamIndex($i);
+
+            if ($prefix) {
+                if (!str_starts_with($name, $prefix) || $name === $prefix) {
+                    continue;
+                }
+                $name = str_replace($prefix, '', $name);
+            }
+
+            try {
+                $targetPath = $destinationPath . DIRECTORY_SEPARATOR . FilePathNormalizer::normalize($name);
+            } catch (\Exception $exception) {
+                throw new ThemeModuleException("Bad file path found in module ZIP file: {$name}");
+            }
+
+            $targetPathDir = dirname($targetPath);
+            if (!is_dir($targetPathDir)) {
+                $dirCreated = mkdir($targetPathDir, 0777, true);
+                if (!$dirCreated) {
+                    throw new ThemeModuleException("Failed to create directory {$targetPathDir} when extracting module files");
+                }
+            }
+
+            $targetFile = fopen($targetPath, 'w');
+            $written = stream_copy_to_stream($stream, $targetFile);
+            if (!$written) {
+                throw new ThemeModuleException("Failed to write to {$targetPath} when extracting module files");
+            }
+            fclose($targetFile);
+        }
+
         $zip->close();
     }
 
@@ -31,7 +71,8 @@ readonly class ThemeModuleZip
             throw new ThemeModuleException("Unable to open zip file at {$this->path}");
         }
 
-        $moduleJsonText = $zip->getFromName('bookstack-module.json');
+        $prefix = $this->getZipContentPrefix($zip);
+        $moduleJsonText = $zip->getFromName("{$prefix}bookstack-module.json");
         $zip->close();
 
         if ($moduleJsonText === false) {
@@ -94,5 +135,21 @@ readonly class ThemeModuleZip
         $zip->close();
 
         return $totalSize;
+    }
+
+    protected function getZipContentPrefix(ZipArchive $zip): string
+    {
+        $index = $zip->locateName('bookstack-module.json', ZipArchive::FL_NODIR);
+        if ($index === false) {
+            return '';
+        }
+
+        $location = $zip->getNameIndex($index);
+        $pathParts = explode('/', $location);
+        if (count($pathParts) !== 2) {
+            return '';
+        }
+
+        return $pathParts[0] . '/';
     }
 }

@@ -66,6 +66,7 @@ Here are some general best practices when it comes to creating modules:
 ### Distribution Format
 
 Modules are expected to be distributed as a compressed ZIP file, where the ZIP contents follow that of a module folder.
+Contents may optionally be placed within a nested folder inside the ZIP.
 BookStack provides a `php artisan bookstack:install-module` command which allows modules to be installed from these ZIP files, either from a local path or from a web URL.
 Currently, there's a hardcoded total filesize limit of 50MB for module contents installed via this method.
 

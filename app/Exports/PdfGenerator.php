@@ -4,6 +4,8 @@ namespace BookStack\Exports;
 
 use BookStack\Exceptions\PdfExportException;
 use Dompdf\Dompdf;
+use FontLib\Font;
+use Illuminate\Support\Str;
 use Knp\Snappy\Pdf as SnappyPdf;
 use Symfony\Component\Process\Exception\ProcessTimedOutException;
 use Symfony\Component\Process\Process;
@@ -60,10 +62,63 @@ class PdfGenerator
         $domPdf = new Dompdf($options);
         $domPdf->setBasePath(base_path('public'));
 
+        $fontMetrics = $domPdf->getFontMetrics();
+        $userFontfamilies = $this->getUserDomPdfFontFamilies();
+        foreach ($userFontfamilies as $fontFamily => $fonts) {
+            try {
+                $fontMetrics->setFontFamily($fontFamily, $fonts);
+            } catch (\Exception $exception) {
+                $expectedPath = storage_path('fonts/dompdf');
+                throw new PdfExportException("Failed to create required font data in {$expectedPath}, Ensure all content in this location is writable by the web server");
+            }
+        }
+
         $domPdf->loadHTML($this->convertEntities($html));
         $domPdf->render();
 
         return (string) $domPdf->output();
+    }
+
+    /**
+     * @return array<string, array<string, string>>
+     */
+    protected function getUserDomPdfFontFamilies(): array
+    {
+        $fontStore = storage_path('fonts/dompdf');
+        if (!is_dir($fontStore)) {
+            return [];
+        }
+
+        $fontFamilies = [];
+        $fontFiles = glob($fontStore . DIRECTORY_SEPARATOR . '*.ttf');
+        foreach ($fontFiles as $fontFile) {
+            $fontFileName = basename($fontFile, '.ttf');
+            $expectedUfm = $fontStore . DIRECTORY_SEPARATOR . $fontFileName . '.ufm';
+            if (!file_exists($expectedUfm)) {
+                $font = Font::load($fontFile);
+                $font->parse();
+                try {
+                    $font->saveAdobeFontMetrics($expectedUfm);
+                } catch (\Exception $exception) {
+                    throw new PdfExportException("Failed to create required font data at $expectedUfm, Ensure this location is writable by the web server");
+                }
+            }
+
+            $nameParts = explode('-', $fontFileName);
+            if (count($nameParts) === 1 || $nameParts[1] === 'Regular') {
+                $nameParts[1] = 'Normal';
+            }
+
+            $family = trim(strtolower(preg_replace('/([A-Z])/', ' $1', $nameParts[0])));
+            $variation = Str::snake($nameParts[1]);
+            if (!isset($fontFamilies[$family])) {
+                $fontFamilies[$family] = [];
+            }
+
+            $fontFamilies[$family][$variation] = $fontStore . DIRECTORY_SEPARATOR . $fontFileName;
+        }
+
+        return $fontFamilies;
     }
 
     /**

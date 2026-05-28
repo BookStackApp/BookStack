@@ -85,12 +85,12 @@ return [
     'webhook_delete_notification' => 'Вебхук успешно удален',
 
     // Imports
-    'import_create' => 'created import',
-    'import_create_notification' => 'Import successfully uploaded',
+    'import_create' => 'создал импорт',
+    'import_create_notification' => 'Импорт успешно добавлен',
     'import_run' => 'обновлен импорт',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_run_notification' => 'Контент успешно импортирован',
+    'import_delete' => 'удалил импорт',
+    'import_delete_notification' => 'Импорт успешно удален',
 
     // Users
     'user_create' => 'создал пользователя',
@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Пользователь успешно обновлен',
     'user_delete' => 'удалил пользователя',
     'user_delete_notification' => 'Пользователь успешно удален',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'создан API токен',

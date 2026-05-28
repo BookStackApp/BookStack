@@ -10,7 +10,7 @@ class PwaManifestBuilder
         // does not start a session, so we won't have current user context.
         // This was attempted but removed since manifest calls could affect user session
         // history tracking and back redirection.
-        // Context: https://github.com/BookStackApp/BookStack/issues/4649
+        // Context: https://codeberg.org/bookstack/bookstack/issues/4649
         $darkMode = (bool) setting()->getForCurrentUser('dark-mode-enabled');
         $appName = setting('app-name');
 

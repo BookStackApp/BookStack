@@ -16,6 +16,7 @@ use BookStack\References\ReferenceUpdater;
 use BookStack\Sorting\BookSorter;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Util\HtmlDescriptionFilter;
+use BookStack\Util\HtmlToPlainText;
 use Illuminate\Http\UploadedFile;
 
 class BaseRepo
@@ -151,9 +152,10 @@ class BaseRepo
         }
 
         if (isset($input['description_html'])) {
+            $plainTextConverter = new HtmlToPlainText();
             $entity->descriptionInfo()->set(
                 HtmlDescriptionFilter::filterFromString($input['description_html']),
-                html_entity_decode(strip_tags($input['description_html']))
+                $plainTextConverter->convert($input['description_html']),
             );
         } else if (isset($input['description'])) {
             $entity->descriptionInfo()->set('', $input['description']);

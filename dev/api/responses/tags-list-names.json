@@ -1,0 +1,32 @@
+{
+	"data": [
+		{
+			"name": "Category",
+			"values": 8,
+			"usages": 184,
+			"page_count": 3,
+			"chapter_count": 8,
+			"book_count": 171,
+			"shelf_count": 2
+		},
+		{
+			"name": "Review Due",
+			"values": 2,
+			"usages": 2,
+			"page_count": 1,
+			"chapter_count": 0,
+			"book_count": 1,
+			"shelf_count": 0
+		},
+		{
+			"name": "Type",
+			"values": 2,
+			"usages": 2,
+			"page_count": 0,
+			"chapter_count": 1,
+			"book_count": 1,
+			"shelf_count": 0
+		}
+	],
+	"total": 3
+}

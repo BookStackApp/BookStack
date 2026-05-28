@@ -208,6 +208,7 @@ return [
     'role_all' => '全部',
     'role_own' => '擁有',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => '儲存角色',
     'role_users' => '屬於此角色的使用者',
     'role_users_none' => '目前沒有使用者被分配到此角色',
@@ -264,6 +265,9 @@ return [
     'users_mfa_desc' => '設定多重身份驗證為您的帳戶多增加了一道防線',
     'users_mfa_x_methods' => ':count 個措施已配置|:count 個措施已配置',
     'users_mfa_configure' => '方式設置',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => '建立 API 權杖',
@@ -364,6 +368,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

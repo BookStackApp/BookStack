@@ -119,7 +119,7 @@ class SearchIndex
      * Create a scored term array from the given text, where the keys are the terms
      * and the values are their scores.
      *
-     * @return array<string, int>
+     * @return array<string, float>
      */
     protected function generateTermScoreMapFromText(string $text, float $scoreAdjustment = 1): array
     {
@@ -136,7 +136,7 @@ class SearchIndex
      * Create a scored term array from the given HTML, where the keys are the terms
      * and the values are their scores.
      *
-     * @return array<string, int>
+     * @return array<string, float>
      */
     protected function generateTermScoreMapFromHtml(string $html): array
     {
@@ -177,7 +177,7 @@ class SearchIndex
      *
      * @param Tag[] $tags
      *
-     * @return array<string, int>
+     * @return array<string, float>
      */
     protected function generateTermScoreMapFromTags(array $tags): array
     {
@@ -277,9 +277,9 @@ class SearchIndex
      * For the given term data arrays, Merge their contents by term
      * while combining any scores.
      *
-     * @param array<string, int>[] ...$scoreMaps
+     * @param array<string, float>[] ...$scoreMaps
      *
-     * @return array<string, int>
+     * @return array<string, float>
      */
     protected function mergeTermScoreMaps(...$scoreMaps): array
     {

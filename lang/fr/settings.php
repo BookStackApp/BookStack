@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tous',
     'role_own' => 'Propres',
     'role_controlled_by_asset' => 'Contrôlé par les ressources les ayant envoyés',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Enregistrer le rôle',
     'role_users' => 'Utilisateurs ayant ce rôle',
     'role_users_none' => 'Aucun utilisateur avec ce rôle actuellement',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Configurer l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
     'users_mfa_x_methods' => ':count méthode configurée|:count méthodes configurées',
     'users_mfa_configure' => 'Méthode de configuration',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Créer un nouveau jeton API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovaque',
         'sl' => 'Slovène',
         'sv' => 'Suédois',
+        'th' => 'ภาษาไทย',
         'tr' => 'Turc',
         'uk' => 'Ukrainien',
         'uz' => 'O‘zbekcha',

@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Brugeren blev opdateret',
     'user_delete' => 'slettet bruger',
     'user_delete_notification' => 'Brugeren blev fjernet',
+    'user_mfa_reset' => 'nulstil MFA for brugeren',
+    'user_mfa_reset_notification' => 'Nulstilling af metoder til multifaktor-godkendelse',
 
     // API Tokens
     'api_token_create' => 'oprettet API token',

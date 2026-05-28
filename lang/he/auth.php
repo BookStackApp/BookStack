@@ -8,6 +8,7 @@ return [
 
     'failed' => 'פרטי ההתחברות אינם תואמים את הנתונים שלנו.',
     'throttle' => 'נסיונות התחברות מהירים מדי, יש להמתין :seconds שניות ולנסות שנית.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'הרשמה למערכת',

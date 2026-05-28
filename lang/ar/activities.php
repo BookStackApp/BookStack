@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'تم تحديث المستخدم بنجاح',
     'user_delete' => 'المستخدم المحذوف',
     'user_delete_notification' => 'تم إزالة المستخدم بنجاح',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'تم إنشاء رمز واجهة برمجة التطبيقات -API-',

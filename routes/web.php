@@ -251,6 +251,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/users/{id}', [UserControllers\UserController::class, 'edit']);
     Route::put('/settings/users/{id}', [UserControllers\UserController::class, 'update']);
     Route::delete('/settings/users/{id}', [UserControllers\UserController::class, 'destroy']);
+    Route::delete('/settings/users/{id}/mfa', [UserControllers\UserController::class, 'resetMfa']);
 
     // User Account
     Route::get('/my-account', [UserControllers\UserAccountController::class, 'redirect']);

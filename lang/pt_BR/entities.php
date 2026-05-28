@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Mova capítulos e páginas de um livro para reorganizar seu conteúdo. É possível acrescentar outros livros, o que permite uma movimentação fácil de capítulos e páginas entre livros. Opcionalmente, uma regra de ordenação automática pode ser definida para ordenar automaticamente o conteúdo deste livro após alterações.',
     'books_sort_auto_sort' => 'Opção de ordenação automática',
     'books_sort_auto_sort_active' => 'Ordenação automática ativa: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Regras de ordenação automática podem ser criadas na área de configurações "Lista e Classificação" por um usuário com as permissões relevantes.',
     'books_sort_named' => 'Ordenar Livro :bookName',
     'books_sort_name' => 'Ordernar por Nome',
     'books_sort_created' => 'Ordenar por Data de Criação',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => '',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Marcadores de Página',
     'chapter_tags' => 'Marcadores de Capítulo',
     'book_tags' => 'Marcadores de Livro',

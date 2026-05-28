@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'Ο Χρήστης ενημερώθηκε με επιτυχία',
     'user_delete' => 'διαγραμμένος χρήστης',
     'user_delete_notification' => 'Ο Χρήστης αφαιρέθηκε επιτυχώς',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'created API token',

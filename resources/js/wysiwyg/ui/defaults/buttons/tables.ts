@@ -7,6 +7,7 @@ import insertColumnAfterIcon from "@icons/editor/table-insert-column-after.svg";
 import insertColumnBeforeIcon from "@icons/editor/table-insert-column-before.svg";
 import insertRowAboveIcon from "@icons/editor/table-insert-row-above.svg";
 import insertRowBelowIcon from "@icons/editor/table-insert-row-below.svg";
+import tableHeaderIcon from "@icons/editor/table-header.svg";
 import {EditorUiContext} from "../../framework/core";
 import {$getSelection, BaseSelection} from "lexical";
 import {
@@ -14,7 +15,7 @@ import {
     $deleteTableRow__EXPERIMENTAL,
     $insertTableColumn__EXPERIMENTAL,
     $insertTableRow__EXPERIMENTAL, $isTableCellNode,
-    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellNode,
+    $isTableNode, $isTableRowNode, $isTableSelection, $unmergeCell, TableCellHeaderStates, TableCellNode,
 } from "@lexical/table";
 import {$getNodeFromSelection, $selectionContainsNodeType} from "../../../utils/selection";
 import {$getParentOfType} from "../../../utils/nodes";
@@ -23,7 +24,7 @@ import {
     $clearTableFormatting,
     $clearTableSizes, $getTableFromSelection,
     $getTableRowsFromSelection,
-    $mergeTableCellsInSelection
+    $mergeTableCellsInSelection, $toggleRowCellHeaderState
 } from "../../../utils/tables";
 import {
     $copySelectedColumnsToClipboard,
@@ -237,6 +238,28 @@ export const pasteRowAfter: EditorButtonDefinition = {
     },
     isActive: neverActive,
     isDisabled: (selection) => cellNotSelected(selection) || isRowClipboardEmpty(),
+};
+
+export const toggleRowHeaders: EditorButtonDefinition = {
+    label: 'Row header',
+    format: 'small',
+    icon: tableHeaderIcon,
+    action(context: EditorUiContext, button) {
+        context.editor.update(() => {
+            const row = $getNodeFromSelection($getSelection(), $isTableCellNode)?.getParent();
+            if (!$isTableRowNode(row)) {
+                return;
+            }
+
+            const isNowHeader = $toggleRowCellHeaderState(row);
+            button.setActiveState(isNowHeader);
+        });
+    },
+    isActive: (selection) => {
+        return $selectionContainsNodeType(selection, (node) => {
+            return $isTableCellNode(node) && node.getHeaderStyles() !== TableCellHeaderStates.NO_STATUS;
+        });
+    }
 };
 
 export const cutColumn: EditorButtonDefinition = {

@@ -207,6 +207,7 @@ return [
     'role_all' => 'Tot',
     'role_own' => 'Propriu',
     'role_controlled_by_asset' => 'Controlat de activele pe care sunt încărcate',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Salvare rol',
     'role_users' => 'Utilizatori cu acest rol',
     'role_users_none' => 'Nici un utilizator nu este asociat acestui rol',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Configurare autentificarea multi-factor ca un nivel suplimentar de securitate pentru contul tău de utilizator.',
     'users_mfa_x_methods' => ':count metodă configurată|:count metode configurate',
     'users_mfa_configure' => 'Configurare metode',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Creare token API',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

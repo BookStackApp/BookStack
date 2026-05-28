@@ -6,7 +6,7 @@
  *
  */
 
-import type {ListNode, ListType} from './';
+import type {ListNode, ListType} from './LexicalListNode';
 import type {
   BaseSelection,
   DOMConversionMap,
@@ -32,10 +32,11 @@ import {
 } from 'lexical';
 import invariant from 'lexical/shared/invariant';
 
-import {$createListNode, $isListNode} from './';
+import {$createListNode, $isListNode} from './LexicalListNode';
 import {mergeLists} from './formatList';
 import {isNestedListNode} from './utils';
 import {el} from "../../utils/dom";
+import {$escapeListAtItem} from "../../utils/lists";
 
 export type SerializedListItemNode = Spread<
   {
@@ -273,21 +274,13 @@ export class ListItemNode extends ElementNode {
     restoreSelection = true,
   ): ListItemNode | ParagraphNode | null {
 
-    if (this.getTextContent().trim() === '' && this.isLastChild()) {
-      const list = this.getParentOrThrow<ListNode>();
-      const parentListItem = list.getParent();
-      if ($isListItemNode(parentListItem)) {
-        // Un-nest list item if empty nested item
-        parentListItem.insertAfter(this);
-        this.selectStart();
-        return null;
-      } else {
-        // Insert empty paragraph after list if adding after last empty child
-        const paragraph = $createParagraphNode();
-        list.insertAfter(paragraph, restoreSelection);
-        this.remove();
-        return paragraph;
-      }
+    // If we're adding a new empty item, and coming from an empty item,
+    // take that as a desire to break from the current list level.
+    // Intended to be a bit more lenient on the last list item hence ignores whitespace,
+    // which allows empty items to be listed with just a space (except for last).
+    const textContent = this.getTextContent();
+    if (textContent === '' || (textContent.trim() === '' && this.isLastChild())) {
+        return $escapeListAtItem(this);
     }
 
     const newElement = $createListItemNode(

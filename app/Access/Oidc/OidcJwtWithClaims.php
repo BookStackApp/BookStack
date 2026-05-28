@@ -102,12 +102,12 @@ class OidcJwtWithClaims implements ProvidesClaims
     protected function validateTokenStructure(): void
     {
         foreach (['header', 'payload'] as $prop) {
-            if (empty($this->$prop) || !is_array($this->$prop)) {
+            if (empty($this->$prop)) {
                 throw new OidcInvalidTokenException("Could not parse out a valid {$prop} within the provided token");
             }
         }
 
-        if (empty($this->signature) || !is_string($this->signature)) {
+        if (empty($this->signature)) {
             throw new OidcInvalidTokenException('Could not parse out a valid signature within the provided token');
         }
     }

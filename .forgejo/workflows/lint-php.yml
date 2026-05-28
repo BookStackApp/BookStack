@@ -1,6 +1,7 @@
 name: lint-php
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '**.php'
@@ -11,14 +12,16 @@ on:
 jobs:
   build:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
-    runs-on: ubuntu-24.04
+    runs-on: docker
+    container:
+      image: docker.io/library/node:24-trixie
     steps:
-    - uses: actions/checkout@v4
+    - uses: https://code.forgejo.org/actions/checkout@v6
 
     - name: Setup PHP
-      uses: shivammathur/setup-php@v2
+      uses: https://github.com/shivammathur/setup-php@v2
       with:
-        php-version: 8.3
+        php-version: 8.5
         tools: phpcs
 
     - name: Run formatting check

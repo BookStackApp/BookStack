@@ -69,8 +69,9 @@ Source: zeit/arg
 Link: zeit/arg
 -----------
 argparse
-License: Python-2.0
+License: MIT
 License File: node_modules/argparse/LICENSE
+Copyright: Copyright (C) 2012 by Vitaly Puzrin
 Source: nodeca/argparse
 Link: nodeca/argparse
 -----------
@@ -80,34 +81,6 @@ License File: node_modules/array-buffer-byte-length/LICENSE
 Copyright: Copyright (c) 2023 Inspect JS
 Source: git+https://github.com/inspect-js/array-buffer-byte-length.git
 Link: https://github.com/inspect-js/array-buffer-byte-length#readme
------------
-array-includes
-License: MIT
-License File: node_modules/array-includes/LICENSE
-Copyright: Copyright (C) 2015 Jordan Harband
-Source: git://github.com/es-shims/array-includes.git
-Link: git://github.com/es-shims/array-includes.git
------------
-array.prototype.findlastindex
-License: MIT
-License File: node_modules/array.prototype.findlastindex/LICENSE
-Copyright: Copyright (c) 2021 ECMAScript Shims
-Source: git+https://github.com/es-shims/Array.prototype.findLastIndex.git
-Link: https://github.com/es-shims/Array.prototype.findLastIndex#readme
------------
-array.prototype.flat
-License: MIT
-License File: node_modules/array.prototype.flat/LICENSE
-Copyright: Copyright (c) 2017 ECMAScript Shims
-Source: git://github.com/es-shims/Array.prototype.flat.git
-Link: git://github.com/es-shims/Array.prototype.flat.git
------------
-array.prototype.flatmap
-License: MIT
-License File: node_modules/array.prototype.flatmap/LICENSE
-Copyright: Copyright (c) 2017 ECMAScript Shims
-Source: git://github.com/es-shims/Array.prototype.flatMap.git
-Link: git://github.com/es-shims/Array.prototype.flatMap.git
 -----------
 arraybuffer.prototype.slice
 License: MIT
@@ -169,9 +142,14 @@ Link: https://github.com/jestjs/jest.git
 balanced-match
 License: MIT
 License File: node_modules/balanced-match/LICENSE.md
-Copyright: Copyright (c) 2013 Julian Gruber &lt;******@************.***&gt;
 Source: git://github.com/juliangruber/balanced-match.git
-Link: https://github.com/juliangruber/balanced-match
+Link: git://github.com/juliangruber/balanced-match.git
+-----------
+baseline-browser-mapping
+License: Apache-2.0
+License File: node_modules/baseline-browser-mapping/LICENSE.txt
+Source: git+https://github.com/web-platform-dx/baseline-browser-mapping.git
+Link: git+https://github.com/web-platform-dx/baseline-browser-mapping.git
 -----------
 binary-extensions
 License: MIT
@@ -184,9 +162,8 @@ Link: sindresorhus/binary-extensions
 brace-expansion
 License: MIT
 License File: node_modules/brace-expansion/LICENSE
-Copyright: Copyright (c) 2013 Julian Gruber <******@************.***>
-Source: git://github.com/juliangruber/brace-expansion.git
-Link: https://github.com/juliangruber/brace-expansion
+Source: git+ssh://git@github.com/juliangruber/brace-expansion.git
+Link: git+ssh://git@github.com/juliangruber/brace-expansion.git
 -----------
 braces
 License: MIT
@@ -472,8 +449,8 @@ Link: git://github.com/ljharb/define-properties.git
 detect-libc
 License: Apache-2.0
 License File: node_modules/detect-libc/LICENSE
-Source: git://github.com/lovell/detect-libc
-Link: git://github.com/lovell/detect-libc
+Source: git://github.com/lovell/detect-libc.git
+Link: git://github.com/lovell/detect-libc.git
 -----------
 detect-newline
 License: MIT
@@ -488,12 +465,6 @@ License File: node_modules/diff/LICENSE
 Copyright: Copyright (c) 2009-2015, Kevin Decker <********@*****.***>
 Source: git://github.com/kpdecker/jsdiff.git
 Link: git://github.com/kpdecker/jsdiff.git
------------
-doctrine
-License: Apache-2.0
-License File: node_modules/doctrine/LICENSE
-Source: eslint/doctrine
-Link: https://github.com/eslint/doctrine
 -----------
 dunder-proto
 License: MIT
@@ -511,8 +482,8 @@ electron-to-chromium
 License: ISC
 License File: node_modules/electron-to-chromium/LICENSE
 Copyright: Copyright 2018 Kilian Valkhof
-Source: https://github.com/kilian/electron-to-chromium/
-Link: https://github.com/kilian/electron-to-chromium/
+Source: git+https://github.com/kilian/electron-to-chromium.git
+Link: git+https://github.com/kilian/electron-to-chromium.git
 -----------
 emittery
 License: MIT
@@ -577,13 +548,6 @@ Copyright: Copyright (c) 2022 ECMAScript Shims
 Source: git+https://github.com/es-shims/es-set-tostringtag.git
 Link: https://github.com/es-shims/es-set-tostringtag#readme
 -----------
-es-shim-unscopables
-License: MIT
-License File: node_modules/es-shim-unscopables/LICENSE
-Copyright: Copyright (c) 2022 Jordan Harband
-Source: git+https://github.com/ljharb/es-shim-unscopables.git
-Link: https://github.com/ljharb/es-shim-unscopables#readme
------------
 es-to-primitive
 License: MIT
 License File: node_modules/es-to-primitive/LICENSE
@@ -611,27 +575,6 @@ License File: node_modules/escape-string-regexp/license
 Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
 Source: sindresorhus/escape-string-regexp
 Link: sindresorhus/escape-string-regexp
------------
-eslint-import-resolver-node
-License: MIT
-License File: node_modules/eslint-import-resolver-node/LICENSE
-Copyright: Copyright (c) 2015 Ben Mosher
-Source: https://github.com/import-js/eslint-plugin-import
-Link: https://github.com/import-js/eslint-plugin-import
------------
-eslint-module-utils
-License: MIT
-License File: node_modules/eslint-module-utils/LICENSE
-Copyright: Copyright (c) 2015 Ben Mosher
-Source: git+https://github.com/import-js/eslint-plugin-import.git
-Link: https://github.com/import-js/eslint-plugin-import#readme
------------
-eslint-plugin-import
-License: MIT
-License File: node_modules/eslint-plugin-import/LICENSE
-Copyright: Copyright (c) 2015 Ben Mosher
-Source: https://github.com/import-js/eslint-plugin-import
-Link: https://github.com/import-js/eslint-plugin-import
 -----------
 eslint-scope
 License: BSD-2-Clause
@@ -813,6 +756,13 @@ License File: node_modules/functions-have-names/LICENSE
 Copyright: Copyright (c) 2019 Jordan Harband
 Source: git+https://github.com/inspect-js/functions-have-names.git
 Link: https://github.com/inspect-js/functions-have-names#readme
+-----------
+generator-function
+License: MIT
+License File: node_modules/generator-function/LICENSE.md
+Copyright: Copyright (c) 2015 Tiancheng “Timothy” Gu
+Source: git+https://github.com/TimothyGu/generator-function.git
+Link: https://github.com/TimothyGu/generator-function#readme
 -----------
 gensync
 License: MIT
@@ -1025,13 +975,6 @@ License File: node_modules/immutable/LICENSE
 Copyright: Copyright (c) 2014-present, Lee Byron and other contributors.
 Source: git://github.com/immutable-js/immutable-js.git
 Link: https://immutable-js.com
------------
-import-fresh
-License: MIT
-License File: node_modules/import-fresh/license
-Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
-Source: sindresorhus/import-fresh
-Link: sindresorhus/import-fresh
 -----------
 import-local
 License: MIT
@@ -1529,7 +1472,7 @@ License: MIT
 License File: node_modules/js-yaml/LICENSE
 Copyright: Copyright (C) 2011-2015 by Vitaly Puzrin
 Source: nodeca/js-yaml
-Link: nodeca/js-yaml
+Link: https://github.com/nodeca/js-yaml
 -----------
 jsdom
 License: MIT
@@ -1645,12 +1588,6 @@ License File: node_modules/lodash.memoize/LICENSE
 Source: lodash/lodash
 Link: https://lodash.com/
 -----------
-lodash.merge
-License: MIT
-License File: node_modules/lodash.merge/LICENSE
-Source: lodash/lodash
-Link: https://lodash.com/
------------
 lodash.throttle
 License: MIT
 License File: node_modules/lodash.throttle/LICENSE
@@ -1741,11 +1678,10 @@ Source: sindresorhus/mimic-fn
 Link: sindresorhus/mimic-fn
 -----------
 minimatch
-License: ISC
-License File: node_modules/minimatch/LICENSE
-Copyright: Copyright (c) Isaac Z. Schlueter and Contributors
-Source: git://github.com/isaacs/minimatch.git
-Link: git://github.com/isaacs/minimatch.git
+License: BlueOak-1.0.0
+License File: node_modules/minimatch/LICENSE.md
+Source: git@github.com:isaacs/minimatch
+Link: git@github.com:isaacs/minimatch
 -----------
 minimist
 License: MIT
@@ -1754,9 +1690,8 @@ Source: git://github.com/minimistjs/minimist.git
 Link: https://github.com/minimistjs/minimist
 -----------
 minipass
-License: ISC
-License File: node_modules/minipass/LICENSE
-Copyright: Copyright (c) 2017-2023 npm, Inc., Isaac Z. Schlueter, and Contributors
+License: BlueOak-1.0.0
+License File: node_modules/minipass/LICENSE.md
 Source: https://github.com/isaacs/minipass
 Link: https://github.com/isaacs/minipass
 -----------
@@ -1872,27 +1807,6 @@ Copyright: Copyright (c) 2014 Jordan Harband
 Source: git://github.com/ljharb/object.assign.git
 Link: git://github.com/ljharb/object.assign.git
 -----------
-object.fromentries
-License: MIT
-License File: node_modules/object.fromentries/LICENSE
-Copyright: Copyright (c) 2018 Jordan Harband
-Source: git://github.com/es-shims/Object.fromEntries.git
-Link: git://github.com/es-shims/Object.fromEntries.git
------------
-object.groupby
-License: MIT
-License File: node_modules/object.groupby/LICENSE
-Copyright: Copyright (c) 2023 ECMAScript Shims
-Source: git+https://github.com/es-shims/Object.groupBy.git
-Link: https://github.com/es-shims/Object.groupBy#readme
------------
-object.values
-License: MIT
-License File: node_modules/object.values/LICENSE
-Copyright: Copyright (c) 2015 Jordan Harband
-Source: git://github.com/es-shims/Object.values.git
-Link: git://github.com/es-shims/Object.values.git
------------
 once
 License: ISC
 License File: node_modules/once/LICENSE
@@ -1947,13 +1861,6 @@ License: BlueOak-1.0.0
 License File: node_modules/package-json-from-dist/LICENSE.md
 Source: git+https://github.com/isaacs/package-json-from-dist.git
 Link: git+https://github.com/isaacs/package-json-from-dist.git
------------
-parent-module
-License: MIT
-License File: node_modules/parent-module/license
-Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (sindresorhus.com)
-Source: sindresorhus/parent-module
-Link: sindresorhus/parent-module
 -----------
 parse-json
 License: MIT
@@ -2159,8 +2066,8 @@ resolve
 License: MIT
 License File: node_modules/resolve/LICENSE
 Copyright: Copyright (c) 2012 James Halliday
-Source: git://github.com/browserify/resolve.git
-Link: git://github.com/browserify/resolve.git
+Source: ssh://github.com/browserify/resolve.git
+Link: ssh://github.com/browserify/resolve.git
 -----------
 rrweb-cssom
 License: MIT
@@ -2405,7 +2312,7 @@ Link: sindresorhus/string-width
 string-width
 License: MIT
 License File: node_modules/string-width/license
-Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (sindresorhus.com)
+Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
 Source: sindresorhus/string-width
 Link: sindresorhus/string-width
 -----------
@@ -2569,13 +2476,6 @@ License File: node_modules/ts-node/LICENSE
 Copyright: Copyright (c) 2014 Blake Embrey (*****@***********.***)
 Source: git://github.com/TypeStrong/ts-node.git
 Link: https://typestrong.org/ts-node
------------
-tsconfig-paths
-License: MIT
-License File: node_modules/tsconfig-paths/LICENSE
-Copyright: Copyright (c) 2016 Jonas Kello
-Source: https://github.com/dividab/tsconfig-paths
-Link: https://github.com/dividab/tsconfig-paths
 -----------
 type-check
 License: MIT
@@ -2810,7 +2710,7 @@ Link: chalk/wrap-ansi
 wrap-ansi
 License: MIT
 License File: node_modules/wrap-ansi/license
-Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (sindresorhus.com)
+Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
 Source: chalk/wrap-ansi
 Link: chalk/wrap-ansi
 -----------
@@ -2891,12 +2791,6 @@ License File: node_modules/yocto-queue/license
 Copyright: Copyright (c) Sindre Sorhus <************@*****.***> (https://sindresorhus.com)
 Source: sindresorhus/yocto-queue
 Link: sindresorhus/yocto-queue
------------
-@ampproject/remapping
-License: Apache-2.0
-License File: node_modules/@ampproject/remapping/LICENSE
-Source: git+https://github.com/ampproject/remapping.git
-Link: git+https://github.com/ampproject/remapping.git
 -----------
 @asamuzakjp/css-color
 License: MIT
@@ -3172,15 +3066,15 @@ Link: https://demurgos.github.io/v8-coverage
 License: MIT
 License File: node_modules/@codemirror/autocomplete/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/autocomplete.git
-Link: https://github.com/codemirror/autocomplete.git
+Source: git+https://github.com/codemirror/autocomplete.git
+Link: git+https://github.com/codemirror/autocomplete.git
 -----------
 @codemirror/commands
 License: MIT
 License File: node_modules/@codemirror/commands/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/commands.git
-Link: https://github.com/codemirror/commands.git
+Source: git+https://github.com/codemirror/commands.git
+Link: git+https://github.com/codemirror/commands.git
 -----------
 @codemirror/lang-css
 License: MIT
@@ -3200,8 +3094,8 @@ Link: https://github.com/codemirror/lang-html.git
 License: MIT
 License File: node_modules/@codemirror/lang-javascript/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/lang-javascript.git
-Link: https://github.com/codemirror/lang-javascript.git
+Source: git+https://github.com/codemirror/lang-javascript.git
+Link: git+https://github.com/codemirror/lang-javascript.git
 -----------
 @codemirror/lang-json
 License: MIT
@@ -3235,8 +3129,8 @@ Link: https://github.com/codemirror/lang-xml.git
 License: MIT
 License File: node_modules/@codemirror/language/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/language.git
-Link: https://github.com/codemirror/language.git
+Source: git+https://github.com/codemirror/language.git
+Link: git+https://github.com/codemirror/language.git
 -----------
 @codemirror/legacy-modes
 License: MIT
@@ -3249,22 +3143,22 @@ Link: https://github.com/codemirror/legacy-modes.git
 License: MIT
 License File: node_modules/@codemirror/lint/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/lint.git
-Link: https://github.com/codemirror/lint.git
+Source: git+https://github.com/codemirror/lint.git
+Link: git+https://github.com/codemirror/lint.git
 -----------
 @codemirror/search
 License: MIT
 License File: node_modules/@codemirror/search/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/search.git
-Link: https://github.com/codemirror/search.git
+Source: git+https://github.com/codemirror/search.git
+Link: git+https://github.com/codemirror/search.git
 -----------
 @codemirror/state
 License: MIT
 License File: node_modules/@codemirror/state/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/state.git
-Link: https://github.com/codemirror/state.git
+Source: git+https://github.com/codemirror/state.git
+Link: git+https://github.com/codemirror/state.git
 -----------
 @codemirror/theme-one-dark
 License: MIT
@@ -3277,8 +3171,8 @@ Link: https://github.com/codemirror/theme-one-dark.git
 License: MIT
 License File: node_modules/@codemirror/view/LICENSE
 Copyright: Copyright (C) 2018-2021 by Marijn Haverbeke <******@*********.******> and others
-Source: https://github.com/codemirror/view.git
-Link: https://github.com/codemirror/view.git
+Source: git+https://github.com/codemirror/view.git
+Link: git+https://github.com/codemirror/view.git
 -----------
 @cspotcode/source-map-support
 License: MIT
@@ -3357,12 +3251,6 @@ License: Apache-2.0
 License File: node_modules/@eslint/core/LICENSE
 Source: git+https://github.com/eslint/rewrite.git
 Link: https://github.com/eslint/rewrite/tree/main/packages/core#readme
------------
-@eslint/eslintrc
-License: MIT
-License File: node_modules/@eslint/eslintrc/LICENSE
-Source: eslint/eslintrc
-Link: https://github.com/eslint/eslintrc#readme
 -----------
 @eslint/js
 License: MIT
@@ -3567,6 +3455,13 @@ Copyright: Copyright 2024 Justin Ridgewell <******@*********.****>
 Source: git+https://github.com/jridgewell/sourcemaps.git
 Link: https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping
 -----------
+@jridgewell/remapping
+License: MIT
+License File: node_modules/@jridgewell/remapping/LICENSE
+Copyright: Copyright 2024 Justin Ridgewell <******@*********.****>
+Source: git+https://github.com/jridgewell/sourcemaps.git
+Link: https://github.com/jridgewell/sourcemaps/tree/main/packages/remapping
+-----------
 @jridgewell/resolve-uri
 License: MIT
 License File: node_modules/@jridgewell/resolve-uri/LICENSE
@@ -3704,18 +3599,12 @@ License: MIT
 Source: git+https://github.com/un-ts/pkgr.git
 Link: https://github.com/un-ts/pkgr/blob/master/packages/core
 -----------
-@rtsao/scc
-License: MIT
-License File: node_modules/@rtsao/scc/LICENSE
-Copyright: Copyright (c) 2019 Ryan Tsao
-Source: rtsao/scc
-Link: rtsao/scc
------------
 @sinclair/typebox
 License: MIT
 License File: node_modules/@sinclair/typebox/license
-Source: https://github.com/sinclairzx81/typebox
-Link: https://github.com/sinclairzx81/typebox
+Copyright: Copyright (c) 2017-2026 Haydn Paterson
+Source: https://github.com/sinclairzx81/typebox-legacy
+Link: https://github.com/sinclairzx81/typebox-legacy
 -----------
 @sinonjs/commons
 License: BSD-3-Clause
@@ -3798,6 +3687,13 @@ Copyright: Copyright (c) Microsoft Corporation.
 Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
 Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/babel__traverse
 -----------
+@types/esrecurse
+License: MIT
+License File: node_modules/@types/esrecurse/LICENSE
+Copyright: Copyright (c) Microsoft Corporation.
+Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
+Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/esrecurse
+-----------
 @types/estree
 License: MIT
 License File: node_modules/@types/estree/LICENSE
@@ -3846,11 +3742,6 @@ License File: node_modules/@types/json-schema/LICENSE
 Copyright: Copyright (c) Microsoft Corporation.
 Source: https://github.com/DefinitelyTyped/DefinitelyTyped.git
 Link: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/json-schema
------------
-@types/json5
-License: MIT
-Source: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
-Link: https://www.github.com/DefinitelyTyped/DefinitelyTyped.git
 -----------
 @types/linkify-it
 License: MIT

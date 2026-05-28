@@ -17,7 +17,14 @@ use ReflectionMethod;
 
 class ApiDocsGenerator
 {
+    /**
+     * @var array<string, ReflectionClass>
+     */
     protected array $reflectionClasses = [];
+
+    /**
+     * @var array<string, ApiController>
+     */
     protected array $controllerClasses = [];
 
     /**
@@ -107,7 +114,6 @@ class ApiDocsGenerator
      */
     protected function getBodyParamsFromClass(string $className, string $methodName): ?array
     {
-        /** @var ApiController $class */
         $class = $this->controllerClasses[$className] ?? null;
         if ($class === null) {
             $class = app()->make($className);
@@ -153,7 +159,7 @@ class ApiDocsGenerator
         $matches = [];
         preg_match_all('/^\s*?\*\s?($|((?![\/@\s]).*?))$/m', $comment, $matches);
 
-        $text = implode(' ', $matches[1] ?? []);
+        $text = implode(' ', $matches[1]);
         return str_replace('  ', "\n", $text);
     }
 
@@ -189,11 +195,12 @@ class ApiDocsGenerator
     protected function getFlatApiRoutes(): Collection
     {
         return collect(Route::getRoutes()->getRoutes())->filter(function ($route) {
-            return strpos($route->uri, 'api/') === 0;
+            return str_starts_with($route->uri, 'api/');
         })->map(function ($route) {
             [$controller, $controllerMethod] = explode('@', $route->action['uses']);
             $baseModelName = explode('.', explode('/', $route->uri)[1])[0];
-            $shortName = $baseModelName . '-' . $controllerMethod;
+            $controllerMethodKebab = Str::kebab($controllerMethod);
+            $shortName = $baseModelName . '-' . $controllerMethodKebab;
 
             return [
                 'name'                    => $shortName,
@@ -201,7 +208,7 @@ class ApiDocsGenerator
                 'method'                  => $route->methods[0],
                 'controller'              => $controller,
                 'controller_method'       => $controllerMethod,
-                'controller_method_kebab' => Str::kebab($controllerMethod),
+                'controller_method_kebab' => $controllerMethodKebab,
                 'base_model'              => $baseModelName,
             ];
         });

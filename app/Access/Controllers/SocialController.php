@@ -67,7 +67,7 @@ class SocialController extends Controller
         if ($request->has('error') && $request->has('error_description')) {
             throw new SocialSignInException(trans('errors.social_login_bad_response', [
                 'socialAccount' => $socialDriver,
-                'error'         => $request->get('error_description'),
+                'error'         => $request->input('error_description'),
             ]), '/login');
         }
 

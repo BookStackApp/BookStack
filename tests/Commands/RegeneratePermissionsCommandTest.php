@@ -16,7 +16,7 @@ class RegeneratePermissionsCommandTest extends TestCase
         $page = $this->entities->page();
         $editor = $this->users->editor();
         $role = $editor->roles()->first();
-        $this->permissions->addEntityPermission($page, ['view'], $role);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $role);
         JointPermission::query()->truncate();
 
         $this->assertDatabaseMissing('joint_permissions', ['entity_id' => $page->id]);

@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Αυτά τα διαπιστευτήρια δεν ταιριάζουν με τα αρχεία μας.',
     'throttle' => 'Πάρα πολλές προσπάθειες σύνδεσης. Δοκιμάστε ξανά σε :δευτερόλεπτα.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Εγγραφείτε',

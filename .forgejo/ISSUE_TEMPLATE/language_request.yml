@@ -1,6 +1,6 @@
 name: Language Request
 description: Request a new language to be added to Crowdin for you to translate
-labels: [":earth_africa: Translations"]
+labels: ["Focus: Translations"]
 assignees:
   - ssddanbrown
 body:

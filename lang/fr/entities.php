@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Déplacer les pages et chapitres au sein d’un livre pour en réorganiser le contenu. D’autres livres peuvent être ajoutés pour faciliter le déplacement des pages et chapitres entre les livres. Facultativement, une règle de tri automatique peut être mise en place afin de trier le livre lorsqu’il est édité.',
     'books_sort_auto_sort' => 'Option de tri automatique',
     'books_sort_auto_sort_active' => 'Tri automatique actif : :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Les règles de tri automatiques peuvent être créées dans la section « Listes et tri » des préférences par un utilisateur disposant des autorisations appropriées.',
     'books_sort_named' => 'Trier le livre :bookName',
     'books_sort_name' => 'Trier par le nom',
     'books_sort_created' => 'Trier par la date de création',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Afficher/masquer la barre latérale',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Étiquettes de la page',
     'chapter_tags' => 'Étiquettes du chapitre',
     'book_tags' => 'Étiquettes du livre',

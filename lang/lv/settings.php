@@ -207,6 +207,7 @@ return [
     'role_all' => 'Visi',
     'role_own' => 'Savi',
     'role_controlled_by_asset' => 'Kontrolē resurss, uz ko tie ir augšupielādēti',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Saglabāt grupu',
     'role_users' => 'Lietotāji šajā grupā',
     'role_users_none' => 'Pagaidām neviens lietotājs nav pievienots šai grupai',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Iestati vairākfaktoru autentifikāciju kā papildus drošības līmeni tavam lietotāja kontam.',
     'users_mfa_x_methods' => ':count metode iestatīta|:count metodes iestatītas',
     'users_mfa_configure' => 'Iestatīt metodes',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'Izveidot API žetonu',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

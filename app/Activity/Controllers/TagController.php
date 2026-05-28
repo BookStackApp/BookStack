@@ -24,9 +24,9 @@ class TagController extends Controller
             'usages' => trans('entities.tags_usages'),
         ]);
 
-        $nameFilter = $request->get('name', '');
+        $nameFilter = $request->input('name', '');
         $tags = $this->tagRepo
-            ->queryWithTotals($listOptions, $nameFilter)
+            ->queryWithTotalsForList($listOptions, $nameFilter)
             ->paginate(50)
             ->appends(array_filter(array_merge($listOptions->getPaginationAppends(), [
                 'name'   => $nameFilter,
@@ -46,7 +46,7 @@ class TagController extends Controller
      */
     public function getNameSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search', '');
+        $searchTerm = $request->input('search', '');
         $suggestions = $this->tagRepo->getNameSuggestions($searchTerm);
 
         return response()->json($suggestions);
@@ -57,8 +57,8 @@ class TagController extends Controller
      */
     public function getValueSuggestions(Request $request)
     {
-        $searchTerm = $request->get('search', '');
-        $tagName = $request->get('name', '');
+        $searchTerm = $request->input('search', '');
+        $tagName = $request->input('name', '');
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
 
         return response()->json($suggestions);

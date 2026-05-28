@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Kredentzial hauek ez dira egokiak.',
     'throttle' => 'Login saiakera kopurua pasa duzu. Mesedez, saiatu berriz :seconds segundu barru.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Izena eman',

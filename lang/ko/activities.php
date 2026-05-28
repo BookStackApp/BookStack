@@ -99,6 +99,8 @@ return [
     'user_update_notification' => '사용자가 업데이트되었습니다',
     'user_delete' => '사용자 삭제',
     'user_delete_notification' => '사용자가 삭제되었습니다',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => '생성된 API 토큰',

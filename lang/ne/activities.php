@@ -99,6 +99,8 @@ return [
     'user_update_notification' => 'प्रयोगकर्ता सफलतापूर्वक अद्यावधिक गरियो',
     'user_delete' => 'प्रयोगकर्ता हटाइयो',
     'user_delete_notification' => 'प्रयोगकर्ता सफलतापूर्वक हटाइयो',
+    'user_mfa_reset' => 'reset MFA for user',
+    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
 
     // API Tokens
     'api_token_create' => 'API टोकन सिर्जना गरियो',

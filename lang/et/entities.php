@@ -173,6 +173,7 @@ return [
     'books_sort_desc' => 'Liiguta raamatu sees peatükke ja lehti, et selle sisu ümber organiseerida. Saad lisada teisi raamatuid, mis võimaldab peatükke ja lehti lihtsasti raamatute vahel liigutada. Lisaks saad määrata automaatse sorteerimise reegli, et selle raamatu sisu muudatuste puhul automaatselt järjestada.',
     'books_sort_auto_sort' => 'Automaatne sorteerimine',
     'books_sort_auto_sort_active' => 'Automaatne sorteerimine aktiivne: :sortName',
+    'books_sort_auto_sort_creation_hint' => 'Automaatse sorteerimise reegleid saab lisada vajalike õigustega kasutaja "Loendid ja järjestamine" seadetes.',
     'books_sort_named' => 'Sorteeri raamat :bookName',
     'books_sort_name' => 'Sorteeri nime järgi',
     'books_sort_created' => 'Sorteeri loomisaja järgi',
@@ -330,6 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Kuva/peida külgriba',
+    'page_contents' => 'Page Contents',
+    'page_contents_none' => 'No headings were found in the page content.',
+    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
     'page_tags' => 'Lehe sildid',
     'chapter_tags' => 'Peatüki sildid',
     'book_tags' => 'Raamatu sildid',

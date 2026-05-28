@@ -8,6 +8,7 @@ return [
 
     'failed' => 'As credenciais fornecidas não puderam ser validadas em nossos registros.',
     'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Criar Conta',
@@ -89,7 +90,7 @@ return [
     'mfa_setup_action' => 'Configurações',
     'mfa_backup_codes_usage_limit_warning' => 'Você tem menos de 5 códigos de backup restantes, Por favor, gere e armazene um novo conjunto antes de esgotar suas opções de códigos de backup para evitar estar bloqueado para fora da sua conta.',
     'mfa_option_totp_title' => 'Aplicativo Móvel',
-    'mfa_option_totp_desc' => 'Para usar a autenticação multi-fator, você precisará de um aplicativo móvel que suporte TOTP como o Google Authenticator, Authy ou o Microsoft Authenticator.',
+    'mfa_option_totp_desc' => 'Para usar a autenticação multi-fator, você precisará de um aplicativo móvel que suporte TOTP como o Google Authenticator, Authy, Microsoft Authenticator ou Proton Authenticator.',
     'mfa_option_backup_codes_title' => 'Códigos de backup',
     'mfa_option_backup_codes_desc' => 'Gera um conjunto de códigos de backup de uso único que você inserirá no login para verificar sua identidade. Certifique-se de armazená-los em um local seguro e protegido.',
     'mfa_gen_confirm_and_enable' => 'Confirmar e habilitar',

@@ -334,10 +334,13 @@ export function $convertTableCellNodeElement(
     width = parseFloat(domNode_.style.width);
   }
 
+  let isHeader = nodeName === 'th';
+  if (domNode instanceof HTMLElement && domNode.closest('thead')) {
+    isHeader = true;
+  }
+
   const tableCellNode = $createTableCellNode(
-      nodeName === 'th'
-          ? TableCellHeaderStates.ROW
-          : TableCellHeaderStates.NO_STATUS,
+      isHeader ? TableCellHeaderStates.ROW : TableCellHeaderStates.NO_STATUS,
       domNode_.colSpan,
       width,
   );

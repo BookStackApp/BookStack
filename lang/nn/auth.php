@@ -8,6 +8,7 @@ return [
 
     'failed' => 'Desse detaljane samsvarar ikkje med det me har på bok.',
     'throttle' => 'For mange forsøk, prøv på nytt om :seconds sekunder.',
+    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'Registrer deg',

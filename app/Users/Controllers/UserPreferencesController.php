@@ -23,7 +23,7 @@ class UserPreferencesController extends Controller
             return $this->redirectToRequest($request);
         }
 
-        $view = $request->get('view');
+        $view = $request->input('view');
         if (!in_array($view, ['grid', 'list'])) {
             $view = 'list';
         }
@@ -44,8 +44,8 @@ class UserPreferencesController extends Controller
             return $this->redirectToRequest($request);
         }
 
-        $sort = substr($request->get('sort') ?: 'name', 0, 50);
-        $order = $request->get('order') === 'desc' ? 'desc' : 'asc';
+        $sort = substr($request->input('sort') ?: 'name', 0, 50);
+        $order = $request->input('order') === 'desc' ? 'desc' : 'asc';
 
         $sortKey = $type . '_sort';
         $orderKey = $type . '_sort_order';
@@ -76,7 +76,7 @@ class UserPreferencesController extends Controller
             return response('Invalid key', 500);
         }
 
-        $newState = $request->get('expand', 'false');
+        $newState = $request->input('expand', 'false');
         setting()->putForCurrentUser('section_expansion#' . $type, $newState);
 
         return response('', 204);

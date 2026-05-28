@@ -17,29 +17,14 @@ class ApiTokenGuard implements Guard
     use GuardHelpers;
 
     /**
-     * The request instance.
-     */
-    protected $request;
-
-    /**
-     * @var LoginService
-     */
-    protected $loginService;
-
-    /**
      * The last auth exception thrown in this request.
-     *
-     * @var ApiAuthException
      */
-    protected $lastAuthException;
+    protected ApiAuthException|null $lastAuthException = null;
 
-    /**
-     * ApiTokenGuard constructor.
-     */
-    public function __construct(Request $request, LoginService $loginService)
-    {
-        $this->request = $request;
-        $this->loginService = $loginService;
+    public function __construct(
+        protected Request $request,
+        protected LoginService $loginService
+    ) {
     }
 
     /**
@@ -67,7 +52,7 @@ class ApiTokenGuard implements Guard
     }
 
     /**
-     * Determine if current user is authenticated. If not, throw an exception.
+     * Determine if the current user is authenticated. If not, throw an exception.
      *
      * @throws ApiAuthException
      *
@@ -121,7 +106,7 @@ class ApiTokenGuard implements Guard
             throw new ApiAuthException(trans('errors.api_no_authorization_found'));
         }
 
-        if (strpos($authToken, ':') === false || strpos($authToken, 'Token ') !== 0) {
+        if (!str_contains($authToken, ':') || !str_starts_with($authToken, 'Token ')) {
             throw new ApiAuthException(trans('errors.api_bad_authorization_format'));
         }
     }
@@ -155,7 +140,7 @@ class ApiTokenGuard implements Guard
     /**
      * {@inheritdoc}
      */
-    public function validate(array $credentials = [])
+    public function validate(array $credentials = []): bool
     {
         if (empty($credentials['id']) || empty($credentials['secret'])) {
             return false;
@@ -175,7 +160,7 @@ class ApiTokenGuard implements Guard
     /**
      * "Log out" the currently authenticated user.
      */
-    public function logout()
+    public function logout(): void
     {
         $this->user = null;
     }

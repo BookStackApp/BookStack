@@ -207,6 +207,7 @@ return [
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',
+    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Rol Opslaan',
     'role_users' => 'Gebruikers in deze rol',
     'role_users_none' => 'Geen enkele gebruiker heeft deze rol',
@@ -263,6 +264,9 @@ return [
     'users_mfa_desc' => 'Stel meervoudige verificatie in als extra beveiligingslaag voor je gebruikersaccount.',
     'users_mfa_x_methods' => ':count methode geconfigureerd|:count methoden geconfigureerd',
     'users_mfa_configure' => 'Configureer methoden',
+    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
+    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
+    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
 
     // API Tokens
     'user_api_token_create' => 'API-token aanmaken',
@@ -363,6 +367,7 @@ return [
         'sk' => 'Slovensky (Slowaaks)',
         'sl' => 'Slovenščina (Sloveens)',
         'sv' => 'Svenska (Zweeds)',
+        'th' => 'ภาษาไทย',
         'tr' => 'Türkçe (Turks)',
         'uk' => 'Українська (Oekraïens)',
         'uz' => 'Oezbeeks',

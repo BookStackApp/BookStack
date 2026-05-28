@@ -118,6 +118,8 @@ enum Permission: string
     case PageViewAll = 'page-view-all';
     case PageViewOwn = 'page-view-own';
 
+    case RevisionViewAll = 'revision-view-all';
+
     /**
      * Get the generic permissions which may be queried for entities.
      */
