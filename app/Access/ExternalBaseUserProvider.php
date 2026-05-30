@@ -42,7 +42,7 @@ class ExternalBaseUserProvider implements UserProvider
     /**
      * Retrieve a user by the given credentials.
      */
-    public function retrieveByCredentials(array $credentials): ?Authenticatable
+    public function retrieveByCredentials(array $credentials): ?User
     {
         return User::query()
             ->where('external_auth_id', $credentials['external_auth_id'])

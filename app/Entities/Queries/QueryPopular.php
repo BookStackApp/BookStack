@@ -6,6 +6,7 @@ use BookStack\Activity\Models\View;
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +21,7 @@ class QueryPopular
 
     public function run(int $count, int $page, array $filterModels): Collection
     {
+        /** @var Builder<View> $query */
         $query = $this->permissions
             ->restrictEntityRelationQuery(View::query(), 'views', 'viewable_id', 'viewable_type')
             ->select('*', 'viewable_id', 'viewable_type', DB::raw('SUM(views) as view_count'))

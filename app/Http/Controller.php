@@ -7,6 +7,7 @@ use BookStack\App\Model;
 use BookStack\Exceptions\NotifyException;
 use BookStack\Facades\Activity;
 use BookStack\Permissions\Permission;
+use BookStack\Users\Models\OwnableInterface;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
@@ -80,7 +81,7 @@ abstract class Controller extends BaseController
     /**
      * Check the current user's permissions against an ownable item otherwise throw an exception.
      */
-    protected function checkOwnablePermission(string|Permission $permission, Model $ownable, string $redirectLocation = '/'): void
+    protected function checkOwnablePermission(string|Permission $permission, Model&OwnableInterface $ownable, string $redirectLocation = '/'): void
     {
         if (!userCan($permission, $ownable)) {
             $this->showPermissionError($redirectLocation);

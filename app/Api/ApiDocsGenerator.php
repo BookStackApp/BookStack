@@ -138,8 +138,8 @@ class ApiDocsGenerator
             return $validation;
         }
 
-        if (is_object($validation) && method_exists($validation, '__toString')) {
-            return strval($validation);
+        if (is_object($validation) && $validation instanceof \Stringable) {
+            return $validation->__toString();
         }
 
         if ($validation instanceof Password) {
