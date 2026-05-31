@@ -11,6 +11,7 @@ use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -27,6 +28,7 @@ class ActivityQueries
      */
     public function latest(int $count = 20, int $page = 0): array
     {
+        /** @var Collection<int, Activity> $activityList */
         $activityList = $this->permissions
             ->restrictEntityRelationQuery(Activity::query(), 'activities', 'loggable_id', 'loggable_type')
             ->orderBy('created_at', 'desc')
@@ -83,6 +85,7 @@ class ActivityQueries
      */
     public function userActivity(User $user, int $count = 20, int $page = 0): array
     {
+        /** @var Collection<int, Activity> $activityList */
         $activityList = $this->permissions
             ->restrictEntityRelationQuery(Activity::query(), 'activities', 'loggable_id', 'loggable_type')
             ->orderBy('created_at', 'desc')

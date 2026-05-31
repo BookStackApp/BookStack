@@ -25,9 +25,13 @@ class CustomListItemRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
+        if (!($node instanceof ListItem)) {
+            return null;
+        }
+
         $listItem = $this->baseRenderer->render($node, $childRenderer);
 
-        if ($node instanceof ListItem && $this->startsTaskListItem($node) && $listItem instanceof HtmlElement) {
+        if ($this->startsTaskListItem($node) && $listItem instanceof HtmlElement) {
             $listItem->setAttribute('class', 'task-list-item');
         }
 

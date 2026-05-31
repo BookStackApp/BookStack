@@ -421,28 +421,41 @@ class PageContent
      */
     protected function headerNodesToLevelList(DOMNodeList $nodeList): array
     {
-        $tree = collect($nodeList)->map(function (DOMElement $header) {
+        $minLevel = 6;
+
+        $headerDetails = array_map(function (DOMNode $header) use (&$minLevel) {
+            if (!$header instanceof DOMElement) {
+                return null;
+            }
+
             $text = trim(str_replace("\xc2\xa0", ' ', $header->nodeValue));
             $text = mb_substr($text, 0, 100);
 
+            if (empty($text)) {
+                return null;
+            }
+
+            $level = intval(str_replace('h', '', $header->nodeName));
+            if ($level < $minLevel) {
+                $minLevel = $level;
+            }
+
             return [
                 'nodeName' => strtolower($header->nodeName),
-                'level'    => intval(str_replace('h', '', $header->nodeName)),
+                'level'    => $level,
                 'link'     => '#' . $header->getAttribute('id'),
                 'text'     => $text,
             ];
-        })->filter(function ($header) {
-            return mb_strlen($header['text']) > 0;
-        });
+        }, [...$nodeList]);
+
+        $filtered = array_values(array_filter($headerDetails));
 
         // Shift headers if only smaller headers have been used
-        $levelChange = ($tree->pluck('level')->min() - 1);
-        $tree = $tree->map(function ($header) use ($levelChange) {
-            $header['level'] -= ($levelChange);
+        $levelChange = ($minLevel - 1);
+        foreach ($filtered as $index => $header) {
+            $filtered[$index]['level'] -= $levelChange;
+        }
 
-            return $header;
-        });
-
-        return $tree->toArray();
+        return $filtered;
     }
 }

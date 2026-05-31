@@ -177,7 +177,7 @@ class PageRevisionController extends Controller
      */
     public function destroyUserDraft(string $pageId)
     {
-        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
+        $page = $this->pageQueries->findVisibleByIdOrFail(intval($pageId));
         $this->revisionRepo->deleteDraftsForCurrentUser($page);
 
         return response('', 200);
