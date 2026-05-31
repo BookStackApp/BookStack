@@ -101,6 +101,7 @@ class JointPermissionBuilder
 
     /**
      * Get a query for fetching a book with its children.
+     * @return Builder<Book>
      */
     protected function bookFetchQuery(): Builder
     {
@@ -117,9 +118,11 @@ class JointPermissionBuilder
 
     /**
      * Build joint permissions for the given book and role combinations.
+     * @param EloquentCollection<int, Book> $books
      */
     protected function buildJointPermissionsForBooks(EloquentCollection $books, array $roles, bool $deleteOld = false): void
     {
+        /** @var EloquentCollection<int, Entity> $entities */
         $entities = clone $books;
 
         /** @var Book $book */

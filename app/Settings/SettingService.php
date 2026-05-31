@@ -243,9 +243,9 @@ class SettingService
     /**
      * Convert a setting key into a user-specific key.
      */
-    protected function userKey(string $userId, string $key = ''): string
+    protected function userKey(int $userId, string $key = ''): string
     {
-        return 'user:' . $userId . ':' . $key;
+        return 'user:' . strval($userId) . ':' . $key;
     }
 
     /**
@@ -267,7 +267,7 @@ class SettingService
     /**
      * Delete settings for a given user id.
      */
-    public function deleteUserSettings(string $userId): void
+    public function deleteUserSettings(int $userId): void
     {
         Setting::query()
             ->where('setting_key', 'like', $this->userKey($userId) . '%')
