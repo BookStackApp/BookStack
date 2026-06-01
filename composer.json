@@ -40,6 +40,7 @@
         "socialiteproviders/okta": "^4.2",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^2.0.0",
+        "web-auth/webauthn-lib": "^5.3",
         "xemlock/htmlpurifier-html5": "^0.1.12"
     },
     "require-dev": {

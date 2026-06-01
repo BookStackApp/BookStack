@@ -319,6 +319,8 @@ Route::middleware('mfa-setup')->group(function () {
     Route::post('/mfa/totp/confirm', [AccessControllers\MfaTotpController::class, 'confirm']);
     Route::get('/mfa/backup_codes/generate', [AccessControllers\MfaBackupCodesController::class, 'generate']);
     Route::post('/mfa/backup_codes/confirm', [AccessControllers\MfaBackupCodesController::class, 'confirm']);
+    Route::get('/mfa/hardware_key/generate', [AccessControllers\MfaHardwareKeyController::class, 'generate']);
+    Route::post('/mfa/hardware_key/confirm', [AccessControllers\MfaHardwareKeyController::class, 'confirm']);
 });
 Route::middleware('guest')->group(function () {
     Route::get('/mfa/verify', [AccessControllers\MfaController::class, 'verify']);

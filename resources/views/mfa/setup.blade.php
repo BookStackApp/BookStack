@@ -8,7 +8,7 @@
             <p class="mb-none"> {{ trans('auth.mfa_setup_desc') }}</p>
 
             <div class="setting-list">
-                @foreach(['totp', 'backup_codes'] as $method)
+                @foreach(\BookStack\Access\Mfa\MfaValue::allMethods() as $method)
                     @include('mfa.parts.setup-method-row', ['method' => $method])
                 @endforeach
             </div>
