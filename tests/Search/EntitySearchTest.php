@@ -233,6 +233,18 @@ class EntitySearchTest extends TestCase
         $this->get('/search?term=' . urlencode('danzorbhsing {created_before:2037-01-01}'))->assertDontSee($page->name);
     }
 
+    public function test_search_tags_with_unexpected_numeric_values_does_not_cause_error()
+    {
+        $pageA = $this->entities->page();
+        $pageA->name = 'MyTestPageWithAwkwardNumericTagValue';
+        $pageA->save();
+        $pageA->tags()->save(new Tag(['name' => 'Count', 'value' => '1E999']));
+
+        $resp = $this->asEditor()->get('/search?term=' . urlencode('[Count=1E999]'));
+        $resp->assertStatus(200);
+        $resp->assertSee('MyTestPageWithAwkwardNumericTagValue');
+    }
+
     public function test_entity_selector_search()
     {
         $page = $this->entities->newPage(['name' => 'my ajax search test', 'html' => 'ajax test']);

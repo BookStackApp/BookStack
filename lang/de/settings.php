@@ -207,7 +207,7 @@ return [
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
     'role_controlled_by_asset' => 'Abhängig von dem Asset, in das sie hochgeladen werden',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Kontrolliert durch die Berechtigung zum Löschen einer Seite',
     'role_save' => 'Rolle speichern',
     'role_users' => 'Dieser Rolle zugeordnete Benutzer',
     'role_users_none' => 'Derzeit sind diesem Rollentyp keine Benutzer zugewiesen',
@@ -265,7 +265,7 @@ return [
     'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
     'users_mfa_configure' => 'Methoden konfigurieren',
     'users_mfa_reset' => 'Setze Multifaktor-Authentifizierung zurück',
-    'users_mfa_reset_desc' => 'Dies wird alle konfigurierten Multifaktor-Authentifizierungsmethoden für diesen Nutzer zurücksetzen. Falls Multifaktor-Authentifizierung für eine seiner Rollen erforderlich ist, werden sie aufgefordert, neue Methoden beim nächsten Login zu konfigurieren.',
+    'users_mfa_reset_desc' => 'Dies wird alle konfigurierten Multifaktor-Authentifizierungsmethoden für diesen Nutzer zurücksetzen. Falls Multifaktor-Authentifizierung für eine seiner Rollen erforderlich ist, wird der Nutzer aufgefordert, neue Methoden beim nächsten Login zu konfigurieren.',
     'users_mfa_reset_confirm' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode für diesen Nutzer zurücksetzen möchten?',
 
     // API Tokens

@@ -173,7 +173,7 @@ return [
     'books_sort_desc' => 'Kapitel und Seiten innerhalb eines Buches verschieben, um dessen Inhalt zu reorganisieren. Andere Bücher können hinzugefügt werden, was das Verschieben von Kapiteln und Seiten zwischen Büchern erleichtert. Optional kann eine automatische Sortierregel erstellt werden, um den Inhalt dieses Buches nach Änderungen automatisch zu sortieren.',
     'books_sort_auto_sort' => 'Auto-Sortieroption',
     'books_sort_auto_sort_active' => 'Automatische Sortierung aktiv: :sortName',
-    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
+    'books_sort_auto_sort_creation_hint' => 'Regeln für die automatische Sortierung können von einem Benutzer mit den entsprechenden Berechtigungen im Einstellungsbereich "Listen & Sortieren" erstellt werden.',
     'books_sort_named' => 'Buch ":bookName" sortieren',
     'books_sort_name' => 'Sortieren nach Namen',
     'books_sort_created' => 'Sortieren nach Erstellungsdatum',
@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Seitenleiste umschalten',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'Seiteninhalt',
+    'page_contents_none' => 'Es wurden keine Überschriften im Seiteninhalt gefunden.',
+    'page_contents_info' => 'Das Inhaltsmenü wird aus allen auf der Seite verwendeten Überschriften generiert.',
     'page_tags' => 'Seiten-Schlagwörter',
     'chapter_tags' => 'Kapitel-Schlagwörter',
     'book_tags' => 'Buch-Schlagwörter',

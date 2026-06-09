@@ -22,6 +22,7 @@ jobs:
       - name: crowdin action
         uses: https://github.com/crowdin/github-action@v2
         with:
+          crowdin_branch_name: development
           upload_sources: true
           upload_translations: false
           download_translations: true

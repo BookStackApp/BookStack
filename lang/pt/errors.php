@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Não pode excluir o único administrador',
     'users_cannot_delete_guest' => 'Não pode excluir o usuário convidado',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Não foi possível criar o utilizador, pois o envio do endereço eletrónico de convite falhou',
 
     // Roles
     'role_cannot_be_edited' => 'Este cargo não pode ser editado',
@@ -106,7 +106,7 @@ return [
     'back_soon' => 'Voltaremos em breve.',
 
     // Import
-    'import_zip_cant_read' => 'Could not read ZIP file.',
+    'import_zip_cant_read' => 'Não foi possível ler o ficheiro ZIP.',
     'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
     'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
     'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',

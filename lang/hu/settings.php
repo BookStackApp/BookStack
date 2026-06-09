@@ -367,7 +367,7 @@ return [
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
         'sv' => 'Svenska',
-        'th' => 'ภาษาไทย',
+        'th' => 'Thai',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

@@ -159,6 +159,38 @@ class AttachmentTest extends TestCase
         $this->files->deleteAllAttachmentFiles();
     }
 
+    public function test_attachment_update_without_permission()
+    {
+        $page = $this->entities->page();
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->asViewer()->put("attachments/{$attachment->id}", [
+            'attachment_edit_name' => 'My new attachment name',
+            'attachment_edit_url'  => 'https://test.example.com',
+        ]);
+
+        $this->assertPermissionError($resp);
+    }
+
+    public function test_attachment_update_without_permission_with_validation_errors()
+    {
+        $page = $this->entities->page();
+        /** @var Attachment $attachment */
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->asViewer()->put("attachments/{$attachment->id}", [
+            'attachment_edit_name' => '',
+            'attachment_edit_url'  => 'https://test.example.com',
+        ]);
+
+        $this->assertPermissionError($resp);
+        $resp->assertDontSee($attachment->path);
+    }
+
     public function test_file_deletion()
     {
         $page = $this->entities->page();

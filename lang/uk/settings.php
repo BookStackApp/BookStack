@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Спочатку розділи',
     'sort_rule_op_chapters_last' => 'Розділи останні',
     'sorting_page_limits' => 'Обмеження відображення сторінок',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => 'Кількість елементів для відображення в різних списках в системі. Зазвичай менша кількість буде більш продуктивною, в той час як більша кількість уникає необхідність натискання на кілька сторінок. Використання кратного 6 рекомендується.',
 
     // Maintenance settings
     'maint' => 'Обслуговування',
@@ -207,7 +207,7 @@ return [
     'role_all' => 'Все',
     'role_own' => 'Власне',
     'role_controlled_by_asset' => 'Контролюється за об\'єктом, до якого вони завантажуються',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Керується правами доступу для видалення сторінки',
     'role_save' => 'Зберегти роль',
     'role_users' => 'Користувачі в цій ролі',
     'role_users_none' => 'Наразі жоден користувач не призначений для цієї ролі',
@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'Двофакторна аутентифікація додає ще один рівень безпеки для вашого облікового запису.',
     'users_mfa_x_methods' => ':count метод налаштовано|:count методів налаштовано',
     'users_mfa_configure' => 'Налаштувати Методи',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Скинути методи багатофакторної автентифікації',
+    'users_mfa_reset_desc' => 'Це скине та очистить всі налаштовані методи багатофакторної аутентифікації для цього користувача. Якщо багатофакторна аутентифікація обов\'язкова будь-якою зі своїх ролей, то вона буде запитана налаштувати нові способи при наступному вході в систему.',
+    'users_mfa_reset_confirm' => 'Ви впевнені, що хочете скинути багатофакторну аутентифікацію для цього користувача?',
 
     // API Tokens
     'user_api_token_create' => 'Створити токен API',

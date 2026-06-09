@@ -8,7 +8,7 @@ return [
 
     'failed' => 'De indtastede brugeroplysninger stemmer ikke overens med vores registreringer.',
     'throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'For mange mislykkede loginforsøg. Prøv igen om :seconds sekunder.',
 
     // Login & Register
     'sign_up' => 'Registrer',

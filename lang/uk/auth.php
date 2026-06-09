@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Цей обліковий запис не знайдено.',
     'throttle' => 'Забагато спроб входу в систему. Будь ласка, спробуйте ще раз через :seconds секунд.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'Занадто багато спроб багатофакторної перевірки. Будь ласка, спробуйте ще раз через :seconds секунд.',
 
     // Login & Register
     'sign_up' => 'Реєстрація',

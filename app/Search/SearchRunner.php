@@ -290,7 +290,7 @@ class SearchRunner
                 $query->where('name', '=', $tagParts['name']);
             }
 
-            if (is_numeric($tagParts['value']) && $tagParts['operator'] !== 'like') {
+            if (is_numeric($tagParts['value']) && is_finite($tagParts['value']) && $tagParts['operator'] !== 'like') {
                 // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
                 // search the value as a string which prevents being able to do number-based operations
                 // on the tag values. We ensure it has a numeric value and then cast it just to be sure.
