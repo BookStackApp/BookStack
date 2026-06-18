@@ -1,13 +1,15 @@
 <?php
 
-namespace BookStack\Util;
+namespace BookStack\Util\HtmlPurifier;
 
 use BookStack\App\AppVersion;
+use BookStack\Util\HtmlPurifier\Filters\UriLimitFileProtocolToAnchors;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use HTMLPurifier_DefinitionCache_Serializer;
 use HTMLPurifier_HTML5Config;
 use HTMLPurifier_HTMLDefinition;
+use HTMLPurifier_URIDefinition;
 
 /**
  * Provides a configured HTML Purifier instance.
@@ -33,7 +35,13 @@ class ConfiguredHtmlPurifier
 
         $htmlDef = $config->getDefinition('HTML', true, true);
         if ($htmlDef instanceof HTMLPurifier_HTMLDefinition) {
-            $this->configureDefinition($htmlDef);
+            $this->configureHtmlDefinition($htmlDef);
+        }
+
+        /** @var \HTMLPurifier_URIDefinition $uriDef */
+        $uriDef = $config->getDefinition('URI', true, true);
+        if ($uriDef instanceof HTMLPurifier_URIDefinition) {
+            $this->configureUriDefinition($uriDef);
         }
 
         $this->purifier = new HTMLPurifier($config);
@@ -91,7 +99,7 @@ class ConfiguredHtmlPurifier
          // $config->set('Cache.DefinitionImpl', null); // Disable cache during testing
     }
 
-    public function configureDefinition(HTMLPurifier_HTMLDefinition $definition): void
+    protected function configureHtmlDefinition(HTMLPurifier_HTMLDefinition $definition): void
     {
         // Allow the object element
         $definition->addElement(
@@ -149,6 +157,11 @@ class ConfiguredHtmlPurifier
 
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
+    }
+
+    protected function configureUriDefinition(HTMLPurifier_URIDefinition $definition): void
+    {
+        $definition->registerFilter(new UriLimitFileProtocolToAnchors());
     }
 
     public function purify(string $html): string

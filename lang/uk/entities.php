@@ -173,7 +173,7 @@ return [
     'books_sort_desc' => 'Перекладіть розділи та сторінки в межах книги, щоб реорганізувати вміст. Інші книги можна додати, що дозволяє легко переміщати глави та сторінки між книгами. При необхідності правило автоматичного сортування може бути встановлено для автоматичного сортування вмісту цієї книги при змінах.',
     'books_sort_auto_sort' => 'Опція автоматичного сортування',
     'books_sort_auto_sort_active' => 'Автосортування : :sortName',
-    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
+    'books_sort_auto_sort_creation_hint' => 'Правила автоматичного сортування можуть бути створені в області налаштувань "Списки і сортування" за допомогою користувача з відповідними дозволами.',
     'books_sort_named' => 'Сортувати книгу :bookName',
     'books_sort_name' => 'Сортувати за назвою',
     'books_sort_created' => 'Сортувати за датою створення',
@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Перемикач бічної панелі',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'Вміст сторінки',
+    'page_contents_none' => 'У тексті сторінки не знайдено заголовків.',
+    'page_contents_info' => 'Вміст меню створюється з будь-яких форматів заголовків, використовуваних для сторінки.',
     'page_tags' => 'Теги сторінки',
     'chapter_tags' => 'Теги розділів',
     'book_tags' => 'Теги книг',

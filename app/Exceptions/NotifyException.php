@@ -6,18 +6,22 @@ use Exception;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
+/**
+ * An exception that is thrown to notify the user of something which went wrong.
+ * Typically these should be translated messages since they will be shown to the end user
+ * via a pop up notification error message in the UI.
+ *
+ * This exception is not intended to be used for internal system/application errors,
+ * and therefore will not be logged by the exception handler.
+ */
 class NotifyException extends Exception implements Responsable, HttpExceptionInterface
 {
-    public $message;
-    public string $redirectLocation;
-    protected int $status;
-
-    public function __construct(string $message, string $redirectLocation = '/', int $status = 500)
-    {
+    public function __construct(
+        string $message,
+        public string $redirectLocation = '/',
+        protected int $status = 500
+    ) {
         $this->message = $message;
-        $this->redirectLocation = $redirectLocation;
-        $this->status = $status;
-
         parent::__construct();
     }
 

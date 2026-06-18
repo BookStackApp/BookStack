@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Diese Anmeldedaten stimmen nicht mit unseren Aufzeichnungen überein.',
     'throttle' => 'Zu viele Anmeldeversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'Zu viele Multi-Faktor-Verifizierungsversuche. Bitte versuchen Sie es in :seconds Sekunden erneut.',
 
     // Login & Register
     'sign_up' => 'Registrieren',

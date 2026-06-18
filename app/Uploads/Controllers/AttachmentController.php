@@ -107,6 +107,9 @@ class AttachmentController extends Controller
     {
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
+        $this->checkOwnablePermission(Permission::PageView, $attachment->page);
+        $this->checkOwnablePermission(Permission::PageUpdate, $attachment->page);
+        $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         try {
             $this->validate($request, [
@@ -119,10 +122,6 @@ class AttachmentController extends Controller
                 'errors'     => new MessageBag($exception->errors()),
             ]), 422);
         }
-
-        $this->checkOwnablePermission(Permission::PageView, $attachment->page);
-        $this->checkOwnablePermission(Permission::PageUpdate, $attachment->page);
-        $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         $attachment = $this->attachmentService->updateFile($attachment, [
             'name' => $request->input('attachment_edit_name'),
@@ -142,6 +141,10 @@ class AttachmentController extends Controller
     public function attachLink(Request $request)
     {
         $pageId = $request->input('attachment_link_uploaded_to');
+        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
+
+        $this->checkPermission(Permission::AttachmentCreateAll);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         try {
             $this->validate($request, [
@@ -155,11 +158,6 @@ class AttachmentController extends Controller
                 'errors' => new MessageBag($exception->errors()),
             ]), 422);
         }
-
-        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-
-        $this->checkPermission(Permission::AttachmentCreateAll);
-        $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $attachmentName = $request->input('attachment_link_name');
         $link = $request->input('attachment_link_url');

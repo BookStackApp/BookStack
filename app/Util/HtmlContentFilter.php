@@ -2,6 +2,7 @@
 
 namespace BookStack\Util;
 
+use BookStack\Util\HtmlPurifier\ConfiguredHtmlPurifier;
 use DOMAttr;
 use DOMElement;
 use DOMNodeList;

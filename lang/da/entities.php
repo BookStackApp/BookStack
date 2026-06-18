@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Sidebjælke til/fra',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'Sideindhold',
+    'page_contents_none' => 'Ingen overskrifter blev fundet i sidens indhold.',
+    'page_contents_info' => 'Indholdsmenuen er genereret fra alle kursformater, der bruges på siden.',
     'page_tags' => 'Sidetags',
     'chapter_tags' => 'Kapiteltags',
     'book_tags' => 'Bogtags',

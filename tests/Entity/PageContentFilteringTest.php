@@ -464,6 +464,11 @@ HTML;
             '<div style="background:#FF0000;left:0;color:#00FFEE;">Hello!</div>' => '<div style="background:#FF0000;color:#00FFEE;">Hello!</div>',
             '<div style="color:#00FFEE;">Hello!<style>testinghello!</style></div>' => '<div style="color:#00FFEE;">Hello!</div>',
             '<div drawio-diagram="5332" another-attr="cat">Hello!</div>' => '<div drawio-diagram="5332">Hello!</div>',
+            '<iframe src="file://link/to/file" id="bkmrk-file-iframe"></iframe>' => '<iframe id="bkmrk-file-iframe"></iframe>',
+            '<embed src="file://link/to/file" id="bkmrk-file-embed"></embed>' => '<embed id="bkmrk-file-embed">',
+            '<object data="file://link/to/file" id="bkmrk-file-object"></object>' => '<object id="bkmrk-file-object">',
+            '<div id="bkmrk-file-img"><img src="file://link/to/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"></div>',
+            '<div id="bkmrk-file-img"><img srcset="file://link/to/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"></div>',
         ];
 
         config()->set('app.content_filtering', 'a');
@@ -476,6 +481,7 @@ HTML;
             $resp = $this->get($page->getUrl());
 
             $resp->assertSee($expected, false);
+            $resp->assertDontSee($input, false);
         }
     }
 
@@ -484,6 +490,7 @@ HTML;
         $testCasesExpectedByInput = [
             '<p><a href="https://example.com" target="_blank">New tab linkydoodle</a></p>',
             '<p><a href="https://example.com/user/1" data-mention-user-id="5">@mentionusertext</a></p>',
+            '<p><a href="file://link/to/file">Link to file</a></p>',
             '<details><summary>Hello</summary><p>Mydetailshere</p></details>',
         ];
 

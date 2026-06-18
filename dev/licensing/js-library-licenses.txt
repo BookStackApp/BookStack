@@ -482,8 +482,8 @@ electron-to-chromium
 License: ISC
 License File: node_modules/electron-to-chromium/LICENSE
 Copyright: Copyright 2018 Kilian Valkhof
-Source: git+https://github.com/kilian/electron-to-chromium.git
-Link: git+https://github.com/kilian/electron-to-chromium.git
+Source: git+https://github.com/Kilian/electron-to-chromium.git
+Link: git+https://github.com/Kilian/electron-to-chromium.git
 -----------
 emittery
 License: MIT
@@ -860,7 +860,7 @@ License: MIT
 License File: node_modules/handlebars/LICENSE
 Copyright: Copyright (C) 2011-2019 by Yehuda Katz
 Source: https://github.com/handlebars-lang/handlebars.js.git
-Link: https://www.handlebarsjs.com/
+Link: https://handlebarsjs.com/
 -----------
 has-bigints
 License: MIT
@@ -1662,13 +1662,6 @@ License File: node_modules/merge-stream/LICENSE
 Copyright: Copyright (c) Stephen Sugden <**@*************.***> (stephensugden.com)
 Source: grncdr/merge-stream
 Link: grncdr/merge-stream
------------
-micromatch
-License: MIT
-License File: node_modules/micromatch/LICENSE
-Copyright: Copyright (c) 2014-present, Jon Schlinkert.
-Source: micromatch/micromatch
-Link: https://github.com/micromatch/micromatch
 -----------
 mimic-fn
 License: MIT
@@ -3574,13 +3567,6 @@ Copyright: Copyright (c) 2017-present Devon Govett
 Source: https://github.com/parcel-bundler/watcher.git
 Link: https://github.com/parcel-bundler/watcher.git
 -----------
-@parcel/watcher-linux-x64-musl
-License: MIT
-License File: node_modules/@parcel/watcher-linux-x64-musl/LICENSE
-Copyright: Copyright (c) 2017-present Devon Govett
-Source: https://github.com/parcel-bundler/watcher.git
-Link: https://github.com/parcel-bundler/watcher.git
------------
 @parcel/watcher
 License: MIT
 License File: node_modules/@parcel/watcher/LICENSE
@@ -3603,8 +3589,8 @@ Link: https://github.com/un-ts/pkgr/blob/master/packages/core
 License: MIT
 License File: node_modules/@sinclair/typebox/license
 Copyright: Copyright (c) 2017-2026 Haydn Paterson
-Source: https://github.com/sinclairzx81/typebox-legacy
-Link: https://github.com/sinclairzx81/typebox-legacy
+Source: https://github.com/sinclairzx81/sinclair-typebox
+Link: https://github.com/sinclairzx81/sinclair-typebox
 -----------
 @sinonjs/commons
 License: BSD-3-Clause
@@ -3814,11 +3800,6 @@ Source: git+https://github.com/ungap/structured-clone.git
 Link: https://github.com/ungap/structured-clone#readme
 -----------
 @unrs/resolver-binding-linux-x64-gnu
-License: MIT
-Source: git+https://github.com/unrs/unrs-resolver.git
-Link: https://github.com/unrs/unrs-resolver#readme
------------
-@unrs/resolver-binding-linux-x64-musl
 License: MIT
 Source: git+https://github.com/unrs/unrs-resolver.git
 Link: https://github.com/unrs/unrs-resolver#readme

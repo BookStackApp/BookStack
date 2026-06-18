@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Neplatné přihlašovací údaje.',
     'throttle' => 'Příliš mnoho pokusů o přihlášení. Zkuste to prosím znovu za :seconds sekund.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => '{0}Příliš mnoho pokusů o vícefázové ověření. Zkuste to prosím znovu za :seconds sekund.|{1}Příliš mnoho pokusů o vícefázové ověření. Zkuste to prosím znovu za :seconds sekundu.|[2,4]Příliš mnoho pokusů o vícefázové ověření. Zkuste to prosím znovu za :seconds sekundy.|[5,*]Příliš mnoho pokusů o vícefázové ověření. Zkuste to prosím znovu za :seconds sekund.',
 
     // Login & Register
     'sign_up' => 'Registrace',

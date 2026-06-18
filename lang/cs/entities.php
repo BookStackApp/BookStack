@@ -173,7 +173,7 @@ return [
     'books_sort_desc' => 'Pro přeuspořádání obsahu přesuňte kapitoly a stránky v knize. Mohou být přidány další knihy, které umožní snadný přesun kapitol a stránek mezi knihami. Volitelně lze nastavit pravidlo automatického řazení, aby se při změnách automaticky seřadil obsah této knihy.',
     'books_sort_auto_sort' => 'Možnost automatického řazení',
     'books_sort_auto_sort_active' => 'Aktivní automatické řazení: :sortName',
-    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
+    'books_sort_auto_sort_creation_hint' => 'Pravidla řazení mohou být vytvořena v nastavení "Seznamy a řazení" uživatelem s příslušnými oprávněními.',
     'books_sort_named' => 'Seřadit knihu :bookName',
     'books_sort_name' => 'Seřadit podle názvu',
     'books_sort_created' => 'Seřadit podle data vytvoření',
@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'Skrýt/Zobrazit postranní panel',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'Obsah stránky',
+    'page_contents_none' => 'Na stránce nejsou žádné nadpisy.',
+    'page_contents_info' => 'Obsah se generuje ze všech použitých nadpisů na stránce.',
     'page_tags' => 'Štítky stránky',
     'chapter_tags' => 'Štítky kapitoly',
     'book_tags' => 'Štítky knihy',

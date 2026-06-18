@@ -208,7 +208,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
     'role_controlled_by_asset' => 'Berechtigungen werden vom Uploadziel bestimmt',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Kontrolliert durch die Berechtigung zum Löschen einer Seite',
     'role_save' => 'Rolle speichern',
     'role_users' => 'Dieser Rolle zugeordnete Benutzer',
     'role_users_none' => 'Bisher sind dieser Rolle keine Benutzer zugeordnet',
@@ -266,8 +266,8 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'users_mfa_x_methods' => ':count Methode konfiguriert|:count Methoden konfiguriert',
     'users_mfa_configure' => 'Methoden konfigurieren',
     'users_mfa_reset' => 'Setze Multifaktor-Authentifizierung zurück',
-    'users_mfa_reset_desc' => 'Dies wird alle konfigurierten Multifaktor-Authentifizierungsmethoden für diesen Nutzer zurücksetzen. Falls Multifaktor-Authentifizierung für eine seiner Rollen erforderlich ist, werden sie aufgefordert, neue Methoden beim nächsten Login zu konfigurieren.',
-    'users_mfa_reset_confirm' => 'Sind Sie sicher, dass Sie diese Multi-Faktor-Authentifizierungsmethode für diesen Nutzer zurücksetzen möchten?',
+    'users_mfa_reset_desc' => 'Dies wird alle konfigurierten Multifaktor-Authentifizierungsmethoden für diesen Nutzer zurücksetzen. Falls Multifaktor-Authentifizierung für eine seiner Rollen erforderlich ist, wird der Nutzer aufgefordert, neue Methoden beim nächsten Login zu konfigurieren.',
+    'users_mfa_reset_confirm' => 'Bist du sicher, dass du diese Multi-Faktor-Authentifizierungsmethode für diesen Nutzer zurücksetzen möchtest?',
 
     // API Tokens
     'user_api_token_create' => 'Neuen API-Token erstellen',

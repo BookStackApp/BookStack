@@ -544,3 +544,5 @@ FelixFrizzy :: German
 Pedro de Mattia (pdmtt) :: Portuguese, Brazilian
 lonestan :: Russian
 Paul Kernstock (kernstock) :: German
+brtbr :: German; German Informal
+Ricardo Covelo (covelo12) :: Portuguese
