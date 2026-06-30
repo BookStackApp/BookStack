@@ -51,5 +51,3 @@ class UriLimitFileProtocolToAnchors extends HTMLPurifier_URIFilter
         return false;
     }
 }
-
-// vim: et sw=4 sts=4

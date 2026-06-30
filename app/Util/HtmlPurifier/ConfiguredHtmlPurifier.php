@@ -156,6 +156,10 @@ class ConfiguredHtmlPurifier
 
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
+
+        // Set up custom handler for srcset to limit accepted types
+        $definition->addAttribute('img', 'srcset', new SrcsetAttrDef());
+        $definition->addAttribute('source', 'srcset', new SrcsetAttrDef());
     }
 
     protected function configureUriDefinition(HTMLPurifier_URIDefinition $definition): void
