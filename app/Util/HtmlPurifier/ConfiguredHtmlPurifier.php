@@ -4,6 +4,7 @@ namespace BookStack\Util\HtmlPurifier;
 
 use BookStack\App\AppVersion;
 use BookStack\Util\HtmlPurifier\Filters\UriLimitFileProtocolToAnchors;
+use BookStack\Util\UrlFilter;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use HTMLPurifier_DefinitionCache_Serializer;
@@ -84,16 +85,13 @@ class ConfiguredHtmlPurifier
         $config->set('Attr.ID.HTML5', true);
         $config->set('Output.FixInnerHTML', false);
         $config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
-        $config->set('URI.AllowedSchemes', [
-            'http' => true,
-            'https' => true,
-            'mailto' => true,
-            'ftp' => true,
-            'nntp' => true,
-            'news' => true,
-            'tel' => true,
-            'file' => true,
-        ]);
+
+        $allowedSchemes = UrlFilter::getAllowedSchemes();
+        $allowedSchemesSetting = [];
+        foreach ($allowedSchemes as $scheme) {
+            $allowedSchemesSetting[$scheme] = true;
+        }
+        $config->set('URI.AllowedSchemes', $allowedSchemesSetting);
 
          // $config->set('Cache.DefinitionImpl', null); // Disable cache during testing
     }
