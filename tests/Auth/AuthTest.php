@@ -70,10 +70,18 @@ class AuthTest extends TestCase
         config()->set('app.url', 'http://localhost');
         $this->setSettings(['app-public' => true]);
 
-        $this->get('/login', ['referer' => 'https://example.com']);
-        $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+        $testCases = [
+            'https://example.com',
+            'http://localhost.example.com',
+            'http://localhost:ab@example.com',
+        ];
 
-        $login->assertRedirect('http://localhost');
+        foreach ($testCases as $testCase) {
+            $this->get('/login', ['Referer' => $testCase]);
+            $login = $this->post('/login', ['email' => 'admin@admin.com', 'password' => 'password']);
+            $login->assertRedirect('http://localhost');
+            auth()->logout();
+        }
     }
 
     public function test_login_intended_redirect_does_not_factor_mfa_routes()

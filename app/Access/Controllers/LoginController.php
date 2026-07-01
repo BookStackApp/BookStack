@@ -8,6 +8,7 @@ use BookStack\Exceptions\LoginAttemptEmailNeededException;
 use BookStack\Exceptions\LoginAttemptException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
+use BookStack\Util\UrlComparison;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -186,7 +187,8 @@ class LoginController extends Controller
     {
         // Store the previous location for redirect after login
         $previous = url()->previous('');
-        $isPreviousFromInstance = str_starts_with($previous, url('/'));
+        $comparison = new UrlComparison($previous, url('/'));
+        $isPreviousFromInstance = $comparison->originsMatch() && $comparison->pathsOverlap();
         if (!$previous || !setting('app-public') || !$isPreviousFromInstance) {
             return;
         }

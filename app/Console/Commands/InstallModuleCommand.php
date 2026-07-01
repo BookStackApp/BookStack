@@ -7,6 +7,7 @@ use BookStack\Theming\ThemeModule;
 use BookStack\Theming\ThemeModuleException;
 use BookStack\Theming\ThemeModuleManager;
 use BookStack\Theming\ThemeModuleZip;
+use BookStack\Util\UrlComparison;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -199,7 +200,6 @@ class InstallModuleCommand extends Command
     {
         $httpRequests = app()->make(HttpRequestService::class);
         $client = $httpRequests->buildClient(30, ['stream' => true]);
-        $originalUrl = parse_url($location);
         $currentLocation = $location;
         $maxRedirects = 3;
         $redirectCount = 0;
@@ -212,12 +212,11 @@ class InstallModuleCommand extends Command
             if ($statusCode >= 300 && $statusCode < 400 && $redirectCount < $maxRedirects) {
                 $redirectLocation = $resp->getHeaderLine('Location');
                 if ($redirectLocation) {
-                    $redirectUrl = parse_url($redirectLocation);
-                    $redirectOriginMatches = ($originalUrl['host'] ?? '') === ($redirectUrl['host'] ?? '')
-                        && ($originalUrl['scheme'] ?? '') === ($redirectUrl['scheme'] ?? '')
-                        && ($originalUrl['port'] ?? '') === ($redirectUrl['port'] ?? '');
+                    $comparison = new UrlComparison($location, $redirectLocation);
+                    $redirectOriginMatches = $comparison->originsMatch();
 
                     if (!$redirectOriginMatches) {
+                        $redirectUrl = parse_url($redirectLocation);
                         $redirectOrigin = ($redirectUrl['scheme'] ?? '') . '://' . ($redirectUrl['host'] ?? '') . (isset($redirectUrl['port']) ? ':' . $redirectUrl['port'] : '');
                         $this->info("The download URL is redirecting to a different site: {$redirectOrigin}");
                         $shouldContinue = $this->confirm("Do you trust downloading the module from this site?");
