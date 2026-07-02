@@ -315,6 +315,34 @@ class AttachmentTest extends TestCase
         }
     }
 
+    public function test_existing_data_and_js_links_do_not_render_link()
+    {
+        $this->asAdmin();
+        $page = $this->entities->page();
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+
+        $links = [
+            'javascript:alert("bunny")',
+            ' javascript:alert("bunny")',
+            'JavaScript:alert("bunny")',
+            "\t\n\t\nJavaScript:alert(\"bunny\")",
+            'data:text/html;bunny<a></a>',
+            'Data:text/html;bunny<a></a>',
+            'Data:text/html;bunny<a></a>',
+            'donk\tscript:alert("bunny")',
+            "donk\tscript:alert('bunny')",
+        ];
+
+        foreach ($links as $link) {
+            $attachment->path = $link;
+            $attachment->save();
+
+            $resp = $this->get($page->getUrl());
+            $resp->assertDontSee('bunny', false);
+            $resp->assertSee('#badlink', false);
+        }
+    }
+
     public function test_attachment_delete_only_shows_with_permission()
     {
         $this->asAdmin();
