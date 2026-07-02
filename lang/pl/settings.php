@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Rozdziały na początku',
     'sort_rule_op_chapters_last' => 'Rozdziały na końcu',
     'sorting_page_limits' => 'Limity wyświetlania per strona',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => 'Ustaw ile elementów pokazywać na stronie w różnych listach w systemie. Zazwyczaj mniejsza ilość będzie bardziej wydajna, podczas gdy większa ilość unika konieczności kliknięcia na wiele stron. Zaleca się stosowanie wielokrotności 6 razy.',
 
     // Maintenance settings
     'maint' => 'Konserwacja',
@@ -207,7 +207,7 @@ return [
     'role_all' => 'Wszyscy',
     'role_own' => 'Własne',
     'role_controlled_by_asset' => 'Kontrolowane przez zasób, do którego zostały udostępnione',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Kontrolowane przez uprawnienia do usuwania stron',
     'role_save' => 'Zapisz rolę',
     'role_users' => 'Użytkownicy w tej roli',
     'role_users_none' => 'Brak użytkowników zapisanych do tej roli',
@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe jako dodatkową warstwę bezpieczeństwa dla swojego konta użytkownika.',
     'users_mfa_x_methods' => ':count metoda skonfigurowana|:count metody skonfigurowane',
     'users_mfa_configure' => 'Konfiguruj metody',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Resetuj metody uwierzytelniania wieloetapowego',
+    'users_mfa_reset_desc' => 'Spowoduje to zresetowanie i wyczyszczenie wszystkich skonfigurowanych metod uwierzytelniania wieloetapowego dla tego użytkownika. Jeśli uwierzytelnianie wieloetapowe jest wymagane przez dowolną z ich ról, zostaną poproszone o skonfigurowanie nowych metod przy następnym logowaniu.',
+    'users_mfa_reset_confirm' => 'Czy na pewno chcesz zresetować uwierzytelnianie wieloskładnikowe dla tego użytkownika?',
 
     // API Tokens
     'user_api_token_create' => 'Utwórz klucz API',
@@ -366,6 +366,7 @@ return [
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
+        'sr' => 'Српски',
         'sv' => 'Svenska',
         'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',

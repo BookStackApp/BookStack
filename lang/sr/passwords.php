@@ -6,10 +6,10 @@
  */
 return [
 
-    'password' => 'Passwords must be at least eight characters and match the confirmation.',
-    'user' => "We can't find a user with that e-mail address.",
-    'token' => 'The password reset token is invalid for this email address.',
-    'sent' => 'We have e-mailed your password reset link!',
-    'reset' => 'Your password has been reset!',
+    'password' => 'Лозинке морају имати најмање осам карактера и да се поклапају са потврдом.',
+    'user' => "Не можемо да пронађемо корисника са том адресом е-поште.",
+    'token' => 'Токен за поништавање лозинке је неисправан за ову адресу е-поште.',
+    'sent' => 'Послали смо вам везу за поништавање лозинке е-поштом!',
+    'reset' => 'Ваша лозинка је поништена!',
 
 ];

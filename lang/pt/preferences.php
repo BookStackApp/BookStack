@@ -23,7 +23,7 @@ return [
     'notifications_desc' => 'Controlar as notificações via correio eletrónico quando certas atividades são executadas pelo sistema.',
     'notifications_opt_own_page_changes' => 'Notificar quando páginas que possuo sofrem alterações',
     'notifications_opt_own_page_comments' => 'Notificar quando comentam páginas que possuo',
-    'notifications_opt_comment_mentions' => 'Notify when I\'m mentioned in a comment',
+    'notifications_opt_comment_mentions' => 'Notificar-me quando for mencionado num comentário',
     'notifications_opt_comment_replies' => 'Notificar respostas aos meus comentários',
     'notifications_save' => 'Guardar preferências',
     'notifications_update_success' => 'Preferências de notificação foram atualizadas!',
@@ -43,7 +43,7 @@ return [
     'profile_email_no_permission' => 'Infelizmente você não tem permissão para alterar seu correio eletrônico. Se você quiser mudar isso, você precisa pedir a um administrador para alterar por você.',
     'profile_avatar_desc' => 'Selecione uma imagem que será usada para lhe representar aos outros usuários do sistema. Idealmente, esta imagem deve ser quadrada e sobre 256px em largura e altura.',
     'profile_admin_options' => 'Opções de administrador',
-    'profile_admin_options_desc' => 'Additional administrator-level options, like those to manage role assignments, can be found for your user account in the "Settings > Users" area of the application.',
+    'profile_admin_options_desc' => 'Poderá encontrar opções adicionais de nível de administrador, como as destinadas a gerir a atribuição de funções, na sua conta de utilizador, na secção "Definições > Utilizadores" da aplicação.',
 
     'delete_account' => 'Excluir Conta',
     'delete_my_account' => 'Excluir a Minha Conta',

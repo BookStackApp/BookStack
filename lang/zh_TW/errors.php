@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => '給定使用的 API 權杖的密碼錯誤',
     'api_user_no_api_permission' => '使用的 API 權杖擁有者無權呼叫 API',
     'api_user_token_expired' => '使用的授權權杖已過期',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => '使用以 cookie 為基礎的驗證來呼叫 API 時，僅允許 GET 請求',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => '寄送測試電子郵件時發生錯誤:',

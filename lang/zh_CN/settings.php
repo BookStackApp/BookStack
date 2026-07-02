@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => '章节正序',
     'sort_rule_op_chapters_last' => '章节倒序',
     'sorting_page_limits' => '每页显示限制',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => '设置系统内各列表的单页显示数量。通常较少的数据量性能更佳，较多的数量则能减少用户的翻页操作。建议设置为 6 的倍数。',
 
     // Maintenance settings
     'maint' => '维护',
@@ -207,7 +207,7 @@ return [
     'role_all' => '全部的',
     'role_own' => '拥有的',
     'role_controlled_by_asset' => '由其所在的资源来控制',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => '受页面删除权限限制',
     'role_save' => '保存角色',
     'role_users' => '此角色的用户',
     'role_users_none' => '目前没有用户被分配到这个角色',
@@ -366,8 +366,9 @@ return [
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenščina',
+        'sr' => 'Српски',
         'sv' => 'Svenska',
-        'th' => 'ภาษาไทย',
+        'th' => '泰语',
         'tr' => 'Türkçe',
         'uk' => 'Українська',
         'uz' => 'O‘zbekcha',

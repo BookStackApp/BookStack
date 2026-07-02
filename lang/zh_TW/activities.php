@@ -99,8 +99,8 @@ return [
     'user_update_notification' => '使用者已成功更新。',
     'user_delete' => '已刪除使用者',
     'user_delete_notification' => '使用者移除成功',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => '重設使用者的多要素驗證',
+    'user_mfa_reset_notification' => '重設多要素驗證方法',
 
     // API Tokens
     'api_token_create' => '建立 API 權杖',

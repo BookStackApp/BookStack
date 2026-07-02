@@ -8,8 +8,8 @@
 return [
     // General editor terms
     'general' => 'Umum',
-    'advanced' => 'Lanjutan',
-    'none' => 'Tidak Ada',
+    'advanced' => 'Tingkat lanjut',
+    'none' => 'Tidak Satupun',
     'cancel' => 'Batal',
     'save' => 'Simpan',
     'close' => 'Tutup',

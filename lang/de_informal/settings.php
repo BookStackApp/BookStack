@@ -367,6 +367,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
         'ru' => 'Russisch',
         'sk' => 'Slowenisch',
         'sl' => 'Slowenisch',
+        'sr' => 'Српски',
         'sv' => 'Schwedisch',
         'th' => 'ภาษาไทย',
         'tr' => 'Türkisch',
