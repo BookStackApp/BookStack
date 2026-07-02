@@ -219,7 +219,7 @@ return [
     'chapters_permissions_active' => 'Permissões de Capítulo Ativas',
     'chapters_permissions_success' => 'Permissões de Capítulo Atualizadas',
     'chapters_search_this' => 'Pesquisar neste Capítulo',
-    'chapter_sort_book' => 'Classificar livro',
+    'chapter_sort_book' => 'Ordenar livro',
 
     // Pages
     'page' => 'Página',
@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => '',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'Conteúdos da página',
+    'page_contents_none' => 'Nenhum título foi encontrado no conteúdo da página.',
+    'page_contents_info' => 'O menu de conteúdo é gerado a partir de qualquer formato de cabeçalho usado na página.',
     'page_tags' => 'Marcadores de Página',
     'chapter_tags' => 'Marcadores de Capítulo',
     'book_tags' => 'Marcadores de Livro',

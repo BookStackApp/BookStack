@@ -77,20 +77,20 @@ return [
     'maintenance_action_run' => 'покренуо акцију одржавања',
 
     // Webhooks
-    'webhook_create' => 'креиран вебхоок',
-    'webhook_create_notification' => 'Вебхоок је успешно креиран',
-    'webhook_update' => 'ажуриран вебхоок',
-    'webhook_update_notification' => 'Вебхоок је успешно ажуриран',
-    'webhook_delete' => 'обрисан вебхоок',
-    'webhook_delete_notification' => 'Вебхоок је успешно обрисан',
+    'webhook_create' => 'креирана веб закачка',
+    'webhook_create_notification' => 'Веб закачка је успешно креирана',
+    'webhook_update' => 'ажурирана веб закачка',
+    'webhook_update_notification' => 'Веб закачка је успешно ажурирана',
+    'webhook_delete' => 'обрисана веб закачка',
+    'webhook_delete_notification' => 'Веб закачка је успешно обрисана',
 
     // Imports
     'import_create' => 'креиран увоз',
-    'import_create_notification' => 'Import successfully uploaded',
+    'import_create_notification' => 'Увоз је успешно отпремљен',
     'import_run' => 'ажуриран увоз',
-    'import_run_notification' => 'Content successfully imported',
-    'import_delete' => 'deleted import',
-    'import_delete_notification' => 'Import successfully deleted',
+    'import_run_notification' => 'Садржај је успешно увезен',
+    'import_delete' => 'обрисан увоз',
+    'import_delete_notification' => 'Увоз је успешно обрисан',
 
     // Users
     'user_create' => 'креирао корисника',
@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'Корисник је успешно ажуриран',
     'user_delete' => 'избрисан корисника',
     'user_delete_notification' => 'Корисник је успешно уклоњен',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'поништи МФА за корисника',
+    'user_mfa_reset_notification' => 'Поништавања начина мултифакторске аутентификације',
 
     // API Tokens
     'api_token_create' => 'креирао апи токен',
@@ -130,12 +130,12 @@ return [
     'comment_delete'              => 'обрисан коментар',
 
     // Sort Rules
-    'sort_rule_create' => 'created sort rule',
-    'sort_rule_create_notification' => 'Sort rule successfully created',
-    'sort_rule_update' => 'updated sort rule',
-    'sort_rule_update_notification' => 'Sort rule successfully updated',
-    'sort_rule_delete' => 'deleted sort rule',
-    'sort_rule_delete_notification' => 'Sort rule successfully deleted',
+    'sort_rule_create' => 'направљено је правило слагања',
+    'sort_rule_create_notification' => 'Правило слагања је успешно направљено',
+    'sort_rule_update' => 'ажурирано је правило слагања',
+    'sort_rule_update_notification' => 'Правило слагања је успешно ажурирано',
+    'sort_rule_delete' => 'избрисано је правило слагања',
+    'sort_rule_delete_notification' => 'Правило слагања је успешно избрисано',
 
     // Other
     'permissions_update'          => 'ажуриране дозволе',

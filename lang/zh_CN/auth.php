@@ -8,7 +8,7 @@ return [
 
     'failed' => '用户名或密码错误。',
     'throttle' => '您的登录次数过多，请在:seconds秒后重试。',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => '多因子认证尝试次数过多，请在 :seconds 秒后重试。',
 
     // Login & Register
     'sign_up' => '注册',

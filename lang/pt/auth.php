@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Estas credenciais não coincidem com os nossos registos.',
     'throttle' => 'Demasiadas tentativas de acesso. Tente novamente em :seconds segundos.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'Foram efetuadas demasiadas tentativas de verificação multifatorial. Por favor, tente novamente daqui a :seconds segundos.',
 
     // Login & Register
     'sign_up' => 'Registar',

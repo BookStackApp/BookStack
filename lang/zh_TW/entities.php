@@ -173,7 +173,7 @@ return [
     'books_sort_desc' => '在書籍中移動章節和頁面，重新安排其內容。可加入其他書籍，方便在書籍之間移動章節與頁面。可選擇設定自動排序規則，以便在變更時自動排序此書籍的內容。',
     'books_sort_auto_sort' => '自動排序選項',
     'books_sort_auto_sort_active' => '自動排序啟動：:sortName',
-    'books_sort_auto_sort_creation_hint' => 'Auto sort option rules can be created in the "Lists & Sorting" settings area by a user with the relevant permissions.',
+    'books_sort_auto_sort_creation_hint' => '具備相關權限的使用者可在「清單與排序」設定區域中建立自動排序選項規則。',
     'books_sort_named' => '排序書本 :bookName',
     'books_sort_name' => '按名稱排序',
     'books_sort_created' => '按建立時間排序',
@@ -331,9 +331,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => '切換側邊欄',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => '頁面內容',
+    'page_contents_none' => '在頁面內容中未找到任何標題。',
+    'page_contents_info' => '內容選單是根據頁面中使用的任何標題格式所產生的。',
     'page_tags' => '頁面標籤',
     'chapter_tags' => '章節標籤',
     'book_tags' => '書本標籤',

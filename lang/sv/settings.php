@@ -366,6 +366,7 @@ return [
         'ru' => 'Русский',
         'sk' => 'Slovensky',
         'sl' => 'Slovenska',
+        'sr' => 'Српски',
         'sv' => 'Svenska',
         'th' => 'ภาษาไทย',
         'tr' => 'Türkçe',
