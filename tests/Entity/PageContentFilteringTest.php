@@ -469,6 +469,9 @@ HTML;
             '<object data="file://link/to/file" id="bkmrk-file-object"></object>' => '<object id="bkmrk-file-object">',
             '<div id="bkmrk-file-img"><img src="file://link/to/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"></div>',
             '<div id="bkmrk-file-img"><img srcset="file://link/to/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"></div>',
+            '<div id="bkmrk-file-img"><img src="http://example.com" srcset="file://link/to/file  2x" alt="My local image"></div>' => '<div id="bkmrk-file-img"><img src="http://example.com" alt="My local image"></div>',
+            '<div id="bkmrk-file-img"><picture><source srcset="file://link/to/file"/><img src="http://example.com" alt="cat"/></picture></div>' => '<div id="bkmrk-file-img"><picture><source><img src="http://example.com" alt="cat"></picture></div>',
+            '<div id="bkmrk-link"><link rel="preload" as="image" imagesizes="50vw" imagesrcset="file://cat.com, bg-wide.png 800w" /></div>' => '<div id="bkmrk-link"></div>',
         ];
 
         config()->set('app.content_filtering', 'a');

@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'Um utilizador com o endereço de e-mail :email já existe mas com credenciais diferentes.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Não foi possível registar a conta de utilizador com os detalhes fornecidos',
     'email_already_confirmed' => 'E-mail já foi confirmado. Tente iniciar sessão.',
     'email_confirmation_invalid' => 'Este token de confirmação não é válido ou já foi utilizado. Por favor, tente registar-se novamente.',
     'email_confirmation_expired' => 'O token de confirmação já expirou. Um novo e-mail foi enviado.',
@@ -37,7 +37,7 @@ return [
     'social_driver_not_found' => 'Social driver não encontrado',
     'social_driver_not_configured' => 'Os seus parâmetros sociais de :socialAccount não estão corretamente configurados.',
     'invite_token_expired' => 'Este link de convite expirou. Alternativamente, pode tentar redefinir a senha da sua conta.',
-    'login_user_not_found' => 'A user for this action could not be found.',
+    'login_user_not_found' => 'Não foi possível encontrar um utilizador para esta ação.',
 
     // System
     'path_not_writable' => 'O caminho do arquivo :filePath não pôde ser carregado. Certifique-se de que tem permissões de escrita no servidor.',
@@ -51,9 +51,9 @@ return [
     'image_upload_error' => 'Ocorreu um erro no carregamento da imagem',
     'image_upload_type_error' => 'O tipo de imagem enviada é inválida',
     'image_upload_replace_type' => 'A imagem de substituição deverá ser do mesmo tipo que a anterior',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
-    'image_gallery_thumbnail_memory_limit' => 'Failed to create gallery thumbnails due to system resource limits.',
+    'image_upload_memory_limit' => 'Não foi possível processar o carregamento da imagem e/ou criar miniaturas devido a limites de recursos do sistema.',
+    'image_thumbnail_memory_limit' => 'Não foi possível criar variações de tamanho de imagem devido a limites de recursos do sistema.',
+    'image_gallery_thumbnail_memory_limit' => 'Não foi possível criar miniaturas da galeria devido a limites de recursos do sistema.',
     'drawing_data_not_found' => 'Dados de desenho não puderam ser carregados. Talvez o arquivo de desenho não exista mais ou não tenha permissão para aceder-lhe.',
 
     // Attachments
@@ -107,16 +107,16 @@ return [
 
     // Import
     'import_zip_cant_read' => 'Não foi possível ler o ficheiro ZIP.',
-    'import_zip_cant_decode_data' => 'Could not find and decode ZIP data.json content.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
-    'import_validation_failed' => 'Import ZIP failed to validate with errors:',
-    'import_zip_failed_notification' => 'Failed to import ZIP file.',
-    'import_perms_books' => 'You are lacking the required permissions to create books.',
-    'import_perms_chapters' => 'You are lacking the required permissions to create chapters.',
-    'import_perms_pages' => 'You are lacking the required permissions to create pages.',
-    'import_perms_images' => 'You are lacking the required permissions to create images.',
-    'import_perms_attachments' => 'You are lacking the required permission to create attachments.',
+    'import_zip_cant_decode_data' => 'Não foi possível encontrar nem descodificar o conteúdo do ficheiro ZIP data.json.',
+    'import_zip_no_data' => 'Os dados do ficheiro ZIP não contêm o conteúdo esperado de livro, capítulo ou página.',
+    'import_zip_data_too_large' => 'O conteúdo do ficheiro ZIP data.json excede o tamanho máximo de upload definido para a aplicação.',
+    'import_validation_failed' => 'A importação do ficheiro ZIP não foi validada devido a erros:',
+    'import_zip_failed_notification' => 'Não foi possível importar o ficheiro ZIP.',
+    'import_perms_books' => 'Não dispõe das permissões necessárias para criar livros.',
+    'import_perms_chapters' => 'Não dispõe das permissões necessárias para criar capítulos.',
+    'import_perms_pages' => 'Não dispõe das permissões necessárias para criar páginas.',
+    'import_perms_images' => 'Não dispõe das permissões necessárias para criar imagens.',
+    'import_perms_attachments' => 'Não dispõe das permissões necessárias para criar anexos.',
 
     // API errors
     'api_no_authorization_found' => 'Nenhum token de autorização encontrado na requisição',
@@ -125,11 +125,11 @@ return [
     'api_incorrect_token_secret' => 'O segredo fornecido para o token de API usado está incorreto',
     'api_user_no_api_permission' => 'O proprietário do token de API utilizado não tem permissão para fazer requisições de API',
     'api_user_token_expired' => 'O token de autenticação expirou',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Ao utilizar a API com autenticação baseada em “cookies”, apenas são permitidos pedidos GET',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Erro lançado ao enviar um e-mail de teste:',
 
     // HTTP errors
-    'http_ssr_url_no_match' => 'The URL does not match the configured allowed SSR hosts',
+    'http_ssr_url_no_match' => 'O URL não corresponde aos "hosts" SSR permitidos configurados',
 ];

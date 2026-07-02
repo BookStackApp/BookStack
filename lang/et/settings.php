@@ -366,6 +366,7 @@ return [
         'ru' => 'Русский (vene keel)',
         'sk' => 'Slovensky',
         'sl' => 'Sloveenia',
+        'sr' => 'Српски',
         'sv' => 'Rootsi',
         'th' => 'ภาษาไทย',
         'tr' => 'Türgi',

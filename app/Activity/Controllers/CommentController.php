@@ -59,8 +59,7 @@ class CommentController extends Controller
             'html' => ['required', 'string'],
         ]);
 
-        $comment = $this->commentRepo->getById($commentId);
-        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        $comment = $this->commentRepo->getVisibleById($commentId);
         $this->checkOwnablePermission(Permission::CommentUpdate, $comment);
 
         $comment = $this->commentRepo->update($comment, $input['html']);
@@ -76,8 +75,7 @@ class CommentController extends Controller
      */
     public function archive(int $id)
     {
-        $comment = $this->commentRepo->getById($id);
-        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        $comment = $this->commentRepo->getVisibleById($id);
         if (!userCan(Permission::CommentUpdate, $comment) && !userCan(Permission::CommentDelete, $comment)) {
             $this->showPermissionError();
         }
@@ -96,8 +94,7 @@ class CommentController extends Controller
      */
     public function unarchive(int $id)
     {
-        $comment = $this->commentRepo->getById($id);
-        $this->checkOwnablePermission(Permission::PageView, $comment->entity);
+        $comment = $this->commentRepo->getVisibleById($id);
         if (!userCan(Permission::CommentUpdate, $comment) && !userCan(Permission::CommentDelete, $comment)) {
             $this->showPermissionError();
         }
@@ -116,7 +113,7 @@ class CommentController extends Controller
      */
     public function destroy(int $id)
     {
-        $comment = $this->commentRepo->getById($id);
+        $comment = $this->commentRepo->getVisibleById($id);
         $this->checkOwnablePermission(Permission::CommentDelete, $comment);
 
         $this->commentRepo->delete($comment);

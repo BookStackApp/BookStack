@@ -11,6 +11,7 @@ use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\AttachmentService;
+use BookStack\Util\UrlFilter;
 use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
@@ -221,7 +222,8 @@ class AttachmentController extends Controller
         }
 
         if ($attachment->external) {
-            return redirect($attachment->path);
+            $url = (new UrlFilter($attachment->path))->clean();
+            return redirect($url);
         }
 
         $fileName = $attachment->getFileName();

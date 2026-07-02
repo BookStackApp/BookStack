@@ -168,7 +168,7 @@ class BookSorter
             $model->priority = $sortMapItem->sort;
         }
 
-        if ($chapterChanged || $priorityChanged) {
+        if ($priorityChanged || $chapterChanged) {
             $model::withoutTimestamps(fn () => $model->save());
         }
     }

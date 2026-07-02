@@ -105,6 +105,23 @@ class CommentStoreTest extends TestCase
         $this->assertActivityExists(ActivityType::COMMENT_DELETE);
     }
 
+    public function test_comment_delete_requires_view_permission_to_page()
+    {
+        $editor = $this->users->editor();
+        $this->permissions->grantUserRolePermissions($editor, ['comment-delete-all']);
+        $page = $this->entities->page();
+        $this->actingAs($editor);
+
+        $commentData = Comment::factory()->make();
+        $this->postJson("/comment/$page->id", $commentData->getAttributes());
+        $comment = $page->comments()->first();
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->deleteJson("/comment/$comment->id");
+        $resp->assertStatus(404);
+        $this->assertDatabaseHas('comments', ['id' => $comment->id]);
+    }
+
     public function test_comment_archive_and_unarchive()
     {
         $this->asAdmin();

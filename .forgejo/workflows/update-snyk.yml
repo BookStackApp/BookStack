@@ -1,0 +1,33 @@
+name: update-snyk
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'composer*'
+      - 'package*'
+    branches:
+      - 'development'
+      - 'release'
+
+jobs:
+  update:
+    runs-on: docker
+    container:
+      image: docker.io/library/node:24-trixie
+    steps:
+    - uses: https://code.forgejo.org/actions/checkout@v6
+
+    - name: Update Snyk for monitoring - Composer
+      uses: https://github.com/snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: snyk monitor --file=composer.lock --project-name=bookstack-${{forgejo.ref_name}}-composer
+
+    - name: Update Snyk for monitoring - NPM
+      uses: https://github.com/snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: snyk monitor --file=package-lock.json --project-name=bookstack-${{forgejo.ref_name}}-npm

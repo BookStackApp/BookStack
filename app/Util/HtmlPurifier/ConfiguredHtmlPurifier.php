@@ -4,6 +4,7 @@ namespace BookStack\Util\HtmlPurifier;
 
 use BookStack\App\AppVersion;
 use BookStack\Util\HtmlPurifier\Filters\UriLimitFileProtocolToAnchors;
+use BookStack\Util\UrlFilter;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use HTMLPurifier_DefinitionCache_Serializer;
@@ -38,7 +39,6 @@ class ConfiguredHtmlPurifier
             $this->configureHtmlDefinition($htmlDef);
         }
 
-        /** @var \HTMLPurifier_URIDefinition $uriDef */
         $uriDef = $config->getDefinition('URI', true, true);
         if ($uriDef instanceof HTMLPurifier_URIDefinition) {
             $this->configureUriDefinition($uriDef);
@@ -85,16 +85,13 @@ class ConfiguredHtmlPurifier
         $config->set('Attr.ID.HTML5', true);
         $config->set('Output.FixInnerHTML', false);
         $config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
-        $config->set('URI.AllowedSchemes', [
-            'http' => true,
-            'https' => true,
-            'mailto' => true,
-            'ftp' => true,
-            'nntp' => true,
-            'news' => true,
-            'tel' => true,
-            'file' => true,
-        ]);
+
+        $allowedSchemes = UrlFilter::getAllowedSchemes();
+        $allowedSchemesSetting = [];
+        foreach ($allowedSchemes as $scheme) {
+            $allowedSchemesSetting[$scheme] = true;
+        }
+        $config->set('URI.AllowedSchemes', $allowedSchemesSetting);
 
          // $config->set('Cache.DefinitionImpl', null); // Disable cache during testing
     }
@@ -157,6 +154,10 @@ class ConfiguredHtmlPurifier
 
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
+
+        // Set up custom handler for srcset to limit accepted types
+        $definition->addAttribute('img', 'srcset', new SrcsetAttrDef());
+        $definition->addAttribute('source', 'srcset', new SrcsetAttrDef());
     }
 
     protected function configureUriDefinition(HTMLPurifier_URIDefinition $definition): void

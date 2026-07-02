@@ -546,3 +546,5 @@ lonestan :: Russian
 Paul Kernstock (kernstock) :: German
 brtbr :: German; German Informal
 Ricardo Covelo (covelo12) :: Portuguese
+Bojan Maksimovic (PolarniMeda) :: Serbian (Cyrillic)
+Dian Prawira (wiradian84) :: Indonesian

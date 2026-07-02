@@ -22,7 +22,7 @@ jobs:
       uses: https://github.com/shivammathur/setup-php@v2
       with:
         php-version: 8.5
-        extensions: gd, mbstring, json, curl, xml, mysql, ldap
+        extensions: gd, mbstring, json, curl, xml, dom, mysql, ldap
 
     - name: Get Composer Cache Directory
       id: composer-cache
