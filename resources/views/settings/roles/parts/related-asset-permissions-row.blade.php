@@ -5,7 +5,8 @@
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.create') }}<br></small>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-create-all', 'label' => ''])
+        @php $createAllAria = trans('settings.role_permission_aria', ['action' => trans('common.create'), 'resource' => strtolower($title), 'value' => trans('settings.role_all')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-create-all', 'label' => '', 'ariaLabel' => $createAllAria])
         @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
     </div>
     <div class="flex py-s px-m min-width-xxs">
@@ -14,16 +15,20 @@
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.edit') }}<br></small>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-own', 'label' => trans('settings.role_own')])
+        @php $editOwnAria = trans('settings.role_permission_aria', ['action' => trans('common.edit'), 'resource' => strtolower($title), 'value' => trans('settings.role_own')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-own', 'label' => trans('settings.role_own'), 'ariaLabel' => $editOwnAria])
         @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
         <br>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-all', 'label' => trans('settings.role_all')])
+        @php $editAllAria = trans('settings.role_permission_aria', ['action' => trans('common.edit'), 'resource' => strtolower($title), 'value' => trans('settings.role_all')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-update-all', 'label' => trans('settings.role_all'), 'ariaLabel' => $editAllAria])
         @if($permissionPrefix === 'comment')<sup class="text-muted">2</sup>@endif
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.delete') }}<br></small>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-delete-own', 'label' => trans('settings.role_own')])
+        @php $deleteOwnAria = trans('settings.role_permission_aria', ['action' => trans('common.delete'), 'resource' => strtolower($title), 'value' => trans('settings.role_own')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-delete-own', 'label' => trans('settings.role_own'), 'ariaLabel' => $deleteOwnAria])
         <br>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-delete-all', 'label' => trans('settings.role_all')])
+        @php $deleteAllAria = trans('settings.role_permission_aria', ['action' => trans('common.delete'), 'resource' => strtolower($title), 'value' => trans('settings.role_all')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-delete-all', 'label' => trans('settings.role_all'), 'ariaLabel' => $deleteAllAria])
     </div>
 </div>
