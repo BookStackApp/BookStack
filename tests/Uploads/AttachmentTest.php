@@ -274,6 +274,26 @@ class AttachmentTest extends TestCase
         $this->files->deleteAllAttachmentFiles();
     }
 
+    public function test_attachment_edit_form_access_requires_view_permission()
+    {
+        $page = $this->entities->page();
+        /** @var Attachment $attachment */
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+        $editor = $this->users->editor();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentUpdateAll]);
+        $this->permissions->setEntityPermissionsForRole($page, ['update'], $editor->roles()->first());
+
+        $resp = $this->actingAs($editor)->get("/attachments/edit/{$attachment->id}");
+        $this->assertPermissionError($resp);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editor->roles()->first());
+        $resp = $this->actingAs($editor)->get("/attachments/edit/{$attachment->id}");
+        $resp->assertOk();
+        $resp->assertSee($attachment->name);
+    }
+
     public function test_data_and_js_links_cannot_be_attached_to_a_page()
     {
         $page = $this->entities->page();
