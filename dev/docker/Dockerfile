@@ -3,15 +3,15 @@ FROM php:8.3-apache
 # Install additional dependencies
 RUN apt-get update && \
     apt-get install -y \
-        git \
-        zip \
-        unzip \
-        libfreetype-dev \
-        libjpeg62-turbo-dev \
-        libldap2-dev \
-        libpng-dev \
-        libzip-dev \
-        wait-for-it && \
+    git \
+    zip \
+    unzip \
+    libfreetype-dev \
+    libjpeg62-turbo-dev \
+    libldap2-dev \
+    libpng-dev \
+    libzip-dev \
+    wait-for-it && \
     rm -rf /var/lib/apt/lists/*
 
 # Mark /app as safe for Git >= 2.35.2
