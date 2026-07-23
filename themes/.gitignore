@@ -1,2 +1,5 @@
 *
 !.gitignore
+
+!my-org-theme/
+!my-org-theme/**
