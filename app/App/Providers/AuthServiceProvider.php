@@ -10,6 +10,7 @@ use BookStack\Access\LoginService;
 use BookStack\Access\RegistrationService;
 use BookStack\Api\ApiTokenGuard;
 use BookStack\Users\Models\User;
+use BookStack\Users\UserRepo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -60,7 +61,7 @@ class AuthServiceProvider extends ServiceProvider
     public function register(): void
     {
         Auth::provider('external-users', function () {
-            return new ExternalBaseUserProvider();
+            return new ExternalBaseUserProvider($this->app[UserRepo::class]);
         });
 
         // Bind and provide the default system user as a singleton to the app instance when needed.
