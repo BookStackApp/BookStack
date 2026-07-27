@@ -488,6 +488,35 @@ HTML;
         }
     }
 
+    public function test_media_protocol_relative_urls_are_given_scheme_depending_on_app_url()
+    {
+        $testCasesExpectedByInput = [
+            '<div id="bkmrk-file-img"><img src="//link/to/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"><img src="SCHEME://link/to/file" alt="My local image"></div>',
+            '<iframe src="//link/to/file" id="bkmrk-file-iframe"></iframe>' => '<iframe src="SCHEME://link/to/file" id="bkmrk-file-iframe"></iframe>',
+            '<embed src="//link/to/file" id="bkmrk-file-embed">' => '<embed src="SCHEME://link/to/file" id="bkmrk-file-embed">',
+            '<object data="//link/to/file" id="bkmrk-file-object"></object>' => '<object data="SCHEME://link/to/file" id="bkmrk-file-object"></object>',
+            '<div id="bkmrk-file-img"><img srcset="//link/to/file 2x, //link-to-another 4x" src="//link/to/a/file" alt="My local image"></div>' => '<div id="bkmrk-file-img"><img srcset="SCHEME://link/to/file 2x, SCHEME://link-to-another 4x" src="SCHEME://link/to/a/file" alt="My local image"></div>',
+        ];
+
+        $baseUrls = ['https://example.com' => 'https', 'http://example.com' => 'http'];
+        foreach ($baseUrls as $baseUrl => $expectedScheme) {
+            $this->runWithEnv(['APP_URL' => $baseUrl], function () use ($expectedScheme, $baseUrl, $testCasesExpectedByInput) {
+                config()->set('app.content_filtering', 'a');
+                $page = $this->entities->page();
+                $this->asEditor();
+
+                foreach ($testCasesExpectedByInput as $input => $expected) {
+                    $page->html = $input;
+                    $page->save();
+                    $resp = $this->get($page->getUrl());
+
+                    $resp->assertSee(str_replace('SCHEME', $expectedScheme, $expected), false);
+                    $resp->assertDontSee($input, false);
+                }
+            });
+        }
+    }
+
     public function test_allow_list_does_not_filter_cases()
     {
         $testCasesExpectedByInput = [
