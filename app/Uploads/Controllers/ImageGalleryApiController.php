@@ -161,8 +161,13 @@ class ImageGalleryApiController extends ApiController
     public function delete(string $id)
     {
         $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission(Permission::PageView, $image->getPage());
         $this->checkOwnablePermission(Permission::ImageDelete, $image);
+
+        $relatedPage = $image->getPage();
+        if ($relatedPage) {
+            $this->checkOwnablePermission(Permission::PageView, $image->getPage());
+        }
+
         $this->imageRepo->destroyImage($image);
 
         return response('', 204);
