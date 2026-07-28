@@ -13,6 +13,7 @@ use BookStack\Permissions\Permission;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
 class LoginService
@@ -178,7 +179,9 @@ class LoginService
 
         // Perform a dummy hash check to balance out the time of a login with an existing known user
         // with that of a user not in the system (which we don't perform a hash check for in the above).
-        if (!$result && auth()->getLastAttempted() === null) {
+        /** @var Authenticatable|null $lastAttempted */
+        $lastAttempted = auth()->getLastAttempted();
+        if (!$result && $lastAttempted === null) {
             Hash::check($credentials['password'], '$2y$04$A.H9icXH4/lxLd9DHuaYqO/GVBd0OKetxyY0txmNfTAlPLVnTBx3y');
         }
 

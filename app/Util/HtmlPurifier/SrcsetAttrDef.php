@@ -87,7 +87,7 @@ class SrcsetAttrDef extends HTMLPurifier_AttrDef
                     }
 
                     if ($state === 'in_descriptor') {
-                        if ($c !== null && strpos($asciiWhitespace, $c) !== false) {
+                        if ($c !== null && str_contains($asciiWhitespace, $c)) {
                             if ($currentDescriptor !== '') {
                                 $descriptors[] = $currentDescriptor;
                             }
@@ -119,8 +119,8 @@ class SrcsetAttrDef extends HTMLPurifier_AttrDef
                         } else {
                             $currentDescriptor .= $c;
                         }
-                    } else if ($state === 'after_descriptor') {
-                        if ($c !== null && strpos($asciiWhitespace, $c) !== false) {
+                    } else {
+                        if ($c !== null && str_contains($asciiWhitespace, $c)) {
                             // Stay in this state
                         } else if ($c === null) {
                             break;
