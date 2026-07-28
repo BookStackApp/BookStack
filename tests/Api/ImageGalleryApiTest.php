@@ -454,4 +454,20 @@ class ImageGalleryApiTest extends TestCase
         $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
         $resp->assertStatus(204);
     }
+
+    public function test_delete_works_on_orphaned_image()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+
+        $image = Image::query()->findOrFail($data['response']->id);
+
+        $this->entities->destroy($imagePage);
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
+
+        $resp->assertStatus(204);
+        $this->assertDatabaseMissing('images', ['id' => $image->id]);
+    }
 }
