@@ -39,6 +39,7 @@ class Image extends Model implements OwnableInterface
     /**
      * Scope the query to just the images visible to the user based upon the
      * user visibility of the uploaded_to page.
+     * This limits results to just page-based images (gallery and drawio types).
      */
     public function scopeVisible(Builder $query): Builder
     {

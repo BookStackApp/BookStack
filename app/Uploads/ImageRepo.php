@@ -27,6 +27,13 @@ class ImageRepo
         return Image::query()->findOrFail($id);
     }
 
+    public function getVisiblePageImageById($id): Image
+    {
+        return Image::query()
+            ->scopes('visible')
+            ->findOrFail($id);
+    }
+
     /**
      * Execute a paginated query, returning in a standard format.
      * Also runs the query through the restriction system.

@@ -97,7 +97,7 @@ class ImageGalleryApiController extends ApiController
      */
     public function read(string $id)
     {
-        $image = Image::query()->scopes(['visible'])->findOrFail($id);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
 
         return response()->json($this->formatForSingleResponse($image));
     }
@@ -108,7 +108,7 @@ class ImageGalleryApiController extends ApiController
      */
     public function readData(string $id)
     {
-        $image = Image::query()->scopes(['visible'])->findOrFail($id);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
 
         return $this->imageService->streamImageFromStorageResponse('gallery', $image->path);
     }
@@ -141,8 +141,7 @@ class ImageGalleryApiController extends ApiController
     public function update(Request $request, string $id)
     {
         $data = $this->validate($request, $this->rules()['update']);
-        $image = $this->imageRepo->getById($id);
-        $this->checkOwnablePermission(Permission::PageView, $image->getPage());
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
 
         $this->imageRepo->updateImageDetails($image, $data);
@@ -160,13 +159,8 @@ class ImageGalleryApiController extends ApiController
      */
     public function delete(string $id)
     {
-        $image = $this->imageRepo->getById($id);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageDelete, $image);
-
-        $relatedPage = $image->getPage();
-        if ($relatedPage) {
-            $this->checkOwnablePermission(Permission::PageView, $image->getPage());
-        }
 
         $this->imageRepo->destroyImage($image);
 
@@ -174,7 +168,7 @@ class ImageGalleryApiController extends ApiController
     }
 
     /**
-     * Format the given image model for single-result display.
+     * Format the given image model for a single-result display.
      */
     protected function formatForSingleResponse(Image $image): array
     {
