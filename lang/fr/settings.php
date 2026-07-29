@@ -39,7 +39,7 @@ return [
     'app_homepage_desc' => 'Choisissez une page à afficher sur la page d\'accueil au lieu de la vue par défaut. Les permissions sont ignorées pour les pages sélectionnées.',
     'app_homepage_select' => 'Choisissez une page',
     'app_footer_links' => 'Liens de pied de page',
-    'app_footer_links_desc' => 'Ajoutez des liens dans le pied de page du site. Ils seront affichés en bas de la plupart des pages, incluant celles qui ne nécesittent pas de connexion. Vous pouvez utiliser l\'étiquette "trans::<key>" pour utiliser les traductions définies par le système. Par exemple, utiliser "trans::common.privacy_policy" fournira la traduction de "Politique de Confidentalité" et "trans::common.terms_of_service" fournira la traduction de "Conditions d\'utilisation".',
+    'app_footer_links_desc' => 'Ajoutez des liens dans le pied de page du site. Ils seront affichés en bas de la plupart des pages, incluant celles qui ne nécessitent pas de connexion. Vous pouvez utiliser l\'étiquette "trans::<key>" pour utiliser les traductions définies par le système. Par exemple, utiliser "trans::common.privacy_policy" fournira la traduction de "Politique de Confidentalité" et "trans::common.terms_of_service" fournira la traduction de "Conditions d\'utilisation".',
     'app_footer_links_label' => 'Libellé du lien',
     'app_footer_links_url' => 'URL du lien',
     'app_footer_links_add' => 'Ajouter un lien en pied de page',
@@ -61,17 +61,17 @@ return [
     'page_draft_color' => 'Couleur des brouillons',
 
     // Registration Settings
-    'reg_settings' => 'Préférence pour l\'inscription',
+    'reg_settings' => 'Paramètres d\'inscription',
     'reg_enable' => 'Activer l\'inscription',
     'reg_enable_toggle' => 'Activer l\'inscription',
-    'reg_enable_desc' => 'Lorsque l\'inscription est activée, l\'utilisateur pourra s\'enregistrer en tant qu\'utilisateur de l\'application. Lors de l\'inscription, ils se voient attribuer un rôle par défaut.',
-    'reg_default_role' => 'Rôle par défaut lors de l\'inscription',
+    'reg_enable_desc' => 'Lorsque l\'inscription est activée, l\'utilisateur peut s\'inscrire lui-même en tant qu\'utilisateur de l\'application. Lors de son inscription, il se voit attribuer un rôle unique par défaut.',
+    'reg_default_role' => 'Rôle de l\'utilisateur par défaut après l\'inscription',
     'reg_enable_external_warning' => 'L\'option ci-dessus est ignorée lorsque l\'authentification externe LDAP ou SAML est activée. Les comptes utilisateur pour les membres non existants seront créés automatiquement si l\'authentification, par rapport au système externe utilisé, est réussie.',
     'reg_email_confirmation' => 'Confirmation de l\'e-mail',
     'reg_email_confirmation_toggle' => 'Obliger la confirmation par e-mail ?',
     'reg_confirm_email_desc' => 'Si la restriction de domaine est activée, la confirmation sera automatiquement obligatoire et cette valeur sera ignorée.',
-    'reg_confirm_restrict_domain' => 'Restreindre l\'inscription à un domaine',
-    'reg_confirm_restrict_domain_desc' => 'Entrez une liste de domaines acceptés lors de l\'inscription, séparés par une virgule. Les utilisateurs recevront un e-mail de confirmation à cette adresse. <br> Les utilisateurs pourront changer leur adresse après inscription s\'ils le souhaitent.',
+    'reg_confirm_restrict_domain' => 'Restriction de domaine',
+    'reg_confirm_restrict_domain_desc' => 'Indiquez, séparés par des virgules, les domaines de messagerie autorisés pour l\'inscription. Les utilisateurs recevront un e-mail pour confirmer leur adresse avant de pouvoir utiliser l\'application. <br> Notez qu\'ils pourront modifier leur adresse e-mail après leur inscription.',
     'reg_confirm_restrict_domain_placeholder' => 'Aucune restriction en place',
 
     // Sorting Settings
@@ -207,7 +207,7 @@ return [
     'role_all' => 'Tous',
     'role_own' => 'Propres',
     'role_controlled_by_asset' => 'Contrôlé par les ressources les ayant envoyés',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Contrôlé par les autorisations de suppression de page',
     'role_save' => 'Enregistrer le rôle',
     'role_users' => 'Utilisateurs ayant ce rôle',
     'role_users_none' => 'Aucun utilisateur avec ce rôle actuellement',
@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'Configurer l\'authentification multi-facteurs ajoute une couche supplémentaire de sécurité à votre compte utilisateur.',
     'users_mfa_x_methods' => ':count méthode configurée|:count méthodes configurées',
     'users_mfa_configure' => 'Méthode de configuration',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Réinitialiser les méthodes d\'authentification multifacteurs',
+    'users_mfa_reset_desc' => 'Cette action réinitialisera et supprimera toutes les méthodes d\'authentification multifacteurs configurées pour cet utilisateur. Si l\'authentification multifacteurs est requise par l\'un de ses rôles, il sera invité à configurer de nouvelles méthodes lors de sa prochaine connexion.',
+    'users_mfa_reset_confirm' => 'Êtes-vous sûr de vouloir réinitialiser l\'authentification multifacteurs pour cet utilisateur ?',
 
     // API Tokens
     'user_api_token_create' => 'Créer un nouveau jeton API',

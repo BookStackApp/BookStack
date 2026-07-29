@@ -11,8 +11,8 @@ return [
     'updated_page_subject' => 'Uppdaterad sida: :pageName',
     'updated_page_intro' => 'En sida har blivit uppdaterad i :appName:',
     'updated_page_debounce' => 'För att förhindra en massa notiser, så kommer det inte skickas nya notiser på ett tag för ytterligare ändringar till denna sida av samma skribent.',
-    'comment_mention_subject' => 'You have been mentioned in a comment on page: :pageName',
-    'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
+    'comment_mention_subject' => 'Du har blivit nämnd i en kommentar på sidan: :pageName',
+    'comment_mention_intro' => 'Du har blivit nämnd i en kommentar på :appName:',
 
     'detail_page_name' => 'Sidonamn:',
     'detail_page_path' => 'Sidosökväg:',

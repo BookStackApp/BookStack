@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Uppgifterna stämmer inte överens med våra register.',
     'throttle' => 'För många inloggningsförsök. Prova igen om :seconds sekunder.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'För många försök till multifaktorverifiering. Försök igen om :seconds sekunder.',
 
     // Login & Register
     'sign_up' => 'Skapa konto',

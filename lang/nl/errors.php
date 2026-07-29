@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Het opgegeven geheim voor de API-token is onjuist',
     'api_user_no_api_permission' => 'De eigenaar van de gebruikte API-token heeft geen machtiging om API calls te maken',
     'api_user_token_expired' => 'De gebruikte autorisatie token is verlopen',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Alleen GET verzoeken zijn toegestaan wanneer de API wordt gebruikt met cookie-gebaseerde authenticatie',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Fout opgetreden bij het verzenden van een test email:',
