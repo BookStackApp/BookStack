@@ -10,7 +10,7 @@ return [
 
     // Auth
     'error_user_exists_different_creds' => 'En användare med adressen :email finns redan.',
-    'auth_pre_register_theme_prevention' => 'User account could not be registered for the provided details',
+    'auth_pre_register_theme_prevention' => 'Användarkontot kunde inte registreras med de angivna uppgifterna',
     'email_already_confirmed' => 'E-posten har redan bekräftats, prova att logga in.',
     'email_confirmation_invalid' => 'Denna bekräftelsekod är inte giltig eller har redan använts. Vänligen prova att registrera dig på nytt.',
     'email_confirmation_expired' => 'Denna bekräftelsekod har gått ut. Vi har skickat dig en ny.',
@@ -51,18 +51,18 @@ return [
     'image_upload_error' => 'Ett fel inträffade vid uppladdningen',
     'image_upload_type_error' => 'Filtypen du försöker ladda upp är ogiltig',
     'image_upload_replace_type' => 'Bilder som skall ersättas måste vara av samma filtyp',
-    'image_upload_memory_limit' => 'Failed to handle image upload and/or create thumbnails due to system resource limits.',
-    'image_thumbnail_memory_limit' => 'Failed to create image size variations due to system resource limits.',
+    'image_upload_memory_limit' => 'Det gick inte att hantera bilduppladdningen och/eller skapa miniatyrbilder på grund av begränsade systemresurser.',
+    'image_thumbnail_memory_limit' => 'Det gick inte att skapa bildstorleksvarianter på grund av begränsade systemresurser.',
     'image_gallery_thumbnail_memory_limit' => 'Misslyckades att skapa galleriminiatyrer på grund av otillräckliga systemresurser.',
-    'drawing_data_not_found' => 'Drawing data could not be loaded. The drawing file might no longer exist or you may not have permission to access it.',
+    'drawing_data_not_found' => 'Ritningsdata kunde inte laddas. Ritningen kanske inte längre finns, eller så har du inte behörighet att komma åt den.',
 
     // Attachments
     'attachment_not_found' => 'Bilagan hittades ej',
-    'attachment_upload_error' => 'An error occurred uploading the attachment file',
+    'attachment_upload_error' => 'Ett fel uppstod vid uppladdning av bilagan',
 
     // Pages
     'page_draft_autosave_fail' => 'Kunde inte spara utkastet. Kontrollera att du är ansluten till internet.',
-    'page_draft_delete_fail' => 'Failed to delete page draft and fetch current page saved content',
+    'page_draft_delete_fail' => 'Det gick inte att radera utkastet och hämta det sparade innehållet för aktuell sida',
     'page_custom_home_deletion' => 'Det går inte att ta bort sidan medan den används som startsida',
 
     // Entities
@@ -78,7 +78,7 @@ return [
     // Users
     'users_cannot_delete_only_admin' => 'Du kan inte ta bort den enda admin-användaren',
     'users_cannot_delete_guest' => 'Du kan inte ta bort gästanvändaren',
-    'users_could_not_send_invite' => 'Could not create user since invite email failed to send',
+    'users_could_not_send_invite' => 'Kunde inte skapa användare eftersom inbjudningsmejlet inte kunde skickas',
 
     // Roles
     'role_cannot_be_edited' => 'Den här rollen kan inte redigeras',
@@ -108,8 +108,8 @@ return [
     // Import
     'import_zip_cant_read' => 'Kunde inte läsa ZIP-filen.',
     'import_zip_cant_decode_data' => 'Kunde inte hitta och avkoda ZIP data.json innehåll.',
-    'import_zip_no_data' => 'ZIP file data has no expected book, chapter or page content.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_no_data' => 'ZIP-filens data innehåller inte förväntat bok-, kapitel- eller sidinnehåll.',
+    'import_zip_data_too_large' => 'Innehållet i ZIP-filens data.json överskrider den konfigurerade maxgränsen för uppladdning i applikationen.',
     'import_validation_failed' => 'ZIP-filen kunde inte valideras med fel:',
     'import_zip_failed_notification' => 'Det gick inte att importera ZIP-fil.',
     'import_perms_books' => 'Du saknar behörighet att skapa böcker.',
@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'Hemligheten för den angivna API-token är felaktig',
     'api_user_no_api_permission' => 'Ägaren av den använda API-token har inte behörighet att göra API-anrop',
     'api_user_token_expired' => 'Den använda auktoriseringstoken har löpt ut',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'Endast GET-förfrågningar är tillåtna vid API-användning med cookiebaserad autentisering',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'Ett fel uppstod när ett test mail skulle skickas:',

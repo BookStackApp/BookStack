@@ -13,7 +13,7 @@ return [
     'cancel' => 'İptal',
     'save' => 'Kaydet',
     'close' => 'Kapat',
-    'apply' => 'Apply',
+    'apply' => 'Uygula',
     'undo' => 'Geri al',
     'redo' => 'Yeniden yap',
     'left' => 'Sol',

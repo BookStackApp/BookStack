@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'Användaren har uppdaterats',
     'user_delete' => 'raderad användare',
     'user_delete_notification' => 'Användaren har tagits bort',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'återställ MFA för användare',
+    'user_mfa_reset_notification' => 'Metoder för multifaktorautentisering återställda',
 
     // API Tokens
     'api_token_create' => 'skapade API-token',

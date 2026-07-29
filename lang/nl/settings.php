@@ -104,7 +104,7 @@ return [
     'sort_rule_op_chapters_first' => 'Hoofdstukken Eerst',
     'sort_rule_op_chapters_last' => 'Hoofdstukken Laatst',
     'sorting_page_limits' => 'Weergavelimiet Per Pagina',
-    'sorting_page_limits_desc' => 'Set how many items to show per-page in various lists within the system. Typically a lower amount will be more performant, while a higher amount avoids the need to click through multiple pages. Using a multiple of 6 is recommended.',
+    'sorting_page_limits_desc' => 'Stel in hoeveel items er op een pagina worden laten zien in de verschillende lijstweergaves. Een lager aantal verbeterd de snelheid, een hoger aantal verminderd het doorklikken door pagina\'s. Het wordt aanbevolen om een meervoud van 6 te gebruiken.',
 
     // Maintenance settings
     'maint' => 'Onderhoud',
@@ -207,7 +207,7 @@ return [
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Ingesteld volgens pagina verwijder machtigingen',
     'role_save' => 'Rol Opslaan',
     'role_users' => 'Gebruikers in deze rol',
     'role_users_none' => 'Geen enkele gebruiker heeft deze rol',
@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'Stel meervoudige verificatie in als extra beveiligingslaag voor je gebruikersaccount.',
     'users_mfa_x_methods' => ':count methode geconfigureerd|:count methoden geconfigureerd',
     'users_mfa_configure' => 'Configureer methoden',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Herstel Meervoudige Verificatie Methodes',
+    'users_mfa_reset_desc' => 'Dit zal alle methodes voor meervoudige verificatie van deze gebruiker wissen. Als meervoudige verificatie vereist is vanwege een van hun rollen, worden ze bij hun volgende inlogpoging gevraagd om nieuwe methodes te configureren.',
+    'users_mfa_reset_confirm' => 'Weet je zeker dat je de meervoudige verificatie van deze gebruiker wilt herstellen?',
 
     // API Tokens
     'user_api_token_create' => 'API-token aanmaken',
