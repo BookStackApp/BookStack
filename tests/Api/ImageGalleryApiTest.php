@@ -423,6 +423,32 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertStatus(200);
     }
 
+    public function test_update_endpoint_only_works_on_gallery_and_drawio_images()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+        $image = Image::findOrFail($data['response']->id);
+
+        $statusByImageType = [
+            'gallery' => 200,
+            'drawio' => 200,
+            'cover_book' => 404,
+            'user' => 404,
+            'system' => 404,
+        ];
+
+        foreach ($statusByImageType as $type => $status) {
+            $image->type = $type;
+            $image->save();
+
+            $resp = $this->putJson($this->baseEndpoint . "/{$image->id}", [
+                'name' => "My updated {$type} image!",
+            ]);
+            $resp->assertStatus($status);
+        }
+    }
+
     public function test_delete_endpoint()
     {
         $this->actingAsApiAdmin();
@@ -453,5 +479,20 @@ class ImageGalleryApiTest extends TestCase
         $this->permissions->grantUserRolePermissions($user, ['image-delete-all']);
         $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
         $resp->assertStatus(204);
+    }
+
+    public function test_delete_limited_to_visible_images()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+
+        $image = Image::query()->findOrFail($data['response']->id);
+
+        $this->entities->destroy($imagePage);
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
+
+        $resp->assertStatus(404);
     }
 }

@@ -166,8 +166,7 @@ class HtmlExportTest extends TestCase
         $storageDisk->delete('uploads/svg_test.svg');
 
         $resp->assertDontSee('http://localhost/uploads/images/gallery/svg_test.svg', false);
-        $resp->assertSee('http://localhost/uploads/svg_test.svg');
-        $resp->assertSee('src="/uploads/svg_test.svg"', false);
+        $resp->assertSee('src="http://localhost/uploads/svg_test.svg"', false);
     }
 
     public function test_page_export_contained_html_does_not_allow_upward_traversal_with_local()

@@ -52,6 +52,25 @@ class UserRepo
     }
 
     /**
+     * Get a user by their external auth ID value.
+     * Returns null if no matching user found.
+     */
+    public function getByExternalAuthId(string $externalId): User|null
+    {
+        // We only really expect at most one user from the search, but as an extra layer of defence against database
+        // normalisation we search possible matches exactly against the value.
+        $users = User::query()->where('external_auth_id', '=', $externalId)->get();
+
+        foreach ($users as $user) {
+            if ($user->external_auth_id === $externalId) {
+                return $user;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Create a new basic instance of user with the given pre-validated data.
      *
      * @param array{name: string, email: string, password: ?string, external_auth_id: ?string, language: ?string, roles: ?array} $data

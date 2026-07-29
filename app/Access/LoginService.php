@@ -13,6 +13,8 @@ use BookStack\Permissions\Permission;
 use BookStack\Theming\ThemeEvents;
 use BookStack\Users\Models\User;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class LoginService
 {
@@ -171,8 +173,22 @@ class LoginService
             } catch (LoginAttemptInvalidUserException $e) {
                 // Catch and return false for non-login accounts
                 // so it looks like a normal invalid login.
-                return false;
+                $result = false;
             }
+        }
+
+        // Perform a dummy hash check to balance out the time of a login with an existing known user
+        // with that of a user not in the system (which we don't perform a hash check for in the above).
+        /** @var Authenticatable|null $lastAttempted */
+        $lastAttempted = auth()->getLastAttempted();
+        if (!$result && $lastAttempted === null) {
+            Hash::check($credentials['password'], '$2y$04$A.H9icXH4/lxLd9DHuaYqO/GVBd0OKetxyY0txmNfTAlPLVnTBx3y');
+        }
+
+        // Add some noise to request times on failed login attempts
+        if (!$result) {
+            $sleepMs = random_int(0, 250);
+            usleep($sleepMs * 1000);
         }
 
         return $result;

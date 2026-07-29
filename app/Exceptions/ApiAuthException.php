@@ -4,7 +4,7 @@ namespace BookStack\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class ApiAuthException extends \Exception implements HttpExceptionInterface
+class ApiAuthException extends \Exception implements HttpExceptionInterface, ShowsApiExceptionMessage
 {
     protected int $status;
 
@@ -22,5 +22,10 @@ class ApiAuthException extends \Exception implements HttpExceptionInterface
     public function getHeaders(): array
     {
         return [];
+    }
+
+    public function getMessageForApi(): string
+    {
+        return $this->getMessage();
     }
 }

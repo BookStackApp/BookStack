@@ -105,11 +105,11 @@ return [
     'url'                  => 'Formatet på :attribute är ogiltigt.',
     'uploaded'             => 'Filen kunde inte laddas upp. Servern kanske inte tillåter filer med denna storlek.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute måste referera till en fil inom ZIP-filen.',
+    'zip_file_size' => 'Filen :attribute får inte överstiga :size MB.',
+    'zip_file_mime' => ':attribute måste referera till en fil av typen :validTypes, hittade :foundType.',
+    'zip_model_expected' => 'Dataobjekt förväntades men ":type" hittades.',
+    'zip_unique' => ':attribute måste referera till en fil inom ZIP-filen.',
 
     // Custom validation lines
     'custom' => [

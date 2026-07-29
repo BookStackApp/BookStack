@@ -52,9 +52,7 @@ class RegistrationService
      */
     public function findOrRegister(string $name, string $email, string $externalId): User
     {
-        $user = User::query()
-            ->where('external_auth_id', '=', $externalId)
-            ->first();
+        $user = $this->userRepo->getByExternalAuthId($externalId);
 
         if (is_null($user)) {
             $userData = [

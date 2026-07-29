@@ -15,7 +15,7 @@ return [
     'shortcuts_section_navigation' => 'Navigation',
     'shortcuts_section_actions' => 'Actions communes',
     'shortcuts_save' => 'Sauvegarder les raccourcis',
-    'shortcuts_overlay_desc' => 'Note : Lorsque les raccourcis sont activés, assistant est disponible en appuyant sur "?" qui mettra en surbrillance les raccourcis disponibles pour les actions actuellement visibles à l\'écran.',
+    'shortcuts_overlay_desc' => 'Note : Lorsque les raccourcis sont activés, assistant est disponible en appuyant sur «?» qui mettra en surbrillance les raccourcis disponibles pour les actions actuellement visibles à l\'écran.',
     'shortcuts_update_success' => 'Les préférences de raccourci ont été mises à jour !',
     'shortcuts_overview_desc' => 'Gérer les raccourcis clavier que vous pouvez utiliser pour naviguer dans l\'interface utilisateur du système.',
 

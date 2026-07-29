@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Ces informations ne correspondent à aucun compte.',
     'throttle' => 'Trop d\'essais, veuillez réessayer dans :seconds secondes.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'Trop de tentatives de vérification multifactorielle. Veuillez réessayer dans :secondes secondes.',
 
     // Login & Register
     'sign_up' => 'S\'inscrire',

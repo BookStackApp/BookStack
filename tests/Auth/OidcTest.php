@@ -471,7 +471,28 @@ class OidcTest extends TestCase
         $this->assertEquals('xXBennyTheGeezXx', $user->external_auth_id);
     }
 
-    public function test_auth_uses_mulitple_display_name_claims_if_configured()
+    public function test_auth_uses_external_id_as_exact_value()
+    {
+        // External auth id the same as we expect below but different casing
+        User::query()->forceCreate([
+            'email'            => 'otheruser@example.com',
+            'external_auth_id' => 'Benni202',
+            'email_confirmed'  => true,
+            'name'             => 'Barry Scott',
+        ]);
+
+        $resp = $this->runLogin([
+            'email'            => 'benny@example.com',
+            'sub'              => 'benni202',
+        ]);
+        $resp->assertRedirect('/');
+
+        $this->assertDatabaseHas('users', ['email' => 'benny@example.com']);
+        $this->assertEquals('benny@example.com', user()->email);
+        $this->assertEquals('benni202', user()->external_auth_id);
+    }
+
+    public function test_auth_uses_multiple_display_name_claims_if_configured()
     {
         config()->set(['oidc.display_name_claims' => 'first_name|last_name']);
 

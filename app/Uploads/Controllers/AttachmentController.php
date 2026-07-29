@@ -93,8 +93,9 @@ class AttachmentController extends Controller
         /** @var Attachment $attachment */
         $attachment = Attachment::query()->findOrFail($attachmentId);
 
+        $this->checkOwnablePermission(Permission::PageView, $attachment->page);
         $this->checkOwnablePermission(Permission::PageUpdate, $attachment->page);
-        $this->checkOwnablePermission(Permission::AttachmentCreate, $attachment);
+        $this->checkOwnablePermission(Permission::AttachmentUpdate, $attachment);
 
         return view('attachments.manager-edit-form', [
             'attachment' => $attachment,

@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'Utilisateur mis à jour avec succès',
     'user_delete' => 'utilisateur supprimé',
     'user_delete_notification' => 'Utilisateur supprimé avec succès',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'réinitialiser l\'authentification multifacteur pour l\'utilisateur',
+    'user_mfa_reset_notification' => 'Les méthodes d\'authentification multifacteurs sont réinitialisées',
 
     // API Tokens
     'api_token_create' => 'a créé un jeton API',

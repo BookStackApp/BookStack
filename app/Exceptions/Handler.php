@@ -126,15 +126,24 @@ class Handler extends ExceptionHandler
             $headers = $e->getHeaders();
         }
 
+        $responseData = [
+            'error' => [
+                'message' => 'An error occurred',
+            ],
+        ];
+
         if ($e instanceof ModelNotFoundException) {
+            $responseData['error']['message'] = 'The requested resource could not be found.';
             $code = 404;
         }
 
-        $responseData = [
-            'error' => [
-                'message' => $e->getMessage(),
-            ],
-        ];
+        if ($e instanceof ShowsApiExceptionMessage) {
+            $responseData['error']['message'] = $e->getMessageForApi();
+        }
+
+        if (app()->hasDebugModeEnabled()) {
+            $responseData['error']['message'] = $e->getMessage();
+        }
 
         if ($e instanceof ValidationException) {
             $responseData['error']['message'] = 'The given data was invalid.';
