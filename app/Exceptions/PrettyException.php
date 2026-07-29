@@ -6,7 +6,7 @@ use Exception;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class PrettyException extends Exception implements Responsable, HttpExceptionInterface
+class PrettyException extends Exception implements Responsable, HttpExceptionInterface, ShowsApiExceptionMessage
 {
     protected ?string $subtitle = null;
     protected ?string $details = null;
@@ -55,5 +55,17 @@ class PrettyException extends Exception implements Responsable, HttpExceptionInt
     public function getHeaders(): array
     {
         return [];
+    }
+
+    public function getMessageForApi(): string
+    {
+        $message = $this->getMessage() . '.';
+        if ($this->subtitle) {
+            $message .= " {$this->subtitle}.";
+        }
+        if ($this->details) {
+            $message .= " {$this->details}.";
+        }
+        return $message;
     }
 }

@@ -3,11 +3,17 @@
 namespace BookStack\Access;
 
 use BookStack\Users\Models\User;
+use BookStack\Users\UserRepo;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
 class ExternalBaseUserProvider implements UserProvider
 {
+    public function __construct(
+        protected UserRepo $userRepo,
+    ) {
+    }
+
     /**
      * Retrieve a user by their unique identifier.
      */
@@ -44,9 +50,7 @@ class ExternalBaseUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials): ?Authenticatable
     {
-        return User::query()
-            ->where('external_auth_id', $credentials['external_auth_id'])
-            ->first();
+        return $this->userRepo->getByExternalAuthId($credentials['external_auth_id']);
     }
 
     /**

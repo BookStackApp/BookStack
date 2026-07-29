@@ -3,6 +3,7 @@
 namespace BookStack\Util\HtmlPurifier;
 
 use BookStack\App\AppVersion;
+use BookStack\Util\HtmlPurifier\Filters\UriEnsureScheme;
 use BookStack\Util\HtmlPurifier\Filters\UriLimitFileProtocolToAnchors;
 use BookStack\Util\UrlFilter;
 use HTMLPurifier;
@@ -84,14 +85,18 @@ class ConfiguredHtmlPurifier
         $config->set('Attr.EnableID', true);
         $config->set('Attr.ID.HTML5', true);
         $config->set('Output.FixInnerHTML', false);
-        $config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
 
         $allowedSchemes = UrlFilter::getAllowedSchemes();
         $allowedSchemesSetting = [];
         foreach ($allowedSchemes as $scheme) {
             $allowedSchemesSetting[$scheme] = true;
         }
+        $defaultScheme = str_starts_with(url('/'), 'http:') ? 'http' : 'https';
+        $config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
         $config->set('URI.AllowedSchemes', $allowedSchemesSetting);
+        $config->set('URI.MakeAbsolute', true);
+        $config->set('URI.DefaultScheme', $defaultScheme);
+        $config->set('URI.Base', url('/'));
 
          // $config->set('Cache.DefinitionImpl', null); // Disable cache during testing
     }
@@ -155,7 +160,8 @@ class ConfiguredHtmlPurifier
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
 
-        // Set up custom handler for srcset to limit accepted types
+        // Set up custom handler for srcset
+        // To remove once added upstream: https://github.com/xemlock/htmlpurifier-html5/pull/91
         $definition->addAttribute('img', 'srcset', new SrcsetAttrDef());
         $definition->addAttribute('source', 'srcset', new SrcsetAttrDef());
     }
@@ -163,6 +169,7 @@ class ConfiguredHtmlPurifier
     protected function configureUriDefinition(HTMLPurifier_URIDefinition $definition): void
     {
         $definition->registerFilter(new UriLimitFileProtocolToAnchors());
+        $definition->registerFilter(new UriEnsureScheme());
     }
 
     public function purify(string $html): string

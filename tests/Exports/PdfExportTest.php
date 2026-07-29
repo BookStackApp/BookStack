@@ -58,7 +58,7 @@ class PdfExportTest extends TestCase
 
         $this->asEditor()->get($page->getUrl('/export/pdf'));
         $this->assertStringNotContainsString('iframe>', $pdfHtml);
-        $this->assertStringContainsString('<p><a href="https://www.youtube.com/embed/ShqUjt33uOs">https://www.youtube.com/embed/ShqUjt33uOs</a></p>', $pdfHtml);
+        $this->assertStringContainsString('<p><a href="http://www.youtube.com/embed/ShqUjt33uOs">http://www.youtube.com/embed/ShqUjt33uOs</a></p>', $pdfHtml);
     }
 
     public function test_page_pdf_export_opens_details_blocks()

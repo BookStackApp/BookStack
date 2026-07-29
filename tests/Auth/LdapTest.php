@@ -207,6 +207,36 @@ class LdapTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => $this->mockUser->email, 'email_confirmed' => false, 'external_auth_id' => 'cooluser456']);
     }
 
+    public function test_login_uses_exact_match_for_external_auth_id_values()
+    {
+        config()->set(['services.ldap.id_attribute' => 'my_custom_id']);
+        // External auth id the same as we expect below but different casing
+        User::query()->forceCreate([
+            'email'            => 'otheruser@example.com',
+            'external_auth_id' => 'CoolUser456',
+            'email_confirmed'  => true,
+            'name'             => 'Barry Scott',
+        ]);
+
+        $this->commonLdapMocks(1, 1, 1, 2, 1);
+        $ldapDn = 'cn=test-user,dc=test' . config('services.ldap.base_dn');
+        $this->mockLdap->shouldReceive('searchAndGetEntries')->times(1)
+            ->with($this->resourceId, config('services.ldap.base_dn'), \Mockery::type('string'), \Mockery::type('array'))
+            ->andReturn(['count' => 1, 0 => [
+                'cn'           => [$this->mockUser->name],
+                'dn'           => $ldapDn,
+                'my_custom_id' => ['cooluser456'],
+                'mail'         => [$this->mockUser->email],
+            ]]);
+
+        $resp = $this->mockUserLogin();
+        $resp->assertRedirect('/');
+
+        $this->assertDatabaseHas('users', ['email' => $this->mockUser->email]);
+        $this->assertEquals($this->mockUser->email, user()->email);
+        $this->assertEquals('cooluser456', user()->external_auth_id);
+    }
+
     public function test_user_filter_default_placeholder_format()
     {
         config()->set('services.ldap.user_filter', '(&(uid={user}))');

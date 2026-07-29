@@ -30,7 +30,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * The user we last attempted to retrieve.
      */
-    protected Authenticatable|null $lastAttempted;
+    protected Authenticatable|null $lastAttempted = null;
 
     /**
      * The session used by the guard.
@@ -203,7 +203,7 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Get the last user we attempted to authenticate.
      */
-    public function getLastAttempted(): Authenticatable
+    public function getLastAttempted(): Authenticatable|null
     {
         return $this->lastAttempted;
     }

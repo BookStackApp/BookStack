@@ -419,6 +419,29 @@ class Saml2Test extends TestCase
         $acsPost->assertSee('A user with the email user@example.com already exists but with different credentials');
     }
 
+    public function test_login_uses_exact_match_for_external_auth_values()
+    {
+        $this->post('/saml2/login');
+        config()->set(['saml2.onelogin.strict' => false]);
+
+        // Make the user pre-existing in DB with auth_id of different casing
+        User::query()->forceCreate([
+            'email'            => 'otheruser@example.com',
+            'external_auth_id' => 'UsEr',
+            'email_confirmed'  => true,
+            'name'             => 'Barry Scott',
+        ]);
+
+        $this->followingRedirects()->post('/saml2/acs', ['SAMLResponse' => $this->acsPostData]);
+
+        $this->assertTrue($this->isAuthenticated());
+        $this->assertDatabaseHas('users', [
+            'email' => 'user@example.com',
+        ]);
+        $this->assertEquals('user@example.com', user()->email);
+        $this->assertEquals('user', user()->external_auth_id);
+    }
+
     public function test_login_request_contains_expected_default_authncontext()
     {
         $authReq = $this->getAuthnRequest();
