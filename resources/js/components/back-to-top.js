@@ -3,10 +3,15 @@ import {Component} from './component';
 export class BackToTop extends Component {
 
     setup() {
-        this.button = this.$el;
+        this.container = this.$el;
+        this.button = this.$refs.button;
+        this.progress = this.$refs.progress;
+        this.progressPath = this.$refs.progressPath;
+
         this.targetElem = document.getElementById('header');
         this.showing = false;
         this.breakPoint = 1200;
+        this.isAnimating = false;
 
         if (document.body.classList.contains('flexbox')) {
             this.button.style.display = 'none';
@@ -15,22 +20,45 @@ export class BackToTop extends Component {
 
         this.button.addEventListener('click', this.scrollToTop.bind(this));
         window.addEventListener('scroll', this.onPageScroll.bind(this));
+
+        this.setupProgressBar();
+    }
+
+    setupProgressBar() {
+        this.button.addEventListener('transitionstart', event => {
+            if (event.target !== this.button) return;
+            this.isAnimating = true;
+            this.renderProgressPath();
+        });
+        const stopAnimating = event => {
+            if (event.target !== this.button) return;
+            this.isAnimating = false;
+        };
+        this.button.addEventListener('transitionend', stopAnimating);
+        this.button.addEventListener('transitioncancel', stopAnimating);
+        this.renderProgressPath();
     }
 
     onPageScroll() {
         const scrollTopPos = document.documentElement.scrollTop || document.body.scrollTop || 0;
         if (!this.showing && scrollTopPos > this.breakPoint) {
-            this.button.style.display = 'block';
+            this.container.display = 'block';
             this.showing = true;
             setTimeout(() => {
-                this.button.style.opacity = 0.4;
+                this.container.style.opacity = '0.4';
             }, 1);
         } else if (this.showing && scrollTopPos < this.breakPoint) {
-            this.button.style.opacity = 0;
+            this.container.style.opacity = '0';
             this.showing = false;
             setTimeout(() => {
-                this.button.style.display = 'none';
+                this.container.display = 'none';
             }, 500);
+        }
+
+        if (this.showing) {
+            const maxScrollTop = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollTopPercent = (scrollTopPos / maxScrollTop) * 100;
+            this.updateProgress(scrollTopPercent);
         }
     }
 
@@ -54,5 +82,46 @@ export class BackToTop extends Component {
 
         requestAnimationFrame(setPos.bind(this));
     }
+
+    renderProgressPath() {
+        const bounds = this.button.getBoundingClientRect();
+        const progressInset = window.getComputedStyle(this.progress).insetInlineStart;
+        const offset = Math.abs(Number(progressInset.replace('px', '') || 0));
+        const path = this.roundedRectPath(bounds.width, bounds.height, bounds.height / 2, offset);
+        this.progressPath.setAttribute('d', path);
+        if (this.isAnimating) {
+            window.requestAnimationFrame(this.renderProgressPath.bind(this));
+        }
+    }
+
+    updateProgress(percentComplete) {
+        if (percentComplete < 5) {
+            percentComplete = 5;
+        }
+        this.progressPath.setAttribute('stroke-dasharray', `${Math.ceil(percentComplete)} 100`);
+    }
+
+    roundedRectPath(w, h, r, offset = 1.5) {
+        // Expand dimensions outward by the offset
+        const W = w + 2 * offset;
+        const H = h + 2 * offset;
+
+        // The corner radius also grows by the offset
+        const R = Math.min(r + offset, W / 2, H / 2);
+
+        return [
+            `M ${W / 2} 0`,                       // start at top center
+            `H ${W - R}`,                          // line to top-right (before arc)
+            `A ${R} ${R} 0 0 1 ${W} ${R}`,        // arc: top-right corner
+            `V ${H - R}`,                          // line down right edge
+            `A ${R} ${R} 0 0 1 ${W - R} ${H}`,    // arc: bottom-right corner
+            `H ${R}`,                              // line across bottom edge
+            `A ${R} ${R} 0 0 1 ${0} ${H - R}`,    // arc: bottom-left corner
+            `V ${R}`,                              // line up left edge
+            `A ${R} ${R} 0 0 1 ${R} ${0}`,        // arc: top-left corner
+            `Z`                                    // close path back to start
+        ].join(' ');
+    }
+
 
 }
