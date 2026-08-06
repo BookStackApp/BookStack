@@ -53,7 +53,6 @@ class BookController extends Controller
         $books = $this->queries->visibleForListWithCover()
             ->orderBy($listOptions->getSort(), $listOptions->getOrder())
             ->paginate(setting()->getInteger('lists-page-count-books', 18, 1, 1000));
-        $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->take(4)->get() : false;
         $popular = $this->queries->popularForList()->take(4)->get();
         $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();
 
@@ -63,7 +62,6 @@ class BookController extends Controller
 
         return view('books.index', [
             'books'   => $books,
-            'recents' => $recents,
             'popular' => $popular,
             'new'     => $new,
             'view'    => $view,

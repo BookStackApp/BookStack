@@ -5,7 +5,9 @@
 @stop
 
 @section('left')
-    @include('books.parts.index-sidebar-section-recents', ['recents' => $recents])
+    @foreach($sidebar->getSectionsForLocation('books-index', 'left') as $section)
+        @include($section->getView(), $section->withData(get_defined_vars(), request()))
+    @endforeach
     @include('books.parts.index-sidebar-section-popular', ['popular' => $popular])
     @include('books.parts.index-sidebar-section-new', ['new' => $new])
 @stop
