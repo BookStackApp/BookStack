@@ -1,0 +1,22 @@
+<?php
+
+namespace BookStack\View\ViewBlocks;
+
+use BookStack\Entities\Models\Bookshelf;
+use BookStack\View\ViewBlock;
+use Illuminate\Http\Request;
+
+class ShelvesShowActions extends ViewBlock
+{
+    protected string $view = 'shelves.parts.show-sidebar-section-actions';
+
+    public function withData(array $viewData, Request $request): array
+    {
+        /** @var Bookshelf $shelf */
+        $shelf = $viewData['shelf'];
+
+        return [
+            'shelf' => $shelf,
+        ];
+    }
+}

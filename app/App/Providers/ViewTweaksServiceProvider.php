@@ -4,7 +4,7 @@ namespace BookStack\App\Providers;
 
 use BookStack\Entities\BreadcrumbsViewComposer;
 use BookStack\Util\DateFormatter;
-use BookStack\View\SidebarSectionManager;
+use BookStack\View\ViewBlockManager;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
@@ -34,7 +34,7 @@ class ViewTweaksServiceProvider extends ServiceProvider
 
         // View Globals
         View::share('dates', $this->app->make(DateFormatter::class));
-        View::share('sidebar', $this->app->make(SidebarSectionManager::class));
+        View::share('viewBlocks', $this->app->make(ViewBlockManager::class));
 
         // Custom blade view directives
         Blade::directive('icon', function ($expression) {
