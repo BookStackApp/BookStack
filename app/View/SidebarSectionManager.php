@@ -2,7 +2,16 @@
 
 namespace BookStack\View;
 
+use BookStack\View\SidebarSections\BooksIndexActions;
+use BookStack\View\SidebarSections\BooksIndexNew;
+use BookStack\View\SidebarSections\BooksIndexPopular;
 use BookStack\View\SidebarSections\BooksIndexRecents;
+use BookStack\View\SidebarSections\BooksShowActions;
+use BookStack\View\SidebarSections\BooksShowActivity;
+use BookStack\View\SidebarSections\BooksShowDetails;
+use BookStack\View\SidebarSections\BooksShowSearchForm;
+use BookStack\View\SidebarSections\BooksShowShelves;
+use BookStack\View\SidebarSections\BooksShowTags;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
 class SidebarSectionManager
@@ -14,7 +23,24 @@ class SidebarSectionManager
         'books-index' => [
             'left' => [
                 BooksIndexRecents::class,
-            ]
+                BooksIndexPopular::class,
+                BooksIndexNew::class,
+            ],
+            'right' => [
+                BooksIndexActions::class,
+            ],
+        ],
+        'books-show' => [
+            'left' => [
+                BooksShowSearchForm::class,
+                BooksShowTags::class,
+                BooksShowShelves::class,
+                BooksShowActivity::class,
+            ],
+            'right' => [
+                BooksShowDetails::class,
+                BooksShowActions::class,
+            ],
         ],
     ];
 

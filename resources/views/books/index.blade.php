@@ -5,13 +5,9 @@
 @stop
 
 @section('left')
-    @foreach($sidebar->getSectionsForLocation('books-index', 'left') as $section)
-        @include($section->getView(), $section->withData(get_defined_vars(), request()))
-    @endforeach
-    @include('books.parts.index-sidebar-section-popular', ['popular' => $popular])
-    @include('books.parts.index-sidebar-section-new', ['new' => $new])
+    @include('common.sidebar-sections', ['location' => 'books-index', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('books.parts.index-sidebar-section-actions', ['view' => $view])
+    @include('common.sidebar-sections', ['location' => 'books-index', 'position' => 'right'])
 @stop
