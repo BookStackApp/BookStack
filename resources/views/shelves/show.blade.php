@@ -69,15 +69,9 @@
 @stop
 
 @section('left')
-    @include('shelves.parts.show-sidebar-section-tags', ['shelf' => $shelf])
-    @include('shelves.parts.show-sidebar-section-details', ['shelf' => $shelf])
-    @include('shelves.parts.show-sidebar-section-activity', ['activity' => $activity])
+    @include('common.sidebar-sections', ['location' => 'shelves-show', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('shelves.parts.show-sidebar-section-actions', ['shelf' => $shelf, 'view' => $view])
+    @include('common.sidebar-sections', ['location' => 'shelves-show', 'position' => 'right'])
 @stop
-
-
-
-

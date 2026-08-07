@@ -2,16 +2,16 @@
 
 namespace BookStack\View\SidebarSections;
 
-use BookStack\Entities\Queries\BookQueries;
+use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\View\SidebarSection;
 use Illuminate\Http\Request;
 
-class BooksIndexRecents extends SidebarSection
+class ShelvesIndexRecents extends SidebarSection
 {
-    protected string $view = 'books.parts.index-sidebar-section-recents';
+    protected string $view = 'shelves.parts.index-sidebar-section-recents';
 
     public function __construct(
-        protected BookQueries $queries,
+        protected BookshelfQueries $queries,
     ) {
     }
 

@@ -62,15 +62,10 @@
 
 @stop
 
-@section('right')
-    @include('chapters.parts.show-sidebar-section-details', ['chapter' => $chapter, 'book' => $book, 'watchOptions' => $watchOptions])
-    @include('chapters.parts.show-sidebar-section-actions', ['chapter' => $chapter, 'watchOptions' => $watchOptions])
-@stop
-
 @section('left')
-    @include('entities.search-form', ['label' => trans('entities.chapters_search_this')])
-    @include('chapters.parts.show-sidebar-section-tags', ['chapter' => $chapter])
-    @include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('common.sidebar-sections', ['location' => 'chapters-show', 'position' => 'left'])
 @stop
 
-
+@section('right')
+    @include('common.sidebar-sections', ['location' => 'chapters-show', 'position' => 'right'])
+@stop

@@ -12,6 +12,25 @@ use BookStack\View\SidebarSections\BooksShowDetails;
 use BookStack\View\SidebarSections\BooksShowSearchForm;
 use BookStack\View\SidebarSections\BooksShowShelves;
 use BookStack\View\SidebarSections\BooksShowTags;
+use BookStack\View\SidebarSections\ChaptersShowActions;
+use BookStack\View\SidebarSections\ChaptersShowBookTree;
+use BookStack\View\SidebarSections\ChaptersShowDetails;
+use BookStack\View\SidebarSections\ChaptersShowSearchForm;
+use BookStack\View\SidebarSections\ChaptersShowTags;
+use BookStack\View\SidebarSections\PagesShowActions;
+use BookStack\View\SidebarSections\PagesShowAttachments;
+use BookStack\View\SidebarSections\PagesShowBookTree;
+use BookStack\View\SidebarSections\PagesShowDetails;
+use BookStack\View\SidebarSections\PagesShowPageNav;
+use BookStack\View\SidebarSections\PagesShowTags;
+use BookStack\View\SidebarSections\ShelvesIndexActions;
+use BookStack\View\SidebarSections\ShelvesIndexNew;
+use BookStack\View\SidebarSections\ShelvesIndexPopular;
+use BookStack\View\SidebarSections\ShelvesIndexRecents;
+use BookStack\View\SidebarSections\ShelvesShowActions;
+use BookStack\View\SidebarSections\ShelvesShowActivity;
+use BookStack\View\SidebarSections\ShelvesShowDetails;
+use BookStack\View\SidebarSections\ShelvesShowTags;
 use Illuminate\Contracts\Container\BindingResolutionException;
 
 class SidebarSectionManager
@@ -20,6 +39,26 @@ class SidebarSectionManager
      * @var array<string, array<string, class-string<SidebarSectionInterface>[]>>
      */
     protected array $sectionByLocation = [
+        'shelves-index' => [
+            'left' => [
+                ShelvesIndexRecents::class,
+                ShelvesIndexPopular::class,
+                ShelvesIndexNew::class,
+            ],
+            'right' => [
+                ShelvesIndexActions::class,
+            ],
+        ],
+        'shelves-show' => [
+            'left' => [
+                ShelvesShowTags::class,
+                ShelvesShowDetails::class,
+                ShelvesShowActivity::class,
+            ],
+            'right' => [
+                ShelvesShowActions::class,
+            ],
+        ],
         'books-index' => [
             'left' => [
                 BooksIndexRecents::class,
@@ -40,6 +79,29 @@ class SidebarSectionManager
             'right' => [
                 BooksShowDetails::class,
                 BooksShowActions::class,
+            ],
+        ],
+        'chapters-show' => [
+            'left' => [
+                ChaptersShowSearchForm::class,
+                ChaptersShowTags::class,
+                ChaptersShowBookTree::class,
+            ],
+            'right' => [
+                ChaptersShowDetails::class,
+                ChaptersShowActions::class,
+            ],
+        ],
+        'pages-show' => [
+            'left' => [
+                PagesShowTags::class,
+                PagesShowAttachments::class,
+                PagesShowPageNav::class,
+                PagesShowBookTree::class,
+            ],
+            'right' => [
+                PagesShowDetails::class,
+                PagesShowActions::class,
             ],
         ],
     ];
