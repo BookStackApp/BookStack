@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class ChaptersShowDetails extends ViewBlock
 {
     protected string $view = 'chapters.parts.show-sidebar-section-details';
+    protected string $labelTranslationKey = 'common.details';
 
     public function __construct(
         protected ReferenceFetcher $referenceFetcher,

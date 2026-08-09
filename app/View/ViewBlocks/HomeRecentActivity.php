@@ -13,6 +13,11 @@ class HomeRecentActivity implements ViewBlockInterface
     ) {
     }
 
+    public function getLabel(): string
+    {
+        return trans('entities.recent_activity');
+    }
+
     public function getView(array $viewData): string
     {
         if ($viewData['homeView'] === 'default') {

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class PagesShowPageNav extends ViewBlock
 {
     protected string $view = 'pages.parts.show-sidebar-section-page-nav';
+    protected string $labelTranslationKey = 'entities.pages_navigation';
 
     public function withData(array $viewData): array
     {

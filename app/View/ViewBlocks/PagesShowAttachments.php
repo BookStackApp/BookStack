@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class PagesShowAttachments extends ViewBlock
 {
     protected string $view = 'pages.parts.show-sidebar-section-attachments';
+    protected string $labelTranslationKey = 'entities.pages_attachments';
 
     public function withData(array $viewData): array
     {

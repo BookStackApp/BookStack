@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ShelvesShowActivity extends ViewBlock
 {
     protected string $view = 'shelves.parts.show-sidebar-section-activity';
+    protected string $labelTranslationKey = 'entities.recent_activity';
 
     public function __construct(
         protected ActivityQueries $activityQueries,

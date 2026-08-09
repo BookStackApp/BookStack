@@ -12,6 +12,11 @@ class HomeRecentDrafts implements ViewBlockInterface
     ) {
     }
 
+    public function getLabel(): string
+    {
+        return trans('entities.my_recent_drafts');
+    }
+
     public function getView(array $viewData): string
     {
         if ($viewData['homeView'] === 'default') {

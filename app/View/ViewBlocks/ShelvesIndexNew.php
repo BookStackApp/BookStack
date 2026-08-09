@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class ShelvesIndexNew extends ViewBlock
 {
     protected string $view = 'shelves.parts.index-sidebar-section-new';
+    protected string $labelTranslationKey = 'entities.shelves_new';
 
     public function __construct(
         protected BookshelfQueries $queries,

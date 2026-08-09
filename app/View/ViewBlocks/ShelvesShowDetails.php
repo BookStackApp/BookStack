@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ShelvesShowDetails extends ViewBlock
 {
     protected string $view = 'shelves.parts.show-sidebar-section-details';
+    protected string $labelTranslationKey = 'common.details';
 
     public function __construct(
         protected ReferenceFetcher $referenceFetcher,

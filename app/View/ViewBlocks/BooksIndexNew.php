@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class BooksIndexNew extends ViewBlock
 {
     protected string $view = 'books.parts.index-sidebar-section-new';
+    protected string $labelTranslationKey = 'entities.books_new';
 
     public function __construct(
         protected BookQueries $queries,

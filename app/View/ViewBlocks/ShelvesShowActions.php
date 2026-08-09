@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class ShelvesShowActions extends ViewBlock
 {
     protected string $view = 'shelves.parts.show-sidebar-section-actions';
+    protected string $labelTranslationKey = 'common.actions';
 
     public function withData(array $viewData): array
     {

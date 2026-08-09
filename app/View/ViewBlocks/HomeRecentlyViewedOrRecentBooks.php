@@ -16,6 +16,12 @@ class HomeRecentlyViewedOrRecentBooks implements ViewBlockInterface
     ) {
     }
 
+    public function getLabel(): string
+    {
+        $key = user()->isGuest() ? 'books_recent' : 'my_recently_viewed';
+        return trans("entities.{$key}");
+    }
+
     public function getView(array $viewData): string
     {
         if ($viewData['homeView'] === 'default') {

@@ -13,6 +13,11 @@ class HomeTopFavourites implements ViewBlockInterface
     ) {
     }
 
+    public function getLabel(): string
+    {
+        return trans('entities.my_most_viewed_favourites');
+    }
+
     public function getView(array $viewData): string
     {
         if ($viewData['homeView'] === 'default') {

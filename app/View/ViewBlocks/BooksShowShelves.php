@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class BooksShowShelves extends ViewBlock
 {
     protected string $view = 'books.parts.show-sidebar-section-shelves';
+    protected string $labelTranslationKey = 'entities.shelves';
 
     public function withData(array $viewData): array
     {

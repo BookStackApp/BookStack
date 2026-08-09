@@ -13,6 +13,11 @@ class HomeRecentlyUpdatedPages implements ViewBlockInterface
     ) {
     }
 
+    public function getLabel(): string
+    {
+        return trans('entities.recently_updated_pages');
+    }
+
     public function getView(array $viewData): string
     {
         if ($viewData['homeView'] === 'default') {

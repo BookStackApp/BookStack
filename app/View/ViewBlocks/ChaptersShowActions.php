@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class ChaptersShowActions extends ViewBlock
 {
     protected string $view = 'chapters.parts.show-sidebar-section-actions';
+    protected string $labelTranslationKey = 'common.actions';
 
     public function withData(array $viewData): array
     {

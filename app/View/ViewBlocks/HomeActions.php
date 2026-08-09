@@ -3,11 +3,11 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
 
 class HomeActions extends ViewBlock
 {
     protected string $view = 'home.parts.configured-section-actions';
+    protected string $labelTranslationKey = 'common.actions';
 
     public function withData(array $viewData): array
     {
