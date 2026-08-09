@@ -9,7 +9,7 @@ class ChaptersShowSearchForm extends ViewBlock
 {
     protected string $view = 'entities.search-form';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         return [
             'label' => trans('entities.chapters_search_this'),

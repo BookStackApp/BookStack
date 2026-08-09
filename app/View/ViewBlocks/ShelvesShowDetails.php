@@ -16,7 +16,7 @@ class ShelvesShowDetails extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Bookshelf $shelf */
         $shelf = $viewData['shelf'];

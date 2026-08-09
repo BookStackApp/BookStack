@@ -1,5 +1,0 @@
-@include('home.parts.sidebar-section-recent-drafts', ['draftPages' => $draftPages])
-@include('home.parts.sidebar-section-top-favourites', ['favourites' => $favourites])
-@include('home.parts.sidebar-section-recently-viewed-or-recent-books', ['recents' => $recents])
-@include('home.parts.sidebar-section-recently-updated-pages', ['recentlyUpdatedPages' => $recentlyUpdatedPages])
-@include('home.parts.sidebar-section-recent-activity', ['activity' => $activity])

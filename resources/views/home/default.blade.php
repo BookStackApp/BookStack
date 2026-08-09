@@ -16,17 +16,15 @@
     <div class="container" id="home-default">
         <div class="grid third gap-x-xxl no-row-gap">
             <div>
-                @include('home.parts.default-card-recent-drafts', ['draftPages' => $draftPages])
-                @include('home.parts.default-card-recently-viewed-or-recent-books', ['recents' => $recents])
+                @include('common.view-blocks', ['location' => 'home-default', 'position' => 'left'])
             </div>
 
             <div>
-                @include('home.parts.default-card-top-favourites', ['favourites' => $favourites])
-                @include('home.parts.default-card-recently-updates-pages', ['recentlyUpdatedPages' => $recentlyUpdatedPages])
+                @include('common.view-blocks', ['location' => 'home-default', 'position' => 'center'])
             </div>
 
             <div>
-                @include('home.parts.default-card-recent-activity', ['activity' => $activity])
+                @include('common.view-blocks', ['location' => 'home-default', 'position' => 'right'])
             </div>
         </div>
     </div>

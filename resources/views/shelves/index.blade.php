@@ -5,9 +5,9 @@
 @stop
 
 @section('left')
-    @include('common.sidebar-sections', ['location' => 'shelves-index', 'position' => 'left'])
+    @include('common.view-blocks', ['location' => 'shelves-index', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('common.sidebar-sections', ['location' => 'shelves-index', 'position' => 'right'])
+    @include('common.view-blocks', ['location' => 'shelves-index', 'position' => 'right'])
 @stop

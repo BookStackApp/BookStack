@@ -15,7 +15,7 @@ class BooksIndexRecents extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         $recents = null;
         if (!user()->isGuest()) {

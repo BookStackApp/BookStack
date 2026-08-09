@@ -10,7 +10,7 @@ class ChaptersShowTags extends ViewBlock
 {
     protected string $view = 'chapters.parts.show-sidebar-section-tags';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Chapter $chapter */
         $chapter = $viewData['chapter'];

@@ -15,7 +15,7 @@ class ShelvesIndexPopular extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         return [
             'popular' => $this->queries->popularForList()->take(4)->get(),

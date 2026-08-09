@@ -11,7 +11,7 @@ class PagesShowActions extends ViewBlock
 {
     protected string $view = 'pages.parts.show-sidebar-section-actions';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Page $page */
         $page = $viewData['page'];

@@ -17,6 +17,12 @@ use BookStack\View\ViewBlocks\ChaptersShowBookTree;
 use BookStack\View\ViewBlocks\ChaptersShowDetails;
 use BookStack\View\ViewBlocks\ChaptersShowSearchForm;
 use BookStack\View\ViewBlocks\ChaptersShowTags;
+use BookStack\View\ViewBlocks\HomeActions;
+use BookStack\View\ViewBlocks\HomeRecentActivity;
+use BookStack\View\ViewBlocks\HomeRecentDrafts;
+use BookStack\View\ViewBlocks\HomeRecentlyUpdatedPages;
+use BookStack\View\ViewBlocks\HomeRecentlyViewedOrRecentBooks;
+use BookStack\View\ViewBlocks\HomeTopFavourites;
 use BookStack\View\ViewBlocks\PagesShowActions;
 use BookStack\View\ViewBlocks\PagesShowAttachments;
 use BookStack\View\ViewBlocks\PagesShowBookTree;
@@ -39,6 +45,31 @@ class ViewBlockManager
      * @var array<string, array<string, class-string<ViewBlockInterface>[]>>
      */
     protected array $blocksByLocationAndPosition = [
+        'home-default' => [
+            'left' => [
+                HomeRecentDrafts::class,
+                HomeRecentlyViewedOrRecentBooks::class,
+            ],
+            'center' => [
+                HomeTopFavourites::class,
+                HomeRecentlyUpdatedPages::class,
+            ],
+            'right' => [
+                HomeRecentActivity::class,
+            ],
+        ],
+        'home-non-default' => [
+            'left' => [
+                HomeRecentDrafts::class,
+                HomeTopFavourites::class,
+                HomeRecentlyViewedOrRecentBooks::class,
+                HomeRecentlyUpdatedPages::class,
+                HomeRecentActivity::class,
+            ],
+            'right' => [
+                HomeActions::class,
+            ],
+        ],
         'shelves-index' => [
             'left' => [
                 ShelvesIndexRecents::class,

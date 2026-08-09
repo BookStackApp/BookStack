@@ -15,7 +15,7 @@ class BooksIndexNew extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         $new = $this->queries->visibleForList()
             ->orderBy('created_at', 'desc')

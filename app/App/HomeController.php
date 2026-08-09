@@ -2,11 +2,8 @@
 
 namespace BookStack\App;
 
-use BookStack\Activity\ActivityQueries;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
-use BookStack\Entities\Queries\QueryRecentlyViewed;
-use BookStack\Entities\Queries\QueryTopFavourites;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Http\Controller;
 use BookStack\Util\SimpleListOptions;
@@ -24,49 +21,19 @@ class HomeController extends Controller
      */
     public function index(
         Request $request,
-        ActivityQueries $activities,
-        QueryRecentlyViewed $recentlyViewed,
-        QueryTopFavourites $topFavourites,
     ) {
-        $activity = $activities->latest(10);
-        $draftPages = [];
-
-        if ($this->isSignedIn()) {
-            $draftPages = $this->queries->pages->currentUserDraftsForList()
-                ->orderBy('updated_at', 'desc')
-                ->with('book')
-                ->take(6)
-                ->get();
-        }
-
-        $recentFactor = count($draftPages) > 0 ? 0.5 : 1;
-        $recents = $this->isSignedIn() ?
-            $recentlyViewed->run(12 * $recentFactor, 1)
-            : $this->queries->books->visibleForList()->orderBy('created_at', 'desc')->take(12 * $recentFactor)->get();
-        $favourites = $topFavourites->run(6);
-        $recentlyUpdatedPages = $this->queries->pages->visibleForList()
-            ->where('draft', false)
-            ->orderBy('updated_at', 'desc')
-            ->take($favourites->count() > 0 ? 5 : 10)
-            ->get();
-
-        $homepageOptions = ['default', 'books', 'bookshelves', 'page'];
-        $homepageOption = setting('app-homepage-type', 'default');
-        if (!in_array($homepageOption, $homepageOptions)) {
-            $homepageOption = 'default';
+        $homepageType = setting('app-homepage-type', 'default');
+        if (!in_array($homepageType, ['default', 'books', 'bookshelves', 'page'])) {
+            $homepageType = 'default';
         }
 
         $commonData = [
-            'activity'             => $activity,
-            'recents'              => $recents,
-            'recentlyUpdatedPages' => $recentlyUpdatedPages,
-            'draftPages'           => $draftPages,
-            'favourites'           => $favourites,
+            'homeView' => $homepageType,
         ];
 
         // Add required list ordering & sorting for books & shelves views.
-        if ($homepageOption === 'bookshelves' || $homepageOption === 'books') {
-            $key = $homepageOption;
+        if ($homepageType === 'bookshelves' || $homepageType === 'books') {
+            $key = $homepageType;
             $view = setting()->getForCurrentUser($key . '_view_type');
             $listOptions = SimpleListOptions::fromRequest($request, $key)->withSortOptions([
                 'name' => trans('common.sort_name'),
@@ -80,7 +47,7 @@ class HomeController extends Controller
             ]);
         }
 
-        if ($homepageOption === 'bookshelves') {
+        if ($homepageType === 'bookshelves') {
             $shelves = $this->queries->shelves->visibleForListWithCover()
                 ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
                 ->paginate(setting()->getInteger('lists-page-count-shelves', 18, 1, 1000));
@@ -89,7 +56,7 @@ class HomeController extends Controller
             return view('home.shelves', $data);
         }
 
-        if ($homepageOption === 'books') {
+        if ($homepageType === 'books') {
             $books = $this->queries->books->visibleForListWithCover()
                 ->orderBy($commonData['listOptions']->getSort(), $commonData['listOptions']->getOrder())
                 ->paginate(setting()->getInteger('lists-page-count-books', 18, 1, 1000));
@@ -98,7 +65,7 @@ class HomeController extends Controller
             return view('home.books', $data);
         }
 
-        if ($homepageOption === 'page') {
+        if ($homepageType === 'page') {
             $homepageSetting = setting('app-homepage', '0:');
             $id = intval(explode(':', $homepageSetting)[0]);
             /** @var Page $customHomepage */

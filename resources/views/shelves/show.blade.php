@@ -69,9 +69,9 @@
 @stop
 
 @section('left')
-    @include('common.sidebar-sections', ['location' => 'shelves-show', 'position' => 'left'])
+    @include('common.view-blocks', ['location' => 'shelves-show', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('common.sidebar-sections', ['location' => 'shelves-show', 'position' => 'right'])
+    @include('common.view-blocks', ['location' => 'shelves-show', 'position' => 'right'])
 @stop

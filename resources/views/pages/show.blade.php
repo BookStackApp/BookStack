@@ -36,9 +36,9 @@
 @stop
 
 @section('left')
-    @include('common.sidebar-sections', ['location' => 'pages-show', 'position' => 'left'])
+    @include('common.view-blocks', ['location' => 'pages-show', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('common.sidebar-sections', ['location' => 'pages-show', 'position' => 'right'])
+    @include('common.view-blocks', ['location' => 'pages-show', 'position' => 'right'])
 @stop

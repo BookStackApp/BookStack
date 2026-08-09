@@ -18,7 +18,7 @@ class PagesShowDetails extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Book $book */
         $book = $viewData['book'];

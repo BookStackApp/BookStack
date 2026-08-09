@@ -9,7 +9,7 @@ abstract class ViewBlock implements ViewBlockInterface
     /**
      * @inheritDoc
      */
-    public function getView(): string
+    public function getView(array $viewData): string
     {
         return $this->view;
     }

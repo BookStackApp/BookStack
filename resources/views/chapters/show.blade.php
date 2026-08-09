@@ -63,9 +63,9 @@
 @stop
 
 @section('left')
-    @include('common.sidebar-sections', ['location' => 'chapters-show', 'position' => 'left'])
+    @include('common.view-blocks', ['location' => 'chapters-show', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('common.sidebar-sections', ['location' => 'chapters-show', 'position' => 'right'])
+    @include('common.view-blocks', ['location' => 'chapters-show', 'position' => 'right'])
 @stop

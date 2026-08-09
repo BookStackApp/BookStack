@@ -9,7 +9,7 @@ class ShelvesIndexActions extends ViewBlock
 {
     protected string $view = 'shelves.parts.index-sidebar-section-actions';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         return [
             'view' => $viewData['view'],

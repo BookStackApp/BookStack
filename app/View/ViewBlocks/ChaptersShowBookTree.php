@@ -10,7 +10,7 @@ class ChaptersShowBookTree extends ViewBlock
 {
     protected string $view = 'entities.book-tree';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Book $book */
         $book = $viewData['book'];

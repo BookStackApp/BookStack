@@ -10,7 +10,7 @@ class BooksShowShelves extends ViewBlock
 {
     protected string $view = 'books.parts.show-sidebar-section-shelves';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         /** @var Book $book */
         $book = $viewData['book'];

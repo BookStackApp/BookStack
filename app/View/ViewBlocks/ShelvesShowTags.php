@@ -9,7 +9,7 @@ class ShelvesShowTags extends ViewBlock
 {
     protected string $view = 'shelves.parts.show-sidebar-section-tags';
 
-    public function withData(array $viewData, Request $request): array
+    public function withData(array $viewData): array
     {
         return [
             'book' => $viewData['book'],
