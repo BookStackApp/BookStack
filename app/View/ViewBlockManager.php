@@ -44,4 +44,25 @@ class ViewBlockManager
             return app()->make($className);
         }, $sections);
     }
+
+    /**
+     * Get the names of all locations where blocks are registered.
+     * Returns an array where the keys are location strings, and the
+     * values are translated labels for that location.
+     * @return array<string, string>
+     */
+    public function getNamedLocations(): array
+    {
+        $labels = ViewBlockDefaults::getLocationLabels();
+        $defaults = ViewBlockDefaults::getLocations();
+        $registered = array_keys($this->blocksByLocationAndPosition);
+        $merged = array_unique(array_merge($defaults, $registered));
+
+        $results = [];
+        foreach ($merged as $location) {
+            $results[$location] = $labels[$location] ?? $location;
+        }
+
+        return $results;
+    }
 }

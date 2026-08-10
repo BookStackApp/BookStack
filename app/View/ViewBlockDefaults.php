@@ -107,4 +107,26 @@ class ViewBlockDefaults
     {
         return self::$defaults[$location] ?? [];
     }
+
+    /**
+     * Get the locations for all default blocks.
+     */
+    public static function getLocations(): array
+    {
+        return array_keys(self::$defaults);
+    }
+
+    public static function getLocationLabels(): array
+    {
+        return [
+            'home-default' => trans('common.homepage'),
+            'home-non-default' => trans('preferences.layouts_home_non_default'),
+            'shelves-index' => trans('entities.shelves'),
+            'shelves-show' => trans('entities.shelf'),
+            'books-index' => trans('entities.books'),
+            'books-show' => trans('entities.book'),
+            'chapters-show' => trans('entities.chapter'),
+            'pages-show' => trans('entities.page'),
+        ];
+    }
 }

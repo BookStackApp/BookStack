@@ -19,6 +19,12 @@ return [
     'shortcuts_update_success' => 'Shortcut preferences have been updated!',
     'shortcuts_overview_desc' => 'Manage keyboard shortcuts you can use to navigate the system user interface.',
 
+    'interface' => 'Interface Preferences',
+    'interface_desc' => 'Customize various user interface elements you see across the application.',
+    'layouts' => 'Customize UI Layout',
+    'layouts_desc' => 'Customize the layout of sections shown in the user interface across various views.',
+    'layouts_home_non_default' => 'Homepage (non-default)',
+
     'notifications' => 'Notification Preferences',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',
     'notifications_opt_own_page_changes' => 'Notify upon changes to pages I own',
