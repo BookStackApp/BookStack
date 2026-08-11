@@ -165,12 +165,28 @@ class UserAccountController extends Controller
      */
     public function showInterface(ViewBlockManager $viewBlockManager)
     {
-        // TODO - Handle language save
-
         return view('users.account.interface', [
             'category'       => 'interface',
             'namedLocations' => $viewBlockManager->getNamedLocations(),
         ]);
+    }
+
+    /**
+     * Handle the submission of the interface preferences form.
+     */
+    public function updateInterface(Request $request)
+    {
+        $this->preventAccessInDemoMode();
+
+        $user = user();
+        $validated = $this->validate($request, [
+            'language' => ['string', 'max:15', 'alpha_dash'],
+            'display_mode' => ['string', 'max:15', 'alpha_dash'],
+        ]);
+
+        $this->userRepo->update($user, $validated, userCan(Permission::UsersManage));
+
+        return redirect('/my-account/interface');
     }
 
     /**

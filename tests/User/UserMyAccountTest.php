@@ -344,4 +344,25 @@ class UserMyAccountTest extends TestCase
         $resp = $this->asEditor()->get('/my-account/notifications');
         $this->withHtml($resp)->assertElementExists('input[name="preferences[comment-mentions]"][value="true"]');
     }
+
+    public function test_update_interface_preferences()
+    {
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $this->assertEquals('en', $editor->getLocale()->appLocale());
+        $this->assertFalse(setting()->getUser($editor, 'dark-mode-enabled'));
+
+        $resp = $this->get('/my-account/interface');
+        $resp->assertOk();
+
+        $resp->assertSeeText('Preferred Language');
+        $resp->assertSeeText('Customize UI Layout');
+
+        $resp = $this->put('/my-account/interface', ['language' => 'fr', 'display_mode' => 'dark']);
+        $resp->assertRedirect('/my-account/interface');
+
+        $this->assertEquals('fr', $editor->getLocale()->appLocale());
+        $this->assertTrue(setting()->getUser($editor, 'dark-mode-enabled'));
+    }
 }

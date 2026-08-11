@@ -21,6 +21,8 @@ return [
 
     'interface' => 'Interface Preferences',
     'interface_desc' => 'Customize various user interface elements you see across the application.',
+    'interface_display_mode' => 'Display Mode',
+    'interface_display_mode_desc' => 'Choose whether the application should show in dark or light mode. This can also be toggled from the home view, or via the profile dropdown in the header bar.',
     'layouts' => 'Customize UI Layout',
     'layouts_desc' => 'Customize the layout of sections shown in the user interface across various views.',
     'layouts_home_non_default' => 'Homepage (non-default)',

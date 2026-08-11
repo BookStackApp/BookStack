@@ -11,6 +11,7 @@
 
             <div class="setting-list">
                 @include('users.parts.language-option-row', ['value' => old('language') ?? user()->getLocale()->appLocale()])
+                @include('users.account.parts.display-mode-option-row')
             </div>
 
             <div class="form-group text-right">

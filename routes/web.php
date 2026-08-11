@@ -262,6 +262,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-account/notifications', [UserControllers\UserAccountController::class, 'showNotifications']);
     Route::put('/my-account/notifications', [UserControllers\UserAccountController::class, 'updateNotifications']);
     Route::get('/my-account/interface', [UserControllers\UserAccountController::class, 'showInterface']);
+    Route::put('/my-account/interface', [UserControllers\UserAccountController::class, 'updateInterface']);
     Route::get('/my-account/auth', [UserControllers\UserAccountController::class, 'showAuth']);
     Route::put('/my-account/auth/password', [UserControllers\UserAccountController::class, 'updatePassword']);
     Route::get('/my-account/delete', [UserControllers\UserAccountController::class, 'delete']);
