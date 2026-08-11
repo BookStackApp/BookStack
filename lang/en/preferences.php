@@ -26,6 +26,11 @@ return [
     'layouts' => 'Customize UI Layout',
     'layouts_desc' => 'Customize the layout of sections shown in the user interface across various views.',
     'layouts_home_non_default' => 'Homepage (non-default)',
+    'layout_edit' => 'Edit Layout',
+    'layout_edit_desc' => 'Drag and drop sections, or use the controls found on them, to reconfigure which sections show within this layout in the interface, and where they are displayed.',
+    'layout_edit_save' => 'Save Layout',
+    'layout_edit_layouts' => 'Layouts',
+    'layout_edit_back_to_preferences' => 'Back to Preferences',
 
     'notifications' => 'Notification Preferences',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',

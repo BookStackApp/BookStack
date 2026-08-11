@@ -29,10 +29,10 @@
             @foreach($namedLocations as $locationKey => $locationName)
                 <div class="flex-container-row justify-space-between item-list-row items-center wrap px-xs">
                     <div class="py-xs px-s min-width-m">
-                        <a href="#{{ $locationKey }}">{{ $locationName }}</a>
+                        <a href="{{ url('/layouts/' . $locationKey) }}">{{ $locationName }}</a>
                     </div>
                     <div class="py-xs min-width-m text-m-right px-m">
-                        <a class="button outline small" href="#{{ $locationKey }}">{{ trans('common.configure') }}</a>
+                        <a class="button outline small" href="{{ url('/layouts/' . $locationKey) }}">{{ trans('common.configure') }}</a>
                     </div>
                 </div>
             @endforeach

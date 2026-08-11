@@ -17,6 +17,7 @@ use BookStack\Sorting as SortingControllers;
 use BookStack\Theming\ThemeController;
 use BookStack\Uploads\Controllers as UploadControllers;
 use BookStack\Users\Controllers as UserControllers;
+use BookStack\View\LayoutController;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -274,6 +275,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/preferences/change-expansion/{type}', [UserControllers\UserPreferencesController::class, 'changeExpansion']);
     Route::patch('/preferences/toggle-dark-mode', [UserControllers\UserPreferencesController::class, 'toggleDarkMode']);
     Route::patch('/preferences/update-code-language-favourite', [UserControllers\UserPreferencesController::class, 'updateCodeLanguageFavourite']);
+
+    // Layout endpoints
+    Route::get('/layouts/{location}', [LayoutController::class, 'edit']);
+    Route::put('/layouts/{location}', [LayoutController::class, 'update']);
 
     // User API Tokens
     Route::get('/api-tokens/{userId}/create', [UserApiTokenController::class, 'create']);
