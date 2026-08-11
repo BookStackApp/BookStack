@@ -63,29 +63,37 @@ class SearchRunner
 
     /**
      * Search a book for entities.
+     *
+     * @return array{total: int, results: Collection<Entity>}
      */
-    public function searchBook(int $bookId, string $searchString): Collection
+    public function searchBook(int $bookId, SearchOptions $searchOpts, int $page = 1, int $count = 20): array
     {
-        $opts = SearchOptions::fromString($searchString);
         $entityTypes = ['page', 'chapter'];
-        $filterMap = $opts->filters->toValueMap();
+        $filterMap = $searchOpts->filters->toValueMap();
         $entityTypesToSearch = isset($filterMap['type']) ? explode('|', $filterMap['type']) : $entityTypes;
 
         $filteredTypes = array_intersect($entityTypesToSearch, $entityTypes);
-        $query = $this->buildQuery($opts, $filteredTypes)->where('book_id', '=', $bookId);
+        $query = $this->buildQuery($searchOpts, $filteredTypes)->where('book_id', '=', $bookId);
 
-        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
+        return [
+            'total'   => $query->count(),
+            'results' => $this->getPageOfDataFromQuery($query, $page, $count)->sortByDesc('score')->values(),
+        ];
     }
 
     /**
      * Search a chapter for entities.
+     *
+     * @return array{total: int, results: Collection<Entity>}
      */
-    public function searchChapter(int $chapterId, string $searchString): Collection
+    public function searchChapter(int $chapterId, SearchOptions $searchOpts, int $page = 1, int $count = 20): array
     {
-        $opts = SearchOptions::fromString($searchString);
-        $query = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId);
+        $query = $this->buildQuery($searchOpts, ['page'])->where('chapter_id', '=', $chapterId);
 
-        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
+        return [
+            'total'   => $query->count(),
+            'results' => $this->getPageOfDataFromQuery($query, $page, $count)->sortByDesc('score')->values(),
+        ];
     }
 
     /**

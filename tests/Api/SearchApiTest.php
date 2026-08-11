@@ -36,6 +36,92 @@ class SearchApiTest extends TestCase
         $resp->assertJsonFragment(['name' => $uniqueTerm, 'type' => 'bookshelf']);
     }
 
+    public function test_book_endpoint_limits_results_to_that_book()
+    {
+        $this->actingAsApiEditor();
+        $uniqueTerm = 'MyUniqueBookScopedApiTerm';
+
+        $bookA = $this->entities->book();
+        $bookB = $this->entities->book();
+
+        $pageA = $bookA->pages->first();
+        $pageA->update(['name' => $uniqueTerm . ' in book a']);
+        $pageA->indexForSearch();
+
+        $pageB = $bookB->pages->first();
+        $pageB->update(['name' => $uniqueTerm . ' in book b']);
+        $pageB->indexForSearch();
+
+        $resp = $this->getJson("/api/search/book/{$bookA->id}?query=" . urlencode($uniqueTerm));
+        $resp->assertOk();
+        $resp->assertJsonFragment(['name' => $pageA->name]);
+        $resp->assertJsonMissing(['name' => $pageB->name]);
+        $resp->assertJsonPath('total', 1);
+    }
+
+    public function test_book_endpoint_finds_chapters_as_well_as_pages()
+    {
+        $this->actingAsApiEditor();
+        $uniqueTerm = 'MyUniqueBookChapterApiTerm';
+
+        $book = $this->entities->bookHasChaptersAndPages();
+        $chapter = $book->chapters->first();
+        $chapter->update(['name' => $uniqueTerm . ' chapter']);
+        $chapter->indexForSearch();
+
+        $resp = $this->getJson("/api/search/book/{$book->id}?query=" . urlencode($uniqueTerm));
+        $resp->assertJsonFragment(['name' => $chapter->name, 'type' => 'chapter']);
+    }
+
+    public function test_book_endpoint_cannot_be_widened_to_other_types()
+    {
+        $this->actingAsApiEditor();
+        $uniqueTerm = 'MyUniqueBookTypeWideningTerm';
+
+        $book = $this->entities->book();
+        $book->update(['name' => $uniqueTerm . ' the book itself']);
+        $book->indexForSearch();
+
+        $page = $book->pages->first();
+        $page->update(['name' => $uniqueTerm . ' a page inside']);
+        $page->indexForSearch();
+
+        // A book cannot contain a book, so asking for one returns nothing rather than
+        // quietly falling back to searching everything.
+        $resp = $this->getJson("/api/search/book/{$book->id}?query=" . urlencode($uniqueTerm . ' {type:book}'));
+        $resp->assertOk();
+        $resp->assertJsonPath('total', 0);
+        $resp->assertJsonMissing(['name' => $book->name]);
+    }
+
+    public function test_chapter_endpoint_limits_results_to_that_chapter()
+    {
+        $this->actingAsApiEditor();
+        $uniqueTerm = 'MyUniqueChapterScopedApiTerm';
+
+        $chapter = $this->entities->chapterHasPages();
+        $inChapter = $chapter->pages->first();
+        $inChapter->update(['name' => $uniqueTerm . ' in chapter']);
+        $inChapter->indexForSearch();
+
+        $elsewhere = $this->entities->pageNotWithinChapter();
+        $elsewhere->update(['name' => $uniqueTerm . ' elsewhere']);
+        $elsewhere->indexForSearch();
+
+        $resp = $this->getJson("/api/search/chapter/{$chapter->id}?query=" . urlencode($uniqueTerm));
+        $resp->assertJsonFragment(['name' => $inChapter->name]);
+        $resp->assertJsonMissing(['name' => $elsewhere->name]);
+    }
+
+    public function test_scoped_endpoints_require_a_query()
+    {
+        $this->actingAsApiEditor();
+        $book = $this->entities->book();
+
+        $this->getJson("/api/search/book/{$book->id}")->assertStatus(422);
+        $this->getJson("/api/search/chapter/1")->assertStatus(422);
+    }
+
     public function test_all_endpoint_returns_entity_url()
     {
         $page = $this->entities->page();

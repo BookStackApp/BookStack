@@ -107,6 +107,8 @@ Route::put('roles/{id}', [RoleApiController::class, 'update']);
 Route::delete('roles/{id}', [RoleApiController::class, 'delete']);
 
 Route::get('search', [SearchApiController::class, 'all']);
+Route::get('search/book/{id}', [SearchApiController::class, 'book']);
+Route::get('search/chapter/{id}', [SearchApiController::class, 'chapter']);
 
 Route::get('system', [SystemApiController::class, 'read']);
 

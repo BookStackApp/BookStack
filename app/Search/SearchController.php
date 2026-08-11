@@ -50,9 +50,9 @@ class SearchController extends Controller
     public function searchBook(Request $request, int $bookId)
     {
         $term = $request->input('term', '');
-        $results = $this->searchRunner->searchBook($bookId, $term);
+        $results = $this->searchRunner->searchBook($bookId, SearchOptions::fromString($term));
 
-        return view('entities.list', ['entities' => $results]);
+        return view('entities.list', ['entities' => $results['results']]);
     }
 
     /**
@@ -61,9 +61,9 @@ class SearchController extends Controller
     public function searchChapter(Request $request, int $chapterId)
     {
         $term = $request->input('term', '');
-        $results = $this->searchRunner->searchChapter($chapterId, $term);
+        $results = $this->searchRunner->searchChapter($chapterId, SearchOptions::fromString($term));
 
-        return view('entities.list', ['entities' => $results]);
+        return view('entities.list', ['entities' => $results['results']]);
     }
 
     /**
