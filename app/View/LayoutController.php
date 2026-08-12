@@ -18,11 +18,13 @@ class LayoutController
     {
         $namedLocations = $this->viewBlocks->getNamedLocations();
         $locationName = $namedLocations[$location] ?? $location;
+        $blocks = $this->viewBlocks->getForLocation($location);
 
         return view('settings.layouts.edit', [
             'location' => $location,
             'locationName' => $locationName,
             'namedLocations' => $namedLocations,
+            'blocks' => $blocks,
         ]);
     }
 

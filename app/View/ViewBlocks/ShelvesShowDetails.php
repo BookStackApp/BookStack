@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ShelvesShowDetails extends ViewBlock
 {
+    protected string $id = 'builtin_shelves-show-details';
     protected string $view = 'shelves.parts.show-sidebar-section-details';
     protected string $labelTranslationKey = 'common.details';
 

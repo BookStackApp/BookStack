@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ChaptersShowSearchForm extends ViewBlock
 {
+    protected string $id = 'builtin_chapters-show-search-form';
     protected string $view = 'entities.search-form';
     protected string $labelTranslationKey = 'common.search';
 

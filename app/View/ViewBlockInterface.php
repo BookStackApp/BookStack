@@ -5,6 +5,11 @@ namespace BookStack\View;
 interface ViewBlockInterface
 {
     /**
+     * Get the unique ID for this block.
+     */
+    public function getId(): string;
+
+    /**
      * Get the label for this block.
      */
     public function getLabel(): string;

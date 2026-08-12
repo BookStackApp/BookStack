@@ -6,6 +6,7 @@ use BookStack\View\ViewBlock;
 
 class HomeActions extends ViewBlock
 {
+    protected string $id = 'builtin_home-actions';
     protected string $view = 'home.parts.configured-section-actions';
     protected string $labelTranslationKey = 'common.actions';
 

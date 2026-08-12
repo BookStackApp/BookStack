@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class BooksIndexRecents extends ViewBlock
 {
+    protected string $id = 'builtin_books-index-recents';
     protected string $view = 'books.parts.index-sidebar-section-recents';
     protected string $labelTranslationKey = 'entities.recently_viewed';
 

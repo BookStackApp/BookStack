@@ -13,6 +13,11 @@ class HomeTopFavourites implements ViewBlockInterface
     ) {
     }
 
+    public function getId(): string
+    {
+        return 'builtin_home-top-favourites';
+    }
+
     public function getLabel(): string
     {
         return trans('entities.my_most_viewed_favourites');

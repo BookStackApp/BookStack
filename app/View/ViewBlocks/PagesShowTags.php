@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class PagesShowTags extends ViewBlock
 {
+    protected string $id = 'builtin_pages-show-tags';
     protected string $view = 'pages.parts.show-sidebar-section-tags';
     protected string $labelTranslationKey = 'entities.tags';
 

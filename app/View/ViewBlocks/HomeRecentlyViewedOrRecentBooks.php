@@ -16,6 +16,11 @@ class HomeRecentlyViewedOrRecentBooks implements ViewBlockInterface
     ) {
     }
 
+    public function getId(): string
+    {
+        return 'builtin_home-recently-viewed-or-recent-books';
+    }
+
     public function getLabel(): string
     {
         $key = user()->isGuest() ? 'books_recent' : 'my_recently_viewed';

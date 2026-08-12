@@ -13,6 +13,11 @@ class HomeRecentActivity implements ViewBlockInterface
     ) {
     }
 
+    public function getId(): string
+    {
+        return 'builtin_home-recent-activity';
+    }
+
     public function getLabel(): string
     {
         return trans('entities.recent_activity');

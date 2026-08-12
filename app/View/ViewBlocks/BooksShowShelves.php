@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class BooksShowShelves extends ViewBlock
 {
+    protected string $id = 'builtin_books-show-shelves';
     protected string $view = 'books.parts.show-sidebar-section-shelves';
     protected string $labelTranslationKey = 'entities.shelves';
 

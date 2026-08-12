@@ -13,6 +13,11 @@ class HomeRecentlyUpdatedPages implements ViewBlockInterface
     ) {
     }
 
+    public function getId(): string
+    {
+        return 'builtin_home-recently-updated-pages';
+    }
+
     public function getLabel(): string
     {
         return trans('entities.recently_updated_pages');

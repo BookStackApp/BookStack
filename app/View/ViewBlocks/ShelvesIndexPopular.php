@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ShelvesIndexPopular extends ViewBlock
 {
+    protected string $id = 'builtin_shelves-index-popular';
     protected string $view = 'shelves.parts.index-sidebar-section-popular';
     protected string $labelTranslationKey = 'entities.shelves_popular';
 

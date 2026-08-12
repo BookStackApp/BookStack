@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ChaptersShowActions extends ViewBlock
 {
+    protected string $id = 'builtin_chapters-show-actions';
     protected string $view = 'chapters.parts.show-sidebar-section-actions';
     protected string $labelTranslationKey = 'common.actions';
 

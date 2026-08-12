@@ -4,8 +4,17 @@ namespace BookStack\View;
 
 abstract class ViewBlock implements ViewBlockInterface
 {
+    protected string $id;
     protected string $view;
     protected string $labelTranslationKey;
+
+    /**
+     * @inheritDoc
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
     /**
      * @inheritDoc

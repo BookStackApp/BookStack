@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ChaptersShowBookTree extends ViewBlock
 {
+    protected string $id = 'builtin_chapters-show-book-tree';
     protected string $view = 'entities.book-tree';
     protected string $labelTranslationKey = 'entities.books_navigation';
 

@@ -30,6 +30,16 @@
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
 
+                        <div class="flex-container-row gap-m">
+                            @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['left'] ?? [], 'label' => trans('preferences.layout_edit_left'), 'id' => 'left'])
+                            @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['center'] ?? [], 'label' => trans('preferences.layout_edit_center'), 'id' => 'center'])
+                            @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['right'] ?? [], 'label' => trans('preferences.layout_edit_right'), 'id' => 'right'])
+                        </div>
+
+                        <div>
+                            @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['unused'] ?? [], 'label' => trans('preferences.layout_edit_unused'), 'id' => 'unused'])
+                        </div>
+
                         <div class="form-group text-right">
                             <a href="{{ url('/my-account/interface') }}" class="button outline">{{ trans('common.cancel') }}</a>
                             <button type="submit" class="button">{{ trans('preferences.layout_edit_save') }}</button>

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class ShelvesShowActions extends ViewBlock
 {
+    protected string $id = 'builtin_shelves-show-actions';
     protected string $view = 'shelves.parts.show-sidebar-section-actions';
     protected string $labelTranslationKey = 'common.actions';
 

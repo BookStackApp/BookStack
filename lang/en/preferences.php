@@ -31,6 +31,11 @@ return [
     'layout_edit_save' => 'Save Layout',
     'layout_edit_layouts' => 'Layouts',
     'layout_edit_back_to_preferences' => 'Back to Preferences',
+    'layout_edit_left' => 'Left',
+    'layout_edit_right' => 'Right',
+    'layout_edit_center' => 'Center',
+    'layout_edit_unused' => 'Unused',
+    'layout_edit_empty' => 'No sections to display',
 
     'notifications' => 'Notification Preferences',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',

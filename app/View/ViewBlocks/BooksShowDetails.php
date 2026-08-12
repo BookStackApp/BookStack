@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class BooksShowDetails extends ViewBlock
 {
+    protected string $id = 'builtin_books-show-details';
     protected string $view = 'books.parts.show-sidebar-section-details';
     protected string $labelTranslationKey = 'common.details';
 

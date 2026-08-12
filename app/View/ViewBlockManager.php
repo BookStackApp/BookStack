@@ -34,7 +34,7 @@ class ViewBlockManager
      * @return ViewBlockInterface[]
      * @throws BindingResolutionException
      */
-    public function getForLocation(string $location, string $position): array
+    public function getForLocationAndPosition(string $location, string $position): array
     {
         $defaults = ViewBlockDefaults::getForLocation($location)[$position] ?? [];
         $registered = $this->blocksByLocationAndPosition[$location][$position] ?? [];
@@ -43,6 +43,28 @@ class ViewBlockManager
         return array_map(function (string $className) {
             return app()->make($className);
         }, $sections);
+    }
+
+    /**
+     * Get all blocks registered for a given location, as sets of arrays
+     * keyed by position.
+     * @return array<string, ViewBlockInterface[]>
+     * @throws BindingResolutionException
+     */
+    public function getForLocation(string $location): array
+    {
+        $defaults = ViewBlockDefaults::getForLocation($location) ?? [];
+        $registered = $this->blocksByLocationAndPosition[$location] ?? [];
+        $sections = array_merge_recursive($defaults, $registered);
+
+        $instances = [];
+        foreach ($sections as $position => $blocks) {
+            $instances[$position] = array_map(function (string $className) {
+                return app()->make($className);
+            }, $blocks);
+        }
+
+        return $instances;
     }
 
     /**

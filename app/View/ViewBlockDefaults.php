@@ -110,6 +110,7 @@ class ViewBlockDefaults
 
     /**
      * Get the locations for all default blocks.
+     * @return string[]
      */
     public static function getLocations(): array
     {
