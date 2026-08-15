@@ -53,9 +53,7 @@ export class LayoutEditor extends Component {
             }
         }
 
-        const data = JSON.stringify(configured, null, 2);
-        console.log('layout-editor-change: \n' + data);
-        this.input.value = data;
+        this.input.value = JSON.stringify(configured, null, 2);
     }
 
     protected addBlockToLeastPopulated(item: HTMLElement): void {

@@ -19,7 +19,29 @@ class LayoutEditTest extends TestCase
 
     public function test_view_loads_existing_preferences()
     {
-        // TODO
+        $this->asEditor();
+        setting()->putForCurrentUser('view-layout#books-show', json_encode([
+            'left' => [
+            ],
+            'right' => [
+            ],
+            'unused' => [
+                'builtin_books-show-search-form',
+                'builtin_books-show-actions',
+                'builtin_books-show-activity',
+                'builtin_books-show-shelves',
+                'builtin_books-show-tags',
+                'builtin_books-show-details',
+            ],
+        ]));
+
+        $resp = $this->get('/layouts/books-show');
+        $resp->assertOk();
+        $html = $this->withHtml($resp);
+
+        $html->assertElementCount('[data-column="unused"] > li', 7);
+        $html->assertElementCount('[data-column="left"] > li', 1);
+        $html->assertElementCount('[data-column="right"] > li', 1);
     }
 
     public function test_update()

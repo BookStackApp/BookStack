@@ -6,10 +6,20 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 
 class ViewBlockManager
 {
+    public function __construct(
+        protected ViewBlockPreferences $preferences,
+    ) {
+    }
+
     /**
      * @var array<string, array<string, class-string<ViewBlockInterface>[]>>
      */
     protected array $blocksByLocationAndPosition = [];
+
+    /**
+     * @var array<string, array<string, ViewBlockInterface[]>
+     */
+    protected array $locationBlockCache = [];
 
     /**
      * Register a block type to be displayed at the given location and position.
@@ -29,20 +39,22 @@ class ViewBlockManager
     }
 
     /**
-     * Get all blocks registered for a given location and position.
-     *
+     * Get all blocks registered for a given location and position, considering the
+     * preferences for the current user.
      * @return ViewBlockInterface[]
      * @throws BindingResolutionException
      */
-    public function getForLocationAndPosition(string $location, string $position): array
+    public function getForLocationAndPositionForCurrentUser(string $location, string $position): array
     {
-        $defaults = ViewBlockDefaults::getForLocation($location)[$position] ?? [];
-        $registered = $this->blocksByLocationAndPosition[$location][$position] ?? [];
-        $sections = array_unique(array_merge($defaults, $registered));
+        $key = user()->id . ':' . $location;
+        if (isset($this->locationBlockCache[$key])) {
+            return $this->locationBlockCache[$key][$position] ?? [];
+        }
 
-        return array_map(function (string $className) {
-            return app()->make($className);
-        }, $sections);
+        $forLocation = $this->getForLocationForCurrentUser($location);
+        $this->locationBlockCache[$key] = $forLocation;
+
+        return $forLocation[$position] ?? [];
     }
 
     /**
@@ -68,6 +80,49 @@ class ViewBlockManager
     }
 
     /**
+     * Get all blocks registered for a given location, as sets of arrays
+     * keyed by position, for the current user.
+     * Same as above but with user-specific preferences applied.
+     * @return array<string, ViewBlockInterface[]>
+     * @throws BindingResolutionException
+     */
+    public function getForLocationForCurrentUser(string $location): array
+    {
+        $forLocation = $this->getForLocation($location);
+        $userBlocksByPosition = $this->preferences->getIdByPositionMap($location);
+        if (empty($userBlocksByPosition)) {
+            return $forLocation;
+        }
+
+        $results = [];
+        $blocksById = $this->blocksByPositionToIdMap($forLocation);
+        $idPositionMap = $this->blocksByPositionToIdPositionMap($forLocation);
+        $locations = array_keys($forLocation);
+        $locations[] = 'unused';
+
+        // Add based on user preferences
+        foreach ($locations as $position) {
+            $userBlockIds = $userBlocksByPosition[$position] ?? [];
+            $results[$position] = [];
+            foreach ($userBlockIds as $blockId) {
+                $block = $blocksById[$blockId] ?? null;
+                if ($block && isset($blocksById[$blockId])) {
+                    $results[$position][] = $block;
+                    unset($blocksById[$blockId]);
+                }
+            }
+        }
+
+        // Add remaining blocks based on their default locations
+        foreach ($blocksById as $block) {
+            $position = $idPositionMap[$block->getId()] ?? 'unused';
+            $results[$position][] = $block;
+        }
+
+        return $results;
+    }
+
+    /**
      * Get the names of all locations where blocks are registered.
      * Returns an array where the keys are location strings, and the
      * values are translated labels for that location.
@@ -86,5 +141,52 @@ class ViewBlockManager
         }
 
         return $results;
+    }
+
+
+    /**
+     * Update user preferences for a given location to match the given layout data map.
+     * @param array<string, string[]> $layoutData
+     * @throws BindingResolutionException
+     */
+    public function updatePreferencesFromIdPositionMap(string $location, array $layoutData): void
+    {
+        $this->preferences->storeByIdPositionMap(
+            $location,
+            $layoutData,
+            $this->getForLocation($location),
+        );
+    }
+
+    /**
+     * Convert a blocksByPosition array into a map of block IDs to blocks.
+     * @param array<string, ViewBlockInterface[]> $blocksByPosition
+     * @return array<string, ViewBlockInterface>
+     */
+    protected function blocksByPositionToIdMap(array $blocksByPosition): array
+    {
+        $map = [];
+        foreach ($blocksByPosition as $position => $blocks) {
+            foreach ($blocks as $block) {
+                $map[$block->getId()] = $block;
+            }
+        }
+        return $map;
+    }
+
+    /**
+     * Convert a blocksByPosition array into a map of block IDs to their positions.
+     * @param array<string, ViewBlockInterface[]> $blocksByPosition
+     * @return array<string, string>
+     */
+    protected function blocksByPositionToIdPositionMap(array $blocksByPosition): array
+    {
+        $map = [];
+        foreach ($blocksByPosition as $position => $blocks) {
+            foreach ($blocks as $block) {
+                $map[$block->getId()] = $position;
+            }
+        }
+        return $map;
     }
 }

@@ -2,13 +2,10 @@
 
 namespace BookStack\View;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
+
 class ViewBlockPreferences
 {
-    public function __construct(
-        protected ViewBlockManager $blockManager
-    ) {
-    }
-
     /**
      * From the request data of the layout editor, validate the request data to ensure the blocks
      * and locations are valid and then store the layout data.
@@ -18,16 +15,20 @@ class ViewBlockPreferences
      *     'position-2' => ['block-id-3'],
      * ]
      * @param array<string, string[]> $layoutData
+     * @param array<string, ViewBlockInterface[]> $validBlocksByPosition
+     * @throws BindingResolutionException
      */
-    public function storeFromLayoutRequestData(string $location, array $layoutData): void
-    {
-        $validBlocks = $this->blockManager->getForLocation($location);
-        $validIds = $this->extractValidBlockIds($validBlocks);
-        $validPositions = array_keys($validBlocks);
+    public function storeByIdPositionMap(
+        string $location,
+        array $layoutData,
+        array $validBlocksByPosition,
+    ): void {
+        $validIds = $this->extractValidBlockIds($validBlocksByPosition);
+        $validPositions = array_keys($validBlocksByPosition);
         $validPositions[] = 'unused';
 
         // Ignore updates for invalid/unknown locations
-        if (empty($validBlocks)) {
+        if (empty($validBlocksByPosition)) {
             return;
         }
 
@@ -44,6 +45,18 @@ class ViewBlockPreferences
 
         $settingKey = $this->getSettingKey($location);
         setting()->putForCurrentUser($settingKey, json_encode($validatedLayoutData));
+    }
+
+    /**
+     * Get the layou data for a given location.
+     * Provides arrays of block ids keyed by position.
+     * @return array<string, string[]>
+     */
+    public function getIdByPositionMap(string $location): array
+    {
+        $settingKey = $this->getSettingKey($location);
+        $layoutData = setting()->getForCurrentUser($settingKey, '{}');
+        return json_decode($layoutData, true) ?? [];
     }
 
     protected function getSettingKey(string $location): string

@@ -10,7 +10,6 @@ class LayoutController extends Controller
 {
     public function __construct(
         protected ViewBlockManager $viewBlocks,
-        protected ViewBlockPreferences $viewBlockPreferences,
     ) {
         $this->middleware(function (Request $request, Closure $next) {
             $this->preventGuestAccess();
@@ -25,9 +24,7 @@ class LayoutController extends Controller
     {
         $namedLocations = $this->viewBlocks->getNamedLocations();
         $locationName = $namedLocations[$location] ?? $location;
-        $blocks = $this->viewBlocks->getForLocation($location);
-
-        // TODO - Load from preferences via ViewBlockPreferences
+        $blocks = $this->viewBlocks->getForLocationForCurrentUser($location);
 
         $this->setPageTitle(trans('preferences.layout_edit'));
 
@@ -49,7 +46,7 @@ class LayoutController extends Controller
         ]);
 
         $layoutData = json_decode($data['layout'], true, 5);
-        $this->viewBlockPreferences->storeFromLayoutRequestData($location, $layoutData);
+        $this->viewBlocks->updatePreferencesFromIdPositionMap($location, $layoutData);
 
         $this->showSuccessNotification(trans('preferences.layout_update_success'));
 
