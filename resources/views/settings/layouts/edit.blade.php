@@ -26,9 +26,11 @@
                     </div>
                     <p class="small text-muted">{{ trans('preferences.layout_edit_desc') }}</p>
 
-                    <form action="{{ url('layouts/' . $location) }}" method="POST">
+                    <form component="layout-editor" action="{{ url('layouts/' . $location) }}" method="POST">
                         {{ method_field('PUT') }}
                         {{ csrf_field() }}
+
+                        <input refs="layout-editor@input" type="hidden" name="layout" value="">
 
                         <div class="flex-container-row gap-m">
                             @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['left'] ?? [], 'label' => trans('preferences.layout_edit_left'), 'id' => 'left'])

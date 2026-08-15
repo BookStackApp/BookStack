@@ -1222,11 +1222,19 @@ input.scroll-box-search, .scroll-box-header-item {
   display: none;
 }
 
-.scroll-box > li.empty-state {
+.scroll-box.layout-editor-column-left [data-action="move_left"],
+.scroll-box.layout-editor-column-right [data-action="move_right"],
+.scroll-box.layout-editor-column-unused [data-action="move_right"],
+.scroll-box.layout-editor-column-unused [data-action="move_left"],
+.scroll-box.layout-editor-column-unused [data-action="remove"],
+.scroll-box.layout-editor-column-left [data-action="add"],
+.scroll-box.layout-editor-column-right [data-action="add"],
+.scroll-box.layout-editor-column-center [data-action="add"],
+{
   display: none;
 }
-.scroll-box > li.empty-state:last-child {
-  display: list-item;
+.scroll-box:has(> li:not(.empty-state)) .empty-state {
+  display: none;
 }
 
 details.section-expander summary {

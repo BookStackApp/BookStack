@@ -1,6 +1,6 @@
 import {Component} from "./component.js";
 import Sortable from "sortablejs";
-import {buildListActions, sortActionClickListener} from "../services/dual-lists";
+import {buildListActions, sortActionClickListener} from "../services/multi-lists";
 
 
 export class SortRuleManager extends Component {
