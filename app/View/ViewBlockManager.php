@@ -17,7 +17,7 @@ class ViewBlockManager
     protected array $blocksByLocationAndPosition = [];
 
     /**
-     * @var array<string, array<string, ViewBlockInterface[]>
+     * @var array<string, array<string, class-string<ViewBlockInterface>[]>>
      */
     protected array $locationBlockCache = [];
 
@@ -46,7 +46,7 @@ class ViewBlockManager
      */
     public function getInstancesForLocationAndPositionForCurrentUser(string $location, string $position): array
     {
-        $key = user()->id . ':' . $location;
+        $key = $location;
         if (isset($this->locationBlockCache[$key])) {
             $blocks = $this->locationBlockCache[$key][$position] ?? [];
             return $this->blocksToInstances($blocks);
@@ -163,6 +163,16 @@ class ViewBlockManager
             $layoutData,
             $this->getForLocation($location),
         );
+    }
+
+    /**
+     * Clear the local user-specific cache of blocks.
+     * The cache only needs to exist for the current request time since its purpose is to
+     * avoid duplicate loading across views.
+     */
+    public function clearLocalCache(): void
+    {
+        $this->locationBlockCache = [];
     }
 
     /**

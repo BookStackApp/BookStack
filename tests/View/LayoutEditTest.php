@@ -2,10 +2,20 @@
 
 namespace Tests\View;
 
+use BookStack\Activity\Models\Favourite;
 use Tests\TestCase;
 
 class LayoutEditTest extends TestCase
 {
+    public function test_route_access_limited_to_logged_in_users()
+    {
+        $this->setSettings(['app-public' => 'true']);
+
+        $this->get('/layouts/books-show')->assertRedirect('/');
+        $this->put('/layouts/books-show')->assertRedirect('/');
+        $this->put('/layouts/books-show/reset')->assertRedirect('/');
+    }
+
     public function test_view()
     {
         $resp = $this->asEditor()->get('/layouts/books-index');
@@ -109,6 +119,45 @@ class LayoutEditTest extends TestCase
                 'builtin_books-show-shelves',
             ],
         ], $storedData);
+    }
+
+    public function test_layout_changes_take_effect()
+    {
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+        $page = $this->entities->page();
+        $page->favourites()->save((new Favourite())->forceFill(['user_id' => $editor->id]));
+        $this->get($page->getUrl());
+
+        $html = $this->withHtml($this->get('/'));
+
+        $html->assertElementExists('.grid.third > div:nth-child(1) h3:contains("My Recently Viewed")');
+        $html->assertElementExists('.grid.third > div:nth-child(2) h3:contains("My Most Viewed Favourites")');
+        $html->assertElementExists('.grid.third > div:nth-child(2) h3:contains("Recently Updated Pages")');
+        $html->assertElementExists('.grid.third > div:nth-child(3) h3:contains("Recent Activity")');
+
+        $layout = [
+            'left' => [
+                'builtin_home-top-favourites',
+            ],
+            'center' => [
+                'builtin_home-recent-activity',
+            ],
+            'right' => [
+                'builtin_home-recently-viewed-or-recent-books',
+            ],
+            'unused' => [
+                'builtin_home-recently-updated-pages',
+            ],
+        ];
+
+        $this->put('/layouts/home-default', ['layout' => json_encode($layout)])->assertRedirect('/layouts/home-default');
+        $html = $this->withHtml($this->get('/'));
+
+        $html->assertElementExists('.grid.third > div:nth-child(3) h3:contains("My Recently Viewed")');
+        $html->assertElementExists('.grid.third > div:nth-child(1) h3:contains("My Most Viewed Favourites")');
+        $html->assertElementNotExists('h3:contains("Recently Updated Pages")');
+        $html->assertElementExists('.grid.third > div:nth-child(2) h3:contains("Recent Activity")');
     }
 
     public function test_reset()

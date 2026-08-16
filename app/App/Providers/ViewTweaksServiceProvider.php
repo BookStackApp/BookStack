@@ -5,6 +5,7 @@ namespace BookStack\App\Providers;
 use BookStack\Entities\BreadcrumbsViewComposer;
 use BookStack\Util\DateFormatter;
 use BookStack\View\ViewBlockManager;
+use BookStack\View\ViewBlockPreferences;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
@@ -18,6 +19,10 @@ class ViewTweaksServiceProvider extends ServiceProvider
             return new DateFormatter(
                 $app['config']->get('app.display_timezone'),
             );
+        });
+
+        $this->app->singleton(ViewBlockManager::class, function ($app) {
+            return new ViewBlockManager(new ViewBlockPreferences());
         });
     }
 
