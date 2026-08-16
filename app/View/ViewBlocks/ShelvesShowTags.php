@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ShelvesShowTags extends ViewBlock
 {
-    protected string $id = 'builtin_shelves-show-tags';
-    protected string $view = 'shelves.parts.show-sidebar-section-tags';
-    protected string $labelTranslationKey = 'entities.tags';
+    protected static string $id = 'builtin_shelves-show-tags';
+    protected static string $view = 'shelves.parts.show-sidebar-section-tags';
+    protected static string $labelTranslationKey = 'entities.tags';
 
     public function withData(array $viewData): array
     {

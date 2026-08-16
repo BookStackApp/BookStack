@@ -22,13 +22,11 @@ class ViewBlockDefaultsTest extends TestCase
 
         $blocks = array_unique($classes);
         foreach ($blocks as $block) {
-            $instance = app()->make($block);
-
-            $id = $instance->getId();
+            $id = $block::getId();
             $this->assertArrayNotHasKey($id, $trueById);
             $trueById[$id] = true;
 
-            $label = $instance->getLabel();
+            $label = $block::getLabel();
             $this->assertIsString($label);
             $this->assertDoesNotMatchRegularExpression('/^[a-z]{1,10}\./', $label);
         }

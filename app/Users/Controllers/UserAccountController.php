@@ -165,6 +165,8 @@ class UserAccountController extends Controller
      */
     public function showInterface(ViewBlockManager $viewBlockManager)
     {
+        $this->setPageTitle(trans('preferences.interface'));
+
         return view('users.account.interface', [
             'category'       => 'interface',
             'namedLocations' => $viewBlockManager->getNamedLocations(),

@@ -15,7 +15,7 @@ class ViewBlockPreferences
      *     'position-2' => ['block-id-3'],
      * ]
      * @param array<string, string[]> $layoutData
-     * @param array<string, ViewBlockInterface[]> $validBlocksByPosition
+     * @param array<string, class-string<ViewBlockInterface>[]> $validBlocksByPosition
      * @throws BindingResolutionException
      */
     public function storeByIdPositionMap(
@@ -65,7 +65,7 @@ class ViewBlockPreferences
     }
 
     /**
-     * @param array<string, ViewBlockInterface[]> $blocksByPosition
+     * @param array<string, class-string<ViewBlockInterface>[]> $blocksByPosition
      * @return string[]
      */
     protected function extractValidBlockIds(array $blocksByPosition): array
@@ -74,7 +74,7 @@ class ViewBlockPreferences
 
         foreach ($blocksByPosition as $blocks) {
             foreach ($blocks as $block) {
-                $ids[] = $block->getId();
+                $ids[] = $block::getId();
             }
         }
 

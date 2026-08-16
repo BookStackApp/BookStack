@@ -1,10 +1,8 @@
-{{--
-$block - ViewBlockInterface - View Block instance to show
---}}
-<li data-block-id="{{ $block->getId() }}"
+@php /** @var $block class-string<\BookStack\View\ViewBlockInterface> */ @endphp
+<li data-block-id="{{ $block::getId() }}"
     class="scroll-box-item items-center">
     <div class="handle px-s">@icon('grip')</div>
-    <div class="text-small">{{ $block->getLabel() }}</div>
+    <div class="text-small">{{ $block::getLabel() }}</div>
     <div class="buttons flex-container-row items-center ml-auto px-xxs py-xxs">
         <button type="button" data-action="move_left" class="icon-button p-xxs"
                 title="{{ trans('common.move_left') }}">@icon('chevron-left')</button>

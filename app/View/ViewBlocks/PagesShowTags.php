@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class PagesShowTags extends ViewBlock
 {
-    protected string $id = 'builtin_pages-show-tags';
-    protected string $view = 'pages.parts.show-sidebar-section-tags';
-    protected string $labelTranslationKey = 'entities.tags';
+    protected static string $id = 'builtin_pages-show-tags';
+    protected static string $view = 'pages.parts.show-sidebar-section-tags';
+    protected static string $labelTranslationKey = 'entities.tags';
 
     public function withData(array $viewData): array
     {

@@ -12,12 +12,12 @@ class HomeRecentDrafts implements ViewBlockInterface
     ) {
     }
 
-    public function getId(): string
+    public static function getId(): string
     {
         return 'builtin_home-recent-drafts';
     }
 
-    public function getLabel(): string
+    public static function getLabel(): string
     {
         return trans('entities.my_recent_drafts');
     }

@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class BooksIndexPopular extends ViewBlock
 {
-    protected string $id = 'builtin_books-index-popular';
-    protected string $view = 'books.parts.index-sidebar-section-popular';
-    protected string $labelTranslationKey = 'entities.books_popular';
+    protected static string $id = 'builtin_books-index-popular';
+    protected static string $view = 'books.parts.index-sidebar-section-popular';
+    protected static string $labelTranslationKey = 'entities.books_popular';
 
     public function __construct(
         protected BookQueries $queries,

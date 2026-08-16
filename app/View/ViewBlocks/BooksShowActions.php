@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class BooksShowActions extends ViewBlock
 {
-    protected string $id = 'builtin_books-show-actions';
-    protected string $view = 'books.parts.show-sidebar-section-actions';
-    protected string $labelTranslationKey = 'common.actions';
+    protected static string $id = 'builtin_books-show-actions';
+    protected static string $view = 'books.parts.show-sidebar-section-actions';
+    protected static string $labelTranslationKey = 'common.actions';
 
     public function withData(array $viewData): array
     {

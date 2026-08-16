@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ShelvesIndexNew extends ViewBlock
 {
-    protected string $id = 'builtin_shelves-index-new';
-    protected string $view = 'shelves.parts.index-sidebar-section-new';
-    protected string $labelTranslationKey = 'entities.shelves_new';
+    protected static string $id = 'builtin_shelves-index-new';
+    protected static string $view = 'shelves.parts.index-sidebar-section-new';
+    protected static string $labelTranslationKey = 'entities.shelves_new';
 
     public function __construct(
         protected BookshelfQueries $queries,

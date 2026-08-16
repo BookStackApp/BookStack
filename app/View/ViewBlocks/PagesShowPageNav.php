@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class PagesShowPageNav extends ViewBlock
 {
-    protected string $id = 'builtin_pages-show-page-nav';
-    protected string $view = 'pages.parts.show-sidebar-section-page-nav';
-    protected string $labelTranslationKey = 'entities.pages_navigation';
+    protected static string $id = 'builtin_pages-show-page-nav';
+    protected static string $view = 'pages.parts.show-sidebar-section-page-nav';
+    protected static string $labelTranslationKey = 'entities.pages_navigation';
 
     public function withData(array $viewData): array
     {

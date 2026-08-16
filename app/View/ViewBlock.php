@@ -4,16 +4,24 @@ namespace BookStack\View;
 
 abstract class ViewBlock implements ViewBlockInterface
 {
-    protected string $id;
-    protected string $view;
-    protected string $labelTranslationKey;
+    protected static string $id;
+    protected static string $view;
+    protected static string $labelTranslationKey;
 
     /**
      * @inheritDoc
      */
-    public function getId(): string
+    public static function getId(): string
     {
-        return $this->id;
+        return static::$id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getLabel(): string
+    {
+        return trans(static::$labelTranslationKey);
     }
 
     /**
@@ -22,13 +30,5 @@ abstract class ViewBlock implements ViewBlockInterface
     public function getView(array $viewData): string
     {
         return $this->view;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getLabel(): string
-    {
-        return trans($this->labelTranslationKey);
     }
 }

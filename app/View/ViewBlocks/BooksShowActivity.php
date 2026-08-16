@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 
 class BooksShowActivity extends ViewBlock
 {
-    protected string $id = 'builtin_books-show-activity';
-    protected string $view = 'books.parts.show-sidebar-section-activity';
-    protected string $labelTranslationKey = 'entities.recent_activity';
+    protected static string $id = 'builtin_books-show-activity';
+    protected static string $view = 'books.parts.show-sidebar-section-activity';
+    protected static string $labelTranslationKey = 'entities.recent_activity';
 
     public function __construct(
         protected ActivityQueries $activityQueries,

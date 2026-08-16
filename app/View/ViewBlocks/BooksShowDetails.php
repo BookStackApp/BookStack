@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 
 class BooksShowDetails extends ViewBlock
 {
-    protected string $id = 'builtin_books-show-details';
-    protected string $view = 'books.parts.show-sidebar-section-details';
-    protected string $labelTranslationKey = 'common.details';
+    protected static string $id = 'builtin_books-show-details';
+    protected static string $view = 'books.parts.show-sidebar-section-details';
+    protected static string $labelTranslationKey = 'common.details';
 
     public function __construct(
         protected ReferenceFetcher $referenceFetcher,

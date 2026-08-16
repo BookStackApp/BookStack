@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class PagesShowBookTree extends ViewBlock
 {
-    protected string $id = 'builtin_pages-show-book-tree';
-    protected string $view = 'entities.book-tree';
-    protected string $labelTranslationKey = 'entities.books_navigation';
+    protected static string $id = 'builtin_pages-show-book-tree';
+    protected static string $view = 'entities.book-tree';
+    protected static string $labelTranslationKey = 'entities.books_navigation';
 
     public function withData(array $viewData): array
     {

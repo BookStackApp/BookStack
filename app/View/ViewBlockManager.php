@@ -44,46 +44,49 @@ class ViewBlockManager
      * @return ViewBlockInterface[]
      * @throws BindingResolutionException
      */
-    public function getForLocationAndPositionForCurrentUser(string $location, string $position): array
+    public function getInstancesForLocationAndPositionForCurrentUser(string $location, string $position): array
     {
         $key = user()->id . ':' . $location;
         if (isset($this->locationBlockCache[$key])) {
-            return $this->locationBlockCache[$key][$position] ?? [];
+            $blocks = $this->locationBlockCache[$key][$position] ?? [];
+            return $this->blocksToInstances($blocks);
         }
 
         $forLocation = $this->getForLocationForCurrentUser($location);
         $this->locationBlockCache[$key] = $forLocation;
 
-        return $forLocation[$position] ?? [];
+        $blocks = $forLocation[$position] ?? [];
+        return $this->blocksToInstances($blocks);
+    }
+
+    /**
+     * Create instances of the given block classes.
+     * @param class-string<ViewBlockInterface>[] $blocks
+     * @return ViewBlockInterface[]
+     * @throws BindingResolutionException
+     */
+    protected function blocksToInstances(array $blocks): array
+    {
+        return array_map(fn (string $blockClass) => app()->make($blockClass), $blocks);
     }
 
     /**
      * Get all blocks registered for a given location, as sets of arrays
      * keyed by position.
-     * @return array<string, ViewBlockInterface[]>
-     * @throws BindingResolutionException
+     * @return array<string, class-string<ViewBlockInterface>[]>
      */
-    public function getForLocation(string $location): array
+    protected function getForLocation(string $location): array
     {
         $defaults = ViewBlockDefaults::getForLocation($location) ?? [];
         $registered = $this->blocksByLocationAndPosition[$location] ?? [];
-        $sections = array_merge_recursive($defaults, $registered);
-
-        $instances = [];
-        foreach ($sections as $position => $blocks) {
-            $instances[$position] = array_map(function (string $className) {
-                return app()->make($className);
-            }, $blocks);
-        }
-
-        return $instances;
+        return array_merge_recursive($defaults, $registered);
     }
 
     /**
      * Get all blocks registered for a given location, as sets of arrays
      * keyed by position, for the current user.
      * Same as above but with user-specific preferences applied.
-     * @return array<string, ViewBlockInterface[]>
+     * @return array<string, class-string<ViewBlockInterface>[]>
      * @throws BindingResolutionException
      */
     public function getForLocationForCurrentUser(string $location): array
@@ -160,7 +163,7 @@ class ViewBlockManager
 
     /**
      * Convert a blocksByPosition array into a map of block IDs to blocks.
-     * @param array<string, ViewBlockInterface[]> $blocksByPosition
+     * @param array<string, class-string<ViewBlockInterface>[]> $blocksByPosition
      * @return array<string, ViewBlockInterface>
      */
     protected function blocksByPositionToIdMap(array $blocksByPosition): array
@@ -168,7 +171,7 @@ class ViewBlockManager
         $map = [];
         foreach ($blocksByPosition as $position => $blocks) {
             foreach ($blocks as $block) {
-                $map[$block->getId()] = $block;
+                $map[$block::getId()] = $block;
             }
         }
         return $map;
@@ -176,7 +179,7 @@ class ViewBlockManager
 
     /**
      * Convert a blocksByPosition array into a map of block IDs to their positions.
-     * @param array<string, ViewBlockInterface[]> $blocksByPosition
+     * @param array<string, class-string<ViewBlockInterface>[]> $blocksByPosition
      * @return array<string, string>
      */
     protected function blocksByPositionToIdPositionMap(array $blocksByPosition): array
@@ -184,7 +187,7 @@ class ViewBlockManager
         $map = [];
         foreach ($blocksByPosition as $position => $blocks) {
             foreach ($blocks as $block) {
-                $map[$block->getId()] = $position;
+                $map[$block::getId()] = $position;
             }
         }
         return $map;

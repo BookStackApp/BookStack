@@ -7,12 +7,12 @@ interface ViewBlockInterface
     /**
      * Get the unique ID for this block.
      */
-    public function getId(): string;
+    public static function getId(): string;
 
     /**
      * Get the label for this block.
      */
-    public function getLabel(): string;
+    public static function getLabel(): string;
 
     /**
      * Get the view to render for this block.

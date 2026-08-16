@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 
 class ChaptersShowDetails extends ViewBlock
 {
-    protected string $id = 'builtin_chapters-show-details';
-    protected string $view = 'chapters.parts.show-sidebar-section-details';
-    protected string $labelTranslationKey = 'common.details';
+    protected static string $id = 'builtin_chapters-show-details';
+    protected static string $view = 'chapters.parts.show-sidebar-section-details';
+    protected static string $labelTranslationKey = 'common.details';
 
     public function __construct(
         protected ReferenceFetcher $referenceFetcher,

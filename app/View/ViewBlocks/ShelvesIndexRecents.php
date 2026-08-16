@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class ShelvesIndexRecents extends ViewBlock
 {
-    protected string $id = 'builtin_shelves-index-recents';
-    protected string $view = 'shelves.parts.index-sidebar-section-recents';
-    protected string $labelTranslationKey = 'entities.recently_viewed';
+    protected static string $id = 'builtin_shelves-index-recents';
+    protected static string $view = 'shelves.parts.index-sidebar-section-recents';
+    protected static string $labelTranslationKey = 'entities.recently_viewed';
 
     public function __construct(
         protected BookshelfQueries $queries,
