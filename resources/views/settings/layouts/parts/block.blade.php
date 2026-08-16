@@ -3,18 +3,21 @@
     class="scroll-box-item items-center">
     <div class="handle px-s">@icon('grip')</div>
     <div class="text-small">{{ $block::getLabel() }}</div>
-    <div class="buttons flex-container-row items-center ml-auto px-xxs py-xxs">
-        <button type="button" data-action="move_left" class="icon-button p-xxs"
-                title="{{ trans('common.move_left') }}">@icon('chevron-left')</button>
-        <button type="button" data-action="move_up" class="icon-button p-xxs"
-                title="{{ trans('entities.books_sort_move_up') }}">@icon('chevron-up')</button>
-        <button type="button" data-action="move_down" class="icon-button p-xxs"
-                title="{{ trans('entities.books_sort_move_down') }}">@icon('chevron-down')</button>
-        <button type="button" data-action="move_right" class="icon-button p-xxs"
-                title="{{ trans('common.move_right') }}">@icon('chevron-right')</button>
-        <button type="button" data-action="add" class="icon-button p-xxs"
-                title="{{ trans('common.add') }}">@icon('add-small')</button>
-        <button type="button" data-action="remove" class="icon-button p-xxs"
-                title="{{ trans('common.remove') }}">@icon('remove')</button>
+    <div component="dropdown"
+         option:dropdown:fixed-position-menu="true"
+         class="dropdown-container ml-auto">
+        <button type="button"
+                refs="dropdown@toggle"
+                aria-haspopup="menu"
+                aria-expanded="false"
+                class="icon-button p-xxs">@icon('more')</button>
+        <ul refs="dropdown@menu layout-editor@action-menu" role="menu" aria-label="{{ trans('common.actions') }}" class="dropdown-menu">
+            <li><button type="button" data-action="move_left" class="icon-item">@icon('chevron-left') {{ trans('common.move_left') }}</button></li>
+            <li><button type="button" data-action="move_up" class="icon-item">@icon('chevron-up') {{ trans('entities.books_sort_move_up') }}</button></li>
+            <li><button type="button" data-action="move_down" class="icon-item">@icon('chevron-down') {{ trans('entities.books_sort_move_down') }}</button></li>
+            <li><button type="button" data-action="move_right" class="icon-item">@icon('chevron-right') {{ trans('common.move_right') }}</button></li>
+            <li><button type="button" data-action="add" class="icon-item">@icon('add-small') {{ trans('common.add') }}</button></li>
+            <li><button type="button" data-action="remove" class="icon-item">@icon('remove') {{ trans('common.remove') }}</button></li>
+        </ul>
     </div>
 </li>

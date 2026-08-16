@@ -6,10 +6,12 @@ import {buildListActions, sortActionClickListener} from "../services/multi-lists
 export class LayoutEditor extends Component {
     protected input!: HTMLInputElement;
     protected columns!: HTMLElement[];
+    protected actionMenus!: HTMLElement[];
 
     setup(): void {
         this.input = this.$refs.input as HTMLInputElement;
         this.columns = this.$manyRefs.column || [];
+        this.actionMenus = this.$manyRefs.actionMenu || [];
 
         this.initSortable();
 
@@ -20,7 +22,9 @@ export class LayoutEditor extends Component {
             unusedColumn.appendChild(item);
         };
         const sortActionListener = sortActionClickListener(listActions, this.onChange.bind(this));
-        this.$el.addEventListener('click', sortActionListener);
+        for (const actionMenu of this.actionMenus) {
+            actionMenu.addEventListener('click', sortActionListener);
+        }
     }
 
     protected initSortable(): void {

@@ -24,7 +24,13 @@
                         <h1 class="list-heading">{{ trans('preferences.layout_edit') }}</h1>
                         <span class="text-muted text-bigger">{{ $locationName }}</span>
                     </div>
+
                     <p class="small text-muted">{{ trans('preferences.layout_edit_desc') }}</p>
+                    @if(!isset($blocks['center']))
+                        <p class="small text-muted">
+                            {{ trans('preferences.layout_edit_column_hint') }}
+                        </p>
+                    @endif
 
                     <form component="layout-editor" action="{{ url('layouts/' . $location) }}" method="POST">
                         {{ method_field('PUT') }}
@@ -32,7 +38,7 @@
 
                         <input refs="layout-editor@input" type="hidden" name="layout" value="">
 
-                        <div class="flex-container-row gap-m">
+                        <div class="flex-container-row gap-m mb-m">
                             @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['left'] ?? [], 'label' => trans('preferences.layout_edit_left'), 'id' => 'left'])
                             @if(isset($blocks['center']))
                                 @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['center'] ?? [], 'label' => trans('preferences.layout_edit_center'), 'id' => 'center'])
@@ -40,7 +46,7 @@
                             @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['right'] ?? [], 'label' => trans('preferences.layout_edit_right'), 'id' => 'right'])
                         </div>
 
-                        <div>
+                        <div class="mb-l">
                             @include('settings.layouts.parts.block-column', ['columnBlocks' => $blocks['unused'] ?? [], 'label' => trans('preferences.layout_edit_unused'), 'id' => 'unused'])
                         </div>
 
