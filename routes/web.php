@@ -279,6 +279,7 @@ Route::middleware('auth')->group(function () {
     // Layout endpoints
     Route::get('/layouts/{location}', [LayoutController::class, 'edit']);
     Route::put('/layouts/{location}', [LayoutController::class, 'update']);
+    Route::put('/layouts/{location}/reset', [LayoutController::class, 'reset']);
 
     // User API Tokens
     Route::get('/api-tokens/{userId}/create', [UserApiTokenController::class, 'create']);

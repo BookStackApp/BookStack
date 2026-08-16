@@ -118,7 +118,7 @@ class ViewBlockManager
 
         // Add remaining blocks based on their default locations
         foreach ($blocksById as $block) {
-            $position = $idPositionMap[$block->getId()] ?? 'unused';
+            $position = $idPositionMap[$block::getId()] ?? 'unused';
             $results[$position][] = $block;
         }
 
@@ -142,6 +142,10 @@ class ViewBlockManager
         foreach ($merged as $location) {
             $results[$location] = $labels[$location] ?? $location;
         }
+
+        $usingDefaultHome = setting('app-homepage-type') === 'default';
+        $toIgnore = $usingDefaultHome ? 'home-non-default' : 'home-default';
+        unset($results[$toIgnore]);
 
         return $results;
     }

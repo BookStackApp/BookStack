@@ -121,7 +121,7 @@ class ViewBlockDefaults
     {
         return [
             'home-default' => trans('common.homepage'),
-            'home-non-default' => trans('preferences.layouts_home_non_default'),
+            'home-non-default' => trans('common.homepage'),
             'shelves-index' => trans('entities.shelves'),
             'shelves-show' => trans('entities.shelf'),
             'books-index' => trans('entities.books'),

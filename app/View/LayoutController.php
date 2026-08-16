@@ -10,6 +10,7 @@ class LayoutController extends Controller
 {
     public function __construct(
         protected ViewBlockManager $viewBlocks,
+        protected ViewBlockPreferences $viewBlockPreferences,
     ) {
         $this->middleware(function (Request $request, Closure $next) {
             $this->preventGuestAccess();
@@ -37,7 +38,7 @@ class LayoutController extends Controller
     }
 
     /**
-     * Update the layout for a specific location.
+     * Update the layout for a specific location for the current user.
      */
     public function update(string $location, Request $request)
     {
@@ -49,6 +50,19 @@ class LayoutController extends Controller
         $this->viewBlocks->updatePreferencesFromIdPositionMap($location, $layoutData);
 
         $this->showSuccessNotification(trans('preferences.layout_update_success'));
+
+        return redirect("/layouts/{$location}");
+    }
+
+    /**
+     * Reset the layout for a specific location, for the current user,
+     * back to system defaults by removing any user-specific preferences.
+     */
+    public function reset(string $location)
+    {
+        $this->viewBlockPreferences->clearForLocation($location);
+
+        $this->showSuccessNotification(trans('preferences.layout_reset_success'));
 
         return redirect("/layouts/{$location}");
     }

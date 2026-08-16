@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function index(
         Request $request,
     ) {
-        $homepageType = setting('app-homepage-type', 'default');
+        $homepageType = setting('app-homepage-type');
         if (!in_array($homepageType, ['default', 'books', 'bookshelves', 'page'])) {
             $homepageType = 'default';
         }

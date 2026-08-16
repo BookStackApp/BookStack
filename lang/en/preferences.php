@@ -25,7 +25,6 @@ return [
     'interface_display_mode_desc' => 'Choose whether the application should show in dark or light mode. This can also be toggled from the home view, or via the profile dropdown in the header bar.',
     'layouts' => 'Customize UI Layout',
     'layouts_desc' => 'Customize the layout of sections shown in the user interface across various views.',
-    'layouts_home_non_default' => 'Homepage (non-default)',
     'layout_edit' => 'Edit Layout',
     'layout_edit_desc' => 'Drag and drop sections, or use the controls found on them, to reconfigure which sections show within this layout in the interface, and where they are displayed.',
     'layout_edit_save' => 'Save Layout',
@@ -36,7 +35,9 @@ return [
     'layout_edit_center' => 'Center',
     'layout_edit_unused' => 'Unused',
     'layout_edit_empty' => 'No sections to display',
+    'layout_edit_reset_to_defaults' => 'Reset to Default',
     'layout_update_success' => 'Layout preferences have been updated!',
+    'layout_reset_success' => 'Layout preferences have been reset!',
 
     'notifications' => 'Notification Preferences',
     'notifications_desc' => 'Control the email notifications you receive when certain activity is performed within the system.',

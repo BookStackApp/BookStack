@@ -29,6 +29,6 @@ abstract class ViewBlock implements ViewBlockInterface
      */
     public function getView(array $viewData): string
     {
-        return $this->view;
+        return static::$view;
     }
 }

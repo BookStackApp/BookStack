@@ -48,7 +48,16 @@ class ViewBlockPreferences
     }
 
     /**
-     * Get the layou data for a given location.
+     * Clear the view block preferences for a given location for the current user.
+     */
+    public function clearForLocation(string $location): void
+    {
+        $settingKey = $this->getSettingKey($location);
+        setting()->removeForCurrentUser($settingKey);
+    }
+
+    /**
+     * Get the layout data for a given location.
      * Provides arrays of block ids keyed by position.
      * @return array<string, string[]>
      */

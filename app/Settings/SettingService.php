@@ -265,6 +265,14 @@ class SettingService
     }
 
     /**
+     * Remove a user-specific setting from the database, for the current access user.
+     */
+    public function removeForCurrentUser(string $key): void
+    {
+        $this->remove($this->userKey(user()->id, $key));
+    }
+
+    /**
      * Delete settings for a given user id.
      */
     public function deleteUserSettings(string $userId): void
