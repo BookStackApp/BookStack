@@ -121,6 +121,27 @@ class LayoutEditTest extends TestCase
         ], $storedData);
     }
 
+    public function test_malformed_update()
+    {
+        $layout = [
+            'left' => 'a',
+            'right' => ['builtin_books-show-activity', 5],
+        ];
+
+        $resp = $this->asEditor()->put('/layouts/books-show', ['layout' => json_encode($layout)]);
+        $resp->assertRedirect('/layouts/books-show');
+
+        $userPreferenceString = setting()->getForCurrentUser('view-layout#books-show');
+        $this->assertJson($userPreferenceString);
+        $storedData = json_decode($userPreferenceString, true);
+
+        $this->assertEquals([
+            'right' => [
+                'builtin_books-show-activity',
+            ],
+        ], $storedData);
+    }
+
     public function test_layout_changes_take_effect()
     {
         $editor = $this->users->editor();

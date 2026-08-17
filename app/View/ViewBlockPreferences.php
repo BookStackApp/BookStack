@@ -36,11 +36,14 @@ class ViewBlockPreferences
         $validatedLayoutData = [];
 
         foreach ($layoutData as $position => $blockIds) {
-            if (!in_array($position, $validPositions)) {
+            // @phpstan-ignore-next-line
+            if (!in_array($position, $validPositions) || !is_array($blockIds)) {
                 continue;
             }
 
-            $validatedLayoutData[$position] = array_intersect($blockIds, $validIds);
+            $validatedLayoutData[$position] = array_filter($blockIds, function ($id) use ($validIds) {
+                return is_string($id) && in_array($id, $validIds);
+            });
         }
 
         $settingKey = $this->getSettingKey($location);

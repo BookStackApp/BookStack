@@ -35,6 +35,7 @@ class ViewBlockManager
             $this->blocksByLocationAndPosition[$location][$defaultPosition] = [];
         }
 
+        // @phpstan-ignore-next-line
         if (!is_a($blockClass, ViewBlockInterface::class, true)) {
             throw new \InvalidArgumentException('When registering a view block, the block class must implement ViewBlockInterface');
         }
@@ -81,7 +82,7 @@ class ViewBlockManager
      */
     protected function getForLocation(string $location): array
     {
-        $defaults = ViewBlockDefaults::getForLocation($location) ?? [];
+        $defaults = ViewBlockDefaults::getForLocation($location);
         $registered = $this->blocksByLocationAndPosition[$location] ?? [];
         return array_merge_recursive($defaults, $registered);
     }
@@ -90,7 +91,7 @@ class ViewBlockManager
      * Get all blocks registered for a given location, as sets of arrays
      * keyed by position, for the current user.
      * Same as above but with user-specific preferences applied.
-     * @return array<string, class-string<ViewBlockInterface>[]>
+     * @return array<string, list<class-string<ViewBlockInterface>>>
      * @throws BindingResolutionException
      */
     public function getForLocationForCurrentUser(string $location): array
@@ -113,7 +114,7 @@ class ViewBlockManager
             $results[$position] = [];
             foreach ($userBlockIds as $blockId) {
                 $block = $blocksById[$blockId] ?? null;
-                if ($block && isset($blocksById[$blockId])) {
+                if ($block) {
                     $results[$position][] = $block;
                     unset($blocksById[$blockId]);
                 }
@@ -182,7 +183,7 @@ class ViewBlockManager
     /**
      * Convert a blocksByPosition array into a map of block IDs to blocks.
      * @param array<string, class-string<ViewBlockInterface>[]> $blocksByPosition
-     * @return array<string, ViewBlockInterface>
+     * @return array<string, class-string<ViewBlockInterface>>
      */
     protected function blocksByPositionToIdMap(array $blocksByPosition): array
     {

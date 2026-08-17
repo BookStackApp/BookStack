@@ -21,10 +21,13 @@ class ClearPerRequestCaches
 
     public function handle(Request $request, Closure $next)
     {
-        $response = $next($request);
+        $this->clearCaches();
 
+        return $next($request);
+    }
+
+    protected function clearCaches(): void
+    {
         $this->viewBlockManager->clearLocalCache();
-
-        return $response;
     }
 }

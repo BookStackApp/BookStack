@@ -47,7 +47,9 @@ class LayoutController extends Controller
         ]);
 
         $layoutData = json_decode($data['layout'], true, 5);
-        $this->viewBlocks->updatePreferencesFromIdPositionMap($location, $layoutData);
+        if (is_array($layoutData)) {
+            $this->viewBlocks->updatePreferencesFromIdPositionMap($location, $layoutData);
+        }
 
         $this->showSuccessNotification(trans('preferences.layout_update_success'));
 

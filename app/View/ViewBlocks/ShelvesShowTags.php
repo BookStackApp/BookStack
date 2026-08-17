@@ -14,7 +14,7 @@ class ShelvesShowTags extends ViewBlock
     public function withData(array $viewData): array
     {
         return [
-            'book' => $viewData['book'],
+            'shelf' => $viewData['shelf'],
         ];
     }
 }

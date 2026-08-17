@@ -357,7 +357,7 @@ class UserMyAccountTest extends TestCase
         $resp->assertOk();
 
         $resp->assertSeeText('Preferred Language');
-        $resp->assertSeeText('Customize UI Layout');
+        $resp->assertSeeText('UI Layout Preferences');
 
         $resp = $this->put('/my-account/interface', ['language' => 'fr', 'display_mode' => 'dark']);
         $resp->assertRedirect('/my-account/interface');
