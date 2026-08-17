@@ -3,7 +3,7 @@ $columnBlocks - array - Blocks to list
 $label - string - Section title
 $id - string - identifier for location/column
 --}}
-<div class="form-group flex">
+<div class="form-group flex min-width-m">
     <label id="layout-blocks-{{ $id }}">{{ $label }}</label>
     <ul refs="layout-editor@column"
         data-column="{{ $id }}"
