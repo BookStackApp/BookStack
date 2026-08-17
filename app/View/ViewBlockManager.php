@@ -25,17 +25,21 @@ class ViewBlockManager
      * Register a block type to be displayed at the given location and position.
      * @param class-string<ViewBlockInterface> $blockClass
      */
-    public function register(string $location, string $position, string $blockClass): void
+    public function register(string $location, string $defaultPosition, string $blockClass): void
     {
         if (!isset($this->blocksByLocationAndPosition[$location])) {
             $this->blocksByLocationAndPosition[$location] = [];
         }
 
-        if (!isset($this->blocksByLocationAndPosition[$location][$position])) {
-            $this->blocksByLocationAndPosition[$location][$position] = [];
+        if (!isset($this->blocksByLocationAndPosition[$location][$defaultPosition])) {
+            $this->blocksByLocationAndPosition[$location][$defaultPosition] = [];
         }
 
-        $this->blocksByLocationAndPosition[$location][$position][] = $blockClass;
+        if (!is_a($blockClass, ViewBlockInterface::class, true)) {
+            throw new \InvalidArgumentException('When registering a view block, the block class must implement ViewBlockInterface');
+        }
+
+        $this->blocksByLocationAndPosition[$location][$defaultPosition][] = $blockClass;
     }
 
     /**
