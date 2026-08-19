@@ -4,6 +4,8 @@ namespace BookStack\Uploads;
 
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\ImageUploadException;
+use BookStack\Exceptions\PrettyException;
+use BookStack\Http\DownloadResponseFactory;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -368,7 +370,18 @@ class ImageService
     {
         $disk = $this->storage->getDisk($imageType);
 
-        return $disk->response($path);
+        $stream = $disk->stream($path);
+        $fileSize = $disk->size($path);
+        $imageName = basename($path);
+        $downloadResponseFactory = new DownloadResponseFactory(request());
+        $response = $downloadResponseFactory->streamedInline($stream, $imageName, $fileSize);
+
+        $contentType = $response->headers->get('Content-Type');
+        if (!str_starts_with($contentType, 'image/')) {
+            throw new PrettyException('Invalid non-image file type when streaming from storage', 415);
+        }
+
+        return $response;
     }
 
     /**
