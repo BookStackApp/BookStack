@@ -192,9 +192,8 @@ export class HttpManager {
     }
 
     /**
-     * Parse the response text for an error response to a user
-     * presentable string. Handles a range of errors responses including
-     * validation responses & server response text.
+     * Parse the response text for an error response to a user-presentable string.
+     * Handles a range of error responses, including validation responses and server response text.
      */
     protected formatErrorResponseText(text: string): string {
         const data = text.startsWith('{') ? JSON.parse(text) : {message: text};
@@ -206,13 +205,13 @@ export class HttpManager {
             return data.message || data.error;
         }
 
-        const values = Object.values(data);
-        const isValidation = values.every(val => {
+        const errorValues = Object.values(data.errors || {});
+        const isValidation = errorValues.length > 0 && errorValues.every(val => {
             return Array.isArray(val) && val.every(x => typeof x === 'string');
         });
 
         if (isValidation) {
-            return values.flat().join(' ');
+            return errorValues.flat().join(' ');
         }
 
         return text;
