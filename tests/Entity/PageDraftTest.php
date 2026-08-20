@@ -5,6 +5,7 @@ namespace Tests\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Repos\PageRepo;
+use BookStack\Exceptions\PermissionsException;
 use Tests\TestCase;
 
 class PageDraftTest extends TestCase
@@ -242,5 +243,24 @@ class PageDraftTest extends TestCase
             'draft' => false,
             'slug'  => 'my-page',
         ]);
+    }
+
+    public function test_draft_published_can_only_be_used_on_draft_pages()
+    {
+        $page = $this->entities->page();
+        $this->withoutExceptionHandling();
+
+        $exception = null;
+        try {
+            $this->asEditor()->post($page->book->getUrl("/draft/{$page->id}"), ['name' => 'My published drafty']);
+        } catch (\Exception $e) {
+            $exception = $e;
+        }
+
+        $this->assertInstanceOf(PermissionsException::class, $exception);
+        $this->assertStringContainsString('This page is already published or does not belong to you', $exception->getMessage());
+
+        $page->refresh();
+        $this->assertNotEquals('My published drafty', $page->name);
     }
 }
