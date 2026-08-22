@@ -36,9 +36,8 @@ class ImageService
         ?int $resizeWidth = null,
         ?int $resizeHeight = null,
         bool $keepRatio = true,
-        string $imageName = '',
     ): Image {
-        $imageName = $imageName ?: $uploadedFile->getClientOriginalName();
+        $imageName = $uploadedFile->getClientOriginalName();
         $imageData = file_get_contents($uploadedFile->getRealPath());
 
         if ($resizeWidth !== null || $resizeHeight !== null) {
@@ -391,6 +390,14 @@ class ImageService
      */
     public static function isExtensionSupported(string $extension): bool
     {
-        return in_array($extension, static::$supportedExtensions);
+        return in_array(strtolower($extension), static::$supportedExtensions);
+    }
+
+    /**
+     * Get all mime-types for images formats which BookStack supports.
+     */
+    public static function getSupportedMimeTypes(): array
+    {
+        return array_map(fn($ext) => 'image/' . $ext, static::$supportedExtensions);
     }
 }

@@ -72,7 +72,7 @@ class ZipExportValidatorTest extends TestCase
         $this->assertEquals($expectedMessage, $results['book.chapters.1.id']);
     }
 
-    public function test_image_files_need_to_be_a_valid_detected_image_file()
+    public function test_page_image_files_need_to_be_a_valid_detected_image_file()
     {
         $validator = $this->getValidatorForData([
             'page' => [
@@ -88,7 +88,7 @@ class ZipExportValidatorTest extends TestCase
         $results = $validator->validate();
         $this->assertCount(1, $results);
 
-        $this->assertEquals('The file needs to reference a file of type image/png,image/jpeg,image/gif,image/webp, found text/plain.', $results['page.images.0.file']);
+        $this->assertEquals('The file needs to reference a file of type image/jpg,image/jpeg,image/png,image/gif,image/webp,image/avif, found text/plain.', $results['page.images.0.file']);
     }
 
     public function test_page_link_attachments_cant_be_data_or_js()
@@ -114,5 +114,21 @@ class ZipExportValidatorTest extends TestCase
             $results = $validator->validate();
             $this->assertCount($count, $results);
         }
+    }
+
+    public function test_book_cover_image_files_need_to_be_a_valid_detected_image_file()
+    {
+        $validator = $this->getValidatorForData([
+            'book' => [
+                'id' => 5,
+                'name' => 'My book',
+                'cover' => 'cat.png',
+            ]
+        ], ['cat.png' => $this->files->testFilePath('test-file.txt')]);
+
+        $results = $validator->validate();
+        $this->assertCount(1, $results);
+
+        $this->assertEquals('The cover needs to reference a file of type image/jpg,image/jpeg,image/png,image/gif,image/webp,image/avif, found text/plain.', $results['book.cover']);
     }
 }
