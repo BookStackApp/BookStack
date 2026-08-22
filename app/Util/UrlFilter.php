@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace BookStack\Util;
 
 /**
- * Helps filter URLs to prevent use of undesired schemes.
+ * Helps filter URLs to prevent the use of undesired schemes.
  * Also parses and rebuilds the URL to ensure it's valid.
  */
 class UrlFilter
 {
-    protected static array $allowedSchemes = ['http', 'https', 'mailto', 'tel', 'file', 'ftp', 'nntp', 'news'];
+    protected static array $allowedSchemes = ['http', 'https', 'mailto', 'tel', 'file', 'sftp', 'ftp', 'nntp', 'news'];
     protected string $url;
 
     public function __construct(string $url)
@@ -20,7 +20,7 @@ class UrlFilter
 
     /**
      * Check if the URL is allowed to be generally used as a link
-     * in the application. This does not assure the original URL string
+     * in the application. This does not ensure the original URL string
      * provided is safe as-is. Ensure you use the clean method to produce
      * a URL that is considered safe to use.
      */
