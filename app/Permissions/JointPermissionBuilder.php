@@ -70,7 +70,11 @@ class JointPermissionBuilder
         }
 
         if ($entity instanceof Chapter) {
-            foreach ($entity->pages as $page) {
+            $childPages = $entity->pages()
+                ->withTrashed()
+                ->select(['id', 'owned_by', 'book_id', 'chapter_id'])
+                ->get();
+            foreach ($childPages as $page) {
                 $entities[] = $page;
             }
         }
