@@ -523,6 +523,8 @@ HTML;
             '<p><a href="https://example.com" target="_blank">New tab linkydoodle</a></p>',
             '<p><a href="https://example.com/user/1" data-mention-user-id="5">@mentionusertext</a></p>',
             '<p><a href="file://link/to/file">Link to file</a></p>',
+            '<p><a href="sftp://example.com/a/link/to/file">Link to file</a></p>',
+            '<p><a href="#hello-section">Link to another section</a></p>',
             '<details><summary>Hello</summary><p>Mydetailshere</p></details>',
         ];
 

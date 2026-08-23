@@ -61,6 +61,7 @@ class UrlFilterTest extends TestCase
             'sftp://a/b/c' => 'sftp://a/b/c',
             'nntp://a/b/c' => 'nntp://a/b/c',
             'news:a/b/c' => 'news:a/b/c',
+            '#a-reference-to-an-id' => '#a-reference-to-an-id',
         ];
 
         foreach ($expectedOutputByInput as $input => $expected) {
