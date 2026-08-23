@@ -245,7 +245,7 @@ class PageDraftTest extends TestCase
         ]);
     }
 
-    public function test_draft_published_can_only_be_used_on_draft_pages()
+    public function test_draft_publish_can_only_be_used_on_draft_pages()
     {
         $page = $this->entities->page();
         $this->withoutExceptionHandling();
@@ -262,5 +262,28 @@ class PageDraftTest extends TestCase
 
         $page->refresh();
         $this->assertNotEquals('My published drafty', $page->name);
+    }
+
+    public function test_destroy_draft_can_only_be_used_on_draft_pages()
+    {
+        $page = $this->entities->page();
+        $this->withoutExceptionHandling();
+
+        $exception = null;
+        try {
+            $this->asEditor()->delete($page->book->getUrl("/draft/{$page->id}"));
+        } catch (\Exception $e) {
+            $exception = $e;
+        }
+
+        $this->assertInstanceOf(PermissionsException::class, $exception);
+        $this->assertStringContainsString('This page is already published or does not belong to you', $exception->getMessage());
+
+        $page->refresh();
+        $this->assertDatabaseHas('entities', [
+            'id' => $page->id,
+            'type' => 'page',
+            'deleted_at' => null
+        ]);
     }
 }

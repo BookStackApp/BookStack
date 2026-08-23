@@ -82,10 +82,6 @@ class PageRepo
      */
     public function publishDraft(Page $draft, array $input): Page
     {
-        if (!$draft->draft || $draft->created_by !== user()->id) {
-            throw new PermissionsException('This page is already published or does not belong to you.');
-        }
-
         return (new DatabaseTransaction(function () use ($draft, $input) {
             $draft->draft = false;
             $draft->revision_count = 1;
