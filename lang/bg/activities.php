@@ -111,7 +111,7 @@ return [
     'api_token_delete_notification' => 'API token successfully deleted',
 
     // Roles
-    'role_create' => 'created role',
+    'role_create' => 'създадена роля',
     'role_create_notification' => 'Успешна създадена роля',
     'role_update' => 'updated role',
     'role_update_notification' => 'Успешно обновена роля',

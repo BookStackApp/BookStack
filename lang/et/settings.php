@@ -207,7 +207,7 @@ return [
     'role_all' => 'Kõik',
     'role_own' => 'Enda omad',
     'role_controlled_by_asset' => 'Õigused määratud seotud objekti kaudu',
-    'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
+    'role_controlled_by_page_delete' => 'Määratud lehe kustutamise õiguste kaudu',
     'role_save' => 'Salvesta roll',
     'role_users' => 'Selle rolliga kasutajad',
     'role_users_none' => 'Seda rolli ei ole hetkel ühelgi kasutajal',
@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'Seadista mitmeastmeline autentimine, et oma kasutajakonto turvalisust tõsta.',
     'users_mfa_x_methods' => ':count meetod seadistatud|:count meetodit seadistatud',
     'users_mfa_configure' => 'Seadista meetodid',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Lähtesta mitmeastmelise autentimise meetodid',
+    'users_mfa_reset_desc' => 'See lähestab kõik selle kasutaja seadistatud mitmeastmelise autentimise meetodid. Kui mõni tema rollidest nõuab mitmeastmelist autentimist, peab ta järgmisel sisselogimisel uued meetodid seadistama.',
+    'users_mfa_reset_confirm' => 'Kas oled kindel, et soovid selle kasutaja mitmeastmelise autentimise meetodid lähtestada?',
 
     // API Tokens
     'user_api_token_create' => 'Lisa API tunnus',

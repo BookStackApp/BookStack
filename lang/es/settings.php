@@ -264,9 +264,9 @@ return [
     'users_mfa_desc' => 'La autenticación en dos pasos añade una capa de seguridad adicional a tu cuenta.',
     'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
     'users_mfa_configure' => 'Configurar métodos',
-    'users_mfa_reset' => 'Reset Multi-Factor Authentication Methods',
-    'users_mfa_reset_desc' => 'This will reset and clear all configured multi-factor authentication methods for this user. If multi-factor authentication is required by any of their roles, they\'ll be prompted to configure new methods on their next login.',
-    'users_mfa_reset_confirm' => 'Are you sure you want to reset multi-factor authentication for this user?',
+    'users_mfa_reset' => 'Restablecer métodos de autenticación en dos pasos',
+    'users_mfa_reset_desc' => 'Esto restablecerá y borrará todos los métodos de autenticación en dos pasos configurados para este usuario. Si la autenticación en dos pasos es requerida por cualquiera de sus roles, se les pedirá que configuren nuevos métodos en su próximo inicio de sesión.',
+    'users_mfa_reset_confirm' => '¿Estás seguro de que deseas eliminar la autenticación en dos pasos para este usuario?',
 
     // API Tokens
     'user_api_token_create' => 'Crear token API',

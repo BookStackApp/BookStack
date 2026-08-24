@@ -8,7 +8,7 @@ return [
 
     'failed' => 'مشخصات وارد شده با اطلاعات ما سازگار نیست.',
     'throttle' => 'دفعات تلاش شما برای ورود بیش از حد مجاز است. لطفا پس از :seconds ثانیه مجددا تلاش فرمایید.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'تلاش‌های تأیید هویت چندمرحله‌ای بیش از حد مجاز است. لطفاً پس از :seconds ثانیه دوباره تلاش کنید.',
 
     // Login & Register
     'sign_up' => 'ثبت نام',
