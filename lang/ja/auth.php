@@ -8,7 +8,7 @@ return [
 
     'failed' => 'この資格情報は登録されていません。',
     'throttle' => 'ログイン試行回数が制限を超えました。:seconds秒後に再試行してください。',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => '多要素認証の試行回数が制限を越えました。:seconds 秒後に再試行してください。',
 
     // Login & Register
     'sign_up' => '新規登録',

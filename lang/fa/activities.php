@@ -36,8 +36,8 @@ return [
     'book_update_notification'    => 'کتاب با موفقیت به روزرسانی شد',
     'book_delete'                 => 'حذف کتاب',
     'book_delete_notification'    => 'کتاب با موفقیت حذف شد',
-    'book_sort'                   => 'مرتب سازی کتاب',
-    'book_sort_notification'      => 'کتاب با موفقیت مرتب سازی شد',
+    'book_sort'                   => 'کتاب‌های مرتب‌شده',
+    'book_sort_notification'      => 'کتاب با موفقیت مجددا مرتب شد',
 
     // Bookshelves
     'bookshelf_create'            => 'ایجاد قفسه',
@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'کاربر با موفقیت به روز شد',
     'user_delete' => 'کاربر حذف شده',
     'user_delete_notification' => 'کاربر با موفقیت حذف شد',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'بازنشانی احراز هویت چندمرحله ای برای کاربر',
+    'user_mfa_reset_notification' => 'بازنشانی روش‌های احراز هویت چندمرحله‌ای',
 
     // API Tokens
     'api_token_create' => 'ایجاد توکن API',

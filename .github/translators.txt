@@ -548,3 +548,9 @@ brtbr :: German; German Informal
 Ricardo Covelo (covelo12) :: Portuguese
 Bojan Maksimovic (PolarniMeda) :: Serbian (Cyrillic)
 Dian Prawira (wiradian84) :: Indonesian
+Tim (timakai) :: Dutch; German Informal; French; Romanian; Catalan; Czech; Danish; German; Finnish; Hungarian; Italian; Japanese; Korean; Polish; Russian; Ukrainian; Chinese Simplified; Chinese Traditional; Portuguese, Brazilian; Persian; Spanish, Argentina; Croatian; Norwegian Nynorsk; Estonian; Uzbek; Norwegian Bokmal
+dadda123 :: Swedish
+Julien Muggli (JulienMuggli) :: French
+nomoreshow :: Turkish
+Qasem Talaee (qasem_talaee) :: Persian
+ddeicide :: Bulgarian

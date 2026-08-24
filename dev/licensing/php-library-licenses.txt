@@ -123,7 +123,7 @@ Link: https://github.com/fruitcake/php-cors
 graham-campbell/result-type
 License: MIT
 License File: vendor/graham-campbell/result-type/LICENSE
-Copyright: Copyright (c) 2020-2024 Graham Campbell <*****@**********.**.**>
+Copyright: Copyright (c) 2020-2026 Graham Campbell <*****@**********.**.**>
 Source: https://github.com/GrahamCampbell/Result-Type.git
 Link: https://github.com/GrahamCampbell/Result-Type.git
 -----------

@@ -105,11 +105,11 @@ return [
     'url'                  => 'Форматът на :attribute не е валиден.',
     'uploaded'             => 'Файлът не можа да бъде качен. Сървърът може да не приема файлове с такъв размер.',
 
-    'zip_file' => 'The :attribute needs to reference a file within the ZIP.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
-    'zip_file_mime' => 'The :attribute needs to reference a file of type :validTypes, found :foundType.',
-    'zip_model_expected' => 'Data object expected but ":type" found.',
-    'zip_unique' => 'The :attribute must be unique for the object type within the ZIP.',
+    'zip_file' => ':attribute трябва да реферира към файл в ZIP архива.',
+    'zip_file_size' => 'Файла :attribute не трябва да надвишава :size MB.',
+    'zip_file_mime' => ':attribute трябва да реферира към файл от тип :validTypes, а е намерен :foundType.',
+    'zip_model_expected' => 'Очаква се обект с данни, но е открит ":type".',
+    'zip_unique' => ':attribute трябва да бъде уникален за типа на обекта в ZIP архива.',
 
     // Custom validation lines
     'custom' => [

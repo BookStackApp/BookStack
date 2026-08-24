@@ -5,14 +5,18 @@ namespace BookStack\Util\HtmlPurifier\Filters;
 use HTMLPurifier_Config;
 use HTMLPurifier_Context;
 use HTMLPurifier_URI;
-use HTMLPurifier_URIFilter;
+use HTMLPurifier_URIFilter_MakeAbsolute;
 
-class UriEnsureScheme extends HTMLPurifier_URIFilter
+/**
+ * A custom version of HTMLPurifier's MakeAbsolute filter which leaves fragment-based
+ * anchors alone without adding a base.
+ */
+class UriMakeAbsolute extends HTMLPurifier_URIFilter_MakeAbsolute
 {
     /**
      * @type string
      */
-    public $name = 'EnsureScheme';
+    public $name = 'CustomMakeAbsolute';
 
     /**
      * @type bool
@@ -23,19 +27,13 @@ class UriEnsureScheme extends HTMLPurifier_URIFilter
      * @param HTMLPurifier_URI $uri
      * @param HTMLPurifier_Config $config
      * @param HTMLPurifier_Context $context
-     * @return bool
      */
     public function filter(&$uri, $config, $context): bool
     {
-        $def = $config->getDefinition('URI');
-        $defaultScheme = $def->defaultScheme ?? '';
-
-        if (empty($uri->scheme) && $defaultScheme) {
-            if (!str_starts_with($uri->toString(), '#')) {
-                $uri->scheme = $defaultScheme;
-            }
+        if (str_starts_with($uri->toString(), '#')) {
+            return true;
         }
 
-        return true;
+        return parent::filter($uri, $config, $context);
     }
 }

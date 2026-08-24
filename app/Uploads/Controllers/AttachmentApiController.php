@@ -24,7 +24,7 @@ class AttachmentApiController extends ApiController
 
     /**
      * Get a listing of attachments visible to the user.
-     * The external property indicates whether the attachment is simple a link.
+     * The external property indicates whether the attachment is simply a link.
      * A false value for the external property would indicate a file upload.
      */
     public function list()
@@ -39,7 +39,7 @@ class AttachmentApiController extends ApiController
      * An uploaded_to value must be provided containing an ID of the page
      * that this upload will be related to.
      *
-     * If you're uploading a file the POST data should be provided via
+     * If you're uploading a file, the POST data should be provided via
      * a multipart/form-data type request instead of JSON.
      *
      * @throws ValidationException
@@ -71,7 +71,7 @@ class AttachmentApiController extends ApiController
     }
 
     /**
-     * Get the details & content of a single attachment of the given ID.
+     * Get the details and content of a single attachment of the given ID.
      * The attachment link or file content is provided via a 'content' property.
      * For files the content will be base64 encoded.
      *
@@ -120,7 +120,7 @@ class AttachmentApiController extends ApiController
 
     /**
      * Update the details of a single attachment.
-     * As per the create endpoint, if a file is being provided as the attachment content
+     * As per the create endpoint, if a file is being provided as the attachment content,
      * the request should be formatted as a multipart/form-data request instead of JSON.
      *
      * @throws ValidationException
@@ -134,9 +134,12 @@ class AttachmentApiController extends ApiController
 
         $page = $attachment->page;
         if ($requestData['uploaded_to'] ?? false) {
-            $pageId = $request->input('uploaded_to');
-            $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-            $attachment->uploaded_to = $requestData['uploaded_to'];
+            $pageId = intval($requestData['uploaded_to']);
+            if ($pageId !== $page->id) {
+                $this->checkOwnablePermission(Permission::PageUpdate, $page);
+                $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
+                $attachment->uploaded_to = $pageId;
+            }
         }
 
         $this->checkOwnablePermission(Permission::PageView, $page);
