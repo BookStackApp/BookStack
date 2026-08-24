@@ -333,6 +333,22 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_read_data_endpoint_does_not_serve_non_image_files()
+    {
+        $this->actingAsApiAdmin();
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage, 'test-image.png');
+
+        $image = Image::findOrFail($data['response']->id);
+        $storagePath = public_path($image->path);
+        file_put_contents($storagePath, '<html><body><p>This is totally not an image file!</p></body></html>');
+
+        $resp = $this->get("{$this->baseEndpoint}/{$image->id}/data");
+        $resp->assertStatus(415);
+
+        $resp->assertJson($this->errorResponse('Invalid non-image file type when streaming from storage.', 415));
+    }
+
     public function test_read_url_data_endpoint()
     {
         $this->actingAsApiAdmin();

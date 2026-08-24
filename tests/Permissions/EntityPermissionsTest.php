@@ -711,4 +711,31 @@ class EntityPermissionsTest extends TestCase
 
         $this->assertNull($error);
     }
+
+    public function test_chapter_permissions_change_updates_permissions_for_pages_in_recycle_bin()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        /** @var Page $page */
+        $page = $chapter->pages()->first();
+        $editor = $this->users->editor();
+        $editorRole = $editor->roles->first();
+
+        $this->asAdmin()->delete($page->getUrl());
+        $this->assertTrue($page->refresh()->trashed());
+
+        $this->put($chapter->getUrl('/permissions'), [
+            'permissions' => [
+                '0' => [
+                    'active' => 'true',
+                ],
+            ],
+        ]);
+
+        $this->assertDatabaseHas('joint_permissions', [
+            'entity_type' => 'page',
+            'entity_id'   => $page->id,
+            'role_id'     => $editorRole->id,
+            'status'      => 0,
+        ]);
+    }
 }

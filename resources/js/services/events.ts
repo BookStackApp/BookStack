@@ -67,8 +67,10 @@ export class EventManager {
      * Notify of standard server-provided validation errors.
      */
     showValidationErrors(responseErr: HttpError): void {
-        if (responseErr.status === 422 && responseErr.data) {
-            const message = Object.values(responseErr.data).flat().join('\n');
+        if (responseErr.status === 422 && responseErr.data instanceof Object) {
+            const data = responseErr.data;
+            const errorValues = Object.values(data.errors ?? data);
+            const message = errorValues.flat().join('\n');
             this.error(message);
         }
     }

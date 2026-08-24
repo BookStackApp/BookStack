@@ -296,4 +296,24 @@ class RecycleBinTest extends TestCase
         $pageRestoreView->assertSee('The parent of this item has also been deleted.');
         $this->withHtml($pageRestoreView)->assertElementContains('a[href$="/settings/recycle-bin/' . $bookDeletion->id . '/restore"]', 'Restore Parent');
     }
+
+    public function test_restore_action_rebuilds_permissions_for_entity()
+    {
+        $book = $this->entities->bookHasChaptersAndPages();
+        /** @var Page $page */
+        $page = $book->pages()->first();
+
+        $this->asEditor()->delete($book->getUrl());
+        $bookDeletion = $book->deletions()->first();
+
+        DB::table('joint_permissions')->where('entity_id', '=', $book->id)
+            ->where('entity_type', '=', 'book')->delete();
+        DB::table('joint_permissions')->where('entity_id', '=', $page->id)
+            ->where('entity_type', '=', 'page')->delete();
+
+        $this->asAdmin()->post("/settings/recycle-bin/{$bookDeletion->id}/restore");
+
+        $this->assertDatabaseHas('joint_permissions', ['entity_id' => $book->id, 'entity_type' => 'book']);
+        $this->assertDatabaseHas('joint_permissions', ['entity_id' => $page->id, 'entity_type' => 'page']);
+    }
 }

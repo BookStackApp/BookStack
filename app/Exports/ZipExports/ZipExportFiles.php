@@ -80,7 +80,7 @@ class ZipExportFiles
     }
 
     /**
-     * Extract each of the ZIP export tracked files.
+     * Extract each of the ZIP export-tracked files.
      * Calls the given callback for each tracked file, passing a temporary
      * file reference of the file contents, and the zip-local tracked reference.
      */

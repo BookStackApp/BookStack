@@ -433,6 +433,29 @@ class ZipImportRunnerTest extends TestCase
         ZipTestHelper::deleteZipForImport($import);
     }
 
+    public function test_book_covers_are_saved_with_a_valid_image_extension()
+    {
+        $testImagePath = $this->files->testFilePath('test-image.png');
+
+        $import = ZipTestHelper::importFromData([], [
+            'book' => [
+                'name' => 'Page A',
+                'cover' => 'my-book-import-ext-test.txt',
+            ],
+        ], [
+            'my-book-import-ext-test.txt' => $testImagePath,
+        ]);
+
+        $this->asAdmin();
+
+        $this->runner->run($import);
+        ZipTestHelper::deleteZipForImport($import);
+
+        $this->assertDatabaseHas('images', [
+            'name' => 'my-book-import-ext-test.txt.png',
+        ]);
+    }
+
     public function test_error_thrown_if_zip_item_exceeds_app_file_upload_limit()
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'bs-zip-test');

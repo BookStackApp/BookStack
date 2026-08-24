@@ -96,7 +96,7 @@ class ZipImportRunner
 
     /**
      * Revert any files which have been stored during this import process.
-     * Considers files only, and avoids the database under the
+     * Considers files only and avoids the database under the
      * assumption that the database may already have been
      * reverted as part of a transaction rollback.
      */
@@ -129,7 +129,7 @@ class ZipImportRunner
         $book = $this->bookRepo->create([
             'name' => $exportBook->name,
             'description_html' => $exportBook->description_html ?? '',
-            'image' => $exportBook->cover ? $this->zipFileToUploadedFile($exportBook->cover, $reader) : null,
+            'image' => $exportBook->cover ? $this->zipFileToUploadedFile($exportBook->cover, $reader, true) : null,
             'tags' => $this->exportTagsToInputArray($exportBook->tags),
         ]);
 
@@ -227,18 +227,11 @@ class ZipImportRunner
 
     protected function importImage(ZipExportImage $exportImage, Page $page, ZipExportReader $reader): Image
     {
-        $mime = $reader->sniffFileMime($exportImage->file);
-        $extension = explode('/', $mime)[1];
-
-        $file = $this->zipFileToUploadedFile($exportImage->file, $reader);
+        $file = $this->zipFileToUploadedFile($exportImage->file, $reader, true);
         $image = $this->imageService->saveNewFromUpload(
             $file,
             $exportImage->type,
             $page->id,
-            null,
-            null,
-            true,
-            $exportImage->name . '.' . $extension,
         );
 
         $image->name = $exportImage->name;
@@ -261,7 +254,7 @@ class ZipImportRunner
         return $tags;
     }
 
-    protected function zipFileToUploadedFile(string $fileName, ZipExportReader $reader): UploadedFile
+    protected function zipFileToUploadedFile(string $fileName, ZipExportReader $reader, bool $forceExtensionFromMime = false): UploadedFile
     {
         if (!$reader->fileWithinSizeLimit($fileName)) {
             throw new ZipImportException([
@@ -277,7 +270,16 @@ class ZipImportRunner
 
         $this->tempFilesToCleanup[] = $tempPath;
 
-        return new UploadedFile($tempPath, $fileName);
+        $intendedUploadName = $fileName;
+        if ($forceExtensionFromMime) {
+            $mime = $reader->sniffFileMime($fileName);
+            $extension = explode('/', $mime)[1];
+            if (!str_ends_with(strtolower($intendedUploadName), '.' . $extension)) {
+                $intendedUploadName .= '.' . $extension;
+            }
+        }
+
+        return new UploadedFile($tempPath, $intendedUploadName);
     }
 
     /**
