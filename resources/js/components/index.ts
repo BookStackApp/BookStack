@@ -30,6 +30,7 @@ export {GlobalSearch} from './global-search';
 export {HeaderMobileToggle} from './header-mobile-toggle';
 export {ImageManager} from './image-manager';
 export {ImagePicker} from './image-picker';
+export {LayoutEditor} from './layout-editor';
 export {ListSortControl} from './list-sort-control';
 export {LoadingButton} from './loading-button';
 export {MarkdownEditor} from './markdown-editor';

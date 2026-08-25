@@ -9,7 +9,7 @@
 
     <div class="text-center">
         <div component="dropdown"
-             option:dropdown:move-menu="true"
+             option:dropdown:fixed-position-menu="true"
              class="dropdown-container  draft-display text {{ $draftsEnabled ? '' : 'hidden' }}">
             <div class="flex-container-row items-center justify-center">
                 <button type="button"
@@ -97,7 +97,7 @@
 
     <div class="flex-container-row justify-flex-end gap-x-m items-center">
         <div component="dropdown"
-             option:dropdown:move-menu="true"
+             option:dropdown:fixed-position-menu="true"
              class="dropdown-container">
             <button refs="dropdown@toggle" type="button" aria-haspopup="true" aria-expanded="false" class="icon-list-item text-link">
                 <span>@icon('edit')</span>

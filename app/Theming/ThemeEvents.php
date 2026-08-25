@@ -181,6 +181,15 @@ class ThemeEvents
     const THEME_REGISTER_VIEWS = 'theme_register_views';
 
     /**
+     * View blocks register event.
+     * Runs once a ViewBlockManager instance is available so that custom blocks can be registered
+     * for use within user-configurable layouts in the system.
+     *
+     * @param \BookStack\View\ViewBlockManager $manager
+     */
+    const VIEW_BLOCKS_REGISTER = 'view_blocks_register';
+
+    /**
      * Web before middleware action.
      * Runs before the request is handled but after all other middleware apart from those
      * that depend on the current session user (Localization for example).

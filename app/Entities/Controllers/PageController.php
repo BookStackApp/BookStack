@@ -4,7 +4,6 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
-use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Page;
@@ -21,7 +20,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
-use BookStack\References\ReferenceFetcher;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
 use Exception;
@@ -36,7 +34,6 @@ class PageController extends Controller
         protected PageRepo $pageRepo,
         protected PageQueries $queries,
         protected EntityQueries $entityQueries,
-        protected ReferenceFetcher $referenceFetcher
     ) {
     }
 
@@ -154,11 +151,10 @@ class PageController extends Controller
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
-        $pageNav = $pageContent->getNavigation($page->html);
 
-        $sidebarTree = (new BookContents($page->book))->getTree();
+        $bookTree = (new BookContents($page->book))->getTree();
         $commentTree = (new CommentTree($page));
-        $nextPreviousLocator = new NextPreviousContentLocator($page, $sidebarTree);
+        $nextPreviousLocator = new NextPreviousContentLocator($page, $bookTree);
 
         View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
@@ -167,13 +163,10 @@ class PageController extends Controller
             'page'            => $page,
             'book'            => $page->book,
             'current'         => $page,
-            'sidebarTree'     => $sidebarTree,
+            'bookTree'        => $bookTree,
             'commentTree'     => $commentTree,
-            'pageNav'         => $pageNav,
-            'watchOptions'    => new UserEntityWatchOptions(user(), $page),
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
-            'referenceCount'  => $this->referenceFetcher->getReferenceCountToEntity($page),
         ]);
     }
 

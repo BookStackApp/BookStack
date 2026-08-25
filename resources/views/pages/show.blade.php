@@ -36,13 +36,9 @@
 @stop
 
 @section('left')
-    @include('pages.parts.show-sidebar-section-tags', ['page' => $page])
-    @include('pages.parts.show-sidebar-section-attachments', ['page' => $page])
-    @include('pages.parts.show-sidebar-section-page-nav', ['pageNav' => $pageNav])
-    @include('entities.book-tree', ['book' => $book, 'sidebarTree' => $sidebarTree])
+    @include('common.view-blocks', ['location' => 'pages-show', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('pages.parts.show-sidebar-section-details', ['page' => $page, 'watchOptions' => $watchOptions, 'book' => $book])
-    @include('pages.parts.show-sidebar-section-actions', ['page' => $page, 'watchOptions' => $watchOptions])
+    @include('common.view-blocks', ['location' => 'pages-show', 'position' => 'right'])
 @stop

@@ -394,4 +394,47 @@ CONTENT;
 
         $this->artisan('view:clear');
     }
+
+    public function test_view_blocks_register_event()
+    {
+        $this->usingThemeFolder(function (string $folder) {
+            $functionsContent = <<<'CONTENT'
+<?php
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
+use BookStack\View\ViewBlockManager;
+class CustomViewBlock implements \BookStack\View\ViewBlockInterface {
+    public static function getId(): string
+    {
+        return 'custom_view';
+    }
+    public static function getLabel(): string
+    {
+        return 'My custom view block';
+    }
+    public function getView(array $viewData): string
+    {
+        return 'custom-block';
+    }
+    public function withData(array $viewData): array
+    {
+        return [];
+    }
+}
+Theme::listen(ThemeEvents::VIEW_BLOCKS_REGISTER, function (ViewBlockManager $manager) {
+    $manager->register('home-default', 'right', CustomViewBlock::class);
+});
+CONTENT;
+
+            $viewDir = theme_path();
+            file_put_contents($viewDir . '/functions.php', $functionsContent);
+            file_put_contents($viewDir . '/custom-block.blade.php', '<h2>Hello there from my custom home block!</h2>');
+
+            $this->refreshApplication();
+            $resp = $this->asEditor()->get('/');
+            $html = $this->withHtml($resp);
+
+            $html->assertElementContains('.grid > div:nth-child(3) h2', 'Hello there from my custom home block!');
+        });
+    }
 }

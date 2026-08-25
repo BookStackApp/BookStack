@@ -259,7 +259,7 @@ export function hashElement(element: HTMLElement): string {
 }
 
 /**
- * Find the closest scroll container parent for the given element
+ * Find the closest scroll container parent for the given element,
  * otherwise will default to the body element.
  */
 export function findClosestScrollContainer(start: HTMLElement): HTMLElement {
