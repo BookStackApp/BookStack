@@ -131,8 +131,6 @@ class OidcJwtWithClaims implements ProvidesClaims
             }
         }, $this->keys);
 
-        $parsedKeys = array_filter($parsedKeys);
-
         $contentToSign = $this->tokenParts[0] . '.' . $this->tokenParts[1];
         /** @var OidcJwtSigningKey $parsedKey */
         foreach ($parsedKeys as $parsedKey) {

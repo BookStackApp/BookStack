@@ -83,6 +83,10 @@ class LdapSessionGuard extends ExternalBaseSessionGuard
             }
         }
 
+        if (!($user instanceof User)) {
+            throw new LoginAttemptException('Could not find or create a user for LDAP login.');
+        }
+
         // Sync LDAP groups if required
         if ($this->ldapService->shouldSyncGroups()) {
             $this->ldapService->syncGroups($user, $username);

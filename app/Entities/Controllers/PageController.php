@@ -24,6 +24,7 @@ use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -364,8 +365,8 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $visibleBelongsScope = function (BelongsTo $query) {
-            $query->scopes('visible');
+        $visibleBelongsScope = function (Relation $relation): void {
+            $relation->scopes('visible');
         };
 
         $pages = $this->queries->visibleForList()

@@ -22,6 +22,7 @@ class ReferenceFetcher
      */
     public function getReferencesToEntity(Entity $entity, bool $withContents = false): Collection
     {
+        /** @var Collection<int, Reference> $references */
         $references = $this->queryReferencesToEntity($entity)->get();
         $this->mixedEntityListLoader->loadIntoRelations($references->all(), 'from', false, $withContents);
 
@@ -37,6 +38,9 @@ class ReferenceFetcher
         return $this->queryReferencesToEntity($entity)->count();
     }
 
+    /**
+     * @return Builder<Reference>
+     */
     protected function queryReferencesToEntity(Entity $entity): Builder
     {
         $baseQuery = Reference::query()

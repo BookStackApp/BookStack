@@ -48,7 +48,7 @@ class ZipImportRunner
      * Returns the top-level entity item which was imported.
      * @throws ZipImportException
      */
-    public function run(Import $import, ?Entity $parent = null): Entity
+    public function run(Import $import, Book|Chapter|null $parent = null): Entity
     {
         $zipPath = $this->getZipPath($import);
         $reader = new ZipExportReader($zipPath);

@@ -73,13 +73,17 @@ class WebhookFormatter
         // Load entity owner, creator, updater details
         $this->addModelFormatter(
             fn ($event, $model) => ($model instanceof Entity),
-            fn ($model) => $model->load(['ownedBy', 'createdBy', 'updatedBy'])
+            function ($model) {
+                $model->load(['ownedBy', 'createdBy', 'updatedBy']);
+            }
         );
 
         // Load revision detail for page update and create events
         $this->addModelFormatter(
             fn ($event, $model) => ($model instanceof Page && ($event === ActivityType::PAGE_CREATE || $event === ActivityType::PAGE_UPDATE)),
-            fn ($model) => $model->load('currentRevision')
+            function ($model) {
+                $model->load('currentRevision');
+            }
         );
     }
 

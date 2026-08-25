@@ -7,7 +7,7 @@ parameters:
         - app
 
     # The level 8 is the highest level
-    level: 4
+    level: 5
 
     phpVersion:
         min: 80200

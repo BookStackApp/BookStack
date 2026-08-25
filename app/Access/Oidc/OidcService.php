@@ -80,6 +80,7 @@ class OidcService
         $provider->setPkceCode($pkceCode);
 
         // Try to exchange authorization code for access token
+        /** @var OidcAccessToken $accessToken */
         $accessToken = $provider->getAccessToken('authorization_code', [
             'code' => $authorizationCode,
         ]);

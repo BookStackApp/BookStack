@@ -4,6 +4,7 @@ namespace BookStack\Search;
 
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\EntityTable;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\EntityHydrator;
 use BookStack\Permissions\PermissionApplicator;
@@ -90,6 +91,8 @@ class SearchRunner
 
     /**
      * Get a page of result data from the given query based on the provided page parameters.
+     * @param EloquentBuilder<EntityTable> $query
+     * @return Collection<Entity>
      */
     protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page, int $count): Collection
     {
@@ -106,6 +109,7 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      * @param string[] $entityTypes
+     * @return EloquentBuilder<EntityTable>
      */
     protected function buildQuery(SearchOptions $searchOpts, array $entityTypes): EloquentBuilder
     {

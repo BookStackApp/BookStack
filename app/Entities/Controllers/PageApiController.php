@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Tools\CommentTree;
@@ -10,7 +12,9 @@ use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PageApiController extends ApiController
 {
@@ -45,7 +49,7 @@ class PageApiController extends ApiController
     /**
      * Get a listing of pages visible to the user.
      */
-    public function list()
+    public function list(): JsonResponse
     {
         $pages = $this->queries->visibleForList()
             ->addSelect(['created_by', 'updated_by', 'revision_count', 'editor']);
@@ -69,7 +73,7 @@ class PageApiController extends ApiController
      * Any images included via base64 data URIs will be extracted and saved as gallery
      * images against the page during upload.
      */
-    public function create(Request $request)
+    public function create(Request $request): JsonResponse
     {
         $this->validate($request, $this->rules['create']);
 
@@ -102,9 +106,9 @@ class PageApiController extends ApiController
      * Comments for the page are provided in a tree-structure representing the hierarchy of top-level
      * comments and replies, for both archived and active comments.
      */
-    public function read(string $id)
+    public function read(string $id): JsonResponse
     {
-        $page = $this->queries->findVisibleByIdOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail(intval($id));
 
         $page = $page->forJsonDisplay();
         $commentTree = (new CommentTree($page));
@@ -124,11 +128,11 @@ class PageApiController extends ApiController
      * Providing a 'book_id' or 'chapter_id' property will essentially move
      * the page into that parent element if you have permissions to do so.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
         $requestData = $this->validate($request, $this->rules['update']);
 
-        $page = $this->queries->findVisibleByIdOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         $parent = null;
@@ -161,9 +165,9 @@ class PageApiController extends ApiController
      * Delete a page.
      * This will typically send the page to the recycle bin.
      */
-    public function delete(string $id)
+    public function delete(string $id): Response
     {
-        $page = $this->queries->findVisibleByIdOrFail($id);
+        $page = $this->queries->findVisibleByIdOrFail(intval($id));
         $this->checkOwnablePermission(Permission::PageDelete, $page);
 
         $this->pageRepo->destroy($page);

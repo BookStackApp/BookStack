@@ -3,6 +3,7 @@
 namespace BookStack\Util;
 
 use Closure;
+use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -24,7 +25,7 @@ use Throwable;
 class DatabaseTransaction
 {
     /**
-     * @param  (Closure(static): TReturn)  $callback
+     * @param  (Closure(Connection): TReturn)  $callback
      */
     public function __construct(
         protected Closure $callback
