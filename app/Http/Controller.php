@@ -121,7 +121,7 @@ abstract class Controller extends BaseController
     /**
      * Create and return a new download response factory using the current request.
      */
-    protected function download(): DownloadResponseFactory
+    protected function createDownload(): DownloadResponseFactory
     {
         return new DownloadResponseFactory(request());
     }

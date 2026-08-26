@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     // API docs routes
     Route::get('/api', [ApiDocsController::class, 'redirect']);
     Route::get('/api/docs', [ApiDocsController::class, 'display']);
+    Route::get('/api/docs/download', [ApiDocsController::class, 'download']);
 
     Route::get('/pages/recently-updated', [EntityControllers\PageController::class, 'showRecentlyUpdated']);
 

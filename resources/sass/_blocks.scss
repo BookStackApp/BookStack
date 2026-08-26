@@ -253,6 +253,9 @@
 /**
  * API Docs
  */
+.api-docs h2.list-heading {
+  font-size: 1.666rem;
+}
 .api-method {
   font-size: 0.75rem;
   background-color: #888;
@@ -282,11 +285,11 @@
     position: sticky;
     top: 0;
     background: #F2F2F2;
-    background: linear-gradient(180deg,rgba(242, 242, 242, 1) 66%, rgba(242, 242, 242, 0) 100%);
+    background: linear-gradient(180deg,rgba(242, 242, 242, 1) 80%, rgba(242, 242, 242, 0) 100%);
     z-index: 4;
   }
 }
 .dark-mode .sticky-sidebar-header {
   background: #111;
-  background: linear-gradient(180deg,rgba(17, 17, 17, 1) 66%, rgba(17, 17, 17, 0) 100%);
+  background: linear-gradient(180deg,rgba(17, 17, 17, 1) 80%, rgba(17, 17, 17, 0) 100%);
 }
