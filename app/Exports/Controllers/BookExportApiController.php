@@ -28,7 +28,7 @@ class BookExportApiController extends ApiController
         $book = $this->queries->findVisibleByIdOrFail($id);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
 
-        return $this->download()->directly($pdfContent, $book->slug . '.pdf');
+        return $this->createDownload()->directly($pdfContent, $book->slug . '.pdf');
     }
 
     /**
@@ -41,7 +41,7 @@ class BookExportApiController extends ApiController
         $book = $this->queries->findVisibleByIdOrFail($id);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
 
-        return $this->download()->directly($htmlContent, $book->slug . '.html');
+        return $this->createDownload()->directly($htmlContent, $book->slug . '.html');
     }
 
     /**
@@ -52,7 +52,7 @@ class BookExportApiController extends ApiController
         $book = $this->queries->findVisibleByIdOrFail($id);
         $textContent = $this->exportFormatter->bookToPlainText($book);
 
-        return $this->download()->directly($textContent, $book->slug . '.txt');
+        return $this->createDownload()->directly($textContent, $book->slug . '.txt');
     }
 
     /**
@@ -63,7 +63,7 @@ class BookExportApiController extends ApiController
         $book = $this->queries->findVisibleByIdOrFail($id);
         $markdown = $this->exportFormatter->bookToMarkdown($book);
 
-        return $this->download()->directly($markdown, $book->slug . '.md');
+        return $this->createDownload()->directly($markdown, $book->slug . '.md');
     }
 
     /**
@@ -74,6 +74,6 @@ class BookExportApiController extends ApiController
         $book = $this->queries->findVisibleByIdOrFail($id);
         $zip = $builder->buildForBook($book);
 
-        return $this->download()->streamedFileDirectly($zip, $book->slug . '.zip', true);
+        return $this->createDownload()->streamedFileDirectly($zip, $book->slug . '.zip', true);
     }
 }
