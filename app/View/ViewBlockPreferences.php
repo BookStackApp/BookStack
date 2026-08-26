@@ -42,6 +42,7 @@ class ViewBlockPreferences
             }
 
             $validatedLayoutData[$position] = array_filter($blockIds, function ($id) use ($validIds) {
+                // @phpstan-ignore function.alreadyNarrowedType
                 return is_string($id) && in_array($id, $validIds);
             });
         }

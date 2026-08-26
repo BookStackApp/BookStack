@@ -166,7 +166,7 @@ class UserRepo
     /**
      * Update the given user with the given data.
      *
-     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string, display_mode: ?string} $data
      *
      * @throws UserUpdateException
      */
