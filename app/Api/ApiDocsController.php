@@ -2,7 +2,6 @@
 
 namespace BookStack\Api;
 
-use BookStack\Entities\Tools\Markdown\HtmlToMarkdown;
 use BookStack\Http\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

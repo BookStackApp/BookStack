@@ -37,4 +37,40 @@ class ApiDocsTest extends TestCase
             ]],
         ]);
     }
+
+    public function test_download_endpoint_returns_html_by_default()
+    {
+        $resp = $this->actingAsApiEditor()->get($this->endpoint . '/download');
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Type', 'application/octet-stream');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'bookstack-api-docs.html');
+
+        $resp->assertSee('BookStack API Documentation');
+        $resp->assertSee('Getting Started');
+        $resp->assertSee('content-permissions-update');
+        $resp->assertDontSee('Jump To Section');
+    }
+
+    public function test_download_endpoint_returns_json_when_requested()
+    {
+        $resp = $this->actingAsApiEditor()->get($this->endpoint . '/download?format=json');
+        $resp->assertStatus(200);
+        $resp->assertHeader('Content-Type', 'application/octet-stream');
+        $resp->assertHeader('Content-Disposition', 'attachment; filename*=UTF-8\'\'bookstack-api-docs.json');
+
+        $resp->assertSee('Getting Started');
+        $resp->assertSee('content-permissions-update');
+        $resp->assertDontSee('Jump To Section');
+
+        $content = $resp->json('getting-started-guide');
+        $this->assertIsString($content);
+        $this->assertGreaterThan(100, strlen($content));
+
+        $resp->assertJson([
+            'docs' => [[
+                'name' => 'docs-display',
+                'uri'  => 'api/docs',
+            ]],
+        ]);
+    }
 }
