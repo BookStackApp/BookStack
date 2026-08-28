@@ -119,7 +119,7 @@ class PageRevisionTest extends TestCase
     {
         $this->asEditor();
         $page = $this->entities->page();
-        $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'summary' => 'My first update']);
+        $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>', 'changelog' => 'My first update']);
         $this->createRevisions($page, 1, ['html' => '<p>new content</p>']);
         $page->refresh();
 
@@ -327,7 +327,7 @@ class PageRevisionTest extends TestCase
         $user = user();
 
         for ($i = 0; $i < $times; $i++) {
-            $data = ['name' => 'Page update' . $i, 'summary' => 'Update entry' . $i];
+            $data = ['name' => 'Page update' . $i, 'changelog' => 'Update entry' . $i];
             if (!isset($attrs['markdown'])) {
                 $data['html'] = '<p>My update page</p>';
             }

@@ -819,7 +819,7 @@ class ImageTest extends TestCase
         $pageRepo->update($page, [
             'name'    => $page->name,
             'html'    => $page->html . "<img src=\"{$image->url}\">",
-            'summary' => '',
+            'changelog' => '',
         ]);
 
         // Ensure no images are reported as deletable
@@ -831,7 +831,7 @@ class ImageTest extends TestCase
         $pageRepo->update($page, [
             'name'    => $page->name,
             'html'    => '<p>Hello</p>',
-            'summary' => '',
+            'changelog' => '',
         ]);
 
         // Ensure revision images are picked up okay

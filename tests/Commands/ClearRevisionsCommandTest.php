@@ -14,8 +14,8 @@ class ClearRevisionsCommandTest extends TestCase
         $this->asEditor();
         $pageRepo = app(PageRepo::class);
         $page = Page::first();
-        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'summary' => 'page revision testing']);
-        $pageRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'summary' => 'page revision testing']);
+        $pageRepo->update($page, ['name' => 'updated page', 'html' => '<p>new content</p>', 'changelog' => 'page revision testing']);
+        $pageRepo->updatePageDraft($page, ['name' => 'updated page', 'html' => '<p>new content in draft</p>', 'changelog' => 'page revision testing']);
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,

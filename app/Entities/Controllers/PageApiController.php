@@ -27,6 +27,7 @@ class PageApiController extends ApiController
             'markdown'   => ['required_without:html', 'string'],
             'tags'       => ['array'],
             'priority'   => ['integer'],
+            'changelog'  => ['string', 'min:1', 'max:180'],
         ],
         'update' => [
             'book_id'    => ['integer'],
@@ -36,6 +37,7 @@ class PageApiController extends ApiController
             'markdown'   => ['string'],
             'tags'       => ['array'],
             'priority'   => ['integer'],
+            'changelog'  => ['string', 'min:1', 'max:180'],
         ],
     ];
 
@@ -75,7 +77,7 @@ class PageApiController extends ApiController
      */
     public function create(Request $request): JsonResponse
     {
-        $this->validate($request, $this->rules['create']);
+        $validated = $this->validate($request, $this->rules['create']);
 
         if ($request->has('chapter_id')) {
             $parent = $this->entityQueries->chapters->findVisibleByIdOrFail(intval($request->input('chapter_id')));
@@ -85,7 +87,7 @@ class PageApiController extends ApiController
         $this->checkOwnablePermission(Permission::PageCreate, $parent);
 
         $draft = $this->pageRepo->getNewDraftPage($parent);
-        $this->pageRepo->publishDraft($draft, $request->only(array_keys($this->rules['create'])));
+        $this->pageRepo->publishDraft($draft, $validated);
 
         return response()->json($draft->forJsonDisplay());
     }

@@ -128,6 +128,27 @@ class PagesApiTest extends TestCase
         $this->assertStringContainsString('href="https://example.com"', $respHtml);
     }
 
+    public function test_create_can_accept_a_changelog_message()
+    {
+        $this->actingAsApiEditor();
+        $book = $this->entities->book();
+        $details = [
+            'name' => 'My updated API page',
+            'html' => '<p>A page updated via the API</p>',
+            'changelog' => 'This is a create changelog message via the API',
+            'book_id' => $book->id,
+        ];
+
+        $resp = $this->postJson($this->baseEndpoint, $details);
+        $resp->assertOk();
+
+        $pageId = $resp->json('id');
+        $page = Page::query()->findOrFail($pageId);
+
+        $latestRevision = $page->revisions()->orderBy('id', 'desc')->first();
+        $this->assertEquals('This is a create changelog message via the API', $latestRevision->summary);
+    }
+
     public function test_read_endpoint()
     {
         $this->actingAsApiEditor();
@@ -336,6 +357,23 @@ class PagesApiTest extends TestCase
 
         $page->refresh();
         $this->assertGreaterThan(Carbon::now()->subDay()->unix(), $page->updated_at->unix());
+    }
+
+    public function test_update_can_accept_a_changelog_message()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $details = [
+            'name' => 'My updated API page',
+            'html' => '<p>A page updated via the API</p>',
+            'changelog' => 'This is a changelog message via the API',
+        ];
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$page->id}", $details);
+        $resp->assertOk();
+
+        $latestRevision = $page->revisions()->orderBy('id', 'desc')->first();
+        $this->assertEquals('This is a changelog message via the API', $latestRevision->summary);
     }
 
     public function test_delete_endpoint()

@@ -108,7 +108,7 @@
                     <p class="text-muted pb-s">{{ trans('entities.pages_edit_enter_changelog_desc') }}</p>
                     <textarea
                         refs="page-editor@changelogInput"
-                        name="summary"
+                        name="changelog"
                         id="summary-input"
                         rows="2"
                         maxlength="180"
