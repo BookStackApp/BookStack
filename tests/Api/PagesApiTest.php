@@ -200,6 +200,19 @@ class PagesApiTest extends TestCase
         $this->assertSame(404, $resp->json('error')['code']);
     }
 
+    public function test_read_with_invalid_id_returns_not_found()
+    {
+        $this->actingAsApiEditor();
+        $resp = $this->getJson($this->baseEndpoint . '/invalid-id');
+        $resp->assertNotFound();
+        $resp->assertJsonStructure([
+            'error' => [
+                'code',
+                'message',
+            ],
+        ]);
+    }
+
     public function test_read_endpoint_includes_page_comments_tree_structure()
     {
         $this->actingAsApiEditor();
