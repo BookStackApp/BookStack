@@ -13,6 +13,7 @@ use BookStack\Users\UserRepo;
 use BookStack\View\ViewBlockManager;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class UserAccountController extends Controller
@@ -220,8 +221,9 @@ class UserAccountController extends Controller
         }
 
         $validated = $this->validate($request, [
-            'password'         => ['required_with:password_confirm', Password::default()],
-            'password-confirm' => ['same:password', 'required_with:password'],
+            'password'         => ['required', Password::default()],
+            'password-confirm' => ['required', 'same:password'],
+            'password-current' => ['required', 'current_password:standard'],
         ]);
 
         $this->userRepo->update(user(), $validated, false);

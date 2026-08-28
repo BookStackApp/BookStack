@@ -135,6 +135,8 @@ class UserMyAccountTest extends TestCase
     public function test_auth_password_change()
     {
         $editor = $this->users->editor();
+        $editor->password = Hash::make('password');
+        $editor->save();
 
         $resp = $this->actingAs($editor)->get('/my-account/auth');
         $resp->assertSee('Change Password');
@@ -144,11 +146,34 @@ class UserMyAccountTest extends TestCase
         $resp = $this->put('/my-account/auth/password', [
             'password' => $password,
             'password-confirm' => $password,
+            'password-current' => 'password'
         ]);
         $resp->assertRedirect('/my-account/auth');
 
         $editor->refresh();
         $this->assertTrue(Hash::check($password, $editor->password));
+    }
+
+    public function test_auth_password_change_requires_current_password()
+    {
+        $editor = $this->users->editor();
+        $editor->password = Hash::make('password');
+        $editor->save();
+
+        $this->actingAs($editor)->get('/my-account/auth');
+
+        $password = Str::random();
+        $resp = $this->put('/my-account/auth/password', [
+            'password' => $password,
+            'password-confirm' => $password,
+            'password-current' => 'caterpillar'
+        ]);
+        $resp->assertRedirect('/my-account/auth');
+        $resp->assertSessionHasErrors(['password-current']);
+
+        $editor->refresh();
+        $this->assertFalse(Hash::check($password, $editor->password));
+        $this->assertTrue(Hash::check('password', $editor->password));
     }
 
     public function test_auth_password_change_hides_if_not_using_email_auth()
