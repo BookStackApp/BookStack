@@ -48,7 +48,7 @@ class Ldap
     }
 
     /**
-     * Search LDAP tree using the provided filter.
+     * Search the LDAP tree using the provided filter.
      *
      * @param resource|\LDAP\Connection   $ldapConnection
      *
@@ -95,7 +95,7 @@ class Ldap
     }
 
     /**
-     * Bind to LDAP directory.
+     * Bind to the LDAP directory.
      *
      * @param resource|\LDAP\Connection $ldapConnection
      */
