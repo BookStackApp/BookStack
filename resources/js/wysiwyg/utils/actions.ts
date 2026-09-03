@@ -1,6 +1,19 @@
-import {$createParagraphNode, $getRoot, $getSelection, $insertNodes, $isBlockElementNode, LexicalEditor} from "lexical";
+import {
+    $createParagraphNode,
+    $getRoot,
+    $getSelection,
+    $insertNodes,
+    $isBlockElementNode,
+    LexicalEditor,
+} from "lexical";
 import {$generateHtmlFromNodes} from "@lexical/html";
-import {$getAllNodesOfType, $getNearestNodeBlockParent, $htmlToBlockNodes, $htmlToNodes} from "./nodes";
+import {
+    $getAllNodesOfType,
+    $getNearestNodeBlockParent,
+    $htmlToBlockNodes,
+    $htmlToNodes,
+    $isSingleSelectableNode
+} from "./nodes";
 import {$isHeadingNode} from "@lexical/rich-text/LexicalHeadingNode";
 
 export function setEditorContentFromHtml(editor: LexicalEditor, html: string) {
@@ -98,6 +111,10 @@ export function focusEditor(editor: LexicalEditor): void {
         const firstChild = root.getFirstChild();
         if (firstChild && !selection) {
             firstChild.selectStart();
+        }
+
+        if ($isSingleSelectableNode(selection?.getNodes() || [])) {
+            editor._rootElement?.focus();
         }
     });
     editor.commitUpdates();

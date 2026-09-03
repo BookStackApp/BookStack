@@ -14,6 +14,9 @@ import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
 import {NodeHasAlignment, NodeHasInset} from "lexical/nodes/common";
 import {$findMatchingParent} from "@lexical/utils";
+import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
+import {$isDiagramNode} from "./diagrams";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
@@ -157,6 +160,20 @@ export function $selectOrCreateAdjacent(node: LexicalNode, after: boolean): Rang
     }
 
     return after ? target.selectStart() : target.selectEnd();
+}
+
+/**
+ * Check if the range of nodes represents a single node which is wholly selectable.
+ */
+export function $isSingleSelectableNode(nodes: LexicalNode[]): boolean {
+    if (nodes.length === 1) {
+        const node = nodes[0];
+        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {

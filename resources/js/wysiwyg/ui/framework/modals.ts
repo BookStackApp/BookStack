@@ -39,7 +39,10 @@ export class EditorFormModal extends EditorContainerUiElement {
     hide() {
         this.getContext().manager.setModalInactive(this.key);
         this.teardown();
-        if (this.originalFocus instanceof HTMLElement && this.originalFocus.isConnected) {
+
+        if (this.originalFocus === this.getContext().editorDOM) {
+            this.getContext().editor.focus();
+        } else if (this.originalFocus instanceof HTMLElement && this.originalFocus.isConnected) {
             this.originalFocus.focus();
         }
     }

@@ -11,6 +11,7 @@ import type {EditorConfig} from "lexical/LexicalEditor";
 import {EditorDecoratorAdapter} from "../../ui/framework/decorator";
 import {CodeEditor} from "../../../components";
 import {el} from "../../utils/dom";
+import {focusEditor} from "../../utils/actions";
 
 export type SerializedCodeBlockNode = Spread<{
     language: string;
@@ -197,8 +198,9 @@ export function $openCodeEditorForNode(editor: LexicalEditor, node: CodeBlockNod
             node.setCode(newCode);
             node.setLanguage(newLang);
         });
-        // TODO - Re-focus
+
+        focusEditor(editor);
     }, () => {
-        // TODO - Re-focus
+        focusEditor(editor);
     });
 }

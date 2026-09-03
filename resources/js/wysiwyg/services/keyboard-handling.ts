@@ -2,7 +2,6 @@ import {EditorUiContext} from "../ui/framework/core";
 import {
     $createParagraphNode,
     $getSelection,
-    $isDecoratorNode,
     COMMAND_PRIORITY_LOW, KEY_ARROW_DOWN_COMMAND, KEY_ARROW_UP_COMMAND,
     KEY_BACKSPACE_COMMAND,
     KEY_DELETE_COMMAND,
@@ -10,26 +9,17 @@ import {
     LexicalEditor,
     LexicalNode
 } from "lexical";
-import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
-import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {getLastSelection} from "../utils/selection";
-import {$getNearestNodeBlockParent, $getParentOfType, $selectOrCreateAdjacent} from "../utils/nodes";
+import {
+    $getNearestNodeBlockParent,
+    $getParentOfType,
+    $isSingleSelectableNode,
+    $selectOrCreateAdjacent
+} from "../utils/nodes";
 import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
-import {$isDiagramNode} from "../utils/diagrams";
 import {$unwrapDetailsNode} from "../utils/details";
-
-function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
-    if (nodes.length === 1) {
-        const node = nodes[0];
-        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
 /**
  * Delete the current node in the selection if the selection contains a single
@@ -37,7 +27,7 @@ function isSingleSelectedNode(nodes: LexicalNode[]): boolean {
  */
 function deleteSingleSelectedNode(editor: LexicalEditor) {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
-    if (isSingleSelectedNode(selectionNodes)) {
+    if ($isSingleSelectableNode(selectionNodes)) {
         editor.update(() => {
             selectionNodes[0].remove();
         });
@@ -50,7 +40,7 @@ function deleteSingleSelectedNode(editor: LexicalEditor) {
  */
 function insertAdjacentToSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
-    if (isSingleSelectedNode(selectionNodes)) {
+    if ($isSingleSelectableNode(selectionNodes)) {
         const node = selectionNodes[0];
         const nearestBlock = $getNearestNodeBlockParent(node) || node;
         const insertBefore = event?.shiftKey === true;
@@ -76,7 +66,7 @@ function insertAdjacentToSingleSelectedNode(editor: LexicalEditor, event: Keyboa
 
 function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: KeyboardEvent|null, after: boolean = true): boolean {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
-    if (!isSingleSelectedNode(selectionNodes)) {
+    if (!$isSingleSelectableNode(selectionNodes)) {
         return false;
     }
 
