@@ -12,11 +12,13 @@ import {EditorDecoratorAdapter} from "../../ui/framework/decorator";
 import {CodeEditor} from "../../../components";
 import {el} from "../../utils/dom";
 import {focusEditor} from "../../utils/actions";
+import {elem} from "../../../services/dom";
 
 export type SerializedCodeBlockNode = Spread<{
     language: string;
     id: string;
     code: string;
+    dir: 'ltr' | 'rtl' | null;
 }, SerializedLexicalNode>
 
 const getLanguageFromClassList = (classes: string) => {
@@ -36,6 +38,7 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
     static clone(node: CodeBlockNode): CodeBlockNode {
         const newNode = new CodeBlockNode(node.__language, node.__code, node.__key);
         newNode.__id = node.__id;
+        newNode.__dir = node.__dir;
         return newNode;
     }
 
@@ -99,23 +102,35 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
             }, [this.__code]),
         ]);
 
-        return el('div', {class: 'editor-code-block-wrap'}, [codeBlock]);
+        return el('div', {
+            class: 'editor-code-block-wrap',
+            dir: this.__dir,
+        }, [codeBlock]);
     }
 
     updateDOM(prevNode: CodeBlockNode, dom: HTMLElement) {
         const code = dom.querySelector('code');
-        if (!code) return false;
+        const pre = dom.querySelector('pre');
+        if (!code || !pre) return false;
 
         if (prevNode.__language !== this.__language) {
             code.className = this.__language ? `language-${this.__language}` : '';
         }
 
         if (prevNode.__id !== this.__id) {
-            dom.setAttribute('id', this.__id);
+            pre.setAttribute('id', this.__id);
         }
 
         if (prevNode.__code !== this.__code) {
             code.textContent = this.__code;
+        }
+
+        if (prevNode.__dir !== this.__dir) {
+            if (this.__dir !== null) {
+                dom.setAttribute('dir', this.__dir)
+            } else {
+                dom.removeAttribute('dir');
+            }
         }
 
         return false;
@@ -123,8 +138,12 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
 
     exportDOM(editor: LexicalEditor): DOMExportOutput {
         const dom = this.createDOM(editor._config, editor);
+        const pre = dom.querySelector('pre') as HTMLElement;
+        if (this.__dir !== null) {
+            pre.setAttribute('dir', this.__dir);
+        }
         return {
-            element: dom.querySelector('pre') as HTMLElement,
+            element: pre,
         };
     }
 
@@ -144,6 +163,10 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
 
                         if (element.id) {
                             node.setId(element.id);
+                        }
+
+                        if (element.dir && (element.dir === 'ltr' || element.dir === 'rtl')) {
+                            node.setDirection(element.dir);
                         }
 
                         return {
@@ -168,12 +191,14 @@ export class CodeBlockNode extends DecoratorNode<EditorDecoratorAdapter> {
             id: this.__id,
             language: this.__language,
             code: this.__code,
+            dir: this.__dir,
         };
     }
 
     static importJSON(serializedNode: SerializedCodeBlockNode): CodeBlockNode {
         const node = $createCodeBlockNode(serializedNode.language, serializedNode.code);
         node.setId(serializedNode.id || '');
+        node.setDirection(serializedNode.dir || null);
         return node;
     }
 }
@@ -189,11 +214,12 @@ export function $isCodeBlockNode(node: LexicalNode | null | undefined) {
 export function $openCodeEditorForNode(editor: LexicalEditor, node: CodeBlockNode): void {
     const code = node.getCode();
     const language = node.getLanguage();
+    const direction = node.getDirection() || 'ltr';
 
     // @ts-ignore
     const codeEditor = window.$components.first('code-editor') as CodeEditor;
-    // TODO - Handle direction
-    codeEditor.open(code, language, 'ltr', (newCode: string, newLang: string) => {
+
+    codeEditor.open(code, language, direction, (newCode: string, newLang: string) => {
         editor.update(() => {
             node.setCode(newCode);
             node.setLanguage(newLang);
