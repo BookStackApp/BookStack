@@ -907,3 +907,18 @@ export function patchRange() {
         };
     };
 }
+
+export function waitAnimationFrames(count: number = 1): Promise<void> {
+  return new Promise((resolve) => {
+    let handled = 0;
+    let tick = () => {
+      if (++handled > count) {
+        resolve();
+      } else {
+        setTimeout(tick, 16);
+      }
+    }
+
+    tick();
+  });
+}

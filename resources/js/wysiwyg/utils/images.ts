@@ -1,6 +1,7 @@
 import {ImageManager} from "../../components";
-import {$createImageNode} from "@lexical/rich-text/LexicalImageNode";
-import {$createLinkNode, LinkNode} from "@lexical/link";
+import {$createImageNode, $isImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$createLinkNode, $isLinkNode, LinkNode} from "@lexical/link";
+import {$isElementNode, $isTextNode, LexicalNode} from "lexical";
 
 export type EditorImageData = {
     id: string;
@@ -24,6 +25,31 @@ export function $createLinkedImageNodeFromImageData(image: EditorImageData): Lin
     });
     linkNode.append(imageNode);
     return linkNode;
+}
+
+/**
+ * Check if the given image node represents a simple linked image, where no other content
+ * exists within the link which wraps the image.
+ */
+export function $isLinkedImageNode(imageNode: LexicalNode): boolean {
+    if (!$isImageNode(imageNode)) {
+        return false;
+    }
+
+    const parent = imageNode.getParent();
+    if (!$isLinkNode(parent)) {
+        return false;
+    }
+
+    const linkChildren = parent.getChildren();
+    const withContent = linkChildren.filter(child => {
+        return child.getKey() !== imageNode.getKey() && (
+            $isElementNode(child)
+            || $isTextNode(child) && child.getTextContent().trim().length > 0
+        );
+    });
+
+    return withContent.length === 0;
 }
 
 /**

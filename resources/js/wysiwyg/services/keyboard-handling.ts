@@ -1,6 +1,7 @@
 import {EditorUiContext} from "../ui/framework/core";
 import {
-    $createParagraphNode,
+    $createLineBreakNode,
+    $createParagraphNode, $createTextNode,
     $getSelection,
     COMMAND_PRIORITY_LOW, KEY_ARROW_DOWN_COMMAND, KEY_ARROW_UP_COMMAND,
     KEY_BACKSPACE_COMMAND,
@@ -20,6 +21,8 @@ import {$setInsetForSelection} from "../utils/lists";
 import {$isListItemNode} from "@lexical/list";
 import {$isDetailsNode, DetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 import {$unwrapDetailsNode} from "../utils/details";
+import {$isLinkNode} from "@lexical/link";
+import {$isLinkedImageNode} from "../utils/images";
 
 /**
  * Delete the current node in the selection if the selection contains a single
@@ -40,28 +43,48 @@ function deleteSingleSelectedNode(editor: LexicalEditor) {
  */
 function insertAdjacentToSingleSelectedNode(editor: LexicalEditor, event: KeyboardEvent|null): boolean {
     const selectionNodes = getLastSelection(editor)?.getNodes() || [];
-    if ($isSingleSelectableNode(selectionNodes)) {
-        const node = selectionNodes[0];
-        const nearestBlock = $getNearestNodeBlockParent(node) || node;
-        const insertBefore = event?.shiftKey === true;
-        if (nearestBlock) {
-            requestAnimationFrame(() => {
-                editor.update(() => {
-                    const newParagraph = $createParagraphNode();
-                    if (insertBefore) {
-                        nearestBlock.insertBefore(newParagraph);
-                    } else {
-                        nearestBlock.insertAfter(newParagraph);
-                    }
-                    newParagraph.select();
-                });
-            });
-            event?.preventDefault();
-            return true;
-        }
+    if (!$isSingleSelectableNode(selectionNodes)) {
+        return false;
     }
 
-    return false;
+    const node = selectionNodes[0];
+    const nearestBlock = $getNearestNodeBlockParent(node) || node;
+    const insertBefore = event?.shiftKey === true;
+
+    let action: null|(()=>void) = null;
+
+    if ($isListItemNode(nearestBlock)) {
+        // If we're in a list item, we'd instead want to keep within the item and insert
+        // adjacent to the selected block.
+        action = () => {
+            const textNode = $createTextNode('');
+            const lineBreak = $createLineBreakNode();
+            const nodeParent = node.getParent();
+            let target = node;
+            if ($isLinkNode(nodeParent) && $isLinkedImageNode(node)) {
+                target = nodeParent;
+            }
+            const insertAction = insertBefore ? target.insertBefore : target.insertAfter;
+            insertAction.bind(target)(textNode);
+            insertAction.bind(target)(lineBreak);
+            textNode.selectStart();
+        };
+    } else if (nearestBlock) {
+        action = () => {
+            const newParagraph = $createParagraphNode();
+            const insertAction = insertBefore ? nearestBlock.insertBefore : nearestBlock.insertAfter;
+            insertAction.bind(nearestBlock)(newParagraph);
+            newParagraph.select();
+        };
+    }
+
+    if (!action) {
+        return false;
+    }
+
+    requestAnimationFrame(() => editor.update(action));
+    event?.preventDefault();
+    return true;
 }
 
 function focusAdjacentOrInsertForSingleSelectNode(editor: LexicalEditor, event: KeyboardEvent|null, after: boolean = true): boolean {
