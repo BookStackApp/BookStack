@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'ไม่ใช้งาน',
     'never' => 'ไม่เคย',
     'none' => 'ไม่มี',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'หน้าแรก',

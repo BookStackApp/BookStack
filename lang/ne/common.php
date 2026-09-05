@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'निष्क्रिय',
     'never' => 'कहिल्यै होइन',
     'none' => 'कुनै पनि होइन',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'गृहपृष्ठ',

@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute може да съдържа само букви и числа.',
     'array'                => ':attribute трябва да е масив (array).',
     'backup_codes'         => 'Предоставеният код не е валиден или вече е бил използван.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute трябва да е дата след :date.',
     'between'              => [
         'numeric' => ':attribute трябва да е между :min и :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'Полето :attribute трябва да съдържа булева стойност (true или false).',
     'confirmed'            => 'Потвърждението на :attribute не съвпада.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute не е валидна дата.',
     'date_format'          => ':attribute не е в посоченият формат - :format.',
     'different'            => ':attribute и :other трябва да са различни.',

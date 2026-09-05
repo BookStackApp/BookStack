@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute mag alleen letters en nummers bevatten.',
     'array'                => ':attribute moet een reeks zijn.',
     'backup_codes'         => 'De opgegeven code is niet geldig of eerder al gebruikt.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute moet een datum zijn voor :date.',
     'between'              => [
         'numeric' => ':attribute moet tussen de :min en :max zijn.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute moet ja of nee zijn.',
     'confirmed'            => ':attribute bevestiging komt niet overeen.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute is geen geldige datum.',
     'date_format'          => ':attribute komt niet overeen met het formaat :format.',
     'different'            => ':attribute en :other moeten verschillend zijn.',

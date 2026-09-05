@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'El camp :attribute només pot contenir lletres, xifres.',
     'array'                => 'El camp :attribute ha de ser una matriu.',
     'backup_codes'         => 'El codi que heu proporcionat no és vàlid o ja s’ha utilitzat.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'El camp :attribute ha de ser una data posterior a :date.',
     'between'              => [
         'numeric' => 'El camp :attribute ha de ser un nombre entre :min i :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'El camp :attribute ha de ser cert o fals.',
     'confirmed'            => 'La confirmació del camp :attribute no coincideix.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'El camp :attribute no és una data vàlida.',
     'date_format'          => 'El camp :attribute no coincideix amb el format :format.',
     'different'            => 'El camp :attribute i :other han de ser diferents.',

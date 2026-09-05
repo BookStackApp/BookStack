@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'Tο :attribute μπορεί να περιλαμβάνει μόνο γράμματα και αριθμούς.',
     'array'                => 'Το :attribute πρέπει να είναι πίνακας.',
     'backup_codes'         => 'Ο παρεχόμενος κωδικός δεν είναι έγκυρος ή έχει ήδη χρησιμοποιηθεί.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'Tο :attribute πρέπει να είναι μια ημερομηνία πριν από :date.',
     'between'              => [
         'numeric' => 'Το :attribute πρέπει να είναι μεταξύ :min και :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'Το πεδίο :attribute πρέπει να είναι σωστό ή λάθος.',
     'confirmed'            => 'Η επιβεβαίωση του :attribute δεν ταιριάζει.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'Το :attribute δεν έχει έγκυρη ημερομηνία.',
     'date_format'          => 'Το :attribute δεν ταιριάζει με τη μορφή :format.',
     'different'            => 'Τα πεδία :attribute και :other πρέπει να είναι διαφορετικά.',

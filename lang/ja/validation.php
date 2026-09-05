@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attributeは文字と数値のみが含められます。',
     'array'                => ':attributeは配列である必要があります。',
     'backup_codes'         => '提供されたコードは無効か、またはすでに使用されています。',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attributeは:date以前である必要があります。',
     'between'              => [
         'numeric' => ':attributeは:min〜:maxである必要があります。',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attributeはtrueまたはfalseである必要があります。',
     'confirmed'            => ':attributeの確認が一致しません。',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attributeは正しい日時ではありません。',
     'date_format'          => ':attributeが:formatのフォーマットと一致しません。',
     'different'            => ':attributeと:otherは異なる必要があります。',

@@ -84,6 +84,8 @@ return [
     'status_inactive' => '비활성',
     'never' => '안 함',
     'none' => '없음',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => '홈페이지',

@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute باید فقط حروف الفبا و اعداد باشد.',
     'array'                => ':attribute باید آرایه باشد.',
     'backup_codes'         => 'کد ارائه شده معتبر نیست یا قبلا استفاده شده است.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute باید تاریخی قبل از :date باشد.',
     'between'              => [
         'numeric' => ':attribute باید بین :min و :max باشد.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute فقط می‌تواند true و یا false باشد.',
     'confirmed'            => ':attribute با فیلد تکرار مطابقت ندارد.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute یک تاریخ معتبر نیست.',
     'date_format'          => ':attribute با الگوی :format مطابقت ندارد.',
     'different'            => ':attribute و :other باید از یکدیگر متفاوت باشند.',

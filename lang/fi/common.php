@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Ei aktiivinen',
     'never' => 'Ei koskaan',
     'none' => 'Ei mitään',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Kotisivu',

@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute může obsahovat pouze písmena a číslice.',
     'array'                => ':attribute musí být pole.',
     'backup_codes'         => 'Zadaný kód není platný nebo již byl použit.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute musí být datum před :date.',
     'between'              => [
         'numeric' => ':attribute musí být hodnota mezi :min a :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute musí být true nebo false',
     'confirmed'            => ':attribute nesouhlasí.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute musí být platné datum.',
     'date_format'          => ':attribute není platný formát data podle :format.',
     'different'            => ':attribute a :other se musí lišit.',

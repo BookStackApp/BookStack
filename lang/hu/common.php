@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inaktív',
     'never' => 'Soha',
     'none' => 'Egyik sem',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Kezdőlap',

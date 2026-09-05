@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'A(z) :attribute csak betűket és számokat tartalmazhat.',
     'array'                => 'A(z) :attribute tömb kell legyen.',
     'backup_codes'         => 'A megadott kód érvénytelen, vagy már felhasználták.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'A(z) :attribute objektumnak egy :date előtti dátumnak kell lennie.',
     'between'              => [
         'numeric' => 'A(z) :attribute értékének :min és :max között kell lennie.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'A(z) :attribute mezőnek igaznak vagy hamisnak kell lennie.',
     'confirmed'            => 'A(z) :attribute megerősítés nem egyezik.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'A(z) :attribute nem egy érvényes dátum.',
     'date_format'          => 'A(z) :attribute nem egyezik a(z) :format formátummal.',
     'different'            => 'A(z) :attribute és :other értékének különböznie kell.',
