@@ -122,7 +122,12 @@ export function $getNearestNodeBlockParent(node: LexicalNode): LexicalNode|null 
     return $findMatchingParent(node, isBlockNode);
 }
 
-export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
+/**
+ * Sort the given node array by their position in the document.
+ * A search point can be provided to limit the search to a specific part of the document, which can
+ * avoid having to traverse the entire document.
+ */
+export function $sortNodes(nodes: LexicalNode[], searchPoint: ElementNode|null = null): LexicalNode[] {
     const idChain: string[] = [];
     const addIds = (n: ElementNode) => {
         for (const child of n.getChildren()) {
@@ -133,8 +138,7 @@ export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
         }
     };
 
-    const root = $getRoot();
-    addIds(root);
+    addIds(searchPoint || $getRoot());
 
     const sorted = Array.from(nodes);
     sorted.sort((a, b) => {

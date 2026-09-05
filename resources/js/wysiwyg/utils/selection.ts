@@ -15,7 +15,7 @@ import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
-import {$getNearestNodeBlockParent, $getParentOfType, nodeHasAlignment} from "./nodes";
+import {$getNearestNodeBlockParent, $getParentOfType, $sortNodes, nodeHasAlignment} from "./nodes";
 import {CommonBlockAlignment} from "lexical/nodes/common";
 import {$isListItemNode} from "@lexical/list";
 import {$createCollapsedRangeSelectionForNode} from "lexical/LexicalSelection";
@@ -90,8 +90,8 @@ function createNewBlockIfSelectionIsSingleListItemText(selection: BaseSelection)
 
     if (isSingleListItemTextSelection) {
         const wrapper = $createParagraphNode();
-        const startNode = startEnd[0].getNode();
-        startNode.insertBefore(wrapper);
+        const firstNode = $sortNodes([startEnd[0].getNode(), startEnd[1].getNode()], startBlock)[0];
+        firstNode.insertBefore(wrapper);
         wrapper.append(...selection.getNodes());
     }
 }
