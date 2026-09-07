@@ -83,7 +83,9 @@ export class EditorFormModal extends EditorContainerUiElement {
             }, 10);
         });
         wrapper.addEventListener('click', event => {
-            if (!mouseDownInModal) {
+            // We check our custom mouse down tracker but also have to check the event target since
+            // sometimes mousedown events are not tracked (for example, clicking outside an open select list).
+            if (!mouseDownInModal && !modal.contains(event.target as HTMLElement)) {
                 this.hide();
             }
         });

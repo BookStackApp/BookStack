@@ -152,10 +152,11 @@ export const link: EditorFormDefinition = {
                             showLinkSelector(entity => {
                                 const modal =  context.manager.getActiveModal('link');
                                 if (modal) {
+                                    const currentValues = modal.getForm().getValues();
                                     modal.getForm().setValues({
                                         url: entity.link,
-                                        text: entity.name,
-                                        title: entity.name,
+                                        text: currentValues.text || entity.name,
+                                        title: currentValues.title || entity.name,
                                     });
                                 }
                             });
