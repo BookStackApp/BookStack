@@ -8,7 +8,7 @@ import {
     $setSelection,
     BaseSelection, DecoratorNode,
     ElementNode, LexicalEditor,
-    LexicalNode, RangeSelection,
+    LexicalNode, NodeSelection, RangeSelection,
     TextFormatType, TextNode
 } from "lexical";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
@@ -164,10 +164,20 @@ export function $insertNewNodesAtSelection(nodes: LexicalNode[]) {
     }
 }
 
-export function $selectSingleNode(node: LexicalNode) {
+/**
+ * Create a selection for a single node.
+ */
+export function $createSingleNodeSelection(node: LexicalNode): NodeSelection {
     const nodeSelection = $createNodeSelection();
     nodeSelection.add(node.getKey());
-    $setSelection(nodeSelection);
+    return nodeSelection;
+}
+
+/**
+ * Create and apply a selection for a single node.
+ */
+export function $selectSingleNode(node: LexicalNode): void {
+    $setSelection($createSingleNodeSelection(node));
 }
 
 function getFirstTextNodeInNodes(nodes: LexicalNode[]): TextNode|null {

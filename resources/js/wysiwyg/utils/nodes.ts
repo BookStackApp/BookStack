@@ -17,6 +17,7 @@ import {$findMatchingParent} from "@lexical/utils";
 import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {$isDiagramNode} from "./diagrams";
+import {$isLinkedImageNode} from "./images";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
@@ -178,6 +179,25 @@ export function $isSingleSelectableNode(nodes: LexicalNode[]): boolean {
     }
 
     return false;
+}
+
+/**
+ * Get the single selectable node if the given range represents a single selectable node.
+ * Typically called with a selection's node ranges.
+ * Normalises the result, like for linked images, for example.
+ */
+export function $getSingleSelectableNode(nodes: LexicalNode[]): LexicalNode|null {
+    if (!$isSingleSelectableNode(nodes)) {
+        return null;
+    }
+
+    const node = nodes[0];
+
+    if ($isLinkedImageNode(node)) {
+        return node.getParent();
+    }
+
+    return node;
 }
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {

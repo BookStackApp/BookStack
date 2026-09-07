@@ -7,13 +7,17 @@ import {
     LexicalNode, PASTE_COMMAND
 } from "lexical";
 import {$getBlockElementNodesInSelection, $insertNewNodesAtSelection, $selectSingleNode} from "../utils/selection";
-import {$getNodePositionFromMouseEvent, $htmlToBlockNodes, $htmlToNodes} from "../utils/nodes";
+import {
+    $getNodePositionFromMouseEvent,
+    $getSingleSelectableNode, $htmlToBlockNodes, $htmlToNodes,
+} from "../utils/nodes";
 import {Clipboard} from "../../services/clipboard";
 import {$createImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$createLinkNode} from "@lexical/link";
 import {EditorImageData, uploadImageFile} from "../utils/images";
 import {EditorUiContext} from "../ui/framework/core";
 import {$getHtmlContent} from "@lexical/clipboard";
+import {$generateHtmlFromNode} from "@lexical/html";
 
 const internalActiveDragTracker: WeakMap<LexicalEditor, DragEvent>  = new WeakMap();
 
@@ -53,6 +57,14 @@ function insertHtmlToEditor(editor: LexicalEditor, html: string, isFromInternal:
             const selected = $getSelection();
             if ($isRangeSelection(selected)) {
                 selected.removeText();
+
+                // Handle single selected node scenarios
+                const singleSelectedNode = $getSingleSelectableNode(selected.getNodes());
+                if (singleSelectedNode) {
+                    singleSelectedNode.remove();
+                }
+
+                // Clear out empty blocks
                 const selectionBlocks = $getBlockElementNodesInSelection(selected);
                 for (const block of selectionBlocks) {
                     if (block.isEmpty()) {
@@ -194,6 +206,14 @@ function createDragStartListener(context: EditorUiContext): (event: DragEvent) =
         context.editor.update(() => {
             const selection = $getSelection();
             if ($isRangeSelection(selection)) {
+
+                const singleSelectableNode = $getSingleSelectableNode(selection.getNodes());
+                if (singleSelectableNode) {
+                    const html = $generateHtmlFromNode(context.editor, singleSelectableNode);
+                    event.dataTransfer?.setData('text/html', html);
+                    return;
+                }
+
                 selection.extract();
                 const html = $getHtmlContent(context.editor, selection);
                 event.dataTransfer?.setData('text/html', html);
