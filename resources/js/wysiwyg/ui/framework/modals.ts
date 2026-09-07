@@ -72,12 +72,23 @@ export class EditorFormModal extends EditorContainerUiElement {
 
         const wrapper = el('div', {class: 'editor-modal-wrapper'}, [modal]);
 
+        // Handle clicks but only when not started from within the modal
+        let mouseDownInModal = false;
+        modal.addEventListener('mousedown', () => {
+            mouseDownInModal = true;
+        });
+        wrapper.addEventListener('mouseup', () => {
+            window.setTimeout(() => {
+                mouseDownInModal = false;
+            }, 10);
+        });
         wrapper.addEventListener('click', event => {
-            if (event.target && !modal.contains(event.target as HTMLElement)) {
+            if (!mouseDownInModal) {
                 this.hide();
             }
         });
 
+        // Handle escape key press
         wrapper.addEventListener('keydown', event => {
             if (event.key === 'Escape') {
                 this.hide();
