@@ -64,6 +64,10 @@ export class DetailsNode extends ElementNode {
         return newNode;
     }
 
+    isShadowRoot(): boolean {
+        return true;
+    }
+
     createDOM(_config: EditorConfig, _editor: LexicalEditor) {
         const el = document.createElement('details');
         if (this.__id) {
