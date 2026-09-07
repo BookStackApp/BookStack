@@ -18,6 +18,7 @@ import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {$isDiagramNode} from "./diagrams";
 import {$isLinkedImageNode} from "./images";
+import {$isDetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
@@ -174,6 +175,10 @@ export function $isSingleSelectableNode(nodes: LexicalNode[]): boolean {
     if (nodes.length === 1) {
         const node = nodes[0];
         if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
+            return true;
+        }
+
+        if ($isDetailsNode(node)) {
             return true;
         }
     }

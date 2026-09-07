@@ -56,12 +56,12 @@ function insertHtmlToEditor(editor: LexicalEditor, html: string, isFromInternal:
         if (isFromInternal) {
             const selected = $getSelection();
             if ($isRangeSelection(selected)) {
-                selected.removeText();
-
                 // Handle single selected node scenarios
                 const singleSelectedNode = $getSingleSelectableNode(selected.getNodes());
                 if (singleSelectedNode) {
                     singleSelectedNode.remove();
+                } else {
+                    selected.removeText();
                 }
 
                 // Clear out empty blocks
