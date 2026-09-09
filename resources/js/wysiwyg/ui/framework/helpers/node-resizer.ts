@@ -25,9 +25,11 @@ class NodeResizer {
         this.scrollContainer = context.scrollDOM;
 
         this.onSelectionChange = this.onSelectionChange.bind(this);
+        this.onLayoutUpdate = this.onLayoutUpdate.bind(this);
         this.onTargetDOMLoad = this.onTargetDOMLoad.bind(this);
 
         context.manager.onSelectionChange(this.onSelectionChange);
+        context.manager.onLayoutUpdate(this.onLayoutUpdate);
     }
 
     onSelectionChange(selection: BaseSelection|null) {
@@ -44,6 +46,10 @@ class NodeResizer {
                 this.showForNode(node, nodeDOM);
             }
         }
+    }
+
+    onLayoutUpdate() {
+        this.updateResizerPosition();
     }
 
     protected getTargetDOM(targetNode: LexicalNode|null): HTMLElement|null {
@@ -64,6 +70,7 @@ class NodeResizer {
 
     teardown() {
         this.context.manager.offSelectionChange(this.onSelectionChange);
+        this.context.manager.offLayoutUpdate(this.onLayoutUpdate);
         this.hide();
     }
 

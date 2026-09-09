@@ -48,6 +48,7 @@ export const image: EditorFormDefinition = {
 
                 selectedImage.setWidth(Number(formData.get('width')?.toString() || '0'));
                 selectedImage.setHeight(Number(formData.get('height')?.toString() || '0'));
+                context.manager.triggerLayoutUpdate();
             }
         });
         return true;
