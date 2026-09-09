@@ -17,7 +17,7 @@ describe('LexicalDetailsNode tests', () => {
             html = details.createDOM(editorConfig, editor).outerHTML;
         });
 
-        expect(html).toBe(`<details contenteditable="false"><summary contenteditable="false"></summary></details>`);
+        expect(html).toBe(`<details draggable="true" contenteditable="false"><summary contenteditable="false"></summary></details>`);
     });
 
     test('exportDOM()', () => {
