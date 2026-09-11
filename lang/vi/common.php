@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Không hoạt động',
     'never' => 'Không bao giờ',
     'none' => 'Không',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Trang chủ',

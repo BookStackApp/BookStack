@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inactiu',
     'never' => 'Mai',
     'none' => 'Cap',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Pàgina d’inici',

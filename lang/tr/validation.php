@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute sadece harflerden ve rakamlardan oluşabilir.',
     'array'                => ':attribute bir dizi olmalıdır.',
     'backup_codes'         => 'Girilen kod geçersiz veya daha önce kullanılmış.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute tarihi, :date tarihinden önceki bir tarih olmalıdır.',
     'between'              => [
         'numeric' => ':attribute değeri, :min ve :max değerleri arasında olmalıdır.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute değeri true veya false olmalıdır.',
     'confirmed'            => ':attribute doğrulaması eşleşmiyor.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute geçerli bir tarih değil.',
     'date_format'          => ':attribute formatı, :format formatına uymuyor.',
     'different'            => ':attribute ve :other birbirinden farklı olmalıdır.',

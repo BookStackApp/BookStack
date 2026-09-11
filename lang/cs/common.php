@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Neaktivní',
     'never' => 'Nikdy',
     'none' => 'Žádná',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Domovská stránka',

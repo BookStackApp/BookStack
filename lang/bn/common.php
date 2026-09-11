@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'নিষ্ক্রিয়',
     'never' => 'অভূতপূর্ব',
     'none' => 'None',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'নীড়পাতা',

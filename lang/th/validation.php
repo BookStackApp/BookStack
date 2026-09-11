@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute ต้องมีเฉพาะตัวอักษรและตัวเลขเท่านั้น',
     'array'                => ':attribute ต้องเป็น array',
     'backup_codes'         => 'รหัสที่ให้มาไม่ถูกต้องหรือถูกใช้ไปแล้ว',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute ต้องเป็นวันที่ก่อน :date',
     'between'              => [
         'numeric' => ':attribute ต้องอยู่ระหว่าง :min ถึง :max',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'ฟิลด์ :attribute ต้องเป็น true หรือ false',
     'confirmed'            => 'การยืนยัน :attribute ไม่ตรงกัน',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute ไม่ใช่วันที่ที่ถูกต้อง',
     'date_format'          => ':attribute ไม่ตรงกับรูปแบบ :format',
     'different'            => ':attribute และ :other ต้องแตกต่างกัน',

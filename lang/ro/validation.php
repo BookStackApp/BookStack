@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute poate conține doar litere și cifre.',
     'array'                => ':attribute trebuie să fie un array.',
     'backup_codes'         => 'Codul furnizat nu este valid sau a fost deja folosit.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute trebuie să fie o dată înainte de :date.',
     'between'              => [
         'numeric' => ':attribute trebuie să fie între :min şi :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'Câmpul :attribute trebuie să fie adevărat sau fals.',
     'confirmed'            => 'Confirmarea :attribute nu se potrivește.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute nu este o dată validă.',
     'date_format'          => ':attribute nu se potrivește cu formatul :format.',
     'different'            => ':attribute și :other trebuie să fie diferite.',

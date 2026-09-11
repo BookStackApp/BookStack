@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Faol emas',
     'never' => 'Hech qachon',
     'none' => 'Yo‘q',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Bosh sahifa',

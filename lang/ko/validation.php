@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute(을)를 문자, 숫자로만 구성하세요.',
     'array'                => ':attribute(을)를 배열로 구성하세요.',
     'backup_codes'         => '유효하지 않거나 사용 중인 코드입니다.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute(을)를 :date 전으로 설정하세요.',
     'between'              => [
         'numeric' => ':attribute(을)를 :min~:max(으)로 구성하세요.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute(을)를 true나 false로만 구성하세요.',
     'confirmed'            => ':attribute(와)과 다릅니다.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute(을)를 유효한 날짜로 구성하세요.',
     'date_format'          => ':attribute(은)는 :format(와)과 다릅니다.',
     'different'            => ':attribute(와)과 :other(을)를 다르게 구성하세요.',

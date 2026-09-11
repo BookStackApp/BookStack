@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inaktibo',
     'never' => 'Inoiz ez',
     'none' => 'Bat ere ez',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Homepage',

@@ -84,6 +84,8 @@ return [
     'status_inactive' => '未啟用',
     'never' => '永不',
     'none' => '無',
+    'move_left' => '左移',
+    'move_right' => '右移',
 
     // Header
     'homepage' => '首頁',

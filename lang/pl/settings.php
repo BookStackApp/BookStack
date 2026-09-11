@@ -228,7 +228,7 @@ return [
     'users_password_desc' => 'Ustaw hasło logowania do aplikacji. Hasło musi mieć przynajmniej 8 znaków.',
     'users_send_invite_text' => 'Możesz wybrać wysłanie do tego użytkownika wiadomości e-mail z zaproszeniem, która pozwala mu ustawić własne hasło, w przeciwnym razie możesz ustawić je samemu.',
     'users_send_invite_option' => 'Wyślij e-mail z zaproszeniem',
-    'users_external_auth_id' => 'Zewnętrzne identyfikatory autentykacji',
+    'users_external_auth_id' => 'Zewnętrzne identyfikatory uwierzytelniania',
     'users_external_auth_id_desc' => 'Gdy używany jest zewnętrzny system uwierzytelniania (np. SAML2, OIDC lub LDAP), to jest ID, które łączy tego użytkownika BookStack z kontem w systemie uwierzytelniania. Możesz zignorować to pole, jeśli używasz domyślnego uwierzytelniania e-mailem.',
     'users_password_warning' => 'Wypełnij poniższe tylko, jeśli chcesz zmienić hasło dla tego użytkownika.',
     'users_system_public' => 'Ten użytkownik reprezentuje każdego gościa odwiedzającego tę aplikację. Nie można się na niego zalogować, lecz jest przyznawany automatycznie.',

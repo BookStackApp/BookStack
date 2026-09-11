@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'يجب أن يقتصر :attribute على الحروف والأرقام فقط.',
     'array'                => 'يجب أن تكون السمة مصفوفة.',
     'backup_codes'         => 'الرمز المقدم غير صالح أو تم استخدامه بالفعل.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'يجب أن يكون التاريخ :attribute قبل :date.',
     'between'              => [
         'numeric' => 'يجب أن يكون :attribute بين :min و :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'يجب أن يحتمل حقل السمة الصحة أو الخطأ.',
     'confirmed'            => ':attribute غير مطابق.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute ليس تاريخ صالح.',
     'date_format'          => ':attribute لا يطابق الصيغة :format.',
     'different'            => 'يجب أن يكون :attribute مختلف عن :other.',

@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute должен содержать только буквы и цифры.',
     'array'                => ':attribute должен быть массивом.',
     'backup_codes'         => 'Указанный код недействителен или уже использован.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute дата должна быть до :date.',
     'between'              => [
         'numeric' => ':attribute должен быть между :min и :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute поле может быть только true или false.',
     'confirmed'            => ':attribute подтверждение не совпадает.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute некорректные данные.',
     'date_format'          => ':attribute не соответствует формату :format.',
     'different'            => ':attribute и :other должны быть различны.',

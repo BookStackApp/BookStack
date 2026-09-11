@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute 只能包含字母和数字。',
     'array'                => ':attribute 必须是一个数组。',
     'backup_codes'         => '您输入的认证码无效或已被使用。',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute 必须是在 :date 前的日期。',
     'between'              => [
         'numeric' => ':attribute 必须在 :min 到 :max 之间。',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute 字段必须为真或假。',
     'confirmed'            => ':attribute 确认不符。',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute 不是一个有效的日期。',
     'date_format'          => ':attribute 不匹配格式 :format。',
     'different'            => ':attribute 和 :other 必须不同。',

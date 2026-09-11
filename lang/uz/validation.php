@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute qiymati faqat harflar va raqamlardan iborat bo‘lishi kerak.',
     'array'                => ':attribute qiymati massiv bo‘lishi kerak.',
     'backup_codes'         => 'Kiritilgan kod to‘g‘ri emas yoki ishlatib bo‘lingan.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute qiymati :date sanadan oldingi sana bo‘lishi kerak.',
     'between'              => [
         'numeric' => ':attribute qiymati :min va :max orasida bo‘lishi kerak.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute qiymati faqat «true» yoki «false» bo`lishi kerak.',
     'confirmed'            => ':attribute tasdiqlash qiymati mos emas.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute qiymati sana emas.',
     'date_format'          => ':attribute qiymati :format formatdagi sana emas.',
     'different'            => ':attribute va :other qiymatlari har xil bo‘lishi kerak.',

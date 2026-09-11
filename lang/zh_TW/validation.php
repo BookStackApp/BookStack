@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute 只能包含字母和數字。',
     'array'                => ':attribute 必須是陣列。',
     'backup_codes'         => '提供的代碼無效或已被使用。',
+    'base64_uri_mime'      => ':attribute 必須是有效的 Base64 URI，其中包含 :mime MIME 類型的資料。',
     'before'               => ':attribute 必須是在 :date 前的日期。',
     'between'              => [
         'numeric' => ':attribute 必須在 :min 到 :max 之間。',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute 欄位必須為 true 或 false。',
     'confirmed'            => ':attribute 確認不符。',
+    'current_password'     => '這不符合您目前的密碼。',
     'date'                 => ':attribute 並非有效的日期。',
     'date_format'          => ':attribute 與 :format 格式不相符。',
     'different'            => ':attribute 和 :other 必須不同。',

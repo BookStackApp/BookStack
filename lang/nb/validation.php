@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute kan kun inneholde bokstaver og tall.',
     'array'                => ':attribute må være en liste.',
     'backup_codes'         => 'Den angitte koden er ikke gyldig, eller er allerede benyttet.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute må være en dato før :date.',
     'between'              => [
         'numeric' => ':attribute må være mellom :min og :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute feltet kan bare være sann eller falsk.',
     'confirmed'            => ':attribute bekreftelsen samsvarer ikke.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute er ikke en gyldig dato.',
     'date_format'          => ':attribute samsvarer ikke med :format.',
     'different'            => ':attribute og :other må være forskjellige.',

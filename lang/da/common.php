@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inaktiv',
     'never' => 'Aldrig',
     'none' => 'Ingen',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Forside',
