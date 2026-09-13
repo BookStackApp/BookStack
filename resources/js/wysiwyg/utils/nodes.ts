@@ -14,6 +14,11 @@ import {$generateNodesFromDOM} from "@lexical/html";
 import {htmlToDom} from "./dom";
 import {NodeHasAlignment, NodeHasInset} from "lexical/nodes/common";
 import {$findMatchingParent} from "@lexical/utils";
+import {$isImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$isMediaNode} from "@lexical/rich-text/LexicalMediaNode";
+import {$isDiagramNode} from "./diagrams";
+import {$isLinkedImageNode} from "./images";
+import {$isDetailsNode} from "@lexical/rich-text/LexicalDetailsNode";
 
 function wrapTextNodes(nodes: LexicalNode[]): LexicalNode[] {
     return nodes.map(node => {
@@ -119,7 +124,12 @@ export function $getNearestNodeBlockParent(node: LexicalNode): LexicalNode|null 
     return $findMatchingParent(node, isBlockNode);
 }
 
-export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
+/**
+ * Sort the given node array by their position in the document.
+ * A search point can be provided to limit the search to a specific part of the document, which can
+ * avoid having to traverse the entire document.
+ */
+export function $sortNodes(nodes: LexicalNode[], searchPoint: ElementNode|null = null): LexicalNode[] {
     const idChain: string[] = [];
     const addIds = (n: ElementNode) => {
         for (const child of n.getChildren()) {
@@ -130,8 +140,7 @@ export function $sortNodes(nodes: LexicalNode[]): LexicalNode[] {
         }
     };
 
-    const root = $getRoot();
-    addIds(root);
+    addIds(searchPoint || $getRoot());
 
     const sorted = Array.from(nodes);
     sorted.sort((a, b) => {
@@ -157,6 +166,43 @@ export function $selectOrCreateAdjacent(node: LexicalNode, after: boolean): Rang
     }
 
     return after ? target.selectStart() : target.selectEnd();
+}
+
+/**
+ * Check if the range of nodes represents a single node which is wholly selectable.
+ */
+export function $isSingleSelectableNode(nodes: LexicalNode[]): boolean {
+    if (nodes.length === 1) {
+        const node = nodes[0];
+        if ($isDecoratorNode(node) || $isImageNode(node) || $isMediaNode(node) || $isDiagramNode(node)) {
+            return true;
+        }
+
+        if ($isDetailsNode(node)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Get the single selectable node if the given range represents a single selectable node.
+ * Typically called with a selection's node ranges.
+ * Normalises the result, like for linked images, for example.
+ */
+export function $getSingleSelectableNode(nodes: LexicalNode[]): LexicalNode|null {
+    if (!$isSingleSelectableNode(nodes)) {
+        return null;
+    }
+
+    const node = nodes[0];
+
+    if ($isLinkedImageNode(node)) {
+        return node.getParent();
+    }
+
+    return node;
 }
 
 export function nodeHasAlignment(node: object): node is NodeHasAlignment {

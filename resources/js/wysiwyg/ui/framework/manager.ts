@@ -23,6 +23,7 @@ export class EditorUIManager {
     protected contextToolbarDefinitionsByKey: Record<string, EditorContextToolbarDefinition> = {};
     protected activeContextToolbars: EditorContextToolbar[] = [];
     protected selectionChangeHandlers: Set<SelectionChangeHandler> = new Set();
+    protected layoutUpdateHandlers: Set<() => void> = new Set();
     protected domEventAbortController = new AbortController();
     protected teardownCallbacks: (()=>void)[] = [];
 
@@ -165,12 +166,24 @@ export class EditorUIManager {
         this.selectionChangeHandlers.delete(handler);
     }
 
+    onLayoutUpdate(handler: () => void): void {
+        this.layoutUpdateHandlers.add(handler);
+    }
+
+    offLayoutUpdate(handler: () => void): void {
+        this.layoutUpdateHandlers.delete(handler);
+    }
+
     triggerLayoutUpdate(): void {
         window.requestAnimationFrame(() => {
             const toolbarBounds: (DOMRect|null)[] = [];
             for (const toolbar of this.activeContextToolbars) {
                 const bounds = toolbar.updatePosition(toolbarBounds);
                 toolbarBounds.push(bounds);
+            }
+
+            for (const handler of this.layoutUpdateHandlers) {
+                handler();
             }
         });
     }

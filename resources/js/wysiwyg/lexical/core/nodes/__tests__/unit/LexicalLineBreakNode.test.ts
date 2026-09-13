@@ -6,9 +6,22 @@
  *
  */
 
-import {$createLineBreakNode, $isLineBreakNode} from 'lexical';
+import {
+  $createLineBreakNode,
+  $createParagraphNode,
+  $createTextNode,
+  $getRoot,
+  $isLineBreakNode,
+  ParagraphNode
+} from 'lexical';
 
-import {initializeUnitTest} from '../../../__tests__/utils';
+import {
+  createTestContext,
+  dispatchKeydownEventForSelectedNode, expectEditorHtmlToBeEqual,
+  expectNodeShapeToMatch,
+  initializeUnitTest
+} from '../../../__tests__/utils';
+import {registerRichText} from "@lexical/rich-text";
 
 describe('LexicalLineBreakNode tests', () => {
   initializeUnitTest((testEnv) => {
@@ -69,6 +82,40 @@ describe('LexicalLineBreakNode tests', () => {
 
         expect($isLineBreakNode(lineBreakNode)).toBe(true);
       });
+    });
+  });
+
+  describe('LineBreakNode.exportDOM()', () => {
+    test('first linebreaks are represented as a double break on export', () => {
+      const {editor} = createTestContext();
+      registerRichText(editor);
+
+      let textNode;
+      let paragraph!: ParagraphNode;
+
+      editor.updateAndCommit(() => {
+        paragraph = $createParagraphNode();
+        textNode = $createTextNode('hello');
+        paragraph.append(textNode);
+
+        $getRoot().append(paragraph);
+        textNode.selectEnd();
+      });
+
+      dispatchKeydownEventForSelectedNode(editor, 'Enter', {shiftKey: true});
+
+      expectNodeShapeToMatch(editor, [
+        {type: 'paragraph', children: [
+            {text: 'hello'},
+            {type: 'linebreak'},
+          ]}
+      ]);
+      expectEditorHtmlToBeEqual(editor, `<p>hello<br><br></p>`);
+
+      dispatchKeydownEventForSelectedNode(editor, 'Enter', {shiftKey: true});
+      dispatchKeydownEventForSelectedNode(editor, 'Enter', {shiftKey: true});
+
+      expectEditorHtmlToBeEqual(editor, `<p>hello<br><br><br><br></p>`);
     });
   });
 });

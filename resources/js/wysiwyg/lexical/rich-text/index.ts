@@ -66,6 +66,7 @@ import {$moveCharacter, $shouldOverrideDefaultCharacterSelection,} from '@lexica
 import {$findMatchingParent, mergeRegister, objectKlassEquals,} from '@lexical/utils';
 import caretFromPoint from 'lexical/shared/caretFromPoint';
 import {CAN_USE_BEFORE_INPUT, IS_APPLE_WEBKIT, IS_IOS, IS_SAFARI,} from 'lexical/shared/environment';
+import {$getSingleSelectableNode} from "../../utils/nodes";
 
 export const DRAG_DROP_PASTE: LexicalCommand<Array<File>> = createCommand(
   'DRAG_DROP_PASTE_FILE',
@@ -107,7 +108,12 @@ async function onCutForRichText(
   editor.update(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
-      selection.removeText();
+      const singleSelectable = $getSingleSelectableNode(selection.getNodes())
+      if (singleSelectable) {
+          singleSelectable.remove();
+      } else {
+        selection.removeText();
+      }
     } else if ($isNodeSelection(selection)) {
       selection.getNodes().forEach((node) => node.remove());
     }

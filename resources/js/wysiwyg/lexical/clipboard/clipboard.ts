@@ -6,7 +6,7 @@
  *
  */
 
-import {$generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
+import {$generateHtmlFromNode, $generateHtmlFromNodes, $generateNodesFromDOM} from '@lexical/html';
 import {$addNodeStyle, $sliceSelectedTextNodeContent} from '@lexical/selection';
 import {objectKlassEquals} from '@lexical/utils';
 import {
@@ -31,6 +31,8 @@ import {
 } from 'lexical';
 import {CAN_USE_DOM} from 'lexical/shared/canUseDOM';
 import invariant from 'lexical/shared/invariant';
+import {$getSingleSelectableNode} from "../../utils/nodes";
+import {$createSingleNodeSelection, $selectSingleNode} from "../../utils/selection";
 
 const getDOMSelection = (targetWindow: Window | null): Selection | null =>
   CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
@@ -57,6 +59,11 @@ export function $getHtmlContent(
 ): string {
   if (selection == null) {
     invariant(false, 'Expected valid LexicalSelection');
+  }
+  // Handle single node selections
+  const singleSelectableNode = $getSingleSelectableNode(selection.getNodes());
+  if (singleSelectableNode) {
+    return $generateHtmlFromNode(editor, singleSelectableNode);
   }
 
   // If we haven't selected anything
@@ -86,6 +93,12 @@ export function $getLexicalContent(
 ): null | string {
   if (selection == null) {
     invariant(false, 'Expected valid LexicalSelection');
+  }
+
+  // Handle single node selections
+  const singleSelectableNode = $getSingleSelectableNode(selection.getNodes());
+  if (singleSelectableNode) {
+    return JSON.stringify($generateJSONFromNode(editor, singleSelectableNode));
   }
 
   // If we haven't selected anything
@@ -351,6 +364,26 @@ export function $generateJSONFromSelectedNodes<
   return {
     namespace: editor._config.namespace,
     nodes,
+  };
+}
+
+/**
+ * Gets the Lexical JSON of the given node.
+ */
+export function $generateJSONFromNode<
+    SerializedNode extends BaseSerializedNode,
+>(
+    editor: LexicalEditor,
+    node: LexicalNode,
+): {
+  namespace: string;
+  node: SerializedNode;
+} {
+  const serialized: Array<SerializedNode> = [];
+  $appendNodesToJSON(editor, null, node, serialized);
+  return {
+    namespace: editor._config.namespace,
+    node: serialized[0],
   };
 }
 

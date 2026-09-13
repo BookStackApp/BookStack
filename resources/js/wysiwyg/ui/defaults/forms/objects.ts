@@ -48,6 +48,7 @@ export const image: EditorFormDefinition = {
 
                 selectedImage.setWidth(Number(formData.get('width')?.toString() || '0'));
                 selectedImage.setHeight(Number(formData.get('height')?.toString() || '0'));
+                context.manager.triggerLayoutUpdate();
             }
         });
         return true;
@@ -152,10 +153,11 @@ export const link: EditorFormDefinition = {
                             showLinkSelector(entity => {
                                 const modal =  context.manager.getActiveModal('link');
                                 if (modal) {
+                                    const currentValues = modal.getForm().getValues();
                                     modal.getForm().setValues({
                                         url: entity.link,
-                                        text: entity.name,
-                                        title: entity.name,
+                                        text: currentValues.text || entity.name,
+                                        title: currentValues.title || entity.name,
                                     });
                                 }
                             });
