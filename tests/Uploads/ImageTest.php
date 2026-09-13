@@ -689,6 +689,31 @@ class ImageTest extends TestCase
         $this->files->deleteAtRelativePath($relPath);
     }
 
+    public function test_image_manager_upload_options_only_shown_with_permission()
+    {
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
+
+        $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
+        $this->withHtml($resp)->assertElementNotExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $resp->assertDontSee('You do not have permission to upload new images.');
+
+        // Viewer with page-update permission but no image-create-all permission
+        $viewer = $this->users->viewer();
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $viewer->roles()->first());
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $this->withHtml($resp)->assertElementExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $resp->assertSee('You do not have permission to upload new images.');
+
+        // Grant image-create-all, upload options should now be enabled
+        $this->permissions->grantUserRolePermissions($viewer, ['image-create-all']);
+
+        $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
+        $this->withHtml($resp)->assertElementNotExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $resp->assertDontSee('You do not have permission to upload new images.');
+    }
+
     public function test_image_manager_regen_thumbnails()
     {
         $this->asEditor();
