@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Encryption\MissingAppKeyException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
@@ -212,8 +213,16 @@ class ConfigTest extends TestCase
         });
     }
 
+    public function test_app_errors_if_no_app_key_set()
+    {
+        $this->runWithEnv(['APP_KEY' => null], function () {
+            $this->expectException(MissingAppKeyException::class);
+            $this->get('/');
+        });
+    }
+
     /**
-     * Set an environment variable of the given name and value
+     * Set an environment variable of the given name and value,
      * then check the given config key to see if it matches the given result.
      * Providing a null $envVal clears the variable.
      */
