@@ -3,6 +3,7 @@
 namespace Tests\Auth;
 
 use BookStack\Access\SocialAccount;
+use BookStack\Access\SocialAuthService;
 use BookStack\Activity\ActivityType;
 use BookStack\Users\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -238,5 +239,61 @@ class SocialAuthTest extends TestCase
         $this->assertDatabaseHas('users', ['name' => 'nonameuser', 'email' => $user->email]);
         $user = $user->whereEmail($user->email)->first();
         $this->assertDatabaseHas('social_accounts', ['user_id' => $user->id]);
+    }
+
+    public function test_registration_allows_creation_with_id_which_already_used_by_another_user_and_service()
+    {
+        $user = $this->users->editor();
+        SocialAccount::factory()->create(['driver' => 'google', 'driver_id' => '123abc', 'user_id' => $user->id]);
+
+        $this->setSettings(['registration-enabled' => 'true']);
+        config(['GITHUB_APP_ID' => 'abc123', 'GITHUB_APP_SECRET' => '123abc']);
+        session()->put('social-callback', 'register');
+
+        $socialUser = new \Laravel\Socialite\One\User();
+        $socialUser->id = '123abc';
+        $socialUser->email = 'barrygithub@example.com';
+        $socialUser->name = 'BarryGitHub';
+        $socialUser->avatar = 'avatar_placeholder';
+
+        $serviceMock = $this->partialMockService(SocialAuthService::class);
+        $serviceMock->shouldReceive('getSocialUser')->andReturn($socialUser);
+
+        $resp = $this->get('/login/service/github/callback');
+        $resp->assertRedirect('/');
+
+        $this->assertTrue(auth()->check());
+        $this->assertDatabaseHas('social_accounts', [
+            'user_id' => user()->id,
+            'driver' => 'github',
+            'driver_id' => '123abc'
+        ]);
+        $this->assertDatabaseHas('social_accounts', [
+            'user_id' => $user->id,
+            'driver' => 'google',
+            'driver_id' => '123abc'
+        ]);
+    }
+
+    public function test_login_account_link_restrained_by_service()
+    {
+        config([
+            'GOOGLE_APP_ID' => 'abc123', 'GOOGLE_APP_SECRET' => '123abc',
+        ]);
+        $existingUser = $this->users->viewer();
+        SocialAccount::factory()->create(['driver' => 'github', 'driver_id' => 'logintest123', 'user_id' => $existingUser->id]);
+        session()->put('social-callback', 'login');
+
+        $socialUser = new \Laravel\Socialite\One\User();
+        $socialUser->id = 'logintest123';
+        $serviceMock = $this->partialMockService(SocialAuthService::class);
+        $serviceMock->shouldReceive('getSocialUser')->andReturn($socialUser);
+
+        $resp = $this->followingRedirects()->get('/login/service/google/callback');
+
+        $this->assertFalse(auth()->check());
+        $this->assertNotEquals($existingUser->id, user()->id);
+        $resp->assertSee('login-form');
+        $resp->assertSee(trans('errors.social_account_not_used', ['socialAccount' => 'Google']));
     }
 }

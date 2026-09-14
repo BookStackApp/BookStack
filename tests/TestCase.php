@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Testing\Assert as PHPUnit;
 use Illuminate\Testing\Constraints\HasInDatabase;
+use Mockery;
+use Mockery\MockInterface;
 use Monolog\Handler\TestHandler;
 use Monolog\Logger;
 use Ssddanbrown\AssertHtml\TestsHtml;
@@ -104,6 +106,19 @@ abstract class TestCase extends BaseTestCase
         foreach ($settingsArray as $key => $value) {
             $settings->put($key, $value);
         }
+    }
+
+    /**
+     * Creates a partial mock of the given service class from a default
+     * container resolved instance. Compared to the default $this->partialMock function,
+     * this resolves mock of a service with its dependencies resolved from the container.
+     */
+    protected function partialMockService(string $service): MockInterface
+    {
+        $realService = app($service);
+        $serviceMock = Mockery::mock($realService)->makePartial();
+        $this->instance($service, $serviceMock);
+        return $serviceMock;
     }
 
     /**
