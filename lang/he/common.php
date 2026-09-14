@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'לא פעיל',
     'never' => 'אף פעם',
     'none' => 'ללא',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'דף הבית',

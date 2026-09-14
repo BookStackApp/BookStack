@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'غير نشط',
     'never' => 'مطلقاً',
     'none' => 'لا شَيْء',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'الصفحة الرئيسية',

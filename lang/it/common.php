@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inattivo',
     'never' => 'Mai',
     'none' => 'Nessuno',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Homepage',

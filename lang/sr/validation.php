@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute може да садржи само слова и бројеве.',
     'array'                => ':attribute мора бити низ.',
     'backup_codes'         => 'Достављени код није исправан или је већ искоришћен.',
+    'base64_uri_mime'      => ':attribute мора бити исправан base64 URI који садржи податке :mime mime типа.',
     'before'               => ':attribute мора бити датум пре :date.',
     'between'              => [
         'numeric' => ':attribute мора бити између :min и :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'Поље :attribute мора бити тачно или нетачно.',
     'confirmed'            => ':attribute потврда се не подудара.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute није исправан датум.',
     'date_format'          => ':attribute се не подудара са форматом :format.',
     'different'            => ':attribute и :other се морају разликовати.',

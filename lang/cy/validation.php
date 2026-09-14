@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'Rhaid ir :attribute cynnwys llythrennau a rhifau yn unig.',
     'array'                => 'Rhaid i :attribute fod yn array.',
     'backup_codes'         => 'Nid yw\'r cod a ddarparwyd yn ddilys neu mae eisoes wedi\'i ddefnyddio.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'Rhaid i\'r :attribute bod yn dyddiad cyn :date.',
     'between'              => [
         'numeric' => 'Rhaid i\'r :attribute bod rhwng :min a :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'Rhaid i :attribute fod yn wir neu ddim.',
     'confirmed'            => 'Dydi\'r cadarnhad :attribute ddim yn cydfynd.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'Nid yw\'r :attribute yn dyddiad dilys.',
     'date_format'          => 'Nid yw\'r :attribute yn cydfynd ar format :format.',
     'different'            => 'Rhaid i :attribute a :other bod yn wahanol.',

@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Inactief',
     'never' => 'Nooit',
     'none' => 'Geen',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Startpagina',
