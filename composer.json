@@ -13,7 +13,6 @@
         "ext-dom": "*",
         "ext-fileinfo": "*",
         "ext-gd": "*",
-        "ext-json": "*",
         "ext-mbstring": "*",
         "ext-xml": "*",
         "ext-zip": "*",
