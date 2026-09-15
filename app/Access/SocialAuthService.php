@@ -55,8 +55,10 @@ class SocialAuthService
      */
     public function handleRegistrationCallback(string $socialDriver, SocialUser $socialUser): SocialUser
     {
+        $socialDriver = trim(strtolower($socialDriver));
+
         // Check social account has not already been used
-        if (SocialAccount::query()->where('driver_id', '=', $socialUser->getId())->exists()) {
+        if ($this->getSocialAccountById($socialDriver, $socialUser->getId())) {
             throw new UserRegistrationException(trans('errors.social_account_in_use', ['socialAccount' => $socialDriver]), '/login');
         }
 
@@ -67,6 +69,19 @@ class SocialAuthService
         }
 
         return $socialUser;
+    }
+
+    /**
+     * Get an existing social account by its ID.
+     */
+    protected function getSocialAccountById(string $socialDriver, string $socialId): SocialAccount|null
+    {
+        $socialDriver = trim(strtolower($socialDriver));
+
+        return SocialAccount::query()
+            ->where('driver', '=', $socialDriver)
+            ->where('driver_id', '=', $socialId)
+            ->first();
     }
 
     /**
@@ -93,7 +108,7 @@ class SocialAuthService
         $socialId = $socialUser->getId();
 
         // Get any attached social accounts or users
-        $socialAccount = SocialAccount::query()->where('driver_id', '=', $socialId)->first();
+        $socialAccount = $this->getSocialAccountById($socialDriver, $socialId);
         $isLoggedIn = auth()->check();
         $currentUser = user();
         $titleCaseDriver = Str::title($socialDriver);
@@ -153,7 +168,7 @@ class SocialAuthService
     public function newSocialAccount(string $socialDriver, SocialUser $socialUser): SocialAccount
     {
         return new SocialAccount([
-            'driver'    => $socialDriver,
+            'driver'    => trim(strtolower($socialDriver)),
             'driver_id' => $socialUser->getId(),
             'avatar'    => $socialUser->getAvatar(),
         ]);
@@ -164,6 +179,7 @@ class SocialAuthService
      */
     public function detachSocialAccount(string $socialDriver): void
     {
+        $socialDriver = trim(strtolower($socialDriver));
         user()->socialAccounts()->where('driver', '=', $socialDriver)->delete();
     }
 
