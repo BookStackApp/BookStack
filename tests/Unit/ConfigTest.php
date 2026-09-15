@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Exception;
 use Illuminate\Encryption\MissingAppKeyException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -215,9 +216,15 @@ class ConfigTest extends TestCase
 
     public function test_app_errors_if_no_app_key_set()
     {
-        $this->runWithEnv(['APP_KEY' => null], function () {
-            $this->expectException(MissingAppKeyException::class);
-            $this->get('/');
+        $this->runWithEnv(['APP_KEY' => ''], function () {
+            $error = null;
+            try {
+                $this->get('/');
+            } catch (Exception $e) {
+                $error = $e;
+            }
+
+            $this->assertInstanceOf(MissingAppKeyException::class, $error);
         });
     }
 
