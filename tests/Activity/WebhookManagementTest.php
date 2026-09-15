@@ -72,7 +72,7 @@ class WebhookManagementTest extends TestCase
         $resp->assertSee('Edit Webhook');
         $this->withHtml($resp)->assertElementContains('form[action="' . $webhook->getUrl() . '"] button', 'Save Webhook');
         $this->withHtml($resp)->assertElementContains('a[href="' . $webhook->getUrl('/delete') . '"]', 'Delete Webhook');
-        $this->withHtml($resp)->assertElementExists('input[type="checkbox"][value="all"][name="events[]"]');
+        $this->withHtml($resp)->assertElementExists('input[type="checkbox"][name="events[all]"][value="all"]');
     }
 
     public function test_update()
