@@ -3,6 +3,7 @@
     <input type="checkbox" @if($value) checked="checked" @endif>
     <span tabindex="0" role="checkbox"
           aria-checked="{{ $value ? 'true' : 'false' }}"
+          aria-label="{{ $label }}"
           class="custom-checkbox text-primary">@icon('check')</span>
     <span class="label">{{ $label }}</span>
 </label>

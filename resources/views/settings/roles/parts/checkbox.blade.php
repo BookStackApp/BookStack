@@ -3,5 +3,6 @@
        'name' => 'permissions[' . $permission . ']',
        'value' => 'true',
        'checked' => old('permissions'.$permission, false)|| (!old('display_name', false) && (isset($role) && $role->hasPermission($permission))),
-       'label' => $label
+       'label' => $label,
+       'ariaLabel' => $ariaLabel ?? null
 ])
