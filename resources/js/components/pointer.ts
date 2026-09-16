@@ -105,7 +105,9 @@ export class Pointer extends Component {
      */
     showPointerAtTarget(element: HTMLElement, xPosition: number, keyboardMode: boolean) {
         this.targetElement = element;
-        this.targetSelectionRange = window.getSelection()?.getRangeAt(0) || null;
+        const selectionMade = window.getSelection();
+        const selectionDirection = selectionMade?.direction || '';
+        this.targetSelectionRange = selectionMade?.getRangeAt(0) || null;
         this.updateDomForTarget(element);
 
         this.pointer.style.display = 'block';
@@ -131,7 +133,12 @@ export class Pointer extends Component {
             window.removeEventListener('scroll', scrollListener);
         };
 
-        element.parentElement?.insertBefore(this.pointer, element);
+        if (selectionDirection === 'forward') {
+            element.after(this.pointer);
+        } else {
+            element.before(this.pointer);
+        }
+
         if (!keyboardMode) {
             window.addEventListener('scroll', scrollListener, {passive: true});
         }
