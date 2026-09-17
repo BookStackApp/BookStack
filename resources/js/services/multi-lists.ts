@@ -1,13 +1,12 @@
 /**
  * Service for helping manage common dual-list scenarios.
- * (Shelf book manager, sort set manager).
+ * (Shelf book manager, sort set manager, layout-editor).
  */
 
 type ListActionsSet = Record<string, ((item: HTMLElement) => void)>;
 
 export function buildListActions(
-    availableList: HTMLElement,
-    configuredList: HTMLElement,
+    ...lists: HTMLElement[]
 ): ListActionsSet {
     return {
         move_up(item) {
@@ -22,11 +21,29 @@ export function buildListActions(
             const newIndex = Math.min(index + 2, list.children.length);
             list.insertBefore(item, list.children[newIndex] || null);
         },
+        move_right(item) {
+            const list = item.parentNode as HTMLElement;
+            const listIndex = lists.indexOf(list);
+            const targetListIndex = Math.min(listIndex + 1, lists.length - 1);
+            lists[targetListIndex].appendChild(item);
+        },
+        move_left(item) {
+            const list = item.parentNode as HTMLElement;
+            const listIndex = lists.indexOf(list);
+            const targetListIndex = Math.max(listIndex - 1, 0);
+            lists[targetListIndex].appendChild(item);
+        },
         remove(item) {
-            availableList.appendChild(item);
+            const otherList = lists.find(list => list !== item.parentNode);
+            if (otherList) {
+                otherList.appendChild(item);
+            }
         },
         add(item) {
-            configuredList.appendChild(item);
+            const otherList = lists.find(list => list !== item.parentNode);
+            if (otherList) {
+                otherList.appendChild(item);
+            }
         },
     };
 }

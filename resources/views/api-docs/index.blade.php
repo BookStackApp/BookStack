@@ -2,14 +2,14 @@
 
 @section('body')
 
-    <div component="api-nav" class="container">
+    <div component="api-nav" class="container api-docs">
 
         <div class="grid right-focus reverse-collapse">
             <div>
 
                 <div refs="api-nav@sidebar" class="sticky-sidebar">
 
-                    <div class="sticky-sidebar-header py-xl">
+                    <div class="sticky-sidebar-header pt-xl pb-m">
                         <select refs="api-nav@select" name="navigation" id="navigation">
                             <option value="getting-started" selected>Jump To Section</option>
                             <option value="getting-started">Getting Started</option>
@@ -22,15 +22,17 @@
                         </select>
                     </div>
 
+                    <div class="flex-container-row wrap gap-xs mb-s">
+                        <a href="{{ url('/api/docs/download?format=html') }}" title="Download API docs as HTML" class="button outline small">@icon('download')<span>HTML</span></a>
+                        <a href="{{ url('/api/docs/download?format=json') }}" title="Download API docs as JSON" class="button outline small">@icon('download')<span>JSON</span></a>
+                    </div>
+
                     <div class="mb-xl">
                         <p id="sidebar-header-getting-started" class="text-uppercase text-muted mb-xm"><strong>Getting Started</strong></p>
                         <div class="text-mono">
-                            <div class="mb-xs"><a href="#authentication">Authentication</a></div>
-                            <div class="mb-xs"><a href="#request-format">Request Format</a></div>
-                            <div class="mb-xs"><a href="#listing-endpoints">Listing Endpoints</a></div>
-                            <div class="mb-xs"><a href="#error-handling">Error Handling</a></div>
-                            <div class="mb-xs"><a href="#rate-limits">Rate Limits</a></div>
-                            <div class="mb-xs"><a href="#content-security">Content Security</a></div>
+                            @foreach($gettingStartedSections as $id => $label)
+                                <div class="mb-xs"><a href="#{{ $id }}">{{ $label }}</a></div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -61,7 +63,7 @@
 
                 @foreach($docs as $model => $endpoints)
                     <section id="section-{{ str_replace(' ', '-', $model) }}" class="card content-wrap auto-height">
-                        <h1 class="list-heading text-capitals">{{ $model }}</h1>
+                        <h2 class="list-heading text-capitals">{{ $model }}</h2>
                         @if($endpoints[0]['model_description'])
                             <p>{{ $endpoints[0]['model_description'] }}</p>
                         @endif

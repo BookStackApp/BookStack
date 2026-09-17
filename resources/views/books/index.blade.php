@@ -5,11 +5,9 @@
 @stop
 
 @section('left')
-    @include('books.parts.index-sidebar-section-recents', ['recents' => $recents])
-    @include('books.parts.index-sidebar-section-popular', ['popular' => $popular])
-    @include('books.parts.index-sidebar-section-new', ['new' => $new])
+    @include('common.view-blocks', ['location' => 'books-index', 'position' => 'left'])
 @stop
 
 @section('right')
-    @include('books.parts.index-sidebar-section-actions', ['view' => $view])
+    @include('common.view-blocks', ['location' => 'books-index', 'position' => 'right'])
 @stop

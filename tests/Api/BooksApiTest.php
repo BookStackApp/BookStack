@@ -38,7 +38,7 @@ class BooksApiTest extends TestCase
         $book = $this->entities->book();
 
         $baseRepo = $this->app->make(BaseRepo::class);
-        $image = $this->files->uploadedImage('book_cover');
+        $image = $this->files->uploadedImage('book_cover.png');
         $baseRepo->updateCoverImage($book, $image);
 
         $resp = $this->getJson($this->baseEndpoint . '?filter[id]=' . $book->id);

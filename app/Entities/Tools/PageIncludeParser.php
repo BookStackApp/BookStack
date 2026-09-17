@@ -192,10 +192,10 @@ class PageIncludeParser
     /**
      * Get the parent paragraph of the given node, if existing.
      */
-    protected function getParentParagraph(DOMNode $parent): ?DOMNode
+    protected function getParentParagraph(DOMNode $parent): ?DOMElement
     {
         do {
-            if (strtolower($parent->nodeName) === 'p') {
+            if (strtolower($parent->nodeName) === 'p' && $parent instanceof DOMElement) {
                 return $parent;
             }
 

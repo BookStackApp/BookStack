@@ -32,6 +32,7 @@ return [
     'page-draft-color-dark' => '#a66ce8',
     'app-custom-head'      => false,
     'registration-enabled' => false,
+    'app-homepage-type'    => 'default',
 
     // User-level default settings
     'user' => [

@@ -540,7 +540,7 @@ body.editor-is-fullscreen {
 /**
  * Form elements
  */
-$inputWidth: 260px;
+$inputWidth: 400px;
 
 .editor-form-field-wrapper {
   margin-bottom: .5rem;
@@ -681,6 +681,10 @@ textarea.editor-form-field-input {
   align-items: end;
   justify-content: space-between;
   gap: .1rem;
+  > div:has(input) {
+    flex: 1;
+    min-width: 100px;
+  }
   .editor-button {
     margin-bottom: 12px;
   }

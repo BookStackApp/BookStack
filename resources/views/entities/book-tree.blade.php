@@ -11,7 +11,7 @@
             </li>
         @endif
 
-        @foreach($sidebarTree as $bookChild)
+        @foreach($bookTree as $bookChild)
             <li class="list-item-{{ $bookChild->getType() }} {{ $bookChild->getType() }} {{ $bookChild->isA('page') && $bookChild->draft ? 'draft' : '' }}">
                 @include('entities.list-item-basic', ['entity' => $bookChild, 'classes' => $current->matches($bookChild)? 'selected' : ''])
 

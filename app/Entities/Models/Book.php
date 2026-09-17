@@ -20,10 +20,10 @@ use Illuminate\Support\Collection;
  * @property ?int                                     $image_id
  * @property ?int                                     $default_template_id
  * @property ?int                                     $sort_rule_id
- * @property \Illuminate\Database\Eloquent\Collection $chapters
- * @property \Illuminate\Database\Eloquent\Collection $pages
- * @property \Illuminate\Database\Eloquent\Collection $directPages
- * @property \Illuminate\Database\Eloquent\Collection $shelves
+ * @property \Illuminate\Database\Eloquent\Collection<int, Chapter> $chapters
+ * @property \Illuminate\Database\Eloquent\Collection<int, Page> $pages
+ * @property \Illuminate\Database\Eloquent\Collection<int, Page> $directPages
+ * @property \Illuminate\Database\Eloquent\Collection<int, Bookshelf> $shelves
  * @property ?SortRule                                $sortRule
  */
 class Book extends Entity implements HasDescriptionInterface, HasCoverInterface, HasDefaultTemplateInterface

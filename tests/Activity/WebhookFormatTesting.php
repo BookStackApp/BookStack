@@ -30,7 +30,7 @@ class WebhookFormatTesting extends TestCase
     public function test_page_create_and_update_events_show_revision_info()
     {
         $page = $this->entities->page();
-        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'summary' => 'Update a']);
+        $this->asEditor()->put($page->getUrl(), ['name' => 'Updated page', 'html' => 'new page html', 'changelog' => 'Update a']);
 
         $data = $this->getWebhookData(ActivityType::PAGE_UPDATE, $page);
         $this->assertEquals($page->currentRevision->id, Arr::get($data, 'related_item.current_revision.id'));

@@ -194,3 +194,104 @@ Theme::addSocialDriver('reddit', [
     $driver->scopes(['open_id']);
 });
 ```
+
+## Custom View Layout Block Example
+
+By listening to the `ThemeEvents::VIEW_BLOCKS_REGISTER` event, it's possible to register
+custom view blocks which can be shown in a layout in the application. View blocks are typically the sections shown in the sidebar,
+or the cards shown on the home view.
+
+As an example of using this system, we'll define a custom view block which will show on the default home view to state how many
+books there are in the system.
+To start, we'll need to create a custom class to represent our view block. This must implement `\BookStack\View\ViewBlockInterface`:
+
+```php
+use BookStack\Entities\Queries\BookQueries;
+use BookStack\View\ViewBlockInterface;
+use BookStack\View\ViewBlockManager;
+
+class BookTotalBlock implements ViewBlockInterface {
+
+    public function __construct(
+        protected BookQueries $bookQueries
+    ) {
+    }
+
+    public static function getId(): string
+    {
+        return 'custom_book_total_block';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Total books displays';
+    }
+
+    public function getView(array $viewData): string
+    {
+        return 'blocks.total-blocks';
+    }
+
+    public function withData(array $viewData): array
+    {
+        $totalBooks = $this->bookQueries->visibleForList()->count();
+        return [
+            'totalBooks' => $totalBooks,
+        ];
+    }
+}
+```
+
+The interface has a few required methods:
+
+- The `getId` method must provide a unique per-block-type string ID.
+- The `getLabel` method must provide a general string label for the block.
+- The `getView` method provides a string path to a view file (Can be one custom registered).
+  - This is provided the available view data at time of render, so it can be dynamic based on context. 
+- The `withData` method is called when block is being rendered, and it should return an array of data which will be merged with existing view data.
+  - This is also provided available view data, for use as context.
+
+In this example, we're also making use of the `BookQueries` internal BookStack class.
+You're able to inject any other dependent classes/services via the constructor like this, and BookStack will attempt to auto-resolve them.  
+
+We can then register this block class using the logical theme system like so:
+
+```php
+use BookStack\Facades\Theme;
+use BookStack\Theming\ThemeEvents;
+use BookStack\View\ViewBlockManager;
+
+Theme::listen(ThemeEvents::VIEW_BLOCKS_REGISTER, function (ViewBlockManager $manager) {
+    $manager->register(
+        'home-default',       // The location/layout where this block will be displayed
+        'right',              // The default position for the block within the location
+        BookTotalBlock::class // The block class to register
+    );
+});
+```
+
+The above registration code would typically be within your `functions.php` theme file.
+You could also define the above block class in the same file or separate it into its own file
+and include it from the `functions.php` via a `require_once()` call.
+
+Lastly, we'll need to create the view for the registered block.
+In our example we return `blocks.total-blocks` from the `getView` method, so our view needs to be located at
+`blocks/total-blocks.blade.php` from a view providing directory. 
+In a theme folder, we can just create it at `blocks/total-blocks.blade.php` within the folder path.
+If we were building in a module, we'd need to create this at `views/blocks/total-blocks.blade.php` within our module folder.
+For our example, we'll use this content to make use of the data we're passing to the view:
+
+```html
+<div class="card mb-xl">
+  <h3 class="card-title">Total Books</h3>
+  <div class="px-m pb-xs">
+    <p>
+      There are currently {{ $totalBooks }} books in the system!
+    </p>
+  </div>
+</div>
+```
+
+This will then show up on the default home grid view, in the right column.
+The exact position within that location may change depending on user preferences, but the block will be limited
+to the location provided during registration unless it has also been registered for other locations.

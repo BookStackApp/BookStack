@@ -4,9 +4,9 @@ namespace BookStack\Entities\Controllers;
 
 use BookStack\Activity\Models\View;
 use BookStack\Activity\Tools\CommentTree;
-use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Page;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
@@ -20,11 +20,11 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Exceptions\PermissionsException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
-use BookStack\References\ReferenceFetcher;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
 use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -35,7 +35,6 @@ class PageController extends Controller
         protected PageRepo $pageRepo,
         protected PageQueries $queries,
         protected EntityQueries $entityQueries,
-        protected ReferenceFetcher $referenceFetcher
     ) {
     }
 
@@ -95,7 +94,7 @@ class PageController extends Controller
     }
 
     /**
-     * Show form to continue editing a draft page.
+     * Show a form to continue editing a draft page.
      *
      * @throws NotFoundException
      */
@@ -103,6 +102,7 @@ class PageController extends Controller
     {
         $draft = $this->queries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission(Permission::PageCreate, $draft->getParent());
+        $this->ensureDraftAccess($draft);
 
         $editorData = new PageEditorData($draft, $this->entityQueries, $request->query('editor', ''));
         $this->setPageTitle(trans('entities.pages_edit_draft'));
@@ -124,6 +124,7 @@ class PageController extends Controller
 
         $draftPage = $this->queries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission(Permission::PageCreate, $draftPage->getParent());
+        $this->ensureDraftAccess($draftPage);
 
         $page = $this->pageRepo->publishDraft($draftPage, $request->all());
 
@@ -151,11 +152,10 @@ class PageController extends Controller
 
         $pageContent = (new PageContent($page));
         $page->html = $pageContent->render();
-        $pageNav = $pageContent->getNavigation($page->html);
 
-        $sidebarTree = (new BookContents($page->book))->getTree();
+        $bookTree = (new BookContents($page->book))->getTree();
         $commentTree = (new CommentTree($page));
-        $nextPreviousLocator = new NextPreviousContentLocator($page, $sidebarTree);
+        $nextPreviousLocator = new NextPreviousContentLocator($page, $bookTree);
 
         View::incrementFor($page);
         $this->setPageTitle($page->getShortName());
@@ -164,13 +164,10 @@ class PageController extends Controller
             'page'            => $page,
             'book'            => $page->book,
             'current'         => $page,
-            'sidebarTree'     => $sidebarTree,
+            'bookTree'        => $bookTree,
             'commentTree'     => $commentTree,
-            'pageNav'         => $pageNav,
-            'watchOptions'    => new UserEntityWatchOptions(user(), $page),
             'next'            => $nextPreviousLocator->getNext(),
             'previous'        => $nextPreviousLocator->getPrevious(),
-            'referenceCount'  => $this->referenceFetcher->getReferenceCountToEntity($page),
         ]);
     }
 
@@ -235,6 +232,7 @@ class PageController extends Controller
      * Save a draft update as a revision.
      *
      * @throws NotFoundException
+     * @throws PermissionsException
      */
     public function saveDraft(Request $request, int $pageId)
     {
@@ -243,6 +241,10 @@ class PageController extends Controller
 
         if (!$this->isSignedIn()) {
             return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
+        }
+
+        if ($page->draft) {
+            $this->ensureDraftAccess($page);
         }
 
         $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
@@ -294,11 +296,14 @@ class PageController extends Controller
      * Show the deletion page for the specified page.
      *
      * @throws NotFoundException
+     * @throws PermissionsException
      */
     public function showDeleteDraft(string $bookSlug, int $pageId)
     {
         $page = $this->queries->findVisibleByIdOrFail($pageId);
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->ensureDraftAccess($page);
+
         $this->setPageTitle(trans('entities.pages_delete_draft_named', ['pageName' => $page->getShortName()]));
         $usedAsTemplate =
             $this->entityQueries->books->start()->where('default_template_id', '=', $page->id)->count() > 0 ||
@@ -340,7 +345,9 @@ class PageController extends Controller
         $page = $this->queries->findVisibleByIdOrFail($pageId);
         $book = $page->book;
         $chapter = $page->chapter;
+
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
+        $this->ensureDraftAccess($page);
 
         $this->pageRepo->destroy($page);
 
@@ -358,8 +365,8 @@ class PageController extends Controller
      */
     public function showRecentlyUpdated()
     {
-        $visibleBelongsScope = function (BelongsTo $query) {
-            $query->scopes('visible');
+        $visibleBelongsScope = function (Relation $relation): void {
+            $relation->scopes('visible');
         };
 
         $pages = $this->queries->visibleForList()
@@ -469,5 +476,15 @@ class PageController extends Controller
         $this->showSuccessNotification(trans('entities.pages_copy_success'));
 
         return redirect($pageCopy->getUrl());
+    }
+
+    /**
+     * @throws PermissionsException
+     */
+    protected function ensureDraftAccess(Page $draft): void
+    {
+        if (!$draft->draft || $draft->created_by !== user()->id) {
+            throw new PermissionsException('This page is already published or does not belong to you.');
+        }
     }
 }

@@ -7,6 +7,7 @@ use BookStack\Theming\ThemeService;
 use BookStack\Theming\ThemeViews;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\FileViewFinder;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -27,7 +28,11 @@ class ThemeServiceProvider extends ServiceProvider
         // Boot up the theme system
         $themeService = $this->app->make(ThemeService::class);
         $viewFactory = $this->app->make('view');
-        $themeViews = new ThemeViews($viewFactory->getFinder());
+        $viewFinder = $viewFactory->getFinder();
+        if (!($viewFinder instanceof FileViewFinder)) {
+            throw new \Exception('Only the file view finder is supported for the theme system');
+        }
+        $themeViews = new ThemeViews($viewFinder);
 
         // Use a custom include so that we can insert theme views before/after includes.
         // This is done, even if no theme is active, so that view caching does not create problems

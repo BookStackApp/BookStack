@@ -5,6 +5,7 @@ namespace BookStack\Util\HtmlPurifier;
 use BookStack\App\AppVersion;
 use BookStack\Util\HtmlPurifier\Filters\UriEnsureScheme;
 use BookStack\Util\HtmlPurifier\Filters\UriLimitFileProtocolToAnchors;
+use BookStack\Util\HtmlPurifier\Filters\UriMakeAbsolute;
 use BookStack\Util\UrlFilter;
 use HTMLPurifier;
 use HTMLPurifier_Config;
@@ -12,6 +13,7 @@ use HTMLPurifier_DefinitionCache_Serializer;
 use HTMLPurifier_HTML5Config;
 use HTMLPurifier_HTMLDefinition;
 use HTMLPurifier_URIDefinition;
+use HTMLPurifier_URISchemeRegistry;
 
 /**
  * Provides a configured HTML Purifier instance.
@@ -39,6 +41,9 @@ class ConfiguredHtmlPurifier
         if ($htmlDef instanceof HTMLPurifier_HTMLDefinition) {
             $this->configureHtmlDefinition($htmlDef);
         }
+
+        $registry = HTMLPurifier_URISchemeRegistry::instance();
+        $registry->register('sftp', new SftpUriScheme());
 
         $uriDef = $config->getDefinition('URI', true, true);
         if ($uriDef instanceof HTMLPurifier_URIDefinition) {
@@ -94,7 +99,7 @@ class ConfiguredHtmlPurifier
         $defaultScheme = str_starts_with(url('/'), 'http:') ? 'http' : 'https';
         $config->set('URI.SafeIframeRegexp', '%^(http://|https://|//)%');
         $config->set('URI.AllowedSchemes', $allowedSchemesSetting);
-        $config->set('URI.MakeAbsolute', true);
+        $config->set('URI.MakeAbsolute', false); // We register our own MakeAbsolute filter below
         $config->set('URI.DefaultScheme', $defaultScheme);
         $config->set('URI.Base', url('/'));
 
@@ -160,6 +165,10 @@ class ConfiguredHtmlPurifier
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
 
+        // Allow 'align' attribute on table cells
+        $definition->addAttribute('td', 'align', 'Enum#left,center,right');
+        $definition->addAttribute('th', 'align', 'Enum#left,center,right');
+
         // Set up custom handler for srcset
         // To remove once added upstream: https://github.com/xemlock/htmlpurifier-html5/pull/91
         $definition->addAttribute('img', 'srcset', new SrcsetAttrDef());
@@ -170,6 +179,7 @@ class ConfiguredHtmlPurifier
     {
         $definition->registerFilter(new UriLimitFileProtocolToAnchors());
         $definition->registerFilter(new UriEnsureScheme());
+        $definition->registerFilter(new UriMakeAbsolute());
     }
 
     public function purify(string $html): string

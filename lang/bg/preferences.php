@@ -37,7 +37,7 @@ return [
 
     'profile' => 'Profile Details',
     'profile_desc' => 'Manage the details of your account which represents you to other users, in addition to details that are used for communication and system personalisation.',
-    'profile_view_public' => 'View Public Profile',
+    'profile_view_public' => 'Виж публичния профил',
     'profile_name_desc' => 'Configure your display name which will be visible to other users in the system through the activity you perform, and content you own.',
     'profile_email_desc' => 'This email will be used for notifications and, depending on active system authentication, system access.',
     'profile_email_no_permission' => 'Unfortunately you don\'t have permission to change your email address. If you want to change this, you\'d need to ask an administrator to change this for you.',

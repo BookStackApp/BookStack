@@ -5,6 +5,7 @@ namespace BookStack\Entities\Queries;
 use BookStack\Activity\Models\View;
 use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class QueryRecentlyViewed
@@ -22,6 +23,7 @@ class QueryRecentlyViewed
             return collect();
         }
 
+        /** @var Builder<View> $query */
         $query = $this->permissions->restrictEntityRelationQuery(
             View::query(),
             'views',

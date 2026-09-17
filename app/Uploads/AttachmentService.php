@@ -102,7 +102,7 @@ class AttachmentService
     /**
      * Updates the ordering for a listing of attached files.
      */
-    public function updateFileOrderWithinPage(array $attachmentOrder, string $pageId)
+    public function updateFileOrderWithinPage(array $attachmentOrder, int $pageId)
     {
         foreach ($attachmentOrder as $index => $attachmentId) {
             Attachment::query()->where('uploaded_to', '=', $pageId)

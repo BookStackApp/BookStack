@@ -1282,7 +1282,7 @@ export class RangeSelection implements BaseSelection {
     if (
       insertedParagraph &&
       $isElementNode(lastInsertedBlock) &&
-      (insertedParagraph.canMergeWhenEmpty() || INTERNAL_$isBlock(lastToInsert))
+      (insertedParagraph.canMergeWhenEmpty() || INTERNAL_$isBlock(lastToInsert) || ($isElementNode(lastToInsert) && lastToInsert.isShadowRoot()))
     ) {
       lastInsertedBlock.append(...insertedParagraph.getChildren());
       insertedParagraph.remove();

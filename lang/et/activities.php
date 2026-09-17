@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'Kasutaja on muudetud',
     'user_delete' => 'kustutas kasutaja',
     'user_delete_notification' => 'Kasutaja on kustutatud',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'lähtestas kasutaja MFA',
+    'user_mfa_reset_notification' => 'Mitmeastmelise autentimise meetodite lähestamine',
 
     // API Tokens
     'api_token_create' => 'lisas API tunnuse',

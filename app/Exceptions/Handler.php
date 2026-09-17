@@ -169,14 +169,4 @@ class Handler extends ExceptionHandler
 
         return redirect()->guest('login');
     }
-
-    /**
-     * Convert a validation exception into a JSON response.
-     *
-     * @param Request $request
-     */
-    protected function invalidJson($request, ValidationException $exception): JsonResponse
-    {
-        return response()->json($exception->errors(), $exception->status);
-    }
 }

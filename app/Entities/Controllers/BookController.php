@@ -2,10 +2,8 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\ActivityType;
 use BookStack\Activity\Models\View;
-use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
 use BookStack\Entities\Queries\EntityQueries;
@@ -19,7 +17,6 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
-use BookStack\References\ReferenceFetcher;
 use BookStack\Util\DatabaseTransaction;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\Request;
@@ -34,7 +31,6 @@ class BookController extends Controller
         protected BookQueries $queries,
         protected EntityQueries $entityQueries,
         protected BookshelfQueries $shelfQueries,
-        protected ReferenceFetcher $referenceFetcher,
     ) {
     }
 
@@ -53,9 +49,6 @@ class BookController extends Controller
         $books = $this->queries->visibleForListWithCover()
             ->orderBy($listOptions->getSort(), $listOptions->getOrder())
             ->paginate(setting()->getInteger('lists-page-count-books', 18, 1, 1000));
-        $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->take(4)->get() : false;
-        $popular = $this->queries->popularForList()->take(4)->get();
-        $new = $this->queries->visibleForList()->orderBy('created_at', 'desc')->take(4)->get();
 
         $this->shelfContext->clearShelfContext();
 
@@ -63,9 +56,6 @@ class BookController extends Controller
 
         return view('books.index', [
             'books'   => $books,
-            'recents' => $recents,
-            'popular' => $popular,
-            'new'     => $new,
             'view'    => $view,
             'listOptions' => $listOptions,
         ]);
@@ -127,7 +117,7 @@ class BookController extends Controller
     /**
      * Display the specified book.
      */
-    public function show(Request $request, ActivityQueries $activities, string $slug)
+    public function show(Request $request, string $slug)
     {
         try {
             $book = $this->queries->findVisibleBySlugOrFail($slug);
@@ -140,7 +130,6 @@ class BookController extends Controller
         }
 
         $bookChildren = (new BookContents($book))->getTree(true);
-        $bookParentShelves = $book->shelves()->scopes('visible')->get();
 
         View::incrementFor($book);
         if ($request->has('shelf')) {
@@ -153,10 +142,6 @@ class BookController extends Controller
             'book'              => $book,
             'current'           => $book,
             'bookChildren'      => $bookChildren,
-            'bookParentShelves' => $bookParentShelves,
-            'watchOptions'      => new UserEntityWatchOptions(user(), $book),
-            'activity'          => $activities->entityActivity($book, 20, 1),
-            'referenceCount'    => $this->referenceFetcher->getReferenceCountToEntity($book),
         ]);
     }
 

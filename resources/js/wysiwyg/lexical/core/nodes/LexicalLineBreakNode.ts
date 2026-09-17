@@ -6,10 +6,10 @@
  *
  */
 
-import type {KlassConstructor} from '../LexicalEditor';
+import {KlassConstructor, LexicalEditor} from '../LexicalEditor';
 import type {
   DOMConversionMap,
-  DOMConversionOutput,
+  DOMConversionOutput, DOMExportOutput,
   NodeKey,
   SerializedLexicalNode,
 } from '../LexicalNode';
@@ -41,6 +41,25 @@ export class LineBreakNode extends LexicalNode {
 
   createDOM(): HTMLElement {
     return document.createElement('br');
+  }
+
+  exportDOM(editor: LexicalEditor): DOMExportOutput {
+    const output = super.exportDOM(editor);
+    const parent = this.getParent();
+
+    // We insert an extra line break when the line break is the last child of a block node
+    // so that a line break is properly represented as an empty line, which mirrors the in-editor
+    // behaviour, where it's handled at the reconciliation phase
+    if (parent && !parent.isInline() && parent.getLastChild()?.getKey() === this.getKey()) {
+      output.after = (el) => {
+        if (el instanceof HTMLElement) {
+          el.before(document.createElement('br'), el);
+        }
+        return null;
+      };
+    }
+
+    return output;
   }
 
   updateDOM(): false {

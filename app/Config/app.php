@@ -120,7 +120,7 @@ return [
     'auto_detect_locale' => env('APP_AUTO_LANG_PUBLIC', true),
 
     // Encryption key
-    'key' => env('APP_KEY', 'AbAZchsay4uBTU33RubBzLKw203yqSqr'),
+    'key' => env('APP_KEY'),
 
     // Encryption cipher
     'cipher' => 'AES-256-CBC',

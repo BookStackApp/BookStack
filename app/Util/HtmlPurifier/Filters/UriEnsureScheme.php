@@ -31,7 +31,9 @@ class UriEnsureScheme extends HTMLPurifier_URIFilter
         $defaultScheme = $def->defaultScheme ?? '';
 
         if (empty($uri->scheme) && $defaultScheme) {
-            $uri->scheme = $defaultScheme;
+            if (!str_starts_with($uri->toString(), '#')) {
+                $uri->scheme = $defaultScheme;
+            }
         }
 
         return true;

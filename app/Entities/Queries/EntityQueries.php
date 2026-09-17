@@ -81,6 +81,13 @@ class EntityQueries
             })->leftJoin('entity_page_data', function (JoinClause $join) {
                 $join->on('entity_page_data.page_id', '=', 'entities.id')
                     ->where('entities.type', '=', 'page');
+            })->where(function ($query) {
+                $query->whereNull('entity_page_data.draft')
+                    ->orWhere('entity_page_data.draft', '=', 0)
+                    ->orWhere(function ($query) {
+                        $query->where('entity_page_data.draft', '=', 1)
+                            ->where('entities.owned_by', '=', user()->id);
+                    });
             });
     }
 

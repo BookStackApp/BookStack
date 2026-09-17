@@ -87,7 +87,7 @@ final class ZipExportBook extends ZipExportModel
             'id'    => ['nullable', 'int', $context->uniqueIdRule('book')],
             'name'  => ['required', 'string', 'min:1'],
             'description_html' => ['nullable', 'string'],
-            'cover' => ['nullable', 'string', $context->fileReferenceRule()],
+            'cover' => ['nullable', 'string', $context->imageFileReferenceRule()],
             'tags' => ['array'],
             'pages' => ['array'],
             'chapters' => ['array'],

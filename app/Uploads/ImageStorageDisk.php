@@ -69,6 +69,14 @@ class ImageStorageDisk
     }
 
     /**
+     * Get the size of the file at the given path.
+     */
+    public function size(string $path): int
+    {
+        return $this->filesystem->size($this->adjustPathForDisk($path));
+    }
+
+    /**
      * Save the given image data at the given path. Can choose to set
      * the image as public which will update its visibility after saving.
      */

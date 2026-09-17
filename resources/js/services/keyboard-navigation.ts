@@ -87,7 +87,9 @@ export class KeyboardNavigationHandler {
         const focusable: HTMLElement[] = [];
         const selector = '[tabindex]:not([tabindex="-1"]),[href],button:not([tabindex="-1"],[disabled]),input:not([type=hidden])';
         for (const container of this.containers) {
-            const toAdd = [...container.querySelectorAll(selector)].filter(e => isHTMLElement(e));
+            const toAdd = [...container.querySelectorAll(selector)].filter(e => {
+                return isHTMLElement(e) && e.checkVisibility();
+            }) as HTMLElement[];
             focusable.push(...toAdd);
         }
 

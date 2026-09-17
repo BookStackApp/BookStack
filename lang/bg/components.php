@@ -6,7 +6,7 @@ return [
 
     // Image Manager
     'image_select' => 'Избор на изображение',
-    'image_list' => 'Image List',
+    'image_list' => 'Списък с изображения',
     'image_details' => 'Image Details',
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',

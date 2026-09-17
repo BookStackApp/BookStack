@@ -25,6 +25,8 @@ export interface DecoratorNode<T> {
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class DecoratorNode<T> extends LexicalNode {
   declare ['constructor']: KlassConstructor<typeof DecoratorNode<T>>;
+  __dir: 'ltr' | 'rtl' | null = null;
+
   constructor(key?: NodeKey) {
     super(key);
   }
@@ -46,6 +48,17 @@ export class DecoratorNode<T> extends LexicalNode {
 
   isKeyboardSelectable(): boolean {
     return true;
+  }
+
+  getDirection(): 'ltr' | 'rtl' | null {
+    const self = this.getLatest();
+    return self.__dir;
+  }
+
+  setDirection(direction: 'ltr' | 'rtl' | null): this {
+    const self = this.getWritable();
+    self.__dir = direction;
+    return self;
   }
 }
 

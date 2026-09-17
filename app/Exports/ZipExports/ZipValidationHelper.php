@@ -3,6 +3,7 @@
 namespace BookStack\Exports\ZipExports;
 
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
+use BookStack\Uploads\ImageService;
 use Illuminate\Validation\Factory;
 
 class ZipValidationHelper
@@ -36,6 +37,11 @@ class ZipValidationHelper
     public function fileReferenceRule(array $acceptedMimes = []): ZipFileReferenceRule
     {
         return new ZipFileReferenceRule($this, $acceptedMimes);
+    }
+
+    public function imageFileReferenceRule(): ZipFileReferenceRule
+    {
+        return new ZipFileReferenceRule($this, ImageService::getSupportedMimeTypes());
     }
 
     public function uniqueIdRule(string $type): ZipUniqueIdRule

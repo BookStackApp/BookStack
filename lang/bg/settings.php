@@ -51,7 +51,7 @@ return [
     'color_scheme' => 'Application Color Scheme',
     'color_scheme_desc' => 'Set the colors to use in the application user interface. Colors can be configured separately for dark and light modes to best fit the theme and ensure legibility.',
     'ui_colors_desc' => 'Set the application primary color and default link color. The primary color is mainly used for the header banner, buttons and interface decorations. The default link color is used for text-based links and actions, both within written content and in the application interface.',
-    'app_color' => 'Primary Color',
+    'app_color' => 'Основен цвят',
     'link_color' => 'Default Link Color',
     'content_colors_desc' => 'Set colors for all elements in the page organisation hierarchy. Choosing colors with a similar brightness to the default colors is recommended for readability.',
     'bookshelf_color' => 'Цвят на рафта',

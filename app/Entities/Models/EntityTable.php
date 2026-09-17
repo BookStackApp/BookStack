@@ -25,6 +25,9 @@ class EntityTable extends Model
 
     /**
      * Get the entities that are visible to the current user.
+     * Note: This only applies basic permission filtering which considers the core entity table.
+     * This will not filter on information from other tables such as page draft status.
+     * That should be done after applying this scope.
      */
     public function scopeVisible(Builder $query): Builder
     {

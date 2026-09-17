@@ -232,10 +232,10 @@ class AttachmentController extends Controller
         $attachmentSize = $this->attachmentService->getAttachmentFileSize($attachment);
 
         if ($request->input('open') === 'true') {
-            return $this->download()->streamedInline($attachmentStream, $fileName, $attachmentSize);
+            return $this->createDownload()->streamedInline($attachmentStream, $fileName, $attachmentSize);
         }
 
-        return $this->download()->streamedDirectly($attachmentStream, $fileName, $attachmentSize);
+        return $this->createDownload()->streamedDirectly($attachmentStream, $fileName, $attachmentSize);
     }
 
     /**

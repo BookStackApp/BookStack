@@ -4,6 +4,7 @@ namespace Tests\Search;
 
 use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
 class EntitySearchTest extends TestCase
@@ -497,5 +498,17 @@ class EntitySearchTest extends TestCase
         $resp = $this->asEditor()->get('/search/suggest?term=spaghettisaurusrex');
         $this->withHtml($resp)->assertElementCount('a', 0);
         $resp->assertSee('No items available');
+    }
+
+    public function test_draft_pages_not_visible_to_others_in_results()
+    {
+        $editor = $this->users->editor();
+        $creator = $this->users->newUser();
+        $creator->roles()->sync([$editor->roles()->first()->id]);
+        $this->actingAs($creator);
+        $page = $this->entities->newDraftPage(['name' => 'Editors draft page', 'html' => '<p>My supercool draft page</p>']);
+
+        $resp = $this->actingAs($editor)->get('/search?term=' . urlencode("{type:page} {created_by:{$creator->slug}}"));
+        $resp->assertDontSee('Editors draft page');
     }
 }

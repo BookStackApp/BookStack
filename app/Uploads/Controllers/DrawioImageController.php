@@ -6,6 +6,7 @@ use BookStack\Entities\Queries\PageQueries;
 use BookStack\Exceptions\ImageUploadException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
+use BookStack\Uploads\Base64UriMimeRule;
 use BookStack\Uploads\ImageRepo;
 use BookStack\Uploads\ImageResizer;
 use BookStack\Util\OutOfMemoryHandler;
@@ -57,7 +58,7 @@ class DrawioImageController extends Controller
     {
         $this->checkPermission(Permission::ImageCreateAll);
         $validated = $this->validate($request, [
-            'image'       => ['required', 'string'],
+            'image'       => ['required', 'string', new Base64UriMimeRule('image/png')],
             'uploaded_to' => ['required', 'integer'],
         ]);
 

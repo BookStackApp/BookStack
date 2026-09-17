@@ -96,6 +96,23 @@ class DrawioTest extends TestCase
         $upload()->assertStatus(200);
     }
 
+    public function test_drawing_base64_upload_validates_data_as_image()
+    {
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+
+        $upload = $this->postJson('images/drawio', [
+            'uploaded_to' => $page->id,
+            'image'       => 'image/png;base64,' . base64_encode('i like turtles'),
+        ]);
+
+        $upload->assertStatus(422);
+        $upload->assertJsonValidationErrors([
+            'image' => 'The image must be a valid base64 URI containing data of image/png mime type.',
+        ]);
+    }
+
     public function test_drawio_url_can_be_configured()
     {
         config()->set('services.drawio', 'http://cats.com?dog=tree');

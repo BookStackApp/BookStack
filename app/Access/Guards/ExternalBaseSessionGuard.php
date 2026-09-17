@@ -50,8 +50,12 @@ class ExternalBaseSessionGuard implements StatefulGuard
     /**
      * Create a new authentication guard.
      */
-    public function __construct(string $name, UserProvider $provider, Session $session, RegistrationService $registrationService)
-    {
+    public function __construct(
+        string $name,
+        UserProvider $provider,
+        Session $session,
+        RegistrationService $registrationService
+    ) {
         $this->name = $name;
         $this->session = $session;
         $this->provider = $provider;

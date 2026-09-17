@@ -30,7 +30,7 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $pdfContent = $this->exportFormatter->bookToPdf($book);
 
-        return $this->download()->directly($pdfContent, $bookSlug . '.pdf');
+        return $this->createDownload()->directly($pdfContent, $bookSlug . '.pdf');
     }
 
     /**
@@ -43,7 +43,7 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $htmlContent = $this->exportFormatter->bookToContainedHtml($book);
 
-        return $this->download()->directly($htmlContent, $bookSlug . '.html');
+        return $this->createDownload()->directly($htmlContent, $bookSlug . '.html');
     }
 
     /**
@@ -54,7 +54,7 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToPlainText($book);
 
-        return $this->download()->directly($textContent, $bookSlug . '.txt');
+        return $this->createDownload()->directly($textContent, $bookSlug . '.txt');
     }
 
     /**
@@ -65,7 +65,7 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $textContent = $this->exportFormatter->bookToMarkdown($book);
 
-        return $this->download()->directly($textContent, $bookSlug . '.md');
+        return $this->createDownload()->directly($textContent, $bookSlug . '.md');
     }
 
     /**
@@ -77,6 +77,6 @@ class BookExportController extends Controller
         $book = $this->queries->findVisibleBySlugOrFail($bookSlug);
         $zip = $builder->buildForBook($book);
 
-        return $this->download()->streamedFileDirectly($zip, $bookSlug . '.zip', true);
+        return $this->createDownload()->streamedFileDirectly($zip, $bookSlug . '.zip', true);
     }
 }

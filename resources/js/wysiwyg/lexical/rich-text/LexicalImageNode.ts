@@ -7,7 +7,6 @@ import {
 } from "lexical";
 import type {EditorConfig} from "lexical/LexicalEditor";
 import {CommonBlockAlignment, extractAlignmentFromElement} from "lexical/nodes/common";
-import {$selectSingleNode} from "../../utils/selection";
 import {SerializedElementNode} from "lexical/nodes/LexicalElementNode";
 
 export interface ImageNodeOptions {

@@ -3,6 +3,8 @@
 namespace BookStack\Exports;
 
 use BookStack\Activity\ActivityType;
+use BookStack\Entities\Models\Book;
+use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Exceptions\FileUploadException;
@@ -119,6 +121,9 @@ class ImportRepo
         $parentModel = null;
         if ($import->type === 'page' || $import->type === 'chapter') {
             $parentModel = $parent ? $this->entityQueries->findVisibleByStringIdentifier($parent) : null;
+            if ($parentModel && !($parentModel instanceof Book || $parentModel instanceof Chapter)) {
+                throw new ZipImportException(['Selected parent is not a book or chapter']);
+            }
         }
 
         DB::beginTransaction();

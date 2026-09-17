@@ -2,6 +2,7 @@
 
 namespace BookStack\Uploads;
 
+use BookStack\Exceptions\ImageUploadException;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Str;
 
@@ -45,6 +46,7 @@ class ImageStorage
 
     /**
      * Clean up an image file name to be both URL and storage safe.
+     * @throws ImageUploadException
      */
     public function cleanImageFileName(string $name): string
     {
@@ -53,6 +55,10 @@ class ImageStorage
         $extension = array_pop($nameParts);
         $name = implode('-', $nameParts);
         $name = Str::slug($name);
+
+        if (!ImageService::isExtensionSupported($extension)) {
+            throw new ImageUploadException('Non supported image extension used when storing image: ' . $extension);
+        }
 
         if (strlen($name) === 0) {
             $name = Str::random(10);

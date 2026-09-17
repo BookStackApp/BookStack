@@ -332,9 +332,9 @@ return [
 
     // Editor Sidebar
     'toggle_sidebar' => 'サイドバーの切り替え',
-    'page_contents' => 'Page Contents',
-    'page_contents_none' => 'No headings were found in the page content.',
-    'page_contents_info' => 'The contents menu is generated from any heading formats used in the page.',
+    'page_contents' => 'ページの内容',
+    'page_contents_none' => 'ページ内に見出しが見つかりませんでした。',
+    'page_contents_info' => '目次メニューは、ページ内で使用されている見出し書式から生成されます。',
     'page_tags' => 'タグ',
     'chapter_tags' => 'チャプターのタグ',
     'book_tags' => 'ブックのタグ',

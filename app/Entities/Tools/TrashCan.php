@@ -358,6 +358,8 @@ class TrashCan
             $entity->chapters()->withTrashed()->withCount('deletions')->get()->each($restoreAction);
         }
 
+        $entity->rebuildPermissions();
+
         return $count;
     }
 

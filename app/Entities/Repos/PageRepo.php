@@ -91,7 +91,7 @@ class PageRepo
             $draft = $this->baseRepo->update($draft, $input);
             $draft->rebuildPermissions();
 
-            $summary = trim($input['summary'] ?? '') ?: trans('entities.pages_initial_revision');
+            $summary = trim($input['changelog'] ?? '') ?: trans('entities.pages_initial_revision');
             $this->revisionRepo->storeNewForPage($draft, $summary);
             $draft->refresh();
 
@@ -134,7 +134,7 @@ class PageRepo
         $this->revisionRepo->deleteDraftsForCurrentUser($page);
 
         // Save a revision after updating
-        $summary = trim($input['summary'] ?? '');
+        $summary = trim($input['changelog'] ?? '');
         $htmlChanged = isset($input['html']) && $input['html'] !== $oldHtml;
         $nameChanged = isset($input['name']) && $input['name'] !== $oldName;
         $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;

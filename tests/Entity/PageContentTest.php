@@ -48,7 +48,7 @@ class PageContentTest extends TestCase
         $includeTag = '{{@' . $secondPage->id . '}}';
         $page->html = '<p>' . $includeTag . '</p>';
 
-        $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'summary' => '']);
+        $resp = $this->put($page->getUrl(), ['name' => $page->name, 'html' => $page->html, 'changelog' => '']);
 
         $resp->assertStatus(302);
 
@@ -127,7 +127,7 @@ class PageContentTest extends TestCase
         $pageSave = $this->put($page->getUrl(), [
             'name'    => $page->name,
             'html'    => $content,
-            'summary' => '',
+            'changelog' => '',
         ]);
         $pageSave->assertRedirect();
 
@@ -144,7 +144,7 @@ class PageContentTest extends TestCase
         $this->put($page->getUrl(), [
             'name'    => $page->name,
             'html'    => $content,
-            'summary' => '',
+            'changelog' => '',
         ]);
 
         $updatedPage = Page::query()->where('id', '=', $page->id)->first();
@@ -253,7 +253,7 @@ class PageContentTest extends TestCase
 | Paragraph   | Text        |';
         $this->put($page->getUrl(), [
             'name' => $page->name,  'markdown' => $content,
-            'html' => '', 'summary' => '',
+            'html' => '', 'changelog' => '',
         ]);
 
         $page->refresh();
@@ -272,7 +272,7 @@ class PageContentTest extends TestCase
 - [x] Item b';
         $this->put($page->getUrl(), [
             'name' => $page->name,  'markdown' => $content,
-            'html' => '', 'summary' => '',
+            'html' => '', 'changelog' => '',
         ]);
 
         $page->refresh();
@@ -292,7 +292,7 @@ class PageContentTest extends TestCase
         $content = '~~some crossed out text~~';
         $this->put($page->getUrl(), [
             'name' => $page->name,  'markdown' => $content,
-            'html' => '', 'summary' => '',
+            'html' => '', 'changelog' => '',
         ]);
 
         $page->refresh();
@@ -311,7 +311,7 @@ class PageContentTest extends TestCase
         $content = '<!-- Test Comment -->';
         $this->put($page->getUrl(), [
             'name' => $page->name,  'markdown' => $content,
-            'html' => '', 'summary' => '',
+            'html' => '', 'changelog' => '',
         ])->assertRedirect();
 
         $page->refresh();
@@ -328,7 +328,7 @@ class PageContentTest extends TestCase
         $page = $this->entities->page();
 
         $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
+            'name' => $page->name, 'changelog' => '',
             'html' => '<p>test<img src="data:image/jpeg;base64,' . $this->base64Jpeg . '"/></p>',
         ]);
 
@@ -352,7 +352,7 @@ class PageContentTest extends TestCase
         $base64PngWithWhitespace = "iVBORw0KGg\noAAAANSUhE\tUgAAAAEAAAA BCA   YAAAAfFcSJAAA\n\t ACklEQVR4nGMAAQAABQAB";
         $base64PngWithoutWhitespace = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQAB';
         $this->put($page->getUrl(), [
-            'name' => $page->name, 'summary' => '',
+            'name' => $page->name, 'changelog' => '',
             'html' => '<p>test<img src="data:image/png;base64,' . $base64PngWithWhitespace . '"/></p>',
         ]);
 
@@ -381,7 +381,7 @@ class PageContentTest extends TestCase
             $page = $this->entities->page();
 
             $this->put($page->getUrl(), [
-                'name' => $page->name, 'summary' => '',
+                'name' => $page->name, 'changelog' => '',
                 'html' => '<p>test<img src="data:image/' . $extension . ';base64,' . $this->base64Jpeg . '"/></p>',
             ]);
 
@@ -425,7 +425,7 @@ class PageContentTest extends TestCase
         $page = $this->entities->page();
 
         $this->put($page->getUrl(), [
-            'name'     => $page->name, 'summary' => '',
+            'name'     => $page->name, 'changelog' => '',
             'markdown' => 'test ![test](data:image/jpeg;base64,' . $this->base64Jpeg . ')',
         ]);
 
@@ -456,7 +456,7 @@ class PageContentTest extends TestCase
         $base64Content = base64_encode($content);
 
         $this->put($page->getUrl(), [
-            'name'     => $page->name, 'summary' => '',
+            'name'     => $page->name, 'changelog' => '',
             'markdown' => 'test ![test](data:image/jpeg;base64,' . $base64Content . ') ![test](data:image/jpeg;base64,' . $base64Content . ')',
         ]);
 
@@ -479,7 +479,7 @@ class PageContentTest extends TestCase
         $page = $this->entities->page();
 
         $this->asEditor()->put($page->getUrl(), [
-            'name'     => $page->name, 'summary' => '',
+            'name'     => $page->name, 'changelog' => '',
             'markdown' => 'test ![test](data:image/jiff;base64,' . $this->base64Jpeg . ')',
         ]);
 

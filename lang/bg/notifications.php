@@ -15,7 +15,7 @@ return [
     'comment_mention_intro' => 'You were mentioned in a comment on :appName:',
 
     'detail_page_name' => 'Page Name:',
-    'detail_page_path' => 'Page Path:',
+    'detail_page_path' => 'Път към страница:',
     'detail_commenter' => 'Commenter:',
     'detail_comment' => 'Comment:',
     'detail_created_by' => 'Created By:',

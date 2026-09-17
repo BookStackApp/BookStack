@@ -4,6 +4,7 @@ namespace BookStack\Search;
 
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\EntityTable;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\EntityHydrator;
 use BookStack\Permissions\PermissionApplicator;
@@ -98,6 +99,8 @@ class SearchRunner
 
     /**
      * Get a page of result data from the given query based on the provided page parameters.
+     * @param EloquentBuilder<EntityTable> $query
+     * @return Collection<Entity>
      */
     protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page, int $count): Collection
     {
@@ -114,6 +117,7 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      * @param string[] $entityTypes
+     * @return EloquentBuilder<EntityTable>
      */
     protected function buildQuery(SearchOptions $searchOpts, array $entityTypes): EloquentBuilder
     {
@@ -298,7 +302,7 @@ class SearchRunner
                 $query->where('name', '=', $tagParts['name']);
             }
 
-            if (is_numeric($tagParts['value']) && is_finite($tagParts['value']) && $tagParts['operator'] !== 'like') {
+            if (is_numeric($tagParts['value']) && is_finite(floatval($tagParts['value'])) && $tagParts['operator'] !== 'like') {
                 // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
                 // search the value as a string which prevents being able to do number-based operations
                 // on the tag values. We ensure it has a numeric value and then cast it just to be sure.

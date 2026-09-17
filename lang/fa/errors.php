@@ -109,7 +109,7 @@ return [
     'import_zip_cant_read' => 'امکان ایجاد کاربر وجود ندارد؛ زیرا ارسال ایمیل دعوت با خطا مواجه شد.',
     'import_zip_cant_decode_data' => 'محتوای data.json در فایل ZIP پیدا یا رمزگشایی نشد.',
     'import_zip_no_data' => 'داده‌های فایل ZIP فاقد محتوای کتاب، فصل یا صفحه مورد انتظار است.',
-    'import_zip_data_too_large' => 'ZIP data.json content exceeds the configured application maximum upload size.',
+    'import_zip_data_too_large' => 'محتوای فایل ZIP data.json از حداکثر حجم آپلود مجازِ تعیین‌شده در برنامه بیشتر است.',
     'import_validation_failed' => 'اعتبارسنجی فایل ZIP واردشده با خطا مواجه شد:',
     'import_zip_failed_notification' => ' فایل ZIP وارد نشد.',
     'import_perms_books' => 'شما مجوز لازم برای ایجاد کتاب را ندارید.',
@@ -125,7 +125,7 @@ return [
     'api_incorrect_token_secret' => 'راز ارائه شده برای کد API استفاده شده نادرست است',
     'api_user_no_api_permission' => 'مالک نشانه API استفاده شده اجازه برقراری تماس های API را ندارد',
     'api_user_token_expired' => 'رمز مجوز استفاده شده منقضی شده است',
-    'api_cookie_auth_only_get' => 'Only GET requests are allowed when using the API with cookie-based authentication',
+    'api_cookie_auth_only_get' => 'برای استفاده از API با احراز هویت مبتنی بر cookie فقط درخواست GET مجاز است',
 
     // Settings & Maintenance
     'maintenance_test_email_failure' => 'خطا در هنگام ارسال ایمیل آزمایشی:',

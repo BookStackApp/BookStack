@@ -40,7 +40,7 @@ class ShelvesApiTest extends TestCase
         $shelf = $this->entities->shelf();
 
         $baseRepo = $this->app->make(BaseRepo::class);
-        $image = $this->files->uploadedImage('shelf_cover');
+        $image = $this->files->uploadedImage('shelf_cover.png');
         $baseRepo->updateCoverImage($shelf, $image);
 
         $resp = $this->getJson($this->baseEndpoint . '?filter[id]=' . $shelf->id);

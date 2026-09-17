@@ -1,6 +1,6 @@
 import Sortable from 'sortablejs';
 import {Component} from './component';
-import {buildListActions, sortActionClickListener} from '../services/dual-lists.ts';
+import {buildListActions, sortActionClickListener} from '../services/multi-lists.ts';
 
 export class ShelfSort extends Component {
 

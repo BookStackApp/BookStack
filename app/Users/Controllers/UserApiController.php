@@ -110,7 +110,7 @@ class UserApiController extends ApiController
      */
     public function read(string $id)
     {
-        $user = $this->userRepo->getById($id);
+        $user = $this->userRepo->getById(intval($id));
         $this->singleFormatter($user);
 
         return response()->json($user);
@@ -124,8 +124,8 @@ class UserApiController extends ApiController
      */
     public function update(Request $request, string $id)
     {
-        $data = $this->validate($request, $this->rules($id)['update']);
-        $user = $this->userRepo->getById($id);
+        $data = $this->validate($request, $this->rules(intval($id))['update']);
+        $user = $this->userRepo->getById(intval($id));
         $this->userRepo->update($user, $data, userCan(Permission::UsersManage));
         $this->singleFormatter($user);
 
@@ -140,7 +140,7 @@ class UserApiController extends ApiController
      */
     public function delete(Request $request, string $id)
     {
-        $user = $this->userRepo->getById($id);
+        $user = $this->userRepo->getById(intval($id));
         $newOwnerId = $request->input('migrate_ownership_id', null);
 
         $this->userRepo->destroy($user, $newOwnerId);

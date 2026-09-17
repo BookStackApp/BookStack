@@ -14,15 +14,20 @@
                     {{ trans('preferences.auth_change_password_desc') }}
                 </p>
 
-                <div class="grid half mt-m gap-xl wrap stretch-inputs mb-m">
+                <div class="grid half mt-m gap-xl wrap stretch-inputs mb-s">
                     <div>
-                        <label for="password">{{ trans('auth.password') }}</label>
+                        <label for="password">{{ trans('auth.password_new') }}</label>
                         @include('form.password', ['name' => 'password', 'autocomplete' => 'new-password'])
                     </div>
                     <div>
-                        <label for="password-confirm">{{ trans('auth.password_confirm') }}</label>
+                        <label for="password-confirm">{{ trans('auth.password_new_confirm') }}</label>
                         @include('form.password', ['name' => 'password-confirm'])
                     </div>
+                </div>
+
+                <div class="stretch-inputs mb-m">
+                    <label for="password-current">{{ trans('auth.password_current') }}</label>
+                    @include('form.password', ['name' => 'password-current'])
                 </div>
 
                 <div class="form-group text-right">

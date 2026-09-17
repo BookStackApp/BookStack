@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'ユーザーを更新しました',
     'user_delete' => 'がユーザを削除',
     'user_delete_notification' => 'ユーザーを削除しました',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'ユーザーの多要素認証をリセット',
+    'user_mfa_reset_notification' => '多要素認証方法をリセット',
 
     // API Tokens
     'api_token_create' => 'がAPIトークンを作成',

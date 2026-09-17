@@ -153,7 +153,7 @@ class ImageController extends Controller
     }
 
     /**
-     * Check related page permission and ensure type is drawio or gallery.
+     * Check related page permission and ensure the type is drawio or gallery.
      * @throws NotifyException
      */
     protected function checkImagePermission(Image $image): void
