@@ -68,9 +68,13 @@ class SearchApiTest extends TestCase
         $chapter = $book->chapters->first();
         $chapter->update(['name' => $uniqueTerm . ' chapter']);
         $chapter->indexForSearch();
+        $page = $book->pages->first();
+        $page->update(['name' => $uniqueTerm . ' page']);
+        $page->indexForSearch();
 
         $resp = $this->getJson("/api/search/book/{$book->id}?query=" . urlencode($uniqueTerm));
-        $resp->assertJsonFragment(['name' => $chapter->name, 'type' => 'chapter']);
+        $resp->assertJsonFragment(['name' => 'MyUniqueBookChapterApiTerm chapter', 'type' => 'chapter']);
+        $resp->assertJsonFragment(['name' => 'MyUniqueBookChapterApiTerm page', 'type' => 'page']);
     }
 
     public function test_book_endpoint_cannot_be_widened_to_other_types()
@@ -86,12 +90,16 @@ class SearchApiTest extends TestCase
         $page->update(['name' => $uniqueTerm . ' a page inside']);
         $page->indexForSearch();
 
+        $otherBook = $this->entities->book();
+        $otherBook->update(['name' => $uniqueTerm . ' the other book']);
+        $otherBook->indexForSearch();
+
         // A book cannot contain a book, so asking for one returns nothing rather than
         // quietly falling back to searching everything.
         $resp = $this->getJson("/api/search/book/{$book->id}?query=" . urlencode($uniqueTerm . ' {type:book}'));
         $resp->assertOk();
         $resp->assertJsonPath('total', 0);
-        $resp->assertJsonMissing(['name' => $book->name]);
+        $resp->assertDontSee($uniqueTerm);
     }
 
     public function test_chapter_endpoint_limits_results_to_that_chapter()
@@ -117,9 +125,10 @@ class SearchApiTest extends TestCase
     {
         $this->actingAsApiEditor();
         $book = $this->entities->book();
+        $chapter = $this->entities->chapter();
 
         $this->getJson("/api/search/book/{$book->id}")->assertStatus(422);
-        $this->getJson("/api/search/chapter/1")->assertStatus(422);
+        $this->getJson("/api/search/chapter/{$chapter->id}")->assertStatus(422);
     }
 
     public function test_all_endpoint_returns_entity_url()

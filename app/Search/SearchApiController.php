@@ -9,6 +9,7 @@ use BookStack\Entities\Models\Entity;
 use BookStack\Http\ApiController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class SearchApiController extends ApiController
 {
@@ -50,17 +51,14 @@ class SearchApiController extends ApiController
     {
         $this->validate($request, $this->rules['all']);
 
-        $options = SearchOptions::fromString($request->input('query') ?? '');
-        $page = intval($request->input('page', '0')) ?: 1;
-        $count = min(intval($request->input('count', '0')) ?: 20, 100);
-
+        [$options, $page, $count] = $this->getRequestData($request);
         $results = $this->searchRunner->searchEntities($options, 'all', $page, $count);
 
         return $this->resultsResponse($results, $options);
     }
 
     /**
-     * Run a search query against the contents of a single book: its pages and chapters.
+     * Run a search query against the contents of a single book, searching its pages and chapters.
      * Takes the same input as the 'all' endpoint, and the same input as the search box
      * shown within a book in the BookStack interface.
      *
@@ -71,10 +69,7 @@ class SearchApiController extends ApiController
     {
         $this->validate($request, $this->rules['book']);
 
-        $options = SearchOptions::fromString($request->input('query') ?? '');
-        $page = intval($request->input('page', '0')) ?: 1;
-        $count = min(intval($request->input('count', '0')) ?: 20, 100);
-
+        [$options, $page, $count] = $this->getRequestData($request);
         $results = $this->searchRunner->searchBook(intval($id), $options, $page, $count);
 
         return $this->resultsResponse($results, $options);
@@ -91,19 +86,28 @@ class SearchApiController extends ApiController
     {
         $this->validate($request, $this->rules['chapter']);
 
-        $options = SearchOptions::fromString($request->input('query') ?? '');
-        $page = intval($request->input('page', '0')) ?: 1;
-        $count = min(intval($request->input('count', '0')) ?: 20, 100);
-
+        [$options, $page, $count] = $this->getRequestData($request);
         $results = $this->searchRunner->searchChapter(intval($id), $options, $page, $count);
 
         return $this->resultsResponse($results, $options);
     }
 
     /**
+     * Get common search request data.
+     * @return array{0: SearchOptions, 1: int, 2: int}
+     */
+    protected function getRequestData(Request $request): array
+    {
+        $options = SearchOptions::fromString($request->input('query') ?? '');
+        $page = intval($request->input('page', '0')) ?: 1;
+        $count = min(intval($request->input('count', '0')) ?: 20, 100);
+        return [$options, $page, $count];
+    }
+
+    /**
      * Format a set of search results into the standard API response shape.
      *
-     * @param array{total: int, results: \Illuminate\Support\Collection} $results
+     * @param array{total: int, results: Collection} $results
      */
     protected function resultsResponse(array $results, SearchOptions $options): JsonResponse
     {

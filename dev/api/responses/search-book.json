@@ -58,35 +58,7 @@
           "order": 0
         }
       ]
-    },
-    {
-      "name": "How advanced are cats?",
-      "id": 362,
-      "slug": "how-advanced-are-cats",
-      "book_id": 13,
-      "chapter_id": 73,
-      "draft": false,
-      "template": false,
-      "created_at": "2020-11-29T21:55:07.000000Z",
-      "updated_at": "2021-11-14T16:02:39.000000Z",
-      "type": "page",
-      "url": "https://example.com/books/big-cats/page/how-advanced-are-cats",
-      "book": {
-        "id": 13,
-        "name": "Big Cats",
-        "slug": "big-cats"
-      },
-      "chapter": {
-        "id": 73,
-        "name": "A chapter for bigger cats",
-        "slug": "a-chapter-for-bigger-cats"
-      },
-      "preview_html": {
-        "name": "How advanced are <strong>cats</strong>?",
-        "content": "<strong>cats</strong> are some of the most advanced animals in the world."
-      },
-      "tags": []
     }
   ],
-  "total": 3
+  "total": 2
 }
