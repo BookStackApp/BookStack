@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'El :attribute solo puede contener letras y números.',
     'array'                => 'El :attribute debe de ser un array.',
     'backup_codes'         => 'El código suministrado no es válido o ya ha sido utilizado.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'El :attribute debe ser una fecha anterior a  :date.',
     'between'              => [
         'numeric' => 'El :attribute debe estar entre :min y :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'El campo :attribute debe ser true o false.',
     'confirmed'            => 'La confirmación de :attribute no concuerda.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'El :attribute no es una fecha válida.',
     'date_format'          => 'El :attribute no coincide con el formato :format.',
     'different'            => ':attribute y :other deben ser diferentes.',

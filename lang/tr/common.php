@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Aktif değil',
     'never' => 'Hiçbir zaman',
     'none' => 'Hiçbiri',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Ana sayfa',

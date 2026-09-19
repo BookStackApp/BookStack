@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => '从技术上讲，这些权限还将提供对系统中用户和角色的可见性和搜索功能。',
     'role_all' => '全部的',
     'role_own' => '拥有的',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => '由其所在的资源来控制',
     'role_controlled_by_page_delete' => '受页面删除权限限制',
     'role_save' => '保存角色',

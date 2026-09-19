@@ -207,6 +207,7 @@ Hinweis: Benutzer können ihre E-Mail Adresse nach erfolgreicher Registrierung �
     'role_asset_users_note' => 'Diese Berechtigungen ermöglichen technisch gesehen auch die Anzeige und Suche nach Benutzern im System.',
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Berechtigungen werden vom Uploadziel bestimmt',
     'role_controlled_by_page_delete' => 'Kontrolliert durch die Berechtigung zum Löschen einer Seite',
     'role_save' => 'Rolle speichern',

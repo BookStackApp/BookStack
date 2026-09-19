@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute võib sisaldada ainult tähti ja numbreid.',
     'array'                => ':attribute peab olema massiiv.',
     'backup_codes'         => 'Kood ei ole korrektne või on seda juba kasutatud.',
+    'base64_uri_mime'      => ':attribute peab olema korrektne base64 URI, mis sisaldab :mime tüüpi andmeid.',
     'before'               => ':attribute peab olema kuupäev enne :date.',
     'between'              => [
         'numeric' => ':attribute peab jääma vahemikku :min ja :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute peab olema tõene või väär.',
     'confirmed'            => ':attribute kinnitus ei kattu.',
+    'current_password'     => 'See ei klapi su praeguse parooliga.',
     'date'                 => ':attribute ei ole kehtiv kuupäev.',
     'date_format'          => ':attribute ei ühti formaadiga :format.',
     'different'            => ':attribute ja :other peavad olema erinevad.',

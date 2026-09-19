@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'غیر فعال',
     'never' => 'هرگز',
     'none' => 'هیچکدام',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'صفحه اصلی',

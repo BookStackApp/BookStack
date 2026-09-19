@@ -16,6 +16,7 @@ return [
     'alpha_num'            => ':attribute eremuak hizki eta zenbakiak solik izan ditzake.',
     'array'                => ':attribute array bat izan behar da.',
     'backup_codes'         => 'Kode hau ez da baliagarria edo iada erabilia izan da.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => ':attribute :date baino berriagoa izan behar da.',
     'between'              => [
         'numeric' => ':min eta :max bitartean egon behar da :attribute.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => ':attribute true edo false izan behar da.',
     'confirmed'            => ':attribute berrezpena ez da aurkitu.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => ':attribute ez da baliozko data.',
     'date_format'          => ':attribute ez da :format formatuan aurkitu.',
     'different'            => ':attribute eta :other ezberdinak izan behar dira.',

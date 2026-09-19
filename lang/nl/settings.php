@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Deze machtigingen geven technisch gezien toegang tot het weergeven van gebruikers binnen het systeem.',
     'role_all' => 'Alles',
     'role_own' => 'Eigen',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Gecontroleerd door de asset waar deze is geüpload',
     'role_controlled_by_page_delete' => 'Ingesteld volgens pagina verwijder machtigingen',
     'role_save' => 'Rol Opslaan',

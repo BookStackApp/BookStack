@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Disse tilladelser vil teknisk set også give synlighed og søgning efter brugere i systemet.',
     'role_all' => 'Alle',
     'role_own' => 'Eget',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Styres af det medie/"asset", de uploades til',
     'role_controlled_by_page_delete' => 'Styres af tilladelser til sletning af sider',
     'role_save' => 'Gem rolle',

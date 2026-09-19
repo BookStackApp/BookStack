@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Diese Berechtigungen ermöglichen technisch gesehen auch die Anzeige und Suche nach Benutzern im System.',
     'role_all' => 'Alle',
     'role_own' => 'Eigene',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Abhängig von dem Asset, in das sie hochgeladen werden',
     'role_controlled_by_page_delete' => 'Kontrolliert durch die Berechtigung zum Löschen einer Seite',
     'role_save' => 'Rolle speichern',
