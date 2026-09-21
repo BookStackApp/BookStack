@@ -4,10 +4,9 @@ namespace BookStack\View\ViewBlocks;
 
 use BookStack\Activity\ActivityQueries;
 use BookStack\Entities\Models\Bookshelf;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class ShelvesShowActivity extends ViewBlock
+class ShelvesShowActivity extends SimpleViewBlock
 {
     protected static string $id = 'builtin_shelves-show-activity';
     protected static string $view = 'shelves.parts.show-sidebar-section-activity';
@@ -18,7 +17,7 @@ class ShelvesShowActivity extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         /** @var Bookshelf $shelf */
         $shelf = $viewData['shelf'];

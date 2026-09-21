@@ -4,16 +4,15 @@ namespace BookStack\View\ViewBlocks;
 
 use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Chapter;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class ChaptersShowActions extends ViewBlock
+class ChaptersShowActions extends SimpleViewBlock
 {
     protected static string $id = 'builtin_chapters-show-actions';
     protected static string $view = 'chapters.parts.show-sidebar-section-actions';
     protected static string $labelTranslationKey = 'common.actions';
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         /** @var Chapter $chapter */
         $chapter = $viewData['chapter'];

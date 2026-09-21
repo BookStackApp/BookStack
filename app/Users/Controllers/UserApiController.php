@@ -2,7 +2,6 @@
 
 namespace BookStack\Users\Controllers;
 
-use BookStack\Entities\EntityExistsRule;
 use BookStack\Exceptions\UserUpdateException;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;

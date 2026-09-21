@@ -3,9 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\PageQueries;
-use BookStack\View\ViewBlockInterface;
+use BookStack\View\BaseViewBlock;
 
-class HomeRecentDrafts implements ViewBlockInterface
+class HomeRecentDrafts extends BaseViewBlock
 {
     public function __construct(
         protected PageQueries $pageQueries
@@ -31,7 +31,7 @@ class HomeRecentDrafts implements ViewBlockInterface
         return 'home.parts.configured-section-recent-drafts';
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $draftPages = [];
 

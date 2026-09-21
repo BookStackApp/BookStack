@@ -16,14 +16,15 @@ interface ViewBlockInterface
 
     /**
      * Get the view to render for this block.
-     * Is provided with the existing parent view data.
+     * This is provided with the existing parent view data to allow the view used to be
+     * dynamic based on the context of its environment.
      */
     public function getView(array $viewData): string;
 
     /**
      * Specify the data to pass to the view on render.
-     * Is provided with the existing parent view data and the original request.
+     * This is provided with the existing parent view data.
      * @return array<string, mixed>
      */
-    public function withData(array $viewData): array;
+    public function getViewData(array $viewData): array;
 }

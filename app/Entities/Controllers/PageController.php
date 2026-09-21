@@ -23,7 +23,6 @@ use BookStack\Permissions\Permission;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
 use Exception;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;

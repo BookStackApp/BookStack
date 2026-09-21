@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\BookQueries;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class BooksIndexPopular extends ViewBlock
+class BooksIndexPopular extends SimpleViewBlock
 {
     protected static string $id = 'builtin_books-index-popular';
     protected static string $view = 'books.parts.index-sidebar-section-popular';
@@ -17,7 +16,7 @@ class BooksIndexPopular extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         return [
             'popular' => $this->queries->popularForList()->take(4)->get(),

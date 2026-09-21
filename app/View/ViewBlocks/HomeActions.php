@@ -2,15 +2,15 @@
 
 namespace BookStack\View\ViewBlocks;
 
-use BookStack\View\ViewBlock;
+use BookStack\View\SimpleViewBlock;
 
-class HomeActions extends ViewBlock
+class HomeActions extends SimpleViewBlock
 {
     protected static string $id = 'builtin_home-actions';
     protected static string $view = 'home.parts.configured-section-actions';
     protected static string $labelTranslationKey = 'common.actions';
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         return [
             'view' => $viewData['view'] ?? '',

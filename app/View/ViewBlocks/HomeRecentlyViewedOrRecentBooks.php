@@ -4,11 +4,9 @@ namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Queries\QueryRecentlyViewed;
-use BookStack\Entities\Queries\QueryTopFavourites;
-use BookStack\View\ViewBlockInterface;
-use Illuminate\Http\Request;
+use BookStack\View\BaseViewBlock;
 
-class HomeRecentlyViewedOrRecentBooks implements ViewBlockInterface
+class HomeRecentlyViewedOrRecentBooks extends BaseViewBlock
 {
     public function __construct(
         protected EntityQueries $queries,
@@ -36,7 +34,7 @@ class HomeRecentlyViewedOrRecentBooks implements ViewBlockInterface
         return 'home.parts.configured-section-recently-viewed-or-recent-books';
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         if (user()->isGuest()) {
             $recents = $this->queries->books->visibleForList()

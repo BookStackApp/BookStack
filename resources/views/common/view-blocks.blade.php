@@ -6,5 +6,5 @@ $position - string
     $sectionVars = get_defined_vars();
 @endphp
 @foreach($viewBlocks->getInstancesForLocationAndPositionForCurrentUser($location, $position) as $block)
-    @include($block->getView($sectionVars), $block->withData($sectionVars))
+    @include($block->getView($sectionVars), $block->getViewData($sectionVars))
 @endforeach

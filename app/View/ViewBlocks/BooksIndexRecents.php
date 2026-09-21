@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\BookQueries;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class BooksIndexRecents extends ViewBlock
+class BooksIndexRecents extends SimpleViewBlock
 {
     protected static string $id = 'builtin_books-index-recents';
     protected static string $view = 'books.parts.index-sidebar-section-recents';
@@ -17,7 +16,7 @@ class BooksIndexRecents extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $recents = null;
         if (!user()->isGuest()) {

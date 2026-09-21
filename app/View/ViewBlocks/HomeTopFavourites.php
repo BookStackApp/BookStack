@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\QueryTopFavourites;
-use BookStack\View\ViewBlockInterface;
-use Illuminate\Http\Request;
+use BookStack\View\BaseViewBlock;
 
-class HomeTopFavourites implements ViewBlockInterface
+class HomeTopFavourites extends BaseViewBlock
 {
     public function __construct(
         protected QueryTopFavourites $topFavourites
@@ -32,7 +31,7 @@ class HomeTopFavourites implements ViewBlockInterface
         return 'home.parts.configured-section-top-favourites';
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $favourites = $this->topFavourites->run(6);
         return [

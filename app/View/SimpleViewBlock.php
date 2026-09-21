@@ -2,7 +2,7 @@
 
 namespace BookStack\View;
 
-abstract class ViewBlock implements ViewBlockInterface
+abstract class SimpleViewBlock extends BaseViewBlock
 {
     protected static string $id;
     protected static string $view;

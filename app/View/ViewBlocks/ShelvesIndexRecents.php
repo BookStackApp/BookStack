@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\BookshelfQueries;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class ShelvesIndexRecents extends ViewBlock
+class ShelvesIndexRecents extends SimpleViewBlock
 {
     protected static string $id = 'builtin_shelves-index-recents';
     protected static string $view = 'shelves.parts.index-sidebar-section-recents';
@@ -17,7 +16,7 @@ class ShelvesIndexRecents extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $recents = null;
         if (!user()->isGuest()) {

@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\BookQueries;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class BooksIndexNew extends ViewBlock
+class BooksIndexNew extends SimpleViewBlock
 {
     protected static string $id = 'builtin_books-index-new';
     protected static string $view = 'books.parts.index-sidebar-section-new';
@@ -17,7 +16,7 @@ class BooksIndexNew extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $new = $this->queries->visibleForList()
             ->orderBy('created_at', 'desc')

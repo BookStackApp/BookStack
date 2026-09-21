@@ -12,7 +12,6 @@ use BookStack\Exports\ZipExports\Models\ZipExportChapter;
 use BookStack\Exports\ZipExports\Models\ZipExportImage;
 use BookStack\Exports\ZipExports\Models\ZipExportModel;
 use BookStack\Exports\ZipExports\Models\ZipExportPage;
-use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
 use BookStack\Uploads\ImageService;

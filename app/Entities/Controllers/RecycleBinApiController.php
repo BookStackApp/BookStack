@@ -11,7 +11,6 @@ use BookStack\Entities\Repos\DeletionRepo;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RecycleBinApiController extends ApiController
 {

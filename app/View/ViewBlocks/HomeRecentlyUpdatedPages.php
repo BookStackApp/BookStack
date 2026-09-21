@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Queries\PageQueries;
-use BookStack\View\ViewBlockInterface;
-use Illuminate\Http\Request;
+use BookStack\View\BaseViewBlock;
 
-class HomeRecentlyUpdatedPages implements ViewBlockInterface
+class HomeRecentlyUpdatedPages extends BaseViewBlock
 {
     public function __construct(
         protected PageQueries $queries
@@ -32,7 +31,7 @@ class HomeRecentlyUpdatedPages implements ViewBlockInterface
         return 'home.parts.configured-section-recently-updated-pages';
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $recentlyUpdatedPages = $this->queries->visibleForList()
             ->where('draft', false)

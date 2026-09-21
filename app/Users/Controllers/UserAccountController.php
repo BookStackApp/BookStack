@@ -13,7 +13,6 @@ use BookStack\Users\UserRepo;
 use BookStack\View\ViewBlockManager;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class UserAccountController extends Controller

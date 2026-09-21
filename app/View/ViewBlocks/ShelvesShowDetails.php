@@ -4,10 +4,9 @@ namespace BookStack\View\ViewBlocks;
 
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\References\ReferenceFetcher;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class ShelvesShowDetails extends ViewBlock
+class ShelvesShowDetails extends SimpleViewBlock
 {
     protected static string $id = 'builtin_shelves-show-details';
     protected static string $view = 'shelves.parts.show-sidebar-section-details';
@@ -18,7 +17,7 @@ class ShelvesShowDetails extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         /** @var Bookshelf $shelf */
         $shelf = $viewData['shelf'];

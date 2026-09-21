@@ -6,10 +6,9 @@ use BookStack\Activity\Tools\UserEntityWatchOptions;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Page;
 use BookStack\References\ReferenceFetcher;
-use BookStack\View\ViewBlock;
-use Illuminate\Http\Request;
+use BookStack\View\SimpleViewBlock;
 
-class PagesShowDetails extends ViewBlock
+class PagesShowDetails extends SimpleViewBlock
 {
     protected static string $id = 'builtin_pages-show-details';
     protected static string $view = 'pages.parts.show-sidebar-section-details';
@@ -20,7 +19,7 @@ class PagesShowDetails extends ViewBlock
     ) {
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         /** @var Book $book */
         $book = $viewData['book'];

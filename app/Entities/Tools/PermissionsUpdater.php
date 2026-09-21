@@ -7,7 +7,6 @@ use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Entity;
 use BookStack\Facades\Activity;
-use BookStack\Permissions\Models\EntityPermission;
 use BookStack\Permissions\Permission;
 use BookStack\Users\Models\Role;
 use BookStack\Users\Models\User;

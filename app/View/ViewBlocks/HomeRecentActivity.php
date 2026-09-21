@@ -3,10 +3,9 @@
 namespace BookStack\View\ViewBlocks;
 
 use BookStack\Activity\ActivityQueries;
-use BookStack\View\ViewBlockInterface;
-use Illuminate\Http\Request;
+use BookStack\View\BaseViewBlock;
 
-class HomeRecentActivity implements ViewBlockInterface
+class HomeRecentActivity extends BaseViewBlock
 {
     public function __construct(
         protected ActivityQueries $activityQueries
@@ -32,7 +31,7 @@ class HomeRecentActivity implements ViewBlockInterface
         return 'home.parts.configured-section-recent-activity';
     }
 
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         $activity = $this->activityQueries->latest(10);
         return [
