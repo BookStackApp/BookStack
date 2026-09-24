@@ -767,13 +767,6 @@ Copyright: Copyright (c) 2014-present Fabien Potencier
 Source: https://github.com/symfony/var-dumper.git
 Link: https://symfony.com
 -----------
-thecodingmachine/safe
-License: MIT
-License File: vendor/thecodingmachine/safe/LICENSE
-Copyright: Copyright (c) 2018 TheCodingMachine
-Source: https://github.com/thecodingmachine/safe.git
-Link: https://github.com/thecodingmachine/safe.git
------------
 tijsverkoyen/css-to-inline-styles
 License: BSD-3-Clause
 License File: vendor/tijsverkoyen/css-to-inline-styles/LICENSE.md

@@ -177,7 +177,7 @@ Alexander Predl (Harveyhase68) :: German
 Rem (Rem9000) :: Dutch
 Michał Stelmach (stelmach-web) :: Polish
 arniom :: French
-REMOVED_USER :: French; German; Dutch; Portuguese, Brazilian; Portuguese; Turkish; 
+REMOVED_USER :: French; German; Dutch; Portuguese, Brazilian; Portuguese; Turkish; Danish; 
 林祖年 (contagion) :: Chinese Traditional
 Siamak Guodarzi (siamakgoudarzi88) :: Persian
 Lis Maestrelo (lismtrl) :: Portuguese, Brazilian
@@ -548,9 +548,12 @@ brtbr :: German; German Informal
 Ricardo Covelo (covelo12) :: Portuguese
 Bojan Maksimovic (PolarniMeda) :: Serbian (Cyrillic)
 Dian Prawira (wiradian84) :: Indonesian
-Tim (timakai) :: Dutch; German Informal; French; Romanian; Catalan; Czech; Danish; German; Finnish; Hungarian; Italian; Japanese; Korean; Polish; Russian; Ukrainian; Chinese Simplified; Chinese Traditional; Portuguese, Brazilian; Persian; Spanish, Argentina; Croatian; Norwegian Nynorsk; Estonian; Uzbek; Norwegian Bokmal
+Tim (timakai) :: Dutch; German; German Informal; French; Romanian; Catalan; Czech; Danish; Finnish; Hungarian; Italian; Japanese; Korean; Polish; Russian; Ukrainian; Chinese Simplified; Chinese Traditional; Portuguese, Brazilian; Persian; Spanish, Argentina; Croatian; Norwegian Nynorsk; Estonian; Uzbek; Norwegian Bokmal
 dadda123 :: Swedish
 Julien Muggli (JulienMuggli) :: French
 nomoreshow :: Turkish
 Qasem Talaee (qasem_talaee) :: Persian
 ddeicide :: Bulgarian
+Luca (luca90043) :: German
+AlwaleedAlwabel (Nick390) :: Arabic
+kpfurtak :: Polish
