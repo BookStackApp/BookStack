@@ -403,7 +403,8 @@ CONTENT;
 use BookStack\Facades\Theme;
 use BookStack\Theming\ThemeEvents;
 use BookStack\View\ViewBlockManager;
-class CustomViewBlock implements \BookStack\View\ViewBlockInterface {
+use BookStack\View\BaseViewBlock;
+class CustomViewBlock extends BaseViewBlock {
     public static function getId(): string
     {
         return 'custom_view';
@@ -416,7 +417,7 @@ class CustomViewBlock implements \BookStack\View\ViewBlockInterface {
     {
         return 'custom-block';
     }
-    public function withData(array $viewData): array
+    public function getViewData(array $viewData): array
     {
         return [];
     }
