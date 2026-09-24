@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Disse tillatelsene vil teknisk sett også gi mulighet til å se & søke etter brukere i systemet.',
     'role_all' => 'Alle',
     'role_own' => 'Egne',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Kontrollert av eiendelen de er lastet opp til',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Lagre rolle',

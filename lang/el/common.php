@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Αδρανής',
     'never' => 'Ποτέ',
     'none' => 'Κανένας',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Αρχική σελίδα',

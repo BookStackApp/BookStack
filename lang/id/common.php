@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Tidak Aktif',
     'never' => 'Jangan Pernah',
     'none' => 'Tidak Satupun',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Beranda',

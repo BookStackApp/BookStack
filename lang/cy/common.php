@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Anweithredol',
     'never' => 'Byth',
     'none' => 'Dim un',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Tudalen cartref',

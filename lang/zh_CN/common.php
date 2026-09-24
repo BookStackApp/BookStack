@@ -84,6 +84,8 @@ return [
     'status_inactive' => '未激活',
     'never' => '从未',
     'none' => '无',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => '主页',

@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Mitteaktiivne',
     'never' => 'Mitte kunagi',
     'none' => 'Puudub',
+    'move_left' => 'Liiguta vasakule',
+    'move_right' => 'Liiguta paremale',
 
     // Header
     'homepage' => 'Avaleht',
