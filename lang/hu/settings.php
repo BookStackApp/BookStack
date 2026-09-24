@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Ezek a jogosultságok gyakorlatilag megtekintést és felhasználó keresést is lehetővé fognak tenni.',
     'role_all' => 'Összes',
     'role_own' => 'Saját',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'A feltöltött tartalom beállításaitól függ',
     'role_controlled_by_page_delete' => 'Az oldal törlési jogosultságoktól függ',
     'role_save' => 'Szerepkör mentése',

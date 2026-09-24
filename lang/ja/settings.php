@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => '技術的には、これらの権限によりシステム内のユーザーの可視性と検索も提供されます。',
     'role_all' => '全て',
     'role_own' => '自身',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'このアセットに対し、右記の操作を許可:',
     'role_controlled_by_page_delete' => 'ページ削除権限を適用',
     'role_save' => '役割を保存',

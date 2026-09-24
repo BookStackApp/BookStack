@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Need õigused lubavad ka süsteemis olevaid kasutajaid vaadata ja otsida.',
     'role_all' => 'Kõik',
     'role_own' => 'Enda omad',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Õigused määratud seotud objekti kaudu',
     'role_controlled_by_page_delete' => 'Määratud lehe kustutamise õiguste kaudu',
     'role_save' => 'Salvesta roll',

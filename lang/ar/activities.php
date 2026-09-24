@@ -50,7 +50,7 @@ return [
     'bookshelf_delete_notification'    => 'تم حذف الرف بنجاح',
 
     // Revisions
-    'revision_restore' => 'استعادة مراجعة',
+    'revision_restore' => 'مراجعة مُستعادة',
     'revision_delete' => 'مراجعة محذوفة',
     'revision_delete_notification' => 'تم حذف المراجعة بنجاح',
 
@@ -59,12 +59,12 @@ return [
     'favourite_remove_notification' => 'تم إزالة ":name" من المفضلة لديك',
 
     // Watching
-    'watch_update_level_notification' => 'تم تحديث الإعدادات المشاهدة بنجاح',
+    'watch_update_level_notification' => 'تم تحديث تفضيلات المشاهدة بنجاح',
 
     // Auth
     'auth_login' => 'تم تسجيل الدخول',
-    'auth_register' => 'سجل كمستخدم جديد',
-    'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة السر',
+    'auth_register' => 'مسجل كمستخدم جديد',
+    'auth_password_reset_request' => 'طلب رابط جديد لإعادة تعيين كلمة المرور',
     'auth_password_reset_update' => 'إعادة تعيين كلمة مرور المستخدم',
     'mfa_setup_method' => 'طريقة المصادقة متعددة العوامل المُهيأة',
     'mfa_setup_method_notification' => 'تم إعداد المصادقة متعددة العوامل بنجاح',
@@ -99,8 +99,8 @@ return [
     'user_update_notification' => 'تم تحديث المستخدم بنجاح',
     'user_delete' => 'المستخدم المحذوف',
     'user_delete_notification' => 'تم إزالة المستخدم بنجاح',
-    'user_mfa_reset' => 'reset MFA for user',
-    'user_mfa_reset_notification' => 'Multi-factor authentication methods reset',
+    'user_mfa_reset' => 'إعادة تعيين MFA للمستخدم',
+    'user_mfa_reset_notification' => 'إعادة تعيين طرق المصادقة المتعددة',
 
     // API Tokens
     'api_token_create' => 'تم إنشاء رمز واجهة برمجة التطبيقات -API-',

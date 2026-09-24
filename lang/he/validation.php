@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'שדה :attribute יכול להכיל אותיות ומספרים בלבד.',
     'array'                => 'שדה :attribute חייב להיות מערך.',
     'backup_codes'         => 'קוד שהוזן לא תקין או שכבר השתמשו בו.',
+    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
     'before'               => 'שדה :attribute חייב להיות תאריך לפני :date.',
     'between'              => [
         'numeric' => 'שדה :attribute חייב להיות בין :min ל-:max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'שדה :attribute חייב להיות אמת או שקר.',
     'confirmed'            => 'שדה האישור של :attribute לא תואם.',
+    'current_password'     => 'This does not match your current password.',
     'date'                 => 'שדה :attribute אינו תאריך תקני.',
     'date_format'          => 'שדה :attribute לא תואם את הפורמט :format.',
     'different'            => 'שדה :attribute ושדה :other חייבים להיות שונים.',

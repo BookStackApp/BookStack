@@ -16,6 +16,7 @@ return [
     'alpha_num'            => 'يجب أن يقتصر :attribute على الحروف والأرقام فقط.',
     'array'                => 'يجب أن تكون السمة مصفوفة.',
     'backup_codes'         => 'الرمز المقدم غير صالح أو تم استخدامه بالفعل.',
+    'base64_uri_mime'      => 'يجب أن يكون :attribute عنوان URI قاعدة64 صالح يحتوي على بيانات من نوع :mime mime .',
     'before'               => 'يجب أن يكون التاريخ :attribute قبل :date.',
     'between'              => [
         'numeric' => 'يجب أن يكون :attribute بين :min و :max.',
@@ -25,6 +26,7 @@ return [
     ],
     'boolean'              => 'يجب أن يحتمل حقل السمة الصحة أو الخطأ.',
     'confirmed'            => ':attribute غير مطابق.',
+    'current_password'     => 'هذا لا يتطابق مع كلمة المرور الحالية.',
     'date'                 => ':attribute ليس تاريخ صالح.',
     'date_format'          => ':attribute لا يطابق الصيغة :format.',
     'different'            => 'يجب أن يكون :attribute مختلف عن :other.',
@@ -106,7 +108,7 @@ return [
     'uploaded'             => 'تعذر تحميل الملف. قد لا يقبل الخادم ملفات بهذا الحجم.',
 
     'zip_file' => ':attribute بحاجة إلى الرجوع إلى مِلَفّ داخل المِلَفّ المضغوط.',
-    'zip_file_size' => 'The file :attribute must not exceed :size MB.',
+    'zip_file_size' => 'يجب ألا يتجاوز الملف :attribute :size MB.',
     'zip_file_mime' => ':attribute بحاجة إلى الإشارة إلى مِلَفّ من نوع :validTypes، وجدت :foundType.',
     'zip_model_expected' => 'عنصر البيانات المتوقع ولكن ":type" تم العثور عليه.',
     'zip_unique' => 'يجب أن يكون :attribute فريداً لنوع الكائن داخل المِلَفّ المضغوط.',

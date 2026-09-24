@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Ces autorisations permettront également l\'accès à la consultation et la recherche des utilisateurs dans le système.',
     'role_all' => 'Tous',
     'role_own' => 'Propres',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Contrôlé par les ressources les ayant envoyés',
     'role_controlled_by_page_delete' => 'Contrôlé par les autorisations de suppression de page',
     'role_save' => 'Enregistrer le rôle',

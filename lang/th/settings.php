@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'สิทธิ์เหล่านี้จะให้การมองเห็นและการค้นหาผู้ใช้ในระบบด้วยในทางเทคนิค',
     'role_all' => 'ทั้งหมด',
     'role_own' => 'ของตัวเอง',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'ควบคุมโดย asset ที่อัปโหลดไปยัง',
     'role_controlled_by_page_delete' => 'ควบคุมโดยสิทธิ์ลบหน้า',
     'role_save' => 'บันทึกบทบาท',

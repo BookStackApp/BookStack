@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Tecnicamente, estas permissões também permitirão visualizar e pesquisar utilizadores no sistema.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controlado pelo ativo para o qual eles são enviados',
     'role_controlled_by_page_delete' => 'Controlado pelas permissões de eliminação de páginas',
     'role_save' => 'Guardar Cargo',

@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Всички',
     'role_own' => 'Собствени',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Контролирани от актива, към който са качени',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Запази ролята',

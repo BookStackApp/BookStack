@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Queste autorizzazioni forniranno tecnicamente anche la visibilità e la ricerca di utenti nel sistema.',
     'role_all' => 'Tutti',
     'role_own' => 'Propri',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controllato dall\'entità in cui sono caricati',
     'role_controlled_by_page_delete' => 'Controllato dai permessi di cancellazione della pagina',
     'role_save' => 'Salva ruolo',

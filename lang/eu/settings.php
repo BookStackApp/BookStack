@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Guztiak',
     'role_own' => 'Norberarenak',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controlled by the asset they are uploaded to',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Gorde rol-a',
