@@ -105,11 +105,10 @@ class ViewBlockManager
         $results = [];
         $blocksById = $this->blocksByPositionToIdMap($forLocation);
         $idPositionMap = $this->blocksByPositionToIdPositionMap($forLocation);
-        $locations = array_keys($forLocation);
-        $locations[] = 'unused';
+        $positions = array_unique([...array_keys($forLocation), 'unused']);
 
         // Add based on user preferences
-        foreach ($locations as $position) {
+        foreach ($positions as $position) {
             $userBlockIds = $userBlocksByPosition[$position] ?? [];
             $results[$position] = [];
             foreach ($userBlockIds as $blockId) {

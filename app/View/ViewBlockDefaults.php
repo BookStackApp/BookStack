@@ -5,6 +5,7 @@ namespace BookStack\View;
 class ViewBlockDefaults
 {
     /**
+     * The default block configuration, organised by location and position.
      * @var array<string, array<string, class-string<ViewBlockInterface>[]>>
      */
     protected static array $defaults = [

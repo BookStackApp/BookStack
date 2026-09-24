@@ -273,6 +273,9 @@ Theme::listen(ThemeEvents::VIEW_BLOCKS_REGISTER, function (ViewBlockManager $man
 });
 ```
 
+Available locations and positions can be found in the [ViewBlockDefaults](../../app/View/ViewBlockDefaults.php)
+class, with locations being the top-level keys, and positions for each location being the nested keys.
+
 The above registration code would typically be within your `functions.php` theme file.
 You could also define the above block class in the same file, or separate it into its own class file
 and include it from the `functions.php` via a `require_once()` call.
