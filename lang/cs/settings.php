@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Tato oprávnění zároveň umožní zobrazit a vyhledat uživatele v systému.',
     'role_all' => 'Vše',
     'role_own' => 'Vlastní',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Řídí se obsahem, do kterého jsou nahrávány',
     'role_controlled_by_page_delete' => 'Řídí se právem k odstranění stránky',
     'role_save' => 'Uložit roli',

@@ -207,6 +207,7 @@ return [
     'role_asset_users_note' => '這些權限在技術上亦將提供系統內使用者的能見度及搜尋功能。',
     'role_all' => '全部',
     'role_own' => '擁有',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => '依據隸屬的資源來決定',
     'role_controlled_by_page_delete' => '受頁面刪除權限控制',
     'role_save' => '儲存角色',

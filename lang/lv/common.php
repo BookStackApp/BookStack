@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Neaktīvs',
     'never' => 'Nekad',
     'none' => 'Neviens',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Sākumlapa',

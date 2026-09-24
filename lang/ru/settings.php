@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Эти разрешения также обеспечивают видимость и поиск пользователей в системе.',
     'role_all' => 'Все',
     'role_own' => 'Владелец',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Контролируется активом, в который они загружены',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Сохранить роль',

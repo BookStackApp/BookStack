@@ -84,6 +84,8 @@ return [
     'status_inactive' => 'Neaktivno',
     'never' => 'Nikada',
     'none' => 'Ništa',
+    'move_left' => 'Move Left',
+    'move_right' => 'Move Right',
 
     // Header
     'homepage' => 'Naslovna Stranica',

@@ -207,6 +207,7 @@ return [
     'role_asset_users_note' => 'Estos permisos proporcionarán también visibilidad y búsqueda de usuarios en el sistema.',
     'role_all' => 'Todo',
     'role_own' => 'Propio',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controlado por el activo al que ha sido subido',
     'role_controlled_by_page_delete' => 'Controlado por página de eliminación de permisos',
     'role_save' => 'Guardar rol',

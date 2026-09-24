@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Všetko',
     'role_own' => 'Vlastné',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Regulované zdrojom, do ktorého sú nahrané',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Uložiť rolu',

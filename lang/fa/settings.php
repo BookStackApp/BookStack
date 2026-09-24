@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'این دسترسی ها از نظر فنی امکان مشاهده و جستجوی کاربران و نقش ها را در سیستم فراهم می کنند.',
     'role_all' => 'همه',
     'role_own' => 'صاحب',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'توسط دارایی که در آن آپلود می شود کنترل می شود',
     'role_controlled_by_page_delete' => 'کنترل شده با دسترسی حذف صفحه',
     'role_save' => 'ذخیره نقش',

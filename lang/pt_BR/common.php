@@ -89,6 +89,8 @@ return [
     'status_inactive' => 'Inativo',
     'never' => 'Nunca',
     'none' => 'Nenhum',
+    'move_left' => 'Mover para Esquerda',
+    'move_right' => 'Mover para Direita',
 
     // Header
     'homepage' => 'Página inicial',

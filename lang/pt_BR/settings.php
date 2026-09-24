@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Essas permissões tecnicamente também fornecerão visibilidade e busca de usuários do sistema.',
     'role_all' => 'Todos',
     'role_own' => 'Próprio',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controlado pelos ativos nos quais o upload foi realizado',
     'role_controlled_by_page_delete' => 'Controlado pelas permissões de exclusão de página',
     'role_save' => 'Salvar Perfil',

@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Ове дозволе ће технички такође омогућити видљивост и претрагу корисника у систему.',
     'role_all' => 'Све',
     'role_own' => 'Власник',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Контролисано по имовини у којој су постављене',
     'role_controlled_by_page_delete' => 'Контролисано дозволама брисања од странице',
     'role_save' => 'Сачувај улогу',
