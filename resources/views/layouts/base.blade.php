@@ -61,12 +61,7 @@
     </div>
 
     @include('layouts.parts.footer')
-
-    <div component="back-to-top" class="back-to-top print-hidden">
-        <div class="inner">
-            @icon('chevron-up') <span>{{ trans('common.back_to_top') }}</span>
-        </div>
-    </div>
+    @include('layouts.parts.back-to-top')
 
     @if($cspNonce ?? false)
         <script src="{{ versioned_asset('dist/app.js') }}" type="module" nonce="{{ $cspNonce }}"></script>

@@ -5,6 +5,7 @@ namespace BookStack\Entities\Queries;
 use BookStack\Activity\Models\Favourite;
 use BookStack\Entities\Tools\MixedEntityListLoader;
 use BookStack\Permissions\PermissionApplicator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 
 class QueryTopFavourites
@@ -22,6 +23,7 @@ class QueryTopFavourites
             return collect();
         }
 
+        /** @var Builder<Favourite> $query */
         $query = $this->permissions
             ->restrictEntityRelationQuery(Favourite::query(), 'favourites', 'favouritable_id', 'favouritable_type')
             ->select('favourites.*')

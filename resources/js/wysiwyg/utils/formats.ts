@@ -106,10 +106,29 @@ export function cycleSelectionCalloutFormats(editor: LexicalEditor) {
 
         let created = false;
         for (const block of blocks) {
-            if (!$isCalloutNode(block)) {
-                block.replace($createCalloutNode('info'), true);
-                created = true;
+            if ($isCalloutNode(block)) {
+                continue;
             }
+
+            if ($isListItemNode(block)) {
+                const blockChildren = block.getChildren();
+                const alreadyHasCallout = blockChildren.some($isCalloutNode);
+                if (alreadyHasCallout) {
+                    continue;
+                }
+
+                const callout = $createCalloutNode('info');
+                callout.append(...blockChildren);
+                block.splice(0, 0, [callout]);
+            } else  {
+                const blockParents = block.getParents();
+                if (blockParents.some($isCalloutNode)) {
+                    continue;
+                }
+                block.replace($createCalloutNode('info'), true);
+            }
+
+            created = true;
         }
 
         if (created) {

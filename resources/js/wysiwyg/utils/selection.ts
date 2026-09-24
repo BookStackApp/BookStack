@@ -8,14 +8,14 @@ import {
     $setSelection,
     BaseSelection, DecoratorNode,
     ElementNode, LexicalEditor,
-    LexicalNode, RangeSelection,
+    LexicalNode, NodeSelection, RangeSelection,
     TextFormatType, TextNode
 } from "lexical";
 import {$getNearestBlockElementAncestorOrThrow} from "@lexical/utils";
 import {LexicalElementNodeCreator, LexicalNodeMatcher} from "../nodes";
 import {$setBlocksType} from "@lexical/selection";
 
-import {$getNearestNodeBlockParent, $getParentOfType, nodeHasAlignment} from "./nodes";
+import {$getNearestNodeBlockParent, $getParentOfType, $sortNodes, nodeHasAlignment} from "./nodes";
 import {CommonBlockAlignment} from "lexical/nodes/common";
 import {$isListItemNode} from "@lexical/list";
 import {$createCollapsedRangeSelectionForNode} from "lexical/LexicalSelection";
@@ -90,8 +90,8 @@ function createNewBlockIfSelectionIsSingleListItemText(selection: BaseSelection)
 
     if (isSingleListItemTextSelection) {
         const wrapper = $createParagraphNode();
-        const startNode = startEnd[0].getNode();
-        startNode.insertBefore(wrapper);
+        const firstNode = $sortNodes([startEnd[0].getNode(), startEnd[1].getNode()], startBlock)[0];
+        firstNode.insertBefore(wrapper);
         wrapper.append(...selection.getNodes());
     }
 }
@@ -164,10 +164,20 @@ export function $insertNewNodesAtSelection(nodes: LexicalNode[]) {
     }
 }
 
-export function $selectSingleNode(node: LexicalNode) {
+/**
+ * Create a selection for a single node.
+ */
+export function $createSingleNodeSelection(node: LexicalNode): NodeSelection {
     const nodeSelection = $createNodeSelection();
     nodeSelection.add(node.getKey());
-    $setSelection(nodeSelection);
+    return nodeSelection;
+}
+
+/**
+ * Create and apply a selection for a single node.
+ */
+export function $selectSingleNode(node: LexicalNode): void {
+    $setSelection($createSingleNodeSelection(node));
 }
 
 function getFirstTextNodeInNodes(nodes: LexicalNode[]): TextNode|null {

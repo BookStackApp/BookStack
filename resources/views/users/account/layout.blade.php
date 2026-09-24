@@ -11,6 +11,7 @@
                     <nav class="active-link-list in-sidebar">
                         <a href="{{ url('/my-account/profile') }}" class="{{ $category === 'profile' ? 'active' : '' }}">@icon('user') {{ trans('preferences.profile') }}</a>
                         <a href="{{ url('/my-account/auth') }}" class="{{ $category === 'auth' ? 'active' : '' }}">@icon('security') {{ trans('preferences.auth') }}</a>
+                        <a href="{{ url('/my-account/interface') }}" class="{{ $category === 'interface' ? 'active' : '' }}">@icon('interface') {{ trans('preferences.interface') }}</a>
                         <a href="{{ url('/my-account/shortcuts') }}" class="{{ $category === 'shortcuts' ? 'active' : '' }}">@icon('shortcuts') {{ trans('preferences.shortcuts_interface') }}</a>
                         @if(userCan(\BookStack\Permissions\Permission::ReceiveNotifications))
                             <a href="{{ url('/my-account/notifications') }}" class="{{ $category === 'notifications' ? 'active' : '' }}">@icon('notifications') {{ trans('preferences.notifications') }}</a>

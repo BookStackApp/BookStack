@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Kaikki',
     'role_own' => 'Omat',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Määräytyy sen sisällön mukaan, johon ne on ladattu',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Tallenna rooli',

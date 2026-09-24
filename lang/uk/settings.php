@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Ці дозволи технічно також забезпечать видимість і пошук користувачів і ролей у системі.',
     'role_all' => 'Все',
     'role_own' => 'Власне',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Контролюється за об\'єктом, до якого вони завантажуються',
     'role_controlled_by_page_delete' => 'Керується правами доступу для видалення сторінки',
     'role_save' => 'Зберегти роль',

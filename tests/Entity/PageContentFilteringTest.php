@@ -526,6 +526,7 @@ HTML;
             '<p><a href="sftp://example.com/a/link/to/file">Link to file</a></p>',
             '<p><a href="#hello-section">Link to another section</a></p>',
             '<details><summary>Hello</summary><p>Mydetailshere</p></details>',
+            '<table><tr><th align="right">Hello</th></tr><tr><td align="center">Hello</td></tr></table>',
         ];
 
         config()->set('app.content_filtering', 'a');

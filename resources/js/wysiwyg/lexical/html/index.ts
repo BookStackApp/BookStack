@@ -99,6 +99,15 @@ export function $generateHtmlFromNodes(
   return nodeCode.join('\n');
 }
 
+/**
+ * Generates HTML from a single given node (and its children), regardless of selection.
+ */
+export function $generateHtmlFromNode(editor: LexicalEditor, node: LexicalNode): string {
+  const container = document.createElement('div');
+  $appendNodesToHTML(editor, node, container);
+  return container.innerHTML;
+}
+
 function $appendNodesToHTML(
   editor: LexicalEditor,
   currentNode: LexicalNode,

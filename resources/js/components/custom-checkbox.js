@@ -20,6 +20,9 @@ export class CustomCheckbox extends Component {
     }
 
     toggle() {
+        if (this.checkbox.disabled) {
+            return;
+        }
         this.checkbox.checked = !this.checkbox.checked;
         this.checkbox.dispatchEvent(new Event('change'));
         this.stateChange();

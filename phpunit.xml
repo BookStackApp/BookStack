@@ -17,6 +17,7 @@
     <server name="APP_AUTO_LANG_PUBLIC" value="true"/>
     <server name="APP_URL" value="http://bookstack.dev"/>
     <server name="APP_TIMEZONE" value="UTC"/>
+    <server name="APP_KEY" value="base64:rt54sY5s5G9+8VmvfI0NIJs2Fzd3qsx4auLjnLE5qw0="/>
     <server name="APP_DISPLAY_TIMEZONE" value="UTC"/>
     <server name="ALLOWED_STYLE_SOURCES" value=""/>
     <server name="ALLOWED_IMAGE_SOURCES" value=""/>

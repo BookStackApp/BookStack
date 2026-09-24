@@ -38,7 +38,7 @@
 
         <div class="toggle-switch-list">
             @include('form.custom-checkbox', [
-                'name' => 'events[]',
+                'name' => 'events[all]',
                 'value' => 'all',
                 'label' => trans('settings.webhooks_events_all'),
                 'checked' => old('events') ? in_array('all', old('events')) : (isset($webhook) ? $webhook->tracksEvent('all') : false),
@@ -51,7 +51,7 @@
             @foreach(\BookStack\Activity\ActivityType::all() as $activityType)
                 <div>
                     @include('form.custom-checkbox', [
-                       'name' => 'events[]',
+                       'name' => 'events[' . $activityType . ']',
                        'value' => $activityType,
                        'label' => $activityType,
                        'checked' => old('events') ? in_array($activityType, old('events')) : (isset($webhook) ? $webhook->tracksEvent($activityType) : false),

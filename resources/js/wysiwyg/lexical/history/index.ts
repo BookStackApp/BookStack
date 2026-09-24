@@ -294,9 +294,12 @@ function createMergeActionGetter(
         return HISTORY_MERGE;
       }
 
-      // A single node might have been marked as dirty, but not have changed
+      // A single node might have been marked as dirty but not have changed
       // due to some node transform reverting the change.
-      if (dirtyLeaves.size === 1) {
+      const hasIntentionalElementChanges = Array.from(
+          dirtyElements.values(),
+      ).some((value) => value);
+      if (!hasIntentionalElementChanges && dirtyLeaves.size === 1) {
         const dirtyLeafKey = Array.from(dirtyLeaves)[0];
         if (
           isTextNodeUnchanged(dirtyLeafKey, prevEditorState, nextEditorState)

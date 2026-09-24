@@ -1,4 +1,4 @@
-<h1 class="list-heading text-capitals mb-l">Getting Started</h1>
+<h2 class="list-heading text-capitals mb-l">Getting Started</h2>
 
 <p class="mb-none">
     This documentation covers use of the REST API. <br>

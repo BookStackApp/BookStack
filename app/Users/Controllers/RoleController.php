@@ -94,7 +94,7 @@ class RoleController extends Controller
     public function edit(string $id)
     {
         $this->checkPermission(Permission::UserRolesManage);
-        $role = $this->permissionsRepo->getRoleById($id);
+        $role = $this->permissionsRepo->getRoleById(intval($id));
 
         $this->setPageTitle(trans('settings.role_edit'));
 
@@ -129,7 +129,7 @@ class RoleController extends Controller
     public function showDelete(string $id)
     {
         $this->checkPermission(Permission::UserRolesManage);
-        $role = $this->permissionsRepo->getRoleById($id);
+        $role = $this->permissionsRepo->getRoleById(intval($id));
         $roles = $this->permissionsRepo->getAllRolesExcept($role);
         $blankRole = $role->newInstance(['display_name' => trans('settings.role_delete_no_migration')]);
         $roles->prepend($blankRole);
@@ -151,7 +151,7 @@ class RoleController extends Controller
 
         try {
             $migrateRoleId = intval($request->input('migrate_role_id') ?: "0");
-            $this->permissionsRepo->deleteRole($id, $migrateRoleId);
+            $this->permissionsRepo->deleteRole(intval($id), $migrateRoleId);
         } catch (PermissionsException $e) {
             $this->showErrorNotification($e->getMessage());
 

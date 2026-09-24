@@ -165,6 +165,10 @@ class ConfiguredHtmlPurifier
         // Allow mention-ids on links
         $definition->addAttribute('a', 'data-mention-user-id', 'Number');
 
+        // Allow 'align' attribute on table cells
+        $definition->addAttribute('td', 'align', 'Enum#left,center,right');
+        $definition->addAttribute('th', 'align', 'Enum#left,center,right');
+
         // Set up custom handler for srcset
         // To remove once added upstream: https://github.com/xemlock/htmlpurifier-html5/pull/91
         $definition->addAttribute('img', 'srcset', new SrcsetAttrDef());

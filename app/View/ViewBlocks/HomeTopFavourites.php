@@ -1,0 +1,41 @@
+<?php
+
+namespace BookStack\View\ViewBlocks;
+
+use BookStack\Entities\Queries\QueryTopFavourites;
+use BookStack\View\BaseViewBlock;
+
+class HomeTopFavourites extends BaseViewBlock
+{
+    public function __construct(
+        protected QueryTopFavourites $topFavourites
+    ) {
+    }
+
+    public static function getId(): string
+    {
+        return 'builtin_home-top-favourites';
+    }
+
+    public static function getLabel(): string
+    {
+        return trans('entities.my_most_viewed_favourites');
+    }
+
+    public function getView(array $viewData): string
+    {
+        if ($viewData['homeView'] === 'default') {
+            return 'home.parts.default-card-top-favourites';
+        }
+
+        return 'home.parts.configured-section-top-favourites';
+    }
+
+    public function getViewData(array $viewData): array
+    {
+        $favourites = $this->topFavourites->run(6);
+        return [
+            'favourites' => $favourites
+        ];
+    }
+}

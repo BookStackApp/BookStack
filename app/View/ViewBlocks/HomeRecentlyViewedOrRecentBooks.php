@@ -1,0 +1,52 @@
+<?php
+
+namespace BookStack\View\ViewBlocks;
+
+use BookStack\Entities\Queries\EntityQueries;
+use BookStack\Entities\Queries\QueryRecentlyViewed;
+use BookStack\View\BaseViewBlock;
+
+class HomeRecentlyViewedOrRecentBooks extends BaseViewBlock
+{
+    public function __construct(
+        protected EntityQueries $queries,
+        protected QueryRecentlyViewed $recentlyViewed,
+    ) {
+    }
+
+    public static function getId(): string
+    {
+        return 'builtin_home-recently-viewed-or-recent-books';
+    }
+
+    public static function getLabel(): string
+    {
+        $key = user()->isGuest() ? 'books_recent' : 'my_recently_viewed';
+        return trans("entities.{$key}");
+    }
+
+    public function getView(array $viewData): string
+    {
+        if ($viewData['homeView'] === 'default') {
+            return 'home.parts.default-card-recently-viewed-or-recent-books';
+        }
+
+        return 'home.parts.configured-section-recently-viewed-or-recent-books';
+    }
+
+    public function getViewData(array $viewData): array
+    {
+        if (user()->isGuest()) {
+            $recents = $this->queries->books->visibleForList()
+                ->orderBy('created_at', 'desc')
+                ->take(10)
+                ->get();
+        } else {
+            $recents = $this->recentlyViewed->run(10, 1);
+        }
+
+        return [
+            'recents' => $recents
+        ];
+    }
+}

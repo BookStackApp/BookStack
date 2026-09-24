@@ -38,21 +38,35 @@ class SortRule extends Model implements Loggable
         $this->sequence = implode(',', $values);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function logDescriptor(): string
     {
         return "({$this->id}) {$this->name}";
     }
 
+    /**
+     * Get the URL to where this rule can be managed.
+     */
     public function getUrl(): string
     {
         return url("/settings/sorting/rules/{$this->id}");
     }
 
+    /**
+     * Get the books which are specifically set to use this sort rule.
+     * @return HasMany<Book, $this>
+     */
     public function books(): HasMany
     {
         return $this->hasMany(Book::class, 'entity_container_data.sort_rule_id', 'id');
     }
 
+    /**
+     * Get all the available sort rules, ordered by name, with the number of books using each.
+     * @return Collection<SortRule>
+     */
     public static function allByName(): Collection
     {
         return static::query()

@@ -91,8 +91,11 @@ Big thanks to these companies for supporting the project.
 </a></td>
 </tr>
 <tr>
-<td align="center" colspan="2"><a href="https://www.admin-intelligence.de/bookstack/" target="_blank">
+<td align="center"><a href="https://www.admin-intelligence.de/bookstack/" target="_blank">
     <img width="210" src="https://www.bookstackapp.com/images/sponsors/admin-intelligence.png" alt="Admin Intelligence">
+</a></td>
+<td align="center"><a href="https://bookhost.co/" target="_blank">
+    <img width="210" src="https://www.bookstackapp.com/images/sponsors/bookhost.png" alt="BookHost">
 </a></td>
 </tr>
 </tbody></table>

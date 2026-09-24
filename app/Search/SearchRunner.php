@@ -4,6 +4,7 @@ namespace BookStack\Search;
 
 use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
+use BookStack\Entities\Models\EntityTable;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\EntityHydrator;
 use BookStack\Permissions\PermissionApplicator;
@@ -63,33 +64,43 @@ class SearchRunner
 
     /**
      * Search a book for entities.
+     *
+     * @return array{total: int, results: Collection<Entity>}
      */
-    public function searchBook(int $bookId, string $searchString): Collection
+    public function searchBook(int $bookId, SearchOptions $searchOpts, int $page = 1, int $count = 20): array
     {
-        $opts = SearchOptions::fromString($searchString);
         $entityTypes = ['page', 'chapter'];
-        $filterMap = $opts->filters->toValueMap();
+        $filterMap = $searchOpts->filters->toValueMap();
         $entityTypesToSearch = isset($filterMap['type']) ? explode('|', $filterMap['type']) : $entityTypes;
 
         $filteredTypes = array_intersect($entityTypesToSearch, $entityTypes);
-        $query = $this->buildQuery($opts, $filteredTypes)->where('book_id', '=', $bookId);
+        $query = $this->buildQuery($searchOpts, $filteredTypes)->where('book_id', '=', $bookId);
 
-        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
+        return [
+            'total'   => $query->count(),
+            'results' => $this->getPageOfDataFromQuery($query, $page, $count)->sortByDesc('score')->values(),
+        ];
     }
 
     /**
      * Search a chapter for entities.
+     *
+     * @return array{total: int, results: Collection<Entity>}
      */
-    public function searchChapter(int $chapterId, string $searchString): Collection
+    public function searchChapter(int $chapterId, SearchOptions $searchOpts, int $page = 1, int $count = 20): array
     {
-        $opts = SearchOptions::fromString($searchString);
-        $query = $this->buildQuery($opts, ['page'])->where('chapter_id', '=', $chapterId);
+        $query = $this->buildQuery($searchOpts, ['page'])->where('chapter_id', '=', $chapterId);
 
-        return $this->getPageOfDataFromQuery($query, 1, 20)->sortByDesc('score');
+        return [
+            'total'   => $query->count(),
+            'results' => $this->getPageOfDataFromQuery($query, $page, $count)->sortByDesc('score')->values(),
+        ];
     }
 
     /**
      * Get a page of result data from the given query based on the provided page parameters.
+     * @param EloquentBuilder<EntityTable> $query
+     * @return Collection<Entity>
      */
     protected function getPageOfDataFromQuery(EloquentBuilder $query, int $page, int $count): Collection
     {
@@ -106,6 +117,7 @@ class SearchRunner
     /**
      * Create a search query for an entity.
      * @param string[] $entityTypes
+     * @return EloquentBuilder<EntityTable>
      */
     protected function buildQuery(SearchOptions $searchOpts, array $entityTypes): EloquentBuilder
     {
@@ -290,7 +302,7 @@ class SearchRunner
                 $query->where('name', '=', $tagParts['name']);
             }
 
-            if (is_numeric($tagParts['value']) && is_finite($tagParts['value']) && $tagParts['operator'] !== 'like') {
+            if (is_numeric($tagParts['value']) && is_finite(floatval($tagParts['value'])) && $tagParts['operator'] !== 'like') {
                 // We have to do a raw sql query for this since otherwise PDO will quote the value and MySQL will
                 // search the value as a string which prevents being able to do number-based operations
                 // on the tag values. We ensure it has a numeric value and then cast it just to be sure.

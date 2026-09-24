@@ -1,0 +1,25 @@
+<?php
+
+namespace BookStack\View\ViewBlocks;
+
+use BookStack\Entities\Queries\BookQueries;
+use BookStack\View\SimpleViewBlock;
+
+class BooksIndexPopular extends SimpleViewBlock
+{
+    protected static string $id = 'builtin_books-index-popular';
+    protected static string $view = 'books.parts.index-sidebar-section-popular';
+    protected static string $labelTranslationKey = 'entities.books_popular';
+
+    public function __construct(
+        protected BookQueries $queries,
+    ) {
+    }
+
+    public function getViewData(array $viewData): array
+    {
+        return [
+            'popular' => $this->queries->popularForList()->take(4)->get(),
+        ];
+    }
+}

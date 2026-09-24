@@ -1,7 +1,7 @@
 <div class="mb-xl">
     <h5>{{ trans('common.details') }}</h5>
     <div class="blended-links">
-        @include('entities.meta', ['entity' => $book, 'watchOptions' => $watchOptions])
+        @include('entities.meta', ['entity' => $book, 'watchOptions' => $watchOptions, 'referenceCount' => $referenceCount])
         @if($book->hasPermissions())
             <div class="active-restriction">
                 @if(userCan(\BookStack\Permissions\Permission::RestrictionsManage, $book))

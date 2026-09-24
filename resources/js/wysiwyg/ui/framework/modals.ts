@@ -39,7 +39,10 @@ export class EditorFormModal extends EditorContainerUiElement {
     hide() {
         this.getContext().manager.setModalInactive(this.key);
         this.teardown();
-        if (this.originalFocus instanceof HTMLElement && this.originalFocus.isConnected) {
+
+        if (this.originalFocus === this.getContext().editorDOM) {
+            this.getContext().editor.focus();
+        } else if (this.originalFocus instanceof HTMLElement && this.originalFocus.isConnected) {
             this.originalFocus.focus();
         }
     }
@@ -69,12 +72,25 @@ export class EditorFormModal extends EditorContainerUiElement {
 
         const wrapper = el('div', {class: 'editor-modal-wrapper'}, [modal]);
 
+        // Handle clicks but only when not started from within the modal
+        let mouseDownInModal = false;
+        modal.addEventListener('mousedown', () => {
+            mouseDownInModal = true;
+        });
+        wrapper.addEventListener('mouseup', () => {
+            window.setTimeout(() => {
+                mouseDownInModal = false;
+            }, 10);
+        });
         wrapper.addEventListener('click', event => {
-            if (event.target && !modal.contains(event.target as HTMLElement)) {
+            // We check our custom mouse down tracker but also have to check the event target since
+            // sometimes mousedown events are not tracked (for example, clicking outside an open select list).
+            if (!mouseDownInModal && !modal.contains(event.target as HTMLElement)) {
                 this.hide();
             }
         });
 
+        // Handle escape key press
         wrapper.addEventListener('keydown', event => {
             if (event.key === 'Escape') {
                 this.hide();

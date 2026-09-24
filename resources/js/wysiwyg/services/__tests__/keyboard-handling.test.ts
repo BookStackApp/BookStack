@@ -1,7 +1,7 @@
 import {
     createTestContext, destroyFromContext,
     dispatchKeydownEventForNode,
-    dispatchKeydownEventForSelectedNode, expectNodeShapeToMatch,
+    dispatchKeydownEventForSelectedNode, expectNodeShapeToMatch, waitAnimationFrames,
 } from "lexical/__tests__/utils";
 import {
     $createParagraphNode, $createTextNode,
@@ -14,6 +14,8 @@ import {registerRichText} from "@lexical/rich-text";
 import {EditorUiContext} from "../../ui/framework/core";
 import {$createListItemNode, $createListNode, ListItemNode, ListNode} from "@lexical/list";
 import {$createImageNode, ImageNode} from "@lexical/rich-text/LexicalImageNode";
+import {$selectSingleNode} from "../../utils/selection";
+import {$createLinkNode} from "@lexical/link";
 
 describe('Keyboard-handling service tests', () => {
 
@@ -155,6 +157,112 @@ describe('Keyboard-handling service tests', () => {
             type: 'paragraph',
             children: [
                 {type: 'image'}
+            ],
+        }]);
+    });
+
+    test('Images in list items: Shift Enter press inserts a new text element and line break above the image', async () => {
+        editor.updateAndCommit(() => {
+            const root = $getRoot();
+            const list = $createListNode('bullet');
+            const listItem = $createListItemNode();
+            const image = $createImageNode('https://example.com/cat.png');
+            root.append(list);
+            list.append(listItem);
+            listItem.append(image);
+
+            $selectSingleNode(image);
+        });
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'list',
+            children: [
+                {
+                    type: 'listitem',
+                    children: [
+                        {type: 'image'}
+                    ],
+                }
+            ],
+        }]);
+
+        dispatchKeydownEventForSelectedNode(editor, 'Enter', {shiftKey: true});
+        await waitAnimationFrames(2);
+
+        editor.updateAndCommit(() => {
+            $getSelection()?.insertText('p');
+        });
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'list',
+            children: [
+                {
+                    type: 'listitem',
+                    children: [
+                        {text: 'p'},
+                        {type: 'linebreak'},
+                        {type: 'image'}
+                    ],
+                }
+            ],
+        }]);
+    });
+
+    test('Linked images in list items: Shift Enter press inserts a new text element and line break above the link', async () => {
+        editor.updateAndCommit(() => {
+            const root = $getRoot();
+            const list = $createListNode('bullet');
+            const listItem = $createListItemNode();
+            const link = $createLinkNode('https://example.com');
+            const image = $createImageNode('https://example.com/cat.png');
+            root.append(list);
+            list.append(listItem);
+            listItem.append(link);
+            link.append(image);
+
+            $selectSingleNode(image);
+        });
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'list',
+            children: [
+                {
+                    type: 'listitem',
+                    children: [
+                        {
+                            type: 'link',
+                            children: [
+                                {type: 'image'}
+                            ]
+                        }
+                    ],
+                }
+            ],
+        }]);
+
+        dispatchKeydownEventForSelectedNode(editor, 'Enter', {shiftKey: true});
+        await waitAnimationFrames(2);
+
+        editor.updateAndCommit(() => {
+            $getSelection()?.insertText('p');
+        });
+
+        expectNodeShapeToMatch(editor, [{
+            type: 'list',
+            children: [
+                {
+                    type: 'listitem',
+                    children: [
+                        {text: 'p'},
+                        {type: 'linebreak'},
+                        {
+                            type: 'link',
+                            children: [
+                                {type: 'image'}
+                            ]
+                        }
+                    ],
+                }
             ],
         }]);
     });

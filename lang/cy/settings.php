@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'These permissions will technically also provide visibility & searching of users in the system.',
     'role_all' => 'Popeth',
     'role_own' => 'Meddu',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Wedi\'u rheoli gan yr ased y maent yn cael eu huwchlwytho iddo',
     'role_controlled_by_page_delete' => 'Controlled by page delete permissions',
     'role_save' => 'Cadw Rôl',

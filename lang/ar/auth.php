@@ -8,7 +8,7 @@ return [
 
     'failed' => 'البيانات المعطاة لا توافق سجلاتنا.',
     'throttle' => 'تجاوزت الحد الأقصى من المحاولات. الرجاء المحاولة مرة أخرى بعد :seconds ثانية/ثواني.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'تجاوزت الحد الأقصى من المحاولات. الرجاء المحاولة مرة أخرى بعد :seconds seconds.',
 
     // Login & Register
     'sign_up' => 'إنشاء حساب',
@@ -21,6 +21,9 @@ return [
     'username' => 'اسم المستخدم',
     'email' => 'البريد الإلكتروني',
     'password' => 'كلمة السر',
+    'password_new' => 'كلمة المرور الجديدة',
+    'password_new_confirm' => 'تأكيد كلمة المرور الجديدة',
+    'password_current' => 'تأكيد كلمة المرور الحالية',
     'password_confirm' => 'تأكيد كلمة السر',
     'password_hint' => 'يجب أن تحتوي كلمة السر على 8 خانات على الأقل',
     'forgot_password' => 'نسيت كلمة السر؟',

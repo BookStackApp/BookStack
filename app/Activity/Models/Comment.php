@@ -3,6 +3,7 @@
 namespace BookStack\Activity\Models;
 
 use BookStack\App\Model;
+use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\JointPermission;
 use BookStack\Permissions\PermissionApplicator;
 use BookStack\Users\Models\HasCreatorAndUpdater;
@@ -40,6 +41,9 @@ class Comment extends Model implements Loggable, OwnableInterface
 
     /**
      * Get the entity that this comment belongs to.
+     * It's only pages right now hence the typing below.
+     * Would need a deeper audit if that changes as many areas assume this is always a page.
+     * @return MorphTo<Page, $this>
      */
     public function entity(): MorphTo
     {
@@ -55,7 +59,9 @@ class Comment extends Model implements Loggable, OwnableInterface
 
         // Ultimately, we could just align the method name to 'commentable' but that would be a potential
         // breaking change and not really worthwhile in a patch due to the risk of creating extra problems.
-        return $this->morphTo(null, 'commentable_type', 'commentable_id');
+        /** @var MorphTo<Page, $this> $relation */
+        $relation = $this->morphTo(null, 'commentable_type', 'commentable_id');
+        return $relation;
     }
 
     /**

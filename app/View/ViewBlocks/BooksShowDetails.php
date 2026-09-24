@@ -1,0 +1,33 @@
+<?php
+
+namespace BookStack\View\ViewBlocks;
+
+use BookStack\Activity\Tools\UserEntityWatchOptions;
+use BookStack\Entities\Models\Book;
+use BookStack\References\ReferenceFetcher;
+use BookStack\View\SimpleViewBlock;
+
+class BooksShowDetails extends SimpleViewBlock
+{
+    protected static string $id = 'builtin_books-show-details';
+    protected static string $view = 'books.parts.show-sidebar-section-details';
+    protected static string $labelTranslationKey = 'common.details';
+
+    public function __construct(
+        protected ReferenceFetcher $referenceFetcher,
+    ) {
+    }
+
+    public function getViewData(array $viewData): array
+    {
+        /** @var Book $book */
+        $book = $viewData['book'];
+        $referenceCount = $this->referenceFetcher->getReferenceCountToEntity($book);
+
+        return [
+            'book' => $book,
+            'watchOptions' => new UserEntityWatchOptions(user(), $book),
+            'referenceCount' => $referenceCount,
+        ];
+    }
+}

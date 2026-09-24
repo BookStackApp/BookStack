@@ -158,7 +158,7 @@ body.tox-fullscreen, body.markdown-fullscreen {
   border-radius: 4px;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.1);
   @include mixins.lightDark(background-color, #fff, #333);
-  width: 328px;
+  width: 344px;
 
   &:before {
     position: absolute;

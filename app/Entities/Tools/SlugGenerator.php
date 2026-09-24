@@ -52,7 +52,7 @@ class SlugGenerator
     {
         $slug = Str::slug($name);
         if ($slug === '') {
-            $slug = substr(md5(rand(1, 500)), 0, 5);
+            $slug = substr(md5(strval(rand(1, 500))), 0, 5);
         }
 
         return $slug;

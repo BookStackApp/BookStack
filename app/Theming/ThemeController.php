@@ -24,7 +24,7 @@ class ThemeController extends Controller
             abort(404);
         }
 
-        $response = $this->download()->streamedFileInline($filePath);
+        $response = $this->createDownload()->streamedFileInline($filePath);
         $response->setMaxAge(86400);
 
         return $response;

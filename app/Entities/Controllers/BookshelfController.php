@@ -2,7 +2,6 @@
 
 namespace BookStack\Entities\Controllers;
 
-use BookStack\Activity\ActivityQueries;
 use BookStack\Activity\Models\View;
 use BookStack\Entities\Queries\BookQueries;
 use BookStack\Entities\Queries\BookshelfQueries;
@@ -13,7 +12,6 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
-use BookStack\References\ReferenceFetcher;
 use BookStack\Util\SimpleListOptions;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,7 +25,6 @@ class BookshelfController extends Controller
         protected EntityQueries $entityQueries,
         protected BookQueries $bookQueries,
         protected ShelfContext $shelfContext,
-        protected ReferenceFetcher $referenceFetcher,
     ) {
     }
 
@@ -46,21 +43,12 @@ class BookshelfController extends Controller
         $shelves = $this->queries->visibleForListWithCover()
             ->orderBy($listOptions->getSort(), $listOptions->getOrder())
             ->paginate(setting()->getInteger('lists-page-count-shelves', 18, 1, 1000));
-        $recents = $this->isSignedIn() ? $this->queries->recentlyViewedForCurrentUser()->get() : false;
-        $popular = $this->queries->popularForList()->get();
-        $new = $this->queries->visibleForList()
-            ->orderBy('created_at', 'desc')
-            ->take(4)
-            ->get();
 
         $this->shelfContext->clearShelfContext();
         $this->setPageTitle(trans('entities.shelves'));
 
         return view('shelves.index', [
             'shelves'     => $shelves,
-            'recents'     => $recents,
-            'popular'     => $popular,
-            'new'         => $new,
             'view'        => $view,
             'listOptions' => $listOptions,
         ]);
@@ -105,7 +93,7 @@ class BookshelfController extends Controller
      *
      * @throws NotFoundException
      */
-    public function show(Request $request, ActivityQueries $activities, string $slug)
+    public function show(Request $request, string $slug)
     {
         try {
             $shelf = $this->queries->findVisibleBySlugOrFail($slug);
@@ -144,9 +132,7 @@ class BookshelfController extends Controller
             'shelf'                   => $shelf,
             'sortedVisibleShelfBooks' => $sortedVisibleShelfBooks,
             'view'                    => $view,
-            'activity'                => $activities->entityActivity($shelf, 20, 1),
             'listOptions'             => $listOptions,
-            'referenceCount'          => $this->referenceFetcher->getReferenceCountToEntity($shelf),
         ]);
     }
 

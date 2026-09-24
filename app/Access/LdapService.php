@@ -346,13 +346,15 @@ class LdapService
         }
 
         $userGroups = $this->extractGroupsFromSearchResponseEntry($user);
-        $allGroups = $this->getGroupsRecursive($userGroups, []);
+        $filteredGroups = $this->filterGroups($userGroups);
+        $allGroups = $this->getGroupsRecursive($filteredGroups, []);
         $formattedGroups = $this->extractGroupNamesFromLdapGroupDns($allGroups);
 
         if ($this->config['dump_user_groups']) {
             throw new JsonDebugException([
                 'details_from_ldap'            => $user,
                 'parsed_direct_user_groups'    => $userGroups,
+                'parsed_filtered_user_groups'  => $filteredGroups,
                 'parsed_recursive_user_groups' => $allGroups,
                 'parsed_resulting_group_names' => $formattedGroups,
             ]);
@@ -367,7 +369,7 @@ class LdapService
 
         foreach ($groupDNs as $groupDN) {
             $exploded = $this->ldap->explodeDn($groupDN, 1);
-            if ($exploded !== false && count($exploded) > 0) {
+            if ($exploded !== false && $exploded['count'] > 0) {
                 $names[] = $exploded[0];
             }
         }
@@ -390,7 +392,8 @@ class LdapService
             }
 
             $parentGroups = $this->getParentsOfGroup($groupDN);
-            $groupsToAdd = array_merge($groupsToAdd, $parentGroups);
+            $parentGroupsFiltered = $this->filterGroups($parentGroups);
+            $groupsToAdd = array_merge($groupsToAdd, $parentGroupsFiltered);
             $checked[] = $groupDN;
         }
 
@@ -401,6 +404,20 @@ class LdapService
         }
 
         return $this->getGroupsRecursive($uniqueDNs, $checked);
+    }
+
+    /**
+     * @param string[] $groupDNs
+     * @return string[]
+     */
+    protected function filterGroups(array $groupDNs): array
+    {
+        $filtered = array_filter($groupDNs, function (string $groupDN) {
+            $exploded = $this->ldap->explodeDn($groupDN, 1);
+            return $exploded !== false && $exploded['count'] > 0;
+        });
+
+        return array_values($filtered);
     }
 
     /**

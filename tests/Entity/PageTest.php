@@ -98,7 +98,7 @@ class PageTest extends TestCase
         $details = [
             'html'    => '<h1>a title</h1>',
             'name'    => 'My page with summary',
-            'summary' => 'Here is my changelog message for a new page!',
+            'changelog' => 'Here is my changelog message for a new page!',
         ];
         $resp = $this->post($book->getUrl("/draft/{$draft->id}"), $details);
         $resp->assertRedirect();

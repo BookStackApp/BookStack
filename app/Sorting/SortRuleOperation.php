@@ -2,7 +2,6 @@
 
 namespace BookStack\Sorting;
 
-use Closure;
 use Illuminate\Support\Str;
 
 enum SortRuleOperation: string

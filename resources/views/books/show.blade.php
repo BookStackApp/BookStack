@@ -66,15 +66,10 @@
 
 @stop
 
-@section('right')
-    @include('books.parts.show-sidebar-section-details', ['book' => $book, 'watchOptions' => $watchOptions])
-    @include('books.parts.show-sidebar-section-actions', ['book' => $book, 'watchOptions' => $watchOptions])
-@stop
-
 @section('left')
-    @include('entities.search-form', ['label' => trans('entities.books_search_this')])
-    @include('books.parts.show-sidebar-section-tags', ['book' => $book])
-    @include('books.parts.show-sidebar-section-shelves', ['bookParentShelves' => $bookParentShelves])
-    @include('books.parts.show-sidebar-section-activity', ['activity' => $activity])
+    @include('common.view-blocks', ['location' => 'books-show', 'position' => 'left'])
 @stop
 
+@section('right')
+    @include('common.view-blocks', ['location' => 'books-show', 'position' => 'right'])
+@stop

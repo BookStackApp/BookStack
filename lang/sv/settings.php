@@ -206,6 +206,7 @@ return [
     'role_asset_users_note' => 'Dessa behörigheter kommer i praktiken även att ge synlighet och sökmöjlighet för användare i systemet.',
     'role_all' => 'Alla',
     'role_own' => 'Egna',
+    'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Kontrolleras av den sida de laddas upp till',
     'role_controlled_by_page_delete' => 'Styrs av behörigheter för radering av sidor',
     'role_save' => 'Spara roll',

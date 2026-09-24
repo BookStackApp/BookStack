@@ -6,7 +6,6 @@ use BookStack\Access\SocialDriverManager;
 use BookStack\Exceptions\ThemeException;
 use Illuminate\Console\Application;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\View\FileViewFinder;
 use Symfony\Component\Console\Command\Command;
 
 class ThemeService

@@ -9,7 +9,8 @@
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.view') }}<br></small>
-        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-view-all', 'label' => trans('settings.role_all')])
+        @php $viewAllAria = trans('settings.role_permission_aria', ['action' => trans('common.view'), 'resource' => strtolower($title), 'value' => trans('settings.role_all')]); @endphp
+        @include('settings.roles.parts.checkbox', ['permission' => $permissionPrefix . '-view-all', 'label' => trans('settings.role_all'), 'ariaLabel' => $viewAllAria])
     </div>
     <div class="flex py-s px-m min-width-xxs">
         <small class="hide-over-m bold">{{ trans('common.edit') }}<br></small>

@@ -41,6 +41,7 @@ import {ImageNode} from "@lexical/rich-text/LexicalImageNode";
 import {MediaNode} from "@lexical/rich-text/LexicalMediaNode";
 import {DiagramNode} from "@lexical/rich-text/LexicalDiagramNode";
 import {DiagramDecorator} from "../../../../ui/decorators/DiagramDecorator";
+import {$generateHtmlFromNodes} from "@lexical/html";
 
 type TestEnv = {
   readonly container: HTMLDivElement;
@@ -768,7 +769,14 @@ export function html(
 }
 
 export function expectHtmlToBeEqual(expected: string, actual: string): void {
-  expect(formatHtml(expected)).toBe(formatHtml(actual));
+  expect(formatHtml(actual)).toBe(formatHtml(expected));
+}
+
+export function expectEditorHtmlToBeEqual(editor: LexicalEditor, expected: string): void {
+  const html = editor.read(() => {
+    return $generateHtmlFromNodes(editor, null);
+  });
+  expect(formatHtml(html)).toBe(formatHtml(expected));
 }
 
 type nodeTextShape = {
@@ -906,4 +914,19 @@ export function patchRange() {
             },
         };
     };
+}
+
+export function waitAnimationFrames(count: number = 1): Promise<void> {
+  return new Promise((resolve) => {
+    let handled = 0;
+    let tick = () => {
+      if (++handled > count) {
+        resolve();
+      } else {
+        setTimeout(tick, 16);
+      }
+    }
+
+    tick();
+  });
 }

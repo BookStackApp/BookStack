@@ -122,7 +122,7 @@ class UserRepo
     /**
      * Update the given user with the given data, but do not create an activity.
      *
-     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string, display_mode: ?string} $data
      *
      * @throws UserUpdateException
      */
@@ -153,6 +153,11 @@ class UserRepo
             setting()->putUser($user, 'language', $data['language']);
         }
 
+        if (!empty($data['display_mode'])) {
+            $value = $data['display_mode'] === 'dark' ? 'true' : 'false';
+            setting()->putUser($user, 'dark-mode-enabled', $value);
+        }
+
         $user->save();
 
         return $user;
@@ -161,7 +166,7 @@ class UserRepo
     /**
      * Update the given user with the given data.
      *
-     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string} $data
+     * @param array{name: ?string, email: ?string, external_auth_id: ?string, password: ?string, roles: ?array<int>, language: ?string, display_mode: ?string} $data
      *
      * @throws UserUpdateException
      */
