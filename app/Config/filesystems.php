@@ -53,8 +53,13 @@ return [
 
         's3' => [
             'driver'                  => 's3',
-            'key'                     => env('STORAGE_S3_KEY', 'your-key'),
-            'secret'                  => env('STORAGE_S3_SECRET', 'your-secret'),
+            // When STORAGE_S3_KEY / STORAGE_S3_SECRET are unset, default to null
+            // so the AWS SDK falls back to its default credential provider chain
+            // (env vars, ECS/EKS container credentials, EC2 instance profile, ...).
+            // Providing non-null placeholders here would short-circuit the chain
+            // and force every call to use the placeholders as explicit credentials.
+            'key'                     => env('STORAGE_S3_KEY'),
+            'secret'                  => env('STORAGE_S3_SECRET'),
             'region'                  => env('STORAGE_S3_REGION', 'your-region'),
             'bucket'                  => env('STORAGE_S3_BUCKET', 'your-bucket'),
             'endpoint'                => env('STORAGE_S3_ENDPOINT', null),
