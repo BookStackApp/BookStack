@@ -487,6 +487,43 @@ class ZipImportRunnerTest extends TestCase
         ZipTestHelper::deleteZipForImport($import);
     }
 
+    public function test_error_thrown_if_zip_item_file_stream_exceeds_its_reported_length_in_zip_archive()
+    {
+        $tempFile = tempnam(sys_get_temp_dir(), 'bs-zip-test');
+        file_put_contents($tempFile, str_repeat('a', 100));
+        $parent = $this->entities->chapter();
+
+        $import = ZipTestHelper::importFromData([], [
+            'page' => [
+                'name' => 'Page A',
+                'html' => '<p>Hello</p>',
+                'attachments' => [
+                    [
+                        'name' => 'Text attachment',
+                        'file' => 'file_attachment'
+                    ]
+                ],
+            ],
+        ], [
+            'file_attachment' => $tempFile,
+        ]);
+
+        $zipPath = storage_path($import->path);
+        // Patch the size fields in the ZIP bytes to 99
+        $bytes = file_get_contents($zipPath);
+        $bytes = substr_replace($bytes, pack('V', 99), 0x103, 4); // central directory usz
+        $bytes = substr_replace($bytes, pack('V', 99), 0x91, 4); // local header usz
+        file_put_contents($zipPath, $bytes);
+
+        $this->asAdmin();
+
+        $this->expectException(ZipImportException::class);
+        $this->expectExceptionMessage('File file_attachment exceeded the file size reported in the ZIP archive.');
+
+        $this->runner->run($import, $parent);
+        ZipTestHelper::deleteZipForImport($import);
+    }
+
     public function test_error_thrown_if_zip_data_exceeds_app_file_upload_limit()
     {
         $parent = $this->entities->chapter();

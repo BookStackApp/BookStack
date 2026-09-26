@@ -263,12 +263,20 @@ class ZipImportRunner
         }
 
         $tempPath = tempnam(sys_get_temp_dir(), 'bszipextract');
+        $fileSize = $reader->fileSize($fileName);
         $fileStream = $reader->streamFile($fileName);
         $tempStream = fopen($tempPath, 'wb');
-        stream_copy_to_stream($fileStream, $tempStream);
+        $copied = stream_copy_to_stream($fileStream, $tempStream, $fileSize + 5);
         fclose($tempStream);
 
         $this->tempFilesToCleanup[] = $tempPath;
+
+        // Raise an error if actual file size exceeds the reported size
+        if ($copied > $fileSize) {
+            throw new ZipImportException([
+                "File $fileName exceeded the file size reported in the ZIP archive."
+            ]);
+        }
 
         $intendedUploadName = $fileName;
         if ($forceExtensionFromMime) {
