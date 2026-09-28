@@ -198,6 +198,7 @@ class PermissionApplicator
                     ->leftJoin('entity_page_data', 'entities.id', '=', 'entity_page_data.page_id')
                     ->whereColumn('entities.id', '=', $fullPageIdColumn)
                     ->where('entities.type', '=', 'page')
+                    ->whereNull('entities.deleted_at')
                     ->where(function (QueryBuilder $query) {
                         $query->where('entity_page_data.draft', '=', false)
                             ->orWhere(function (QueryBuilder $query) {

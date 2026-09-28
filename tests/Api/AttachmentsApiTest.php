@@ -61,6 +61,22 @@ class AttachmentsApiTest extends TestCase
         ]]);
     }
 
+    public function test_index_does_not_show_attachments_for_pages_in_recycle_bin()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $attachment = $this->createAttachmentForPage($page, [
+            'name'     => 'My test attachment',
+            'external' => true,
+        ]);
+        $this->entities->sendToRecycleBin($page);
+
+        $resp = $this->getJson("{$this->baseEndpoint}?filter[id]={$attachment->id}");
+
+        $resp->assertJsonCount(0, 'data');
+        $resp->assertJsonPath('total', 0);
+    }
+
     public function test_create_endpoint_for_link_attachment()
     {
         $this->actingAsApiAdmin();
