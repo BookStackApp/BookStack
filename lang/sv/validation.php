@@ -16,7 +16,7 @@ return [
     'alpha_num'            => ':attribute får bara innehålla bokstäver och siffror.',
     'array'                => ':attribute måste vara en array.',
     'backup_codes'         => 'Den angivna koden är inte giltig eller har redan använts.',
-    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
+    'base64_uri_mime'      => ':attribute måste vara en giltig base64-URI som innehåller data av MIME-typen :mime.',
     'before'               => ':attribute måste vara före :date.',
     'between'              => [
         'numeric' => ':attribute måste vara mellan :min och :max.',
@@ -26,7 +26,7 @@ return [
     ],
     'boolean'              => ':attribute måste vara sant eller falskt.',
     'confirmed'            => 'Bekräftelsen av :attribute stämmer inte.',
-    'current_password'     => 'This does not match your current password.',
+    'current_password'     => 'Detta stämmer inte överens med ditt nuvarande lösenord.',
     'date'                 => ':attribute är inte ett giltigt datum.',
     'date_format'          => ':attribute matchar inte formatet :format.',
     'different'            => ':attribute och :other måste vara olika.',
