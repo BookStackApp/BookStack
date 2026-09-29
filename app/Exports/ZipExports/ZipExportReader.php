@@ -64,7 +64,7 @@ class ZipExportReader
         }
 
         $maxSize = max(intval(config()->get('app.upload_limit')), 1) * 1000000;
-        $dataSize = $info['size'] ?? 0;
+        $dataSize = $info['size'];
         if ($dataSize > $maxSize) {
             throw new ZipExportException(trans('errors.import_zip_data_too_large'));
         }
@@ -96,7 +96,7 @@ class ZipExportReader
             return -1;
         }
 
-        return $fileInfo['size'] ?? -1;
+        return $fileInfo['size'];
     }
 
     /**
