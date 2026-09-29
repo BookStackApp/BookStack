@@ -15,7 +15,7 @@ return [
     'shortcuts_section_navigation' => 'Navigace',
     'shortcuts_section_actions' => 'Společné akce',
     'shortcuts_save' => 'Uložit zkratky',
-    'shortcuts_overlay_desc' => 'Poznámka: Když jsou povoleny zkratky, je k dispozici pomocný překryv stisknutím "? která zvýrazní dostupné zkratky pro akce viditelné na obrazovce.',
+    'shortcuts_overlay_desc' => 'Poznámka: Jsou-li klávesové zkratky povoleny, lze stisknutím klávesy „?“ vyvolat pomocné okno, které zvýrazní dostupné klávesové zkratky pro akce aktuálně zobrazené na obrazovce.',
     'shortcuts_update_success' => 'Nastavení pro zkratky bylo aktualizováno!',
     'shortcuts_overview_desc' => 'Správa klávesových zkratek, které můžete použít k navigaci systémového uživatelského rozhraní.',
 
