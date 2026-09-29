@@ -115,7 +115,7 @@
                                     :<br></strong> {{ $activity->ip }}</div>
                             <div class="flex-3 px-m py-xxs text-m-right min-width-xs"><strong
                                         class="mr-xs hide-over-m">{{ trans('settings.audit_table_date') }}
-                                    :<br></strong> {{ $activity->created_at }}</div>
+                                    :<br></strong> {{ $dates->absolute($activity->created_at) }}</div>
                         </div>
                     </div>
                 @endforeach

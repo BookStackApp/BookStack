@@ -183,7 +183,7 @@ return [
     'books_sort_show_other' => 'Zobrazit ostatní knihy',
     'books_sort_save' => 'Uložit nové pořadí',
     'books_sort_show_other_desc' => 'Přidejte sem další knihy, abyste je zahrnuli do operace třídění, a umožněte snadnou křížovou reorganizaci.',
-    'books_sort_move_up' => 'Posunout Nahoru',
+    'books_sort_move_up' => 'Posunout nahoru',
     'books_sort_move_down' => 'Posunout dolů',
     'books_sort_move_prev_book' => 'Přesunout se na předchozí knihu',
     'books_sort_move_next_book' => 'Přesunout se na další knihu',

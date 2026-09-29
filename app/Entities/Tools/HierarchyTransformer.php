@@ -42,6 +42,7 @@ class HierarchyTransformer
         $this->trashCan->destroyEntity($chapter);
 
         Activity::add(ActivityType::BOOK_CREATE_FROM_CHAPTER, $book);
+        $book->rebuildPermissions();
 
         return $book;
     }

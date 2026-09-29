@@ -67,6 +67,32 @@ class ConvertTest extends TestCase
         $resp->assertRedirect();
     }
 
+    public function test_convert_chapter_to_book_rebuilds_page_permissions()
+    {
+        $editor = $this->users->editor();
+        $chapter = $this->entities->chapterHasPages();
+        /** @var Page $childPage */
+        $childPage = $chapter->pages()->first();
+        $oldBookId = $childPage->book_id;
+
+        // Make chapter non-accessible via parent book, so the permissions should not
+        // be restricting the child page after conversion
+        $this->permissions->disableEntityInheritedPermissions($chapter->book);
+        $this->actingAs($editor)->get($childPage->getUrl())->assertNotFound();
+
+        $resp = $this->asAdmin()->post($chapter->getUrl('/convert-to-book'));
+        $resp->assertRedirectContains('/books/');
+
+        /** @var Book $newBook */
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+        $childPage->refresh();
+        $this->assertNotEquals($oldBookId, $childPage->book_id);
+        $this->assertEquals($newBook->id, $childPage->book_id);
+
+        $resp = $this->actingAs($editor)->get($childPage->getUrl());
+        $resp->assertOk();
+    }
+
     public function test_book_edit_view_shows_convert_option()
     {
         $book = $this->entities->book();

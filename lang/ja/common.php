@@ -84,8 +84,8 @@ return [
     'status_inactive' => '無効',
     'never' => '該当なし',
     'none' => 'なし',
-    'move_left' => 'Move Left',
-    'move_right' => 'Move Right',
+    'move_left' => '左に移動',
+    'move_right' => '右に移動',
 
     // Header
     'homepage' => 'ホームページ',

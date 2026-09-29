@@ -557,3 +557,4 @@ ddeicide :: Bulgarian
 Luca (luca90043) :: German
 AlwaleedAlwabel (Nick390) :: Arabic
 kpfurtak :: Polish
+Jonatan Nyberg (NickWick) :: Swedish
