@@ -695,7 +695,8 @@ class ImageTest extends TestCase
         $editor = $this->users->editor();
 
         $resp = $this->actingAs($editor)->get($page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementNotExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $this->withHtml($resp)->assertElementExists('[refs~="image-manager@uploadButton"]');
+        $this->withHtml($resp)->assertElementExists('[refs="image-manager@dropzoneContainer"]');
         $resp->assertDontSee('You do not have permission to upload new images.');
 
         // Viewer with page-update permission but no image-create-all permission
@@ -703,14 +704,16 @@ class ImageTest extends TestCase
         $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $viewer->roles()->first());
 
         $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $this->withHtml($resp)->assertElementNotExists('[refs~="image-manager@uploadButton"]');
+        $this->withHtml($resp)->assertElementNotExists('[refs="image-manager@dropzoneContainer"]');
         $resp->assertSee('You do not have permission to upload new images.');
 
         // Grant image-create-all, upload options should now be enabled
         $this->permissions->grantUserRolePermissions($viewer, ['image-create-all']);
 
         $resp = $this->actingAs($viewer)->get($page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementNotExists('[refs~="image-manager@uploadButton"]', ['style' => 'display: none;']);
+        $this->withHtml($resp)->assertElementExists('[refs~="image-manager@uploadButton"]');
+        $this->withHtml($resp)->assertElementExists('[refs="image-manager@dropzoneContainer"]');
         $resp->assertDontSee('You do not have permission to upload new images.');
     }
 

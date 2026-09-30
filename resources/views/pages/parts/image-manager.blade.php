@@ -3,7 +3,7 @@
         && userCan(\BookStack\Permissions\Permission::ImageCreateAll)
         && userCan(\BookStack\Permissions\Permission::PageUpdate, $page);
 @endphp
-<div components="image-manager dropzone"
+<div components="image-manager {{ $canUploadImages ? 'dropzone' : '' }}"
      option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
      option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
      option:dropzone:error-message="{{ trans('errors.image_upload_error') }}"
@@ -21,16 +21,17 @@
         <div class="popup-body" tabindex="-1">
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                    <button refs="dropzone@selectButton image-manager@uploadButton" type="button"
-                      @if(!$canUploadImages) style="display: none;" @endif>
-                      <span>@icon('upload')</span>
-                      <span>{{ trans('components.image_upload') }}</span>
+                @if($canUploadImages)
+                    <button refs="dropzone@selectButton image-manager@uploadButton" type="button">
+                        <span>@icon('upload')</span>
+                        <span>{{ trans('components.image_upload') }}</span>
                     </button>
-                    <button refs="popup@hide"
-                       type="button"
-                       title="{{ trans('common.close') }}"
-                       class="popup-header-close">@icon('close')
-                    </button>
+                @endif
+                <button refs="popup@hide"
+                   type="button"
+                   title="{{ trans('common.close') }}"
+                   class="popup-header-close">@icon('close')
+                </button>
             </div>
   
 
@@ -107,16 +108,19 @@
                          aria-labelledby="image-manager-info-tab"
                          class="image-manager-sidebar flex-container-column">
 
-                        <div refs="image-manager@dropzoneContainer">
-                            <div refs="dropzone@status-area"></div>
-                        </div>
+                        @if($canUploadImages)
+                            <div refs="image-manager@dropzoneContainer">
+                                <div refs="dropzone@status-area"></div>
+                            </div>
+                        @endif
 
                         <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
-                           <p @if(!$canUploadImages) style="display: none;" @endif>{{ trans('components.image_intro') }}</p>
-                           <p refs="image-manager@upload-hint" @if(!$canUploadImages) style="display: none;" @endif>{{ trans('components.image_intro_upload') }}</p>
-                             @unless($canUploadImages)
-                           <p>{{ trans('components.image_no_upload_permission') }}</p>
-                            @endunless
+                            <p>{{ trans('components.image_intro') }}</p>
+                            @if($canUploadImages)
+                                <p refs="image-manager@upload-hint">{{ trans('components.image_intro_upload') }}</p>
+                            @else
+                                <p refs="image-manager@upload-hint">{{ trans('components.image_no_upload_permission') }}</p>
+                            @endif
                         </div>
 
                         <div refs="image-manager@formContainer" class="inner flex">

@@ -18,11 +18,11 @@ export class ImageManager extends Component {
         this.listContainer = this.$refs.listContainer;
         this.filterTabs = this.$manyRefs.filterTabs;
         this.selectButton = this.$refs.selectButton;
-        this.uploadButton = this.$refs.uploadButton;
+        this.uploadButton = this.$refs.uploadButton || null;
         this.uploadHint = this.$refs.uploadHint;
         this.formContainer = this.$refs.formContainer;
         this.formContainerPlaceholder = this.$refs.formContainerPlaceholder;
-        this.dropzoneContainer = this.$refs.dropzoneContainer;
+        this.dropzoneContainer = this.$refs.dropzoneContainer || null;
         this.loadMore = this.$refs.loadMore;
 
         // Instance data
@@ -139,13 +139,15 @@ export class ImageManager extends Component {
         this.getPopup().show();
 
         const hideUploads = type !== 'gallery';
-        this.dropzoneContainer.classList.toggle('hidden', hideUploads);
-        this.uploadButton.classList.toggle('hidden', hideUploads);
-        this.uploadHint.classList.toggle('hidden', hideUploads);
+        this.dropzoneContainer?.toggleAttribute('hidden', hideUploads);
+        this.uploadButton?.toggleAttribute('hidden', hideUploads);
+        this.uploadHint.toggleAttribute('hidden', hideUploads);
 
-        /** @var {Dropzone} * */
+        /** @var {Dropzone|null} * */
         const dropzone = window.$components.firstOnElement(this.container, 'dropzone');
-        dropzone.toggleActive(!hideUploads);
+        if (dropzone) {
+            dropzone.toggleActive(!hideUploads);
+        }
 
         if (!this.hasData) {
             this.loadGallery();
