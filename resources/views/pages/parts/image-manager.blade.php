@@ -1,3 +1,8 @@
+@php
+    $canUploadImages = isset($page)
+        && userCan(\BookStack\Permissions\Permission::ImageCreateAll)
+        && userCan(\BookStack\Permissions\Permission::PageUpdate, $page);
+@endphp
 <div components="image-manager dropzone"
      option:dropzone:url="{{ url('/images/gallery?' . http_build_query(['uploaded_to' => $uploaded_to ?? 0])) }}"
      option:dropzone:success-message="{{ trans('components.image_upload_success') }}"
@@ -14,18 +19,20 @@
          refs="image-manager@popup"
          class="popup-background">
         <div class="popup-body" tabindex="-1">
-
             <div class="popup-header primary-background">
                 <div class="popup-title">{{ trans('components.image_select') }}</div>
-                <button refs="dropzone@selectButton image-manager@uploadButton" type="button">
-                    <span>@icon('upload')</span>
-                    <span>{{ trans('components.image_upload') }}</span>
-                </button>
-                <button refs="popup@hide"
-                        type="button"
-                        title="{{ trans('common.close') }}"
-                        class="popup-header-close">@icon('close')</button>
+                    <button refs="dropzone@selectButton image-manager@uploadButton" type="button"
+                      @if(!$canUploadImages) style="display: none;" @endif>
+                      <span>@icon('upload')</span>
+                      <span>{{ trans('components.image_upload') }}</span>
+                    </button>
+                    <button refs="popup@hide"
+                       type="button"
+                       title="{{ trans('common.close') }}"
+                       class="popup-header-close">@icon('close')
+                    </button>
             </div>
+  
 
             <div component="tabs"
                  option:tabs:active-under="880"
@@ -105,8 +112,11 @@
                         </div>
 
                         <div refs="image-manager@form-container-placeholder" class="p-m text-small text-muted">
-                            <p>{{ trans('components.image_intro') }}</p>
-                            <p refs="image-manager@upload-hint">{{ trans('components.image_intro_upload') }}</p>
+                           <p @if(!$canUploadImages) style="display: none;" @endif>{{ trans('components.image_intro') }}</p>
+                           <p refs="image-manager@upload-hint" @if(!$canUploadImages) style="display: none;" @endif>{{ trans('components.image_intro_upload') }}</p>
+                             @unless($canUploadImages)
+                           <p>{{ trans('components.image_no_upload_permission') }}</p>
+                            @endunless
                         </div>
 
                         <div refs="image-manager@formContainer" class="inner flex">
