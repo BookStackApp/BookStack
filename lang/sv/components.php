@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Ladda upp bild',
     'image_intro' => 'Här kan du välja och hantera bilder som tidigare har laddats upp till systemet.',
     'image_intro_upload' => 'Ladda upp en ny bild genom att dra en bildfil till detta fönster, eller genom att använda knappen "Ladda upp bild" ovan.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Alla',
     'image_all_title' => 'Visa alla bilder',
     'image_book_title' => 'Visa bilder som laddats upp till den aktuella boken',

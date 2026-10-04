@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Puja una imatge',
     'image_intro' => 'Seleccioneu i gestioneu les imatges que s’han pujat al sistema amb anterioritat.',
     'image_intro_upload' => 'Pugeu una imatge arrossegant-la i deixant-la anar en aquesta finestra o amb el botó &laquo;Puja una imatge&raquo;.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Totes',
     'image_all_title' => 'Mostra totes les imatges',
     'image_book_title' => 'Mostra les imatges pujades en aquest llibre',

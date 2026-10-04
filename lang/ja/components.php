@@ -11,6 +11,7 @@ return [
     'image_upload' => '画像をアップロード',
     'image_intro' => 'ここでは、システムに以前アップロードされた画像を選択して管理できます。',
     'image_intro_upload' => 'このウィンドウに画像ファイルをドラッグするか、上の「画像をアップロード」ボタンを使用して新しい画像をアップロードします。',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'すべて',
     'image_all_title' => '全ての画像を表示',
     'image_book_title' => 'このブックにアップロードされた画像を表示',

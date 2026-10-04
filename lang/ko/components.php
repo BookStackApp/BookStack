@@ -11,6 +11,7 @@ return [
     'image_upload' => '이미지 올려두기',
     'image_intro' => '여기에서 이전에 시스템에 업로드한 이미지를 선택하고 관리할 수 있습니다.',
     'image_intro_upload' => '이미지 파일을 이 창으로 끌어다 놓거나 위의 \'이미지 업로드\' 버튼을 사용하여 새 이미지를 업로드합니다.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => '모든 이미지',
     'image_all_title' => '모든 이미지 보기',
     'image_book_title' => '이 책에서 쓰고 있는 이미지',
