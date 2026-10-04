@@ -21,7 +21,7 @@ jobs:
     - name: Setup PHP
       uses: https://github.com/shivammathur/setup-php@v2
       with:
-        php-version: 8.5
+        php-version: 8.6
         tools: phpcs
 
     - name: Run formatting check

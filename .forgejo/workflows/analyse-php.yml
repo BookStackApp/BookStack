@@ -21,8 +21,8 @@ jobs:
     - name: Setup PHP
       uses: https://github.com/shivammathur/setup-php@v2
       with:
-        php-version: 8.5
-        extensions: gd, mbstring, json, curl, xml, dom, mysql, ldap
+        php-version: 8.6
+        extensions: gd, mbstring, curl, xml, dom, mysql, ldap
 
     - name: Get Composer Cache Directory
       id: composer-cache
@@ -33,7 +33,7 @@ jobs:
       uses: https://code.forgejo.org/actions/cache@v5
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-8.5
+        key: ${{ runner.os }}-composer-8.6
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install composer dependencies
