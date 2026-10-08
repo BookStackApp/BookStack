@@ -19,9 +19,9 @@ jobs:
       image: docker.io/setupphp/node:noble
     strategy:
       matrix:
-        php: ['8.2', '8.3', '8.4', '8.5']
+        php: ['8.3', '8.4', '8.5', '8.6']
     env:
-      phpextensions: gd, mbstring, json, curl, xml, dom, mysql, ldap, gmp
+      phpextensions: gd, mbstring, curl, xml, dom, mysql, ldap, gmp
       phpextensioncachekey: cache-v1
     steps:
     - uses: https://code.forgejo.org/actions/checkout@v6

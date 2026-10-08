@@ -10,8 +10,8 @@ parameters:
     level: 5
 
     phpVersion:
-        min: 80200
-        max: 80500
+        min: 80300
+        max: 80600
 
     bootstrapFiles:
       - bootstrap/phpstan.php
