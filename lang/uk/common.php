@@ -84,8 +84,8 @@ return [
     'status_inactive' => 'Неактивний',
     'never' => 'Ніколи',
     'none' => 'Відсутньо',
-    'move_left' => 'Move Left',
-    'move_right' => 'Move Right',
+    'move_left' => 'Ліворуч',
+    'move_right' => 'Праворуч',
 
     // Header
     'homepage' => 'Домашня Сторінка',

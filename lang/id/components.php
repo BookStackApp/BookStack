@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Unggah Gambar',
     'image_intro' => 'Di sini Anda dapat memilih dan mengelola gambar yang sebelumnya diunggah ke sistem.',
     'image_intro_upload' => 'Unggah gambar baru dengan menyeret berkas gambar ke jendela ini, atau dengan menggunakan tombol "Unggah Gambar" di atas.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Semua',
     'image_all_title' => 'Lihat semua gambar',
     'image_book_title' => 'Lihat gambar untuk diunggah ke buku ini',

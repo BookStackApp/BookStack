@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Görsel Yükle',
     'image_intro' => 'Burada sisteme daha önce yüklenmiş görselleri seçebilir veya yönetebilirsiniz.',
     'image_intro_upload' => 'Bir resim dosyasını bu pencereye sürükleyerek veya yukarıdaki "Resim Yükle" düğmesini kullanarak yeni bir resim yükleyin.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Hepsi',
     'image_all_title' => 'Bütün görselleri görüntüle',
     'image_book_title' => 'Bu kitaba ait görselleri görüntüle',

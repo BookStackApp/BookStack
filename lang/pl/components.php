@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Prześlij obraz',
     'image_intro' => 'Tutaj możesz wybrać i zarządzać obrazami, które zostały wcześniej przesłane do systemu.',
     'image_intro_upload' => 'Prześlij nowy obraz przeciągając plik obrazu do tego okna lub używając przycisku "Prześlij obraz" powyżej.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Wszystkie',
     'image_all_title' => 'Zobacz wszystkie obrazki',
     'image_book_title' => 'Zobacz obrazki zapisane w tej książce',

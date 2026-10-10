@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Bild hochladen',
     'image_intro' => 'Hier kannst du die zuvor hochgeladenen Bilder auswählen und verwalten.',
     'image_intro_upload' => 'Lade ein neues Bild hoch, indem du eine Bilddatei in dieses Fenster ziehst oder auf die Schaltfläche "Bild hochladen" oben klickst.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Alle',
     'image_all_title' => 'Alle Bilder anzeigen',
     'image_book_title' => 'Zeige alle Bilder, die in dieses Buch hochgeladen wurden',

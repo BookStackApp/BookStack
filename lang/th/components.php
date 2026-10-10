@@ -11,6 +11,7 @@ return [
     'image_upload' => 'อัปโหลดรูปภาพ',
     'image_intro' => 'คุณสามารถเลือกและจัดการรูปภาพที่เคยอัปโหลดไว้ในระบบได้ที่นี่',
     'image_intro_upload' => 'อัปโหลดรูปภาพใหม่โดยลากไฟล์รูปภาพมาวางในหน้าต่างนี้ หรือใช้ปุ่ม "อัปโหลดรูปภาพ" ด้านบน',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'ทั้งหมด',
     'image_all_title' => 'ดูรูปภาพทั้งหมด',
     'image_book_title' => 'ดูรูปภาพที่อัปโหลดในหนังสือนี้',
