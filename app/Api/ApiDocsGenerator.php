@@ -31,7 +31,7 @@ class ApiDocsGenerator
      * Load the docs form the cache if existing
      * otherwise generate and store in the cache.
      */
-    public static function generateConsideringCache(): Collection
+    public static function generateConsideringCache(): array
     {
         $appVersion = AppVersion::get();
         $cacheKey = 'api-docs::' . $appVersion;
@@ -51,14 +51,14 @@ class ApiDocsGenerator
     /**
      * Generate API documentation.
      */
-    protected function generate(): Collection
+    protected function generate(): array
     {
         $apiRoutes = $this->getFlatApiRoutes();
         $apiRoutes = $this->loadDetailsFromControllers($apiRoutes);
         $apiRoutes = $this->loadDetailsFromFiles($apiRoutes);
         $apiRoutes = $apiRoutes->groupBy('base_model');
 
-        return $apiRoutes;
+        return $apiRoutes->toArray();
     }
 
     /**

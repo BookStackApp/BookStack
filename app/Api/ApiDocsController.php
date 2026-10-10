@@ -52,10 +52,10 @@ class ApiDocsController extends ApiController
         $downloadName = Str::slug(strtolower(setting('app-name')) . '-api-docs');
 
         if ($format === 'json') {
-            $docs->prepend(
-                view('api-docs.parts.getting-started')->render(),
-                'getting-started-guide'
-            );
+            $docs = [
+                'getting-started-guide' => view('api-docs.parts.getting-started')->render(),
+                ...$docs,
+            ];
             return $this->createDownload()->directly(json_encode($docs), "{$downloadName}.json");
         }
 
