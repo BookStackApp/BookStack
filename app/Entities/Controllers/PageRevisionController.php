@@ -110,7 +110,7 @@ class PageRevisionController extends Controller
         $prevContent = $prev->html ?? '';
 
         // TODO - Refactor PageContent so we can de-dupe these steps
-        $rawDiff = Diff::excecute($prevContent, $revision->html);
+        $rawDiff = Diff::execute($prevContent, $revision->html);
         $filterConfig = HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'));
         $filter = new HtmlContentFilter($filterConfig);
         $diff = $filter->filterString($rawDiff);
