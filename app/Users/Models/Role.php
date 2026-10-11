@@ -40,7 +40,8 @@ class Role extends Model implements Loggable
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->orderBy('name', 'asc');
+        $relation = $this->belongsToMany(User::class)->orderBy('name', 'asc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -87,7 +88,7 @@ class Role extends Model implements Loggable
     /**
      * Add a permission to this role.
      */
-    public function attachPermission(RolePermission $permission)
+    public function attachPermission(RolePermission $permission): void
     {
         $this->permissions()->attach($permission->id);
     }
@@ -95,7 +96,7 @@ class Role extends Model implements Loggable
     /**
      * Detach a single permission from this role.
      */
-    public function detachPermission(RolePermission $permission)
+    public function detachPermission(RolePermission $permission): void
     {
         $this->permissions()->detach([$permission->id]);
     }

@@ -18,7 +18,7 @@ class RevisionRepo
      */
     public function deleteDraftsForCurrentUser(Page $page): void
     {
-        $this->queries->latestCurrentUserDraftsForPageId($page->id)->delete();
+        $this->queries->latestCurrentUserDraftsForPageId($page->id)->reorder()->delete();
     }
 
     /**

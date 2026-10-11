@@ -29,7 +29,8 @@ class Chapter extends BookChild implements HasDescriptionInterface, HasDefaultTe
      */
     public function pages(string $dir = 'ASC'): HasMany
     {
-        return $this->hasMany(Page::class)->orderBy('priority', $dir);
+        $relation = $this->hasMany(Page::class)->orderBy('priority', $dir);
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
