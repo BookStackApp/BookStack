@@ -213,8 +213,9 @@ abstract class Entity extends Model implements
      */
     public function activity(): MorphMany
     {
-        return $this->morphMany(Activity::class, 'loggable')
+        $relation = $this->morphMany(Activity::class, 'loggable')
             ->orderBy('created_at', 'desc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -230,8 +231,9 @@ abstract class Entity extends Model implements
      */
     public function tags(): MorphMany
     {
-        return $this->morphMany(Tag::class, 'entity')
+        $relation = $this->morphMany(Tag::class, 'entity')
             ->orderBy('order', 'asc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -241,8 +243,8 @@ abstract class Entity extends Model implements
     public function comments(bool $orderByCreated = true): MorphMany
     {
         $query = $this->morphMany(Comment::class, 'commentable');
-
-        return $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
+        $query = $orderByCreated ? $query->orderBy('created_at', 'asc') : $query;
+        return $this->deletableOrderedRelation($query);
     }
 
     /**

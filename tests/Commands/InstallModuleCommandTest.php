@@ -373,7 +373,7 @@ class InstallModuleCommandTest extends TestCase
     {
         $zip = new ZipArchive();
         $tmpFile = tempnam(sys_get_temp_dir(), 'bs-test-module');
-        $zip->open($tmpFile, ZipArchive::CREATE);
+        $zip->open($tmpFile, ZipArchive::OVERWRITE);
 
         $zip->addFromString('bookstack-module.json', json_encode($metadata ?? [
             'name' => 'Test Module',

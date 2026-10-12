@@ -2,6 +2,7 @@
 
 namespace Tests\Search;
 
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 class SearchIndexingTest extends TestCase
@@ -31,10 +32,9 @@ class SearchIndexingTest extends TestCase
         $this->assertEquals(2, $scoreByTerm->get('TermG'));
     }
 
+    #[Group('slow')]
     public function test_indexing_works_as_expected_for_page_with_lots_of_terms()
     {
-        $this->markTestSkipped('Time consuming test');
-
         $count = 100000;
         $text = '';
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_#';

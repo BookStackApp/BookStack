@@ -39,6 +39,12 @@ php vendor/bin/phpunit --filter test_default_homepage_visible
 
 # Filter to a particular test class name
 php vendor/bin/phpunit --filter HomepageTest
+
+# Run slow tests
+php vendor/bin/phpunit --group slow
+
+# Run language list check
+php vendor/bin/phpunit --group lang
 ```
 
 If the codebase needs to be tested with deprecations, this can be done via uncommenting the relevant line within the `TestCase@setUp` function.  This is not expected for most PRs to the project, but instead used for maintenance tasks like dependency & PHP upgrades.

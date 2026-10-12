@@ -8,7 +8,7 @@ use BookStack\App\HomeController;
 use BookStack\App\MetaController;
 use BookStack\Entities\Controllers as EntityControllers;
 use BookStack\Exports\Controllers as ExportControllers;
-use BookStack\Http\Middleware\VerifyCsrfToken;
+use BookStack\Http\Middleware\PreventRequestForgery;
 use BookStack\Permissions\PermissionsController;
 use BookStack\References\ReferenceController;
 use BookStack\Search\SearchController;
@@ -362,7 +362,7 @@ Route::get('/saml2/sls', [AccessControllers\Saml2Controller::class, 'sls']);
 Route::post('/saml2/acs', [AccessControllers\Saml2Controller::class, 'startAcs'])->withoutMiddleware([
     StartSession::class,
     ShareErrorsFromSession::class,
-    VerifyCsrfToken::class,
+    PreventRequestForgery::class,
 ]);
 Route::get('/saml2/acs', [AccessControllers\Saml2Controller::class, 'processAcs']);
 

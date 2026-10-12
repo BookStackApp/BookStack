@@ -28,10 +28,11 @@ class Bookshelf extends Entity implements HasDescriptionInterface, HasCoverInter
      */
     public function books(): BelongsToMany
     {
-        return $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
+        $relation = $this->belongsToMany(Book::class, 'bookshelves_books', 'bookshelf_id', 'book_id')
             ->select(['entities.*', 'entity_container_data.*'])
             ->withPivot('order')
             ->orderBy('order', 'asc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**

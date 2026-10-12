@@ -74,10 +74,11 @@ class Page extends BookChild
      */
     public function revisions(): HasMany
     {
-        return $this->allRevisions()
+        $relation = $this->allRevisions()
             ->where('type', '=', 'version')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -85,10 +86,11 @@ class Page extends BookChild
      */
     public function currentRevision(): HasOne
     {
-        return $this->hasOne(PageRevision::class)
+        $relation = $this->hasOne(PageRevision::class)
             ->where('type', '=', 'version')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -105,7 +107,9 @@ class Page extends BookChild
      */
     public function attachments(): HasMany
     {
-        return $this->hasMany(Attachment::class, 'uploaded_to')->orderBy('order', 'asc');
+        $relation = $this->hasMany(Attachment::class, 'uploaded_to')
+            ->orderBy('order', 'asc');
+        return $this->deletableOrderedRelation($relation);
     }
 
     /**
@@ -115,9 +119,9 @@ class Page extends BookChild
     {
         $parts = [
             'books',
-            urlencode($this->book_slug ?? $this->book->slug),
+            urlencode($this->book_slug ?? $this->book->slug ?? ''),
             $this->draft ? 'draft' : 'page',
-            $this->draft ? $this->id : urlencode($this->slug),
+            $this->draft ? $this->id : urlencode($this->slug ?? ''),
             trim($path, '/'),
         ];
 

@@ -1,6 +1,6 @@
 # Database Testing Suite
 
-This docker setup is designed to run BookStack's test suite against each major database version we support
+This container setup is designed to run BookStack's test suite against each major database version we support
 across MySQL and MariaDB to ensure compatibility and highlight any potential issues before a release.
 This is a fairly slow and heavy process, so is designed to just be run manually before a release which
 makes changes to the database schema, or a release which makes significant changes to database queries.
@@ -10,7 +10,8 @@ makes changes to the database schema, or a release which makes significant chang
 Everything is ran via the `run.sh` script. This will:
 
 - Optionally, accept a branch of BookStack to use for testing.
-- Build the docker image from the `Dockerfile`.
+- Use podman if available, otherwise fall back to docker.
+- Build the container image from the `Containerfile`.
   - This will include a built-in copy of the chosen BookStack branch. 
 - Cycle through each major supported database version:
   - Migrate and seed the database.
@@ -29,4 +30,7 @@ cd dev/docker/db-testing
 
 # Run for a specific branch
 ./run.sh v25-11
+
+# Run, but skip the build step
+./run.sh --skip-build
 ```
