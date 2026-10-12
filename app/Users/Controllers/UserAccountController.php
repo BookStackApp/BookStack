@@ -130,7 +130,6 @@ class UserAccountController extends Controller
 
         $query = user()->watches()->getQuery();
         $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
-        $query = $permissions->filterDeletedFromEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
         $watches = $query->with('watchable')->paginate(20);
 
         $this->setPageTitle(trans('preferences.notifications'));
