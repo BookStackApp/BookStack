@@ -1077,7 +1077,7 @@ class OidcTest extends TestCase
     protected function runLogin($claimOverrides = [], $additionalHttpResponses = []): TestResponse
     {
         $this->post('/oidc/login');
-        $state = explode(':', session()->get('oidc_state'), 2)[1] ?? '';
+        $state = explode(':', session()->get('oidc_state') ?? '', 2)[1] ?? '';
         $this->mockHttpClient([$this->getMockAuthorizationResponse($claimOverrides), ...$additionalHttpResponses]);
 
         return $this->get('/oidc/callback?code=SplxlOBeZQQYbYS6WxSbIA&state=' . $state);
