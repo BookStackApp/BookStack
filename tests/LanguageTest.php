@@ -4,6 +4,7 @@ namespace Tests;
 
 use BookStack\Activity\ActivityType;
 use BookStack\Translation\LocaleManager;
+use PHPUnit\Framework\Attributes\Group;
 
 class LanguageTest extends TestCase
 {
@@ -27,10 +28,9 @@ class LanguageTest extends TestCase
     }
 
     // Not part of standard phpunit test runs since we sometimes expect non-added langs.
+    #[Group('lang')]
     public function test_locales_all_have_language_dropdown_entry()
     {
-        $this->markTestSkipped('Only used when checking language inclusion');
-
         $dropdownLocales = array_keys(trans('settings.language_select', [], 'en'));
         sort($dropdownLocales);
         sort($this->langs);

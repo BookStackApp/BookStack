@@ -6,6 +6,7 @@ use BookStack\Access\Mfa\MfaSession;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\TestResponse;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -173,10 +174,9 @@ class AuthTest extends TestCase
         $resp->assertSee('These credentials do not match our records.');
     }
 
+    #[Group('slow')]
     public function test_failed_login_attempt_has_noise_added_and_have_similar_times_between_known_and_unknown_users()
     {
-        $this->markTestSkipped('Time consuming test');
-
         $user = $this->users->editor();
         $user->password = bcrypt('password');
         $user->save();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.0/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          colors="true">
@@ -9,6 +9,12 @@
       <directory>./tests/</directory>
     </testsuite>
   </testsuites>
+  <groups>
+    <exclude>
+      <group>slow</group>
+      <group>lang</group>
+    </exclude>
+  </groups>
   <php>
     <server name="APP_ENV" value="testing"/>
     <server name="APP_DEBUG" value="false"/>
