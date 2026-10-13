@@ -176,6 +176,24 @@ class UserMyAccountTest extends TestCase
         $this->assertTrue(Hash::check('password', $editor->password));
     }
 
+    public function test_auth_password_change_rotates_remember_token()
+    {
+        $editor = $this->users->editor();
+        $rememberToken = Str::random(16);
+        $editor->remember_token = $rememberToken;
+        $editor->password = Hash::make('password');
+        $editor->save();
+
+        $this->actingAs($editor)->put('/my-account/auth/password', [
+            'password' => 'newpassword101',
+            'password-confirm' => 'newpassword101',
+            'password-current' => 'password'
+        ]);
+
+        $editor->refresh();
+        $this->assertNotEquals($rememberToken, $editor->remember_token);
+    }
+
     public function test_auth_password_change_hides_if_not_using_email_auth()
     {
         $editor = $this->users->editor();

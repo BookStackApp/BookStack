@@ -225,7 +225,6 @@ class UserAccountController extends Controller
         ]);
 
         $this->userRepo->update(user(), $validated, false);
-
         $this->showSuccessNotification(trans('preferences.auth_change_password_success'));
 
         return redirect('/my-account/auth');
