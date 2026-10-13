@@ -131,4 +131,31 @@ class ZipExportValidatorTest extends TestCase
 
         $this->assertEquals('The cover needs to reference a file of type image/jpg,image/jpeg,image/png,image/gif,image/webp,image/avif, found text/plain.', $results['book.cover']);
     }
+
+    public function test_file_references_total_size_must_be_within_a_reasonable_limit_related_to_app_upload_size_limit()
+    {
+        config()->set('app.upload_limit', 1);
+
+        $attachments = [];
+        $testFileToUse = $this->files->testFilePath('animated.png');
+        $testFileSize = filesize($testFileToUse);
+        $count = intval(ceil(1000000 / ($testFileSize - 5))) * 5;
+        for ($i = 0; $i < $count; $i++) {
+            $attachments[] = ['id' => $i, 'name' => 'Attachment ' . $i, 'file' => 'cat.png'];
+        }
+
+        $validator = $this->getValidatorForData([
+            'page' => [
+                'id' => 5,
+                'name' => 'My book',
+                'markdown' => 'Hello',
+                'attachments' => $attachments,
+            ]
+        ], ['cat.png' => $testFileToUse]);
+
+        $results = $validator->validate();
+
+        $this->assertCount(1, $results);
+        $this->assertEquals('The total size of all files in the import must not be more than 5 MB', $results['files']);
+    }
 }

@@ -3,7 +3,6 @@
 namespace BookStack\Permissions;
 
 use BookStack\App\Model;
-use BookStack\Entities\EntityProvider;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Models\EntityPermission;
@@ -11,7 +10,6 @@ use BookStack\Users\Models\OwnableInterface;
 use BookStack\Users\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
-use Illuminate\Database\Query\JoinClause;
 use InvalidArgumentException;
 
 class PermissionApplicator

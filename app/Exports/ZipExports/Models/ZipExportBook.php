@@ -93,6 +93,10 @@ final class ZipExportBook extends ZipExportModel
             'chapters' => ['array'],
         ];
 
+        if (isset($data['cover']) && is_string($data['cover'])) {
+            $context->trackUseOfFile($data['cover']);
+        }
+
         $errors = $context->validateData($data, $rules);
         $errors['tags'] = $context->validateRelations($data['tags'] ?? [], ZipExportTag::class);
         $errors['pages'] = $context->validateRelations($data['pages'] ?? [], ZipExportPage::class);
