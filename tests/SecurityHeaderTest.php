@@ -218,6 +218,29 @@ class SecurityHeaderTest extends TestCase
         $this->assertEquals("img-src 'self' blob: data:", $header);
     }
 
+    public function test_csp_headers_are_set_on_api_responses()
+    {
+        $resp = $this->asEditor()->get('/api/books');
+        $header = $this->getCspHeader($resp, 'script-src');
+
+        $this->assertStringContainsString('nonce', $header);
+    }
+
+    public function test_csp_headers_for_api_dont_alter_session_config()
+    {
+        $this->runWithEnv(['ALLOWED_IFRAME_HOSTS' => 'http://example.com'], function () {
+            $resp = $this->asEditor()->withCookie('bookstack_session', 'a')->get('/api/books');
+            $cookies = $resp->headers->getCookies();
+            $this->assertGreaterThan(0, count($cookies));
+            foreach ($cookies as $cookie) {
+                $this->assertEquals('lax', $cookie->getSameSite());
+            }
+
+            $header = $this->getCspHeader($resp, 'script-src');
+            $this->assertStringContainsString('nonce', $header);
+        });
+    }
+
     public function test_cache_control_headers_are_set_on_responses()
     {
         // Public access
@@ -240,7 +263,7 @@ class SecurityHeaderTest extends TestCase
         $cspHeaders = explode('; ', $resp->headers->get('Content-Security-Policy'));
 
         foreach ($cspHeaders as $cspHeader) {
-            if (strpos($cspHeader, $type) === 0) {
+            if (str_starts_with($cspHeader, $type)) {
                 return $cspHeader;
             }
         }

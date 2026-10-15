@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
             \BookStack\Http\Middleware\ClearPerRequestCaches::class,
         ],
         'api' => [
+            \BookStack\Http\Middleware\ApplyCspRules::class,
             \BookStack\Http\Middleware\ThrottleApiRequests::class,
             \BookStack\Http\Middleware\EncryptCookies::class,
             \BookStack\Http\Middleware\StartSessionIfCookieExists::class,

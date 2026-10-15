@@ -8,25 +8,18 @@ use Illuminate\Http\Request;
 
 class ApplyCspRules
 {
-    protected CspService $cspService;
-
-    public function __construct(CspService $cspService)
-    {
-        $this->cspService = $cspService;
+    public function __construct(
+        protected CspService $cspService
+    ) {
     }
 
     /**
      * Handle an incoming request.
-     *
-     * @param Request $request
-     * @param Closure $next
-     *
-     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         view()->share('cspNonce', $this->cspService->getNonce());
-        if ($this->cspService->allowedIFrameHostsConfigured()) {
+        if ($this->cspService->allowedIFrameHostsConfigured() && !$request->is('api/*')) {
             config()->set('session.same_site', 'none');
         }
 
