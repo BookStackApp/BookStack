@@ -7,7 +7,9 @@ use BookStack\Exceptions\LdapException;
 use BookStack\Uploads\UserAvatars;
 use BookStack\Users\Models\User;
 use ErrorException;
+use Exception;
 use Illuminate\Support\Facades\Log;
+use LDAP\Connection;
 
 /**
  * Class LdapService
@@ -15,10 +17,7 @@ use Illuminate\Support\Facades\Log;
  */
 class LdapService
 {
-    /**
-     * @var resource|\LDAP\Connection
-     */
-    protected $ldapConnection;
+    protected Connection|null $ldapConnection = null;
 
     protected array $config;
     protected bool $enabled;
@@ -187,11 +186,9 @@ class LdapService
      * Bind the system user to the LDAP connection using the given credentials
      * otherwise anonymous access is attempted.
      *
-     * @param resource|\LDAP\Connection $connection
-     *
      * @throws LdapException
      */
-    protected function bindSystemUser($connection): void
+    protected function bindSystemUser(Connection $connection): void
     {
         $ldapDn = $this->config['dn'];
         $ldapPass = $this->config['pass'];
@@ -213,10 +210,8 @@ class LdapService
      * Creates a new connection if one does not exist.
      *
      * @throws LdapException
-     *
-     * @return resource|\LDAP\Connection
      */
-    protected function getConnection()
+    protected function getConnection(): Connection
     {
         if ($this->ldapConnection !== null) {
             return $this->ldapConnection;
@@ -255,7 +250,7 @@ class LdapService
         if ($this->config['start_tls']) {
             try {
                 $started = $this->ldap->startTls($ldapConnection);
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 $error = $exception->getMessage() . ' :: ' . ldap_error($ldapConnection);
                 ldap_get_option($ldapConnection, LDAP_OPT_DIAGNOSTIC_MESSAGE, $detail);
                 Log::info("LDAP STARTTLS failure: {$error} {$detail}");
@@ -431,8 +426,7 @@ class LdapService
 
         $followReferrals = $this->config['follow_referrals'] ? 1 : 0;
         $this->ldap->setOption($ldapConnection, LDAP_OPT_REFERRALS, $followReferrals);
-        $read = $this->ldap->read($ldapConnection, $groupDN, '(objectClass=*)', [$groupsAttr]);
-        $results = $this->ldap->getEntries($ldapConnection, $read);
+        $results = $this->ldap->readAndGetEntries($ldapConnection, $groupDN, '(objectClass=*)', [$groupsAttr]);
         if ($results['count'] === 0) {
             return [];
         }
@@ -488,7 +482,7 @@ class LdapService
         try {
             $imageData = $ldapUserDetails['avatar'];
             $this->userAvatars->assignToUserFromExistingData($user, $imageData, 'jpg');
-        } catch (\Exception $exception) {
+        } catch (Exception) {
             Log::info("Failed to use avatar image from LDAP data for user id {$user->id}");
         }
     }

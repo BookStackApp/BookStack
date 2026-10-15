@@ -2,6 +2,9 @@
 
 namespace BookStack\Access;
 
+use LDAP\Connection;
+use LDAP\Result;
+
 /**
  * Class Ldap
  * An object-orientated thin abstraction wrapper for common PHP LDAP functions.
@@ -11,20 +14,16 @@ class Ldap
 {
     /**
      * Connect to an LDAP server.
-     *
-     * @return resource|\LDAP\Connection|false
      */
-    public function connect(string $hostName)
+    public function connect(string $hostName): Connection|false
     {
         return ldap_connect($hostName);
     }
 
     /**
      * Set the value of an LDAP option for the given connection.
-     *
-     * @param resource|\LDAP\Connection|null $ldapConnection
      */
-    public function setOption($ldapConnection, int $option, mixed $value): bool
+    public function setOption(Connection|null $ldapConnection, int $option, mixed $value): bool
     {
         return ldap_set_option($ldapConnection, $option, $value);
     }
@@ -32,17 +31,15 @@ class Ldap
     /**
      * Start TLS on the given LDAP connection.
      */
-    public function startTls($ldapConnection): bool
+    public function startTls(Connection $ldapConnection): bool
     {
         return ldap_start_tls($ldapConnection);
     }
 
     /**
      * Set the version number for the given LDAP connection.
-     *
-     * @param resource|\LDAP\Connection $ldapConnection
      */
-    public function setVersion($ldapConnection, int $version): bool
+    public function setVersion(Connection $ldapConnection, int $version): bool
     {
         return $this->setOption($ldapConnection, LDAP_OPT_PROTOCOL_VERSION, $version);
     }
@@ -50,11 +47,9 @@ class Ldap
     /**
      * Search the LDAP tree using the provided filter.
      *
-     * @param resource|\LDAP\Connection   $ldapConnection
-     *
-     * @return \LDAP\Result|array|false
+     * @return Result|Result[]|false
      */
-    public function search($ldapConnection, string $baseDn, string $filter, array $attributes = [])
+    public function search(Connection $ldapConnection, string $baseDn, string $filter, array $attributes = [])
     {
         return ldap_search($ldapConnection, $baseDn, $filter, $attributes);
     }
@@ -62,32 +57,34 @@ class Ldap
     /**
      * Read an entry from the LDAP tree.
      *
-     * @param resource|\Ldap\Connection $ldapConnection
-     *
-     * @return \LDAP\Result|array|false
+     * @return Result|false
      */
-    public function read($ldapConnection, string $baseDn, string $filter, array $attributes = [])
+    protected function read(Connection $ldapConnection, string $baseDn, string $filter, array $attributes = [])
     {
         return ldap_read($ldapConnection, $baseDn, $filter, $attributes);
     }
 
     /**
      * Get entries from an LDAP search result.
-     *
-     * @param resource|\LDAP\Connection $ldapConnection
-     * @param resource|\LDAP\Result $ldapSearchResult
      */
-    public function getEntries($ldapConnection, $ldapSearchResult): array|false
+    protected function getEntries(Connection $ldapConnection, Result $ldapSearchResult): array|false
     {
         return ldap_get_entries($ldapConnection, $ldapSearchResult);
     }
 
     /**
-     * Search and get entries immediately.
-     *
-     * @param resource|\LDAP\Connection   $ldapConnection
+     * Read from the LDAP system, and get the entries immediately.
      */
-    public function searchAndGetEntries($ldapConnection, string $baseDn, string $filter, array $attributes = []): array|false
+    public function readAndGetEntries(Connection $ldapConnection, string $baseDn, string $filter, array $attributes = []): array|false
+    {
+        $read = $this->read($ldapConnection, $baseDn, $filter, $attributes);
+        return $this->getEntries($ldapConnection, $read);
+    }
+
+    /**
+     * Search and get entries immediately.
+     */
+    public function searchAndGetEntries(Connection $ldapConnection, string $baseDn, string $filter, array $attributes = []): array|false
     {
         $search = $this->search($ldapConnection, $baseDn, $filter, $attributes);
 
@@ -96,10 +93,8 @@ class Ldap
 
     /**
      * Bind to the LDAP directory.
-     *
-     * @param resource|\LDAP\Connection $ldapConnection
      */
-    public function bind($ldapConnection, ?string $bindRdn = null, ?string $bindPassword = null): bool
+    public function bind(Connection $ldapConnection, ?string $bindRdn = null, ?string $bindPassword = null): bool
     {
         return ldap_bind($ldapConnection, $bindRdn, $bindPassword);
     }

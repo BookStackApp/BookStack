@@ -51,6 +51,9 @@
         "squizlabs/php_codesniffer": "^4.0.1",
         "ssddanbrown/asserthtml": "^3.1"
     },
+    "suggest": {
+        "ext-ldap": "*"
+    },
     "autoload": {
         "psr-4": {
             "BookStack\\": "app/",
