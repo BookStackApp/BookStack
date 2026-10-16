@@ -14,7 +14,6 @@ export {CodeHighlighter} from './code-highlighter';
 export {CodeTextarea} from './code-textarea';
 export {Collapsible} from './collapsible';
 export {ConfirmDialog} from './confirm-dialog';
-export {CustomCheckbox} from './custom-checkbox';
 export {DetailsHighlighter} from './details-highlighter';
 export {Dropdown} from './dropdown';
 export {DropdownSearch} from './dropdown-search';
