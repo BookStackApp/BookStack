@@ -30,7 +30,7 @@
         <label class="setting-list-label">{{ trans('settings.role_system') }}</label>
         <a href="#" refs="permissions-table@toggle-all" class="text-small text-link">{{ trans('common.toggle_all') }}</a>
 
-        <div class="toggle-switch-list grid half my-m">
+        <div class="custom-checkbox-list grid half my-m">
             <div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-all', 'label' => trans('settings.role_manage_entity_permissions')]) <sup>1</sup></div>
                 <div>@include('settings.roles.parts.checkbox', ['permission' => 'restrictions-manage-own', 'label' => trans('settings.role_manage_own_entity_permissions')]) <sup>1</sup></div>
@@ -65,7 +65,7 @@
         <div component="permissions-table"
              option:permissions-table:cell-selector=".item-list-row > div"
              option:permissions-table:row-selector=".item-list-row"
-             class="item-list toggle-switch-list">
+             class="item-list custom-checkbox-list">
             <div class="item-list-row flex-container-row items-center hide-under-m bold">
                 <div class="flex py-s px-m min-width-s">
                     <a href="#" refs="permissions-table@toggle-all" class="text-small text-link">{{ trans('common.toggle_all') }}</a>

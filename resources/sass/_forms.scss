@@ -178,7 +178,7 @@ html.markdown-editor-display.dark-mode {
   .dropdown-menu {
     padding: 0;
   }
-  .toggle-switch {
+  .custom-checkbox {
     margin: vars.$s 0;
   }
 }
@@ -308,11 +308,11 @@ input[type=color] {
     cursor: not-allowed;
   }
 }
-.toggle-switch-list {
-  .toggle-switch {
+.custom-checkbox-list {
+  .custom-checkbox {
     margin: vars.$xs 0;
   }
-  &.compact .toggle-switch {
+  &.compact .custom-checkbox {
     margin: 1px 0;
   }
 }

@@ -36,7 +36,7 @@
         <p class="small">{{ trans('settings.webhooks_events_desc') }}</p>
         <p class="text-warn small">{{ trans('settings.webhooks_events_warning') }}</p>
 
-        <div class="toggle-switch-list">
+        <div class="custom-checkbox-list">
             @include('form.custom-checkbox', [
                 'name' => 'events[all]',
                 'value' => 'all',
@@ -47,7 +47,7 @@
 
         <hr class="my-s">
 
-        <div class="dual-column-content toggle-switch-list">
+        <div class="dual-column-content custom-checkbox-list">
             @foreach(\BookStack\Activity\ActivityType::all() as $activityType)
                 <div>
                     @include('form.custom-checkbox', [

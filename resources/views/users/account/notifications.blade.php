@@ -10,7 +10,7 @@
             <p class="text-small text-muted">{{ trans('preferences.notifications_desc') }}</p>
 
             <div class="flex-container-row wrap justify-space-between pb-m">
-                <div class="toggle-switch-list min-width-l">
+                <div class="custom-checkbox-list min-width-l">
                     <div>
                         @include('form.toggle-switch', [
                             'name' => 'preferences[own-page-changes]',
