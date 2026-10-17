@@ -178,7 +178,7 @@ html.markdown-editor-display.dark-mode {
   .dropdown-menu {
     padding: 0;
   }
-  .toggle-switch {
+  .custom-checkbox {
     margin: vars.$s 0;
   }
 }
@@ -267,57 +267,52 @@ input[type=color] {
   }
 }
 
-.toggle-switch {
+.custom-checkbox {
   user-select: none;
   display: inline-grid;
   grid-template-columns: (16px + vars.$s) 1fr;
   align-items: center;
   margin: vars.$m 0;
-  .custom-checkbox {
+  input {
+    color: var(--color-primary);
+    appearance: none;
+    border: 2px solid currentColor;
     width: 16px;
     height: 16px;
-    border-radius: 2px;
-    display: inline-block;
-    border: 2px solid currentColor;
-    overflow: hidden;
-    fill: currentColor;
-    .svg-icon {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      bottom: auto;
-      top: -1.5px;
-      left: 0;
-      transition: transform ease-in-out 120ms;
-      transform: scale(0);
-      transform-origin: center center;
-    }
+    position: relative;
+    background-color: transparent;
   }
-  input[type=checkbox] {
-    display: none;
+  input:checked::before {
+    width: 12px;
+    height: 12px;
+    content: '';
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns=%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox=%220%200%2024%2024%22%3E%3Cpath fill=%22white%22 d=%22m18.86 4.118-9.733 9.609-3.951-3.995-2.98 2.966 6.93 7.184L21.805 7.217z%22/%3E%3C/svg%3E")
+    center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns=%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 viewBox=%220%200%2024%2024%22%3E%3Cpath fill=%22white%22 d=%22m18.86 4.118-9.733 9.609-3.951-3.995-2.98 2.966 6.93 7.184L21.805 7.217z%22/%3E%3C/svg%3E")
+    center / contain no-repeat;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
-  input[type=checkbox]:checked + .custom-checkbox .svg-icon {
-    transform: scale(1);
+  input:focus {
+    outline-offset: 2px;
+    outline: 1px dotted currentColor;
   }
-  .custom-checkbox:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    opacity: 0.8;
+  input:hover {
+    background-color: rgb(from var(--color-primary) r g b / 6%);
   }
-  input[type=checkbox][disabled] ~ * {
+  input:disabled {
+    color: currentColor;
     opacity: 0.8;
     cursor: not-allowed;
   }
-  input[type=checkbox][disabled] ~ .custom-checkbox {
-    border-color: #999;
-    color: #999 !important;
-    background: #f2f2f2;
-  }
 }
-.toggle-switch-list {
-  .toggle-switch {
+.custom-checkbox-list {
+  .custom-checkbox {
     margin: vars.$xs 0;
   }
-  &.compact .toggle-switch {
+  &.compact .custom-checkbox {
     margin: 1px 0;
   }
 }

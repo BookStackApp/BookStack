@@ -1,5 +1,5 @@
 
-<div class="toggle-switch-list dual-column-content">
+<div class="custom-checkbox-list dual-column-content">
     <input type="hidden" name="{{ $name }}[0]" value="0">
     @foreach($roles as $role)
         <div>
