@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Laadi pilt üles',
     'image_intro' => 'Siin saad valida ja hallata pilte, mis on eelnevalt süsteemi üles laaditud.',
     'image_intro_upload' => 'Laadi uus pilt üles pildifaili sellesse aknasse lohistades või ülal "Laadi pilt üles" nupu abil.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Kõik',
     'image_all_title' => 'Vaata kõiki pildifaile',
     'image_book_title' => 'Vaata sellesse raamatusse laaditud pildifaile',

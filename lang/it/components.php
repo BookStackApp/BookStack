@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Carica immagine',
     'image_intro' => 'Qui è possibile selezionare e gestire le immagini che sono state precedentemente caricate nel sistema.',
     'image_intro_upload' => 'Carica una nuova immagine trascinando un file immagine in questa finestra oppure utilizzando il pulsante "Carica immagine" in alto.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Tutte',
     'image_all_title' => 'Visualizza tutte le immagini',
     'image_book_title' => 'Visualizza immagini caricate in questo libro',

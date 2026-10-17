@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Hlaða upp mynd',
     'image_intro' => 'Hér getur þú valið og stjórnað þeim myndum sem þegar hefur verið upphlaðið.',
     'image_intro_upload' => 'Hladdu upp nýrri mynd með því að draga hana inn í þennan glugga eða nota "Hlaða upp" hnappinn hér fyrir ofan.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Allar',
     'image_all_title' => 'Skoða allar myndir',
     'image_book_title' => 'Skoða þær myndir sem þegar hefur verið hlaðið upp í þessa bók',
