@@ -1,9 +1,9 @@
-import MarkdownIt from 'markdown-it';
+import MarkdownIt, {type MarkdownIt as MarkdownItInstance} from 'markdown-it';
 // @ts-ignore
 import mdTasksLists from 'markdown-it-task-lists';
 
 export class Markdown {
-    protected renderer: MarkdownIt;
+    protected renderer: MarkdownItInstance;
 
     constructor() {
         this.renderer = new MarkdownIt({html: true});
@@ -13,7 +13,7 @@ export class Markdown {
     /**
      * Get the front-end render used to convert Markdown to HTML.
      */
-    getRenderer(): MarkdownIt {
+    getRenderer(): MarkdownItInstance {
         return this.renderer;
     }
 

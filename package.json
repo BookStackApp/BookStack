@@ -21,19 +21,17 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@lezer/generator": "^1.8.0",
+    "@swc/core": "^1.16.18",
+    "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
-    "@types/markdown-it": "^14.1.2",
     "@types/sortablejs": "^1.15.9",
-    "chokidar-cli": "^3.0",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.2",
     "eslint": "^10.2.0",
     "globals": "^17.4.0",
-    "jest": "^30.3.0",
+    "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.3.0",
     "npm-run-all": "^4.1.5",
     "sass": "^1.99.0",
-    "ts-jest": "^29.4.9",
-    "ts-node": "^10.9.2",
     "typescript": "6.0.*"
   },
   "dependencies": {
@@ -55,7 +53,7 @@
     "@ssddanbrown/codemirror-lang-twig": "^1.0.0",
     "codemirror": "^6.0.2",
     "idb-keyval": "^6.2.2",
-    "markdown-it": "^14.1.1",
+    "markdown-it": "^15.0.0",
     "markdown-it-task-lists": "^2.1.1",
     "snabbdom": "^3.6.3",
     "sortablejs": "^1.15.7"

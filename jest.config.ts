@@ -4,16 +4,6 @@
  */
 
 import type {Config} from 'jest';
-import {pathsToModuleNameMapper} from "ts-jest";
-import fs from "node:fs";
-
-const { compilerOptions } = JSON.parse(fs.readFileSync('./tsconfig.json', 'utf8'));
-const compilerPaths = compilerOptions.paths as Record<string, string[]>;
-const cleanedPaths: Record<string, string[]> = {};
-Object.keys(compilerPaths).forEach((key) => {
-  const paths = compilerPaths[key];
-    cleanedPaths[key] = paths.map(p => p.replace('./', ''));
-});
 
 const config: Config = {
   // All imported modules in your tests should be mocked automatically
@@ -104,9 +94,13 @@ const config: Config = {
   modulePaths: ['./'],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  // Note: This should generally align to tsconfig.json
   moduleNameMapper: {
-    'lexical/shared/invariant': 'resources/js/wysiwyg/lexical/core/shared/__mocks__/invariant',
-    ...pathsToModuleNameMapper(cleanedPaths),
+    'lexical/shared/invariant': '<rootDir>/resources/js/wysiwyg/lexical/core/shared/__mocks__/invariant',
+    '^@icons/(.*)$': '<rootDir>/resources/icons/$1',
+    '^lexical$': '<rootDir>/resources/js/wysiwyg/lexical/core/index.ts',
+    '^lexical/(.*)$': '<rootDir>/resources/js/wysiwyg/lexical/core/$1',
+    '^@lexical/(.*)$': '<rootDir>/resources/js/wysiwyg/lexical/$1',
   },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -119,7 +113,7 @@ const config: Config = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  // preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -192,7 +186,7 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+.tsx?$": ["ts-jest",{}],
+    "^.+.tsx?$": ["@swc/jest",{}],
     "^.+.svg$": ["<rootDir>/dev/build/svg-blank-transform.js",{}],
   },
 
