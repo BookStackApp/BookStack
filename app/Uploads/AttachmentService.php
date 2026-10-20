@@ -3,7 +3,9 @@
 namespace BookStack\Uploads;
 
 use BookStack\Exceptions\FileUploadException;
+use BookStack\Exceptions\NotFoundException;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
@@ -11,6 +13,20 @@ class AttachmentService
     public function __construct(
         protected FileStorage $storage,
     ) {
+    }
+
+    /**
+     * Get an attachment by ID, ensuring it is visible to the current user.
+     *
+     * @throws NotFoundException
+     */
+    public function getVisibleAttachmentOrFail(string $id): Attachment
+    {
+        try {
+            return Attachment::visible()->findOrFail(intval($id));
+        } catch (ModelNotFoundException) {
+            throw new NotFoundException(trans('errors.attachment_not_found'));
+        }
     }
 
     /**

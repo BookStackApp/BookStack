@@ -79,6 +79,10 @@ class UserManagementTest extends TestCase
     public function test_user_password_update()
     {
         $user = $this->users->viewer();
+        $rememberToken = Str::random();
+        $user->remember_token = $rememberToken;
+        $user->save();
+
         $userProfilePage = '/settings/users/' . $user->id;
 
         $this->asAdmin()->get($userProfilePage);
@@ -93,8 +97,9 @@ class UserManagementTest extends TestCase
             'password-confirm' => 'newpassword',
         ])->assertRedirect('/settings/users');
 
-        $userPassword = User::query()->find($user->id)->password;
-        $this->assertTrue(Hash::check('newpassword', $userPassword));
+        $user->refresh();
+        $this->assertTrue(Hash::check('newpassword', $user->password));
+        $this->assertNotEquals($rememberToken, $user->remember_token);
     }
 
     public function test_user_can_be_updated_with_single_char_name()
