@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Kép feltöltése',
     'image_intro' => 'Itt kiválaszthatja és kezelheti a rendszerbe korábban feltöltött képeket.',
     'image_intro_upload' => 'Húzzon ide egy új képfájlt az új kép feltöltéséhez, vagy használja a fenti "Kép feltöltése" gombot.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Összes',
     'image_all_title' => 'Összes kép megtekintése',
     'image_book_title' => 'A könyvhöz feltöltött képek megtekintése',

@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Додај слику',
     'image_intro' => 'Овде можете изабрати и управљати сликама које су претходно отпремљене у систем.',
     'image_intro_upload' => 'Отпремите нову слику тако што ћете превући датотеку слике у овај прозор или помоћу дугмета „Отпреми слику“ изнад.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Све',
     'image_all_title' => 'Прикажи све слике',
     'image_book_title' => 'Погледајте слике отпремљене уз ову књигу',

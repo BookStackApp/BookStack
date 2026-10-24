@@ -11,6 +11,7 @@ return [
     'image_upload' => 'העלאת תמונה',
     'image_intro' => 'כאן ניתן לבחור ולנהל תמונות אשר הועלו למערכת.',
     'image_intro_upload' => 'ניתן לגרור תמונות לחלון זה, או על ידי לחיצה על כפתור "העלאת תמונות" למעלה.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'הכל',
     'image_all_title' => 'הצג את כל התמונות',
     'image_book_title' => 'הצג תמונות שהועלו לספר זה',
