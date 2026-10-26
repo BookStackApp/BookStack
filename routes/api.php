@@ -32,6 +32,7 @@ Route::get('pages/{id}/export/pdf', [ExportControllers\PageExportApiController::
 Route::get('pages/{id}/export/plaintext', [ExportControllers\PageExportApiController::class, 'exportPlainText']);
 Route::get('pages/{id}/export/markdown', [ExportControllers\PageExportApiController::class, 'exportMarkdown']);
 Route::get('pages/{id}/export/zip', [ExportControllers\PageExportApiController::class, 'exportZip']);
+Route::get('pages/{id}/revisions', [EntityControllers\PageRevisionApiController::class, 'listForPage']);
 
 Route::get('chapters', [EntityControllers\ChapterApiController::class, 'list']);
 Route::post('chapters', [EntityControllers\ChapterApiController::class, 'create']);
@@ -99,6 +100,8 @@ Route::delete('imports/{id}', [ExportControllers\ImportApiController::class, 'de
 Route::get('recycle-bin', [EntityControllers\RecycleBinApiController::class, 'list']);
 Route::put('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiController::class, 'restore']);
 Route::delete('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiController::class, 'destroy']);
+
+Route::get('revisions/{id}', [EntityControllers\PageRevisionApiController::class, 'read']);
 
 Route::get('roles', [RoleApiController::class, 'list']);
 Route::post('roles', [RoleApiController::class, 'create']);
