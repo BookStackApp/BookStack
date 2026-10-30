@@ -62,7 +62,7 @@ class RevisionRepo
         $revision->type = 'version';
         $revision->summary = $summary;
 
-        $pageDraftMaxRevision = $this->queries->maxRevisionIdForPageId($page->id);
+        $pageDraftMaxRevision = $this->queries->maxRevisionVersionNumberForPageId($page->id);
         $revision->revision_number = max($page->revision_count, $pageDraftMaxRevision + 1);
 
         $revision->save();
