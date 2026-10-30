@@ -322,6 +322,27 @@ class PageRevisionTest extends TestCase
         $respHtml->assertElementExists('form[action$="/delete"]');
     }
 
+    public function test_revision_number_is_always_above_others()
+    {
+        $page = $this->entities->page();
+        $this->createRevisions($page, 5);
+        $page->revision_count = 1;
+        $page->save();
+
+
+        $maxNum = $page->revisions()->max('revision_number');
+        $this->assertEquals(6, $maxNum);
+
+        $this->asEditor()->put($page->getUrl(), [
+            'name' => 'Another page update',
+            'html' => '<p>Another page update</p>',
+            'changelog' => 'Updated again'
+        ]);
+
+        $maxNum = $page->revisions()->max('revision_number');
+        $this->assertEquals(7, $maxNum);
+    }
+
     protected function createRevisions(Page $page, int $times, array $attrs = [])
     {
         $user = user();
@@ -331,7 +352,7 @@ class PageRevisionTest extends TestCase
             if (!isset($attrs['markdown'])) {
                 $data['html'] = '<p>My update page</p>';
             }
-            $this->asAdmin()->put($page->getUrl(), array_merge($data, $attrs));
+            $resp = $this->asAdmin()->put($page->getUrl(), array_merge($data, $attrs));
             $page->refresh();
         }
 

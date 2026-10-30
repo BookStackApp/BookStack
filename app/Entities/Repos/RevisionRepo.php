@@ -61,7 +61,10 @@ class RevisionRepo
         $revision->created_at = $page->updated_at;
         $revision->type = 'version';
         $revision->summary = $summary;
-        $revision->revision_number = $page->revision_count;
+
+        $pageDraftMaxRevision = $this->queries->maxRevisionIdForPageId($page->id);
+        $revision->revision_number = max($page->revision_count, $pageDraftMaxRevision + 1);
+
         $revision->save();
 
         $this->deleteOldRevisions($page);

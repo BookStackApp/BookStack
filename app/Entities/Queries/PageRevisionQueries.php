@@ -41,4 +41,12 @@ class PageRevisionQueries
             ->where('page_id', '=', $pageId)
             ->orderBy('created_at', 'desc');
     }
+
+    public function maxRevisionIdForPageId(int $pageId): int
+    {
+        return $this->start()
+            ->where('page_id', '=', $pageId)
+            ->where('type', '=', 'version')
+            ->max('revision_number') ?? 0;
+    }
 }
