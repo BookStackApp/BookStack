@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Uwchlwytho Llun',
     'image_intro' => 'Yma gallwch ddewis a rheoli lluniau sydd wedi\'u huwchlwytho i’r system o’r blaen.',
     'image_intro_upload' => 'Uwchlwythwch lun newydd drwy lusgo ffeil llun i\'r ffenestr hon, neu drwy ddefnyddio\'r botwm "Uwchlwytho Llun" uchod.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Popeth',
     'image_all_title' => 'Gweld holl ddelweddau',
     'image_book_title' => 'Gweld lluniau a uwchlwythwyd i’r llyfr hwn',

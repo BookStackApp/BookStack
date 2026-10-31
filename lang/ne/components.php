@@ -11,6 +11,7 @@ return [
     'image_upload' => 'चित्र अपलोड गर्नुहोस्',
     'image_intro' => 'यहाँ तपाईंले पहिले अपलोड गरिएका चित्रहरू चयन र व्यवस्थापन गर्न सक्नुहुन्छ।',
     'image_intro_upload' => '"चित्र अपलोड गर्नुहोस्" बटन प्रयोग गरेर वा चित्र फाइललाई यो विन्डोमा तानेर नयाँ चित्र अपलोड गर्नुहोस्।',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'सबै',
     'image_all_title' => 'सबै चित्रहरू हेर्नुहोस्',
     'image_book_title' => 'यस पुस्तकमा अपलोड गरिएका चित्रहरू हेर्नुहोस्',

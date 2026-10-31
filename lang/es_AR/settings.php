@@ -76,7 +76,7 @@ return [
 
     // Sorting Settings
     'sorting' => 'Listas y ordenación',
-    'sorting_book_default' => 'Orden de libros por defecto',
+    'sorting_book_default' => 'Regla de orden de libro por defecto',
     'sorting_book_default_desc' => 'Seleccione la regla de ordenación predeterminada para aplicar a nuevos libros. Esto no afectará a los libros existentes, y puede ser anulado por libro.',
     'sorting_rules' => 'Reglas de Ordenación',
     'sorting_rules_desc' => 'Son operaciones de ordenación predefinidas que se pueden aplicar al contenido en el sistema.',
@@ -198,7 +198,7 @@ return [
     'role_import_content' => 'Importar contenido',
     'role_editor_change' => 'Cambiar editor de página',
     'role_notifications' => 'Recibir y gestionar notificaciones',
-    'role_permission_note_users_and_roles' => 'Estos permisos proporcionarán también visibilidad y búsqueda de usuarios y roles en el sistema.',
+    'role_permission_note_users_and_roles' => 'Estos permisos proporcionarán también técnicamente visibilidad y búsqueda de usuarios y roles en el sistema.',
     'role_asset' => 'Permisos de activos',
     'roles_system_warning' => 'Tenga en cuenta que el acceso a cualquiera de los tres permisos anteriores puede permitir a un usuario modificar sus propios privilegios o los privilegios de otros usuarios en el sistema. Asignar roles con estos permisos sólo a usuarios de comfianza.',
     'role_asset_desc' => 'Estos permisos controlan el acceso por defecto a los activos del sistema. Permisos definidos en Libros, Capítulos y Páginas ignorarán estos permisos.',
@@ -209,7 +209,7 @@ return [
     'role_own' => 'Propio',
     'role_permission_aria' => ':action :resource: :value',
     'role_controlled_by_asset' => 'Controlado por el activo al que ha sido subido',
-    'role_controlled_by_page_delete' => 'Controlado por página de eliminación de permisos',
+    'role_controlled_by_page_delete' => 'Controlado por permisos de eliminación de página',
     'role_save' => 'Guardar rol',
     'role_users' => 'Usuarios en este rol',
     'role_users_none' => 'No hay usuarios asignados a este rol',
@@ -266,9 +266,9 @@ return [
     'users_mfa_desc' => 'Configure la autenticación de múltiples factores como una capa extra de seguridad para su cuenta de usuario.',
     'users_mfa_x_methods' => ':count método configurado|:count métodos configurados',
     'users_mfa_configure' => 'Configurar Métodos',
-    'users_mfa_reset' => 'Restablecer métodos de autenticación en dos pasos',
-    'users_mfa_reset_desc' => 'Esto restablecerá y borrará todos los métodos de autenticación en dos pasos configurados para este usuario. Si la autenticación en dos pasos es requerida por cualquiera de sus roles, se les pedirá que configuren nuevos métodos en su próximo inicio de sesión.',
-    'users_mfa_reset_confirm' => '¿Estás seguro de que deseas eliminar la autenticación en dos pasos para este usuario?',
+    'users_mfa_reset' => 'Restablecer métodos de autenticación de multifactor',
+    'users_mfa_reset_desc' => 'Esto restablecerá y borrará todos los métodos de autenticación multifactor configurados para este usuario. Si la autenticación de multifactor es requerida por cualquiera de sus roles, se les pedirá que configuren nuevos métodos en su próximo inicio de sesión.',
+    'users_mfa_reset_confirm' => '¿Está seguro de que desea restablecer la autenticación multifactor para este usuario?',
 
     // API Tokens
     'user_api_token_create' => 'Crear token API',
