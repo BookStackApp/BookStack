@@ -110,6 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'update']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'destroy']);
     Route::delete('/books/{bookSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'destroyDraft']);
+    Route::delete('/page-user-drafts/{pageId}', [EntityControllers\PageUpdateDraftController::class, 'destroy']);
 
     // Revisions
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [EntityControllers\PageRevisionController::class, 'index']);
@@ -118,7 +119,6 @@ Route::middleware('auth')->group(function () {
     // TODO - Update these two to just be without slugs?
     Route::put('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}/restore', [EntityControllers\PageRevisionController::class, 'restore']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}/delete', [EntityControllers\PageRevisionController::class, 'destroy']);
-    Route::delete('/page-revisions/user-drafts/{pageId}', [EntityControllers\PageRevisionController::class, 'destroyUserDraft']);
     // Old show/changes routes using revision-ids for for backwards compatibility
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}', [EntityControllers\PageRevisionController::class, 'showById']);
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}/changes', [EntityControllers\PageRevisionController::class, 'changesById']);

@@ -85,9 +85,7 @@ class PageDraftTest extends TestCase
             'html' => '<p>updated draft</p>',
         ]);
 
-        /** @var PageRevision $draft */
-        $draft = $page->allRevisions()
-            ->where('type', '=', 'update_draft')
+        $draft = $page->updateDrafts()
             ->where('created_by', '=', $editor->id)
             ->first();
         $draft->created_at = now()->subMinute(1);
@@ -179,18 +177,17 @@ class PageDraftTest extends TestCase
             'html' => '<p>updated draft again</p>',
         ]);
 
-        $revisionData = [
-            'type' => 'update_draft',
+        $draftMetadata = [
             'created_by' => $editor->id,
             'page_id' => $page->id,
         ];
 
-        $this->assertDatabaseHas('page_revisions', $revisionData);
+        $this->assertDatabaseHas('page_update_drafts', $draftMetadata);
 
-        $resp = $this->delete("/page-revisions/user-drafts/{$page->id}");
+        $resp = $this->delete("/page-user-drafts/{$page->id}");
 
         $resp->assertOk();
-        $this->assertDatabaseMissing('page_revisions', $revisionData);
+        $this->assertDatabaseMissing('page_update_drafts', $draftMetadata);
     }
 
     public function test_updating_page_draft_with_markdown_retains_markdown_content()

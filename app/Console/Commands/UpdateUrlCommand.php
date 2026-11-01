@@ -48,6 +48,7 @@ class UpdateUrlCommand extends Command
             'entity_page_data' => ['html', 'text', 'markdown'],
             'entity_container_data' => ['description_html'],
             'page_revisions' => ['html', 'text', 'markdown'],
+            'page_update_drafts' => ['html', 'markdown'],
             'images'      => ['url'],
             'settings'    => ['value'],
             'comments'    => ['html'],

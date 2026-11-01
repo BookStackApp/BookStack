@@ -19,11 +19,9 @@ class ClearRevisionsCommandTest extends TestCase
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
-            'type'    => 'version',
         ]);
-        $this->assertDatabaseHas('page_revisions', [
+        $this->assertDatabaseHas('page_update_drafts', [
             'page_id' => $page->id,
-            'type'    => 'update_draft',
         ]);
 
         $exitCode = Artisan::call('bookstack:clear-revisions');
@@ -31,19 +29,16 @@ class ClearRevisionsCommandTest extends TestCase
 
         $this->assertDatabaseMissing('page_revisions', [
             'page_id' => $page->id,
-            'type'    => 'version',
         ]);
-        $this->assertDatabaseHas('page_revisions', [
+        $this->assertDatabaseHas('page_update_drafts', [
             'page_id' => $page->id,
-            'type'    => 'update_draft',
         ]);
 
         $exitCode = Artisan::call('bookstack:clear-revisions', ['--all' => true]);
         $this->assertTrue($exitCode === 0, 'Command executed successfully');
 
-        $this->assertDatabaseMissing('page_revisions', [
+        $this->assertDatabaseMissing('page_update_drafts', [
             'page_id' => $page->id,
-            'type'    => 'update_draft',
         ]);
     }
 }

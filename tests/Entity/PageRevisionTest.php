@@ -130,7 +130,6 @@ class PageRevisionTest extends TestCase
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $page->id,
             'text'    => 'new contente def456',
-            'type'    => 'version',
             'summary' => "Restored from #{$revToRestore->id}; My first update",
         ]);
 

@@ -206,7 +206,7 @@ export class PageEditor extends Component {
 
         try {
             const discard = this.discardDraft(false);
-            const draftDelete = window.$http.delete(`/page-revisions/user-drafts/${this.pageId}`);
+            const draftDelete = window.$http.delete(`/page-user-drafts/${this.pageId}`);
             await Promise.all([discard, draftDelete]);
             window.$events.success(this.draftDeleteText);
             this.deleteDraftWrap.toggleAttribute('hidden', true);

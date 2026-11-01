@@ -31,7 +31,6 @@ class PageRevisionFactory extends Factory
             'created_by'     => User::factory(),
             'slug'           => $page->slug,
             'book_slug'      => $page->book->slug,
-            'type'           => 'version',
             'markdown'       => strip_tags($html),
             'summary'        => $this->faker->sentence(),
             'revision_number' => rand(1, 4000),

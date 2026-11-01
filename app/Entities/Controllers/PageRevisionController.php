@@ -21,7 +21,6 @@ use BookStack\Util\HtmlContentFilterConfig;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
 use Ssddanbrown\HtmlDiff\Diff;
 
@@ -49,8 +48,7 @@ class PageRevisionController extends Controller
         ]);
 
         $revisions = $page->revisions()->select([
-                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at',
-                'type', 'revision_number', 'summary',
+                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at', 'revision_number', 'summary',
             ])
             ->selectRaw("IF(markdown = '', false, true) as is_markdown")
             ->with(['page.book', 'createdBy'])
@@ -76,7 +74,7 @@ class PageRevisionController extends Controller
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $revision = $this->revisionQueries->findVersionForPageByNumberOrFail($page->id, intval($revisionNum));
+        $revision = $this->revisionQueries->findForPageByNumberOrFail($page->id, intval($revisionNum));
 
         return $this->show($page, $revision);
     }
@@ -90,7 +88,7 @@ class PageRevisionController extends Controller
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $revision = $this->revisionQueries->findVersionForPageByIdOrFail($page->id, intval($revisionId));
+        $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, intval($revisionId));
 
         return $this->show($page, $revision);
     }
@@ -119,7 +117,7 @@ class PageRevisionController extends Controller
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $revision = $this->revisionQueries->findVersionForPageByNumberOrFail($page->id, intval($revisionNum));
+        $revision = $this->revisionQueries->findForPageByNumberOrFail($page->id, intval($revisionNum));
 
         return $this->changes($page, $revision);
     }
@@ -134,7 +132,7 @@ class PageRevisionController extends Controller
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
-        $revision = $this->revisionQueries->findVersionForPageByIdOrFail($page->id, intval($revisionId));
+        $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, intval($revisionId));
 
         return $this->changes($page, $revision);
     }
@@ -189,7 +187,7 @@ class PageRevisionController extends Controller
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $this->checkOwnablePermission(Permission::PageDelete, $page);
 
-        $revision = $this->revisionQueries->findVersionForPageByIdOrFail($page->id, intval($revisionId));
+        $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, intval($revisionId));
 
         // Check if it's the latest revision, cannot delete the latest revision.
         if (intval($page->currentRevision->id ?? null) === intval($revisionId)) {
@@ -202,16 +200,5 @@ class PageRevisionController extends Controller
         Activity::add(ActivityType::REVISION_DELETE, $revision);
 
         return redirect($page->getUrl('/revisions'));
-    }
-
-    /**
-     * Destroys existing drafts, belonging to the current user, for the given page.
-     */
-    public function destroyUserDraft(string $pageId): Response
-    {
-        $page = $this->pageQueries->findVisibleByIdOrFail(intval($pageId));
-        $this->revisionRepo->deleteDraftsForCurrentUser($page);
-
-        return response('', 200);
     }
 }

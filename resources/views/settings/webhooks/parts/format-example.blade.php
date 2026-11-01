@@ -50,7 +50,6 @@
             "updated_at": "2021-12-11T21:53:24.000000Z",
             "slug": "my-wonderful-updated-page",
             "book_slug": "my-awesome-book",
-            "type": "version",
             "summary": "Updated the title and fixed some spelling",
             "revision_number": 2
         }

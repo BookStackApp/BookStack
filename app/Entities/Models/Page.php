@@ -75,7 +75,6 @@ class Page extends BookChild
     public function revisions(): HasMany
     {
         $relation = $this->allRevisions()
-            ->where('type', '=', 'version')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');
         return $this->deletableOrderedRelation($relation);
@@ -87,7 +86,6 @@ class Page extends BookChild
     public function currentRevision(): HasOne
     {
         $relation = $this->hasOne(PageRevision::class)
-            ->where('type', '=', 'version')
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');
         return $this->deletableOrderedRelation($relation);
@@ -95,11 +93,18 @@ class Page extends BookChild
 
     /**
      * Get all revision instances assigned to this page.
-     * Includes all types of revisions.
      */
     public function allRevisions(): HasMany
     {
         return $this->hasMany(PageRevision::class);
+    }
+
+    /**
+     * Get all user update drafts which have been created for this page.
+     */
+    public function updateDrafts(): HasMany
+    {
+        return $this->hasMany(PageUpdateDraft::class);
     }
 
     /**
