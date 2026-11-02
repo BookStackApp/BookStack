@@ -15,6 +15,7 @@ use BookStack\Activity\Models\Watch;
 use BookStack\Api\ApiToken;
 use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Models\PageUpdateDraft;
 use BookStack\Exports\Import;
 use BookStack\Uploads\Attachment;
 use BookStack\Uploads\Image;
@@ -210,6 +211,7 @@ class UserManagementTest extends TestCase
         $image = Image::factory()->create(['created_by' => $user->id, 'updated_by' => $user->id]);
         $import = Import::factory()->create(['created_by' => $user->id]);
         $revision = PageRevision::factory()->create(['created_by' => $user->id]);
+        $draft = PageUpdateDraft::factory()->create(['created_by' => $user->id]);
 
         $apiToken = ApiToken::factory()->create(['user_id' => $user->id]);
         \DB::table('email_confirmations')->insert(['user_id' => $user->id, 'token' => 'abc123']);
@@ -232,6 +234,7 @@ class UserManagementTest extends TestCase
             'imports' => ['created_by'],
             'joint_permissions' => ['owner_id'],
             'mfa_values' => ['user_id'],
+            'page_update_drafts' => ['created_by'],
             'page_revisions' => ['created_by'],
             'role_user' => ['user_id'],
             'social_accounts' => ['user_id'],
@@ -265,6 +268,7 @@ class UserManagementTest extends TestCase
         $this->assertDatabaseHas('images', ['id' => $image->id, 'created_by' => null, 'updated_by' => null]);
         $this->assertDatabaseHas('imports', ['id' => $import->id, 'created_by' => null]);
         $this->assertDatabaseHas('page_revisions', ['id' => $revision->id, 'created_by' => null]);
+        $this->assertDatabaseHas('page_update_drafts', ['id' => $draft->id, 'created_by' => null]);
 
         // Check models no longer exist where should have been deleted with the user
         $this->assertDatabaseMissing('api_tokens', ['id' => $apiToken->id]);

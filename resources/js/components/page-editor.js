@@ -76,11 +76,13 @@ export class PageEditor extends Component {
 
         // Changelog controls
         const updateChangelogDebounced = debounce(this.updateChangelogDisplay.bind(this), 300, false);
-        this.changelogInput.addEventListener('input', () => {
+        const onChangelogInput = () => {
             const count = this.changelogInput.value.length;
             this.changelogCounter.innerText = `${count} / 180`;
             updateChangelogDebounced();
-        });
+        };
+        this.changelogInput.addEventListener('input', onChangelogInput.bind(this));
+        onChangelogInput();
 
         // Draft Controls
         onSelect(this.saveDraftButton, this.saveDraft.bind(this));
@@ -121,7 +123,10 @@ export class PageEditor extends Component {
     }
 
     async saveDraft() {
-        const data = {name: this.titleElem.value.trim()};
+        const data = {
+            name: this.titleElem.value.trim(),
+            changelog: this.changelogInput.value || '',
+        };
 
         const editorContent = await this.getEditorComponent().getContent();
         Object.assign(data, editorContent);
@@ -206,7 +211,7 @@ export class PageEditor extends Component {
 
         try {
             const discard = this.discardDraft(false);
-            const draftDelete = window.$http.delete(`/page-revisions/user-drafts/${this.pageId}`);
+            const draftDelete = window.$http.delete(`/page-user-drafts/${this.pageId}`);
             await Promise.all([discard, draftDelete]);
             window.$events.success(this.draftDeleteText);
             this.deleteDraftWrap.toggleAttribute('hidden', true);

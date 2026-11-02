@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Chapter;
 use BookStack\Entities\Models\Entity;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Models\PageUpdateDraft;
 use BookStack\Entities\Queries\EntityQueries;
 use BookStack\Entities\Tools\BookContents;
 use BookStack\Entities\Tools\PageContent;
@@ -28,6 +29,7 @@ class PageRepo
     public function __construct(
         protected BaseRepo $baseRepo,
         protected RevisionRepo $revisionRepo,
+        protected PageUpdateDraftRepo $pageUpdateDraftRepo,
         protected EntityQueries $entityQueries,
         protected ReferenceStore $referenceStore,
         protected ReferenceUpdater $referenceUpdater,
@@ -127,11 +129,11 @@ class PageRepo
         $page = $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->revision_count++;
+        $page->incrementRevisionCount();
         $page->save();
 
         // Remove all update drafts for this user and page.
-        $this->revisionRepo->deleteDraftsForCurrentUser($page);
+        $this->pageUpdateDraftRepo->deleteForCurrentUser($page);
 
         // Save a revision after updating
         $summary = trim($input['changelog'] ?? '');
@@ -183,7 +185,7 @@ class PageRepo
     /**
      * Save a page update draft.
      */
-    public function updatePageDraft(Page $page, array $input): Page|PageRevision
+    public function updatePageDraft(Page $page, array $input): Page|PageUpdateDraft
     {
         // If the page itself is a draft, simply update that
         if ($page->draft) {
@@ -195,8 +197,12 @@ class PageRepo
         }
 
         // Otherwise, save the data to a revision
-        $draft = $this->revisionRepo->getNewDraftForCurrentUser($page);
+        $draft = $this->pageUpdateDraftRepo->getNewForCurrentUser($page);
         $draft->fill($input);
+
+        if (isset($input['changelog'])) {
+            $draft->summary = $input['changelog'];
+        }
 
         if (!empty($input['markdown'])) {
             $draft->markdown = $input['markdown'];
@@ -229,7 +235,7 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $oldUrl = $page->getUrl();
-        $page->revision_count++;
+        $page->incrementRevisionCount();
 
         /** @var PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();

@@ -14,36 +14,6 @@ class RevisionRepo
     }
 
     /**
-     * Delete all drafts revisions, for the given page, belonging to the current user.
-     */
-    public function deleteDraftsForCurrentUser(Page $page): void
-    {
-        $this->queries->latestCurrentUserDraftsForPageId($page->id)->reorder()->delete();
-    }
-
-    /**
-     * Get a user update_draft page revision to update for the given page.
-     * Checks for an existing revision before providing a fresh one.
-     */
-    public function getNewDraftForCurrentUser(Page $page): PageRevision
-    {
-        $draft = $this->queries->findLatestCurrentUserDraftsForPageId($page->id);
-
-        if ($draft) {
-            return $draft;
-        }
-
-        $draft = new PageRevision();
-        $draft->page_id = $page->id;
-        $draft->slug = $page->slug;
-        $draft->book_slug = $page->book->slug;
-        $draft->created_by = user()->id;
-        $draft->type = 'update_draft';
-
-        return $draft;
-    }
-
-    /**
      * Store a new revision in the system for the given page.
      */
     public function storeNewForPage(Page $page, ?string $summary = null): PageRevision
@@ -59,9 +29,11 @@ class RevisionRepo
         $revision->book_slug = $page->book->slug;
         $revision->created_by = user()->id;
         $revision->created_at = $page->updated_at;
-        $revision->type = 'version';
         $revision->summary = $summary;
-        $revision->revision_number = $page->revision_count;
+
+        $pageDraftMaxRevision = $this->queries->maxRevisionVersionNumberForPageId($page->id);
+        $revision->revision_number = max($page->revision_count, $pageDraftMaxRevision + 1);
+
         $revision->save();
 
         $this->deleteOldRevisions($page);

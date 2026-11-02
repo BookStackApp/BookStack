@@ -246,7 +246,7 @@ class PageController extends Controller
             $this->ensureDraftAccess($page);
         }
 
-        $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown']));
+        $draft = $this->pageRepo->updatePageDraft($page, $request->only(['name', 'html', 'markdown', 'changelog']));
         $warnings = (new PageEditActivity($page))->getWarningMessagesForDraft($draft);
 
         return response()->json([

@@ -110,14 +110,17 @@ Route::middleware('auth')->group(function () {
     Route::put('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'update']);
     Route::delete('/books/{bookSlug}/page/{pageSlug}', [EntityControllers\PageController::class, 'destroy']);
     Route::delete('/books/{bookSlug}/draft/{pageId}', [EntityControllers\PageController::class, 'destroyDraft']);
+    Route::delete('/page-user-drafts/{pageId}', [EntityControllers\PageUpdateDraftController::class, 'destroy']);
 
     // Revisions
     Route::get('/books/{bookSlug}/page/{pageSlug}/revisions', [EntityControllers\PageRevisionController::class, 'index']);
-    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}', [EntityControllers\PageRevisionController::class, 'show']);
-    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/changes', [EntityControllers\PageRevisionController::class, 'changes']);
-    Route::put('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/restore', [EntityControllers\PageRevisionController::class, 'restore']);
-    Route::delete('/books/{bookSlug}/page/{pageSlug}/revisions/{revId}/delete', [EntityControllers\PageRevisionController::class, 'destroy']);
-    Route::delete('/page-revisions/user-drafts/{pageId}', [EntityControllers\PageRevisionController::class, 'destroyUserDraft']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revision/{revisionNum}', [EntityControllers\PageRevisionController::class, 'showByNumber']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revision/{revisionNum}/changes', [EntityControllers\PageRevisionController::class, 'changesByNumber']);
+    Route::put('/books/{bookSlug}/page/{pageSlug}/revision/{revisionNum}/restore', [EntityControllers\PageRevisionController::class, 'restore']);
+    Route::delete('/books/{bookSlug}/page/{pageSlug}/revision/{revisionNum}/delete', [EntityControllers\PageRevisionController::class, 'destroy']);
+    // Old show/changes routes using revision-ids for for backwards compatibility
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}', [EntityControllers\PageRevisionController::class, 'showById']);
+    Route::get('/books/{bookSlug}/page/{pageSlug}/revisions/{revisionId}/changes', [EntityControllers\PageRevisionController::class, 'changesById']);
 
     // Chapters
     Route::get('/books/{bookSlug}/chapter/{chapterSlug}/create-page', [EntityControllers\PageController::class, 'create']);

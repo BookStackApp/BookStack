@@ -39,7 +39,7 @@
                     @foreach($revisions as $index => $revision)
                         @include('pages.parts.revisions-index-row', [
                                 'revision' => $revision,
-                                'current' => $page->revision_count === $revision->revision_number,
+                                'current' => $youngestRevisionId === $revision->id,
                                 'oldest' => $oldestRevisionId === $revision->id,
                             ])
                     @endforeach
