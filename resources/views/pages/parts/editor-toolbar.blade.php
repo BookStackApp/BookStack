@@ -114,7 +114,7 @@
                         maxlength="180"
                         title="{{ trans('entities.pages_edit_enter_changelog') }}"
                         placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
-                    ></textarea>
+                    >{{ $model->summary ?? '' }}</textarea>
                     <small refs="page-editor@changelogCounter" class="text-muted mt-xs">0 / 180</small>
                 </li>
             </ul>

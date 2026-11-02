@@ -283,4 +283,27 @@ class PageDraftTest extends TestCase
             'deleted_at' => null
         ]);
     }
+
+    public function test_saving_update_draft_stores_summary_and_restores_it_on_page_re_edit()
+    {
+        $page = $this->entities->page();
+        $user = $this->users->editor();
+
+        $this->actingAs($user)->put('/ajax/page/' . $page->id . '/save-draft', [
+            'name' => 'My updated page',
+            'html' => '<p>Summary test</p>',
+            'changelog' => 'Ensuring this remains angrycatdinosaur',
+        ])->assertOk();
+
+        $this->assertDatabaseHas('page_update_drafts', [
+            'page_id' => $page->id,
+            'created_by' => $user->id,
+            'name' => 'My updated page',
+            'summary' => 'Ensuring this remains angrycatdinosaur',
+        ]);
+
+        $edit = $this->get($page->getUrl('/edit'));
+        $edit->assertOk();
+        $this->withHtml($edit)->assertFieldHasValue('changelog', 'Ensuring this remains angrycatdinosaur');
+    }
 }

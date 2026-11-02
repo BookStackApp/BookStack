@@ -200,6 +200,10 @@ class PageRepo
         $draft = $this->pageUpdateDraftRepo->getNewForCurrentUser($page);
         $draft->fill($input);
 
+        if (isset($input['changelog'])) {
+            $draft->summary = $input['changelog'];
+        }
+
         if (!empty($input['markdown'])) {
             $draft->markdown = $input['markdown'];
             $draft->html = '';
