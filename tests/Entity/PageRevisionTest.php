@@ -144,9 +144,29 @@ class PageRevisionTest extends TestCase
     {
         $page = $this->entities->page();
         $startCount = $page->revision_count;
-        $this->createRevisions($page, 1);
 
-        $this->assertTrue(Page::query()->find($page->id)->revision_count === $startCount + 1);
+        $this->createRevisions($page, 1);
+        $page->refresh();
+
+        $this->assertEquals($startCount + 1, $page->revision_count);
+    }
+
+    public function test_page_revision_count_will_stay_above_max_revision_number()
+    {
+        $page = $this->entities->page();
+        $startCount = $page->revision_count;
+        $this->createRevisions($page, 1);
+        $newRevNum = $startCount + 100;
+
+        /** @var PageRevision $revision */
+        $revision = $page->revisions()->first();
+        $revision->revision_number = $newRevNum;
+        $revision->save();
+
+        $this->createRevisions($page, 1);
+        $page->refresh();
+
+        $this->assertEquals($newRevNum + 1, $page->revision_count);
     }
 
     public function test_revision_count_shown_in_page_meta()

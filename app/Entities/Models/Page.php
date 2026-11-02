@@ -71,6 +71,7 @@ class Page extends BookChild
     /**
      * Get the associated page revisions, ordered by created date.
      * Only provides actual saved page revision instances, Not drafts.
+     * @return HasMany<PageRevision, $this>
      */
     public function revisions(): HasMany
     {
@@ -160,5 +161,16 @@ class Page extends BookChild
     public function relatedData(): HasOne
     {
         return $this->hasOne(EntityPageData::class, 'page_id', 'id');
+    }
+
+    /**
+     * Update this page's own revision counter, incrementing it up by one upon
+     * any existing revision and/or the existing revision count.
+     */
+    public function incrementRevisionCount(): void
+    {
+        $maxRevNum = $this->revisions()->max('revision_number') ?? 0;
+        $newCount = max($this->revision_count + 1, $maxRevNum + 1);
+        $this->revision_count = $newCount;
     }
 }

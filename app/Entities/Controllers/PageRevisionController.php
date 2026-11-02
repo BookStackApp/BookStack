@@ -64,6 +64,7 @@ class PageRevisionController extends Controller
             'page'        => $page,
             'listOptions' => $listOptions,
             'oldestRevisionId' => $page->revisions()->min('id'),
+            'youngestRevisionId' => $page->revisions()->max('id'),
         ]);
     }
 

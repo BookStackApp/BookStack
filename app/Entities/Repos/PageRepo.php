@@ -129,7 +129,7 @@ class PageRepo
         $page = $this->baseRepo->update($page, $input);
 
         // Update with new details
-        $page->revision_count++;
+        $page->incrementRevisionCount();
         $page->save();
 
         // Remove all update drafts for this user and page.
@@ -231,7 +231,7 @@ class PageRepo
     public function restoreRevision(Page $page, int $revisionId): Page
     {
         $oldUrl = $page->getUrl();
-        $page->revision_count++;
+        $page->incrementRevisionCount();
 
         /** @var PageRevision $revision */
         $revision = $page->revisions()->where('id', '=', $revisionId)->first();
