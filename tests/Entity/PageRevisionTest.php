@@ -36,6 +36,38 @@ class PageRevisionTest extends TestCase
         $resp->assertSee('new content');
     }
 
+    public function test_page_revision_views_accessible_at_old_id_paths()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new content</p>']);
+        $pageRevision = $page->revisions->last();
+
+        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $resp->assertStatus(200);
+        $resp->assertSee('new content');
+
+        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
+        $resp->assertStatus(200);
+        $resp->assertSee('new content');
+    }
+
+    public function test_page_revision_views_show_revision_number_in_breadcrumbs()
+    {
+        $this->asEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new content</p>']);
+        $pageRevision = $page->revisions->last();
+
+        $resp = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number);
+        $resp->assertStatus(200);
+        $this->withHtml($resp)->assertElementContains('.breadcrumbs a', "Revision #{$pageRevision->revision_number}");
+
+        $resp = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number . '/changes');
+        $resp->assertStatus(200);
+        $this->withHtml($resp)->assertElementContains('.breadcrumbs a', "Revision #{$pageRevision->revision_number} changes");
+    }
+
     public function test_page_revision_preview_shows_content_of_revision()
     {
         $this->asEditor();
