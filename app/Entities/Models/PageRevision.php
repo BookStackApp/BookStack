@@ -56,7 +56,7 @@ class PageRevision extends Model implements Loggable
      */
     public function getUrl(string $path = ''): string
     {
-        return $this->page->getUrl('/revisions/' . $this->id . '/' . ltrim($path, '/'));
+        return $this->page->getUrl('/revision/' . $this->revision_number . '/' . ltrim($path, '/'));
     }
 
     /**

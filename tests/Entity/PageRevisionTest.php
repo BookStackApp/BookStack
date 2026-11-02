@@ -27,11 +27,11 @@ class PageRevisionTest extends TestCase
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>new content</p>']);
         $pageRevision = $page->revisions->last();
 
-        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $resp = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number);
         $resp->assertStatus(200);
         $resp->assertSee('new content');
 
-        $resp = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id . '/changes');
+        $resp = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number . '/changes');
         $resp->assertStatus(200);
         $resp->assertSee('new content');
     }
@@ -44,7 +44,7 @@ class PageRevisionTest extends TestCase
         $pageRevision = $page->revisions->last();
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>Updated content</p>']);
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number);
         $revisionView->assertStatus(200);
         $revisionView->assertSee('new revision content');
     }
@@ -57,7 +57,7 @@ class PageRevisionTest extends TestCase
         $pageRevision = $page->revisions->last();
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p>Updated content</p>']);
 
-        $revisionView = $this->get($page->getUrl() . '/revisions/' . $pageRevision->id);
+        $revisionView = $this->get($page->getUrl() . '/revision/' . $pageRevision->revision_number);
         $revisionView->assertStatus(200);
         $revisionView->assertSee('expectthisthough');
         $revisionView->assertDontSee('dontwantthishere');
@@ -69,15 +69,16 @@ class PageRevisionTest extends TestCase
         $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'html' => '<p>new contente def456</p>']);
         $this->createRevisions($page, 1, ['name' => 'updated page again', 'html' => '<p>new content</p>']);
-        $page = Page::find($page->id);
+        $page = Page::query()->find($page->id);
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee('abc123');
         $pageView->assertDontSee('def456');
 
+        /** @var PageRevision $revToRestore */
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
-        $page = Page::find($page->id);
+        $restoreReq = $this->put($page->getUrl() . '/revision/' . $revToRestore->revision_number . '/restore');
+        $page = Page::query()->find($page->id);
 
         $restoreReq->assertStatus(302);
         $restoreReq->assertRedirect($page->getUrl());
@@ -93,15 +94,16 @@ class PageRevisionTest extends TestCase
         $page = $this->entities->page();
         $this->createRevisions($page, 1, ['name' => 'updated page abc123', 'markdown' => '## New Content def456']);
         $this->createRevisions($page, 1, ['name' => 'updated page again', 'markdown' => '## New Content Updated']);
-        $page = Page::find($page->id);
+        $page = Page::query()->find($page->id);
 
         $pageView = $this->get($page->getUrl());
         $pageView->assertDontSee('abc123');
         $pageView->assertDontSee('def456');
 
+        /** @var PageRevision $revToRestore */
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $restoreReq = $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
-        $page = Page::find($page->id);
+        $restoreReq = $this->put($page->getUrl() . '/revision/' . $revToRestore->revision_number . '/restore');
+        $page = Page::query()->find($page->id);
 
         $restoreReq->assertStatus(302);
         $restoreReq->assertRedirect($page->getUrl());
@@ -123,8 +125,9 @@ class PageRevisionTest extends TestCase
         $this->createRevisions($page, 1, ['html' => '<p>new content</p>']);
         $page->refresh();
 
+        /** @var PageRevision $revToRestore */
         $revToRestore = $page->revisions()->where('name', 'like', '%abc123')->first();
-        $this->put($page->getUrl() . '/revisions/' . $revToRestore->id . '/restore');
+        $this->put($page->getUrl() . '/revision/' . $revToRestore->revision_number . '/restore');
         $page->refresh();
 
         $this->assertDatabaseHas('page_revisions', [
@@ -143,7 +146,7 @@ class PageRevisionTest extends TestCase
         $startCount = $page->revision_count;
         $this->createRevisions($page, 1);
 
-        $this->assertTrue(Page::find($page->id)->revision_count === $startCount + 1);
+        $this->assertTrue(Page::query()->find($page->id)->revision_count === $startCount + 1);
     }
 
     public function test_revision_count_shown_in_page_meta()
@@ -237,8 +240,9 @@ class PageRevisionTest extends TestCase
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p id="bkmrk-hello">Hello there dog</p>']);
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => '<p id="bkmrk-hello">Hello there cat</p>']);
 
+        /** @var PageRevision $pageRevision */
         $pageRevision = $page->revisions()->orderBy('id', 'desc')->first();
-        $revisionView = $this->get("{$page->getUrl()}/revisions/{$pageRevision->id}/changes");
+        $revisionView = $this->get("{$page->getUrl()}/revision/{$pageRevision->revision_number}/changes");
         $revisionView->assertStatus(200);
         $revisionView->assertSee('<p id="bkmrk-hello">Hello there <del class="diffmod">dog</del><ins class="diffmod">cat</ins></p>', false);
     }
@@ -251,8 +255,9 @@ class PageRevisionTest extends TestCase
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => $html]);
         $this->createRevisions($page, 1, ['name' => 'updated page', 'html' => $html]);
 
+        /** @var PageRevision $pageRevision */
         $pageRevision = $page->revisions()->orderBy('id', 'desc')->first();
-        $revisionView = $this->get("{$page->getUrl()}/revisions/{$pageRevision->id}/changes");
+        $revisionView = $this->get("{$page->getUrl()}/revision/{$pageRevision->revision_number}/changes");
         $revisionView->assertStatus(200);
         $revisionView->assertSee('expectthisthough');
         $revisionView->assertDontSee('dontwantthishere');

@@ -44,7 +44,8 @@ class PageRevisionController extends Controller
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
         $listOptions = SimpleListOptions::fromRequest($request, 'page_revisions', true)->withSortOptions([
-            'id' => trans('entities.pages_revisions_sort_number')
+            'created_at' => trans('common.sort_created_at'),
+            'revision_number' => trans('entities.pages_revisions_sort_number'),
         ]);
 
         $revisions = $page->revisions()->select([
@@ -52,7 +53,8 @@ class PageRevisionController extends Controller
             ])
             ->selectRaw("IF(markdown = '', false, true) as is_markdown")
             ->with(['page.book', 'createdBy'])
-            ->reorder('id', $listOptions->getOrder())
+            ->reorder($listOptions->getSort(), $listOptions->getOrder())
+            ->orderBy('id', $listOptions->getOrder())
             ->paginate(50);
 
         $this->setPageTitle(trans('entities.pages_revisions_named', ['pageName' => $page->getShortName()]));
@@ -165,13 +167,15 @@ class PageRevisionController extends Controller
      *
      * @throws NotFoundException
      */
-    public function restore(string $bookSlug, string $pageSlug, int $revisionId): RedirectResponse
+    public function restore(string $bookSlug, string $pageSlug, string $revisionNum): RedirectResponse
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $revision = $this->revisionQueries->findForPageByNumberOrFail($page->id, intval($revisionNum));
+
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
-        $page = $this->pageRepo->restoreRevision($page, $revisionId);
+        $page = $this->pageRepo->restoreRevision($page, $revision->id);
 
         return redirect($page->getUrl());
     }
@@ -181,16 +185,18 @@ class PageRevisionController extends Controller
      *
      * @throws NotFoundException
      */
-    public function destroy(string $bookSlug, string $pageSlug, string $revisionId): RedirectResponse
+    public function destroy(string $bookSlug, string $pageSlug, string $revisionNum): RedirectResponse
     {
         $this->checkPermission(Permission::RevisionViewAll);
         $page = $this->pageQueries->findVisibleBySlugsOrFail($bookSlug, $pageSlug);
+        $revision = $this->revisionQueries->findForPageByNumberOrFail($page->id, intval($revisionNum));
+
         $this->checkOwnablePermission(Permission::PageDelete, $page);
 
-        $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, intval($revisionId));
+        $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, $revision->id);
 
         // Check if it's the latest revision, cannot delete the latest revision.
-        if (intval($page->currentRevision->id ?? null) === intval($revisionId)) {
+        if (intval($page->currentRevision->id ?? null) === $revision->id) {
             $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
 
             return redirect($page->getUrl('/revisions'));
