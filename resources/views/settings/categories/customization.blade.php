@@ -30,9 +30,9 @@
                 </div>
                 <div>
                     <select name="setting-app-editor" id="setting-app-editor">
-                        <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG</option>
+                        <option @if(setting('app-editor') === 'wysiwyg2024') selected @endif value="wysiwyg2024">WYSIWYG (New)</option>
                         <option @if(setting('app-editor') === 'markdown') selected @endif value="markdown">Markdown</option>
-                        <option @if(setting('app-editor') === 'wysiwyg2024') selected @endif value="wysiwyg2024">New WYSIWYG (beta testing)</option>
+                        <option @if(setting('app-editor') === 'wysiwyg') selected @endif value="wysiwyg">WYSIWYG (Legacy)</option>
                     </select>
                 </div>
             </div>

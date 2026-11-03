@@ -84,8 +84,6 @@
                                 @icon('swap-horizontal')
                                 <div>
                                     {{ trans('entities.pages_edit_switch_to_new_wysiwyg') }}
-                                    <br>
-                                    <small>{{ trans('entities.pages_edit_switch_to_new_wysiwyg_desc') }}</small>
                                 </div>
                             </a>
                         @endif

@@ -19,7 +19,7 @@ class PageEditorTest extends TestCase
 
     public function test_default_editor_is_wysiwyg_for_new_pages()
     {
-        $this->assertEquals('wysiwyg', setting('app-editor'));
+        $this->assertEquals('wysiwyg2024', setting('app-editor'));
         $resp = $this->asAdmin()->get($this->page->book->getUrl('/create-page'));
         $this->withHtml($this->followRedirects($resp))->assertElementExists('#html-editor');
     }
@@ -30,7 +30,7 @@ class PageEditorTest extends TestCase
 
         $this->asEditor()->get($book->getUrl('/create-page'));
         $newPage = $book->pages()->orderBy('id', 'desc')->first();
-        $this->assertEquals('wysiwyg', $newPage->editor);
+        $this->assertEquals('wysiwyg2024', $newPage->editor);
 
         $this->setSettings(['app-editor' => PageEditorType::Markdown->value]);
 
@@ -171,7 +171,7 @@ class PageEditorTest extends TestCase
     public function test_page_editor_changes_with_editor_property()
     {
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
 
         $this->page->markdown = "## A Header\n\nSome content with **bold** text!";
         $this->page->editor = 'markdown';
@@ -180,11 +180,11 @@ class PageEditorTest extends TestCase
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
         $this->withHtml($resp)->assertElementExists('[component="markdown-editor"]');
 
-        $this->page->editor = 'wysiwyg2024';
+        $this->page->editor = 'wysiwyg';
         $this->page->save();
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit'));
-        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
     }
 
     public function test_editor_type_switch_options_show()
@@ -193,11 +193,11 @@ class PageEditorTest extends TestCase
         $editLink = $this->page->getUrl('/edit') . '?editor=';
         $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-clean\"]", '(Clean Content)');
         $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}markdown-stable\"]", '(Stable Content)');
-        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg2024\"]", '(In Beta Testing)');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg\"]", 'Switch to Legacy WYSIWYG');
 
         $resp = $this->asAdmin()->get($this->page->getUrl('/edit?editor=markdown-stable'));
         $editLink = $this->page->getUrl('/edit') . '?editor=';
-        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg\"]", 'Switch to WYSIWYG Editor');
+        $this->withHtml($resp)->assertElementContains("a[href=\"{$editLink}wysiwyg2024\"]", 'Switch to New WYSIWYG');
     }
 
     public function test_editor_type_switch_options_dont_show_if_without_change_editor_permissions()
@@ -215,7 +215,7 @@ class PageEditorTest extends TestCase
 
         $resp = $this->asEditor()->get($page->getUrl('/edit?editor=markdown-stable'));
         $resp->assertStatus(200);
-        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor-tinymce"]');
+        $this->withHtml($resp)->assertElementExists('[component="wysiwyg-editor"]');
         $this->withHtml($resp)->assertElementNotExists('[component="markdown-editor"]');
     }
 
