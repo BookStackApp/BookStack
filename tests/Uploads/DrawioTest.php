@@ -45,6 +45,42 @@ class DrawioTest extends TestCase
         ]);
     }
 
+    public function test_get_image_as_base64_fails_if_related_page_in_recycle_bin()
+    {
+        $page = $this->entities->page();
+        $this->asAdmin();
+        $imageName = 'first-image.png';
+
+        $this->files->uploadGalleryImage($this, $imageName, $page->id);
+        /** @var Image $image */
+        $image = Image::query()->first();
+        $image->type = 'drawio';
+        $image->save();
+
+        $this->entities->sendToRecycleBin($page);
+
+        $imageGet = $this->getJson("/images/drawio/base64/{$image->id}");
+        $imageGet->assertStatus(404);
+    }
+
+    public function test_get_image_as_base64_fails_if_on_a_draft_for_another_user()
+    {
+        $user = $this->users->admin();
+        $this->actingAs($user);
+        $draft = $this->entities->newDraftPage();
+        $this->files->uploadGalleryImage($this, 'my-image.png', $draft->id);
+
+        /** @var Image $image */
+        $image = Image::query()->where('uploaded_to', '=', $draft->id)
+            ->where('type', '=', 'gallery')
+            ->first();
+        $image->type = 'drawio';
+        $image->save();
+
+        $imageGet = $this->asEditor()->getJson("/images/drawio/base64/{$image->id}");
+        $imageGet->assertStatus(404);
+    }
+
     public function test_drawing_base64_upload()
     {
         $page = $this->entities->page();
