@@ -50,7 +50,7 @@ return [
     'import_zip_validation_errors' => 'Foram detetados erros ao validar o ficheiro ZIP fornecido:',
     'import_pending' => 'Aguardando importação',
     'import_pending_none' => 'Nenhuma importação foi iniciada.',
-    'import_continue' => 'Continuar importação',
+    'import_continue' => 'Continuar Importação',
     'import_continue_desc' => 'Verifique o conteúdo a importar a partir do ficheiro ZIP carregado. Quando estiver pronto, execute a importação para adicionar o seu conteúdo a este sistema. O ficheiro ZIP de importação carregado será automaticamente removido após a importação bem-sucedida.',
     'import_details' => 'Detalhes da importação',
     'import_run' => 'Executar Importação',

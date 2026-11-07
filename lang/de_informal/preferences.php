@@ -19,7 +19,7 @@ return [
     'shortcuts_update_success' => 'Tastenkürzel Einstellungen wurden aktualisiert!',
     'shortcuts_overview_desc' => 'Verwalten von Tastenkombinationen, die zur Navigation der Benutzeroberfläche verwendet werden können.',
 
-    'interface' => 'Oberflächeneinstellungen',
+    'interface' => 'Schnittstellen-Einstellungen',
     'interface_desc' => 'Hier können Sie das Erscheinungsbild der Benutzeroberfläche anpassen.',
     'interface_display_mode' => 'Anzeigemodus',
     'interface_display_mode_desc' => 'Wählen Sie, ob die Anwendung im dunklen oder hellen Modus angezeigt werden soll. Dies kann auch in der Startansicht oder über das Profil-Dropdown in der Kopfleiste geändert werden.',
@@ -36,7 +36,7 @@ return [
     'layout_edit_center' => 'Mitte',
     'layout_edit_unused' => 'Nicht verwendet',
     'layout_edit_empty' => 'Keine Bereiche zum Anzeigen',
-    'layout_edit_reset_to_defaults' => 'Auf Standard zurücksetzen',
+    'layout_edit_reset_to_defaults' => 'Auf Standardeinstellung zurücksetzen',
     'layout_update_success' => 'Die Layout-Einstellungen wurden aktualisiert!',
     'layout_reset_success' => 'Die Layout-Einstellungen wurden zurückgesetzt!',
 

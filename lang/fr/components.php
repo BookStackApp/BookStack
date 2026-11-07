@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Téléverser une image',
     'image_intro' => 'Ici, vous pouvez sélectionner et gérer les images qui ont été précédemment téléversées sur le système.',
     'image_intro_upload' => 'Téléversez une nouvelle image en glissant un fichier image dans cette fenêtre, ou en utilisant le bouton "Téléverser une image" ci-dessus.',
+    'image_no_upload_permission' => 'Vous n\'avez pas la permission de téléverser de nouvelles images.',
     'image_all' => 'Toutes',
     'image_all_title' => 'Voir toutes les images',
     'image_book_title' => 'Voir les images ajoutées à ce livre',

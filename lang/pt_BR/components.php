@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Fazer upload de imagem',
     'image_intro' => 'Aqui você pode selecionar e gerenciar imagens que foram previamente enviadas para o sistema.',
     'image_intro_upload' => 'Faça upload de uma imagem arrastando um arquivo de imagem para esta janela, ou usando o botão "Fazer upload de imagem" acima.',
+    'image_no_upload_permission' => 'Você não tem permissão para carregar novas imagens.',
     'image_all' => 'Todas',
     'image_all_title' => 'Visualizar todas as imagens',
     'image_book_title' => 'Visualizar imagens relacionadas a esse livro',

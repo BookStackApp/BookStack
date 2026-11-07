@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Upload Image',
     'image_intro' => 'Here you can select and manage images that have been previously uploaded to the system.',
     'image_intro_upload' => 'Upload a new image by dragging an image file into this window, or by using the "Upload Image" button above.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'All',
     'image_all_title' => 'View all images',
     'image_book_title' => 'View images uploaded to this book',
