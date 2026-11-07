@@ -36,16 +36,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * The base class for book-like items such as pages, chapters and books.
  * This is not a database model in itself but extended.
  *
- * @property int        $id
- * @property string     $type
- * @property string     $name
- * @property string     $slug
- * @property Carbon     $created_at
- * @property Carbon     $updated_at
- * @property Carbon     $deleted_at
- * @property int|null   $created_by
- * @property int|null   $updated_by
- * @property int|null   $owned_by
+ * @property int         $id
+ * @property string      $type
+ * @property string      $name
+ * @property string      $slug
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
+ * @property Carbon|null $deleted_at
+ * @property int|null    $created_by
+ * @property int|null    $updated_by
+ * @property int|null    $owned_by
  * @property Collection<int, Tag> $tags
  *
  * @method static Entity|Builder visible()
@@ -293,6 +293,7 @@ abstract class Entity extends Model implements
 
     /**
      * Get the related delete records for this entity.
+     * @return MorphMany<Deletion, $this>
      */
     public function deletions(): MorphMany
     {
