@@ -164,6 +164,24 @@ class ImageTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_image_edit_fails_if_page_is_another_users_initial_draft()
+    {
+        $this->asEditor();
+        $admin = $this->users->admin();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $page->draft = true;
+        $page->created_by = $admin->id;
+        $page->owned_by = $admin->id;
+        $page->save();
+
+        $resp = $this->get("/images/edit/{$image->id}");
+        $resp->assertStatus(404);
+    }
+
     public function test_image_file_update()
     {
         $page = $this->entities->page();
@@ -253,6 +271,26 @@ class ImageTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_image_file_update_fails_if_page_is_another_users_initial_draft()
+    {
+        $this->asEditor();
+        $admin = $this->users->admin();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $page->draft = true;
+        $page->created_by = $admin->id;
+        $page->owned_by = $admin->id;
+        $page->save();
+
+        $newUpload = $this->files->uploadedImage('updated-image.jpg', 'compressed.png');
+        $resp = $this->call('PUT', "/images/{$image->id}/file", [], [], ['file' => $newUpload]);
+
+        $resp->assertStatus(404);
+    }
+
     public function test_image_update_fails_if_page_is_in_recycle_bin()
     {
         $this->asEditor();
@@ -262,6 +300,24 @@ class ImageTest extends TestCase
         $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
 
         $this->entities->sendToRecycleBin($page);
+
+        $resp = $this->put("/images/{$image->id}", ['name' => 'Updated image name']);
+        $resp->assertStatus(404);
+    }
+
+    public function test_image_update_fails_if_page_is_another_users_initial_draft()
+    {
+        $this->asEditor();
+        $admin = $this->users->admin();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $page->draft = true;
+        $page->created_by = $admin->id;
+        $page->owned_by = $admin->id;
+        $page->save();
 
         $resp = $this->put("/images/{$image->id}", ['name' => 'Updated image name']);
         $resp->assertStatus(404);
@@ -716,6 +772,24 @@ class ImageTest extends TestCase
         $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
 
         $this->entities->sendToRecycleBin($page);
+
+        $resp = $this->delete("/images/{$image->id}");
+        $resp->assertStatus(404);
+    }
+
+    public function test_image_delete_fails_if_page_is_another_users_initial_draft()
+    {
+        $this->asEditor();
+        $admin = $this->users->admin();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $page->draft = true;
+        $page->created_by = $admin->id;
+        $page->owned_by = $admin->id;
+        $page->save();
 
         $resp = $this->delete("/images/{$image->id}");
         $resp->assertStatus(404);
