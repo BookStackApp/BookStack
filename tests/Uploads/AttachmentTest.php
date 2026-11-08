@@ -55,6 +55,22 @@ class AttachmentTest extends TestCase
         $this->files->deleteAllAttachmentFiles();
     }
 
+    public function test_file_upload_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $fileName = 'upload_test_file.txt';
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentCreateAll]);
+        $this->actingAs($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $inaccessible = $this->files->uploadAttachmentFile($this, $fileName, $page->id);
+        $nonExisting = $this->files->uploadAttachmentFile($this, $fileName, $maxPageId);
+        $this->assertEquals($inaccessible->getStatusCode(), $nonExisting->getStatusCode());
+        $this->assertEquals(404, $inaccessible->getStatusCode());
+    }
+
     public function test_file_display_and_access()
     {
         $page = $this->entities->page();
@@ -134,6 +150,29 @@ class AttachmentTest extends TestCase
         $attachment = $page->attachments()->where('external', '=', true)->first();
         $resp = $this->get($attachment->getUrl());
         $resp->assertRedirect($link);
+    }
+
+    public function test_attach_link_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentCreateAll]);
+        $this->actingAs($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $inaccessible = $this->post('attachments/link', [
+            'attachment_link_url'         => 'https://example.com',
+            'attachment_link_name'        => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $page->id,
+        ]);
+        $nonExisting = $this->post('attachments/link', [
+            'attachment_link_url'         => 'https://example.com',
+            'attachment_link_name'        => 'Example Attachment Link',
+            'attachment_link_uploaded_to' => $maxPageId,
+        ]);
+        $this->assertEquals($inaccessible->getStatusCode(), $nonExisting->getStatusCode());
+        $this->assertEquals(404, $inaccessible->getStatusCode());
     }
 
     public function test_attachment_updating()

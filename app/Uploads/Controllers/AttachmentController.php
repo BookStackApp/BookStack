@@ -2,7 +2,6 @@
 
 namespace BookStack\Uploads\Controllers;
 
-use BookStack\Entities\EntityExistsRule;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Repos\PageRepo;
 use BookStack\Exceptions\FileUploadException;
@@ -35,7 +34,7 @@ class AttachmentController extends Controller
     public function upload(Request $request)
     {
         $this->validate($request, [
-            'uploaded_to' => ['required', 'integer',  new EntityExistsRule('page')],
+            'uploaded_to' => ['required', 'integer',  'min:1'],
             'file'        => array_merge(['required'], $this->attachmentService->getFileValidationRules()),
         ]);
 
@@ -140,31 +139,30 @@ class AttachmentController extends Controller
      */
     public function attachLink(Request $request)
     {
-        $pageId = $request->input('attachment_link_uploaded_to');
-        $page = $this->pageQueries->findVisibleByIdOrFail($pageId);
-
-        $this->checkPermission(Permission::AttachmentCreateAll);
-        $this->checkOwnablePermission(Permission::PageUpdate, $page);
-
         try {
-            $this->validate($request, [
-                'attachment_link_uploaded_to' => ['required', 'integer',  new EntityExistsRule('page')],
+            $validated = $this->validate($request, [
+                'attachment_link_uploaded_to' => ['required', 'integer', 'min:1'],
                 'attachment_link_name'        => ['required', 'string', 'min:1', 'max:255'],
                 'attachment_link_url'         => ['required', 'string', 'min:1', 'max:2000', 'safe_url'],
             ]);
         } catch (ValidationException $exception) {
             return response()->view('attachments.manager-link-form', array_merge($request->only(['attachment_link_name', 'attachment_link_url']), [
-                'pageId' => $pageId,
+                'pageId' => $request->input('attachment_link_uploaded_to') ?? 0,
                 'errors' => new MessageBag($exception->errors()),
             ]), 422);
         }
 
-        $attachmentName = $request->input('attachment_link_name');
-        $link = $request->input('attachment_link_url');
-        $this->attachmentService->saveNewFromLink($attachmentName, $link, intval($pageId));
+        $page = $this->pageQueries->findVisibleByIdOrFail($validated['attachment_link_uploaded_to']);
+
+        $this->checkPermission(Permission::AttachmentCreateAll);
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+
+        $attachmentName = $validated['attachment_link_name'];
+        $link = $validated['attachment_link_url'];
+        $this->attachmentService->saveNewFromLink($attachmentName, $link, $page->id);
 
         return view('attachments.manager-link-form', [
-            'pageId' => $pageId,
+            'pageId' => $page->id,
         ]);
     }
 
