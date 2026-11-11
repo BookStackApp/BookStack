@@ -66,6 +66,7 @@ class PageRevision extends Model implements Loggable
     public function getPreviousRevision(): ?PageRevision
     {
         $id = static::newQuery()->where('page_id', '=', $this->page_id)
+            ->where('type', '=', 'version')
             ->where('id', '<', $this->id)
             ->max('id');
 
