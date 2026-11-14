@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Lataa kuva',
     'image_intro' => 'Täällä voit valita ja hallita kuvia, jotka on aiemmin ladattu järjestelmään.',
     'image_intro_upload' => 'Lataa uusi kuva vetämällä kuvatiedosto tähän ikkunaan tai käyttämällä yllä olevaa "Lataa kuva" -painiketta.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Kaikki',
     'image_all_title' => 'Näytä kaikki kuvat',
     'image_book_title' => 'Näytä tähän kirjaan ladatut kuvat',

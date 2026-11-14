@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Rasm yuklash',
     'image_intro' => 'Bu yerda siz avvalroq tizimga yuklangan rasmlarni tanlashingiz va boshqarishingiz mumkin.',
     'image_intro_upload' => 'Tasvir faylini ushbu oynaga sudrab yoki yuqoridagi "Rasmni yuklash" tugmasini bosib yangi rasmni yuklang.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Barchasi',
     'image_all_title' => 'Barcha rasmlarni ko‘rish',
     'image_book_title' => 'Ush kitobga yuklangan barcha rasmlarni ko‘rish',

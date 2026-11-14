@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Subir imagen',
     'image_intro' => 'Aquí puede seleccionar y administrar las imágenes que previamente se subieron al sistema.',
     'image_intro_upload' => 'Suba una nueva imagen arrastrando un archivo de imagen a esta ventana, o usando el botón "Subir imagen" de arriba.',
+    'image_no_upload_permission' => 'No tiene permiso para subir nuevas imágenes.',
     'image_all' => 'Todo',
     'image_all_title' => 'Ver todas las imágenes',
     'image_book_title' => 'Ver las imágenes subidas a este libro',

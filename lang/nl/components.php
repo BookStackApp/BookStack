@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Upload afbeelding',
     'image_intro' => 'Hier kan je eerder geüploade afbeeldingen selecteren en beheren.',
     'image_intro_upload' => 'Sleep een afbeeldingsbestand naar dit venster of gebruik de "Upload afbeelding"-knop om een afbeelding te uploaden.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Alles',
     'image_all_title' => 'Alle afbeeldingen weergeven',
     'image_book_title' => 'Bekijk afbeeldingen die naar dit boek zijn geüpload',

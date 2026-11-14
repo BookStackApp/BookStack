@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Încarcă imaginea',
     'image_intro' => 'Aici puteţi selecta şi gestiona imaginile care au fost încărcate anterior în sistem.',
     'image_intro_upload' => 'Încărcați o imagine nouă trăgând o imagine în această fereastră sau utilizând butonul "Încărcați Imaginea" de mai sus.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Tot',
     'image_all_title' => 'Vezi toate imaginile',
     'image_book_title' => 'Vezi imaginile încărcate în această carte',
