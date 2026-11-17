@@ -108,6 +108,11 @@
         "sort-packages": true,
         "platform": {
             "php": "8.3.0"
+        },
+        "policy": {
+            "cooldown": {
+                "period": "4 hours"
+            }
         }
     },
     "extra": {

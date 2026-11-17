@@ -6,10 +6,12 @@ use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Repos\BookRepo;
 use BookStack\Entities\Repos\BookshelfRepo;
 use BookStack\Facades\Activity;
+use Illuminate\Database\Eloquent\Collection;
 
 class HierarchyTransformer
 {
@@ -32,9 +34,14 @@ class HierarchyTransformer
         $book = $this->bookRepo->create($inputData);
         $this->cloner->copyEntityPermissions($chapter, $book);
 
-        /** @var Page $page */
-        foreach ($chapter->pages as $page) {
-            $page->chapter_id = 0;
+        if ($chapter->deleted_at) {
+            $this->copyChapterDeletionToBook($chapter, $book);
+        }
+
+        /** @var Collection<int, Page> $pages */
+        $pages = $chapter->pages()->withTrashed()->get();
+        foreach ($pages as $page) {
+            $page->chapter_id = null;
             $page->save();
             $this->parentChanger->changeBook($page, $book->id);
         }
@@ -59,8 +66,9 @@ class HierarchyTransformer
 
         $shelfBookSyncData = [];
 
-        /** @var Chapter $chapter */
-        foreach ($book->chapters as $index => $chapter) {
+        /** @var Collection<int, Chapter> $chapters */
+        $chapters = $book->chapters()->withTrashed()->get();
+        foreach ($chapters as $index => $chapter) {
             $newBook = $this->transformChapterToBook($chapter);
             $shelfBookSyncData[$newBook->id] = ['order' => $index];
             if (!$newBook->hasPermissions()) {
@@ -68,7 +76,7 @@ class HierarchyTransformer
             }
         }
 
-        if ($book->directPages->count() > 0) {
+        if ($book->directPages()->withTrashed()->count() > 0) {
             $book->name .= ' ' . trans('entities.pages');
             $shelfBookSyncData[$book->id] = ['order' => count($shelfBookSyncData) + 1];
             $book->save();
@@ -81,5 +89,19 @@ class HierarchyTransformer
         Activity::add(ActivityType::BOOKSHELF_CREATE_FROM_BOOK, $shelf);
 
         return $shelf;
+    }
+
+    public function copyChapterDeletionToBook(Chapter $chapter, Book $book): void
+    {
+        $book->deleted_at = $chapter->deleted_at;
+        $book->save();
+
+        $deletions = $chapter->deletions()->get();
+        /** @var Deletion $deletion */
+        foreach ($deletions as $deletion) {
+            $deletion->deletable_id = $book->id;
+            $deletion->deletable_type = 'book';
+            $deletion->save();
+        }
     }
 }

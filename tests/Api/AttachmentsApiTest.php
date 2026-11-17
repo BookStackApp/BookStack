@@ -115,6 +115,22 @@ class AttachmentsApiTest extends TestCase
         unlink(storage_path($newItem->path));
     }
 
+    public function test_create_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentCreateAll]);
+        $this->actingAsForApi($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $fileData = ['file' => $this->getTestFile('textfile.txt')];
+        $invisible = $this->call('POST', $this->baseEndpoint, ['name' => 'My attachment', 'uploaded_to' => $page->id], [], $fileData);
+        $nonExisting = $this->call('POST', $this->baseEndpoint, ['name' => 'My attachment', 'uploaded_to' => $maxPageId], [], $fileData);
+        $this->assertEquals($invisible->getStatusCode(), $nonExisting->getStatusCode());
+        $this->assertEquals($nonExisting->getStatusCode(), 404);
+    }
+
     public function test_upload_limit_restricts_attachment_uploads()
     {
         $this->actingAsApiAdmin();
@@ -385,6 +401,22 @@ class AttachmentsApiTest extends TestCase
         $this->assertPermissionError($resp);
         $this->assertNotEquals($newPage->id, $attachment->uploaded_to);
         $this->assertEquals($originalPage->id, $attachment->uploaded_to);
+    }
+
+    public function test_update_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $attachment = $this->createAttachmentForPage($page);
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentUpdateAll]);
+        $this->actingAsForApi($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $invisible = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", ['uploaded_to' => $page->id, 'name' => 'attachy']);
+        $notExisting = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", ['uploaded_to' => $maxPageId, 'name' => 'attachy']);
+        $this->assertEquals($invisible->getStatusCode(), $notExisting->getStatusCode());
+        $this->assertEquals(404, $invisible->getStatusCode());
     }
 
     public function test_delete_endpoint()

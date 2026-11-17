@@ -338,7 +338,7 @@ License File: vendor/nette/schema/license.md
 Copyright: Copyright (c) 2004, 2014 David Grudl (https://davidgrudl.com)
 All rights reserved.
 Source: https://github.com/nette/schema.git
-Link: https://nette.org
+Link: https://doc.nette.org/schema
 -----------
 nette/utils
 License: BSD-3-Clause GPL-2.0-only GPL-3.0-only
@@ -393,7 +393,7 @@ Link: https://github.com/schmittjoh/php-option.git
 phpseclib/phpseclib
 License: MIT
 License File: vendor/phpseclib/phpseclib/LICENSE
-Copyright: Copyright (c) 2011-2019 TerraFrost and other contributors
+Copyright: Copyright (c) 2011-2026 TerraFrost and other contributors
 Source: https://github.com/phpseclib/phpseclib.git
 Link: http://phpseclib.sourceforge.net
 -----------
@@ -500,7 +500,7 @@ Link: https://github.com/ramsey/uuid.git
 robrichards/xmlseclibs
 License: BSD-3-Clause
 License File: vendor/robrichards/xmlseclibs/LICENSE
-Copyright: Copyright (c) 2007-2024, Robert Richards <*********@*********.***>.
+Copyright: Copyright (c) 2007-2026, Robert Richards <*********@*********.***>.
 Source: https://github.com/robrichards/xmlseclibs.git
 Link: https://github.com/robrichards/xmlseclibs
 -----------
@@ -704,6 +704,13 @@ Copyright: Copyright (c) 2025-present Fabien Potencier
 Source: https://github.com/symfony/polyfill-php85.git
 Link: https://symfony.com
 -----------
+symfony/polyfill-time
+License: MIT
+License File: vendor/symfony/polyfill-time/LICENSE
+Copyright: Copyright (c) 2026-present Fabien Potencier
+Source: https://github.com/symfony/polyfill-time.git
+Link: https://symfony.com
+-----------
 symfony/polyfill-uuid
 License: MIT
 License File: vendor/symfony/polyfill-uuid/LICENSE
@@ -778,8 +785,8 @@ vlucas/phpdotenv
 License: BSD-3-Clause
 License File: vendor/vlucas/phpdotenv/LICENSE
 Copyright: Copyright (c) 2014, Graham Campbell.
-Source: https://github.com/vlucas/phpdotenv.git
-Link: https://github.com/vlucas/phpdotenv.git
+Source: https://github.com/phpdotenv/phpdotenv.git
+Link: https://github.com/phpdotenv/phpdotenv.git
 -----------
 voku/portable-ascii
 License: MIT

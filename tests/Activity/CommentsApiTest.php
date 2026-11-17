@@ -247,4 +247,19 @@ class CommentsApiTest extends TestCase
             'id' => $comment->id,
         ]);
     }
+
+    public function test_comments_on_deleted_pages_are_not_visible()
+    {
+        $page = $this->entities->page();
+        $comment = Comment::factory()->make([
+            'html' => '<p>A lovely comment</p>',
+        ]);
+        $page->comments()->save($comment);
+        $comment->refresh();
+
+        $this->entities->sendToRecycleBin($page);
+
+        $this->actingAsApiAdmin()->get("/api/comments?sort=-id")->assertJsonMissing(['id' => $comment->id]);
+        $this->get("/api/comments/{$comment->id}")->assertStatus(404);
+    }
 }

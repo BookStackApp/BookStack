@@ -18,7 +18,5 @@ class PreventRequestForgery extends Middleware
      *
      * @var array<int, string>
      */
-    protected $except = [
-        'saml2/*',
-    ];
+    protected $except = [];
 }

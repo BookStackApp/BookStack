@@ -130,7 +130,6 @@ class UserAccountController extends Controller
 
         $query = user()->watches()->getQuery();
         $query = $permissions->restrictEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
-        $query = $permissions->filterDeletedFromEntityRelationQuery($query, 'watches', 'watchable_id', 'watchable_type');
         $watches = $query->with('watchable')->paginate(20);
 
         $this->setPageTitle(trans('preferences.notifications'));
@@ -226,7 +225,6 @@ class UserAccountController extends Controller
         ]);
 
         $this->userRepo->update(user(), $validated, false);
-
         $this->showSuccessNotification(trans('preferences.auth_change_password_success'));
 
         return redirect('/my-account/auth');
