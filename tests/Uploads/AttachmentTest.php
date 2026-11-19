@@ -7,6 +7,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Tools\TrashCan;
 use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
+use BookStack\Users\Models\Role;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -292,6 +293,29 @@ class AttachmentTest extends TestCase
         $resp->assertNotFound();
 
         $this->assertDatabaseHas('attachments', ['id' => $attachment->id]);
+    }
+
+    public function test_attachment_deletion_requires_page_edit_permission()
+    {
+        $page = $this->entities->page();
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+        $editor = $this->users->editor();
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentDeleteAll]);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $resp = $this->actingAs($editor)->delete($attachment->getUrl());
+        $this->assertPermissionError($resp);
+        $this->assertDatabaseHas('attachments', ['id' => $attachment->id]);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+        $resp = $this->delete($attachment->getUrl());
+        $resp->assertOk();
+
+        $this->assertDatabaseMissing('attachments', ['id' => $attachment->id]);
     }
 
     public function test_attachment_access_without_permission_shows_404()

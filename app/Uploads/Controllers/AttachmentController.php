@@ -236,6 +236,8 @@ class AttachmentController extends Controller
     {
         $attachment = $this->attachmentService->getVisibleAttachmentOrFail($attachmentId);
         $this->checkOwnablePermission(Permission::AttachmentDelete, $attachment);
+        $this->checkOwnablePermission(Permission::PageUpdate, $attachment->page);
+
         $this->attachmentService->deleteFile($attachment);
 
         return response()->json(['message' => trans('entities.attachments_deleted')]);

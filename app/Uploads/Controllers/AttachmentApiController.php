@@ -164,6 +164,7 @@ class AttachmentApiController extends ApiController
         /** @var Attachment $attachment */
         $attachment = Attachment::visible()->findOrFail($id);
         $this->checkOwnablePermission(Permission::AttachmentDelete, $attachment);
+        $this->checkOwnablePermission(Permission::PageUpdate, $attachment->page);
 
         $this->attachmentService->deleteFile($attachment);
 

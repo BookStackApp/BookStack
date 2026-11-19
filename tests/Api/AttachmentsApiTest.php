@@ -5,6 +5,7 @@ namespace Tests\Api;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
+use BookStack\Users\Models\Role;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\AssertableJsonString;
 use Tests\TestCase;
@@ -428,6 +429,29 @@ class AttachmentsApiTest extends TestCase
         $resp = $this->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
 
         $resp->assertStatus(204);
+        $this->assertDatabaseMissing('attachments', ['id' => $attachment->id]);
+    }
+
+    public function test_delete_requires_page_edit_permission()
+    {
+        $page = $this->entities->page();
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+        $editor = $this->users->editor();
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentDeleteAll]);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $resp = $this->actingAsForApi($editor)->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
+        $this->assertPermissionError($resp);
+        $this->assertDatabaseHas('attachments', ['id' => $attachment->id]);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+        $resp = $this->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
+        $resp->assertSuccessful();
+
         $this->assertDatabaseMissing('attachments', ['id' => $attachment->id]);
     }
 
