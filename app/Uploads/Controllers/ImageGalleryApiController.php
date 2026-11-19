@@ -142,7 +142,9 @@ class ImageGalleryApiController extends ApiController
     {
         $data = $this->validate($request, $this->rules()['update']);
         $image = $this->imageRepo->getVisiblePageImageById($id);
+
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $this->imageRepo->updateImageDetails($image, $data);
         if (isset($data['image'])) {
@@ -161,6 +163,7 @@ class ImageGalleryApiController extends ApiController
     {
         $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageDelete, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $this->imageRepo->destroyImage($image);
 

@@ -36,6 +36,27 @@ class ImageTest extends TestCase
         ]);
     }
 
+    public function test_gallery_image_upload_requires_page_update_permission()
+    {
+        $page = $this->entities->page();
+        $editor = $this->users->editor();
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+        $this->actingAs($editor);
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $file = $this->files->uploadedImage('my-image.png', '');
+        $resp = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], ['CONTENT_TYPE' => 'image/png']);
+        $this->assertPermissionError($resp);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+
+        $resp = $this->call('POST', '/images/gallery', ['uploaded_to' => $page->id], [], ['file' => $file], ['CONTENT_TYPE' => 'image/png']);
+        $resp->assertSuccessful();
+    }
+
     public function test_image_upload_with_page_reference_requires_visibility_and_update_permissions_of_target_page()
     {
         $page = $this->entities->page();
@@ -291,6 +312,30 @@ class ImageTest extends TestCase
         $resp->assertStatus(404);
     }
 
+    public function test_image_file_update_requires_related_page_update_permission()
+    {
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $newUpload = $this->files->uploadedImage('replacement.png');
+        $resp = $this->call('PUT', "/images/{$image->id}/file", [], [], ['file' => $newUpload]);
+        $this->assertPermissionError($resp);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+
+        $resp = $this->call('PUT', "/images/{$image->id}/file", [], [], ['file' => $newUpload]);
+        $resp->assertSuccessful();
+    }
+
     public function test_image_update_fails_if_page_is_in_recycle_bin()
     {
         $this->asEditor();
@@ -321,6 +366,29 @@ class ImageTest extends TestCase
 
         $resp = $this->put("/images/{$image->id}", ['name' => 'Updated image name']);
         $resp->assertStatus(404);
+    }
+
+    public function test_update_requires_related_page_update_permission()
+    {
+        $editor = $this->users->editor();
+        $this->actingAs($editor);
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $resp = $this->put("/images/{$image->id}", ['name' => 'Updated image name']);
+        $this->assertPermissionError($resp);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+
+        $resp = $this->put("/images/{$image->id}", ['name' => 'Updated image name']);
+        $resp->assertSuccessful();
     }
 
     public function test_gallery_get_list_format()
@@ -793,6 +861,29 @@ class ImageTest extends TestCase
 
         $resp = $this->delete("/images/{$image->id}");
         $resp->assertStatus(404);
+    }
+
+    public function test_image_delete_requires_permission_to_update_related_page()
+    {
+        $editor = $this->users->editor();
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+        $this->actingAs($editor);
+        $page = $this->entities->page();
+
+        $this->files->uploadGalleryImageToPage($this, $page);
+        $image = Image::query()->where('type', '=', 'gallery')->where('uploaded_to', '=', $page->id)->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $resp = $this->delete("/images/{$image->id}");
+        $this->assertPermissionError($resp);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+
+        $resp = $this->delete("/images/{$image->id}");
+        $resp->assertSuccessful();
     }
 
     public function test_image_manager_delete_button_only_shows_with_permission()

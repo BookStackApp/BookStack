@@ -51,6 +51,7 @@ class ImageController extends Controller
 
         $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $image = $this->imageRepo->updateImageDetails($image, $data);
 
@@ -71,6 +72,7 @@ class ImageController extends Controller
 
         $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
         $file = $request->file('file');
 
         new OutOfMemoryHandler(function () {
@@ -124,6 +126,7 @@ class ImageController extends Controller
     {
         $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageDelete, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $this->imageRepo->destroyImage($image);
 
