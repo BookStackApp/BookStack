@@ -1,5 +1,5 @@
-import {findClosestScrollContainer, onSelect} from '../services/dom.ts';
-import {KeyboardNavigationHandler} from '../services/keyboard-navigation.ts';
+import {findClosestScrollContainer, onSelect} from '../services/dom';
+import {KeyboardNavigationHandler} from '../services/keyboard-navigation';
 import {Component} from './component';
 
 /**
@@ -7,6 +7,17 @@ import {Component} from './component';
  * Provides some simple logic to create simple dropdown menus.
  */
 export class Dropdown extends Component {
+
+    protected container!: HTMLElement;
+    protected menu!: HTMLElement;
+    protected toggle!: HTMLElement;
+
+    protected fixedPositionMenu: boolean = false;
+    protected bubbleEscapes: boolean = false;
+    protected direction: string = 'left';
+    protected body!: HTMLElement;
+    protected showing: boolean = false;
+    protected onCloseAbortController: AbortController = new AbortController();
 
     setup() {
         this.container = this.$el;
@@ -17,13 +28,12 @@ export class Dropdown extends Component {
 
         this.direction = (document.dir === 'rtl') ? 'right' : 'left';
         this.body = document.body;
-        this.showing = false;
 
         this.hide = this.hide.bind(this);
         this.setupListeners();
     }
 
-    show(event = null) {
+    show(event: Event|null = null) {
         this.hideAll();
 
         this.menu.style.display = 'block';
@@ -63,13 +73,22 @@ export class Dropdown extends Component {
             this.menu.style.maxHeight = `${Math.floor(maxHeight)}px`;
         }
 
+        this.onCloseAbortController = new AbortController();
+
         // Set listener to hide on mouse leave or window click
-        this.menu.addEventListener('mouseleave', this.hide);
-        window.addEventListener('click', clickEvent => {
-            if (!this.menu.contains(clickEvent.target)) {
+        this.menu.addEventListener('mouseleave', (event: MouseEvent) => {
+            const focusedOnInputWithin = document.activeElement
+                && this.menu.contains(document.activeElement)
+                && document.activeElement.matches('input,textarea,select');
+            if (!focusedOnInputWithin) {
                 this.hide();
             }
-        });
+        }, { signal: this.onCloseAbortController.signal });
+        window.addEventListener('click', clickEvent => {
+            if (!this.menu.contains(clickEvent.target as HTMLElement)) {
+                this.hide();
+            }
+        }, { signal: this.onCloseAbortController.signal });
 
         // Focus on first input if existing
         const input = this.menu.querySelector('input');
@@ -86,7 +105,7 @@ export class Dropdown extends Component {
     }
 
     hideAll() {
-        for (const dropdown of window.$components.get('dropdown')) {
+        for (const dropdown of window.$components.get('dropdown') as Dropdown[]) {
             dropdown.hide();
         }
     }
@@ -101,12 +120,13 @@ export class Dropdown extends Component {
 
         if (this.fixedPositionMenu) {
             this.menu.style.position = '';
-            this.menu.style[this.direction] = '';
+            this.menu.style.setProperty(this.direction, '');
             this.menu.style.width = '';
             this.menu.style.left = '';
         }
 
         this.showing = false;
+        this.onCloseAbortController.abort();
     }
 
     setupListeners() {
@@ -117,7 +137,7 @@ export class Dropdown extends Component {
                 event.stopPropagation();
             }
         }, event => {
-            if (event.target.nodeName === 'INPUT') {
+            if (event.target instanceof HTMLElement && event.target.nodeName === 'INPUT') {
                 event.preventDefault();
                 event.stopPropagation();
             }
@@ -126,8 +146,8 @@ export class Dropdown extends Component {
 
         // Hide menu on option click
         this.container.addEventListener('click', event => {
-            const possibleChildren = Array.from(this.menu.querySelectorAll('a'));
-            if (possibleChildren.includes(event.target)) {
+            const possibleChildren: HTMLElement[] = Array.from(this.menu.querySelectorAll('a'));
+            if (event.target instanceof HTMLElement && possibleChildren.includes(event.target)) {
                 this.hide();
             }
         });
