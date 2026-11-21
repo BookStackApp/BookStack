@@ -98,11 +98,17 @@ export class EditorForm extends EditorContainerUiElement {
         this.definition = definition;
     }
 
-    focusOnFirst() {
-        const focusable = this.getDOMElement().querySelector('input,select,textarea');
+    /**
+     * Focus on the first element within the form.
+     * Returns a boolean to indicate if focus was set by the function.
+     */
+    focusOnFirst(): boolean {
+        const focusable = this.getDOMElement().querySelector('input:not([type="hidden"]),select,textarea');
         if (focusable) {
             (focusable as HTMLElement).focus();
+            return true;
         }
+        return false;
     }
 
     getValues(): Record<string, string> {

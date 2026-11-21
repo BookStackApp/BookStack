@@ -23,4 +23,10 @@ class LicensesTest extends TestCase
         $html = $this->withHtml($resp);
         $html->assertLinkExists(url('/licenses'), 'License Details');
     }
+
+    public function test_licenses_page_has_a_main_landmark()
+    {
+        $resp = $this->get('/licenses');
+        $this->withHtml($resp)->assertElementExists('body #main-content main');
+    }
 }

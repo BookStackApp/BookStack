@@ -33,7 +33,14 @@ export class EditorFormModal extends EditorContainerUiElement {
         form.setOnSuccessfulSubmit(this.hide.bind(this));
 
         this.getContext().manager.setModalActive(this.key, this);
-        form.focusOnFirst();
+
+        const focused = form.focusOnFirst();
+        if (!focused) {
+            const focusable = dom.querySelector('[tabindex="-1"]');
+            if (focusable instanceof HTMLElement) {
+                focusable.focus();
+            }
+        }
     }
 
     hide() {
@@ -60,9 +67,9 @@ export class EditorFormModal extends EditorContainerUiElement {
         closeButton.innerHTML = closeIcon;
         closeButton.addEventListener('click', this.hide.bind(this));
 
-        const modal = el('div', {class: 'editor-modal editor-form-modal'}, [
+        const modal = el('div', {class: 'editor-modal editor-form-modal', role: 'dialog', 'aria-labelledby': `editor-modal-title-${this.key}`}, [
             el('div', {class: 'editor-modal-header'}, [
-                el('div', {class: 'editor-modal-title'}, [this.trans(this.definition.title)]),
+                el('div', {class: 'editor-modal-title', tabindex: '-1', id: `editor-modal-title-${this.key}`}, [this.trans(this.definition.title)]),
                 closeButton,
             ]),
             el('div', {class: 'editor-modal-body'}, [
