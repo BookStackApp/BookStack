@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute måste referera till en fil av typen :validTypes, hittade :foundType.',
     'zip_model_expected' => 'Dataobjekt förväntades men ":type" hittades.',
     'zip_unique' => ':attribute måste referera till en fil inom ZIP-filen.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

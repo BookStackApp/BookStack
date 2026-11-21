@@ -27,7 +27,7 @@ return [
     'app_secure_images_toggle' => 'Daha güvenli görsel yüklemelerini aktifleştir',
     'app_secure_images_desc' => 'Bütün görseller, performans sebepleri nedeniyle herkes tarafından görüntülenebilir durumdadır. Bu seçeneği aktif ederseniz; görsel bağlantılarının önüne rastgele, tahmini zor karakterler eklenmesini sağlarsınız. Kolay erişimin önlenmesi için dizin indekslerinin kapalı olduğundan emin olun.',
     'app_default_editor' => 'Varsayılan Yazı Düzenleyici',
-    'app_default_editor_desc' => 'Select which editor will be used by default when editing new pages. This can be overridden at a page level where permissions allow.',
+    'app_default_editor_desc' => 'Yeni sayfaları düzenlerken varsayılan olarak hangi düzenleyicinin kullanılacağını seçin. Bu ayar, izinlerin izin verdiği durumlarda sayfa düzeyinde geçersiz kılınabilir.',
     'app_custom_html' => 'Özel HTML "Head" İçeriği',
     'app_custom_html_desc' => 'Buraya yazacağınız içerik, <head> etiketinin içine ve en sonuna eklenecektir. Bu işlem, stil değişikliklerinin uygulanmasında ya da analytics kodlarının eklenmesinde yararlı olmaktadır.',
     'app_custom_html_disabled_notice' => 'Olası hatalı değişikliklerin geriye alınabilmesi için bu sayfanın özelleştirilmiş HTML "head" içeriği devre dışı bırakıldı.',

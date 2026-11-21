@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Tải ảnh lên',
     'image_intro' => 'Bạn có thể lựa chọn và quản lý các hình ảnh đã được tải lên hệ thống từ trước ở đây.',
     'image_intro_upload' => 'Tải lên ảnh mới bằng cách kéo và thả nó vào cửa sổ này, hoặc sử dụng nút tải ảnh ở bên trên.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Tất cả',
     'image_all_title' => 'Xem tất cả các ảnh',
     'image_book_title' => 'Xem các ảnh đã được tải lên trong sách này',

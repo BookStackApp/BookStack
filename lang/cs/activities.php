@@ -40,14 +40,14 @@ return [
     'book_sort_notification'      => 'Kniha byla úspěšně seřazena',
 
     // Bookshelves
-    'bookshelf_create'            => 'vytvořil polici',
-    'bookshelf_create_notification'    => 'Police byla úspěšně vytvořena',
-    'bookshelf_create_from_book'    => 'převést knihu na polici',
-    'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na polici',
-    'bookshelf_update'                 => 'aktualizovat polici',
-    'bookshelf_update_notification'    => 'Police byla úspěšně aktualizována',
-    'bookshelf_delete'                 => 'odstranil polici',
-    'bookshelf_delete_notification'    => 'Police byla úspěšně odstraněna',
+    'bookshelf_create'            => 'vytvořil poličku',
+    'bookshelf_create_notification'    => 'Polička byla úspěšně vytvořena',
+    'bookshelf_create_from_book'    => 'převedl/a knihu na poličku',
+    'bookshelf_create_from_book_notification'    => 'Kniha byla úspěšně převedena na poličku',
+    'bookshelf_update'                 => 'aktualizoval/a poličku',
+    'bookshelf_update_notification'    => 'Polička byla úspěšně aktualizována',
+    'bookshelf_delete'                 => 'odstranil/a poličku',
+    'bookshelf_delete_notification'    => 'Polička byla úspěšně odstraněna',
 
     // Revisions
     'revision_restore' => 'obnovil revizi',

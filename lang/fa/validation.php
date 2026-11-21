@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'ویژگی :attribute باید به فایلی با نوع :validTypes اشاره کند، اما نوع یافت‌شده :foundType است.',
     'zip_model_expected' => 'سیستم در این بخش انتظار دریافت یک شیء داده‌ای را داشت، اما «:type» دریافت گردید',
     'zip_unique' => 'برای هر نوع شیء در فایل ZIP، مقدار ویژگی :attribute باید یکتا و بدون تکرار باشد.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

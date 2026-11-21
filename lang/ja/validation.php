@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute は種別 :validType のファイルを参照する必要がありますが、種別 :foundType となっています。',
     'zip_model_expected' => 'データオブジェクトが期待されますが、":type" が見つかりました。',
     'zip_unique' => 'ZIP内のオブジェクトタイプに :attribute が一意である必要があります。',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

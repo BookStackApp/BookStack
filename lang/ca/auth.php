@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Aquestes credencials no existeixen al nostre registre.',
     'throttle' => 'Massa intents d’inici de sessió. Torneu-ho a provar d’aquí :seconds segons.',
-    'mfa_throttle' => 'Too many multi-factor verification attempts. Please try again in :seconds seconds.',
+    'mfa_throttle' => 'Massa intents de verificació multifactorial. Torneu-ho a provar d’aquí a :seconds segons.',
 
     // Login & Register
     'sign_up' => 'Registreu-vos',
@@ -21,9 +21,9 @@ return [
     'username' => 'Nom d’usuari',
     'email' => 'Correu electrònic',
     'password' => 'Contrasenya',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => 'Contrasenya nova',
+    'password_new_confirm' => 'Confirmeu la contrasenya nova',
+    'password_current' => 'Confirmeu la contrasenya actual',
     'password_confirm' => 'Confirmeu la contrasenya',
     'password_hint' => 'Ha de tenir almenys 8 caràcters',
     'forgot_password' => 'Heu oblidat la contrasenya?',

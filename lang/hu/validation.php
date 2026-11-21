@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'A(z) :attribute egy :validTypes típusú fájlra kell, hogy hivatkozzon, a :foundType helyett.',
     'zip_model_expected' => 'Adat objektum helyett ":type" lett találva.',
     'zip_unique' => 'A(z) :attribute egyedi kell hogy legyen a ZIP fájlban az adott objektum típushoz.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

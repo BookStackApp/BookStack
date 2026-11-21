@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute بحاجة إلى الإشارة إلى مِلَفّ من نوع :validTypes، وجدت :foundType.',
     'zip_model_expected' => 'عنصر البيانات المتوقع ولكن ":type" تم العثور عليه.',
     'zip_unique' => 'يجب أن يكون :attribute فريداً لنوع الكائن داخل المِلَفّ المضغوط.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

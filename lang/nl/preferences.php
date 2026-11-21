@@ -20,8 +20,8 @@ return [
     'shortcuts_overview_desc' => 'Beheer toetsenbordsnelkoppelingen om door de gebruikersinterface van het systeem te navigeren.',
 
     'interface' => 'Interface Voorkeuren',
-    'interface_desc' => 'Here you can find options to customize the appearance of the application user interface.',
-    'interface_display_mode' => 'Display Mode',
+    'interface_desc' => 'Hier vind je opties om het uiterlijk van de gebruikersinterface van de applicatie aan te passen.',
+    'interface_display_mode' => 'Midden',
     'interface_display_mode_desc' => 'Choose whether the application should show in dark or light mode. This can also be toggled from the home view, or via the profile dropdown in the header bar.',
     'layouts' => 'Lay-out Voorkeuren',
     'layouts_desc' => 'Customize the layout of sections shown in the user interface for a range of views.',

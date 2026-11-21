@@ -84,8 +84,8 @@ return [
     'status_inactive' => 'Inaktiv',
     'never' => 'Aldrig',
     'none' => 'Ingen',
-    'move_left' => 'Move Left',
-    'move_right' => 'Move Right',
+    'move_left' => 'Flyt Til Venstre',
+    'move_right' => 'Flyt Til Højre',
 
     // Header
     'homepage' => 'Forside',

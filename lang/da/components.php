@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Upload billede',
     'image_intro' => 'Her kan du vælge og administrere billeder, der tidligere er blevet uploadet til systemet.',
     'image_intro_upload' => 'Upload et nyt billede ved at trække en billedfil ind i dette vindue, eller ved at bruge knappen "Upload billede" ovenfor.',
+    'image_no_upload_permission' => 'Du har ikke tilladelse til at uploade nye billeder.',
     'image_all' => 'Alt',
     'image_all_title' => 'Se alle billeder',
     'image_book_title' => 'Vis billeder uploadet til denne bog',

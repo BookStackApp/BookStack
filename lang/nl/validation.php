@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'Het \':attribute\' veld moet verwijzen naar een bestand met het type :validTypes, vond :foundType.',
     'zip_model_expected' => 'Dataobject verwacht maar vond ":type".',
     'zip_unique' => ':attribute moet uniek zijn voor het objecttype binnen de ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

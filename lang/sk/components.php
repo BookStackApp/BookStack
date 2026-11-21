@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Nahrať obrázok',
     'image_intro' => 'Tu môžete vybrať a spravovať obrázky, ktoré boli predtým nahrané do systému.',
     'image_intro_upload' => 'Nahrajte nový obrázok pretiahnutím súboru obrázka do tohto okna alebo pomocou vyššie uvedeného tlačidla „Nahrať obrázok“.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Všetko',
     'image_all_title' => 'Zobraziť všetky obrázky',
     'image_book_title' => 'Zobraziť obrázky nahrané do tejto knihy',

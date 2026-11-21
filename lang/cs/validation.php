@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute musí odkazovat na soubor typu :validTypes, nalezen :foundType.',
     'zip_model_expected' => 'Očekáván datový objekt, ale nalezen „:type“.',
     'zip_unique' => ':attribute musí být jedinečný pro typ objektu v archivu ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

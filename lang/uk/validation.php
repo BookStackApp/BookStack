@@ -16,7 +16,7 @@ return [
     'alpha_num'            => 'Поле :attribute має містити лише літери та цифри.',
     'array'                => 'Поле :attribute має бути масивом.',
     'backup_codes'         => 'Наданий код є недійсним або вже використаний.',
-    'base64_uri_mime'      => 'The :attribute must be a valid base64 URI containing data of :mime mime type.',
+    'base64_uri_mime'      => ':attribute має бути коректним URI для base64 URI, що містить дані типу :mime mime.',
     'before'               => 'Поле :attribute має містити дату не пізніше :date.',
     'between'              => [
         'numeric' => 'Поле :attribute має бути між :min та :max.',
@@ -26,7 +26,7 @@ return [
     ],
     'boolean'              => 'Поле :attribute повинне містити true чи false.',
     'confirmed'            => 'Поле :attribute не збігається з підтвердженням.',
-    'current_password'     => 'This does not match your current password.',
+    'current_password'     => 'Це не збігається з вашим поточним паролем.',
     'date'                 => 'Поле :attribute не є датою.',
     'date_format'          => 'Поле :attribute не відповідає формату :format.',
     'different'            => 'Поля :attribute та :other повинні бути різними.',
@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'Поле :attribute повинне посилатись на файл типу :validtypes, знайдений :foundType.',
     'zip_model_expected' => 'Очікувався об’єкт даних, але знайдено ":type".',
     'zip_unique' => 'Поле :attribute має бути унікальним для типу об\'єкта в ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'Il campo :attribute deve fare riferimento a un file di tipo :validTypes, trovato :foundType.',
     'zip_model_expected' => 'Oggetto dati atteso ma ":type" trovato.',
     'zip_unique' => 'L\'attributo :attribute deve essere univoco per il tipo di oggetto all\'interno dello ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [
