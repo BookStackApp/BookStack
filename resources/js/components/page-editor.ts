@@ -39,6 +39,7 @@ export class PageEditor extends Component {
     protected draftDeleteText!: string;
     protected draftDeleteFailText!: string;
     protected setChangelogText!: string;
+    protected loginSessionRefreshedText!: string;
 
     // State data
     protected autoSave: { interval: null|number; frequency: number; last: number; pendingChange: boolean; pendingSessionRefresh: boolean } = {
@@ -84,6 +85,7 @@ export class PageEditor extends Component {
         this.draftDeleteText = this.$opts.draftDeleteText;
         this.draftDeleteFailText = this.$opts.draftDeleteFailText;
         this.setChangelogText = this.$opts.setChangelogText;
+        this.loginSessionRefreshedText = this.$opts.loginSessionRefreshedText;
 
         if (this.pageId !== 0 && this.draftsEnabled) {
             window.setTimeout(() => {
@@ -302,7 +304,7 @@ export class PageEditor extends Component {
                     metaToken.setAttribute('content', token);
                 }
 
-                window.$events.success(`Your login session has been refreshed! You can now continue editing.`);
+                window.$events.success(this.loginSessionRefreshedText);
                 loginWindow?.close();
 
                 this.autoSave.pendingSessionRefresh = false;
