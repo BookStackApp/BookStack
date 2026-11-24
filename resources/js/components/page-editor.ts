@@ -6,6 +6,7 @@ import {WysiwygEditorTinymce} from "./wysiwyg-editor-tinymce";
 import {WysiwygEditor} from "./wysiwyg-editor";
 import {MarkdownEditor} from "./markdown-editor";
 import {ConfirmDialog} from "./confirm-dialog";
+import {HttpError} from "../services/http";
 
 export class PageEditor extends Component {
     protected draftsEnabled!: boolean;
@@ -29,6 +30,7 @@ export class PageEditor extends Component {
     protected changeEditorButtons!: HTMLElement[];
     protected switchDialogContainer!: HTMLElement;
     protected deleteDraftDialogContainer!: HTMLElement;
+    protected sessionRefreshDialogContainer!: HTMLElement;
 
     protected draftText!: string;
     protected autosaveFailText!: string;
@@ -39,11 +41,12 @@ export class PageEditor extends Component {
     protected setChangelogText!: string;
 
     // State data
-    protected autoSave: { interval: null|number; frequency: number; last: number; pendingChange: boolean } = {
+    protected autoSave: { interval: null|number; frequency: number; last: number; pendingChange: boolean; pendingSessionRefresh: boolean } = {
         interval: null,
         frequency: 30000,
         last: 0,
         pendingChange: false,
+        pendingSessionRefresh: false,
     };
     protected shownWarningsCache = new Set();
 
@@ -71,6 +74,7 @@ export class PageEditor extends Component {
         this.changeEditorButtons = this.$manyRefs.changeEditor || [];
         this.switchDialogContainer = this.$refs.switchDialog;
         this.deleteDraftDialogContainer = this.$refs.deleteDraftDialog;
+        this.sessionRefreshDialogContainer = this.$refs.sessionRefreshDialog;
 
         // Translations
         this.draftText = this.$opts.draftText;
@@ -94,8 +98,10 @@ export class PageEditor extends Component {
 
     setupListeners() {
         // Listen to save events from editor
-        window.$events.listen('editor-save-draft', this.saveDraft.bind(this));
         window.$events.listen('editor-save-page', this.savePage.bind(this));
+        if (this.draftsEnabled) {
+            window.$events.listen('editor-save-draft', this.saveDraft.bind(this));
+        }
 
         // Listen to content changes from the editor
         const onContentChange = () => {
@@ -144,7 +150,7 @@ export class PageEditor extends Component {
     runAutoSave() {
         // Stop if manually saved recently to prevent bombarding the server
         const savedRecently = (Date.now() - this.autoSave.last < (this.autoSave.frequency) / 2);
-        if (savedRecently || !this.autoSave.pendingChange) {
+        if (savedRecently || !this.autoSave.pendingChange || this.autoSave.pendingSessionRefresh) {
             return;
         }
 
@@ -186,7 +192,12 @@ export class PageEditor extends Component {
 
             didSave = true;
             this.autoSave.pendingChange = false;
-        } catch {
+        } catch (err) {
+            if (err instanceof HttpError && (err.status === 419 || err.status === 401)) {
+                this.startSessionRefresh();
+                return false;
+            }
+
             // Save the editor content in LocalStorage as a last resort, just in case.
             try {
                 const saveKey = `draft-save-fail-${(new Date()).toISOString()}`;
@@ -258,6 +269,46 @@ export class PageEditor extends Component {
             console.error(err);
             window.$events.error(this.draftDeleteFailText);
         }
+    }
+
+    async startSessionRefresh() {
+        if (this.autoSave.pendingSessionRefresh) {
+            return;
+        }
+
+        this.autoSave.pendingSessionRefresh = true;
+        const dialog = window.$components.firstOnElement(this.sessionRefreshDialogContainer, 'confirm-dialog') as ConfirmDialog;
+        const confirmed = await dialog.show();
+        if (!confirmed) {
+            this.autoSave.pendingSessionRefresh = false;
+            return;
+        }
+
+        const loginWindow = window.open(window.baseUrl('/session/refresh'));
+
+        window.addEventListener('message', e => {
+            if (e.origin !== window.location.origin || e.source !== loginWindow) {
+                return;
+            }
+
+            if (e.data.csrf_token) {
+                const token = e.data.csrf_token;
+                const tokenFields = document.querySelectorAll('input[name="_token"]');
+                for (const tokenField of tokenFields) {
+                    (tokenField as HTMLInputElement).value = token;
+                }
+                const metaToken = document.querySelector('meta[name="token"]');
+                if (metaToken) {
+                    metaToken.setAttribute('content', token);
+                }
+
+                window.$events.success(`Your login session has been refreshed! You can now continue editing.`);
+                loginWindow?.close();
+
+                this.autoSave.pendingSessionRefresh = false;
+                this.saveDraft();
+            }
+        });
     }
 
     updateChangelogDisplay() {

@@ -239,7 +239,7 @@ class PageController extends Controller
         $this->checkOwnablePermission(Permission::PageUpdate, $page);
 
         if (!$this->isSignedIn()) {
-            return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 500);
+            return $this->jsonError(trans('errors.guests_cannot_save_drafts'), 401);
         }
 
         if ($page->draft) {

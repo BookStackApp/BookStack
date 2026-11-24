@@ -92,4 +92,13 @@
             {{ trans('entities.pages_drawing_unsaved_confirm') }}
         </p>
     @endcomponent
+
+    {{--Session Refresh--}}
+    @component('common.confirm-dialog', ['title' => 'Login Session Expired', 'ref' => 'page-editor@session-refresh-dialog'])
+        <p>
+            It looks like your session has expired, and you have been logged out.
+            <br>
+            Press continue below to open a new tab to log back in, so that you can continue your editing session here.
+        </p>
+    @endcomponent
 </div>
