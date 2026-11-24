@@ -301,4 +301,13 @@ class PageEditorTest extends TestCase
             $resp->assertOk();
         }
     }
+
+    public function test_editor_page_includes_session_refresh_dialog()
+    {
+        $page = $this->entities->page();
+
+        $resp = $this->asEditor()->get($page->getUrl('edit'));
+        $resp->assertSee('Editing Session Expired');
+        $resp->assertSee('It looks like your session has expired, and you have been logged out.');
+    }
 }
