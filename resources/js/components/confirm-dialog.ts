@@ -1,5 +1,6 @@
-import {onSelect} from '../services/dom.ts';
+import {onSelect} from '../services/dom';
 import {Component} from './component';
+import {Popup} from "./popup";
 
 /**
  * Custom equivalent of window.confirm() using our popup component.
@@ -8,11 +9,14 @@ import {Component} from './component';
  */
 export class ConfirmDialog extends Component {
 
+    protected container!: HTMLElement;
+    protected confirmButton!: HTMLButtonElement;
+
+    protected res: null|Function = null;
+
     setup() {
         this.container = this.$el;
-        this.confirmButton = this.$refs.confirm;
-
-        this.res = null;
+        this.confirmButton = this.$refs.confirm as HTMLButtonElement;
 
         onSelect(this.confirmButton, () => {
             this.sendResult(true);
@@ -21,7 +25,7 @@ export class ConfirmDialog extends Component {
     }
 
     show() {
-        this.getPopup().show(null, () => {
+        this.getPopup().show(null, (): void => {
             this.sendResult(false);
         });
 
@@ -30,21 +34,14 @@ export class ConfirmDialog extends Component {
         });
     }
 
-    /**
-     * @returns {Popup}
-     */
-    getPopup() {
-        return window.$components.firstOnElement(this.container, 'popup');
+    getPopup(): Popup {
+        return window.$components.firstOnElement(this.container, 'popup') as Popup;
     }
 
-    /**
-     * @param {Boolean} result
-     */
-    sendResult(result) {
+    sendResult(result: boolean): void {
         if (this.res) {
             this.res(result);
             this.res = null;
         }
     }
-
 }
