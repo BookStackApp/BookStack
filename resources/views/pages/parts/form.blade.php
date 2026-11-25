@@ -15,7 +15,8 @@
      option:page-editor:draft-discarded-text="{{ trans('entities.pages_draft_discarded') }}"
      option:page-editor:draft-delete-text="{{ trans('entities.pages_draft_deleted') }}"
      option:page-editor:draft-delete-fail-text="{{ trans('errors.page_draft_delete_fail') }}"
-     option:page-editor:set-changelog-text="{{ trans('entities.pages_edit_set_changelog') }}">
+     option:page-editor:set-changelog-text="{{ trans('entities.pages_edit_set_changelog') }}"
+     option:page-editor:login-session-refreshed-text="{{ trans('entities.pages_edit_login_session_refreshed') }}">
 
     {{--Header Toolbar--}}
     @include('pages.parts.editor-toolbar', ['model' => $model, 'editor' => $editor, 'isDraft' => $isDraft, 'draftsEnabled' => $draftsEnabled])
@@ -90,6 +91,15 @@
     @component('common.confirm-dialog', ['title' => trans('entities.pages_drawing_unsaved'), 'id' => 'unsaved-drawing-dialog'])
         <p>
             {{ trans('entities.pages_drawing_unsaved_confirm') }}
+        </p>
+    @endcomponent
+
+    {{--Session Refresh--}}
+    @component('common.confirm-dialog', ['title' => trans('entities.pages_edit_session_expired_title'), 'ref' => 'page-editor@session-refresh-dialog'])
+        <p>
+            {{ trans('entities.pages_edit_session_expired') }}
+            <br>
+            {{ trans('entities.pages_edit_session_expired_continue') }}
         </p>
     @endcomponent
 </div>

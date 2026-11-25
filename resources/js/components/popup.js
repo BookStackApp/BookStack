@@ -44,6 +44,10 @@ export class Popup extends Component {
         }
     }
 
+    /**
+     * @param {null|Function} onComplete
+     * @param {null|Function} onHide
+     */
     show(onComplete = null, onHide = null) {
         fadeIn(this.container, 120, onComplete);
 

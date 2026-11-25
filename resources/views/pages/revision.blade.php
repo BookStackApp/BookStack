@@ -20,8 +20,8 @@
                 'text' => trans('entities.pages_revisions'),
                 'icon' => 'history',
             ],
-            $revision->getUrl('/changes') => $diff ? trans('entities.pages_revisions_numbered_changes', ['id' => $revision->id]) : null,
-            $revision->getUrl() => !$diff ? trans('entities.pages_revisions_numbered', ['id' => $revision->id]) : null,
+            $revision->getUrl('/changes') => $diff ? trans('entities.pages_revisions_numbered_changes', ['id' => $revision->revision_number]) : null,
+            $revision->getUrl() => !$diff ? trans('entities.pages_revisions_numbered', ['id' => $revision->revision_number]) : null,
         ]])
     </div>
 

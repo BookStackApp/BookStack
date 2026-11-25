@@ -84,7 +84,7 @@ export const fullscreen: EditorButtonDefinition = {
 };
 
 export const about: EditorButtonDefinition = {
-    label: 'About the editor',
+    label: 'Editor information & shortcuts',
     icon: aboutIcon,
     async action(context: EditorUiContext, button: EditorButton) {
         const modal = context.manager.createModal('about');

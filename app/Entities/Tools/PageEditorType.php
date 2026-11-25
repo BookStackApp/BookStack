@@ -34,4 +34,13 @@ enum PageEditorType: string
         $setting = setting('app-editor');
         return static::tryFrom($setting) ?? static::WysiwygTinymce;
     }
+
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::WysiwygTinymce => 'WYSIWYG (legacy)',
+            self::WysiwygLexical => 'WYSIWYG (new)',
+            self::Markdown => 'Markdown',
+        };
+    }
 }

@@ -13,6 +13,8 @@ return [
     'app-name'             => 'BookStack',
     'app-logo'             => '',
     'app-name-header'      => true,
+    // Note: For new instance the app-editor is set to 'wysiwyg2024' via a 2026-11-03 dated migration
+    // The below is to be updated once the new editor is made default at a wider scale.
     'app-editor'           => 'wysiwyg',
     'app-color'            => '#206ea7',
     'app-color-light'      => 'rgba(32,110,167,0.15)',

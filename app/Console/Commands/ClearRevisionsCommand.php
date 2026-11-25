@@ -3,6 +3,7 @@
 namespace BookStack\Console\Commands;
 
 use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Models\PageUpdateDraft;
 use Illuminate\Console\Command;
 
 class ClearRevisionsCommand extends Command
@@ -28,8 +29,11 @@ class ClearRevisionsCommand extends Command
      */
     public function handle(): int
     {
-        $deleteTypes = $this->option('all') ? ['version', 'update_draft'] : ['version'];
-        PageRevision::query()->whereIn('type', $deleteTypes)->delete();
+        PageRevision::query()->delete();
+        if ($this->option('all')) {
+            PageUpdateDraft::query()->delete();
+        }
+
         $this->comment('Revisions deleted');
         return 0;
     }

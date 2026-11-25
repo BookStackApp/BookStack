@@ -108,6 +108,26 @@ class UpdateUrlCommandTest extends TestCase
         ]);
     }
 
+    public function test_command_updates_page_update_drafts()
+    {
+        $page = $this->entities->page();
+
+        for ($i = 0; $i < 2; $i++) {
+            $page->updateDrafts()->forceCreate([
+                'name' => $page->name,
+                'markdown' => "[A link {$i}](https://example.com/donkey/cat)"
+            ]);
+        }
+
+        $this->runUpdate('https://example.com', 'https://cats.example.com');
+        setting()->flushCache();
+
+        $this->assertDatabaseHas('page_update_drafts', [
+            'page_id' => $page->id,
+            'markdown' => '[A link 1](https://cats.example.com/donkey/cat)',
+        ]);
+    }
+
     protected function runUpdate(string $oldUrl, string $newUrl)
     {
         $this->artisan("bookstack:update-url {$oldUrl} {$newUrl}")

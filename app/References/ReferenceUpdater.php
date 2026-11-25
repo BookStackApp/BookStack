@@ -125,7 +125,7 @@ class ReferenceUpdater
 
         $page->html = $html;
         $page->markdown = $markdown;
-        $page->revision_count++;
+        $page->incrementRevisionCount();
         $page->save();
 
         $summary = trans('entities.pages_references_update_revision');

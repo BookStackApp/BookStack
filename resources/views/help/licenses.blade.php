@@ -2,7 +2,7 @@
 
 @section('body')
 
-    <div class="container small">
+    <main class="container small">
 
         <div class="my-l">&nbsp;</div>
 
@@ -62,6 +62,6 @@
                 Link: https://github.com/facebook/lexical
             </div>
         </div>
-    </div>
+    </main>
 
 @endsection

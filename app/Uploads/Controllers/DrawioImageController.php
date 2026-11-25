@@ -82,12 +82,12 @@ class DrawioImageController extends Controller
     public function getAsBase64($id)
     {
         try {
-            $image = $this->imageRepo->getById($id);
-        } catch (Exception $exception) {
+            $image = $this->imageRepo->getVisiblePageImageById($id);
+        } catch (Exception) {
             return $this->jsonError(trans('errors.drawing_data_not_found'), 404);
         }
 
-        if ($image->type !== 'drawio' || !userCan(Permission::PageView, $image->getPage())) {
+        if ($image->type !== 'drawio') {
             return $this->jsonError(trans('errors.drawing_data_not_found'), 404);
         }
 

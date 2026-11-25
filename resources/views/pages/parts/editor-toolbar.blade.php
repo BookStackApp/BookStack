@@ -84,8 +84,6 @@
                                 @icon('swap-horizontal')
                                 <div>
                                     {{ trans('entities.pages_edit_switch_to_new_wysiwyg') }}
-                                    <br>
-                                    <small>{{ trans('entities.pages_edit_switch_to_new_wysiwyg_desc') }}</small>
                                 </div>
                             </a>
                         @endif
@@ -114,7 +112,7 @@
                         maxlength="180"
                         title="{{ trans('entities.pages_edit_enter_changelog') }}"
                         placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
-                    ></textarea>
+                    >{{ $model->summary ?? '' }}</textarea>
                     <small refs="page-editor@changelogCounter" class="text-muted mt-xs">0 / 180</small>
                 </li>
             </ul>

@@ -147,6 +147,7 @@ class UserRepo
 
         if (!empty($data['password'])) {
             $user->password = Hash::make($data['password']);
+            $user->setRememberToken(Str::random(60));
         }
 
         if (!empty($data['language'])) {
@@ -232,6 +233,7 @@ class UserRepo
             'imports' => ['created_by'],
             'joint_permissions' => ['owner_id'],
             'page_revisions' => ['created_by'],
+            'page_update_drafts' => ['created_by'],
             'sessions' => ['user_id'],
         ];
 

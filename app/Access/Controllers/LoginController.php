@@ -34,6 +34,7 @@ class LoginController extends Controller
         $socialDrivers = $this->socialDriverManager->getActive();
         $authMethod = config('auth.method');
         $preventInitiation = $request->input('prevent_auto_init') === 'true';
+        $sessionRefresh = $request->input('session_refresh') === 'true';
 
         if ($request->has('email')) {
             session()->flashInput([
@@ -44,6 +45,11 @@ class LoginController extends Controller
 
         // Store the previous location for redirect after login
         $this->updateIntendedFromPrevious();
+
+        // If we're following a session-refresh, ensure we redirect to the refresh view
+        if ($sessionRefresh) {
+            redirect()->setIntendedUrl(url('/session/refresh'));
+        }
 
         if (!$preventInitiation && $this->loginService->shouldAutoInitiate()) {
             return view('auth.login-initiate', [

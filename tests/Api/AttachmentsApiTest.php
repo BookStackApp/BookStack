@@ -5,6 +5,7 @@ namespace Tests\Api;
 use BookStack\Entities\Models\Page;
 use BookStack\Permissions\Permission;
 use BookStack\Uploads\Attachment;
+use BookStack\Users\Models\Role;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Testing\AssertableJsonString;
 use Tests\TestCase;
@@ -113,6 +114,22 @@ class AttachmentsApiTest extends TestCase
         $resp->assertJson(['id' => $newItem->id, 'external' => false, 'extension' => 'txt', 'name' => $details['name'], 'uploaded_to' => $page->id]);
         $this->assertTrue(file_exists(storage_path($newItem->path)));
         unlink(storage_path($newItem->path));
+    }
+
+    public function test_create_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentCreateAll]);
+        $this->actingAsForApi($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $fileData = ['file' => $this->getTestFile('textfile.txt')];
+        $invisible = $this->call('POST', $this->baseEndpoint, ['name' => 'My attachment', 'uploaded_to' => $page->id], [], $fileData);
+        $nonExisting = $this->call('POST', $this->baseEndpoint, ['name' => 'My attachment', 'uploaded_to' => $maxPageId], [], $fileData);
+        $this->assertEquals($invisible->getStatusCode(), $nonExisting->getStatusCode());
+        $this->assertEquals($nonExisting->getStatusCode(), 404);
     }
 
     public function test_upload_limit_restricts_attachment_uploads()
@@ -387,6 +404,22 @@ class AttachmentsApiTest extends TestCase
         $this->assertEquals($originalPage->id, $attachment->uploaded_to);
     }
 
+    public function test_update_does_not_indicate_inaccessible_page_existence()
+    {
+        $editor = $this->users->editor();
+        $page = $this->entities->page();
+        $attachment = $this->createAttachmentForPage($page);
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentUpdateAll]);
+        $this->actingAsForApi($editor);
+
+        $maxPageId = Page::query()->max('id') + 1;
+        $invisible = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", ['uploaded_to' => $page->id, 'name' => 'attachy']);
+        $notExisting = $this->putJson("{$this->baseEndpoint}/{$attachment->id}", ['uploaded_to' => $maxPageId, 'name' => 'attachy']);
+        $this->assertEquals($invisible->getStatusCode(), $notExisting->getStatusCode());
+        $this->assertEquals(404, $invisible->getStatusCode());
+    }
+
     public function test_delete_endpoint()
     {
         $this->actingAsApiAdmin();
@@ -396,6 +429,29 @@ class AttachmentsApiTest extends TestCase
         $resp = $this->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
 
         $resp->assertStatus(204);
+        $this->assertDatabaseMissing('attachments', ['id' => $attachment->id]);
+    }
+
+    public function test_delete_requires_page_edit_permission()
+    {
+        $page = $this->entities->page();
+        $attachment = Attachment::factory()->create(['uploaded_to' => $page->id]);
+        $editor = $this->users->editor();
+        /** @var Role $editorRole */
+        $editorRole = $editor->roles()->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+        $this->permissions->grantUserRolePermissions($editor, [Permission::AttachmentDeleteAll]);
+        $this->permissions->setEntityPermissionsForRole($page, ['view'], $editorRole);
+
+        $resp = $this->actingAsForApi($editor)->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
+        $this->assertPermissionError($resp);
+        $this->assertDatabaseHas('attachments', ['id' => $attachment->id]);
+
+        $this->permissions->setEntityPermissionsForRole($page, ['view', 'update'], $editorRole);
+        $resp = $this->deleteJson("{$this->baseEndpoint}/{$attachment->id}");
+        $resp->assertSuccessful();
+
         $this->assertDatabaseMissing('attachments', ['id' => $attachment->id]);
     }
 

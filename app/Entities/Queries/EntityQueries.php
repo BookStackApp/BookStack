@@ -19,6 +19,7 @@ class EntityQueries
         public ChapterQueries $chapters,
         public PageQueries $pages,
         public PageRevisionQueries $revisions,
+        public PageUpdateDraftQueries $updateDrafts,
         protected SlugHistory $slugHistory,
     ) {
     }

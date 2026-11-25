@@ -56,8 +56,7 @@ class TagRepo
                 DB::raw('CAST(SUM(IF(entity_type = \'chapter\', 1, 0)) as UNSIGNED) as chapter_count'),
                 DB::raw('CAST(SUM(IF(entity_type = \'book\', 1, 0)) as UNSIGNED) as book_count'),
                 DB::raw('CAST(SUM(IF(entity_type = \'bookshelf\', 1, 0)) as UNSIGNED) as shelf_count'),
-            ])
-            ->whereHas('entity');
+            ]);
 
         if ($nameFilter) {
             $query->where('name', '=', $nameFilter);

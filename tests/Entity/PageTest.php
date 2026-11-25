@@ -136,27 +136,23 @@ class PageTest extends TestCase
     public function test_page_full_delete_removes_all_revisions()
     {
         $page = $this->entities->page();
-        $page->revisions()->create([
-            'html' => '<p>ducks</p>',
+        $page->updateDrafts()->create([
+            'html' => '<p>dogs</p>',
             'name' => 'my page revision',
-            'type' => 'draft',
         ]);
         $page->revisions()->create([
             'html' => '<p>ducks</p>',
             'name' => 'my page revision',
-            'type' => 'revision',
         ]);
 
-        $this->assertDatabaseHas('page_revisions', [
-            'page_id' => $page->id,
-        ]);
+        $this->assertDatabaseHas('page_revisions', ['page_id' => $page->id]);
+        $this->assertDatabaseHas('page_update_drafts', ['page_id' => $page->id]);
 
         $this->asEditor()->delete($page->getUrl());
         $this->asAdmin()->post('/settings/recycle-bin/empty');
 
-        $this->assertDatabaseMissing('page_revisions', [
-            'page_id' => $page->id,
-        ]);
+        $this->assertDatabaseMissing('page_revisions', ['page_id' => $page->id]);
+        $this->assertDatabaseMissing('page_update_drafts', ['page_id' => $page->id]);
     }
 
     public function test_page_full_delete_nulls_related_images()

@@ -59,8 +59,13 @@ export class KeyboardNavigationHandler {
 
     #keydownHandler(event: KeyboardEvent) {
         // Ignore certain key events in inputs to allow text editing.
-        if (isHTMLElement(event.target) && event.target.matches('input') && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) {
-            return;
+        if (isHTMLElement(event.target)) {
+            if (event.target.matches('textarea') && event.key.startsWith('Arrow')) {
+                return;
+            }
+            if (event.target.matches('input') && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+                return;
+            }
         }
 
         if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {

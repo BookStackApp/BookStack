@@ -49,9 +49,9 @@ class ImageController extends Controller
             'name' => ['required', 'min:2', 'string'],
         ]);
 
-        $image = $this->imageRepo->getById($id);
-        $this->checkImagePermission($image);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $image = $this->imageRepo->updateImageDetails($image, $data);
 
@@ -70,9 +70,9 @@ class ImageController extends Controller
             'file' => ['required', 'file', ...$this->getImageValidationRules()],
         ]);
 
-        $image = $this->imageRepo->getById($id);
-        $this->checkImagePermission($image);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
         $file = $request->file('file');
 
         new OutOfMemoryHandler(function () {
@@ -95,8 +95,7 @@ class ImageController extends Controller
      */
     public function edit(Request $request, string $id)
     {
-        $image = $this->imageRepo->getById($id);
-        $this->checkImagePermission($image);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
 
         if ($request->has('delete')) {
             $dependantPages = $this->imageRepo->getPagesUsingImage($image);
@@ -125,9 +124,9 @@ class ImageController extends Controller
      */
     public function destroy(string $id)
     {
-        $image = $this->imageRepo->getById($id);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageDelete, $image);
-        $this->checkImagePermission($image);
+        $this->checkOwnablePermission(Permission::PageUpdate, $image->getPage());
 
         $this->imageRepo->destroyImage($image);
 
@@ -139,8 +138,7 @@ class ImageController extends Controller
      */
     public function rebuildThumbnails(string $id)
     {
-        $image = $this->imageRepo->getById($id);
-        $this->checkImagePermission($image);
+        $image = $this->imageRepo->getVisiblePageImageById($id);
         $this->checkOwnablePermission(Permission::ImageUpdate, $image);
 
         new OutOfMemoryHandler(function () {
@@ -150,21 +148,5 @@ class ImageController extends Controller
         $this->imageResizer->loadGalleryThumbnailsForImage($image, true);
 
         return response(trans('components.image_rebuild_thumbs_success'));
-    }
-
-    /**
-     * Check related page permission and ensure the type is drawio or gallery.
-     * @throws NotifyException
-     */
-    protected function checkImagePermission(Image $image): void
-    {
-        if ($image->type !== 'drawio' && $image->type !== 'gallery') {
-            $this->showPermissionError();
-        }
-
-        $relatedPage = $image->getPage();
-        if ($relatedPage) {
-            $this->checkOwnablePermission(Permission::PageView, $relatedPage);
-        }
     }
 }

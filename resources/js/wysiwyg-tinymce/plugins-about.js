@@ -3,13 +3,13 @@
  */
 function register(editor) {
     const aboutDialog = {
-        title: 'About the WYSIWYG Editor',
+        title: 'Editor Information & Shortcuts',
         url: window.baseUrl('/help/tinymce'),
     };
 
     editor.ui.registry.addButton('about', {
         icon: 'help',
-        tooltip: 'About the editor',
+        tooltip: 'Editor information & shortcuts',
         onAction() {
             window.tinymce.activeEditor.windowManager.openUrl(aboutDialog);
         },

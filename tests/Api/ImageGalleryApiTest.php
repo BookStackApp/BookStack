@@ -4,6 +4,7 @@ namespace Tests\Api;
 
 use BookStack\Entities\Models\Page;
 use BookStack\Uploads\Image;
+use BookStack\Users\Models\Role;
 use Tests\TestCase;
 
 class ImageGalleryApiTest extends TestCase
@@ -439,6 +440,30 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertStatus(200);
     }
 
+    public function test_update_endpoint_requires_page_update_permission()
+    {
+        $user = $this->users->editor();
+        /** @var Role $userRole */
+        $userRole = $user->roles->first();
+        $this->actingAsForApi($user);
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+        $image = Image::findOrFail($data['response']->id);
+
+        $this->permissions->disableEntityInheritedPermissions($imagePage);
+        $this->permissions->setEntityPermissionsForRole($imagePage, ['view'], $userRole);
+
+        $resp = $this->putJson($this->baseEndpoint . "/{$image->id}", ['name' => 'My new name']);
+        $resp->assertStatus(403);
+        $resp->assertJson($this->permissionErrorResponse());
+
+        $this->permissions->setEntityPermissionsForRole($imagePage, ['view', 'update'], $userRole);
+
+        $this->permissions->grantUserRolePermissions($user, ['image-update-all']);
+        $resp = $this->putJson($this->baseEndpoint . "/{$image->id}", ['name' => 'My new name']);
+        $resp->assertStatus(200);
+    }
+
     public function test_update_endpoint_only_works_on_gallery_and_drawio_images()
     {
         $this->actingAsApiAdmin();
@@ -493,6 +518,29 @@ class ImageGalleryApiTest extends TestCase
         $resp->assertJson($this->permissionErrorResponse());
 
         $this->permissions->grantUserRolePermissions($user, ['image-delete-all']);
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
+        $resp->assertStatus(204);
+    }
+
+    public function test_delete_endpoint_requires_page_update_permission()
+    {
+        $user = $this->users->editor();
+        /** @var Role $userRole */
+        $userRole = $user->roles()->first();
+        $this->actingAsForApi($user);
+        $imagePage = $this->entities->page();
+        $data = $this->files->uploadGalleryImageToPage($this, $imagePage);
+        $image = Image::query()->findOrFail($data['response']->id);
+
+        $this->permissions->disableEntityInheritedPermissions($imagePage);
+        $this->permissions->setEntityPermissionsForRole($imagePage, ['view'], $userRole);
+
+        $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
+        $resp->assertStatus(403);
+        $resp->assertJson($this->permissionErrorResponse());
+
+        $this->permissions->setEntityPermissionsForRole($imagePage, ['view', 'update'], $userRole);
+
         $resp = $this->deleteJson($this->baseEndpoint . "/{$image->id}");
         $resp->assertStatus(204);
     }

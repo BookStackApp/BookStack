@@ -37,8 +37,7 @@ class TagApiController extends ApiController
      */
     public function listNames(): JsonResponse
     {
-        $tagQuery = $this->tagRepo
-            ->queryWithTotalsForApi('');
+        $tagQuery = $this->tagRepo->queryWithTotalsForApi('');
 
         return $this->apiListingResponse($tagQuery, [
             'name', 'values', 'usages', 'page_count', 'chapter_count', 'book_count', 'shelf_count',

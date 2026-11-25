@@ -610,7 +610,7 @@ class RolePermissionsTest extends TestCase
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertStatus(403);
 
-        $this->permissions->grantUserRolePermissions($this->user, ['image-delete-own']);
+        $this->permissions->grantUserRolePermissions($this->user, ['image-delete-own', 'page-update-all']);
 
         $this->actingAs($this->user)->json('delete', '/images/' . $image->id)->assertOk();
         $this->assertDatabaseMissing('images', ['id' => $image->id]);
@@ -618,7 +618,7 @@ class RolePermissionsTest extends TestCase
 
     public function test_image_delete_all_permission()
     {
-        $this->permissions->grantUserRolePermissions($this->user, ['image-update-all']);
+        $this->permissions->grantUserRolePermissions($this->user, ['image-update-all', 'page-update-all']);
         $admin = $this->users->admin();
         $page = $this->entities->page();
         $image = Image::factory()->create(['uploaded_to' => $page->id, 'created_by' => $admin->id, 'updated_by' => $admin->id]);

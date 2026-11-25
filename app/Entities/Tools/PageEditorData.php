@@ -56,9 +56,9 @@ class PageEditorData
         }
 
         // Check for a current draft version for this user
-        $userDraft = $this->queries->revisions->findLatestCurrentUserDraftsForPageId($page->id);
+        $userDraft = $this->queries->updateDrafts->findLatestCurrentUserDraftsForPageId($page->id);
         if (!is_null($userDraft)) {
-            $page->forceFill($userDraft->only(['name', 'html', 'markdown']));
+            $page->forceFill($userDraft->only(['name', 'html', 'markdown', 'summary']));
             $isDraftRevision = true;
             $this->warnings[] = $editActivity->getEditingActiveDraftMessage($userDraft);
             $lastEditorId = $userDraft->created_by;

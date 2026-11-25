@@ -55,6 +55,7 @@ class Book extends Entity implements HasDescriptionInterface, HasCoverInterface,
 
     /**
      * Get the direct child pages of this book.
+     * @return HasMany<Page, $this>
      */
     public function directPages(): HasMany
     {

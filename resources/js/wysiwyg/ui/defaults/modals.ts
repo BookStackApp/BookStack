@@ -37,7 +37,7 @@ export const modals: Record<string, EditorFormModalDefinition> = {
         form: details,
     },
     about: {
-        title: 'About the WYSIWYG Editor',
+        title: 'Editor Information & Shortcuts',
         form: about,
     }
 };

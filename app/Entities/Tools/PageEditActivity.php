@@ -3,7 +3,7 @@
 namespace BookStack\Entities\Tools;
 
 use BookStack\Entities\Models\Page;
-use BookStack\Entities\Models\PageRevision;
+use BookStack\Entities\Models\PageUpdateDraft;
 use BookStack\Util\DateFormatter;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,7 +33,6 @@ class PageEditActivity
 
         $userMessage = trans('entities.pages_draft_edit_active.start_a', ['count' => $count]);
         if ($count === 1) {
-            /** @var PageRevision $firstDraft */
             $firstDraft = $pageDraftEdits->first();
             $userMessage = trans('entities.pages_draft_edit_active.start_b', ['userName' => $firstDraft->createdBy->name ?? '']);
         }
@@ -48,7 +47,7 @@ class PageEditActivity
      *
      * @return string[]
      */
-    public function getWarningMessagesForDraft(Page|PageRevision $draft): array
+    public function getWarningMessagesForDraft(Page|PageUpdateDraft $draft): array
     {
         $warnings = [];
 
@@ -56,7 +55,7 @@ class PageEditActivity
             $warnings[] = $this->activeEditingMessage();
         }
 
-        if ($draft instanceof PageRevision && $this->hasPageBeenUpdatedSinceDraftCreated($draft)) {
+        if ($draft instanceof PageUpdateDraft && $this->hasPageBeenUpdatedSinceDraftCreated($draft)) {
             $warnings[] = trans('entities.pages_draft_page_changed_since_creation');
         }
 
@@ -66,7 +65,7 @@ class PageEditActivity
     /**
      * Check if the page has been updated since the draft has been saved.
      */
-    protected function hasPageBeenUpdatedSinceDraftCreated(PageRevision $draft): bool
+    protected function hasPageBeenUpdatedSinceDraftCreated(PageUpdateDraft $draft): bool
     {
         return $draft->page->updated_at->timestamp > $draft->created_at->timestamp;
     }
@@ -74,7 +73,7 @@ class PageEditActivity
     /**
      * Get the message to show when the user will be editing one of their drafts.
      */
-    public function getEditingActiveDraftMessage(PageRevision $draft): string
+    public function getEditingActiveDraftMessage(PageUpdateDraft $draft): string
     {
         $formatter = resolve(DateFormatter::class);
         $message = trans('entities.pages_editing_draft_notification', ['timeDiff' => $formatter->relative($draft->updated_at)]);
@@ -88,12 +87,13 @@ class PageEditActivity
     /**
      * A query to check for active update drafts on a particular page
      * within the last given many minutes.
+     *
+     * @return Builder<PageUpdateDraft>
      */
     protected function activePageEditingQuery(int $withinMinutes): Builder
     {
         $checkTime = Carbon::now()->subMinutes($withinMinutes);
-        $query = PageRevision::query()
-            ->where('type', '=', 'update_draft')
+        $query = PageUpdateDraft::query()
             ->where('page_id', '=', $this->page->id)
             ->where('updated_at', '>', $this->page->updated_at)
             ->where('created_by', '!=', user()->id)

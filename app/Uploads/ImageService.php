@@ -7,6 +7,7 @@ use BookStack\Exceptions\ImageUploadException;
 use BookStack\Exceptions\PrettyException;
 use BookStack\Http\DownloadResponseFactory;
 use Exception;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -194,7 +195,16 @@ class ImageService
                                 ->where('html', 'like', $searchQuery)->count() > 0;
                     }
 
-                    if (!$inPage && !$inRevision) {
+                    $inDraft = false;
+                    if ($checkRevisions) {
+                        $inDraft = DB::table('page_update_drafts')
+                            ->where(function (Builder $query) use ($searchQuery) {
+                                $query->where('html', 'like', $searchQuery)
+                                    ->orWhere('markdown', 'like', $searchQuery);
+                            })->count() > 0;
+                    }
+
+                    if (!$inPage && !$inRevision && !$inDraft) {
                         $deletedPaths[] = $image->path;
                         if (!$dryRun) {
                             $this->destroy($image);

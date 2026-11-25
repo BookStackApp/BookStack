@@ -7,6 +7,7 @@ use BookStack\Activity\Models\Tag;
 use BookStack\Entities\Models\Book;
 use BookStack\Entities\Models\Bookshelf;
 use BookStack\Entities\Models\Chapter;
+use BookStack\Entities\Models\Deletion;
 use BookStack\Entities\Models\Page;
 use Tests\TestCase;
 
@@ -36,7 +37,7 @@ class ConvertTest extends TestCase
         $newBook = Book::query()->orderBy('id', 'desc')->first();
 
         $this->assertDatabaseMissing('entities', ['id' => $chapter->id, 'type' => 'chapter']);
-        $this->assertDatabaseHasEntityData('page', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => 0]);
+        $this->assertDatabaseHasEntityData('page', ['id' => $childPage->id, 'book_id' => $newBook->id, 'chapter_id' => null]);
         $this->assertCount(1, $newBook->tags);
         $this->assertEquals('Category', $newBook->tags->first()->name);
         $this->assertEquals('Penguins', $newBook->tags->first()->value);
@@ -93,6 +94,24 @@ class ConvertTest extends TestCase
         $resp->assertOk();
     }
 
+    public function test_convert_chapter_migrates_deleted_pages()
+    {
+        $chapter = $this->entities->chapterHasPages();
+        /** @var Page $page */
+        $page = $chapter->pages()->first();
+        $this->entities->sendToRecycleBin($page);
+
+        $this->asAdmin()->post($chapter->getUrl('/convert-to-book'))->assertRedirect();
+
+        $newBook = Book::query()->orderBy('id', 'desc')->first();
+        $this->assertDatabaseHas('entities', [
+            'id' => $page->id,
+            'type' => 'page',
+            'book_id' => $newBook->id,
+            'chapter_id' => null,
+        ]);
+    }
+
     public function test_book_edit_view_shows_convert_option()
     {
         $book = $this->entities->book();
@@ -143,7 +162,7 @@ class ConvertTest extends TestCase
 
         // Checks for nested page
         $chapterChildPage->refresh();
-        $this->assertEquals(0, $chapterChildPage->chapter_id);
+        $this->assertNull($chapterChildPage->chapter_id);
         $this->assertEquals($childChapter->name, $chapterChildPage->book->name);
     }
 
@@ -165,5 +184,51 @@ class ConvertTest extends TestCase
         $resp = $this->actingAs($user)->post($book->getUrl('/convert-to-shelf'));
         $this->assertNotPermissionError($resp);
         $resp->assertRedirect();
+    }
+
+    public function test_book_convert_to_shelf_migrates_deleted_chapters_and_pages()
+    {
+        /** @var Book $book */
+        $book = Book::query()->whereHas('directPages')->whereHas('chapters')->firstOrFail();
+        /** @var Page $childPage */
+        $childPage = $book->directPages()->first();
+        $childPage->name = 'BookConvertDirectChildPage';
+        $childPage->save();
+        /** @var Chapter $childChapter */
+        $childChapter = $book->chapters()->whereHas('pages')->firstOrFail();
+        $childChapter->name = 'BookConvertChildChapter';
+        $childChapter->save();
+        /** @var Page $chapterChildPage */
+        $chapterChildPage = $childChapter->pages()->firstOrFail();
+        $chapterChildPage->name = 'BookConvertChapterChildPage';
+        $chapterChildPage->save();
+
+        $this->entities->sendToRecycleBin($childChapter);
+        $this->entities->sendToRecycleBin($childPage);
+        $childChapter->refresh();
+        /** @var Deletion $chapterDeletion */
+        $chapterDeletion = $childChapter->deletions()->first();
+        $this->assertNotNull($chapterDeletion);
+
+        // Run conversion
+        $this->asEditor()->post($book->getUrl('/convert-to-shelf'))->assertRedirect();
+
+        $childPage = Page::query()->where('name', '=', 'BookConvertDirectChildPage')->withTrashed()->first();
+        $this->assertNotNull($childPage);
+
+        /** @var Book $convertedChapter */
+        $convertedChapter = Book::query()->where('name', '=', 'BookConvertChildChapter')->withTrashed()->first();
+        $this->assertNotNull($convertedChapter);
+        $this->assertNotNull($convertedChapter->deleted_at);
+        $this->assertEquals($childChapter->deleted_at->unix(), $convertedChapter->deleted_at->unix());
+
+        $chapterDeletion->refresh();
+        $this->assertEquals($chapterDeletion->deletable_type, 'book');
+        $this->assertEquals($chapterDeletion->deletable_id, $convertedChapter->id);
+
+        $chapterChildPage = Page::query()->where('name', '=', 'BookConvertChapterChildPage')->withTrashed()->first();
+        $this->assertNotNull($chapterChildPage);
+        $this->assertEquals($convertedChapter->id, $chapterChildPage->book_id);
+        $this->assertNull($chapterChildPage->chapter_id);
     }
 }

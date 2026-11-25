@@ -105,4 +105,18 @@ class TagsApiTest extends TestCase
         $resp->assertJson(['total' => 8]);
         $resp->assertJsonMissing(['value' => 'cat' . $pagesToTag[3]->id]);
     }
+
+    public function test_tags_are_not_reflected_on_items_in_the_recycle_bin(): void
+    {
+        $page = $this->entities->page();
+        $page->tags()->save(new Tag(['name' => 'MyRecycledTag', 'value' => 'cat' . $page->id]));
+
+        $this->entities->sendToRecycleBin($page);
+
+        $resp = $this->actingAsApiAdmin()->getJson('api/tags/names?filter[name]=MyRecycledTag');
+        $resp->assertJsonCount(0, 'data');
+
+        $resp = $this->getJson('api/tags/values-for-name?name=MyRecycledTag');
+        $resp->assertJsonCount(0, 'data');
+    }
 }

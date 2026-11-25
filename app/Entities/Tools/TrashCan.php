@@ -206,6 +206,7 @@ class TrashCan
     {
         $this->destroyCommonRelations($page);
         $page->allRevisions()->delete();
+        $page->updateDrafts()->delete();
 
         // Delete Attached Files
         $attachmentService = app()->make(AttachmentService::class);
