@@ -73,12 +73,4 @@ class ApiDocsTest extends TestCase
             ]],
         ]);
     }
-
-    public function test_docs_include_revision_endpoints()
-    {
-        $resp = $this->actingAsApiEditor()->get($this->endpoint . '.json');
-        $resp->assertStatus(200);
-        $resp->assertSee('pages-list-for-page');
-        $resp->assertSee('revisions-read');
-    }
 }

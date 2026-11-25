@@ -33,7 +33,7 @@ class PageRevision extends Model implements Loggable
     use HasFactory;
 
     protected $fillable = ['name', 'text', 'summary'];
-    protected $hidden = ['html', 'markdown', 'text'];
+    protected $hidden = ['html', 'markdown', 'text', 'updated_at'];
 
     /**
      * Get the user that created the page revision.

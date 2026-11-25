@@ -16,15 +16,19 @@ class PageRevisionQueries
         return PageRevision::query();
     }
 
+    public function visible(): Builder
+    {
+        return $this->start()->whereHas('page', function (Builder $query) {
+            $query->scopes('visible');
+        });
+    }
+
     /**
      * Get the latest revision of a page based on the provided slugs.
      */
     public function findLatestBySlugs(string $bookSlug, string $pageSlug): ?PageRevision
     {
-        return $this->start()
-            ->whereHas('page', function (Builder $query) {
-                $query->scopes('visible');
-            })
+        return $this->visible()
             ->where('slug', '=', $pageSlug)
             ->where('book_slug', '=', $bookSlug)
             ->orderBy('created_at', 'desc')

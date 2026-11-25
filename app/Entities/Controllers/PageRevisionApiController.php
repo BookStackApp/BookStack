@@ -7,6 +7,7 @@ namespace BookStack\Entities\Controllers;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\PageQueries;
+use BookStack\Entities\Queries\PageRevisionQueries;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\ApiController;
@@ -14,14 +15,16 @@ use BookStack\Permissions\Permission;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Page revision details, including the content of individual saved revisions.
- *
- * Only saved page versions are provided, in-progress user drafts are excluded.
+ * List and view details of page revisions.
+ * The 'revision_number' property on revisions is the page-local incrementing revision number.
+ * The 'name' and 'slug' represents the page name & URL slug at the time of revision creation,
+ * with the 'book_slug' being that for the parent book at that time.
  */
 class PageRevisionApiController extends ApiController
 {
     public function __construct(
         protected PageQueries $pageQueries,
+        protected PageRevisionQueries $revisionQueries,
     ) {
         $this->middleware(function ($request, $next) {
             $this->checkPermission(Permission::RevisionViewAll);
@@ -31,28 +34,17 @@ class PageRevisionApiController extends ApiController
     }
 
     /**
-     * Get a listing of the saved revisions for the given page.
-     *
-     * Results are ordered oldest first by default. The name, summary and slugs
-     * provided are those captured when the revision was created.
-     *
-     * Revision content is not included in this listing, use the revision read
-     * endpoint to fetch the content of an individual revision.
-     *
-     * Requires the "revision-view-all" system permission and view access to the page.
+     * Get a listing of all visible page revisions across all pages.
+     * Filter on 'page_id' to find revisions for a specific page.
      */
-    public function listForPage(string $id): JsonResponse
+    public function list(): JsonResponse
     {
-        $page = $this->pageQueries->findVisibleByIdOrFail(intval($id));
-
-        $query = PageRevision::query()
-            ->where('page_id', '=', $page->id)
-            ->where('type', '=', 'version');
+        $query = $this->revisionQueries->visible();
 
         return $this->apiListingResponse($query, [
             'id', 'page_id', 'name', 'slug', 'book_slug',
-            'type', 'summary', 'revision_number',
-            'created_at', 'updated_at', 'created_by',
+            'summary', 'revision_number',
+            'created_at', 'created_by',
         ]);
     }
 
@@ -68,25 +60,15 @@ class PageRevisionApiController extends ApiController
      * The 'raw_html' and 'markdown' properties are provided as stored, and are
      * not sanitised for display. See the "Content Security" section of these docs.
      *
-     * Requires the "revision-view-all" system permission and view access to the page.
+     * Requires permission to view revisions and to view the related page.
      *
      * @throws NotFoundException
      */
     public function read(string $id): JsonResponse
     {
-        $revision = PageRevision::query()
-            ->where('id', '=', intval($id))
-            ->where('type', '=', 'version')
-            ->first();
-
-        if ($revision === null) {
-            throw new NotFoundException();
-        }
-
-        $page = $this->pageQueries->findVisibleById($revision->page_id);
-        if ($page === null) {
-            throw new NotFoundException();
-        }
+        /** @var PageRevision $revision */
+        $revision = $this->revisionQueries->visible()->findOrFail($id);
+        $page = $this->pageQueries->findVisibleByIdOrFail($revision->page_id);
 
         $revision->load('createdBy');
         $revision->makeVisible(['html', 'markdown']);
