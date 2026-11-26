@@ -43,7 +43,7 @@ class PageRevisionApiController extends ApiController
 
         return $this->apiListingResponse($query, [
             'id', 'page_id', 'name', 'slug', 'book_slug',
-            'summary', 'revision_number',
+            'changelog', 'revision_number',
             'created_at', 'created_by',
         ]);
     }

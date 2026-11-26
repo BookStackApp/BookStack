@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="flex-2 px-m py-xs min-width-m text-small">
-        {{ $revision->summary }}
+        {{ $revision->changelog }}
     </div>
     <div class="flex-2 px-m py-xs actions text-small text-l-right min-width-l">
         @if(!$oldest)

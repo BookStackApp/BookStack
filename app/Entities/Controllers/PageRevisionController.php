@@ -49,7 +49,7 @@ class PageRevisionController extends Controller
         ]);
 
         $revisions = $page->revisions()->select([
-                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at', 'revision_number', 'summary',
+                'id', 'page_id', 'name', 'created_at', 'created_by', 'updated_at', 'revision_number', 'changelog',
             ])
             ->selectRaw("IF(markdown = '', false, true) as is_markdown")
             ->with(['page.book', 'createdBy'])

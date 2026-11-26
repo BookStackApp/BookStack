@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int    $created_by
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property string $summary
+ * @property string $changelog
  * @property string $markdown
  * @property string $html
  * @property string $text
@@ -32,7 +32,7 @@ class PageRevision extends Model implements Loggable
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'text', 'summary'];
+    protected $fillable = ['name', 'text', 'changelog'];
     protected $hidden = ['html', 'markdown', 'text', 'updated_at'];
 
     /**

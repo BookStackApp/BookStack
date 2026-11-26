@@ -146,7 +146,7 @@ class PagesApiTest extends TestCase
         $page = Page::query()->findOrFail($pageId);
 
         $latestRevision = $page->revisions()->orderBy('id', 'desc')->first();
-        $this->assertEquals('This is a create changelog message via the API', $latestRevision->summary);
+        $this->assertEquals('This is a create changelog message via the API', $latestRevision->changelog);
     }
 
     public function test_read_endpoint()
@@ -373,7 +373,7 @@ class PagesApiTest extends TestCase
         $resp->assertOk();
 
         $latestRevision = $page->revisions()->orderBy('id', 'desc')->first();
-        $this->assertEquals('This is a changelog message via the API', $latestRevision->summary);
+        $this->assertEquals('This is a changelog message via the API', $latestRevision->changelog);
     }
 
     public function test_delete_endpoint()

@@ -128,8 +128,8 @@ class ReferenceUpdater
         $page->incrementRevisionCount();
         $page->save();
 
-        $summary = trans('entities.pages_references_update_revision');
-        $this->revisionRepo->storeNewForPage($page, $summary);
+        $changelog = trans('entities.pages_references_update_revision');
+        $this->revisionRepo->storeNewForPage($page, $changelog);
     }
 
     protected function updateLinksInMarkdown(string $markdown, string $oldLink, string $newLink): string

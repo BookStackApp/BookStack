@@ -32,7 +32,7 @@ class PageRevisionFactory extends Factory
             'slug'           => $page->slug,
             'book_slug'      => $page->book->slug,
             'markdown'       => strip_tags($html),
-            'summary'        => $this->faker->sentence(),
+            'changelog'        => $this->faker->sentence(),
             'revision_number' => rand(1, 4000),
         ];
     }

@@ -105,7 +105,7 @@ class PageTest extends TestCase
 
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $draft->id,
-            'summary' => 'Here is my changelog message for a new page!',
+            'changelog' => 'Here is my changelog message for a new page!',
         ]);
 
         $draft->refresh();

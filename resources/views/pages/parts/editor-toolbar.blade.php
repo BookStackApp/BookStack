@@ -107,12 +107,12 @@
                     <textarea
                         refs="page-editor@changelogInput"
                         name="changelog"
-                        id="summary-input"
+                        id="changelog-input"
                         rows="2"
                         maxlength="180"
                         title="{{ trans('entities.pages_edit_enter_changelog') }}"
                         placeholder="{{ trans('entities.pages_edit_enter_changelog') }}"
-                    >{{ $model->summary ?? '' }}</textarea>
+                    >{{ $model->changelog ?? '' }}</textarea>
                     <small refs="page-editor@changelogCounter" class="text-muted mt-xs">0 / 180</small>
                 </li>
             </ul>

@@ -34,7 +34,7 @@ class WebhookFormatTesting extends TestCase
 
         $data = $this->getWebhookData(ActivityType::PAGE_UPDATE, $page);
         $this->assertEquals($page->currentRevision->id, Arr::get($data, 'related_item.current_revision.id'));
-        $this->assertEquals('Update a', Arr::get($data, 'related_item.current_revision.summary'));
+        $this->assertEquals('Update a', Arr::get($data, 'related_item.current_revision.changelog'));
     }
 
     protected function getWebhookData(string $event, $detail): array

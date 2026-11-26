@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $name
  * @property string $html
  * @property string $markdown
- * @property string $summary
+ * @property string $changelog
  * @property int    $created_by
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -26,7 +26,7 @@ class PageUpdateDraft extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'summary'];
+    protected $fillable = ['name', 'changelog'];
     protected $hidden = ['html', 'markdown', 'text'];
 
     /**

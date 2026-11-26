@@ -43,7 +43,7 @@ class PageRevisionsApiTest extends TestCase
                     'page_id'         => $page->id,
                     'name'            => $latest->name,
                     'slug'            => $latest->slug,
-                    'summary'         => $latest->summary,
+                    'changelog'       => $latest->changelog,
                     'revision_number' => $latest->revision_number,
                     'created_by'      => $latest->created_by,
                 ],
@@ -127,7 +127,7 @@ class PageRevisionsApiTest extends TestCase
             'raw_html'        => $revision->html,
         ]);
         $resp->assertJsonStructure([
-            'id', 'page_id', 'name', 'slug', 'book_slug', 'summary',
+            'id', 'page_id', 'name', 'slug', 'book_slug', 'changelog',
             'revision_number', 'created_at', 'created_by',
             'html', 'raw_html', 'markdown',
         ]);

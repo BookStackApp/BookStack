@@ -93,8 +93,8 @@ class PageRepo
             $draft = $this->baseRepo->update($draft, $input);
             $draft->rebuildPermissions();
 
-            $summary = trim($input['changelog'] ?? '') ?: trans('entities.pages_initial_revision');
-            $this->revisionRepo->storeNewForPage($draft, $summary);
+            $changelog = trim($input['changelog'] ?? '') ?: trans('entities.pages_initial_revision');
+            $this->revisionRepo->storeNewForPage($draft, $changelog);
             $draft->refresh();
 
             Activity::add(ActivityType::PAGE_CREATE, $draft);
@@ -136,12 +136,12 @@ class PageRepo
         $this->pageUpdateDraftRepo->deleteForCurrentUser($page);
 
         // Save a revision after updating
-        $summary = trim($input['changelog'] ?? '');
+        $changelog = trim($input['changelog'] ?? '');
         $htmlChanged = isset($input['html']) && $input['html'] !== $oldHtml;
         $nameChanged = isset($input['name']) && $input['name'] !== $oldName;
         $markdownChanged = isset($input['markdown']) && $input['markdown'] !== $oldMarkdown;
-        if ($htmlChanged || $nameChanged || $markdownChanged || $summary) {
-            $this->revisionRepo->storeNewForPage($page, $summary);
+        if ($htmlChanged || $nameChanged || $markdownChanged || $changelog) {
+            $this->revisionRepo->storeNewForPage($page, $changelog);
         }
 
         Activity::add(ActivityType::PAGE_UPDATE, $page);
@@ -201,7 +201,7 @@ class PageRepo
         $draft->fill($input);
 
         if (isset($input['changelog'])) {
-            $draft->summary = $input['changelog'];
+            $draft->changelog = $input['changelog'];
         }
 
         if (!empty($input['markdown'])) {
@@ -255,8 +255,8 @@ class PageRepo
         $page->indexForSearch();
         $this->referenceStore->updateForEntity($page);
 
-        $summary = trans('entities.pages_revision_restored_from', ['id' => strval($revisionId), 'summary' => $revision->summary]);
-        $this->revisionRepo->storeNewForPage($page, $summary);
+        $changelog = trans('entities.pages_revision_restored_from', ['id' => strval($revision->revision_number), 'summary' => $revision->changelog]);
+        $this->revisionRepo->storeNewForPage($page, $changelog);
 
         if ($oldUrl !== $page->getUrl()) {
             $this->referenceUpdater->updateEntityReferences($page, $oldUrl);

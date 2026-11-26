@@ -16,6 +16,9 @@ class PageRevisionQueries
         return PageRevision::query();
     }
 
+    /**
+     * @return Builder<PageRevision>
+     */
     public function visible(): Builder
     {
         return $this->start()->whereHas('page', function (Builder $query) {

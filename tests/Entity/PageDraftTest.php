@@ -299,7 +299,7 @@ class PageDraftTest extends TestCase
             'page_id' => $page->id,
             'created_by' => $user->id,
             'name' => 'My updated page',
-            'summary' => 'Ensuring this remains angrycatdinosaur',
+            'changelog' => 'Ensuring this remains angrycatdinosaur',
         ]);
 
         $edit = $this->get($page->getUrl('/edit'));

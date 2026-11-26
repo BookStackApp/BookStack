@@ -28,7 +28,7 @@ class PageUpdateDraftFactory extends Factory
             'name'           => $this->faker->sentence(),
             'html'           => $html,
             'markdown'       => strip_tags($html),
-            'summary'        => $this->faker->sentence(),
+            'changelog'      => $this->faker->sentence(),
             'created_by'     => User::factory(),
         ];
     }

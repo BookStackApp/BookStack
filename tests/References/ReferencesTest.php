@@ -169,7 +169,7 @@ class ReferencesTest extends TestCase
             $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo"', $page->html);
             $this->assertDatabaseHas('page_revisions', [
                 'page_id' => $page->id,
-                'summary' => 'System auto-update of internal links',
+                'changelog' => 'System auto-update of internal links',
             ]);
         }
     }
@@ -192,7 +192,7 @@ class ReferencesTest extends TestCase
         $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo/page/' . $bookPage->slug . '"', $otherPage->html);
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $otherPage->id,
-            'summary' => 'System auto-update of internal links',
+            'changelog' => 'System auto-update of internal links',
         ]);
     }
 
@@ -214,7 +214,7 @@ class ReferencesTest extends TestCase
         $this->assertStringContainsString('href="http://localhost/books/my-updated-book-slugaroo/chapter/' . $bookChapter->slug . '"', $otherPage->html);
         $this->assertDatabaseHas('page_revisions', [
             'page_id' => $otherPage->id,
-            'summary' => 'System auto-update of internal links',
+            'changelog' => 'System auto-update of internal links',
         ]);
     }
 

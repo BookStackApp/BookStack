@@ -16,7 +16,7 @@ class RevisionRepo
     /**
      * Store a new revision in the system for the given page.
      */
-    public function storeNewForPage(Page $page, ?string $summary = null): PageRevision
+    public function storeNewForPage(Page $page, ?string $changelog = null): PageRevision
     {
         $revision = new PageRevision();
 
@@ -29,7 +29,7 @@ class RevisionRepo
         $revision->book_slug = $page->book->slug;
         $revision->created_by = user()->id;
         $revision->created_at = $page->updated_at;
-        $revision->summary = $summary;
+        $revision->changelog = $changelog;
 
         $pageDraftMaxRevision = $this->queries->maxRevisionVersionNumberForPageId($page->id);
         $revision->revision_number = max($page->revision_count, $pageDraftMaxRevision + 1);

@@ -47,10 +47,9 @@
             "name": "My wonderful updated page",
             "created_by": 1,
             "created_at": "2021-12-11T21:53:24.000000Z",
-            "updated_at": "2021-12-11T21:53:24.000000Z",
             "slug": "my-wonderful-updated-page",
             "book_slug": "my-awesome-book",
-            "summary": "Updated the title and fixed some spelling",
+            "changelog": "Updated the title and fixed some spelling",
             "revision_number": 2
         }
     }
