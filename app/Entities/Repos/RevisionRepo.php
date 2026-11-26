@@ -2,11 +2,15 @@
 
 namespace BookStack\Entities\Repos;
 
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\PageRevisionQueries;
+use BookStack\Exceptions\RevisionDeleteException;
+use BookStack\Facades\Activity;
 use BookStack\Util\HtmlContentFilter;
 use BookStack\Util\HtmlContentFilterConfig;
+use Exception;
 use Ssddanbrown\HtmlDiff\Diff;
 
 class RevisionRepo
@@ -78,5 +82,21 @@ class RevisionRepo
         $filter = new HtmlContentFilter($filterConfig);
 
         return $filter->filterString($rawDiff);
+    }
+
+    /**
+     * Destroy the given revision from the system.
+     * Throws an exception if the user is attempting to delete the latest revision.
+     * @throws RevisionDeleteException
+     */
+    public function destroyRevision(PageRevision $revision): void
+    {
+        $currentRevision = $revision->page->currentRevision;
+        if (($currentRevision->id ?? 0) === $revision->id) {
+            throw new RevisionDeleteException(trans('entities.revision_cannot_delete_latest'));
+        }
+
+        $revision->delete();
+        Activity::add(ActivityType::REVISION_DELETE, $revision);
     }
 }

@@ -87,7 +87,6 @@ class Page extends BookChild
     public function currentRevision(): HasOne
     {
         $relation = $this->hasOne(PageRevision::class)
-            ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc');
         return $this->deletableOrderedRelation($relation);
     }

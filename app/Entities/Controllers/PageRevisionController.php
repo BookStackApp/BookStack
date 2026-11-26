@@ -13,6 +13,7 @@ use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\RevisionDeleteException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
@@ -185,15 +186,11 @@ class PageRevisionController extends Controller
 
         $revision = $this->revisionQueries->findForPageByIdOrFail($page->id, $revision->id);
 
-        // Check if it's the latest revision, cannot delete the latest revision.
-        if (intval($page->currentRevision->id ?? null) === $revision->id) {
-            $this->showErrorNotification(trans('entities.revision_cannot_delete_latest'));
-
-            return redirect($page->getUrl('/revisions'));
+        try {
+            $this->revisionRepo->destroyRevision($revision);
+        } catch (RevisionDeleteException $exception) {
+            $this->showErrorNotification($exception->getMessage());
         }
-
-        $revision->delete();
-        Activity::add(ActivityType::REVISION_DELETE, $revision);
 
         return redirect($page->getUrl('/revisions'));
     }

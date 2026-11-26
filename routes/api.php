@@ -102,7 +102,9 @@ Route::delete('recycle-bin/{deletionId}', [EntityControllers\RecycleBinApiContro
 
 Route::get('revisions', [EntityControllers\PageRevisionApiController::class, 'list']);
 Route::get('revisions/{id}', [EntityControllers\PageRevisionApiController::class, 'read']);
+Route::put('revisions/{id}', [EntityControllers\PageRevisionApiController::class, 'restore']);
 Route::get('revisions/{id}/changes', [EntityControllers\PageRevisionApiController::class, 'changes']);
+Route::delete('revisions/{id}', [EntityControllers\PageRevisionApiController::class, 'delete']);
 
 Route::get('roles', [RoleApiController::class, 'list']);
 Route::post('roles', [RoleApiController::class, 'create']);

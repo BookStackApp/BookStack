@@ -2,6 +2,7 @@
 
 namespace Tests\Api;
 
+use BookStack\Activity\ActivityType;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Permissions\Permission;
@@ -100,22 +101,24 @@ class PageRevisionsApiTest extends TestCase
         $this->permissions->removeUserRolePermissions($editor, [Permission::RevisionViewAll]);
 
         $endpoints = [
-            $this->baseEndpoint,
-            "{$this->baseEndpoint}/{$revision->id}",
-            "{$this->baseEndpoint}/{$revision->id}/changes",
+            ['GET', $this->baseEndpoint],
+            ['GET', "{$this->baseEndpoint}/{$revision->id}"],
+            ['GET', "{$this->baseEndpoint}/{$revision->id}/changes"],
+            ['PUT', "{$this->baseEndpoint}/{$revision->id}"],
+            ['DELETE', "{$this->baseEndpoint}/{$revision->id}"],
         ];
 
-        foreach ($endpoints as $endpoint) {
-            $resp = $this->getJson($endpoint);
+        foreach ($endpoints as [$method, $endpoint]) {
+            $resp = $this->json($method, $endpoint);
             $resp->assertStatus(403);
             $resp->assertJson($this->permissionErrorResponse());
         }
 
         $this->permissions->grantUserRolePermissions($editor, [Permission::RevisionViewAll]);
 
-        foreach ($endpoints as $endpoint) {
-            $resp = $this->getJson($endpoint);
-            $resp->assertOk();
+        foreach ($endpoints as [$method, $endpoint]) {
+            $resp = $this->json($method, $endpoint);
+            $resp->assertSuccessful();
         }
     }
 
@@ -258,5 +261,99 @@ class PageRevisionsApiTest extends TestCase
 
         $resp = $this->getJson("{$this->baseEndpoint}/{$revision->id}/changes");
         $resp->assertNotFound();
+    }
+
+    public function test_restore_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 3);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)
+            ->orderByDesc('id')
+            ->skip(1)
+            ->first();
+
+        $resp = $this->putJson("{$this->baseEndpoint}/{$revision->id}");
+        $resp->assertStatus(204);
+
+        $page->refresh();
+        $this->assertEquals('Updated revision 1', $page->name);
+        $this->assertEquals('<p id="bkmrk-revision-content-1">Revision content 1</p>', $page->html);
+        $this->assertActivityExists(ActivityType::REVISION_RESTORE);
+    }
+
+    public function test_restore_endpoint_requires_page_update_permission()
+    {
+        $page = $this->entities->page();
+        $this->actingAsApiEditor();
+        $this->createRevisions($page, 2, [
+            'name' => 'Changes',
+            'html' => '<p id="bkmrk-a-cool-cat">A cool cat</p>',
+            'changelog' => 'Updated page',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+        $user = $this->users->viewer();
+
+        $resp = $this->actingAsForApi($user)->putJson("{$this->baseEndpoint}/{$revision->id}");
+        $this->assertPermissionError($resp);
+
+        $this->permissions->grantUserRolePermissions($user, ['page-update-all']);
+
+        $resp = $this->actingAsForApi($user)->putJson("{$this->baseEndpoint}/{$revision->id}");
+        $resp->assertSuccessful();
+    }
+
+    public function test_delete_endpoint()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 2, [
+            'name' => 'Changes',
+            'html' => '<p id="bkmrk-a-cool-cat">A cool cat</p>',
+            'changelog' => 'Updated page',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderBy('id', 'asc')->first();
+
+        $resp = $this->deleteJson("{$this->baseEndpoint}/{$revision->id}");
+        $resp->assertStatus(204);
+        $this->assertDatabaseMissing('page_revisions', ['id' => $revision->id]);
+        $this->assertActivityExists(ActivityType::REVISION_DELETE);
+    }
+
+    public function test_delete_endpoint_requires_page_delete_permission()
+    {
+        $page = $this->entities->page();
+        $this->actingAsApiEditor();
+        $this->createRevisions($page, 2, [
+            'name' => 'Changes',
+            'html' => '<p id="bkmrk-a-cool-cat">A cool cat</p>',
+            'changelog' => 'Updated page',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderBy('id', 'asc')->first();
+        $user = $this->users->viewer();
+
+        $resp = $this->actingAsForApi($user)->deleteJson("{$this->baseEndpoint}/{$revision->id}");
+        $this->assertPermissionError($resp);
+
+        $this->permissions->grantUserRolePermissions($user, ['page-delete-all']);
+
+        $resp = $this->actingAsForApi($user)->deleteJson("{$this->baseEndpoint}/{$revision->id}");
+        $resp->assertSuccessful();
+    }
+
+    public function test_delete_endpoint_errors_if_deleting_latest_revision()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, [
+            'name' => 'Changes',
+            'html' => '<p id="bkmrk-a-cool-cat">A cool cat</p>',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+
+        $resp = $this->deleteJson("{$this->baseEndpoint}/{$revision->id}");
+        $resp->assertStatus(400);
+        $resp->assertJson(['status' => 'error', 'message' => 'Cannot delete the latest revision.']);
+        $this->assertDatabaseHas('page_revisions', ['id' => $revision->id]);
     }
 }

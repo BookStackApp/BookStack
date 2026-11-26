@@ -8,12 +8,15 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\PageRevisionQueries;
+use BookStack\Entities\Repos\PageRepo;
 use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
+use BookStack\Exceptions\RevisionDeleteException;
 use BookStack\Http\ApiController;
 use BookStack\Permissions\Permission;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 /**
  * List and view details of page revisions.
@@ -26,9 +29,10 @@ use Illuminate\Http\JsonResponse;
 class PageRevisionApiController extends ApiController
 {
     public function __construct(
-        protected PageQueries $pageQueries,
         protected PageRevisionQueries $revisionQueries,
         protected RevisionRepo $revisionRepo,
+        protected PageQueries $pageQueries,
+        protected PageRepo $pageRepo,
     ) {
         $this->middleware(function ($request, $next) {
             $this->checkPermission(Permission::RevisionViewAll);
@@ -95,6 +99,41 @@ class PageRevisionApiController extends ApiController
             'html_diff' => $diff,
             'previous_revision_id' => $prevRevision->id ?? null,
         ]);
+    }
+
+    /**
+     * Restore the contents of the revision, of the given ID, updating the current
+     * state of the related page to this revision's content.
+     * This requires permission to update the related page.
+     */
+    public function restore(string $id): Response
+    {
+        $revision = $this->revisionQueries->findVisibleByIdOrFail(intval($id));
+        $page = $revision->page;
+
+        $this->checkOwnablePermission(Permission::PageUpdate, $page);
+
+        $this->pageRepo->restoreRevision($page, $revision->id);
+
+        return response('', 204);
+    }
+
+    /**
+     * Delete the revision of the given ID.
+     * This requires delete permission on the related page.
+     */
+    public function delete(string $id): Response|JsonResponse
+    {
+        $revision = $this->revisionQueries->findVisibleByIdOrFail(intval($id));
+        $this->checkOwnablePermission(Permission::PageDelete, $revision->page);
+
+        try {
+            $this->revisionRepo->destroyRevision($revision);
+        } catch (RevisionDeleteException $exception) {
+            return $this->jsonError($exception->getMessage(), 400);
+        }
+
+        return response('', 204);
     }
 
     /**
