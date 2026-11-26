@@ -16,13 +16,10 @@ use BookStack\Exceptions\NotFoundException;
 use BookStack\Facades\Activity;
 use BookStack\Http\Controller;
 use BookStack\Permissions\Permission;
-use BookStack\Util\HtmlContentFilter;
-use BookStack\Util\HtmlContentFilterConfig;
 use BookStack\Util\SimpleListOptions;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Ssddanbrown\HtmlDiff\Diff;
 
 class PageRevisionController extends Controller
 {
@@ -142,15 +139,7 @@ class PageRevisionController extends Controller
 
     protected function changes(Page $page, PageRevision $revision): View
     {
-        $prev = $revision->getPreviousRevision();
-        $prevContent = $prev->html ?? '';
-
-        // TODO - Refactor PageContent so we can de-dupe these steps
-        $rawDiff = Diff::excecute($prevContent, $revision->html);
-        $filterConfig = HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'));
-        $filter = new HtmlContentFilter($filterConfig);
-        $diff = $filter->filterString($rawDiff);
-
+        $diff = $this->revisionRepo->getRevisionChangesDiff($revision, $revision->getPreviousRevision());
         $page->fill($revision->toArray());
         $page->html = '';
         $this->setPageTitle(trans('entities.pages_revision_named', ['pageName' => $page->getShortName()]));

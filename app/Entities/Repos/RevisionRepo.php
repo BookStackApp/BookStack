@@ -5,6 +5,9 @@ namespace BookStack\Entities\Repos;
 use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\PageRevisionQueries;
+use BookStack\Util\HtmlContentFilter;
+use BookStack\Util\HtmlContentFilterConfig;
+use Ssddanbrown\HtmlDiff\Diff;
 
 class RevisionRepo
 {
@@ -61,5 +64,19 @@ class RevisionRepo
         if ($revisionsToDelete->count() > 0) {
             PageRevision::query()->whereIn('id', $revisionsToDelete->pluck('id'))->delete();
         }
+    }
+
+    /**
+     * Get the changes for a revision, compared to its previous revision, as a HTML diff.
+     */
+    public function getRevisionChangesDiff(PageRevision $revision, PageRevision|null $priorRevision): string
+    {
+        $prevContent = $priorRevision->html ?? '';
+
+        $rawDiff = Diff::excecute($prevContent, $revision->html);
+        $filterConfig = HtmlContentFilterConfig::fromConfigString(config('app.content_filtering'));
+        $filter = new HtmlContentFilter($filterConfig);
+
+        return $filter->filterString($rawDiff);
     }
 }

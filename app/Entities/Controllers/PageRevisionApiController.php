@@ -8,6 +8,7 @@ use BookStack\Entities\Models\Page;
 use BookStack\Entities\Models\PageRevision;
 use BookStack\Entities\Queries\PageQueries;
 use BookStack\Entities\Queries\PageRevisionQueries;
+use BookStack\Entities\Repos\RevisionRepo;
 use BookStack\Entities\Tools\PageContent;
 use BookStack\Exceptions\NotFoundException;
 use BookStack\Http\ApiController;
@@ -19,12 +20,15 @@ use Illuminate\Http\JsonResponse;
  * The 'revision_number' property on revisions is the page-local incrementing revision number.
  * The 'name' and 'slug' represents the page name & URL slug at the time of revision creation,
  * with the 'book_slug' being that for the parent book at that time.
+ *
+ * All endpoints require permission to view revisions, and access permission for the related page.
  */
 class PageRevisionApiController extends ApiController
 {
     public function __construct(
         protected PageQueries $pageQueries,
         protected PageRevisionQueries $revisionQueries,
+        protected RevisionRepo $revisionRepo,
     ) {
         $this->middleware(function ($request, $next) {
             $this->checkPermission(Permission::RevisionViewAll);
@@ -60,14 +64,11 @@ class PageRevisionApiController extends ApiController
      * The 'raw_html' and 'markdown' properties are provided as stored, and are
      * not sanitised for display. See the "Content Security" section of these docs.
      *
-     * Requires permission to view revisions and to view the related page.
-     *
      * @throws NotFoundException
      */
     public function read(string $id): JsonResponse
     {
-        /** @var PageRevision $revision */
-        $revision = $this->revisionQueries->visible()->findOrFail($id);
+        $revision = $this->revisionQueries->findVisibleByIdOrFail(intval($id));
         $page = $this->pageQueries->findVisibleByIdOrFail($revision->page_id);
 
         $revision->load('createdBy');
@@ -76,6 +77,24 @@ class PageRevisionApiController extends ApiController
         $revision->setAttribute('html', $this->renderRevisionHtml($page, $revision));
 
         return response()->json($revision);
+    }
+
+    /**
+     * Get the changes (as a HTML-based diff) of a revision when compared
+     * to the previous available revision for the same page.
+     * Provides a 'previous_revision_id' to indicate what revision is used for comparison,
+     * which may be null if there's no prior revision found.
+     */
+    public function changes(string $id): JsonResponse
+    {
+        $revision = $this->revisionQueries->findVisibleByIdOrFail(intval($id));
+        $prevRevision = $revision->getPreviousRevision();
+        $diff = $this->revisionRepo->getRevisionChangesDiff($revision, $prevRevision);
+
+        return response()->json([
+            'html_diff' => $diff,
+            'previous_revision_id' => $prevRevision->id ?? null,
+        ]);
     }
 
     /**

@@ -27,6 +27,14 @@ class PageRevisionQueries
     }
 
     /**
+     * Get a revision, ensuring it's visible based on related page visibility, via it's id.
+     */
+    public function findVisibleByIdOrFail(int $id): PageRevision
+    {
+        return $this->visible()->findOrFail($id);
+    }
+
+    /**
      * Get the latest revision of a page based on the provided slugs.
      */
     public function findLatestBySlugs(string $bookSlug, string $pageSlug): ?PageRevision

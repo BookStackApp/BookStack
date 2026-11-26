@@ -52,33 +52,17 @@ class PageRevisionsApiTest extends TestCase
         $resp->assertJson(['total' => PageRevision::query()->count()]);
     }
 
-    public function test_endpoints_require_revision_view_all_permission()
+    public function test_index_content_does_not_include_content()
     {
-        $editor = $this->users->editor();
-        $this->actingAsForApi($editor);
+        $this->actingAsApiEditor();
         $page = $this->entities->page();
         $this->createRevisions($page, 1);
-        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
 
-        $this->permissions->removeUserRolePermissions($editor, [Permission::RevisionViewAll]);
-
-        $endpoints = [
-            $this->baseEndpoint,
-            "{$this->baseEndpoint}/{$revision->id}",
-        ];
-
-        foreach ($endpoints as $endpoint) {
-            $resp = $this->getJson($endpoint);
-            $resp->assertStatus(403);
-            $resp->assertJson($this->permissionErrorResponse());
-        }
-
-        $this->permissions->grantUserRolePermissions($editor, [Permission::RevisionViewAll]);
-
-        foreach ($endpoints as $endpoint) {
-            $resp = $this->getJson($endpoint);
-            $resp->assertOk();
-        }
+        $resp = $this->getJson("{$this->baseEndpoint}");
+        $resp->assertOk();
+        $resp->assertJsonMissingPath('data.0.html');
+        $resp->assertJsonMissingPath('data.0.markdown');
+        $resp->assertJsonMissingPath('data.0.text');
     }
 
     public function test_index_endpoint_filters_based_on_visibility()
@@ -103,6 +87,36 @@ class PageRevisionsApiTest extends TestCase
         $resp = $this->getJson($this->baseEndpoint);
         $resp->assertOk();
         $resp->assertJsonMissing($expected);
+    }
+
+    public function test_endpoints_require_revision_view_all_permission()
+    {
+        $editor = $this->users->editor();
+        $this->actingAsForApi($editor);
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+
+        $this->permissions->removeUserRolePermissions($editor, [Permission::RevisionViewAll]);
+
+        $endpoints = [
+            $this->baseEndpoint,
+            "{$this->baseEndpoint}/{$revision->id}",
+            "{$this->baseEndpoint}/{$revision->id}/changes",
+        ];
+
+        foreach ($endpoints as $endpoint) {
+            $resp = $this->getJson($endpoint);
+            $resp->assertStatus(403);
+            $resp->assertJson($this->permissionErrorResponse());
+        }
+
+        $this->permissions->grantUserRolePermissions($editor, [Permission::RevisionViewAll]);
+
+        foreach ($endpoints as $endpoint) {
+            $resp = $this->getJson($endpoint);
+            $resp->assertOk();
+        }
     }
 
     public function test_read_endpoint_returns_revision_details_and_content()
@@ -189,16 +203,60 @@ class PageRevisionsApiTest extends TestCase
         $this->getJson("{$this->baseEndpoint}/{$revision->id}")->assertNotFound();
     }
 
-    public function test_listing_does_not_include_content()
+    public function test_changes_endpoint()
     {
         $this->actingAsApiEditor();
         $page = $this->entities->page();
-        $this->createRevisions($page, 1);
+        $this->createRevisions($page, 1, [
+            'name' => 'Changes',
+            'html' => '<p>A cool cat</p>',
+        ]);
+        $priorRevision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+        $this->createRevisions($page, 1, [
+            'name' => 'Changes',
+            'html' => '<p>A cool dog</p>',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
 
-        $resp = $this->getJson("{$this->baseEndpoint}");
+        $resp = $this->getJson("{$this->baseEndpoint}/{$revision->id}/changes");
         $resp->assertOk();
-        $resp->assertJsonMissingPath('data.0.html');
-        $resp->assertJsonMissingPath('data.0.markdown');
-        $resp->assertJsonMissingPath('data.0.text');
+        $resp->assertJson([
+            'html_diff' => '<p id="bkmrk-a-cool-dog">A cool <del class="diffmod">cat</del><ins class="diffmod">dog</ins></p>',
+            'previous_revision_id' => $priorRevision->id,
+        ]);
+    }
+
+    public function test_changes_endpoint_when_no_prior_revision()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, [
+            'name' => 'Changes',
+            'html' => '<p>A cool cat</p>',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+
+        $resp = $this->getJson("{$this->baseEndpoint}/{$revision->id}/changes");
+        $resp->assertOk();
+        $resp->assertJson([
+            'html_diff' => '<p id="bkmrk-a-cool-cat"><ins class="diffins">A cool cat</ins></p>',
+            'previous_revision_id' => null,
+        ]);
+    }
+
+    public function test_changes_endpoint_returns_not_found_for_non_visible_page()
+    {
+        $this->actingAsApiEditor();
+        $page = $this->entities->page();
+        $this->createRevisions($page, 1, [
+            'name' => 'Changes',
+            'html' => '<p>A cool cat</p>',
+        ]);
+        $revision = PageRevision::query()->where('page_id', '=', $page->id)->orderByDesc('id')->first();
+
+        $this->permissions->disableEntityInheritedPermissions($page);
+
+        $resp = $this->getJson("{$this->baseEndpoint}/{$revision->id}/changes");
+        $resp->assertNotFound();
     }
 }

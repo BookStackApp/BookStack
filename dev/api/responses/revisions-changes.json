@@ -1,0 +1,4 @@
+{
+	"html_diff": "<p id=\"bkmrk-that%27s-a-nice-cat\">That's a nice <del class=\"diffmod\">dog</del><ins class=\"diffmod\">cat</ins></p>",
+	"previous_revision_id": 4381
+}
