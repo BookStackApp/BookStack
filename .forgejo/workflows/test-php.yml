@@ -16,7 +16,7 @@ jobs:
     if: ${{ github.ref != 'refs/heads/l10n_development' }}
     runs-on: docker
     container:
-      image: docker.io/setupphp/node:noble
+      image: docker.io/setupphp/node:resolute
     strategy:
       matrix:
         php: ['8.3', '8.4', '8.5', '8.6']
@@ -24,7 +24,7 @@ jobs:
       phpextensions: gd, mbstring, curl, xml, dom, mysql, ldap, gmp
       phpextensioncachekey: cache-v1
     steps:
-    - uses: https://code.forgejo.org/actions/checkout@v6
+    - uses: https://code.forgejo.org/actions/checkout@v7
 
     - name: Setup cache environment
       id: extcache
@@ -35,7 +35,7 @@ jobs:
         key: ${{ env.phpextensioncachekey }}
 
     - name: Cache extensions
-      uses: https://code.forgejo.org/actions/cache@v5
+      uses: https://code.forgejo.org/actions/cache@v6
       with:
         path: ${{ steps.extcache.outputs.dir }}
         key: ${{ steps.extcache.outputs.key }}
@@ -53,7 +53,7 @@ jobs:
         echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache composer packages
-      uses: https://code.forgejo.org/actions/cache@v5
+      uses: https://code.forgejo.org/actions/cache@v6
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ matrix.php }}

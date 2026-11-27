@@ -16,7 +16,7 @@ jobs:
     container:
       image: docker.io/library/node:24-trixie
     steps:
-    - uses: https://code.forgejo.org/actions/checkout@v6
+    - uses: https://code.forgejo.org/actions/checkout@v7
 
     - name: Update Snyk for monitoring - Composer
       uses: https://github.com/snyk/actions/node@master

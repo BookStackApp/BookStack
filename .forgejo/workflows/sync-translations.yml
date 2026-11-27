@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: https://code.forgejo.org/actions/checkout@v6
+        uses: https://code.forgejo.org/actions/checkout@v7
 
       - name: crowdin action
         uses: https://github.com/crowdin/github-action@v2
