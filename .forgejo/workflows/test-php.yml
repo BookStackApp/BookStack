@@ -64,16 +64,16 @@ jobs:
       env:
         COMPOSER_AUTH: '{"github-oauth": {"github.com": "${{ secrets.GH_TOKEN }}"}}'
 
-    - name: Start MySQL
+    - name: Start MariaDB
       run: |
-        sudo systemctl start mysql
+        sudo systemctl start mariadb
 
     - name: Create database & user
       run: |
-        mysql -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
-        mysql -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bookstack-test';"
-        mysql -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
-        mysql -uroot -proot -e 'FLUSH PRIVILEGES;'
+        mariadb -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
+        mariadb -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bookstack-test';"
+        mariadb -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
+        mariadb -uroot -proot -e 'FLUSH PRIVILEGES;'
 
     - name: Migrate and seed the database
       env:
