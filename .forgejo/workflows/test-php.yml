@@ -71,7 +71,7 @@ jobs:
     - name: Create database & user
       run: |
         mariadb -uroot -proot -e 'CREATE DATABASE IF NOT EXISTS `bookstack-test`;'
-        mariadb -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED WITH mysql_native_password BY 'bookstack-test';"
+        mariadb -uroot -proot -e "CREATE USER 'bookstack-test'@'localhost' IDENTIFIED BY 'bookstack-test';"
         mariadb -uroot -proot -e "GRANT ALL ON \`bookstack-test\`.* TO 'bookstack-test'@'localhost';"
         mariadb -uroot -proot -e 'FLUSH PRIVILEGES;'
 
