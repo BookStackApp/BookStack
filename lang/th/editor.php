@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'ป้ายกำกับสลับ',
 
     // About view
-    'about' => 'เกี่ยวกับตัวแก้ไข',
-    'about_title' => 'เกี่ยวกับตัวแก้ไข WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'สัญญาอนุญาตและลิขสิทธิ์ตัวแก้ไข',
     'editor_lexical_license' => 'ตัวแก้ไขนี้สร้างจาก :lexicalLink ซึ่งเผยแพร่ภายใต้สัญญาอนุญาต MIT',
     'editor_lexical_license_link' => 'ดูรายละเอียดสัญญาอนุญาตฉบับเต็มได้ที่นี่',

@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'Το :attribute πρέπει να αναφέρεται σε αρχείο τύπου :validTypes, βρέθηκε :foundType.',
     'zip_model_expected' => 'Αναμενόταν αντικείμενο δεδομένων, αλλά ":type" βρέθηκε.',
     'zip_unique' => 'Το :attribute πρέπει να είναι μοναδικό για τον τύπο αντικειμένου εντός του ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

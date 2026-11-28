@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'पासवर्ड पक्का गर्नुहोस्',
     'user_invite_success_login' => 'पासवर्ड सेट गरिएको छ, तपाईं अब तपाईंको सेट गरिएको पासवर्ड प्रयोग गरेर :appName मा लगइन गर्न सक्षम हुनुहुनेछ!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'मल्टि-फ्याक्टर प्रमाणीकरण सेटअप गर्नुहोस्',
     'mfa_setup_desc' => 'तपाईंको प्रयोगकर्ता खाता सुरक्षा थप गर्न मल्टि-फ्याक्टर प्रमाणीकरण सेटअप गर्नुहोस्।',

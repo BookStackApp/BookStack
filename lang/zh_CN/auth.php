@@ -21,9 +21,9 @@ return [
     'username' => '用户名',
     'email' => 'Email地址',
     'password' => '密码',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => '新密码',
+    'password_new_confirm' => '确认新密码',
+    'password_current' => '确认当前密码',
     'password_confirm' => '确认密码',
     'password_hint' => '必须至少有 8 个字符',
     'forgot_password' => '忘记密码?',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => '要完成您的账户并获得访问权限，您需要设置一个密码，该密码将在以后访问时用于登录 :appName。',
     'user_invite_page_confirm_button' => '确认密码',
     'user_invite_success_login' => '密码已设置，您现在可以使用您设置的密码登录 :appName!',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => '设置多重身份认证',

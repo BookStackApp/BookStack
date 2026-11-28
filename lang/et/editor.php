@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Näita silti',
 
     // About view
-    'about' => 'Redaktori info',
-    'about_title' => 'Info WYSIWYG redaktori kohta',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Redaktori litsents ja autoriõigused',
     'editor_lexical_license' => 'See redaktor on loodud :lexicalLink põhjal, mis on saadaval MIT litsentsi alusel.',
     'editor_lexical_license_link' => 'Täielikud litsentsitingimused on leitavad siin.',

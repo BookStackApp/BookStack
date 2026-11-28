@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => '確認密碼',
     'user_invite_success_login' => '密碼已設定完成，您可以使用改密碼來登入 :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => '設定雙重身份驗證',
     'mfa_setup_desc' => '設定雙重身份驗證為您的帳戶多增加了一道防線',

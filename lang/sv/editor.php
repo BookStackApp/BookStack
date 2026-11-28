@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Visa eller dölj etikett',
 
     // About view
-    'about' => 'Om redigeraren',
-    'about_title' => 'Om WYSIWYG-redigeraren',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licens och upphovsrätt för redigerare',
     'editor_lexical_license' => 'Denna editor är byggd som en fork av :lexicalLink som distribueras under MIT-licensen.',
     'editor_lexical_license_link' => 'Fullständiga licensdetaljer hittas här.',

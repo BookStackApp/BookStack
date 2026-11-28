@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Εναλλαγή ετικέτας',
 
     // About view
-    'about' => 'Σχετικά',
-    'about_title' => 'Σχετικά με τον επεξεργαστή WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Άδεια εκδότη και πνευματικά δικαιώματα',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

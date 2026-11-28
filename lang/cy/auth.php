@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Cadarnhau cyfrinair',
     'user_invite_success_login' => 'Cyfrinair wedi’i osod, dylech nawr allu mewngofnodi gan ddefnyddio\'r cyfrinair a osodwyd i gael mynediad i :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Gosod Dilysu Aml-Ffactor',
     'mfa_setup_desc' => 'Gosod dilysu aml-ffactor fel haen ychwanegol o ddiogelwch ar gyfer eich cyfrif defnyddiwr.',

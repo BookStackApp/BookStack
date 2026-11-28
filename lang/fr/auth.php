@@ -21,9 +21,9 @@ return [
     'username' => 'Nom d\'utilisateur',
     'email' => 'E-mail',
     'password' => 'Mot de passe',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => 'Nouveau mot de passe',
+    'password_new_confirm' => 'Confirmer le nouveau mot de passe',
+    'password_current' => 'Confirmer le mot de passe actuel',
     'password_confirm' => 'Confirmez le mot de passe',
     'password_hint' => 'Doit être d\'au moins 8 caractères',
     'forgot_password' => 'Mot de passe oublié ?',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => 'Pour finaliser votre compte et recevoir l\'accès, vous devez renseigner le mot de passe qui sera utilisé pour la connexion à :appName les prochaines fois.',
     'user_invite_page_confirm_button' => 'Confirmez le mot de passe',
     'user_invite_success_login' => 'Mot de passe défini, vous devriez maintenant pouvoir vous connecter en utilisant votre mot de passe défini pour accéder à :appName!',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Authentification multi-facteurs',

@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Commuta l’etiqueta',
 
     // About view
-    'about' => 'Quant a l’Editor',
-    'about_title' => 'Quant a l’Editor WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Llicència i copyright de l’Editor',
     'editor_lexical_license' => 'Aquest editor està construït com una bifurcació de :lexicalLink i es distribueix sota la llicència MIT.',
     'editor_lexical_license_link' => 'Tots els detalls complets de la llicència es poden trobar aquí.',

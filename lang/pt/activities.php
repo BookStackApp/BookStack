@@ -64,79 +64,79 @@ return [
     // Auth
     'auth_login' => 'iniciou sessão',
     'auth_register' => 'registado como novo utilizador',
-    'auth_password_reset_request' => 'pedido a redefinição da palavra-passe',
-    'auth_password_reset_update' => 'redifinir palavra-passe do utilizador',
-    'mfa_setup_method' => 'configurar método de duplo fator',
-    'mfa_setup_method_notification' => 'Método de autenticação por múltiplos-fatores configurado com sucesso',
-    'mfa_remove_method' => 'método de duplo fator removido',
-    'mfa_remove_method_notification' => 'Método de autenticação por múltiplos-fatores removido com sucesso',
+    'auth_password_reset_request' => 'pediu a redefinição da palavra-passe',
+    'auth_password_reset_update' => 'redifiniu palavra-passe do utilizador',
+    'mfa_setup_method' => 'configurou método de autenticação multifatorial',
+    'mfa_setup_method_notification' => 'Método de autenticação multifatorial configurado com sucesso',
+    'mfa_remove_method' => 'removeu método de autenticação multifatorial',
+    'mfa_remove_method_notification' => 'Método de autenticação multifatorial removido com sucesso',
 
     // Settings
-    'settings_update' => 'configurações atualizadas',
+    'settings_update' => 'atualizou as configurações',
     'settings_update_notification' => 'Configurações atualizadas com sucesso',
-    'maintenance_action_run' => 'ação de manutenção executada',
+    'maintenance_action_run' => 'executou ação de manutenção',
 
     // Webhooks
-    'webhook_create' => 'webhook criado',
+    'webhook_create' => 'criou webhook',
     'webhook_create_notification' => 'Webhook criado com sucesso',
-    'webhook_update' => 'atualizar um webhook',
+    'webhook_update' => 'atualizou webhook',
     'webhook_update_notification' => 'Webhook criado com sucesso',
-    'webhook_delete' => 'eliminar webhook',
+    'webhook_delete' => 'eliminou webhook',
     'webhook_delete_notification' => 'Webhook criado com sucesso',
 
     // Imports
-    'import_create' => 'importação criada',
+    'import_create' => 'criou importação',
     'import_create_notification' => 'Importação carregada com sucesso',
-    'import_run' => 'importação atualizada',
+    'import_run' => 'atualizou importação',
     'import_run_notification' => 'Conteúdo importado com sucesso',
-    'import_delete' => 'importação apagada',
+    'import_delete' => 'apagou importação',
     'import_delete_notification' => 'Importação eliminada com sucesso',
 
     // Users
-    'user_create' => 'utilizador criado',
+    'user_create' => 'ciou utilizador',
     'user_create_notification' => 'Utilizador criado com sucesso',
-    'user_update' => 'utilizador atualizado',
+    'user_update' => 'atualizou utilizador',
     'user_update_notification' => 'Utilizador atualizado com sucesso',
-    'user_delete' => 'utilizador eliminado',
+    'user_delete' => 'eliminou utilizador',
     'user_delete_notification' => 'Utilizador removido com sucesso',
-    'user_mfa_reset' => 'reiniciar a MFA para o utilizador',
+    'user_mfa_reset' => 'reiniciou método de autenticação multifatorial para utilizador',
     'user_mfa_reset_notification' => 'Reinicialização dos métodos de autenticação multifatorial',
 
     // API Tokens
     'api_token_create' => 'token API criado',
     'api_token_create_notification' => 'API token criado com sucesso',
-    'api_token_update' => 'token API atualizado',
+    'api_token_update' => 'API token atualizado',
     'api_token_update_notification' => 'API token atualizado com sucesso',
-    'api_token_delete' => 'token API apagado',
+    'api_token_delete' => 'API token apagado',
     'api_token_delete_notification' => 'API token atualizado com sucesso',
 
     // Roles
-    'role_create' => 'cargo criado',
-    'role_create_notification' => 'Cargo criado com sucesso',
-    'role_update' => 'cargo atualizado',
-    'role_update_notification' => 'Cargo atualizado com sucesso',
-    'role_delete' => 'cargo eliminado',
-    'role_delete_notification' => 'Cargo excluído com sucesso',
+    'role_create' => 'criou papel',
+    'role_create_notification' => 'Papel criado com sucesso',
+    'role_update' => 'atualizou papel',
+    'role_update_notification' => 'Papel atualizado com sucesso',
+    'role_delete' => 'eliminou papel',
+    'role_delete_notification' => 'Papel excluído com sucesso',
 
     // Recycle Bin
-    'recycle_bin_empty' => 'reciclagem vazia',
-    'recycle_bin_restore' => 'restaurado da reciclagem',
-    'recycle_bin_destroy' => 'removido da reciclagem',
+    'recycle_bin_empty' => 'esvaziou a reciclagem',
+    'recycle_bin_restore' => 'restaurou da reciclagem',
+    'recycle_bin_destroy' => 'removeu da reciclagem',
 
     // Comments
     'commented_on'                => 'comentado a',
-    'comment_create'              => 'comentário adicionado',
-    'comment_update'              => 'comentário atualizado',
-    'comment_delete'              => 'comentário eliminado',
+    'comment_create'              => 'adicionou comentário',
+    'comment_update'              => 'atualizou comentário',
+    'comment_delete'              => 'eliminou comentário',
 
     // Sort Rules
-    'sort_rule_create' => 'regra de ordenação criada',
+    'sort_rule_create' => 'criou regra de ordenação',
     'sort_rule_create_notification' => 'Regra de ordenação criada com sucesso',
-    'sort_rule_update' => 'regra de ordenação atualizada',
+    'sort_rule_update' => 'atualizou regra de ordenação',
     'sort_rule_update_notification' => 'Regra de ordenação atualizada com sucesso',
-    'sort_rule_delete' => 'regra de ordenação apagada',
+    'sort_rule_delete' => 'apagou regra de ordenação',
     'sort_rule_delete_notification' => 'Regra de ordenação apagada com sucesso',
 
     // Other
-    'permissions_update'          => 'permissões atualizadas',
+    'permissions_update'          => 'atualizou permissões',
 ];

@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute ต้องอ้างอิงถึงไฟล์ประเภท :validTypes แต่พบ :foundType',
     'zip_model_expected' => 'คาดหวัง data object แต่พบ ":type"',
     'zip_unique' => ':attribute ต้องไม่ซ้ำกันสำหรับประเภท object ภายใน ZIP',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

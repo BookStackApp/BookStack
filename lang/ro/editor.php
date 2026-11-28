@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Comută etichetă',
 
     // About view
-    'about' => 'Despre editor',
-    'about_title' => 'Despre editorul WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Editor licență și drepturi de autor',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Jelszó megerősítése',
     'user_invite_success_login' => 'Jelszó beállítva. Most már be tud jelentkezni a beállított jelszóval a(z) :appName rendszerbe!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Többlépcsős azonosítás beállítása',
     'mfa_setup_desc' => 'Állítsa be a többlépcsős azonosítást egy extra biztonsági rétegként a felhasználói fiókjához.',

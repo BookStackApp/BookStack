@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Címke ki/be kapcsolása',
 
     // About view
-    'about' => 'A szerkesztő névjegye',
-    'about_title' => 'A WYSIWYG szerkesztőről',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Szerkesztő licenc és jogi információi',
     'editor_lexical_license' => 'Ez a szerkesztő az MIT licenc alatt szolgáltatott :lexicalLink segítségével készült.',
     'editor_lexical_license_link' => 'A teljes licenc az itt található.',

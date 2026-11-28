@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Staðfestu lykilorð',
     'user_invite_success_login' => 'Lykilorð klárt, nú ættir þú að geta skráð þig inn á :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Setja upp tvöfalda auðkenningu',
     'mfa_setup_desc' => 'Tvöföld euðkenning er viðbótar vörn til að tryggja aðganginn þinn.',

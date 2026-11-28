@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Pārslēgt marķējumu',
 
     // About view
-    'about' => 'Par redaktoru',
-    'about_title' => 'Par WYSIWYG redaktoru',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Redaktora licence un autortiesības',
     'editor_lexical_license' => 'Šis redaktors ir izveidots, izmantojot :tinyLink, kas ir publicēts ar MIT licenci.',
     'editor_lexical_license_link' => 'Pilnu licences informāciju var atrast šeit.',

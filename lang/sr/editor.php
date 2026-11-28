@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Укључите ознаку',
 
     // About view
-    'about' => 'О уређивачу',
-    'about_title' => 'О уређивачу WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Уредничка лиценца и ауторска права',
     'editor_lexical_license' => 'Уређивач је изграђен као копија :lexicalLink који се дистрибуира под MIT лиценцом.',
     'editor_lexical_license_link' => 'Комплетни детаљи лиценце се могу пронаћи овде.',

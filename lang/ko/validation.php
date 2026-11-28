@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute은(는)  :validTypes, found :foundType 유형의 파일을 참조해야 합니다.',
     'zip_model_expected' => '데이터 객체가 필요하지만 ":type" 타입이 발견되었습니다.',
     'zip_unique' => ':attribute은(는) 컨텐츠 ZIP 파일 내의 객체 유형에 대해 고유해야 합니다.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

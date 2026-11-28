@@ -21,9 +21,9 @@ return [
     'username' => 'Логін',
     'email' => 'Адреса електронної пошти',
     'password' => 'Пароль',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => 'Новий пароль',
+    'password_new_confirm' => 'Підтвердити новий пароль',
+    'password_current' => 'Підтвердити поточний пароль',
     'password_confirm' => 'Підтвердження пароля',
     'password_hint' => 'Повинен бути щонайменше 8 символів',
     'forgot_password' => 'Забули пароль?',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => 'Для завершення процесу створення облікового запису та отримання доступу вам потрібно задати пароль, який буде використовуватися для входу в :appName в майбутньому.',
     'user_invite_page_confirm_button' => 'Підтвердити пароль',
     'user_invite_success_login' => 'Пароль встановлено, ви повинні увійти в систему, використовуючи свій встановлений пароль для доступу :appNam!',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Налаштувати двофакторну автентифікацію',

@@ -11,6 +11,7 @@ return [
     'image_upload' => '上傳圖片',
     'image_intro' => '您可以在這裡選取和管理上傳到系統的圖片。',
     'image_intro_upload' => '透過拖曳圖檔至視窗中，或是使用下方的「上傳圖片」按鍵',
+    'image_no_upload_permission' => '你沒有權限上傳圖片。',
     'image_all' => '全部',
     'image_all_title' => '檢視所有圖片',
     'image_book_title' => '檢視上傳到此書本的圖片',

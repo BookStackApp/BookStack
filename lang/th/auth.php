@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'ยืนยันรหัสผ่าน',
     'user_invite_success_login' => 'ตั้งรหัสผ่านแล้ว คุณสามารถเข้าสู่ระบบ :appName ด้วยรหัสผ่านที่ตั้งไว้ได้แล้ว!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'ตั้งค่าการยืนยันตัวตนแบบหลายขั้นตอน',
     'mfa_setup_desc' => 'ตั้งค่า MFA เพื่อเพิ่มความปลอดภัยให้บัญชีของคุณ',

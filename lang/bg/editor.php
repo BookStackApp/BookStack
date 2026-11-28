@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Превключи надписа',
 
     // About view
-    'about' => 'За редактора',
-    'about_title' => 'Относно визуалния редактор',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Лиценз, авторски и сходни права на редактора',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

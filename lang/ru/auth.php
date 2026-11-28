@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Подтвердите пароль',
     'user_invite_success_login' => 'Пароль установлен, теперь вы можете войти в систему, используя установленный пароль для доступа к :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Многофакторная аутентификация',
     'mfa_setup_desc' => 'Многофакторная аутентификация повышает степень безопасности вашей учетной записи.',

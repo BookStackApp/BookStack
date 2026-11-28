@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Attiva/disattiva etichetta',
 
     // About view
-    'about' => 'Informazioni sull\'editor',
-    'about_title' => 'Informazioni sull\'editor di WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licenza e copyright dell\'editor',
     'editor_lexical_license' => 'Questo editor è stato creato come fork di :lexicalLink ed è distribuito sotto la licenza MIT.',
     'editor_lexical_license_link' => 'I dettagli della licenza sono disponibili qui.',

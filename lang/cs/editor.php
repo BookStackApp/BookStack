@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Přepnout popisek',
 
     // About view
-    'about' => 'O editoru',
-    'about_title' => 'O WYSIWYG editoru',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Editor licence a autorská práva',
     'editor_lexical_license' => 'Tento editor je vytvořen jako fork :lexicalLink, který je distribuován pod licencí MIT.',
     'editor_lexical_license_link' => 'Kompletní údaje o licenci naleznete zde.',

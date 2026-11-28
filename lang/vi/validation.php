@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute cần tham chiếu đến một tệp có kiểu: :validTypes, tìm thấy :foundType.',
     'zip_model_expected' => 'Đối tượng dữ liệu được mong đợi nhưng tìm thấy ":type".',
     'zip_unique' => ':attribute phải là duy nhất cho kiểu đối tượng trong ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

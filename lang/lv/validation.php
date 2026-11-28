@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute ir jāatsaucas uz failu ar tipu :validTypes, bet atrasts :foundType.',
     'zip_model_expected' => 'Sagaidīts datu objekts, bet atrasts ":type".',
     'zip_unique' => ':attribute jābūt unikālam šim objekta tipam ZIP arhīvā.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Schakel label aan/uit',
 
     // About view
-    'about' => 'Over de bewerker',
-    'about_title' => 'Over de WYSIWYG Bewerker',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Bewerker Licentie & Copyright',
     'editor_lexical_license' => 'Deze editor is gemaakt als een fork van :lexicalLink welke is verstrekt onder de MIT-licentie.',
     'editor_lexical_license_link' => 'Volledige licentieinformatie kan hier gevonden worden.',

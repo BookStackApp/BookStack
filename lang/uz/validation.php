@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute :validTypes turidagi faylga havola qilishi kerak, lekin :foundType turida keldi.',
     'zip_model_expected' => 'Ma\'lumotlar obyekti kutilmoqda, ammo ":type" topildi.',
     'zip_unique' => ':attribute ZIP ichidagi obyekt turi uchun noyob bo\'lishi kerak.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

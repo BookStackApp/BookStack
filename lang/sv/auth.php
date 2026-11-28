@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Bekräfta lösenord',
     'user_invite_success_login' => 'Lösenord inställt, du bör nu kunna logga in med ditt inställda lösenord för att komma åt :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Konfigurera multifaktorsautentisering',
     'mfa_setup_desc' => 'Konfigurera multifaktorsautentisering som ett extra skydd för ditt konto.',

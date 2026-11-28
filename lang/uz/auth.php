@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Parolni tasdiqlang',
     'user_invite_success_login' => 'Parol o‘rnatilgan, endi siz o‘rnatilgan parolingizdan foydalanib tizimga kirishingiz kerak: appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Ko‘p faktorli autentifikatsiyani sozlash',
     'mfa_setup_desc' => 'Ko‘p faktorli autentifikatsiyani foydalanuvchi hisobingiz uchun qo‘shimcha xavfsizlik qatlami sifatida o‘rnatish.',

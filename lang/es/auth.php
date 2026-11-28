@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
     'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar Autenticación en Dos Pasos',
     'mfa_setup_desc' => 'La autenticación en dos pasos añade una capa de seguridad adicional a tu cuenta de usuario.',

@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => '비밀번호 확인',
     'user_invite_success_login' => '비밀번호를 설정했습니다, 이제 입력한 비밀번호로 :appName 애플리케이션에 로그인할 수 있습니다!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => '다중 인증 설정',
     'mfa_setup_desc' => '추가 보안 계층으로 다중 인증을 설정합니다.',

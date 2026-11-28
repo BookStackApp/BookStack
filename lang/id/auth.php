@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Konfirmasi Kata sandi',
     'user_invite_success_login' => 'Kata sandi diset, Anda seharusnya sudah bisa masuk menggunakan kata sandi yang sudah diset untuk mengakses :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Atur Multi-Factor Otentikasi',
     'mfa_setup_desc' => 'Mengatur multi-factor otentikasi sebagai tambahan ekstra keamanan untuk akun Anda.',

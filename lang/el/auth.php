@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Επιβεβαίωση Κωδικού',
     'user_invite_success_login' => 'Ορίστηκε κωδικός πρόσβασης, θα πρέπει τώρα να μπορείτε να συνδεθείτε χρησιμοποιώντας τον καθορισμένο κωδικό πρόσβασης για να αποκτήσετε πρόσβαση στο :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Ρύθμιση ελέγχου ταυτότητας πολλαπλών παραγόντων',
     'mfa_setup_desc' => 'Ρυθμίστε τον έλεγχο ταυτότητας πολλαπλών παραγόντων ως ένα επιπλέον επίπεδο ασφάλειας για τον λογαριασμό χρήστη σας.',

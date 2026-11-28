@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Bekreft passord',
     'user_invite_success_login' => 'Passordet ble satt, du skal nå kunne logge inn med ditt nye passord for å få tilgang til :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Konfigurer flerfaktor-autentisering',
     'mfa_setup_desc' => 'Konfigurer flerfaktor-autentisering som et ekstra lag med sikkerhet for brukerkontoen din.',

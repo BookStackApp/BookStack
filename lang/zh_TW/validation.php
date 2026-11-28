@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute 需要參照類型為 :validTypes 的檔案，找到 :foundType。',
     'zip_model_expected' => '預期為資料物件，但找到「:type」。',
     'zip_unique' => '對於 ZIP 中的物件類型，:attribute 必須是唯一的。',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

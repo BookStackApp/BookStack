@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Potvrdiť heslo',
     'user_invite_success_login' => 'Heslo je nastavené, teraz by ste sa mali vedieť prihlásiť pomocou svojho nastaveného hesla na prístup k :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Nastaviť viacúrovňové prihlasovanie',
     'mfa_setup_desc' => 'Pre vyššiu úroveň bezpečnosti si nastavte viacúrovňové prihlasovanie.',

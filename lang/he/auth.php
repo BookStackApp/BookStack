@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'אימות סיסמא',
     'user_invite_success_login' => 'הסיסמה הוגדרה בהצלחה, כעת תוכלו לקבל גישה ל :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'הגדר אימות רב-שלבי',
     'mfa_setup_desc' => 'הגדר אימות רב-שלבי כשכבת אבטחה נוספת עבור החשבון שלך.',

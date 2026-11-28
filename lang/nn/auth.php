@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Stadfest passord',
     'user_invite_success_login' => 'Passordet vart lagra, du skal nå kunne logge inn med ditt nye passord for å få tilgang til :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Konfigurer fleirfaktor-autentisering',
     'mfa_setup_desc' => 'Konfigurer fleirfaktor-autentisering som eit ekstra lag med tryggleik for brukarkontoen din.',

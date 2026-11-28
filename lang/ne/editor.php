@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'लेबल टगल गर्नुहोस्',
 
     // About view
-    'about' => 'संपादकको बारेमा',
-    'about_title' => 'WYSIWYG संपादकको बारेमा',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'संपादक अनुमति र कपीराइट',
     'editor_lexical_license' => 'यो संपादक :lexicalLink को फोर्कको रूपमा निर्माण गरिएको हो जुन MIT लाइसेन्स अन्तर्गत वितरण गरिएको छ।',
     'editor_lexical_license_link' => 'पूरा लाइसेन्स विवरण यहाँ भेट्न सकिन्छ।',

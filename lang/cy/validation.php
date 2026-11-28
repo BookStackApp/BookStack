@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => 'Mae\'r :attribute angen cyfeirio at ffeil o fath :valid Types, sydd wedi\'i ffeindio :foundType.',
     'zip_model_expected' => 'Dyswgyl am wrthrych data ond wedi ffeindio ":type".',
     'zip_unique' => 'Mae rhaid y :attribute fod yn unigol i\'r fath o wrthrych yn y ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

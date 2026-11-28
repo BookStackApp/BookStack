@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Xác nhận Mật khẩu',
     'user_invite_success_login' => 'Đã đặt mật khẩu, bạn có thể đăng nhập với mật khẩu trên để truy cập :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Cài đặt xác thực nhiều bước',
     'mfa_setup_desc' => 'Cài đặt xác thực nhiều bước như một lớp bảo mật khác cho tài khoản của bạn.',

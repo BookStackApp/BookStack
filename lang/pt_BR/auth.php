@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Confirmar Senha',
     'user_invite_success_login' => 'Senha definida, agora você pode fazer login usando sua senha para acessar :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar autenticação multi-fator',
     'mfa_setup_desc' => 'A autenticação multi-fator adiciona outra camada de segurança à sua conta.',

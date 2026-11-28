@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute मा :validTypes प्रकारको फाइल हुनुपर्छ, तर :foundType भेटियो।',
     'zip_model_expected' => 'डेटा वस्तु चाहिएको थियो तर ":type" भेटियो।',
     'zip_unique' => ':attribute ZIP भित्रको वस्तु प्रकारको लागि अद्वितीय हुनुपर्छ।',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

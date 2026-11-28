@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Wachtwoord Bevestigen',
     'user_invite_success_login' => 'Wachtwoord ingesteld, je zou nu moeten kunnen inloggen met je ingestelde wachtwoord om toegang te krijgen tot :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Meervoudige verificatie instellen',
     'mfa_setup_desc' => 'Stel meervoudige verificatie in als een extra beveiligingslaag voor je gebruikersaccount.',

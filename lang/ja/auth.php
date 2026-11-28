@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'パスワードを確定',
     'user_invite_success_login' => 'パスワードが設定されました。設定したパスワードで:appNameにログインできるようになりました！',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => '多要素認証を設定',
     'mfa_setup_desc' => 'アカウントのセキュリティを強化するために、多要素認証を設定してください。',

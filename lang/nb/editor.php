@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Veksle etikettsynlighet',
 
     // About view
-    'about' => 'Om tekstredigeringsprogrammet',
-    'about_title' => 'Om HDSEHDF-tekstredigeringsprogrammet',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Tekstbehandlerlisens og opphavsrett',
     'editor_lexical_license' => 'Denne redaktoren er bygget som en fork av :lexicalLink, som er distribuert under MIT-lisensen.',
     'editor_lexical_license_link' => 'Full lisensinformasjon finner du her.',

@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Yorliqni almashtirish',
 
     // About view
-    'about' => 'Muharrir haqida',
-    'about_title' => 'WYSIWYG muharriri haqida',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Muharrir litsenziyasi va mualliflik huquqi',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

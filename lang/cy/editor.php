@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Toglo label',
 
     // About view
-    'about' => 'Ynglŷn â\'r golygydd',
-    'about_title' => 'Ynglŷn â\'r Golygydd WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Trwydded a Hawlfraint Golygydd',
     'editor_lexical_license' => 'Mae\'r golygydd hwn wedi\'i adeiladu fel fforc o :lexicalLink sy\'n cael ei ddosbarthu o dan y drwydded MIT.',
     'editor_lexical_license_link' => 'Gellir gweld manylion llawn y drwydded yma.',

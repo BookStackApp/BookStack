@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Потвърди паролата',
     'user_invite_success_login' => 'Паролата е настроена, вече можеш да се впишеш с новата парола, за да достъпиш :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Настрой многофакторно удостоверяване',
     'mfa_setup_desc' => 'Настрой многофакторно удостверяване като втори слой сигурност на твоя профил.',

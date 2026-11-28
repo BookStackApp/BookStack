@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute seharusnya berupa file dengan tipe :validTypes, tapi yang Anda unggah bertipe :foundType.',
     'zip_model_expected' => 'Diharapkan sebuah objek data, namun yang ditemukan adalah \':type\'.',
     'zip_unique' => ':attribute harus bersifat unik untuk setiap jenis objek dalam file ZIP.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

@@ -21,9 +21,9 @@ return [
     'username' => 'Brugernavn',
     'email' => 'E-mail',
     'password' => 'Adgangskode',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => 'Ny adgangskode',
+    'password_new_confirm' => 'Bekræft ny adgangskode',
+    'password_current' => 'Bekræft Nuværende Adgangskode',
     'password_confirm' => 'Bekræft adgangskode',
     'password_hint' => 'Skal være på mindst 8 karakterer',
     'forgot_password' => 'Glemt Adgangskode?',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => 'For at færdiggøre din konto og få adgang skal du indstille en adgangskode, der bruges til at logge ind på :appName ved fremtidige besøg.',
     'user_invite_page_confirm_button' => 'Bekræft adgangskode',
     'user_invite_success_login' => 'Adgangskoden er sat. Du burde nu kunne logge ind med din angivede adgangskode for at tilgå :appName!',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Opsætning af Multi-faktor godkendelse',

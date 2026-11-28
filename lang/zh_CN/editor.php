@@ -163,8 +163,8 @@ return [
     'toggle_label' => '切换标签',
 
     // About view
-    'about' => '关于编辑器',
-    'about_title' => '关于所见即所得（WYSIWYG）编辑器',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => '编辑器许可证与版权信息',
     'editor_lexical_license' => '该编辑器是 :lexicalLink 的一个分支构建的，并根据 MIT 许可证进行分发.',
     'editor_lexical_license_link' => '许可证详细信息请点击此处',

@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Promijeni oznaku',
 
     // About view
-    'about' => 'O Editoru',
-    'about_title' => 'O WYSIWYG Editoru',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licenca i autorsko pravo uređivača',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

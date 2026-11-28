@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'تأكيد كلمة السر',
     'user_invite_success_login' => 'تم تأكيد كلمة السر. يمكنك الآن تسجيل الدخول باستخدام كلمة السر المحددة للوصول إلى :appName !',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'إعداد المصادقة متعددة العوامل',
     'mfa_setup_desc' => 'إعداد المصادقة متعددة العوامل كطبقة إضافية من الأمان لحساب المستخدم الخاص بك.',

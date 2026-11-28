@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Potvrdite lozinku',
     'user_invite_success_login' => 'Lozinka je postavljena, sada biste se trebali moći prijaviti koristeći postavljenu lozinku kako biste pristupili aplikaciji :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Postavite Višestruku Autentifikaciju',
     'mfa_setup_desc' => 'Postavite višestruku provjeru autentičnosti kao dodatni sloj sigurnosti za svoj korisnički račun.',

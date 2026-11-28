@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Potwierdź hasło',
     'user_invite_success_login' => 'Hasło ustawione, teraz powinieneś mieć możliwość logowania się przy użyciu ustawionego hasła, aby uzyskać dostęp do :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe',
     'mfa_setup_desc' => 'Skonfiguruj uwierzytelnianie wieloskładnikowe jako dodatkową warstwę bezpieczeństwa dla swojego konta użytkownika.',

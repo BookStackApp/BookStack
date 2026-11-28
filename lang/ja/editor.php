@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'ブロックのラベル',
 
     // About view
-    'about' => 'エディタについて',
-    'about_title' => 'WYSIWYGエディタについて',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'エディタのライセンスと著作権',
     'editor_lexical_license' => 'このエディタはMITライセンスの下で配布されている :lexicalLink のフォークとして構築されています。',
     'editor_lexical_license_link' => '完全なライセンスの詳細はこちらをご覧ください。',

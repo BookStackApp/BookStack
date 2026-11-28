@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Alternar etiqueta',
 
     // About view
-    'about' => 'Sobre o editor',
-    'about_title' => 'Sobre o Editor WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licença do Editor e Direitos Autorais',
     'editor_lexical_license' => 'Este editor é criado como uma bifurcação de :lexicalLink distribuído sob a licença MIT.',
     'editor_lexical_license_link' => 'Aqui podem ser encontrados detalhes da licença.',

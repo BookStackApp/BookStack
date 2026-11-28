@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Przełącz etykietę',
 
     // About view
-    'about' => 'O edytorze',
-    'about_title' => 'O edytorze WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licencja edytora i prawa autorskie',
     'editor_lexical_license' => 'Ten edytor został zbudowany na podstawie :lexicalLink, który jest dystrybuowany na licencji MIT.',
     'editor_lexical_license_link' => 'Pełne szczegóły licencji znajdziesz tutaj.',

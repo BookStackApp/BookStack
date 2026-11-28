@@ -112,6 +112,7 @@ return [
     'zip_file_mime' => ':attribute peab viitama :validTypes tüüpi failile, leiti :foundType.',
     'zip_model_expected' => 'Oodatud andmete asemel leiti ":type".',
     'zip_unique' => ':attribute peab olema ZIP-arhiivi piires objekti tüübile unikaalne.',
+    'zip_files_total_size' => 'The total size of all files in the import must not be more than :size MB',
 
     // Custom validation lines
     'custom' => [

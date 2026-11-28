@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Last opp bilete',
     'image_intro' => 'Her kan du velja og behandla bilete som tidlegare har vorte lasta opp til systemet.',
     'image_intro_upload' => 'Last opp eit nytt bilete ved å dra eit bilete i dette vindauget, eller ved å bruka knappen "Last opp bilete" ovanfor.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Alle',
     'image_all_title' => 'Vis alle bilete',
     'image_book_title' => 'Vis bilete som er lasta opp i denne boka',

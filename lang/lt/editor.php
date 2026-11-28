@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Toggle label',
 
     // About view
-    'about' => 'Apie redaktorių',
-    'about_title' => 'Apie WYSIWYG redaktorių',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Editor License & Copyright',
     'editor_lexical_license' => 'This editor is built as a fork of :lexicalLink which is distributed under the MIT license.',
     'editor_lexical_license_link' => 'Full license details can be found here.',

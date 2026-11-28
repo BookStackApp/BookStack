@@ -163,8 +163,8 @@ return [
     'toggle_label' => '切換標籤',
 
     // About view
-    'about' => '關於編輯器',
-    'about_title' => '關於所見即所得（WYSIWYG）編輯器',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => '編輯器許可證與版權信息',
     'editor_lexical_license' => '這個編輯器是從 :lexicalLink 分支出來的，而 :lexicalLink 是以 MIT 授權條款散佈。',
     'editor_lexical_license_link' => '完整的授權條款詳細資訊可在這裡找到。',

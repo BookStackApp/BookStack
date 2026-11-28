@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Potvrdit heslo',
     'user_invite_success_login' => 'Heslo bylo nasteaveno, nyní byste měli být schopni přihlásit se nastaveným heslem do aplikace :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Nastavit vícefaktorové ověření',
     'mfa_setup_desc' => 'Nastavit vícefaktorové ověřování jako další vrstvu zabezpečení vašeho uživatelského účtu.',

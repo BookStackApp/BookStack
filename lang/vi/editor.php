@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Chuyển đổi nhãn',
 
     // About view
-    'about' => 'Giới thiệu về trình soạn thảo',
-    'about_title' => 'Giới thiệu về trình soạn thảo WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Giấy phép & Bản quyền của trình soạn thảo',
     'editor_lexical_license' => 'Trình soạn thảo này được xây dựng dựa trên :lexicalLink được phân phối theo giấy phép MIT.',
     'editor_lexical_license_link' => 'Chi tiết giấy phép đầy đủ có thể tìm thấy tại đây.',

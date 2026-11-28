@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Conferma password',
     'user_invite_success_login' => 'Password impostata, ora dovresti essere in grado di effettuare il login utilizzando la password impostata per accedere a :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Imposta autenticazione multi-fattore',
     'mfa_setup_desc' => 'Imposta l\'autenticazione multi-fattore come misura di sicurezza aggiuntiva per il tuo account.',

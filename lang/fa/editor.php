@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'تغییر برچسب',
 
     // About view
-    'about' => 'درباره ویرایشگر',
-    'about_title' => 'درباره ویرایشگر WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'مجوز و حق کپی رایت ویرایشگر',
     'editor_lexical_license' => 'این ویرایشگر بر پایه‌ی نسخه‌ای مشتق‌شده از «:lexicalLink» ساخته شده است که تحت مجوز MIT منتشر می‌شود.',
     'editor_lexical_license_link' => 'جزئیات کامل مجوز را می‌توانید این‌جا مشاهده کنید.',

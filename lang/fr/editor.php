@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Activer/désactiver le libellé',
 
     // About view
-    'about' => 'À propos de l\'éditeur',
-    'about_title' => 'À propos de l\'éditeur WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Licence d\'éditeur et droit d\'auteur',
     'editor_lexical_license' => 'Cet éditeur est construit comme un fork de :lexicalLink qui est distribué sous licence MIT.',
     'editor_lexical_license_link' => 'Vous trouverez ici tous les détails de la licence.',

@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Kinnita parool',
     'user_invite_success_login' => 'Parool seatud, nüüd on sul selle parooli abil ligipääs rakendusele :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Seadista mitmeastmeline autentimine',
     'mfa_setup_desc' => 'Seadista mitmeastmeline autentimine, et oma kasutajakonto turvalisust tõsta.',

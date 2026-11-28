@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Confirmă parola',
     'user_invite_success_login' => 'Parola setată, acum ar trebui să te poți autentifica folosind parola setată pentru a accesa :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Configurează autentificarea cu mai mulți factori de autentificare',
     'mfa_setup_desc' => 'Configurează autentificarea cu mai mulți factori ca un nivel suplimentar de securitate pentru contul tău de utilizator.',

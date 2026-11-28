@@ -8,7 +8,7 @@ return [
 
     'failed' => 'Estas credenciales no concuerdan con nuestros registros.',
     'throttle' => 'Demasiados intentos fallidos de inicio de sesión. Por favor intente nuevamente en :seconds segundos.',
-    'mfa_throttle' => 'Demasiados intentos de verificación de autenticación en dos pasos. Por favor, inténtalo de nuevo en :seconds segundos.',
+    'mfa_throttle' => 'Demasiados intentos de autenticación multifactor. Por favor, inténtelo de nuevo en :seconds segundos.',
 
     // Login & Register
     'sign_up' => 'Registrarse',
@@ -22,7 +22,7 @@ return [
     'email' => 'Correo electrónico',
     'password' => 'Contraseña',
     'password_new' => 'Nueva Contraseña',
-    'password_new_confirm' => 'Confirme Nueva Contraseña',
+    'password_new_confirm' => 'Confirmar nueva contraseña',
     'password_current' => 'Confirmar contraseña actual',
     'password_confirm' => 'Confirmar contraseña',
     'password_hint' => 'Debe contener al menos 8 caracteres',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => 'Para finalizar la cuenta y tener acceso debe establcer una contraseña que utilizará para ingresar a :appName en visitas futuras.',
     'user_invite_page_confirm_button' => 'Confirmar Contraseña',
     'user_invite_success_login' => 'Contraseña guardada, ¡ahora debería ser capaz de iniciar sesión usando su contraseña establecida para acceder a :appName!',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Configurar autenticación de múltiples factores',

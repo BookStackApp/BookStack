@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Učitaj Sliku',
     'image_intro' => 'Ovdje možete odabrati i upravljati slikama koje su prethodno prenesene u sustav.',
     'image_intro_upload' => 'Prenesite novu sliku povlačenjem slikovne datoteke u ovaj prozor ili koristite gumb "Učitaj sliku" iznad.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Sve',
     'image_all_title' => 'Vidi sve slike',
     'image_book_title' => 'Vidi slike dodane ovoj knjizi',

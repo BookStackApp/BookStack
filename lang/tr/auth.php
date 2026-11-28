@@ -21,9 +21,9 @@ return [
     'username' => 'Kullanıcı Adı',
     'email' => 'E-posta',
     'password' => 'Şifre',
-    'password_new' => 'New Password',
-    'password_new_confirm' => 'Confirm New Password',
-    'password_current' => 'Confirm Current Password',
+    'password_new' => 'Yeni Parola',
+    'password_new_confirm' => 'Yeni Parolayı Doğrula',
+    'password_current' => 'Geçerli Parolayı Doğrula',
     'password_confirm' => 'Şifreyi Onaylayın',
     'password_hint' => 'En az 8 karakter olmalı',
     'forgot_password' => 'Şifrenizi mi unuttunuz?',
@@ -83,6 +83,10 @@ return [
     'user_invite_page_text' => 'Hesap kurulumunuzu tamamlamak ve gelecekteki :appName ziyaretlerinizde hesabınıza erişim sağlayabilmeniz için bir şifre belirlemeniz gerekiyor.',
     'user_invite_page_confirm_button' => 'Şifreyi Onayla',
     'user_invite_success_login' => 'Şifre belirlendi, :appName! uygulamasına giriş yapmak için belirlediğiniz şifreyi kullanabilirsiniz',
+
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
 
     // Multi-factor Authentication
     'mfa_setup' => 'Çok Aşamalı Kimlik Doğrulama',

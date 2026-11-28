@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Apstiprināt paroli',
     'user_invite_success_login' => 'Parole ir uzstādīta, jums tagad jābūt iespējai pieslēgties izmantojot uzstādīto paroli, lai piekļūtu :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Iestati divfaktoru autentifikāciju (2FA)',
     'mfa_setup_desc' => 'Iestati divfaktoru autentifikāciju kā papildus drošību tavam lietotāja kontam.',

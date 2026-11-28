@@ -11,6 +11,7 @@ return [
     'image_upload' => 'تحميل صورة',
     'image_intro' => 'هنا يمكنك تحديد وإدارة الصور التي تم تحميلها مسبقًا إلى النظام.',
     'image_intro_upload' => 'تحميل صورة جديدة عن طريق سحب الصورة إلى هذه النافذة، أو باستخدام زر "تحميل صورة" أعلاه.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'الكل',
     'image_all_title' => 'عرض جميع الصور',
     'image_book_title' => 'عرض الصور المرفوعة لهذا الكتاب',

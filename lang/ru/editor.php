@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Метка',
 
     // About view
-    'about' => 'О редакторе',
-    'about_title' => 'О редакторе WYSIWYG',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Лицензия редактора и авторские права',
     'editor_lexical_license' => 'Этот редактор создан с помощью :lexicalLink, распространяемый под лицензией MIT.',
     'editor_lexical_license_link' => 'Здесь вы можете найти полную информацию о лицензии.',

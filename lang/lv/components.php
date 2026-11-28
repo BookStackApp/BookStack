@@ -11,6 +11,7 @@ return [
     'image_upload' => 'Augšupielādēt attēlu',
     'image_intro' => 'Šeit jūs varat izvēlēties un pārvaldīt attēlus, kuri iepriekš tika aplugšupielādēti sistēmā.',
     'image_intro_upload' => 'Augšupielādējiet jaunu attēlu ievelkot attēla failu šajā logā vai izmantojot "Augšupielādēt attēlu" pogu augstāk.',
+    'image_no_upload_permission' => 'You do not have permission to upload new images.',
     'image_all' => 'Visi',
     'image_all_title' => 'Skatīt visus attēlus',
     'image_book_title' => 'Apskatīt augšupielādētos attēlus šajā grāmatā',

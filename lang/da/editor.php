@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Skift etiket',
 
     // About view
-    'about' => 'Om redaktøren',
-    'about_title' => 'Om WYSIWYG-editoren',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Editor-licens og copyright',
     'editor_lexical_license' => 'Denne editor er bygget som en forgrening af :lexicalLink, som distribueres under MIT-licensen.',
     'editor_lexical_license_link' => 'Du kan finde alle licensoplysninger her.',

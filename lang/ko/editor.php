@@ -163,8 +163,8 @@ return [
     'toggle_label' => '레이블 보이기/숨기기',
 
     // About view
-    'about' => '이 편집기에 대하여',
-    'about_title' => 'WYSIWYG 편집기에 대하여',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => '편집기 라이선스 & 저작권',
     'editor_lexical_license' => '이 편집기는 MIT 라이선스에 따라 배포되는 :lexicalLink의 포크로 만들어졌습니다.',
     'editor_lexical_license_link' => '전체 라이센스 세부 사항은 여기에서 확인할 수 있습니다.',

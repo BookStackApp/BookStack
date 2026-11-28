@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'Перемкнути ярлики',
 
     // About view
-    'about' => 'Про редактор',
-    'about_title' => 'Про WYSIWYG редактор',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'Ліцензія редактора і авторські права',
     'editor_lexical_license' => 'Цей редактор побудований як форк :lexicalLink який поширюється під ліцензією MIT.',
     'editor_lexical_license_link' => 'Тут ви можете знайти повну інформацію про ліцензію.',

@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'Berretsi pasahitza',
     'user_invite_success_login' => 'Password set, you should now be able to login using your set password to access :appName!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'Setup Multi-Factor Authentication',
     'mfa_setup_desc' => 'Setup multi-factor authentication as an extra layer of security for your user account.',

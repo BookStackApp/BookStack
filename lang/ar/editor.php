@@ -163,8 +163,8 @@ return [
     'toggle_label' => 'تبديل التسمية',
 
     // About view
-    'about' => 'عن المحرر',
-    'about_title' => 'حول محرر ما تراه هو ما تحصل عليه -WYSIWYG-',
+    'about' => 'Editor information & shortcuts',
+    'about_title' => 'Editor Information & Shortcuts',
     'editor_license' => 'رخصة المحرر وحقوق  التأليف والنشر',
     'editor_lexical_license' => 'تم إنشاء هذا المحرر باعتباره فرعًا لـ :lexicalLink الذي يتم توزيعه بموجب ترخيص معهد ماساتشوستس للتقانة -MIT-.',
     'editor_lexical_license_link' => 'يمكنك العثور على تفاصيل الترخيص الكاملة هنا.',

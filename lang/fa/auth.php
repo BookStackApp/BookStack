@@ -84,6 +84,10 @@ return [
     'user_invite_page_confirm_button' => 'تایید کلمه عبور',
     'user_invite_success_login' => 'رمز عبور تنظیم شده است، اکنون باید بتوانید با استفاده از رمز عبور تعیین شده خود وارد شوید تا به :appName دسترسی پیدا کنید!',
 
+    // Session
+    'session_refreshing' => 'Refreshing session...',
+    'session_refreshing_desc' => 'Your login session is being refreshed. This tab should close automatically once complete.',
+
     // Multi-factor Authentication
     'mfa_setup' => 'تنظیم احراز هویت چند مرحله‌ای',
     'mfa_setup_desc' => 'تنظیم احراز هویت چند مرحله ای یک لایه امنیتی دیگر به حساب شما اضافه میکند.',
